@@ -58,6 +58,15 @@ public final class DatabaseConnectorRegistry
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
     DatabaseConnectorRegistry.class.getName());
 
+  public static DatabaseConnectorRegistry getDatabaseConnectorRegistry()
+  {
+    if (databaseConnectorRegistrySingleton == null)
+    {
+      databaseConnectorRegistrySingleton = new DatabaseConnectorRegistry();
+    }
+    return databaseConnectorRegistrySingleton;
+  }
+
   private static Map<String, DatabaseConnector> loadDatabaseConnectorRegistry()
   {
 
@@ -126,10 +135,10 @@ public final class DatabaseConnectorRegistry
       LOGGER.log(Level.FINE, "Could not log registered JDBC drivers", e);
     }
   }
-
+  private static DatabaseConnectorRegistry databaseConnectorRegistrySingleton;
   private final Map<String, DatabaseConnector> databaseConnectorRegistry;
 
-  public DatabaseConnectorRegistry()
+  private DatabaseConnectorRegistry()
   {
     databaseConnectorRegistry = loadDatabaseConnectorRegistry();
     logRegisteredJdbcDrivers();

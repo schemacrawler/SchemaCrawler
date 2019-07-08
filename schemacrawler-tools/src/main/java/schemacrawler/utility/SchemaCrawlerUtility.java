@@ -142,7 +142,7 @@ public final class SchemaCrawlerUtility
     throws SchemaCrawlerException
   {
     checkConnection(connection);
-    final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry registry =  DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     final DatabaseConnector dbConnector = registry
       .lookupDatabaseConnector(connection);
     LOGGER

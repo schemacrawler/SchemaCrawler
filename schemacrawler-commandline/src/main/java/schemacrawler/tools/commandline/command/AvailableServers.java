@@ -42,7 +42,9 @@ public class AvailableServers
   private static List<String> availableServers()
   {
     final List<String> availableServers = new ArrayList<>();
-    for (final DatabaseServerType serverType : new DatabaseConnectorRegistry())
+    final DatabaseConnectorRegistry databaseConnectorRegistry = DatabaseConnectorRegistry
+      .getDatabaseConnectorRegistry();
+    for (final DatabaseServerType serverType : databaseConnectorRegistry)
     {
       final String description = serverType.getDatabaseSystemIdentifier();
       availableServers.add(description);

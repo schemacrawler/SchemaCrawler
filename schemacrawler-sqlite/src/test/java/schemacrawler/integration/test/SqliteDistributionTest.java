@@ -63,7 +63,7 @@ public class SqliteDistributionTest
   public void setup()
     throws SchemaCrawlerException
   {
-    final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     dbConnector = registry.lookupDatabaseConnector("sqlite");
   }
 

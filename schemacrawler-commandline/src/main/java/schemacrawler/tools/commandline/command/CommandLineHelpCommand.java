@@ -56,7 +56,8 @@ public final class CommandLineHelpCommand
 
   private static CommandLine databaseConnectorCommand(final String databaseSystemIdentifier)
   {
-    final DatabaseConnectorRegistry databaseConnectorRegistry = new DatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry databaseConnectorRegistry = DatabaseConnectorRegistry
+      .getDatabaseConnectorRegistry();
     final DatabaseConnector databaseConnector = databaseConnectorRegistry.lookupDatabaseConnector(
       databaseSystemIdentifier);
 
@@ -140,7 +141,8 @@ public final class CommandLineHelpCommand
     {
       return;
     }
-    final DatabaseConnectorRegistry databaseConnectorRegistry = new DatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry databaseConnectorRegistry = DatabaseConnectorRegistry
+      .getDatabaseConnectorRegistry();
     final CommandLine subCommand;
     if (databaseConnectorRegistry.hasDatabaseSystemIdentifier(commandName))
     {

@@ -53,7 +53,8 @@ public class CommandLineUtility
   private static void addDatabasePluginHelpCommands(final CommandLine commandLine,
                                                     final boolean addAsMixins)
   {
-    final DatabaseConnectorRegistry databaseConnectorRegistry = new DatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry databaseConnectorRegistry = DatabaseConnectorRegistry
+      .getDatabaseConnectorRegistry();
     for (final DatabaseServerType databaseServerType : databaseConnectorRegistry)
     {
       final String pluginCommandName = databaseServerType.getDatabaseSystemIdentifier();
@@ -121,7 +122,7 @@ public class CommandLineUtility
     throws SchemaCrawlerException
   {
     // Add commands for plugins
-    final CommandRegistry commandRegistry = new CommandRegistry();
+    final CommandRegistry commandRegistry = CommandRegistry.getCommandRegistry();
     for (final PluginCommand pluginCommand : commandRegistry.getCommandLineCommands())
     {
       addPluginCommand(commandLine, pluginCommand, addAsMixins);
@@ -193,7 +194,7 @@ public class CommandLineUtility
     throws SchemaCrawlerException
   {
     // Retrieve options, and save them to the state
-    final CommandRegistry commandRegistry = new CommandRegistry();
+    final CommandRegistry commandRegistry =  CommandRegistry.getCommandRegistry();
     final Config additionalConfig = new Config();
     for (final PluginCommand pluginCommand : commandRegistry.getCommandLineCommands())
     {

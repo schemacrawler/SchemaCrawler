@@ -52,7 +52,9 @@ public class AvailableServersCommand
                                            new Column(15, 1, SPAN),
                                            new Column(65, 1, WRAP));
 
-    for (final DatabaseServerType serverType : new DatabaseConnectorRegistry())
+    final DatabaseConnectorRegistry databaseConnectorRegistry = DatabaseConnectorRegistry
+      .getDatabaseConnectorRegistry();
+    for (final DatabaseServerType serverType : databaseConnectorRegistry)
     {
       textTable.addRowValues(serverType.getDatabaseSystemIdentifier(),
                              serverType.getDatabaseSystemName());

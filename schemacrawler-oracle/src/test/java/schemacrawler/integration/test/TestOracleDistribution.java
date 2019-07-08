@@ -35,7 +35,6 @@ import java.sql.Connection;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
@@ -49,7 +48,7 @@ public class TestOracleDistribution
   public void setup()
     throws SchemaCrawlerException
   {
-    final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     dbConnector = registry.lookupDatabaseConnector("oracle");
   }
 
@@ -60,7 +59,8 @@ public class TestOracleDistribution
 
     final Connection connection = null;
     assertThat(dbConnector.getSchemaRetrievalOptionsBuilder(connection)
-      .toOptions().getIdentifierQuoteString(), is(""));
+                          .toOptions()
+                          .getIdentifierQuoteString(), is(""));
   }
 
 }

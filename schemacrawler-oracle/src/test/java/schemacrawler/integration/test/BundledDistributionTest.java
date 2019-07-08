@@ -46,7 +46,7 @@ public class BundledDistributionTest
   {
 
     final Connection connection = null;
-    final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     final DatabaseConnector databaseSystemIdentifier = registry.lookupDatabaseConnector(
       "oracle");
     assertThat(databaseSystemIdentifier.getSchemaRetrievalOptionsBuilder(
@@ -57,7 +57,7 @@ public class BundledDistributionTest
   public void testPlugin_oracle()
     throws Exception
   {
-    final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     assertThat(registry.hasDatabaseSystemIdentifier("oracle"), is(true));
   }
 

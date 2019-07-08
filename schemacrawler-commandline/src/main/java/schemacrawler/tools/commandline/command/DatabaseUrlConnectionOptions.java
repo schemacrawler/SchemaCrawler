@@ -49,7 +49,9 @@ public class DatabaseUrlConnectionOptions
   @Override
   public DatabaseConnector getDatabaseConnector()
   {
-    return new DatabaseConnectorRegistry().lookupDatabaseConnectorFromUrl(
+    final DatabaseConnectorRegistry databaseConnectorRegistry = DatabaseConnectorRegistry
+      .getDatabaseConnectorRegistry();
+    return databaseConnectorRegistry.lookupDatabaseConnectorFromUrl(
       connectionUrl);
   }
 

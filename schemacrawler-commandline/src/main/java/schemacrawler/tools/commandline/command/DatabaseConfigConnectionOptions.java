@@ -138,7 +138,9 @@ public class DatabaseConfigConnectionOptions
   @Override
   public DatabaseConnector getDatabaseConnector()
   {
-    return new DatabaseConnectorRegistry().lookupDatabaseConnector(
+    final DatabaseConnectorRegistry databaseConnectorRegistry = DatabaseConnectorRegistry
+      .getDatabaseConnectorRegistry();
+    return databaseConnectorRegistry.lookupDatabaseConnector(
       databaseSystemIdentifier);
   }
 

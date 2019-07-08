@@ -55,7 +55,7 @@ abstract class BaseCommandChain
   {
     super(command);
 
-    commandRegistry = new CommandRegistry();
+    commandRegistry = CommandRegistry.getCommandRegistry();
     scCommands = new ArrayList<>();
   }
 

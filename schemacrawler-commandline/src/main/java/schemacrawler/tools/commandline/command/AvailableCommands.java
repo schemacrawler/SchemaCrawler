@@ -47,7 +47,8 @@ public class AvailableCommands
     final List<String> availableCommands = new ArrayList<>();
     try
     {
-      final Collection<CommandDescription> commandDescriptions = new CommandRegistry()
+      final Collection<CommandDescription> commandDescriptions = CommandRegistry
+        .getCommandRegistry()
         .getSupportedCommands();
 
       for (final CommandDescription commandDescription : commandDescriptions)

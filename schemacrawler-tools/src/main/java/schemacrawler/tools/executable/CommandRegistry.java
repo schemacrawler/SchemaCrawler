@@ -53,6 +53,16 @@ public final class CommandRegistry
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
     CommandRegistry.class.getName());
 
+  public static CommandRegistry getCommandRegistry()
+    throws SchemaCrawlerException
+  {
+    if (commandRegistrySingleton == null)
+    {
+      commandRegistrySingleton = new CommandRegistry();
+    }
+    return commandRegistrySingleton;
+  }
+
   private static List<CommandProvider> loadCommandRegistry()
     throws SchemaCrawlerException
   {
@@ -84,10 +94,11 @@ public final class CommandRegistry
 
     return commandProviders;
   }
+  private static CommandRegistry commandRegistrySingleton;
 
   private final List<CommandProvider> commandRegistry;
 
-  public CommandRegistry()
+  private CommandRegistry()
     throws SchemaCrawlerException
   {
     commandRegistry = loadCommandRegistry();

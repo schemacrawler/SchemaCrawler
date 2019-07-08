@@ -45,7 +45,7 @@ public class BundledDistributionTest
   public void testContextrmationSchema_hsqldb()
     throws Exception
   {
-    final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     final DatabaseConnector databaseSystemIdentifier = registry
       .lookupDatabaseConnector("hsqldb");
     final Connection connection = null;
@@ -58,7 +58,7 @@ public class BundledDistributionTest
   public void testPlugin_hsqldb()
     throws Exception
   {
-    final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     assertThat(registry.hasDatabaseSystemIdentifier("hsqldb"), is(true));
   }
 

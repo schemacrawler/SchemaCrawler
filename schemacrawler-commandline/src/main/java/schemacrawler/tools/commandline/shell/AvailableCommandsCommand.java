@@ -58,7 +58,8 @@ public class AvailableCommandsCommand
                                            new Column(65, 1, WRAP));
     try
     {
-      final Collection<CommandDescription> commandDescriptions = new CommandRegistry()
+      final Collection<CommandDescription> commandDescriptions = CommandRegistry
+        .getCommandRegistry()
         .getSupportedCommands();
       commandDescriptions.add(new CommandDescription("<query_name>",
                                                      "Shows results of query <query_name>, "
