@@ -31,8 +31,14 @@ package schemacrawler.crawl;
 public enum MetadataRetrievalStrategy
 {
 
- metadata,
- metadata_all,
- data_dictionary_all;
+  // use JDBC metadata calls to retrieve information one database object at a time;
+  // each JDBC driver decides how to honor these requests
+  metadata,
+  // uses JDBC metadata calls to retrieve information for all database objects together;
+  // each JDBC driver decides how to honor these requests
+  metadata_all,
+  // use the INFORMATION_SCHEMA or database-specific data dictionary queries to
+  // retrieve information for all database objects together
+  data_dictionary_all;
 
 }
