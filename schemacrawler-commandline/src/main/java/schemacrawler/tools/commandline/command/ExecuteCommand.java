@@ -46,7 +46,9 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import sf.util.ObjectToStringFormat;
 import sf.util.SchemaCrawlerLogger;
+import sf.util.StringFormat;
 
 @Command(name = "execute",
          header = "** Execute Options - Execute SchemaCrawler command",
@@ -127,6 +129,12 @@ public class ExecuteCommand
 
       final Catalog catalog = state.getCatalog();
       final String command = commandOptions.getCommand();
+
+      LOGGER.log(Level.INFO,
+                 new StringFormat("Executing SchemaCrawler command <%s>",
+                                  command));
+      LOGGER.log(Level.INFO,
+                 new ObjectToStringFormat(outputOptions));
 
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
         command);

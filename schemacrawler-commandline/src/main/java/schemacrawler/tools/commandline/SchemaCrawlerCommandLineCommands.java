@@ -28,6 +28,8 @@ class SchemaCrawlerCommandLineCommands
   @Mixin
   private ShowCommand show;
   @Mixin
+  private ShowStateCommand showstate;
+  @Mixin
   private SortCommand sort;
 
 }

@@ -154,8 +154,6 @@ public final class SchemaCrawlerExecutable
     // from an offline or other source
     reduceCatalog();
 
-    logExecution();
-
     scCommand.setCatalog(catalog);
     scCommand.setConnection(connection);
 
@@ -236,39 +234,6 @@ public final class SchemaCrawlerExecutable
     scCommand.setIdentifiers(schemaRetrievalOptions.getIdentifiers());
 
     return scCommand;
-  }
-
-  private void logExecution()
-  {
-    if (!hasConnection())
-    {
-      LOGGER.log(Level.CONFIG,
-                 new StringFormat(
-                   "No connection available while executing SchemaCrawler command <%s>",
-                   command));
-    }
-
-    if (LOGGER.isLoggable(Level.INFO))
-    {
-      LOGGER.log(Level.INFO,
-                 String.format("Executing SchemaCrawler command <%s>",
-                               command));
-
-      if (LOGGER.isLoggable(Level.CONFIG))
-      {
-        LOGGER.log(Level.CONFIG,
-                   String.format("Executable: %s", getClass().getName()));
-        LOGGER.log(Level.CONFIG, ObjectToString.toString(schemaCrawlerOptions));
-        LOGGER.log(Level.CONFIG, ObjectToString.toString(outputOptions));
-        LOGGER.log(Level.CONFIG, schemaRetrievalOptions.toString());
-
-        if (LOGGER.isLoggable(Level.FINE))
-        {
-          LOGGER.log(Level.FINE,
-                     ObjectToString.toString(additionalConfiguration));
-        }
-      }
-    }
   }
 
   private void reduceCatalog()

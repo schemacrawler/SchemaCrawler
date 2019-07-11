@@ -104,17 +104,15 @@ public final class SchemaCrawlerCommandLine
       "grep",
       "show",
       "sort",
+      "showstate",
       "load",
       "execute"
     })
     {
       final Runnable command = (Runnable) subcommands.get(commandName);
-      if (command != null)
-      {
-        LOGGER.log(Level.INFO,
-                   "Running command " + command.getClass().getSimpleName());
-        command.run();
-      }
+      LOGGER.log(Level.INFO,
+                 "Running command " + command.getClass().getSimpleName());
+      command.run();
     }
   }
 

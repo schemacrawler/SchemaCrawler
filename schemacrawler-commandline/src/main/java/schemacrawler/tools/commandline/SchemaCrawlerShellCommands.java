@@ -23,6 +23,7 @@ import schemacrawler.tools.commandline.shell.*;
   IsConnectedCommand.class,
   SweepCommand.class,
   SystemCommand.class,
+  ShowStateCommand.class,
   ExitCommand.class
 })
 public class SchemaCrawlerShellCommands
