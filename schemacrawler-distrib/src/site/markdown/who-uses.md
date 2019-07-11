@@ -58,6 +58,7 @@ Photograph courtesy of [Adrien Sales](https://www.linkedin.com/in/adrien-sales).
 
 SchemaCrawler in the press, and in online articles and blogs.
 
+- João Rocha da Silva's article [How to make nice diagrams from your SQLite database](https://silvae86.github.io/databases/sqlite/diagrams/macos/reverse/engineering/2019/04/14/how_to_reverse_engineer_database_diagrams/)
 - Dan Nguyen's article, [Generating cool SQLite database diagrams with schemacrawler on Mac OS](https://gist.github.com/dannguyen/f056d05bb7fec408bb7c14ea1552c349)
 - Buffer of My Mind on [ SchemaCrawler ](http://mindbuffer.wordpress.com/2010/10/14/schema-crawler/)
 - Maxime Werlen's blog post on [Analyse BDD avec SchemaCrawler](http://maxime.werlen.fr/blog/archives/2011/04/22/schemacrawler-pour-extraire-la-structure-d-une-base-de-donn-e.html) 
