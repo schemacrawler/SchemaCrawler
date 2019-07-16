@@ -31,7 +31,7 @@ package schemacrawler.crawl;
 
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
-import schemacrawler.schema.ProcedureColumnType;
+import schemacrawler.schema.RoutineColumnType;
 
 /**
  * Represents a column in a database procedure. Created from metadata
@@ -46,7 +46,7 @@ final class MutableProcedureColumn
 
   private static final long serialVersionUID = 3546361725629772857L;
 
-  private ProcedureColumnType procedureColumnType;
+  private RoutineColumnType procedureColumnType;
 
   MutableProcedureColumn(final Procedure parent, final String name)
   {
@@ -57,12 +57,12 @@ final class MutableProcedureColumn
    * {@inheritDoc}
    */
   @Override
-  public ProcedureColumnType getColumnType()
+  public RoutineColumnType getColumnType()
   {
     return procedureColumnType;
   }
 
-  void setProcedureColumnType(final ProcedureColumnType procedureColumnType)
+  void setProcedureColumnType(final RoutineColumnType procedureColumnType)
   {
     this.procedureColumnType = procedureColumnType;
   }

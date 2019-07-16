@@ -32,24 +32,16 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.SQLException;
-import java.sql.SQLFeatureNotSupportedException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.logging.Level;
 
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.schema.FunctionColumn;
-import schemacrawler.schema.FunctionColumnType;
+import schemacrawler.schema.RoutineColumnType;
 import schemacrawler.schema.RoutineType;
-import schemacrawler.schemacrawler.InclusionRule;
-import schemacrawler.schemacrawler.InformationSchemaKey;
-import schemacrawler.schemacrawler.InformationSchemaViews;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
+import schemacrawler.schemacrawler.*;
 import schemacrawler.utility.Query;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -64,8 +56,8 @@ final class FunctionColumnRetriever
   extends AbstractRetriever
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(FunctionColumnRetriever.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
+    FunctionColumnRetriever.class.getName());
 
   FunctionColumnRetriever(final RetrieverConnection retrieverConnection,
                           final MutableCatalog catalog,
@@ -81,13 +73,13 @@ final class FunctionColumnRetriever
   {
     requireNonNull(allRoutines, "No functions provided");
 
-    final InclusionRuleFilter<FunctionColumn> columnFilter = new InclusionRuleFilter<>(columnInclusionRule,
-                                                                                       true);
+    final InclusionRuleFilter<FunctionColumn> columnFilter = new InclusionRuleFilter<>(
+      columnInclusionRule,
+      true);
     if (columnFilter.isExcludeAll())
     {
-      LOGGER
-        .log(Level.INFO,
-             "Not retrieving function columns, since this was not requested");
+      LOGGER.log(Level.INFO,
+                 "Not retrieving function columns, since this was not requested");
       return;
     }
 
@@ -96,16 +88,14 @@ final class FunctionColumnRetriever
     switch (functionColumnRetrievalStrategy)
     {
       case data_dictionary_all:
-        LOGGER
-          .log(Level.INFO,
-               "Retrieving function columns, using fast data dictionary retrieval");
+        LOGGER.log(Level.INFO,
+                   "Retrieving function columns, using fast data dictionary retrieval");
         retrieveFunctionColumnsFromDataDictionary(allRoutines, columnFilter);
         break;
 
       case metadata_all:
-        LOGGER
-          .log(Level.INFO,
-               "Retrieving function columns, using fast meta-data retrieval");
+        LOGGER.log(Level.INFO,
+                   "Retrieving function columns, using fast meta-data retrieval");
         retrieveFunctionColumnsFromMetadataForAllFunctions(allRoutines,
                                                            columnFilter);
         break;
@@ -125,10 +115,10 @@ final class FunctionColumnRetriever
                                     final NamedObjectList<MutableRoutine> allRoutines,
                                     final InclusionRuleFilter<FunctionColumn> columnFilter)
   {
-    final String columnCatalogName = normalizeCatalogName(results
-      .getString("FUNCTION_CAT"));
-    final String schemaName = normalizeSchemaName(results
-      .getString("FUNCTION_SCHEM"));
+    final String columnCatalogName = normalizeCatalogName(results.getString(
+      "FUNCTION_CAT"));
+    final String schemaName = normalizeSchemaName(results.getString(
+      "FUNCTION_SCHEM"));
     final String functionName = results.getString("FUNCTION_NAME");
     final String columnName = results.getString("COLUMN_NAME");
     final String specificName = results.getString("SPECIFIC_NAME");
@@ -145,8 +135,11 @@ final class FunctionColumnRetriever
       return;
     }
 
-    final Optional<MutableRoutine> optionalRoutine = allRoutines.lookup(Arrays
-      .asList(columnCatalogName, schemaName, functionName, specificName));
+    final Optional<MutableRoutine> optionalRoutine = allRoutines.lookup(Arrays.asList(
+      columnCatalogName,
+      schemaName,
+      functionName,
+      specificName));
     if (!optionalRoutine.isPresent())
     {
       return;
@@ -161,26 +154,27 @@ final class FunctionColumnRetriever
     final MutableFunction function = (MutableFunction) routine;
     final MutableFunctionColumn column = lookupOrCreateFunctionColumn(function,
                                                                       columnName);
-    if (columnFilter.test(column)
-        && belongsToSchema(function, columnCatalogName, schemaName))
+    if (columnFilter.test(column) && belongsToSchema(function,
+                                                     columnCatalogName,
+                                                     schemaName))
     {
-      final FunctionColumnType columnType = results
-        .getEnumFromShortId("COLUMN_TYPE", FunctionColumnType.unknown);
+      final RoutineColumnType columnType = getFunctionColumnType(results.getInt(
+        "COLUMN_TYPE",
+        DatabaseMetaData.functionColumnUnknown));
       final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
       final int dataType = results.getInt("DATA_TYPE", 0);
       final String typeName = results.getString("TYPE_NAME");
       final int length = results.getInt("LENGTH", 0);
       final int precision = results.getInt("PRECISION", 0);
-      final boolean isNullable = results
-        .getShort("NULLABLE",
-                  (short) DatabaseMetaData.functionNullableUnknown) == (short) DatabaseMetaData.functionNullable;
+      final boolean isNullable = results.getShort("NULLABLE",
+                                                  (short) DatabaseMetaData.functionNullableUnknown)
+                                 == (short) DatabaseMetaData.functionNullable;
       final String remarks = results.getString("REMARKS");
       column.setOrdinalPosition(ordinalPosition);
       column.setFunctionColumnType(columnType);
-      column
-        .setColumnDataType(lookupOrCreateColumnDataType(function.getSchema(),
-                                                        dataType,
-                                                        typeName));
+      column.setColumnDataType(lookupOrCreateColumnDataType(function.getSchema(),
+                                                            dataType,
+                                                            typeName));
       column.setSize(length);
       column.setPrecision(precision);
       column.setNullable(isNullable);
@@ -196,11 +190,30 @@ final class FunctionColumnRetriever
 
   }
 
+  private RoutineColumnType getFunctionColumnType(final int columnType)
+  {
+    switch (columnType)
+    {
+      case DatabaseMetaData.functionColumnIn:
+        return RoutineColumnType.in;
+      case DatabaseMetaData.functionColumnInOut:
+        return RoutineColumnType.inOut;
+      case DatabaseMetaData.functionColumnOut:
+        return RoutineColumnType.out;
+      case DatabaseMetaData.functionColumnResult:
+        return RoutineColumnType.result;
+      case DatabaseMetaData.functionReturn:
+        return RoutineColumnType.returnValue;
+      default:
+        return RoutineColumnType.unknown;
+    }
+  }
+
   private MutableFunctionColumn lookupOrCreateFunctionColumn(final MutableFunction function,
                                                              final String columnName)
   {
-    final Optional<MutableFunctionColumn> columnOptional = function
-      .lookupColumn(columnName);
+    final Optional<MutableFunctionColumn> columnOptional = function.lookupColumn(
+      columnName);
     final MutableFunctionColumn column;
     if (columnOptional.isPresent())
     {
@@ -224,13 +237,13 @@ final class FunctionColumnRetriever
       throw new SchemaCrawlerSQLException("No function columns SQL provided",
                                           null);
     }
-    final Query functionColumnsSql = informationSchemaViews
-      .getQuery(InformationSchemaKey.FUNCTION_COLUMNS);
+    final Query functionColumnsSql = informationSchemaViews.getQuery(
+      InformationSchemaKey.FUNCTION_COLUMNS);
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(functionColumnsSql,
-                                                                statement,
-                                                                getSchemaInclusionRule());)
+      final MetadataResultSet results = new MetadataResultSet(functionColumnsSql,
+                                                              statement,
+                                                              getSchemaInclusionRule());)
     {
       results.setDescription("retrieveFunctionColumnsFromDataDictionary");
       while (results.next())
@@ -244,7 +257,7 @@ final class FunctionColumnRetriever
                                                    final InclusionRuleFilter<FunctionColumn> columnFilter)
     throws SchemaCrawlerSQLException
   {
-    for (final MutableRoutine routine: allRoutines)
+    for (final MutableRoutine routine : allRoutines)
     {
       if (routine.getRoutineType() != RoutineType.function)
       {
@@ -254,10 +267,13 @@ final class FunctionColumnRetriever
 
       LOGGER.log(Level.FINE, "Retrieving function columns for " + function);
       try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-        .getFunctionColumns(function.getSchema().getCatalogName(),
-                            function.getSchema().getName(),
-                            function.getName(),
-                            null));)
+                                                                     .getFunctionColumns(
+                                                                       function.getSchema()
+                                                                               .getCatalogName(),
+                                                                       function.getSchema()
+                                                                               .getName(),
+                                                                       function.getName(),
+                                                                       null));)
       {
         while (results.next())
         {
@@ -266,15 +282,15 @@ final class FunctionColumnRetriever
       }
       catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
       {
-        logSQLFeatureNotSupported(new StringFormat("Could not retrieve columns for function %s",
-                                                   function),
-                                  e);
+        logSQLFeatureNotSupported(new StringFormat(
+          "Could not retrieve columns for function %s",
+          function), e);
       }
       catch (final SQLException e)
       {
-        logPossiblyUnsupportedSQLFeature(new StringFormat("Could not retrieve columns for function %s",
-                                                          function),
-                                         e);
+        logPossiblyUnsupportedSQLFeature(new StringFormat(
+          "Could not retrieve columns for function %s",
+          function), e);
       }
     }
   }
@@ -283,8 +299,11 @@ final class FunctionColumnRetriever
                                                                   final InclusionRuleFilter<FunctionColumn> columnFilter)
     throws SQLException
   {
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getFunctionColumns(null, null, "%", "%"));)
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData().getFunctionColumns(
+      null,
+      null,
+      "%",
+      "%"));)
     {
       while (results.next())
       {
@@ -293,13 +312,13 @@ final class FunctionColumnRetriever
     }
     catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
     {
-      logSQLFeatureNotSupported(new StringFormat("Could not retrieve columns for functions"),
-                                e);
+      logSQLFeatureNotSupported(new StringFormat(
+        "Could not retrieve columns for functions"), e);
     }
     catch (final SQLException e)
     {
-      logPossiblyUnsupportedSQLFeature(new StringFormat("Could not retrieve columns for functions"),
-                                       e);
+      logPossiblyUnsupportedSQLFeature(new StringFormat(
+        "Could not retrieve columns for functions"), e);
     }
   }
 

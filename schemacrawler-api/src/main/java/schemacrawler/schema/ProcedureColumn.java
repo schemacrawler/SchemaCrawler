@@ -44,6 +44,6 @@ public interface ProcedureColumn
    * @return Procedure type.
    */
   @Override
-  ProcedureColumnType getColumnType();
+  RoutineColumnType getColumnType();
 
 }

@@ -42,13 +42,9 @@ import java.util.logging.Level;
 
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.schema.ProcedureColumn;
-import schemacrawler.schema.ProcedureColumnType;
+import schemacrawler.schema.RoutineColumnType;
 import schemacrawler.schema.RoutineType;
-import schemacrawler.schemacrawler.InclusionRule;
-import schemacrawler.schemacrawler.InformationSchemaKey;
-import schemacrawler.schemacrawler.InformationSchemaViews;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
+import schemacrawler.schemacrawler.*;
 import schemacrawler.utility.Query;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -163,8 +159,8 @@ final class ProcedureColumnRetriever
     if (columnFilter.test(column)
         && belongsToSchema(procedure, columnCatalogName, schemaName))
     {
-      final ProcedureColumnType columnType = results
-        .getEnumFromShortId("COLUMN_TYPE", ProcedureColumnType.unknown);
+      final RoutineColumnType columnType = getProcedureColumnType(results
+        .getInt("COLUMN_TYPE", DatabaseMetaData.procedureColumnUnknown));
       final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
       final int dataType = results.getInt("DATA_TYPE", 0);
       final String typeName = results.getString("TYPE_NAME");
@@ -193,6 +189,25 @@ final class ProcedureColumnRetriever
       procedure.addColumn(column);
     }
 
+  }
+
+  private RoutineColumnType getProcedureColumnType(final int columnType)
+  {
+    switch (columnType)
+    {
+      case DatabaseMetaData.procedureColumnIn:
+        return RoutineColumnType.in;
+      case DatabaseMetaData.procedureColumnInOut:
+        return RoutineColumnType.inOut;
+      case DatabaseMetaData.procedureColumnOut:
+        return RoutineColumnType.out;
+      case DatabaseMetaData.procedureColumnResult:
+        return RoutineColumnType.result;
+      case DatabaseMetaData.procedureColumnReturn:
+        return RoutineColumnType.returnValue;
+      default:
+        return RoutineColumnType.unknown;
+    }
   }
 
   private MutableProcedureColumn lookupOrCreateProcedureColumn(final MutableProcedure procedure,

@@ -28,10 +28,48 @@ http://www.gnu.org/licenses/
 package schemacrawler.schema;
 
 
-import sf.util.IdentifiedEnum;
-
-public interface RoutineColumnType
-  extends IdentifiedEnum
+public enum RoutineColumnType
 {
+
+  /**
+   * Unknown.
+   */
+  unknown("unknown"),
+  /**
+   * In.
+   */
+  in("in"),
+  /**
+   * In/ out.
+   */
+  inOut("in/ out"),
+  /**
+   * Out.
+   */
+  out("out"),
+  /**
+   * Return.
+   */
+  returnValue("return"),
+  /**
+   * Return.
+   */
+  result("result");
+
+  private final String text;
+
+  private RoutineColumnType(final String text)
+  {
+    this.text = text;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String toString()
+  {
+    return text;
+  }
 
 }

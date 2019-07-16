@@ -31,7 +31,7 @@ package schemacrawler.crawl;
 
 import schemacrawler.schema.Function;
 import schemacrawler.schema.FunctionColumn;
-import schemacrawler.schema.FunctionColumnType;
+import schemacrawler.schema.RoutineColumnType;
 
 /**
  * Represents a column in a database function. Created from metadata
@@ -46,7 +46,7 @@ final class MutableFunctionColumn
 
   private static final long serialVersionUID = 3546361725629772857L;
 
-  private FunctionColumnType functionColumnType;
+  private RoutineColumnType functionColumnType;
 
   MutableFunctionColumn(final Function parent, final String name)
   {
@@ -57,12 +57,12 @@ final class MutableFunctionColumn
    * {@inheritDoc}
    */
   @Override
-  public FunctionColumnType getColumnType()
+  public RoutineColumnType getColumnType()
   {
     return functionColumnType;
   }
 
-  void setFunctionColumnType(final FunctionColumnType functionColumnType)
+  void setFunctionColumnType(final RoutineColumnType functionColumnType)
   {
     this.functionColumnType = functionColumnType;
   }
