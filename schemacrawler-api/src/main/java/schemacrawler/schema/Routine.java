@@ -36,11 +36,11 @@ public interface Routine
 {
 
   /**
-   * Gets the list of columns in ordinal order.
+   * Gets the list of parameters in ordinal order.
    *
-   * @return Columns of the routine
+   * @return Parameters of the routine
    */
-  <C extends RoutineParameter<? extends Routine>> List<C> getColumns();
+  <C extends RoutineParameter<? extends Routine>> List<C> getParameters();
 
   /**
    * Gets the routine type.
@@ -71,12 +71,12 @@ public interface Routine
   String getSpecificName();
 
   /**
-   * Gets a column by unqualified name.
+   * Gets a parameter by unqualified name.
    *
    * @param name
    *        Unqualified name
-   * @return Column.
+   * @return Parameter.
    */
-  <C extends RoutineParameter<? extends Routine>> Optional<C> lookupColumn(String name);
+  <C extends RoutineParameter<? extends Routine>> Optional<C> lookupParameter(String name);
 
 }

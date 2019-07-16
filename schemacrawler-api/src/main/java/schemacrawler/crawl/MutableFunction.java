@@ -68,7 +68,7 @@ final class MutableFunction
    * {@inheritDoc}
    */
   @Override
-  public List<FunctionParameter> getColumns()
+  public List<FunctionParameter> getParameters()
   {
     return new ArrayList<>(columns.values());
   }
@@ -92,7 +92,7 @@ final class MutableFunction
    * {@inheritDoc}
    */
   @Override
-  public Optional<MutableFunctionParameter> lookupColumn(final String name)
+  public Optional<MutableFunctionParameter> lookupParameter(final String name)
   {
     return columns.lookup(this, name);
   }

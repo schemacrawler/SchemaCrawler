@@ -177,7 +177,7 @@ final class SchemaTextFormatter
 
     if (!isBrief)
     {
-      printRoutineParameters(routine.getColumns());
+      printRoutineParameters(routine.getParameters());
     }
 
     if (isVerbose)
@@ -812,32 +812,32 @@ final class SchemaTextFormatter
     parameters.sort(NamedObjectSort
       .getNamedObjectSort(options.isAlphabeticalSortForRoutineParameters()));
 
-    for (final RoutineParameter<?> column: parameters)
+    for (final RoutineParameter<?> parameter: parameters)
     {
       final String columnTypeName;
       if (options.isShowStandardColumnTypeNames())
       {
-        columnTypeName = column.getColumnDataType().getJavaSqlType().getName();
+        columnTypeName = parameter.getColumnDataType().getJavaSqlType().getName();
       }
       else
       {
-        columnTypeName = column.getColumnDataType()
+        columnTypeName = parameter.getColumnDataType()
           .getDatabaseSpecificTypeName();
       }
       final StringBuilder columnType = new StringBuilder(64);
-      columnType.append(columnTypeName).append(column.getWidth());
-      if (column.getParameterMode() != null)
+      columnType.append(columnTypeName).append(parameter.getWidth());
+      if (parameter.getParameterMode() != null)
       {
-        columnType.append(", ").append(column.getParameterMode().toString());
+        columnType.append(", ").append(parameter.getParameterMode().toString());
       }
 
       String ordinalNumberString = "";
       if (options.isShowOrdinalNumbers())
       {
-        ordinalNumberString = String.valueOf(column.getOrdinalPosition() + 1);
+        ordinalNumberString = String.valueOf(parameter.getOrdinalPosition() + 1);
       }
       formattingHelper.writeDetailRow(ordinalNumberString,
-                                      identifiers.quoteName(column),
+                                      identifiers.quoteName(parameter),
                                       columnType.toString());
     }
   }

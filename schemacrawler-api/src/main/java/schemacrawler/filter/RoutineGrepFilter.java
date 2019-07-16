@@ -81,11 +81,11 @@ class RoutineGrepFilter
 
     boolean includeForColumns = false;
     boolean includeForDefinitions = false;
-    for (final RoutineParameter<?> column: routine.getColumns())
+    for (final RoutineParameter<?> parameter: routine.getParameters())
     {
       if (checkIncludeForColumns)
       {
-        if (grepColumnInclusionRule.test(column.getFullName()))
+        if (grepColumnInclusionRule.test(parameter.getFullName()))
         {
           includeForColumns = true;
           break;
@@ -93,7 +93,7 @@ class RoutineGrepFilter
       }
       if (checkIncludeForDefinitions)
       {
-        if (grepDefinitionInclusionRule.test(column.getRemarks()))
+        if (grepDefinitionInclusionRule.test(parameter.getRemarks()))
         {
           includeForDefinitions = true;
           break;

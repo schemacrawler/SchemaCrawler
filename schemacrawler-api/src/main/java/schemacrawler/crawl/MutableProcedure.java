@@ -68,7 +68,7 @@ final class MutableProcedure
    * {@inheritDoc}
    */
   @Override
-  public List<ProcedureParameter> getColumns()
+  public List<ProcedureParameter> getParameters()
   {
     return new ArrayList<>(columns.values());
   }
@@ -92,7 +92,7 @@ final class MutableProcedure
    * {@inheritDoc}
    */
   @Override
-  public Optional<MutableProcedureParameter> lookupColumn(final String name)
+  public Optional<MutableProcedureParameter> lookupParameter(final String name)
   {
     return columns.lookup(this, name);
   }

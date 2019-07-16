@@ -53,7 +53,7 @@ final class ProcedurePartial
   }
 
   @Override
-  public List<ProcedureParameter> getColumns()
+  public List<ProcedureParameter> getParameters()
   {
     throw new NotLoadedException(this);
   }
@@ -71,7 +71,7 @@ final class ProcedurePartial
   }
 
   @Override
-  public Optional<ProcedureParameter> lookupColumn(final String name)
+  public Optional<ProcedureParameter> lookupParameter(final String name)
   {
     throw new NotLoadedException(this);
   }

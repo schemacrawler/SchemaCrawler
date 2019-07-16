@@ -53,7 +53,7 @@ final class FunctionPartial
   }
 
   @Override
-  public List<FunctionParameter> getColumns()
+  public List<FunctionParameter> getParameters()
   {
     throw new NotLoadedException(this);
   }
@@ -71,7 +71,7 @@ final class FunctionPartial
   }
 
   @Override
-  public Optional<FunctionParameter> lookupColumn(final String name)
+  public Optional<FunctionParameter> lookupParameter(final String name)
   {
     throw new NotLoadedException(this);
   }

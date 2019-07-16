@@ -191,11 +191,11 @@ final class SchemaJsonFormatter
         final JSONArray jsonParameters = new JSONArray();
         jsonRoutine.put("parameters", jsonParameters);
 
-        final List<? extends RoutineParameter<? extends Routine>> columns = routine
-          .getColumns();
-        columns.sort(NamedObjectSort
+        final List<? extends RoutineParameter<? extends Routine>> parameters = routine
+          .getParameters();
+        parameters.sort(NamedObjectSort
           .getNamedObjectSort(options.isAlphabeticalSortForRoutineParameters()));
-        for (final RoutineParameter<?> column: columns)
+        for (final RoutineParameter<?> column: parameters)
         {
           jsonParameters.put(handleRoutineParameter(column));
         }

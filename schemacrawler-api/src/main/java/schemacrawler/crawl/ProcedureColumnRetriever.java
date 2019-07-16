@@ -214,7 +214,7 @@ final class ProcedureColumnRetriever
                                                                   final String columnName)
   {
     final Optional<MutableProcedureParameter> columnOptional = procedure
-      .lookupColumn(columnName);
+      .lookupParameter(columnName);
     final MutableProcedureParameter column;
     if (columnOptional.isPresent())
     {

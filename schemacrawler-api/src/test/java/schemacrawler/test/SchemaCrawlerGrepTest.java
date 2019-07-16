@@ -237,9 +237,9 @@ public class SchemaCrawlerGrepTest
         for (final Routine routine: routines)
         {
           out.println("  routine: " + routine.getFullName());
-          final RoutineParameter[] columns = routine.getColumns()
+          final RoutineParameter[] parameters = routine.getParameters()
                                                     .toArray(new RoutineParameter[0]);
-          for (final RoutineParameter column: columns)
+          for (final RoutineParameter column: parameters)
           {
             out.println("    parameter: " + column.getFullName());
           }
