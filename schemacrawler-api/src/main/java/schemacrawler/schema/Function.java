@@ -47,7 +47,7 @@ public interface Function
    * @return Columns of the procedure
    */
   @Override
-  List<FunctionColumn> getColumns();
+  List<FunctionParameter> getColumns();
 
   /**
    * Gets the procedure type.
@@ -73,6 +73,6 @@ public interface Function
    * @return Column of the procedure
    */
   @Override
-  Optional<? extends FunctionColumn> lookupColumn(String name);
+  Optional<? extends FunctionParameter> lookupColumn(String name);
 
 }

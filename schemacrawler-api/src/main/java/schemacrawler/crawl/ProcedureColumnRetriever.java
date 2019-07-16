@@ -41,7 +41,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 
 import schemacrawler.filter.InclusionRuleFilter;
-import schemacrawler.schema.ProcedureColumn;
+import schemacrawler.schema.ProcedureParameter;
 import schemacrawler.schema.ParameterModeType;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schemacrawler.*;
@@ -76,8 +76,8 @@ final class ProcedureColumnRetriever
   {
     requireNonNull(allRoutines, "No procedures provided");
 
-    final InclusionRuleFilter<ProcedureColumn> columnFilter = new InclusionRuleFilter<>(columnInclusionRule,
-                                                                                        true);
+    final InclusionRuleFilter<ProcedureParameter> columnFilter = new InclusionRuleFilter<>(columnInclusionRule,
+                                                                                           true);
     if (columnFilter.isExcludeAll())
     {
       LOGGER
@@ -118,7 +118,7 @@ final class ProcedureColumnRetriever
 
   private void createProcedureColumn(final MetadataResultSet results,
                                      final NamedObjectList<MutableRoutine> allRoutines,
-                                     final InclusionRuleFilter<ProcedureColumn> columnFilter)
+                                     final InclusionRuleFilter<ProcedureParameter> columnFilter)
   {
     final String columnCatalogName = normalizeCatalogName(results
       .getString("PROCEDURE_CAT"));
@@ -154,8 +154,8 @@ final class ProcedureColumnRetriever
     }
 
     final MutableProcedure procedure = (MutableProcedure) routine;
-    final MutableProcedureColumn column = lookupOrCreateProcedureColumn(procedure,
-                                                                        columnName);
+    final MutableProcedureParameter column = lookupOrCreateProcedureColumn(procedure,
+                                                                           columnName);
     if (columnFilter.test(column)
         && belongsToSchema(procedure, columnCatalogName, schemaName))
     {
@@ -210,25 +210,25 @@ final class ProcedureColumnRetriever
     }
   }
 
-  private MutableProcedureColumn lookupOrCreateProcedureColumn(final MutableProcedure procedure,
-                                                               final String columnName)
+  private MutableProcedureParameter lookupOrCreateProcedureColumn(final MutableProcedure procedure,
+                                                                  final String columnName)
   {
-    final Optional<MutableProcedureColumn> columnOptional = procedure
+    final Optional<MutableProcedureParameter> columnOptional = procedure
       .lookupColumn(columnName);
-    final MutableProcedureColumn column;
+    final MutableProcedureParameter column;
     if (columnOptional.isPresent())
     {
       column = columnOptional.get();
     }
     else
     {
-      column = new MutableProcedureColumn(procedure, columnName);
+      column = new MutableProcedureParameter(procedure, columnName);
     }
     return column;
   }
 
   private void retrieveProcedureColumnsFromDataDictionary(final NamedObjectList<MutableRoutine> allRoutines,
-                                                          final InclusionRuleFilter<ProcedureColumn> columnFilter)
+                                                          final InclusionRuleFilter<ProcedureParameter> columnFilter)
     throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
@@ -256,7 +256,7 @@ final class ProcedureColumnRetriever
   }
 
   private void retrieveProcedureColumnsFromMetadata(final NamedObjectList<MutableRoutine> allRoutines,
-                                                    final InclusionRuleFilter<ProcedureColumn> columnFilter)
+                                                    final InclusionRuleFilter<ProcedureParameter> columnFilter)
     throws SchemaCrawlerSQLException
   {
     for (final MutableRoutine routine: allRoutines)
@@ -289,7 +289,7 @@ final class ProcedureColumnRetriever
   }
 
   private void retrieveProcedureColumnsFromMetadataForAllProcedures(final NamedObjectList<MutableRoutine> allRoutines,
-                                                                    final InclusionRuleFilter<ProcedureColumn> columnFilter)
+                                                                    final InclusionRuleFilter<ProcedureParameter> columnFilter)
     throws SQLException
   {
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()

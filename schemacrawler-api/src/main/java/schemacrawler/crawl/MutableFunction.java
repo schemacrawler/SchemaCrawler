@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.Optional;
 
 import schemacrawler.schema.Function;
-import schemacrawler.schema.FunctionColumn;
+import schemacrawler.schema.FunctionParameter;
 import schemacrawler.schema.FunctionReturnType;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
@@ -55,7 +55,7 @@ final class MutableFunction
   private static final long serialVersionUID = 3906925686089134130L;
 
   private FunctionReturnType returnType;
-  private final NamedObjectList<MutableFunctionColumn> columns = new NamedObjectList<>();
+  private final NamedObjectList<MutableFunctionParameter> columns = new NamedObjectList<>();
 
   MutableFunction(final Schema schema, final String name)
   {
@@ -68,7 +68,7 @@ final class MutableFunction
    * {@inheritDoc}
    */
   @Override
-  public List<FunctionColumn> getColumns()
+  public List<FunctionParameter> getColumns()
   {
     return new ArrayList<>(columns.values());
   }
@@ -92,12 +92,12 @@ final class MutableFunction
    * {@inheritDoc}
    */
   @Override
-  public Optional<MutableFunctionColumn> lookupColumn(final String name)
+  public Optional<MutableFunctionParameter> lookupColumn(final String name)
   {
     return columns.lookup(this, name);
   }
 
-  void addColumn(final MutableFunctionColumn column)
+  void addColumn(final MutableFunctionParameter column)
   {
     columns.add(column);
   }

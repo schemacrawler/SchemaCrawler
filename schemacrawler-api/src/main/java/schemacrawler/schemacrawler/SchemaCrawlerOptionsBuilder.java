@@ -60,13 +60,13 @@ public final class SchemaCrawlerOptionsBuilder
 
   private static final String SC_ROUTINE_PATTERN_EXCLUDE = "schemacrawler.routine.pattern.exclude";
   private static final String SC_ROUTINE_PATTERN_INCLUDE = "schemacrawler.routine.pattern.include";
-  private static final String SC_ROUTINE_COLUMN_PATTERN_EXCLUDE = "schemacrawler.routine.inout.pattern.exclude";
-  private static final String SC_ROUTINE_COLUMN_PATTERN_INCLUDE = "schemacrawler.routine.inout.pattern.include";
+  private static final String SC_ROUTINE_PARAMETER_PATTERN_EXCLUDE = "schemacrawler.routine.inout.pattern.exclude";
+  private static final String SC_ROUTINE_PARAMETER_PATTERN_INCLUDE = "schemacrawler.routine.inout.pattern.include";
 
   private static final String SC_GREP_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.column.pattern.include";
   private static final String SC_GREP_COLUMN_PATTERN_EXCLUDE = "schemacrawler.grep.column.pattern.exclude";
-  private static final String SC_GREP_ROUTINE_COLUMN_PATTERN_EXCLUDE = "schemacrawler.grep.routine.inout.pattern.exclude";
-  private static final String SC_GREP_ROUTINE_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.routine.inout.pattern.include";
+  private static final String SC_GREP_ROUTINE_PARAMETER_PATTERN_EXCLUDE = "schemacrawler.grep.routine.inout.pattern.exclude";
+  private static final String SC_GREP_ROUTINE_PARAMETER_PATTERN_INCLUDE = "schemacrawler.grep.routine.inout.pattern.include";
   private static final String SC_GREP_DEFINITION_PATTERN_EXCLUDE = "schemacrawler.grep.definition.pattern.exclude";
   private static final String SC_GREP_DEFINITION_PATTERN_INCLUDE = "schemacrawler.grep.definition.pattern.include";
 
@@ -104,9 +104,9 @@ public final class SchemaCrawlerOptionsBuilder
   private Optional<Collection<RoutineType>> routineTypes;
   private InclusionRule routineInclusionRule;
 
-  private InclusionRule routineColumnInclusionRule;
+  private InclusionRule routineParameterInclusionRule;
   private Optional<InclusionRule> grepColumnInclusionRule;
-  private Optional<InclusionRule> grepRoutineColumnInclusionRule;
+  private Optional<InclusionRule> grepRoutineParameterInclusionRule;
   private Optional<InclusionRule> grepDefinitionInclusionRule;
   private boolean grepInvertMatch;
 
@@ -138,10 +138,10 @@ public final class SchemaCrawlerOptionsBuilder
 
     routineTypes = Optional.of(allRoutineTypes());
     routineInclusionRule = new ExcludeAll();
-    routineColumnInclusionRule = new ExcludeAll();
+    routineParameterInclusionRule = new ExcludeAll();
 
     grepColumnInclusionRule = Optional.empty();
-    grepRoutineColumnInclusionRule = Optional.empty();
+    grepRoutineParameterInclusionRule = Optional.empty();
     grepDefinitionInclusionRule = Optional.empty();
   }
 
@@ -200,17 +200,16 @@ public final class SchemaCrawlerOptionsBuilder
       SC_ROUTINE_PATTERN_INCLUDE,
       SC_ROUTINE_PATTERN_EXCLUDE,
       ExcludeAll::new);
-    routineColumnInclusionRule = config.getInclusionRuleWithDefault(
-      SC_ROUTINE_COLUMN_PATTERN_INCLUDE,
-      SC_ROUTINE_COLUMN_PATTERN_EXCLUDE,
+    routineParameterInclusionRule = config.getInclusionRuleWithDefault(
+      SC_ROUTINE_PARAMETER_PATTERN_INCLUDE, SC_ROUTINE_PARAMETER_PATTERN_EXCLUDE,
       IncludeAll::new);
 
     grepColumnInclusionRule = config.getOptionalInclusionRule(
       SC_GREP_COLUMN_PATTERN_INCLUDE,
       SC_GREP_COLUMN_PATTERN_EXCLUDE);
-    grepRoutineColumnInclusionRule = config.getOptionalInclusionRule(
-      SC_GREP_ROUTINE_COLUMN_PATTERN_INCLUDE,
-      SC_GREP_ROUTINE_COLUMN_PATTERN_EXCLUDE);
+    grepRoutineParameterInclusionRule = config.getOptionalInclusionRule(
+      SC_GREP_ROUTINE_PARAMETER_PATTERN_INCLUDE,
+      SC_GREP_ROUTINE_PARAMETER_PATTERN_EXCLUDE);
     grepDefinitionInclusionRule = config.getOptionalInclusionRule(
       SC_GREP_DEFINITION_PATTERN_INCLUDE,
       SC_GREP_DEFINITION_PATTERN_EXCLUDE);
@@ -240,11 +239,11 @@ public final class SchemaCrawlerOptionsBuilder
 
     routineTypes = Optional.ofNullable(options.getRoutineTypes());
     routineInclusionRule = options.getRoutineInclusionRule();
-    routineColumnInclusionRule = options.getRoutineColumnInclusionRule();
+    routineParameterInclusionRule = options.getRoutineParameterInclusionRule();
 
     grepColumnInclusionRule = options.getGrepColumnInclusionRule();
-    grepRoutineColumnInclusionRule = Optional
-      .ofNullable(options.getGrepRoutineColumnInclusionRule()).orElse(null);
+    grepRoutineParameterInclusionRule = Optional
+      .ofNullable(options.getGrepRoutineParameterInclusionRule()).orElse(null);
     grepDefinitionInclusionRule = Optional
       .ofNullable(options.getGrepDefinitionInclusionRule()).orElse(null);
     grepInvertMatch = options.isGrepInvertMatch();
@@ -378,36 +377,36 @@ public final class SchemaCrawlerOptionsBuilder
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder includeGreppedRoutineColumns(final InclusionRule grepRoutineColumnInclusionRule)
+  public SchemaCrawlerOptionsBuilder includeGreppedRoutineParameters(final InclusionRule grepRoutineParameterInclusionRule)
   {
-    this.grepRoutineColumnInclusionRule = Optional
-      .ofNullable(grepRoutineColumnInclusionRule);
+    this.grepRoutineParameterInclusionRule = Optional
+      .ofNullable(grepRoutineParameterInclusionRule);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder includeGreppedRoutineColumns(final Pattern grepRoutineColumnsPattern)
+  public SchemaCrawlerOptionsBuilder includeGreppedRoutineParameters(final Pattern grepRoutineParametersPattern)
   {
-    if (grepRoutineColumnsPattern == null)
+    if (grepRoutineParametersPattern == null)
     {
-      grepRoutineColumnInclusionRule = Optional.empty();
+      grepRoutineParameterInclusionRule = Optional.empty();
     }
     else
     {
-      grepRoutineColumnInclusionRule = Optional
-        .of(new RegularExpressionInclusionRule(grepRoutineColumnsPattern));
+      grepRoutineParameterInclusionRule = Optional
+        .of(new RegularExpressionInclusionRule(grepRoutineParametersPattern));
     }
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder includeRoutineColumns(final InclusionRule routineColumnInclusionRule)
+  public SchemaCrawlerOptionsBuilder includeRoutineParameters(final InclusionRule routineParameterInclusionRule)
   {
-    if (routineColumnInclusionRule == null)
+    if (routineParameterInclusionRule == null)
     {
-      this.routineColumnInclusionRule = new IncludeAll();
+      this.routineParameterInclusionRule = new IncludeAll();
     }
     else
     {
-      this.routineColumnInclusionRule = routineColumnInclusionRule;
+      this.routineParameterInclusionRule = routineParameterInclusionRule;
     }
     return this;
   }
@@ -417,12 +416,12 @@ public final class SchemaCrawlerOptionsBuilder
     if (routineInclusionRule == null)
     {
       this.routineInclusionRule = new ExcludeAll();
-      routineColumnInclusionRule = new ExcludeAll();
+      routineParameterInclusionRule = new ExcludeAll();
     }
     else
     {
       this.routineInclusionRule = routineInclusionRule;
-      routineColumnInclusionRule = new IncludeAll();
+      routineParameterInclusionRule = new IncludeAll();
     }
     return this;
   }
@@ -654,9 +653,9 @@ public final class SchemaCrawlerOptionsBuilder
                                     columnInclusionRule,
                                     routineTypes.orElse(null),
                                     routineInclusionRule,
-                                    routineColumnInclusionRule,
+                                    routineParameterInclusionRule,
                                     grepColumnInclusionRule.orElse(null),
-                                    grepRoutineColumnInclusionRule.orElse(null),
+                                    grepRoutineParameterInclusionRule.orElse(null),
                                     grepDefinitionInclusionRule.orElse(null),
                                     grepInvertMatch,
                                     grepOnlyMatching,

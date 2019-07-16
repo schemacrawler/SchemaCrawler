@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.Optional;
 
 import schemacrawler.schema.Function;
-import schemacrawler.schema.FunctionColumn;
+import schemacrawler.schema.FunctionParameter;
 import schemacrawler.schema.FunctionReturnType;
 import schemacrawler.schema.RoutineType;
 
@@ -53,7 +53,7 @@ final class FunctionPartial
   }
 
   @Override
-  public List<FunctionColumn> getColumns()
+  public List<FunctionParameter> getColumns()
   {
     throw new NotLoadedException(this);
   }
@@ -71,7 +71,7 @@ final class FunctionPartial
   }
 
   @Override
-  public Optional<FunctionColumn> lookupColumn(final String name)
+  public Optional<FunctionParameter> lookupColumn(final String name)
   {
     throw new NotLoadedException(this);
   }

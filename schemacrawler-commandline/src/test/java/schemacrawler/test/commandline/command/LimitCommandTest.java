@@ -56,7 +56,7 @@ public class LimitCommandTest
 
     assertThat(schemaCrawlerOptions.getRoutineInclusionRule(),
                is(new ExcludeAll()));
-    assertThat(schemaCrawlerOptions.getRoutineColumnInclusionRule(),
+    assertThat(schemaCrawlerOptions.getRoutineParameterInclusionRule(),
                is(new ExcludeAll()));
     assertThat(schemaCrawlerOptions.getRoutineTypes(),
                hasItems(RoutineType.function, RoutineType.procedure));
@@ -212,7 +212,7 @@ public class LimitCommandTest
 
     assertThat(schemaCrawlerOptions.getRoutineInclusionRule(),
                is(new RegularExpressionInclusionRule(".*regexp.*")));
-    assertThat(schemaCrawlerOptions.getRoutineColumnInclusionRule(),
+    assertThat(schemaCrawlerOptions.getRoutineParameterInclusionRule(),
                is(new RegularExpressionExclusionRule(".*regexp.*")));
     assertThat(schemaCrawlerOptions.getRoutineTypes(),
                hasItems(RoutineType.function));

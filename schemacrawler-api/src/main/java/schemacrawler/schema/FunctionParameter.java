@@ -26,45 +26,24 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.crawl;
+package schemacrawler.schema;
 
-
-import schemacrawler.schema.Procedure;
-import schemacrawler.schema.ProcedureColumn;
-import schemacrawler.schema.ParameterModeType;
 
 /**
- * Represents a column in a database procedure. Created from metadata
- * returned by a JDBC call.
+ * Represents a column in a database procedure.
  *
  * @author Sualeh Fatehi
  */
-final class MutableProcedureColumn
-  extends MutableRoutineColumn<Procedure>
-  implements ProcedureColumn
+public interface FunctionParameter
+  extends RoutineParameter<Function>
 {
 
-  private static final long serialVersionUID = 3546361725629772857L;
-
-  private ParameterModeType parameterMode;
-
-  MutableProcedureColumn(final Procedure parent, final String name)
-  {
-    super(new ProcedureReference(parent), name);
-  }
-
   /**
-   * {@inheritDoc}
+   * Gets the function column type.
+   *
+   * @return Function column type.
    */
   @Override
-  public ParameterModeType getParameterMode()
-  {
-    return parameterMode;
-  }
-
-  void setParameterMode(final ParameterModeType parameterMode)
-  {
-    this.parameterMode = parameterMode;
-  }
+  ParameterModeType getParameterMode();
 
 }

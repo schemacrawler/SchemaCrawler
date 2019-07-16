@@ -184,7 +184,7 @@ public final class LimitCommand
     }
     if (excludeinout != null)
     {
-      optionsBuilder.includeRoutineColumns(new RegularExpressionExclusionRule(
+      optionsBuilder.includeRoutineParameters(new RegularExpressionExclusionRule(
         excludeinout));
     }
 

@@ -29,49 +29,42 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.Routine;
-import schemacrawler.schema.RoutineColumn;
+import schemacrawler.schema.Function;
+import schemacrawler.schema.FunctionParameter;
+import schemacrawler.schema.ParameterModeType;
 
 /**
- * Represents a column in a database routine. Created from metadata
+ * Represents a column in a database function. Created from metadata
  * returned by a JDBC call.
  *
  * @author Sualeh Fatehi
  */
-abstract class MutableRoutineColumn<R extends Routine>
-  extends AbstractColumn<R>
-  implements RoutineColumn<R>
+final class MutableFunctionParameter
+  extends MutableRoutineParameter<Function>
+  implements FunctionParameter
 {
 
   private static final long serialVersionUID = 3546361725629772857L;
 
-  /**
-   * Effective Java - Item 17 - Minimize Mutability - Package-private
-   * constructors make a class effectively final
-   *
-   * @param parent
-   *        Parent of this object
-   * @param name
-   *        Name of the named object
-   */
-  MutableRoutineColumn(final DatabaseObjectReference<R> parent,
-                       final String name)
+  private ParameterModeType parameterMode;
+
+  MutableFunctionParameter(final Function parent, final String name)
   {
-    super(parent, name);
+    super(new FunctionReference(parent), name);
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final int getPrecision()
+  public ParameterModeType getParameterMode()
   {
-    return getDecimalDigits();
+    return parameterMode;
   }
 
-  final void setPrecision(final int precision)
+  void setParameterMode(final ParameterModeType parameterMode)
   {
-    setDecimalDigits(precision);
+    this.parameterMode = parameterMode;
   }
 
 }

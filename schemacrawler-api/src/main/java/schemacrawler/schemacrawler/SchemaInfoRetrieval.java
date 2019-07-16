@@ -55,7 +55,7 @@ public enum SchemaInfoRetrieval
  retrieveIndexes(table, standard),
  retrieveIndexInformation(table, maximum),
  retrievePrimaryKeyDefinitions(table, maximum),
- retrieveRoutineColumns(routine, standard),
+ retrieveRoutineParameters(routine, standard),
  retrieveRoutineInformation(routine, detailed),
  retrieveRoutines(routine, minimum),
  retrieveSequenceInformation(other, maximum),

@@ -38,7 +38,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 
 import schemacrawler.filter.InclusionRuleFilter;
-import schemacrawler.schema.FunctionColumn;
+import schemacrawler.schema.FunctionParameter;
 import schemacrawler.schema.ParameterModeType;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schemacrawler.*;
@@ -73,7 +73,7 @@ final class FunctionColumnRetriever
   {
     requireNonNull(allRoutines, "No functions provided");
 
-    final InclusionRuleFilter<FunctionColumn> columnFilter = new InclusionRuleFilter<>(
+    final InclusionRuleFilter<FunctionParameter> columnFilter = new InclusionRuleFilter<>(
       columnInclusionRule,
       true);
     if (columnFilter.isExcludeAll())
@@ -113,7 +113,7 @@ final class FunctionColumnRetriever
 
   private void createFunctionColumn(final MetadataResultSet results,
                                     final NamedObjectList<MutableRoutine> allRoutines,
-                                    final InclusionRuleFilter<FunctionColumn> columnFilter)
+                                    final InclusionRuleFilter<FunctionParameter> columnFilter)
   {
     final String columnCatalogName = normalizeCatalogName(results.getString(
       "FUNCTION_CAT"));
@@ -152,8 +152,8 @@ final class FunctionColumnRetriever
     }
 
     final MutableFunction function = (MutableFunction) routine;
-    final MutableFunctionColumn column = lookupOrCreateFunctionColumn(function,
-                                                                      columnName);
+    final MutableFunctionParameter column = lookupOrCreateFunctionColumn(function,
+                                                                         columnName);
     if (columnFilter.test(column) && belongsToSchema(function,
                                                      columnCatalogName,
                                                      schemaName))
@@ -209,25 +209,25 @@ final class FunctionColumnRetriever
     }
   }
 
-  private MutableFunctionColumn lookupOrCreateFunctionColumn(final MutableFunction function,
-                                                             final String columnName)
+  private MutableFunctionParameter lookupOrCreateFunctionColumn(final MutableFunction function,
+                                                                final String columnName)
   {
-    final Optional<MutableFunctionColumn> columnOptional = function.lookupColumn(
+    final Optional<MutableFunctionParameter> columnOptional = function.lookupColumn(
       columnName);
-    final MutableFunctionColumn column;
+    final MutableFunctionParameter column;
     if (columnOptional.isPresent())
     {
       column = columnOptional.get();
     }
     else
     {
-      column = new MutableFunctionColumn(function, columnName);
+      column = new MutableFunctionParameter(function, columnName);
     }
     return column;
   }
 
   private void retrieveFunctionColumnsFromDataDictionary(final NamedObjectList<MutableRoutine> allRoutines,
-                                                         final InclusionRuleFilter<FunctionColumn> columnFilter)
+                                                         final InclusionRuleFilter<FunctionParameter> columnFilter)
     throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
@@ -254,7 +254,7 @@ final class FunctionColumnRetriever
   }
 
   private void retrieveFunctionColumnsFromMetadata(final NamedObjectList<MutableRoutine> allRoutines,
-                                                   final InclusionRuleFilter<FunctionColumn> columnFilter)
+                                                   final InclusionRuleFilter<FunctionParameter> columnFilter)
     throws SchemaCrawlerSQLException
   {
     for (final MutableRoutine routine : allRoutines)
@@ -296,7 +296,7 @@ final class FunctionColumnRetriever
   }
 
   private void retrieveFunctionColumnsFromMetadataForAllFunctions(final NamedObjectList<MutableRoutine> allRoutines,
-                                                                  final InclusionRuleFilter<FunctionColumn> columnFilter)
+                                                                  final InclusionRuleFilter<FunctionParameter> columnFilter)
     throws SQLException
   {
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData().getFunctionColumns(

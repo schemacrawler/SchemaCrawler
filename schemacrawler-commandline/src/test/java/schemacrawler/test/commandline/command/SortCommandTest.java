@@ -84,7 +84,7 @@ public class SortCommandTest
     assertThat(builder.toOptions().isAlphabeticalSortForTableColumns(),
                is(false));
     assertThat(builder.toOptions().isAlphabeticalSortForRoutines(), is(false));
-    assertThat(builder.toOptions().isAlphabeticalSortForRoutineColumns(),
+    assertThat(builder.toOptions().isAlphabeticalSortForRoutineParameters(),
                is(false));
 
   }
@@ -112,7 +112,7 @@ public class SortCommandTest
     assertThat(builder.toOptions().isAlphabeticalSortForTableColumns(),
                is(true));
     assertThat(builder.toOptions().isAlphabeticalSortForRoutines(), is(true));
-    assertThat(builder.toOptions().isAlphabeticalSortForRoutineColumns(),
+    assertThat(builder.toOptions().isAlphabeticalSortForRoutineParameters(),
                is(true));
 
   }

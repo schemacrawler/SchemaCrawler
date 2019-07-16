@@ -47,7 +47,7 @@ public interface Procedure
    * @return Columns of the procedure
    */
   @Override
-  List<ProcedureColumn> getColumns();
+  List<ProcedureParameter> getColumns();
 
   /**
    * Gets the procedure type.
@@ -65,6 +65,6 @@ public interface Procedure
    * @return Column of the procedure
    */
   @Override
-  Optional<? extends ProcedureColumn> lookupColumn(String name);
+  Optional<? extends ProcedureParameter> lookupColumn(String name);
 
 }

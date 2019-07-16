@@ -172,9 +172,9 @@ public final class SchemaInfoLevel
     return is(SchemaInfoRetrieval.retrievePrimaryKeyDefinitions);
   }
 
-  public boolean isRetrieveRoutineColumns()
+  public boolean isRetrieveRoutineParameters()
   {
-    return is(SchemaInfoRetrieval.retrieveRoutineColumns);
+    return is(SchemaInfoRetrieval.retrieveRoutineParameters);
   }
 
   public boolean isRetrieveRoutineInformation()

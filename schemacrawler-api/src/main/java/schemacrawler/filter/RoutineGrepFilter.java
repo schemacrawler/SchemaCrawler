@@ -32,7 +32,7 @@ import java.util.function.Predicate;
 import java.util.logging.Level;
 
 import schemacrawler.schema.Routine;
-import schemacrawler.schema.RoutineColumn;
+import schemacrawler.schema.RoutineParameter;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import sf.util.SchemaCrawlerLogger;
@@ -53,7 +53,7 @@ class RoutineGrepFilter
   {
     invertMatch = options.isGrepInvertMatch();
 
-    grepColumnInclusionRule = options.getGrepRoutineColumnInclusionRule()
+    grepColumnInclusionRule = options.getGrepRoutineParameterInclusionRule()
       .orElse(null);
     grepDefinitionInclusionRule = options.getGrepDefinitionInclusionRule()
       .orElse(null);
@@ -81,7 +81,7 @@ class RoutineGrepFilter
 
     boolean includeForColumns = false;
     boolean includeForDefinitions = false;
-    for (final RoutineColumn<?> column: routine.getColumns())
+    for (final RoutineParameter<?> column: routine.getColumns())
     {
       if (checkIncludeForColumns)
       {

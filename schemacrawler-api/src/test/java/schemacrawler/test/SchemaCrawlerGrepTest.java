@@ -48,7 +48,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Routine;
-import schemacrawler.schema.RoutineColumn;
+import schemacrawler.schema.RoutineParameter;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
@@ -222,7 +222,7 @@ public class SchemaCrawlerGrepTest
     {
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
         .builder().includeAllRoutines()
-        .includeGreppedRoutineColumns(new RegularExpressionInclusionRule(".*\\.B_COUNT"));
+        .includeGreppedRoutineParameters(new RegularExpressionInclusionRule(".*\\.B_COUNT"));
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
         .toOptions();
 
@@ -237,9 +237,9 @@ public class SchemaCrawlerGrepTest
         for (final Routine routine: routines)
         {
           out.println("  routine: " + routine.getFullName());
-          final RoutineColumn[] columns = routine.getColumns()
-            .toArray(new RoutineColumn[0]);
-          for (final RoutineColumn column: columns)
+          final RoutineParameter[] columns = routine.getColumns()
+                                                    .toArray(new RoutineParameter[0]);
+          for (final RoutineParameter column: columns)
           {
             out.println("    parameter: " + column.getFullName());
           }

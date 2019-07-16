@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.Optional;
 
 import schemacrawler.schema.Procedure;
-import schemacrawler.schema.ProcedureColumn;
+import schemacrawler.schema.ProcedureParameter;
 import schemacrawler.schema.ProcedureReturnType;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
@@ -55,7 +55,7 @@ final class MutableProcedure
   private static final long serialVersionUID = 3906925686089134130L;
 
   private ProcedureReturnType returnType;
-  private final NamedObjectList<MutableProcedureColumn> columns = new NamedObjectList<>();
+  private final NamedObjectList<MutableProcedureParameter> columns = new NamedObjectList<>();
 
   MutableProcedure(final Schema schema, final String name)
   {
@@ -68,7 +68,7 @@ final class MutableProcedure
    * {@inheritDoc}
    */
   @Override
-  public List<ProcedureColumn> getColumns()
+  public List<ProcedureParameter> getColumns()
   {
     return new ArrayList<>(columns.values());
   }
@@ -92,12 +92,12 @@ final class MutableProcedure
    * {@inheritDoc}
    */
   @Override
-  public Optional<MutableProcedureColumn> lookupColumn(final String name)
+  public Optional<MutableProcedureParameter> lookupColumn(final String name)
   {
     return columns.lookup(this, name);
   }
 
-  void addColumn(final MutableProcedureColumn column)
+  void addColumn(final MutableProcedureParameter column)
   {
     columns.add(column);
   }

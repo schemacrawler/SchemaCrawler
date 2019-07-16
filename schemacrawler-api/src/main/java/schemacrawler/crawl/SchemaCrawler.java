@@ -286,22 +286,22 @@ public final class SchemaCrawler
         return;
       }
 
-      stopWatch.time("retrieveRoutineColumns", () -> {
+      stopWatch.time("retrieveRoutineParameters", () -> {
         LOGGER.log(Level.INFO, "Retrieving routine columns");
-        if (infoLevel.isRetrieveRoutineColumns())
+        if (infoLevel.isRetrieveRoutineParameters())
         {
           if (routineTypes.contains(RoutineType.procedure))
           {
             procedureColumnRetriever.retrieveProcedureColumns(allRoutines,
                                                               options
-                                                                .getRoutineColumnInclusionRule());
+                                                                .getRoutineParameterInclusionRule());
           }
 
           if (routineTypes.contains(RoutineType.function))
           {
             functionColumnRetriever.retrieveFunctionColumns(allRoutines,
                                                             options
-                                                              .getRoutineColumnInclusionRule());
+                                                              .getRoutineParameterInclusionRule());
           }
         }
         return null;

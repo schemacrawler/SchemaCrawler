@@ -62,7 +62,7 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
 
   private static final String SORT_ALPHABETICALLY_ROUTINES =
     SCHEMACRAWLER_FORMAT_PREFIX + "sort_alphabetically.routines";
-  private static final String SORT_ALPHABETICALLY_ROUTINE_COLUMNS =
+  private static final String SORT_ALPHABETICALLY_ROUTINE_PARAMETERS =
     SCHEMACRAWLER_FORMAT_PREFIX + "sort_alphabetically.routine_columns";
 
   private static final String NO_SCHEMA_COLORS =
@@ -71,7 +71,7 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
   private static final String IDENTIFIER_QUOTING_STRATEGY =
     SCHEMACRAWLER_FORMAT_PREFIX + "identifier_quoting_strategy";
 
-  protected boolean isAlphabeticalSortForRoutineColumns;
+  protected boolean isAlphabeticalSortForRoutineParameters;
   protected boolean isAlphabeticalSortForRoutines;
   protected boolean isAlphabeticalSortForTableColumns;
   protected boolean isAlphabeticalSortForTables = true;
@@ -124,9 +124,9 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
     isAlphabeticalSortForRoutines = config.getBooleanValue(
       SORT_ALPHABETICALLY_ROUTINES,
       isAlphabeticalSortForRoutines);
-    isAlphabeticalSortForRoutineColumns = config.getBooleanValue(
-      SORT_ALPHABETICALLY_ROUTINE_COLUMNS,
-      isAlphabeticalSortForRoutineColumns);
+    isAlphabeticalSortForRoutineParameters = config.getBooleanValue(
+      SORT_ALPHABETICALLY_ROUTINE_PARAMETERS,
+      isAlphabeticalSortForRoutineParameters);
 
     isNoSchemaColors = config.getBooleanValue(NO_SCHEMA_COLORS);
 
@@ -158,8 +158,8 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
       .isAlphabeticalSortForTableColumns();
 
     isAlphabeticalSortForRoutines = options.isAlphabeticalSortForRoutines();
-    isAlphabeticalSortForRoutineColumns = options
-      .isAlphabeticalSortForRoutineColumns();
+    isAlphabeticalSortForRoutineParameters = options
+      .isAlphabeticalSortForRoutineParameters();
 
     isNoSchemaColors = options.isNoSchemaColors();
 
@@ -284,7 +284,7 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
    */
   public final B sortInOut(final boolean value)
   {
-    isAlphabeticalSortForRoutineColumns = value;
+    isAlphabeticalSortForRoutineParameters = value;
     return (B) this;
   }
 
@@ -357,8 +357,8 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
     config.setBooleanValue(SORT_ALPHABETICALLY_ROUTINES,
                            isAlphabeticalSortForRoutines);
 
-    config.setBooleanValue(SORT_ALPHABETICALLY_ROUTINE_COLUMNS,
-                           isAlphabeticalSortForRoutineColumns);
+    config.setBooleanValue(SORT_ALPHABETICALLY_ROUTINE_PARAMETERS,
+                           isAlphabeticalSortForRoutineParameters);
 
     config.setBooleanValue(NO_SCHEMA_COLORS, isNoSchemaColors);
 

@@ -57,10 +57,10 @@ public final class SchemaCrawlerOptions
 
   private final Collection<RoutineType> routineTypes;
   private final InclusionRule routineInclusionRule;
-  private final InclusionRule routineColumnInclusionRule;
+  private final InclusionRule routineParameterInclusionRule;
 
   private final InclusionRule grepColumnInclusionRule;
-  private final InclusionRule grepRoutineColumnInclusionRule;
+  private final InclusionRule grepRoutineParameterInclusionRule;
   private final InclusionRule grepDefinitionInclusionRule;
   private final boolean grepInvertMatch;
   private final boolean grepOnlyMatching;
@@ -80,9 +80,9 @@ public final class SchemaCrawlerOptions
                        final InclusionRule columnInclusionRule,
                        final Collection<RoutineType> routineTypes,
                        final InclusionRule routineInclusionRule,
-                       final InclusionRule routineColumnInclusionRule,
+                       final InclusionRule routineParameterInclusionRule,
                        final InclusionRule grepColumnInclusionRule,
-                       final InclusionRule grepRoutineColumnInclusionRule,
+                       final InclusionRule grepRoutineParameterInclusionRule,
                        final InclusionRule grepDefinitionInclusionRule,
                        final boolean grepInvertMatch,
                        final boolean grepOnlyMatching,
@@ -100,9 +100,9 @@ public final class SchemaCrawlerOptions
     this.columnInclusionRule = columnInclusionRule;
     this.routineTypes = routineTypes;
     this.routineInclusionRule = routineInclusionRule;
-    this.routineColumnInclusionRule = routineColumnInclusionRule;
+    this.routineParameterInclusionRule = routineParameterInclusionRule;
     this.grepColumnInclusionRule = grepColumnInclusionRule;
-    this.grepRoutineColumnInclusionRule = grepRoutineColumnInclusionRule;
+    this.grepRoutineParameterInclusionRule = grepRoutineParameterInclusionRule;
     this.grepDefinitionInclusionRule = grepDefinitionInclusionRule;
     this.grepInvertMatch = grepInvertMatch;
     this.grepOnlyMatching = grepOnlyMatching;
@@ -151,9 +151,9 @@ public final class SchemaCrawlerOptions
    *
    * @return Routine column rule for grep.
    */
-  public Optional<InclusionRule> getGrepRoutineColumnInclusionRule()
+  public Optional<InclusionRule> getGrepRoutineParameterInclusionRule()
   {
-    return Optional.ofNullable(grepRoutineColumnInclusionRule);
+    return Optional.ofNullable(grepRoutineParameterInclusionRule);
   }
 
   public int getParentTableFilterDepth()
@@ -166,9 +166,9 @@ public final class SchemaCrawlerOptions
    *
    * @return Routine column rule.
    */
-  public InclusionRule getRoutineColumnInclusionRule()
+  public InclusionRule getRoutineParameterInclusionRule()
   {
-    return routineColumnInclusionRule;
+    return routineParameterInclusionRule;
   }
 
   /**
@@ -302,9 +302,9 @@ public final class SchemaCrawlerOptions
     return grepOnlyMatching;
   }
 
-  public boolean isGrepRoutineColumns()
+  public boolean isGrepRoutineParameters()
   {
-    return grepRoutineColumnInclusionRule != null;
+    return grepRoutineParameterInclusionRule != null;
   }
 
   /**

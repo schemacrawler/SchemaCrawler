@@ -41,7 +41,7 @@ public abstract class BaseTextOptions
   private final boolean isAlphabeticalSortForTables;
   private final boolean isAlphabeticalSortForTableColumns;
   private final boolean isAlphabeticalSortForRoutines;
-  private final boolean isAlphabeticalSortForRoutineColumns;
+  private final boolean isAlphabeticalSortForRoutineParameters;
   private final boolean isAppendOutput;
   private final boolean isNoFooter;
   private final boolean isNoHeader;
@@ -59,7 +59,7 @@ public abstract class BaseTextOptions
     isAlphabeticalSortForTables = builder.isAlphabeticalSortForTables;
     isAlphabeticalSortForTableColumns = builder.isAlphabeticalSortForTableColumns;
     isAlphabeticalSortForRoutines = builder.isAlphabeticalSortForRoutines;
-    isAlphabeticalSortForRoutineColumns = builder.isAlphabeticalSortForRoutineColumns;
+    isAlphabeticalSortForRoutineParameters = builder.isAlphabeticalSortForRoutineParameters;
     isAppendOutput = builder.isAppendOutput;
     isNoFooter = builder.isNoFooter;
     isNoHeader = builder.isNoHeader;
@@ -76,9 +76,9 @@ public abstract class BaseTextOptions
     return identifierQuotingStrategy;
   }
 
-  public boolean isAlphabeticalSortForRoutineColumns()
+  public boolean isAlphabeticalSortForRoutineParameters()
   {
-    return isAlphabeticalSortForRoutineColumns;
+    return isAlphabeticalSortForRoutineParameters;
   }
 
   public boolean isAlphabeticalSortForRoutines()

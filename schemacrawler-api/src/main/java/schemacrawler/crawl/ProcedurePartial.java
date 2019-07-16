@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.Optional;
 
 import schemacrawler.schema.Procedure;
-import schemacrawler.schema.ProcedureColumn;
+import schemacrawler.schema.ProcedureParameter;
 import schemacrawler.schema.ProcedureReturnType;
 import schemacrawler.schema.RoutineType;
 
@@ -53,7 +53,7 @@ final class ProcedurePartial
   }
 
   @Override
-  public List<ProcedureColumn> getColumns()
+  public List<ProcedureParameter> getColumns()
   {
     throw new NotLoadedException(this);
   }
@@ -71,7 +71,7 @@ final class ProcedurePartial
   }
 
   @Override
-  public Optional<ProcedureColumn> lookupColumn(final String name)
+  public Optional<ProcedureParameter> lookupColumn(final String name)
   {
     throw new NotLoadedException(this);
   }

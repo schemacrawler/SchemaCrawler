@@ -40,7 +40,7 @@ public interface Routine
    *
    * @return Columns of the routine
    */
-  <C extends RoutineColumn<? extends Routine>> List<C> getColumns();
+  <C extends RoutineParameter<? extends Routine>> List<C> getColumns();
 
   /**
    * Gets the routine type.
@@ -77,6 +77,6 @@ public interface Routine
    *        Unqualified name
    * @return Column.
    */
-  <C extends RoutineColumn<? extends Routine>> Optional<C> lookupColumn(String name);
+  <C extends RoutineParameter<? extends Routine>> Optional<C> lookupColumn(String name);
 
 }

@@ -60,7 +60,7 @@ import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexType;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Routine;
-import schemacrawler.schema.RoutineColumn;
+import schemacrawler.schema.RoutineParameter;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
@@ -177,7 +177,7 @@ final class SchemaTextFormatter
 
     if (!isBrief)
     {
-      printRoutineColumns(routine.getColumns());
+      printRoutineParameters(routine.getColumns());
     }
 
     if (isVerbose)
@@ -802,17 +802,17 @@ final class SchemaTextFormatter
     formattingHelper.writeWideRow(object.getRemarks(), "remarks");
   }
 
-  private void printRoutineColumns(final List<? extends RoutineColumn<?>> columns)
+  private void printRoutineParameters(final List<? extends RoutineParameter<?>> parameters)
   {
-    if (columns.isEmpty())
+    if (parameters.isEmpty())
     {
       return;
     }
 
-    columns.sort(NamedObjectSort
-      .getNamedObjectSort(options.isAlphabeticalSortForRoutineColumns()));
+    parameters.sort(NamedObjectSort
+      .getNamedObjectSort(options.isAlphabeticalSortForRoutineParameters()));
 
-    for (final RoutineColumn<?> column: columns)
+    for (final RoutineParameter<?> column: parameters)
     {
       final String columnTypeName;
       if (options.isShowStandardColumnTypeNames())

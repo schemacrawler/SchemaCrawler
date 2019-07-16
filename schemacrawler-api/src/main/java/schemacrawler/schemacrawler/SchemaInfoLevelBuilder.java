@@ -259,10 +259,10 @@ public final class SchemaInfoLevelBuilder
     return this;
   }
 
-  public SchemaInfoLevelBuilder setRetrieveRoutineColumns(final boolean retrieveRoutineColumns)
+  public SchemaInfoLevelBuilder setRetrieveRoutineParameters(final boolean retrieveRoutineParameters)
   {
-    schemaInfoRetrievals.put(SchemaInfoRetrieval.retrieveRoutineColumns,
-                             retrieveRoutineColumns);
+    schemaInfoRetrievals.put(SchemaInfoRetrieval.retrieveRoutineParameters,
+                             retrieveRoutineParameters);
     return this;
   }
 

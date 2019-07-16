@@ -111,7 +111,7 @@ public final class GrepCommand
     }
     if (grepinout != null)
     {
-      optionsBuilder.includeGreppedRoutineColumns(grepinout);
+      optionsBuilder.includeGreppedRoutineParameters(grepinout);
     }
     if (grepdef != null)
     {

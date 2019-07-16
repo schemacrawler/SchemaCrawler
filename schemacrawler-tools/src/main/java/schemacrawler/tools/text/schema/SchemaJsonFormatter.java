@@ -57,7 +57,7 @@ import schemacrawler.schema.IndexType;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Routine;
-import schemacrawler.schema.RoutineColumn;
+import schemacrawler.schema.RoutineParameter;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
@@ -191,13 +191,13 @@ final class SchemaJsonFormatter
         final JSONArray jsonParameters = new JSONArray();
         jsonRoutine.put("parameters", jsonParameters);
 
-        final List<? extends RoutineColumn<? extends Routine>> columns = routine
+        final List<? extends RoutineParameter<? extends Routine>> columns = routine
           .getColumns();
         columns.sort(NamedObjectSort
-          .getNamedObjectSort(options.isAlphabeticalSortForRoutineColumns()));
-        for (final RoutineColumn<?> column: columns)
+          .getNamedObjectSort(options.isAlphabeticalSortForRoutineParameters()));
+        for (final RoutineParameter<?> column: columns)
         {
-          jsonParameters.put(handleRoutineColumn(column));
+          jsonParameters.put(handleRoutineParameter(column));
         }
         printDefinition(routine, jsonRoutine);
 
@@ -655,22 +655,22 @@ final class SchemaJsonFormatter
     return jsonIndex;
   }
 
-  private JSONObject handleRoutineColumn(final RoutineColumn<?> column)
+  private JSONObject handleRoutineParameter(final RoutineParameter<?> parameter)
   {
     final JSONObject jsonColumn = new JSONObject();
 
     try
     {
-      jsonColumn.put("name", column.getName());
+      jsonColumn.put("name", parameter.getName());
       jsonColumn.put("dataType",
-                     column.getColumnDataType().getJavaSqlType().getName());
+                     parameter.getColumnDataType().getJavaSqlType().getName());
       jsonColumn.put("databaseSpecificType",
-                     column.getColumnDataType().getDatabaseSpecificTypeName());
-      jsonColumn.put("width", column.getWidth());
-      jsonColumn.put("type", column.getParameterMode().toString());
+                     parameter.getColumnDataType().getDatabaseSpecificTypeName());
+      jsonColumn.put("width", parameter.getWidth());
+      jsonColumn.put("type", parameter.getParameterMode().toString());
       if (options.isShowOrdinalNumbers())
       {
-        jsonColumn.put("ordinal", column.getOrdinalPosition() + 1);
+        jsonColumn.put("ordinal", parameter.getOrdinalPosition() + 1);
       }
     }
     catch (final JSONException e)
