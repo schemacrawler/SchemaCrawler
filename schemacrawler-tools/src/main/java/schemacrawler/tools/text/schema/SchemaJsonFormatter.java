@@ -667,7 +667,7 @@ final class SchemaJsonFormatter
       jsonColumn.put("databaseSpecificType",
                      column.getColumnDataType().getDatabaseSpecificTypeName());
       jsonColumn.put("width", column.getWidth());
-      jsonColumn.put("type", column.getColumnType().toString());
+      jsonColumn.put("type", column.getParameterMode().toString());
       if (options.isShowOrdinalNumbers())
       {
         jsonColumn.put("ordinal", column.getOrdinalPosition() + 1);

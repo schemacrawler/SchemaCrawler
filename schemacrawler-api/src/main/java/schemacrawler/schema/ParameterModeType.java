@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.schema;
 
 
-public enum RoutineColumnType
+public enum ParameterModeType
 {
 
   /**
@@ -58,7 +58,7 @@ public enum RoutineColumnType
 
   private final String text;
 
-  private RoutineColumnType(final String text)
+  private ParameterModeType(final String text)
   {
     this.text = text;
   }

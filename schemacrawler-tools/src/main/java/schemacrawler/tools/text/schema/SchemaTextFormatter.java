@@ -826,9 +826,9 @@ final class SchemaTextFormatter
       }
       final StringBuilder columnType = new StringBuilder(64);
       columnType.append(columnTypeName).append(column.getWidth());
-      if (column.getColumnType() != null)
+      if (column.getParameterMode() != null)
       {
-        columnType.append(", ").append(column.getColumnType().toString());
+        columnType.append(", ").append(column.getParameterMode().toString());
       }
 
       String ordinalNumberString = "";

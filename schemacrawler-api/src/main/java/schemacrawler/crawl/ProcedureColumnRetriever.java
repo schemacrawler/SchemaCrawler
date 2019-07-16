@@ -42,7 +42,7 @@ import java.util.logging.Level;
 
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.schema.ProcedureColumn;
-import schemacrawler.schema.RoutineColumnType;
+import schemacrawler.schema.ParameterModeType;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schemacrawler.*;
 import schemacrawler.utility.Query;
@@ -159,7 +159,7 @@ final class ProcedureColumnRetriever
     if (columnFilter.test(column)
         && belongsToSchema(procedure, columnCatalogName, schemaName))
     {
-      final RoutineColumnType columnType = getProcedureColumnType(results
+      final ParameterModeType parameterMode = getProcedureParameterMode(results
         .getInt("COLUMN_TYPE", DatabaseMetaData.procedureColumnUnknown));
       final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
       final int dataType = results.getInt("DATA_TYPE", 0);
@@ -171,7 +171,7 @@ final class ProcedureColumnRetriever
                   (short) DatabaseMetaData.procedureNullableUnknown) == (short) DatabaseMetaData.procedureNullable;
       final String remarks = results.getString("REMARKS");
       column.setOrdinalPosition(ordinalPosition);
-      column.setProcedureColumnType(columnType);
+      column.setParameterMode(parameterMode);
       column
         .setColumnDataType(lookupOrCreateColumnDataType(procedure.getSchema(),
                                                         dataType,
@@ -191,22 +191,22 @@ final class ProcedureColumnRetriever
 
   }
 
-  private RoutineColumnType getProcedureColumnType(final int columnType)
+  private ParameterModeType getProcedureParameterMode(final int columnType)
   {
     switch (columnType)
     {
       case DatabaseMetaData.procedureColumnIn:
-        return RoutineColumnType.in;
+        return ParameterModeType.in;
       case DatabaseMetaData.procedureColumnInOut:
-        return RoutineColumnType.inOut;
+        return ParameterModeType.inOut;
       case DatabaseMetaData.procedureColumnOut:
-        return RoutineColumnType.out;
+        return ParameterModeType.out;
       case DatabaseMetaData.procedureColumnResult:
-        return RoutineColumnType.result;
+        return ParameterModeType.result;
       case DatabaseMetaData.procedureColumnReturn:
-        return RoutineColumnType.returnValue;
+        return ParameterModeType.returnValue;
       default:
-        return RoutineColumnType.unknown;
+        return ParameterModeType.unknown;
     }
   }
 

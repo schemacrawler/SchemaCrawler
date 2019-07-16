@@ -39,7 +39,7 @@ import java.util.logging.Level;
 
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.schema.FunctionColumn;
-import schemacrawler.schema.RoutineColumnType;
+import schemacrawler.schema.ParameterModeType;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schemacrawler.*;
 import schemacrawler.utility.Query;
@@ -158,7 +158,7 @@ final class FunctionColumnRetriever
                                                      columnCatalogName,
                                                      schemaName))
     {
-      final RoutineColumnType columnType = getFunctionColumnType(results.getInt(
+      final ParameterModeType parameterMode = getFunctionParameterMode(results.getInt(
         "COLUMN_TYPE",
         DatabaseMetaData.functionColumnUnknown));
       final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
@@ -171,7 +171,7 @@ final class FunctionColumnRetriever
                                  == (short) DatabaseMetaData.functionNullable;
       final String remarks = results.getString("REMARKS");
       column.setOrdinalPosition(ordinalPosition);
-      column.setFunctionColumnType(columnType);
+      column.setParameterMode(parameterMode);
       column.setColumnDataType(lookupOrCreateColumnDataType(function.getSchema(),
                                                             dataType,
                                                             typeName));
@@ -190,22 +190,22 @@ final class FunctionColumnRetriever
 
   }
 
-  private RoutineColumnType getFunctionColumnType(final int columnType)
+  private ParameterModeType getFunctionParameterMode(final int columnType)
   {
     switch (columnType)
     {
       case DatabaseMetaData.functionColumnIn:
-        return RoutineColumnType.in;
+        return ParameterModeType.in;
       case DatabaseMetaData.functionColumnInOut:
-        return RoutineColumnType.inOut;
+        return ParameterModeType.inOut;
       case DatabaseMetaData.functionColumnOut:
-        return RoutineColumnType.out;
+        return ParameterModeType.out;
       case DatabaseMetaData.functionColumnResult:
-        return RoutineColumnType.result;
+        return ParameterModeType.result;
       case DatabaseMetaData.functionReturn:
-        return RoutineColumnType.returnValue;
+        return ParameterModeType.returnValue;
       default:
-        return RoutineColumnType.unknown;
+        return ParameterModeType.unknown;
     }
   }
 

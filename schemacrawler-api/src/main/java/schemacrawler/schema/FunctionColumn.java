@@ -44,6 +44,6 @@ public interface FunctionColumn
    * @return Function column type.
    */
   @Override
-  RoutineColumnType getColumnType();
+  ParameterModeType getParameterMode();
 
 }

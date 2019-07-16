@@ -37,7 +37,7 @@ public interface RoutineColumn<R extends Routine>
    *
    * @return Routine column type.
    */
-  RoutineColumnType getColumnType();
+  ParameterModeType getParameterMode();
 
   /**
    * Gets the number of decimal digits precision for the column.
