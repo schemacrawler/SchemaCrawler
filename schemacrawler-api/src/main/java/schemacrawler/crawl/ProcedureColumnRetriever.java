@@ -41,8 +41,8 @@ import java.util.Optional;
 import java.util.logging.Level;
 
 import schemacrawler.filter.InclusionRuleFilter;
-import schemacrawler.schema.ProcedureParameter;
 import schemacrawler.schema.ParameterModeType;
+import schemacrawler.schema.ProcedureParameter;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schemacrawler.*;
 import schemacrawler.utility.Query;
@@ -76,13 +76,13 @@ final class ProcedureColumnRetriever
   {
     requireNonNull(allRoutines, "No procedures provided");
 
-    final InclusionRuleFilter<ProcedureParameter> columnFilter = new InclusionRuleFilter<>(columnInclusionRule,
-                                                                                           true);
+    final InclusionRuleFilter<ProcedureParameter> columnFilter = new InclusionRuleFilter<>(
+      columnInclusionRule,
+      true);
     if (columnFilter.isExcludeAll())
     {
-      LOGGER
-        .log(Level.INFO,
-             "Not retrieving procedure columns, since this was not requested");
+      LOGGER.log(Level.INFO,
+                 "Not retrieving procedure columns, since this was not requested");
       return;
     }
 
@@ -91,16 +91,14 @@ final class ProcedureColumnRetriever
     switch (procedureColumnRetrievalStrategy)
     {
       case data_dictionary_all:
-        LOGGER
-          .log(Level.INFO,
-               "Retrieving procedure columns, using fast data dictionary retrieval");
+        LOGGER.log(Level.INFO,
+                   "Retrieving procedure columns, using fast data dictionary retrieval");
         retrieveProcedureColumnsFromDataDictionary(allRoutines, columnFilter);
         break;
 
       case metadata_all:
-        LOGGER
-          .log(Level.INFO,
-               "Retrieving procedure columns, using fast meta-data retrieval");
+        LOGGER.log(Level.INFO,
+                   "Retrieving procedure columns, using fast meta-data retrieval");
         retrieveProcedureColumnsFromMetadataForAllProcedures(allRoutines,
                                                              columnFilter);
         break;
@@ -120,13 +118,18 @@ final class ProcedureColumnRetriever
                                      final NamedObjectList<MutableRoutine> allRoutines,
                                      final InclusionRuleFilter<ProcedureParameter> columnFilter)
   {
-    final String columnCatalogName = normalizeCatalogName(results
-      .getString("PROCEDURE_CAT"));
+    final String columnCatalogName = normalizeCatalogName(results.getString(
+      "PROCEDURE_CAT"));
     final String schemaName = normalizeSchemaName(results
-      .getString("PROCEDURE_SCHEM"));
+                                                    .getString("PROCEDURE_SCHEM"));
     final String procedureName = results.getString("PROCEDURE_NAME");
-    final String columnName = results.getString("COLUMN_NAME");
+    String columnName = results.getString("COLUMN_NAME");
     final String specificName = results.getString("SPECIFIC_NAME");
+
+    final ParameterModeType parameterMode = getProcedureParameterMode(results
+                                                                        .getInt(
+                                                                          "COLUMN_TYPE",
+                                                                          DatabaseMetaData.procedureColumnUnknown));
 
     LOGGER.log(Level.FINE,
                new StringFormat("Retrieving procedure column <%s.%s.%s.%s.%s>",
@@ -135,13 +138,21 @@ final class ProcedureColumnRetriever
                                 procedureName,
                                 specificName,
                                 columnName));
+    if (isBlank(columnName) && parameterMode == ParameterModeType.result)
+    {
+      columnName = "<return value>";
+    }
     if (isBlank(columnName))
     {
       return;
     }
 
     final Optional<MutableRoutine> optionalRoutine = allRoutines.lookup(Arrays
-      .asList(columnCatalogName, schemaName, procedureName, specificName));
+                                                                          .asList(
+                                                                            columnCatalogName,
+                                                                            schemaName,
+                                                                            procedureName,
+                                                                            specificName));
     if (!optionalRoutine.isPresent())
     {
       return;
@@ -154,21 +165,21 @@ final class ProcedureColumnRetriever
     }
 
     final MutableProcedure procedure = (MutableProcedure) routine;
-    final MutableProcedureParameter column = lookupOrCreateProcedureColumn(procedure,
-                                                                           columnName);
-    if (columnFilter.test(column)
-        && belongsToSchema(procedure, columnCatalogName, schemaName))
+    final MutableProcedureParameter column = lookupOrCreateProcedureColumn(
+      procedure,
+      columnName);
+    if (columnFilter.test(column) && belongsToSchema(procedure,
+                                                     columnCatalogName,
+                                                     schemaName))
     {
-      final ParameterModeType parameterMode = getProcedureParameterMode(results
-        .getInt("COLUMN_TYPE", DatabaseMetaData.procedureColumnUnknown));
       final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
       final int dataType = results.getInt("DATA_TYPE", 0);
       final String typeName = results.getString("TYPE_NAME");
       final int length = results.getInt("LENGTH", 0);
       final int precision = results.getInt("PRECISION", 0);
-      final boolean isNullable = results
-        .getShort("NULLABLE",
-                  (short) DatabaseMetaData.procedureNullableUnknown) == (short) DatabaseMetaData.procedureNullable;
+      final boolean isNullable = results.getShort("NULLABLE",
+                                                  (short) DatabaseMetaData.procedureNullableUnknown)
+                                 == (short) DatabaseMetaData.procedureNullable;
       final String remarks = results.getString("REMARKS");
       column.setOrdinalPosition(ordinalPosition);
       column.setParameterMode(parameterMode);
@@ -243,9 +254,10 @@ final class ProcedureColumnRetriever
       .getQuery(InformationSchemaKey.PROCEDURE_COLUMNS);
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(procedureColumnsSql,
-                                                                statement,
-                                                                getSchemaInclusionRule());)
+      final MetadataResultSet results = new MetadataResultSet(
+        procedureColumnsSql,
+        statement,
+        getSchemaInclusionRule());)
     {
       results.setDescription("retrieveProcedureColumnsFromDataDictionary");
       while (results.next())
@@ -259,7 +271,7 @@ final class ProcedureColumnRetriever
                                                     final InclusionRuleFilter<ProcedureParameter> columnFilter)
     throws SchemaCrawlerSQLException
   {
-    for (final MutableRoutine routine: allRoutines)
+    for (final MutableRoutine routine : allRoutines)
     {
       if (routine.getRoutineType() != RoutineType.procedure)
       {
@@ -269,10 +281,16 @@ final class ProcedureColumnRetriever
       final MutableProcedure procedure = (MutableProcedure) routine;
       LOGGER.log(Level.FINE, "Retrieving procedure columns for " + procedure);
       try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-        .getProcedureColumns(procedure.getSchema().getCatalogName(),
-                             procedure.getSchema().getName(),
-                             procedure.getName(),
-                             null));)
+                                                                     .getProcedureColumns(
+                                                                       procedure
+                                                                         .getSchema()
+                                                                         .getCatalogName(),
+                                                                       procedure
+                                                                         .getSchema()
+                                                                         .getName(),
+                                                                       procedure
+                                                                         .getName(),
+                                                                       null));)
       {
         while (results.next())
         {
@@ -281,9 +299,9 @@ final class ProcedureColumnRetriever
       }
       catch (final SQLException e)
       {
-        throw new SchemaCrawlerSQLException(String
-          .format("Could not retrieve procedure columns for procedure <%s>",
-                  procedure), e);
+        throw new SchemaCrawlerSQLException(String.format(
+          "Could not retrieve procedure columns for procedure <%s>",
+          procedure), e);
       }
     }
   }
@@ -293,7 +311,11 @@ final class ProcedureColumnRetriever
     throws SQLException
   {
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getProcedureColumns(null, null, "%", "%"));)
+                                                                   .getProcedureColumns(
+                                                                     null,
+                                                                     null,
+                                                                     "%",
+                                                                     "%"));)
     {
       while (results.next())
       {

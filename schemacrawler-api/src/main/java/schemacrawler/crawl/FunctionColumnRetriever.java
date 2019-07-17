@@ -56,8 +56,8 @@ final class FunctionColumnRetriever
   extends AbstractRetriever
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
-    FunctionColumnRetriever.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+    .getLogger(FunctionColumnRetriever.class.getName());
 
   FunctionColumnRetriever(final RetrieverConnection retrieverConnection,
                           final MutableCatalog catalog,
@@ -117,11 +117,16 @@ final class FunctionColumnRetriever
   {
     final String columnCatalogName = normalizeCatalogName(results.getString(
       "FUNCTION_CAT"));
-    final String schemaName = normalizeSchemaName(results.getString(
-      "FUNCTION_SCHEM"));
+    final String schemaName = normalizeSchemaName(results
+                                                    .getString("FUNCTION_SCHEM"));
     final String functionName = results.getString("FUNCTION_NAME");
-    final String columnName = results.getString("COLUMN_NAME");
+    String columnName = results.getString("COLUMN_NAME");
     final String specificName = results.getString("SPECIFIC_NAME");
+
+    final ParameterModeType parameterMode = getFunctionParameterMode(results
+                                                                       .getInt(
+                                                                         "COLUMN_TYPE",
+                                                                         DatabaseMetaData.functionColumnUnknown));
 
     LOGGER.log(Level.FINE,
                new StringFormat("Retrieving function column <%s.%s.%s.%s.%s>",
@@ -130,16 +135,21 @@ final class FunctionColumnRetriever
                                 functionName,
                                 specificName,
                                 columnName));
+    if (isBlank(columnName) && parameterMode == ParameterModeType.result)
+    {
+      columnName = "<return value>";
+    }
     if (isBlank(columnName))
     {
       return;
     }
 
-    final Optional<MutableRoutine> optionalRoutine = allRoutines.lookup(Arrays.asList(
-      columnCatalogName,
-      schemaName,
-      functionName,
-      specificName));
+    final Optional<MutableRoutine> optionalRoutine = allRoutines.lookup(Arrays
+                                                                          .asList(
+                                                                            columnCatalogName,
+                                                                            schemaName,
+                                                                            functionName,
+                                                                            specificName));
     if (!optionalRoutine.isPresent())
     {
       return;
@@ -152,15 +162,13 @@ final class FunctionColumnRetriever
     }
 
     final MutableFunction function = (MutableFunction) routine;
-    final MutableFunctionParameter column = lookupOrCreateFunctionColumn(function,
-                                                                         columnName);
+    final MutableFunctionParameter column = lookupOrCreateFunctionColumn(
+      function,
+      columnName);
     if (columnFilter.test(column) && belongsToSchema(function,
                                                      columnCatalogName,
                                                      schemaName))
     {
-      final ParameterModeType parameterMode = getFunctionParameterMode(results.getInt(
-        "COLUMN_TYPE",
-        DatabaseMetaData.functionColumnUnknown));
       final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
       final int dataType = results.getInt("DATA_TYPE", 0);
       final String typeName = results.getString("TYPE_NAME");
@@ -172,9 +180,10 @@ final class FunctionColumnRetriever
       final String remarks = results.getString("REMARKS");
       column.setOrdinalPosition(ordinalPosition);
       column.setParameterMode(parameterMode);
-      column.setColumnDataType(lookupOrCreateColumnDataType(function.getSchema(),
-                                                            dataType,
-                                                            typeName));
+      column
+        .setColumnDataType(lookupOrCreateColumnDataType(function.getSchema(),
+                                                        dataType,
+                                                        typeName));
       column.setSize(length);
       column.setPrecision(precision);
       column.setNullable(isNullable);
@@ -212,8 +221,8 @@ final class FunctionColumnRetriever
   private MutableFunctionParameter lookupOrCreateFunctionColumn(final MutableFunction function,
                                                                 final String columnName)
   {
-    final Optional<MutableFunctionParameter> columnOptional = function.lookupParameter(
-      columnName);
+    final Optional<MutableFunctionParameter> columnOptional = function
+      .lookupParameter(columnName);
     final MutableFunctionParameter column;
     if (columnOptional.isPresent())
     {
@@ -237,8 +246,8 @@ final class FunctionColumnRetriever
       throw new SchemaCrawlerSQLException("No function columns SQL provided",
                                           null);
     }
-    final Query functionColumnsSql = informationSchemaViews.getQuery(
-      InformationSchemaKey.FUNCTION_COLUMNS);
+    final Query functionColumnsSql = informationSchemaViews
+      .getQuery(InformationSchemaKey.FUNCTION_COLUMNS);
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
       final MetadataResultSet results = new MetadataResultSet(functionColumnsSql,
@@ -268,11 +277,14 @@ final class FunctionColumnRetriever
       LOGGER.log(Level.FINE, "Retrieving function columns for " + function);
       try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
                                                                      .getFunctionColumns(
-                                                                       function.getSchema()
-                                                                               .getCatalogName(),
-                                                                       function.getSchema()
-                                                                               .getName(),
-                                                                       function.getName(),
+                                                                       function
+                                                                         .getSchema()
+                                                                         .getCatalogName(),
+                                                                       function
+                                                                         .getSchema()
+                                                                         .getName(),
+                                                                       function
+                                                                         .getName(),
                                                                        null));)
       {
         while (results.next())
@@ -299,11 +311,12 @@ final class FunctionColumnRetriever
                                                                   final InclusionRuleFilter<FunctionParameter> columnFilter)
     throws SQLException
   {
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData().getFunctionColumns(
-      null,
-      null,
-      "%",
-      "%"));)
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+                                                                   .getFunctionColumns(
+                                                                     null,
+                                                                     null,
+                                                                     "%",
+                                                                     "%"));)
     {
       while (results.next())
       {
