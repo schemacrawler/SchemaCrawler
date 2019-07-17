@@ -1,4 +1,4 @@
-SchemaCrawler 15.07.01
+SchemaCrawler 16.1.1
 Database schema discovery and comprehension tool
 Copyright (c) 2000-2019, Sualeh Fatehi <sualeh@hotmail.com>.
 
@@ -31,12 +31,10 @@ Available SchemaCrawler Commands:
  <query_name>   Shows results of query <query_name>, as specified in the
                   configuration properties file
  <query>        Shows results of SQL <query>
-The query itself can contain the
-                  variables ${table}, ${columns} and ${tabletype}, or system
-                  properties referenced as ${<system-property-name>}
-Queries
-                  without any variables are executed exactly once
-Queries with
-                  variables are executed once for each table, with the
-                  variables substituted
+                The query itself can contain the variables ${table}, ${columns}
+                  and ${tabletype}, or system properties referenced as
+                  ${<system-property-name>}
+                Queries without any variables are executed exactly once
+                Queries with variables are executed once for each table, with
+                  the variables substituted
 
