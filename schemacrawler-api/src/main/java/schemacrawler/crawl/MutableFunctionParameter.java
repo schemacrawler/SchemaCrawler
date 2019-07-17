@@ -31,7 +31,6 @@ package schemacrawler.crawl;
 
 import schemacrawler.schema.Function;
 import schemacrawler.schema.FunctionParameter;
-import schemacrawler.schema.ParameterModeType;
 
 /**
  * Represents a column in a database function. Created from metadata
@@ -46,25 +45,9 @@ final class MutableFunctionParameter
 
   private static final long serialVersionUID = 3546361725629772857L;
 
-  private ParameterModeType parameterMode;
-
   MutableFunctionParameter(final Function parent, final String name)
   {
     super(new FunctionReference(parent), name);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public ParameterModeType getParameterMode()
-  {
-    return parameterMode;
-  }
-
-  void setParameterMode(final ParameterModeType parameterMode)
-  {
-    this.parameterMode = parameterMode;
   }
 
 }

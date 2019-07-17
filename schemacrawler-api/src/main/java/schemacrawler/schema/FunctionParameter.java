@@ -38,12 +38,4 @@ public interface FunctionParameter
   extends RoutineParameter<Function>
 {
 
-  /**
-   * Gets the function column type.
-   *
-   * @return Function column type.
-   */
-  @Override
-  ParameterModeType getParameterMode();
-
 }

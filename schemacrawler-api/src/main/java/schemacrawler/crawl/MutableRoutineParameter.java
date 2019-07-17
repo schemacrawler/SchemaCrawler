@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
+import schemacrawler.schema.ParameterModeType;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineParameter;
 
@@ -44,6 +45,8 @@ abstract class MutableRoutineParameter<R extends Routine>
 {
 
   private static final long serialVersionUID = 3546361725629772857L;
+
+  private ParameterModeType parameterMode;
 
   /**
    * Effective Java - Item 17 - Minimize Mutability - Package-private
@@ -64,6 +67,15 @@ abstract class MutableRoutineParameter<R extends Routine>
    * {@inheritDoc}
    */
   @Override
+  public ParameterModeType getParameterMode()
+  {
+    return parameterMode;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
   public final int getPrecision()
   {
     return getDecimalDigits();
@@ -72,6 +84,11 @@ abstract class MutableRoutineParameter<R extends Routine>
   final void setPrecision(final int precision)
   {
     setDecimalDigits(precision);
+  }
+
+  void setParameterMode(final ParameterModeType parameterMode)
+  {
+    this.parameterMode = parameterMode;
   }
 
 }

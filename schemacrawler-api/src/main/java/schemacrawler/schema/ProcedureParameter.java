@@ -38,12 +38,4 @@ public interface ProcedureParameter
   extends RoutineParameter<Procedure>
 {
 
-  /**
-   * Gets the procedure type.
-   *
-   * @return Procedure type.
-   */
-  @Override
-  ParameterModeType getParameterMode();
-
 }

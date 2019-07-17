@@ -31,7 +31,6 @@ package schemacrawler.crawl;
 
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureParameter;
-import schemacrawler.schema.ParameterModeType;
 
 /**
  * Represents a column in a database procedure. Created from metadata
@@ -46,25 +45,9 @@ final class MutableProcedureParameter
 
   private static final long serialVersionUID = 3546361725629772857L;
 
-  private ParameterModeType parameterMode;
-
   MutableProcedureParameter(final Procedure parent, final String name)
   {
     super(new ProcedureReference(parent), name);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public ParameterModeType getParameterMode()
-  {
-    return parameterMode;
-  }
-
-  void setParameterMode(final ParameterModeType parameterMode)
-  {
-    this.parameterMode = parameterMode;
   }
 
 }
