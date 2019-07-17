@@ -62,15 +62,15 @@ public final class SortCommand
           },
           negatable = true)
   private Boolean sortcolumns;
-  @Option(names = { "--sort-in-out" },
+  @Option(names = { "--sort-parameters" },
           description = {
             "Sort parameters in a routine alphabetically",
-            "--sort-in-out=<sortinout>",
-            "<sortinout> can be true or false",
+            "--sort-parameters=<sortparameters>",
+            "<sortparameters> can be true or false",
             "Optional, defaults to false"
           },
           negatable = true)
-  private Boolean sortinout;
+  private Boolean sortparameters;
   @Option(names = { "--sort-routines" },
           description = {
             "Sort routines alphabetically",
@@ -116,9 +116,9 @@ public final class SortCommand
     {
       optionsBuilder.sortRoutines(sortroutines);
     }
-    if (sortinout != null)
+    if (sortparameters != null)
     {
-      optionsBuilder.sortInOut(sortinout);
+      optionsBuilder.sortRoutineParameters(sortparameters);
     }
 
     // Set updated configuration options

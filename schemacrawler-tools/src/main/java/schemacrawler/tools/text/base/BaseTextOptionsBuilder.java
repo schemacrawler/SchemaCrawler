@@ -271,18 +271,18 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
   }
 
   /**
-   * Corresponds to the --sort-in-out command-line argument.
+   * Corresponds to the --sort-parameters command-line argument.
    */
-  public final B sortInOut()
+  public final B sortRoutineParameters()
   {
-    return sortInOut(true);
+    return sortRoutineParameters(true);
   }
 
   /**
-   * Corresponds to the --sort-in-out=&lt;boolean&gt; command-line
+   * Corresponds to the --sort-parameters=&lt;boolean&gt; command-line
    * argument.
    */
-  public final B sortInOut(final boolean value)
+  public final B sortRoutineParameters(final boolean value)
   {
     isAlphabeticalSortForRoutineParameters = value;
     return (B) this;

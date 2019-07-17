@@ -10,7 +10,7 @@ a regular expression.
    `schemacrawler.cmd --server=hsqldb --database=schemacrawler --user=sa --password= --info-level=standard --command=details --no-info --grep-columns=.*\.PUBLISHER` 
    (use `schemacrawler.sh` instead of `schemacrawler.cmd` on Unix)
 3. To find routines with certain parameter names, run 
-    `schemacrawler.cmd --server=hsqldb --database=schemacrawler --user=sa --password= --info-level=standard --command=schema --routines=.* --tables= --no-info --grep-in-out=.*\.B_ADDR` 
+    `schemacrawler.cmd --server=hsqldb --database=schemacrawler --user=sa --password= --info-level=standard --command=schema --routines=.* --tables= --no-info --grep-parameters=.*\.B_ADDR` 
    (use `schemacrawler.sh` instead of `schemacrawler.cmd` on Unix) 
 
 ## How to Experiment

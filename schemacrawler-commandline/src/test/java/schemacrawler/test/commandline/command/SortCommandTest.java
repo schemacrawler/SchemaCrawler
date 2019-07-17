@@ -96,7 +96,7 @@ public class SortCommandTest
       "--sort-tables",
       "--sort-columns",
       "--sort-routines",
-      "--sort-in-out",
+      "--sort-parameters",
       "additional",
       "--extra"
     };

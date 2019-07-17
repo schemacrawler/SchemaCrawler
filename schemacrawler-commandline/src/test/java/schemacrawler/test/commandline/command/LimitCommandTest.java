@@ -115,9 +115,9 @@ public class LimitCommandTest
   }
 
   @Test
-  public void excludeInOutBadValue()
+  public void excludeParameterBadValue()
   {
-    runBadCommand(new String[] { "--exclude-in-out", "[" });
+    runBadCommand(new String[] { "--exclude-parameters", "[" });
   }
 
   @Test
@@ -157,9 +157,9 @@ public class LimitCommandTest
   }
 
   @Test
-  public void excludeInOutNoValue()
+  public void excludeParameterNoValue()
   {
-    runBadCommand(new String[] { "--exclude-in-out" });
+    runBadCommand(new String[] { "--exclude-parameters" });
   }
 
   @Test
@@ -178,7 +178,7 @@ public class LimitCommandTest
       ".*regexp.*",
       "--exclude-columns",
       ".*regexp.*",
-      "--exclude-in-out",
+      "--exclude-parameters",
       ".*regexp.*",
       "--table-types",
       "CHAIR",

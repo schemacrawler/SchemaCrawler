@@ -114,11 +114,11 @@ If your database does not have a SchemaCrawler plug-in, use
                               any table
                             Columns that match the pattern are not displayed
                             Optional, default is to show all columns
-      --exclude-in-out=<excludeinout>
-                            <excludeinout> is a regular expression to match
-                              fully qualified parameter names - for example,
-                              --exclude-in-out=@p1|@p2 matches parameters named
-                              @p1 or @p2 in any procedure
+      --exclude-parameters=<excludeparameters>
+                            <excludeparameters> is a regular expression to
+                              match fully qualified parameter names - for
+                              example, --exclude-parameters=@p1|@p2 matches
+                              parameters named @p1 or @p2 in any procedure
                             Parameters that match the pattern are not displayed
                             Optional, default is to show all parameters
       --routine-types=<routinetypes>[,<routinetypes>...]
@@ -196,12 +196,13 @@ If your database does not have a SchemaCrawler plug-in, use
                                within remarks and definitions of views, stored
                                proedures and triggers, if available
                              Optional, default is no grep
-      --grep-in-out=<grepinout>
-                             <grepinout> is a regular expression to match fully
-                               qualified inout names, in the form "SCHEMANAME.
-                               ROUTINENAME.INOUTNAME" - for example,
-                               --grep-in-out=.*\.STREET|.*\.PRICE matches
-                               inouts named STREET or PRICE in any routine
+      --grep-parameters=<grepparameters>
+                             <grepparameters> is a regular expression to match
+                               fully qualified routine parameter names, in the
+                               form "SCHEMANAME.ROUTINENAME.INOUTNAME" - for
+                               example, --grep-parameters=.*\.STREET|.*\.PRICE
+                               matches routine parameters named STREET or PRICE
+                               in any routine
                              Optional, default is no grep
       --[no-]invert-match    Inverts the sense of matching, and shows
                                non-matching tables and columns
@@ -269,9 +270,9 @@ If your database does not have a SchemaCrawler plug-in, use
                              --sort-columns=<sortcolumns>
                              <sortcolumns> can be true or false
                              Optional, defaults to false
-      --[no-]sort-in-out     Sort parameters in a routine alphabetically
-                             --sort-in-out=<sortinout>
-                             <sortinout> can be true or false
+      --[no-]sort-parameters Sort parameters in a routine alphabetically
+                             --sort-parameters=<sortparameters>
+                             <sortparameters> can be true or false
                              Optional, defaults to false
       --[no-]sort-routines   Sort routines alphabetically
                              --sort-routines=<sortroutines>

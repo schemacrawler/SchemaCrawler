@@ -86,7 +86,7 @@ public class GrepCommandTest
     final String[] args = {
       "--grep-columns",
       "new.*pattern[1-3]",
-      "--grep-in-out",
+      "--grep-parameters",
       "new.*pattern[4-6]",
       "--grep-def",
       "new.*pattern[7-9]",

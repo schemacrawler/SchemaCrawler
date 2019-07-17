@@ -70,15 +70,15 @@ public final class GrepCommand
             "Optional, default is no grep"
           })
   private Pattern grepdef;
-  @Option(names = "--grep-in-out",
+  @Option(names = "--grep-parameters",
           description = {
-            "<grepinout> is a regular expression to match fully qualified inout names, "
+            "<grepparameters> is a regular expression to match fully qualified routine parameter names, "
             + "in the form \"SCHEMANAME.ROUTINENAME.INOUTNAME\" "
-            + "- for example, --grep-in-out=.*\\.STREET|.*\\.PRICE "
-            + "matches inouts named STREET or PRICE in any routine",
+            + "- for example, --grep-parameters=.*\\.STREET|.*\\.PRICE "
+            + "matches routine parameters named STREET or PRICE in any routine",
             "Optional, default is no grep"
           })
-  private Pattern grepinout;
+  private Pattern grepparameters;
   @Option(names = "--invert-match",
           description = {
             "Inverts the sense of matching, and shows non-matching tables and columns",
@@ -109,9 +109,9 @@ public final class GrepCommand
     {
       optionsBuilder.includeGreppedColumns(grepcolumns);
     }
-    if (grepinout != null)
+    if (grepparameters != null)
     {
-      optionsBuilder.includeGreppedRoutineParameters(grepinout);
+      optionsBuilder.includeGreppedRoutineParameters(grepparameters);
     }
     if (grepdef != null)
     {

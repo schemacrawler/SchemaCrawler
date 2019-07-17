@@ -71,15 +71,15 @@ public final class LimitCommand
             "Optional, default is to show all columns"
           })
   private Pattern excludecolumns;
-  @Option(names = { "--exclude-in-out" },
+  @Option(names = { "--exclude-parameters" },
           description = {
-            "<excludeinout> is a regular expression to match fully qualified parameter names "
-            + "- for example, --exclude-in-out=@p1|@p2 matches parameters named @p1 or @p2 "
+            "<excludeparameters> is a regular expression to match fully qualified parameter names "
+            + "- for example, --exclude-parameters=@p1|@p2 matches parameters named @p1 or @p2 "
             + "in any procedure",
             "Parameters that match the pattern are not displayed",
             "Optional, default is to show all parameters"
           })
-  private Pattern excludeinout;
+  private Pattern excludeparameters;
   @Option(names = { "--routines" },
           description = {
             "<routines> is a regular expression to match fully qualified stored procedure "
@@ -182,10 +182,10 @@ public final class LimitCommand
     {
       optionsBuilder.includeRoutines(routines);
     }
-    if (excludeinout != null)
+    if (excludeparameters != null)
     {
       optionsBuilder.includeRoutineParameters(new RegularExpressionExclusionRule(
-        excludeinout));
+        excludeparameters));
     }
 
     if (synonyms != null)
