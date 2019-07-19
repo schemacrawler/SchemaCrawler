@@ -43,14 +43,26 @@ import sf.util.SchemaCrawlerLogger;
 public class SchemaCrawlerShellState
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
-    SchemaCrawlerShellState.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+    .getLogger(SchemaCrawlerShellState.class.getName());
+
   private Config additionalConfiguration;
   private Config baseConfiguration;
   private Catalog catalog;
   private Supplier<Connection> dataSource;
+  private Throwable lastException;
   private SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder;
   private SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder;
+
+  public Throwable getLastException()
+  {
+    return lastException;
+  }
+
+  public void setLastException(final Throwable lastException)
+  {
+    this.lastException = lastException;
+  }
 
   public Supplier<Connection> getDataSource()
   {
@@ -172,6 +184,7 @@ public class SchemaCrawlerShellState
     additionalConfiguration = null;
     schemaCrawlerOptionsBuilder = null;
     schemaRetrievalOptionsBuilder = null;
+    lastException = null;
 
     disconnect();
   }

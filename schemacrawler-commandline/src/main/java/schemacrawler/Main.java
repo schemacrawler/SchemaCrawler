@@ -40,6 +40,7 @@ import schemacrawler.tools.commandline.command.CommandLineHelpCommand;
 import schemacrawler.tools.commandline.command.LogCommand;
 import schemacrawler.tools.commandline.shell.InteractiveShellOptions;
 import schemacrawler.tools.commandline.shell.SystemCommand;
+import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -99,7 +100,7 @@ public final class Main
 
   private static boolean showVersionIfRequested(final String[] args)
   {
-    final SystemCommand systemCommand = new SystemCommand();
+    final SystemCommand systemCommand = new SystemCommand(new SchemaCrawlerShellState());
     final CommandLine commandLine = new CommandLine(systemCommand);
     commandLine.setUnmatchedArgumentsAllowed(true);
     commandLine.parseArgs(args);

@@ -30,6 +30,7 @@ package schemacrawler.test.commandline.command;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
@@ -47,6 +48,8 @@ import schemacrawler.tools.commandline.shell.AvailableCommandsCommand;
 import schemacrawler.tools.commandline.shell.AvailableServersCommand;
 import schemacrawler.tools.commandline.shell.ExitCommand;
 import schemacrawler.tools.commandline.shell.SystemCommand;
+import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.StateFactory;
 
 @ExtendWith(TestContextParameterResolver.class)
 public class ShellCommandsTest
@@ -97,7 +100,11 @@ public class ShellCommandsTest
   @Test
   public void system(final TestContext testContext)
   {
-    new SystemCommand().run();
+    final String[] args = new String[] {"--version"};
+
+    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    newCommandLine(SystemCommand.class, new StateFactory(state), false).execute(
+      args);
 
     assertThat(outputOf(err), hasNoContent());
     assertThat(outputOf(out),

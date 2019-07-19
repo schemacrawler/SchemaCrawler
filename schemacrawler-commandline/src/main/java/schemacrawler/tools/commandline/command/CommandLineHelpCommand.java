@@ -102,8 +102,9 @@ public final class CommandLineHelpCommand
     out = System.out;
     err = System.err;
 
+    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     final CommandLine parent = newCommandLine(new SchemaCrawlerShellCommands(),
-                                              new StateFactory(new SchemaCrawlerShellState()),
+                                              new StateFactory(state),
                                               false);
 
     if (commands != null && commands.length > 0)
@@ -112,7 +113,8 @@ public final class CommandLineHelpCommand
     }
     else
     {
-      new SystemCommand().run();
+      new SystemCommand(state).printVersion();
+
       out.println();
       out.println();
 

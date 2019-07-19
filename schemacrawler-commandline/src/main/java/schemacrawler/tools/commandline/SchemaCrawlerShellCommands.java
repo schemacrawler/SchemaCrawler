@@ -20,7 +20,6 @@ import schemacrawler.tools.commandline.shell.*;
   AvailableCommandsCommand.class,
   AvailableServersCommand.class,
   DisconnectCommand.class,
-  IsConnectedCommand.class,
   SweepCommand.class,
   SystemCommand.class,
   ShowStateCommand.class,

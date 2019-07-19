@@ -34,20 +34,33 @@ import picocli.CommandLine.Option;
 import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
 import schemacrawler.SchemaCrawlerInfo;
+import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
-@Command(name = "version",
-         aliases = {
-           "sys-info", "system-info"
-         },
-         header = "** System Information Options - Display SchemaCrawler version and system information")
+@Command(name = "system", aliases = {
+  "schemacrawler",
+  "sc",
+  "sys-info" }, header = "** System Information Options - Display SchemaCrawler version and system information")
 public class SystemCommand
   implements Runnable
 {
 
-  @Option(names = { "-V", "--version" },
-          versionHelp = true,
-          description = "Display SchemaCrawler version and system information")
+  private final SchemaCrawlerShellState state;
+
+  @Option(names = "--is-connected", description = "Checks whether the shell has a connection to a database")
+  private boolean isconnected;
+  @Option(names = "--is-loaded", description = "Checks whether the shell has loaded database metadata")
+  private boolean isloaded;
+  @Option(names = "--show-stacktrace", description = "Shows stack trace from previous command")
+  private boolean showstacktrace;
+  @Option(names = {
+    "-V",
+    "--version" }, description = "Display SchemaCrawler version and system information")
   private boolean versionRequested;
+
+  public SystemCommand(final SchemaCrawlerShellState state)
+  {
+    this.state = state;
+  }
 
   public boolean isVersionRequested()
   {
@@ -56,6 +69,33 @@ public class SystemCommand
 
   @Override
   public void run()
+  {
+    if (versionRequested)
+    {
+      printVersion();
+    }
+    if (isconnected)
+    {
+      final boolean isConnectedState = state.isConnected();
+      System.out
+        .println(String.format("%sconnected", isConnectedState? "": "not "));
+    }
+    if (isloaded)
+    {
+      final boolean isLoadedState = state.isConnected();
+      System.out.println(String.format("%sloaded", isLoadedState? "": "not "));
+    }
+    if (showstacktrace)
+    {
+      final Throwable lastExceptionState = state.getLastException();
+      if (lastExceptionState != null)
+      {
+        lastExceptionState.printStackTrace(System.out);
+      }
+    }
+  }
+
+  public void printVersion()
   {
     final SchemaCrawlerInfo scInfo = new SchemaCrawlerInfo();
     System.out.println(scInfo.getSchemaCrawlerAbout());
@@ -69,7 +109,6 @@ public class SystemCommand
     new AvailableCommandsCommand().run();
 
     new AvailableServersCommand().run();
-
   }
 
 }

@@ -50,8 +50,8 @@ import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.commandline.shell.DisconnectCommand;
-import schemacrawler.tools.commandline.shell.IsConnectedCommand;
 import schemacrawler.tools.commandline.shell.SweepCommand;
+import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -99,9 +99,10 @@ public class ConnectionShellCommandsTest
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setDataSource(dataSource);
 
-    final String[] args = new String[0];
+    final String[] args = new String[] {
+      "--is-connected" };
 
-    final IsConnectedCommand optionsParser = new IsConnectedCommand(state);
+    final SystemCommand optionsParser = new SystemCommand(state);
     final CommandLine commandLine = newCommandLine(optionsParser, null, false);
     commandLine.execute(args);
 
@@ -114,9 +115,10 @@ public class ConnectionShellCommandsTest
   {
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
 
-    final String[] args = new String[0];
+    final String[] args = new String[] {
+      "--is-connected" };
 
-    final IsConnectedCommand optionsParser = new IsConnectedCommand(state);
+    final SystemCommand optionsParser = new SystemCommand(state);
     final CommandLine commandLine = newCommandLine(optionsParser, null, false);
     commandLine.execute(args);
 
