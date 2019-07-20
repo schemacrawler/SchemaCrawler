@@ -53,8 +53,8 @@ import sf.util.SchemaCrawlerLogger;
 public final class SchemaCrawlerShell
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
-    SchemaCrawlerShell.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+    .getLogger(SchemaCrawlerShell.class.getName());
 
   public static void execute(final String[] args)
     throws Exception
@@ -70,21 +70,16 @@ public final class SchemaCrawlerShell
                                                    false);
 
     final Terminal terminal = TerminalBuilder.builder().build();
-    final LineReader reader = LineReaderBuilder.builder()
-                                               .terminal(terminal)
-                                               .completer(new PicocliJLineCompleter(
-                                                 commandLine.getCommandSpec()))
-                                               .parser(new DefaultParser())
-                                               .build();
+    final LineReader reader = LineReaderBuilder.builder().terminal(terminal)
+      .completer(new PicocliJLineCompleter(commandLine.getCommandSpec()))
+      .parser(new DefaultParser()).build();
 
     while (true)
     {
       try
       {
-        final String line = reader.readLine("schemacrawler> ",
-                                            null,
-                                            (MaskingCallback) null,
-                                            null);
+        final String line = reader
+          .readLine("schemacrawler> ", null, (MaskingCallback) null, null);
         final ParsedLine pl = reader.getParser().parse(line, 0);
         final String[] arguments = pl.words().toArray(new String[0]);
 
@@ -122,8 +117,9 @@ public final class SchemaCrawlerShell
 
     if (parseResult.hasSubcommand())
     {
+      boolean badCommand = true;
       for (final CommandLine subcommandLine : parseResult.subcommand()
-                                                         .asCommandLineList())
+        .asCommandLineList())
       {
         try
         {
@@ -133,12 +129,30 @@ public final class SchemaCrawlerShell
             LOGGER.log(Level.INFO,
                        "Running command " + command.getClass().getSimpleName());
             command.run();
+
+            badCommand = false;
+            break;
           }
         }
         catch (final PicocliException e)
         {
+          Throwable cause = e.getCause();
+          if (cause == null)
+          {
+            cause = e;
+          }
+          state.setLastException(cause);
+          // Print command help
+          System.out.println("ERROR: " + cause.getMessage());
+          System.out.println();
           subcommandLine.usage(System.out, Help.Ansi.AUTO);
+
+          return;
         }
+      }
+      if (badCommand)
+      {
+        System.out.println("bad command");
       }
     }
   }
