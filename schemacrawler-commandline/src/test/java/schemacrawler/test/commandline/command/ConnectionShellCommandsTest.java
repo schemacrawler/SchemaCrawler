@@ -107,7 +107,7 @@ public class ConnectionShellCommandsTest
     commandLine.execute(args);
 
     assertThat(outputOf(err), hasNoContent());
-    assertThat(out.getFileContents(), startsWith("connected"));
+    assertThat(out.getFileContents(), startsWith("Connected to the database"));
   }
 
   @Test
@@ -123,7 +123,7 @@ public class ConnectionShellCommandsTest
     commandLine.execute(args);
 
     assertThat(outputOf(err), hasNoContent());
-    assertThat(out.getFileContents(), startsWith("not connected"));
+    assertThat(out.getFileContents(), startsWith("Not connected to the database"));
   }
 
   @Test

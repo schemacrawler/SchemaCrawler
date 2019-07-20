@@ -82,7 +82,7 @@ public class ExecuteCommand
     if (!state.isLoaded())
     {
       throw new ExecutionException(spec.commandLine(),
-                                   "Cannot execute SchemaCrawler command");
+                                   "No database metadata is loaded");
     }
 
     Connection connection = null;

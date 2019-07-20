@@ -33,6 +33,7 @@ import static picocli.CommandLine.printHelpIfRequested;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.retrievePluginOptions;
 
+import java.io.PrintWriter;
 import java.util.logging.Level;
 
 import org.jline.reader.*;
@@ -40,7 +41,6 @@ import org.jline.reader.impl.DefaultParser;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import picocli.CommandLine;
-import picocli.CommandLine.Help;
 import picocli.CommandLine.ParseResult;
 import picocli.CommandLine.PicocliException;
 import picocli.shell.jline3.PicocliJLineCompleter;
@@ -95,7 +95,7 @@ public final class SchemaCrawlerShell
       }
       catch (final Exception e)
       {
-        System.err.println("Unknown command");
+        System.err.println("ERROR: " + e.getMessage());
         LOGGER.log(Level.WARNING, e.getMessage(), e);
       }
     }
@@ -106,6 +106,9 @@ public final class SchemaCrawlerShell
                                   final String[] arguments)
     throws SchemaCrawlerException
   {
+
+    boolean badCommand = true;
+
     final ParseResult parseResult = commandLine.parseArgs(arguments);
     if (printHelpIfRequested(parseResult))
     {
@@ -117,7 +120,6 @@ public final class SchemaCrawlerShell
 
     if (parseResult.hasSubcommand())
     {
-      boolean badCommand = true;
       for (final CommandLine subcommandLine : parseResult.subcommand()
         .asCommandLineList())
       {
@@ -143,17 +145,23 @@ public final class SchemaCrawlerShell
           }
           state.setLastException(cause);
           // Print command help
-          System.out.println("ERROR: " + cause.getMessage());
-          System.out.println();
-          subcommandLine.usage(System.out, Help.Ansi.AUTO);
+          final PrintWriter out = subcommandLine.getOut();
+          out.println("ERROR: " + cause.getMessage());
+          out.println();
+          out.println("Get help using:");
+          out.printf("help %s%n", subcommandLine.getCommandName());
 
           return;
         }
       }
-      if (badCommand)
-      {
-        System.out.println("bad command");
-      }
+    }
+
+    if (badCommand)
+    {
+      System.out.println("ERROR: Bad command");
+      System.out.println();
+      System.out.println("Get help using:");
+      System.out.println("help");
     }
   }
 

@@ -78,12 +78,12 @@ public class SystemCommand
     {
       final boolean isConnectedState = state.isConnected();
       System.out
-        .println(String.format("%sconnected", isConnectedState? "": "not "));
+        .println(String.format("%sonnected to the database", isConnectedState? "C": "Not c"));
     }
     if (isloaded)
     {
       final boolean isLoadedState = state.isConnected();
-      System.out.println(String.format("%sloaded", isLoadedState? "": "not "));
+      System.out.println(String.format("Database metadata is %s loaded", isLoadedState? "": "not"));
     }
     if (showstacktrace)
     {
