@@ -22,7 +22,6 @@ import schemacrawler.tools.commandline.shell.*;
   DisconnectCommand.class,
   SweepCommand.class,
   SystemCommand.class,
-  ShowStateCommand.class,
   ExitCommand.class
 })
 public class SchemaCrawlerShellCommands

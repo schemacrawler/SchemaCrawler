@@ -35,6 +35,7 @@ import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
 import schemacrawler.SchemaCrawlerInfo;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.StateUtility;
 
 @Command(name = "system", aliases = {
   "schemacrawler",
@@ -52,6 +53,8 @@ public class SystemCommand
   private boolean isloaded;
   @Option(names = "--show-stacktrace", description = "Shows stack trace from previous command")
   private boolean showstacktrace;
+  @Option(names = "--show-state", description = "Shows internal state")
+  private boolean showstate;
   @Option(names = {
     "-V",
     "--version" }, description = "Display SchemaCrawler version and system information")
@@ -82,7 +85,7 @@ public class SystemCommand
     }
     if (isloaded)
     {
-      final boolean isLoadedState = state.isConnected();
+      final boolean isLoadedState = state.isLoaded();
       System.out.println(String.format("Database metadata is %s loaded", isLoadedState? "": "not"));
     }
     if (showstacktrace)
@@ -92,6 +95,10 @@ public class SystemCommand
       {
         lastExceptionState.printStackTrace(System.out);
       }
+    }
+    if (showstate)
+    {
+      StateUtility.logState(state, true);
     }
   }
 
