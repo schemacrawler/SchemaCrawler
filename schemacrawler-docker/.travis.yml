@@ -1,0 +1,29 @@
+language: java
+jdk:
+- oraclejdk8
+os:
+- linux
+sudo: required
+services:
+- docker
+env:
+  global:
+  - DOCKER_USERNAME=schemacrawler
+  - secure: aT5qem1zlvQVI7l9wtpUv6Jj7PydssAmsGV7n2iXWZzAB2rc7jLNNPBjiSLOZX4XhNc1jiszGZoK1Sa6NWIHZIVqJ8H/J0cLQskhACc7dfBilwKsIV+mAgPKdLXl+9AzBhzySWpTzfOt1QdcPqn/3AkW4gFdpvgkQCecaZ1RUZM+mgZ7B6Egf4zOYDMdO8fsblnppN5o4o91MGz1HOBuOrKDvgmVb9ZTXM++dTRGIvj8yYxnklMeSXpgozgxP6mPKgJ2k2btRz19DP5JBEhCxyF2004I8sgMCxY03gZGYuNXEvlWKTw+SFUo4W8MbT90H+RSYZ+1Y4Yna0eAWQ5D26mW7jcYWQY38higweSCeo0barplG1MeWfe1tp4VXUsHoAB3W0SyvDyrGo9RAakSqKYRV1aVDVwIKFnrToVe3n0SZFWVXbACIjn2TWIP5UFq4eYS7uzu9FoYEl+bu++eMSkBSzi6X7OMdb8Gpig1ZBrpCd2B3RTTdCk4uR8GTiLXVT0N3qOlPOjv9JLganH7DQRao5nkXUAVQqu38B5iYIp71BpriIvGzBcV0JazXaOlV1+t7skjr2t9XPXpgBi74zTCLcsVDzcZ3i3Sa9kfkS13Ijnzqo1IU2pJkV0WbV/0QkreohWv4RA9DQsNvpXfej+XvEIy283VllPqRgMfTRo=
+cache:
+  directories:
+    - .autoconf
+    - $HOME/.m2
+    - $HOME/.ivy2    
+script:
+- echo "Building Docker image"
+before_deploy:
+- git fetch --tags
+deploy:
+- provider: script
+  script: bash -c "./docker-build.sh"
+  skip_cleanup: true
+  on:
+    repo: schemacrawler/SchemaCrawler-Docker
+    branch: master
+    tags: true
