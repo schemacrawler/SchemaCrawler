@@ -61,7 +61,8 @@ directory on your `PATH`. Once you open a command shell, you can run SchemaCrawl
 ## SchemaCrawler Docker Image
 
 You can use the official [SchemaCrawler Docker image] from Docker Hub to reduce some of your 
-installation steps. It comes with [Graphviz] pre-installed, so you can generate diagrams.
+installation steps. It comes with [Graphviz] pre-installed, so you can generate diagrams. 
+For more information, see [information on the Docker image](docker-image.html).
 
 ## Tweaking Your Installation
 If you install SchemaCrawler to some other location, you can use 

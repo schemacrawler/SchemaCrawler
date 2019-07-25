@@ -1,16 +1,6 @@
-[![Build Status](https://travis-ci.org/schemacrawler/SchemaCrawler-Docker.svg?branch=master)](https://travis-ci.org/schemacrawler/SchemaCrawler-Docker)
-[![Docker Pulls](https://img.shields.io/docker/pulls/schemacrawler/schemacrawler.svg)](https://hub.docker.com/r/schemacrawler/schemacrawler/)
+# Docker Image for SchemaCrawler
 
-
-# ![SchemaCrawler](https://github.com/schemacrawler/SchemaCrawler/raw/master/schemacrawler-docs/logo/schemacrawler_logo.png?raw=true) Docker Image for SchemaCrawler
-
-> **Please see the [SchemaCrawler website](http://www.schemacrawler.com/) for more details.**
-
-## About
-
-SchemaCrawler is a free database schema discovery and comprehension tool. SchemaCrawler is available under a number of [licenses](http://sualeh.github.io/SchemaCrawler/license.html).
-
-This project provides an Docker image for SchemaCrawler. 
+[SchemaCrawler is distrubuted with an image on Docker Hub](https://hub.docker.com/r/schemacrawler/schemacrawler/). Keep reading for information on how to use this Docker image,
 
 -------
 
@@ -21,11 +11,15 @@ Start the SchemaCrawler Interactive Shell in the Docker container like this
 docker run \
 -v $(pwd):/share \
 --rm -i -t \
---entrypoint=/opt/schemacrawler/schemacrawler-shell.sh \
+--entrypoint=/bin/bash \
 schemacrawler/schemacrawler
 ```
+Followed by
+```
+schemacrawler --shell
+```
 
-From within the shell, type `help` for a list of commands. See [information on how to use SchemaCrawler Interactive Shell](https://www.schemacrawler.com/schemacrawler-shell.html) on the SchemaCrawler website.
+From within the shell, type `help` for a list of commands. See [information on how to use SchemaCrawler Interactive Shell](schemacrawler-shell.html).
 
 Use the following script from within the shell to create a sample diagram
 ```
@@ -34,7 +28,6 @@ load-catalog -infolevel maximum
 execute -command schema -o /share/sc_db.png
 ```
 The image exports a volume called `/share`, and you can map it to your local directory. 
-
 
 -------
 
@@ -140,7 +133,6 @@ schemacrawler \
 -outputformat=png \
 -o /share/schema.png
 ```
-
 
 -------
 ## How to Extend the SchemaCrawler Docker Image
