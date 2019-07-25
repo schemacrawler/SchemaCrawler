@@ -1,5 +1,17 @@
 # SchemaCrawler Change History
 
+<a name="a16.1.1"></a>
+## Release 16.1.1 - 2019-07-25
+
+- Use semantic versioning
+- Use POSIX compliant command-line arguments
+- Consolidate code for command-line and shell using picocli 4.0.1
+- Update the help system for plugins using picocli
+- Rename routine columns to routine parameters consistently across the API and command-line
+- Move Maven archetypes into GitHub example projects
+- Move Docker build back into the main project
+
+
 <a name="a15.06.01"></a>
 ## Release 15.06.01 - 2019-03-10
 
