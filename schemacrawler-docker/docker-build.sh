@@ -8,8 +8,8 @@ SCHEMACRAWLER_VERSION=16.1.1
 echo "** Creating SchemaCrawler v$SCHEMACRAWLER_VERSION Docker container"
 
 # Create SchemaCrawler distribution
-schemacrawler-distribution-local.sh
-schemacrawler-distribution-setup.sh
+./schemacrawler-distribution-local.sh
+./schemacrawler-distribution-setup.sh
 
 # Print Docker version
 pwd
