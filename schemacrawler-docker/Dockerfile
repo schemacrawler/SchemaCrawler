@@ -68,9 +68,6 @@ COPY \
 RUN \
     echo 'alias schemacrawler="/opt/schemacrawler/schemacrawler.sh"' \
     >> /home/schcrwlr/.bashrc
-RUN \
-    echo 'alias schemacrawler-shell="/opt/schemacrawler/schemacrawler-shell.sh"' \
-    >> /home/schcrwlr/.bashrc
 
 
 MAINTAINER Sualeh Fatehi <sualeh@hotmail.com>

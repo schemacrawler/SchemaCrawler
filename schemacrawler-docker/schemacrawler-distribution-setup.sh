@@ -26,7 +26,6 @@ echo "Performing additional setup of distribution"
 cd "$SC_DIR"
 
 rm ./_schemacrawler/lib/slf4j-jdk14-*.jar
-cp ./examples/shell/schemacrawler-shell.* ./_schemacrawler
 
 echo "Done"
 
