@@ -124,7 +124,7 @@
 
         <div id="banner" class="jumbotron jumbotron-fluid bg-light">
           <div class="container-fluid">
-            <img class="img-fluid" style="display: block; float: left; width: 8.0rem;" src="images/schemacrawler_logo.svg" alt="Schemacrawler logo" />
+            <img class="img-fluid mr-5" style="display: block; float: left; width: 7.0rem;" src="images/schemacrawler_logo.svg" alt="Schemacrawler logo" />
             <h1>SchemaCrawler</h1>
             <p class="lead">Free database schema discovery and comprehension tool</p>
           </div>

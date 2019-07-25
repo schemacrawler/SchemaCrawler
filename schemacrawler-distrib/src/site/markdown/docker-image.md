@@ -2,7 +2,6 @@
 
 [SchemaCrawler is distrubuted with an image on Docker Hub](https://hub.docker.com/r/schemacrawler/schemacrawler/). Keep reading for information on how to use this Docker image,
 
--------
 
 ## Use the SchemaCrawler Interactive Shell
 
@@ -29,7 +28,6 @@ execute -command schema -o /share/sc_db.png
 ```
 The image exports a volume called `/share`, and you can map it to your local directory. 
 
--------
 
 ## Run the SchemaCrawler Command-line
 
@@ -54,7 +52,6 @@ The image exports a volume called `/share`, and you can map it to your local dir
 
 Exit the Docker container for SchemaCrawler, and look at the `sc_db.png` file in your local directory on the host.
 
--------
 
 ## How to Run SchemaCrawler With a Modified Configuration
 
@@ -74,6 +71,7 @@ schemacrawler \
 -outputfile=/share/sc_db.png
 ```
 
+
 ## How to SchemaCrawler Against Microsoft SQL Server on Amazon RDS
 
 Here is an example of how to connect to Microsoft SQL Server on Amazon RDS. 
@@ -88,6 +86,7 @@ schemacrawler \
 -database=SCHEMACRAWLER -schemas=SCHEMACRAWLER.dbo \
 -infolevel=minimum -command=list
 ```
+
 
 ## How to SchemaCrawler Against PostgreSQL Running in Another Docker Container
 
@@ -134,7 +133,7 @@ schemacrawler \
 -o /share/schema.png
 ```
 
--------
+
 ## How to Extend the SchemaCrawler Docker Image
 
 The SchemaCrawler Docker image can be extended to include any additional local jar files, such as proprietary JDBC drivers that cannot be publicly distributed. The following procedure is intended for privately built Docker images.
