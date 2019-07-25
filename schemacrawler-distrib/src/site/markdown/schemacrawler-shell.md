@@ -5,11 +5,14 @@ You can connect to a database, load the schema metadata catalog, and then execut
 
 In order to use SchemaCrawler Interactive Shell, 
 download the [latest SchemaCrawler distribution](http://github.com/schemacrawler/SchemaCrawler/releases/). 
-Unzip it, and follow instructions in the `shell` example included with the distribution.
+Unzip it, and follow instructions in the `shell` example included with the distribution. You can start the SchemaCrawler Interactive Shell from the command-line with a `--shell` argument.
 
-Example commands look like:
+Once the SchemaCrawler Interactive Shell starts up, you will get the `schemacrawler>` command-prompt, and you can interact with SchemaCrawler using shell comamnds.
+
+Example shell commands look like:
 
 ```sh
+help
 connect --server <server> --host <host> --user <host> --password <password> --database <database>
 load-catalog --info-level maximum
 execute --command list
