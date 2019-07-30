@@ -6,7 +6,7 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/schemacrawler/schemacrawler.svg)](https://hub.docker.com/r/schemacrawler/schemacrawler/)
 [![Chocolatey](https://img.shields.io/chocolatey/v/schemacrawler.svg)](https://chocolatey.org/packages/schemacrawler)
 
-![SchemaCrawler](https://github.com/sualeh/SchemaCrawler/raw/master/schemacrawler-distrib/src/site/resources/images/schemacrawler_logo.png?raw=true) 
+![SchemaCrawler](https://raw.githubusercontent.com/schemacrawler/SchemaCrawler/master/schemacrawler-distrib/src/site/resources/images/schemacrawler_logo.png) 
 
 # SchemaCrawler
 
