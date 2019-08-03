@@ -28,6 +28,14 @@ Before downloading SchemaCrawler, be sure to read the [FAQs] and take a look at 
 Also read the [Scribe Tools](http://scribetools.readthedocs.org/en/latest/schemacrawler/index.html) 
 _Read The Docs_ guide.
 
+
+## Explore the Command-Line
+
+Explore the SchemaCrawler command-line on [Katacoda](https://www.katacoda.com/schemacrawler).
+
+SchemaCrawler provides detailed command-line help. Simply run `schemacrawler.cmd` (or
+`schemacrawler.sh` on Unix) with no command-line arguments for help.
+
 ## Examples
 
 The first thing to try is the [SchemaCrawler examples].
@@ -37,14 +45,13 @@ Maven], as an API, how to script your database using JavaScript, [Groovy], [Ruby
 create database diagrams with [Graphviz] and how to use the [Apache Velocity] templating integration 
 are provided with the [SchemaCrawler distribution with the examples] download.
 
-## Command-line Help
-SchemaCrawler provides detailed command-line help. Simply run `schemacrawler.cmd` (or
-`schemacrawler.sh` on Unix) with no command-line arguments for help.
 
 ## Connecting To Your Database
+
 Read information about [database support] carefully to understand how to connect to your database.
 
 ## How-tos
+
 Once you start getting comfortable with SchemaCrawler, and need to know more about how to do 
 things, read the [how-tos] section.
 
@@ -57,6 +64,7 @@ After you have worked through the examples, you can make a copy of this `_schema
 any location on your hard-disk, and rename the directory to something appropriate. Then, put this 
 directory on your `PATH`. Once you open a command shell, you can run SchemaCrawler using 
 `schemacrawler.cmd` (or `schemacrawler.sh` on Unix).
+
 
 ## SchemaCrawler Docker Image
 
@@ -73,6 +81,7 @@ to launch SchemaCrawler
 
 To use SchemaCrawler in your development projects, or to build SchemaCrawler from the source code, read 
 about [building].
+
 
 ## Additional Installation Options
 

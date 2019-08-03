@@ -40,7 +40,13 @@ import picocli.CommandLine.Option;
          header = "** Logging Options - Turn logging on or off",
          description = {
            ""
-         })
+         },
+         headerHeading = "",
+         synopsisHeading = "Command:%n",
+         customSynopsis = {
+           "log"
+         },
+         optionListHeading = "Options:%n")
 public final class LogCommand
   implements Runnable
 {

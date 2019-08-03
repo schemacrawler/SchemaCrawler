@@ -55,7 +55,13 @@ import sf.util.StringFormat;
            "https://www.schemacrawler.com/database-support.html",
            "first, before running SchemaCrawler",
            ""
-         })
+         },
+         headerHeading = "",
+         synopsisHeading = "Command:%n",
+         customSynopsis = {
+           "connect"
+         },
+         optionListHeading = "Options:%n")
 public class ConnectCommand
   implements Runnable
 {

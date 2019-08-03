@@ -61,7 +61,9 @@ SchemaCrawler can produce [plain text,](snapshot-examples/snapshot.text) [HTML5,
 
 ### <a name="commands">What are the SchemaCrawler commands?</a>
 
-The easiest way to see the SchemaCrawler commands is to download and install SchemaCrawler, and run the provided scripts (`schemacrawler.sh` on Unix, and `schemacrawler.cmd` on Windows). Detailed command-line help will be displayed.
+Explore the SchemaCrawler command-line on [Katacoda](https://www.katacoda.com/schemacrawler).
+
+Then download and install SchemaCrawler, and run the provided scripts (`schemacrawler.sh` on Unix, and `schemacrawler.cmd` on Windows). Detailed command-line help will be displayed.
 
 SchemaCrawler can produce listings, and standard, or verbose details of your schema. The brief schema option gives you just table, view, stored procedure and function names. The standard schema option gives you the column names and primary keys. The verbose schema option will give you details of data types, indexes, primary and foreign keys, view, stored procedure and function definitions. The SchemaCrawler command can be combined with an _info-level_ , which determines the level of detail of schema metadata obtained. The maximum infolevel will give you privileges, triggers definitions, and check constraints. Each successive option takes more time to execute.
 
@@ -170,7 +172,7 @@ The SchemaCrawler Grep configuration file is the same as the [SchemaCrawler conf
 
 ### <a name="schema-lint">What is SchemaCrawler Lint?</a>
 
-SchemaCrawler can analyze and [lint](http://en.wikipedia.org/wiki/Lint_(software)) your database schema design to find potential issues. SchemaCrawler Lint can be run using the `-command=lint` command-line option.
+SchemaCrawler can analyze and [lint](http://en.wikipedia.org/wiki/Lint_(software)) your database schema design to find potential issues. SchemaCrawler Lint can be run using the `--command=lint` command-line option.
 _For more details, look at the [SchemaCrawler Lint](lint.html) page._
 
 ----------

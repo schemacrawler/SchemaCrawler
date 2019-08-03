@@ -37,10 +37,18 @@ import schemacrawler.SchemaCrawlerInfo;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.commandline.state.StateUtility;
 
-@Command(name = "system", aliases = {
-  "schemacrawler",
-  "sc",
-  "sys-info" }, header = "** System Information Options - Display SchemaCrawler version and system information")
+@Command(name = "system",
+         aliases = {
+          "sys",
+          "sys-info"
+         },
+         header = "** System Information Options - Display SchemaCrawler version and system information",
+         headerHeading = "",
+         synopsisHeading = "Command:%n",
+         customSynopsis = {
+           "system"
+         },
+         optionListHeading = "Options:%n")
 public class SystemCommand
   implements Runnable
 {

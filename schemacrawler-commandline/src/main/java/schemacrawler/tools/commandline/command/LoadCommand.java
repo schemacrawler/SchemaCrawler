@@ -50,7 +50,13 @@ import sf.util.StringFormat;
          header = "** Load Options - Load database metadata into memory",
          description = {
            ""
-         })
+         },
+         headerHeading = "",
+         synopsisHeading = "Command:%n",
+         customSynopsis = {
+           "load"
+         },
+         optionListHeading = "Options:%n")
 public class LoadCommand
   implements Runnable
 {

@@ -38,7 +38,13 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import sf.util.SchemaCrawlerLogger;
 
 @Command(name = "disconnect",
-         header = "** Disconnect Options - Disconnect from a database")
+         header = "** Disconnect Options - Disconnect from a database",
+         headerHeading = "",
+         synopsisHeading = "Command:%n",
+         customSynopsis = {
+           "disconnect"
+         },
+         optionListHeading = "Options:%n")
 public class DisconnectCommand
   implements Runnable
 {

@@ -65,7 +65,13 @@ import sf.util.StringFormat;
            "3. Which can be overridden by other command-line options",
            "",
            "Command-line options will override configuration file options.",
-         })
+         },
+         headerHeading = "",
+         synopsisHeading = "Command:%n",
+         customSynopsis = {
+           "config-file"
+         },
+         optionListHeading = "Options:%n")
 public class ConfigFileCommand
   implements Runnable
 {

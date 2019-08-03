@@ -31,7 +31,9 @@ dependencies {
 ```
 
 ### SchemaCrawler Docker Image
-The official [SchemaCrawler Docker image] is available on Docker Hub. The SchemaCrawler command-line and the interactive shell are available, with open-source JDBC drivers.
+The official [SchemaCrawler Docker image] is available on Docker Hub. 
+The SchemaCrawler command-line and the interactive shell are available in the image, 
+with open-source JDBC drivers.
 
 
 ## Building From the Source Code

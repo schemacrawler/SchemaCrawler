@@ -38,7 +38,13 @@ import sf.util.SchemaCrawlerLogger;
          aliases = {
            "quit", "terminate"
          },
-         header = "** Exit Options - Terminate the interactive shell")
+         header = "** Exit Options - Terminate the interactive shell",
+         headerHeading = "",
+         synopsisHeading = "Command:%n",
+         customSynopsis = {
+           "exit"
+         },
+         optionListHeading = "Options:%n")
 public class ExitCommand
   implements Runnable
 {

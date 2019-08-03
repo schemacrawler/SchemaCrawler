@@ -30,6 +30,8 @@ SchemaCrawler is available under a number of [licenses](https://www.schemacrawle
 
 Additional SchemaCrawler database plugins are available from the [schemacrawler/SchemaCrawler-Database-Plugins](https://github.com/schemacrawler/SchemaCrawler-Database-Plugins) project.
 
+Explore the SchemaCrawler command-line on [Katacoda](https://www.katacoda.com/schemacrawler).
+
 ## Support
 
 Please get support on [Stack Overflow](http://stackoverflow.com/search?tab=newest&q=schemacrawler), following the [Guidelines for Support](https://www.schemacrawler.com/consulting.html).

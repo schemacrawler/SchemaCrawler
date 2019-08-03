@@ -39,7 +39,13 @@ import schemacrawler.tools.commandline.state.StateUtility;
          header = "** Show State Options - Show internal state",
          description = {
            "",
-         })
+         },
+         headerHeading = "",
+         synopsisHeading = "Command:%n",
+         customSynopsis = {
+           "showstate"
+         },
+         optionListHeading = "Options:%n")
 public final class ShowStateCommand
   implements Runnable
 {

@@ -46,7 +46,13 @@ import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.CommandRegistry;
 
 @Command(name = "commands",
-         header = "** Commands Options - List available SchemaCrawler commands")
+         header = "** Commands Options - List available SchemaCrawler commands",
+         headerHeading = "",
+         synopsisHeading = "Command:%n",
+         customSynopsis = {
+           "commands"
+         },
+         optionListHeading = "Options:%n")
 public class AvailableCommandsCommand
   implements Runnable
 {

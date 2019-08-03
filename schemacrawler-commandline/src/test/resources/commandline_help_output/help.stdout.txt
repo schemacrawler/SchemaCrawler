@@ -41,7 +41,10 @@ Available SchemaCrawler Commands:
 
 
 ** Logging Options - Turn logging on or off
+Command:
+log
 
+Options:
       --log-level=<loglevel>
          Set log level using one of OFF, SEVERE, WARNING, INFO, CONFIG, FINE,
            FINER, FINEST, ALL
@@ -50,6 +53,8 @@ Available SchemaCrawler Commands:
 
 ** Configuration Options - Load SchemaCrawler configuration from the classpath
 and file
+Command:
+config-file
 
 SchemaCrawler configuration reads a resource called schemacrawler.config.
 properties from the CLASSPATH, which includes the lib/ folder. You can modify
@@ -61,6 +66,7 @@ The order of loading configuration settings is:
 3. Which can be overridden by other command-line options
 
 Command-line options will override configuration file options.
+Options:
   -g, --config-file=<configfile>
          Read SchemaCrawler configuration properties from <configfile>
          <configfile> is the full path to the configuration file
@@ -69,11 +75,14 @@ Command-line options will override configuration file options.
 
 
 ** Connection Options - Database connection options
+Command:
+connect
 
 For database connections, please read
 https://www.schemacrawler.com/database-support.html
 first, before running SchemaCrawler
 
+Options:
       --password=<password>
                           Database password
       --password:env=<environment variable name>
@@ -102,7 +111,10 @@ If your database does not have a SchemaCrawler plug-in, use
 
 
 ** Limit Options - Limit database object metadata
+Command:
+limit
 
+Options:
       --exclude-columns=<excludecolumns>
                             <excludecolumns> is a regular expression to match
                               fully qualified column names, in the form
@@ -182,7 +194,10 @@ If your database does not have a SchemaCrawler plug-in, use
 
 
 ** Grep Options - Grep for database object metadata
+Command:
+grep
 
+Options:
       --grep-columns=<grepcolumns>
                              <grepcolumns> is a regular expression to match
                                fully qualified column names, in the form
@@ -212,7 +227,10 @@ If your database does not have a SchemaCrawler plug-in, use
 
 
 ** Filter Options - Filter database object metadata
+Command:
+filter
 
+Options:
       --children=<children> <children> is the number of generations of
                               descendants for the tables selected by grep, and
                               shown in the results
@@ -227,7 +245,10 @@ If your database does not have a SchemaCrawler plug-in, use
 
 
 ** Load Options - Load database metadata into memory
+Command:
+load
 
+Options:
   -i, --info-level=<infolevel>
          <infolevel> is one of unknown, minimum, standard, detailed, maximum
          The info level determines the amount of database metadata retrieved,
@@ -237,7 +258,10 @@ If your database does not have a SchemaCrawler plug-in, use
 
 
 ** Show Options - Show information in output
+Command:
+show
 
+Options:
       --[no-]info      Hide or show database information
                        --no-info=<boolean>
                        <boolean> can be true or false
@@ -263,7 +287,10 @@ If your database does not have a SchemaCrawler plug-in, use
 
 
 ** Sort Options - Sort database objects in output
+Command:
+sort
 
+Options:
       --[no-]sort-columns    Sort columns in a table alphabetically
                              --sort-columns=<sortcolumns>
                              <sortcolumns> can be true or false
@@ -283,7 +310,10 @@ If your database does not have a SchemaCrawler plug-in, use
 
 
 ** Execute Options - Execute SchemaCrawler command
+Command:
+execute
 
+Options:
   -c, --command=<command>   SchemaCrawler command
   -m, --title=<title>       Shows the title on the output
                             Optional, defaults to no title being shown

@@ -44,7 +44,13 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
          header = "** Filter Options - Filter database object metadata",
          description = {
            "",
-         })
+         },
+         headerHeading = "",
+         synopsisHeading = "Command:%n",
+         customSynopsis = {
+           "filter"
+         },
+         optionListHeading = "Options:%n")
 public final class FilterCommand
   implements Runnable
 {

@@ -136,21 +136,6 @@ public class CommandLineUtility
     commandLine.setTrimQuotes(true);
     commandLine.setToggleBooleanFlags(false);
 
-    commandLine.setHelpSectionKeys(Arrays.asList(SECTION_KEY_HEADER_HEADING,
-                                                 SECTION_KEY_HEADER,
-                                                 // SECTION_KEY_SYNOPSIS_HEADING,
-                                                 // SECTION_KEY_SYNOPSIS,
-                                                 SECTION_KEY_DESCRIPTION_HEADING,
-                                                 SECTION_KEY_DESCRIPTION,
-                                                 SECTION_KEY_PARAMETER_LIST_HEADING,
-                                                 SECTION_KEY_PARAMETER_LIST,
-                                                 SECTION_KEY_OPTION_LIST_HEADING,
-                                                 SECTION_KEY_OPTION_LIST,
-                                                 SECTION_KEY_COMMAND_LIST_HEADING,
-                                                 SECTION_KEY_COMMAND_LIST,
-                                                 SECTION_KEY_FOOTER_HEADING,
-                                                 SECTION_KEY_FOOTER));
-
     return commandLine;
   }
 

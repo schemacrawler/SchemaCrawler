@@ -46,7 +46,13 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
          header = "** Sort Options - Sort database objects in output",
          description = {
            ""
-         })
+         },
+         headerHeading = "",
+         synopsisHeading = "Command:%n",
+         customSynopsis = {
+           "sort"
+         },
+         optionListHeading = "Options:%n")
 public final class SortCommand
   implements Runnable
 {

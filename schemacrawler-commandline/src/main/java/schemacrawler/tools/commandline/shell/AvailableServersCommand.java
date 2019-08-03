@@ -42,7 +42,13 @@ import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
 @Command(name = "servers",
-         header = "** Servers Options - List available SchemaCrawler database plugins")
+         header = "** Servers Options - List available SchemaCrawler database plugins",
+         headerHeading = "",
+         synopsisHeading = "Command:%n",
+         customSynopsis = {
+           "servers"
+         },
+         optionListHeading = "Options:%n")
 public class AvailableServersCommand
   implements Runnable
 {

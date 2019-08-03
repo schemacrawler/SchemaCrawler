@@ -46,7 +46,13 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
          header = "** Show Options - Show information in output",
          description = {
            "",
-         })
+         },
+         headerHeading = "",
+         synopsisHeading = "Command:%n",
+         customSynopsis = {
+           "show"
+         },
+         optionListHeading = "Options:%n")
 public final class ShowCommand
   implements Runnable
 {

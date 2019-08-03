@@ -2,8 +2,8 @@
 
 ## How to Use the SchemaCrawler Command-line
 
-1.  [Explanation of the SchemaCrawler main Programs](#sc-main)
-2.  [How to run an arbitrary query](#arbitrary-query)
+Explore the SchemaCrawler command-line on [Katacoda](https://www.katacoda.com/schemacrawler). 
+Read [How to run an arbitrary query](#arbitrary-query)
 
 ## Include and Exclude Stuff from the Output
 
@@ -61,7 +61,7 @@ a properties configuration file. There are options to load configuration from pr
 JDBC drivers and other external libraries must be available on the classpath for this 
 application to function.
 
-For help, use the ``-h` command-line switch.
+For help, use the `-h` command-line switch.
 
 ---------
 

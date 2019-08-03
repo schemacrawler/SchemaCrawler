@@ -29,6 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 
+import static picocli.CommandLine.Model.UsageMessageSpec.*;
+import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_FOOTER;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.*;
 import static sf.util.Utility.isBlank;
 
@@ -49,34 +51,16 @@ import schemacrawler.tools.executable.commandline.PluginCommand;
 
 @Command(name = "help",
          header = "Displays SchemaCrawler command-line help",
-         helpCommand = true)
+         helpCommand = true,
+         headerHeading = "",
+         synopsisHeading = "Command:%n",
+         customSynopsis = {
+           "help"
+         },
+         optionListHeading = "Options:%n")
 public final class CommandLineHelpCommand
   implements Runnable
 {
-
-  private static CommandLine databaseConnectorCommand(final String databaseSystemIdentifier)
-  {
-    final DatabaseConnectorRegistry databaseConnectorRegistry = DatabaseConnectorRegistry
-      .getDatabaseConnectorRegistry();
-    final DatabaseConnector databaseConnector = databaseConnectorRegistry.lookupDatabaseConnector(
-      databaseSystemIdentifier);
-
-    @Command
-    class EmptyCommand
-    {
-    }
-
-    final CommandLine commandLine = new CommandLine(new EmptyCommand());
-
-    final PluginCommand helpCommand = databaseConnector.getHelpCommand();
-    addPluginCommand(commandLine, helpCommand, false);
-
-    final CommandLine subcommandLine = commandLine.getSubcommands()
-                                                  .get(databaseSystemIdentifier);
-    configureCommandLine(subcommandLine);
-
-    return subcommandLine;
-  }
 
   private Help.Ansi ansi;
   @Parameters
@@ -109,6 +93,7 @@ public final class CommandLineHelpCommand
 
     if (commands != null && commands.length > 0)
     {
+      configureHelpForSubcommand(parent);
       showHelpForSubcommand(parent, commands[0]);
     }
     else
@@ -134,6 +119,53 @@ public final class CommandLineHelpCommand
       }
 
     }
+  }
+
+  private CommandLine databaseConnectorCommand(final String databaseSystemIdentifier)
+  {
+    final DatabaseConnectorRegistry databaseConnectorRegistry = DatabaseConnectorRegistry
+      .getDatabaseConnectorRegistry();
+    final DatabaseConnector databaseConnector = databaseConnectorRegistry.lookupDatabaseConnector(
+      databaseSystemIdentifier);
+
+    @Command
+    class EmptyCommand
+    {
+    }
+
+    final CommandLine commandLine = new CommandLine(new EmptyCommand());
+
+    final PluginCommand helpCommand = databaseConnector.getHelpCommand();
+    addPluginCommand(commandLine, helpCommand, false);
+
+    final CommandLine subcommandLine = commandLine.getSubcommands()
+                                                  .get(databaseSystemIdentifier);
+    configureCommandLine(subcommandLine);
+    configureHelpForSubcommand(subcommandLine);
+
+    return subcommandLine;
+  }
+
+  private void configureHelpForSubcommand(final CommandLine commandLine) {
+
+    if (commandLine == null) {
+      return;
+    }
+
+    commandLine.setHelpSectionKeys(Arrays.asList(// SECTION_KEY_HEADER_HEADING,
+                                                 SECTION_KEY_HEADER,
+                                                 // SECTION_KEY_SYNOPSIS_HEADING,
+                                                 // SECTION_KEY_SYNOPSIS,
+                                                 // SECTION_KEY_DESCRIPTION_HEADING,
+                                                 SECTION_KEY_DESCRIPTION,
+                                                 // SECTION_KEY_PARAMETER_LIST_HEADING,
+                                                 SECTION_KEY_PARAMETER_LIST,
+                                                 // SECTION_KEY_OPTION_LIST_HEADING,
+                                                 SECTION_KEY_OPTION_LIST,
+                                                 // SECTION_KEY_COMMAND_LIST_HEADING,
+                                                 SECTION_KEY_COMMAND_LIST,
+                                                 // SECTION_KEY_FOOTER_HEADING,
+                                                 SECTION_KEY_FOOTER));
   }
 
   private void showHelpForSubcommand(final CommandLine parent,

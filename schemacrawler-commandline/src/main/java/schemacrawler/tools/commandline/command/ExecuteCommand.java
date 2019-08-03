@@ -54,7 +54,13 @@ import sf.util.StringFormat;
          header = "** Execute Options - Execute SchemaCrawler command",
          description = {
            ""
-         })
+         },
+         headerHeading = "",
+         synopsisHeading = "Command:%n",
+         customSynopsis = {
+           "execute"
+         },
+         optionListHeading = "Options:%n")
 public class ExecuteCommand
   implements Runnable
 {

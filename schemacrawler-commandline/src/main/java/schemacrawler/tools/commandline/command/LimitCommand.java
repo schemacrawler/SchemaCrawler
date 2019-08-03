@@ -54,7 +54,13 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
          header = "** Limit Options - Limit database object metadata",
          description = {
            "",
-         })
+         },
+         headerHeading = "",
+         synopsisHeading = "Command:%n",
+         customSynopsis = {
+           "limit"
+         },
+         optionListHeading = "Options:%n")
 public final class LimitCommand
   implements Runnable
 {

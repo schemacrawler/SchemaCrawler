@@ -47,7 +47,13 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
          header = "** Grep Options - Grep for database object metadata",
          description = {
            "",
-         })
+         },
+         headerHeading = "",
+         synopsisHeading = "Command:%n",
+         customSynopsis = {
+           "grep"
+         },
+         optionListHeading = "Options:%n")
 public final class GrepCommand
   implements Runnable
 {
