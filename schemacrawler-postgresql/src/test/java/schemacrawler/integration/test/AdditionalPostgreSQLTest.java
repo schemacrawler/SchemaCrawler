@@ -31,6 +31,8 @@ package schemacrawler.integration.test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
+import static schemacrawler.test.utility.FileHasContent.*;
 import static sf.util.DatabaseUtility.checkConnection;
 
 import java.io.IOException;
@@ -55,6 +57,8 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.server.postgresql.EmbeddedPostgreSQLWrapper;
 import schemacrawler.server.postgresql.PostgreSQLDatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 public class AdditionalPostgreSQLTest
   extends BasePostgreSQLTest
@@ -148,6 +152,39 @@ public class AdditionalPostgreSQLTest
                equalToIgnoringCase("VARCHAR"));
 
     LOGGER.log(Level.INFO, "Completed PostgreSQL catalog test successfully");
+  }
+
+
+  @Test
+  public void testDataIssue258()
+    throws Exception
+  {
+    if (!isDatabaseRunning)
+    {
+      LOGGER.log(Level.INFO, "Did NOT run PostgreSQL test");
+      return;
+    }
+
+    try (final Connection connection = getConnection();
+      Statement stmt = connection.createStatement();)
+    {
+      stmt.execute("CREATE TABLE AIRCRAFT (NAME VARCHAR(100)) WITH OIDS");
+      stmt.execute("INSERT INTO AIRCRAFT VALUES ('Boeing 747')");
+      connection.commit();
+    }
+
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder();
+    final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder
+      .toOptions();
+
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("dump");
+    executable.setSchemaCrawlerOptions(options);
+
+    assertThat(outputOf(executableExecution(getConnection(), executable)),
+               hasSameContentAs(classpathResource("testDataIssue258.txt")));
+
+    LOGGER.log(Level.INFO, "Completed PostgreSQL test successfully");
   }
 
 }
