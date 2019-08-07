@@ -109,7 +109,7 @@ public class AdditionalPostgreSQLTest
     try (final Connection connection = getConnection();
       Statement stmt = connection.createStatement();)
     {
-      stmt.execute("CREATE TABLE AIRCRAFT (NAME VARCHAR(100)) -- WITH OIDS");
+      stmt.execute("CREATE TABLE AIRCRAFT (NAME VARCHAR(100)) WITH OIDS");
       stmt.execute("INSERT INTO AIRCRAFT VALUES ('Boeing 747')");
       connection.commit();
     }
