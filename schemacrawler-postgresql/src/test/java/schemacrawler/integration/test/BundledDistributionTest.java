@@ -42,7 +42,7 @@ public class BundledDistributionTest
 {
 
   @Test
-  public void testContextrmationSchema_postgresql()
+  public void testInformationSchema_postgresql()
     throws Exception
   {
 
@@ -51,7 +51,7 @@ public class BundledDistributionTest
     final DatabaseConnector databaseSystemIdentifier = registry.lookupDatabaseConnector(
       "postgresql");
     assertThat(databaseSystemIdentifier.getSchemaRetrievalOptionsBuilder(
-      connection).toOptions().getInformationSchemaViews().size(), is(8));
+      connection).toOptions().getInformationSchemaViews().size(), is(9));
   }
 
   @Test

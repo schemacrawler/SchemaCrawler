@@ -30,6 +30,7 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.*;
@@ -45,15 +46,13 @@ import java.util.logging.Level;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.*;
 import schemacrawler.server.postgresql.EmbeddedPostgreSQLWrapper;
 import schemacrawler.server.postgresql.PostgreSQLDatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -101,7 +100,8 @@ public class AdditionalPostgreSQLTest
   }
 
   @Test
-  public void testIssue258()
+  @DisplayName("Test additional table attributes - see issue #258 on GitHub")
+  public void testAdditionalTableAttibutes()
     throws Exception
   {
     if (!isDatabaseRunning)
@@ -120,7 +120,8 @@ public class AdditionalPostgreSQLTest
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
       .builder();
-    final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder
+    final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder.withSchemaInfoLevel(
+      SchemaInfoLevelBuilder.maximum())
       .toOptions();
 
     final Connection connection = checkConnection(getConnection());
@@ -139,6 +140,7 @@ public class AdditionalPostgreSQLTest
 
     final Table table = tables.stream().findFirst().get();
     assertThat("Got wrong table", table.getName(), equalToIgnoringCase("AIRCRAFT"));
+    assertThat("Got no oim attributes", table.getAttributes().get("RELHASOIDS"), is(true));
 
     final List<Column> columns = table.getColumns();
     assertThat("Did not retrieve all table columns",
@@ -152,39 +154,6 @@ public class AdditionalPostgreSQLTest
                equalToIgnoringCase("VARCHAR"));
 
     LOGGER.log(Level.INFO, "Completed PostgreSQL catalog test successfully");
-  }
-
-
-  @Test
-  public void testDataIssue258()
-    throws Exception
-  {
-    if (!isDatabaseRunning)
-    {
-      LOGGER.log(Level.INFO, "Did NOT run PostgreSQL test");
-      return;
-    }
-
-    try (final Connection connection = getConnection();
-      Statement stmt = connection.createStatement();)
-    {
-      stmt.execute("CREATE TABLE AIRCRAFT (NAME VARCHAR(100)) WITH OIDS");
-      stmt.execute("INSERT INTO AIRCRAFT VALUES ('Boeing 747')");
-      connection.commit();
-    }
-
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder();
-    final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder
-      .toOptions();
-
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("dump");
-    executable.setSchemaCrawlerOptions(options);
-
-    assertThat(outputOf(executableExecution(getConnection(), executable)),
-               hasSameContentAs(classpathResource("testDataIssue258.txt")));
-
-    LOGGER.log(Level.INFO, "Completed PostgreSQL test successfully");
   }
 
 }
