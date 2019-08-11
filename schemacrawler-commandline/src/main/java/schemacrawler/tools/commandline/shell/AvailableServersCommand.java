@@ -42,9 +42,9 @@ import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
 @Command(name = "servers",
-         header = "** Servers Options - List available SchemaCrawler database plugins",
+         header = "** List available SchemaCrawler database plugins",
          headerHeading = "",
-         synopsisHeading = "Command:%n",
+         synopsisHeading = "Shell Command:%n",
          customSynopsis = {
            "servers"
          },
@@ -75,7 +75,7 @@ public class AvailableServersCommand
     if (!isBlank(availableServers))
     {
       System.out.println();
-      System.out.println("Available Database Server Types:");
+      System.out.println("Available SchemaCrawler database plugins:");
       System.out.println(availableServers);
     }
   }

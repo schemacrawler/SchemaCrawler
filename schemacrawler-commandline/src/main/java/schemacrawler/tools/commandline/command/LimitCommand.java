@@ -51,12 +51,15 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
  * @author Sualeh Fatehi
  */
 @Command(name = "limit",
-         header = "** Limit Options - Limit database object metadata",
+         header = "** Limit database object metadata",
          description = {
            "",
+           "When you limit database object metadata, it reduces SchemaCrawler's visibility into other database objects.",
+           "From SchemaCrawler's perspective, the other database objects do not exist.",
+           ""
          },
          headerHeading = "",
-         synopsisHeading = "Command:%n",
+         synopsisHeading = "Shell Command:%n",
          customSynopsis = {
            "limit"
          },

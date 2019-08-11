@@ -41,12 +41,12 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
  * @author Sualeh Fatehi
  */
 @Command(name = "filter",
-         header = "** Filter Options - Filter database object metadata",
+         header = "** Filter database object metadata",
          description = {
            "",
          },
          headerHeading = "",
-         synopsisHeading = "Command:%n",
+         synopsisHeading = "Shell Command:%n",
          customSynopsis = {
            "filter"
          },

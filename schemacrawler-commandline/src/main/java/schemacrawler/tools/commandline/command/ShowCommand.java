@@ -43,12 +43,12 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
  * @author Sualeh Fatehi
  */
 @Command(name = "show",
-         header = "** Show Options - Show information in output",
+         header = "** Show information in output",
          description = {
            "",
          },
          headerHeading = "",
-         synopsisHeading = "Command:%n",
+         synopsisHeading = "Shell Command:%n",
          customSynopsis = {
            "show"
          },

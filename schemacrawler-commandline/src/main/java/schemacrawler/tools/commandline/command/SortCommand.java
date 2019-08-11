@@ -43,12 +43,12 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
  * @author Sualeh Fatehi
  */
 @Command(name = "sort",
-         header = "** Sort Options - Sort database objects in output",
+         header = "** Sort database objects in output",
          description = {
            ""
          },
          headerHeading = "",
-         synopsisHeading = "Command:%n",
+         synopsisHeading = "Shell Command:%n",
          customSynopsis = {
            "sort"
          },

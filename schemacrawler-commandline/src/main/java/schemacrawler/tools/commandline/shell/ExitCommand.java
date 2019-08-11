@@ -38,9 +38,9 @@ import sf.util.SchemaCrawlerLogger;
          aliases = {
            "quit", "terminate"
          },
-         header = "** Exit Options - Terminate the interactive shell",
+         header = "** Terminate the interactive shell",
          headerHeading = "",
-         synopsisHeading = "Command:%n",
+         synopsisHeading = "Shell Command:%n",
          customSynopsis = {
            "exit"
          },

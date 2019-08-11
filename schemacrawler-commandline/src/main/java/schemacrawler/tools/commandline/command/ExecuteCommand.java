@@ -51,12 +51,12 @@ import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 @Command(name = "execute",
-         header = "** Execute Options - Execute SchemaCrawler command",
+         header = "** Execute a SchemaCrawler command",
          description = {
            ""
          },
          headerHeading = "",
-         synopsisHeading = "Command:%n",
+         synopsisHeading = "Shell Command:%n",
          customSynopsis = {
            "execute"
          },

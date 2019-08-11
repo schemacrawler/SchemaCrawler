@@ -42,9 +42,9 @@ import schemacrawler.tools.commandline.state.StateUtility;
           "sys",
           "sys-info"
          },
-         header = "** System Information Options - Display SchemaCrawler version and system information",
+         header = "** Display SchemaCrawler version and system information",
          headerHeading = "",
-         synopsisHeading = "Command:%n",
+         synopsisHeading = "Shell Command:%n",
          customSynopsis = {
            "system"
          },

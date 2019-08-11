@@ -44,12 +44,12 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
  * @author Sualeh Fatehi
  */
 @Command(name = "grep",
-         header = "** Grep Options - Grep for database object metadata",
+         header = "** Grep for database object metadata",
          description = {
            "",
          },
          headerHeading = "",
-         synopsisHeading = "Command:%n",
+         synopsisHeading = "Shell Command:%n",
          customSynopsis = {
            "grep"
          },

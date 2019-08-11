@@ -52,7 +52,7 @@ import sf.util.StringFormat;
  * @author Sualeh Fatehi
  */
 @Command(name = "config-file",
-         header = "** Configuration Options - Load SchemaCrawler configuration from the classpath and file",
+         header = "** Load SchemaCrawler configuration from the classpath and file",
          description = {
            "",
            "SchemaCrawler configuration reads a resource called schemacrawler.config.properties "
@@ -65,9 +65,10 @@ import sf.util.StringFormat;
            "3. Which can be overridden by other command-line options",
            "",
            "Command-line options will override configuration file options.",
+           ""
          },
          headerHeading = "",
-         synopsisHeading = "Command:%n",
+         synopsisHeading = "Shell Command:%n",
          customSynopsis = {
            "config-file"
          },

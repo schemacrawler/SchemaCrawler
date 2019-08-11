@@ -37,12 +37,12 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
 @Command(name = "log",
-         header = "** Logging Options - Turn logging on or off",
+         header = "** Turn logging on or off",
          description = {
            ""
          },
          headerHeading = "",
-         synopsisHeading = "Command:%n",
+         synopsisHeading = "Shell Command:%n",
          customSynopsis = {
            "log"
          },

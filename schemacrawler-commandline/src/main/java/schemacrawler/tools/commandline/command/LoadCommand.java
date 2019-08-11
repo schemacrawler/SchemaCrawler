@@ -47,12 +47,12 @@ import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 @Command(name = "load",
-         header = "** Load Options - Load database metadata into memory",
+         header = "** Load database metadata into memory",
          description = {
            ""
          },
          headerHeading = "",
-         synopsisHeading = "Command:%n",
+         synopsisHeading = "Shell Command:%n",
          customSynopsis = {
            "load"
          },

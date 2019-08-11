@@ -1,4 +1,4 @@
-SchemaCrawler 16.1.1
+SchemaCrawler 16.1.2
 Database schema discovery and comprehension tool
 Copyright (c) 2000-2019, Sualeh Fatehi <sualeh@hotmail.com>.
 
@@ -12,7 +12,7 @@ System Information:
 Windows 10 10.0
 Oracle Corporation Java HotSpot(TM) 64-Bit Server VM 1.8.0_191-b12
 
-Available SchemaCrawler Commands:
+Available SchemaCrawler commands:
  brief          Shows basic schema information, for tables, views and routines,
                   columns, primary keys, and foreign keys
  count          Shows counts of rows in the tables
@@ -40,8 +40,8 @@ Available SchemaCrawler Commands:
 
 
 
-** Logging Options - Turn logging on or off
-Command:
+** Turn logging on or off
+Shell Command:
 log
 
 Options:
@@ -51,9 +51,8 @@ Options:
          Optional, defaults to OFF
 
 
-** Configuration Options - Load SchemaCrawler configuration from the classpath
-and file
-Command:
+** Load SchemaCrawler configuration from the classpath and file
+Shell Command:
 config-file
 
 SchemaCrawler configuration reads a resource called schemacrawler.config.
@@ -66,6 +65,7 @@ The order of loading configuration settings is:
 3. Which can be overridden by other command-line options
 
 Command-line options will override configuration file options.
+
 Options:
   -g, --config-file=<configfile>
          Read SchemaCrawler configuration properties from <configfile>
@@ -74,8 +74,8 @@ Options:
            current directory, or in-built default options
 
 
-** Connection Options - Database connection options
-Command:
+** Connect to the database
+Shell Command:
 connect
 
 For database connections, please read
@@ -110,9 +110,13 @@ If your database does not have a SchemaCrawler plug-in, use
                           JDBC connection URL to the database
 
 
-** Limit Options - Limit database object metadata
-Command:
+** Limit database object metadata
+Shell Command:
 limit
+
+When you limit database object metadata, it reduces SchemaCrawler's visibility
+into other database objects.
+From SchemaCrawler's perspective, the other database objects do not exist.
 
 Options:
       --exclude-columns=<excludecolumns>
@@ -193,8 +197,8 @@ Options:
                             Optional, defaults to showing all tables
 
 
-** Grep Options - Grep for database object metadata
-Command:
+** Grep for database object metadata
+Shell Command:
 grep
 
 Options:
@@ -226,8 +230,8 @@ Options:
                              Optional, default is false
 
 
-** Filter Options - Filter database object metadata
-Command:
+** Filter database object metadata
+Shell Command:
 filter
 
 Options:
@@ -244,8 +248,8 @@ Options:
                             Optional, default is 0
 
 
-** Load Options - Load database metadata into memory
-Command:
+** Load database metadata into memory
+Shell Command:
 load
 
 Options:
@@ -257,8 +261,8 @@ Options:
 
 
 
-** Show Options - Show information in output
-Command:
+** Show information in output
+Shell Command:
 show
 
 Options:
@@ -286,8 +290,8 @@ Options:
                        Optional, defaults to false
 
 
-** Sort Options - Sort database objects in output
-Command:
+** Sort database objects in output
+Shell Command:
 sort
 
 Options:
@@ -309,8 +313,8 @@ Options:
                              Optional, defaults to true
 
 
-** Execute Options - Execute SchemaCrawler command
-Command:
+** Execute a SchemaCrawler command
+Shell Command:
 execute
 
 Options:

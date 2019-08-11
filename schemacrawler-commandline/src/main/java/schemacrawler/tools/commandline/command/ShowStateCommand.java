@@ -36,12 +36,12 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.commandline.state.StateUtility;
 
 @Command(name = "showstate",
-         header = "** Show State Options - Show internal state",
+         header = "** Show internal state",
          description = {
            "",
          },
          headerHeading = "",
-         synopsisHeading = "Command:%n",
+         synopsisHeading = "Shell Command:%n",
          customSynopsis = {
            "showstate"
          },

@@ -50,10 +50,10 @@ import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 
 @Command(name = "help",
-         header = "Displays SchemaCrawler command-line help",
+         header = "Display SchemaCrawler command-line help",
          helpCommand = true,
          headerHeading = "",
-         synopsisHeading = "Command:%n",
+         synopsisHeading = "Shell Command:%n",
          customSynopsis = {
            "help"
          },

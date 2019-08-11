@@ -48,7 +48,7 @@ import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 @Command(name = "connect",
-         header = "** Connection Options - Database connection options",
+         header = "** Connect to the database",
          description = {
            "",
            "For database connections, please read",
@@ -57,7 +57,7 @@ import sf.util.StringFormat;
            ""
          },
          headerHeading = "",
-         synopsisHeading = "Command:%n",
+         synopsisHeading = "Shell Command:%n",
          customSynopsis = {
            "connect"
          },
