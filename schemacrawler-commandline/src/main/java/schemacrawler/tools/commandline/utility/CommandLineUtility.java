@@ -80,9 +80,14 @@ public class CommandLineUtility
       return;
     }
     final String pluginCommandName = pluginCommand.getName();
+
     final UsageMessageSpec usageMessageSpec = new UsageMessageSpec();
     usageMessageSpec.header(pluginCommand.getHelpHeader());
     usageMessageSpec.description(pluginCommand.getHelpDescription());
+    usageMessageSpec.synopsisHeading("Command:%n");
+    usageMessageSpec.customSynopsis(pluginCommandName);
+    usageMessageSpec.optionListHeading("Options:%n");
+
     final CommandSpec pluginCommandSpec = CommandSpec.create()
                                                      .name(pluginCommandName)
                                                      .usageMessage(
