@@ -1,0 +1,8 @@
+** Process a template file, such as Freemarker, against the database schema
+
+      --template=<template>
+         Path to the template file or to the CLASSPATH resource
+      --templating-language=<templating-language>
+         Templating language
+
+
