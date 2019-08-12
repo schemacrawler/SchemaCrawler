@@ -1,5 +1,13 @@
 # SchemaCrawler Change History
 
+<a name="a16.1.2"></a>
+## Release 16.1.2 - 2019-08-11
+
+- Better help text, including shell command names in the help text
+- Distributed with PostgreSQL driver 42.2.6 which reports function columns
+- Reporting of additional table information for PostgreSQL
+
+
 <a name="a16.1.1"></a>
 ## Release 16.1.1 - 2019-07-25
 

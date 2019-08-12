@@ -207,7 +207,7 @@
                 <artifactItem>
                   <groupId>org.postgresql</groupId>
                   <artifactId>postgresql</artifactId>
-                  <version>42.2.5</version>
+                  <version>42.2.6</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
