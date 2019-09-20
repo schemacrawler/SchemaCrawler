@@ -20,6 +20,7 @@ SchemaCrawler questions from users.
   that handles enterprise-scale schemas
 - [Atlassian JIRA database schema](https://developer.atlassian.com/display/JIRADEV/Database+Schema)
 - [RedG test data generation library](https://btc-ag.github.io/redg/)
+- [Data Platform at Zoomcar](https://medium.com/@shanker.sneh/https-medium-com-shanker-sneh-data-platform-at-zoomcar-a-narrative-part-i-f2455e3e2ae5)
 - Architect at Nestlé Nespresso SA: 
 "I run a daily cron to export the content (metadata and data) of a 
 schema, and I compare it to another reference schema to check which 
