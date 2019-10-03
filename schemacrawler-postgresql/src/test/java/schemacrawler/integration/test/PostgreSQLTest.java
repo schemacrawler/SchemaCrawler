@@ -56,15 +56,15 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.server.postgresql.EmbeddedPostgreSQLWrapper;
 import schemacrawler.server.postgresql.PostgreSQLDatabaseConnector;
+import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 public class PostgreSQLTest
-  extends BasePostgreSQLTest
+  extends BaseAdditionalDatabaseTest
 {
 
   private boolean isDatabaseRunning;
@@ -76,7 +76,7 @@ public class PostgreSQLTest
   {
     try
     {
-      embeddedPostgreSQL = new EmbeddedPostgreSQLWrapper(getEmbeddedPostgreSQLVersion());
+      embeddedPostgreSQL = new EmbeddedPostgreSQLWrapper();
       embeddedPostgreSQL.startServer();
       createDataSource(embeddedPostgreSQL.getConnectionUrl(),
                        embeddedPostgreSQL.getUser(),

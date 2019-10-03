@@ -33,7 +33,6 @@ import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.FileHasContent.*;
 import static sf.util.DatabaseUtility.checkConnection;
 
 import java.io.IOException;
@@ -53,14 +52,12 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.*;
-import schemacrawler.server.postgresql.EmbeddedPostgreSQLWrapper;
 import schemacrawler.server.postgresql.PostgreSQLDatabaseConnector;
+import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 public class AdditionalPostgreSQLTest
-  extends BasePostgreSQLTest
+  extends BaseAdditionalDatabaseTest
 {
 
   private boolean isDatabaseRunning;
@@ -72,8 +69,7 @@ public class AdditionalPostgreSQLTest
   {
     try
     {
-      embeddedPostgreSQL = new EmbeddedPostgreSQLWrapper(
-        getEmbeddedPostgreSQLVersion());
+      embeddedPostgreSQL = new EmbeddedPostgreSQLWrapper();
       embeddedPostgreSQL.startServer();
       createDataSource(embeddedPostgreSQL.getConnectionUrl(),
                        embeddedPostgreSQL.getUser(),
