@@ -32,16 +32,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static sf.util.DatabaseUtility.checkConnection;
 
-import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
 import java.util.List;
-import java.util.logging.Level;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -54,58 +50,37 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.*;
 import schemacrawler.server.postgresql.PostgreSQLDatabaseConnector;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
+import schemacrawler.test.utility.DatabaseServerContainer;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 
-public class AdditionalPostgreSQLTest
+@DisplayName("Test for issue #258 on GitHub")
+public class PostgreSQLAdditionalTableAttributesTest
   extends BaseAdditionalDatabaseTest
 {
 
-  private boolean isDatabaseRunning;
-  private EmbeddedPostgreSQLWrapper embeddedPostgreSQL;
+  private DatabaseServerContainer databaseServer;
 
   @BeforeEach
   public void createDatabase()
-    throws SchemaCrawlerException, SQLException, IOException
+    throws SchemaCrawlerException
   {
-    try
-    {
-      embeddedPostgreSQL = new EmbeddedPostgreSQLWrapper();
-      embeddedPostgreSQL.startServer();
-      createDataSource(embeddedPostgreSQL.getConnectionUrl(),
-                       embeddedPostgreSQL.getUser(),
-                       embeddedPostgreSQL.getPassword());
+    databaseServer = new EmbeddedPostgreSQLWrapper();
+    databaseServer.startServer();
 
-      isDatabaseRunning = true;
-    }
-    catch (final Throwable e)
-    {
-      LOGGER.log(Level.FINE, e.getMessage(), e);
-      // Do not run if database server cannot be loaded
-      isDatabaseRunning = false;
-    }
+    createDataSource(databaseServer);
   }
 
   @AfterEach
   public void stopDatabaseServer()
-    throws SchemaCrawlerException
   {
-    if (isDatabaseRunning)
-    {
-      embeddedPostgreSQL.stopServer();
-    }
+    databaseServer.stopServer();
   }
 
   @Test
-  @DisplayName("Test additional table attributes - see issue #258 on GitHub")
+  @DisplayName("Test additional table attributes")
   public void testAdditionalTableAttibutes()
     throws Exception
   {
-    if (!isDatabaseRunning)
-    {
-      LOGGER.log(Level.INFO, "Did NOT run PostgreSQL test");
-      return;
-    }
-
     try (final Connection connection = getConnection();
       Statement stmt = connection.createStatement();)
     {
@@ -116,9 +91,8 @@ public class AdditionalPostgreSQLTest
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
       .builder();
-    final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder.withSchemaInfoLevel(
-      SchemaInfoLevelBuilder.maximum())
-      .toOptions();
+    final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum()).toOptions();
 
     final Connection connection = checkConnection(getConnection());
     final DatabaseConnector postgreSQLDatabaseConnector = new PostgreSQLDatabaseConnector();
@@ -135,8 +109,12 @@ public class AdditionalPostgreSQLTest
     assertThat("Did not retrieve all tables", tables.size(), equalTo(1));
 
     final Table table = tables.stream().findFirst().get();
-    assertThat("Got wrong table", table.getName(), equalToIgnoringCase("AIRCRAFT"));
-    assertThat("Got no oim attributes", table.getAttributes().get("RELHASOIDS"), is(true));
+    assertThat("Got wrong table",
+               table.getName(),
+               equalToIgnoringCase("AIRCRAFT"));
+    assertThat("Got no oim attributes",
+               table.getAttributes().get("RELHASOIDS"),
+               is(true));
 
     final List<Column> columns = table.getColumns();
     assertThat("Did not retrieve all table columns",
@@ -144,12 +122,12 @@ public class AdditionalPostgreSQLTest
                equalTo(1));
 
     final Column column = columns.stream().findFirst().get();
-    assertThat("Got wrong column", column.getName(), equalToIgnoringCase("NAME"));
+    assertThat("Got wrong column",
+               column.getName(),
+               equalToIgnoringCase("NAME"));
     assertThat("Got wrong column data type",
                column.getColumnDataType().getDatabaseSpecificTypeName(),
                equalToIgnoringCase("VARCHAR"));
-
-    LOGGER.log(Level.INFO, "Completed PostgreSQL catalog test successfully");
   }
 
 }

@@ -31,33 +31,24 @@ package schemacrawler.integration.test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.test.utility.FileHasContent.*;
 import static sf.util.DatabaseUtility.checkConnection;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Property;
-import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.*;
 import schemacrawler.server.postgresql.PostgreSQLDatabaseConnector;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
+import schemacrawler.test.utility.DatabaseServerContainer;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
@@ -67,52 +58,29 @@ public class PostgreSQLTest
   extends BaseAdditionalDatabaseTest
 {
 
-  private boolean isDatabaseRunning;
-  private EmbeddedPostgreSQLWrapper embeddedPostgreSQL;
+  private DatabaseServerContainer databaseServer;
 
   @BeforeEach
   public void createDatabase()
-    throws SchemaCrawlerException, SQLException, IOException
+    throws SQLException, SchemaCrawlerException
   {
-    try
-    {
-      embeddedPostgreSQL = new EmbeddedPostgreSQLWrapper();
-      embeddedPostgreSQL.startServer();
-      createDataSource(embeddedPostgreSQL.getConnectionUrl(),
-                       embeddedPostgreSQL.getUser(),
-                       embeddedPostgreSQL.getPassword());
-      createDatabase("/postgresql.scripts.txt");
+    databaseServer = new EmbeddedPostgreSQLWrapper();
+    databaseServer.startServer();
 
-      isDatabaseRunning = true;
-    }
-    catch (final Throwable e)
-    {
-      LOGGER.log(Level.FINE, e.getMessage(), e);
-      // Do not run if database server cannot be loaded
-      isDatabaseRunning = false;
-    }
+    createDataSource(databaseServer);
+    createDatabase("/postgresql.scripts.txt");
   }
 
   @AfterEach
   public void stopDatabaseServer()
-    throws SchemaCrawlerException
   {
-    if (isDatabaseRunning)
-    {
-      embeddedPostgreSQL.stopServer();
-    }
+    databaseServer.stopServer();
   }
 
   @Test
   public void testPostgreSQLCatalog()
     throws Exception
   {
-    if (!isDatabaseRunning)
-    {
-      LOGGER.log(Level.INFO, "Did NOT run PostgreSQL test");
-      return;
-    }
-
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
       .builder();
     schemaCrawlerOptionsBuilder
@@ -134,25 +102,17 @@ public class PostgreSQLTest
                                                           options);
     final Catalog catalog = schemaCrawler.crawl();
     final List<Property> serverInfo = new ArrayList<>(catalog.getDatabaseInfo()
-      .getServerInfo());
+                                                        .getServerInfo());
 
     assertThat(serverInfo.size(), equalTo(1));
     assertThat(serverInfo.get(0).getName(), equalTo("current_database"));
-    assertThat(serverInfo.get(0).getValue(), equalTo("schemacrawler"));
-
-    LOGGER.log(Level.INFO, "Completed PostgreSQL catalog test successfully");
+    assertThat(serverInfo.get(0).getValue(), equalTo("test"));
   }
 
   @Test
   public void testPostgreSQLWithConnection()
     throws Exception
   {
-    if (!isDatabaseRunning)
-    {
-      LOGGER.log(Level.INFO, "Did NOT run PostgreSQL test");
-      return;
-    }
-
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
       .builder();
     schemaCrawlerOptionsBuilder
@@ -168,14 +128,16 @@ public class PostgreSQLTest
     textOptionsBuilder.showDatabaseInfo().showJdbcDriverInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
+      "details");
     executable.setSchemaCrawlerOptions(options);
-    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
-      .builder(textOptions).toConfig());
+    executable
+      .setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions)
+                                    .toConfig());
 
     assertThat(outputOf(executableExecution(getConnection(), executable)),
-               hasSameContentAs(classpathResource("testPostgreSQLWithConnection.txt")));
-    LOGGER.log(Level.INFO, "Completed PostgreSQL test successfully");
+               hasSameContentAs(classpathResource(
+                 "testPostgreSQLWithConnection.txt")));
   }
 
 }

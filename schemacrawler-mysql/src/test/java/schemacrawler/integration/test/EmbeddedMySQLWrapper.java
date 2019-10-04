@@ -31,19 +31,30 @@ package schemacrawler.integration.test;
 
 import java.util.logging.Level;
 
-import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.containers.MySQLContainer;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.DatabaseServerContainer;
 import sf.util.SchemaCrawlerLogger;
 
-public class EmbeddedPostgreSQLWrapper
+public class EmbeddedMySQLWrapper
   implements DatabaseServerContainer
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(EmbeddedPostgreSQLWrapper.class.getName());
+    .getLogger(EmbeddedMySQLWrapper.class.getName());
 
-  private PostgreSQLContainer dbContainer;
+  private MySQLContainer dbContainer;
+  private final String databaseName;
+
+  public EmbeddedMySQLWrapper(final String databaseName)
+  {
+    this.databaseName = databaseName;
+  }
+
+  public EmbeddedMySQLWrapper()
+  {
+    this.databaseName = null;
+  }
 
   public String getConnectionUrl()
   {
@@ -55,7 +66,13 @@ public class EmbeddedPostgreSQLWrapper
   {
     try
     {
-      dbContainer = new PostgreSQLContainer<>();
+      dbContainer = new MySQLContainer<>()
+        .withCommand("mysqld", "--lower_case_table_names=1")
+        .withUsername("schemacrawler");
+      if (databaseName != null)
+      {
+        dbContainer.withDatabaseName(databaseName);
+      }
       LOGGER.log(Level.FINE, "Starting database server");
       dbContainer.start();
       Runtime.getRuntime().addShutdownHook(new Thread(() -> {

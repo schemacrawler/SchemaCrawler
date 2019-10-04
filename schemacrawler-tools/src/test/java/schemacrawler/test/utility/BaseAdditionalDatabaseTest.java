@@ -46,8 +46,8 @@ import schemacrawler.testdb.TestSchemaCreator;
 public abstract class BaseAdditionalDatabaseTest
 {
 
-  protected final static Logger LOGGER = Logger.getLogger(ExecutableTestUtility.class
-                                                            .getName());
+  protected final static Logger LOGGER = Logger
+    .getLogger(ExecutableTestUtility.class.getName());
 
   @BeforeAll
   public static final void startLogging()
@@ -69,6 +69,13 @@ public abstract class BaseAdditionalDatabaseTest
                                                                     scriptsResource);
       schemaCreator.run();
     }
+  }
+
+  protected void createDataSource(final DatabaseServerContainer databaseServerContainer)
+  {
+    createDataSource(databaseServerContainer.getConnectionUrl(),
+                     databaseServerContainer.getUser(),
+                     databaseServerContainer.getPassword());
   }
 
   protected void createDataSource(final String connectionUrl,
