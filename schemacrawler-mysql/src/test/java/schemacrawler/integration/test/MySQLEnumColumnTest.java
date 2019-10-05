@@ -36,7 +36,6 @@ import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.List;
-import java.util.logging.Level;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -91,7 +90,7 @@ public class MySQLEnumColumnTest
   public void createDatabase()
     throws SchemaCrawlerException
   {
-    databaseServer = new EmbeddedMySQLWrapper();
+    databaseServer = new MySQLDatabaseServerContainer();
     databaseServer.startServer();
 
     createDataSource(databaseServer);

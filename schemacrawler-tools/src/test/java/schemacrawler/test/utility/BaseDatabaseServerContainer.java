@@ -26,24 +26,37 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.integration.test;
+package schemacrawler.test.utility;
 
 
 import java.util.logging.Level;
 
-import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.containers.JdbcDatabaseContainer;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.test.utility.DatabaseServerContainer;
 import sf.util.SchemaCrawlerLogger;
 
-public class EmbeddedPostgreSQLWrapper
+public class BaseDatabaseServerContainer<C extends JdbcDatabaseContainer>
   implements DatabaseServerContainer
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(EmbeddedPostgreSQLWrapper.class.getName());
+    .getLogger(BaseDatabaseServerContainer.class.getName());
 
-  private PostgreSQLContainer dbContainer;
+  private final String databaseName;
+  private final C dbContainer;
+
+  protected BaseDatabaseServerContainer(final C dbContainer)
+  {
+    this.dbContainer = dbContainer;
+    this.databaseName = null;
+  }
+
+  protected BaseDatabaseServerContainer(final C dbContainer,
+                                        final String databaseName)
+  {
+    this.dbContainer = dbContainer;
+    this.databaseName = databaseName;
+  }
 
   public String getConnectionUrl()
   {
@@ -55,9 +68,15 @@ public class EmbeddedPostgreSQLWrapper
   {
     try
     {
-      dbContainer = new PostgreSQLContainer<>();
-      LOGGER.log(Level.FINE, "Starting database server");
+      if (databaseName != null)
+      {
+        dbContainer.withDatabaseName(databaseName);
+      }
+
+      LOGGER.log(Level.FINE, "Starting " + dbContainer.getDockerImageName());
+      System.out.println("Starting " + dbContainer.getDockerImageName());
       dbContainer.start();
+
       Runtime.getRuntime().addShutdownHook(new Thread(() -> {
         stopServer();
       }));
@@ -72,9 +91,9 @@ public class EmbeddedPostgreSQLWrapper
   {
     if (dbContainer != null)
     {
-      LOGGER.log(Level.FINE, "Stopping database server");
+      LOGGER.log(Level.FINE, "Stopping " + dbContainer.getDockerImageName());
+      System.out.println("Stopping " + dbContainer.getDockerImageName());
       dbContainer.stop();
-      dbContainer = null;
     }
   }
 

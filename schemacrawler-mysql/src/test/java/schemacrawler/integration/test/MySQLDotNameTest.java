@@ -98,7 +98,7 @@ public class MySQLDotNameTest
   public void createDatabase()
     throws SchemaCrawlerException
   {
-    databaseServer = new EmbeddedMySQLWrapper();
+    databaseServer = new MySQLDatabaseServerContainer();
     databaseServer.startServer();
 
     createDataSource(databaseServer);

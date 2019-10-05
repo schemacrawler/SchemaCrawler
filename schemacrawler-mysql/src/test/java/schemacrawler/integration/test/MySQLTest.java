@@ -54,7 +54,7 @@ public class MySQLTest
   public void createDatabase()
     throws SchemaCrawlerException, SQLException
   {
-    databaseServer = new EmbeddedMySQLWrapper("books");
+    databaseServer = new MySQLDatabaseServerContainer("books");
     databaseServer.startServer();
 
     createDataSource(databaseServer);

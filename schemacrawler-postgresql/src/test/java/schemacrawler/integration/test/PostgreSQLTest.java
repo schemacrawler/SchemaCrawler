@@ -64,7 +64,7 @@ public class PostgreSQLTest
   public void createDatabase()
     throws SQLException, SchemaCrawlerException
   {
-    databaseServer = new EmbeddedPostgreSQLWrapper();
+    databaseServer = new PostgreSQLDatabaseServerContainer();
     databaseServer.startServer();
 
     createDataSource(databaseServer);

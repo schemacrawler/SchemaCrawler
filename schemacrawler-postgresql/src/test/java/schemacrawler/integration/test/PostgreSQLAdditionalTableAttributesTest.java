@@ -64,7 +64,7 @@ public class PostgreSQLAdditionalTableAttributesTest
   public void createDatabase()
     throws SchemaCrawlerException
   {
-    databaseServer = new EmbeddedPostgreSQLWrapper();
+    databaseServer = new PostgreSQLDatabaseServerContainer();
     databaseServer.startServer();
 
     createDataSource(databaseServer);
