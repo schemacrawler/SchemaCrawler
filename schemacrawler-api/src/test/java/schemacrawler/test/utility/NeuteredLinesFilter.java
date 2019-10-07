@@ -60,6 +60,7 @@ final class NeuteredLinesFilter
     Pattern.compile(".*16\\.\\d\\.\\d.*"),
     Pattern.compile(".*(Windows|Linux).*"),
     Pattern.compile(".*Oracle Corporation (Java|OpenJDK).*"),
+    Pattern.compile(".*ServerName.*"),
     };
 
   /**
