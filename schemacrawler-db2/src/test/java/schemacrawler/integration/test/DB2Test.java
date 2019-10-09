@@ -62,8 +62,7 @@ public class DB2Test
 {
 
   @Container
-  private Db2Container dbContainer = new Db2Container().acceptLicense()
-    .withExposedPorts(50001).withPassword("schemacrawler");
+  private Db2Container dbContainer = new Db2Container().acceptLicense();
 
   @BeforeEach
   public void createDatabase()
