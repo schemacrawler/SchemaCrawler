@@ -1,7 +1,7 @@
 [
 {
   "schemaCrawlerInfo": {
-    "productVersion": "15.07.01",
+    "productVersion": "16.1.2",
     "productName": "SchemaCrawler"
   },
   "tables": [
@@ -2103,7 +2103,7 @@
           }
         ],
         "unique": true,
-        "name": "SYS_IDX_PK_CUSTOMERS_10228",
+        "name": "SYS_IDX_PK_CUSTOMERS_10227",
         "definition": ""
       }],
       "columns": [
@@ -2210,7 +2210,7 @@
             "autoIncremented": false,
             "ordinal": 1
           },
-          "name": "SYS_CT_10224",
+          "name": "SYS_CT_10223",
           "definition": "\"PUBLISHER SALES\".REGIONS.CITY IS NOT NULL",
           "type": "check"
         },
@@ -2227,7 +2227,7 @@
             "autoIncremented": false,
             "ordinal": 2
           },
-          "name": "SYS_CT_10225",
+          "name": "SYS_CT_10224",
           "definition": "\"PUBLISHER SALES\".REGIONS.STATE IS NOT NULL",
           "type": "check"
         },
@@ -2244,7 +2244,7 @@
             "autoIncremented": false,
             "ordinal": 3
           },
-          "name": "SYS_CT_10226",
+          "name": "SYS_CT_10225",
           "definition": "\"PUBLISHER SALES\".REGIONS.POSTALCODE IS NOT NULL",
           "type": "check"
         },
@@ -2261,7 +2261,7 @@
             "autoIncremented": false,
             "ordinal": 4
           },
-          "name": "SYS_CT_10227",
+          "name": "SYS_CT_10226",
           "definition": "\"PUBLISHER SALES\".REGIONS.COUNTRY IS NOT NULL",
           "type": "check"
         }
@@ -2378,7 +2378,7 @@
             "ordinal": 6
           },
           "unique": false,
-          "name": "SYS_IDX_FK_SALES_SALESDATA_10242",
+          "name": "SYS_IDX_FK_SALES_SALESDATA_10241",
           "definition": ""
         },
         {
@@ -2397,7 +2397,7 @@
             }
           ],
           "unique": false,
-          "name": "SYS_IDX_FK_SALES_REGIONS_10240",
+          "name": "SYS_IDX_FK_SALES_REGIONS_10239",
           "definition": ""
         }
       ],
@@ -2548,7 +2548,7 @@
             "autoIncremented": false,
             "ordinal": 1
           },
-          "name": "SYS_CT_10235",
+          "name": "SYS_CT_10234",
           "definition": "\"PUBLISHER SALES\".SALES.POSTALCODE IS NOT NULL",
           "type": "check"
         },
@@ -2565,7 +2565,7 @@
             "autoIncremented": false,
             "ordinal": 2
           },
-          "name": "SYS_CT_10236",
+          "name": "SYS_CT_10235",
           "definition": "\"PUBLISHER SALES\".SALES.COUNTRY IS NOT NULL",
           "type": "check"
         }
@@ -2643,7 +2643,7 @@
           "ordinal": 1
         },
         "unique": true,
-        "name": "SYS_IDX_UQ_CUSTOMERS_10234",
+        "name": "SYS_IDX_UQ_CUSTOMERS_10233",
         "definition": ""
       }],
       "columns": [
@@ -3964,16 +3964,33 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "runId": "b8184de3-6223-40df-b189-e42f91bb2588",
-    "crawlTimestamp": "2019-06-25 20:35:50",
+    "runId": "4ba4c789-e103-4f7a-989b-ea8d2bccb446",
+    "crawlTimestamp": "2019-10-09 01:01:19",
     "title": ""
   },
   "routines": [
     {
       "name": "NEW_PUBLISHER",
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
-      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10161 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER",
-      "specificName": "NEW_PUBLISHER_10161",
+      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_FORCE_VALUE LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'",
+      "specificName": "NEW_PUBLISHER_FORCE_VALUE",
+      "type": "procedure",
+      "parameters": [{
+        "databaseSpecificType": "CHARACTER VARYING",
+        "dataType": "VARCHAR",
+        "name": "PUBLISHER",
+        "width": "",
+        "type": "out",
+        "ordinal": 2
+      }],
+      "returnType": "no result",
+      "remarks": ""
+    },
+    {
+      "name": "NEW_PUBLISHER",
+      "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
+      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10160 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER",
+      "specificName": "NEW_PUBLISHER_10160",
       "type": "procedure",
       "parameters": [
         {
@@ -3997,27 +4014,27 @@
       "remarks": ""
     },
     {
-      "name": "NEW_PUBLISHER",
-      "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
-      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10160 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'",
-      "specificName": "NEW_PUBLISHER_10160",
-      "type": "procedure",
+      "name": "CUSTOMADD",
+      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
+      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10162 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)",
+      "specificName": "CUSTOMADD_10162",
+      "type": "function",
       "parameters": [{
-        "databaseSpecificType": "CHARACTER VARYING",
-        "dataType": "VARCHAR",
-        "name": "PUBLISHER",
+        "databaseSpecificType": "INTEGER",
+        "dataType": "INTEGER",
+        "name": "ONE",
         "width": "",
-        "type": "out",
+        "type": "in",
         "ordinal": 2
       }],
-      "returnType": "no result",
+      "returnType": "does not return a table",
       "remarks": ""
     },
     {
       "name": "CUSTOMADD",
       "fullName": "PUBLIC.BOOKS.CUSTOMADD",
-      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10162 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO",
-      "specificName": "CUSTOMADD_10162",
+      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10161 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO",
+      "specificName": "CUSTOMADD_10161",
       "type": "function",
       "parameters": [
         {
@@ -4039,23 +4056,6 @@
       ],
       "returnType": "does not return a table",
       "remarks": ""
-    },
-    {
-      "name": "CUSTOMADD",
-      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
-      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10163 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)",
-      "specificName": "CUSTOMADD_10163",
-      "type": "function",
-      "parameters": [{
-        "databaseSpecificType": "INTEGER",
-        "dataType": "INTEGER",
-        "name": "ONE",
-        "width": "",
-        "type": "in",
-        "ordinal": 2
-      }],
-      "returnType": "does not return a table",
-      "remarks": ""
     }
   ],
   "sequences": {
@@ -4071,7 +4071,7 @@
     "isJDBCCompliant": "true",
     "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
     "driverName": "HSQL Database Engine Driver",
-    "url": "jdbc:hsqldb:hsql://0.0.0.0:60146/schemacrawler60146",
+    "url": "jdbc:hsqldb:hsql://0.0.0.0:56161/schemacrawler56161",
     "jdbcDriverProperties": [
       {
         "name": "default_schema",

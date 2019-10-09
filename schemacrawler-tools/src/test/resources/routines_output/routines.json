@@ -1,7 +1,7 @@
 [
 {
   "schemaCrawlerInfo": {
-    "productVersion": "15.07.01",
+    "productVersion": "16.1.2",
     "productName": "SchemaCrawler"
   },
   "columnDataypes": [
@@ -1241,15 +1241,30 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "runId": "91730dea-ecd8-40c2-85d7-0ba430b6dae4",
-    "crawlTimestamp": "2019-06-25 20:46:17",
+    "runId": "37dd4f84-3c10-405e-affc-a92378bdd2e6",
+    "crawlTimestamp": "2019-10-09 01:01:26",
     "title": ""
   },
   "routines": [
     {
       "name": "NEW_PUBLISHER",
-      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10161 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER",
-      "specificName": "NEW_PUBLISHER_10161",
+      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_FORCE_VALUE LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'",
+      "specificName": "NEW_PUBLISHER_FORCE_VALUE",
+      "type": "procedure",
+      "parameters": [{
+        "databaseSpecificType": "CHARACTER VARYING",
+        "dataType": "VARCHAR",
+        "name": "PUBLISHER",
+        "width": "",
+        "type": "out"
+      }],
+      "returnType": "no result",
+      "remarks": ""
+    },
+    {
+      "name": "NEW_PUBLISHER",
+      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10160 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER",
+      "specificName": "NEW_PUBLISHER_10160",
       "type": "procedure",
       "parameters": [
         {
@@ -1271,24 +1286,24 @@
       "remarks": ""
     },
     {
-      "name": "NEW_PUBLISHER",
-      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10160 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'",
-      "specificName": "NEW_PUBLISHER_10160",
-      "type": "procedure",
+      "name": "CUSTOMADD",
+      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10162 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)",
+      "specificName": "CUSTOMADD_10162",
+      "type": "function",
       "parameters": [{
-        "databaseSpecificType": "CHARACTER VARYING",
-        "dataType": "VARCHAR",
-        "name": "PUBLISHER",
+        "databaseSpecificType": "INTEGER",
+        "dataType": "INTEGER",
+        "name": "ONE",
         "width": "",
-        "type": "out"
+        "type": "in"
       }],
-      "returnType": "no result",
+      "returnType": "does not return a table",
       "remarks": ""
     },
     {
       "name": "CUSTOMADD",
-      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10162 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO",
-      "specificName": "CUSTOMADD_10162",
+      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10161 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO",
+      "specificName": "CUSTOMADD_10161",
       "type": "function",
       "parameters": [
         {
@@ -1308,21 +1323,6 @@
       ],
       "returnType": "does not return a table",
       "remarks": ""
-    },
-    {
-      "name": "CUSTOMADD",
-      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10163 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)",
-      "specificName": "CUSTOMADD_10163",
-      "type": "function",
-      "parameters": [{
-        "databaseSpecificType": "INTEGER",
-        "dataType": "INTEGER",
-        "name": "ONE",
-        "width": "",
-        "type": "in"
-      }],
-      "returnType": "does not return a table",
-      "remarks": ""
     }
   ],
   "jdbcDriverInfo": {
@@ -1330,7 +1330,7 @@
     "isJDBCCompliant": "true",
     "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
     "driverName": "HSQL Database Engine Driver",
-    "url": "jdbc:hsqldb:hsql://0.0.0.0:60697/schemacrawler60697",
+    "url": "jdbc:hsqldb:hsql://0.0.0.0:56161/schemacrawler56161",
     "jdbcDriverProperties": [
       {
         "name": "default_schema",

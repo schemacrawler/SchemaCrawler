@@ -264,13 +264,13 @@ FK_WRITER_JOIN                             [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_FK_WRITER_JOIN_10202                          [non-unique index]
+SYS_IDX_FK_WRITER_JOIN_10201                          [non-unique index]
 1   WRITERID                          ascending                   
 
-SYS_IDX_PK_EXTRA_PK_10198                                 [unique index]
+SYS_IDX_PK_EXTRA_PK_10197                                 [unique index]
 3   ID                                ascending                   
 
-SYS_IDX_FK_PUBLICATION_JOIN_10204                     [non-unique index]
+SYS_IDX_FK_PUBLICATION_JOIN_10203                     [non-unique index]
 2   PUBLICATIONID                     ascending                   
 
 
@@ -314,10 +314,10 @@ FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_FK_PUBLICATIONS_WRITER_10183                  [non-unique index]
+SYS_IDX_FK_PUBLICATIONS_WRITER_10182                  [non-unique index]
 4   WRITERID                          ascending                   
 
-SYS_IDX_PK_PUBLICATIONS_10179                             [unique index]
+SYS_IDX_PK_PUBLICATIONS_10178                             [unique index]
 1   ID                                ascending                   
 
 
@@ -337,10 +337,10 @@ FK_WRITER                                  [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_FK_WRITER_10190                               [non-unique index]
+SYS_IDX_FK_WRITER_10189                               [non-unique index]
 2   WRITERID                          ascending                   
 
-SYS_IDX_FK_PUBLICATION_10192                          [non-unique index]
+SYS_IDX_FK_PUBLICATION_10191                          [non-unique index]
 1   PUBLICATIONID                     ascending                   
 
 
@@ -362,10 +362,10 @@ FK_SELFREFERENCE                           [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_PK_SELFREFERENCE_10208                            [unique index]
+SYS_IDX_PK_SELFREFERENCE_10207                            [unique index]
 1   ID                                ascending                   
 
-SYS_IDX_FK_SELFREFERENCE_10211                        [non-unique index]
+SYS_IDX_FK_SELFREFERENCE_10210                        [non-unique index]
 1   ID                                ascending                   
 
 
@@ -412,10 +412,10 @@ FK_WRITER                                  [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_PK_WRITERS_10169                                  [unique index]
+SYS_IDX_PK_WRITERS_10168                                  [unique index]
 1   ID                                ascending                   
 
-SYS_IDX_FK_WRITERS_PUBLICATION_10214                  [non-unique index]
+SYS_IDX_FK_WRITERS_PUBLICATION_10213                  [non-unique index]
 18  PUBLICATION_ID                    ascending                   
 
 IDX_A1_WRITERS                                        [non-unique index]
@@ -459,7 +459,7 @@ FK_SALES_REGIONS                           [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_PK_CUSTOMERS_10228                                [unique index]
+SYS_IDX_PK_CUSTOMERS_10227                                [unique index]
 3   POSTALCODE                        ascending                   
 4   COUNTRY                           ascending                   
 
@@ -485,10 +485,10 @@ FK_SALES_REGIONS                           [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_FK_SALES_SALESDATA_10242                      [non-unique index]
+SYS_IDX_FK_SALES_SALESDATA_10241                      [non-unique index]
 6   SALESDATAID                       ascending                   
 
-SYS_IDX_FK_SALES_REGIONS_10240                        [non-unique index]
+SYS_IDX_FK_SALES_REGIONS_10239                        [non-unique index]
 1   POSTALCODE                        ascending                   
 2   COUNTRY                           ascending                   
 
@@ -506,6 +506,6 @@ FK_SALES_SALESDATA                         [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_UQ_CUSTOMERS_10234                                [unique index]
+SYS_IDX_UQ_CUSTOMERS_10233                                [unique index]
 1   SALESDATAID                       ascending                   
 

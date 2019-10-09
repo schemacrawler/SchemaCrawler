@@ -412,8 +412,8 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "runId": "0fb6cf32-2a75-44d4-aed9-af974b55c30f",
-    "crawlTimestamp": "2018-09-25 23:03:36",
+    "runId": "a123d21c-65f5-4d34-9ab1-b5bb2a9cf48f",
+    "crawlTimestamp": "2019-10-08 08:16:33",
     "title": ""
   }
 },
@@ -620,13 +620,13 @@
           "severity": "high",
           "description": "redundant index",
           "id": "schemacrawler.tools.linter.LinterRedundantIndexes",
-          "value": "SYS_IDX_FK_SELFREFERENCE_10211"
+          "value": "SYS_IDX_FK_SELFREFERENCE_10210"
         },
         {
           "severity": "high",
           "description": "redundant index",
           "id": "schemacrawler.tools.linter.LinterRedundantIndexes",
-          "value": "SYS_IDX_PK_SELFREFERENCE_10208"
+          "value": "SYS_IDX_PK_SELFREFERENCE_10207"
         },
         {
           "severity": "low",

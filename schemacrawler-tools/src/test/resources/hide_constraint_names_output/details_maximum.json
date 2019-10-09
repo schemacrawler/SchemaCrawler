@@ -1,7 +1,7 @@
 [
 {
   "schemaCrawlerInfo": {
-    "productVersion": "15.07.01",
+    "productVersion": "16.1.2",
     "productName": "SchemaCrawler"
   },
   "tables": [
@@ -3746,16 +3746,32 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "runId": "74730d33-7149-4c47-86d5-8d5a8016383f",
-    "crawlTimestamp": "2019-06-24 00:28:37",
+    "runId": "acb4096a-fb0e-405e-8a84-4fec156bd6ed",
+    "crawlTimestamp": "2019-10-09 01:01:16",
     "title": ""
   },
   "routines": [
     {
       "name": "NEW_PUBLISHER",
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
-      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10161 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER",
-      "specificName": "NEW_PUBLISHER_10161",
+      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_FORCE_VALUE LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'",
+      "specificName": "NEW_PUBLISHER_FORCE_VALUE",
+      "type": "procedure",
+      "parameters": [{
+        "databaseSpecificType": "CHARACTER VARYING",
+        "dataType": "VARCHAR",
+        "name": "PUBLISHER",
+        "width": "",
+        "type": "out"
+      }],
+      "returnType": "no result",
+      "remarks": ""
+    },
+    {
+      "name": "NEW_PUBLISHER",
+      "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
+      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10160 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER",
+      "specificName": "NEW_PUBLISHER_10160",
       "type": "procedure",
       "parameters": [
         {
@@ -3777,26 +3793,26 @@
       "remarks": ""
     },
     {
-      "name": "NEW_PUBLISHER",
-      "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
-      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10160 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'",
-      "specificName": "NEW_PUBLISHER_10160",
-      "type": "procedure",
+      "name": "CUSTOMADD",
+      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
+      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10162 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)",
+      "specificName": "CUSTOMADD_10162",
+      "type": "function",
       "parameters": [{
-        "databaseSpecificType": "CHARACTER VARYING",
-        "dataType": "VARCHAR",
-        "name": "PUBLISHER",
+        "databaseSpecificType": "INTEGER",
+        "dataType": "INTEGER",
+        "name": "ONE",
         "width": "",
-        "type": "out"
+        "type": "in"
       }],
-      "returnType": "no result",
+      "returnType": "does not return a table",
       "remarks": ""
     },
     {
       "name": "CUSTOMADD",
       "fullName": "PUBLIC.BOOKS.CUSTOMADD",
-      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10162 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO",
-      "specificName": "CUSTOMADD_10162",
+      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10161 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO",
+      "specificName": "CUSTOMADD_10161",
       "type": "function",
       "parameters": [
         {
@@ -3816,22 +3832,6 @@
       ],
       "returnType": "does not return a table",
       "remarks": ""
-    },
-    {
-      "name": "CUSTOMADD",
-      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
-      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10163 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)",
-      "specificName": "CUSTOMADD_10163",
-      "type": "function",
-      "parameters": [{
-        "databaseSpecificType": "INTEGER",
-        "dataType": "INTEGER",
-        "name": "ONE",
-        "width": "",
-        "type": "in"
-      }],
-      "returnType": "does not return a table",
-      "remarks": ""
     }
   ],
   "sequences": {
@@ -3847,7 +3847,7 @@
     "isJDBCCompliant": "true",
     "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
     "driverName": "HSQL Database Engine Driver",
-    "url": "jdbc:hsqldb:hsql://0.0.0.0:57868/schemacrawler57868",
+    "url": "jdbc:hsqldb:hsql://0.0.0.0:56161/schemacrawler56161",
     "jdbcDriverProperties": [
       {
         "name": "default_schema",

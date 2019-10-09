@@ -1,7 +1,7 @@
 [
 {
   "schemaCrawlerInfo": {
-    "productVersion": "15.07.01",
+    "productVersion": "16.1.2",
     "productName": "SchemaCrawler"
   },
   "tables": [
@@ -1584,7 +1584,7 @@
           }
         ],
         "unique": true,
-        "name": "SYS_IDX_PK_CUSTOMERS_10228",
+        "name": "SYS_IDX_PK_CUSTOMERS_10227",
         "definition": ""
       }],
       "name": "REGIONS",
@@ -1774,7 +1774,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_FK_SALES_SALESDATA_10242",
+          "name": "SYS_IDX_FK_SALES_SALESDATA_10241",
           "definition": ""
         },
         {
@@ -1791,7 +1791,7 @@
             }
           ],
           "unique": false,
-          "name": "SYS_IDX_FK_SALES_REGIONS_10240",
+          "name": "SYS_IDX_FK_SALES_REGIONS_10239",
           "definition": ""
         }
       ],
@@ -1899,7 +1899,7 @@
           "definition": ""
         },
         "unique": true,
-        "name": "SYS_IDX_UQ_CUSTOMERS_10234",
+        "name": "SYS_IDX_UQ_CUSTOMERS_10233",
         "definition": ""
       }],
       "name": "SALESDATA",
@@ -3172,8 +3172,8 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "runId": "d5048ed8-bfde-4993-9f94-039f3f20f4a2",
-    "crawlTimestamp": "2019-06-25 20:46:25",
+    "runId": "d140e3b6-ff74-4f5e-95fb-574e35612a34",
+    "crawlTimestamp": "2019-10-09 01:01:29",
     "title": ""
   },
   "routines": [
@@ -3181,7 +3181,23 @@
       "name": "NEW_PUBLISHER",
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
       "definition": "",
-      "specificName": "NEW_PUBLISHER_10161",
+      "specificName": "NEW_PUBLISHER_FORCE_VALUE",
+      "type": "procedure",
+      "parameters": [{
+        "databaseSpecificType": "CHARACTER VARYING",
+        "dataType": "VARCHAR",
+        "name": "PUBLISHER",
+        "width": "",
+        "type": "out"
+      }],
+      "returnType": "no result",
+      "remarks": ""
+    },
+    {
+      "name": "NEW_PUBLISHER",
+      "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
+      "definition": "",
+      "specificName": "NEW_PUBLISHER_10160",
       "type": "procedure",
       "parameters": [
         {
@@ -3203,26 +3219,26 @@
       "remarks": ""
     },
     {
-      "name": "NEW_PUBLISHER",
-      "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
+      "name": "CUSTOMADD",
+      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
       "definition": "",
-      "specificName": "NEW_PUBLISHER_10160",
-      "type": "procedure",
+      "specificName": "CUSTOMADD_10162",
+      "type": "function",
       "parameters": [{
-        "databaseSpecificType": "CHARACTER VARYING",
-        "dataType": "VARCHAR",
-        "name": "PUBLISHER",
+        "databaseSpecificType": "INTEGER",
+        "dataType": "INTEGER",
+        "name": "ONE",
         "width": "",
-        "type": "out"
+        "type": "in"
       }],
-      "returnType": "no result",
+      "returnType": "does not return a table",
       "remarks": ""
     },
     {
       "name": "CUSTOMADD",
       "fullName": "PUBLIC.BOOKS.CUSTOMADD",
       "definition": "",
-      "specificName": "CUSTOMADD_10162",
+      "specificName": "CUSTOMADD_10161",
       "type": "function",
       "parameters": [
         {
@@ -3242,22 +3258,6 @@
       ],
       "returnType": "does not return a table",
       "remarks": ""
-    },
-    {
-      "name": "CUSTOMADD",
-      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
-      "definition": "",
-      "specificName": "CUSTOMADD_10163",
-      "type": "function",
-      "parameters": [{
-        "databaseSpecificType": "INTEGER",
-        "dataType": "INTEGER",
-        "name": "ONE",
-        "width": "",
-        "type": "in"
-      }],
-      "returnType": "does not return a table",
-      "remarks": ""
     }
   ],
   "jdbcDriverInfo": {
@@ -3265,7 +3265,7 @@
     "isJDBCCompliant": "true",
     "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
     "driverName": "HSQL Database Engine Driver",
-    "url": "jdbc:hsqldb:hsql://0.0.0.0:60697/schemacrawler60697",
+    "url": "jdbc:hsqldb:hsql://0.0.0.0:56161/schemacrawler56161",
     "jdbcDriverProperties": [
       {
         "name": "default_schema",

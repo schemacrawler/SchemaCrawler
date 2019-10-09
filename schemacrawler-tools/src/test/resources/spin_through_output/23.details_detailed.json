@@ -1,7 +1,7 @@
 [
 {
   "schemaCrawlerInfo": {
-    "productVersion": "15.06.01",
+    "productVersion": "16.1.2",
     "productName": "SchemaCrawler"
   },
   "tables": [
@@ -1446,7 +1446,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_FK_WRITER_JOIN_10202",
+          "name": "SYS_IDX_FK_WRITER_JOIN_10201",
           "definition": ""
         },
         {
@@ -1456,7 +1456,7 @@
             "definition": ""
           },
           "unique": true,
-          "name": "SYS_IDX_PK_EXTRA_PK_10198",
+          "name": "SYS_IDX_PK_EXTRA_PK_10197",
           "definition": ""
         },
         {
@@ -1466,7 +1466,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_FK_PUBLICATION_JOIN_10204",
+          "name": "SYS_IDX_FK_PUBLICATION_JOIN_10203",
           "definition": ""
         }
       ],
@@ -1574,7 +1574,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10195",
+          "name": "SYS_CT_10194",
           "definition": "FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL",
           "type": "check"
         },
@@ -1590,7 +1590,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10196",
+          "name": "SYS_CT_10195",
           "definition": "FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL",
           "type": "check"
         },
@@ -1606,7 +1606,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10197",
+          "name": "SYS_CT_10196",
           "definition": "FOR_LINT.EXTRA_PK.ID IS NOT NULL",
           "type": "check"
         }
@@ -1698,7 +1698,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_FK_PUBLICATIONS_WRITER_10183",
+          "name": "SYS_IDX_FK_PUBLICATIONS_WRITER_10182",
           "definition": ""
         },
         {
@@ -1708,7 +1708,7 @@
             "definition": ""
           },
           "unique": true,
-          "name": "SYS_IDX_PK_PUBLICATIONS_10179",
+          "name": "SYS_IDX_PK_PUBLICATIONS_10178",
           "definition": ""
         }
       ],
@@ -1860,7 +1860,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10176",
+          "name": "SYS_CT_10175",
           "definition": "FOR_LINT.PUBLICATIONS.ID IS NOT NULL",
           "type": "check"
         },
@@ -1876,7 +1876,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10177",
+          "name": "SYS_CT_10176",
           "definition": "FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL",
           "type": "check"
         },
@@ -1892,7 +1892,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10178",
+          "name": "SYS_CT_10177",
           "definition": "FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL",
           "type": "check"
         }
@@ -1940,7 +1940,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_FK_WRITER_10190",
+          "name": "SYS_IDX_FK_WRITER_10189",
           "definition": ""
         },
         {
@@ -1950,7 +1950,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_FK_PUBLICATION_10192",
+          "name": "SYS_IDX_FK_PUBLICATION_10191",
           "definition": ""
         }
       ],
@@ -2030,7 +2030,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10185",
+          "name": "SYS_CT_10184",
           "definition": "FOR_LINT.PUBLICATIONWRITERS.PUBLICATIONID IS NOT NULL",
           "type": "check"
         },
@@ -2046,7 +2046,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10186",
+          "name": "SYS_CT_10185",
           "definition": "FOR_LINT.PUBLICATIONWRITERS.WRITERID IS NOT NULL",
           "type": "check"
         }
@@ -2073,7 +2073,7 @@
             "definition": ""
           },
           "unique": true,
-          "name": "SYS_IDX_PK_SELFREFERENCE_10208",
+          "name": "SYS_IDX_PK_SELFREFERENCE_10207",
           "definition": ""
         },
         {
@@ -2083,7 +2083,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_FK_SELFREFERENCE_10211",
+          "name": "SYS_IDX_FK_SELFREFERENCE_10210",
           "definition": ""
         }
       ],
@@ -2163,7 +2163,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10206",
+          "name": "SYS_CT_10205",
           "definition": "FOR_LINT.SELFREFERENCE.ID IS NOT NULL",
           "type": "check"
         },
@@ -2179,7 +2179,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10207",
+          "name": "SYS_CT_10206",
           "definition": "FOR_LINT.SELFREFERENCE.TITLE IS NOT NULL",
           "type": "check"
         }
@@ -2247,7 +2247,7 @@
             "definition": ""
           },
           "unique": true,
-          "name": "SYS_IDX_PK_WRITERS_10169",
+          "name": "SYS_IDX_PK_WRITERS_10168",
           "definition": ""
         },
         {
@@ -2257,7 +2257,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_FK_WRITERS_PUBLICATION_10214",
+          "name": "SYS_IDX_FK_WRITERS_PUBLICATION_10213",
           "definition": ""
         },
         {
@@ -2623,7 +2623,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10164",
+          "name": "SYS_CT_10163",
           "definition": "FOR_LINT.WRITERS.ID IS NOT NULL",
           "type": "check"
         },
@@ -2639,7 +2639,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10165",
+          "name": "SYS_CT_10164",
           "definition": "FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL",
           "type": "check"
         },
@@ -2655,7 +2655,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10166",
+          "name": "SYS_CT_10165",
           "definition": "FOR_LINT.WRITERS.LASTNAME IS NOT NULL",
           "type": "check"
         },
@@ -2671,7 +2671,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10167",
+          "name": "SYS_CT_10166",
           "definition": "FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL",
           "type": "check"
         },
@@ -2687,7 +2687,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10168",
+          "name": "SYS_CT_10167",
           "definition": "FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL",
           "type": "check"
         }
@@ -2735,7 +2735,7 @@
           }
         ],
         "unique": true,
-        "name": "SYS_IDX_PK_CUSTOMERS_10228",
+        "name": "SYS_IDX_PK_CUSTOMERS_10227",
         "definition": ""
       }],
       "columns": [
@@ -2835,7 +2835,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10224",
+          "name": "SYS_CT_10223",
           "definition": "\"PUBLISHER SALES\".REGIONS.CITY IS NOT NULL",
           "type": "check"
         },
@@ -2851,7 +2851,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10225",
+          "name": "SYS_CT_10224",
           "definition": "\"PUBLISHER SALES\".REGIONS.STATE IS NOT NULL",
           "type": "check"
         },
@@ -2867,7 +2867,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10226",
+          "name": "SYS_CT_10225",
           "definition": "\"PUBLISHER SALES\".REGIONS.POSTALCODE IS NOT NULL",
           "type": "check"
         },
@@ -2883,7 +2883,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10227",
+          "name": "SYS_CT_10226",
           "definition": "\"PUBLISHER SALES\".REGIONS.COUNTRY IS NOT NULL",
           "type": "check"
         }
@@ -2944,7 +2944,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_FK_SALES_SALESDATA_10242",
+          "name": "SYS_IDX_FK_SALES_SALESDATA_10241",
           "definition": ""
         },
         {
@@ -2961,7 +2961,7 @@
             }
           ],
           "unique": false,
-          "name": "SYS_IDX_FK_SALES_REGIONS_10240",
+          "name": "SYS_IDX_FK_SALES_REGIONS_10239",
           "definition": ""
         }
       ],
@@ -3102,7 +3102,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10235",
+          "name": "SYS_CT_10234",
           "definition": "\"PUBLISHER SALES\".SALES.POSTALCODE IS NOT NULL",
           "type": "check"
         },
@@ -3118,7 +3118,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10236",
+          "name": "SYS_CT_10235",
           "definition": "\"PUBLISHER SALES\".SALES.COUNTRY IS NOT NULL",
           "type": "check"
         }
@@ -3144,7 +3144,7 @@
           "definition": ""
         },
         "unique": true,
-        "name": "SYS_IDX_UQ_CUSTOMERS_10234",
+        "name": "SYS_IDX_UQ_CUSTOMERS_10233",
         "definition": ""
       }],
       "columns": [
@@ -3463,16 +3463,32 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "runId": "3486439d-9cd1-49a1-9835-818079e02e45",
-    "crawlTimestamp": "2018-09-25 22:43:51",
+    "runId": "dbcfd3b7-0bfb-48d0-a704-3e4c468f4198",
+    "crawlTimestamp": "2019-10-09 01:00:55",
     "title": ""
   },
   "routines": [
     {
       "name": "NEW_PUBLISHER",
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
-      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10161 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER",
-      "specificName": "NEW_PUBLISHER_10161",
+      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_FORCE_VALUE LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'",
+      "specificName": "NEW_PUBLISHER_FORCE_VALUE",
+      "type": "procedure",
+      "parameters": [{
+        "databaseSpecificType": "CHARACTER VARYING",
+        "dataType": "VARCHAR",
+        "name": "PUBLISHER",
+        "width": "",
+        "type": "out"
+      }],
+      "returnType": "no result",
+      "remarks": ""
+    },
+    {
+      "name": "NEW_PUBLISHER",
+      "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
+      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10160 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER",
+      "specificName": "NEW_PUBLISHER_10160",
       "type": "procedure",
       "parameters": [
         {
@@ -3494,26 +3510,26 @@
       "remarks": ""
     },
     {
-      "name": "NEW_PUBLISHER",
-      "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
-      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10160 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'",
-      "specificName": "NEW_PUBLISHER_10160",
-      "type": "procedure",
+      "name": "CUSTOMADD",
+      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
+      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10162 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)",
+      "specificName": "CUSTOMADD_10162",
+      "type": "function",
       "parameters": [{
-        "databaseSpecificType": "CHARACTER VARYING",
-        "dataType": "VARCHAR",
-        "name": "PUBLISHER",
+        "databaseSpecificType": "INTEGER",
+        "dataType": "INTEGER",
+        "name": "ONE",
         "width": "",
-        "type": "out"
+        "type": "in"
       }],
-      "returnType": "no result",
+      "returnType": "does not return a table",
       "remarks": ""
     },
     {
       "name": "CUSTOMADD",
       "fullName": "PUBLIC.BOOKS.CUSTOMADD",
-      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10162 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO",
-      "specificName": "CUSTOMADD_10162",
+      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10161 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO",
+      "specificName": "CUSTOMADD_10161",
       "type": "function",
       "parameters": [
         {
@@ -3531,22 +3547,6 @@
           "type": "in"
         }
       ],
-      "returnType": "does not return a table",
-      "remarks": ""
-    },
-    {
-      "name": "CUSTOMADD",
-      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
-      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10163 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)",
-      "specificName": "CUSTOMADD_10163",
-      "type": "function",
-      "parameters": [{
-        "databaseSpecificType": "INTEGER",
-        "dataType": "INTEGER",
-        "name": "ONE",
-        "width": "",
-        "type": "in"
-      }],
       "returnType": "does not return a table",
       "remarks": ""
     },
@@ -3824,6 +3824,6 @@
     "isJDBCCompliant": "true",
     "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
     "driverName": "HSQL Database Engine Driver",
-    "url": "jdbc:hsqldb:hsql://localhost/schemacrawler"
+    "url": "jdbc:hsqldb:hsql://0.0.0.0:56161/schemacrawler56161"
   }
 }]

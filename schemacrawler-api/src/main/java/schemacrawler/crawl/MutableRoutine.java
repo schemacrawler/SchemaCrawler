@@ -29,13 +29,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import schemacrawler.schema.Routine;
-import schemacrawler.schema.RoutineBodyType;
-import schemacrawler.schema.RoutineType;
-import schemacrawler.schema.Schema;
+import schemacrawler.schema.*;
+import schemacrawler.utility.CompareUtility;
 
 /**
  * Represents a database routine. Created from metadata returned by a
@@ -47,6 +47,38 @@ abstract class MutableRoutine
   extends AbstractDatabaseObject
   implements Routine
 {
+  @Override
+  public RoutineType getRoutineType()
+  {
+    return null;
+  }
+
+  @Override
+  public int compareTo(final NamedObject obj)
+  {
+    int comparison = super.compareTo(obj);
+
+    if (obj instanceof Routine)
+    {
+      final Routine other = (Routine) obj;
+      if (comparison == 0)
+      {
+        final List<RoutineParameter<? extends Routine>> thisParameters = getParameters();
+        final List<RoutineParameter<? extends Routine>> otherParameters = other
+          .getParameters();
+
+        comparison = CompareUtility
+          .compareLists(thisParameters, otherParameters);
+      }
+
+      if (comparison == 0)
+      {
+        comparison = this.getSpecificName().compareTo(other.getSpecificName());
+      }
+    }
+
+    return comparison;
+  }
 
   private static final long serialVersionUID = 3906925686089134130L;
 
@@ -58,10 +90,8 @@ abstract class MutableRoutine
    * Effective Java - Item 17 - Minimize Mutability - Package-private
    * constructors make a class effectively final
    *
-   * @param schema
-   *        Schema of this object
-   * @param name
-   *        Name of the named object
+   * @param schema Schema of this object
+   * @param name   Name of the named object
    */
   MutableRoutine(final Schema schema, final String name)
   {
@@ -91,7 +121,14 @@ abstract class MutableRoutine
   @Override
   public final String getSpecificName()
   {
-    return specificName;
+    if (isBlank(specificName))
+    {
+      return getName();
+    }
+    else
+    {
+      return specificName;
+    }
   }
 
   /**

@@ -652,13 +652,13 @@
           "severity": "high",
           "description": "redundant index",
           "id": "schemacrawler.tools.linter.LinterRedundantIndexes",
-          "value": "SYS_IDX_FK_SELFREFERENCE_10211"
+          "value": "SYS_IDX_FK_SELFREFERENCE_10210"
         },
         {
           "severity": "high",
           "description": "redundant index",
           "id": "schemacrawler.tools.linter.LinterRedundantIndexes",
-          "value": "SYS_IDX_PK_SELFREFERENCE_10208"
+          "value": "SYS_IDX_PK_SELFREFERENCE_10207"
         },
         {
           "severity": "low",
