@@ -29,6 +29,7 @@ package schemacrawler.integration.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.matchesPattern;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.*;
@@ -40,7 +41,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.Db2Container;
 import org.testcontainers.junit.jupiter.Container;
@@ -62,7 +62,11 @@ public class DB2Test
 {
 
   @Container
-  private Db2Container dbContainer = new Db2Container().acceptLicense();
+  private Db2Container dbContainer = new Db2Container().acceptLicense()
+   // .withUsername("schemacrawler")
+    .withExposedPorts(50001)
+    .withPassword("schemacrawler")
+   ;
 
   @BeforeEach
   public void createDatabase()
@@ -75,7 +79,6 @@ public class DB2Test
     createDatabase("/db2.scripts.txt");
   }
 
-  @Disabled("TODO: Locate database identifier for DB2")
   @Test
   public void testDB2Catalog()
     throws Exception
@@ -103,9 +106,9 @@ public class DB2Test
     final List<Property> serverInfo = new ArrayList<>(catalog.getDatabaseInfo()
                                                         .getServerInfo());
 
-    assertThat(serverInfo.size(), equalTo(1));
-    assertThat(serverInfo.get(0).getName(), equalTo("current_database"));
-    assertThat(serverInfo.get(0).getValue(), equalTo("test"));
+    assertThat(serverInfo.size(), equalTo(4));
+    assertThat(serverInfo.get(0).getName(), equalTo("HOST_NAME"));
+    assertThat(String.valueOf(serverInfo.get(0).getValue()), matchesPattern("[0-9a-z]{12}"));
   }
 
   @Test
@@ -136,8 +139,7 @@ public class DB2Test
                                     .toConfig());
 
     assertThat(outputOf(executableExecution(getConnection(), executable)),
-               hasSameContentAs(classpathResource(
-                 "testDB2WithConnection.txt")));
+               hasSameContentAs(classpathResource("testDB2WithConnection.txt")));
   }
 
 }

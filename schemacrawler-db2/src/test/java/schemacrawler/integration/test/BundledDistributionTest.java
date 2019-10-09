@@ -50,7 +50,7 @@ public class BundledDistributionTest
     final DatabaseConnector databaseSystemIdentifier = registry.lookupDatabaseConnector(
       "db2");
     assertThat(databaseSystemIdentifier.getSchemaRetrievalOptionsBuilder(
-      connection).toOptions().getInformationSchemaViews().size(), is(11));
+      connection).toOptions().getInformationSchemaViews().size(), is(12));
   }
 
   @Test
