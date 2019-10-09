@@ -63,10 +63,7 @@ public class DB2Test
 
   @Container
   private Db2Container dbContainer = new Db2Container().acceptLicense()
-   // .withUsername("schemacrawler")
-    .withExposedPorts(50001)
-    .withPassword("schemacrawler")
-   ;
+    .withExposedPorts(50001).withPassword("schemacrawler");
 
   @BeforeEach
   public void createDatabase()
@@ -108,7 +105,8 @@ public class DB2Test
 
     assertThat(serverInfo.size(), equalTo(4));
     assertThat(serverInfo.get(0).getName(), equalTo("HOST_NAME"));
-    assertThat(String.valueOf(serverInfo.get(0).getValue()), matchesPattern("[0-9a-z]{12}"));
+    assertThat(String.valueOf(serverInfo.get(0).getValue()),
+               matchesPattern("[0-9a-z]{12}"));
   }
 
   @Test
