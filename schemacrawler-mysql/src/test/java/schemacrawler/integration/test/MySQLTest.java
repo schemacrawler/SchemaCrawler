@@ -34,37 +34,36 @@ import static schemacrawler.test.utility.FileHasContent.*;
 
 import java.sql.SQLException;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.schemacrawler.*;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
-import schemacrawler.test.utility.DatabaseServerContainer;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
+@Testcontainers
 public class MySQLTest
   extends BaseAdditionalDatabaseTest
 {
 
-  private DatabaseServerContainer databaseServer;
+  @Container
+  private MySQLContainer dbContainer = new MySQLContainer<>()
+    .withCommand("mysqld", "--lower_case_table_names=1")
+    .withUsername("schemacrawler").withDatabaseName("books");
 
   @BeforeEach
   public void createDatabase()
-    throws SchemaCrawlerException, SQLException
+    throws SQLException, SchemaCrawlerException
   {
-    databaseServer = new MySQLDatabaseServerContainer("books");
-    databaseServer.startServer();
+    createDataSource(dbContainer.getJdbcUrl(),
+                     dbContainer.getUsername(),
+                     dbContainer.getPassword());
 
-    createDataSource(databaseServer);
     createDatabase("/mysql.scripts.txt");
-  }
-
-  @AfterEach
-  public void stopDatabaseServer()
-  {
-    databaseServer.stopServer();
   }
 
   @Test

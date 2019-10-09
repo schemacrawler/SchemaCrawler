@@ -34,12 +34,15 @@ import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
@@ -50,13 +53,25 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.server.mysql.MySQLUtility;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
-import schemacrawler.test.utility.DatabaseServerContainer;
 
+@Testcontainers
 public class MySQLEnumColumnTest
   extends BaseAdditionalDatabaseTest
 {
 
-  private DatabaseServerContainer databaseServer;
+  @Container
+  private MySQLContainer dbContainer = new MySQLContainer<>()
+    .withCommand("mysqld", "--lower_case_table_names=1")
+    .withUsername("schemacrawler");;
+
+  @BeforeEach
+  public void createDatabase()
+    throws SQLException, SchemaCrawlerException
+  {
+    createDataSource(dbContainer.getJdbcUrl(),
+                     dbContainer.getUsername(),
+                     dbContainer.getPassword());
+  }
 
   @Test
   public void columnWithEnum()
@@ -84,22 +99,6 @@ public class MySQLEnumColumnTest
     assertThat(column, notNullValue());
     final List<String> enumValues = MySQLUtility.getEnumValues(column);
     assertThat(enumValues, containsInAnyOrder("small", "medium", "large"));
-  }
-
-  @BeforeEach
-  public void createDatabase()
-    throws SchemaCrawlerException
-  {
-    databaseServer = new MySQLDatabaseServerContainer();
-    databaseServer.startServer();
-
-    createDataSource(databaseServer);
-  }
-
-  @AfterEach
-  public void stopDatabaseServer()
-  {
-    databaseServer.stopServer();
   }
 
 }

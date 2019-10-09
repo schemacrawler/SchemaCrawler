@@ -39,41 +39,39 @@ import java.sql.Statement;
 import java.util.Collection;
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.*;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.server.postgresql.PostgreSQLDatabaseConnector;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
-import schemacrawler.test.utility.DatabaseServerContainer;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 
+@Testcontainers
 @DisplayName("Test for issue #258 on GitHub")
 public class PostgreSQLAdditionalTableAttributesTest
   extends BaseAdditionalDatabaseTest
 {
 
-  private DatabaseServerContainer databaseServer;
+  @Container
+  private PostgreSQLContainer dbContainer = new PostgreSQLContainer<>();
 
   @BeforeEach
   public void createDatabase()
-    throws SchemaCrawlerException
   {
-    databaseServer = new PostgreSQLDatabaseServerContainer();
-    databaseServer.startServer();
-
-    createDataSource(databaseServer);
-  }
-
-  @AfterEach
-  public void stopDatabaseServer()
-  {
-    databaseServer.stopServer();
+    createDataSource(dbContainer.getJdbcUrl(),
+                     dbContainer.getUsername(),
+                     dbContainer.getPassword());
   }
 
   @Test

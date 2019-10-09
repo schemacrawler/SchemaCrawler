@@ -39,42 +39,40 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Ignore;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.testcontainers.containers.Db2Container;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.*;
 import schemacrawler.server.db2.DB2DatabaseConnector;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
-import schemacrawler.test.utility.DatabaseServerContainer;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
-
+@Testcontainers
 public class DB2Test
   extends BaseAdditionalDatabaseTest
 {
 
-  private DatabaseServerContainer databaseServer;
+  @Container
+  private Db2Container dbContainer = new Db2Container().acceptLicense();
 
   @BeforeEach
   public void createDatabase()
     throws SQLException, SchemaCrawlerException
   {
-    databaseServer = new DB2DatabaseServerContainer();
-    databaseServer.startServer();
+    createDataSource(dbContainer.getJdbcUrl(),
+                     dbContainer.getUsername(),
+                     dbContainer.getPassword());
 
-    createDataSource(databaseServer);
     createDatabase("/db2.scripts.txt");
-  }
-
-  @AfterEach
-  public void stopDatabaseServer()
-  {
-    databaseServer.stopServer();
   }
 
   @Disabled("TODO: Locate database identifier for DB2")

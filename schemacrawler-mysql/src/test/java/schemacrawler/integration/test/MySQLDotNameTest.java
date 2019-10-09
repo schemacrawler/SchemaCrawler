@@ -33,12 +33,15 @@ import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.utility.SchemaCrawlerUtility.matchSchemaRetrievalOptions;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.crawl.MetadataRetrievalStrategy;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
@@ -47,14 +50,26 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.*;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
-import schemacrawler.test.utility.DatabaseServerContainer;
 
+@Testcontainers
 @DisplayName("Test for issue #252 on GitHub")
 public class MySQLDotNameTest
   extends BaseAdditionalDatabaseTest
 {
 
-  private DatabaseServerContainer databaseServer;
+  @Container
+  private MySQLContainer dbContainer = new MySQLContainer<>()
+    .withCommand("mysqld", "--lower_case_table_names=1")
+    .withUsername("schemacrawler");;
+
+  @BeforeEach
+  public void createDatabase()
+    throws SQLException, SchemaCrawlerException
+  {
+    createDataSource(dbContainer.getJdbcUrl(),
+                     dbContainer.getUsername(),
+                     dbContainer.getPassword());
+  }
 
   @Test
   @DisplayName("Retrieve table and columns names with a dot in them")
@@ -92,22 +107,6 @@ public class MySQLDotNameTest
     assertThat(table, notNullValue());
     final Column column = table.lookupColumn("a.b").orElse(null);
     assertThat(column, notNullValue());
-  }
-
-  @BeforeEach
-  public void createDatabase()
-    throws SchemaCrawlerException
-  {
-    databaseServer = new MySQLDatabaseServerContainer();
-    databaseServer.startServer();
-
-    createDataSource(databaseServer);
-  }
-
-  @AfterEach
-  public void stopDatabaseServer()
-  {
-    databaseServer.stopServer();
   }
 
 }

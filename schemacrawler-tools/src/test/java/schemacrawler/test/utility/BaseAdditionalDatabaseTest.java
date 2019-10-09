@@ -71,13 +71,6 @@ public abstract class BaseAdditionalDatabaseTest
     }
   }
 
-  protected void createDataSource(final DatabaseServerContainer databaseServerContainer)
-  {
-    createDataSource(databaseServerContainer.getConnectionUrl(),
-                     databaseServerContainer.getUser(),
-                     databaseServerContainer.getPassword());
-  }
-
   protected void createDataSource(final String connectionUrl,
                                   final String user,
                                   final String password)
