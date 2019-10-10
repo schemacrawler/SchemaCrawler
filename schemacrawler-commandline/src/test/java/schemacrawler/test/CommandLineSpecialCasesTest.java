@@ -89,7 +89,6 @@ public class CommandLineSpecialCasesTest
     argsMap.put("-command", "schema");
     argsMap.put("-output-format", "htmlx");
     argsMap.put("-info-level", "standard");
-    argsMap.put("-log-level", "CONFIG");
 
     run(testContext, argsMap, null, connectionInfo);
   }

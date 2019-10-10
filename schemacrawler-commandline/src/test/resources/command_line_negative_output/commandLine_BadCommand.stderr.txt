@@ -1,6 +1,6 @@
-SchemaCrawler 15.06.01
+SchemaCrawler 16.1.2
 
-Error: Cannot execute SchemaCrawler command
+Error: Unknown command <badcommand>: unexpected token: BADCOMMAND
 
 Re-run SchemaCrawler with just the
 -?
