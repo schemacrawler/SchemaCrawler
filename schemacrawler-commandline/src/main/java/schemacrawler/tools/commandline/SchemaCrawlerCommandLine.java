@@ -70,8 +70,17 @@ public final class SchemaCrawlerCommandLine
 
       executeCommandLine(commandLine);
     }
-    catch (final Throwable e)
+    catch (final Throwable e1)
     {
+      Throwable e = e1;
+      if (e1 instanceof picocli.CommandLine.PicocliException)
+      {
+        if (e1.getCause() != null)
+        {
+          e = e1.getCause();
+        }
+      }
+
       System.err.printf("%s %s%n%n",
                         Version.getProductName(),
                         Version.getVersion());
