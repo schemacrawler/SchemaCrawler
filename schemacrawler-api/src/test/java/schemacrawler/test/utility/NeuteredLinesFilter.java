@@ -62,6 +62,7 @@ final class NeuteredLinesFilter
     Pattern.compile(".*Oracle Corporation (Java|OpenJDK).*"),
     Pattern.compile(".*ServerName.*"),
     Pattern.compile(".*HOST_NAME.*"),
+    Pattern.compile(".*TOTAL_MEMORY.*"),
     };
 
   /**
