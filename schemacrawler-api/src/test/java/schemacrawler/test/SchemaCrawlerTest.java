@@ -458,10 +458,13 @@ public class SchemaCrawlerTest
   }
 
   @Test
-  public void routineDefinitions(final TestContext testContext,
+  public void routines(final TestContext testContext,
                                  final Connection connection)
     throws Exception
   {
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout)
+    {
     final Config config = loadHsqldbConfig();
 
     final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
@@ -480,13 +483,20 @@ public class SchemaCrawlerTest
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     final Routine[] routines = catalog.getRoutines(schema)
                                       .toArray(new Routine[0]);
-    assertThat("Wrong number of routines", routines, arrayWithSize(4));
-    for (final Routine routine : routines)
+    assertThat("Routine count does not match", routines, arrayWithSize(4));
+      for (final Routine routine : routines)
     {
-      assertThat("Routine definition not found, for " + routine,
-                 isBlank(routine.getDefinition()),
-                 is(false));
+      assertThat(routine, notNullValue());
+      out.println("routine: " + routine.getName());
+      out.println("  specific name: " + routine.getSpecificName());
+      out.println("  return type: " + routine.getReturnType());
+      out.println("  body type: " + routine.getRoutineBodyType());
+      out.println("  definition:\n" + routine.getDefinition());
+      out.println();
     }
+  }
+  assertThat(outputOf(testout),
+  hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
