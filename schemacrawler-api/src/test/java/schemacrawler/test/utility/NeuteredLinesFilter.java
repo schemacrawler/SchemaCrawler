@@ -61,6 +61,7 @@ final class NeuteredLinesFilter
     Pattern.compile(".*(Windows|Linux).*"),
     Pattern.compile(".*Oracle Corporation (Java|OpenJDK).*"),
     Pattern.compile(".*ServerName.*"),
+    Pattern.compile(".*HOST_NAME.*"),
     };
 
   /**
