@@ -60,6 +60,18 @@
       <version>${graphviz.java.version}</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>com.thoughtworks.xstream</groupId>
+      <artifactId>xstream</artifactId>
+      <version>1.4.11.1</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.jettison</groupId>
+      <artifactId>jettison</artifactId>
+      <version>1.4.0</version>
+      <scope>provided</scope>
+    </dependency>
 
   </dependencies>
   <build>
