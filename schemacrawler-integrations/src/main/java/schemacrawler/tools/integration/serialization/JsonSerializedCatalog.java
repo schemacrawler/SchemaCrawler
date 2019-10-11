@@ -33,9 +33,15 @@ import static java.util.Objects.requireNonNull;
 import java.io.OutputStream;
 import java.util.Optional;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyName;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.introspect.Annotated;
+import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
+import com.fasterxml.jackson.databind.introspect.ObjectIdInfo;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.NamedObject;
 import schemacrawler.schemacrawler.BaseCatalogDecorator;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
@@ -49,6 +55,24 @@ public final class JsonSerializedCatalog
 {
 
   private static final long serialVersionUID = 5314326260124511414L;
+
+
+  private static class ObjectIdGenerator
+    extends JacksonAnnotationIntrospector
+  {
+    @Override
+    public ObjectIdInfo findObjectIdInfo(final Annotated ann)
+    {
+      if (ann.getAnnotated().getClass().isInstance(NamedObject.class))
+      {
+        return new ObjectIdInfo(PropertyName.construct("@uuid", null),
+                                null,
+                                ObjectIdGenerators.UUIDGenerator.class,
+                                null);
+      }
+      return super.findObjectIdInfo(ann);
+    }
+  }
 
   public JsonSerializedCatalog(final Catalog catalog)
   {
@@ -77,10 +101,14 @@ public final class JsonSerializedCatalog
     requireNonNull(out, "No output stream provided");
     try
     {
-      final XStream xstream = new XStream(new JettisonMappedXmlDriver());
-      xstream.setMode(XStream.NO_REFERENCES);
-      xstream.setMode(XStream.ID_REFERENCES);
-      xstream.toXML(catalog, out);
+      final ObjectMapper objectMapper = new ObjectMapper();
+      objectMapper.enable(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS,
+                          SerializationFeature.FLUSH_AFTER_WRITE_VALUE,
+                          SerializationFeature.INDENT_OUTPUT,
+                          SerializationFeature.USE_EQUALITY_FOR_OBJECT_ID,
+                          SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
+      objectMapper.setAnnotationIntrospector(new ObjectIdGenerator());
+      objectMapper.writeValue(out, catalog);
     }
     catch (final Exception e)
     {
