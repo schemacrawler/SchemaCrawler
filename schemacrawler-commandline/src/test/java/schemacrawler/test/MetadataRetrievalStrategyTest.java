@@ -31,8 +31,8 @@ package schemacrawler.test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
-import static schemacrawler.test.utility.FileHasContent.hasNoContent;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.TestUtility.clean;
 
 import java.io.FileDescriptor;
@@ -96,10 +96,10 @@ public class MetadataRetrievalStrategyTest
                                              config,
                                              outputFormat)), hasNoContent());
 
-    final String errorLog = err.getFileContents();
-    // Catalog retrieval should fail, since no data dictionary SQL to obtain tables is provided
-    assertThat(errorLog, containsString("Error: Cannot load catalog"));
-
+    assertThat(outputOf(err),
+               hasSameContentAs(classpathResource(
+                 METADATA_RETRIEVAL_STRATEGY_OUTPUT + testContext.testMethodName()
+                 + ".stderr.txt")));
   }
 
   @BeforeEach
