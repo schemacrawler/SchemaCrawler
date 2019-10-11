@@ -33,6 +33,7 @@ import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSafeArguments;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.retrievePluginOptions;
+import static sf.util.Utility.isBlank;
 
 import java.util.Map;
 import java.util.logging.Level;
@@ -48,8 +49,8 @@ import sf.util.SchemaCrawlerLogger;
 public final class SchemaCrawlerCommandLine
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
-    SchemaCrawlerCommandLine.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+    .getLogger(SchemaCrawlerCommandLine.class.getName());
 
   public static void execute(final String[] args)
   {
@@ -70,32 +71,41 @@ public final class SchemaCrawlerCommandLine
 
       executeCommandLine(commandLine);
     }
-    catch (final Throwable e1)
+    catch (final Throwable throwable)
     {
-      Throwable e = e1;
-      if (e1 instanceof picocli.CommandLine.PicocliException)
-      {
-        if (e1.getCause() != null)
+      logSafeArguments(args);
+      logFullStackTrace(Level.SEVERE, throwable);
+
+      final String errorMessage;
+      if (throwable instanceof picocli.CommandLine.PicocliException)
         {
-          e = e1.getCause();
+          final Throwable cause = throwable.getCause();
+          if (cause != null && !isBlank(cause.getMessage()))
+          {
+            errorMessage = cause.getMessage();
+          } else {
+            errorMessage = throwable.getMessage();
         }
+      } else {
+        errorMessage = throwable.getMessage();
       }
 
-      System.err.printf("%s %s%n%n",
-                        Version.getProductName(),
-                        Version.getVersion());
-      final String errorMessage = e.getMessage();
-      if (errorMessage != null)
+      System.err
+        .printf("%s %s%n%n", Version.getProductName(), Version.getVersion());
+      if (!isBlank(errorMessage))
       {
         System.err.printf("Error: %s%n%n", errorMessage);
       }
-      System.err.println(
-        "Re-run SchemaCrawler with just the\n-?\noption for help");
-      System.err.println();
-      System.err.println(
-        "Or, re-run SchemaCrawler with an additional\n--log-level=CONFIG\noption for details on the error");
-      logSafeArguments(args);
-      logFullStackTrace(Level.SEVERE, e);
+      else
+      {
+        System.err
+          .printf("Error: Unknown error%n%n");
+      }
+      System.err.printf(
+        "Re-run SchemaCrawler with just the%n" + "-?%n" + "option for help%n%n");
+      System.err.printf(
+        "Or, re-run SchemaCrawler with an additional%n" + "--log-level=CONFIG%n"
+        + "option for details on the error");
     }
 
   }
@@ -115,8 +125,7 @@ public final class SchemaCrawlerCommandLine
       "sort",
       "showstate",
       "load",
-      "execute"
-    })
+      "execute" })
     {
       final Runnable command = (Runnable) subcommands.get(commandName);
       LOGGER.log(Level.INFO,
