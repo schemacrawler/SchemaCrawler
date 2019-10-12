@@ -108,7 +108,9 @@ public final class JsonSerializedCatalog
     {
       final FilterProvider filters = new SimpleFilterProvider().addFilter(
         "skip_references_serializer",
-        SimpleBeanPropertyFilter.serializeAllExcept("parent"));
+        SimpleBeanPropertyFilter.serializeAllExcept("parent",
+                                                    "exportedForeignKeys",
+                                                    "inportedForeignKeys"));
       @JsonFilter("skip_references_serializer")
       class PropertyFilterMixIn
       {
