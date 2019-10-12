@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.serialization;
 
 
+import static com.fasterxml.jackson.databind.MapperFeature.SORT_PROPERTIES_ALPHABETICALLY;
 import static com.fasterxml.jackson.databind.SerializationFeature.*;
 import static java.util.Objects.requireNonNull;
 
@@ -119,6 +120,7 @@ public final class JsonSerializedCatalog
                     INDENT_OUTPUT,
                     USE_EQUALITY_FOR_OBJECT_ID,
                     WRITE_ENUMS_USING_TO_STRING);
+      mapper.enable(SORT_PROPERTIES_ALPHABETICALLY);
       mapper.setAnnotationIntrospector(new ObjectIdGenerator());
       mapper.addMixIn(Object.class, PropertyFilterMixIn.class);
       mapper.setFilterProvider(filters);

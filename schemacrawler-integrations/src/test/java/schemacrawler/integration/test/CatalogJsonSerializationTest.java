@@ -39,8 +39,6 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -92,11 +90,18 @@ public class CatalogJsonSerializationTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final Iterable<JsonNode> iterable = () -> tablesNode.elements();
-      final Stream<JsonNode> tablesStream = StreamSupport
-        .stream(iterable.spliterator(), false);
-      tablesStream.forEach(tableNode -> {
-        out.println(tableNode.findPath("fullName").asText());
+      tablesNode.elements().forEachRemaining(tableNode -> {
+        out.println(tableNode.get("fullName").asText());
+        tableNode.get("columns").elements().forEachRemaining(columnNode -> {
+          final JsonNode columnFullname = columnNode.get("fullName");
+          if (columnFullname != null)
+          {
+            out.println("- column @uuid: " + columnNode.get("@uuid").asText());
+            out.println("  " + columnFullname.asText());
+          } else {
+            out.println("- column @uuid: " + columnNode.asText());
+          }
+        });
       });
     }
     assertThat(outputOf(testout),

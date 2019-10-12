@@ -48,6 +48,18 @@ final class NeuteredLinesFilter
     Pattern.compile(".*[A-Za-z]+ \\d+\\, 201[456] \\d+:\\d+ [AP]M.*"),
     Pattern.compile(".*201[89]-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.*"),
     Pattern.compile(".*201[89]-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d.*"),
+    Pattern.compile("- column @uuid: .*"),
+    // Versions
+    Pattern.compile(".*15\\.0[6-7]\\.\\d\\d.*"),
+    Pattern.compile(".*16\\.\\d\\.\\d.*"),
+    // Operating systems and environment
+    Pattern.compile(".*(Windows|Linux).*"),
+    Pattern.compile(".*Oracle Corporation (Java|OpenJDK).*"),
+    // SQL Server
+    Pattern.compile(".*ServerName.*"),
+    // DB2
+    Pattern.compile(".*HOST_NAME.*"),
+    Pattern.compile(".*TOTAL_MEMORY.*"),
     // Apache Derby unnamed objects
     Pattern.compile("SQL\\d+\\s+\\[primary key\\]"),
     Pattern.compile("SQL\\d+\\s+\\[foreign key, with no action\\]"),
@@ -55,14 +67,6 @@ final class NeuteredLinesFilter
     Pattern.compile("server_uuid\\s+.*"),
     Pattern.compile("hostname\\s+.*"),
     Pattern.compile("  value\\s+\\d+\\s+"),
-    // Operating systems and environment
-    Pattern.compile(".*15\\.0[6-7]\\.\\d\\d.*"),
-    Pattern.compile(".*16\\.\\d\\.\\d.*"),
-    Pattern.compile(".*(Windows|Linux).*"),
-    Pattern.compile(".*Oracle Corporation (Java|OpenJDK).*"),
-    Pattern.compile(".*ServerName.*"),
-    Pattern.compile(".*HOST_NAME.*"),
-    Pattern.compile(".*TOTAL_MEMORY.*"),
     };
 
   /**
