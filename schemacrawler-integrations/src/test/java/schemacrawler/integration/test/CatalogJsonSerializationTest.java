@@ -31,6 +31,7 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static schemacrawler.test.utility.FileHasContent.*;
 import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.io.FileOutputStream;
@@ -38,17 +39,17 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.MissingNode;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.test.utility.DatabaseTestUtility;
-import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.*;
 import schemacrawler.tools.integration.serialization.JsonSerializedCatalog;
 import sf.util.IOUtility;
 
@@ -78,15 +79,30 @@ public class CatalogJsonSerializationTest
 
     // Read generated JSON file, and assert values
     final ObjectMapper objectMapper = new ObjectMapper();
-    final JsonNode rootNode = objectMapper.readTree(testOutputFile.toFile());
-    final JsonNode catalogNode = rootNode.path("catalog");
-    assertThat("Catalog was not serialized", catalogNode, not(nullValue()));
+    final JsonNode catalogNode = objectMapper.readTree(testOutputFile.toFile());
     assertThat("Catalog schemas were not serialized",
                catalogNode.findPath("schemas"),
-               not(nullValue()));
+               not(instanceOf(MissingNode.class)));
+
+    final JsonNode tablesNode = catalogNode.findPath("tables");
     assertThat("Catalog tables were not serialized",
-               catalogNode.findPath("tables"),
-               not(nullValue()));
+               tablesNode,
+               not(instanceOf(MissingNode.class)));
+
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout)
+    {
+      final Iterable<JsonNode> iterable = () -> tablesNode.elements();
+      final Stream<JsonNode> tablesStream = StreamSupport
+        .stream(iterable.spliterator(), false);
+      tablesStream.forEach(tableNode -> {
+        out.println(tableNode.findPath("fullName").asText());
+      });
+    }
+    assertThat(outputOf(testout),
+               hasSameContentAs(classpathResource(testContext
+                                                    .testMethodFullName())));
+
   }
 
 }

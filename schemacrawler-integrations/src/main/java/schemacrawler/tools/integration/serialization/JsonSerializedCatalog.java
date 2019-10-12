@@ -28,18 +28,22 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.serialization;
 
 
+import static com.fasterxml.jackson.databind.SerializationFeature.*;
 import static java.util.Objects.requireNonNull;
 
 import java.io.OutputStream;
 import java.util.Optional;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyName;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.introspect.Annotated;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import com.fasterxml.jackson.databind.introspect.ObjectIdInfo;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schemacrawler.BaseCatalogDecorator;
@@ -101,14 +105,26 @@ public final class JsonSerializedCatalog
     requireNonNull(out, "No output stream provided");
     try
     {
-      final ObjectMapper objectMapper = new ObjectMapper();
-      objectMapper.enable(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS,
-                          SerializationFeature.FLUSH_AFTER_WRITE_VALUE,
-                          SerializationFeature.INDENT_OUTPUT,
-                          SerializationFeature.USE_EQUALITY_FOR_OBJECT_ID,
-                          SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
-      objectMapper.setAnnotationIntrospector(new ObjectIdGenerator());
-      objectMapper.writeValue(out, catalog);
+      final FilterProvider filters = new SimpleFilterProvider().addFilter(
+        "skip_references_serializer",
+        SimpleBeanPropertyFilter.serializeAllExcept("parent"));
+      @JsonFilter("skip_references_serializer")
+      class PropertyFilterMixIn
+      {
+
+      }
+
+      final ObjectMapper mapper = new ObjectMapper();
+      mapper.enable(ORDER_MAP_ENTRIES_BY_KEYS,
+                    INDENT_OUTPUT,
+                    USE_EQUALITY_FOR_OBJECT_ID,
+                    WRITE_ENUMS_USING_TO_STRING);
+      mapper.setAnnotationIntrospector(new ObjectIdGenerator());
+      mapper.addMixIn(Object.class, PropertyFilterMixIn.class);
+      mapper.setFilterProvider(filters);
+
+      // Write JSON to stream
+      mapper.writeValue(out, catalog);
     }
     catch (final Exception e)
     {
