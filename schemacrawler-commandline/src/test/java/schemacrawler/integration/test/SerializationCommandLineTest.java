@@ -32,6 +32,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.oneOf;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
@@ -159,7 +160,7 @@ public class SerializationCommandLineTest
 
     assertThat(outputOf(err), hasNoContent());
     assertThat(Files.size(testOutputFile), greaterThan(0L));
-    assertThat(probeFileHeader(testOutputFile), is("7B0D"));
+    assertThat(probeFileHeader(testOutputFile), is(oneOf("7B0D", "7B0A")));
   }
 
 }

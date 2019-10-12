@@ -76,7 +76,7 @@ public class CatalogJsonSerializationTest
     assertThat("Catalog was not serialized",
                Files.size(testOutputFile),
                greaterThan(0L));
-    assertThat(probeFileHeader(testOutputFile), is("7B0D"));
+    assertThat(probeFileHeader(testOutputFile), is(oneOf("7B0D", "7B0A")));
 
     // Read generated JSON file, and assert values
     final ObjectMapper objectMapper = new ObjectMapper();
