@@ -30,6 +30,7 @@ package schemacrawler.tools.integration.serialization;
 
 
 import static java.nio.file.Files.newOutputStream;
+import static java.util.Objects.requireNonNull;
 
 import java.io.OutputStream;
 import java.nio.file.Path;
@@ -48,6 +49,8 @@ public final class SerializationCommand
 
   static final String COMMAND = "serialize";
 
+  private SerializationOptions serializationOptions;
+
   public SerializationCommand()
   {
     this(COMMAND);
@@ -58,12 +61,26 @@ public final class SerializationCommand
     super(command);
   }
 
+  public final void setSerializationOptions(final SerializationOptions serializationOptions)
+  {
+    this.serializationOptions = requireNonNull(serializationOptions,
+                                               "No serialization options provided");
+  }
+
   @Override
   public void checkAvailability()
     throws Exception
   {
     // Nothing additional to check at this point. The Command should be
     // available after the class is loaded, and imports are resolved.
+  }
+
+  @Override
+  public void initialize()
+    throws Exception
+  {
+    super.initialize();
+    loadSerializationOptions();
   }
 
   /**
@@ -75,15 +92,18 @@ public final class SerializationCommand
   {
     checkCatalog();
 
+    final SerializationFormat serializationFormat = serializationOptions
+      .getSerializationFormat();
+
     // Force a file to be created
-    final Path outputFile = outputOptions.getOutputFile("data");
+    final Path outputFile = outputOptions
+      .getOutputFile(serializationFormat.getFileExtension());
 
     outputOptions = OutputOptionsBuilder.builder(outputOptions)
-                                        .withOutputFile(outputFile)
-                                        .toOptions();
+      .withOutputFile(outputFile).toOptions();
 
-    final SerializableCatalog serializableCatalog = new JavaSerializedCatalog(
-      catalog);
+    final SerializableCatalog serializableCatalog = serializationFormat
+      .getSerializableCatalog(catalog);
     try (final OutputStream out = newOutputStream(outputFile))
     {
       serializableCatalog.save(out);
@@ -94,6 +114,15 @@ public final class SerializationCommand
   public boolean usesConnection()
   {
     return false;
+  }
+
+  private void loadSerializationOptions()
+  {
+    if (serializationOptions == null)
+    {
+      serializationOptions = SerializationOptionsBuilder.builder()
+        .fromConfig(additionalConfiguration).toOptions();
+    }
   }
 
 }

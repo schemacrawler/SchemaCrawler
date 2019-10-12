@@ -29,9 +29,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.TestUtility.probeFileHeader;
 import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.io.FileOutputStream;
@@ -74,6 +76,7 @@ public class CatalogJsonSerializationTest
     assertThat("Catalog was not serialized",
                Files.size(testOutputFile),
                greaterThan(0L));
+    assertThat(probeFileHeader(testOutputFile), is("7B0D"));
 
     // Read generated JSON file, and assert values
     final ObjectMapper objectMapper = new ObjectMapper();

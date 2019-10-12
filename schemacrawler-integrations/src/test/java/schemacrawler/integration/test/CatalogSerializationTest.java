@@ -29,6 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
+import static java.nio.file.Files.probeContentType;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
@@ -83,6 +85,7 @@ public class CatalogSerializationTest
     assertThat("Catalog was not serialized",
                Files.size(testOutputFile),
                greaterThan(0L));
+    assertThat(probeContentType(testOutputFile), is("ACED"));
 
     Catalog catalogDeserialized = null;
     try (final ObjectInputStream in = new ObjectInputStream(new FileInputStream(
