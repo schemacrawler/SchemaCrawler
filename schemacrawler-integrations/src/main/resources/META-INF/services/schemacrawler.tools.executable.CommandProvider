@@ -1,3 +1,2 @@
 schemacrawler.tools.integration.graph.GraphCommandProvider
 schemacrawler.tools.integration.embeddedgraph.EmbeddedGraphCommandProvider
-schemacrawler.tools.integration.serialization.SerializationCommandProvider
