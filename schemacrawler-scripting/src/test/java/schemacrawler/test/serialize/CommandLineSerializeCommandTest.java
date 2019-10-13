@@ -29,7 +29,6 @@ package schemacrawler.test.serialize;
 
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.oneOf;
@@ -38,12 +37,16 @@ import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.probeFileHeader;
 
-import java.io.*;
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.hamcrest.Matcher;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -56,7 +59,6 @@ import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-@ExtendWith(TestContextParameterResolver.class)
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
 public class CommandLineSerializeCommandTest
@@ -84,65 +86,60 @@ public class CommandLineSerializeCommandTest
   }
 
   @Test
-  public void commandLineDefault(final TestContext testContext,
-                                 final DatabaseConnectionInfo connectionInfo)
+  public void commandLineDefault(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-
-    final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("-info-level", InfoLevel.standard.name());
-
-    final OutputFormat outputFormat = TextOutputFormat.text;
-
-    final Path testOutputFile = IOUtility.createTempFilePath("test", "");
-
-    commandlineExecution(connectionInfo,
-                         "serialize",
-                         argsMap,
-                         null,
-                         outputFormat.getFormat(),
-                         testOutputFile);
-
-    assertThat(outputOf(err), hasNoContent());
-    assertThat(Files.size(testOutputFile), greaterThan(0L));
-    assertThat(probeFileHeader(testOutputFile), is("ACED"));
+    assertThatOutputIsCorrect(commandlineSerialize(connectionInfo, null),
+                              is("ACED"));
   }
 
   @Test
-  public void commandLineJava(final TestContext testContext,
-                              final DatabaseConnectionInfo connectionInfo)
+  public void commandLineJava(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-
-    final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("-info-level", InfoLevel.standard.name());
-    argsMap.put("-serialization-format", SerializationFormat.java.name());
-
-    final OutputFormat outputFormat = TextOutputFormat.text;
-
-    final Path testOutputFile = IOUtility.createTempFilePath("test", "");
-
-    commandlineExecution(connectionInfo,
-                         "serialize",
-                         argsMap,
-                         null,
-                         outputFormat.getFormat(),
-                         testOutputFile);
-
-    assertThat(outputOf(err), hasNoContent());
-    assertThat(Files.size(testOutputFile), greaterThan(0L));
-    assertThat(probeFileHeader(testOutputFile), is("ACED"));
+    assertThatOutputIsCorrect(commandlineSerialize(connectionInfo,
+                                                   SerializationFormat.java),
+                              is("ACED"));
   }
 
   @Test
-  public void commandLineJson(final TestContext testContext,
-                              final DatabaseConnectionInfo connectionInfo)
+  public void commandLineJson(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
+    assertThatOutputIsCorrect(commandlineSerialize(connectionInfo,
+                                                   SerializationFormat.json),
+                              is(oneOf("7B0D", "7B0A")));
+  }
 
+  @Test
+  public void commandLineYaml(final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    assertThatOutputIsCorrect(commandlineSerialize(connectionInfo,
+                                                   SerializationFormat.yaml),
+                              is("2D2D"));
+  }
+
+  private void assertThatOutputIsCorrect(final Path testOutputFile,
+                                         final Matcher<String> fileHeaderMatcher)
+    throws IOException
+  {
+    assertThat(outputOf(err), hasNoContent());
+    assertThat(outputOf(out), hasNoContent());
+    assertThat(Files.size(testOutputFile), greaterThan(0L));
+    assertThat(probeFileHeader(testOutputFile), fileHeaderMatcher);
+  }
+
+  private Path commandlineSerialize(final DatabaseConnectionInfo connectionInfo,
+                                    final SerializationFormat serializationFormat)
+    throws Exception
+  {
     final Map<String, String> argsMap = new HashMap<>();
     argsMap.put("-info-level", InfoLevel.standard.name());
-    argsMap.put("-serialization-format", SerializationFormat.json.name());
+    if (serializationFormat != null)
+    {
+      argsMap.put("-serialization-format", serializationFormat.name());
+    }
 
     final OutputFormat outputFormat = TextOutputFormat.text;
 
@@ -154,10 +151,7 @@ public class CommandLineSerializeCommandTest
                          null,
                          outputFormat.getFormat(),
                          testOutputFile);
-
-    assertThat(outputOf(err), hasNoContent());
-    assertThat(Files.size(testOutputFile), greaterThan(0L));
-    assertThat(probeFileHeader(testOutputFile), is(oneOf("7B0D", "7B0A")));
+    return testOutputFile;
   }
 
 }

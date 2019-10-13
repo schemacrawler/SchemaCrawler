@@ -34,7 +34,9 @@ public enum SerializationFormat
   java("schemacrawler.tools.integration.serialize.JavaSerializedCatalog",
        "ser"),
   json("schemacrawler.tools.integration.serialize.JsonSerializedCatalog",
-       "json");
+       "json"),
+  yaml("schemacrawler.tools.integration.serialize.YamlSerializedCatalog",
+         "yaml");
 
   private final String fileExtension;
   private final String serializerClassName;

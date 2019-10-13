@@ -4,6 +4,6 @@
          Specifies serialization output format
          Optional, defaults to Java serialization
 
-         Use one of unknown, java, json
+         Use one of unknown, java, json, yaml
 
 
