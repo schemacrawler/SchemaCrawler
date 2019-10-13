@@ -27,7 +27,6 @@ Available SchemaCrawler commands:
  schema         Shows the commonly needed detail of the schema, including
                   details of tables, views and routines, columns, primary keys,
                   indexes, foreign keys, and triggers
- serialize      Create an offline catalog snapshot
  <query_name>   Shows results of query <query_name>, as specified in the
                   configuration properties file
  <query>        Shows results of SQL <query>

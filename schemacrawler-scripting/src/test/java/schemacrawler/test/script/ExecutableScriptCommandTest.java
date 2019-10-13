@@ -26,16 +26,17 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.test;
+package schemacrawler.test.script;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.FileHasContent.*;
-import static schemacrawler.test.utility.ScriptTestUtility.commandLineScriptExecution;
+import static schemacrawler.test.utility.ScriptTestUtility.scriptExecution;
+
+import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -43,42 +44,39 @@ import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public class ScriptingCommandlineTest
+public class ExecutableScriptCommandTest
 {
 
   @Test
-  public void commandlineGroovy(final DatabaseConnectionInfo connectionInfo)
+  public void executableGroovy(final Connection connection)
     throws Exception
   {
-    assertThat(outputOf(commandLineScriptExecution(connectionInfo,
-                                                   "/plaintextschema.groovy")),
+    assertThat(outputOf(scriptExecution(connection, "/plaintextschema.groovy")),
                hasSameContentAs(classpathResource("script_output.txt")));
   }
 
   @Test
-  public void commandlineJavaScript(final DatabaseConnectionInfo connectionInfo)
+  public void executableJavaScript(final Connection connection)
     throws Exception
   {
-    assertThat(outputOf(commandLineScriptExecution(connectionInfo,
-                                                   "/plaintextschema.js")),
+    assertThat(outputOf(scriptExecution(connection, "/plaintextschema.js")),
                hasSameContentAs(classpathResource("script_output.txt")));
   }
 
   @Test
-  public void commandlinePython(final DatabaseConnectionInfo connectionInfo)
+  public void executablePython(final Connection connection)
     throws Exception
   {
-    assertThat(outputOf(commandLineScriptExecution(connectionInfo,
-                                                   "/plaintextschema.py")),
+    System.setProperty("python.console.encoding", "UTF-8");
+    assertThat(outputOf(scriptExecution(connection, "/plaintextschema.py")),
                hasSameContentAs(classpathResource("script_output.txt")));
   }
 
   @Test
-  public void commandlineRuby(final DatabaseConnectionInfo connectionInfo)
+  public void executableRuby(final Connection connection)
     throws Exception
   {
-    assertThat(outputOf(commandLineScriptExecution(connectionInfo,
-                                                   "/plaintextschema.rb")),
+    assertThat(outputOf(scriptExecution(connection, "/plaintextschema.rb")),
                hasSameContentAs(classpathResource("script_output_rb.txt")));
   }
 

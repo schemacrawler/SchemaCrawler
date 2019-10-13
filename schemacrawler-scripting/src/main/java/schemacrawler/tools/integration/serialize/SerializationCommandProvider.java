@@ -25,23 +25,26 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.integration.serialization;
+package schemacrawler.tools.integration.serialize;
 
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
+import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.OutputOptions;
 
 public class SerializationCommandProvider
   extends BaseCommandProvider
 {
 
+  private static final String DESCRIPTION_HEADER = "Create an offline catalog snapshot";
+
   public SerializationCommandProvider()
   {
     super(new CommandDescription(SerializationCommand.COMMAND,
-                                 "Create an offline catalog snapshot"));
+                                 DESCRIPTION_HEADER));
   }
 
   @Override
@@ -56,6 +59,20 @@ public class SerializationCommandProvider
                                               final OutputOptions outputOptions)
   {
     return supportsCommand(command);
+  }
+
+  @Override
+  public PluginCommand getCommandLineCommand()
+  {
+    final PluginCommand pluginCommand = new PluginCommand("serialize",
+                                                          "** "
+                                                          + DESCRIPTION_HEADER);
+    pluginCommand.addOption("serialization-format",
+                 "Specifies serialization output format%n"
+                 + "Optional, defaults to Java serialization%n",
+                 SerializationFormat.class);
+
+    return pluginCommand;
   }
 
 }

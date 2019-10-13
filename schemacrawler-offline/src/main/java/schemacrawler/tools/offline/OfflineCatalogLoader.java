@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.*;
 import schemacrawler.tools.catalogloader.CatalogLoader;
-import schemacrawler.tools.integration.serialization.JavaSerializedCatalog;
+import schemacrawler.tools.integration.serialize.JavaSerializedCatalog;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
 import sf.util.SchemaCrawlerLogger;
 

@@ -26,12 +26,12 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.test;
+package schemacrawler.test.template;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.FileHasContent.*;
-import static schemacrawler.test.utility.ScriptTestUtility.scriptExecution;
+import static schemacrawler.test.utility.ScriptTestUtility.templateExecution;
 
 import java.sql.Connection;
 
@@ -44,40 +44,41 @@ import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public class ScriptingTest
+public class ExecutableTemplateCommandTest
 {
 
   @Test
-  public void executableGroovy(final Connection connection)
+  public void executableFreeMarker(final Connection connection)
     throws Exception
   {
-    assertThat(outputOf(scriptExecution(connection, "/plaintextschema.groovy")),
-               hasSameContentAs(classpathResource("script_output.txt")));
+    assertThat(outputOf(templateExecution(connection, "/plaintextschema.ftl")),
+               hasSameContentAs(classpathResource("executableForFreeMarker.txt")));
   }
 
   @Test
-  public void executableJavaScript(final Connection connection)
+  public void executableMustache(final Connection connection)
     throws Exception
   {
-    assertThat(outputOf(scriptExecution(connection, "/plaintextschema.js")),
-               hasSameContentAs(classpathResource("script_output.txt")));
+    assertThat(outputOf(templateExecution(connection,
+                                          "/plaintextschema.mustache")),
+               hasSameContentAs(classpathResource("executableForMustache.txt")));
   }
 
   @Test
-  public void executablePython(final Connection connection)
+  public void executableThymeleaf(final Connection connection)
     throws Exception
   {
-    System.setProperty("python.console.encoding", "UTF-8");
-    assertThat(outputOf(scriptExecution(connection, "/plaintextschema.py")),
-               hasSameContentAs(classpathResource("script_output.txt")));
+    assertThat(outputOf(templateExecution(connection,
+                                          "/plaintextschema.thymeleaf")),
+               hasSameContentAs(classpathResource("executableForThymeleaf.txt")));
   }
 
   @Test
-  public void executableRuby(final Connection connection)
+  public void executableVelocity(final Connection connection)
     throws Exception
   {
-    assertThat(outputOf(scriptExecution(connection, "/plaintextschema.rb")),
-               hasSameContentAs(classpathResource("script_output_rb.txt")));
+    assertThat(outputOf(templateExecution(connection, "/plaintextschema.vm")),
+               hasSameContentAs(classpathResource("executableForVelocity.txt")));
   }
 
 }

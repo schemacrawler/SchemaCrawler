@@ -115,27 +115,45 @@ public final class CommandlineTestUtility
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final Map<String, String> commandlineArgsMap = new HashMap<>();
-      commandlineArgsMap.put("-url", connectionInfo.getConnectionUrl());
-      commandlineArgsMap.put("-user", "sa");
-      commandlineArgsMap.put("-password", "");
-      if (propertiesFile != null)
-      {
-        commandlineArgsMap.put("g", propertiesFile.toString());
-      }
-      commandlineArgsMap.put("c", command);
-      commandlineArgsMap.put("-output-format", outputFormatValue);
-      commandlineArgsMap.put("-output-file", out.toString());
-
-      // Override and add to command-line arguments
-      if (argsMap != null)
-      {
-        commandlineArgsMap.putAll(argsMap);
-      }
-
-      Main.main(flattenCommandlineArgs(commandlineArgsMap));
+      commandlineExecution(connectionInfo,
+                           command,
+                           argsMap,
+                           propertiesFile,
+                           outputFormatValue,
+                           out.getFilePath());
     }
     return testout.getFilePath();
+  }
+
+  public static Path commandlineExecution(final DatabaseConnectionInfo connectionInfo,
+                                          final String command,
+                                          final Map<String, String> argsMap,
+                                          final Path propertiesFile,
+                                          final String outputFormatValue,
+                                          final Path out)
+    throws Exception
+  {
+    final Map<String, String> commandlineArgsMap = new HashMap<>();
+    commandlineArgsMap.put("-url", connectionInfo.getConnectionUrl());
+    commandlineArgsMap.put("-user", "sa");
+    commandlineArgsMap.put("-password", "");
+    if (propertiesFile != null)
+    {
+      commandlineArgsMap.put("g", propertiesFile.toString());
+    }
+    commandlineArgsMap.put("c", command);
+    commandlineArgsMap.put("-output-format", outputFormatValue);
+    commandlineArgsMap.put("-output-file", out.toString());
+
+    // Override and add to command-line arguments
+    if (argsMap != null)
+    {
+      commandlineArgsMap.putAll(argsMap);
+    }
+
+    Main.main(flattenCommandlineArgs(commandlineArgsMap));
+
+    return out;
   }
 
   public static void parseCommand(final Object object, final String[] args)
@@ -214,15 +232,14 @@ public final class CommandlineTestUtility
     }
 
     final Path tempFile = IOUtility.createTempFilePath("test", ".properties")
-                                   .normalize()
-                                   .toAbsolutePath();
+      .normalize().toAbsolutePath();
 
     final Writer tempFileWriter = newBufferedWriter(tempFile,
                                                     WRITE,
                                                     TRUNCATE_EXISTING,
                                                     CREATE);
     config.toProperties()
-          .store(tempFileWriter, "Store config to temporary file for testing");
+      .store(tempFileWriter, "Store config to temporary file for testing");
 
     return tempFile;
   }

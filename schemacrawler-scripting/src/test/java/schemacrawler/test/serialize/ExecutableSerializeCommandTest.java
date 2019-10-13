@@ -26,18 +26,18 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.test;
+package schemacrawler.test.serialize;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
 import static schemacrawler.test.utility.FileHasContent.*;
-import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
 import java.nio.file.Path;
 import java.sql.Connection;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.Config;
@@ -49,32 +49,29 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public class ScriptingLanguageTest
+public class ExecutableSerializeCommandTest
 {
 
-  private static Path executableScriptFromFile(final Connection connection,
-                                               final String language,
-                                               final Path scriptFile)
+  private static Path executeSerialize(final Connection connection,
+                                       final String language)
     throws Exception
   {
-    final SchemaCrawlerExecutable executable = executableOf("script");
+    final SchemaCrawlerExecutable executable = executableOf("template");
     final Config additionalConfiguration = new Config();
-    additionalConfiguration.put("script", scriptFile.toString());
-    additionalConfiguration.put("script-language", language);
+    additionalConfiguration.put("templating-language", language);
     executable.setAdditionalConfiguration(additionalConfiguration);
 
     return executableExecution(connection, executable, "text");
   }
 
+  @Disabled("Work in progress to check correctness of output")
   @Test
-  public void executableGroovy(final Connection connection)
+  public void executableJava(final Connection connection)
     throws Exception
   {
-    final Path scriptFile = copyResourceToTempFile("/plaintextschema.groovy");
-    assertThat(outputOf(executableScriptFromFile(connection,
-                                                 "groovy",
-                                                 scriptFile)),
-               hasSameContentAs(classpathResource("script_output.txt")));
+    assertThat(outputOf(executeSerialize(connection,
+                                         "java")),
+               hasSameContentAs(classpathResource("executableForVelocity.txt")));
   }
 
 }

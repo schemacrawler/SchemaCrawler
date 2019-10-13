@@ -26,55 +26,60 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.test;
+package schemacrawler.test.script;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
 import static schemacrawler.test.utility.FileHasContent.*;
-import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
-
-import java.nio.file.Path;
-import java.sql.Connection;
+import static schemacrawler.test.utility.ScriptTestUtility.commandLineScriptExecution;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.schemacrawler.Config;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
-import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public class TemplatingLanguageTest
+public class CommandlineScriptCommandTest
 {
 
-  private static Path executableScriptFromFile(final Connection connection,
-                                               final String language,
-                                               final Path scriptFile)
+  @Test
+  public void commandlineGroovy(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    final SchemaCrawlerExecutable executable = executableOf("template");
-    final Config additionalConfiguration = new Config();
-    additionalConfiguration.put("template", scriptFile.toString());
-    additionalConfiguration.put("templating-language", language);
-    executable.setAdditionalConfiguration(additionalConfiguration);
-
-    return executableExecution(connection, executable, "text");
+    assertThat(outputOf(commandLineScriptExecution(connectionInfo,
+                                                   "/plaintextschema.groovy")),
+               hasSameContentAs(classpathResource("script_output.txt")));
   }
 
   @Test
-  public void executableGroovy(final Connection connection)
+  public void commandlineJavaScript(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    final Path scriptFile = copyResourceToTempFile("/plaintextschema.vm");
-    assertThat(outputOf(executableScriptFromFile(connection,
-                                                 "velocity",
-                                                 scriptFile)),
-               hasSameContentAs(classpathResource("executableForVelocity.txt")));
+    assertThat(outputOf(commandLineScriptExecution(connectionInfo,
+                                                   "/plaintextschema.js")),
+               hasSameContentAs(classpathResource("script_output.txt")));
+  }
+
+  @Test
+  public void commandlinePython(final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    assertThat(outputOf(commandLineScriptExecution(connectionInfo,
+                                                   "/plaintextschema.py")),
+               hasSameContentAs(classpathResource("script_output.txt")));
+  }
+
+  @Test
+  public void commandlineRuby(final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    assertThat(outputOf(commandLineScriptExecution(connectionInfo,
+                                                   "/plaintextschema.rb")),
+               hasSameContentAs(classpathResource("script_output_rb.txt")));
   }
 
 }

@@ -29,19 +29,9 @@ package schemacrawler.test.utility;
 
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Files.createDirectories;
-import static java.nio.file.Files.delete;
-import static java.nio.file.Files.deleteIfExists;
-import static java.nio.file.Files.exists;
-import static java.nio.file.Files.move;
-import static java.nio.file.Files.newBufferedReader;
-import static java.nio.file.Files.newInputStream;
-import static java.nio.file.Files.newOutputStream;
-import static java.nio.file.Files.size;
+import static java.nio.file.Files.*;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
-import static java.nio.file.StandardOpenOption.CREATE;
-import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
-import static java.nio.file.StandardOpenOption.WRITE;
+import static java.nio.file.StandardOpenOption.*;
 import static java.util.Objects.requireNonNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -49,55 +39,62 @@ import static org.hamcrest.Matchers.is;
 import static sf.util.IOUtility.isFileReadable;
 import static sf.util.Utility.isBlank;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.Reader;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.*;
+import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import java.util.zip.ZipInputStream;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
 import org.apache.commons.io.FileUtils;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonToken;
-
 import sf.util.IOUtility;
 
 public final class TestUtility
 {
 
+  private static Path buildDirectory()
+    throws Exception
+  {
+    final StackTraceElement ste = currentMethodStackTraceElement();
+    final Class<?> callingClass = Class.forName(ste.getClassName());
+    final Path codePath = Paths
+      .get(callingClass.getProtectionDomain().getCodeSource().getLocation()
+             .toURI()).normalize().toAbsolutePath();
+    final boolean isInTarget = codePath.toString().contains("target");
+    if (!isInTarget)
+    {
+      throw new RuntimeException("Not in build directory, " + codePath);
+    }
+    final Path directory = codePath.resolve("..");
+    return directory.normalize().toAbsolutePath();
+  }
+
   public static void clean(final String dirname)
     throws Exception
   {
-    FileUtils.deleteDirectory(buildDirectory()
-      .resolve("unit_tests_results_output").resolve(dirname).toFile());
+    FileUtils
+      .deleteDirectory(buildDirectory().resolve("unit_tests_results_output")
+                         .resolve(dirname).toFile());
   }
 
   public static List<String> compareCompressedOutput(final String referenceFile,
@@ -203,74 +200,6 @@ public final class TestUtility
     return failures;
   }
 
-  public static Path copyResourceToTempFile(final String resource)
-    throws IOException
-  {
-    if (isBlank(resource))
-    {
-      throw new IOException("Cannot read empty resource");
-    }
-
-    try (final InputStream resourceStream = TestUtility.class
-      .getResourceAsStream(resource);)
-    {
-      requireNonNull(resourceStream, "Resource not found, " + resource);
-      return writeToTempFile(resourceStream);
-    }
-  }
-
-  public static String[] flattenCommandlineArgs(final Map<String, String> argsMap)
-  {
-    final List<String> argsList = new ArrayList<>();
-    for (final Map.Entry<String, String> arg: argsMap.entrySet())
-    {
-      final String key = arg.getKey();
-      final String value = arg.getValue();
-      if (value != null)
-      {
-        argsList.add(String.format("-%s=%s", key, value));
-      }
-      else
-      {
-        argsList.add(String.format("-%s", key));
-      }
-    }
-    final String[] args = argsList.toArray(new String[0]);
-    return args;
-  }
-
-  public static Reader readerForResource(final String resource,
-                                         final Charset encoding)
-    throws IOException
-  {
-    return readerForResource(resource, encoding, false);
-  }
-
-  public static void validateDiagram(final Path diagramFile)
-    throws IOException
-  {
-    assertThat("Diagram file not created", exists(diagramFile), is(true));
-    assertThat("Diagram file has 0 bytes size",
-               size(diagramFile),
-               greaterThan(0L));
-  }
-
-  private static Path buildDirectory()
-    throws Exception
-  {
-    final StackTraceElement ste = currentMethodStackTraceElement();
-    final Class<?> callingClass = Class.forName(ste.getClassName());
-    final Path codePath = Paths.get(callingClass.getProtectionDomain()
-      .getCodeSource().getLocation().toURI()).normalize().toAbsolutePath();
-    final boolean isInTarget = codePath.toString().contains("target");
-    if (!isInTarget)
-    {
-      throw new RuntimeException("Not in build directory, " + codePath);
-    }
-    final Path directory = codePath.resolve("..");
-    return directory.normalize().toAbsolutePath();
-  }
-
   private static boolean contentEquals(final Reader expectedInputReader,
                                        final Reader actualInputReader,
                                        final List<String> failures,
@@ -282,11 +211,10 @@ public final class TestUtility
       return false;
     }
 
-    try (
-        final Stream<String> expectedLinesStream = new BufferedReader(expectedInputReader)
-          .lines();
-        final Stream<String> actualLinesStream = new BufferedReader(actualInputReader)
-          .lines();)
+    try (final Stream<String> expectedLinesStream = new BufferedReader(
+      expectedInputReader).lines();
+      final Stream<String> actualLinesStream = new BufferedReader(
+        actualInputReader).lines();)
     {
       final Iterator<String> expectedLinesIterator = expectedLinesStream
         .filter(keepLines).iterator();
@@ -326,6 +254,22 @@ public final class TestUtility
     }
   }
 
+  public static Path copyResourceToTempFile(final String resource)
+    throws IOException
+  {
+    if (isBlank(resource))
+    {
+      throw new IOException("Cannot read empty resource");
+    }
+
+    try (final InputStream resourceStream = TestUtility.class
+      .getResourceAsStream(resource);)
+    {
+      requireNonNull(resourceStream, "Resource not found, " + resource);
+      return writeToTempFile(resourceStream);
+    }
+  }
+
   private static StackTraceElement currentMethodStackTraceElement()
   {
     final Pattern baseTestClassName = Pattern.compile(".*\\.Base.*Test");
@@ -333,11 +277,11 @@ public final class TestUtility
 
     final StackTraceElement[] stackTrace = Thread.currentThread()
       .getStackTrace();
-    for (final StackTraceElement stackTraceElement: stackTrace)
+    for (final StackTraceElement stackTraceElement : stackTrace)
     {
       final String className = stackTraceElement.getClassName();
-      if (testClassName.matcher(className).matches()
-          && !baseTestClassName.matcher(className).matches())
+      if (testClassName.matcher(className).matches() && !baseTestClassName
+        .matcher(className).matches())
       {
         return stackTraceElement;
       }
@@ -370,6 +314,26 @@ public final class TestUtility
     }
   }
 
+  public static String[] flattenCommandlineArgs(final Map<String, String> argsMap)
+  {
+    final List<String> argsList = new ArrayList<>();
+    for (final Map.Entry<String, String> arg : argsMap.entrySet())
+    {
+      final String key = arg.getKey();
+      final String value = arg.getValue();
+      if (value != null)
+      {
+        argsList.add(String.format("-%s=%s", key, value));
+      }
+      else
+      {
+        argsList.add(String.format("-%s", key));
+      }
+    }
+    final String[] args = argsList.toArray(new String[0]);
+    return args;
+  }
+
   private static Reader openNewCompressedInputReader(final InputStream inputStream,
                                                      final Charset charset)
     throws IOException
@@ -377,6 +341,19 @@ public final class TestUtility
     final ZipInputStream zipInputStream = new ZipInputStream(inputStream);
     zipInputStream.getNextEntry();
     return new InputStreamReader(zipInputStream, charset);
+  }
+
+  public static String probeFileHeader(final Path tempFile)
+    throws IOException
+  {
+    try (final FileChannel fc = new FileInputStream(tempFile.toFile())
+      .getChannel();)
+    {
+      final ByteBuffer bb = ByteBuffer.allocate(2);
+      fc.read(bb);
+      final String hexValue = new BigInteger(1, bb.array()).toString(16);
+      return hexValue.toUpperCase();
+    }
   }
 
   private static Reader readerForFile(final Path testOutputTempFile)
@@ -393,8 +370,9 @@ public final class TestUtility
     final BufferedReader bufferedReader;
     if (isCompressed)
     {
-      final ZipInputStream inputStream = new ZipInputStream(newInputStream(testOutputTempFile,
-                                                                           StandardOpenOption.READ));
+      final ZipInputStream inputStream = new ZipInputStream(newInputStream(
+        testOutputTempFile,
+        StandardOpenOption.READ));
       inputStream.getNextEntry();
 
       bufferedReader = new BufferedReader(new InputStreamReader(inputStream,
@@ -405,6 +383,13 @@ public final class TestUtility
       bufferedReader = newBufferedReader(testOutputTempFile, UTF_8);
     }
     return bufferedReader;
+  }
+
+  public static Reader readerForResource(final String resource,
+                                         final Charset encoding)
+    throws IOException
+  {
+    return readerForResource(resource, encoding, false);
   }
 
   private static Reader readerForResource(final String resource,
@@ -442,13 +427,22 @@ public final class TestUtility
     return reader;
   }
 
+  public static void validateDiagram(final Path diagramFile)
+    throws IOException
+  {
+    assertThat("Diagram file not created", exists(diagramFile), is(true));
+    assertThat("Diagram file has 0 bytes size",
+               size(diagramFile),
+               greaterThan(0L));
+  }
+
   private static boolean validateJSON(final Path testOutputFile,
                                       final List<String> failures)
     throws FileNotFoundException, SAXException, IOException
   {
     final JsonElement jsonElement;
     try (final Reader reader = readerForFile(testOutputFile);
-        final JsonReader jsonReader = new JsonReader(reader);)
+      final JsonReader jsonReader = new JsonReader(reader);)
     {
       jsonElement = new JsonParser().parse(jsonReader);
       if (jsonReader.peek() != JsonToken.END_DOCUMENT)
@@ -496,6 +490,13 @@ public final class TestUtility
     builder.setErrorHandler(new ErrorHandler()
     {
       @Override
+      public void warning(final SAXParseException e)
+        throws SAXException
+      {
+        failures.add(e.getMessage());
+      }
+
+      @Override
       public void error(final SAXParseException e)
         throws SAXException
       {
@@ -504,13 +505,6 @@ public final class TestUtility
 
       @Override
       public void fatalError(final SAXParseException e)
-        throws SAXException
-      {
-        failures.add(e.getMessage());
-      }
-
-      @Override
-      public void warning(final SAXParseException e)
         throws SAXException
       {
         failures.add(e.getMessage());

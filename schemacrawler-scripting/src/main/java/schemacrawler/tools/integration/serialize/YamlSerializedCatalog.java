@@ -25,19 +25,32 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.integration.serialization;
+package schemacrawler.tools.integration.serialize;
 
 
-import java.io.OutputStream;
+import static com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature.USE_PLATFORM_LINE_BREAKS;
+import static com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature.WRITE_DOC_START_MARKER;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 
-public interface SerializableCatalog
-  extends Catalog
+/**
+ * Decorates a database to allow for serialization to YAML serialization.
+ */
+public final class YamlSerializedCatalog
+  extends BaseJacksonSerializedCatalog
 {
 
-  void save(final OutputStream out)
-    throws SchemaCrawlerException;
+  public YamlSerializedCatalog(final Catalog catalog)
+  {
+    super(catalog);
+  }
+
+  @Override
+  protected ObjectMapper newObjectMapper()
+  {
+    return new ObjectMapper(new YAMLFactory());
+  }
 
 }

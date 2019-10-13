@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.integration.serialization;
+package schemacrawler.tools.integration.serialize;
 
 
 import static java.nio.file.Files.newOutputStream;
@@ -34,11 +34,13 @@ import static java.nio.file.Files.newOutputStream;
 import java.io.OutputStream;
 import java.nio.file.Path;
 
+import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 
 /**
- * Main executor for the graphing integration.
+ * Main executor for the serialization integration.
  *
  * @author Sualeh Fatehi
  */
@@ -48,14 +50,12 @@ public final class SerializationCommand
 
   static final String COMMAND = "serialize";
 
+  private final SerializationLanguage serializationLanguage;
+
   public SerializationCommand()
   {
-    this(COMMAND);
-  }
-
-  public SerializationCommand(final String command)
-  {
-    super(command);
+    super(COMMAND);
+    this.serializationLanguage = new SerializationLanguage();
   }
 
   @Override
@@ -75,15 +75,28 @@ public final class SerializationCommand
   {
     checkCatalog();
 
+    serializationLanguage.addConfig(getAdditionalConfiguration());
+
+    final SerializationFormat serializationFormat = serializationLanguage
+      .getSerializationFormat();
+    if (serializationFormat == SerializationFormat.unknown)
+    {
+      throw new SchemaCrawlerException("No serialization format provided");
+    }
+    final String serializerClassName = serializationFormat
+      .getSerializerClassName();
+    final Class<SerializableCatalog> serializableCatalogClass = (Class<SerializableCatalog>) Class
+      .forName(serializerClassName);
+    final SerializableCatalog serializableCatalog = serializableCatalogClass
+      .getDeclaredConstructor(Catalog.class).newInstance(catalog);
+
     // Force a file to be created
-    final Path outputFile = outputOptions.getOutputFile("data");
+    final Path outputFile = outputOptions
+      .getOutputFile(serializationFormat.getFileExtension());
 
     outputOptions = OutputOptionsBuilder.builder(outputOptions)
-                                        .withOutputFile(outputFile)
-                                        .toOptions();
+      .withOutputFile(outputFile).toOptions();
 
-    final SerializableCatalog serializableCatalog = new JavaSerializedCatalog(
-      catalog);
     try (final OutputStream out = newOutputStream(outputFile))
     {
       serializableCatalog.save(out);

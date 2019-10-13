@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.test;
+package schemacrawler.test.serialize;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -46,7 +46,7 @@ import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.commandline.command.CommandLineHelpCommand;
 
 @ExtendWith(TestContextParameterResolver.class)
-public class CommandLineScriptHelpTest
+public class CommandLineSerializeHelpTest
 {
 
   private static final String COMMANDLINE_HELP_OUTPUT = "commandline_help_output/";
@@ -62,10 +62,10 @@ public class CommandLineScriptHelpTest
   }
 
   @Test
-  public void helpTemplate(final TestContext testContext)
+  public void helpSerialize(final TestContext testContext)
   {
     final String[] args = {
-      "--help", "template" };
+      "--help", "serialize" };
 
     final CommandLineHelpCommand optionsParser = new CommandLineHelpCommand();
     new CommandLine(optionsParser).parseArgs(args);
@@ -74,23 +74,7 @@ public class CommandLineScriptHelpTest
     assertThat(outputOf(err), hasNoContent());
     assertThat(outputOf(out),
                hasSameContentAs(classpathResource(
-                 COMMANDLINE_HELP_OUTPUT + "help.template.stdout.txt")));
-  }
-
-  @Test
-  public void helpScript(final TestContext testContext)
-  {
-    final String[] args = {
-      "--help", "script" };
-
-    final CommandLineHelpCommand optionsParser = new CommandLineHelpCommand();
-    new CommandLine(optionsParser).parseArgs(args);
-    optionsParser.run();
-
-    assertThat(outputOf(err), hasNoContent());
-    assertThat(outputOf(out),
-               hasSameContentAs(classpathResource(
-                 COMMANDLINE_HELP_OUTPUT + "help.script.stdout.txt")));
+                 COMMANDLINE_HELP_OUTPUT + "help.serialize.stdout.txt")));
   }
 
   @BeforeEach

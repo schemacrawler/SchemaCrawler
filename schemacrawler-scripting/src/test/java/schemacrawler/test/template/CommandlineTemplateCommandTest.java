@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.test;
+package schemacrawler.test.template;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -43,7 +43,7 @@ import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public class TemplatingCommandlineTest
+public class CommandlineTemplateCommandTest
 {
 
   @Test
