@@ -47,8 +47,7 @@ public enum TextOutputFormat
 
  text("Plain text format", "txt"),
  html("HyperText Markup Language (HTML) format"),
- tsv("Tab-separated values (TSV) format"),
- json("JavaScript Object Notation (JSON) format"),;
+ tsv("Tab-separated values (TSV) format");
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(TextOutputFormat.class.getName());

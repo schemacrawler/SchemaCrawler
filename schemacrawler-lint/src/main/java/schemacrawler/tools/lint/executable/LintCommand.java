@@ -137,9 +137,11 @@ public class LintCommand
     formatter.handleStart();
     formatter.handle(catalog);
 
-    final List<? extends Table> tablesList = new ArrayList<>(catalog.getTables());
+    final List<? extends Table> tablesList = new ArrayList<>(catalog
+                                                               .getTables());
     Collections.sort(tablesList,
-                     NamedObjectSort.getNamedObjectSort(lintOptions.isAlphabeticalSortForTables()));
+                     NamedObjectSort.getNamedObjectSort(lintOptions
+                                                          .isAlphabeticalSortForTables()));
     for (final Table table : tablesList)
     {
       formatter.handle(table);
@@ -153,25 +155,11 @@ public class LintCommand
   private LintTraversalHandler getSchemaTraversalHandler()
     throws SchemaCrawlerException
   {
-    final LintTraversalHandler formatter;
-
     final String identifierQuoteString = identifiers.getIdentifierQuoteString();
 
-    final TextOutputFormat outputFormat = TextOutputFormat.fromFormat(
-      outputOptions.getOutputFormatValue());
-    if (outputFormat == TextOutputFormat.json)
-    {
-      formatter = new LintJsonFormatter(lintOptions,
-                                        outputOptions,
-                                        identifierQuoteString);
-    }
-    else
-    {
-      formatter = new LintTextFormatter(lintOptions,
-                                        outputOptions,
-                                        identifierQuoteString);
-    }
-
+    final LintTraversalHandler formatter = new LintTextFormatter(lintOptions,
+                                                                 outputOptions,
+                                                                 identifierQuoteString);
     return formatter;
   }
 
@@ -180,8 +168,7 @@ public class LintCommand
     if (lintOptions == null)
     {
       lintOptions = LintOptionsBuilder.builder()
-                                      .fromConfig(additionalConfiguration)
-                                      .toOptions();
+        .fromConfig(additionalConfiguration).toOptions();
     }
   }
 

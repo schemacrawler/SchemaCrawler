@@ -42,8 +42,7 @@ public class TitleTest
   {
     return Arrays.stream(new OutputFormat[] {
                                               TextOutputFormat.text,
-                                              TextOutputFormat.html,
-                                              TextOutputFormat.json });
+                                              TextOutputFormat.html });
   }
 
 }

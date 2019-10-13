@@ -47,7 +47,6 @@ import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.utility.DatabaseObjectColorMap;
 import schemacrawler.tools.text.utility.HtmlFormattingHelper;
-import schemacrawler.tools.text.utility.JsonFormattingHelper;
 import schemacrawler.tools.text.utility.PlainTextFormattingHelper;
 import schemacrawler.tools.text.utility.TextFormattingHelper;
 import schemacrawler.tools.traversal.TraversalHandler;
@@ -102,9 +101,6 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
     {
       case html:
         formattingHelper = new HtmlFormattingHelper(out, outputFormat);
-        break;
-      case json:
-        formattingHelper = new JsonFormattingHelper(out, outputFormat);
         break;
       case text:
       default:
