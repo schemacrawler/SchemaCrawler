@@ -207,7 +207,7 @@
                 <artifactItem>
                   <groupId>org.postgresql</groupId>
                   <artifactId>postgresql</artifactId>
-                  <version>42.2.6</version>
+                  <version>42.2.8</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
@@ -263,7 +263,7 @@
                 <artifactItem>
                   <groupId>info.picocli</groupId>
                   <artifactId>picocli</artifactId>
-                  <version>4.0.3</version>
+                  <version>4.0.4</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
