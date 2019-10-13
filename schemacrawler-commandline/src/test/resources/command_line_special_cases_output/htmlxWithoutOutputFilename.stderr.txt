@@ -3,7 +3,7 @@ SchemaCrawler 16.1.2
 Error: Output file has to be specified for schema diagrams
 
 Re-run SchemaCrawler with just the
--?
+-h
 option for help
 
 Or, re-run SchemaCrawler with an additional

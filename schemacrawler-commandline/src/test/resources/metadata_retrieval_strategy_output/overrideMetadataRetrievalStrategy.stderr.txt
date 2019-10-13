@@ -3,7 +3,7 @@ SchemaCrawler 16.1.2
 Error: No tables SQL provided
 
 Re-run SchemaCrawler with just the
--?
+-h
 option for help
 
 Or, re-run SchemaCrawler with an additional

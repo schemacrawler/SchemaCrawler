@@ -23,7 +23,7 @@ SchemaCrawler 15.06.01
 Error: Cannot execute SchemaCrawler command
 
 Re-run SchemaCrawler with just the
--?
+-h
 option for help
 
 Or, re-run SchemaCrawler with an additional
