@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.integration.test;
+package schemacrawler.test.serialize;
 
 
 import static org.hamcrest.CoreMatchers.is;
@@ -59,7 +59,7 @@ import sf.util.IOUtility;
 @ExtendWith(TestContextParameterResolver.class)
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
-public class SerializationCommandLineTest
+public class CommandLineSerializeCommandTest
 {
 
   private TestOutputStream err;
@@ -84,8 +84,8 @@ public class SerializationCommandLineTest
   }
 
   @Test
-  public void testDefaultSerializationCommandLine(final TestContext testContext,
-                                                  final DatabaseConnectionInfo connectionInfo)
+  public void commandLineDefault(final TestContext testContext,
+                                 final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
 
@@ -109,8 +109,8 @@ public class SerializationCommandLineTest
   }
 
   @Test
-  public void testJavaSerializationCommandLine(final TestContext testContext,
-                                               final DatabaseConnectionInfo connectionInfo)
+  public void commandLineJava(final TestContext testContext,
+                              final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
 
@@ -135,8 +135,8 @@ public class SerializationCommandLineTest
   }
 
   @Test
-  public void testJsonSerializationCommandLine(final TestContext testContext,
-                                               final DatabaseConnectionInfo connectionInfo)
+  public void commandLineJson(final TestContext testContext,
+                              final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
 

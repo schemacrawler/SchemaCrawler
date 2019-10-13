@@ -26,16 +26,17 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.test.script;
+package schemacrawler.test.template;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.FileHasContent.*;
-import static schemacrawler.test.utility.ScriptTestUtility.commandLineScriptExecution;
+import static schemacrawler.test.utility.ScriptTestUtility.templateExecution;
+
+import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -43,43 +44,41 @@ import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public class ScriptingCommandlineTest
+public class ExecutableTemplateCommandTest
 {
 
   @Test
-  public void commandlineGroovy(final DatabaseConnectionInfo connectionInfo)
+  public void executableFreeMarker(final Connection connection)
     throws Exception
   {
-    assertThat(outputOf(commandLineScriptExecution(connectionInfo,
-                                                   "/plaintextschema.groovy")),
-               hasSameContentAs(classpathResource("script_output.txt")));
+    assertThat(outputOf(templateExecution(connection, "/plaintextschema.ftl")),
+               hasSameContentAs(classpathResource("executableForFreeMarker.txt")));
   }
 
   @Test
-  public void commandlineJavaScript(final DatabaseConnectionInfo connectionInfo)
+  public void executableMustache(final Connection connection)
     throws Exception
   {
-    assertThat(outputOf(commandLineScriptExecution(connectionInfo,
-                                                   "/plaintextschema.js")),
-               hasSameContentAs(classpathResource("script_output.txt")));
+    assertThat(outputOf(templateExecution(connection,
+                                          "/plaintextschema.mustache")),
+               hasSameContentAs(classpathResource("executableForMustache.txt")));
   }
 
   @Test
-  public void commandlinePython(final DatabaseConnectionInfo connectionInfo)
+  public void executableThymeleaf(final Connection connection)
     throws Exception
   {
-    assertThat(outputOf(commandLineScriptExecution(connectionInfo,
-                                                   "/plaintextschema.py")),
-               hasSameContentAs(classpathResource("script_output.txt")));
+    assertThat(outputOf(templateExecution(connection,
+                                          "/plaintextschema.thymeleaf")),
+               hasSameContentAs(classpathResource("executableForThymeleaf.txt")));
   }
 
   @Test
-  public void commandlineRuby(final DatabaseConnectionInfo connectionInfo)
+  public void executableVelocity(final Connection connection)
     throws Exception
   {
-    assertThat(outputOf(commandLineScriptExecution(connectionInfo,
-                                                   "/plaintextschema.rb")),
-               hasSameContentAs(classpathResource("script_output_rb.txt")));
+    assertThat(outputOf(templateExecution(connection, "/plaintextschema.vm")),
+               hasSameContentAs(classpathResource("executableForVelocity.txt")));
   }
 
 }

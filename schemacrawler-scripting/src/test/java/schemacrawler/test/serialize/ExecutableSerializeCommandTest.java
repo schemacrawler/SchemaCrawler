@@ -26,58 +26,51 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.test.template;
+package schemacrawler.test.serialize;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
+import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
 import static schemacrawler.test.utility.FileHasContent.*;
-import static schemacrawler.test.utility.ScriptTestUtility.templateExecution;
 
+import java.nio.file.Path;
 import java.sql.Connection;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public class TemplatingTest
+public class ExecutableSerializeCommandTest
 {
 
-  @Test
-  public void executableFreeMarker(final Connection connection)
+  private static Path executeSerialize(final Connection connection,
+                                       final String language)
     throws Exception
   {
-    assertThat(outputOf(templateExecution(connection, "/plaintextschema.ftl")),
-               hasSameContentAs(classpathResource("executableForFreeMarker.txt")));
+    final SchemaCrawlerExecutable executable = executableOf("template");
+    final Config additionalConfiguration = new Config();
+    additionalConfiguration.put("templating-language", language);
+    executable.setAdditionalConfiguration(additionalConfiguration);
+
+    return executableExecution(connection, executable, "text");
   }
 
+  @Disabled("Work in progress to check correctness of output")
   @Test
-  public void executableMustache(final Connection connection)
+  public void executableJava(final Connection connection)
     throws Exception
   {
-    assertThat(outputOf(templateExecution(connection,
-                                          "/plaintextschema.mustache")),
-               hasSameContentAs(classpathResource("executableForMustache.txt")));
-  }
-
-  @Test
-  public void executableThymeleaf(final Connection connection)
-    throws Exception
-  {
-    assertThat(outputOf(templateExecution(connection,
-                                          "/plaintextschema.thymeleaf")),
-               hasSameContentAs(classpathResource("executableForThymeleaf.txt")));
-  }
-
-  @Test
-  public void executableVelocity(final Connection connection)
-    throws Exception
-  {
-    assertThat(outputOf(templateExecution(connection, "/plaintextschema.vm")),
+    assertThat(outputOf(executeSerialize(connection,
+                                         "java")),
                hasSameContentAs(classpathResource("executableForVelocity.txt")));
   }
 

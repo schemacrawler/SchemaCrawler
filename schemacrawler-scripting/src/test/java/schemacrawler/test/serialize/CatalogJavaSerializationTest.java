@@ -54,7 +54,7 @@ import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import sf.util.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public class CatalogSerializationTest
+public class CatalogJavaSerializationTest
 {
 
   @Test
