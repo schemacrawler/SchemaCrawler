@@ -92,7 +92,6 @@ public class SiteSnapshotVariationsTest
   {
     for (final OutputFormat outputFormat : new OutputFormat[] {
       TextOutputFormat.html,
-      TextOutputFormat.json,
       TextOutputFormat.text,
       GraphOutputFormat.htmlx
     })
