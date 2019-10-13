@@ -26,20 +26,21 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.integration.serialization;
+package schemacrawler.tools.integration.serialize;
 
 
 import static java.nio.file.Files.newOutputStream;
-import static java.util.Objects.requireNonNull;
 
 import java.io.OutputStream;
 import java.nio.file.Path;
 
+import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 
 /**
- * Main executor for the graphing integration.
+ * Main executor for the serialization integration.
  *
  * @author Sualeh Fatehi
  */
@@ -49,22 +50,12 @@ public final class SerializationCommand
 
   static final String COMMAND = "serialize";
 
-  private SerializationOptions serializationOptions;
+  private final SerializationLanguage serializationLanguage;
 
   public SerializationCommand()
   {
-    this(COMMAND);
-  }
-
-  public SerializationCommand(final String command)
-  {
-    super(command);
-  }
-
-  public final void setSerializationOptions(final SerializationOptions serializationOptions)
-  {
-    this.serializationOptions = requireNonNull(serializationOptions,
-                                               "No serialization options provided");
+    super(COMMAND);
+    this.serializationLanguage = new SerializationLanguage();
   }
 
   @Override
@@ -73,14 +64,6 @@ public final class SerializationCommand
   {
     // Nothing additional to check at this point. The Command should be
     // available after the class is loaded, and imports are resolved.
-  }
-
-  @Override
-  public void initialize()
-    throws Exception
-  {
-    super.initialize();
-    loadSerializationOptions();
   }
 
   /**
@@ -92,8 +75,20 @@ public final class SerializationCommand
   {
     checkCatalog();
 
-    final SerializationFormat serializationFormat = serializationOptions
+    serializationLanguage.addConfig(getAdditionalConfiguration());
+
+    final SerializationFormat serializationFormat = serializationLanguage
       .getSerializationFormat();
+    if (serializationFormat == SerializationFormat.unknown)
+    {
+      throw new SchemaCrawlerException("No serialization format provided");
+    }
+    final String serializerClassName = serializationFormat
+      .getSerializerClassName();
+    final Class<SerializableCatalog> serializableCatalogClass = (Class<SerializableCatalog>) Class
+      .forName(serializerClassName);
+    final SerializableCatalog serializableCatalog = serializableCatalogClass
+      .getDeclaredConstructor(Catalog.class).newInstance(catalog);
 
     // Force a file to be created
     final Path outputFile = outputOptions
@@ -102,8 +97,6 @@ public final class SerializationCommand
     outputOptions = OutputOptionsBuilder.builder(outputOptions)
       .withOutputFile(outputFile).toOptions();
 
-    final SerializableCatalog serializableCatalog = serializationFormat
-      .getSerializableCatalog(catalog);
     try (final OutputStream out = newOutputStream(outputFile))
     {
       serializableCatalog.save(out);
@@ -114,15 +107,6 @@ public final class SerializationCommand
   public boolean usesConnection()
   {
     return false;
-  }
-
-  private void loadSerializationOptions()
-  {
-    if (serializationOptions == null)
-    {
-      serializationOptions = SerializationOptionsBuilder.builder()
-        .fromConfig(additionalConfiguration).toOptions();
-    }
   }
 
 }

@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.integration.serialization;
+package schemacrawler.tools.integration.serialize;
 
 
 import static java.util.Objects.requireNonNull;

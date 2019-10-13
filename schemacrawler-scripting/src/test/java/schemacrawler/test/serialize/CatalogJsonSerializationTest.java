@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.integration.test;
+package schemacrawler.test.serialize;
 
 
 import static org.hamcrest.CoreMatchers.is;
@@ -50,7 +50,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.*;
-import schemacrawler.tools.integration.serialization.JsonSerializedCatalog;
+import schemacrawler.tools.integration.serialize.JsonSerializedCatalog;
 import sf.util.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)

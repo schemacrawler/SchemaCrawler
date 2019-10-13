@@ -25,10 +25,8 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.integration.serialization;
+package schemacrawler.tools.integration.serialize;
 
-
-import java.nio.file.Path;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.BaseCommandProvider;
@@ -68,12 +66,12 @@ public class SerializationCommandProvider
   {
     final PluginCommand pluginCommand = new PluginCommand("serialize",
                                                           "** "
-                                                          + DESCRIPTION_HEADER,
-                                                          "For more information, see https://www.schemacrawler.com/lint.html %n");
+                                                          + DESCRIPTION_HEADER);
     pluginCommand.addOption("serialization-format",
                  "Specifies serialization output format%n"
                  + "Optional, defaults to Java serialization%n",
                  SerializationFormat.class);
+
     return pluginCommand;
   }
 

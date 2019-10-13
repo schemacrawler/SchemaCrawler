@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.integration.test;
+package schemacrawler.test.serialize;
 
 
 import static java.nio.file.Files.probeContentType;

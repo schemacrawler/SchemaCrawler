@@ -55,7 +55,7 @@ import schemacrawler.schemacrawler.*;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.integration.serialization.JavaSerializedCatalog;
+import schemacrawler.tools.integration.serialize.JavaSerializedCatalog;
 import schemacrawler.tools.offline.OfflineDatabaseConnector;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
 import schemacrawler.tools.options.TextOutputFormat;

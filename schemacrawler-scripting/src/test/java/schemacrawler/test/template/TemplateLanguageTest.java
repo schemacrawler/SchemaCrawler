@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.test;
+package schemacrawler.test.template;
 
 
 import static org.hamcrest.CoreMatchers.is;

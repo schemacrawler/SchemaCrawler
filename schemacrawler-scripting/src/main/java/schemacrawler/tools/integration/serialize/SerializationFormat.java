@@ -25,33 +25,35 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.integration.serialization;
+package schemacrawler.tools.integration.serialize;
 
 
-import static java.util.Objects.requireNonNull;
-
-import schemacrawler.schemacrawler.Options;
-
-public class SerializationOptions
-  implements Options
+public enum SerializationFormat
 {
+  unknown(null,null),
+  java("schemacrawler.tools.integration.serialize.JavaSerializedCatalog",
+       "ser"),
+  json("schemacrawler.tools.integration.serialize.JsonSerializedCatalog",
+       "json");
 
-  private final SerializationFormat serializationFormat;
+  private final String fileExtension;
+  private final String serializerClassName;
 
-  public SerializationOptions(final SerializationOptionsBuilder builder)
+  SerializationFormat(final String serializerClassName,
+                      final String fileExtension)
   {
-    requireNonNull(builder, "No builder provided");
-
-    serializationFormat = builder.serializationFormat;
+    this.fileExtension = fileExtension;
+    this.serializerClassName = serializerClassName;
   }
 
-  /**
-   * Gets the configured catalog serialization format.
-   * @return Serialization format
-   */
-  public SerializationFormat getSerializationFormat()
+  public String getFileExtension()
   {
-    return serializationFormat;
+    return fileExtension;
+  }
+
+  public String getSerializerClassName()
+  {
+    return serializerClassName;
   }
 
 }

@@ -53,7 +53,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
-import schemacrawler.tools.integration.serialization.JavaSerializedCatalog;
+import schemacrawler.tools.integration.serialize.JavaSerializedCatalog;
 import sf.util.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)

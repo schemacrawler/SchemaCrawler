@@ -39,9 +39,6 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.probeFileHeader;
 
 import java.io.*;
-import java.math.BigInteger;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -53,7 +50,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.*;
-import schemacrawler.tools.integration.serialization.SerializationFormat;
+import schemacrawler.tools.integration.serialize.SerializationFormat;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;

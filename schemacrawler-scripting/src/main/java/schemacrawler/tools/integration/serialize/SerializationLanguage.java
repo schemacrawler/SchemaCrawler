@@ -25,36 +25,37 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.integration.serialization;
+
+package schemacrawler.tools.integration.serialize;
 
 
-import java.util.function.Function;
+import schemacrawler.tools.integration.BaseLanguage;
 
-import schemacrawler.schema.Catalog;
-
-public enum SerializationFormat
+public final class SerializationLanguage
+  extends BaseLanguage
 {
-  java(catalog -> new JavaSerializedCatalog(catalog), "ser"),
-  json(catalog -> new JsonSerializedCatalog(catalog), "json");
 
-  private final String fileExtension;
-  private final Function<Catalog, SerializableCatalog> serializerFunction;
-
-  private SerializationFormat(final Function<Catalog, SerializableCatalog> serializerFunction,
-                              final String fileExtension)
+  public SerializationLanguage()
   {
-    this.serializerFunction = serializerFunction;
-    this.fileExtension = fileExtension;
+    super("serialization-format", "serializer", "java");
   }
 
-  public String getFileExtension()
+  public final SerializationFormat getSerializationFormat()
   {
-    return fileExtension;
-  }
+    final String language = getLanguage();
 
-  public SerializableCatalog getSerializableCatalog(final Catalog catalog)
-  {
-    return serializerFunction.apply(catalog);
+    try
+    {
+      final SerializationFormat serializationFormat = SerializationFormat
+        .valueOf(language);
+      return serializationFormat;
+    }
+    catch (final IllegalArgumentException e)
+    {
+      // Ignore
+    }
+
+    return SerializationFormat.unknown;
   }
 
 }
