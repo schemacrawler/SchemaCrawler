@@ -88,7 +88,7 @@ public class SiteLintReportVariationsTest
     throws Exception
   {
     for (final OutputFormat outputFormat : new OutputFormat[] {
-      TextOutputFormat.html, TextOutputFormat.json, TextOutputFormat.text,
+      TextOutputFormat.html, TextOutputFormat.text,
       })
     {
       final String extension;
