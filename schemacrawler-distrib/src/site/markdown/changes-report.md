@@ -1,5 +1,13 @@
 # SchemaCrawler Change History
 
+<a name="a16.2.1"></a>
+## Release 16.2.1 - 2019-10-14
+
+- Perform tests for major databases during the CI build using Testcontainers
+- Add support for JSON and YAML output using Jackson
+  *NOTE*: JSON format for output is deprecated, and will be removed in the next release
+
+
 <a name="a16.1.2"></a>
 ## Release 16.1.2 - 2019-08-11
 
