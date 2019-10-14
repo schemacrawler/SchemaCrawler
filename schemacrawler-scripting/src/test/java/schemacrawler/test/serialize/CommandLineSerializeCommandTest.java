@@ -43,6 +43,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,6 +65,8 @@ import sf.util.IOUtility;
 @ExtendWith(TestAssertNoSystemOutOutput.class)
 public class CommandLineSerializeCommandTest
 {
+
+  private static boolean DEBUG = true;
 
   private TestOutputStream err;
   private TestOutputStream out;
@@ -142,7 +146,6 @@ public class CommandLineSerializeCommandTest
     }
 
     final OutputFormat outputFormat = TextOutputFormat.text;
-
     final Path testOutputFile = IOUtility.createTempFilePath("test", "");
 
     commandlineExecution(connectionInfo,
@@ -151,6 +154,16 @@ public class CommandLineSerializeCommandTest
                          null,
                          outputFormat.getFormat(),
                          testOutputFile);
+    if (DEBUG) {
+      if (serializationFormat!=null)
+      {
+        final Path copied = Paths.get(String.format("./serialize.%s",
+                                                    serializationFormat.getFileExtension()));
+        Files.copy(testOutputFile, copied, StandardCopyOption.REPLACE_EXISTING);
+        // System.out.println(copied.toAbsolutePath());
+      }
+    }
+
     return testOutputFile;
   }
 

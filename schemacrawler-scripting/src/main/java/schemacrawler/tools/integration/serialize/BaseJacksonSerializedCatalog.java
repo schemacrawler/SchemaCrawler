@@ -29,13 +29,13 @@ package schemacrawler.tools.integration.serialize;
 
 
 import static com.fasterxml.jackson.databind.MapperFeature.SORT_PROPERTIES_ALPHABETICALLY;
+import static com.fasterxml.jackson.databind.PropertyNamingStrategy.KEBAB_CASE;
 import static com.fasterxml.jackson.databind.SerializationFeature.*;
 import static java.util.Objects.requireNonNull;
 
 import java.io.OutputStream;
 import java.util.Optional;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyName;
@@ -111,11 +111,6 @@ public abstract class BaseJacksonSerializedCatalog
         SimpleBeanPropertyFilter.serializeAllExcept("parent",
                                                     "exportedForeignKeys",
                                                     "inportedForeignKeys"));
-      @JsonFilter("skip_references_serializer")
-      class PropertyFilterMixIn
-      {
-
-      }
 
       final ObjectMapper mapper = newObjectMapper();
       mapper.enable(ORDER_MAP_ENTRIES_BY_KEYS,
@@ -123,8 +118,8 @@ public abstract class BaseJacksonSerializedCatalog
                     USE_EQUALITY_FOR_OBJECT_ID,
                     WRITE_ENUMS_USING_TO_STRING);
       mapper.enable(SORT_PROPERTIES_ALPHABETICALLY);
+      mapper.setPropertyNamingStrategy(KEBAB_CASE);
       mapper.setAnnotationIntrospector(new ObjectIdGenerator());
-      mapper.addMixIn(Object.class, PropertyFilterMixIn.class);
       mapper.setFilterProvider(filters);
 
       // Write JSON to stream
