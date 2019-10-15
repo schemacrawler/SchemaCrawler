@@ -78,7 +78,7 @@ public class SpinThroughOperationsCommandLineTest
   private static Stream<TextOutputFormat> outputFormats()
   {
     return Arrays.stream(new TextOutputFormat[] {
-      TextOutputFormat.text, TextOutputFormat.html, TextOutputFormat.json
+      TextOutputFormat.text, TextOutputFormat.html
     });
   }
 

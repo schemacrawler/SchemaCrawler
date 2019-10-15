@@ -12,7 +12,7 @@ SchemaCrawler can analyze and
 potential design flaws. SchemaCrawler Lint can be run using the 
 `--command=lint`
 command-line option. A lint report will be produced in any specified format -
-either text, HTML5 or JSON.
+either text or HTML5.
 
 SchemaCrawler Lint is a separate jar, and contains both the framework for doing database 
 schema lints, as well as some checks for common database schema design issues. You can 
@@ -25,7 +25,7 @@ download.
 ## SchemaCrawler Lint Reports
 
 SchemaCrawler Lint can produce reports in 
-[text](lint-report-examples/lint_report.txt), [HTML5](lint-report-examples/lint_report.html) or
+[text](lint-report-examples/lint_report.text), [HTML5](lint-report-examples/lint_report.html) or
 [JSON](lint-report-examples/lint_report.json) format. 
 (Click on the links for example reports.)
 

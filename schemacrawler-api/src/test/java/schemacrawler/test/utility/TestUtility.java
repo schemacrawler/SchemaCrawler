@@ -167,10 +167,6 @@ public final class TestUtility
     {
       validateXML(testOutputTempFile, failures);
     }
-    else if ("json".equals(outputFormat))
-    {
-      validateJSON(testOutputTempFile, failures);
-    }
     else if ("png".equals(outputFormat))
     {
       validateDiagram(testOutputTempFile);
@@ -434,48 +430,6 @@ public final class TestUtility
     assertThat("Diagram file has 0 bytes size",
                size(diagramFile),
                greaterThan(0L));
-  }
-
-  private static boolean validateJSON(final Path testOutputFile,
-                                      final List<String> failures)
-    throws FileNotFoundException, SAXException, IOException
-  {
-    final JsonElement jsonElement;
-    try (final Reader reader = readerForFile(testOutputFile);
-      final JsonReader jsonReader = new JsonReader(reader);)
-    {
-      jsonElement = new JsonParser().parse(jsonReader);
-      if (jsonReader.peek() != JsonToken.END_DOCUMENT)
-      {
-        failures.add("JSON document was not fully consumed.");
-      }
-    }
-    catch (final Exception e)
-    {
-      failures.add(e.getMessage());
-      return false;
-    }
-
-    final int size;
-    if (jsonElement.isJsonObject())
-    {
-      size = jsonElement.getAsJsonObject().entrySet().size();
-    }
-    else if (jsonElement.isJsonArray())
-    {
-      size = jsonElement.getAsJsonArray().size();
-    }
-    else
-    {
-      size = 0;
-    }
-
-    if (size == 0)
-    {
-      failures.add("Invalid JSON string");
-    }
-
-    return failures.isEmpty();
   }
 
   private static void validateXML(final Path testOutputFile,

@@ -29,6 +29,7 @@ package schemacrawler.tools.integration.serialize;
 
 
 import static com.fasterxml.jackson.databind.MapperFeature.SORT_PROPERTIES_ALPHABETICALLY;
+import static com.fasterxml.jackson.databind.PropertyNamingStrategy.KEBAB_CASE;
 import static com.fasterxml.jackson.databind.SerializationFeature.*;
 import static java.util.Objects.requireNonNull;
 
@@ -39,6 +40,7 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyName;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.introspect.Annotated;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import com.fasterxml.jackson.databind.introspect.ObjectIdInfo;
@@ -123,9 +125,10 @@ public abstract class BaseJacksonSerializedCatalog
                     USE_EQUALITY_FOR_OBJECT_ID,
                     WRITE_ENUMS_USING_TO_STRING);
       mapper.enable(SORT_PROPERTIES_ALPHABETICALLY);
+      mapper.setPropertyNamingStrategy(KEBAB_CASE);
       mapper.setAnnotationIntrospector(new ObjectIdGenerator());
+      mapper.setFilterProvider(filters); // Setting a filter provider is not sufficient - need a mixin
       mapper.addMixIn(Object.class, PropertyFilterMixIn.class);
-      mapper.setFilterProvider(filters);
 
       // Write JSON to stream
       mapper.writeValue(out, catalog);

@@ -146,14 +146,7 @@ public final class SchemaTextRenderer
     final String identifierQuoteString = identifiers.getIdentifierQuoteString();
     final TextOutputFormat outputFormat = TextOutputFormat.fromFormat(
       outputOptions.getOutputFormatValue());
-    if (outputFormat == TextOutputFormat.json)
-    {
-      formatter = new SchemaJsonFormatter(schemaTextDetailType,
-                                          schemaTextOptions,
-                                          outputOptions,
-                                          identifierQuoteString);
-    }
-    else if (schemaTextDetailType == SchemaTextDetailType.list)
+    if (schemaTextDetailType == SchemaTextDetailType.list)
     {
       formatter = new SchemaListFormatter(schemaTextDetailType,
                                           schemaTextOptions,

@@ -1,5 +1,12 @@
 # SchemaCrawler Change History
 
+<a name="a16.2.2"></a>
+## Release 16.2.2 - 2019-10-16
+
+- Remove ability to generate JSON as an output format, since it has been replaced with
+  the ability to generate JSON as a serialization format, with a lot more information
+
+
 <a name="a16.2.1"></a>
 ## Release 16.2.1 - 2019-10-14
 

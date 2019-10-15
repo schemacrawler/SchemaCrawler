@@ -65,7 +65,6 @@ public abstract class AbstractSchemaCrawlerOutputTest
   private static final String ORDINAL_OUTPUT = "ordinal_output/";
   private static final String TABLE_ROW_COUNT_OUTPUT = "table_row_count_output/";
   private static final String SHOW_WEAK_ASSOCIATIONS_OUTPUT = "show_weak_associations_output/";
-  private static final String JSON_OUTPUT = "json_output/";
   private static final String HIDE_CONSTRAINT_NAMES_OUTPUT = "hide_constraint_names_output/";
   private static final String UNQUALIFIED_NAMES_OUTPUT = "unqualified_names_output/";
   private static final String ROUTINES_OUTPUT = "routines_output/";
@@ -240,61 +239,6 @@ public abstract class AbstractSchemaCrawlerOutputTest
                              hasSameContentAndTypeAs(classpathResource(
                                IDENTIFIER_QUOTING_OUTPUT + referenceFile),
                                                      outputFormat));
-                }));
-  }
-
-  @Test
-  public void compareJsonOutput(final Connection connection)
-    throws Exception
-  {
-    clean(JSON_OUTPUT);
-
-    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
-      .builder();
-    textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo()
-      .showJdbcDriverInfo();
-    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
-
-    final InfoLevel infoLevel = InfoLevel.maximum;
-
-    assertAll(Arrays.stream(SchemaTextDetailType.values())
-                .map(schemaTextDetailType -> () -> {
-
-                  final String referenceFile =
-                    schemaTextDetailType + "_" + infoLevel + ".json";
-                  final OutputFormat outputFormat = TextOutputFormat.json;
-
-                  final Config config = loadHsqldbConfig();
-
-                  final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
-                    .builder().fromConfig(config);
-
-                  final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-                    .builder()
-                    .withSchemaInfoLevel(infoLevel.toSchemaInfoLevel())
-                    .includeSchemas(new RegularExpressionExclusionRule(
-                      ".*\\.SYSTEM_LOBS|.*\\.FOR_LINT")).includeAllSequences()
-                    .includeAllRoutines();
-                  final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-                    .toOptions();
-
-                  final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder
-                    .builder(textOptions);
-
-                  final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-                    schemaTextDetailType.name());
-                  executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-                  executable.setAdditionalConfiguration(schemaTextOptionsBuilder
-                                                          .toConfig());
-                  executable
-                    .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder
-                                                 .toOptions());
-
-                  assertThat(outputOf(executableExecution(connection,
-                                                          executable,
-                                                          outputFormat)),
-                             hasSameContentAndTypeAs(classpathResource(
-                               JSON_OUTPUT + referenceFile), outputFormat));
                 }));
   }
 

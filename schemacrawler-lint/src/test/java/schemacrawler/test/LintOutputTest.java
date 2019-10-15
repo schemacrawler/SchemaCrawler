@@ -53,7 +53,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
@@ -65,7 +64,6 @@ public class LintOutputTest
 
   private static final String TEXT_OUTPUT = "lint_text_output/";
   private static final String COMPOSITE_OUTPUT = "lint_composite_output/";
-  private static final String JSON_OUTPUT = "lint_json_output/";
 
   @Test
   public void compareCompositeOutput(final Connection connection)
@@ -119,33 +117,6 @@ public class LintOutputTest
   }
 
   @Test
-  public void compareJsonOutput(final Connection connection)
-    throws Exception
-  {
-    clean(JSON_OUTPUT);
-
-    final InfoLevel infoLevel = InfoLevel.standard;
-    final OutputFormat outputFormat = TextOutputFormat.json;
-
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder()
-      .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"))
-      .withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-      .toOptions();
-
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("lint");
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-
-    assertThat(outputOf(executableExecution(connection,
-                                            executable,
-                                            outputFormat)),
-               hasSameContentAndTypeAs(classpathResource(JSON_OUTPUT
-                                                         + "lints.json"),
-                                       outputFormat));
-  }
-
-  @Test
   public void compareTextOutput(final Connection connection)
     throws Exception
   {
@@ -171,8 +142,7 @@ public class LintOutputTest
   {
     return Arrays.stream(new TextOutputFormat[] {
                                                   TextOutputFormat.text,
-                                                  TextOutputFormat.html,
-                                                  TextOutputFormat.json });
+                                                  TextOutputFormat.html });
   }
 
 }

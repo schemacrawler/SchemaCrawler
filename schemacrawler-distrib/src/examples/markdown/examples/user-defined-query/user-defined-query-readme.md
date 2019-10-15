@@ -14,7 +14,7 @@ execute arbitrary SQL, per table.
 4. Run `user-defined-query.cmd` (or `user-defined-query.sh` on Unix) 
 
 ## How to Experiment
-1. Try generating different output formats, such as HTML or JSON. 
+1. Try generating different output formats, such as HTML. 
 2. Try modifying `config/schemacrawler.config.properties` with different queries. 
 3. Redirect the output of SchemaCrawler into a file, by running `user-defined-query.cmd > file.txt`. 
 4. Try running an arbitrary query, following the instructions in the [commandline](../commandline/commandline-readme.html) example. 
