@@ -53,9 +53,6 @@ import schemacrawler.tools.options.TextOutputFormat;
 public class SiteSnapshotVariationsTest
 {
 
-  private static Path directory;
-  private static Path propertiesFile;
-
   @BeforeAll
   public static void _saveConfigProperties()
     throws IOException
@@ -75,6 +72,8 @@ public class SiteSnapshotVariationsTest
     directory = testContext
       .resolveTargetFromRootPath("_website/snapshot-examples");
   }
+  private static Path directory;
+  private static Path propertiesFile;
 
   @Test
   public void snapshots(final DatabaseConnectionInfo connectionInfo)
@@ -95,13 +94,28 @@ public class SiteSnapshotVariationsTest
 
       run(connectionInfo,
           "details,count,dump",
+          new HashMap<>(),
           outputFormat,
           directory.resolve("snapshot." + extension));
     }
   }
 
+  @Test
+  public void jsonSnapshot(final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    final Map<String, String> additionalArgsMap = new HashMap<>();
+    additionalArgsMap.put("-serialization-format", "json");
+    run(connectionInfo,
+        "count,serialize",
+        additionalArgsMap,
+        TextOutputFormat.text,
+        directory.resolve("snapshot.json"));
+  }
+
   private void run(final DatabaseConnectionInfo connectionInfo,
                    final String command,
+                   final Map<String, String> additionalArgsMap,
                    final OutputFormat outputFormat,
                    final Path outputFile)
     throws Exception
@@ -109,6 +123,7 @@ public class SiteSnapshotVariationsTest
     deleteIfExists(outputFile);
 
     final Map<String, String> argsMap = new HashMap<>();
+    argsMap.putAll(additionalArgsMap);
     argsMap.put("-info-level", "maximum");
     argsMap.put("-title", "Details of Example Database");
 
