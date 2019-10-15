@@ -29,8 +29,8 @@ package schemacrawler.test.sitegen;
 
 
 import static java.nio.file.Files.deleteIfExists;
-import static java.nio.file.Files.move;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
+import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -38,7 +38,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.test.utility.*;
@@ -53,37 +53,27 @@ import schemacrawler.tools.options.TextOutputFormat;
 public class SiteSnapshotVariationsTest
 {
 
-  private static void run(final DatabaseConnectionInfo connectionInfo,
-                          final Map<String, String> argsMap,
-                          final OutputFormat outputFormat,
-                          final Path outputFile)
-    throws Exception
+  private static Path directory;
+  private static Path propertiesFile;
+
+  @BeforeAll
+  public static void _saveConfigProperties()
+    throws IOException
   {
-    deleteIfExists(outputFile);
-
-    final String command = "details,count,dump";
-
-    argsMap.put("-title", "Details of Example Database");
-
-    final Path snapshotFile = commandlineExecution(connectionInfo,
-                                                   command,
-                                                   argsMap,
-                                                   "/hsqldb.INFORMATION_SCHEMA.config.properties",
-                                                   outputFormat);
-    move(snapshotFile, outputFile);
+    propertiesFile = copyResourceToTempFile(
+      "/hsqldb.INFORMATION_SCHEMA.config.properties");
   }
-  private Path directory;
 
-  @BeforeEach
-  public void _setupDirectory(final TestContext testContext)
+  @BeforeAll
+  public static void _setupDirectory(final TestContext testContext)
     throws IOException, URISyntaxException
   {
     if (directory != null)
     {
       return;
     }
-    directory = testContext.resolveTargetFromRootPath(
-      "_website/snapshot-examples");
+    directory = testContext
+      .resolveTargetFromRootPath("_website/snapshot-examples");
   }
 
   @Test
@@ -91,10 +81,7 @@ public class SiteSnapshotVariationsTest
     throws Exception
   {
     for (final OutputFormat outputFormat : new OutputFormat[] {
-      TextOutputFormat.html,
-      TextOutputFormat.text,
-      GraphOutputFormat.htmlx
-    })
+      TextOutputFormat.html, TextOutputFormat.text, GraphOutputFormat.htmlx })
     {
       final String extension;
       if ("htmlx".equals(outputFormat.getFormat()))
@@ -106,14 +93,31 @@ public class SiteSnapshotVariationsTest
         extension = outputFormat.getFormat();
       }
 
-      final Map<String, String> args = new HashMap<>();
-      args.put("-info-level", "maximum");
-
       run(connectionInfo,
-          args,
+          "details,count,dump",
           outputFormat,
           directory.resolve("snapshot." + extension));
     }
+  }
+
+  private void run(final DatabaseConnectionInfo connectionInfo,
+                   final String command,
+                   final OutputFormat outputFormat,
+                   final Path outputFile)
+    throws Exception
+  {
+    deleteIfExists(outputFile);
+
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("-info-level", "maximum");
+    argsMap.put("-title", "Details of Example Database");
+
+    commandlineExecution(connectionInfo,
+                         command,
+                         argsMap,
+                         propertiesFile,
+                         outputFormat.getFormat(),
+                         outputFile);
   }
 
 }
