@@ -65,15 +65,45 @@ public class SiteSnapshotVariationsTest
   public static void _setupDirectory(final TestContext testContext)
     throws IOException, URISyntaxException
   {
-    if (directory != null)
-    {
-      return;
-    }
-    directory = testContext
+    snapshotsDirectory = testContext
       .resolveTargetFromRootPath("_website/snapshot-examples");
+    lintReportsDirectory = testContext
+      .resolveTargetFromRootPath("_website/lint-report-examples");
   }
-  private static Path directory;
+
+  private static Path lintReportsDirectory;
   private static Path propertiesFile;
+  private static Path snapshotsDirectory;
+
+  @Test
+  public void lintReports(final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    for (final OutputFormat outputFormat : new OutputFormat[] {
+      TextOutputFormat.html, TextOutputFormat.text, })
+    {
+      final String extension = outputFormat.getFormat();
+
+      run(connectionInfo,
+          "lint",
+          new HashMap<>(),
+          outputFormat,
+          lintReportsDirectory.resolve("lint_report." + extension));
+    }
+  }
+
+  @Test
+  public void jsonLintReports(final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    final Map<String, String> additionalArgsMap = new HashMap<>();
+    additionalArgsMap.put("-serialization-format", "json");
+    run(connectionInfo,
+        "lint,serialize",
+        additionalArgsMap,
+        TextOutputFormat.text,
+        lintReportsDirectory.resolve("lint_report.json"));
+  }
 
   @Test
   public void snapshots(final DatabaseConnectionInfo connectionInfo)
@@ -96,7 +126,7 @@ public class SiteSnapshotVariationsTest
           "details,count,dump",
           new HashMap<>(),
           outputFormat,
-          directory.resolve("snapshot." + extension));
+          snapshotsDirectory.resolve("snapshot." + extension));
     }
   }
 
@@ -110,7 +140,7 @@ public class SiteSnapshotVariationsTest
         "count,serialize",
         additionalArgsMap,
         TextOutputFormat.text,
-        directory.resolve("snapshot.json"));
+        snapshotsDirectory.resolve("snapshot.json"));
   }
 
   private void run(final DatabaseConnectionInfo connectionInfo,
