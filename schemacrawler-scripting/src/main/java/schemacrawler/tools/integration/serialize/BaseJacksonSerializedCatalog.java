@@ -125,10 +125,10 @@ public abstract class BaseJacksonSerializedCatalog
                     USE_EQUALITY_FOR_OBJECT_ID,
                     WRITE_ENUMS_USING_TO_STRING);
       mapper.enable(SORT_PROPERTIES_ALPHABETICALLY);
-      mapper.setAnnotationIntrospector(new ObjectIdGenerator());
-      mapper.addMixIn(Object.class, PropertyFilterMixIn.class);
       mapper.setPropertyNamingStrategy(KEBAB_CASE);
-      mapper.setFilterProvider(filters);
+      mapper.setAnnotationIntrospector(new ObjectIdGenerator());
+      mapper.setFilterProvider(filters); // Setting a filter provider is not sufficient - need a mixin
+      mapper.addMixIn(Object.class, PropertyFilterMixIn.class);
 
       // Write JSON to stream
       mapper.writeValue(out, catalog);
