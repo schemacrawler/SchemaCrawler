@@ -11,6 +11,6 @@ is database-specific. This example demonstrates how to execute arbitrary SQL.
 4. Run `db-specific-query.cmd` (or `db-specific-query.sh` on Unix). 
 
 ## How to Experiment
-1. Try generating different output formats, such as HTML or JSON. 
+1. Try generating different output formats, such as HTML. 
 2. Try modifying `config/schemacrawler.config.properties` with different queries. 
 3. Redirect the output of SchemaCrawler into a file, by running `db-specific-query.cmd > file.txt`. 
