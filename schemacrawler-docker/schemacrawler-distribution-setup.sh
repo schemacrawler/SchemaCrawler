@@ -13,6 +13,8 @@ cd ./_downloader
 pwd
 chmod +x ./download.sh
 
+./download.sh jackson
+
 ./download.sh groovy
 ./download.sh python
 ./download.sh ruby
