@@ -56,3 +56,5 @@ buildNumber.properties
 **/hsqldb.schemacrawler.properties
 **/hsqldb.schemacrawler.script
 **/derby.log
+
+/schemacrawler-scripting/serialize.*

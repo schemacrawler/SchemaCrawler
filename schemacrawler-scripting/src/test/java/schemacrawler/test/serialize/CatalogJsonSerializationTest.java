@@ -94,9 +94,9 @@ public class CatalogJsonSerializationTest
     try (final TestWriter out = testout)
     {
       tablesNode.elements().forEachRemaining(tableNode -> {
-        out.println(tableNode.get("fullName").asText());
+        out.println(tableNode.get("full-name").asText());
         tableNode.get("columns").elements().forEachRemaining(columnNode -> {
-          final JsonNode columnFullname = columnNode.get("fullName");
+          final JsonNode columnFullname = columnNode.get("full-name");
           if (columnFullname != null)
           {
             out.println("- column @uuid: " + columnNode.get("@uuid").asText());
