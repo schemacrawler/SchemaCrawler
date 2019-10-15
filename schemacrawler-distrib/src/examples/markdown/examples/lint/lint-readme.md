@@ -14,9 +14,13 @@ below to run SchemaCrawler Lint.
 1. See help on all of the available lints, run 
    `schemacrawler.cmd lint --help` 
    (use `schemacrawler.sh` instead of `schemacrawler.cmd` on Unix)
-1. Create the SchemaCrawler Lint report in HTML5 format. 
-2. Create a customized SchemaCrawler Lint report using a linter configuration file. 
+2. Create the SchemaCrawler Lint report in HTML5 format. 
+3. Create a customized SchemaCrawler Lint report using a linter configuration file. 
   1. Copy the `schemacrawler-linter-configs.xml` file to the SchemaCrawler distribution directory, that is, the `_schemacrawler` directory.
   2. To find schema design issues, run with an additional command-line option,
     `--linter-configs=schemacrawler-linter-configs.xml`
-3. Try creating your own database lints in a new jar - see [SchemaCrawler Lint](https://www.schemacrawler.com/lint.html). 
+4. Try creating your own database lints in a new jar - see [SchemaCrawler Lint](https://www.schemacrawler.com/lint.html). 
+5. Generate lint reports in JSON format. First download Jackson using instructions in the `serialize` example.
+   Then run, 
+   `schemacrawler.cmd --server=hsqldb --database=schemacrawler --password= --info-level=standard --command=lint,serialize --serialization-format=json` 
+   (use `schemacrawler.sh` instead of `schemacrawler.cmd` on Unix)
