@@ -36,15 +36,11 @@ import static java.util.Objects.requireNonNull;
 import java.io.OutputStream;
 import java.util.Optional;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyName;
-import com.fasterxml.jackson.databind.introspect.Annotated;
-import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
-import com.fasterxml.jackson.databind.introspect.ObjectIdInfo;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schema.NamedObject;
 import schemacrawler.schemacrawler.BaseCatalogDecorator;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
@@ -58,24 +54,6 @@ public abstract class BaseJacksonSerializedCatalog
 {
 
   private static final long serialVersionUID = 5314326260124511414L;
-
-
-  private static class ObjectIdGenerator
-    extends JacksonAnnotationIntrospector
-  {
-    @Override
-    public ObjectIdInfo findObjectIdInfo(final Annotated ann)
-    {
-      if (ann.getAnnotated().getClass().isInstance(NamedObject.class))
-      {
-        return new ObjectIdInfo(PropertyName.construct("@uuid", null),
-                                null,
-                                ObjectIdGenerators.UUIDGenerator.class,
-                                null);
-      }
-      return super.findObjectIdInfo(ann);
-    }
-  }
 
   public BaseJacksonSerializedCatalog(final Catalog catalog)
   {
@@ -109,6 +87,7 @@ public abstract class BaseJacksonSerializedCatalog
                               "parent",
                               "exported-foreign-keys",
                               "imported-foreign-keys" })
+      @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@uuid")
       class JacksonAnnotationMixIn
       {
 
@@ -121,7 +100,6 @@ public abstract class BaseJacksonSerializedCatalog
                     WRITE_ENUMS_USING_TO_STRING);
       mapper.enable(SORT_PROPERTIES_ALPHABETICALLY);
       mapper.setPropertyNamingStrategy(KEBAB_CASE);
-      mapper.setAnnotationIntrospector(new ObjectIdGenerator());
       mapper.addMixIn(Object.class, JacksonAnnotationMixIn.class);
 
       // Write JSON to stream
