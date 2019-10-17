@@ -28,8 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.serialize;
 
 
-import static com.fasterxml.jackson.databind.MapperFeature.SORT_PROPERTIES_ALPHABETICALLY;
-import static com.fasterxml.jackson.databind.PropertyNamingStrategy.KEBAB_CASE;
 import static com.fasterxml.jackson.databind.SerializationFeature.*;
 import static java.util.Objects.requireNonNull;
 
@@ -38,8 +36,11 @@ import java.util.Optional;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.BaseCatalogDecorator;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -88,6 +89,8 @@ public abstract class BaseJacksonSerializedCatalog
                               "exported-foreign-keys",
                               "imported-foreign-keys" })
       @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@uuid")
+      @JsonPropertyOrder(alphabetic = true)
+      @JsonNaming(PropertyNamingStrategy.KebabCaseStrategy.class)
       class JacksonAnnotationMixIn
       {
 
@@ -98,8 +101,6 @@ public abstract class BaseJacksonSerializedCatalog
                     INDENT_OUTPUT,
                     USE_EQUALITY_FOR_OBJECT_ID,
                     WRITE_ENUMS_USING_TO_STRING);
-      mapper.enable(SORT_PROPERTIES_ALPHABETICALLY);
-      mapper.setPropertyNamingStrategy(KEBAB_CASE);
       mapper.addMixIn(Object.class, JacksonAnnotationMixIn.class);
 
       // Write JSON to stream
