@@ -36,17 +36,13 @@ import static java.util.Objects.requireNonNull;
 import java.io.OutputStream;
 import java.util.Optional;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyName;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.introspect.Annotated;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import com.fasterxml.jackson.databind.introspect.ObjectIdInfo;
-import com.fasterxml.jackson.databind.ser.FilterProvider;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schemacrawler.BaseCatalogDecorator;
@@ -108,13 +104,12 @@ public abstract class BaseJacksonSerializedCatalog
     requireNonNull(out, "No output stream provided");
     try
     {
-      final FilterProvider filters = new SimpleFilterProvider().addFilter(
-        "skip_references_serializer",
-        SimpleBeanPropertyFilter.serializeAllExcept("parent",
-                                                    "exportedForeignKeys",
-                                                    "inportedForeignKeys"));
-      @JsonFilter("skip_references_serializer")
-      class PropertyFilterMixIn
+
+      @JsonIgnoreProperties({
+                              "parent",
+                              "exported-foreign-keys",
+                              "imported-foreign-keys" })
+      class JacksonAnnotationMixIn
       {
 
       }
@@ -127,8 +122,7 @@ public abstract class BaseJacksonSerializedCatalog
       mapper.enable(SORT_PROPERTIES_ALPHABETICALLY);
       mapper.setPropertyNamingStrategy(KEBAB_CASE);
       mapper.setAnnotationIntrospector(new ObjectIdGenerator());
-      mapper.setFilterProvider(filters); // Setting a filter provider is not sufficient - need a mixin
-      mapper.addMixIn(Object.class, PropertyFilterMixIn.class);
+      mapper.addMixIn(Object.class, JacksonAnnotationMixIn.class);
 
       // Write JSON to stream
       mapper.writeValue(out, catalog);

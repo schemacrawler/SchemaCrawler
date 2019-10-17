@@ -37,14 +37,18 @@ import static schemacrawler.test.utility.TestUtility.probeFileHeader;
 import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.MissingNode;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schema.Catalog;
@@ -57,6 +61,20 @@ import sf.util.IOUtility;
 @ExtendWith(TestContextParameterResolver.class)
 public class CatalogJsonSerializationTest
 {
+
+  private static final boolean DEBUG = true;
+  private Path directory;
+
+  @BeforeEach
+  public void _setupDirectory(final TestContext testContext)
+    throws IOException, URISyntaxException
+  {
+    if (directory != null)
+    {
+      return;
+    }
+    directory = testContext.resolveTargetFromRootPath(".");
+  }
 
   @Test
   public void catalogSerializationWithJson(final TestContext testContext,
@@ -77,6 +95,13 @@ public class CatalogJsonSerializationTest
                Files.size(testOutputFile),
                greaterThan(0L));
     assertThat(probeFileHeader(testOutputFile), is(oneOf("7B0D", "7B0A")));
+
+    if (DEBUG)
+    {
+      final Path copied = directory
+        .resolve(testContext.testMethodFullName() + ".json");
+      Files.copy(testOutputFile, copied, StandardCopyOption.REPLACE_EXISTING);
+    }
 
     // Read generated JSON file, and assert values
     final ObjectMapper objectMapper = new ObjectMapper();
@@ -101,7 +126,9 @@ public class CatalogJsonSerializationTest
           {
             out.println("- column @uuid: " + columnNode.get("@uuid").asText());
             out.println("  " + columnFullname.asText());
-          } else {
+          }
+          else
+          {
             out.println("- column @uuid: " + columnNode.asText());
           }
         });
