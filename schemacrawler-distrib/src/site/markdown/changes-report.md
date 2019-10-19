@@ -4,9 +4,11 @@
 ## Release 16.2.2 - 2019-10-20
 
 - Remove ability to generate JSON as an output format, since it has been replaced with
-  the ability to generate JSON as a serialization format (usning the `serialize` command, 
+  the ability to generate JSON as a serialization format (using the `serialize` command, 
   with a lot more schema information
-
+- Workaround MySQL JDBC driver issue with retrieving table comments 
+  (https://bugs.mysql.com/bug.php?id=80473) by allowing table comments to be obtained
+  from `table.getAttribute("TABLE_COMMENT")`
 
 <a name="a16.2.1"></a>
 ## Release 16.2.1 - 2019-10-14
