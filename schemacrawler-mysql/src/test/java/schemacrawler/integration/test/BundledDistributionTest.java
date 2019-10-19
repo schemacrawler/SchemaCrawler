@@ -50,7 +50,7 @@ public class BundledDistributionTest
     final DatabaseConnector databaseSystemIdentifier = registry.lookupDatabaseConnector(
       "mysql");
     assertThat(databaseSystemIdentifier.getSchemaRetrievalOptionsBuilder(
-      connection).toOptions().getInformationSchemaViews().size(), is(7));
+      connection).toOptions().getInformationSchemaViews().size(), is(8));
   }
 
   @Test
