@@ -4,7 +4,8 @@
 ## Release 16.2.2 - 2019-10-20
 
 - Remove ability to generate JSON as an output format, since it has been replaced with
-  the ability to generate JSON as a serialization format, with a lot more information
+  the ability to generate JSON as a serialization format (usning the `serialize` command, 
+  with a lot more schema information
 
 
 <a name="a16.2.1"></a>
