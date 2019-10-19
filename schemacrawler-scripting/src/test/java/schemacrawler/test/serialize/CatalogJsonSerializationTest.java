@@ -32,6 +32,7 @@ package schemacrawler.test.serialize;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.FileHasContent.*;
 import static schemacrawler.test.utility.TestUtility.probeFileHeader;
 import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
@@ -110,30 +111,29 @@ public class CatalogJsonSerializationTest
                catalogNode.findPath("schemas"),
                not(instanceOf(MissingNode.class)));
 
-    final JsonNode tablesNode = catalogNode.findPath("tables");
-    assertThat("Catalog tables were not serialized",
-               tablesNode,
+    final JsonNode allTableColumnsNode = catalogNode
+      .findPath("all-table-columns");
+    assertThat("Table columns were not serialized",
+               allTableColumnsNode,
                not(instanceOf(MissingNode.class)));
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      tablesNode.elements().forEachRemaining(tableNode -> {
-        out.println(tableNode.get("full-name").asText());
-        tableNode.get("columns").elements().forEachRemaining(columnNode -> {
-          final JsonNode columnFullname = columnNode.get("full-name");
-          if (columnFullname != null)
-          {
-            out.println("- column @uuid: " + columnNode.get("@uuid").asText());
-            out.println("  " + columnFullname.asText());
-          }
-          else
-          {
-            out.println("- column @uuid: " + columnNode.asText());
-          }
-        });
+      allTableColumnsNode.elements().forEachRemaining(columnNode -> {
+        final JsonNode columnFullnameNode = columnNode.get("full-name");
+        if (columnFullnameNode != null)
+        {
+          out.println("- column @uuid: " + columnNode.get("@uuid").asText());
+          out.println("  " + columnFullnameNode.asText());
+        }
+        else
+        {
+          fail("Table column object not found - " + columnNode.asText());
+        }
       });
     }
+
     assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(testContext
                                                     .testMethodFullName())));

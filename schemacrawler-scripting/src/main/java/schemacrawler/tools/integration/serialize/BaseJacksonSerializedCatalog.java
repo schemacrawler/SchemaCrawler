@@ -32,7 +32,7 @@ import static com.fasterxml.jackson.databind.SerializationFeature.*;
 import static java.util.Objects.requireNonNull;
 
 import java.io.OutputStream;
-import java.util.Optional;
+import java.util.*;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -42,6 +42,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Column;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.BaseCatalogDecorator;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
@@ -56,9 +58,13 @@ public abstract class BaseJacksonSerializedCatalog
 
   private static final long serialVersionUID = 5314326260124511414L;
 
+  private final SortedSet<Column> allTableColumns;
+
   public BaseJacksonSerializedCatalog(final Catalog catalog)
   {
     super(catalog);
+    allTableColumns = new TreeSet<>();
+    loadAllTableColumns();
   }
 
   /**
@@ -68,6 +74,11 @@ public abstract class BaseJacksonSerializedCatalog
   public final <T> Optional<T> lookupAttribute(final String name)
   {
     return Optional.of(getAttribute(name));
+  }
+
+  public Set<Column> getAllTableColumns()
+  {
+    return new TreeSet<>(allTableColumns);
   }
 
   /**
@@ -86,10 +97,25 @@ public abstract class BaseJacksonSerializedCatalog
 
       @JsonIgnoreProperties({
                               "parent",
+                              "referenced-column",
                               "exported-foreign-keys",
                               "imported-foreign-keys" })
+      @JsonPropertyOrder(value = {
+        "@uuid",
+        "name",
+        "short-name",
+        "full-name",
+        "crawl-info",
+        "schema-crawler-info",
+        "jvm-system-info",
+        "operating-system-info",
+        "database-info",
+        "jdbc-driver-info",
+        "schemas",
+        "system-column-data-types",
+        "column-data-types",
+        "all-table-columns" }, alphabetic = true)
       @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@uuid")
-      @JsonPropertyOrder(alphabetic = true)
       @JsonNaming(PropertyNamingStrategy.KebabCaseStrategy.class)
       class JacksonAnnotationMixIn
       {
@@ -104,7 +130,7 @@ public abstract class BaseJacksonSerializedCatalog
       mapper.addMixIn(Object.class, JacksonAnnotationMixIn.class);
 
       // Write JSON to stream
-      mapper.writeValue(out, catalog);
+      mapper.writeValue(out, this);
     }
     catch (final Exception e)
     {
@@ -113,5 +139,16 @@ public abstract class BaseJacksonSerializedCatalog
   }
 
   protected abstract ObjectMapper newObjectMapper();
+
+  private void loadAllTableColumns()
+  {
+    for (final Table table : catalog.getTables())
+    {
+      for (final Column column : table.getColumns())
+      {
+        allTableColumns.add(column);
+      }
+    }
+  }
 
 }
