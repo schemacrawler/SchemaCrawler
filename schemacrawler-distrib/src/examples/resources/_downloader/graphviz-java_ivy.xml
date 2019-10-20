@@ -2,7 +2,7 @@
 <ivy-module xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             version="2.0"
             xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
-  <info organisation="schemacrawler" module="schemacrawler-graphviz-java"/>
+  <info organisation="us.fatehi" module="schemacrawler"/>
   <dependencies>
     <dependency org="guru.nidi" name="graphviz-java"
                 rev="0.8.1"/>
