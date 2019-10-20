@@ -290,7 +290,7 @@
                 <artifactItem>
                   <groupId>info.picocli</groupId>
                   <artifactId>picocli-shell-jline3</artifactId>
-                  <version>4.0.2</version>
+                  <version>4.0.4</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
