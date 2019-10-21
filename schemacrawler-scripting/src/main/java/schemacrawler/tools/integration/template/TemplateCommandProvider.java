@@ -65,7 +65,7 @@ public class TemplateCommandProvider
   @Override
   public PluginCommand getCommandLineCommand()
   {
-    final PluginCommand pluginCommand = new PluginCommand("template",
+    final PluginCommand pluginCommand = new PluginCommand(TemplateCommand.COMMAND,
                                                           "** "
                                                           + DESCRIPTION_HEADER);
     pluginCommand.addOption("template",

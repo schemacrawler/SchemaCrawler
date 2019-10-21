@@ -29,9 +29,15 @@ package schemacrawler.test.commandline.command;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.collection.IsMapContaining.hasEntry;
+import static org.hamcrest.collection.IsMapContaining.hasKey;
+import static org.hamcrest.core.IsNot.not;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.CommandlineTestUtility.createLoadedSchemaCrawlerShellState;
 import static schemacrawler.test.utility.FileHasContent.*;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.retrievePluginOptions;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -40,8 +46,8 @@ import java.sql.Connection;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import picocli.CommandLine;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -78,6 +84,37 @@ public class ExecuteCommandTest
     assertThat(outputOf(testOutputFile),
                hasSameContentAs(classpathResource(
                  testContext.testMethodFullName() + ".txt")));
+  }
+
+  @Test
+  public void testPluginOptions()
+    throws SchemaCrawlerException
+  {
+
+    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+
+    final String[] args = new String[] {
+      "-c",
+      "test",
+      "--test-command-parameter",
+      "parameter-value",
+      "--unknown-parameter",
+      "some-value" };
+
+    final ExecuteCommand executeTestCommand = new ExecuteCommand(state);
+    final CommandLine commandLine = newCommandLine(executeTestCommand,
+                                                   null,
+                                                   false);
+
+    final CommandLine.ParseResult parseResult = commandLine.parseArgs(args);
+    final Config additionalConfig = retrievePluginOptions(parseResult);
+
+    assertThat(additionalConfig,
+               hasEntry(is("test-command-parameter"), is("parameter-value")));
+    assertThat(additionalConfig, not(hasKey(is("unknown-parameter"))));
+
+    assertThrows(CommandLine.ExecutionException.class,
+                 () -> executeTestCommand.run());
   }
 
 }

@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.integration.script;
+package schemacrawler.test.utility;
 
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -35,23 +35,22 @@ import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.OutputOptions;
 
-public class ScriptCommandProvider
+public class TestCommandProvider
   extends BaseCommandProvider
 {
 
-  public static final String DESCRIPTION_HEADER =
-    "Process a script file, such as JavaScript, "
-    + "against the database schema";
+  public static final String COMMAND = "test";
+  public static final String DESCRIPTION_HEADER = "Test command which is not deployed with the release";
 
-  public ScriptCommandProvider()
+  public TestCommandProvider()
   {
-    super(new CommandDescription(ScriptCommand.COMMAND, DESCRIPTION_HEADER));
+    super(new CommandDescription(COMMAND, DESCRIPTION_HEADER));
   }
 
   @Override
   public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
   {
-    return new ScriptCommand();
+    throw new UnsupportedOperationException(DESCRIPTION_HEADER);
   }
 
   @Override
@@ -59,20 +58,17 @@ public class ScriptCommandProvider
                                               final SchemaCrawlerOptions schemaCrawlerOptions,
                                               final OutputOptions outputOptions)
   {
-    return supportsCommand(command);
+    return false;
   }
 
   @Override
   public PluginCommand getCommandLineCommand()
   {
-    final PluginCommand pluginCommand = new PluginCommand(ScriptCommand.COMMAND,
+    final PluginCommand pluginCommand = new PluginCommand("test",
                                                           "** "
                                                           + DESCRIPTION_HEADER);
-    pluginCommand.addOption("script",
-                            "Path to the script file or to the CLASSPATH resource",
-                            String.class)
-                 .addOption("script-language",
-                            "Scripting language",
+    pluginCommand.addOption("test-command-parameter",
+                            "Parameter for test command",
                             String.class);
     return pluginCommand;
   }
