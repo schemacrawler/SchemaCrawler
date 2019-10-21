@@ -105,12 +105,10 @@ public class PluginCommandOption
   @Override
   public String toString()
   {
-    return new StringJoiner(", ", "option [", "]").add("name='" + name + "'")
-                                                  .add("helpText='" + helpText
-                                                       + "'")
-                                                  .add(
-                                                    "valueClass=" + valueClass)
-                                                  .toString();
+    return new StringJoiner(", ",
+                            PluginCommandOption.class.getSimpleName() + "[",
+                            "]").add("name='" + name + "'")
+      .add("valueClass=" + valueClass.getCanonicalName()).toString();
   }
 
 }

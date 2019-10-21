@@ -64,7 +64,7 @@ public class SerializationCommandProvider
   @Override
   public PluginCommand getCommandLineCommand()
   {
-    final PluginCommand pluginCommand = new PluginCommand("serialize",
+    final PluginCommand pluginCommand = new PluginCommand(SerializationCommand.COMMAND,
                                                           "** "
                                                           + DESCRIPTION_HEADER);
     pluginCommand.addOption("serialization-format",

@@ -39,6 +39,7 @@ import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.tools.integration.template.TemplateLanguageType;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
@@ -51,6 +52,7 @@ public class CommandlineTemplateCommandTest
     throws Exception
   {
     assertThat(outputOf(commandLineTemplateExecution(connectionInfo,
+                                                     TemplateLanguageType.freemarker,
                                                      "/plaintextschema.ftl")),
                hasSameContentAs(classpathResource("executableForFreeMarker.txt")));
   }
@@ -60,6 +62,7 @@ public class CommandlineTemplateCommandTest
     throws Exception
   {
     assertThat(outputOf(commandLineTemplateExecution(connectionInfo,
+                                                     TemplateLanguageType.mustache,
                                                      "/plaintextschema.mustache")),
                hasSameContentAs(classpathResource("executableForMustache.txt")));
   }
@@ -69,6 +72,7 @@ public class CommandlineTemplateCommandTest
     throws Exception
   {
     assertThat(outputOf(commandLineTemplateExecution(connectionInfo,
+                                                     TemplateLanguageType.thymeleaf,
                                                      "/plaintextschema.thymeleaf")),
                hasSameContentAs(classpathResource("executableForThymeleaf.txt")));
   }
@@ -78,6 +82,7 @@ public class CommandlineTemplateCommandTest
     throws Exception
   {
     assertThat(outputOf(commandLineTemplateExecution(connectionInfo,
+                                                     TemplateLanguageType.velocity,
                                                      "/plaintextschema.vm")),
                hasSameContentAs(classpathResource("executableForVelocity.txt")));
   }

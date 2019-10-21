@@ -57,22 +57,6 @@ public class TemplateLanguageTest
   }
 
   @Test
-  public void templateLanguageByExtension()
-  {
-    final TemplateLanguage templateLanguage = new TemplateLanguage();
-    for (final TemplateLanguageType templateLanguageType : TemplateLanguageType.values())
-    {
-      final Config config = new Config();
-      config.put("templating-language",
-                 templateLanguageType.getFileExtension());
-      templateLanguage.addConfig(config);
-
-      assertThat(templateLanguage.getTemplateLanguageType(),
-                 is(templateLanguageType));
-    }
-  }
-
-  @Test
   public void templateLanguageForNull()
   {
     final TemplateLanguage templateLanguage = new TemplateLanguage();

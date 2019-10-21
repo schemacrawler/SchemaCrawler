@@ -37,7 +37,9 @@ public final class SerializationLanguage
 
   public SerializationLanguage()
   {
-    super("serialization-format", "serializer", "java");
+    super("serialization-format",
+          "serializer",
+          SerializationFormat.java.name());
   }
 
   public final SerializationFormat getSerializationFormat()

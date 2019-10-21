@@ -158,4 +158,13 @@ public class PluginCommand
     return name;
   }
 
+  @Override
+  public String toString()
+  {
+    return new StringJoiner(", ",
+                            PluginCommand.class.getSimpleName() + "[",
+                            "]").add("name='" + name + "'")
+      .add("options=" + options).toString();
+  }
+
 }
