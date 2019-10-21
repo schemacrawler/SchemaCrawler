@@ -34,16 +34,21 @@ import static java.nio.file.StandardOpenOption.*;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
+import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Path;
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import picocli.CommandLine;
 import schemacrawler.Main;
-import schemacrawler.schemacrawler.Config;
+import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.*;
+import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.options.OutputFormat;
 import sf.util.IOUtility;
 
@@ -156,10 +161,20 @@ public final class CommandlineTestUtility
     return out;
   }
 
-  public static void parseCommand(final Object object, final String[] args)
+  public static SchemaCrawlerShellState createLoadedSchemaCrawlerShellState(final Connection connection)
+    throws SchemaCrawlerException
   {
-    final CommandLine commandLine = newCommandLine(object, null, true);
-    commandLine.parseArgs(args);
+    final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
+    final Supplier<Connection> dataSource = () -> connection;
+
+    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    state.setSchemaCrawlerOptionsBuilder(SchemaCrawlerOptionsBuilder.builder()
+                                           .fromOptions(schemaCrawlerOptions));
+    state.setSchemaRetrievalOptionsBuilder(SchemaRetrievalOptionsBuilder.builder());
+    state.setDataSource(dataSource); // is-connected
+    state.setCatalog(catalog); // is-loaded
+    return state;
   }
 
   public static void runCommandInTest(final Object object, final String[] args)

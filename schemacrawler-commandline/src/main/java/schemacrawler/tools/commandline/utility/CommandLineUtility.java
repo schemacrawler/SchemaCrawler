@@ -28,9 +28,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.utility;
 
 
-import static picocli.CommandLine.Model.UsageMessageSpec.*;
+import static java.util.Objects.requireNonNull;
 
-import java.util.Arrays;
+import java.util.List;
 
 import picocli.CommandLine;
 import picocli.CommandLine.IFactory;
@@ -57,9 +57,10 @@ public class CommandLineUtility
       .getDatabaseConnectorRegistry();
     for (final DatabaseServerType databaseServerType : databaseConnectorRegistry)
     {
-      final String pluginCommandName = databaseServerType.getDatabaseSystemIdentifier();
+      final String pluginCommandName = databaseServerType
+        .getDatabaseSystemIdentifier();
       final CommandSpec pluginCommandSpec = CommandSpec.create()
-                                                       .name(pluginCommandName);
+        .name(pluginCommandName);
       if (addAsMixins)
       {
         commandLine.addMixin(pluginCommandName, pluginCommandSpec);
@@ -79,39 +80,9 @@ public class CommandLineUtility
     {
       return;
     }
-    final String pluginCommandName = pluginCommand.getName();
 
-    final UsageMessageSpec usageMessageSpec = new UsageMessageSpec();
-    usageMessageSpec.header(pluginCommand.getHelpHeader());
-    usageMessageSpec.description(pluginCommand.getHelpDescription());
-    usageMessageSpec.synopsisHeading("Command:%n");
-    usageMessageSpec.customSynopsis(pluginCommandName);
-    usageMessageSpec.optionListHeading("Options:%n");
-
-    final CommandSpec pluginCommandSpec = CommandSpec.create()
-                                                     .name(pluginCommandName)
-                                                     .usageMessage(
-                                                       usageMessageSpec);
-    for (final PluginCommandOption option : pluginCommand)
-    {
-      final String optionName = option.getName();
-      final String paramName = String.format("<%s>", optionName);
-      final String helpText;
-      if (option.getValueClass().isEnum())
-      {
-        helpText = String.format("%s%nUse one of ${COMPLETION-CANDIDATES}",
-                                 option.getHelpText());
-      }
-      else
-      {
-        helpText = option.getHelpText();
-      }
-      pluginCommandSpec.addOption(OptionSpec.builder("--" + optionName)
-                                            .description(helpText)
-                                            .paramLabel(paramName)
-                                            .type(option.getValueClass())
-                                            .build());
-    }
+    final CommandSpec pluginCommandSpec = toCommandSpec(pluginCommand);
+    final String pluginCommandName = pluginCommandSpec.name();
     if (addAsMixins)
     {
       commandLine.addMixin(pluginCommandName, pluginCommandSpec);
@@ -127,8 +98,10 @@ public class CommandLineUtility
     throws SchemaCrawlerException
   {
     // Add commands for plugins
-    final CommandRegistry commandRegistry = CommandRegistry.getCommandRegistry();
-    for (final PluginCommand pluginCommand : commandRegistry.getCommandLineCommands())
+    final CommandRegistry commandRegistry = CommandRegistry
+      .getCommandRegistry();
+    for (final PluginCommand pluginCommand : commandRegistry
+      .getCommandLineCommands())
     {
       addPluginCommand(commandLine, pluginCommand, addAsMixins);
     }
@@ -180,13 +153,27 @@ public class CommandLineUtility
     return commandLine;
   }
 
+  /**
+   * SchemaCrawler plugins are registered on-the-fly, by adding them to the
+   * classpath. Inspect the command-line to see if there are any additional
+   * plugin-specific options passed in from the command-line, and put them in
+   * the configuration.
+   *
+   * @param parseResult Result of parsing the command-line
+   * @return Config with additional plugin-specific command-line options
+   * @throws SchemaCrawlerException On an exception
+   */
   public static Config retrievePluginOptions(final ParseResult parseResult)
     throws SchemaCrawlerException
   {
-    // Retrieve options, and save them to the state
-    final CommandRegistry commandRegistry =  CommandRegistry.getCommandRegistry();
+    requireNonNull(parseResult, "No parse result provided");
+
+    final List<String> originalArgs = parseResult.originalArgs();
+    final CommandRegistry commandRegistry = CommandRegistry
+      .getCommandRegistry();
     final Config additionalConfig = new Config();
-    for (final PluginCommand pluginCommand : commandRegistry.getCommandLineCommands())
+    for (final PluginCommand pluginCommand : commandRegistry
+      .getCommandLineCommands())
     {
       if (pluginCommand == null || pluginCommand.isEmpty())
       {
@@ -198,12 +185,73 @@ public class CommandLineUtility
         if (parseResult.hasMatchedOption(optionName))
         {
           final Object value = parseResult.matchedOptionValue(optionName, null);
-          additionalConfig.put(optionName,
-                               value == null? null: String.valueOf(value));
+          additionalConfig
+            .put(optionName, value == null? null: String.valueOf(value));
+        }
+        else
+        {
+          // Pull out arguments from the orginal command-line, since the subcommand
+          // may not be matched in the case of the execute command
+          final String commandLineOption = "--" + optionName;
+          if (originalArgs != null && originalArgs.contains(commandLineOption))
+          {
+            final int index = originalArgs.indexOf(commandLineOption);
+            final String value;
+            if (index < originalArgs.size())
+            {
+              value = originalArgs.get(index + 1);
+            }
+            else
+            {
+              value = null;
+            }
+            additionalConfig.put(optionName, value);
+          }
         }
       }
     }
     return additionalConfig;
+  }
+
+  public static CommandSpec toCommandSpec(final PluginCommand pluginCommand)
+  {
+    requireNonNull(pluginCommand, "No plugin command provided");
+    if (pluginCommand.isEmpty())
+    {
+      throw new NullPointerException("Empty plugin command provided");
+    }
+
+    final String pluginCommandName = pluginCommand.getName();
+
+    final UsageMessageSpec usageMessageSpec = new UsageMessageSpec();
+    usageMessageSpec.header(pluginCommand.getHelpHeader());
+    usageMessageSpec.description(pluginCommand.getHelpDescription());
+    usageMessageSpec.synopsisHeading("Command:%n");
+    usageMessageSpec.customSynopsis(pluginCommandName);
+    usageMessageSpec.optionListHeading("Options:%n");
+
+    final CommandSpec pluginCommandSpec = CommandSpec.create()
+      .name(pluginCommandName).usageMessage(usageMessageSpec);
+    for (final PluginCommandOption option : pluginCommand)
+    {
+      final String optionName = option.getName();
+      final String paramName = String.format("<%s>", optionName);
+      final String helpText;
+      if (option.getValueClass().isEnum())
+      {
+        helpText = String.format("%s%nUse one of ${COMPLETION-CANDIDATES}",
+                                 option.getHelpText());
+      }
+      else
+      {
+        helpText = option.getHelpText();
+      }
+      pluginCommandSpec
+        .addOption(OptionSpec.builder("--" + optionName).description(helpText)
+                     .paramLabel(paramName).type(option.getValueClass())
+                     .build());
+    }
+    return pluginCommandSpec;
   }
 
   private CommandLineUtility()
