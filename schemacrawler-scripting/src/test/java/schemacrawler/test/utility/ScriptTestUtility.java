@@ -40,6 +40,7 @@ import java.util.Map;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.integration.template.TemplateLanguageType;
 
 public class ScriptTestUtility
 {
@@ -56,34 +57,31 @@ public class ScriptTestUtility
                                                 final String script)
     throws Exception
   {
-    return keyedCommandLineExecution(connectionInfo, "script", script);
+    final Map<String, String> argsMap = additionalArgsMap();
+    argsMap.put("-" + "script", script);
+    return commandlineExecution(connectionInfo, "script", argsMap, "text");
   }
 
   public static Path commandLineTemplateExecution(final DatabaseConnectionInfo connectionInfo,
+                                                  final TemplateLanguageType templateLanguage,
                                                   final String template)
     throws Exception
   {
-    return keyedCommandLineExecution(connectionInfo, "template", template);
-  }
-
-  private static Path keyedCommandLineExecution(final DatabaseConnectionInfo connectionInfo,
-                                                final String key,
-                                                final String script)
-    throws Exception
-  {
     final Map<String, String> argsMap = additionalArgsMap();
-    argsMap.put("-" + key, script);
-    return commandlineExecution(connectionInfo, key, argsMap, "text");
+    argsMap.put("-template", template);
+    argsMap.put("-templating-language", templateLanguage.name());
+    return commandlineExecution(connectionInfo, "template", argsMap, "text");
   }
 
-  private static Path keyedExecutableExecution(final Connection connection,
-                                               final String key,
-                                               final String script)
+  public static Path templateExecution(final Connection connection,
+                                        final TemplateLanguageType templateLanguage,
+                                        final String templateResource)
     throws Exception
   {
-    final SchemaCrawlerExecutable executable = executableOf(key);
+    final SchemaCrawlerExecutable executable = executableOf("template");
     final Config additionalConfiguration = new Config();
-    additionalConfiguration.put(key, script);
+    additionalConfiguration.put("template", templateResource);
+    additionalConfiguration.put("templating-language", templateLanguage.name());
     executable.setAdditionalConfiguration(additionalConfiguration);
 
     return executableExecution(connection, executable, "text");
@@ -93,14 +91,12 @@ public class ScriptTestUtility
                                      final String script)
     throws Exception
   {
-    return keyedExecutableExecution(connection, "script", script);
-  }
+    final SchemaCrawlerExecutable executable = executableOf("script");
+    final Config additionalConfiguration = new Config();
+    additionalConfiguration.put("script", script);
+    executable.setAdditionalConfiguration(additionalConfiguration);
 
-  public static Path templateExecution(final Connection connection,
-                                       final String template)
-    throws Exception
-  {
-    return keyedExecutableExecution(connection, "template", template);
+    return executableExecution(connection, executable, "text");
   }
 
 }

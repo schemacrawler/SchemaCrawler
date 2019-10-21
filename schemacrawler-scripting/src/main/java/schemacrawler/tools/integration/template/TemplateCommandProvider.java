@@ -73,7 +73,7 @@ public class TemplateCommandProvider
                             String.class)
                  .addOption("templating-language",
                             "Templating language",
-                            String.class);
+                            TemplateLanguageType.class);
     return pluginCommand;
   }
 

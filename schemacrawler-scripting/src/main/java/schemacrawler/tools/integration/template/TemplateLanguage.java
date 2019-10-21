@@ -48,20 +48,16 @@ public final class TemplateLanguage
 
     try
     {
-      final TemplateLanguageType templateLanguageType = TemplateLanguageType.valueOf(
-        language);
-      if (templateLanguageType != TemplateLanguageType.unknown)
-      {
-        return templateLanguageType;
-      }
+      final TemplateLanguageType templateLanguageType = TemplateLanguageType
+        .valueOf(language);
+      return templateLanguageType;
     }
     catch (final IllegalArgumentException e)
     {
       // Ignore
     }
 
-    // Second try using extensions
-    return TemplateLanguageType.valueOfFromExtension(language);
+    return TemplateLanguageType.unknown;
   }
 
 }

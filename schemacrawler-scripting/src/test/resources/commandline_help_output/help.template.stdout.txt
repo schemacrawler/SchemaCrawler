@@ -4,5 +4,6 @@
          Path to the template file or to the CLASSPATH resource
       --templating-language=<templating-language>
          Templating language
+         Use one of unknown, velocity, freemarker, mustache, thymeleaf
 
 

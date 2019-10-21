@@ -41,25 +41,6 @@ public enum TemplateLanguageType
   thymeleaf("schemacrawler.tools.integration.template.ThymeleafRenderer",
             "thymeleaf");
 
-  /**
-   * Find the enumeration value corresponding to the string.
-   *
-   * @param extension Sort sequence code.
-   * @return Enumeration value
-   */
-  public static TemplateLanguageType valueOfFromExtension(final String extension)
-  {
-    for (final TemplateLanguageType type : EnumSet.complementOf(EnumSet.of(
-      TemplateLanguageType.unknown)))
-    {
-      if (type.getFileExtension().equalsIgnoreCase(extension))
-      {
-        return type;
-      }
-    }
-    return unknown;
-  }
-
   private final String fileExtension;
   private final String templateRendererClassName;
 

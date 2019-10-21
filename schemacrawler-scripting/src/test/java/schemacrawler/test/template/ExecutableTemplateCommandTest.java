@@ -40,6 +40,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.tools.integration.template.TemplateLanguageType;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
@@ -51,7 +52,9 @@ public class ExecutableTemplateCommandTest
   public void executableFreeMarker(final Connection connection)
     throws Exception
   {
-    assertThat(outputOf(templateExecution(connection, "/plaintextschema.ftl")),
+    assertThat(outputOf(templateExecution(connection,
+                                          TemplateLanguageType.freemarker,
+                                          "/plaintextschema.ftl")),
                hasSameContentAs(classpathResource("executableForFreeMarker.txt")));
   }
 
@@ -60,6 +63,7 @@ public class ExecutableTemplateCommandTest
     throws Exception
   {
     assertThat(outputOf(templateExecution(connection,
+                                          TemplateLanguageType.mustache,
                                           "/plaintextschema.mustache")),
                hasSameContentAs(classpathResource("executableForMustache.txt")));
   }
@@ -69,6 +73,7 @@ public class ExecutableTemplateCommandTest
     throws Exception
   {
     assertThat(outputOf(templateExecution(connection,
+                                          TemplateLanguageType.thymeleaf,
                                           "/plaintextschema.thymeleaf")),
                hasSameContentAs(classpathResource("executableForThymeleaf.txt")));
   }
@@ -77,7 +82,9 @@ public class ExecutableTemplateCommandTest
   public void executableVelocity(final Connection connection)
     throws Exception
   {
-    assertThat(outputOf(templateExecution(connection, "/plaintextschema.vm")),
+    assertThat(outputOf(templateExecution(connection,
+                                          TemplateLanguageType.velocity,
+                                          "/plaintextschema.vm")),
                hasSameContentAs(classpathResource("executableForVelocity.txt")));
   }
 
