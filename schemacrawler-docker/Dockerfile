@@ -55,11 +55,11 @@ WORKDIR /home/schcrwlr
 
 # Copy configuration files for the current user
 COPY \
-    --chown=users:schcrwlr \
+    --chown=schcrwlr:users \
     ./schemacrawler-${SCHEMACRAWLER_VERSION}-distribution/_testdb/sc.db \
     /home/schcrwlr/sc.db
 COPY \
-    --chown=users:schcrwlr \
+    --chown=schcrwlr:users \
     ./schemacrawler-${SCHEMACRAWLER_VERSION}-distribution/_schemacrawler/config/* \
     /home/schcrwlr/
 
@@ -70,4 +70,3 @@ RUN \
 
 
 MAINTAINER Sualeh Fatehi <sualeh@hotmail.com>
-
