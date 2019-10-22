@@ -49,18 +49,17 @@ RUN \
 
 # Run the image as a non-root user
 RUN \
-    addgroup -g 1000 -S schcrwlr \
- && adduser -u 1000 -S schcrwlr -G schcrwlr
+    adduser --disabled-password --gecos "" --force-badname --ingroup 100 schcrwlr
 USER schcrwlr
 WORKDIR /home/schcrwlr
 
 # Copy configuration files for the current user
 COPY \
-    --chown=schcrwlr:schcrwlr \
+    --chown=users:schcrwlr \
     ./schemacrawler-${SCHEMACRAWLER_VERSION}-distribution/_testdb/sc.db \
     /home/schcrwlr/sc.db
 COPY \
-    --chown=schcrwlr:schcrwlr \
+    --chown=users:schcrwlr \
     ./schemacrawler-${SCHEMACRAWLER_VERSION}-distribution/_schemacrawler/config/* \
     /home/schcrwlr/
 
