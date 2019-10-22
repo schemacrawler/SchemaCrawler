@@ -49,7 +49,7 @@ RUN \
 
 # Run the image as a non-root user
 RUN \
-    adduser --disabled-password --gecos "" --force-badname --ingroup 100 schcrwlr
+    adduser -u 1000 -S schcrwlr -G users
 USER schcrwlr
 WORKDIR /home/schcrwlr
 
