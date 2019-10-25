@@ -31,6 +31,7 @@ package schemacrawler.tools.commandline.utility;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.logging.Level;
 
 import picocli.CommandLine;
 import picocli.CommandLine.IFactory;
@@ -42,13 +43,19 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.tools.commandline.SchemaCrawlerShell;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.executable.commandline.PluginCommandOption;
+import sf.util.SchemaCrawlerLogger;
+import sf.util.StringFormat;
 
 public class CommandLineUtility
 {
+
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+    .getLogger(CommandLineUtility.class.getName());
 
   private static void addDatabasePluginHelpCommands(final CommandLine commandLine,
                                                     final boolean addAsMixins)
@@ -179,6 +186,7 @@ public class CommandLineUtility
       {
         continue;
       }
+      LOGGER.log(Level.CONFIG, new StringFormat("Processing plugin command%n%s%nwith arguments%n%s%n", pluginCommand, originalArgs));
       for (final PluginCommandOption option : pluginCommand)
       {
         final String optionName = option.getName();
