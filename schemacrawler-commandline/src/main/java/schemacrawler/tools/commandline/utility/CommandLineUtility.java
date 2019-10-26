@@ -30,7 +30,8 @@ package schemacrawler.tools.commandline.utility;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 
 import picocli.CommandLine;
@@ -43,7 +44,6 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
-import schemacrawler.tools.commandline.SchemaCrawlerShell;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -175,10 +175,10 @@ public class CommandLineUtility
   {
     requireNonNull(parseResult, "No parse result provided");
 
-    final List<String> originalArgs = parseResult.originalArgs();
     final CommandRegistry commandRegistry = CommandRegistry
       .getCommandRegistry();
     final Config additionalConfig = new Config();
+    final Set<String> pluginOptionNames = new HashSet<>();
     for (final PluginCommand pluginCommand : commandRegistry
       .getCommandLineCommands())
     {
@@ -186,38 +186,24 @@ public class CommandLineUtility
       {
         continue;
       }
-      LOGGER.log(Level.CONFIG, new StringFormat("Processing plugin command%n%s%nwith arguments%n%s%n", pluginCommand, originalArgs));
       for (final PluginCommandOption option : pluginCommand)
       {
         final String optionName = option.getName();
+        pluginOptionNames.add(optionName);
         if (parseResult.hasMatchedOption(optionName))
         {
           final Object value = parseResult.matchedOptionValue(optionName, null);
           additionalConfig
             .put(optionName, value == null? null: String.valueOf(value));
         }
-        else
-        {
-          // Pull out arguments from the orginal command-line, since the subcommand
-          // may not be matched in the case of the execute command
-          final String commandLineOption = "--" + optionName;
-          if (originalArgs != null && originalArgs.contains(commandLineOption))
-          {
-            final int index = originalArgs.indexOf(commandLineOption);
-            final String value;
-            if (index < originalArgs.size())
-            {
-              value = originalArgs.get(index + 1);
-            }
-            else
-            {
-              value = null;
-            }
-            additionalConfig.put(optionName, value);
-          }
-        }
       }
     }
+
+    final CommandLineArgumentsParser commandLineArgumentsParser = new CommandLineArgumentsParser(
+      parseResult.originalArgs());
+    commandLineArgumentsParser.parse();
+    additionalConfig.putAll(commandLineArgumentsParser.getFilteredOptionsMap(pluginOptionNames));
+
     return additionalConfig;
   }
 
