@@ -1,5 +1,11 @@
 # SchemaCrawler Change History
 
+<a name="a16.2.4"></a>
+## Release 16.2.4 - 2019-10-26
+
+- Really fix issue with passing parameters into shell commands
+
+
 <a name="a16.2.3"></a>
 ## Release 16.2.3 - 2019-10-21
 

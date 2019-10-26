@@ -3,7 +3,7 @@ set -e
 
 echo "** Setting up SchemaCrawler v$SCHEMACRAWLER_VERSION distribution"
 
-SCHEMACRAWLER_VERSION=16.2.3
+SCHEMACRAWLER_VERSION=16.2.4
 SC_DIR=`pwd`/schemacrawler-"$SCHEMACRAWLER_VERSION"-distribution
 
 # Download additional libraries to allow SchemaCrawler commands to work
