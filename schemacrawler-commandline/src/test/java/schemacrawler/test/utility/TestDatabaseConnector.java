@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.iosource.ClasspathInputResource;
 
 /**
@@ -38,6 +39,17 @@ public final class TestDatabaseConnector
   protected Predicate<String> supportsUrlPredicate()
   {
     return url -> Pattern.matches("jdbc:test-db:.*", url);
+  }
+
+  @Override
+  public PluginCommand getHelpCommand()
+  {
+    final PluginCommand pluginCommand = super.getHelpCommand();
+    pluginCommand.addOption("server",
+                            "--server=test-db%n"
+                            + "Loads SchemaCrawler plug-in for Test Database",
+                            String.class);
+    return pluginCommand;
   }
 
 }

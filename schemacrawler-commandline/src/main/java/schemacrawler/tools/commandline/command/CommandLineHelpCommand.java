@@ -140,6 +140,9 @@ public final class CommandLineHelpCommand
 
     final CommandLine subcommandLine = commandLine.getSubcommands()
                                                   .get(databaseSystemIdentifier);
+    if (subcommandLine == null) {
+      return commandLine;
+    }
     configureCommandLine(subcommandLine);
     configureHelpForSubcommand(subcommandLine);
 
@@ -192,6 +195,7 @@ public final class CommandLineHelpCommand
       System.out.println();
       System.out.println();
     }
+
   }
 
 }

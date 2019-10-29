@@ -1,0 +1,6 @@
+** Test command which is not deployed with the release
+
+      --test-command-parameter=<test-command-parameter>
+         Parameter for test command
+
+

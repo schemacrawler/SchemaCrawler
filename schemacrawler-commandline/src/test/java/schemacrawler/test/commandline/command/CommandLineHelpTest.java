@@ -77,18 +77,36 @@ public class CommandLineHelpTest
   public void helpConnect(final TestContext testContext)
   {
     final String[] args = {
-      "--help", "connect"
-    };
+      "--help", "connect" };
 
-    final CommandLineHelpCommand optionsParser = new CommandLineHelpCommand();
-    new CommandLine(optionsParser).parseArgs(args);
-    optionsParser.run();
+    assertHelpMessage(testContext, args, true);
+  }
 
-    assertThat(outputOf(err), hasNoContent());
-    assertThat(outputOf(out),
-               hasSameContentAs(classpathResource(
-                 COMMANDLINE_HELP_OUTPUT + testContext.testMethodName()
-                 + ".stdout.txt")));
+  @Test
+  public void helpCommand(final TestContext testContext)
+  {
+    final String[] args = {
+      "--help", "test-command" };
+
+    assertHelpMessage(testContext, args, true);
+  }
+
+  @Test
+  public void helpBadCommand(final TestContext testContext)
+  {
+    final String[] args = {
+      "--help", "bad-command" };
+
+    assertHelpMessage(testContext, args, false);
+  }
+
+  @Test
+  public void helpDatabaseServer(final TestContext testContext)
+  {
+    final String[] args = {
+      "--help", "test-db" };
+
+    assertHelpMessage(testContext, args, true);
   }
 
   @BeforeEach
@@ -100,6 +118,28 @@ public class CommandLineHelpTest
 
     err = new TestOutputStream();
     System.setErr(new PrintStream(err));
+  }
+
+  private void assertHelpMessage(final TestContext testContext,
+                                 final String[] args,
+                                 final boolean hasHelpMessage)
+  {
+    final CommandLineHelpCommand optionsParser = new CommandLineHelpCommand();
+    new CommandLine(optionsParser).parseArgs(args);
+    optionsParser.run();
+
+    assertThat(outputOf(err), hasNoContent());
+    if (hasHelpMessage)
+    {
+      assertThat(outputOf(out),
+                 hasSameContentAs(classpathResource(
+                   COMMANDLINE_HELP_OUTPUT + testContext.testMethodName()
+                   + ".stdout.txt")));
+    }
+    else
+    {
+      assertThat(outputOf(out), hasNoContent());
+    }
   }
 
 }

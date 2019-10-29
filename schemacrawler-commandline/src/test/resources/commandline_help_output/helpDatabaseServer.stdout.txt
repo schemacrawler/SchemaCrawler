@@ -1,0 +1,6 @@
+** Connect to Test Database
+
+      --server=<server>   --server=test-db
+                          Loads SchemaCrawler plug-in for Test Database
+
+
