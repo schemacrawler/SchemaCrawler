@@ -103,11 +103,29 @@ public class ShellCommandsTest
   @Test
   public void system(final TestContext testContext)
   {
-    final String[] args = new String[] {"--version"};
+    final String[] args = new String[] { "--version" };
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    newCommandLine(SystemCommand.class, new StateFactory(state), false).execute(
-      args);
+    newCommandLine(SystemCommand.class, new StateFactory(state), false)
+      .execute(args);
+
+    assertThat(outputOf(err), hasNoContent());
+    assertThat(outputOf(out),
+               hasSameContentAs(classpathResource(
+                 SHELL_COMMANDS_OUTPUT + testContext.testMethodName()
+                 + ".stdout.txt")));
+  }
+
+  @Test
+  public void systemShowStackTrace(final TestContext testContext)
+  {
+    final String[] args = new String[] { "--show-stacktrace" };
+
+    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    state.setLastException(new RuntimeException("Test to display stacktrace"));
+
+    newCommandLine(SystemCommand.class, new StateFactory(state), false)
+      .execute(args);
 
     assertThat(outputOf(err), hasNoContent());
     assertThat(outputOf(out),
