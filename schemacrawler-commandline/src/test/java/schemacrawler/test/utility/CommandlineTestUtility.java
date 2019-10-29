@@ -166,13 +166,12 @@ public final class CommandlineTestUtility
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
-    final Supplier<Connection> dataSource = () -> connection;
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(SchemaCrawlerOptionsBuilder.builder()
                                            .fromOptions(schemaCrawlerOptions));
     state.setSchemaRetrievalOptionsBuilder(SchemaRetrievalOptionsBuilder.builder());
-    state.setDataSource(dataSource); // is-connected
+    state.setDataSource(() -> connection); // is-connected
     state.setCatalog(catalog); // is-loaded
     return state;
   }

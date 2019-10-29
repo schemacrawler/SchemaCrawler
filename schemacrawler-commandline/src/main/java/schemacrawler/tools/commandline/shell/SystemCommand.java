@@ -94,7 +94,7 @@ public class SystemCommand
     if (isloaded)
     {
       final boolean isLoadedState = state.isLoaded();
-      System.out.println(String.format("Database metadata is %s loaded", isLoadedState? "": "not"));
+      System.out.println(String.format("Database metadata is %sloaded", isLoadedState? "": "not "));
     }
     if (showstacktrace)
     {
