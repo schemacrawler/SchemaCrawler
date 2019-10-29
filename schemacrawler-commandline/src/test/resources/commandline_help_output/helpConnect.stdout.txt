@@ -22,7 +22,7 @@ For connecting to specific databases, use
       --server=<database system identifier>
                           Where <database system identifier> is a database for
                             which a SchemaCrawler plug-in is available
-                          Use one of
+                          Use one of test-db
       --urlx=<String=String>
                           JDBC URL additional properties
 

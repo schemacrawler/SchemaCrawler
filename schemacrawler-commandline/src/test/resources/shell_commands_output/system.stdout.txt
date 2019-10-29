@@ -1,4 +1,4 @@
-SchemaCrawler 16.2.2
+SchemaCrawler 16.2.4
 Database schema discovery and comprehension tool
 Copyright (c) 2000-2019, Sualeh Fatehi <sualeh@hotmail.com>.
 
@@ -27,7 +27,7 @@ Available SchemaCrawler commands:
  schema         Shows the commonly needed detail of the schema, including
                   details of tables, views and routines, columns, primary keys,
                   indexes, foreign keys, and triggers
- test           Test command which is not deployed with the release
+ test-command   Test command which is not deployed with the release
  <query_name>   Shows results of query <query_name>, as specified in the
                   configuration properties file
  <query>        Shows results of SQL <query>
@@ -37,4 +37,8 @@ Available SchemaCrawler commands:
                 Queries without any variables are executed exactly once
                 Queries with variables are executed once for each table, with
                   the variables substituted
+
+
+Available SchemaCrawler database plugins:
+ test-db        Test Database
 

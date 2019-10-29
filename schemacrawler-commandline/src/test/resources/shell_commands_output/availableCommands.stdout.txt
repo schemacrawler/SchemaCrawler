@@ -14,7 +14,7 @@ Available SchemaCrawler commands:
  schema         Shows the commonly needed detail of the schema, including
                   details of tables, views and routines, columns, primary keys,
                   indexes, foreign keys, and triggers
- test           Test command which is not deployed with the release
+ test-command   Test command which is not deployed with the release
  <query_name>   Shows results of query <query_name>, as specified in the
                   configuration properties file
  <query>        Shows results of SQL <query>

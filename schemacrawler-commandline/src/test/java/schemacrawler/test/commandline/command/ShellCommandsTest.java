@@ -72,7 +72,10 @@ public class ShellCommandsTest
     new AvailableServersCommand().run();
 
     assertThat(outputOf(err), hasNoContent());
-    assertThat(outputOf(out), hasNoContent());
+    assertThat(outputOf(out),
+               hasSameContentAs(classpathResource(
+                 SHELL_COMMANDS_OUTPUT + testContext.testMethodName()
+                 + ".stdout.txt")));
   }
 
   @Test
