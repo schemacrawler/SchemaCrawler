@@ -156,7 +156,7 @@ public class ConnectionOptionsTest
     final DatabaseConnectionSource databaseConnectionSource = databaseConnectable
       .toDatabaseConnectionSource(config);
 
-    // Assert internal field for conenction properties
+    // Assert internal field for connection properties
     final Field f = databaseConnectionSource.getClass()
       .getDeclaredField("connectionProperties");
     f.setAccessible(true);
