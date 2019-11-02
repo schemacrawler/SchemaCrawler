@@ -56,17 +56,24 @@ final class NeuteredLinesFilter
     Pattern.compile(".*(Windows|Linux).*"),
     Pattern.compile(".*Oracle Corporation (Java|OpenJDK).*"),
     // SQL Server
+    // -- server-specific values
     Pattern.compile(".*ServerName.*"),
     // DB2
+    // -- server-specific values
     Pattern.compile(".*HOST_NAME.*"),
     Pattern.compile(".*TOTAL_MEMORY.*"),
-    // Apache Derby unnamed objects
+    // Apache Derby
+    // -- unnamed objects
     Pattern.compile("SQL\\d+\\s+\\[primary key\\]"),
     Pattern.compile("SQL\\d+\\s+\\[foreign key, with no action\\]"),
     // MySQL
+    // -- server-specific values
     Pattern.compile("server_uuid\\s+.*"),
     Pattern.compile("hostname\\s+.*"),
     Pattern.compile("  value\\s+\\d+\\s+"),
+    // SQL Server
+    // -- unnamed objects
+    Pattern.compile("PK__Publishe__3214EC07.*\\s+\\[primary key\\]"),
     };
 
   /**

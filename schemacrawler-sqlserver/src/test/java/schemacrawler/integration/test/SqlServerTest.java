@@ -91,9 +91,9 @@ public class SqlServerTest
       .toOptions();
 
     final Connection connection = checkConnection(getConnection());
-    final DatabaseConnector db2DatabaseConnector = new SqlServerDatabaseConnector();
+    final DatabaseConnector databaseConnector = new SqlServerDatabaseConnector();
 
-    final SchemaRetrievalOptions schemaRetrievalOptions = db2DatabaseConnector
+    final SchemaRetrievalOptions schemaRetrievalOptions = databaseConnector
       .getSchemaRetrievalOptionsBuilder(connection).toOptions();
 
     final SchemaCrawler schemaCrawler = new SchemaCrawler(getConnection(),
@@ -117,14 +117,13 @@ public class SqlServerTest
     schemaCrawlerOptionsBuilder
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
       .includeSchemas(new RegularExpressionInclusionRule("BOOKS\\.dbo"))
-      .includeAllSequences().includeAllSynonyms()
-      .includeRoutines(new RegularExpressionInclusionRule("[a-zA-Z\\.]*"))
+      .includeAllSequences().includeAllSynonyms().includeAllRoutines()
       .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
     final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder
       .toOptions();
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
-      .builder().portableNames();
+      .builder();
     textOptionsBuilder.showDatabaseInfo().showJdbcDriverInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
