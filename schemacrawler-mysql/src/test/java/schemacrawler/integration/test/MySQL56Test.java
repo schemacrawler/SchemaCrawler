@@ -46,13 +46,13 @@ import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 @Testcontainers
-public class MySQLTest
+public class MySQL56Test
   extends BaseAdditionalDatabaseTest
 {
 
   @Container
-  private MySQLContainer dbContainer = new MySQLContainer<>("mysql:8.0.18")
-    .withCommand("mysqld", "--lower_case_table_names=1", "--log_bin_trust_function_creators=1")
+  private MySQLContainer dbContainer = new MySQLContainer<>("mysql:5.6.46")
+    .withCommand("mysqld", "--lower_case_table_names=1")
     .withUsername("schemacrawler").withDatabaseName("books");
 
   @BeforeEach
@@ -63,11 +63,11 @@ public class MySQLTest
                      dbContainer.getUsername(),
                      dbContainer.getPassword());
 
-    createDatabase("/mysql.scripts.txt");
+    createDatabase("/mysql.scripts.5.6.txt");
   }
 
   @Test
-  public void testMySQLWithConnection()
+  public void testMySQL56WithConnection()
     throws Exception
   {
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
@@ -92,7 +92,7 @@ public class MySQLTest
                                     .toConfig());
 
     assertThat(outputOf(executableExecution(getConnection(), executable)),
-               hasSameContentAs(classpathResource("testMySQLWithConnection.txt")));
+               hasSameContentAs(classpathResource("testMySQL56WithConnection.txt")));
   }
 
 }
