@@ -10,7 +10,7 @@ docker run \
 --entrypoint=/bin/bash \
 schemacrawler/schemacrawler
 ```
-The SchemaCrawler Docker container starts with a non-privileged user `schcrwlr` in group `users`. Please ensure that the mount point () for the Docker container is writable by user 1000 in group 100 on the host.
+The SchemaCrawler Docker container starts with a non-privileged user `schcrwlr` in group `users`. Please ensure that the mount point for the Docker container is writable by user 1000 in group 100 on the host.
 
 ## Use the SchemaCrawler Interactive Shell
 
