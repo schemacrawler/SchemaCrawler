@@ -1,5 +1,11 @@
 # SchemaCrawler Change History
 
+<a name="a16.2.5"></a>
+## Release 16.2.5 - 2019-11-05
+
+- Add support for IBM DB2 materialized query tables (MQT)
+
+
 <a name="a16.2.4"></a>
 ## Release 16.2.4 - 2019-10-26
 

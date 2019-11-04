@@ -68,6 +68,14 @@ public class DB2Test
   public void createDatabase()
     throws SQLException, SchemaCrawlerException
   {
+    /**
+    // Add the following trace properties to the URL for debugging
+    // Set the trace directory appropriately
+    final String traceProperties =
+      ":traceDirectory=C:\\Java" + ";traceFile=trace3"
+      + ";traceFileAppend=false" + ";traceLevel="
+      + (DB2BaseDataSource.TRACE_ALL) + ";";
+    */
     createDataSource(dbContainer.getJdbcUrl(),
                      dbContainer.getUsername(),
                      dbContainer.getPassword());
@@ -76,16 +84,14 @@ public class DB2Test
   }
 
   @Test
-  public void testDB2Catalog()
+  public void testDB2CatalogServerInfo()
     throws Exception
   {
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
       .builder();
     schemaCrawlerOptionsBuilder
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-      .includeSchemas(new RegularExpressionInclusionRule("DB2INST1"))
-      .includeAllSequences().includeAllSynonyms().includeAllRoutines()
-      .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
+      .includeSchemas(new RegularExpressionInclusionRule("DB2INST1"));
     final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder
       .toOptions();
 
@@ -119,7 +125,7 @@ public class DB2Test
       .includeSchemas(new RegularExpressionInclusionRule("DB2INST1"))
       .includeAllSequences().includeAllSynonyms()
       .includeRoutines(new RegularExpressionInclusionRule("[0-9a-zA-Z_\\.]*"))
-      .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
+      .tableTypes("TABLE,VIEW,MATERIALIZED QUERY TABLE");
     final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder
       .toOptions();
 

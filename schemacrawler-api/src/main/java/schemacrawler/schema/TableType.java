@@ -181,7 +181,9 @@ public final class TableType
    */
   public boolean isView()
   {
-    return tableType != null && tableType.toUpperCase().contains("VIEW");
+    return tableType != null && (tableType.toUpperCase().contains("VIEW")
+                                 || tableType.toUpperCase()
+                                   .contains("MATERIALIZED"));
   }
 
   /**
