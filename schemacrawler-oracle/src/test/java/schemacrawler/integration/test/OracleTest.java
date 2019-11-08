@@ -63,7 +63,7 @@ public class OracleTest
 
   @Container
   private OracleContainer dbContainer = new OracleContainer(
-    "martinsthiago/oraclexe-11g-fig");
+    "wnameless/oracle-xe-11g-r2");
 
   @BeforeEach
   public void createDatabase()
@@ -76,7 +76,6 @@ public class OracleTest
                      urlx);
 
     createDatabase("/oracle.11g.scripts.txt");
-    System.out.println("Created database");
   }
 
   @Test
@@ -116,6 +115,7 @@ public class OracleTest
   {
     final SchemaInfoLevelBuilder infoLevelBuilder = SchemaInfoLevelBuilder
       .builder().withTag("maximum").withInfoLevel(InfoLevel.maximum)
+      /*
       .setRetrievePrimaryKeyDefinitions(false)
       .setRetrieveForeignKeyDefinitions(false)
       .setRetrieveTableConstraintDefinitions(false)
@@ -123,6 +123,8 @@ public class OracleTest
       .setRetrieveIndexInformation(false)
       .setRetrieveIndexColumnInformation(false)
       .setRetrieveRoutineInformation(false);
+      */
+      ;
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
       .builder();
