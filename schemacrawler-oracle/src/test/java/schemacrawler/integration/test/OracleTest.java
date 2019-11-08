@@ -103,10 +103,10 @@ public class OracleTest
     final List<Property> serverInfo = new ArrayList<>(catalog.getDatabaseInfo()
                                                         .getServerInfo());
 
-    assertThat(serverInfo.size(), equalTo(4));
-    assertThat(serverInfo.get(0).getName(), equalTo("HOST_NAME"));
+    assertThat(serverInfo.size(), equalTo(1));
+    assertThat(serverInfo.get(0).getName(), equalTo("GLOBAL_NAME"));
     assertThat(String.valueOf(serverInfo.get(0).getValue()),
-               matchesPattern("[0-9a-z]{12}"));
+               matchesPattern("[0-9a-zA-Z]{1,12}"));
   }
 
   @Test
