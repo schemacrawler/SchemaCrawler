@@ -40,6 +40,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -53,8 +54,10 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.server.mysql.MySQLUtility;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
+import schemacrawler.test.utility.HeavyDatabaseBuildCondition;
 
 @Testcontainers(disabledWithoutDocker = true)
+@ExtendWith(HeavyDatabaseBuildCondition.class)
 public class MySQLEnumColumnTest
   extends BaseAdditionalDatabaseTest
 {

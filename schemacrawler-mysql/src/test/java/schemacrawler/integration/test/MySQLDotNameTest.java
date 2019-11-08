@@ -39,6 +39,7 @@ import java.sql.Statement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -50,8 +51,11 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.*;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
+import schemacrawler.test.utility.CompleteBuildCondition;
+import schemacrawler.test.utility.HeavyDatabaseBuildCondition;
 
 @Testcontainers(disabledWithoutDocker = true)
+@ExtendWith(HeavyDatabaseBuildCondition.class)
 @DisplayName("Test for issue #252 on GitHub")
 public class MySQLDotNameTest
   extends BaseAdditionalDatabaseTest
