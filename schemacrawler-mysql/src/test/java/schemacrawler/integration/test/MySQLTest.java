@@ -45,7 +45,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 public class MySQLTest
   extends BaseAdditionalDatabaseTest
 {

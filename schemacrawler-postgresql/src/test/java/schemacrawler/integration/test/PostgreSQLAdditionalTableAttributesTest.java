@@ -57,7 +57,7 @@ import schemacrawler.server.postgresql.PostgreSQLDatabaseConnector;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 @DisplayName("Test for issue #258 on GitHub")
 public class PostgreSQLAdditionalTableAttributesTest
   extends BaseAdditionalDatabaseTest

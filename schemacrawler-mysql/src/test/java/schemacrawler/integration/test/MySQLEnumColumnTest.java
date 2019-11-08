@@ -54,7 +54,7 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.server.mysql.MySQLUtility;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 public class MySQLEnumColumnTest
   extends BaseAdditionalDatabaseTest
 {

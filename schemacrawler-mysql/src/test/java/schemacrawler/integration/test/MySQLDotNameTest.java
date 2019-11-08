@@ -51,7 +51,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.*;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 @DisplayName("Test for issue #252 on GitHub")
 public class MySQLDotNameTest
   extends BaseAdditionalDatabaseTest
