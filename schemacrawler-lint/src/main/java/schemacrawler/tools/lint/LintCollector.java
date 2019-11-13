@@ -74,7 +74,7 @@ public final class LintCollector
       lints.add(lint);
 
       final Collection<Lint<?>> columnLints = namedObject
-        .getAttribute(LINT_KEY, new ArrayList<Lint<?>>());
+        .getAttribute(LINT_KEY, new ArrayList<>());
       columnLints.add(lint);
       namedObject.setAttribute(LINT_KEY, columnLints);
     }

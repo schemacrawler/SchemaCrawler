@@ -75,12 +75,24 @@ public abstract class BaseAdditionalDatabaseTest
                                   final String user,
                                   final String password)
   {
+    createDataSource(connectionUrl, user, password, null);
+  }
+
+  protected void createDataSource(final String connectionUrl,
+                                  final String user,
+                                  final String password,
+                                  final String connectionProperties)
+  {
     LOGGER.log(Level.CONFIG, "Database connection URL: " + connectionUrl);
 
     final BasicDataSource ds = new BasicDataSource();
     ds.setUrl(connectionUrl);
     ds.setUsername(user);
     ds.setPassword(password);
+    if (connectionProperties != null)
+    {
+      ds.setConnectionProperties(connectionProperties);
+    }
     ds.setDefaultAutoCommit(false);
 
     dataSource = ds;

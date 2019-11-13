@@ -39,14 +39,13 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
-public class TestOracleDistribution
+public class OracleDistributionTest
 {
 
   private DatabaseConnector dbConnector;
 
   @BeforeEach
   public void setup()
-    throws SchemaCrawlerException
   {
     final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     dbConnector = registry.lookupDatabaseConnector("oracle");
@@ -54,7 +53,6 @@ public class TestOracleDistribution
 
   @Test
   public void testIdentifierQuoteString()
-    throws Exception
   {
 
     final Connection connection = null;

@@ -34,14 +34,27 @@ import org.junit.jupiter.api.extension.ConditionEvaluationResult;
 import org.junit.jupiter.api.extension.ExecutionCondition;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
-public class CompleteBuildCondition
-  extends BaseEnvironmentalVariableBuildCondition
+abstract class BaseEnvironmentalVariableBuildCondition
+  implements ExecutionCondition
 {
 
   @Override
-  protected String getSystemBooleanVariable()
+  public ConditionEvaluationResult evaluateExecutionCondition(final ExtensionContext context)
   {
-    return "complete";
+    final String isBuildPropertyValue = System
+      .getProperty(getSystemBooleanVariable());
+    final boolean isRunBuild =
+      isBuildPropertyValue != null && isBlank(isBuildPropertyValue) || Boolean
+        .parseBoolean(isBuildPropertyValue);
+    if (!isRunBuild)
+    {
+      return ConditionEvaluationResult
+        .disabled("Development build - disable long running tests");
+    }
+
+    return ConditionEvaluationResult.enabled("Complete build - run all tests");
   }
+
+  protected abstract String getSystemBooleanVariable();
 
 }

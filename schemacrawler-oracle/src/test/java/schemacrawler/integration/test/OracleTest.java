@@ -29,6 +29,7 @@ package schemacrawler.integration.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.matchesPattern;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.*;
@@ -42,14 +43,14 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.containers.OracleContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.*;
-import schemacrawler.server.postgresql.PostgreSQLDatabaseConnector;
+import schemacrawler.server.oracle.OracleDatabaseConnector;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseBuildCondition;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -59,42 +60,43 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 @Testcontainers(disabledWithoutDocker = true)
 @ExtendWith(HeavyDatabaseBuildCondition.class)
-public class PostgreSQLTest
+public class OracleTest
   extends BaseAdditionalDatabaseTest
 {
 
   @Container
-  private PostgreSQLContainer dbContainer = new PostgreSQLContainer<>();
+  private OracleContainer dbContainer = new OracleContainer(
+    "wnameless/oracle-xe-11g-r2");
 
   @BeforeEach
   public void createDatabase()
     throws SQLException, SchemaCrawlerException
   {
+    final String urlx = "restrictGetTables=true;useFetchSizeWithLongColumn=true";
     createDataSource(dbContainer.getJdbcUrl(),
                      dbContainer.getUsername(),
-                     dbContainer.getPassword());
+                     dbContainer.getPassword(),
+                     urlx);
 
-    createDatabase("/postgresql.scripts.txt");
+    createDatabase("/oracle.11g.scripts.txt");
   }
 
   @Test
-  public void testPostgreSQLCatalog()
+  public void testOracleCatalogServerInfo()
     throws Exception
   {
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
       .builder();
     schemaCrawlerOptionsBuilder
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-      .includeSchemas(new RegularExpressionInclusionRule("books"))
-      .includeAllSequences().includeAllSynonyms().includeAllRoutines()
-      .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
+      .includeSchemas(new RegularExpressionInclusionRule("BOOKS"));
     final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder
       .toOptions();
 
     final Connection connection = checkConnection(getConnection());
-    final DatabaseConnector postgreSQLDatabaseConnector = new PostgreSQLDatabaseConnector();
+    final DatabaseConnector databaseConnector = new OracleDatabaseConnector();
 
-    final SchemaRetrievalOptions schemaRetrievalOptions = postgreSQLDatabaseConnector
+    final SchemaRetrievalOptions schemaRetrievalOptions = databaseConnector
       .getSchemaRetrievalOptionsBuilder(connection).toOptions();
 
     final SchemaCrawler schemaCrawler = new SchemaCrawler(getConnection(),
@@ -105,21 +107,36 @@ public class PostgreSQLTest
                                                         .getServerInfo());
 
     assertThat(serverInfo.size(), equalTo(1));
-    assertThat(serverInfo.get(0).getName(), equalTo("current_database"));
-    assertThat(serverInfo.get(0).getValue(), equalTo("test"));
+    assertThat(serverInfo.get(0).getName(), equalTo("GLOBAL_NAME"));
+    assertThat(String.valueOf(serverInfo.get(0).getValue()),
+               matchesPattern("[0-9a-zA-Z]{1,12}"));
   }
 
   @Test
-  public void testPostgreSQLWithConnection()
+  public void testOracleWithConnection()
     throws Exception
   {
+    final SchemaInfoLevelBuilder infoLevelBuilder = SchemaInfoLevelBuilder
+      .builder().withTag("maximum").withInfoLevel(InfoLevel.maximum)
+      /*
+      .setRetrievePrimaryKeyDefinitions(false)
+      .setRetrieveForeignKeyDefinitions(false)
+      .setRetrieveTableConstraintDefinitions(false)
+      .setRetrieveTableDefinitionsInformation(false)
+      .setRetrieveIndexInformation(false)
+      .setRetrieveIndexColumnInformation(false)
+      .setRetrieveRoutineInformation(false);
+      */
+      ;
+
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
       .builder();
     schemaCrawlerOptionsBuilder
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-      .includeSchemas(new RegularExpressionInclusionRule("books"))
-      .includeAllSequences().includeAllSynonyms().includeAllRoutines()
-      .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
+      .withSchemaInfoLevel(infoLevelBuilder.toOptions())
+      .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
+      .includeAllSequences().includeAllSynonyms()
+      .includeRoutines(new RegularExpressionInclusionRule("[0-9a-zA-Z_\\.]*"))
+      .tableTypes("TABLE,VIEW");
     final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder
       .toOptions();
 
@@ -136,8 +153,7 @@ public class PostgreSQLTest
                                     .toConfig());
 
     assertThat(outputOf(executableExecution(getConnection(), executable)),
-               hasSameContentAs(classpathResource(
-                 "testPostgreSQLWithConnection.txt")));
+               hasSameContentAs(classpathResource("testOracleWithConnection.txt")));
   }
 
 }

@@ -74,7 +74,10 @@ final class NeuteredLinesFilter
     // SQL Server
     // -- unnamed objects
     Pattern.compile("PK__Publishe__3214EC07.*\\s+\\[primary key\\]"),
-    };
+    // Oracle
+    // -- server-specific values
+    Pattern.compile("\\s+value\\s+localhost:\\d+:xe\\s+"),
+};
 
   /**
    * Should we keep the line - that is, not ignore it?
