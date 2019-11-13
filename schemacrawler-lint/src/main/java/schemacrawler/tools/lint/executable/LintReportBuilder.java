@@ -4,22 +4,16 @@ package schemacrawler.tools.lint.executable;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.LintedCatalog;
+import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.traversal.TraversalHandler;
 
-interface LintTraversalHandler
-  extends TraversalHandler
+interface LintReportBuilder
 {
 
-  void handle(final LintedCatalog catalog)
-    throws SchemaCrawlerException;
+  boolean canBuildReport(LintOptions options,
+                         OutputOptions outputOptions);
 
-  void handle(final Table table)
-    throws SchemaCrawlerException;
-
-  void handleEnd()
-    throws SchemaCrawlerException;
-
-  void handleStart()
+  void generateLintReport(LintedCatalog catalog)
     throws SchemaCrawlerException;
 
 }

@@ -28,11 +28,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint.executable;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import static sf.util.Utility.isBlank;
+
+import java.util.*;
 
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -43,24 +41,74 @@ import schemacrawler.tools.lint.LintedCatalog;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseTabularFormatter;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
+import schemacrawler.utility.NamedObjectSort;
 import sf.util.Color;
 import sf.util.Multimap;
 
-final class LintTextFormatter
+final class LintReportTextFormatter
   extends BaseTabularFormatter<LintOptions>
-  implements LintTraversalHandler
+  implements LintReportBuilder
 {
 
-  LintTextFormatter(final LintOptions options,
-                    final OutputOptions outputOptions,
-                    final String identifierQuoteString)
+  private final LintOptions lintOptions;
+
+  LintReportTextFormatter(final LintOptions lintOptions,
+                          final OutputOptions outputOptions,
+                          final String identifierQuoteString)
     throws SchemaCrawlerException
   {
-    super(options, false, outputOptions, identifierQuoteString);
+    super(lintOptions, false, outputOptions, identifierQuoteString);
+    this.lintOptions = lintOptions;
   }
 
   @Override
-  public void handle(final LintedCatalog catalog)
+  public boolean canBuildReport(final LintOptions options,
+                                final OutputOptions outputOptions)
+  {
+    final boolean canBuildReport;
+    final String outputFormatValue = outputOptions.getOutputFormatValue();
+    if (isBlank(outputFormatValue))
+    {
+      canBuildReport = true;
+    }
+    else
+    {
+      canBuildReport = !outputFormatValue.equalsIgnoreCase("json");
+    }
+    return canBuildReport;
+  }
+
+  public void generateLintReport(final LintedCatalog catalog)
+    throws SchemaCrawlerException
+  {
+
+    this.begin();
+
+    this.handleInfoStart();
+    this.handle(catalog.getSchemaCrawlerInfo());
+    this.handle(catalog.getDatabaseInfo());
+    this.handle(catalog.getJdbcDriverInfo());
+    this.handleInfoEnd();
+
+    this.handleStart();
+    this.handle(catalog);
+
+    final List<? extends Table> tablesList = new ArrayList<>(catalog
+                                                               .getTables());
+    Collections.sort(tablesList,
+                     NamedObjectSort.getNamedObjectSort(lintOptions
+                                                          .isAlphabeticalSortForTables()));
+    for (final Table table : tablesList)
+    {
+      this.handle(table);
+    }
+
+    this.handleEnd();
+
+    this.end();
+  }
+
+  private void handle(final LintedCatalog catalog)
     throws SchemaCrawlerException
   {
     final Collection<Lint<?>> lints = LintCollector.getLint(catalog);
@@ -76,8 +124,7 @@ final class LintTextFormatter
     }
   }
 
-  @Override
-  public void handle(final Table table)
+  private void handle(final Table table)
   {
     final Collection<Lint<?>> lints = LintCollector.getLint(table);
     if (lints != null && !lints.isEmpty())
@@ -97,20 +144,12 @@ final class LintTextFormatter
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void handleEnd()
+  private void handleEnd()
   {
     // No output required
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void handleStart()
+  private void handleStart()
   {
     formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Lints");
   }
@@ -120,13 +159,13 @@ final class LintTextFormatter
     formattingHelper.writeEmptyRow();
 
     final Multimap<LintSeverity, Lint<?>> multiMap = new Multimap<>();
-    for (final Lint<?> lint: lints)
+    for (final Lint<?> lint : lints)
     {
       multiMap.add(lint.getSeverity(), lint);
     }
     final List<LintSeverity> severities = Arrays.asList(LintSeverity.values());
     Collections.reverse(severities);
-    for (final LintSeverity severity: severities)
+    for (final LintSeverity severity : severities)
     {
       if (!multiMap.containsKey(severity))
       {
@@ -135,7 +174,7 @@ final class LintTextFormatter
 
       formattingHelper.writeNameRow("", String.format("[lint, %s]", severity));
       final List<Lint<?>> lintsById = new ArrayList<>(multiMap.get(severity));
-      for (final Lint<?> lint: lintsById)
+      for (final Lint<?> lint : lintsById)
       {
         final Object lintValue = lint.getValue();
         if (lintValue instanceof Boolean)
