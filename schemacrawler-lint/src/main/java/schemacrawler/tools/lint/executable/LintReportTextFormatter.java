@@ -109,7 +109,6 @@ final class LintReportTextFormatter
   }
 
   private void handle(final LintedCatalog catalog)
-    throws SchemaCrawlerException
   {
     final Collection<Lint<?>> lints = LintCollector.getLint(catalog);
     if (lints != null && !lints.isEmpty())

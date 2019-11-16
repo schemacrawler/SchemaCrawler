@@ -1,0 +1,379 @@
+{
+  "lints" : [ {
+    "lint-id" : "de3610a3-e2ac-4333-8f41-a8dcc2b80af4",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoPrimaryKey",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithNoPrimaryKey@21526f6c",
+    "message" : "no primary key",
+    "object-name" : "PUBLIC.FOR_LINT.\"Global Counts\"",
+    "severity" : "high",
+    "value" : ""
+  }, {
+    "lint-id" : "788fbcf0-3de5-4695-aa45-aff5ca63da3f",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoSurrogatePrimaryKey",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithNoSurrogatePrimaryKey@299266e2",
+    "message" : "primary key may not be a surrogate",
+    "object-name" : "PUBLIC.FOR_LINT.\"Global Counts\"",
+    "severity" : "high",
+    "value" : ""
+  }, {
+    "lint-id" : "7a818faa-fcc1-478f-a671-8212733e6beb",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableAllNullableColumns",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableAllNullableColumns@a7e2d9d",
+    "message" : "no non-nullable data columns",
+    "object-name" : "PUBLIC.FOR_LINT.\"Global Counts\"",
+    "severity" : "medium",
+    "value" : ""
+  }, {
+    "lint-id" : "d7e21518-6dab-4e58-8865-f6ede0adfaf7",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoIndexes",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithNoIndexes@4c36250e",
+    "message" : "no indexes",
+    "object-name" : "PUBLIC.FOR_LINT.\"Global Counts\"",
+    "severity" : "medium",
+    "value" : ""
+  }, {
+    "lint-id" : "32270b99-510e-4164-85eb-759eeb9a95be",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithQuotedNames",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithQuotedNames@66ea1466",
+    "message" : "spaces in name, or reserved word",
+    "object-name" : "PUBLIC.FOR_LINT.\"Global Counts\"",
+    "severity" : "medium",
+    "value" : ""
+  }, {
+    "lint-id" : "777f2410-5015-429d-913e-bec7ea9d9eac",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithQuotedNames",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithQuotedNames@66ea1466",
+    "message" : "spaces in name, or reserved word",
+    "object-name" : "PUBLIC.FOR_LINT.\"Global Counts\"",
+    "severity" : "medium",
+    "value" : "Global Count"
+  }, {
+    "lint-id" : "d18d58bb-e452-42e4-bb3a-7bc1bec542de",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithSingleColumn",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithSingleColumn@4a9cc6cb",
+    "message" : "single column",
+    "object-name" : "PUBLIC.FOR_LINT.\"Global Counts\"",
+    "severity" : "medium",
+    "value" : ""
+  }, {
+    "lint-id" : "6380223d-9518-46a8-90e0-c6f3b232d6b0",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableEmpty",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableEmpty@2b52c0d6",
+    "message" : "empty table",
+    "object-name" : "PUBLIC.FOR_LINT.\"Global Counts\"",
+    "severity" : "low",
+    "value" : ""
+  }, {
+    "lint-id" : "a36b75c7-5a0e-4342-915e-416b337263d0",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks@49f5c307",
+    "message" : "should have remarks",
+    "object-name" : "PUBLIC.FOR_LINT.\"Global Counts\"",
+    "severity" : "low",
+    "value" : ""
+  }, {
+    "lint-id" : "3addf56b-0d6f-4a9c-a16a-439ece9218e2",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks@49f5c307",
+    "message" : "should have remarks",
+    "object-name" : "PUBLIC.FOR_LINT.\"Global Counts\"",
+    "severity" : "low",
+    "value" : "Global Count"
+  }, {
+    "lint-id" : "f6fead2a-b229-434a-a4cb-8610b92b7d31",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableEmpty",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableEmpty@2b52c0d6",
+    "message" : "empty table",
+    "object-name" : "PUBLIC.FOR_LINT.EXTRA_PK",
+    "severity" : "low",
+    "value" : ""
+  }, {
+    "lint-id" : "9ef7086a-f54e-4aba-bc28-5cad26f3d473",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks@49f5c307",
+    "message" : "should have remarks",
+    "object-name" : "PUBLIC.FOR_LINT.EXTRA_PK",
+    "severity" : "low",
+    "value" : "WRITERID, PUBLICATIONID, ID"
+  }, {
+    "lint-id" : "a34d60e9-9c40-47bb-bb94-31d3ece40fa9",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithPrimaryKeyNotFirst",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithPrimaryKeyNotFirst@5471388b",
+    "message" : "primary key not first",
+    "object-name" : "PUBLIC.FOR_LINT.EXTRA_PK",
+    "severity" : "low",
+    "value" : ""
+  }, {
+    "lint-id" : "eb68edfc-cf41-40c5-844a-401657d7d65a",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithQuotedNames",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithQuotedNames@66ea1466",
+    "message" : "spaces in name, or reserved word",
+    "object-name" : "PUBLIC.FOR_LINT.PUBLICATIONS",
+    "severity" : "medium",
+    "value" : "UPDATE"
+  }, {
+    "lint-id" : "1ea6d388-4b46-455c-85de-1c20a97c078b",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableEmpty",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableEmpty@2b52c0d6",
+    "message" : "empty table",
+    "object-name" : "PUBLIC.FOR_LINT.PUBLICATIONS",
+    "severity" : "low",
+    "value" : ""
+  }, {
+    "lint-id" : "3b35c2a7-2a3f-4008-b920-454fd7400e06",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks@49f5c307",
+    "message" : "should have remarks",
+    "object-name" : "PUBLIC.FOR_LINT.PUBLICATIONS",
+    "severity" : "low",
+    "value" : ""
+  }, {
+    "lint-id" : "1c61df9b-6c23-4e59-93f6-0d1b06a70bf1",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks@49f5c307",
+    "message" : "should have remarks",
+    "object-name" : "PUBLIC.FOR_LINT.PUBLICATIONS",
+    "severity" : "low",
+    "value" : "ID, DESCRIPTION, WRITERID, PUBLICATIONDATE, PRICE, UPDATE, PRESS_RELEASE"
+  }, {
+    "lint-id" : "df3a3296-de4a-4ae1-bd42-02cc118f94bb",
+    "linter-id" : "schemacrawler.tools.linter.LinterTooManyLobs",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTooManyLobs@5990e6c5",
+    "message" : "too many binary objects",
+    "object-name" : "PUBLIC.FOR_LINT.PUBLICATIONS",
+    "severity" : "low",
+    "value" : "UPDATE, PRESS_RELEASE"
+  }, {
+    "lint-id" : "7d41a3aa-8591-49f9-b70e-e083da744b6f",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoSurrogatePrimaryKey",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithNoSurrogatePrimaryKey@299266e2",
+    "message" : "primary key may not be a surrogate",
+    "object-name" : "PUBLIC.FOR_LINT.PUBLICATIONWRITERS",
+    "severity" : "high",
+    "value" : ""
+  }, {
+    "lint-id" : "70b8a92d-8834-40f2-b257-c6a84adc1311",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableEmpty",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableEmpty@2b52c0d6",
+    "message" : "empty table",
+    "object-name" : "PUBLIC.FOR_LINT.PUBLICATIONWRITERS",
+    "severity" : "low",
+    "value" : ""
+  }, {
+    "lint-id" : "61c96ee8-26f7-46cf-887d-53640ac20d6f",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks@49f5c307",
+    "message" : "should have remarks",
+    "object-name" : "PUBLIC.FOR_LINT.PUBLICATIONWRITERS",
+    "severity" : "low",
+    "value" : ""
+  }, {
+    "lint-id" : "da10c371-f216-473b-bca2-009c52ca058a",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks@49f5c307",
+    "message" : "should have remarks",
+    "object-name" : "PUBLIC.FOR_LINT.PUBLICATIONWRITERS",
+    "severity" : "low",
+    "value" : "PUBLICATIONID, WRITERID"
+  }, {
+    "lint-id" : "e1ddac38-c348-4310-8f83-cd532888a8b8",
+    "linter-id" : "schemacrawler.tools.linter.LinterForeignKeySelfReference",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterForeignKeySelfReference@3bde62ff",
+    "message" : "foreign key self-references primary key",
+    "object-name" : "PUBLIC.FOR_LINT.SELFREFERENCE",
+    "severity" : "critical",
+    "value" : "FK_SELFREFERENCE"
+  }, {
+    "lint-id" : "42584bb7-2354-4ab9-bd96-320e0789b9e1",
+    "linter-id" : "schemacrawler.tools.linter.LinterRedundantIndexes",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterRedundantIndexes@791cbf87",
+    "message" : "redundant index",
+    "object-name" : "PUBLIC.FOR_LINT.SELFREFERENCE",
+    "severity" : "high",
+    "value" : "SYS_IDX_FK_SELFREFERENCE_10210"
+  }, {
+    "lint-id" : "863b2772-ef91-4ee0-806a-2926cce3a199",
+    "linter-id" : "schemacrawler.tools.linter.LinterRedundantIndexes",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterRedundantIndexes@791cbf87",
+    "message" : "redundant index",
+    "object-name" : "PUBLIC.FOR_LINT.SELFREFERENCE",
+    "severity" : "high",
+    "value" : "SYS_IDX_PK_SELFREFERENCE_10207"
+  }, {
+    "lint-id" : "9df9dc12-2e75-46f8-9621-b9ca5fdf1c60",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableEmpty",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableEmpty@2b52c0d6",
+    "message" : "empty table",
+    "object-name" : "PUBLIC.FOR_LINT.SELFREFERENCE",
+    "severity" : "low",
+    "value" : ""
+  }, {
+    "lint-id" : "0fb5ee18-4673-4f83-a6fe-370b157b5709",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks@49f5c307",
+    "message" : "should have remarks",
+    "object-name" : "PUBLIC.FOR_LINT.SELFREFERENCE",
+    "severity" : "low",
+    "value" : ""
+  }, {
+    "lint-id" : "2d00ec1e-f6ba-4e9a-b952-36578e2a7648",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks@49f5c307",
+    "message" : "should have remarks",
+    "object-name" : "PUBLIC.FOR_LINT.SELFREFERENCE",
+    "severity" : "low",
+    "value" : "ID, TITLE"
+  }, {
+    "lint-id" : "cb96f42e-4879-4708-a350-3a735e5a31fc",
+    "linter-id" : "schemacrawler.tools.linter.LinterForeignKeyMismatch",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterForeignKeyMismatch@a1217f9",
+    "message" : "foreign key data type different from primary key",
+    "object-name" : "PUBLIC.FOR_LINT.WRITERS",
+    "severity" : "high",
+    "value" : "FK_WRITERS_PUBLICATION"
+  }, {
+    "lint-id" : "c2d1cd9e-99b5-4028-9f91-730a1b4977fd",
+    "linter-id" : "schemacrawler.tools.linter.LinterRedundantIndexes",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterRedundantIndexes@791cbf87",
+    "message" : "redundant index",
+    "object-name" : "PUBLIC.FOR_LINT.WRITERS",
+    "severity" : "high",
+    "value" : "IDX_A1_WRITERS"
+  }, {
+    "lint-id" : "4a17cfdb-02a3-4d57-92f9-0f6d6b780443",
+    "linter-id" : "schemacrawler.tools.linter.LinterNullColumnsInIndex",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterNullColumnsInIndex@2baa8d82",
+    "message" : "unique index with nullable columns",
+    "object-name" : "PUBLIC.FOR_LINT.WRITERS",
+    "severity" : "medium",
+    "value" : "IDX_U_WRITERS"
+  }, {
+    "lint-id" : "015a3688-5e5a-4cee-a2a4-e9d2bb8043eb",
+    "linter-id" : "schemacrawler.tools.linter.LinterNullIntendedColumns",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterNullIntendedColumns@319dead1",
+    "message" : "column where NULL may be intended",
+    "object-name" : "PUBLIC.FOR_LINT.WRITERS",
+    "severity" : "medium",
+    "value" : "ADDRESS2"
+  }, {
+    "lint-id" : "3a3e637d-c558-424c-9809-e3ef8be697dd",
+    "linter-id" : "schemacrawler.tools.linter.LinterNullIntendedColumns",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterNullIntendedColumns@319dead1",
+    "message" : "column where NULL may be intended",
+    "object-name" : "PUBLIC.FOR_LINT.WRITERS",
+    "severity" : "medium",
+    "value" : "COUNTRY"
+  }, {
+    "lint-id" : "6f40f0b5-4e9c-4dc8-9a34-eb2b6ec7ac60",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithIncrementingColumns@5dcbb60",
+    "message" : "incrementing columns",
+    "object-name" : "PUBLIC.FOR_LINT.WRITERS",
+    "severity" : "medium",
+    "value" : "ADDRESS1, ADDRESS2"
+  }, {
+    "lint-id" : "9e5ea299-bc70-47ed-807e-3a64bfe84571",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithIncrementingColumns@5dcbb60",
+    "message" : "incrementing columns",
+    "object-name" : "PUBLIC.FOR_LINT.WRITERS",
+    "severity" : "medium",
+    "value" : "PHONE1, PHONE2"
+  }, {
+    "lint-id" : "5163acbc-ab55-4e42-a96d-75715b6a969e",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithIncrementingColumns@5dcbb60",
+    "message" : "incrementing columns",
+    "object-name" : "PUBLIC.FOR_LINT.WRITERS",
+    "severity" : "medium",
+    "value" : "FAX, FAX3"
+  }, {
+    "lint-id" : "f6a42ca9-f7d2-48f1-b107-6d15596a217d",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithIncrementingColumns@5dcbb60",
+    "message" : "incrementing columns",
+    "object-name" : "PUBLIC.FOR_LINT.WRITERS",
+    "severity" : "medium",
+    "value" : "EMAIL1, EMAIL2"
+  }, {
+    "lint-id" : "d90a0763-850c-488c-aeb7-2eef44ca3f76",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithIncrementingColumns@5dcbb60",
+    "message" : "incrementing columns",
+    "object-name" : "PUBLIC.FOR_LINT.WRITERS",
+    "severity" : "medium",
+    "value" : "HOMEEMAIL11, HOMEEMAIL12"
+  }, {
+    "lint-id" : "a4d2c279-d986-4ffc-b68f-1600455c6e32",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithIncrementingColumns@5dcbb60",
+    "message" : "incrementing columns are not consecutive",
+    "object-name" : "PUBLIC.FOR_LINT.WRITERS",
+    "severity" : "medium",
+    "value" : "FAX, FAX3"
+  }, {
+    "lint-id" : "c57b1f14-3e4c-4f88-b35b-ddd5326f6924",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithIncrementingColumns@5dcbb60",
+    "message" : "incrementing columns don't have the same data-type",
+    "object-name" : "PUBLIC.FOR_LINT.WRITERS",
+    "severity" : "medium",
+    "value" : "PHONE1, PHONE2"
+  }, {
+    "lint-id" : "bcffcf12-0cb5-484e-b631-2a359f15b408",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithIncrementingColumns@5dcbb60",
+    "message" : "incrementing columns don't have the same data-type",
+    "object-name" : "PUBLIC.FOR_LINT.WRITERS",
+    "severity" : "medium",
+    "value" : "FAX, FAX3"
+  }, {
+    "lint-id" : "f028a9d1-3ff9-4c1c-a3ae-138ea6905d93",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithIncrementingColumns@5dcbb60",
+    "message" : "incrementing columns don't have the same data-type",
+    "object-name" : "PUBLIC.FOR_LINT.WRITERS",
+    "severity" : "medium",
+    "value" : "EMAIL1, EMAIL2"
+  }, {
+    "lint-id" : "6ddeaf79-36ae-4478-aa58-f04f1dbedbe7",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableEmpty",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableEmpty@2b52c0d6",
+    "message" : "empty table",
+    "object-name" : "PUBLIC.FOR_LINT.WRITERS",
+    "severity" : "low",
+    "value" : ""
+  }, {
+    "lint-id" : "e67c9332-c327-49c3-a376-18045245e790",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks@49f5c307",
+    "message" : "should have remarks",
+    "object-name" : "PUBLIC.FOR_LINT.WRITERS",
+    "severity" : "low",
+    "value" : ""
+  }, {
+    "lint-id" : "0aa4a6a5-f492-4bd6-b408-202f06b17a04",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableWithNoRemarks@49f5c307",
+    "message" : "should have remarks",
+    "object-name" : "PUBLIC.FOR_LINT.WRITERS",
+    "severity" : "low",
+    "value" : "ID, FIRSTNAME, LASTNAME, ADDRESS1, ADDRESS2, CITY, STATE, POSTALCODE, COUNTRY, PHONE1, PHONE2, EMAIL1, EMAIL2, FAX, FAX3, HOMEEMAIL11, HOMEEMAIL12, PUBLICATION_ID"
+  }, {
+    "lint-id" : "0ca823dd-19bd-4223-ae41-19c9603c0c6a",
+    "linter-id" : "schemacrawler.tools.linter.LinterColumnTypes",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterColumnTypes@4a067c25",
+    "message" : "column with same name but different data types",
+    "object-name" : "catalog",
+    "severity" : "medium",
+    "value" : "ID [BIGINT, INTEGER]"
+  }, {
+    "lint-id" : "628bf1b4-39ee-466d-afc8-12b43118734e",
+    "linter-id" : "schemacrawler.tools.linter.LinterTableCycles",
+    "linter-instance-id" : "schemacrawler.tools.linter.LinterTableCycles@754777cd",
+    "message" : "cycles in table relationships",
+    "object-name" : "catalog",
+    "severity" : "medium",
+    "value" : "PUBLICATIONS, WRITERS"
+  } ]
+}

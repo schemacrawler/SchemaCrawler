@@ -53,7 +53,9 @@ public final class LintCollector
     }
 
     final List<Lint<? extends Serializable>> lints = new ArrayList<>(namedObject
-      .getAttribute(LINT_KEY, new ArrayList<>()));
+                                                                       .getAttribute(
+                                                                         LINT_KEY,
+                                                                         new ArrayList<>()));
     lints.sort(naturalOrder());
     return lints;
   }
@@ -68,8 +70,8 @@ public final class LintCollector
   public <N extends NamedObject & AttributedObject> void addLint(final N namedObject,
                                                                  final Lint<?> lint)
   {
-    if (namedObject != null && lint != null
-        && namedObject.getFullName().equals(lint.getObjectName()))
+    if (namedObject != null && lint != null && namedObject.getFullName()
+      .equals(lint.getObjectName()))
     {
       lints.add(lint);
 
@@ -83,8 +85,13 @@ public final class LintCollector
   @Override
   public Iterator<Lint<? extends Serializable>> iterator()
   {
+    return getLints().iterator();
+  }
+
+  public Collection<Lint<? extends Serializable>> getLints()
+  {
     lints.sort(naturalOrder());
-    return lints.iterator();
+    return new ArrayList<>(lints);
   }
 
   public int size()

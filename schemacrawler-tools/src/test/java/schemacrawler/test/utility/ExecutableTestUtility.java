@@ -102,8 +102,15 @@ public final class ExecutableTestUtility
   public static Matcher<TestResource> hasSameContentAndTypeAs(final TestResource classpathTestResource,
                                                               final OutputFormat outputFormat)
   {
-    return FileHasContent.hasSameContentAndTypeAs(classpathTestResource,
+    return hasSameContentAndTypeAs(classpathTestResource,
                                                   outputFormat.getFormat());
+  }
+
+  public static Matcher<TestResource> hasSameContentAndTypeAs(final TestResource classpathTestResource,
+                                                              final String outputFormat)
+  {
+    return FileHasContent.hasSameContentAndTypeAs(classpathTestResource,
+                                                  outputFormat);
   }
 
   private ExecutableTestUtility()

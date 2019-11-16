@@ -120,11 +120,26 @@ public class LintCommand
   {
     final String identifierQuoteString = identifiers.getIdentifierQuoteString();
 
-    final LintReportBuilder textReportBuilder = new LintReportTextFormatter(
+    final LintReportBuilder lintReportBuilder;
+
+    final LintReportBuilder jsonReportBuilder = new LintReportJsonBuilder(
       lintOptions,
       outputOptions,
       identifierQuoteString);
-    return textReportBuilder;
+    if (jsonReportBuilder.canBuildReport(lintOptions, outputOptions))
+    {
+      lintReportBuilder = jsonReportBuilder;
+    }
+    else
+    {
+      final LintReportBuilder textReportBuilder = new LintReportTextFormatter(
+        lintOptions,
+        outputOptions,
+        identifierQuoteString);
+      lintReportBuilder = textReportBuilder;
+    }
+
+    return lintReportBuilder;
   }
 
   private void loadLintOptions()

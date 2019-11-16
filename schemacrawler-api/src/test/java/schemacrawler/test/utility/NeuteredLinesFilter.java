@@ -49,6 +49,8 @@ final class NeuteredLinesFilter
     Pattern.compile(".*201[89]-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.*"),
     Pattern.compile(".*201[89]-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d.*"),
     Pattern.compile("- column @uuid: .*"),
+    Pattern.compile("\\s+\"lint-id\" : .*"),
+    Pattern.compile("\\s+\"linter-instance-id\" : .*"),
     // Versions
     Pattern.compile(".*15\\.0[6-7]\\.\\d\\d.*"),
     Pattern.compile(".*16\\.\\d\\.\\d.*"),
