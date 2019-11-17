@@ -29,19 +29,14 @@ package schemacrawler.tools.lint;
 
 
 import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.isBlank;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import schemacrawler.JvmSystemInfo;
-import schemacrawler.OperatingSystemInfo;
-import schemacrawler.SchemaCrawlerInfo;
-import schemacrawler.schema.Catalog;
 import schemacrawler.schema.CrawlInfo;
-import schemacrawler.schema.DatabaseInfo;
-import schemacrawler.schema.JdbcDriverInfo;
 
 public final class LintReport
   implements Iterable<Lint<? extends Serializable>>
@@ -49,14 +44,29 @@ public final class LintReport
 
   private final CrawlInfo crawlInfo;
   private final Collection<Lint<? extends Serializable>> lints;
+  private final String title;
 
-  public LintReport(final Catalog catalog, final LintCollector collector)
+  public LintReport(final String title,
+                    final CrawlInfo crawlInfo,
+                    final Collection<Lint<? extends Serializable>> lints)
   {
-    requireNonNull(catalog, "No catalog provided");
-    crawlInfo = catalog.getCrawlInfo();
+    if (isBlank(title))
+    {
+      this.title = "";
+    }
+    else
+    {
+      this.title = title;
+    }
+    requireNonNull(crawlInfo, "No crawl information provided");
+    this.crawlInfo = crawlInfo;
+    requireNonNull(lints, "No lints provided");
+    this.lints = lints;
+  }
 
-    requireNonNull(collector, "No lint collector provided");
-    lints = collector.getLints();
+  public String getTitle()
+  {
+    return title;
   }
 
   public CrawlInfo getCrawlInfo()

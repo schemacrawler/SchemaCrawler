@@ -80,8 +80,9 @@ public class LintCommand
     linters.lint(catalog, connection);
 
     // Produce the lint report
-    final LintReport lintReport = new LintReport(catalog,
-                                                 linters.getCollector());
+    final LintReport lintReport = new LintReport(outputOptions.getTitle(),
+                                                 catalog.getCrawlInfo(),
+                                                 linters.getCollector().getLints());
 
     // Write out the lint report
     getLintReportBuilder().generateLintReport(lintReport);
