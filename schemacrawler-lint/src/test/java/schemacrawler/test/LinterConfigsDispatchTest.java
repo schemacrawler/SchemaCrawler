@@ -136,7 +136,7 @@ public class LinterConfigsDispatchTest
                            TextOutputFormat.text,
                            "/schemacrawler-linter-configs-with-dispatch.xml",
                            additionalArgs,
-                           "schemacrawler-linter-configs-with-dispatch");
+                           "schemacrawler-linter-configs-with-dispatch.txt");
 
     checkSystemErrLog(testContext);
   }

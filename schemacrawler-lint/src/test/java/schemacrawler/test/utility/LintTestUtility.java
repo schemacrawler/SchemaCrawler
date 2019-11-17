@@ -107,7 +107,7 @@ public final class LintTestUtility
                                              new Config(),
                                              outputFormat)),
                hasSameContentAndTypeAs(classpathResource(
-                 referenceFileName + ".txt"), outputFormat));
+                 referenceFileName), outputFormat));
   }
 
 }

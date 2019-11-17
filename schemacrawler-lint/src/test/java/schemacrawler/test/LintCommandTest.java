@@ -58,20 +58,7 @@ public class LintCommandTest
                            TextOutputFormat.text,
                            null,
                            null,
-                           "executableForLint");
-  }
-
-  @Test
-  public void commandlineLintReportAsJson(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
-    final Map<String, String> addiionalArgs = new HashMap<>();
-    addiionalArgs.put("-lint-report-output-format","json");
-    executeLintCommandLine(connectionInfo,
-                           TextOutputFormat.text,
-                           null,
-                           addiionalArgs,
-                           "commandlineLintReportAsJson");
+                           "executableForLint.txt");
   }
 
   @Test
@@ -82,7 +69,7 @@ public class LintCommandTest
                            TextOutputFormat.text,
                            "/schemacrawler-linter-configs-test.xml",
                            null,
-                           "executableForLintWithConfig");
+                           "executableForLintWithConfig.txt");
   }
 
   @Test
