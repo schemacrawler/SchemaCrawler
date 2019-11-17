@@ -77,25 +77,25 @@ public abstract class BaseLinter
 
   protected final void addCatalogLint(final String message)
   {
-    addLint(catalog, message, null);
+    addLint(LintObjectType.catalog, catalog, message, null);
   }
 
   protected final <V extends Serializable> void addCatalogLint(final String message,
                                                                final V value)
   {
-    addLint(catalog, message, value);
+    addLint(LintObjectType.catalog, catalog, message, value);
   }
 
   protected final void addTableLint(final Table table, final String message)
   {
-    addLint(table, message, null);
+    addLint(LintObjectType.table, table, message, null);
   }
 
   protected final <V extends Serializable> void addTableLint(final Table table,
                                                              final String message,
                                                              final V value)
   {
-    addLint(table, message, value);
+    addLint(LintObjectType.table, table, message, value);
   }
 
   protected void end(final Connection connection)

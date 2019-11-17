@@ -156,6 +156,7 @@ public final class LintOptionsBuilder
     config.setStringValue(LINTER_CONFIGS, linterConfigs);
     config.setEnumValue(LINT_DISPATCH, lintDispatch);
     config.setBooleanValue(RUN_ALL_LINTERS, runAllLinters);
+    // Lint report output format is not written to the config
     return config;
   }
 

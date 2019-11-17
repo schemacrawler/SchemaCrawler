@@ -8,7 +8,7 @@ Database                                                      [database]
 
                                                           [lint, medium]
 	column with same name but different data types	ID [BIGINT, INTEGER]
-	cycles in table relationships	PUBLICATIONS, WRITERS
+	cycles in table relationships	PUBLIC.FOR_LINT.PUBLICATIONS, PUBLIC.FOR_LINT.WRITERS
 
 
 
@@ -50,7 +50,7 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 	empty table	
 	should have remarks	
 	should have remarks	ID, DESCRIPTION, WRITERID, PUBLICATIONDATE, PRICE, UPDATE, PRESS_RELEASE
-	too many binary objects	UPDATE, PRESS_RELEASE
+	too many binary objects	PUBLIC.FOR_LINT.PUBLICATIONS."UPDATE", PUBLIC.FOR_LINT.PUBLICATIONS.PRESS_RELEASE
 
 
 
@@ -72,8 +72,8 @@ PUBLIC.FOR_LINT.SELFREFERENCE                                    [table]
                                                         [lint, critical]
 	foreign key self-references primary key	FK_SELFREFERENCE
                                                             [lint, high]
-	redundant index	SYS_IDX_FK_SELFREFERENCE_10210
-	redundant index	SYS_IDX_PK_SELFREFERENCE_10207
+	redundant index	PUBLIC.FOR_LINT.SELFREFERENCE.SYS_IDX_FK_SELFREFERENCE_10210
+	redundant index	PUBLIC.FOR_LINT.SELFREFERENCE.SYS_IDX_PK_SELFREFERENCE_10207
                                                              [lint, low]
 	empty table	
 	should have remarks	
@@ -86,20 +86,20 @@ PUBLIC.FOR_LINT.WRITERS                                          [table]
 
                                                             [lint, high]
 	foreign key data type different from primary key	FK_WRITERS_PUBLICATION
-	redundant index	IDX_A1_WRITERS
+	redundant index	PUBLIC.FOR_LINT.WRITERS.IDX_A1_WRITERS
                                                           [lint, medium]
-	unique index with nullable columns	IDX_U_WRITERS
-	column where NULL may be intended	ADDRESS2
-	column where NULL may be intended	COUNTRY
-	incrementing columns	ADDRESS1, ADDRESS2
-	incrementing columns	PHONE1, PHONE2
-	incrementing columns	FAX, FAX3
-	incrementing columns	EMAIL1, EMAIL2
-	incrementing columns	HOMEEMAIL11, HOMEEMAIL12
-	incrementing columns are not consecutive	FAX, FAX3
-	incrementing columns don't have the same data-type	PHONE1, PHONE2
-	incrementing columns don't have the same data-type	FAX, FAX3
-	incrementing columns don't have the same data-type	EMAIL1, EMAIL2
+	unique index with nullable columns	PUBLIC.FOR_LINT.WRITERS.IDX_U_WRITERS
+	column where NULL may be intended	PUBLIC.FOR_LINT.WRITERS.ADDRESS2
+	column where NULL may be intended	PUBLIC.FOR_LINT.WRITERS.COUNTRY
+	incrementing columns	PUBLIC.FOR_LINT.WRITERS.ADDRESS1, PUBLIC.FOR_LINT.WRITERS.ADDRESS2
+	incrementing columns	PUBLIC.FOR_LINT.WRITERS.PHONE1, PUBLIC.FOR_LINT.WRITERS.PHONE2
+	incrementing columns	PUBLIC.FOR_LINT.WRITERS.FAX, PUBLIC.FOR_LINT.WRITERS.FAX3
+	incrementing columns	PUBLIC.FOR_LINT.WRITERS.EMAIL1, PUBLIC.FOR_LINT.WRITERS.EMAIL2
+	incrementing columns	PUBLIC.FOR_LINT.WRITERS.HOMEEMAIL11, PUBLIC.FOR_LINT.WRITERS.HOMEEMAIL12
+	incrementing columns are not consecutive	PUBLIC.FOR_LINT.WRITERS.FAX, PUBLIC.FOR_LINT.WRITERS.FAX3
+	incrementing columns don't have the same data-type	PUBLIC.FOR_LINT.WRITERS.PHONE1, PUBLIC.FOR_LINT.WRITERS.PHONE2
+	incrementing columns don't have the same data-type	PUBLIC.FOR_LINT.WRITERS.FAX, PUBLIC.FOR_LINT.WRITERS.FAX3
+	incrementing columns don't have the same data-type	PUBLIC.FOR_LINT.WRITERS.EMAIL1, PUBLIC.FOR_LINT.WRITERS.EMAIL2
                                                              [lint, low]
 	empty table	
 	should have remarks	

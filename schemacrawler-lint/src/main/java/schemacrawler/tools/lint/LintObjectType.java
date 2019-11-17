@@ -25,38 +25,10 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.analysis.associations;
+package schemacrawler.tools.lint;
 
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-
-import schemacrawler.schema.Catalog;
-import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.BaseCatalogDecorator;
-
-public final class CatalogWithAssociations
-  extends BaseCatalogDecorator
+public enum LintObjectType
 {
-
-  private static final long serialVersionUID = -3953296149824921463L;
-
-  private final Collection<WeakAssociationForeignKey> weakAssociations;
-
-  public CatalogWithAssociations(final Catalog catalog)
-  {
-    super(catalog);
-
-    final List<Table> allTables = new ArrayList<>(catalog.getTables());
-    final WeakAssociationsAnalyzer weakAssociationsAnalyzer = new WeakAssociationsAnalyzer(allTables);
-    weakAssociations = weakAssociationsAnalyzer.analyzeTables();
-  }
-
-  public Collection<WeakAssociationForeignKey> getWeakAssociations()
-  {
-    return weakAssociations;
-  }
-
+  unknown, catalog, table;
 }

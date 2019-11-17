@@ -10,6 +10,13 @@ For more information, see https://www.schemacrawler.com/lint.html
                             schemacrawler.lint.lintdispatch
                           Use one of none, write_err, throw_exception,
                             terminate_system
+      --lint-report-output-format=<lint-report-output-format>
+                          Output format for lint report
+                          Optional, defaults to text
+                          Use one of [text, txt] Plain text format, [html]
+                            HyperText Markup Language (HTML) format, [json]
+                            JavaScript Object Notation (JSON) format, [yaml]
+                            YAML Ain't Markup Language (YAML) format
       --linter-configs=<linter-configs>
                           Path to the SchemaCrawler lint XML configuration file
       --run-all-linters   Whether to run all linters, including running the

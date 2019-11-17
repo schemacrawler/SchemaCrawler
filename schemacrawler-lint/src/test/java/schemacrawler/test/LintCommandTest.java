@@ -33,6 +33,8 @@ import static schemacrawler.test.utility.LintTestUtility.executableLint;
 import static schemacrawler.test.utility.LintTestUtility.executeLintCommandLine;
 
 import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -56,7 +58,7 @@ public class LintCommandTest
                            TextOutputFormat.text,
                            null,
                            null,
-                           "executableForLint");
+                           "executableForLint.txt");
   }
 
   @Test
@@ -67,7 +69,7 @@ public class LintCommandTest
                            TextOutputFormat.text,
                            "/schemacrawler-linter-configs-test.xml",
                            null,
-                           "executableForLintWithConfig");
+                           "executableForLintWithConfig.txt");
   }
 
   @Test

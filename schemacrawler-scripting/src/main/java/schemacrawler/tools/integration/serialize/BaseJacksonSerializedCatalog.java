@@ -67,15 +67,6 @@ public abstract class BaseJacksonSerializedCatalog
     loadAllTableColumns();
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final <T> Optional<T> lookupAttribute(final String name)
-  {
-    return Optional.of(getAttribute(name));
-  }
-
   public Set<Column> getAllTableColumns()
   {
     return new TreeSet<>(allTableColumns);

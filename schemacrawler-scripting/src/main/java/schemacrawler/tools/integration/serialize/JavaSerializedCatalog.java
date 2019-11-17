@@ -78,15 +78,6 @@ public final class JavaSerializedCatalog
   }
 
   /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final <T> Optional<T> lookupAttribute(final String name)
-  {
-    return Optional.of(getAttribute(name));
-  }
-
-  /**
    * Serializes the database to the writer, as XML.
    *
    * @param out

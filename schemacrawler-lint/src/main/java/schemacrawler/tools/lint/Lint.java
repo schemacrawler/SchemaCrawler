@@ -32,10 +32,7 @@ import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.NamedObject;
@@ -46,17 +43,18 @@ public final class Lint<V extends Serializable>
 {
 
   private static final long serialVersionUID = -8627082144974643415L;
-
   private final String lintId;
   private final String linterId;
   private final String linterInstanceId;
-  private final String objectName;
-  private final LintSeverity severity;
   private final String message;
+  private final String objectName;
+  private final LintObjectType objectType;
+  private final LintSeverity severity;
   private final V value;
 
   public <N extends NamedObject & AttributedObject> Lint(final String linterId,
                                                          final String linterInstanceId,
+                                                         final LintObjectType objectType,
                                                          final N namedObject,
                                                          final LintSeverity severity,
                                                          final String message,
@@ -76,6 +74,8 @@ public final class Lint<V extends Serializable>
     }
     this.linterInstanceId = linterInstanceId;
 
+    requireNonNull(objectType, "Named object type not provided");
+    this.objectType = objectType;
     requireNonNull(namedObject, "Named object not provided");
     this.objectName = namedObject.getFullName();
 
@@ -97,6 +97,48 @@ public final class Lint<V extends Serializable>
     this.value = value;
   }
 
+  @Override
+  public boolean equals(final Object o)
+  {
+    if (this == o)
+      return true;
+    if (!(o instanceof Lint))
+      return false;
+    final Lint<?> lint = (Lint<?>) o;
+    return Objects.equals(linterId, lint.linterId) && Objects
+      .equals(message, lint.message) && Objects
+             .equals(objectName, lint.objectName)
+           && objectType == lint.objectType && severity == lint.severity
+           && Objects.equals(value, lint.value);
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return Objects
+      .hash(linterId, message, objectName, objectType, severity, value);
+  }
+
+  @Override
+  public String toString()
+  {
+    final String valueString;
+    if (value != null && !(value instanceof Boolean))
+    {
+      valueString = ": " + getValueAsString();
+    }
+    else
+    {
+      valueString = "";
+    }
+    return String.format("[%s] %s%s", objectName, message, valueString);
+  }
+
+  public LintObjectType getObjectType()
+  {
+    return objectType;
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -109,6 +151,11 @@ public final class Lint<V extends Serializable>
     }
 
     int compareTo = 0;
+    compareTo = objectType.compareTo(lint.getObjectType());
+    if (compareTo != 0)
+    {
+      return compareTo;
+    }
     compareTo = objectName.compareTo(lint.getObjectName());
     if (compareTo != 0)
     {
@@ -128,73 +175,6 @@ public final class Lint<V extends Serializable>
     compareTo = message.compareTo(lint.getMessage());
 
     return compareTo;
-  }
-
-  @Override
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
-      return true;
-    }
-    if (obj == null)
-    {
-      return false;
-    }
-    if (!(obj instanceof Lint))
-    {
-      return false;
-    }
-    final Lint<?> other = (Lint<?>) obj;
-    if (linterId == null)
-    {
-      if (other.linterId != null)
-      {
-        return false;
-      }
-    }
-    else if (!linterId.equals(other.linterId))
-    {
-      return false;
-    }
-    if (message == null)
-    {
-      if (other.message != null)
-      {
-        return false;
-      }
-    }
-    else if (!message.equals(other.message))
-    {
-      return false;
-    }
-    if (objectName == null)
-    {
-      if (other.objectName != null)
-      {
-        return false;
-      }
-    }
-    else if (!objectName.equals(other.objectName))
-    {
-      return false;
-    }
-    if (severity != other.severity)
-    {
-      return false;
-    }
-    if (value == null)
-    {
-      if (other.value != null)
-      {
-        return false;
-      }
-    }
-    else if (!value.equals(other.value))
-    {
-      return false;
-    }
-    return true;
   }
 
   public String getLinterId()
@@ -239,8 +219,8 @@ public final class Lint<V extends Serializable>
       final Class<? extends Object> valueClass = value.getClass();
       Object valueObject = value;
 
-      if (valueClass.isArray()
-          && NamedObject.class.isAssignableFrom(valueClass.getComponentType()))
+      if (valueClass.isArray() && NamedObject.class
+        .isAssignableFrom(valueClass.getComponentType()))
       {
         valueObject = Arrays.asList(Arrays.copyOf((Object[]) value,
                                                   ((Object[]) value).length,
@@ -249,16 +229,16 @@ public final class Lint<V extends Serializable>
 
       if (NamedObject.class.isAssignableFrom(valueClass))
       {
-        valueObject = ((NamedObject) valueObject).getName();
+        valueObject = ((NamedObject) valueObject).getFullName();
       }
       else if (Iterable.class.isAssignableFrom(valueObject.getClass()))
       {
         final List<String> list = new ArrayList<>();
-        for (final Object valuePart: (Iterable<?>) valueObject)
+        for (final Object valuePart : (Iterable<?>) valueObject)
         {
           if (valuePart instanceof NamedObject)
           {
-            list.add(((NamedObject) valuePart).getName());
+            list.add(((NamedObject) valuePart).getFullName());
           }
           else
           {
@@ -279,37 +259,9 @@ public final class Lint<V extends Serializable>
     }
   }
 
-  @Override
-  public int hashCode()
-  {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (linterId == null? 0: linterId.hashCode());
-    result = prime * result + (message == null? 0: message.hashCode());
-    result = prime * result + (objectName == null? 0: objectName.hashCode());
-    result = prime * result + (severity == null? 0: severity.hashCode());
-    result = prime * result + (value == null? 0: value.hashCode());
-    return result;
-  }
-
   public boolean hasValue()
   {
     return value == null;
-  }
-
-  @Override
-  public String toString()
-  {
-    final String valueString;
-    if (value != null && !(value instanceof Boolean))
-    {
-      valueString = ": " + getValueAsString();
-    }
-    else
-    {
-      valueString = "";
-    }
-    return String.format("[%s] %s%s", objectName, message, valueString);
   }
 
 }

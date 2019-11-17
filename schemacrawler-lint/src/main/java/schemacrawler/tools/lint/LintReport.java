@@ -28,47 +28,60 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint;
 
 
-import static java.util.Comparator.naturalOrder;
+import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.isBlank;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
-import schemacrawler.schema.AttributedObject;
-import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.CrawlInfo;
 
-public final class LintCollector
+public final class LintReport
+  implements Iterable<Lint<? extends Serializable>>
 {
 
-  private static final String LINT_KEY = "schemacrawler.lint";
+  private final CrawlInfo crawlInfo;
+  private final Collection<Lint<? extends Serializable>> lints;
+  private final String title;
 
-  private final List<Lint<? extends Serializable>> lints;
-
-  public LintCollector()
+  public LintReport(final String title,
+                    final CrawlInfo crawlInfo,
+                    final Collection<Lint<? extends Serializable>> lints)
   {
-    lints = new ArrayList<>();
+    if (isBlank(title))
+    {
+      this.title = "";
+    }
+    else
+    {
+      this.title = title;
+    }
+    requireNonNull(crawlInfo, "No crawl information provided");
+    this.crawlInfo = crawlInfo;
+    requireNonNull(lints, "No lints provided");
+    this.lints = lints;
   }
 
-  public <N extends NamedObject & AttributedObject> void addLint(final N namedObject,
-                                                                 final Lint<?> lint)
+  public String getTitle()
   {
-    if (namedObject != null && lint != null && namedObject.getFullName()
-      .equals(lint.getObjectName()))
-    {
-      lints.add(lint);
+    return title;
+  }
 
-      final Collection<Lint<?>> columnLints = namedObject
-        .getAttribute(LINT_KEY, new ArrayList<>());
-      columnLints.add(lint);
-      namedObject.setAttribute(LINT_KEY, columnLints);
-    }
+  public CrawlInfo getCrawlInfo()
+  {
+    return crawlInfo;
+  }
+
+  @Override
+  public Iterator<Lint<? extends Serializable>> iterator()
+  {
+    return getLints().iterator();
   }
 
   public Collection<Lint<? extends Serializable>> getLints()
   {
-    lints.sort(naturalOrder());
     return new ArrayList<>(lints);
   }
 
@@ -76,4 +89,5 @@ public final class LintCollector
   {
     return lints.size();
   }
+
 }

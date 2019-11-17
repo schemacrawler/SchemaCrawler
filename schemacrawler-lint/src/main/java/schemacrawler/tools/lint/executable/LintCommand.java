@@ -31,19 +31,12 @@ package schemacrawler.tools.lint.executable;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.lint.LintUtility.readLinterConfigs;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.lint.LintDispatch;
-import schemacrawler.tools.lint.LintedCatalog;
+import schemacrawler.tools.lint.LintReport;
 import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.lint.Linters;
-import schemacrawler.tools.options.TextOutputFormat;
-import schemacrawler.utility.NamedObjectSort;
 
 public class LintCommand
   extends BaseSchemaCrawlerCommand
@@ -79,16 +72,20 @@ public class LintCommand
   {
     checkCatalog();
 
+    // Lint the catalog
     final LinterConfigs linterConfigs = readLinterConfigs(lintOptions,
                                                           additionalConfiguration);
     final Linters linters = new Linters(linterConfigs,
                                         lintOptions.isRunAllLinters());
+    linters.lint(catalog, connection);
 
-    final LintedCatalog lintedCatalog = new LintedCatalog(catalog,
-                                                          connection,
-                                                          linters);
+    // Produce the lint report
+    final LintReport lintReport = new LintReport(outputOptions.getTitle(),
+                                                 catalog.getCrawlInfo(),
+                                                 linters.getCollector().getLints());
 
-    generateReport(lintedCatalog);
+    // Write out the lint report
+    getLintReportBuilder().generateLintReport(lintReport);
 
     dispatch(linters);
   }
@@ -121,46 +118,30 @@ public class LintCommand
     lintDispatch.dispatch();
   }
 
-  private void generateReport(final LintedCatalog catalog)
+  private LintReportBuilder getLintReportBuilder()
     throws SchemaCrawlerException
   {
-    final LintTraversalHandler formatter = getSchemaTraversalHandler();
+    final LintReportOutputFormat outputFormat = LintReportOutputFormat
+      .fromFormat(outputOptions.getOutputFormatValue());
 
-    formatter.begin();
-
-    formatter.handleInfoStart();
-    formatter.handle(catalog.getSchemaCrawlerInfo());
-    formatter.handle(catalog.getDatabaseInfo());
-    formatter.handle(catalog.getJdbcDriverInfo());
-    formatter.handleInfoEnd();
-
-    formatter.handleStart();
-    formatter.handle(catalog);
-
-    final List<? extends Table> tablesList = new ArrayList<>(catalog
-                                                               .getTables());
-    Collections.sort(tablesList,
-                     NamedObjectSort.getNamedObjectSort(lintOptions
-                                                          .isAlphabeticalSortForTables()));
-    for (final Table table : tablesList)
+    final LintReportBuilder lintReportBuilder;
+    switch (outputFormat)
     {
-      formatter.handle(table);
+      case json:
+        lintReportBuilder = new LintReportJsonBuilder(outputOptions);
+        break;
+      case yaml:
+        lintReportBuilder = new LintReportYamlBuilder(outputOptions);
+        break;
+      default:
+        lintReportBuilder = new LintReportTextFormatter(catalog,
+                                                        lintOptions,
+                                                        outputOptions,
+                                                        identifiers
+                                                          .getIdentifierQuoteString());
     }
 
-    formatter.handleEnd();
-
-    formatter.end();
-  }
-
-  private LintTraversalHandler getSchemaTraversalHandler()
-    throws SchemaCrawlerException
-  {
-    final String identifierQuoteString = identifiers.getIdentifierQuoteString();
-
-    final LintTraversalHandler formatter = new LintTextFormatter(lintOptions,
-                                                                 outputOptions,
-                                                                 identifierQuoteString);
-    return formatter;
+    return lintReportBuilder;
   }
 
   private void loadLintOptions()
