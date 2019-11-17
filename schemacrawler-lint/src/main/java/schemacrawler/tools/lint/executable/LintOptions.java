@@ -38,7 +38,6 @@ public class LintOptions
   private final String linterConfigs;
   private final LintDispatch lintDispatch;
   private final boolean runAllLinters;
-  private final LintReportOutputFormat lintReportOutputFormat;
 
   public LintOptions(final LintOptionsBuilder builder)
   {
@@ -46,7 +45,6 @@ public class LintOptions
     linterConfigs = builder.linterConfigs;
     lintDispatch = builder.lintDispatch;
     runAllLinters = builder.runAllLinters;
-    lintReportOutputFormat = builder.lintReportOutputFormat;
   }
 
   /**
@@ -77,15 +75,6 @@ public class LintOptions
   public LintDispatch getLintDispatch()
   {
     return lintDispatch;
-  }
-
-  /**
-   * Gets the output format for the lint report
-   * @return Output format of the lint report
-   */
-  public LintReportOutputFormat getLintReportOutputFormat()
-  {
-    return lintReportOutputFormat;
   }
 
 }
