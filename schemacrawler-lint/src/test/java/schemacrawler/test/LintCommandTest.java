@@ -33,6 +33,8 @@ import static schemacrawler.test.utility.LintTestUtility.executableLint;
 import static schemacrawler.test.utility.LintTestUtility.executeLintCommandLine;
 
 import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -57,6 +59,19 @@ public class LintCommandTest
                            null,
                            null,
                            "executableForLint");
+  }
+
+  @Test
+  public void commandlineLintReportAsJson(final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    final Map<String, String> addiionalArgs = new HashMap<>();
+    addiionalArgs.put("-lint-report-output-format","json");
+    executeLintCommandLine(connectionInfo,
+                           TextOutputFormat.text,
+                           null,
+                           addiionalArgs,
+                           "commandlineLintReportAsJson");
   }
 
   @Test

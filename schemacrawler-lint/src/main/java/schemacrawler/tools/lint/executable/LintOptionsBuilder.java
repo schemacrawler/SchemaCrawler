@@ -41,6 +41,7 @@ public final class LintOptionsBuilder
   private static final String CLI_LINTER_CONFIGS = "linter-configs";
   private static final String CLI_LINT_DISPATCH = "lint-dispatch";
   private static final String CLI_RUN_ALL_LINTERS = "run-all-linters";
+  private static final String CLI_LINT_REPORT_OUTPUT_FORMAT = "lint-report-output-format";
   private static final String SCHEMACRAWLER_LINT_PREFIX = "schemacrawler.lint.";
   private static final String LINTER_CONFIGS =
     SCHEMACRAWLER_LINT_PREFIX + CLI_LINTER_CONFIGS;
@@ -72,12 +73,14 @@ public final class LintOptionsBuilder
   LintDispatch lintDispatch;
   String linterConfigs;
   boolean runAllLinters;
+  LintReportOutputFormat lintReportOutputFormat;
 
   private LintOptionsBuilder()
   {
     linterConfigs = "";
     lintDispatch = LintDispatch.none;
     runAllLinters = true;
+    lintReportOutputFormat = LintReportOutputFormat.text;
   }
 
   @Override
@@ -130,6 +133,10 @@ public final class LintOptionsBuilder
     }
     runAllLinters = config.getBooleanValue(runAllLintersKey, true);
 
+    // Lint report output format is only read from the command-line
+    lintReportOutputFormat = config
+      .getEnumValue(CLI_LINT_REPORT_OUTPUT_FORMAT, LintReportOutputFormat.text);
+
     return this;
   }
 
@@ -145,6 +152,7 @@ public final class LintOptionsBuilder
     linterConfigs = options.getLinterConfigs();
     lintDispatch = options.getLintDispatch();
     runAllLinters = options.isRunAllLinters();
+    lintReportOutputFormat = options.getLintReportOutputFormat();
 
     return this;
   }
@@ -156,6 +164,7 @@ public final class LintOptionsBuilder
     config.setStringValue(LINTER_CONFIGS, linterConfigs);
     config.setEnumValue(LINT_DISPATCH, lintDispatch);
     config.setBooleanValue(RUN_ALL_LINTERS, runAllLinters);
+    // Lint report output format is not written to the config
     return config;
   }
 
@@ -204,6 +213,22 @@ public final class LintOptionsBuilder
   {
     this.runAllLinters = runAllLinters;
 
+    return this;
+  }
+
+  /**
+   * With a lint report output format.
+   */
+  public LintOptionsBuilder withLintReportOutputFormat(final LintReportOutputFormat lintReportOutputFormat)
+  {
+    if (lintReportOutputFormat == null)
+    {
+      this.lintReportOutputFormat = LintReportOutputFormat.text;
+    }
+    else
+    {
+      this.lintReportOutputFormat = lintReportOutputFormat;
+    }
     return this;
   }
 

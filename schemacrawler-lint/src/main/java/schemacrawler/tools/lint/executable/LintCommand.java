@@ -120,9 +120,7 @@ public class LintCommand
   private LintReportBuilder getLintReportBuilder()
     throws SchemaCrawlerException
   {
-    final String outputFormatValue = outputOptions.getOutputFormatValue();
-    final LintReportOutputFormat outputFormat = LintReportOutputFormat
-      .fromFormat(outputFormatValue);
+    final LintReportOutputFormat outputFormat = lintOptions.getLintReportOutputFormat();
 
     final LintReportBuilder lintReportBuilder;
     switch (outputFormat)

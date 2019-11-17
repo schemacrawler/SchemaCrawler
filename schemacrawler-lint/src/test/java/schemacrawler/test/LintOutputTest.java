@@ -45,6 +45,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.*;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.lint.executable.LintReportOutputFormat;
+import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
@@ -79,8 +81,8 @@ public class LintOutputTest
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
 
-    assertAll(Arrays.stream(new String[] {
-      TextOutputFormat.text.name(), TextOutputFormat.html.name() })
+    assertAll(Arrays.stream(new OutputFormat[] {
+      TextOutputFormat.text, TextOutputFormat.html })
                 .flatMap(outputFormat -> Arrays.stream(commands)
                   .map(command -> () -> {
 
@@ -125,8 +127,9 @@ public class LintOutputTest
       "lint");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
-    assertAll(Arrays.stream(new String[] {
-      TextOutputFormat.text.name(), TextOutputFormat.html.name(), "json", "yaml" })
+    assertAll(Arrays.stream(new OutputFormat[] {
+      TextOutputFormat.text, TextOutputFormat.html,
+      LintReportOutputFormat.json, LintReportOutputFormat.yaml })
                 .map(outputFormat -> () -> {
                   final String referenceFile = "lint." + outputFormat;
 
