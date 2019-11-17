@@ -24,15 +24,4 @@ public class LintReportJsonBuilder
     return new ObjectMapper();
   }
 
-  @Override
-  public boolean canBuildReport(final LintOptions options,
-                                final OutputOptions outputOptions)
-  {
-    final boolean canBuildReport;
-    final String outputFormatValue = outputOptions.getOutputFormatValue();
-    canBuildReport =
-      !isBlank(outputFormatValue) && outputFormatValue.equalsIgnoreCase("json");
-    return canBuildReport;
-  }
-
 }

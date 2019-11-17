@@ -83,23 +83,6 @@ final class LintReportTextFormatter
     this.lintOptions = lintOptions;
   }
 
-  @Override
-  public boolean canBuildReport(final LintOptions options,
-                                final OutputOptions outputOptions)
-  {
-    final boolean canBuildReport;
-    final String outputFormatValue = outputOptions.getOutputFormatValue();
-    if (isBlank(outputFormatValue))
-    {
-      canBuildReport = true;
-    }
-    else
-    {
-      canBuildReport = !outputFormatValue.equalsIgnoreCase("json");
-    }
-    return canBuildReport;
-  }
-
   public void generateLintReport(final LintReport report)
     throws SchemaCrawlerException
   {

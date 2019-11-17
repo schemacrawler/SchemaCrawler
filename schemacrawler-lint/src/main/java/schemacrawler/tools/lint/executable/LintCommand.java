@@ -120,30 +120,25 @@ public class LintCommand
   private LintReportBuilder getLintReportBuilder()
     throws SchemaCrawlerException
   {
-    final String identifierQuoteString = identifiers.getIdentifierQuoteString();
+    final String outputFormatValue = outputOptions.getOutputFormatValue();
+    final LintReportOutputFormat outputFormat = LintReportOutputFormat
+      .fromFormat(outputFormatValue);
 
     final LintReportBuilder lintReportBuilder;
-
-    final LintReportBuilder jsonReportBuilder = new LintReportJsonBuilder(
-      outputOptions);
-    final LintReportBuilder yamlReportBuilder = new LintReportYamlBuilder(
-      outputOptions);
-    if (jsonReportBuilder.canBuildReport(lintOptions, outputOptions))
+    switch (outputFormat)
     {
-      lintReportBuilder = jsonReportBuilder;
-    }
-    else if (yamlReportBuilder.canBuildReport(lintOptions, outputOptions))
-    {
-      lintReportBuilder = yamlReportBuilder;
-    }
-    else
-    {
-      final LintReportBuilder textReportBuilder = new LintReportTextFormatter(
-        catalog,
-        lintOptions,
-        outputOptions,
-        identifierQuoteString);
-      lintReportBuilder = textReportBuilder;
+      case json:
+        lintReportBuilder = new LintReportJsonBuilder(outputOptions);
+        break;
+      case yaml:
+        lintReportBuilder = new LintReportYamlBuilder(outputOptions);
+        break;
+      default:
+        lintReportBuilder = new LintReportTextFormatter(catalog,
+                                                        lintOptions,
+                                                        outputOptions,
+                                                        identifiers
+                                                          .getIdentifierQuoteString());
     }
 
     return lintReportBuilder;

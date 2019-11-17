@@ -24,15 +24,4 @@ public class LintReportYamlBuilder
     return new ObjectMapper(new YAMLFactory());
   }
 
-  @Override
-  public boolean canBuildReport(final LintOptions options,
-                                final OutputOptions outputOptions)
-  {
-    final boolean canBuildReport;
-    final String outputFormatValue = outputOptions.getOutputFormatValue();
-    canBuildReport =
-      !isBlank(outputFormatValue) && outputFormatValue.equalsIgnoreCase("yaml");
-    return canBuildReport;
-  }
-
 }
