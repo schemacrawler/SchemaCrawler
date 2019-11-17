@@ -61,7 +61,6 @@ public final class CommandOutputOptions
             "Format of the SchemaCrawler output, where <outputformat> is one of:",
             "  text - For text output (default)",
             "  html - For HTML5 output",
-            "  json - For JavaScript Object Notation output",
             "  scdot - For Graphviz DOT output, for schema only",
             "",
             "You can generate a database diagram using Graphviz",
