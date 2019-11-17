@@ -126,7 +126,7 @@ public class LintOutputTest
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
     assertAll(Arrays.stream(new String[] {
-      TextOutputFormat.text.name(), TextOutputFormat.html.name(), "json" })
+      TextOutputFormat.text.name(), TextOutputFormat.html.name(), "json", "yaml" })
                 .map(outputFormat -> () -> {
                   final String referenceFile = "lint." + outputFormat;
 

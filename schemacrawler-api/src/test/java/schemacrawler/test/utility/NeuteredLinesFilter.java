@@ -48,12 +48,12 @@ final class NeuteredLinesFilter
     Pattern.compile(".*[A-Za-z]+ \\d+\\, 201[456] \\d+:\\d+ [AP]M.*"),
     Pattern.compile(".*201[89]-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.*"),
     Pattern.compile(".*201[89]-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d.*"),
-    // JSON output
+    // JSON and YAML output
     Pattern.compile("- column @uuid: .*"),
-    Pattern.compile("\\s+\"run-id\" : .*"),
-    Pattern.compile("\\s+\"crawl-timestamp\" : .*"),
-    Pattern.compile("\\s+\"lint-id\" : .*"),
-    Pattern.compile("\\s+\"linter-instance-id\" : .*"),
+    Pattern.compile("\\s+\"?run-id\"?\\s?: .*"),
+    Pattern.compile("\\s+\"?crawl-timestamp\"?\\s?: .*"),
+    Pattern.compile("\\s*(- )?\"?lint-id\"?\\s?: .*"),
+    Pattern.compile("\\s+\"?linter-instance-id\"?\\s?: .*"),
     // Versions
     Pattern.compile(".*15\\.0[6-7]\\.\\d\\d.*"),
     Pattern.compile(".*16\\.\\d\\.\\d.*"),

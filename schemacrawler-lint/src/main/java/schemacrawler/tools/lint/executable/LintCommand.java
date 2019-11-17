@@ -80,7 +80,8 @@ public class LintCommand
     linters.lint(catalog, connection);
 
     // Produce the lint report
-    final LintReport lintReport = new LintReport(catalog, linters.getCollector());
+    final LintReport lintReport = new LintReport(catalog,
+                                                 linters.getCollector());
 
     // Write out the lint report
     getLintReportBuilder().generateLintReport(lintReport);
@@ -124,16 +125,21 @@ public class LintCommand
     final LintReportBuilder lintReportBuilder;
 
     final LintReportBuilder jsonReportBuilder = new LintReportJsonBuilder(
-      lintOptions,
-      outputOptions,
-      identifierQuoteString);
+      outputOptions);
+    final LintReportBuilder yamlReportBuilder = new LintReportYamlBuilder(
+      outputOptions);
     if (jsonReportBuilder.canBuildReport(lintOptions, outputOptions))
     {
       lintReportBuilder = jsonReportBuilder;
     }
+    else if (yamlReportBuilder.canBuildReport(lintOptions, outputOptions))
+    {
+      lintReportBuilder = yamlReportBuilder;
+    }
     else
     {
-      final LintReportBuilder textReportBuilder = new LintReportTextFormatter(catalog,
+      final LintReportBuilder textReportBuilder = new LintReportTextFormatter(
+        catalog,
         lintOptions,
         outputOptions,
         identifierQuoteString);
