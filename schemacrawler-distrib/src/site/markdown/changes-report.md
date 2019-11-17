@@ -1,7 +1,13 @@
 # SchemaCrawler Change History
 
 <a name="a16.2.5"></a>
-## Release 16.2.5 - 2019-11-05
+## Release 16.2.5 - 2019-11-17
+
+- Support JSON and YAML output formats for lint reports
+
+
+<a name="a16.2.4"></a>
+## Release 16.2.4 - 2019-11-05
 
 - Add support for IBM DB2 materialized query tables (MQT)
 

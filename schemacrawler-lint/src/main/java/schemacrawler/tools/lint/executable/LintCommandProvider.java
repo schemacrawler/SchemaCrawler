@@ -85,11 +85,7 @@ public class LintCommandProvider
                             + "that are not explicitly configured with their default settings%n"
                             + "Optional, defaults to true%n"
                             + "Corresponds to the configuration file setting: schemacrawler.lint.runalllinters",
-                            boolean.class)
-                 .addOption("lint-report-output-format",
-                            "Output format for lint report%n"
-                            + "Optional, defaults to text",
-                            LintReportOutputFormat.class);
+                            boolean.class);
     return pluginCommand;
   }
 
