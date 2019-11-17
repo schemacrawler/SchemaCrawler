@@ -79,17 +79,14 @@ public class LintTest
     linterConfigs.add(linterConfig);
 
     final Linters linters = new Linters(linterConfigs, true);
-
-    final LintedCatalog lintedDatabase = new LintedCatalog(catalog,
-                                                           connection,
-                                                           linters);
-    final LintCollector lintCollector = lintedDatabase.getCollector();
+    linters.lint(catalog, connection);
+    final LintCollector lintCollector = linters.getCollector();
     assertThat(lintCollector.size(), is(51));
 
     final TestWriter testout1 = new TestWriter();
     try (final TestWriter out = testout1)
     {
-      for (final Lint<?> lint : lintCollector)
+      for (final Lint<?> lint : lintCollector.getLints())
       {
         out.println(lint);
       }
@@ -130,17 +127,14 @@ public class LintTest
 
     final LinterConfigs linterConfigs = new LinterConfigs(new Config());
     final Linters linters = new Linters(linterConfigs, true);
-
-    final LintedCatalog lintedDatabase = new LintedCatalog(catalog,
-                                                           connection,
-                                                           linters);
-    final LintCollector lintCollector = lintedDatabase.getCollector();
+    linters.lint(catalog, connection);
+    final LintCollector lintCollector = linters.getCollector();
     assertThat(lintCollector.size(), is(40));
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      for (final Lint<?> lint : lintCollector)
+      for (final Lint<?> lint : lintCollector.getLints())
       {
         out.println(lint);
       }
@@ -173,10 +167,8 @@ public class LintTest
     final Linters linters = new Linters(linterConfigs, false);
     assertThat("All linters should be turned off", linters.size(), is(0));
 
-    final LintedCatalog lintedDatabase = new LintedCatalog(catalog,
-                                                           connection,
-                                                           linters);
-    final LintCollector lintCollector = lintedDatabase.getCollector();
+    linters.lint(catalog, connection);
+    final LintCollector lintCollector = linters.getCollector();
     assertThat("All linters should be turned off, so there should be no lints",
                lintCollector.size(),
                is(0));

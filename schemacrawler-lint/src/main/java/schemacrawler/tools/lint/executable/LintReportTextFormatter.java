@@ -28,16 +28,19 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint.executable;
 
 
+import static java.util.Comparator.naturalOrder;
 import static sf.util.Utility.isBlank;
 
+import java.io.Serializable;
 import java.util.*;
 
+import schemacrawler.schema.AttributedObject;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.Lint;
-import schemacrawler.tools.lint.LintCollector;
+import schemacrawler.tools.lint.LintReport;
 import schemacrawler.tools.lint.LintSeverity;
-import schemacrawler.tools.lint.LintedCatalog;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseTabularFormatter;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
@@ -50,14 +53,33 @@ final class LintReportTextFormatter
   implements LintReportBuilder
 {
 
+  private static final String LINT_KEY = "schemacrawler.lint";
+
+  private static Collection<Lint<?>> getLint(final AttributedObject namedObject)
+  {
+    if (namedObject == null)
+    {
+      return null;
+    }
+
+    final List<Lint<? extends Serializable>> lints = new ArrayList<>(namedObject
+                                                                       .getAttribute(
+                                                                         LINT_KEY,
+                                                                         new ArrayList<>()));
+    lints.sort(naturalOrder());
+    return lints;
+  }
+  private final Catalog catalog;
   private final LintOptions lintOptions;
 
-  LintReportTextFormatter(final LintOptions lintOptions,
+  LintReportTextFormatter(final Catalog catalog,
+                          final LintOptions lintOptions,
                           final OutputOptions outputOptions,
                           final String identifierQuoteString)
     throws SchemaCrawlerException
   {
     super(lintOptions, false, outputOptions, identifierQuoteString);
+    this.catalog = catalog;
     this.lintOptions = lintOptions;
   }
 
@@ -78,7 +100,7 @@ final class LintReportTextFormatter
     return canBuildReport;
   }
 
-  public void generateLintReport(final LintedCatalog catalog)
+  public void generateLintReport(final LintReport report)
     throws SchemaCrawlerException
   {
 
@@ -108,9 +130,9 @@ final class LintReportTextFormatter
     this.end();
   }
 
-  private void handle(final LintedCatalog catalog)
+  private void handle(final Catalog catalog)
   {
-    final Collection<Lint<?>> lints = LintCollector.getLint(catalog);
+    final Collection<Lint<?>> lints = getLint(catalog);
     if (lints != null && !lints.isEmpty())
     {
       formattingHelper.writeObjectStart();
@@ -125,7 +147,7 @@ final class LintReportTextFormatter
 
   private void handle(final Table table)
   {
-    final Collection<Lint<?>> lints = LintCollector.getLint(table);
+    final Collection<Lint<?>> lints = getLint(table);
     if (lints != null && !lints.isEmpty())
     {
       formattingHelper.writeObjectStart();

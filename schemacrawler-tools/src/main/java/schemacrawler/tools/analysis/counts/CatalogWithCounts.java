@@ -122,13 +122,4 @@ public final class CatalogWithCounts
     return counts;
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final <T> Optional<T> lookupAttribute(final String name)
-  {
-    return Optional.of(getAttribute(name));
-  }
-
 }

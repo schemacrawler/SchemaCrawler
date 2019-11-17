@@ -1,11 +1,9 @@
 package schemacrawler.tools.lint.executable;
 
 
-import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.lint.LintedCatalog;
+import schemacrawler.tools.lint.LintReport;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.traversal.TraversalHandler;
 
 interface LintReportBuilder
 {
@@ -13,7 +11,7 @@ interface LintReportBuilder
   boolean canBuildReport(LintOptions options,
                          OutputOptions outputOptions);
 
-  void generateLintReport(LintedCatalog catalog)
+  void generateLintReport(LintReport report)
     throws SchemaCrawlerException;
 
 }

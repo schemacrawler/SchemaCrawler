@@ -34,7 +34,7 @@ import static schemacrawler.tools.lint.LintUtility.readLinterConfigs;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.lint.LintDispatch;
-import schemacrawler.tools.lint.LintedCatalog;
+import schemacrawler.tools.lint.LintReport;
 import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.lint.Linters;
 
@@ -72,17 +72,18 @@ public class LintCommand
   {
     checkCatalog();
 
+    // Lint the catalog
     final LinterConfigs linterConfigs = readLinterConfigs(lintOptions,
                                                           additionalConfiguration);
     final Linters linters = new Linters(linterConfigs,
                                         lintOptions.isRunAllLinters());
+    linters.lint(catalog, connection);
 
-    final LintedCatalog lintedCatalog = new LintedCatalog(catalog,
-                                                          connection,
-                                                          linters);
+    // Produce the lint report
+    final LintReport lintReport = new LintReport(catalog, linters.getCollector());
 
-    // Generate the lint report
-    getLintReportBuilder().generateLintReport(lintedCatalog);
+    // Write out the lint report
+    getLintReportBuilder().generateLintReport(lintReport);
 
     dispatch(linters);
   }
@@ -132,7 +133,7 @@ public class LintCommand
     }
     else
     {
-      final LintReportBuilder textReportBuilder = new LintReportTextFormatter(
+      final LintReportBuilder textReportBuilder = new LintReportTextFormatter(catalog,
         lintOptions,
         outputOptions,
         identifierQuoteString);

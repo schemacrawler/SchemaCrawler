@@ -74,6 +74,15 @@ public abstract class BaseCatalogDecorator
     return catalog.getAttribute(name, (T) null);
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final <T> Optional<T> lookupAttribute(final String name)
+  {
+    return Optional.of(getAttribute(name));
+  }
+
   @Override
   public int compareTo(final NamedObject o)
   {

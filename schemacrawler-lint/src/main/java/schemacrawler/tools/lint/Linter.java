@@ -151,9 +151,11 @@ public abstract class Linter
                          getSummary());
   }
 
-  protected final <N extends NamedObject & AttributedObject, V extends Serializable> void addLint(final N namedObject,
-                                                                                                  final String message,
-                                                                                                  final V value)
+  protected final <N extends NamedObject & AttributedObject, V extends Serializable> void addLint(
+    final LintObjectType objectType,
+    final N namedObject,
+    final String message,
+    final V value)
   {
     LOGGER.log(Level.FINE,
                new StringFormat("Found lint for %s: %s --> %s",
@@ -164,6 +166,7 @@ public abstract class Linter
     {
       final Lint<V> lint = new Lint<>(getLinterId(),
                                       getLinterInstanceId(),
+                                      objectType,
                                       namedObject,
                                       getSeverity(),
                                       message,

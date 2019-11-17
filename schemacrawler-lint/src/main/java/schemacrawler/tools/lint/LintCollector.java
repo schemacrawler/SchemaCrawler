@@ -40,25 +40,9 @@ import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.NamedObject;
 
 public final class LintCollector
-  implements Iterable<Lint<? extends Serializable>>
 {
 
   private static final String LINT_KEY = "schemacrawler.lint";
-
-  public static Collection<Lint<?>> getLint(final AttributedObject namedObject)
-  {
-    if (namedObject == null)
-    {
-      return null;
-    }
-
-    final List<Lint<? extends Serializable>> lints = new ArrayList<>(namedObject
-                                                                       .getAttribute(
-                                                                         LINT_KEY,
-                                                                         new ArrayList<>()));
-    lints.sort(naturalOrder());
-    return lints;
-  }
 
   private final List<Lint<? extends Serializable>> lints;
 
@@ -82,12 +66,6 @@ public final class LintCollector
     }
   }
 
-  @Override
-  public Iterator<Lint<? extends Serializable>> iterator()
-  {
-    return getLints().iterator();
-  }
-
   public Collection<Lint<? extends Serializable>> getLints()
   {
     lints.sort(naturalOrder());
@@ -98,5 +76,4 @@ public final class LintCollector
   {
     return lints.size();
   }
-
 }
