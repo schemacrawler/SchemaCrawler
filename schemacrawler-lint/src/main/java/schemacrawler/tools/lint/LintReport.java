@@ -48,50 +48,15 @@ public final class LintReport
 {
 
   private final CrawlInfo crawlInfo;
-  private final DatabaseInfo databaseInfo;
-  private final JdbcDriverInfo jdbcDriverInfo;
-  private final JvmSystemInfo jvmInfo;
   private final Collection<Lint<? extends Serializable>> lints;
-  private final OperatingSystemInfo osInfo;
-  private final SchemaCrawlerInfo schemaCrawlerInfo;
 
   public LintReport(final Catalog catalog, final LintCollector collector)
   {
     requireNonNull(catalog, "No catalog provided");
     crawlInfo = catalog.getCrawlInfo();
-    databaseInfo = catalog.getDatabaseInfo();
-    jdbcDriverInfo = catalog.getJdbcDriverInfo();
-    schemaCrawlerInfo = catalog.getSchemaCrawlerInfo();
-    osInfo = catalog.getOperatingSystemInfo();
-    jvmInfo = catalog.getJvmSystemInfo();
 
     requireNonNull(collector, "No lint collector provided");
     lints = collector.getLints();
-  }
-
-  public DatabaseInfo getDatabaseInfo()
-  {
-    return databaseInfo;
-  }
-
-  public JdbcDriverInfo getJdbcDriverInfo()
-  {
-    return jdbcDriverInfo;
-  }
-
-  public SchemaCrawlerInfo getSchemaCrawlerInfo()
-  {
-    return schemaCrawlerInfo;
-  }
-
-  public OperatingSystemInfo getOsInfo()
-  {
-    return osInfo;
-  }
-
-  public JvmSystemInfo getJvmInfo()
-  {
-    return jvmInfo;
   }
 
   public CrawlInfo getCrawlInfo()
