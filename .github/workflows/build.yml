@@ -15,6 +15,6 @@ jobs:
       with:
         java-version: 1.8
     - name: Install packages
-      run: sudo aput-get update; sudo aput-get install graphviz		
+      run: sudo apt-get update; sudo apt-get install graphviz		
     - name: Build with Maven
       run: ./gradlew build
