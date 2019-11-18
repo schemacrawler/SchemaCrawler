@@ -59,7 +59,7 @@ final class NeuteredLinesFilter
     Pattern.compile(".*16\\.\\d\\.\\d.*"),
     // Operating systems and environment
     Pattern.compile(".*(Windows|Linux).*"),
-    Pattern.compile(".*Oracle Corporation (Java|OpenJDK).*"),
+    Pattern.compile(".*(Java|OpenJDK).*"),
     // SQL Server
     // -- server-specific values
     Pattern.compile(".*ServerName.*"),
