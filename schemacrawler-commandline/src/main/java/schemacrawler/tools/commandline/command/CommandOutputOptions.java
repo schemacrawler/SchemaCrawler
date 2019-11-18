@@ -55,13 +55,15 @@ public final class CommandOutputOptions
           })
   private Path outputFile;
   @Option(names = {
-    "--output-format"
+    "-F", "--output-format"
   },
           description = {
-            "Format of the SchemaCrawler output, where <outputformat> is one of:",
+            "Format of the SchemaCrawler output",
+            "Supported formats are dependent on the SchemaCrawler command being executed",
+            "",
+            "For the schema output commands, <outputformat> is one of:",
             "  text - For text output (default)",
             "  html - For HTML5 output",
-            "  scdot - For Graphviz DOT output, for schema only",
             "",
             "You can generate a database diagram using Graphviz",
             "For a diagram <outputformat> is one of dot, eps, gif, jpg, or png",
@@ -71,6 +73,8 @@ public final class CommandOutputOptions
             "IMPORTANT: Graphviz needs to be installed, and available on the system PATH",
             "http://www.graphviz.org/",
             "If Graphviz is not installed, a DOT file is produced.",
+            "Or, use:",
+            "  scdot - For Graphviz DOT output, for schema only",
             "",
             "Optional, defaults to the format specified by the output file, "
             + "otherwise, text"
