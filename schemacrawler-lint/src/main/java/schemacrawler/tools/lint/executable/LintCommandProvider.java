@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint.executable;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.nio.file.Path;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -37,6 +39,7 @@ import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.TextOutputFormat;
 
 public class LintCommandProvider
   extends BaseCommandProvider
@@ -62,7 +65,18 @@ public class LintCommandProvider
                                               final SchemaCrawlerOptions schemaCrawlerOptions,
                                               final OutputOptions outputOptions)
   {
-    return supportsCommand(command);
+    if (outputOptions == null)
+    {
+      return false;
+    }
+    final String format = outputOptions.getOutputFormatValue();
+    if (isBlank(format))
+    {
+      return false;
+    }
+    final boolean supportsSchemaCrawlerCommand =
+      supportsCommand(command) && LintReportOutputFormat.isSupportedFormat(format);
+    return supportsSchemaCrawlerCommand;
   }
 
   @Override
@@ -88,5 +102,6 @@ public class LintCommandProvider
                             boolean.class);
     return pluginCommand;
   }
+
 
 }
