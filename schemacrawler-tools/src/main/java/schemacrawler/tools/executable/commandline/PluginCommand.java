@@ -136,7 +136,7 @@ public class PluginCommand
 
   public boolean isEmpty()
   {
-    return options.isEmpty();
+    return isBlank(name) && options.isEmpty();
   }
 
   public PluginCommand addOption(final String name,

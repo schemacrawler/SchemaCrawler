@@ -38,6 +38,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import schemacrawler.tools.options.TextOutputFormat;
 
 /**
  * Main executor for the serialization integration.
@@ -50,12 +51,10 @@ public final class SerializationCommand
 
   static final String COMMAND = "serialize";
 
-  private final SerializationLanguage serializationLanguage;
 
   public SerializationCommand()
   {
     super(COMMAND);
-    this.serializationLanguage = new SerializationLanguage();
   }
 
   @Override
@@ -75,14 +74,9 @@ public final class SerializationCommand
   {
     checkCatalog();
 
-    serializationLanguage.addConfig(getAdditionalConfiguration());
+    final SerializationFormat serializationFormat = SerializationFormat.fromFormat(
+      outputOptions.getOutputFormatValue());
 
-    final SerializationFormat serializationFormat = serializationLanguage
-      .getSerializationFormat();
-    if (serializationFormat == SerializationFormat.unknown)
-    {
-      throw new SchemaCrawlerException("No serialization format provided");
-    }
     final String serializerClassName = serializationFormat
       .getSerializerClassName();
     final Class<SerializableCatalog> serializableCatalogClass = (Class<SerializableCatalog>) Class

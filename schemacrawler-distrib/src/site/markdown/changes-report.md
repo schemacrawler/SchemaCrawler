@@ -1,5 +1,11 @@
 # SchemaCrawler Change History
 
+<a name="a16.2.6"></a>
+## Release 16.2.6 - 2019-11-20
+
+- Use `--output-format`for specifying serialization output formats
+
+
 <a name="a16.2.5"></a>
 ## Release 16.2.5 - 2019-11-17
 

@@ -1,9 +1,4 @@
 ** Create an offline catalog snapshot
 
-      --serialization-format=<serialization-format>
-         Specifies serialization output format
-         Optional, defaults to Java serialization
-
-         Use one of unknown, java, json, yaml
 
 

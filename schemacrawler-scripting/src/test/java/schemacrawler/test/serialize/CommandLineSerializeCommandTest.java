@@ -105,14 +105,6 @@ public class CommandLineSerializeCommandTest
   }
 
   @Test
-  public void commandLineDefault(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
-    assertThatOutputIsCorrect(commandlineSerialize(connectionInfo, null),
-                              is("ACED"));
-  }
-
-  @Test
   public void commandLineJava(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
@@ -155,12 +147,8 @@ public class CommandLineSerializeCommandTest
   {
     final Map<String, String> argsMap = new HashMap<>();
     argsMap.put("-info-level", InfoLevel.standard.name());
-    if (serializationFormat != null)
-    {
-      argsMap.put("-serialization-format", serializationFormat.name());
-    }
 
-    final OutputFormat outputFormat = TextOutputFormat.text;
+    final OutputFormat outputFormat = serializationFormat;
     final Path testOutputFile = IOUtility.createTempFilePath("test", "");
 
     commandlineExecution(connectionInfo,
