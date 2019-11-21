@@ -67,10 +67,6 @@ public class SerializationCommandProvider
     final PluginCommand pluginCommand = new PluginCommand(SerializationCommand.COMMAND,
                                                           "** "
                                                           + DESCRIPTION_HEADER);
-    pluginCommand.addOption("serialization-format",
-                 "Specifies serialization output format%n"
-                 + "Optional, defaults to Java serialization%n",
-                 SerializationFormat.class);
 
     return pluginCommand;
   }

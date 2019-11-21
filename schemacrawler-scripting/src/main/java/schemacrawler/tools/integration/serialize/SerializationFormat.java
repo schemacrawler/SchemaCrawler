@@ -28,34 +28,126 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.serialize;
 
 
-public enum SerializationFormat
-{
-  unknown(null,null),
-  java("schemacrawler.tools.integration.serialize.JavaSerializedCatalog",
-       "ser"),
-  json("schemacrawler.tools.integration.serialize.JsonSerializedCatalog",
-       "json"),
-  yaml("schemacrawler.tools.integration.serialize.YamlSerializedCatalog",
-         "yaml");
+import static sf.util.Utility.isBlank;
 
-  private final String fileExtension;
+import java.util.List;
+import java.util.logging.Level;
+
+import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.OutputFormatState;
+import sf.util.SchemaCrawlerLogger;
+import sf.util.StringFormat;
+
+public enum SerializationFormat
+  implements OutputFormat
+{
+  java("Java serialization",
+       "schemacrawler.tools.integration.serialize.JavaSerializedCatalog",
+       "ser"),
+  json("JavaScript Object Notation (JSON) serialization format",
+       "schemacrawler.tools.integration.serialize.JsonSerializedCatalog",
+       "json"),
+  yaml("YAML Ain't Markup Language (YAML) serialization format",
+       "schemacrawler.tools.integration.serialize.YamlSerializedCatalog",
+       "yaml");
+
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+    .getLogger(SerializationFormat.class.getName());
+
+  /**
+   * Gets the value from the format.
+   *
+   * @param format Text output format.
+   * @return SerializationFormat
+   */
+  public static SerializationFormat fromFormat(final String format)
+  {
+    final SerializationFormat outputFormat = fromFormatOrNull(format);
+    if (outputFormat == null)
+    {
+      LOGGER.log(Level.CONFIG,
+                 new StringFormat("Unknown format <%s>, using default",
+                                  format));
+      return java;
+    }
+    else
+    {
+      return outputFormat;
+    }
+  }
+
+  private static SerializationFormat fromFormatOrNull(final String format)
+  {
+    if (isBlank(format))
+    {
+      return null;
+    }
+    for (final SerializationFormat outputFormat : SerializationFormat.values())
+    {
+      if (outputFormat.outputFormatState.isSupportedFormat(format))
+      {
+        return outputFormat;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Checks if the value of the format is supported.
+   *
+   * @return True if the format is a text output format
+   */
+  public static boolean isSupportedFormat(final String format)
+  {
+    return fromFormatOrNull(format) != null;
+  }
+
+  private final OutputFormatState outputFormatState;
   private final String serializerClassName;
 
-  SerializationFormat(final String serializerClassName,
-                      final String fileExtension)
+  private SerializationFormat(final String description,
+                              final String serializerClassName,
+                              final String... additionalFormatSpecifiers)
   {
-    this.fileExtension = fileExtension;
+    outputFormatState = new OutputFormatState(name(),
+                                              description,
+                                              additionalFormatSpecifiers);
     this.serializerClassName = serializerClassName;
   }
 
   public String getFileExtension()
   {
-    return fileExtension;
+    final List<String> formats = outputFormatState.getFormats();
+    return formats.get(formats.size() - 1);
   }
 
   public String getSerializerClassName()
   {
     return serializerClassName;
+  }
+
+  @Override
+  public String getDescription()
+  {
+    return outputFormatState.getDescription();
+  }
+
+  @Override
+  public String getFormat()
+  {
+    return outputFormatState.getFormat();
+  }
+
+  @Override
+  public List<String> getFormats()
+  {
+    return outputFormatState.getFormats();
+  }
+
+  @Override
+  public String toString()
+  {
+    return outputFormatState.toString();
   }
 
 }
