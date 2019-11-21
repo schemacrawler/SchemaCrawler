@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.serialize;
 
 
+import static sf.util.Utility.isBlank;
+
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandDescription;
@@ -58,7 +60,18 @@ public class SerializationCommandProvider
                                               final SchemaCrawlerOptions schemaCrawlerOptions,
                                               final OutputOptions outputOptions)
   {
-    return supportsCommand(command);
+    if (outputOptions == null)
+    {
+      return false;
+    }
+    final String format = outputOptions.getOutputFormatValue();
+    if (isBlank(format))
+    {
+      return false;
+    }
+    final boolean supportsSchemaCrawlerCommand =
+      supportsCommand(command) && SerializationFormat.isSupportedFormat(format);
+    return supportsSchemaCrawlerCommand;
   }
 
   @Override
