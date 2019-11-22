@@ -5,7 +5,7 @@
   <info organisation="us.fatehi" module="schemacrawler"/>
   <dependencies>
     <dependency org="guru.nidi" name="graphviz-java"
-                rev="0.8.1"/>
+                rev="0.12.1"/>
 
     <exclude type="source" ext="jar"/>
     <exclude type="sources" ext="jar"/>

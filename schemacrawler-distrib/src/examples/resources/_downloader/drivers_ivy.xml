@@ -4,7 +4,10 @@
   xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
   <info organisation="us.fatehi" module="schemacrawler"/>
   <dependencies>
-    <dependency org="org.jruby" name="jruby" rev="9.2.9.0" />
+    <dependency org="com.oracle.ojdbc" name="ojdbc8_g"
+                rev="19.3.0.0" />
+    <dependency org="com.ibm.db2" name="jcc"
+                rev="11.5.0.0" />
 
     <exclude type="source" ext="jar" />
     <exclude type="sources" ext="jar" />

@@ -201,13 +201,13 @@
         <springframework.version>4.3.12.RELEASE</springframework.version>
         <velocity.version>2.0</velocity.version>
         <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
-        <freemarker.version>2.3.28</freemarker.version>
+        <freemarker.version>2.3.29</freemarker.version>
         <mustache.version>0.9.6</mustache.version>
-        <groovy.version>2.5.7</groovy.version>
-        <jruby.version>9.2.5.0</jruby.version>
+        <groovy.version>2.5.8</groovy.version>
+        <jruby.version>9.2.9.0</jruby.version>
         <jython.version>2.7.1</jython.version>
-        <slf4j.version>1.7.25</slf4j.version>
-        <graphviz.java.version>0.8.1</graphviz.java.version>
+        <slf4j.version>1.7.29</slf4j.version>
+        <graphviz.java.version>0.12.1</graphviz.java.version>
     </properties>
     <build>
         <pluginManagement>
