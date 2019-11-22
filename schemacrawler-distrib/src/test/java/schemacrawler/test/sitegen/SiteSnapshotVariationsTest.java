@@ -43,6 +43,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.test.utility.*;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
+import schemacrawler.tools.integration.serialize.SerializationFormat;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 
@@ -96,12 +97,10 @@ public class SiteSnapshotVariationsTest
   public void jsonLintReports(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    final Map<String, String> additionalArgsMap = new HashMap<>();
-    additionalArgsMap.put("-serialization-format", "json");
     run(connectionInfo,
         "lint,serialize",
-        additionalArgsMap,
-        TextOutputFormat.text,
+        null,
+        SerializationFormat.json,
         lintReportsDirectory.resolve("lint_report.json"));
   }
 
@@ -134,12 +133,10 @@ public class SiteSnapshotVariationsTest
   public void jsonSnapshot(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    final Map<String, String> additionalArgsMap = new HashMap<>();
-    additionalArgsMap.put("-serialization-format", "json");
     run(connectionInfo,
         "count,serialize",
-        additionalArgsMap,
-        TextOutputFormat.text,
+        null,
+        SerializationFormat.json,
         snapshotsDirectory.resolve("snapshot.json"));
   }
 
@@ -153,7 +150,10 @@ public class SiteSnapshotVariationsTest
     deleteIfExists(outputFile);
 
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.putAll(additionalArgsMap);
+    if (additionalArgsMap != null)
+    {
+      argsMap.putAll(additionalArgsMap);
+    }
     argsMap.put("-info-level", "maximum");
     argsMap.put("-title", "Details of Example Database");
 
