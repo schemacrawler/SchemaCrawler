@@ -126,7 +126,7 @@ public class ConnectionOptionsTest
 
     final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
 
-    assertThrows(CommandLine.MutuallyExclusiveArgsException.class, () -> {
+    assertThrows(CommandLine.MissingParameterException.class, () -> {
       final CommandLine commandLine = newCommandLine(optionsParser, null, true);
       commandLine.parseArgs(args);
     });
