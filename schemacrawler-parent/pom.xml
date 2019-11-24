@@ -6,7 +6,7 @@
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
     <packaging>pom</packaging>
-    <version>16.2.5</version>
+    <version>16.2.6</version>
     <name>SchemaCrawler [Parent]</name>
     <description>Free database schema discovery and comprehension tool</description>
     <url>https://www.schemacrawler.com</url>
@@ -97,6 +97,7 @@
                 <module>../schemacrawler-diff</module>
 
                 <module>../schemacrawler-docs</module>
+                <module>../schemacrawler-docker</module>
                 <module>../schemacrawler-distrib</module>
             </modules>
             <properties>

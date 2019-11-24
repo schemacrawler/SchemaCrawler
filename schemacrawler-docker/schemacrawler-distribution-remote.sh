@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-SCHEMACRAWLER_VERSION=16.2.5
+SCHEMACRAWLER_VERSION=16.2.6
 
 # Download SchemaCrawler distribution
 echo "** Downloading SchemaCrawler v$SCHEMACRAWLER_VERSION distribution"
