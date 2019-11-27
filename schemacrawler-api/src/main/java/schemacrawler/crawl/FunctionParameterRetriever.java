@@ -48,61 +48,60 @@ import sf.util.StringFormat;
 
 /**
  * A retriever uses database metadata to get the details about the
- * database function columns.
+ * database function parameters.
  *
  * @author Sualeh Fatehi
  */
-final class FunctionColumnRetriever
+final class FunctionParameterRetriever
   extends AbstractRetriever
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(FunctionColumnRetriever.class.getName());
+    .getLogger(FunctionParameterRetriever.class.getName());
 
-  FunctionColumnRetriever(final RetrieverConnection retrieverConnection,
-                          final MutableCatalog catalog,
-                          final SchemaCrawlerOptions options)
-    throws SQLException
+  FunctionParameterRetriever(final RetrieverConnection retrieverConnection,
+                             final MutableCatalog catalog,
+                             final SchemaCrawlerOptions options)
   {
     super(retrieverConnection, catalog, options);
   }
 
-  void retrieveFunctionColumns(final NamedObjectList<MutableRoutine> allRoutines,
-                               final InclusionRule columnInclusionRule)
+  void retrieveFunctionParameters(final NamedObjectList<MutableRoutine> allRoutines,
+                                  final InclusionRule parameterInclusionRule)
     throws SQLException
   {
     requireNonNull(allRoutines, "No functions provided");
 
-    final InclusionRuleFilter<FunctionParameter> columnFilter = new InclusionRuleFilter<>(
-      columnInclusionRule,
+    final InclusionRuleFilter<FunctionParameter> parameterFilter = new InclusionRuleFilter<>(
+      parameterInclusionRule,
       true);
-    if (columnFilter.isExcludeAll())
+    if (parameterFilter.isExcludeAll())
     {
       LOGGER.log(Level.INFO,
-                 "Not retrieving function columns, since this was not requested");
+                 "Not retrieving function parameters, since this was not requested");
       return;
     }
 
-    final MetadataRetrievalStrategy functionColumnRetrievalStrategy = getRetrieverConnection()
+    final MetadataRetrievalStrategy functionParameterRetrievalStrategy = getRetrieverConnection()
       .getFunctionColumnRetrievalStrategy();
-    switch (functionColumnRetrievalStrategy)
+    switch (functionParameterRetrievalStrategy)
     {
       case data_dictionary_all:
         LOGGER.log(Level.INFO,
-                   "Retrieving function columns, using fast data dictionary retrieval");
-        retrieveFunctionColumnsFromDataDictionary(allRoutines, columnFilter);
+                   "Retrieving function parameters, using fast data dictionary retrieval");
+        retrieveFunctionParametersFromDataDictionary(allRoutines, parameterFilter);
         break;
 
       case metadata_all:
         LOGGER.log(Level.INFO,
-                   "Retrieving function columns, using fast meta-data retrieval");
-        retrieveFunctionColumnsFromMetadataForAllFunctions(allRoutines,
-                                                           columnFilter);
+                   "Retrieving function parameters, using fast meta-data retrieval");
+        retrieveFunctionParametersFromMetadataForAllFunctions(allRoutines,
+                                                              parameterFilter);
         break;
 
       case metadata:
-        LOGGER.log(Level.INFO, "Retrieving function columns");
-        retrieveFunctionColumnsFromMetadata(allRoutines, columnFilter);
+        LOGGER.log(Level.INFO, "Retrieving function parameters");
+        retrieveFunctionParametersFromMetadata(allRoutines, parameterFilter);
         break;
 
       default:
@@ -111,9 +110,9 @@ final class FunctionColumnRetriever
 
   }
 
-  private void createFunctionColumn(final MetadataResultSet results,
-                                    final NamedObjectList<MutableRoutine> allRoutines,
-                                    final InclusionRuleFilter<FunctionParameter> columnFilter)
+  private void createFunctionParameter(final MetadataResultSet results,
+                                       final NamedObjectList<MutableRoutine> allRoutines,
+                                       final InclusionRuleFilter<FunctionParameter> parameterFilter)
   {
     final String columnCatalogName = normalizeCatalogName(results.getString(
       "FUNCTION_CAT"));
@@ -162,10 +161,10 @@ final class FunctionColumnRetriever
     }
 
     final MutableFunction function = (MutableFunction) routine;
-    final MutableFunctionParameter column = lookupOrCreateFunctionColumn(
+    final MutableFunctionParameter parameter = lookupOrCreateFunctionParameter(
       function,
       columnName);
-    if (columnFilter.test(column) && belongsToSchema(function,
+    if (parameterFilter.test(parameter) && belongsToSchema(function,
                                                      columnCatalogName,
                                                      schemaName))
     {
@@ -178,23 +177,23 @@ final class FunctionColumnRetriever
                                                   (short) DatabaseMetaData.functionNullableUnknown)
                                  == (short) DatabaseMetaData.functionNullable;
       final String remarks = results.getString("REMARKS");
-      column.setOrdinalPosition(ordinalPosition);
-      column.setParameterMode(parameterMode);
-      column
+      parameter.setOrdinalPosition(ordinalPosition);
+      parameter.setParameterMode(parameterMode);
+      parameter
         .setColumnDataType(lookupOrCreateColumnDataType(function.getSchema(),
                                                         dataType,
                                                         typeName));
-      column.setSize(length);
-      column.setPrecision(precision);
-      column.setNullable(isNullable);
-      column.setRemarks(remarks);
+      parameter.setSize(length);
+      parameter.setPrecision(precision);
+      parameter.setNullable(isNullable);
+      parameter.setRemarks(remarks);
 
-      column.addAttributes(results.getAttributes());
+      parameter.addAttributes(results.getAttributes());
 
       LOGGER.log(Level.FINER,
-                 new StringFormat("Adding column to function <%s>",
-                                  column.getFullName()));
-      function.addColumn(column);
+                 new StringFormat("Adding parameter to function <%s>",
+                                  parameter.getFullName()));
+      function.addParameter(parameter);
     }
 
   }
@@ -218,8 +217,8 @@ final class FunctionColumnRetriever
     }
   }
 
-  private MutableFunctionParameter lookupOrCreateFunctionColumn(final MutableFunction function,
-                                                                final String columnName)
+  private MutableFunctionParameter lookupOrCreateFunctionParameter(final MutableFunction function,
+                                                                   final String columnName)
   {
     final Optional<MutableFunctionParameter> columnOptional = function
       .lookupParameter(columnName);
@@ -235,8 +234,8 @@ final class FunctionColumnRetriever
     return column;
   }
 
-  private void retrieveFunctionColumnsFromDataDictionary(final NamedObjectList<MutableRoutine> allRoutines,
-                                                         final InclusionRuleFilter<FunctionParameter> columnFilter)
+  private void retrieveFunctionParametersFromDataDictionary(final NamedObjectList<MutableRoutine> allRoutines,
+                                                            final InclusionRuleFilter<FunctionParameter> parameterFilter)
     throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
@@ -257,14 +256,13 @@ final class FunctionColumnRetriever
       results.setDescription("retrieveFunctionColumnsFromDataDictionary");
       while (results.next())
       {
-        createFunctionColumn(results, allRoutines, columnFilter);
+        createFunctionParameter(results, allRoutines, parameterFilter);
       }
     }
   }
 
-  private void retrieveFunctionColumnsFromMetadata(final NamedObjectList<MutableRoutine> allRoutines,
-                                                   final InclusionRuleFilter<FunctionParameter> columnFilter)
-    throws SchemaCrawlerSQLException
+  private void retrieveFunctionParametersFromMetadata(final NamedObjectList<MutableRoutine> allRoutines,
+                                                      final InclusionRuleFilter<FunctionParameter> parameterFilter)
   {
     for (final MutableRoutine routine : allRoutines)
     {
@@ -274,7 +272,7 @@ final class FunctionColumnRetriever
       }
       final MutableFunction function = (MutableFunction) routine;
 
-      LOGGER.log(Level.FINE, "Retrieving function columns for " + function);
+      LOGGER.log(Level.FINE, "Retrieving function parameters for " + function);
       try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
                                                                      .getFunctionColumns(
                                                                        function
@@ -289,27 +287,26 @@ final class FunctionColumnRetriever
       {
         while (results.next())
         {
-          createFunctionColumn(results, allRoutines, columnFilter);
+          createFunctionParameter(results, allRoutines, parameterFilter);
         }
       }
       catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
       {
         logSQLFeatureNotSupported(new StringFormat(
-          "Could not retrieve columns for function %s",
+          "Could not retrieve parameters for function %s",
           function), e);
       }
       catch (final SQLException e)
       {
         logPossiblyUnsupportedSQLFeature(new StringFormat(
-          "Could not retrieve columns for function %s",
+          "Could not retrieve parameters for function %s",
           function), e);
       }
     }
   }
 
-  private void retrieveFunctionColumnsFromMetadataForAllFunctions(final NamedObjectList<MutableRoutine> allRoutines,
-                                                                  final InclusionRuleFilter<FunctionParameter> columnFilter)
-    throws SQLException
+  private void retrieveFunctionParametersFromMetadataForAllFunctions(final NamedObjectList<MutableRoutine> allRoutines,
+                                                                     final InclusionRuleFilter<FunctionParameter> parameterFilter)
   {
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
                                                                    .getFunctionColumns(
@@ -320,18 +317,18 @@ final class FunctionColumnRetriever
     {
       while (results.next())
       {
-        createFunctionColumn(results, allRoutines, columnFilter);
+        createFunctionParameter(results, allRoutines, parameterFilter);
       }
     }
     catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
     {
       logSQLFeatureNotSupported(new StringFormat(
-        "Could not retrieve columns for functions"), e);
+        "Could not retrieve parameters for functions"), e);
     }
     catch (final SQLException e)
     {
       logPossiblyUnsupportedSQLFeature(new StringFormat(
-        "Could not retrieve columns for functions"), e);
+        "Could not retrieve parameters for functions"), e);
     }
   }
 

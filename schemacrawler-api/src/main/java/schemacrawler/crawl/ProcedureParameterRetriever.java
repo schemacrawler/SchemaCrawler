@@ -51,61 +51,60 @@ import sf.util.StringFormat;
 
 /**
  * A retriever uses database metadata to get the details about the
- * database procedure columns.
+ * database procedure parameters.
  *
  * @author Sualeh Fatehi
  */
-final class ProcedureColumnRetriever
+final class ProcedureParameterRetriever
   extends AbstractRetriever
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(ProcedureColumnRetriever.class.getName());
+    .getLogger(ProcedureParameterRetriever.class.getName());
 
-  ProcedureColumnRetriever(final RetrieverConnection retrieverConnection,
-                           final MutableCatalog catalog,
-                           final SchemaCrawlerOptions options)
-    throws SQLException
+  ProcedureParameterRetriever(final RetrieverConnection retrieverConnection,
+                              final MutableCatalog catalog,
+                              final SchemaCrawlerOptions options)
   {
     super(retrieverConnection, catalog, options);
   }
 
-  void retrieveProcedureColumns(final NamedObjectList<MutableRoutine> allRoutines,
-                                final InclusionRule columnInclusionRule)
+  void retrieveProcedureParameters(final NamedObjectList<MutableRoutine> allRoutines,
+                                   final InclusionRule parameterInclusionRule)
     throws SQLException
   {
     requireNonNull(allRoutines, "No procedures provided");
 
-    final InclusionRuleFilter<ProcedureParameter> columnFilter = new InclusionRuleFilter<>(
-      columnInclusionRule,
+    final InclusionRuleFilter<ProcedureParameter> parameterFilter = new InclusionRuleFilter<>(
+      parameterInclusionRule,
       true);
-    if (columnFilter.isExcludeAll())
+    if (parameterFilter.isExcludeAll())
     {
       LOGGER.log(Level.INFO,
-                 "Not retrieving procedure columns, since this was not requested");
+                 "Not retrieving procedure parameters, since this was not requested");
       return;
     }
 
-    final MetadataRetrievalStrategy procedureColumnRetrievalStrategy = getRetrieverConnection()
+    final MetadataRetrievalStrategy procedureParameterRetrievalStrategy = getRetrieverConnection()
       .getProcedureColumnRetrievalStrategy();
-    switch (procedureColumnRetrievalStrategy)
+    switch (procedureParameterRetrievalStrategy)
     {
       case data_dictionary_all:
         LOGGER.log(Level.INFO,
-                   "Retrieving procedure columns, using fast data dictionary retrieval");
-        retrieveProcedureColumnsFromDataDictionary(allRoutines, columnFilter);
+                   "Retrieving procedure parameters, using fast data dictionary retrieval");
+        retrieveProcedureParametersFromDataDictionary(allRoutines, parameterFilter);
         break;
 
       case metadata_all:
         LOGGER.log(Level.INFO,
-                   "Retrieving procedure columns, using fast meta-data retrieval");
-        retrieveProcedureColumnsFromMetadataForAllProcedures(allRoutines,
-                                                             columnFilter);
+                   "Retrieving procedure parameters, using fast meta-data retrieval");
+        retrieveProcedureParametersFromMetadataForAllProcedures(allRoutines,
+                                                                parameterFilter);
         break;
 
       case metadata:
-        LOGGER.log(Level.INFO, "Retrieving procedure columns");
-        retrieveProcedureColumnsFromMetadata(allRoutines, columnFilter);
+        LOGGER.log(Level.INFO, "Retrieving procedure parameters");
+        retrieveProcedureParametersFromMetadata(allRoutines, parameterFilter);
         break;
 
       default:
@@ -114,9 +113,9 @@ final class ProcedureColumnRetriever
 
   }
 
-  private void createProcedureColumn(final MetadataResultSet results,
-                                     final NamedObjectList<MutableRoutine> allRoutines,
-                                     final InclusionRuleFilter<ProcedureParameter> columnFilter)
+  private void createProcedureParameter(final MetadataResultSet results,
+                                        final NamedObjectList<MutableRoutine> allRoutines,
+                                        final InclusionRuleFilter<ProcedureParameter> parameterFilter)
   {
     final String columnCatalogName = normalizeCatalogName(results.getString(
       "PROCEDURE_CAT"));
@@ -132,7 +131,7 @@ final class ProcedureColumnRetriever
                                                                           DatabaseMetaData.procedureColumnUnknown));
 
     LOGGER.log(Level.FINE,
-               new StringFormat("Retrieving procedure column <%s.%s.%s.%s.%s>",
+               new StringFormat("Retrieving procedure parameter <%s.%s.%s.%s.%s>",
                                 columnCatalogName,
                                 schemaName,
                                 procedureName,
@@ -165,10 +164,10 @@ final class ProcedureColumnRetriever
     }
 
     final MutableProcedure procedure = (MutableProcedure) routine;
-    final MutableProcedureParameter column = lookupOrCreateProcedureColumn(
+    final MutableProcedureParameter parameter = lookupOrCreateProcedureParameter(
       procedure,
       columnName);
-    if (columnFilter.test(column) && belongsToSchema(procedure,
+    if (parameterFilter.test(parameter) && belongsToSchema(procedure,
                                                      columnCatalogName,
                                                      schemaName))
     {
@@ -181,23 +180,23 @@ final class ProcedureColumnRetriever
                                                   (short) DatabaseMetaData.procedureNullableUnknown)
                                  == (short) DatabaseMetaData.procedureNullable;
       final String remarks = results.getString("REMARKS");
-      column.setOrdinalPosition(ordinalPosition);
-      column.setParameterMode(parameterMode);
-      column
+      parameter.setOrdinalPosition(ordinalPosition);
+      parameter.setParameterMode(parameterMode);
+      parameter
         .setColumnDataType(lookupOrCreateColumnDataType(procedure.getSchema(),
                                                         dataType,
                                                         typeName));
-      column.setSize(length);
-      column.setPrecision(precision);
-      column.setNullable(isNullable);
-      column.setRemarks(remarks);
+      parameter.setSize(length);
+      parameter.setPrecision(precision);
+      parameter.setNullable(isNullable);
+      parameter.setRemarks(remarks);
 
-      column.addAttributes(results.getAttributes());
+      parameter.addAttributes(results.getAttributes());
 
       LOGGER.log(Level.FINER,
-                 new StringFormat("Adding column to procedure <%s>",
-                                  column.getFullName()));
-      procedure.addColumn(column);
+                 new StringFormat("Adding parameter to procedure <%s>",
+                                  parameter.getFullName()));
+      procedure.addParameter(parameter);
     }
 
   }
@@ -221,25 +220,25 @@ final class ProcedureColumnRetriever
     }
   }
 
-  private MutableProcedureParameter lookupOrCreateProcedureColumn(final MutableProcedure procedure,
-                                                                  final String columnName)
+  private MutableProcedureParameter lookupOrCreateProcedureParameter(final MutableProcedure procedure,
+                                                                     final String columnName)
   {
-    final Optional<MutableProcedureParameter> columnOptional = procedure
+    final Optional<MutableProcedureParameter> parameterOptional = procedure
       .lookupParameter(columnName);
-    final MutableProcedureParameter column;
-    if (columnOptional.isPresent())
+    final MutableProcedureParameter parameter;
+    if (parameterOptional.isPresent())
     {
-      column = columnOptional.get();
+      parameter = parameterOptional.get();
     }
     else
     {
-      column = new MutableProcedureParameter(procedure, columnName);
+      parameter = new MutableProcedureParameter(procedure, columnName);
     }
-    return column;
+    return parameter;
   }
 
-  private void retrieveProcedureColumnsFromDataDictionary(final NamedObjectList<MutableRoutine> allRoutines,
-                                                          final InclusionRuleFilter<ProcedureParameter> columnFilter)
+  private void retrieveProcedureParametersFromDataDictionary(final NamedObjectList<MutableRoutine> allRoutines,
+                                                             final InclusionRuleFilter<ProcedureParameter> parameterFilter)
     throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
@@ -247,7 +246,7 @@ final class ProcedureColumnRetriever
     if (!informationSchemaViews
       .hasQuery(InformationSchemaKey.PROCEDURE_COLUMNS))
     {
-      throw new SchemaCrawlerSQLException("No procedure columns SQL provided",
+      throw new SchemaCrawlerSQLException("No procedure parameters SQL provided",
                                           null);
     }
     final Query procedureColumnsSql = informationSchemaViews
@@ -259,16 +258,16 @@ final class ProcedureColumnRetriever
         statement,
         getSchemaInclusionRule());)
     {
-      results.setDescription("retrieveProcedureColumnsFromDataDictionary");
+      results.setDescription("retrieveProcedureParametersFromDataDictionary");
       while (results.next())
       {
-        createProcedureColumn(results, allRoutines, columnFilter);
+        createProcedureParameter(results, allRoutines, parameterFilter);
       }
     }
   }
 
-  private void retrieveProcedureColumnsFromMetadata(final NamedObjectList<MutableRoutine> allRoutines,
-                                                    final InclusionRuleFilter<ProcedureParameter> columnFilter)
+  private void retrieveProcedureParametersFromMetadata(final NamedObjectList<MutableRoutine> allRoutines,
+                                                       final InclusionRuleFilter<ProcedureParameter> parameterFilter)
     throws SchemaCrawlerSQLException
   {
     for (final MutableRoutine routine : allRoutines)
@@ -279,7 +278,7 @@ final class ProcedureColumnRetriever
       }
 
       final MutableProcedure procedure = (MutableProcedure) routine;
-      LOGGER.log(Level.FINE, "Retrieving procedure columns for " + procedure);
+      LOGGER.log(Level.FINE, "Retrieving procedure parameters for " + procedure);
       try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
                                                                      .getProcedureColumns(
                                                                        procedure
@@ -294,20 +293,20 @@ final class ProcedureColumnRetriever
       {
         while (results.next())
         {
-          createProcedureColumn(results, allRoutines, columnFilter);
+          createProcedureParameter(results, allRoutines, parameterFilter);
         }
       }
       catch (final SQLException e)
       {
         throw new SchemaCrawlerSQLException(String.format(
-          "Could not retrieve procedure columns for procedure <%s>",
+          "Could not retrieve procedure parameters for procedure <%s>",
           procedure), e);
       }
     }
   }
 
-  private void retrieveProcedureColumnsFromMetadataForAllProcedures(final NamedObjectList<MutableRoutine> allRoutines,
-                                                                    final InclusionRuleFilter<ProcedureParameter> columnFilter)
+  private void retrieveProcedureParametersFromMetadataForAllProcedures(final NamedObjectList<MutableRoutine> allRoutines,
+                                                                       final InclusionRuleFilter<ProcedureParameter> parameterFilter)
     throws SQLException
   {
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
@@ -319,7 +318,7 @@ final class ProcedureColumnRetriever
     {
       while (results.next())
       {
-        createProcedureColumn(results, allRoutines, columnFilter);
+        createProcedureParameter(results, allRoutines, parameterFilter);
       }
     }
   }

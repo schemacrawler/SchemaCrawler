@@ -97,7 +97,7 @@ final class MutableFunction
     return columns.lookup(this, name);
   }
 
-  void addColumn(final MutableFunctionParameter column)
+  void addParameter(final MutableFunctionParameter column)
   {
     columns.add(column);
   }

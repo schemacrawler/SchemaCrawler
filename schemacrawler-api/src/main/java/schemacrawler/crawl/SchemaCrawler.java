@@ -241,21 +241,21 @@ public final class SchemaCrawler
 
     final RoutineRetriever retriever;
     final RoutineExtRetriever retrieverExtra;
-    final ProcedureColumnRetriever procedureColumnRetriever;
-    final FunctionColumnRetriever functionColumnRetriever;
+    final ProcedureParameterRetriever procedureParameterRetriever;
+    final FunctionParameterRetriever functionParameterRetriever;
     try
     {
       retriever = new RoutineRetriever(retrieverConnection, catalog, options);
       retrieverExtra = new RoutineExtRetriever(retrieverConnection,
                                                catalog,
                                                options);
-      procedureColumnRetriever = new ProcedureColumnRetriever(
+      procedureParameterRetriever = new ProcedureParameterRetriever(
         retrieverConnection,
         catalog,
         options);
-      functionColumnRetriever = new FunctionColumnRetriever(retrieverConnection,
-                                                            catalog,
-                                                            options);
+      functionParameterRetriever = new FunctionParameterRetriever(retrieverConnection,
+                                                                  catalog,
+                                                                  options);
 
       final Collection<RoutineType> routineTypes = options.getRoutineTypes();
 
@@ -292,15 +292,15 @@ public final class SchemaCrawler
         {
           if (routineTypes.contains(RoutineType.procedure))
           {
-            procedureColumnRetriever.retrieveProcedureColumns(allRoutines,
-                                                              options
+            procedureParameterRetriever.retrieveProcedureParameters(allRoutines,
+                                                                    options
                                                                 .getRoutineParameterInclusionRule());
           }
 
           if (routineTypes.contains(RoutineType.function))
           {
-            functionColumnRetriever.retrieveFunctionColumns(allRoutines,
-                                                            options
+            functionParameterRetriever.retrieveFunctionParameters(allRoutines,
+                                                                  options
                                                               .getRoutineParameterInclusionRule());
           }
         }

@@ -97,7 +97,7 @@ final class MutableProcedure
     return columns.lookup(this, name);
   }
 
-  void addColumn(final MutableProcedureParameter column)
+  void addParameter(final MutableProcedureParameter column)
   {
     columns.add(column);
   }
