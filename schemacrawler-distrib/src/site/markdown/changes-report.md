@@ -4,6 +4,7 @@
 ## Release 16.2.7 - 2019-12-03
 
 - Update documentation on website
+- Change copyright notices
 
 
 <a name="a16.2.6"></a>

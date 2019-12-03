@@ -1,8 +1,11 @@
 # Docker Image for SchemaCrawler
 
-[SchemaCrawler is distrubuted with an image on Docker Hub](https://hub.docker.com/r/schemacrawler/schemacrawler/). Keep reading for information on how to use this Docker image,
 
-Start the SchemaCrawler Interactive Shell in the Docker container like this
+
+## Start the SchemaCrawler Docker Container
+
+[SchemaCrawler is distrubuted with an image on Docker Hub](https://hub.docker.com/r/schemacrawler/schemacrawler/). Run the SchemaCrawler Docker container like this:
+
 ```
 docker run \
 -v $(pwd):/home/schcrwlr/share \
@@ -10,7 +13,7 @@ docker run \
 --entrypoint=/bin/bash \
 schemacrawler/schemacrawler
 ```
-The SchemaCrawler Docker container starts with a non-privileged user `schcrwlr` in group `users`. Please ensure that the mount point for the Docker container is writable by user 1000 in group 100 on the host.
+The SchemaCrawler Docker container starts with a non-privileged user `schcrwlr` in group `users`. Please ensure that the mount point for the SchemaCrawler Docker container is writable by user 1000 in group 100 on the host.
 
 ## Use the SchemaCrawler Interactive Shell
 
@@ -28,8 +31,6 @@ connect --server=sqlite --database=sc.db
 load --info-level=minimum
 execute --command list
 ```
-The image exports a volume called `share`, and you can map it to your local directory. 
-
 The easiest way to learn how to use the SchemaCrawler Interactive Shell is by doing the [online tutorial on Katacoda](https://www.katacoda.com/schemacrawler/scenarios/schemacrawler-shell).
 
 
@@ -40,10 +41,8 @@ Once you start the SchemaCrawler Docker container, you can start SchemaCrawler f
 ```
 schemacrawler \
 --server=sqlite --database=sc.db \
--infolevel=maximum --command=schema
+--info-level=maximum --command=schema
 ```
-The image exports a volume called `/share`, and you can map it to your local directory. 
-
 The easiest way to learn how to use the SchemaCrawler command-line is by doing the [online tutorial on Katacoda](https://www.katacoda.com/schemacrawler/scenarios/schemacrawler).
 
 

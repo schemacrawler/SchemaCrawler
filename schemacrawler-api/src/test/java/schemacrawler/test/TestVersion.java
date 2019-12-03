@@ -71,7 +71,7 @@ public class TestVersion
     throws Exception
   {
     Version.main(new String[0]);
-    assertThat(out.getFileContents(), startsWith("SchemaCrawler 16.2.6"));
+    assertThat(out.getFileContents(), startsWith("SchemaCrawler 16.2.7"));
     assertThat(outputOf(err), hasNoContent());
   }
 
