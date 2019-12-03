@@ -55,7 +55,11 @@ SchemaCrawler is also a command-line tool to output your database schema and dat
 
 ### <a name="output">What does SchemaCrawler output look like?</a>
 
-SchemaCrawler can produce [plain text,](snapshot-examples/snapshot.text) [HTML5,](snapshot-examples/snapshot.html) or [JavaScript object notation (JSON).](snapshot-examples/snapshot.json) The HTML5 output is a combination of valid XML (that can be manipulated by XML tools or XSLT), and HTML that can be viewed in a browser. SchemaCrawler can produce output in the [DOT format,](http://www.graphviz.org/doc/info/lang.html ) which [Graphviz](http://www.graphviz.org/) can convert into [schema diagrams.](diagramming.html)
+SchemaCrawler can produce [plain text,](snapshot-examples/snapshot.text)
+[HTML5,](snapshot-examples/snapshot.html)
+[HTML5 with embedded diagrams](snapshot-examples/snapshot.svg.html),
+[JavaScript object notation (JSON)](snapshot-examples/snapshot.json) or
+[YAML](snapshot-examples/snapshot.yaml) output. The HTML5 output is a combination of valid XML (that can be manipulated by XML tools or XSLT), and HTML that can be viewed in a browser. SchemaCrawler can produce output in the [DOT format,](http://www.graphviz.org/doc/info/lang.html ) which [Graphviz](http://www.graphviz.org/) can convert into [schema diagrams.](diagramming.html)
 
 ----------
 
@@ -65,7 +69,7 @@ Explore the SchemaCrawler command-line on [Katacoda](https://www.katacoda.com/sc
 
 Then download and install SchemaCrawler, and run the provided scripts (`schemacrawler.sh` on Unix, and `schemacrawler.cmd` on Windows). Detailed command-line help will be displayed.
 
-SchemaCrawler can produce listings, and standard, or verbose details of your schema. The brief schema option gives you just table, view, stored procedure and function names. The standard schema option gives you the column names and primary keys. The verbose schema option will give you details of data types, indexes, primary and foreign keys, view, stored procedure and function definitions. The SchemaCrawler command can be combined with an _info-level_ , which determines the level of detail of schema metadata obtained. The maximum infolevel will give you privileges, triggers definitions, and check constraints. Each successive option takes more time to execute.
+SchemaCrawler can produce listings, and standard, or verbose details of your schema. The brief schema option gives you just table, view, stored procedure and function names. The standard schema option gives you the column names and primary keys. The verbose schema option will give you details of data types, indexes, primary and foreign keys, view, stored procedure and function definitions. The SchemaCrawler command can be combined with an _info-level_, which determines the level of detail of schema metadata obtained. The maximum _info-level_ will give you privileges, triggers definitions, and check constraints. Each successive option takes more time to execute.
 
 SchemaCrawler provides commands for producing graphs and running templates, if the appropriate extensions are installed.
 
@@ -92,7 +96,7 @@ SchemaCrawler supports any database for which there is a JDBC database driver av
 
 ### <a name="supported-java">What Java version does SchemaCrawler work with?</a>
 
-SchemaCrawler works with Java SE 8, Compact Profile 2 or better. SchemaCrawler does not depend on any Java libraries other than the standard Java SE 8, Compact Profile 2 runtime libraries and a JDBC driver.
+SchemaCrawler works with Java SE 8, Compact Profile 2 or better.
 
 ----------
 
@@ -190,7 +194,7 @@ SchemaCrawler has built-in support to be used with JavaScript scripts. SchemaCra
 
 Also, look at the [scripting](scripting.html) page.
 
-_For more details, see scripting example in the [SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) download, in the `examples\javascript`, `examples\groovy`, `examples\ruby` and `examples\python` directories._
+_For more details, see scripting examples in the [SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) download, in the `examples\javascript`, `examples\groovy`, `examples\ruby` and `examples\python` directories._
 
 ----------
 

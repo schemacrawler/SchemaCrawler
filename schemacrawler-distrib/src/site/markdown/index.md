@@ -22,7 +22,6 @@ Java SE 8, Compact Profile 2 or better.
 [![The Central Repository](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler.svg)](https://search.maven.org/search?q=g:us.fatehi%20a:schemacrawler*)
 [![Main distribution](https://img.shields.io/badge/zip-download-blue.svg)](https://github.com/schemacrawler/SchemaCrawler/releases/latest)
 [![Docker Pulls](https://img.shields.io/docker/pulls/schemacrawler/schemacrawler.svg)](https://hub.docker.com/r/schemacrawler/schemacrawler/)
-[![Chocolatey](https://img.shields.io/chocolatey/v/schemacrawler.svg)](https://chocolatey.org/packages/schemacrawler)
 
 -----
 
@@ -129,7 +128,6 @@ For more example code, take a look at the [examples project](https://github.com/
 For more details, please refer to the [javadocs](apidocs/index.html).
 
 <script src="https://gist.github.com/schemacrawler/63e4b8cb0515c6e928e7a9a419f46411.js"></script>
-
 More code examples are at [Code Examples Using the SchemaCrawler API](code-examples.html).
 
 ## Acknowledgements

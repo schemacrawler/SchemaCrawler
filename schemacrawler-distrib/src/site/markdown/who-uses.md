@@ -54,7 +54,6 @@ Photograph courtesy of [Adrien Sales](https://www.linkedin.com/in/adrien-sales).
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">SchemaCrawler is an excelent tool to explore a database schema. It&#39;s a layer on top of JDBC: http://bit.ly/aVqIVZ. Give it a try.</p>&mdash; William Chinelato (@willchinelato) <a href="https://twitter.com/willchinelato/status/12117092941?ref_src=twsrc%5Etfw">April 13, 2010</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
 ## Press
 
 SchemaCrawler in the press, and in online articles and blogs.
@@ -65,6 +64,7 @@ SchemaCrawler in the press, and in online articles and blogs.
 - Maxime Werlen's blog post on [Analyse BDD avec SchemaCrawler](http://maxime.werlen.fr/blog/archives/2011/04/22/schemacrawler-pour-extraire-la-structure-d-une-base-de-donn-e.html) 
 - Kelvin Meeks' post on [Data Governance Tools.](http://intltechventures.blogspot.com/2012/08/2012-08-22-wednesday-data-governance.html)
 - Gilesey's post on [A lightweight schema diff or dump from Oracle](https://gilesey.wordpress.com/2012/11/15/a-lightweight-schema-diff-or-dump-from-oracle/)
+- Java Mon Amour's post on [SchemaCrawler for Oracle DB diff](http://www.javamonamour.org/2013/06/schemacrawler-for-oracle-db-diff.html)
 - Pierluigi Vernetto's post [SchemaCrawler for Oracle DB Diff](http://www.javamonamour.org/2013/06/schemacrawler-for-oracle-db-diff.html)
 - Mike Zhukovskiy's exploration of ERD tools, [Twitter ERD](http://rubyrailsmz.blogspot.com/2014/08/blog-post.html)
 - Thom Snoeren's blog post, [SchemaCrawler 1: Notes & Lint](http://tsn-admin.blogspot.com/2014/12/schemacrawler-1-notes-lint-by-sualeh.html)

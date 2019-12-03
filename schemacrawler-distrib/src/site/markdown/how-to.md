@@ -1,9 +1,9 @@
 # SchemaCrawler - How-to
 
-## How to Use the SchemaCrawler Command-line
+## SchemaCrawler Command-line
 
-Explore the SchemaCrawler command-line on [Katacoda](https://www.katacoda.com/schemacrawler). 
-Read [How to run an arbitrary query](#arbitrary-query)
+1.  [How to run the SchemaCrawler command-line](#command-line)
+
 
 ## Include and Exclude Stuff from the Output
 
@@ -13,6 +13,7 @@ Read [How to run an arbitrary query](#arbitrary-query)
 4.  [How to exclude database views from the output](#excluded-views)
 5.  [How to exclude routines, that is, stored procedures and functions from the output](#excluded-routines)
 6.  [How to exclude database functions from the output](#excluded-functions)
+7.  [How to exclude database table and column remarks or comments from the output](#excluded-remarks)
 
 ## Create diff-able Output
 
@@ -53,7 +54,9 @@ Read [How to run an arbitrary query](#arbitrary-query)
 
 ---------
 
-## How to Use the SchemaCrawler Command-line
+## <a name="command-line">How to Use the SchemaCrawler Command-line</a>
+
+Explore the SchemaCrawler command-line on [Katacoda](https://www.katacoda.com/schemacrawler). 
 
 Use `schemacrawler.Main` to launch SchemaCrawler from the command-line. This launch offers a 
 number of connection options, including by JDBC driver and URL, and by a connection defined in 
@@ -62,11 +65,6 @@ JDBC drivers and other external libraries must be available on the classpath for
 application to function.
 
 For help, use the `-h` command-line switch.
-
----------
-
-### <a name="arbitrary-query">How to run an arbitrary query</a>
-Run SchemaCrawler withquery, with a query for the command `"--scommand=SELECT * FROM PUBLIC.BOOKS.AUTHORS"` (The double quotes are required.)
 
 ----------
 
@@ -110,6 +108,12 @@ Further, see the [details on the command-line options.](faq.html#commands)
 Use the `--routine-types=FUNCTION` command-line option. Further, see the [details on the command-line options.](faq.html#commands)
 
 ----------
+
+### <a name="excluded-remarks">How to exclude database table and column remarks or comments from the output</a>
+Use the `--no-remarks` command-line option. Further, see the [details on the command-line options.](faq.html#commands)
+
+----------
+
 
 ## Create diff-able Output
 
@@ -231,7 +235,6 @@ _See the api example in the [SchemaCrawler examples](http://github.com/schemacra
 Or, if you are impatient, try code similar to the following:
 
 <script src="https://gist.github.com/schemacrawler/63e4b8cb0515c6e928e7a9a419f46411.js"></script>
-
 More code examples are at [Code Examples Using the SchemaCrawler API](code-examples.html).
 
 ----------
