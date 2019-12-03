@@ -44,6 +44,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.test.utility.*;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.integration.serialize.SerializationFormat;
+import schemacrawler.tools.lint.executable.LintReportOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 
@@ -77,35 +78,22 @@ public class SiteSnapshotVariationsTest
   private static Path snapshotsDirectory;
 
   @Test
-  public void lintReports(final DatabaseConnectionInfo connectionInfo)
+  public void lintReportExamples(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    for (final OutputFormat outputFormat : new OutputFormat[] {
-      TextOutputFormat.html, TextOutputFormat.text, })
+    for (final OutputFormat outputFormat : LintReportOutputFormat.values())
     {
       final String extension = outputFormat.getFormat();
-
       run(connectionInfo,
           "lint",
-          new HashMap<>(),
+          null,
           outputFormat,
           lintReportsDirectory.resolve("lint_report." + extension));
     }
   }
 
   @Test
-  public void jsonLintReports(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
-    run(connectionInfo,
-        "lint,serialize",
-        null,
-        SerializationFormat.json,
-        lintReportsDirectory.resolve("lint_report.json"));
-  }
-
-  @Test
-  public void snapshots(final DatabaseConnectionInfo connectionInfo)
+  public void snapshotsExamples(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     for (final OutputFormat outputFormat : new OutputFormat[] {
@@ -130,14 +118,19 @@ public class SiteSnapshotVariationsTest
   }
 
   @Test
-  public void jsonSnapshot(final DatabaseConnectionInfo connectionInfo)
+  public void serializeExamples(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    run(connectionInfo,
-        "count,serialize",
-        null,
-        SerializationFormat.json,
-        snapshotsDirectory.resolve("snapshot.json"));
+    for (final OutputFormat outputFormat : new OutputFormat[] {
+      SerializationFormat.json, SerializationFormat.yaml })
+    {
+      final String extension = outputFormat.getFormat();
+      run(connectionInfo,
+          "count,serialize",
+          null,
+          outputFormat,
+          snapshotsDirectory.resolve("snapshot." + extension));
+    }
   }
 
   private void run(final DatabaseConnectionInfo connectionInfo,

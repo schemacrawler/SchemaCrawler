@@ -18,9 +18,9 @@ For more details, see the `serialize` example in the
 [SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) 
 download.
 
-SchemaCrawler serialization can produce output in Java, 
-[JSON](serialize-examples/serialize.json), or 
-[YAML](serialize-examples/serialize.yaml) format. 
+SchemaCrawler serialization can produce output in Java,
+[JavaScript object notation (JSON)](snapshot-examples/snapshot.json) or
+[YAML](snapshot-examples/snapshot.yaml) format. 
 (Click on the links for example output.) 
 A serialized schema metadata model will be produced in the format specified using the 
 `--output-format` command-line option. For example,
