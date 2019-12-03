@@ -105,7 +105,7 @@ Further, see the [details on the command-line options.](faq.html#commands)
 ----------
 
 ### <a name="excluded-functions">How to exclude database functions from the output</a>
-Use the `--routine-types=FUNCTION` command-line option. Further, see the [details on the command-line options.](faq.html#commands)
+Use the `--routine-types=PROCEDURE` command-line option. Further, see the [details on the command-line options.](faq.html#commands)
 
 ----------
 
@@ -193,13 +193,13 @@ Change the configuration for the SchemaCrawler `schemacrawler.format.no_schema_c
 
 ### <a name="javascript">How to script with your database</a>
 
-SchemaCrawler has built-in support to be used with JavaScript scripts. Write your JavaScript file, assuming that a "catalog" variable containing the database schema will be available. A "connection" variable will also be available, and you will be able to execute SQL against your database. Run SchemaCrawler with the command-line options - `--command script --output-format <your script file>` . See the example in the `examples\javascript` directory for more details.
+SchemaCrawler has built-in support to be used with JavaScript scripts. Write your JavaScript file, assuming that a "catalog" variable containing the database schema will be available. A "connection" variable will also be available, and you will be able to execute SQL against your database. Run SchemaCrawler with the command-line options - `--command script --script <your script file>` . See the example in the `examples\javascript` directory for more details.
 
 ----------
 
 ### <a name="velocity">How to create your own output format</a>
 
-SchemaCrawler integrates with [Apache Velocity](http://velocity.apache.org/) to allow for templated ouput. Put Velocity on your classpath, and create your template, and run SchemaCrawler with the command-line options - `--command script --output-format <your script file>` . `--command velocity --output-format <your Velocity template>` . See the Velocity example in the [SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) download.
+SchemaCrawler integrates with [Apache Velocity](http://velocity.apache.org/) to allow for templated output. Put Velocity on your classpath, and create your template, and run SchemaCrawler with the command-line options `--command velocity --template <your Velocity template>`. See the Velocity example in the [SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) download.
 
 ----------
 
