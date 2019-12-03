@@ -79,7 +79,8 @@ public class SerializationCommandProvider
   {
     final PluginCommand pluginCommand = new PluginCommand(SerializationCommand.COMMAND,
                                                           "** "
-                                                          + DESCRIPTION_HEADER);
+                                                          + DESCRIPTION_HEADER,
+                                                          "For more information, see https://www.schemacrawler.com/serialize.html %n");
 
     return pluginCommand;
   }

@@ -94,6 +94,7 @@
                     <a class="dropdown-item" href="diagramming.html">Diagramming</a>
                     <a class="dropdown-item" href="scripting.html">Scripting</a>
                     <a class="dropdown-item" href="lint.html">Lint</a>
+                    <a class="dropdown-item" href="serialize.html">Serialization</a>
                     <a class="dropdown-item" href="weak-associations.html">Weak Associations</a>
                     <a class="dropdown-item" href="offline.html">Offline Snapshots</a>
                     <a class="dropdown-item" href="plugins.html">Plugins</a>
