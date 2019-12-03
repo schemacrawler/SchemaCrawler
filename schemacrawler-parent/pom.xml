@@ -333,7 +333,7 @@
                             <additionalOptions>
                                 <additionalOption>-Xdoclint:none</additionalOption>
                             </additionalOptions>
-                            <bottom>Copyright © 2000-2019 {organizationName}. All
+                            <bottom>Copyright © 2000-2020 {organizationName}. All
                                 rights
                                 reserved.
                             </bottom>
