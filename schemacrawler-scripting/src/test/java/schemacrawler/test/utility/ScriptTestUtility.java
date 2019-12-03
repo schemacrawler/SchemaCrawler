@@ -5,7 +5,7 @@ package schemacrawler.test.utility;
 ========================================================================
 SchemaCrawler
 http://www.schemacrawler.com
-Copyright (c) 2000-2019, Sualeh Fatehi <sualeh@hotmail.com>.
+Copyright (c) 2000-2020, Sualeh Fatehi <sualeh@hotmail.com>.
 All rights reserved.
 ------------------------------------------------------------------------
 

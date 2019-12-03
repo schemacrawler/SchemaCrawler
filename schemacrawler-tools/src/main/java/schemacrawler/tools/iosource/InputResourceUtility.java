@@ -2,7 +2,7 @@
 ========================================================================
 SchemaCrawler
 http://www.schemacrawler.com
-Copyright (c) 2000-2019, Sualeh Fatehi <sualeh@hotmail.com>.
+Copyright (c) 2000-2020, Sualeh Fatehi <sualeh@hotmail.com>.
 All rights reserved.
 ------------------------------------------------------------------------
 
@@ -37,7 +37,7 @@ public class InputResourceUtility
   /**
    * Creates an input resource from the classpath, or from the file
    * system. If neither are found, returns an empty input resource.
-   * 
+   *
    * @param inputResourceName
    *        Name of input resource.
    * @return Input resource
