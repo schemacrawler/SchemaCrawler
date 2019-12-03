@@ -25,7 +25,7 @@ download.
 SchemaCrawler Lint can produce reports in 
 [text](lint-report-examples/lint_report.text), 
 [HTML5](lint-report-examples/lint_report.html),
-[JSON](lint-report-examples/lint_report.json) or
+[JavaScript object notation (JSON)](lint-report-examples/lint_report.json) or
 [YAML](lint-report-examples/lint_report.yaml) format. 
 (Click on the links for example reports.) 
 A lint report will be produced in the format specified using the 
