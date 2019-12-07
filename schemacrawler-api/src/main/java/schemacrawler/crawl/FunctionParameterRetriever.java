@@ -192,7 +192,7 @@ final class FunctionParameterRetriever
 
       LOGGER.log(Level.FINER,
                  new StringFormat("Adding parameter to function <%s>",
-                                  parameter.getFullName()));
+                                  parameter));
       function.addParameter(parameter);
     }
 

@@ -218,7 +218,7 @@ final class TableColumnRetriever
       LOGGER.log(Level.FINER,
                  new StringFormat("Adding %scolumn to table <%s>",
                                   isHidden? "hidden ": "",
-                                  column.getFullName()));
+                                  column));
       if (isHidden)
       {
         column.setHidden(true);

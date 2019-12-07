@@ -317,7 +317,7 @@ final class ForeignKeyRetriever
       LOGGER
         .log(Level.FINER,
              new StringFormat("Creating column reference for a column that is referenced by a foreign key <%s>",
-                              column.getFullName()));
+                              column));
     }
     return column;
   }

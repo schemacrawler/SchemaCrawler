@@ -154,7 +154,7 @@ final class IndexRetriever
     String indexName = results.getString("INDEX_NAME");
     LOGGER.log(Level.FINE,
                new StringFormat("Retrieving index <%s.%s>",
-                                table.getFullName(),
+                                table,
                                 indexName));
 
     // Work-around PostgreSQL JDBC driver bugs by unquoting column
@@ -170,7 +170,7 @@ final class IndexRetriever
     }
     LOGGER.log(Level.FINE,
                new StringFormat("Retrieving index column <%s.%s.%s>",
-                                table.getFullName(),
+                                table,
                                 indexName,
                                 columnName));
 
@@ -246,7 +246,7 @@ final class IndexRetriever
     final int keySequence = Integer.parseInt(results.getString("KEY_SEQ"));
     LOGGER.log(Level.FINE,
                new StringFormat("Retrieving primary column <%s.%s.%s>",
-                                table.getFullName(),
+                                table,
                                 primaryKeyName,
                                 columnName));
 

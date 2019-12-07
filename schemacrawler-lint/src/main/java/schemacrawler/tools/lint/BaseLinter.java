@@ -191,7 +191,7 @@ public abstract class BaseLinter
       else
       {
         LOGGER.log(Level.FINE,
-                   new StringFormat("Excluding table %s for lint %s",
+                   new StringFormat("Excluding table <%s> for lint <%s>",
                                     table,
                                     getLinterId()));
       }

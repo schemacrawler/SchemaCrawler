@@ -195,7 +195,7 @@ final class ProcedureParameterRetriever
 
       LOGGER.log(Level.FINER,
                  new StringFormat("Adding parameter to procedure <%s>",
-                                  parameter.getFullName()));
+                                  parameter));
       procedure.addParameter(parameter);
     }
 
