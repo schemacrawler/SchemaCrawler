@@ -67,6 +67,8 @@ final class NeuteredLinesFilter
     // -- server-specific values
     Pattern.compile(".*HOST_NAME.*"),
     Pattern.compile(".*TOTAL_MEMORY.*"),
+    Pattern.compile(".*TOTAL_CPUS.*"),
+    Pattern.compile(".*OS_NAME.*"),
     // Apache Derby
     // -- unnamed objects
     Pattern.compile("SQL\\d+\\s+\\[primary key\\]"),
