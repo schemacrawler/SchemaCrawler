@@ -44,10 +44,14 @@ RUN \
 # Copy SchemaCrawler distribution from the build directory
 COPY \
     ./schemacrawler-${SCHEMACRAWLER_VERSION}-distribution/_schemacrawler /opt/schemacrawler
+# Ensure that the SchemaCrawler script is executable
 RUN \
     chmod +rx /opt/schemacrawler/schemacrawler.sh
+# Create symbolic link for SchemaCrawler
+RUN \
+    ln -s /opt/schemacrawler/schemacrawler.sh /usr/local/bin/schemacrawler
 
-# Run the image as a non-root user
+# Run the image as a non-root user, "schcrwlr"
 RUN \
     adduser -u 1000 -S schcrwlr -G users
 USER schcrwlr
@@ -62,11 +66,6 @@ COPY \
     --chown=schcrwlr:users \
     ./schemacrawler-${SCHEMACRAWLER_VERSION}-distribution/_schemacrawler/config/* \
     /home/schcrwlr/
-
-# Create aliases for SchemaCrawler
-RUN \
-    echo 'alias schemacrawler="/opt/schemacrawler/schemacrawler.sh"' \
-    >> /home/schcrwlr/.bashrc
 
 
 MAINTAINER Sualeh Fatehi <sualeh@hotmail.com>
