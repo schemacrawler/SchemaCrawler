@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testcontainers.containers.OracleContainer;
@@ -112,6 +113,7 @@ public class OracleTest
                matchesPattern("[0-9a-zA-Z]{1,12}"));
   }
 
+  @Disabled("Very long running test, since getting definitions takes time")
   @Test
   public void testOracleWithConnection()
     throws Exception
