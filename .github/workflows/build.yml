@@ -17,4 +17,6 @@ jobs:
     - name: Install packages
       run: sudo apt-get update; sudo apt-get install graphviz
     - name: Build with Maven
-      run: mvn -f schemacrawler-parent/pom.xml clean package
+      env:
+        TZ: GMT
+      run: mvn  -Dcomplete -Dheavydb -f schemacrawler-parent/pom.xml clean package
