@@ -29,7 +29,7 @@ addons:
 script:
   - echo $SC_BUILD_DIR
   - cd "./schemacrawler-parent"
-  - mvn -Dcomplete -Dheavydb clean install jacoco:report coveralls:report
+  - mvn -Dcomplete clean install jacoco:report coveralls:report
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 before_deploy:
