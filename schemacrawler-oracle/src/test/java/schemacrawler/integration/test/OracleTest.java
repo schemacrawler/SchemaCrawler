@@ -113,7 +113,6 @@ public class OracleTest
                matchesPattern("[0-9a-zA-Z]{1,12}"));
   }
 
-  @Disabled("Very long running test, since getting definitions takes time")
   @Test
   public void testOracleWithConnection()
     throws Exception
