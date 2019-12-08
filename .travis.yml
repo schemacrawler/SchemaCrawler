@@ -15,6 +15,7 @@ notifications:
 env:
   global:
     - SC_BUILD_DIR=`pwd`
+    - TZ=GMT
 cache:
   directories:
     - .autoconf
@@ -28,7 +29,7 @@ addons:
 script:
   - echo $SC_BUILD_DIR
   - cd "./schemacrawler-parent"
-  - mvn -Dcomplete clean install
+  - mvn -Dcomplete -Dheavydb clean install jacoco:report coveralls:report
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 before_deploy:
