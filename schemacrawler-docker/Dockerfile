@@ -33,7 +33,7 @@ LABEL \
   "us.fatehi.schemacrawler.website"="http://www.schemacrawler.com" \
   "us.fatehi.schemacrawler.docker-hub"="https://hub.docker.com/r/schemacrawler/schemacrawler"
 
-# Install GraphViz
+# Install Graphviz
 RUN \
   apk add --update --no-cache \
   bash \
@@ -47,9 +47,6 @@ COPY \
 # Ensure that the SchemaCrawler script is executable
 RUN \
     chmod +rx /opt/schemacrawler/schemacrawler.sh
-# Create symbolic link for SchemaCrawler
-RUN \
-    ln -s /opt/schemacrawler/schemacrawler.sh /usr/local/bin/schemacrawler
 
 # Run the image as a non-root user, "schcrwlr"
 RUN \
@@ -66,6 +63,11 @@ COPY \
     --chown=schcrwlr:users \
     ./schemacrawler-${SCHEMACRAWLER_VERSION}-distribution/_schemacrawler/config/* \
     /home/schcrwlr/
+
+# Create aliases for SchemaCrawler	
+RUN \	
+    echo 'alias schemacrawler="/opt/schemacrawler/schemacrawler.sh"' \	
+    >> /home/schcrwlr/.bashrc	
 
 
 MAINTAINER Sualeh Fatehi <sualeh@hotmail.com>
