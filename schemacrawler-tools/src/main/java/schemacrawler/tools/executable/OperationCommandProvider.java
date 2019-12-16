@@ -30,6 +30,7 @@ package schemacrawler.tools.executable;
 
 import static sf.util.Utility.isBlank;
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -53,6 +54,7 @@ final class OperationCommandProvider
   @Override
   public boolean supportsSchemaCrawlerCommand(final String command,
                                               final SchemaCrawlerOptions schemaCrawlerOptions,
+                                              final Config additionalConfiguration,
                                               final OutputOptions outputOptions)
   {
     if (outputOptions == null)

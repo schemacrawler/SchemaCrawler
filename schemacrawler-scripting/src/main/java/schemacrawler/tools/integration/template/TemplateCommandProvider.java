@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.template;
 
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandDescription;
@@ -57,6 +58,7 @@ public class TemplateCommandProvider
   @Override
   public boolean supportsSchemaCrawlerCommand(final String command,
                                               final SchemaCrawlerOptions schemaCrawlerOptions,
+                                              final Config additionalConfiguration,
                                               final OutputOptions outputOptions)
   {
     return supportsCommand(command);

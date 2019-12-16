@@ -30,6 +30,7 @@ package schemacrawler.tools.integration.graph;
 
 import static sf.util.Utility.isBlank;
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandProviderUtility;
@@ -54,6 +55,7 @@ public final class GraphCommandProvider
   @Override
   public boolean supportsSchemaCrawlerCommand(final String command,
                                               final SchemaCrawlerOptions schemaCrawlerOptions,
+                                              final Config additionalConfiguration,
                                               final OutputOptions outputOptions)
   {
     if (outputOptions == null)

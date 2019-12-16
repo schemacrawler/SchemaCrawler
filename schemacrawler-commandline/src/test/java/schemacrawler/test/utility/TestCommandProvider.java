@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandDescription;
@@ -56,6 +57,7 @@ public class TestCommandProvider
   @Override
   public boolean supportsSchemaCrawlerCommand(final String command,
                                               final SchemaCrawlerOptions schemaCrawlerOptions,
+                                              final Config additionalConfiguration,
                                               final OutputOptions outputOptions)
   {
     return false;

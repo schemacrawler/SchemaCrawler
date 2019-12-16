@@ -32,6 +32,7 @@ import static sf.util.Utility.isBlank;
 
 import java.nio.file.Path;
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandDescription;
@@ -39,7 +40,6 @@ import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.options.TextOutputFormat;
 
 public class LintCommandProvider
   extends BaseCommandProvider
@@ -63,6 +63,7 @@ public class LintCommandProvider
   @Override
   public boolean supportsSchemaCrawlerCommand(final String command,
                                               final SchemaCrawlerOptions schemaCrawlerOptions,
+                                              final Config additionalConfiguration,
                                               final OutputOptions outputOptions)
   {
     if (outputOptions == null)

@@ -34,6 +34,7 @@ import static java.util.Comparator.naturalOrder;
 import java.util.*;
 import java.util.logging.Level;
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
@@ -130,6 +131,7 @@ public final class CommandRegistry
 
   SchemaCrawlerCommand configureNewCommand(final String command,
                                            final SchemaCrawlerOptions schemaCrawlerOptions,
+                                           final Config additionalConfiguration,
                                            final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
@@ -138,8 +140,10 @@ public final class CommandRegistry
     {
       if (commandProvider.supportsSchemaCrawlerCommand(command,
                                                        schemaCrawlerOptions,
+                                                       additionalConfiguration,
                                                        outputOptions))
       {
+
         executableCommandProvider = commandProvider;
         break;
       }
