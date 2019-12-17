@@ -66,7 +66,14 @@ final class OperationCommandProvider
     {
       return false;
     }
-    final boolean supportsSchemaCrawlerCommand =
+   final boolean hasNamedQuery;
+    if (additionalConfiguration != null)
+    {
+      hasNamedQuery = additionalConfiguration.hasValue(command);
+    } else {
+      hasNamedQuery = false;
+    }
+    final boolean supportsSchemaCrawlerCommand = hasNamedQuery &&
       supportsCommand(command) && TextOutputFormat.isSupportedFormat(format);
     return supportsSchemaCrawlerCommand;
   }
