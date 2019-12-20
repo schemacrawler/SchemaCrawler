@@ -218,15 +218,7 @@ public final class OperationCommand
     if (operation == null)
     {
       final String queryName = command;
-      final String queryString;
-      if (additionalConfiguration != null)
-      {
-        queryString = additionalConfiguration.get(queryName);
-      }
-      else
-      {
-        queryString = null;
-      }
+      final String queryString = additionalConfiguration.get(queryName);
       query = new Query(queryName, queryString);
     }
     else

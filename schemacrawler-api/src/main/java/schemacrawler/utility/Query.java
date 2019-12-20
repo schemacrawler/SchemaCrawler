@@ -45,7 +45,6 @@ public final class Query
 
   private static final long serialVersionUID = 2820769346069413473L;
 
-  private final boolean hasName;
   private final String name;
   private final String query;
 
@@ -53,32 +52,21 @@ public final class Query
    * Definition of a query, including a name, and parameterized or
    * regular SQL.
    *
-   * @param name
-   *        Query name.
-   * @param query
-   *        Query SQL.
-   * @param throwSQLException
-   *        Whether the query should throw a SQL exception on an error.
+   * @param name  Query name.
+   * @param query Query SQL.
    */
   public Query(final String name, final String query)
   {
-    final boolean isNameProvided = !isBlank(name);
-    final boolean isQueryProvided = !isBlank(query);
-    if (isNameProvided && isQueryProvided)
+    if (isBlank(name))
     {
-      this.name = name;
-      this.query = query;
-      hasName = true;
+      throw new IllegalArgumentException("No query name provided");
     }
-    else if (isNameProvided && !isQueryProvided)
+    if (isBlank(query))
     {
-      this.name = this.query = name;
-      hasName = false;
+      throw new IllegalArgumentException("No query SQL provided");
     }
-    else
-    {
-      throw new IllegalArgumentException("No SQL found for query");
-    }
+    this.name = name;
+    this.query = query;
   }
 
   /**
@@ -99,16 +87,6 @@ public final class Query
   public String getQuery()
   {
     return query;
-  }
-
-  /**
-   * Whether a query name was provided.
-   *
-   * @return Whether a query name was provided
-   */
-  public boolean hasName()
-  {
-    return hasName;
   }
 
   /**

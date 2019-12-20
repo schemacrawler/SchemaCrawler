@@ -33,7 +33,6 @@ import static sf.util.Utility.isBlank;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.operation.OperationCommand;
 
 final class OperationCommandProvider
@@ -66,15 +65,26 @@ final class OperationCommandProvider
     {
       return false;
     }
-   final boolean hasNamedQuery;
+
+    // Check if the command is an operation
+    final boolean isOperation = supportsCommand(command);
+
+    /// Check if the command is a named query
+    final boolean isNamedQuery;
     if (additionalConfiguration != null)
     {
-      hasNamedQuery = additionalConfiguration.hasValue(command);
-    } else {
-      hasNamedQuery = false;
+      isNamedQuery = additionalConfiguration.containsKey(command);
     }
-    final boolean supportsSchemaCrawlerCommand = hasNamedQuery &&
-      supportsCommand(command) && TextOutputFormat.isSupportedFormat(format);
+    else
+    {
+      isNamedQuery = false;
+    }
+
+    // Operation and query output is only in text or HTMl, but nevertheless some operations such as count
+    // can be represented on diagrams (since the catalog is annotated with attributes).
+    // Also, if a query is part of a comma-separated list of commands, the run should not fail due to a bad output format.
+    // So no check is done for output format.
+    final boolean supportsSchemaCrawlerCommand = isOperation || isNamedQuery;
     return supportsSchemaCrawlerCommand;
   }
 

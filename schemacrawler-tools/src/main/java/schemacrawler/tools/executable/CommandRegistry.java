@@ -70,9 +70,6 @@ public final class CommandRegistry
 
     final List<CommandProvider> commandProviders = new ArrayList<>();
 
-    commandProviders.add(new SchemaTextCommandProvider());
-    commandProviders.add(new OperationCommandProvider());
-
     try
     {
       final ServiceLoader<CommandProvider> serviceLoader = ServiceLoader.load(
@@ -92,6 +89,9 @@ public final class CommandRegistry
         "Could not load extended command registry",
         e);
     }
+
+    commandProviders.add(new SchemaTextCommandProvider());
+    commandProviders.add(new OperationCommandProvider());
 
     return commandProviders;
   }
@@ -150,7 +150,7 @@ public final class CommandRegistry
     }
     if (executableCommandProvider == null)
     {
-      executableCommandProvider = new OperationCommandProvider();
+      throw new SchemaCrawlerException(String.format("Unknown command <%s>", command));
     }
 
     final SchemaCrawlerCommand scCommand;

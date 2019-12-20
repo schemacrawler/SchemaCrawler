@@ -271,23 +271,6 @@ public class CommandLineTest
   }
 
   @Test
-  public void commandLineWithQueryCommand(final TestContext testContext,
-                                          final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
-
-    final Map<String, String> args = new HashMap<>();
-
-    final Map<String, String> config = new HashMap<>();
-
-    run(testContext,
-        connectionInfo,
-        args,
-        config,
-        "SELECT * FROM BOOKS.Authors");
-  }
-
-  @Test
   public void commandLineWithQueryInConfig(final TestContext testContext,
                                            final DatabaseConnectionInfo connectionInfo)
     throws Exception

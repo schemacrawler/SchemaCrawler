@@ -93,6 +93,10 @@ abstract class BaseCommandChain
 
       return scCommand;
     }
+    catch (final SchemaCrawlerException e)
+    {
+      throw e;
+    }
     catch (final Exception e)
     {
       throw new SchemaCrawlerException(String.format(
