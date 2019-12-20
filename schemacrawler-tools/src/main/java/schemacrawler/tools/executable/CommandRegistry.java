@@ -34,6 +34,7 @@ import static java.util.Comparator.naturalOrder;
 import java.util.*;
 import java.util.logging.Level;
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
@@ -69,9 +70,6 @@ public final class CommandRegistry
 
     final List<CommandProvider> commandProviders = new ArrayList<>();
 
-    commandProviders.add(new SchemaTextCommandProvider());
-    commandProviders.add(new OperationCommandProvider());
-
     try
     {
       final ServiceLoader<CommandProvider> serviceLoader = ServiceLoader.load(
@@ -91,6 +89,9 @@ public final class CommandRegistry
         "Could not load extended command registry",
         e);
     }
+
+    commandProviders.add(new SchemaTextCommandProvider());
+    commandProviders.add(new OperationCommandProvider());
 
     return commandProviders;
   }
@@ -130,6 +131,7 @@ public final class CommandRegistry
 
   SchemaCrawlerCommand configureNewCommand(final String command,
                                            final SchemaCrawlerOptions schemaCrawlerOptions,
+                                           final Config additionalConfiguration,
                                            final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
@@ -138,15 +140,17 @@ public final class CommandRegistry
     {
       if (commandProvider.supportsSchemaCrawlerCommand(command,
                                                        schemaCrawlerOptions,
+                                                       additionalConfiguration,
                                                        outputOptions))
       {
+
         executableCommandProvider = commandProvider;
         break;
       }
     }
     if (executableCommandProvider == null)
     {
-      executableCommandProvider = new OperationCommandProvider();
+      throw new SchemaCrawlerException(String.format("Unknown command <%s>", command));
     }
 
     final SchemaCrawlerCommand scCommand;

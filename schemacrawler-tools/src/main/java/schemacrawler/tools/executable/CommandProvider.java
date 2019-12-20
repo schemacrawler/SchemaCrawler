@@ -30,6 +30,7 @@ package schemacrawler.tools.executable;
 
 import java.util.Collection;
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -45,6 +46,7 @@ public interface CommandProvider
 
   boolean supportsSchemaCrawlerCommand(String command,
                                        SchemaCrawlerOptions schemaCrawlerOptions,
+                                       Config additionalConfiguration,
                                        OutputOptions outputOptions);
 
   PluginCommand getCommandLineCommand();

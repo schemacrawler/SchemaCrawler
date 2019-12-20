@@ -77,6 +77,7 @@ abstract class BaseCommandChain
       final SchemaCrawlerCommand scCommand = commandRegistry.configureNewCommand(
         command,
         schemaCrawlerOptions,
+        additionalConfiguration,
         outputOptions);
       if (scCommand == null)
       {
@@ -91,6 +92,10 @@ abstract class BaseCommandChain
       scCommands.add(scCommand);
 
       return scCommand;
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      throw e;
     }
     catch (final Exception e)
     {

@@ -51,6 +51,7 @@ public class TestCommandProvider
     final OutputOptions outputOptions = OutputOptionsBuilder.newOutputOptions();
     assertThat(lintCommandProvider.supportsSchemaCrawlerCommand("lint",
                                                                 schemaCrawlerOptions,
+                                                                null,
                                                                 outputOptions),
                is(true));
   }
