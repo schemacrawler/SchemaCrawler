@@ -203,7 +203,7 @@ public abstract class BaseSchemaCrawlerCommand
   @Override
   public final String toString()
   {
-    return ObjectToString.toString(this);
+    return command;
   }
 
   protected void checkCatalog()

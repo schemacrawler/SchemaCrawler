@@ -200,7 +200,7 @@ public final class SchemaCrawlerExecutable
   @Override
   public final String toString()
   {
-    return ObjectToString.toString(this);
+    return command;
   }
 
   private void loadCatalog()
