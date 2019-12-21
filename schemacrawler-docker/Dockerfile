@@ -26,7 +26,7 @@
 
 FROM openjdk:8-jdk-alpine
 
-ARG SCHEMACRAWLER_VERSION=16.2.7
+ARG SCHEMACRAWLER_VERSION=16.3.0
 
 LABEL \
   "us.fatehi.schemacrawler.product-version"="SchemaCrawler ${SCHEMACRAWLER_VERSION}" \
@@ -64,10 +64,10 @@ COPY \
     ./schemacrawler-${SCHEMACRAWLER_VERSION}-distribution/_schemacrawler/config/* \
     /home/schcrwlr/
 
-# Create aliases for SchemaCrawler	
-RUN \	
-    echo 'alias schemacrawler="/opt/schemacrawler/schemacrawler.sh"' \	
-    >> /home/schcrwlr/.bashrc	
+# Create aliases for SchemaCrawler
+RUN \
+    echo 'alias schemacrawler="/opt/schemacrawler/schemacrawler.sh"' \
+    >> /home/schcrwlr/.bashrc
 
 
 MAINTAINER Sualeh Fatehi <sualeh@hotmail.com>
