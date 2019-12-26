@@ -34,14 +34,14 @@ import org.junit.jupiter.api.extension.ConditionEvaluationResult;
 import org.junit.jupiter.api.extension.ExecutionCondition;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
-public class CompleteBuildCondition
+public class LightDatabaseBuildCondition
   extends BaseEnvironmentalVariableBuildCondition
 {
 
   @Override
   protected String getSystemBooleanVariable()
   {
-    return "complete";
+    return "lightdb";
   }
 
 }

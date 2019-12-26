@@ -51,7 +51,6 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.*;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
-import schemacrawler.test.utility.CompleteBuildCondition;
 import schemacrawler.test.utility.HeavyDatabaseBuildCondition;
 
 @Testcontainers(disabledWithoutDocker = true)

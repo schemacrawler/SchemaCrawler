@@ -26,12 +26,10 @@ addons:
       - graphviz
 script:
   - echo $SC_BUILD_DIR
-  - cd "./schemacrawler-parent"
-  - mvn -Dcomplete clean install jacoco:report coveralls:report
+  - mvn  -Dlightdb -Ddistrib -f ./schemacrawler-parent/pom.xml clean install jacoco:report coveralls:report
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 before_deploy:
-  - cd $SC_BUILD_DIR
   - git fetch --tags
 deploy:
   - provider: script

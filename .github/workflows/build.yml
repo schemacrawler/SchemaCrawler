@@ -19,4 +19,4 @@ jobs:
     - name: Build with Maven
       env:
         TZ: GMT
-      run: mvn  -Dcomplete -Dheavydb -f schemacrawler-parent/pom.xml clean package
+      run: mvn  -Dlighdb -Dheavydb -f schemacrawler-parent/pom.xml clean package

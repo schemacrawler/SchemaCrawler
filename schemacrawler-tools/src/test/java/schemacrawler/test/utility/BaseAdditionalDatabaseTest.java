@@ -42,7 +42,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.testdb.TestSchemaCreator;
 
 @ExtendWith(TestLoggingExtension.class)
-@ExtendWith(CompleteBuildCondition.class)
 public abstract class BaseAdditionalDatabaseTest
 {
 
