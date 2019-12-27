@@ -28,12 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
-import static sf.util.Utility.isBlank;
-
-import org.junit.jupiter.api.extension.ConditionEvaluationResult;
-import org.junit.jupiter.api.extension.ExecutionCondition;
-import org.junit.jupiter.api.extension.ExtensionContext;
-
 public class LightDatabaseBuildCondition
   extends BaseEnvironmentalVariableBuildCondition
 {

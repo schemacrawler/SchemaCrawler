@@ -41,6 +41,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -63,9 +64,10 @@ public class MySQLEnumColumnTest
 {
 
   @Container
-  private MySQLContainer dbContainer = new MySQLContainer<>()
-    .withCommand("mysqld", "--lower_case_table_names=1")
-    .withUsername("schemacrawler");;
+  private JdbcDatabaseContainer dbContainer = new HeavyDatabaseBuildCondition()
+    .getJdbcDatabaseContainer(() -> new MySQLContainer<>()
+      .withCommand("mysqld", "--lower_case_table_names=1")
+      .withUsername("schemacrawler"));
 
   @BeforeEach
   public void createDatabase()

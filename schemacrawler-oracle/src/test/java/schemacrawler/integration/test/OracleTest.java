@@ -41,9 +41,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.OracleContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -66,8 +66,9 @@ public class OracleTest
 {
 
   @Container
-  private OracleContainer dbContainer = new OracleContainer(
-    "wnameless/oracle-xe-11g-r2");
+  private JdbcDatabaseContainer dbContainer = new HeavyDatabaseBuildCondition()
+    .getJdbcDatabaseContainer(() -> new OracleContainer(
+      "wnameless/oracle-xe-11g-r2"));
 
   @BeforeEach
   public void createDatabase()
@@ -127,8 +128,7 @@ public class OracleTest
       .setRetrieveIndexInformation(false)
       .setRetrieveIndexColumnInformation(false)
       .setRetrieveRoutineInformation(false);
-      */
-      ;
+      */;
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
       .builder();

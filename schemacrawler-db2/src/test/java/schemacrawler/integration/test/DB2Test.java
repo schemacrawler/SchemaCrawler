@@ -44,6 +44,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testcontainers.containers.Db2Container;
+import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.crawl.SchemaCrawler;
@@ -65,20 +66,21 @@ public class DB2Test
 {
 
   @Container
-  private Db2Container dbContainer = new Db2Container().acceptLicense();
+  private JdbcDatabaseContainer dbContainer = new HeavyDatabaseBuildCondition()
+    .getJdbcDatabaseContainer(() -> new Db2Container().acceptLicense());
 
   @BeforeEach
   public void createDatabase()
     throws SQLException, SchemaCrawlerException
   {
     /**
-    // Add the following trace properties to the URL for debugging
-    // Set the trace directory appropriately
-    final String traceProperties =
-      ":traceDirectory=C:\\Java" + ";traceFile=trace3"
-      + ";traceFileAppend=false" + ";traceLevel="
-      + (DB2BaseDataSource.TRACE_ALL) + ";";
-    */
+     // Add the following trace properties to the URL for debugging
+     // Set the trace directory appropriately
+     final String traceProperties =
+     ":traceDirectory=C:\\Java" + ";traceFile=trace3"
+     + ";traceFileAppend=false" + ";traceLevel="
+     + (DB2BaseDataSource.TRACE_ALL) + ";";
+     */
     createDataSource(dbContainer.getJdbcUrl(),
                      dbContainer.getUsername(),
                      dbContainer.getPassword());

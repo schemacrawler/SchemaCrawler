@@ -37,6 +37,7 @@ import java.sql.SQLException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -54,9 +55,10 @@ public class MySQL56Test
 {
 
   @Container
-  private MySQLContainer dbContainer = new MySQLContainer<>("mysql:5.6.46")
-    .withCommand("mysqld", "--lower_case_table_names=1")
-    .withUsername("schemacrawler").withDatabaseName("books");
+  private JdbcDatabaseContainer dbContainer = new HeavyDatabaseBuildCondition()
+    .getJdbcDatabaseContainer(() -> new MySQLContainer<>("mysql:5.6.46")
+      .withCommand("mysqld", "--lower_case_table_names=1")
+      .withUsername("schemacrawler").withDatabaseName("books"));
 
   @BeforeEach
   public void createDatabase()
@@ -95,7 +97,8 @@ public class MySQL56Test
                                     .toConfig());
 
     assertThat(outputOf(executableExecution(getConnection(), executable)),
-               hasSameContentAs(classpathResource("testMySQL56WithConnection.txt")));
+               hasSameContentAs(classpathResource(
+                 "testMySQL56WithConnection.txt")));
   }
 
 }

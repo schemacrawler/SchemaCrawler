@@ -28,33 +28,20 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
-import static sf.util.Utility.isBlank;
+import java.util.function.Supplier;
 
-import org.junit.jupiter.api.extension.ConditionEvaluationResult;
-import org.junit.jupiter.api.extension.ExecutionCondition;
-import org.junit.jupiter.api.extension.ExtensionContext;
+import org.testcontainers.containers.JdbcDatabaseContainer;
 
-abstract class BaseEnvironmentalVariableBuildCondition
-  implements ExecutionCondition
+public class HeavyDatabaseBuildCondition
+  extends BaseEnvironmentalVariableBuildCondition
 {
 
   @Override
-  public ConditionEvaluationResult evaluateExecutionCondition(final ExtensionContext context)
+  protected String getSystemBooleanVariable()
   {
-    final String isBuildPropertyValue = System
-      .getProperty(getSystemBooleanVariable());
-    final boolean isRunBuild =
-      isBuildPropertyValue != null && isBlank(isBuildPropertyValue) || Boolean
-        .parseBoolean(isBuildPropertyValue);
-    if (!isRunBuild)
-    {
-      return ConditionEvaluationResult
-        .disabled("Development build - disable long running tests");
-    }
-
-    return ConditionEvaluationResult.enabled("Complete build - run all tests");
+    return "heavydb";
   }
 
-  protected abstract String getSystemBooleanVariable();
+
 
 }

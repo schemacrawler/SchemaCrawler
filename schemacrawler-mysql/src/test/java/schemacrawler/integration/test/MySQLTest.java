@@ -37,6 +37,7 @@ import java.sql.SQLException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -54,9 +55,12 @@ public class MySQLTest
 {
 
   @Container
-  private MySQLContainer dbContainer = new MySQLContainer<>("mysql:8.0.18")
-    .withCommand("mysqld", "--lower_case_table_names=1", "--log_bin_trust_function_creators=1")
-    .withUsername("schemacrawler").withDatabaseName("books");
+  private JdbcDatabaseContainer dbContainer = new HeavyDatabaseBuildCondition()
+    .getJdbcDatabaseContainer(() -> new MySQLContainer<>("mysql:8.0.18")
+      .withCommand("mysqld",
+                   "--lower_case_table_names=1",
+                   "--log_bin_trust_function_creators=1")
+      .withUsername("schemacrawler").withDatabaseName("books"));
 
   @BeforeEach
   public void createDatabase()

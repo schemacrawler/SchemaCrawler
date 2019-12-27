@@ -30,18 +30,51 @@ package schemacrawler.test.utility;
 
 import static sf.util.Utility.isBlank;
 
+import java.util.function.Supplier;
+
 import org.junit.jupiter.api.extension.ConditionEvaluationResult;
 import org.junit.jupiter.api.extension.ExecutionCondition;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import org.testcontainers.containers.JdbcDatabaseContainer;
 
-public class HeavyDatabaseBuildCondition
-  extends BaseEnvironmentalVariableBuildCondition
+abstract class BaseEnvironmentalVariableBuildCondition
+  implements ExecutionCondition
 {
 
-  @Override
-  protected String getSystemBooleanVariable()
+  public <C extends JdbcDatabaseContainer> C getJdbcDatabaseContainer(final Supplier<C> createTestContainer)
   {
-    return "heavydb";
+    if (createTestContainer != null && shouldExecute())
+    {
+      return createTestContainer.get();
+    }
+    else
+    {
+      return null;
+    }
+  }
+
+  @Override
+  public ConditionEvaluationResult evaluateExecutionCondition(final ExtensionContext context)
+  {
+    if (!shouldExecute())
+    {
+      return ConditionEvaluationResult
+        .disabled("Development build - disable long running tests");
+    }
+
+    return ConditionEvaluationResult.enabled("Complete build - run all tests");
+  }
+
+  protected abstract String getSystemBooleanVariable();
+
+  private boolean shouldExecute()
+  {
+    final String systemBooleanValue = System
+      .getProperty(getSystemBooleanVariable());
+    final boolean shouldExecute =
+      systemBooleanValue != null && isBlank(systemBooleanValue) || Boolean
+        .parseBoolean(systemBooleanValue);
+    return shouldExecute;
   }
 
 }

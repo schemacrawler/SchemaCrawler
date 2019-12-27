@@ -42,6 +42,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -64,7 +65,8 @@ public class PostgreSQLTest
 {
 
   @Container
-  private PostgreSQLContainer dbContainer = new PostgreSQLContainer<>();
+  private JdbcDatabaseContainer dbContainer = new HeavyDatabaseBuildCondition()
+    .getJdbcDatabaseContainer(() -> new PostgreSQLContainer<>());
 
   @BeforeEach
   public void createDatabase()

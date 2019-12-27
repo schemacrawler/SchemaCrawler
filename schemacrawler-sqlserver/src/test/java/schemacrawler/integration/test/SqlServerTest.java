@@ -44,6 +44,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.MSSQLServerContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -66,7 +67,8 @@ public class SqlServerTest
 {
 
   @Container
-  private MSSQLServerContainer dbContainer = new MSSQLServerContainer<>();
+  private JdbcDatabaseContainer dbContainer = new HeavyDatabaseBuildCondition()
+    .getJdbcDatabaseContainer(() -> new MSSQLServerContainer<>());
 
   @BeforeEach
   public void createDatabase()
