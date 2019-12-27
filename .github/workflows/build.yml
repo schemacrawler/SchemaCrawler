@@ -19,4 +19,4 @@ jobs:
     - name: Build with Maven
       env:
         TZ: GMT
-      run: mvn -f schemacrawler-parent/pom.xml clean package jacoco:report coveralls:report -DrepoToken=${{ secrets.COVERALLS_TOKEN }} -DserviceName=GitHub -DserviceBuildUrl=https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks -Dbranch=${{ github.head_ref || github.ref }}
+      run: mvn --no-transfer-progress --batch-mode -f schemacrawler-parent/pom.xml clean package jacoco:report coveralls:report -DrepoToken=${{ secrets.COVERALLS_TOKEN }} -DserviceName=GitHub -DserviceBuildUrl=https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks -Dbranch=${{ github.head_ref || github.ref }}
