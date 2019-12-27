@@ -24,15 +24,15 @@ jobs:
         echo ${{ github.head_ref || github.ref }}
         echo ${{ github.sha }}
         mvn \
-        --no-transfer-progress \
-        --batch-mode \
-        -f schemacrawler-parent/pom.xml \
-        clean package \
-        jacoco:report \
-        coveralls:report \
-        -DrepoToken=${{ secrets.COVERALLS_TOKEN }} \
-        -DserviceName=github \
-        -DserviceBuildUrl=https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks \
-        -DserviceBuildNumber=${{ github.head_ref || github.ref }} \
-        -Dbranch=${{ github.head_ref || github.ref }} \
-        -DfailOnServiceError=false
+          --no-transfer-progress \
+          --batch-mode \
+          -f schemacrawler-parent/pom.xml \
+          clean package \
+          jacoco:report \
+          coveralls:report \
+          -DrepoToken=${{ secrets.COVERALLS_TOKEN }} \
+          -DserviceName=github \
+          -DserviceBuildUrl=https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks \
+          -DserviceBuildNumber=${{ github.head_ref || github.ref }} \
+          -Dbranch=${{ github.head_ref || github.ref }} \
+          -DfailOnServiceError=false
