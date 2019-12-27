@@ -91,7 +91,6 @@
         </property>
       </activation>
       <modules>
-
         <module>../schemacrawler-dbtest</module>
 
         <module>../schemacrawler-diff</module>
@@ -103,46 +102,6 @@
       <properties>
         <maven.javadoc.skip>false</maven.javadoc.skip>
       </properties>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.jacoco</groupId>
-            <artifactId>jacoco-maven-plugin</artifactId>
-            <version>0.8.2</version>
-            <executions>
-              <execution>
-                <id>prepare-agent</id>
-                <goals>
-                  <goal>prepare-agent</goal>
-                </goals>
-              </execution>
-              <execution>
-                <id>report</id>
-                <phase>test</phase>
-                <goals>
-                  <goal>report</goal>
-                </goals>
-                <configuration>
-                  <excludes>
-                    <exclude>**/JSON*.*</exclude>
-                    <exclude>**/*Test.*</exclude>
-                    <exclude>**/Test*.*</exclude>
-                  </excludes>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.eluder.coveralls</groupId>
-              <artifactId>coveralls-maven-plugin</artifactId>
-              <version>4.3.0</version>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-      </build>
     </profile>
   </profiles>
   <dependencies>
@@ -275,6 +234,11 @@
           <artifactId>maven-deploy-plugin</artifactId>
           <version>2.8.2</version>
         </plugin>
+				<plugin>
+					<groupId>org.eluder.coveralls</groupId>
+					<artifactId>coveralls-maven-plugin</artifactId>
+					<version>4.3.0</version>
+				</plugin>				
         <plugin>
           <groupId>org.sonatype.plugins</groupId>
           <artifactId>nexus-staging-maven-plugin</artifactId>
@@ -360,6 +324,33 @@
           </execution>
         </executions>
       </plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.5</version>
+				<executions>
+					<execution>
+						<id>prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration>
+							<excludes>
+								<exclude>**/JSON*.*</exclude>
+								<exclude>**/*Test.*</exclude>
+								<exclude>**/Test*.*</exclude>
+							</excludes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>			
       <plugin>
         <groupId>org.sonatype.plugins</groupId>
         <artifactId>nexus-staging-maven-plugin</artifactId>

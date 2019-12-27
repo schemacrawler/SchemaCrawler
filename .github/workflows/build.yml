@@ -19,6 +19,6 @@ jobs:
     - name: Build with Maven
       env:
         TZ: GMT
-      run: mvn -Dlighdb -Dheavydb -f schemacrawler-parent/pom.xml clean package jacoco:report coveralls:report
+      run: mvn -Dlightdb -Dheavydb -f schemacrawler-parent/pom.xml clean package jacoco:report coveralls:report
     - name: Upload coverage reports
       run: bash <(curl -s https://codecov.io/bash) -t 4456b669-238d-485f-a64a-250449710514
