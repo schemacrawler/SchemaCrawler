@@ -31,6 +31,7 @@ jobs:
         jacoco:report \
         coveralls:report \
         -DrepoToken=${{ secrets.COVERALLS_TOKEN }} \
-        -DserviceName=GitHub \
+        -DserviceName=Github \
         -DserviceBuildUrl=https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks \
+        -DserviceBuildNumber=${{ github.head_ref || github.ref }} \
         -Dbranch=${{ github.head_ref || github.ref }}
