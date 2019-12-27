@@ -44,10 +44,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schema.*;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.test.utility.DatabaseTestUtility;
-import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
-import schemacrawler.test.utility.TestWriter;
+import schemacrawler.test.utility.*;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.integration.objectdiffer.SchemaCrawlerDifferBuilder;
@@ -55,6 +52,7 @@ import schemacrawler.tools.sqlite.EmbeddedSQLiteWrapper;
 import schemacrawler.utility.NamedObjectSort;
 import schemacrawler.utility.SchemaCrawlerUtility;
 
+@ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestContextParameterResolver.class)
 public class DiffTest
 {
