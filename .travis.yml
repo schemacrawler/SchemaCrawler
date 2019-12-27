@@ -26,7 +26,7 @@ addons:
       - graphviz
 script:
   - echo $SC_BUILD_DIR
-  - mvn --no-transfer-progress --batch-mode -Ddistrib -f ./schemacrawler-parent/pom.xml clean install jacoco:report coveralls:report
+  - mvn -Ddistrib -f ./schemacrawler-parent/pom.xml clean install jacoco:report coveralls:report
 before_deploy:
   - git fetch --tags
 deploy:
