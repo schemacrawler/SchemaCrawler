@@ -1,4 +1,4 @@
-name: CI for Project
+name: Integration Tests
 
 on: [push]
 
