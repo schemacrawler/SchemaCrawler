@@ -1,4 +1,4 @@
-name: Integration Tests
+name: Code Coverage
 
 on: [push]
 
