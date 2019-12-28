@@ -33,6 +33,8 @@ LABEL \
   "us.fatehi.schemacrawler.website"="http://www.schemacrawler.com" \
   "us.fatehi.schemacrawler.docker-hub"="https://hub.docker.com/r/schemacrawler/schemacrawler"
 
+LABEL "maintainer"="Sualeh Fatehi <sualeh@hotmail.com>"
+
 # Install Graphviz
 RUN \
   apk add --update --no-cache \
@@ -68,6 +70,3 @@ COPY \
 RUN \
     echo 'alias schemacrawler="/opt/schemacrawler/schemacrawler.sh"' \
     >> /home/schcrwlr/.bashrc
-
-
-MAINTAINER Sualeh Fatehi <sualeh@hotmail.com>
