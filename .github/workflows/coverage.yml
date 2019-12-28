@@ -35,8 +35,9 @@ jobs:
             -DserviceName=github \
             -DserviceJobId=$GITHUB_ACTION \
             -DserviceBuildUrl=https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks \
-            -Dbranch=${{ github.head_ref || github.ref }}
-            -DdryRun=true
+            -Dbranch=${{ github.head_ref || github.ref }} \
+            -DdryRun=true \
+            -DfailOnServiceError=false
     - name: Coveralls
       uses: coverallsapp/github-action@master
       with:
