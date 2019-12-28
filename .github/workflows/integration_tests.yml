@@ -16,7 +16,7 @@ jobs:
         java-version: 1.8
     - name: Install packages
       run: sudo apt-get update; sudo apt-get install graphviz
-    - name: Build with Maven
+    - name: Run integration tests, and upload coverage
       env:
         TZ: GMT
       run: |
@@ -30,3 +30,4 @@ jobs:
           -Dheavydb \
           -f schemacrawler-parent/pom.xml \
           clean package
+        bash <(curl -s https://codecov.io/bash) -t 4456b669-238d-485f-a64a-250449710514
