@@ -33,13 +33,7 @@ jobs:
           coveralls:report \
             -DrepoToken=${{ secrets.COVERALLS_TOKEN }} \
             -DserviceName=github \
-            -DserviceJobId=$GITHUB_ACTION \
+            -DserviceJobId=${{ github.sha }} \
             -DserviceBuildUrl=https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks \
             -Dbranch=${{ github.head_ref || github.ref }} \
-            -DdryRun=true \
             -DfailOnServiceError=false
-    - name: Coveralls
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: ./schemacrawler-parent/target/coveralls.json
