@@ -1,4 +1,3 @@
-
 /*
 ========================================================================
 SchemaCrawler
@@ -30,9 +29,9 @@ http://www.gnu.org/licenses/
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 
 import java.io.FileDescriptor;
@@ -47,15 +46,12 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.testdb.TestDatabase;
 import schemacrawler.tools.options.TextOutputFormat;
 
 public class ExampleTest
 {
-
-  private static TestDatabase testDatabase;
 
   @BeforeAll
   public static void startDatabase()
@@ -68,7 +64,7 @@ public class ExampleTest
   {
     testDatabase.stop();
   }
-
+  private static TestDatabase testDatabase;
   private TestOutputStream out;
   private TestOutputStream err;
 
@@ -95,7 +91,9 @@ public class ExampleTest
     throws Exception
   {
     // Test
-    final Path tempFile = Files.createTempFile("sc", ".out").toAbsolutePath();
+    final Path tempFile = Files
+      .createTempFile("sc", ".out")
+      .toAbsolutePath();
     ExecutableExample.main(new String[] { tempFile.toString() });
 
     final List<String> failures = compareOutput("ExecutableExample.html",
