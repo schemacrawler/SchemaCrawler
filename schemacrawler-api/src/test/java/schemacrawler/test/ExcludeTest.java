@@ -42,7 +42,6 @@ import java.util.logging.Level;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
@@ -62,8 +61,8 @@ import sf.util.SchemaCrawlerLogger;
 public class ExcludeTest
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(ExcludeTest.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(ExcludeTest.class.getName());
 
   @Test
   public void excludeColumns(final TestContext testContext,
@@ -71,44 +70,52 @@ public class ExcludeTest
     throws Exception
   {
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout;)
+    try (final TestWriter out = testout)
     {
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder()
-        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
-        .includeColumns(new RegularExpressionExclusionRule(".*\\..*\\.ID"));
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-        .toOptions();
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+        SchemaCrawlerOptionsBuilder
+          .builder()
+          .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
+          .includeColumns(new RegularExpressionExclusionRule(".*\\..*\\.ID"));
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+        schemaCrawlerOptionsBuilder.toOptions();
 
       final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
-      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
+      final Schema[] schemas = catalog
+        .getSchemas()
+        .toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(5));
-      for (final Schema schema: schemas)
+      for (final Schema schema : schemas)
       {
         out.println("schema: " + schema.getFullName());
-        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
+        final Table[] tables = catalog
+          .getTables(schema)
+          .toArray(new Table[0]);
         Arrays.sort(tables, NamedObjectSort.alphabetical);
-        for (final Table table: tables)
+        for (final Table table : tables)
         {
           out.println("  table: " + table.getFullName());
-          final Column[] columns = table.getColumns().toArray(new Column[0]);
+          final Column[] columns = table
+            .getColumns()
+            .toArray(new Column[0]);
           Arrays.sort(columns);
-          for (final Column column: columns)
+          for (final Column column : columns)
           {
             LOGGER.log(Level.FINE, column.toString());
             out.println("    column: " + column.getFullName());
-            out.println("      database type: " + column.getColumnDataType()
+            out.println("      database type: " + column
+              .getColumnDataType()
               .getDatabaseSpecificTypeName());
-            out
-              .println("      type: "
-                       + column.getColumnDataType().getJavaSqlType().getName());
+            out.println("      type: " + column
+              .getColumnDataType()
+              .getJavaSqlType()
+              .getName());
           }
         }
       }
     }
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext
-                 .testMethodFullName())));
+               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
 }

@@ -68,31 +68,6 @@ public class FileHasContent
                                    true);
   }
 
-  public static Matcher<TestResource> hasSameContentAs(final TestResource classpathTestResource)
-  {
-    return hasSameContentAndTypeAs(classpathTestResource, null, false);
-  }
-
-  public static TestResource outputOf(final Path filePath)
-  {
-    if (filePath == null)
-    {
-      return new TestResource();
-    }
-    else
-    {
-      return new TestResource(filePath);
-    }
-  }
-
-  public static TestResource outputOf(final TestOutputCapture testoutput)
-  {
-    requireNonNull(testoutput, "No test output capture provided");
-    final Path filePath = testoutput.getFilePath();
-    return outputOf(filePath);
-
-  }
-
   private static Matcher<TestResource> hasSameContentAndTypeAs(final TestResource classpathTestResource,
                                                                final String outputFormatValue,
                                                                final boolean validateOutputFormat)
@@ -108,6 +83,30 @@ public class FileHasContent
     return new FileHasContent(classpathTestResource, outputFormatValue);
   }
 
+  public static Matcher<TestResource> hasSameContentAs(final TestResource classpathTestResource)
+  {
+    return hasSameContentAndTypeAs(classpathTestResource, null, false);
+  }
+
+  public static TestResource outputOf(final TestOutputCapture testoutput)
+  {
+    requireNonNull(testoutput, "No test output capture provided");
+    final Path filePath = testoutput.getFilePath();
+    return outputOf(filePath);
+
+  }
+
+  public static TestResource outputOf(final Path filePath)
+  {
+    if (filePath == null)
+    {
+      return new TestResource();
+    }
+    else
+    {
+      return new TestResource(filePath);
+    }
+  }
   private final TestResource referenceFileResource;
   private final String outputFormatValue;
   private List<String> failures;
@@ -130,9 +129,12 @@ public class FileHasContent
       {
         try
         {
-          final Path fileResource = ((TestResource) item).getFileResource()
+          final Path fileResource = ((TestResource) item)
+            .getFileResource()
             .orElse(null);
-          value = Files.lines(fileResource).limit(5)
+          value = Files
+            .lines(fileResource)
+            .limit(5)
             .collect(Collectors.joining("\n"));
         }
         catch (IOException e)
@@ -201,7 +203,8 @@ public class FileHasContent
     {
       throw new RuntimeException("No file input resource provided");
     }
-    final Path file = ((TestResource) actualValue).getFileResource()
+    final Path file = ((TestResource) actualValue)
+      .getFileResource()
       .orElseThrow(() -> new RuntimeException("No file input resource provided"));
     return file;
   }
@@ -229,8 +232,10 @@ public class FileHasContent
     }
     else
     {
-      referenceFile = referenceFileResource.getClasspathResource()
-        .map(resource -> resource.substring(1)).orElse(null);
+      referenceFile = referenceFileResource
+        .getClasspathResource()
+        .map(resource -> resource.substring(1))
+        .orElse(null);
     }
     return referenceFile;
   }

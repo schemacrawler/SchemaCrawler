@@ -35,7 +35,6 @@ import static org.hamcrest.number.OrderingComparison.greaterThan;
 import static org.hamcrest.number.OrderingComparison.lessThan;
 
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.TableType;
 
@@ -43,21 +42,19 @@ public class CompareToTest
 {
 
   /**
-   * See: <a href=
-   * "https://github.com/schemacrawler/SchemaCrawler/issues/228">Inconsistent
+   * See: <a href= "https://github.com/schemacrawler/SchemaCrawler/issues/228">Inconsistent
    * table comparison</a>
    */
   @Test
   public void compareTables()
   {
-    final MutableTable tbl = new MutableTable(new SchemaReference(null,
-                                                                  "public"),
-                                              "booking_detail");
+    final MutableTable tbl =
+      new MutableTable(new SchemaReference(null, "public"), "booking_detail");
     tbl.setTableType(new TableType("table"));
 
-    final MutableView view = new MutableView(new SchemaReference(null,
-                                                                 "public"),
-                                             "blog_monthly_stat_fa");
+    final MutableView view =
+      new MutableView(new SchemaReference(null, "public"),
+                      "blog_monthly_stat_fa");
     view.setTableType(new TableType("materialized view"));
 
     assertThat(view, lessThan(null));

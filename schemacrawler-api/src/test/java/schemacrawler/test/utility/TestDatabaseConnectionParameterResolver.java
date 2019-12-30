@@ -36,7 +36,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
-import org.junit.jupiter.api.extension.*;
+import org.junit.jupiter.api.extension.BeforeAllCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.ParameterContext;
+import org.junit.jupiter.api.extension.ParameterResolutionException;
+import org.junit.jupiter.api.extension.ParameterResolver;
 import schemacrawler.testdb.TestDatabase;
 
 public class TestDatabaseConnectionParameterResolver
@@ -47,12 +51,16 @@ public class TestDatabaseConnectionParameterResolver
 
   private static boolean isParameterConnection(final Parameter parameter)
   {
-    return parameter.getType().equals(Connection.class);
+    return parameter
+      .getType()
+      .equals(Connection.class);
   }
 
   private static boolean isParameterDatabaseConnectionInfo(final Parameter parameter)
   {
-    return parameter.getType().equals(DatabaseConnectionInfo.class);
+    return parameter
+      .getType()
+      .equals(DatabaseConnectionInfo.class);
   }
 
   @Override

@@ -32,7 +32,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 
 import org.junit.jupiter.api.Test;
-
 import sf.util.Multimap;
 
 public class MultimapTest

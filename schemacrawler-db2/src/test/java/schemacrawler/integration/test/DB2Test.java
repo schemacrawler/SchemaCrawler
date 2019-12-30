@@ -32,7 +32,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.matchesPattern;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static sf.util.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
@@ -50,7 +52,12 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Property;
-import schemacrawler.schemacrawler.*;
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.server.db2.DB2DatabaseConnector;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseBuildCondition;
@@ -66,8 +73,8 @@ public class DB2Test
 {
 
   @Container
-  private JdbcDatabaseContainer dbContainer = new HeavyDatabaseBuildCondition()
-    .getJdbcDatabaseContainer(() -> new Db2Container().acceptLicense());
+  private JdbcDatabaseContainer dbContainer =
+    new HeavyDatabaseBuildCondition().getJdbcDatabaseContainer(() -> new Db2Container().acceptLicense());
 
   @BeforeEach
   public void createDatabase()
@@ -92,59 +99,67 @@ public class DB2Test
   public void testDB2CatalogServerInfo()
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder.builder();
     schemaCrawlerOptionsBuilder
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
       .includeSchemas(new RegularExpressionInclusionRule("DB2INST1"));
-    final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptions options =
+      schemaCrawlerOptionsBuilder.toOptions();
 
     final Connection connection = checkConnection(getConnection());
     final DatabaseConnector db2DatabaseConnector = new DB2DatabaseConnector();
 
     final SchemaRetrievalOptions schemaRetrievalOptions = db2DatabaseConnector
-      .getSchemaRetrievalOptionsBuilder(connection).toOptions();
+      .getSchemaRetrievalOptionsBuilder(connection)
+      .toOptions();
 
-    final SchemaCrawler schemaCrawler = new SchemaCrawler(getConnection(),
-                                                          schemaRetrievalOptions,
-                                                          options);
+    final SchemaCrawler schemaCrawler =
+      new SchemaCrawler(getConnection(), schemaRetrievalOptions, options);
     final Catalog catalog = schemaCrawler.crawl();
-    final List<Property> serverInfo = new ArrayList<>(catalog.getDatabaseInfo()
+    final List<Property> serverInfo = new ArrayList<>(catalog
+                                                        .getDatabaseInfo()
                                                         .getServerInfo());
 
     assertThat(serverInfo.size(), equalTo(4));
-    assertThat(serverInfo.get(0).getName(), equalTo("HOST_NAME"));
-    assertThat(String.valueOf(serverInfo.get(0).getValue()),
-               matchesPattern("[0-9a-z]{12}"));
+    assertThat(serverInfo
+                 .get(0)
+                 .getName(), equalTo("HOST_NAME"));
+    assertThat(String.valueOf(serverInfo
+                                .get(0)
+                                .getValue()), matchesPattern("[0-9a-z]{12}"));
   }
 
   @Test
   public void testDB2WithConnection()
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder.builder();
     schemaCrawlerOptionsBuilder
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
       .includeSchemas(new RegularExpressionInclusionRule("DB2INST1"))
-      .includeAllSequences().includeAllSynonyms()
+      .includeAllSequences()
+      .includeAllSynonyms()
       .includeRoutines(new RegularExpressionInclusionRule("[0-9a-zA-Z_\\.]*"))
       .tableTypes("TABLE,VIEW,MATERIALIZED QUERY TABLE");
-    final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptions options =
+      schemaCrawlerOptionsBuilder.toOptions();
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
-      .builder().portableNames();
-    textOptionsBuilder.showDatabaseInfo().showJdbcDriverInfo();
+      .builder()
+      .portableNames();
+    textOptionsBuilder
+      .showDatabaseInfo()
+      .showJdbcDriverInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-      "details");
+    final SchemaCrawlerExecutable executable =
+      new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(options);
-    executable
-      .setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions)
-                                    .toConfig());
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
+                                            .builder(textOptions)
+                                            .toConfig());
 
     assertThat(outputOf(executableExecution(getConnection(), executable)),
                hasSameContentAs(classpathResource("testDB2WithConnection.txt")));

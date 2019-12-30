@@ -32,12 +32,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import org.junit.jupiter.api.Test;
-
 import sf.util.graph.DirectedGraph;
 
 /**
- * Test cases from
- * http://codereview.stackexchange.com/questions/38063/check-if-directed
+ * Test cases from http://codereview.stackexchange.com/questions/38063/check-if-directed
  * -graph-contains-a-cycle
  */
 public class DirectedGraphTest3

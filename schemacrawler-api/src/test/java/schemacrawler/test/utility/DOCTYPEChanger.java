@@ -36,7 +36,9 @@ public final class DOCTYPEChanger
   extends FilterReader
 {
 
-  /** This class defines a main() method to test the DOCTYPEChanger */
+  /**
+   * This class defines a main() method to test the DOCTYPEChanger
+   */
   public static void main(final String[] args)
   {
     try
@@ -53,7 +55,7 @@ public final class DOCTYPEChanger
       tester.setInternalSubset("this is a test");
       tester.setReplace(false);
 
-      try (final BufferedReader in = new BufferedReader(tester);)
+      try (final BufferedReader in = new BufferedReader(tester))
       {
         String line;
         while ((line = in.readLine()) != null)
@@ -81,9 +83,9 @@ public final class DOCTYPEChanger
   protected StringBuffer myBuffer = new StringBuffer();
 
   /**
-   * This method is a placeholder - all 'real' activity appears in the
-   * int read() method. This placeholder is substantially from Java I/O
-   * by Elliotte Rusty Harold, http://www.oreilly.com/catalog/javaio/.
+   * This method is a placeholder - all 'real' activity appears in the int
+   * read() method. This placeholder is substantially from Java I/O by Elliotte
+   * Rusty Harold, http://www.oreilly.com/catalog/javaio/.
    */
   private boolean endOfStream = false;
 
@@ -107,6 +109,18 @@ public final class DOCTYPEChanger
   }
 
   /**
+   * Use this method to set the internal subset identified by the DOCTYPE
+   * declaration. If set, the result will be &lt;!DOCTYPE
+   * <i>rootElement</i> <i>PUBLIC or SYSTEM identifiers</i> [
+   * <i>internalSubset</i>]>&gt;
+   */
+
+  public void setInternalSubset(final String subsetContents)
+  {
+    internalSubsetContent = subsetContents;
+  }
+
+  /**
    * Returns the public identifier. Mostly useful to see if you set it
    * previously.
    */
@@ -117,13 +131,35 @@ public final class DOCTYPEChanger
   }
 
   /**
-   * Returns the root element. Mostly useful to see if you set it
-   * previously.
+   * Use setPublicIdentifier to set the public identifer identified by the
+   * DOCTYPE declaration. If set, the result will be &lt;!DOCTYPE
+   * <i>rootElement</i> PUBLIC '<i>publicIdentifier</i>' '
+   * <i>systemIdentifer</i>' <i>[internalSubset, if present]></i>&gt; .
+   * You must also set a system identifier for this to work properly.
+   */
+
+  public void setPublicIdentifier(final String identifier)
+  {
+    publicIdentifier = identifier;
+  }
+
+  /**
+   * Returns the root element. Mostly useful to see if you set it previously.
    */
 
   public String getRootElement()
   {
     return rootElement;
+  }
+
+  /**
+   * Use setRootElement to set the root element identified by the DOCTYPE
+   * declaration.
+   */
+
+  public void setRootElement(final String elementName)
+  {
+    rootElement = elementName;
   }
 
   /**
@@ -134,6 +170,18 @@ public final class DOCTYPEChanger
   public String getSystemIdentifier()
   {
     return systemIdentifier;
+  }
+
+  /**
+   * Use setSystemIdentifier to set the public identifer identified by the
+   * DOCTYPE declaration. If set without a public identifier, the result will be
+   * &lt;!DOCTYPE <i>rootElement</i> SYSTEM '
+   * <i>systemIdentifer</i>' <i>[internalSubset, if present]></i>&gt;
+   */
+
+  public void setSystemIdentifier(final String identifier)
+  {
+    systemIdentifier = identifier;
   }
 
   @Override
@@ -245,61 +293,14 @@ public final class DOCTYPEChanger
   }
 
   /**
-   * Use this method to set the internal subset identified by the
-   * DOCTYPE declaration. If set, the result will be &lt;!DOCTYPE
-   * <i>rootElement</i> <i>PUBLIC or SYSTEM identifiers</i> [
-   * <i>internalSubset</i>]>&gt;
-   */
-
-  public void setInternalSubset(final String subsetContents)
-  {
-    internalSubsetContent = subsetContents;
-  }
-
-  /**
-   * Use setPublicIdentifier to set the public identifer identified by
-   * the DOCTYPE declaration. If set, the result will be &lt;!DOCTYPE
-   * <i>rootElement</i> PUBLIC '<i>publicIdentifier</i>' '
-   * <i>systemIdentifer</i>' <i>[internalSubset, if present]></i>&gt; .
-   * You must also set a system identifier for this to work properly.
-   */
-
-  public void setPublicIdentifier(final String identifier)
-  {
-    publicIdentifier = identifier;
-  }
-
-  /**
-   * Use setReplace to indicate whether to replace the DOCTYPE
-   * declarations for documents that already have one. False means don't
-   * replace, true means do replace.
+   * Use setReplace to indicate whether to replace the DOCTYPE declarations for
+   * documents that already have one. False means don't replace, true means do
+   * replace.
    */
 
   public void setReplace(final boolean replaceChoice)
   {
     replace = replaceChoice;
-  }
-
-  /**
-   * Use setRootElement to set the root element identified by the
-   * DOCTYPE declaration.
-   */
-
-  public void setRootElement(final String elementName)
-  {
-    rootElement = elementName;
-  }
-
-  /**
-   * Use setSystemIdentifier to set the public identifer identified by
-   * the DOCTYPE declaration. If set without a public identifier, the
-   * result will be &lt;!DOCTYPE <i>rootElement</i> SYSTEM '
-   * <i>systemIdentifer</i>' <i>[internalSubset, if present]></i>&gt;
-   */
-
-  public void setSystemIdentifier(final String identifier)
-  {
-    systemIdentifier = identifier;
   }
 
   protected void addDocType()

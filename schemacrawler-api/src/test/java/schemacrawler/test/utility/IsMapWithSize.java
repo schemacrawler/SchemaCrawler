@@ -52,12 +52,13 @@ public class IsMapWithSize<K, V>
    * </pre>
    *
    * @param size
-   *        the expected size of an examined {@link java.util.Map}
+   *   the expected size of an examined {@link java.util.Map}
    */
-  public static <K, V> Matcher<Map<? extends K, ? extends V>> isMapWithSize(final int size)
+  public static <K, V> Matcher<Map<? extends K, ? extends V>> isMapWithSize(
+    final int size)
   {
     final Matcher<? super Integer> matcher = equalTo(size);
-    return IsMapWithSize.<K, V> isMapWithSize(matcher);
+    return IsMapWithSize.isMapWithSize(matcher);
   }
 
   /**
@@ -74,9 +75,10 @@ public class IsMapWithSize<K, V>
    * </pre>
    *
    * @param sizeMatcher
-   *        a matcher for the size of an examined {@link java.util.Map}
+   *   a matcher for the size of an examined {@link java.util.Map}
    */
-  public static <K, V> Matcher<Map<? extends K, ? extends V>> isMapWithSize(final Matcher<? super Integer> sizeMatcher)
+  public static <K, V> Matcher<Map<? extends K, ? extends V>> isMapWithSize(
+    final Matcher<? super Integer> sizeMatcher)
   {
     return new IsMapWithSize<K, V>(sizeMatcher);
   }

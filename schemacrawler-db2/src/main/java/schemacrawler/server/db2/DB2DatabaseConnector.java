@@ -45,23 +45,23 @@ public final class DB2DatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
-    DB2DatabaseConnector.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(DB2DatabaseConnector.class.getName());
 
   public DB2DatabaseConnector()
     throws IOException
   {
     super(new DatabaseServerType("db2", "IBM DB2"),
           new ClasspathInputResource("/schemacrawler-db2.config.properties"),
-          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder
-            .fromResourceFolder("/db2.information_schema"));
+          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
+            "/db2.information_schema"));
   }
 
   @Override
   public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(final Connection connection)
   {
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = super.getSchemaRetrievalOptionsBuilder(
-      connection);
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+      super.getSchemaRetrievalOptionsBuilder(connection);
     schemaRetrievalOptionsBuilder.withTableColumnRetrievalStrategy(
       MetadataRetrievalStrategy.metadata_all);
     return schemaRetrievalOptionsBuilder;
@@ -71,17 +71,17 @@ public final class DB2DatabaseConnector
   public PluginCommand getHelpCommand()
   {
     final PluginCommand pluginCommand = super.getHelpCommand();
-    pluginCommand.addOption("server",
-                            "--server=db2%n"
-                            + "Loads SchemaCrawler plug-in for IBM DB2",
-                            String.class)
-                 .addOption("host",
-                            "Host name%n" + "Optional, defaults to localhost",
-                            String.class)
-                 .addOption("port",
-                            "Port number%n" + "Optional, defaults to 50000",
-                            Integer.class)
-                 .addOption("database", "Database name", String.class);
+    pluginCommand
+      .addOption("server",
+                 "--server=db2%n" + "Loads SchemaCrawler plug-in for IBM DB2",
+                 String.class)
+      .addOption("host",
+                 "Host name%n" + "Optional, defaults to localhost",
+                 String.class)
+      .addOption("port",
+                 "Port number%n" + "Optional, defaults to 50000",
+                 Integer.class)
+      .addOption("database", "Database name", String.class);
     return pluginCommand;
   }
 

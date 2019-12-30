@@ -68,7 +68,9 @@ public class TestContextParameterResolver
 
   private boolean isParameterTestContext(final Parameter parameter)
   {
-    return parameter.getType().equals(TestContext.class);
+    return parameter
+      .getType()
+      .equals(TestContext.class);
   }
 
 }

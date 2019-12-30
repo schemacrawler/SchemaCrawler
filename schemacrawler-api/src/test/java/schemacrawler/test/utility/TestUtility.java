@@ -29,9 +29,19 @@ package schemacrawler.test.utility;
 
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Files.*;
+import static java.nio.file.Files.createDirectories;
+import static java.nio.file.Files.delete;
+import static java.nio.file.Files.deleteIfExists;
+import static java.nio.file.Files.exists;
+import static java.nio.file.Files.move;
+import static java.nio.file.Files.newBufferedReader;
+import static java.nio.file.Files.newInputStream;
+import static java.nio.file.Files.newOutputStream;
+import static java.nio.file.Files.size;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
-import static java.nio.file.StandardOpenOption.*;
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.nio.file.StandardOpenOption.WRITE;
 import static java.util.Objects.requireNonNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -41,7 +51,14 @@ import static sf.util.Utility.isBlank;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.Reader;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
@@ -52,16 +69,16 @@ import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import java.util.zip.ZipInputStream;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonToken;
 import org.apache.commons.io.FileUtils;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
@@ -78,23 +95,33 @@ public final class TestUtility
     final StackTraceElement ste = currentMethodStackTraceElement();
     final Class<?> callingClass = Class.forName(ste.getClassName());
     final Path codePath = Paths
-      .get(callingClass.getProtectionDomain().getCodeSource().getLocation()
-             .toURI()).normalize().toAbsolutePath();
-    final boolean isInTarget = codePath.toString().contains("target");
+      .get(callingClass
+             .getProtectionDomain()
+             .getCodeSource()
+             .getLocation()
+             .toURI())
+      .normalize()
+      .toAbsolutePath();
+    final boolean isInTarget = codePath
+      .toString()
+      .contains("target");
     if (!isInTarget)
     {
       throw new RuntimeException("Not in build directory, " + codePath);
     }
     final Path directory = codePath.resolve("..");
-    return directory.normalize().toAbsolutePath();
+    return directory
+      .normalize()
+      .toAbsolutePath();
   }
 
   public static void clean(final String dirname)
     throws Exception
   {
-    FileUtils
-      .deleteDirectory(buildDirectory().resolve("unit_tests_results_output")
-                         .resolve(dirname).toFile());
+    FileUtils.deleteDirectory(buildDirectory()
+                                .resolve("unit_tests_results_output")
+                                .resolve(dirname)
+                                .toFile());
   }
 
   public static List<String> compareCompressedOutput(final String referenceFile,
@@ -129,16 +156,15 @@ public final class TestUtility
 
     if (!isFileReadable(testOutputTempFile))
     {
-      return Collections
-        .singletonList("Output file not created - " + testOutputTempFile);
+      return Collections.singletonList(
+        "Output file not created - " + testOutputTempFile);
     }
 
     final List<String> failures = new ArrayList<>();
 
     final boolean contentEquals;
-    final Reader referenceReader = readerForResource(referenceFile,
-                                                     UTF_8,
-                                                     isCompressed);
+    final Reader referenceReader =
+      readerForResource(referenceFile, UTF_8, isCompressed);
     if (referenceReader == null)
 
     {
@@ -151,12 +177,10 @@ public final class TestUtility
     else
     {
       final Reader fileReader = readerForFile(testOutputTempFile, isCompressed);
-      final Predicate<String> linesFilter = new SvgElementFilter()
-        .and(new NeuteredLinesFilter());
-      contentEquals = contentEquals(referenceReader,
-                                    fileReader,
-                                    failures,
-                                    linesFilter);
+      final Predicate<String> linesFilter =
+        new SvgElementFilter().and(new NeuteredLinesFilter());
+      contentEquals =
+        contentEquals(referenceReader, fileReader, failures, linesFilter);
     }
 
     if ("html".equals(outputFormat))
@@ -175,7 +199,8 @@ public final class TestUtility
     if (!contentEquals)
     {
       final Path testOutputTargetFilePath = buildDirectory()
-        .resolve("unit_tests_results_output").resolve(referenceFile);
+        .resolve("unit_tests_results_output")
+        .resolve(referenceFile);
       createDirectories(testOutputTargetFilePath.getParent());
       deleteIfExists(testOutputTargetFilePath);
       move(testOutputTempFile, testOutputTargetFilePath, REPLACE_EXISTING);
@@ -207,15 +232,19 @@ public final class TestUtility
       return false;
     }
 
-    try (final Stream<String> expectedLinesStream = new BufferedReader(
-      expectedInputReader).lines();
+    try (
+      final Stream<String> expectedLinesStream = new BufferedReader(
+        expectedInputReader).lines();
       final Stream<String> actualLinesStream = new BufferedReader(
-        actualInputReader).lines();)
+        actualInputReader).lines()
+    )
     {
       final Iterator<String> expectedLinesIterator = expectedLinesStream
-        .filter(keepLines).iterator();
+        .filter(keepLines)
+        .iterator();
       final Iterator<String> actualLinesIterator = actualLinesStream
-        .filter(keepLines).iterator();
+        .filter(keepLines)
+        .iterator();
 
       while (expectedLinesIterator.hasNext() && actualLinesIterator.hasNext())
       {
@@ -225,9 +254,15 @@ public final class TestUtility
         if (!expectedline.equals(actualLine))
         {
           final StringBuilder buffer = new StringBuilder();
-          buffer.append(">> expected followed by actual:").append("\n");
-          buffer.append(expectedline).append("\n");
-          buffer.append(actualLine).append("\n");
+          buffer
+            .append(">> expected followed by actual:")
+            .append("\n");
+          buffer
+            .append(expectedline)
+            .append("\n");
+          buffer
+            .append(actualLine)
+            .append("\n");
 
           final String lineMiscompare = buffer.toString();
           failures.add(lineMiscompare);
@@ -241,12 +276,7 @@ public final class TestUtility
       {
         return false;
       }
-      if (expectedLinesIterator.hasNext())
-      {
-        return false;
-      }
-
-      return true;
+      return !expectedLinesIterator.hasNext();
     }
   }
 
@@ -258,8 +288,10 @@ public final class TestUtility
       throw new IOException("Cannot read empty resource");
     }
 
-    try (final InputStream resourceStream = TestUtility.class
-      .getResourceAsStream(resource);)
+    try (
+      final InputStream resourceStream = TestUtility.class.getResourceAsStream(
+        resource)
+    )
     {
       requireNonNull(resourceStream, "Resource not found, " + resource);
       return writeToTempFile(resourceStream);
@@ -271,13 +303,17 @@ public final class TestUtility
     final Pattern baseTestClassName = Pattern.compile(".*\\.Base.*Test");
     final Pattern testClassName = Pattern.compile(".*\\.[A-Z].*Test");
 
-    final StackTraceElement[] stackTrace = Thread.currentThread()
+    final StackTraceElement[] stackTrace = Thread
+      .currentThread()
       .getStackTrace();
     for (final StackTraceElement stackTraceElement : stackTrace)
     {
       final String className = stackTraceElement.getClassName();
-      if (testClassName.matcher(className).matches() && !baseTestClassName
-        .matcher(className).matches())
+      if (testClassName
+            .matcher(className)
+            .matches() && !baseTestClassName
+        .matcher(className)
+        .matches())
       {
         return stackTraceElement;
       }
@@ -342,8 +378,9 @@ public final class TestUtility
   public static String probeFileHeader(final Path tempFile)
     throws IOException
   {
-    try (final FileChannel fc = new FileInputStream(tempFile.toFile())
-      .getChannel();)
+    try (
+      final FileChannel fc = new FileInputStream(tempFile.toFile()).getChannel()
+    )
     {
       final ByteBuffer bb = ByteBuffer.allocate(2);
       fc.read(bb);
@@ -371,8 +408,8 @@ public final class TestUtility
         StandardOpenOption.READ));
       inputStream.getNextEntry();
 
-      bufferedReader = new BufferedReader(new InputStreamReader(inputStream,
-                                                                UTF_8));
+      bufferedReader =
+        new BufferedReader(new InputStreamReader(inputStream, UTF_8));
     }
     else
     {
@@ -393,8 +430,8 @@ public final class TestUtility
                                           final boolean isCompressed)
     throws IOException
   {
-    final InputStream inputStream = TestUtility.class
-      .getResourceAsStream("/" + resource);
+    final InputStream inputStream =
+      TestUtility.class.getResourceAsStream("/" + resource);
     final Reader reader;
     if (inputStream != null)
     {
@@ -468,15 +505,19 @@ public final class TestUtility
   }
 
   private static Path writeToTempFile(final InputStream resourceStream)
-    throws IOException, FileNotFoundException
+    throws IOException
   {
-    final Path tempFile = IOUtility.createTempFilePath("resource", "data")
-      .normalize().toAbsolutePath();
+    final Path tempFile = IOUtility
+      .createTempFilePath("resource", "data")
+      .normalize()
+      .toAbsolutePath();
 
-    try (final OutputStream tempFileStream = newOutputStream(tempFile,
-                                                             WRITE,
-                                                             TRUNCATE_EXISTING,
-                                                             CREATE);)
+    try (
+      final OutputStream tempFileStream = newOutputStream(tempFile,
+                                                          WRITE,
+                                                          TRUNCATE_EXISTING,
+                                                          CREATE)
+    )
     {
       fastChannelCopy(Channels.newChannel(resourceStream),
                       Channels.newChannel(tempFileStream));

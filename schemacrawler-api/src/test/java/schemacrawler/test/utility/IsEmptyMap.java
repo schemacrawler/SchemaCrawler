@@ -39,8 +39,8 @@ public class IsEmptyMap<K, V>
 {
 
   /**
-   * Creates a matcher for {@link java.util.Map}s matching examined
-   * collections whose <code>isEmpty</code> method returns
+   * Creates a matcher for {@link java.util.Map}s matching examined collections
+   * whose <code>isEmpty</code> method returns
    * <code>true</code>.
    * <p/>
    * For example:

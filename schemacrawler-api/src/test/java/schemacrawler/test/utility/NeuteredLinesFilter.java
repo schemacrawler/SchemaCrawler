@@ -84,7 +84,7 @@ final class NeuteredLinesFilter
     // Oracle
     // -- server-specific values
     Pattern.compile("\\s+value\\s+localhost:\\d+:xe\\s+"),
-};
+    };
 
   /**
    * Should we keep the line - that is, not ignore it?
@@ -94,7 +94,9 @@ final class NeuteredLinesFilter
   {
     for (final Pattern neuter : neuters)
     {
-      if (neuter.matcher(line).matches())
+      if (neuter
+        .matcher(line)
+        .matches())
       {
         return false;
       }

@@ -41,7 +41,6 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
@@ -67,29 +66,37 @@ public class MetadataUtilityTest
                           final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
 
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
 
-    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
+    final Schema schema = catalog
+      .lookupSchema("PUBLIC.BOOKS")
+      .get();
     assertThat("BOOKS Schema not found", schema, notNullValue());
 
-    final Table table = catalog.lookupTable(schema, "BOOKS").get();
+    final Table table = catalog
+      .lookupTable(schema, "BOOKS")
+      .get();
     assertThat("BOOKS Table not found", table, notNullValue());
 
-    final ForeignKey fk = table.getForeignKeys().toArray(new ForeignKey[0])[0];
+    final ForeignKey fk = table
+      .getForeignKeys()
+      .toArray(new ForeignKey[0])[0];
     assertThat("Foreign key not found", fk, notNullValue());
 
-    final ColumnReference columnReference = fk.getColumnReferences()
+    final ColumnReference columnReference = fk
+      .getColumnReferences()
       .toArray(new ColumnReference[0])[0];
     assertThat("Column reference not found", columnReference, notNullValue());
 
-    assertThat(MetaDataUtility
-      .constructForeignKeyName(columnReference.getForeignKeyColumn(),
-                               columnReference.getPrimaryKeyColumn()),
+    assertThat(MetaDataUtility.constructForeignKeyName(columnReference.getForeignKeyColumn(),
+                                                       columnReference.getPrimaryKeyColumn()),
                is("SC_AA4376_AFD2BA21"));
 
     assertThat(MetaDataUtility.findForeignKeyCardinality(fk),
@@ -104,30 +111,44 @@ public class MetadataUtilityTest
                              final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
 
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
 
-    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
+    final Schema schema = catalog
+      .lookupSchema("PUBLIC.BOOKS")
+      .get();
     assertThat("BOOKS Schema not found", schema, notNullValue());
 
-    final Table table = catalog.lookupTable(schema, "BOOKS").get();
+    final Table table = catalog
+      .lookupTable(schema, "BOOKS")
+      .get();
     assertThat("BOOKS Table not found", table, notNullValue());
 
-    assertThat(MetaDataUtility.allIndexCoumnNames(table).stream()
-      .flatMap(List::stream).collect(Collectors.toSet()),
+    assertThat(MetaDataUtility
+                 .allIndexCoumnNames(table)
+                 .stream()
+                 .flatMap(List::stream)
+                 .collect(Collectors.toSet()),
                containsInAnyOrder("PUBLIC.BOOKS.BOOKS.ID",
                                   "PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID"));
 
-    assertThat(MetaDataUtility.uniqueIndexCoumnNames(table).stream()
-      .flatMap(List::stream).collect(Collectors.toSet()),
+    assertThat(MetaDataUtility
+                 .uniqueIndexCoumnNames(table)
+                 .stream()
+                 .flatMap(List::stream)
+                 .collect(Collectors.toSet()),
                containsInAnyOrder("PUBLIC.BOOKS.BOOKS.ID",
                                   "PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID"));
 
-    final Index index = table.getIndexes().toArray(new Index[0])[0];
+    final Index index = table
+      .getIndexes()
+      .toArray(new Index[0])[0];
     assertThat("Index not found", index, notNullValue());
 
     assertThat(MetaDataUtility.columnNames(index),

@@ -41,7 +41,6 @@ import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
@@ -63,17 +62,18 @@ public class SchemaCrawlerReferenceTest
     throws Exception
   {
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     int fkReferenceCount = 0;
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     final Collection<Table> tables = catalog.getTables();
-    for (final Table table: tables)
+    for (final Table table : tables)
     {
       final Collection<ForeignKey> foreignKeys = table.getForeignKeys();
-      for (final ForeignKey foreignKey: foreignKeys)
+      for (final ForeignKey foreignKey : foreignKeys)
       {
-        for (final ForeignKeyColumnReference fkColumnRef: foreignKey)
+        for (final ForeignKeyColumnReference fkColumnRef : foreignKey)
         {
           assertReferencedColumnExists(catalog,
                                        fkColumnRef.getPrimaryKeyColumn());
@@ -93,22 +93,24 @@ public class SchemaCrawlerReferenceTest
     throws Exception
   {
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder()
-      .includeTables(new RegularExpressionInclusionRule(".*\\.BOOKAUTHORS"))
-      .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.BOOKAUTHORS\\..*"));
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .includeTables(new RegularExpressionInclusionRule(".*\\.BOOKAUTHORS"))
+        .includeGreppedColumns(new RegularExpressionInclusionRule(
+          ".*\\.BOOKAUTHORS\\..*"));
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
 
     int fkReferenceCount = 0;
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     final Collection<Table> tables = catalog.getTables();
-    for (final Table table: tables)
+    for (final Table table : tables)
     {
       final Collection<ForeignKey> foreignKeys = table.getForeignKeys();
-      for (final ForeignKey foreignKey: foreignKeys)
+      for (final ForeignKey foreignKey : foreignKeys)
       {
-        for (final ForeignKeyColumnReference fkColumnRef: foreignKey)
+        for (final ForeignKeyColumnReference fkColumnRef : foreignKey)
         {
           assertReferencedColumnDoesNotExist(catalog,
                                              fkColumnRef.getPrimaryKeyColumn(),
@@ -129,22 +131,24 @@ public class SchemaCrawlerReferenceTest
     throws Exception
   {
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder()
-      .includeTables(new RegularExpressionInclusionRule(".*\\.AUTHORS"))
-      .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.AUTHORS\\..*"));
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .includeTables(new RegularExpressionInclusionRule(".*\\.AUTHORS"))
+        .includeGreppedColumns(new RegularExpressionInclusionRule(
+          ".*\\.AUTHORS\\..*"));
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
 
     int fkReferenceCount = 0;
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     final Collection<Table> tables = catalog.getTables();
-    for (final Table table: tables)
+    for (final Table table : tables)
     {
       final Collection<ForeignKey> foreignKeys = table.getForeignKeys();
-      for (final ForeignKey foreignKey: foreignKeys)
+      for (final ForeignKey foreignKey : foreignKeys)
       {
-        for (final ForeignKeyColumnReference fkColumnRef: foreignKey)
+        for (final ForeignKeyColumnReference fkColumnRef : foreignKey)
         {
           assertReferencedColumnExists(catalog,
                                        fkColumnRef.getPrimaryKeyColumn());
@@ -165,20 +169,22 @@ public class SchemaCrawlerReferenceTest
     throws Exception
   {
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-      .builder()
-      .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.BOOKAUTHORS\\..*"))
-      .toOptions();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .includeGreppedColumns(new RegularExpressionInclusionRule(
+          ".*\\.BOOKAUTHORS\\..*"))
+        .toOptions();
 
     int fkReferenceCount = 0;
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     final Collection<Table> tables = catalog.getTables();
-    for (final Table table: tables)
+    for (final Table table : tables)
     {
       final Collection<ForeignKey> foreignKeys = table.getForeignKeys();
-      for (final ForeignKey foreignKey: foreignKeys)
+      for (final ForeignKey foreignKey : foreignKeys)
       {
-        for (final ForeignKeyColumnReference fkColumnRef: foreignKey)
+        for (final ForeignKeyColumnReference fkColumnRef : foreignKey)
         {
           assertReferencedColumnDoesNotExist(catalog,
                                              fkColumnRef.getPrimaryKeyColumn(),
@@ -199,20 +205,22 @@ public class SchemaCrawlerReferenceTest
     throws Exception
   {
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-      .builder()
-      .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.AUTHORS\\..*"))
-      .toOptions();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .includeGreppedColumns(new RegularExpressionInclusionRule(
+          ".*\\.AUTHORS\\..*"))
+        .toOptions();
 
     int fkReferenceCount = 0;
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     final Collection<Table> tables = catalog.getTables();
-    for (final Table table: tables)
+    for (final Table table : tables)
     {
       final Collection<ForeignKey> foreignKeys = table.getForeignKeys();
-      for (final ForeignKey foreignKey: foreignKeys)
+      for (final ForeignKey foreignKey : foreignKeys)
       {
-        for (final ForeignKeyColumnReference fkColumnRef: foreignKey)
+        for (final ForeignKeyColumnReference fkColumnRef : foreignKey)
         {
           assertReferencedColumnExists(catalog,
                                        fkColumnRef.getPrimaryKeyColumn());
@@ -238,7 +246,9 @@ public class SchemaCrawlerReferenceTest
                catalog.lookupTable(table.getSchema(), table.getName()),
                emptyOptional());
     assertThat("Column references do not match",
-               column == table.lookupColumn(column.getName()).get(),
+               column == table
+                 .lookupColumn(column.getName())
+                 .get(),
                is(true));
 
     if (assertDataNotLoaded)
@@ -246,7 +256,8 @@ public class SchemaCrawlerReferenceTest
       try
       {
         table.getTableType();
-        fail("An exception should be thrown indicating that this table was not loaded from the database");
+        fail(
+          "An exception should be thrown indicating that this table was not loaded from the database");
       }
       catch (final NotLoadedException e)
       {
@@ -255,7 +266,8 @@ public class SchemaCrawlerReferenceTest
       try
       {
         column.getColumnDataType();
-        fail("An exception should be thrown indicating that this table was not loaded from the database");
+        fail(
+          "An exception should be thrown indicating that this table was not loaded from the database");
       }
       catch (final NotLoadedException e)
       {
@@ -270,10 +282,13 @@ public class SchemaCrawlerReferenceTest
     assertThat(column, notNullValue());
     final Table table = column.getParent();
     assertThat("Table references do not match - " + table.getName(),
-               table == catalog.lookupTable(table.getSchema(), table.getName())
+               table == catalog
+                 .lookupTable(table.getSchema(), table.getName())
                  .get());
     assertThat("Column references do not match",
-               column == table.lookupColumn(column.getName()).get());
+               column == table
+                 .lookupColumn(column.getName())
+                 .get());
   }
 
 }

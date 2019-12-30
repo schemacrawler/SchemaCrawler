@@ -30,22 +30,48 @@ package schemacrawler.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.arrayWithSize;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
-import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map.Entry;
+import java.util.Random;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schema.*;
-import schemacrawler.schemacrawler.*;
-import schemacrawler.test.utility.*;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.InfoLevel;
+import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.test.utility.DatabaseTestUtility;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.TestWriter;
 import schemacrawler.utility.NamedObjectSort;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -81,8 +107,9 @@ public class SchemaCrawlerTest
       isBlank(literalSuffix)? "no literal suffix":
       "literal suffix " + literalSuffix;
 
-    final String javaSqlType =
-      "java.sql.Types: " + columnDataType.getJavaSqlType().getName();
+    final String javaSqlType = "java.sql.Types: " + columnDataType
+      .getJavaSqlType()
+      .getName();
 
     final String precision = "precision " + columnDataType.getPrecision();
     final String minimumScale =
@@ -90,15 +117,43 @@ public class SchemaCrawlerTest
     final String maximumScale =
       "maximum scale " + columnDataType.getMaximumScale();
 
-    buffer.append(typeName).append("\n").append("  ").append(dataType)
-      .append("\n").append("  ").append(definedWith).append("\n").append("  ")
-      .append(nullable).append("\n").append("  ").append(autoIncrementable)
-      .append("\n").append("  ").append(literalPrefixText).append("\n")
-      .append("  ").append(literalSuffixText).append("\n").append("  ")
-      .append(columnDataType.getSearchable().toString()).append("\n")
-      .append("  ").append(precision).append("\n").append("  ")
-      .append(minimumScale).append("\n").append("  ").append(maximumScale)
-      .append("\n").append("  ").append(javaSqlType);
+    buffer
+      .append(typeName)
+      .append("\n")
+      .append("  ")
+      .append(dataType)
+      .append("\n")
+      .append("  ")
+      .append(definedWith)
+      .append("\n")
+      .append("  ")
+      .append(nullable)
+      .append("\n")
+      .append("  ")
+      .append(autoIncrementable)
+      .append("\n")
+      .append("  ")
+      .append(literalPrefixText)
+      .append("\n")
+      .append("  ")
+      .append(literalSuffixText)
+      .append("\n")
+      .append("  ")
+      .append(columnDataType
+                .getSearchable()
+                .toString())
+      .append("\n")
+      .append("  ")
+      .append(precision)
+      .append("\n")
+      .append("  ")
+      .append(minimumScale)
+      .append("\n")
+      .append("  ")
+      .append(maximumScale)
+      .append("\n")
+      .append("  ")
+      .append(javaSqlType);
     if (isUserDefined)
     {
       final String baseTypeName;
@@ -111,7 +166,11 @@ public class SchemaCrawlerTest
       {
         baseTypeName = baseColumnDataType.getFullName();
       }
-      buffer.append("\n").append("  ").append("based on ").append(baseTypeName);
+      buffer
+        .append("\n")
+        .append("  ")
+        .append("based on ")
+        .append(baseTypeName);
     }
 
     return buffer.toString();
@@ -127,20 +186,21 @@ public class SchemaCrawlerTest
     {
       final Config config = loadHsqldbConfig();
 
-      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
-        .newSchemaRetrievalOptions(config);
+      final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(config);
 
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-        .includeAllRoutines();
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-        .toOptions();
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+        SchemaCrawlerOptionsBuilder
+          .builder()
+          .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+          .includeAllRoutines();
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+        schemaCrawlerOptionsBuilder.toOptions();
 
-      final Catalog catalog = getCatalog(connection,
-                                         schemaRetrievalOptions,
-                                         schemaCrawlerOptions);
-      final Collection<ColumnDataType> columnDataTypes = catalog
-        .getColumnDataTypes();
+      final Catalog catalog =
+        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
+      final Collection<ColumnDataType> columnDataTypes =
+        catalog.getColumnDataTypes();
       assertThat("ColumnDataType count does not match",
                  columnDataTypes,
                  hasSize(30));
@@ -151,8 +211,7 @@ public class SchemaCrawlerTest
       }
     }
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext
-                                                    .testMethodFullName())));
+               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
@@ -160,14 +219,18 @@ public class SchemaCrawlerTest
                            final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-      .newSchemaCrawlerOptions();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     assertThat(catalog, notNullValue());
-    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
+    final Schema schema = catalog
+      .lookupSchema("PUBLIC.BOOKS")
+      .get();
     assertThat(schema, notNullValue());
-    final Table table = catalog.lookupTable(schema, "AUTHORS").get();
+    final Table table = catalog
+      .lookupTable(schema, "AUTHORS")
+      .get();
     assertThat(table, notNullValue());
     assertThat(table.lookupColumn(null), is(emptyOptional()));
     assertThat(table.lookupColumn(""), is(emptyOptional()));
@@ -185,27 +248,34 @@ public class SchemaCrawlerTest
     {
       final Config config = loadHsqldbConfig();
 
-      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
-        .newSchemaRetrievalOptions(config);
+      final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(config);
 
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-        .toOptions();
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+        SchemaCrawlerOptionsBuilder
+          .builder()
+          .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+          .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+        schemaCrawlerOptionsBuilder.toOptions();
 
-      final Catalog catalog = getCatalog(connection,
-                                         schemaRetrievalOptions,
-                                         schemaCrawlerOptions);
-      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
+      final Catalog catalog =
+        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
+      final Schema[] schemas = catalog
+        .getSchemas()
+        .toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(5));
       for (final Schema schema : schemas)
       {
-        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
+        final Table[] tables = catalog
+          .getTables(schema)
+          .toArray(new Table[0]);
         Arrays.sort(tables, NamedObjectSort.alphabetical);
         for (final Table table : tables)
         {
-          final Column[] columns = table.getColumns().toArray(new Column[0]);
+          final Column[] columns = table
+            .getColumns()
+            .toArray(new Column[0]);
           Arrays.sort(columns);
           for (final Column column : columns)
           {
@@ -240,14 +310,14 @@ public class SchemaCrawlerTest
             out.println(String.format("  - %s=%s",
                                       "ordinal position",
                                       column.getOrdinalPosition()));
-            out.println(String
-                          .format("  - %s=%s", "remarks", column.getRemarks()));
+            out.println(String.format("  - %s=%s",
+                                      "remarks",
+                                      column.getRemarks()));
 
             out.println(String.format("  - %s=%s", "attibutes", ""));
-            final SortedMap<String, Object> columnAttributes = new TreeMap<>(
-              column.getAttributes());
-            for (final Entry<String, Object> columnAttribute : columnAttributes
-              .entrySet())
+            final SortedMap<String, Object> columnAttributes =
+              new TreeMap<>(column.getAttributes());
+            for (final Entry<String, Object> columnAttribute : columnAttributes.entrySet())
             {
               out.println(String.format("    ~ %s=%s",
                                         columnAttribute.getKey(),
@@ -260,8 +330,7 @@ public class SchemaCrawlerTest
       }
     }
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext
-                                                    .testMethodFullName())));
+               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
@@ -273,45 +342,59 @@ public class SchemaCrawlerTest
     {
       final Config config = loadHsqldbConfig();
 
-      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
-        .newSchemaRetrievalOptions(config);
+      final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(config);
 
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-        .toOptions();
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+        SchemaCrawlerOptionsBuilder
+          .builder()
+          .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+          .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+        schemaCrawlerOptionsBuilder.toOptions();
 
-      final Catalog catalog = getCatalog(connection,
-                                         schemaRetrievalOptions,
-                                         schemaCrawlerOptions);
-      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
+      final Catalog catalog =
+        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
+      final Schema[] schemas = catalog
+        .getSchemas()
+        .toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(5));
       for (final Schema schema : schemas)
       {
         out.println("schema: " + schema.getFullName());
-        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
+        final Table[] tables = catalog
+          .getTables(schema)
+          .toArray(new Table[0]);
         Arrays.sort(tables, NamedObjectSort.alphabetical);
         for (final Table table : tables)
         {
           out.println("  table: " + table.getFullName());
-          out.println("    # columns: " + table.getColumns().size());
-          out.println(
-            "    # constraints: " + table.getTableConstraints().size());
-          out.println("    # indexes: " + table.getIndexes().size());
-          out.println("    # foreign keys: " + table.getForeignKeys().size());
-          out.println(
-            "    # imported foreign keys: " + table.getExportedForeignKeys()
-              .size());
-          out.println(
-            "    # exported: " + table.getImportedForeignKeys().size());
-          out.println("    # privileges: " + table.getPrivileges().size());
+          out.println("    # columns: " + table
+            .getColumns()
+            .size());
+          out.println("    # constraints: " + table
+            .getTableConstraints()
+            .size());
+          out.println("    # indexes: " + table
+            .getIndexes()
+            .size());
+          out.println("    # foreign keys: " + table
+            .getForeignKeys()
+            .size());
+          out.println("    # imported foreign keys: " + table
+            .getExportedForeignKeys()
+            .size());
+          out.println("    # exported: " + table
+            .getImportedForeignKeys()
+            .size());
+          out.println("    # privileges: " + table
+            .getPrivileges()
+            .size());
         }
       }
     }
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext
-                                                    .testMethodFullName())));
+               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
@@ -324,21 +407,22 @@ public class SchemaCrawlerTest
     {
       final Config config = loadHsqldbConfig();
 
-      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
-        .newSchemaRetrievalOptions(config);
+      final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(config);
 
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-        .includeAllRoutines();
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-        .toOptions();
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+        SchemaCrawlerOptionsBuilder
+          .builder()
+          .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+          .includeAllRoutines();
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+        schemaCrawlerOptionsBuilder.toOptions();
 
-      final Catalog catalog = getCatalog(connection,
-                                         schemaRetrievalOptions,
-                                         schemaCrawlerOptions);
+      final Catalog catalog =
+        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
       final DatabaseInfo databaseInfo = catalog.getDatabaseInfo();
-      final Collection<DatabaseProperty> dbProperties = databaseInfo
-        .getProperties();
+      final Collection<DatabaseProperty> dbProperties =
+        databaseInfo.getProperties();
       /*
       assertThat("Database property count does not match",
                  dbProperties,
@@ -349,8 +433,8 @@ public class SchemaCrawlerTest
                  serverInfo,
                  is(empty()));
       out.println(String.format("username=%s", databaseInfo.getUserName()));
-      out.println(String
-                    .format("product name=%s", databaseInfo.getProductName()));
+      out.println(String.format("product name=%s",
+                                databaseInfo.getProductName()));
       out.println(String.format("product version=%s",
                                 databaseInfo.getProductVersion()));
       out.println(String.format("catalog=%s", catalog.getName()));
@@ -366,8 +450,7 @@ public class SchemaCrawlerTest
       }
     }
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext
-                                                    .testMethodFullName())));
+               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
@@ -378,29 +461,33 @@ public class SchemaCrawlerTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder()
-        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-        .toOptions();
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+        SchemaCrawlerOptionsBuilder
+          .builder()
+          .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+        schemaCrawlerOptionsBuilder.toOptions();
 
       final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
-      final Table[] tables = catalog.getTables().toArray(new Table[0]);
+      final Table[] tables = catalog
+        .getTables()
+        .toArray(new Table[0]);
       assertThat("Table count does not match", tables, arrayWithSize(13));
       Arrays.sort(tables, NamedObjectSort.alphabetical);
       for (final Table table : tables)
       {
         out.println("  table: " + table.getFullName());
-        out.println("    # columns: " + table.getColumns().size());
-        out.println("    # child tables: " + table
-          .getRelatedTables(TableRelationshipType.child));
-        out.println("    # parent tables: " + table
-          .getRelatedTables(TableRelationshipType.parent));
+        out.println("    # columns: " + table
+          .getColumns()
+          .size());
+        out.println("    # child tables: " + table.getRelatedTables(
+          TableRelationshipType.child));
+        out.println("    # parent tables: " + table.getRelatedTables(
+          TableRelationshipType.parent));
       }
     }
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext
-                                                    .testMethodFullName())));
+               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
@@ -411,34 +498,38 @@ public class SchemaCrawlerTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder()
-        .includeTables(new RegularExpressionInclusionRule(".*\\.AUTHORS"));
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-        .toOptions();
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+        SchemaCrawlerOptionsBuilder
+          .builder()
+          .includeTables(new RegularExpressionInclusionRule(".*\\.AUTHORS"));
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+        schemaCrawlerOptionsBuilder.toOptions();
 
       final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
-      final Table[] tables = catalog.getTables().toArray(new Table[0]);
+      final Table[] tables = catalog
+        .getTables()
+        .toArray(new Table[0]);
       assertThat("Table count does not match", tables, arrayWithSize(1));
       Arrays.sort(tables, NamedObjectSort.alphabetical);
       for (final Table table : tables)
       {
         out.println("  table: " + table.getFullName());
-        out.println("    # columns: " + table.getColumns().size());
-        out.println("    # child tables: " + table
-          .getRelatedTables(TableRelationshipType.child));
-        out.println("    # parent tables: " + table
-          .getRelatedTables(TableRelationshipType.parent));
+        out.println("    # columns: " + table
+          .getColumns()
+          .size());
+        out.println("    # child tables: " + table.getRelatedTables(
+          TableRelationshipType.child));
+        out.println("    # parent tables: " + table.getRelatedTables(
+          TableRelationshipType.parent));
       }
     }
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext
-                                                    .testMethodFullName())));
+               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
   public void routineParameters(final TestContext testContext,
-                       final Connection connection)
+                                final Connection connection)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -446,29 +537,31 @@ public class SchemaCrawlerTest
     {
       final Config config = loadHsqldbConfig();
 
-      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
-        .newSchemaRetrievalOptions(config);
+      final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(config);
 
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-        .includeAllRoutines();
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-        .toOptions();
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+        SchemaCrawlerOptionsBuilder
+          .builder()
+          .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+          .includeAllRoutines();
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+        schemaCrawlerOptionsBuilder.toOptions();
 
-      final Catalog catalog = getCatalog(connection,
-                                         schemaRetrievalOptions,
-                                         schemaCrawlerOptions);
+      final Catalog catalog =
+        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
       final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
-      final Routine[] routines = catalog.getRoutines(schema)
+      final Routine[] routines = catalog
+        .getRoutines(schema)
         .toArray(new Routine[0]);
       assertThat("Routine count does not match", routines, arrayWithSize(4));
       for (final Routine routine : routines)
       {
         assertThat(routine, notNullValue());
         out.println("routine: " + routine.getName());
-        final List<RoutineParameter<? extends Routine>> parameters = routine
-          .getParameters();
-        for (final RoutineParameter<? extends Routine> parameter: parameters)
+        final List<RoutineParameter<? extends Routine>> parameters =
+          routine.getParameters();
+        for (final RoutineParameter<? extends Routine> parameter : parameters)
         {
           out.println("  parameter: " + parameter.getName());
           out.println(String.format("  - %s=%s",
@@ -478,15 +571,18 @@ public class SchemaCrawlerTest
           out.println(String.format("  - %s=%s",
                                     "decimal digits",
                                     parameter.getDecimalDigits()));
-          out.println(String.format("  - %s=%s", "width", parameter.getWidth()));
+          out.println(String.format("  - %s=%s",
+                                    "width",
+                                    parameter.getWidth()));
           out.println(String.format("  - %s=%s",
                                     "nullable",
                                     parameter.isNullable()));
           out.println(String.format("  - %s=%s",
                                     "ordinal position",
                                     parameter.getOrdinalPosition()));
-          out.println(String
-                        .format("  - %s=%s", "remarks", parameter.getRemarks()));
+          out.println(String.format("  - %s=%s",
+                                    "remarks",
+                                    parameter.getRemarks()));
 
           out.println(String.format("  - %s=%s", "attibutes", ""));
         }
@@ -494,8 +590,7 @@ public class SchemaCrawlerTest
       out.println();
     }
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext
-                                                    .testMethodFullName())));
+               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
@@ -508,20 +603,22 @@ public class SchemaCrawlerTest
     {
       final Config config = loadHsqldbConfig();
 
-      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
-        .newSchemaRetrievalOptions(config);
+      final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(config);
 
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-        .includeAllRoutines();
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-        .toOptions();
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+        SchemaCrawlerOptionsBuilder
+          .builder()
+          .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+          .includeAllRoutines();
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+        schemaCrawlerOptionsBuilder.toOptions();
 
-      final Catalog catalog = getCatalog(connection,
-                                         schemaRetrievalOptions,
-                                         schemaCrawlerOptions);
+      final Catalog catalog =
+        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
       final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
-      final Routine[] routines = catalog.getRoutines(schema)
+      final Routine[] routines = catalog
+        .getRoutines(schema)
         .toArray(new Routine[0]);
       assertThat("Routine count does not match", routines, arrayWithSize(4));
       for (final Routine routine : routines)
@@ -536,8 +633,7 @@ public class SchemaCrawlerTest
       }
     }
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext
-                                                    .testMethodFullName())));
+               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
@@ -546,11 +642,13 @@ public class SchemaCrawlerTest
     throws Exception
   {
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.detailed())
-      .includeAllRoutines();
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.detailed())
+        .includeAllRoutines();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
 
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     final Schema schema1 = new SchemaReference("PUBLIC", "BOOKS");
@@ -572,8 +670,12 @@ public class SchemaCrawlerTest
                equalTo(catalog.getRoutines(schema2)));
 
     // Try negative test
-    final Table table1 = catalog.getTables(schema1).toArray(new Table[0])[0];
-    final Table table2 = catalog.getTables(schema1).toArray(new Table[0])[1];
+    final Table table1 = catalog
+      .getTables(schema1)
+      .toArray(new Table[0])[0];
+    final Table table2 = catalog
+      .getTables(schema1)
+      .toArray(new Table[0])[1];
     assertThat("Tables should not be equal", table1, not(equalTo(table2)));
 
   }
@@ -588,24 +690,31 @@ public class SchemaCrawlerTest
     {
       final Config config = loadHsqldbConfig();
 
-      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
-        .newSchemaRetrievalOptions(config);
+      final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(config);
 
-      final SchemaInfoLevel schemaInfoLevel = SchemaInfoLevelBuilder.builder()
-        .withInfoLevel(InfoLevel.minimum).setRetrieveSequenceInformation(true)
+      final SchemaInfoLevel schemaInfoLevel = SchemaInfoLevelBuilder
+        .builder()
+        .withInfoLevel(InfoLevel.minimum)
+        .setRetrieveSequenceInformation(true)
         .toOptions();
 
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder().withSchemaInfoLevel(schemaInfoLevel).includeAllSequences();
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-        .toOptions();
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+        SchemaCrawlerOptionsBuilder
+          .builder()
+          .withSchemaInfoLevel(schemaInfoLevel)
+          .includeAllSequences();
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+        schemaCrawlerOptionsBuilder.toOptions();
 
-      final Catalog catalog = getCatalog(connection,
-                                         schemaRetrievalOptions,
-                                         schemaCrawlerOptions);
-      final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
+      final Catalog catalog =
+        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
+      final Schema schema = catalog
+        .lookupSchema("PUBLIC.BOOKS")
+        .get();
       assertThat("BOOKS Schema not found", schema, notNullValue());
-      final Sequence[] sequences = catalog.getSequences(schema)
+      final Sequence[] sequences = catalog
+        .getSequences(schema)
         .toArray(new Sequence[0]);
       assertThat("Sequence count does not match", sequences, arrayWithSize(1));
       for (final Sequence sequence : sequences)
@@ -619,8 +728,7 @@ public class SchemaCrawlerTest
       }
     }
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext
-                                                    .testMethodFullName())));
+               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
@@ -633,37 +741,45 @@ public class SchemaCrawlerTest
     {
       final Config config = loadHsqldbConfig();
 
-      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
-        .newSchemaRetrievalOptions(config);
+      final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(config);
 
-      final SchemaInfoLevel schemaInfoLevel = SchemaInfoLevelBuilder.builder()
-        .withInfoLevel(InfoLevel.minimum).setRetrieveSynonymInformation(true)
+      final SchemaInfoLevel schemaInfoLevel = SchemaInfoLevelBuilder
+        .builder()
+        .withInfoLevel(InfoLevel.minimum)
+        .setRetrieveSynonymInformation(true)
         .toOptions();
 
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder().withSchemaInfoLevel(schemaInfoLevel).includeAllSynonyms();
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-        .toOptions();
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+        SchemaCrawlerOptionsBuilder
+          .builder()
+          .withSchemaInfoLevel(schemaInfoLevel)
+          .includeAllSynonyms();
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+        schemaCrawlerOptionsBuilder.toOptions();
 
-      final Catalog catalog = getCatalog(connection,
-                                         schemaRetrievalOptions,
-                                         schemaCrawlerOptions);
-      final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
+      final Catalog catalog =
+        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
+      final Schema schema = catalog
+        .lookupSchema("PUBLIC.BOOKS")
+        .get();
       assertThat("BOOKS Schema not found", schema, notNullValue());
-      final Synonym[] synonyms = catalog.getSynonyms(schema)
+      final Synonym[] synonyms = catalog
+        .getSynonyms(schema)
         .toArray(new Synonym[0]);
       assertThat("Synonym count does not match", synonyms, arrayWithSize(1));
       for (final Synonym synonym : synonyms)
       {
         assertThat(synonym, notNullValue());
         out.println("synonym: " + synonym.getName());
-        out.println("  class: " + synonym.getReferencedObject().getClass()
+        out.println("  class: " + synonym
+          .getReferencedObject()
+          .getClass()
           .getSimpleName());
       }
     }
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext
-                                                    .testMethodFullName())));
+               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
@@ -676,24 +792,29 @@ public class SchemaCrawlerTest
     {
       final Config config = loadHsqldbConfig();
 
-      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
-        .newSchemaRetrievalOptions(config);
+      final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(config);
 
-      final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+        DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
-      final Catalog catalog = getCatalog(connection,
-                                         schemaRetrievalOptions,
-                                         schemaCrawlerOptions);
-      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
+      final Catalog catalog =
+        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
+      final Schema[] schemas = catalog
+        .getSchemas()
+        .toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(6));
       for (final Schema schema : schemas)
       {
         out.println("schema: " + schema.getFullName());
-        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
+        final Table[] tables = catalog
+          .getTables(schema)
+          .toArray(new Table[0]);
         for (final Table table : tables)
         {
           out.println("  table: " + table.getFullName());
-          final Constraint[] tableConstraints = table.getTableConstraints()
+          final Constraint[] tableConstraints = table
+            .getTableConstraints()
             .toArray(new Constraint[0]);
           for (final Constraint tableConstraint : tableConstraints)
           {
@@ -701,9 +822,10 @@ public class SchemaCrawlerTest
             out.println("      type: " + tableConstraint.getConstraintType());
             if (tableConstraint instanceof TableConstraint)
             {
-              final TableConstraint dependentTableConstraint = (TableConstraint) tableConstraint;
-              final List<TableConstraintColumn> columns = dependentTableConstraint
-                .getColumns();
+              final TableConstraint dependentTableConstraint =
+                (TableConstraint) tableConstraint;
+              final List<TableConstraintColumn> columns =
+                dependentTableConstraint.getColumns();
               for (final TableConstraintColumn tableConstraintColumn : columns)
               {
                 out.println(
@@ -715,8 +837,7 @@ public class SchemaCrawlerTest
       }
     }
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext
-                                                    .testMethodFullName())));
+               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
@@ -728,33 +849,37 @@ public class SchemaCrawlerTest
     {
       final Config config = loadHsqldbConfig();
 
-      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
-        .newSchemaRetrievalOptions(config);
+      final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(config);
 
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-        .toOptions();
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+        SchemaCrawlerOptionsBuilder
+          .builder()
+          .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+          .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+        schemaCrawlerOptionsBuilder.toOptions();
 
-      final Catalog catalog = getCatalog(connection,
-                                         schemaRetrievalOptions,
-                                         schemaCrawlerOptions);
-      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
+      final Catalog catalog =
+        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
+      final Schema[] schemas = catalog
+        .getSchemas()
+        .toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(5));
       for (final Schema schema : schemas)
       {
-        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
+        final Table[] tables = catalog
+          .getTables(schema)
+          .toArray(new Table[0]);
         Arrays.sort(tables, NamedObjectSort.alphabetical);
         for (final Table table : tables)
         {
           out.println(String.format("o--> %s [%s]",
                                     table.getFullName(),
                                     table.getTableType()));
-          final SortedMap<String, Object> tableAttributes = new TreeMap<>(table
-                                                                            .getAttributes());
-          for (final Entry<String, Object> tableAttribute : tableAttributes
-            .entrySet())
+          final SortedMap<String, Object> tableAttributes =
+            new TreeMap<>(table.getAttributes());
+          for (final Entry<String, Object> tableAttribute : tableAttributes.entrySet())
           {
             out.println(String.format("      ~ %s=%s",
                                       tableAttribute.getKey(),
@@ -764,8 +889,7 @@ public class SchemaCrawlerTest
       }
     }
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext
-                                                    .testMethodFullName())));
+               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
@@ -784,21 +908,27 @@ public class SchemaCrawlerTest
       "PUBLISHERS",
       "BOOKAUTHORS",
       "ΒΙΒΛΊΑ",
-      "AUTHORSLIST" };
+      "AUTHORSLIST"
+    };
     final Random rnd = new Random();
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder()
-      .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
 
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
-    final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
+    final Schema[] schemas = catalog
+      .getSchemas()
+      .toArray(new Schema[0]);
     assertThat("Schema count does not match", schemas, arrayWithSize(5));
     final Schema schema = schemas[0];
 
-    final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
+    final Table[] tables = catalog
+      .getTables(schema)
+      .toArray(new Table[0]);
     for (int i = 0; i < 10; i++)
     {
       for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
@@ -829,16 +959,18 @@ public class SchemaCrawlerTest
   {
     final Config config = loadHsqldbConfig();
 
-    final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
-      .newSchemaRetrievalOptions(config);
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+      SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(config);
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
-    final Catalog catalog = getCatalog(connection,
-                                       schemaRetrievalOptions,
-                                       schemaCrawlerOptions);
+    final Catalog catalog =
+      getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
-    final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
+    final Table[] tables = catalog
+      .getTables(schema)
+      .toArray(new Table[0]);
     boolean foundTrigger = false;
     for (final Table table : tables)
     {
@@ -863,20 +995,21 @@ public class SchemaCrawlerTest
   {
     final Config config = loadHsqldbConfig();
 
-    final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
-      .newSchemaRetrievalOptions(config);
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+      SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(config);
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder.builder();
     schemaCrawlerOptionsBuilder.tableTypes("VIEW");
-    schemaCrawlerOptionsBuilder
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    schemaCrawlerOptionsBuilder.withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
     final Catalog catalog = getCatalog(connection,
                                        schemaRetrievalOptions,
                                        schemaCrawlerOptionsBuilder.toOptions());
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
-    final View view = (View) catalog.lookupTable(schema, "AUTHORSLIST").get();
+    final View view = (View) catalog
+      .lookupTable(schema, "AUTHORSLIST")
+      .get();
     assertThat("View not found", view, notNullValue());
     assertThat("View definition not found",
                view.getDefinition(),
