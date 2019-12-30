@@ -29,13 +29,31 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.arrayWithSize;
+import static org.hamcrest.Matchers.is;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
+
+import javax.sql.DataSource;
+import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.test.utility.*;
+import schemacrawler.test.utility.BaseSqliteTest;
+import schemacrawler.test.utility.DatabaseTestUtility;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
+import schemacrawler.test.utility.TestLoggingExtension;
+import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
 import schemacrawler.tools.analysis.associations.WeakAssociation;
 import schemacrawler.tools.analysis.associations.WeakAssociationForeignKey;
@@ -43,47 +61,36 @@ import schemacrawler.tools.analysis.associations.WeakAssociationsUtility;
 import schemacrawler.utility.NamedObjectSort;
 import schemacrawler.utility.SchemaCrawlerUtility;
 
-import javax.sql.DataSource;
-import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.Collection;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.arrayWithSize;
-import static org.hamcrest.Matchers.is;
-import static schemacrawler.test.utility.FileHasContent.*;
-import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
-
 @ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestContextParameterResolver.class)
 public class PrimaryKeyWeakAssociationsTest
-    extends BaseSqliteTest
+  extends BaseSqliteTest
 {
 
   @Test
   public void weakAssociations1(final TestContext testContext)
-      throws Exception
+    throws Exception
   {
     weakAssociations(testContext, "/pk_test_1.sql");
   }
 
   @Test
   public void weakAssociations2(final TestContext testContext)
-      throws Exception
+    throws Exception
   {
     weakAssociations(testContext, "/pk_test_2.sql");
   }
 
   @Test
   public void weakAssociations3(final TestContext testContext)
-      throws Exception
+    throws Exception
   {
     weakAssociations(testContext, "/pk_test_3.sql");
   }
 
   private void weakAssociations(final TestContext testContext,
                                 final String databaseSqlResource)
-      throws Exception
+    throws Exception
   {
     final String currentMethodFullName = testContext.testMethodFullName();
     final Path sqliteDbFile = createTestDatabase(databaseSqlResource);
@@ -91,26 +98,32 @@ public class PrimaryKeyWeakAssociationsTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+        DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
       final DataSource dataSource = createDataSource(sqliteDbFile);
 
-      final Catalog baseCatalog = SchemaCrawlerUtility
-          .getCatalog(dataSource.getConnection(), schemaCrawlerOptions);
-      final CatalogWithAssociations catalog = new CatalogWithAssociations(
-          baseCatalog);
-      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
+      final Catalog baseCatalog =
+        SchemaCrawlerUtility.getCatalog(dataSource.getConnection(),
+                                        schemaCrawlerOptions);
+      final CatalogWithAssociations catalog =
+        new CatalogWithAssociations(baseCatalog);
+      final Schema[] schemas = catalog
+        .getSchemas()
+        .toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, is(arrayWithSize(1)));
       for (final Schema schema : schemas)
       {
         out.println("schema: " + schema.getFullName());
-        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
+        final Table[] tables = catalog
+          .getTables(schema)
+          .toArray(new Table[0]);
         Arrays.sort(tables, NamedObjectSort.alphabetical);
         for (final Table table : tables)
         {
           out.println("  table: " + table.getFullName());
-          final Collection<WeakAssociationForeignKey> weakAssociations = WeakAssociationsUtility
-              .getWeakAssociations(table);
+          final Collection<WeakAssociationForeignKey> weakAssociations =
+            WeakAssociationsUtility.getWeakAssociations(table);
           for (final WeakAssociationForeignKey weakFk : weakAssociations)
           {
             out.println(String.format("    weak association (1 to %s):",

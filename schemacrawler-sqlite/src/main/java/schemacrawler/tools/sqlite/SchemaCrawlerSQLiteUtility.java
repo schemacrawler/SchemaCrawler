@@ -37,7 +37,8 @@ public class SchemaCrawlerSQLiteUtility
                                                 final String extension)
     throws Exception
   {
-    final EmbeddedSQLiteWrapper sqLiteDatabaseLoader = new EmbeddedSQLiteWrapper();
+    final EmbeddedSQLiteWrapper sqLiteDatabaseLoader =
+      new EmbeddedSQLiteWrapper();
     sqLiteDatabaseLoader.loadDatabaseFile(dbFile);
     return sqLiteDatabaseLoader.createDiagram(extension);
   }

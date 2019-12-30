@@ -51,15 +51,15 @@ public final class SQLiteDatabaseConnector
   {
     super(new DatabaseServerType("sqlite", "SQLite"),
           new ClasspathInputResource("/schemacrawler-sqlite.config.properties"),
-          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder
-            .fromResourceFolder("/sqlite.information_schema"));
+          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
+            "/sqlite.information_schema"));
   }
 
   @Override
   public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(final Connection connection)
   {
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = super.getSchemaRetrievalOptionsBuilder(
-      connection);
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+      super.getSchemaRetrievalOptionsBuilder(connection);
     schemaRetrievalOptionsBuilder.withIdentifierQuoteString("\"");
     return schemaRetrievalOptionsBuilder;
   }
@@ -87,15 +87,13 @@ public final class SQLiteDatabaseConnector
   public PluginCommand getHelpCommand()
   {
     final PluginCommand pluginCommand = super.getHelpCommand();
-    pluginCommand.addOption("server",
-                            "--server=sqlite%n"
-                            + "Loads SchemaCrawler plug-in for SQLite",
-                            String.class)
-                 .addOption("host", "Should be omitted", String.class)
-                 .addOption("port", "Should be omitted", Integer.class)
-                 .addOption("database",
-                            "SQLite database file path",
-                            String.class);
+    pluginCommand
+      .addOption("server",
+                 "--server=sqlite%n" + "Loads SchemaCrawler plug-in for SQLite",
+                 String.class)
+      .addOption("host", "Should be omitted", String.class)
+      .addOption("port", "Should be omitted", Integer.class)
+      .addOption("database", "SQLite database file path", String.class);
     return pluginCommand;
   }
 

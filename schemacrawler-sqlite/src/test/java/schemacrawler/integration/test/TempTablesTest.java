@@ -29,6 +29,15 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.arrayWithSize;
+import static org.hamcrest.Matchers.is;
+
+import javax.sql.DataSource;
+import java.nio.file.Path;
+import java.sql.Connection;
+import java.util.Arrays;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schema.Catalog;
@@ -44,43 +53,43 @@ import schemacrawler.testdb.TestSchemaCreator;
 import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.IOUtility;
 
-import javax.sql.DataSource;
-import java.nio.file.Path;
-import java.sql.Connection;
-import java.util.Arrays;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.arrayWithSize;
-import static org.hamcrest.Matchers.is;
-
 @ExtendWith(TestLoggingExtension.class)
 public class TempTablesTest
-    extends BaseSqliteTest
+  extends BaseSqliteTest
 {
 
   @Test
   public void tempTables()
-      throws Exception
+    throws Exception
   {
-    final Path sqliteDbFile = IOUtility.createTempFilePath("sc", ".db")
-        .normalize().toAbsolutePath();
+    final Path sqliteDbFile = IOUtility
+      .createTempFilePath("sc", ".db")
+      .normalize()
+      .toAbsolutePath();
 
     TestSchemaCreator.main(new String[] {
-        "jdbc:sqlite:" + sqliteDbFile, null, null, "/sqlite.scripts.txt" });
+      "jdbc:sqlite:" + sqliteDbFile, null, null, "/sqlite.scripts.txt"
+    });
     final Connection connection = executeSqlInTestDatabase(sqliteDbFile,
                                                            "/db/books/05_temp_tables_01_B.sql");
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.minimum())
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.minimum())
         .tableTypes(Arrays.asList("GLOBAL TEMPORARY"));
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-        .toOptions();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
 
-    final Catalog catalog = SchemaCrawlerUtility
-        .getCatalog(connection, schemaCrawlerOptions);
-    final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
+    final Catalog catalog =
+      SchemaCrawlerUtility.getCatalog(connection, schemaCrawlerOptions);
+    final Schema[] schemas = catalog
+      .getSchemas()
+      .toArray(new Schema[0]);
     assertThat("Schema count does not match", schemas, is(arrayWithSize(1)));
-    final Table[] tables = catalog.getTables(schemas[0]).toArray(new Table[0]);
+    final Table[] tables = catalog
+      .getTables(schemas[0])
+      .toArray(new Table[0]);
     assertThat("Table count does not match", tables, is(arrayWithSize(1)));
     final Table table = tables[0];
     assertThat("Table name does not match",
@@ -90,7 +99,7 @@ public class TempTablesTest
 
   protected Connection executeSqlInTestDatabase(final Path sqliteDbFile,
                                                 final String databaseSqlResource)
-      throws Exception
+    throws Exception
   {
     final DataSource dataSource = createDataSource(sqliteDbFile);
 
