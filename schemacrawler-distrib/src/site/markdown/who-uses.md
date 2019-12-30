@@ -39,8 +39,7 @@ Photograph courtesy of [Adrien Sales](https://www.linkedin.com/in/adrien-sales).
 <img class="img-fluid img-thumbnail" style="width: 200px" src="images/SchemaCrawler_Noumea.jpg" alt="Schemacrawler database diagrams in use" />
 </a>
 
-- [A large number of projects on GitHub](https://github.com/search?q=schemacrawler+-user%3Asualeh&type=Code)
-- [SchemaCrawler experts on LinkedIn](https://www.linkedin.com/search/results/people/?keywords=%22schemacrawler%22)
+- [A large number of projects on GitHub](https://github.com/search?q=schemacrawler+-user%3Asualeh+-user%3Aschemacrawler&type=Code)
 
 ## Tweeted testimonials
 
