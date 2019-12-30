@@ -28,55 +28,63 @@ http://www.gnu.org/licenses/
 package schemacrawler.testdb;
 
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Objects.requireNonNull;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.util.Objects.requireNonNull;
-
 public class TestSchemaCreator
-    implements Runnable
+  implements Runnable
 {
 
-  private final Connection connection;
-  private final String scriptsResource;
-  public TestSchemaCreator(final Connection connection,
-                           final String scriptsResource)
-  {
-    this.connection = requireNonNull(connection,
-                                     "No database connection provided");
-    this.scriptsResource = requireNonNull(scriptsResource,
-                                          "No script resource provided");
-  }
-
   public static void main(final String[] args)
-      throws Exception
+    throws Exception
   {
     final String connectionUrl = args[0];
     final String user = args[1];
     final String password = args[2];
     final String scriptsResource = args[3];
 
-    try (final Connection connection = DriverManager
-        .getConnection(connectionUrl, user, password))
+    try (
+      final Connection connection = DriverManager.getConnection(connectionUrl,
+                                                                user,
+                                                                password)
+    )
     {
       connection.setAutoCommit(false);
-      final TestSchemaCreator schemaCreator = new TestSchemaCreator(connection,
-                                                                    scriptsResource);
+      final TestSchemaCreator schemaCreator =
+        new TestSchemaCreator(connection, scriptsResource);
       schemaCreator.run();
     }
   }
+  private final Connection connection;
+  private final String scriptsResource;
 
-  @Override public void run()
+  public TestSchemaCreator(final Connection connection,
+                           final String scriptsResource)
   {
-    try (final BufferedReader reader = new BufferedReader(new InputStreamReader(
+    this.connection =
+      requireNonNull(connection, "No database connection provided");
+    this.scriptsResource =
+      requireNonNull(scriptsResource, "No script resource provided");
+  }
+
+  @Override
+  public void run()
+  {
+    try (
+      final BufferedReader reader = new BufferedReader(new InputStreamReader(
         TestSchemaCreator.class.getResourceAsStream(scriptsResource),
-        UTF_8)))
+        UTF_8))
+    )
     {
-      reader.lines().forEach(line -> new SqlScript(line, connection).run());
+      reader
+        .lines()
+        .forEach(line -> new SqlScript(line, connection).run());
     }
     catch (final IOException e)
     {
