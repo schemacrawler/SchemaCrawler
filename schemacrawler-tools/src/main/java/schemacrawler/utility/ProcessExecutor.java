@@ -47,8 +47,8 @@ public class ProcessExecutor
   implements Callable<Integer>
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(ProcessExecutor.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(ProcessExecutor.class.getName());
 
   private List<String> command;
   private Path processOutput;
@@ -118,11 +118,10 @@ public class ProcessExecutor
   }
 
   /**
-   * Quotes command-line arguments that have spaces, and removes blank
-   * items.
+   * Quotes command-line arguments that have spaces, and removes blank items.
    *
    * @param args
-   *        Command-line arguments
+   *   Command-line arguments
    * @return Quoted command-line arguments
    */
   protected List<String> quoteCommandLine(final List<String> args)
@@ -134,7 +133,7 @@ public class ProcessExecutor
     }
 
     final List<String> command = new ArrayList<>();
-    for (final String arg: args)
+    for (final String arg : args)
     {
       if (isBlank(arg))
       {

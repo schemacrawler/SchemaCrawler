@@ -23,8 +23,10 @@ public final class OutputOptionsBuilder
   implements OptionsBuilder<OutputOptionsBuilder, OutputOptions>
 {
 
-  private static final String SC_INPUT_ENCODING = "schemacrawler.encoding.input";
-  private static final String SC_OUTPUT_ENCODING = "schemacrawler.encoding.output";
+  private static final String SC_INPUT_ENCODING =
+    "schemacrawler.encoding.input";
+  private static final String SC_OUTPUT_ENCODING =
+    "schemacrawler.encoding.output";
 
   public static OutputOptionsBuilder builder()
   {
@@ -44,15 +46,20 @@ public final class OutputOptionsBuilder
   public static OutputOptions newOutputOptions(final OutputFormat outputFormat,
                                                final Path outputFile)
   {
-    return OutputOptionsBuilder.builder().withOutputFormat(outputFormat)
-      .withOutputFile(outputFile).toOptions();
+    return OutputOptionsBuilder
+      .builder()
+      .withOutputFormat(outputFormat)
+      .withOutputFile(outputFile)
+      .toOptions();
   }
 
   public static OutputOptions newOutputOptions(final String outputFormatValue,
                                                final Path outputFile)
   {
-    return OutputOptionsBuilder.builder()
-      .withOutputFormatValue(outputFormatValue).withOutputFile(outputFile)
+    return OutputOptionsBuilder
+      .builder()
+      .withOutputFormatValue(outputFormatValue)
+      .withOutputFile(outputFile)
       .toOptions();
   }
 
@@ -95,10 +102,9 @@ public final class OutputOptionsBuilder
       configProperties = config;
     }
 
-    withInputEncoding(configProperties
-                        .getStringValue(SC_INPUT_ENCODING, UTF_8.name()))
-      .withOutputEncoding(configProperties
-                            .getStringValue(SC_OUTPUT_ENCODING, UTF_8.name()));
+    withInputEncoding(configProperties.getStringValue(SC_INPUT_ENCODING,
+                                                      UTF_8.name())).withOutputEncoding(
+      configProperties.getStringValue(SC_OUTPUT_ENCODING, UTF_8.name()));
 
     return this;
   }
@@ -144,8 +150,8 @@ public final class OutputOptionsBuilder
       final String fileExtension;
       if (outputResource instanceof FileOutputResource)
       {
-        fileExtension = getFileExtension(((FileOutputResource) outputResource)
-                                           .getOutputFile());
+        fileExtension =
+          getFileExtension(((FileOutputResource) outputResource).getOutputFile());
       }
       else
       {
@@ -189,10 +195,10 @@ public final class OutputOptionsBuilder
   }
 
   /**
-   * Set character encoding for input files, such as scripts and
-   * templates.
+   * Set character encoding for input files, such as scripts and templates.
    *
-   * @param inputEncoding Input encoding
+   * @param inputEncoding
+   *   Input encoding
    * @return Builder
    */
   public OutputOptionsBuilder withInputEncoding(final String inputEncoding)
@@ -224,7 +230,8 @@ public final class OutputOptionsBuilder
   /**
    * Set character encoding for output files.
    *
-   * @param outputEncoding Output encoding
+   * @param outputEncoding
+   *   Output encoding
    * @return Builder
    */
   public OutputOptionsBuilder withOutputEncoding(final String outputEncoding)
@@ -241,10 +248,11 @@ public final class OutputOptionsBuilder
   }
 
   /**
-   * Sets the name of the output file. It is important to note that the
-   * output encoding should be available at this point.
+   * Sets the name of the output file. It is important to note that the output
+   * encoding should be available at this point.
    *
-   * @param outputFile Output path.
+   * @param outputFile
+   *   Output path.
    * @return Builder
    */
   public OutputOptionsBuilder withOutputFile(final Path outputFile)
@@ -257,26 +265,28 @@ public final class OutputOptionsBuilder
   /**
    * Sets output format.
    *
-   * @param outputFormat Output format
+   * @param outputFormat
+   *   Output format
    * @return Builder
    */
   public OutputOptionsBuilder withOutputFormat(final OutputFormat outputFormat)
   {
-    outputFormatValue = requireNonNull(outputFormat,
-                                       "No output format provided").getFormat();
+    outputFormatValue =
+      requireNonNull(outputFormat, "No output format provided").getFormat();
     return this;
   }
 
   /**
    * Sets output format value.
    *
-   * @param outputFormatValue Output format value
+   * @param outputFormatValue
+   *   Output format value
    * @return Builder
    */
   public OutputOptionsBuilder withOutputFormatValue(final String outputFormatValue)
   {
-    this.outputFormatValue = requireNonNull(outputFormatValue,
-                                            "No output format value provided");
+    this.outputFormatValue =
+      requireNonNull(outputFormatValue, "No output format value provided");
     return this;
   }
 
@@ -284,7 +294,8 @@ public final class OutputOptionsBuilder
   {
     if (outputResource == null)
     {
-      if (outputFormatValue == null || TextOutputFormat.text.name()
+      if (outputFormatValue == null || TextOutputFormat.text
+        .name()
         .equals(outputFormatValue))
       {
         this.outputResource = new ConsoleOutputResource();
@@ -306,11 +317,12 @@ public final class OutputOptionsBuilder
           extension = "out";
         }
 
-        final Path randomOutputFile = Paths.get(".",
-                                                String.format(
-                                                  "schemacrawler-%s.%s",
-                                                  UUID.randomUUID(),
-                                                  extension)).normalize()
+        final Path randomOutputFile = Paths
+          .get(".",
+               String.format("schemacrawler-%s.%s",
+                             UUID.randomUUID(),
+                             extension))
+          .normalize()
           .toAbsolutePath();
         this.outputResource = new FileOutputResource(randomOutputFile);
       }

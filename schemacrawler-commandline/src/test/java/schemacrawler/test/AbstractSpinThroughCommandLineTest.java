@@ -44,7 +44,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.InfoLevel;
-import schemacrawler.test.utility.*;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
+import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
@@ -65,8 +69,9 @@ public abstract class AbstractSpinThroughCommandLineTest
 
   private static Stream<InfoLevel> infoLevels()
   {
-    return Arrays.stream(InfoLevel.values())
-                 .filter(infoLevel -> infoLevel != InfoLevel.unknown);
+    return Arrays
+      .stream(InfoLevel.values())
+      .filter(infoLevel -> infoLevel != InfoLevel.unknown);
   }
 
   private static String referenceFile(final SchemaTextDetailType schemaTextDetailType,
@@ -94,9 +99,8 @@ public abstract class AbstractSpinThroughCommandLineTest
     assertAll(infoLevels().flatMap(infoLevel -> outputFormats().flatMap(
       outputFormat -> schemaTextDetailTypes().map(schemaTextDetailType -> () -> {
 
-        final String referenceFile = referenceFile(schemaTextDetailType,
-                                                   infoLevel,
-                                                   outputFormat);
+        final String referenceFile =
+          referenceFile(schemaTextDetailType, infoLevel, outputFormat);
 
         final String command = schemaTextDetailType.name();
 

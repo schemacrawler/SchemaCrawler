@@ -42,8 +42,8 @@ import java.util.regex.Pattern;
 public class RegularExpressionColorMap
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(RegularExpressionColorMap.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(RegularExpressionColorMap.class.getName());
 
   private final Map<Pattern, Color> colorMap;
 
@@ -59,7 +59,7 @@ public class RegularExpressionColorMap
     {
       return;
     }
-    for (final Entry<Object, Object> match: properties.entrySet())
+    for (final Entry<Object, Object> match : properties.entrySet())
     {
       if (match != null)
       {
@@ -76,11 +76,11 @@ public class RegularExpressionColorMap
           }
           else
           {
-            LOGGER
-              .log(Level.CONFIG,
-                   new StringFormat("Could not add color mapping for %s = %s",
-                                    regExpPattern,
-                                    htmlColor));
+            LOGGER.log(Level.CONFIG,
+                       new StringFormat(
+                         "Could not add color mapping for %s = %s",
+                         regExpPattern,
+                         htmlColor));
           }
         }
       }
@@ -89,10 +89,12 @@ public class RegularExpressionColorMap
 
   public Optional<Color> match(final String value)
   {
-    for (final Entry<Pattern, Color> entry: colorMap.entrySet())
+    for (final Entry<Pattern, Color> entry : colorMap.entrySet())
     {
       final Pattern pattern = entry.getKey();
-      if (pattern.matcher(value).matches())
+      if (pattern
+        .matcher(value)
+        .matches())
       {
         return Optional.of(entry.getValue());
       }
@@ -106,7 +108,8 @@ public class RegularExpressionColorMap
     {
       if (isBlank(regExpPattern))
       {
-        throw new IllegalArgumentException("No regular expression pattern provided");
+        throw new IllegalArgumentException(
+          "No regular expression pattern provided");
       }
 
       final Pattern pattern = Pattern.compile(regExpPattern, 0);
@@ -137,12 +140,12 @@ public class RegularExpressionColorMap
     }
     catch (final Exception e)
     {
-      LOGGER
-        .log(Level.CONFIG,
-             new StringFormat("Could not add literal color mapping for %s = %s",
-                              literal,
-                              color),
-             e);
+      LOGGER.log(Level.CONFIG,
+                 new StringFormat(
+                   "Could not add literal color mapping for %s = %s",
+                   literal,
+                   color),
+                 e);
     }
   }
 

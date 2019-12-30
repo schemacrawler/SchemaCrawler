@@ -40,38 +40,40 @@ import sf.util.StringFormat;
 public enum ConditionTimingType
 {
 
- /**
-  * Unknown
-  */
- unknown("unknown"),
- /**
-  * Before
-  */
- before("BEFORE"),
- /**
-  * Instead of
-  */
- instead_of("INSTEAD OF"),
- /**
-  * After
-  */
- after("AFTER");
+  /**
+   * Unknown
+   */
+  unknown("unknown"),
+  /**
+   * Before
+   */
+  before("BEFORE"),
+  /**
+   * Instead of
+   */
+  instead_of("INSTEAD OF"),
+  /**
+   * After
+   */
+  after("AFTER");
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(ConditionTimingType.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(ConditionTimingType.class.getName());
 
   /**
    * Find the enumeration value corresponding to the string.
    *
    * @param value
-   *        Sort sequence code.
+   *   Sort sequence code.
    * @return Enumeration value
    */
   public static ConditionTimingType valueOfFromValue(final String value)
   {
-    for (final ConditionTimingType type: ConditionTimingType.values())
+    for (final ConditionTimingType type : ConditionTimingType.values())
     {
-      if (type.getValue().equalsIgnoreCase(value))
+      if (type
+        .getValue()
+        .equalsIgnoreCase(value))
       {
         return type;
       }
@@ -82,7 +84,7 @@ public enum ConditionTimingType
 
   private final String value;
 
-  private ConditionTimingType(final String value)
+  ConditionTimingType(final String value)
   {
     this.value = value;
   }

@@ -30,5 +30,7 @@ package schemacrawler.tools.lint;
 
 public enum LintObjectType
 {
-  unknown, catalog, table;
+  unknown,
+  catalog,
+  table;
 }

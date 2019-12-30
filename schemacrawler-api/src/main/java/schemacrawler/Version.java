@@ -36,26 +36,25 @@ import java.io.IOException;
 import java.io.StringReader;
 
 /**
- * Version information for this product. Has methods to obtain
- * information about the product, as well as a main method, so it can be
- * called from the command-line.
+ * Version information for this product. Has methods to obtain information about
+ * the product, as well as a main method, so it can be called from the
+ * command-line.
  *
  * @author Sualeh Fatehi
  */
 public final class Version
 {
 
+  private static final String ABOUT;
   private static final String PRODUCTNAME = "SchemaCrawler";
   private static final String VERSION;
-  private static final String ABOUT;
 
   static
   {
     ABOUT = readResourceFully("/help/SchemaCrawler.txt");
 
     String[] productLine;
-    try (
-        final BufferedReader reader = new BufferedReader(new StringReader(ABOUT)))
+    try (final BufferedReader reader = new BufferedReader(new StringReader(ABOUT)))
     {
       final String readLine = reader.readLine();
       if (readLine != null)
@@ -108,7 +107,7 @@ public final class Version
    * Main routine. Prints information about this product.
    *
    * @param args
-   *        Arguments to the main routine - they are ignored.
+   *   Arguments to the main routine - they are ignored.
    */
   public static void main(final String[] args)
   {

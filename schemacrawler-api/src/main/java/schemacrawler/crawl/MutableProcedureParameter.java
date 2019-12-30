@@ -33,8 +33,8 @@ import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureParameter;
 
 /**
- * Represents a column in a database procedure. Created from metadata
- * returned by a JDBC call.
+ * Represents a column in a database procedure. Created from metadata returned
+ * by a JDBC call.
  *
  * @author Sualeh Fatehi
  */

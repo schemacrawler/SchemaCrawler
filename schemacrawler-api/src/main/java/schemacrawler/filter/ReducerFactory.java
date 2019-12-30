@@ -23,26 +23,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 public final class ReducerFactory
 {
 
-  private abstract static class BaseReducer<N extends NamedObject>
-    implements Reducer<N>
-  {
-
-    private final Predicate<N> filter;
-
-    protected BaseReducer(final Predicate<N> filter)
-    {
-      this.filter = requireNonNull(filter, "No filter provided");
-    }
-
-    @Override
-    public void reduce(final ReducibleCollection<? extends N> allNamedObjects)
-    {
-      requireNonNull(allNamedObjects, "No named objects provided");
-      allNamedObjects.filter(filter);
-    }
-
-  }
-
   public static Reducer<Routine> getRoutineReducer(final SchemaCrawlerOptions options)
   {
     return new BaseReducer<Routine>(routineFilter(options))
@@ -81,6 +61,26 @@ public final class ReducerFactory
   public static Reducer<Table> getTableReducer(final SchemaCrawlerOptions options)
   {
     return new TablesReducer(options, tableFilter(options));
+  }
+
+  private abstract static class BaseReducer<N extends NamedObject>
+    implements Reducer<N>
+  {
+
+    private final Predicate<N> filter;
+
+    protected BaseReducer(final Predicate<N> filter)
+    {
+      this.filter = requireNonNull(filter, "No filter provided");
+    }
+
+    @Override
+    public void reduce(final ReducibleCollection<? extends N> allNamedObjects)
+    {
+      requireNonNull(allNamedObjects, "No named objects provided");
+      allNamedObjects.filter(filter);
+    }
+
   }
 
   private ReducerFactory()

@@ -51,13 +51,14 @@ public enum LintReportOutputFormat
   json("JavaScript Object Notation (JSON) format"),
   yaml("YAML Ain't Markup Language (YAML) format");
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(LintReportOutputFormat.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(LintReportOutputFormat.class.getName());
 
   /**
    * Gets the value from the format.
    *
-   * @param format Text output format.
+   * @param format
+   *   Text output format.
    * @return TextOutputFormat
    */
   public static LintReportOutputFormat fromFormat(final String format)
@@ -76,24 +77,13 @@ public enum LintReportOutputFormat
     }
   }
 
-  /**
-   * Checks if the value of the format is supported.
-   *
-   * @return True if the format is a text output format
-   */
-  public static boolean isSupportedFormat(final String format)
-  {
-    return fromFormatOrNull(format) != null;
-  }
-
   private static LintReportOutputFormat fromFormatOrNull(final String format)
   {
     if (isBlank(format))
     {
       return null;
     }
-    for (final LintReportOutputFormat outputFormat : LintReportOutputFormat
-      .values())
+    for (final LintReportOutputFormat outputFormat : LintReportOutputFormat.values())
     {
       if (outputFormat.outputFormatState.isSupportedFormat(format))
       {
@@ -103,6 +93,15 @@ public enum LintReportOutputFormat
     return null;
   }
 
+  /**
+   * Checks if the value of the format is supported.
+   *
+   * @return True if the format is a text output format
+   */
+  public static boolean isSupportedFormat(final String format)
+  {
+    return fromFormatOrNull(format) != null;
+  }
   private final OutputFormatState outputFormatState;
 
   private LintReportOutputFormat(final String description)
@@ -113,9 +112,8 @@ public enum LintReportOutputFormat
   private LintReportOutputFormat(final String description,
                                  final String... additionalFormatSpecifiers)
   {
-    outputFormatState = new OutputFormatState(name(),
-                                              description,
-                                              additionalFormatSpecifiers);
+    outputFormatState =
+      new OutputFormatState(name(), description, additionalFormatSpecifiers);
   }
 
   @Override

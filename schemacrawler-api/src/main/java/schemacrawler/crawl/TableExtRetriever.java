@@ -54,8 +54,8 @@ import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
- * A retriever uses database metadata to get the extended details about
- * the database tables.
+ * A retriever uses database metadata to get the extended details about the
+ * database tables.
  *
  * @author Sualeh Fatehi
  */
@@ -63,8 +63,8 @@ final class TableExtRetriever
   extends AbstractRetriever
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(TableExtRetriever.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(TableExtRetriever.class.getName());
 
   TableExtRetriever(final RetrieverConnection retrieverConnection,
                     final MutableCatalog catalog,
@@ -78,47 +78,47 @@ final class TableExtRetriever
    * Retrieves additional column attributes from the database.
    *
    * @throws SQLException
-   *         On a SQL exception
+   *   On a SQL exception
    */
   void retrieveAdditionalColumnAttributes()
     throws SQLException
   {
-    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-      .getInformationSchemaViews();
-    if (!informationSchemaViews
-      .hasQuery(InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES))
+    final InformationSchemaViews informationSchemaViews =
+      getRetrieverConnection().getInformationSchemaViews();
+    if (!informationSchemaViews.hasQuery(InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES))
     {
-      LOGGER
-        .log(Level.INFO,
-             "Not retrieving additional column attributes, since this was not requested");
+      LOGGER.log(Level.INFO,
+                 "Not retrieving additional column attributes, since this was not requested");
       LOGGER.log(Level.FINE,
                  "Additional column attributes SQL statement was not provided");
       return;
     }
-    final Query columnAttributesSql = informationSchemaViews
-      .getQuery(InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES);
+    final Query columnAttributesSql =
+      informationSchemaViews.getQuery(InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES);
 
     final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(columnAttributesSql,
-                                                                statement,
-                                                                getSchemaInclusionRule());)
+    try (
+      final Statement statement = connection.createStatement();
+      final MetadataResultSet results = new MetadataResultSet(
+        columnAttributesSql,
+        statement,
+        getSchemaInclusionRule())
+    )
     {
 
       while (results.next())
       {
-        final String catalogName = normalizeCatalogName(results
-          .getString("TABLE_CATALOG"));
-        final String schemaName = normalizeSchemaName(results
-          .getString("TABLE_SCHEMA"));
+        final String catalogName =
+          normalizeCatalogName(results.getString("TABLE_CATALOG"));
+        final String schemaName =
+          normalizeSchemaName(results.getString("TABLE_SCHEMA"));
         final String tableName = results.getString("TABLE_NAME");
         final String columnName = results.getString("COLUMN_NAME");
         LOGGER.log(Level.FINER,
                    "Retrieving additional column attributes: " + columnName);
 
-        final Optional<MutableTable> tableOptional = lookupTable(catalogName,
-                                                                 schemaName,
-                                                                 tableName);
+        final Optional<MutableTable> tableOptional =
+          lookupTable(catalogName, schemaName, tableName);
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
@@ -130,8 +130,8 @@ final class TableExtRetriever
         }
 
         final MutableTable table = tableOptional.get();
-        final Optional<MutableColumn> columnOptional = table
-          .lookupColumn(columnName);
+        final Optional<MutableColumn> columnOptional =
+          table.lookupColumn(columnName);
         if (!columnOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
@@ -162,46 +162,45 @@ final class TableExtRetriever
    * Retrieves additional table attributes from the database.
    *
    * @throws SQLException
-   *         On a SQL exception
+   *   On a SQL exception
    */
   void retrieveAdditionalTableAttributes()
     throws SQLException
   {
-    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-      .getInformationSchemaViews();
-    if (!informationSchemaViews
-      .hasQuery(InformationSchemaKey.ADDITIONAL_TABLE_ATTRIBUTES))
+    final InformationSchemaViews informationSchemaViews =
+      getRetrieverConnection().getInformationSchemaViews();
+    if (!informationSchemaViews.hasQuery(InformationSchemaKey.ADDITIONAL_TABLE_ATTRIBUTES))
     {
-      LOGGER
-        .log(Level.INFO,
-             "Not retrieving additional table attributes, since this was not requested");
+      LOGGER.log(Level.INFO,
+                 "Not retrieving additional table attributes, since this was not requested");
       LOGGER.log(Level.FINE,
                  "Additional table attributes SQL statement was not provided");
       return;
     }
-    final Query tableAttributesSql = informationSchemaViews
-      .getQuery(InformationSchemaKey.ADDITIONAL_TABLE_ATTRIBUTES);
+    final Query tableAttributesSql =
+      informationSchemaViews.getQuery(InformationSchemaKey.ADDITIONAL_TABLE_ATTRIBUTES);
 
     final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(tableAttributesSql,
-                                                                statement,
-                                                                getSchemaInclusionRule());)
+    try (
+      final Statement statement = connection.createStatement();
+      final MetadataResultSet results = new MetadataResultSet(tableAttributesSql,
+                                                              statement,
+                                                              getSchemaInclusionRule())
+    )
     {
 
       while (results.next())
       {
-        final String catalogName = normalizeCatalogName(results
-          .getString("TABLE_CATALOG"));
-        final String schemaName = normalizeSchemaName(results
-          .getString("TABLE_SCHEMA"));
+        final String catalogName =
+          normalizeCatalogName(results.getString("TABLE_CATALOG"));
+        final String schemaName =
+          normalizeSchemaName(results.getString("TABLE_SCHEMA"));
         final String tableName = results.getString("TABLE_NAME");
         LOGGER.log(Level.FINER,
                    "Retrieving additional table attributes: " + tableName);
 
-        final Optional<MutableTable> tableOptional = lookupTable(catalogName,
-                                                                 schemaName,
-                                                                 tableName);
+        final Optional<MutableTable> tableOptional =
+          lookupTable(catalogName, schemaName, tableName);
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
@@ -230,20 +229,18 @@ final class TableExtRetriever
    * INFORMATION_SCHEMA format.
    *
    * @throws SQLException
-   *         On a SQL exception
+   *   On a SQL exception
    */
   void retrieveIndexColumnInformation()
     throws SQLException
   {
-    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-      .getInformationSchemaViews();
+    final InformationSchemaViews informationSchemaViews =
+      getRetrieverConnection().getInformationSchemaViews();
 
-    if (!informationSchemaViews
-      .hasQuery(InformationSchemaKey.EXT_INDEX_COLUMNS))
+    if (!informationSchemaViews.hasQuery(InformationSchemaKey.EXT_INDEX_COLUMNS))
     {
-      LOGGER
-        .log(Level.INFO,
-             "Not retrieving additional index column information, since this was not requested");
+      LOGGER.log(Level.INFO,
+                 "Not retrieving additional index column information, since this was not requested");
       LOGGER.log(Level.FINE,
                  "Index column information SQL statement was not provided");
       return;
@@ -251,27 +248,29 @@ final class TableExtRetriever
 
     LOGGER.log(Level.INFO, "Retrieving additional index column information");
 
-    final Query extIndexColumnsInformationSql = informationSchemaViews
-      .getQuery(InformationSchemaKey.EXT_INDEX_COLUMNS);
+    final Query extIndexColumnsInformationSql =
+      informationSchemaViews.getQuery(InformationSchemaKey.EXT_INDEX_COLUMNS);
     final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(extIndexColumnsInformationSql,
-                                                                statement,
-                                                                getSchemaInclusionRule());)
+    try (
+      final Statement statement = connection.createStatement();
+      final MetadataResultSet results = new MetadataResultSet(
+        extIndexColumnsInformationSql,
+        statement,
+        getSchemaInclusionRule())
+    )
     {
 
       while (results.next())
       {
-        final String catalogName = normalizeCatalogName(results
-          .getString("INDEX_CATALOG"));
-        final String schemaName = normalizeSchemaName(results
-          .getString("INDEX_SCHEMA"));
+        final String catalogName =
+          normalizeCatalogName(results.getString("INDEX_CATALOG"));
+        final String schemaName =
+          normalizeSchemaName(results.getString("INDEX_SCHEMA"));
         final String tableName = results.getString("TABLE_NAME");
         final String indexName = results.getString("INDEX_NAME");
 
-        final Optional<MutableTable> tableOptional = lookupTable(catalogName,
-                                                                 schemaName,
-                                                                 tableName);
+        final Optional<MutableTable> tableOptional =
+          lookupTable(catalogName, schemaName, tableName);
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
@@ -286,8 +285,8 @@ final class TableExtRetriever
                    new StringFormat("Retrieving index information <%s>",
                                     indexName));
         final MutableTable table = tableOptional.get();
-        final Optional<MutableIndex> indexOptional = table
-          .lookupIndex(indexName);
+        final Optional<MutableIndex> indexOptional =
+          table.lookupIndex(indexName);
         if (!indexOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
@@ -302,18 +301,18 @@ final class TableExtRetriever
         final MutableIndex index = indexOptional.get();
         final String indexColumnName = results.getString("COLUMN_NAME");
 
-        final Optional<MutableIndexColumn> indexColumnOptional = index
-          .lookupColumn(indexColumnName);
+        final Optional<MutableIndexColumn> indexColumnOptional =
+          index.lookupColumn(indexColumnName);
         if (!indexColumnOptional.isPresent())
         {
-          LOGGER
-            .log(Level.FINE,
-                 new StringFormat("Cannot find index column <%s.%s.%s.%s.%s>",
-                                  catalogName,
-                                  schemaName,
-                                  tableName,
-                                  indexName,
-                                  indexColumnName));
+          LOGGER.log(Level.FINE,
+                     new StringFormat(
+                       "Cannot find index column <%s.%s.%s.%s.%s>",
+                       catalogName,
+                       schemaName,
+                       tableName,
+                       indexName,
+                       indexColumnName));
           continue;
         }
 
@@ -338,23 +337,22 @@ final class TableExtRetriever
   }
 
   /**
-   * Retrieves index information from the database, in the
-   * INFORMATION_SCHEMA format.
+   * Retrieves index information from the database, in the INFORMATION_SCHEMA
+   * format.
    *
    * @throws SQLException
-   *         On a SQL exception
+   *   On a SQL exception
    */
   void retrieveIndexInformation()
     throws SQLException
   {
-    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-      .getInformationSchemaViews();
+    final InformationSchemaViews informationSchemaViews =
+      getRetrieverConnection().getInformationSchemaViews();
 
     if (!informationSchemaViews.hasQuery(InformationSchemaKey.EXT_INDEXES))
     {
-      LOGGER
-        .log(Level.INFO,
-             "Not retrieving additional index information, since this was not requested");
+      LOGGER.log(Level.INFO,
+                 "Not retrieving additional index information, since this was not requested");
       LOGGER.log(Level.FINE,
                  "Indexes information SQL statement was not provided");
       return;
@@ -362,27 +360,29 @@ final class TableExtRetriever
 
     LOGGER.log(Level.INFO, "Retrieving additional index information");
 
-    final Query extIndexesInformationSql = informationSchemaViews
-      .getQuery(InformationSchemaKey.EXT_INDEXES);
+    final Query extIndexesInformationSql =
+      informationSchemaViews.getQuery(InformationSchemaKey.EXT_INDEXES);
     final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(extIndexesInformationSql,
-                                                                statement,
-                                                                getSchemaInclusionRule());)
+    try (
+      final Statement statement = connection.createStatement();
+      final MetadataResultSet results = new MetadataResultSet(
+        extIndexesInformationSql,
+        statement,
+        getSchemaInclusionRule())
+    )
     {
 
       while (results.next())
       {
-        final String catalogName = normalizeCatalogName(results
-          .getString("INDEX_CATALOG"));
-        final String schemaName = normalizeSchemaName(results
-          .getString("INDEX_SCHEMA"));
+        final String catalogName =
+          normalizeCatalogName(results.getString("INDEX_CATALOG"));
+        final String schemaName =
+          normalizeSchemaName(results.getString("INDEX_SCHEMA"));
         final String tableName = results.getString("TABLE_NAME");
         final String indexName = results.getString("INDEX_NAME");
 
-        final Optional<MutableTable> tableOptional = lookupTable(catalogName,
-                                                                 schemaName,
-                                                                 tableName);
+        final Optional<MutableTable> tableOptional =
+          lookupTable(catalogName, schemaName, tableName);
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
@@ -397,8 +397,8 @@ final class TableExtRetriever
                    new StringFormat("Retrieving index information <%s>",
                                     indexName));
         final MutableTable table = tableOptional.get();
-        final Optional<MutableIndex> indexOptional = table
-          .lookupIndex(indexName);
+        final Optional<MutableIndex> indexOptional =
+          table.lookupIndex(indexName);
         if (!indexOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
@@ -432,8 +432,8 @@ final class TableExtRetriever
   {
     requireNonNull(allTables, "No tables provided");
 
-    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-      .getInformationSchemaViews();
+    final InformationSchemaViews informationSchemaViews =
+      getRetrieverConnection().getInformationSchemaViews();
 
     final Connection connection = getDatabaseConnection();
 
@@ -445,7 +445,7 @@ final class TableExtRetriever
     }
 
     final NamedObjectList<MutablePrimaryKey> allPks = new NamedObjectList<>();
-    for (final MutableTable table: allTables)
+    for (final MutableTable table : allTables)
     {
       if (table.hasPrimaryKey())
       {
@@ -454,32 +454,34 @@ final class TableExtRetriever
       }
     }
 
-    final Query extPrimaryKeysSql = informationSchemaViews
-      .getQuery(InformationSchemaKey.EXT_PRIMARY_KEYS);
+    final Query extPrimaryKeysSql =
+      informationSchemaViews.getQuery(InformationSchemaKey.EXT_PRIMARY_KEYS);
 
-    try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(extPrimaryKeysSql,
-                                                                statement,
-                                                                getSchemaInclusionRule());)
+    try (
+      final Statement statement = connection.createStatement();
+      final MetadataResultSet results = new MetadataResultSet(extPrimaryKeysSql,
+                                                              statement,
+                                                              getSchemaInclusionRule())
+    )
     {
       while (results.next())
       {
-        final String catalogName = normalizeCatalogName(results
-          .getString("PRIMARY_KEY_CATALOG"));
-        final String schemaName = normalizeSchemaName(results
-          .getString("PRIMARY_KEY_SCHEMA"));
+        final String catalogName =
+          normalizeCatalogName(results.getString("PRIMARY_KEY_CATALOG"));
+        final String schemaName =
+          normalizeSchemaName(results.getString("PRIMARY_KEY_SCHEMA"));
         final String tableName = results.getString("PRIMARY_KEY_TABLE_NAME");
         final String pkName = results.getString("PRIMARY_KEY_NAME");
 
-        final List<String> constraintLookupKey = Arrays
-          .asList(catalogName, schemaName, tableName, pkName);
+        final List<String> constraintLookupKey =
+          Arrays.asList(catalogName, schemaName, tableName, pkName);
         LOGGER.log(Level.FINER,
                    new StringFormat("Retrieving definition of primary key <%s>",
                                     constraintLookupKey));
         final String definition = results.getString("PRIMARY_KEY_DEFINITION");
 
-        final Optional<MutablePrimaryKey> optionalPk = allPks
-          .lookup(constraintLookupKey);
+        final Optional<MutablePrimaryKey> optionalPk =
+          allPks.lookup(constraintLookupKey);
         if (optionalPk.isPresent())
         {
           final MutablePrimaryKey pkConstraint = optionalPk.get();
@@ -505,37 +507,41 @@ final class TableExtRetriever
   void retrieveTableColumnPrivileges()
     throws SQLException
   {
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getColumnPrivileges(null, null, "%", "%"));)
+    try (
+      final MetadataResultSet results = new MetadataResultSet(getMetaData().getColumnPrivileges(
+        null,
+        null,
+        "%",
+        "%"))
+    )
     {
       createPrivileges(results, true);
     }
     catch (final Exception e)
     {
-      LOGGER
-        .log(Level.WARNING,
-             "Could not retrieve table column privileges:" + e.getMessage());
+      LOGGER.log(Level.WARNING,
+                 "Could not retrieve table column privileges:"
+                 + e.getMessage());
     }
   }
 
   /**
-   * Retrieves table definitions from the database, in the
-   * INFORMATION_SCHEMA format.
+   * Retrieves table definitions from the database, in the INFORMATION_SCHEMA
+   * format.
    *
    * @throws SQLException
-   *         On a SQL exception
+   *   On a SQL exception
    */
   void retrieveTableDefinitions()
     throws SQLException
   {
-    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-      .getInformationSchemaViews();
+    final InformationSchemaViews informationSchemaViews =
+      getRetrieverConnection().getInformationSchemaViews();
 
     if (!informationSchemaViews.hasQuery(InformationSchemaKey.EXT_TABLES))
     {
-      LOGGER
-        .log(Level.INFO,
-             "Not retrieving table definitions, since this was not requested");
+      LOGGER.log(Level.INFO,
+                 "Not retrieving table definitions, since this was not requested");
       LOGGER.log(Level.FINE,
                  "Table definitions SQL statement was not provided");
       return;
@@ -543,26 +549,28 @@ final class TableExtRetriever
 
     LOGGER.log(Level.INFO, "Retrieving table definitions");
 
-    final Query tableDefinitionsInformationSql = informationSchemaViews
-      .getQuery(InformationSchemaKey.EXT_TABLES);
+    final Query tableDefinitionsInformationSql =
+      informationSchemaViews.getQuery(InformationSchemaKey.EXT_TABLES);
     final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(tableDefinitionsInformationSql,
-                                                                statement,
-                                                                getSchemaInclusionRule());)
+    try (
+      final Statement statement = connection.createStatement();
+      final MetadataResultSet results = new MetadataResultSet(
+        tableDefinitionsInformationSql,
+        statement,
+        getSchemaInclusionRule())
+    )
     {
 
       while (results.next())
       {
-        final String catalogName = normalizeCatalogName(results
-          .getString("TABLE_CATALOG"));
-        final String schemaName = normalizeSchemaName(results
-          .getString("TABLE_SCHEMA"));
+        final String catalogName =
+          normalizeCatalogName(results.getString("TABLE_CATALOG"));
+        final String schemaName =
+          normalizeSchemaName(results.getString("TABLE_SCHEMA"));
         final String tableName = results.getString("TABLE_NAME");
 
-        final Optional<MutableTable> tableOptional = lookupTable(catalogName,
-                                                                 schemaName,
-                                                                 tableName);
+        final Optional<MutableTable> tableOptional =
+          lookupTable(catalogName, schemaName, tableName);
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
@@ -595,8 +603,12 @@ final class TableExtRetriever
   void retrieveTablePrivileges()
     throws SQLException
   {
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getTablePrivileges(null, null, "%"));)
+    try (
+      final MetadataResultSet results = new MetadataResultSet(getMetaData().getTablePrivileges(
+        null,
+        null,
+        "%"))
+    )
     {
       createPrivileges(results, false);
     }
@@ -611,18 +623,17 @@ final class TableExtRetriever
    * INFORMATION_SCHEMA format.
    *
    * @throws SQLException
-   *         On a SQL exception
+   *   On a SQL exception
    */
   void retrieveTriggerInformation()
     throws SQLException
   {
-    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-      .getInformationSchemaViews();
+    final InformationSchemaViews informationSchemaViews =
+      getRetrieverConnection().getInformationSchemaViews();
     if (!informationSchemaViews.hasQuery(InformationSchemaKey.TRIGGERS))
     {
-      LOGGER
-        .log(Level.INFO,
-             "Not retrieving trigger definitions, since this was not requested");
+      LOGGER.log(Level.INFO,
+                 "Not retrieving trigger definitions, since this was not requested");
       LOGGER.log(Level.FINE,
                  "Trigger definition SQL statement was not provided");
       return;
@@ -630,21 +641,24 @@ final class TableExtRetriever
 
     LOGGER.log(Level.INFO, "Retrieving trigger definitions");
 
-    final Query triggerInformationSql = informationSchemaViews
-      .getQuery(InformationSchemaKey.TRIGGERS);
+    final Query triggerInformationSql =
+      informationSchemaViews.getQuery(InformationSchemaKey.TRIGGERS);
     final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(triggerInformationSql,
-                                                                statement,
-                                                                getSchemaInclusionRule());)
+    try (
+      final Statement statement = connection.createStatement();
+      final MetadataResultSet results = new MetadataResultSet(
+        triggerInformationSql,
+        statement,
+        getSchemaInclusionRule())
+    )
     {
 
       while (results.next())
       {
-        final String catalogName = normalizeCatalogName(results
-          .getString("TRIGGER_CATALOG"));
-        final String schemaName = normalizeSchemaName(results
-          .getString("TRIGGER_SCHEMA"));
+        final String catalogName =
+          normalizeCatalogName(results.getString("TRIGGER_CATALOG"));
+        final String schemaName =
+          normalizeSchemaName(results.getString("TRIGGER_SCHEMA"));
         final String triggerName = results.getString("TRIGGER_NAME");
         LOGGER.log(Level.FINER,
                    new StringFormat("Retrieving trigger <%s>", triggerName));
@@ -652,9 +666,8 @@ final class TableExtRetriever
         // "EVENT_OBJECT_CATALOG", "EVENT_OBJECT_SCHEMA"
         final String tableName = results.getString("EVENT_OBJECT_TABLE");
 
-        final Optional<MutableTable> tableOptional = lookupTable(catalogName,
-                                                                 schemaName,
-                                                                 tableName);
+        final Optional<MutableTable> tableOptional =
+          lookupTable(catalogName, schemaName, tableName);
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
@@ -667,22 +680,23 @@ final class TableExtRetriever
 
         final MutableTable table = tableOptional.get();
 
-        final EventManipulationType eventManipulationType = results
-          .getEnum("EVENT_MANIPULATION", EventManipulationType.unknown);
+        final EventManipulationType eventManipulationType =
+          results.getEnum("EVENT_MANIPULATION", EventManipulationType.unknown);
         final int actionOrder = results.getInt("ACTION_ORDER", 0);
         final String actionCondition = results.getString("ACTION_CONDITION");
         final String actionStatement = results.getString("ACTION_STATEMENT");
-        final ActionOrientationType actionOrientation = results
-          .getEnum("ACTION_ORIENTATION", ActionOrientationType.unknown);
+        final ActionOrientationType actionOrientation =
+          results.getEnum("ACTION_ORIENTATION", ActionOrientationType.unknown);
         String conditionTimingString = results.getString("ACTION_TIMING");
         if (conditionTimingString == null)
         {
           conditionTimingString = results.getString("CONDITION_TIMING");
         }
-        final ConditionTimingType conditionTiming = ConditionTimingType
-          .valueOfFromValue(conditionTimingString);
+        final ConditionTimingType conditionTiming =
+          ConditionTimingType.valueOfFromValue(conditionTimingString);
 
-        final MutableTrigger trigger = table.lookupTrigger(triggerName)
+        final MutableTrigger trigger = table
+          .lookupTrigger(triggerName)
           .orElse(new MutableTrigger(table, triggerName));
         trigger.setEventManipulationType(eventManipulationType);
         trigger.setActionOrder(actionOrder);
@@ -705,49 +719,49 @@ final class TableExtRetriever
   }
 
   /**
-   * Retrieves view information from the database, in the
-   * INFORMATION_SCHEMA format.
+   * Retrieves view information from the database, in the INFORMATION_SCHEMA
+   * format.
    *
    * @throws SQLException
-   *         On a SQL exception
+   *   On a SQL exception
    */
   void retrieveViewInformation()
     throws SQLException
   {
-    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-      .getInformationSchemaViews();
+    final InformationSchemaViews informationSchemaViews =
+      getRetrieverConnection().getInformationSchemaViews();
 
     if (!informationSchemaViews.hasQuery(InformationSchemaKey.VIEWS))
     {
-      LOGGER
-        .log(Level.INFO,
-             "Not retrieving additional view information, since this was not requested");
+      LOGGER.log(Level.INFO,
+                 "Not retrieving additional view information, since this was not requested");
       LOGGER.log(Level.FINE, "Views SQL statement was not provided");
       return;
     }
 
     LOGGER.log(Level.INFO, "Retrieving additional view information");
 
-    final Query viewInformationSql = informationSchemaViews
-      .getQuery(InformationSchemaKey.VIEWS);
+    final Query viewInformationSql =
+      informationSchemaViews.getQuery(InformationSchemaKey.VIEWS);
     final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(viewInformationSql,
-                                                                statement,
-                                                                getSchemaInclusionRule());)
+    try (
+      final Statement statement = connection.createStatement();
+      final MetadataResultSet results = new MetadataResultSet(viewInformationSql,
+                                                              statement,
+                                                              getSchemaInclusionRule())
+    )
     {
 
       while (results.next())
       {
-        final String catalogName = normalizeCatalogName(results
-          .getString("TABLE_CATALOG"));
-        final String schemaName = normalizeSchemaName(results
-          .getString("TABLE_SCHEMA"));
+        final String catalogName =
+          normalizeCatalogName(results.getString("TABLE_CATALOG"));
+        final String schemaName =
+          normalizeSchemaName(results.getString("TABLE_SCHEMA"));
         final String viewName = results.getString("TABLE_NAME");
 
-        final Optional<MutableTable> viewOptional = lookupTable(catalogName,
-                                                                schemaName,
-                                                                viewName);
+        final Optional<MutableTable> viewOptional =
+          lookupTable(catalogName, schemaName, viewName);
         if (!viewOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
@@ -759,12 +773,12 @@ final class TableExtRetriever
         }
 
         final MutableView view = (MutableView) viewOptional.get();
-        LOGGER
-          .log(Level.FINER,
-               new StringFormat("Retrieving view information <%s>", viewName));
+        LOGGER.log(Level.FINER,
+                   new StringFormat("Retrieving view information <%s>",
+                                    viewName));
         final String definition = results.getString("VIEW_DEFINITION");
-        final CheckOptionType checkOption = results
-          .getEnum("CHECK_OPTION", CheckOptionType.unknown);
+        final CheckOptionType checkOption =
+          results.getEnum("CHECK_OPTION", CheckOptionType.unknown);
         final boolean updatable = results.getBoolean("IS_UPDATABLE");
 
         view.appendDefinition(definition);
@@ -787,10 +801,10 @@ final class TableExtRetriever
   {
     while (results.next())
     {
-      final String catalogName = normalizeCatalogName(results
-        .getString("TABLE_CAT"));
-      final String schemaName = normalizeSchemaName(results
-        .getString("TABLE_SCHEM"));
+      final String catalogName =
+        normalizeCatalogName(results.getString("TABLE_CAT"));
+      final String schemaName =
+        normalizeSchemaName(results.getString("TABLE_SCHEM"));
       final String tableName = results.getString("TABLE_NAME");
       final String columnName;
       if (privilegesForColumn)
@@ -802,9 +816,8 @@ final class TableExtRetriever
         columnName = null;
       }
 
-      final Optional<MutableTable> tableOptional = lookupTable(catalogName,
-                                                               schemaName,
-                                                               tableName);
+      final Optional<MutableTable> tableOptional =
+        lookupTable(catalogName, schemaName, tableName);
       if (!tableOptional.isPresent())
       {
         continue;
@@ -814,8 +827,8 @@ final class TableExtRetriever
       final MutableColumn column;
       if (privilegesForColumn)
       {
-        final Optional<MutableColumn> columnOptional = table
-          .lookupColumn(columnName);
+        final Optional<MutableColumn> columnOptional =
+          table.lookupColumn(columnName);
         if (!columnOptional.isPresent())
         {
           continue;
@@ -835,19 +848,19 @@ final class TableExtRetriever
       final MutablePrivilege<?> privilege;
       if (privilegesForColumn)
       {
-        final Optional<MutablePrivilege<Column>> privilegeOptional = column
-          .lookupPrivilege(privilegeName);
-        privilege = privilegeOptional
-          .orElse(new MutablePrivilege<>(new ColumnReference(column),
-                                         privilegeName));
+        final Optional<MutablePrivilege<Column>> privilegeOptional =
+          column.lookupPrivilege(privilegeName);
+        privilege =
+          privilegeOptional.orElse(new MutablePrivilege<>(new ColumnReference(
+            column), privilegeName));
       }
       else
       {
-        final Optional<MutablePrivilege<Table>> privilegeOptional = table
-          .lookupPrivilege(privilegeName);
-        privilege = privilegeOptional
-          .orElse(new MutablePrivilege<>(new TableReference(table),
-                                         privilegeName));
+        final Optional<MutablePrivilege<Table>> privilegeOptional =
+          table.lookupPrivilege(privilegeName);
+        privilege =
+          privilegeOptional.orElse(new MutablePrivilege<>(new TableReference(
+            table), privilegeName));
       }
 
       privilege.addGrant(grantor, grantee, isGrantable);

@@ -32,12 +32,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import org.junit.jupiter.api.Test;
-
 import sf.util.graph.DirectedGraph;
 
 /**
- * Tests from
- * https://github.com/danielrbradley/CycleDetection/blob/master/
+ * Tests from https://github.com/danielrbradley/CycleDetection/blob/master/
  * StronglyConnectedComponentsTests/StronglyConnectedComponentTests.cs
  */
 public class DirectedGraphBoundaryTest

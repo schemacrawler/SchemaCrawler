@@ -47,7 +47,9 @@ public class SchemaCrawlerLogger
 
   private static void updateSource(final LogRecord lr, final int depth)
   {
-    final StackTraceElement[] steArray = Thread.currentThread().getStackTrace();
+    final StackTraceElement[] steArray = Thread
+      .currentThread()
+      .getStackTrace();
     if (steArray == null)
     {
       return;

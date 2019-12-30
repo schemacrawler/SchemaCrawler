@@ -38,7 +38,11 @@ import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.logging.Level;
 
-import schemacrawler.schemacrawler.*;
+import schemacrawler.schemacrawler.ExcludeAll;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
@@ -48,8 +52,8 @@ import sf.util.SchemaCrawlerLogger;
 public class EmbeddedSQLiteWrapper
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(EmbeddedSQLiteWrapper.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(EmbeddedSQLiteWrapper.class.getName());
 
   private Path databaseFile;
 
@@ -60,8 +64,8 @@ public class EmbeddedSQLiteWrapper
 
     try
     {
-      final DatabaseConnectionSource connectionOptions = new SQLiteDatabaseConnector()
-        .newDatabaseConnectionSource(config -> new DatabaseConnectionSource(
+      final DatabaseConnectionSource connectionOptions =
+        new SQLiteDatabaseConnector().newDatabaseConnectionSource(config -> new DatabaseConnectionSource(
           getConnectionUrl(),
           config));
       return connectionOptions;
@@ -109,13 +113,14 @@ public class EmbeddedSQLiteWrapper
   protected final Path checkDatabaseFile(final Path dbFile)
     throws IOException
   {
-    final Path databaseFile = requireNonNull(dbFile,
-                                             "No database file path provided")
-      .normalize().toAbsolutePath();
+    final Path databaseFile =
+      requireNonNull(dbFile, "No database file path provided")
+        .normalize()
+        .toAbsolutePath();
     if (!isFileReadable(databaseFile))
     {
-      final IOException e = new IOException(
-        "Cannot read database file, " + databaseFile);
+      final IOException e =
+        new IOException("Cannot read database file, " + databaseFile);
       LOGGER.log(Level.FINE, e.getMessage(), e);
       throw e;
     }
@@ -128,18 +133,20 @@ public class EmbeddedSQLiteWrapper
   {
     checkConnection(connection);
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
-      .includeRoutines(new ExcludeAll());
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
+        .includeRoutines(new ExcludeAll());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
 
     final Path diagramFile = createTempFilePath("schemacrawler", extension);
-    final OutputOptions outputOptions = OutputOptionsBuilder
-      .newOutputOptions(extension, diagramFile);
+    final OutputOptions outputOptions =
+      OutputOptionsBuilder.newOutputOptions(extension, diagramFile);
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-      "schema");
+    final SchemaCrawlerExecutable executable =
+      new SchemaCrawlerExecutable("schema");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setOutputOptions(outputOptions);
     executable.setConnection(connection);

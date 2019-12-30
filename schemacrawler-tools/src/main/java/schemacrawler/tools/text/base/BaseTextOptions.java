@@ -57,9 +57,11 @@ public abstract class BaseTextOptions
     requireNonNull(builder, "No builder provided");
 
     isAlphabeticalSortForTables = builder.isAlphabeticalSortForTables;
-    isAlphabeticalSortForTableColumns = builder.isAlphabeticalSortForTableColumns;
+    isAlphabeticalSortForTableColumns =
+      builder.isAlphabeticalSortForTableColumns;
     isAlphabeticalSortForRoutines = builder.isAlphabeticalSortForRoutines;
-    isAlphabeticalSortForRoutineParameters = builder.isAlphabeticalSortForRoutineParameters;
+    isAlphabeticalSortForRoutineParameters =
+      builder.isAlphabeticalSortForRoutineParameters;
     isAppendOutput = builder.isAppendOutput;
     isNoFooter = builder.isNoFooter;
     isNoHeader = builder.isNoHeader;

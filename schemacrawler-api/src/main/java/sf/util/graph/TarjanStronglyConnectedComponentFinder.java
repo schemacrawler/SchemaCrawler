@@ -37,23 +37,21 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Implementation of <a href=
- * "https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm">
+ * Implementation of <a href= "https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm">
  * Tarjan's algorithm</a>
  *
- * @author Sualeh Fatehi
  * @param <T>
- *        Any comparable class
+ *   Any comparable class
+ * @author Sualeh Fatehi
  */
 public class TarjanStronglyConnectedComponentFinder<T extends Comparable<? super T>>
 {
 
-  private static final String ATTRIBUTE_LOWLINK = "lowlink";
   private static final String ATTRIBUTE_INDEX = "index";
-
+  private static final String ATTRIBUTE_LOWLINK = "lowlink";
   private final DirectedGraph<T> graph;
-  private final Collection<List<T>> stronglyConnectedComponents;
   private final Deque<Vertex<T>> stack;
+  private final Collection<List<T>> stronglyConnectedComponents;
 
   public TarjanStronglyConnectedComponentFinder(final DirectedGraph<T> graph)
   {
@@ -70,7 +68,7 @@ public class TarjanStronglyConnectedComponentFinder<T extends Comparable<? super
    */
   public Collection<List<T>> detectCycles()
   {
-    for (final Vertex<T> vertex: graph.vertexSet())
+    for (final Vertex<T> vertex : graph.vertexSet())
     {
       if (!vertex.hasAttribute(ATTRIBUTE_INDEX))
       {
@@ -86,32 +84,30 @@ public class TarjanStronglyConnectedComponentFinder<T extends Comparable<? super
     vertexFrom.putAttribute(ATTRIBUTE_LOWLINK, index);
     stack.push(vertexFrom);
 
-    for (final DirectedEdge<T> edge: graph.getOutgoingEdges(vertexFrom))
+    for (final DirectedEdge<T> edge : graph.getOutgoingEdges(vertexFrom))
     {
       final Vertex<T> vertexTo = edge.getTo();
       if (!vertexTo.hasAttribute(ATTRIBUTE_INDEX))
       {
         // Successor vertex has not yet been visited; recurse on it
         strongConnect(vertexTo, index + 1);
-        vertexFrom
-          .putAttribute(ATTRIBUTE_LOWLINK,
-                        Math
-                          .min((int) vertexFrom.getAttribute(ATTRIBUTE_LOWLINK),
-                               (int) vertexTo.getAttribute(ATTRIBUTE_LOWLINK)));
+        vertexFrom.putAttribute(ATTRIBUTE_LOWLINK,
+                                Math.min(vertexFrom.getAttribute(
+                                  ATTRIBUTE_LOWLINK),
+                                         vertexTo.getAttribute(ATTRIBUTE_LOWLINK)));
       }
       else if (stack.contains(vertexTo))
       {
         // Successor vertex is on stack, hence in the current SCC
-        vertexFrom
-          .putAttribute(ATTRIBUTE_LOWLINK,
-                        Math
-                          .min((int) vertexFrom.getAttribute(ATTRIBUTE_LOWLINK),
-                               (int) vertexTo.getAttribute(ATTRIBUTE_INDEX)));
+        vertexFrom.putAttribute(ATTRIBUTE_LOWLINK,
+                                Math.min(vertexFrom.getAttribute(
+                                  ATTRIBUTE_LOWLINK),
+                                         vertexTo.getAttribute(ATTRIBUTE_INDEX)));
       }
     }
 
-    if (vertexFrom.getAttribute(ATTRIBUTE_LOWLINK) == vertexFrom
-      .getAttribute(ATTRIBUTE_INDEX))
+    if (vertexFrom.getAttribute(ATTRIBUTE_LOWLINK) == vertexFrom.getAttribute(
+      ATTRIBUTE_INDEX))
     {
       final LinkedList<T> scc = new LinkedList<>();
       Vertex<T> sccVertex;
@@ -119,7 +115,8 @@ public class TarjanStronglyConnectedComponentFinder<T extends Comparable<? super
       {
         sccVertex = stack.pop();
         scc.addFirst(sccVertex.getValue());
-      } while (!vertexFrom.equals(sccVertex));
+      }
+      while (!vertexFrom.equals(sccVertex));
       if (scc.size() > 1)
       {
         stronglyConnectedComponents.add(scc);

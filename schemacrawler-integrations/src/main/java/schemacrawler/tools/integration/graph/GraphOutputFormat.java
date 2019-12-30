@@ -39,60 +39,60 @@ import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 public enum GraphOutputFormat
-  implements
-  OutputFormat
+  implements OutputFormat
 {
 
- htmlx("SchemaCrawler graph embedded in HTML5"),
- scdot("SchemaCrawler generated format"),
- //
- bmp("Windows Bitmap Format"),
- canon("DOT"),
- dot("DOT"),
- gv("DOT"),
- xdot("DOT", "xdot1.2", "xdot1.4"),
- cgimage("CGImage bitmap format"),
- cmap("Client-side imagemap (deprecated)"),
- eps("Encapsulated PostScript"),
- exr("OpenEXR"),
- fig("FIG"),
- gd("GD/GD2 formats", "gd2"),
- gif("GIF"),
- gtk("GTK canvas"),
- ico("Icon Image File Format"),
- imap("Server-side and client-side imagemaps", "cmapx", "imap_np", "cmapx_np"),
- jp2("JPEG 2000"),
- jpg("JPEG", "jpeg", "jpe"),
- pct("PICT", "pict"),
- pdf("Portable Document Format (PDF)"),
- pic("Kernighan's PIC graphics language"),
- plain("Simple text format", "plain-ext"),
- png("Portable Network Graphics format"),
- pov("POV-Ray markup language (prototype)"),
- ps("PostScript"),
- ps2("PostScript for PDF"),
- psd("PSD"),
- sgi("SGI"),
- svg("Scalable Vector Graphics"),
- svgz("Scalable Vector Graphics"),
- tga("Truevision TGA"),
- tiff("TIFF (Tag Image File Format)", "tif"),
- tk("TK graphics"),
- vml("Vector Markup Language (VML)"),
- vmlz("Vector Markup Language (VML)"),
- vrml("VRML"),
- wbmp("Wireless BitMap format"),
- webp("Image format for the Web"),
- xlib("Xlib canvas", "x11"),;
+  htmlx("SchemaCrawler graph embedded in HTML5"),
+  scdot("SchemaCrawler generated format"),
+  //
+  bmp("Windows Bitmap Format"),
+  canon("DOT"),
+  dot("DOT"),
+  gv("DOT"),
+  xdot("DOT", "xdot1.2", "xdot1.4"),
+  cgimage("CGImage bitmap format"),
+  cmap("Client-side imagemap (deprecated)"),
+  eps("Encapsulated PostScript"),
+  exr("OpenEXR"),
+  fig("FIG"),
+  gd("GD/GD2 formats", "gd2"),
+  gif("GIF"),
+  gtk("GTK canvas"),
+  ico("Icon Image File Format"),
+  imap("Server-side and client-side imagemaps", "cmapx", "imap_np", "cmapx_np"),
+  jp2("JPEG 2000"),
+  jpg("JPEG", "jpeg", "jpe"),
+  pct("PICT", "pict"),
+  pdf("Portable Document Format (PDF)"),
+  pic("Kernighan's PIC graphics language"),
+  plain("Simple text format", "plain-ext"),
+  png("Portable Network Graphics format"),
+  pov("POV-Ray markup language (prototype)"),
+  ps("PostScript"),
+  ps2("PostScript for PDF"),
+  psd("PSD"),
+  sgi("SGI"),
+  svg("Scalable Vector Graphics"),
+  svgz("Scalable Vector Graphics"),
+  tga("Truevision TGA"),
+  tiff("TIFF (Tag Image File Format)", "tif"),
+  tk("TK graphics"),
+  vml("Vector Markup Language (VML)"),
+  vmlz("Vector Markup Language (VML)"),
+  vrml("VRML"),
+  wbmp("Wireless BitMap format"),
+  webp("Image format for the Web"),
+  xlib("Xlib canvas", "x11"),
+  ;
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(GraphOutputFormat.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(GraphOutputFormat.class.getName());
 
   /**
    * Gets the value from the format.
    *
    * @param format
-   *        Graph output format.
+   *   Graph output format.
    * @return GraphOutputFormat
    */
   public static GraphOutputFormat fromFormat(final String format)
@@ -100,15 +100,31 @@ public enum GraphOutputFormat
     final GraphOutputFormat outputFormat = fromFormatOrNull(format);
     if (outputFormat == null)
     {
-      LOGGER
-        .log(Level.CONFIG,
-             new StringFormat("Unknown format <%s>, using default", format));
+      LOGGER.log(Level.CONFIG,
+                 new StringFormat("Unknown format <%s>, using default",
+                                  format));
       return png;
     }
     else
     {
       return outputFormat;
     }
+  }
+
+  private static GraphOutputFormat fromFormatOrNull(final String format)
+  {
+    if (isBlank(format))
+    {
+      return null;
+    }
+    for (final GraphOutputFormat outputFormat : GraphOutputFormat.values())
+    {
+      if (outputFormat.outputFormatState.isSupportedFormat(format))
+      {
+        return outputFormat;
+      }
+    }
+    return null;
   }
 
   /**
@@ -120,23 +136,6 @@ public enum GraphOutputFormat
   {
     return fromFormatOrNull(format) != null;
   }
-
-  private static GraphOutputFormat fromFormatOrNull(final String format)
-  {
-    if (isBlank(format))
-    {
-      return null;
-    }
-    for (final GraphOutputFormat outputFormat: GraphOutputFormat.values())
-    {
-      if (outputFormat.outputFormatState.isSupportedFormat(format))
-      {
-        return outputFormat;
-      }
-    }
-    return null;
-  }
-
   private final OutputFormatState outputFormatState;
 
   private GraphOutputFormat(final String description)
@@ -147,9 +146,8 @@ public enum GraphOutputFormat
   private GraphOutputFormat(final String description,
                             final String... additionalFormatSpecifiers)
   {
-    outputFormatState = new OutputFormatState(name(),
-                                              description,
-                                              additionalFormatSpecifiers);
+    outputFormatState =
+      new OutputFormatState(name(), description, additionalFormatSpecifiers);
   }
 
   @Override

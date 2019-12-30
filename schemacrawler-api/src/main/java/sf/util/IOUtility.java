@@ -58,16 +58,16 @@ import java.util.logging.Level;
 public final class IOUtility
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(IOUtility.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(IOUtility.class.getName());
 
   /**
    * Reads the stream fully, and writes to the writer.
    *
    * @param reader
-   *        Reader to read.
+   *   Reader to read.
    * @param writer
-   *        Writer to copy to
+   *   Writer to copy to
    */
   public static void copy(final Reader reader, final Writer writer)
   {
@@ -88,8 +88,8 @@ public final class IOUtility
       // Do not close resources - that is the responsibility of the
       // caller
       final Reader bufferedReader = new BufferedReader(reader, buffer.length);
-      final BufferedWriter bufferedWriter = new BufferedWriter(writer,
-                                                               buffer.length);
+      final BufferedWriter bufferedWriter =
+        new BufferedWriter(writer, buffer.length);
 
       int read;
       do
@@ -99,7 +99,8 @@ public final class IOUtility
         {
           bufferedWriter.write(buffer, 0, read);
         }
-      } while (read >= 0);
+      }
+      while (read >= 0);
 
       bufferedWriter.flush();
     }
@@ -113,11 +114,14 @@ public final class IOUtility
                                         final String extension)
     throws IOException
   {
-    final Path tempFilePath = createTempFile("schemacrawler." + stem + ".",
-                                             "." + extension).normalize()
-                                               .toAbsolutePath();
+    final Path tempFilePath =
+      createTempFile("schemacrawler." + stem + ".", "." + extension)
+        .normalize()
+        .toAbsolutePath();
     delete(tempFilePath);
-    tempFilePath.toFile().deleteOnExit();
+    tempFilePath
+      .toFile()
+      .deleteOnExit();
     return tempFilePath;
   }
 
@@ -139,8 +143,8 @@ public final class IOUtility
     final String ext;
     if (fileName != null)
     {
-      ext = fileName.lastIndexOf('.') == -1? "": fileName
-        .substring(fileName.lastIndexOf('.') + 1, fileName.length());
+      ext = fileName.lastIndexOf('.') == -1? "":
+            fileName.substring(fileName.lastIndexOf('.') + 1);
     }
     else
     {
@@ -150,11 +154,10 @@ public final class IOUtility
   }
 
   /**
-   * Checks if an input file can be read. The file must contain some
-   * data.
+   * Checks if an input file can be read. The file must contain some data.
    *
    * @param file
-   *        Input file to read
+   *   Input file to read
    * @return True if the file can be read, false otherwise.
    */
   public static boolean isFileReadable(final Path file)
@@ -182,11 +185,10 @@ public final class IOUtility
   }
 
   /**
-   * Checks if an output file can be written. The file does not need to
-   * exist.
+   * Checks if an output file can be written. The file does not need to exist.
    *
    * @param file
-   *        Output file to write
+   *   Output file to write
    * @return True if the file can be written, false otherwise.
    */
   public static boolean isFileWritable(final Path file)
@@ -200,12 +202,8 @@ public final class IOUtility
       return false;
     }
     final Path parentPath = file.getParent();
-    if (parentPath == null || !exists(parentPath) || !isDirectory(parentPath)
-        || !isWritable(parentPath))
-    {
-      return false;
-    }
-    return true;
+    return parentPath != null && exists(parentPath) && isDirectory(parentPath)
+           && isWritable(parentPath);
   }
 
   public static String readFully(final InputStream stream)
@@ -222,7 +220,7 @@ public final class IOUtility
    * Reads the stream fully, and returns a byte array of data.
    *
    * @param reader
-   *        Reader to read.
+   *   Reader to read.
    * @return Byte array
    */
   public static String readFully(final Reader reader)

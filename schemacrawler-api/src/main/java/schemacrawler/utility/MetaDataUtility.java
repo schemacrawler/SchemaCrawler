@@ -54,28 +54,6 @@ import sf.util.UtilityMarker;
 public final class MetaDataUtility
 {
 
-  public enum ForeignKeyCardinality
-  {
-   unknown(""),
-   zero_one("(0..1)"),
-   zero_many("(0..many)"),
-   one_one("(1..1)");
-
-    private final String description;
-
-    private ForeignKeyCardinality(final String description)
-    {
-      this.description = requireNonNull(description, "No description provided");
-    }
-
-    @Override
-    public String toString()
-    {
-      return description;
-    }
-
-  }
-
   public static Collection<List<String>> allIndexCoumnNames(final Table table)
   {
     return indexCoumnNames(table, false);
@@ -89,7 +67,7 @@ public final class MetaDataUtility
     }
 
     final List<String> columnNames = new ArrayList<>();
-    for (final Column indexColumn: index)
+    for (final Column indexColumn : index)
     {
       columnNames.add(indexColumn.getFullName());
     }
@@ -104,9 +82,14 @@ public final class MetaDataUtility
 
     final Table pkTable = pkColumn.getParent();
     final Table fkParent = fkColumn.getParent();
-    final String pkHex = Integer.toHexString(pkTable.getFullName().hashCode());
-    final String fkHex = Integer.toHexString(fkParent.getFullName().hashCode());
-    final String foreignKeyName = String.format("SC_%s_%s", pkHex, fkHex)
+    final String pkHex = Integer.toHexString(pkTable
+                                               .getFullName()
+                                               .hashCode());
+    final String fkHex = Integer.toHexString(fkParent
+                                               .getFullName()
+                                               .hashCode());
+    final String foreignKeyName = String
+      .format("SC_%s_%s", pkHex, fkHex)
       .toUpperCase();
     return foreignKeyName;
   }
@@ -118,7 +101,7 @@ public final class MetaDataUtility
       return false;
     }
 
-    for (final Column indexColumn: index)
+    for (final Column indexColumn : index)
     {
       if (indexColumn.isGenerated())
       {
@@ -136,7 +119,9 @@ public final class MetaDataUtility
     }
     final boolean isForeignKeyUnique = isForeignKeyUnique(foreignKey);
 
-    final ColumnReference columnRef0 = foreignKey.getColumnReferences().get(0);
+    final ColumnReference columnRef0 = foreignKey
+      .getColumnReferences()
+      .get(0);
     final Column fkColumn = columnRef0.getForeignKeyColumn();
     final boolean isColumnReference = fkColumn instanceof PartialDatabaseObject;
 
@@ -163,29 +148,13 @@ public final class MetaDataUtility
       return Collections.emptyList();
     }
     final List<String> columnNames = new ArrayList<>();
-    for (final ColumnReference columnReference: foreignKey)
+    for (final ColumnReference columnReference : foreignKey)
     {
-      columnNames.add(columnReference.getForeignKeyColumn().getFullName());
+      columnNames.add(columnReference
+                        .getForeignKeyColumn()
+                        .getFullName());
     }
     return columnNames;
-  }
-
-  public static boolean isForeignKeyUnique(final BaseForeignKey<?> foreignKey)
-  {
-    if (foreignKey == null)
-    {
-      return false;
-    }
-    final ColumnReference columnRef0 = foreignKey.getColumnReferences().get(0);
-    final Table fkTable = columnRef0.getForeignKeyColumn().getParent();
-    final Collection<List<String>> uniqueIndexCoumnNames = uniqueIndexCoumnNames(fkTable);
-    final List<String> foreignKeyColumnNames = foreignKeyColumnNames(foreignKey);
-    return uniqueIndexCoumnNames.contains(foreignKeyColumnNames);
-  }
-
-  public static Collection<List<String>> uniqueIndexCoumnNames(final Table table)
-  {
-    return indexCoumnNames(table, true);
   }
 
   private static Collection<List<String>> indexCoumnNames(final Table table,
@@ -201,7 +170,7 @@ public final class MetaDataUtility
     final List<String> pkColumns = columnNames(primaryKey);
     allIndexCoumns.add(pkColumns);
 
-    for (final Index index: table.getIndexes())
+    for (final Index index : table.getIndexes())
     {
       if (includeUniqueOnly && !index.isUnique())
       {
@@ -212,6 +181,52 @@ public final class MetaDataUtility
       allIndexCoumns.add(indexColumns);
     }
     return allIndexCoumns;
+  }
+
+  public static boolean isForeignKeyUnique(final BaseForeignKey<?> foreignKey)
+  {
+    if (foreignKey == null)
+    {
+      return false;
+    }
+    final ColumnReference columnRef0 = foreignKey
+      .getColumnReferences()
+      .get(0);
+    final Table fkTable = columnRef0
+      .getForeignKeyColumn()
+      .getParent();
+    final Collection<List<String>> uniqueIndexCoumnNames =
+      uniqueIndexCoumnNames(fkTable);
+    final List<String> foreignKeyColumnNames =
+      foreignKeyColumnNames(foreignKey);
+    return uniqueIndexCoumnNames.contains(foreignKeyColumnNames);
+  }
+
+  public static Collection<List<String>> uniqueIndexCoumnNames(final Table table)
+  {
+    return indexCoumnNames(table, true);
+  }
+
+  public enum ForeignKeyCardinality
+  {
+    unknown(""),
+    zero_one("(0..1)"),
+    zero_many("(0..many)"),
+    one_one("(1..1)");
+
+    private final String description;
+
+    ForeignKeyCardinality(final String description)
+    {
+      this.description = requireNonNull(description, "No description provided");
+    }
+
+    @Override
+    public String toString()
+    {
+      return description;
+    }
+
   }
 
   private MetaDataUtility()

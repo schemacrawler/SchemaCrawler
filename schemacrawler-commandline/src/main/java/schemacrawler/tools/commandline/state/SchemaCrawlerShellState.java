@@ -43,8 +43,8 @@ import sf.util.SchemaCrawlerLogger;
 public class SchemaCrawlerShellState
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(SchemaCrawlerShellState.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(SchemaCrawlerShellState.class.getName());
 
   private Config additionalConfiguration;
   private Config baseConfiguration;

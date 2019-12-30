@@ -66,10 +66,10 @@ public class LinterTableWithPrimaryKeyNotFirst
       return;
     }
 
-    for (final IndexColumn indexColumn: primaryKey.getColumns())
+    for (final IndexColumn indexColumn : primaryKey.getColumns())
     {
-      if (indexColumn.getIndexOrdinalPosition() != indexColumn
-        .getOrdinalPosition())
+      if (indexColumn.getIndexOrdinalPosition()
+          != indexColumn.getOrdinalPosition())
       {
         addTableLint(table, getSummary());
         break;

@@ -65,30 +65,32 @@ public class SchemaCrawlerExecutableChainTest
   public void chainJavaScript(final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-      "script");
+    final SchemaCrawlerExecutable executable =
+      new SchemaCrawlerExecutable("script");
     final Path testOutputFile = IOUtility.createTempFilePath("sc", "data");
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder()
-      .includeAllRoutines();
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .includeAllRoutines();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
 
-    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
-      .builder();
-    textOptionsBuilder.noSchemaCrawlerInfo(false)
-                      .showDatabaseInfo()
-                      .showJdbcDriverInfo();
+    final SchemaTextOptionsBuilder textOptionsBuilder =
+      SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder
+      .noSchemaCrawlerInfo(false)
+      .showDatabaseInfo()
+      .showJdbcDriverInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    final Config additionalConfiguration = SchemaTextOptionsBuilder.builder(
-      textOptions).toConfig();
+    final Config additionalConfiguration = SchemaTextOptionsBuilder
+      .builder(textOptions)
+      .toConfig();
     additionalConfiguration.put("script", "/chain.js");
 
-    final OutputOptions outputOptions = OutputOptionsBuilder.newOutputOptions(
-      "text",
-      testOutputFile);
+    final OutputOptions outputOptions =
+      OutputOptionsBuilder.newOutputOptions("text", testOutputFile);
 
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setOutputOptions(outputOptions);

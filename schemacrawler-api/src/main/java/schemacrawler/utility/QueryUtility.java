@@ -60,8 +60,8 @@ import sf.util.UtilityMarker;
 public final class QueryUtility
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(QueryUtility.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(QueryUtility.class.getName());
 
   public static ResultSet executeAgainstSchema(final Query query,
                                                final Statement statement,
@@ -85,10 +85,8 @@ public final class QueryUtility
     requireNonNull(query, "No query provided");
     requireNonNull(identifiers, "No identifiers provided");
 
-    final String sql = getQuery(query,
-                                table,
-                                isAlphabeticalSortForTableColumns,
-                                identifiers);
+    final String sql =
+      getQuery(query, table, isAlphabeticalSortForTableColumns, identifiers);
     LOGGER.log(Level.FINE,
                new StringFormat("Executing %s: %n%s", query.getName(), sql));
     return executeSql(statement, sql);
@@ -139,11 +137,13 @@ public final class QueryUtility
     for (int i = 0; i < columns.size(); i++)
     {
       final Column column = columns.get(i);
-      final JavaSqlTypeGroup javaSqlTypeGroup = column.getColumnDataType()
-        .getJavaSqlType().getJavaSqlTypeGroup();
-      if (!(omitLargeObjectColumns
-            && (javaSqlTypeGroup == JavaSqlTypeGroup.large_object
-                || javaSqlTypeGroup == JavaSqlTypeGroup.object)))
+      final JavaSqlTypeGroup javaSqlTypeGroup = column
+        .getColumnDataType()
+        .getJavaSqlType()
+        .getJavaSqlTypeGroup();
+      if (!(omitLargeObjectColumns && (
+        javaSqlTypeGroup == JavaSqlTypeGroup.large_object
+        || javaSqlTypeGroup == JavaSqlTypeGroup.object)))
       {
         columnsList.add(identifiers.quoteName(column.getName()));
       }
@@ -160,7 +160,7 @@ public final class QueryUtility
    * Gets the query with parameters substituted.
    *
    * @param schemaInclusionRule
-   *        Schema inclusion rule
+   *   Schema inclusion rule
    * @return Ready-to-execute query
    */
   private static String getQuery(final Query query,
@@ -172,8 +172,10 @@ public final class QueryUtility
     if (schemaInclusionRule != null
         && schemaInclusionRule instanceof InclusionRuleWithRegularExpression)
     {
-      final String schemaInclusionPattern = ((InclusionRuleWithRegularExpression) schemaInclusionRule)
-        .getInclusionPattern().pattern();
+      final String schemaInclusionPattern =
+        ((InclusionRuleWithRegularExpression) schemaInclusionRule)
+          .getInclusionPattern()
+          .pattern();
       if (!isBlank(schemaInclusionPattern))
       {
         properties.put("schemas", schemaInclusionPattern);
@@ -195,8 +197,8 @@ public final class QueryUtility
     final Map<String, String> tableProperties = new HashMap<>();
     if (table != null)
     {
-      final NamedObjectSort columnsSort = NamedObjectSort
-        .getNamedObjectSort(isAlphabeticalSortForTableColumns);
+      final NamedObjectSort columnsSort =
+        NamedObjectSort.getNamedObjectSort(isAlphabeticalSortForTableColumns);
       final List<Column> columns = table.getColumns();
       columns.sort(columnsSort);
 
@@ -212,7 +214,10 @@ public final class QueryUtility
                           getColumnsListAsString(columns, false, identifiers));
       tableProperties.put("orderbycolumns",
                           getColumnsListAsString(columns, true, identifiers));
-      tableProperties.put("tabletype", table.getTableType().toString());
+      tableProperties.put("tabletype",
+                          table
+                            .getTableType()
+                            .toString());
     }
 
     String sql = query.getQuery();

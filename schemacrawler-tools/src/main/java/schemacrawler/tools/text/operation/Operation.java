@@ -50,9 +50,8 @@ public enum Operation
        "Shows data from all rows in the tables",
        "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}"),
   /**
-   * Quick dump operation, where columns do not need to be retrieved
-   * (minimum infolevel), but the order of rows may not be preserved from
-   * run to run.
+   * Quick dump operation, where columns do not need to be retrieved (minimum
+   * infolevel), but the order of rows may not be preserved from run to run.
    */
   quickdump("Dump",
             "Shows data from all rows in the tables, "

@@ -30,7 +30,9 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 
 import java.sql.SQLException;
 
@@ -41,7 +43,11 @@ import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import schemacrawler.schemacrawler.*;
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseBuildCondition;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -55,12 +61,14 @@ public class MySQLTest
 {
 
   @Container
-  private JdbcDatabaseContainer dbContainer = new HeavyDatabaseBuildCondition()
-    .getJdbcDatabaseContainer(() -> new MySQLContainer<>("mysql:8.0.18")
+  private JdbcDatabaseContainer dbContainer =
+    new HeavyDatabaseBuildCondition().getJdbcDatabaseContainer(() -> new MySQLContainer<>(
+      "mysql:8.0.18")
       .withCommand("mysqld",
                    "--lower_case_table_names=1",
                    "--log_bin_trust_function_creators=1")
-      .withUsername("schemacrawler").withDatabaseName("books"));
+      .withUsername("schemacrawler")
+      .withDatabaseName("books"));
 
   @BeforeEach
   public void createDatabase()
@@ -77,26 +85,30 @@ public class MySQLTest
   public void testMySQLWithConnection()
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder.builder();
     schemaCrawlerOptionsBuilder
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
       .includeSchemas(new RegularExpressionInclusionRule("books"))
-      .includeAllSequences().includeAllSynonyms().includeAllRoutines();
-    final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder
-      .toOptions();
+      .includeAllSequences()
+      .includeAllSynonyms()
+      .includeAllRoutines();
+    final SchemaCrawlerOptions options =
+      schemaCrawlerOptionsBuilder.toOptions();
 
-    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
-      .builder();
-    textOptionsBuilder.showDatabaseInfo().showJdbcDriverInfo();
+    final SchemaTextOptionsBuilder textOptionsBuilder =
+      SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder
+      .showDatabaseInfo()
+      .showJdbcDriverInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-      "details");
+    final SchemaCrawlerExecutable executable =
+      new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(options);
-    executable
-      .setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions)
-                                    .toConfig());
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
+                                            .builder(textOptions)
+                                            .toConfig());
 
     assertThat(outputOf(executableExecution(getConnection(), executable)),
                hasSameContentAs(classpathResource("testMySQLWithConnection.txt")));

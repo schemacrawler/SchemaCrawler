@@ -32,7 +32,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.tools.lint.LinterRegistry;
 
 public class TestLintPlugin
@@ -43,19 +42,20 @@ public class TestLintPlugin
     throws Exception
   {
     final LinterRegistry registry = new LinterRegistry();
-    for (final String linter: new String[] {
-                                             "schemacrawler.tools.linter.LinterColumnTypes",
-                                             "schemacrawler.tools.linter.LinterForeignKeyMismatch",
-                                             "schemacrawler.tools.linter.LinterForeignKeyWithNoIndexes",
-                                             "schemacrawler.tools.linter.LinterNullColumnsInIndex",
-                                             "schemacrawler.tools.linter.LinterNullIntendedColumns",
-                                             "schemacrawler.tools.linter.LinterRedundantIndexes",
-                                             "schemacrawler.tools.linter.LinterTableCycles",
-                                             "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
-                                             "schemacrawler.tools.linter.LinterTableWithNoIndexes",
-                                             "schemacrawler.tools.linter.LinterTableWithQuotedNames",
-                                             "schemacrawler.tools.linter.LinterTableWithSingleColumn",
-                                             "schemacrawler.tools.linter.LinterTooManyLobs", })
+    for (final String linter : new String[] {
+      "schemacrawler.tools.linter.LinterColumnTypes",
+      "schemacrawler.tools.linter.LinterForeignKeyMismatch",
+      "schemacrawler.tools.linter.LinterForeignKeyWithNoIndexes",
+      "schemacrawler.tools.linter.LinterNullColumnsInIndex",
+      "schemacrawler.tools.linter.LinterNullIntendedColumns",
+      "schemacrawler.tools.linter.LinterRedundantIndexes",
+      "schemacrawler.tools.linter.LinterTableCycles",
+      "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
+      "schemacrawler.tools.linter.LinterTableWithNoIndexes",
+      "schemacrawler.tools.linter.LinterTableWithQuotedNames",
+      "schemacrawler.tools.linter.LinterTableWithSingleColumn",
+      "schemacrawler.tools.linter.LinterTooManyLobs",
+      })
     {
       assertThat(registry.hasLinter(linter), is(true));
     }

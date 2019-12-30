@@ -48,8 +48,8 @@ public final class TemplateLanguage
 
     try
     {
-      final TemplateLanguageType templateLanguageType = TemplateLanguageType
-        .valueOf(language);
+      final TemplateLanguageType templateLanguageType =
+        TemplateLanguageType.valueOf(language);
       return templateLanguageType;
     }
     catch (final IllegalArgumentException e)

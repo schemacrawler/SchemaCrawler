@@ -35,7 +35,6 @@ import java.sql.Connection;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
@@ -47,7 +46,8 @@ public class OracleDistributionTest
   @BeforeEach
   public void setup()
   {
-    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry registry =
+      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     dbConnector = registry.lookupDatabaseConnector("oracle");
   }
 
@@ -56,9 +56,10 @@ public class OracleDistributionTest
   {
 
     final Connection connection = null;
-    assertThat(dbConnector.getSchemaRetrievalOptionsBuilder(connection)
-                          .toOptions()
-                          .getIdentifierQuoteString(), is(""));
+    assertThat(dbConnector
+                 .getSchemaRetrievalOptionsBuilder(connection)
+                 .toOptions()
+                 .getIdentifierQuoteString(), is(""));
   }
 
 }

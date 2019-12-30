@@ -31,8 +31,8 @@ package sf.util;
 import static sf.util.Utility.isBlank;
 
 /**
- * Color breaks the dependency on java.awt.Color. The AWT comes with a
- * lot of baggage, and is not part of Java Compact Profile 2.
+ * Color breaks the dependency on java.awt.Color. The AWT comes with a lot of
+ * baggage, and is not part of Java Compact Profile 2.
  *
  * @author Sualeh Fatehi
  */
@@ -40,32 +40,6 @@ public final class Color
 {
 
   public static final Color white = new Color(255, 255, 255);
-
-  public static Color fromHexTriplet(final String htmlColor)
-  {
-    if (isBlank(htmlColor))
-    {
-      throw new IllegalArgumentException("No color provided, " + htmlColor);
-    }
-    if (htmlColor.length() != 7 || !htmlColor.startsWith("#"))
-    {
-      throw new IllegalArgumentException("Bad color provided, " + htmlColor);
-    }
-
-    // Parse color
-    try
-    {
-      final int r = Integer.parseInt(htmlColor.substring(1, 3), 16);
-      final int b = Integer.parseInt(htmlColor.substring(3, 5), 16);
-      final int g = Integer.parseInt(htmlColor.substring(5, 7), 16);
-
-      return new Color(r, b, g);
-    }
-    catch (final Exception e)
-    {
-      throw new IllegalArgumentException("Bad color provided, " + htmlColor, e);
-    }
-  }
 
   /**
    * <a href= "http://stackoverflow.com/questions/7896280"> Converting
@@ -97,11 +71,37 @@ public final class Color
       case 5:
         return fromRGB(value, p, q);
       default:
-        throw new IllegalArgumentException(String
-          .format("Could not convert from HSV (%f, %f, %f) to RGB",
-                  normaliedHue,
-                  saturation,
-                  value));
+        throw new IllegalArgumentException(String.format(
+          "Could not convert from HSV (%f, %f, %f) to RGB",
+          normaliedHue,
+          saturation,
+          value));
+    }
+  }
+
+  public static Color fromHexTriplet(final String htmlColor)
+  {
+    if (isBlank(htmlColor))
+    {
+      throw new IllegalArgumentException("No color provided, " + htmlColor);
+    }
+    if (htmlColor.length() != 7 || !htmlColor.startsWith("#"))
+    {
+      throw new IllegalArgumentException("Bad color provided, " + htmlColor);
+    }
+
+    // Parse color
+    try
+    {
+      final int r = Integer.parseInt(htmlColor.substring(1, 3), 16);
+      final int b = Integer.parseInt(htmlColor.substring(3, 5), 16);
+      final int g = Integer.parseInt(htmlColor.substring(5, 7), 16);
+
+      return new Color(r, b, g);
+    }
+    catch (final Exception e)
+    {
+      throw new IllegalArgumentException("Bad color provided, " + htmlColor, e);
     }
   }
 
@@ -117,9 +117,9 @@ public final class Color
                      (int) (b * 255 + 0.5));
   }
 
-  private final int r;
-  private final int g;
   private final int b;
+  private final int g;
+  private final int r;
 
   private Color(final int r, final int g, final int b)
   {
@@ -164,6 +164,17 @@ public final class Color
   }
 
   @Override
+  public int hashCode()
+  {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + b;
+    result = prime * result + g;
+    result = prime * result + r;
+    return result;
+  }
+
+  @Override
   public boolean equals(final Object obj)
   {
     if (this == obj)
@@ -187,22 +198,7 @@ public final class Color
     {
       return false;
     }
-    if (r != other.r)
-    {
-      return false;
-    }
-    return true;
-  }
-
-  @Override
-  public int hashCode()
-  {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + b;
-    result = prime * result + g;
-    result = prime * result + r;
-    return result;
+    return r == other.r;
   }
 
   @Override
@@ -210,7 +206,9 @@ public final class Color
   {
     final int rgb = (r & 0xFF) << 16 | (g & 0xFF) << 8 | (b & 0xFF) << 0;
 
-    final String htmlColor = "#" + String.format("%06x", rgb).toUpperCase();
+    final String htmlColor = "#" + String
+      .format("%06x", rgb)
+      .toUpperCase();
     return htmlColor;
   }
 

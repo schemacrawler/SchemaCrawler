@@ -46,19 +46,23 @@ public class BundledDistributionTest
   {
 
     final Connection connection = null;
-    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    final DatabaseConnector databaseSystemIdentifier = registry
-      .lookupDatabaseConnector("sqlserver");
+    final DatabaseConnectorRegistry registry =
+      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnector databaseSystemIdentifier =
+      registry.lookupDatabaseConnector("sqlserver");
     assertThat(databaseSystemIdentifier
-      .getSchemaRetrievalOptionsBuilder(connection).toOptions()
-      .getInformationSchemaViews().size(), is(9));
+                 .getSchemaRetrievalOptionsBuilder(connection)
+                 .toOptions()
+                 .getInformationSchemaViews()
+                 .size(), is(9));
   }
 
   @Test
   public void testPlugin_sqlserver()
     throws Exception
   {
-    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry registry =
+      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     assertThat(registry.hasDatabaseSystemIdentifier("sqlserver"), is(true));
   }
 

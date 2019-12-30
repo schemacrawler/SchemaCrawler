@@ -29,9 +29,15 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 
-import static picocli.CommandLine.Model.UsageMessageSpec.*;
+import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_COMMAND_LIST;
+import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_DESCRIPTION;
 import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_FOOTER;
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.*;
+import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_HEADER;
+import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_OPTION_LIST;
+import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_PARAMETER_LIST;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommand;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.configureCommandLine;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static sf.util.Utility.isBlank;
 
 import java.io.PrintStream;
@@ -40,7 +46,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import picocli.CommandLine;
-import picocli.CommandLine.*;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Help;
+import picocli.CommandLine.Model;
+import picocli.CommandLine.Option;
+import picocli.CommandLine.Parameters;
+import picocli.CommandLine.Spec;
 import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
@@ -49,15 +60,9 @@ import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 
-@Command(name = "help",
-         header = "Display SchemaCrawler command-line help",
-         helpCommand = true,
-         headerHeading = "",
-         synopsisHeading = "Shell Command:%n",
-         customSynopsis = {
-           "help"
-         },
-         optionListHeading = "Options:%n")
+@Command(name = "help", header = "Display SchemaCrawler command-line help", helpCommand = true, headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
+  "help"
+}, optionListHeading = "Options:%n")
 public final class CommandLineHelpCommand
   implements Runnable
 {
@@ -66,9 +71,10 @@ public final class CommandLineHelpCommand
   @Parameters
   private String[] commands;
   private PrintStream err;
-  @Option(names = { "-h", "--help" },
-          usageHelp = true,
-          description = "Displays SchemaCrawler command-line help")
+  @Option(names = {
+    "-h",
+    "--help"
+  }, usageHelp = true, description = "Displays SchemaCrawler command-line help")
   private boolean helpRequested;
   private PrintStream out;
   @Spec
@@ -110,7 +116,9 @@ public final class CommandLineHelpCommand
                                                                       "grep",
                                                                       "filter",
                                                                       "load"));
-      new AvailableCommands().iterator().forEachRemaining(commandNames::add);
+      new AvailableCommands()
+        .iterator()
+        .forEachRemaining(commandNames::add);
       commandNames.addAll(Arrays.asList("show", "sort", "execute"));
 
       for (final String commandName : commandNames)
@@ -123,10 +131,10 @@ public final class CommandLineHelpCommand
 
   private CommandLine databaseConnectorCommand(final String databaseSystemIdentifier)
   {
-    final DatabaseConnectorRegistry databaseConnectorRegistry = DatabaseConnectorRegistry
-      .getDatabaseConnectorRegistry();
-    final DatabaseConnector databaseConnector = databaseConnectorRegistry.lookupDatabaseConnector(
-      databaseSystemIdentifier);
+    final DatabaseConnectorRegistry databaseConnectorRegistry =
+      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnector databaseConnector =
+      databaseConnectorRegistry.lookupDatabaseConnector(databaseSystemIdentifier);
 
     @Command
     class EmptyCommand
@@ -138,9 +146,11 @@ public final class CommandLineHelpCommand
     final PluginCommand helpCommand = databaseConnector.getHelpCommand();
     addPluginCommand(commandLine, helpCommand, false);
 
-    final CommandLine subcommandLine = commandLine.getSubcommands()
-                                                  .get(databaseSystemIdentifier);
-    if (subcommandLine == null) {
+    final CommandLine subcommandLine = commandLine
+      .getSubcommands()
+      .get(databaseSystemIdentifier);
+    if (subcommandLine == null)
+    {
       return commandLine;
     }
     configureCommandLine(subcommandLine);
@@ -149,9 +159,11 @@ public final class CommandLineHelpCommand
     return subcommandLine;
   }
 
-  private void configureHelpForSubcommand(final CommandLine commandLine) {
+  private void configureHelpForSubcommand(final CommandLine commandLine)
+  {
 
-    if (commandLine == null) {
+    if (commandLine == null)
+    {
       return;
     }
 
@@ -178,8 +190,8 @@ public final class CommandLineHelpCommand
     {
       return;
     }
-    final DatabaseConnectorRegistry databaseConnectorRegistry = DatabaseConnectorRegistry
-      .getDatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry databaseConnectorRegistry =
+      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     final CommandLine subCommand;
     if (databaseConnectorRegistry.hasDatabaseSystemIdentifier(commandName))
     {
@@ -187,7 +199,9 @@ public final class CommandLineHelpCommand
     }
     else
     {
-      subCommand = parent.getSubcommands().get(commandName);
+      subCommand = parent
+        .getSubcommands()
+        .get(commandName);
     }
     if (subCommand != null)
     {

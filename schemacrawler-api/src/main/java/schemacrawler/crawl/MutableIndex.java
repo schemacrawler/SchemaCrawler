@@ -55,12 +55,13 @@ class MutableIndex
 
   private static final long serialVersionUID = 4051326747138079028L;
 
-  private final NamedObjectList<MutableIndexColumn> columns = new NamedObjectList<>();
-  private boolean isUnique;
-  private IndexType indexType;
-  private int cardinality;
-  private int pages;
+  private final NamedObjectList<MutableIndexColumn> columns =
+    new NamedObjectList<>();
   private final StringBuilder definition;
+  private int cardinality;
+  private IndexType indexType;
+  private boolean isUnique;
+  private int pages;
 
   MutableIndex(final Table parent, final String name)
   {
@@ -73,9 +74,9 @@ class MutableIndex
   /**
    * {@inheritDoc}
    * <p>
-   * Note: Since indexes are not always explicitly named in databases,
-   * the sorting routine orders the indexes by the names of the columns
-   * in the index.
+   * Note: Since indexes are not always explicitly named in databases, the
+   * sorting routine orders the indexes by the names of the columns in the
+   * index.
    * </p>
    */
   @Override
@@ -108,7 +109,9 @@ class MutableIndex
 
     if (compareTo == 0)
     {
-      compareTo = indexType.ordinal() - that.getIndexType().ordinal();
+      compareTo = indexType.ordinal() - that
+        .getIndexType()
+        .ordinal();
     }
 
     if (compareTo == 0)
@@ -128,6 +131,11 @@ class MutableIndex
     return cardinality;
   }
 
+  final void setCardinality(final int cardinality)
+  {
+    this.cardinality = cardinality;
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -141,18 +149,14 @@ class MutableIndex
    * {@inheritDoc}
    */
   @Override
-  public final String getDefinition()
-  {
-    return definition.toString();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public final IndexType getIndexType()
   {
     return indexType;
+  }
+
+  final void setIndexType(final IndexType indexType)
+  {
+    this.indexType = requireNonNull(indexType, "Null index type");
   }
 
   /**
@@ -164,19 +168,9 @@ class MutableIndex
     return pages;
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final IndexType getType()
+  final void setPages(final int pages)
   {
-    return getIndexType();
-  }
-
-  @Override
-  public final boolean hasDefinition()
-  {
-    return definition.length() > 0;
+    this.pages = pages;
   }
 
   /**
@@ -188,10 +182,9 @@ class MutableIndex
     return isUnique;
   }
 
-  @Override
-  public final Iterator<IndexColumn> iterator()
+  final void setUnique(final boolean unique)
   {
-    return getColumns().iterator();
+    isUnique = unique;
   }
 
   /**
@@ -205,6 +198,36 @@ class MutableIndex
     return columns.lookup(getParent(), name);
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final String getDefinition()
+  {
+    return definition.toString();
+  }
+
+  @Override
+  public final boolean hasDefinition()
+  {
+    return definition.length() > 0;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final IndexType getType()
+  {
+    return getIndexType();
+  }
+
+  @Override
+  public final Iterator<IndexColumn> iterator()
+  {
+    return getColumns().iterator();
+  }
+
   final void addColumn(final MutableIndexColumn column)
   {
     columns.add(column);
@@ -216,26 +239,6 @@ class MutableIndex
     {
       this.definition.append(definition);
     }
-  }
-
-  final void setCardinality(final int cardinality)
-  {
-    this.cardinality = cardinality;
-  }
-
-  final void setIndexType(final IndexType indexType)
-  {
-    this.indexType = requireNonNull(indexType, "Null index type");
-  }
-
-  final void setPages(final int pages)
-  {
-    this.pages = pages;
-  }
-
-  final void setUnique(final boolean unique)
-  {
-    isUnique = unique;
   }
 
 }

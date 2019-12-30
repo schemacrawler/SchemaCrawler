@@ -77,12 +77,6 @@ final class TablePartial
   }
 
   @Override
-  public String getDefinition()
-  {
-    throw new NotLoadedException(this);
-  }
-
-  @Override
   public Collection<ForeignKey> getExportedForeignKeys()
   {
     throw new NotLoadedException(this);
@@ -148,18 +142,6 @@ final class TablePartial
     throw new NotLoadedException(this);
   }
 
-  @Override
-  public TableType getType()
-  {
-    throw new NotLoadedException(this);
-  }
-
-  @Override
-  public boolean hasDefinition()
-  {
-    throw new NotLoadedException(this);
-  }
-
   /**
    * {@inheritDoc}
    */
@@ -172,7 +154,9 @@ final class TablePartial
   @Override
   public Optional<Column> lookupColumn(final String name)
   {
-    if (column.getName().equals(name))
+    if (column
+      .getName()
+      .equals(name))
     {
       return Optional.ofNullable(column);
     }
@@ -185,7 +169,9 @@ final class TablePartial
   @Override
   public Optional<ForeignKey> lookupForeignKey(final String name)
   {
-    if (foreignKey.getName().equals(name))
+    if (foreignKey
+      .getName()
+      .equals(name))
     {
       return Optional.ofNullable(foreignKey);
     }
@@ -209,6 +195,24 @@ final class TablePartial
 
   @Override
   public Optional<Trigger> lookupTrigger(final String name)
+  {
+    throw new NotLoadedException(this);
+  }
+
+  @Override
+  public String getDefinition()
+  {
+    throw new NotLoadedException(this);
+  }
+
+  @Override
+  public boolean hasDefinition()
+  {
+    throw new NotLoadedException(this);
+  }
+
+  @Override
+  public TableType getType()
   {
     throw new NotLoadedException(this);
   }

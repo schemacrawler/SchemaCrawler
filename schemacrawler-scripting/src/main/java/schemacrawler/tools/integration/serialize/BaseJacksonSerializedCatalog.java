@@ -28,11 +28,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.serialize;
 
 
-import static com.fasterxml.jackson.databind.SerializationFeature.*;
+import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;
+import static com.fasterxml.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS;
+import static com.fasterxml.jackson.databind.SerializationFeature.USE_EQUALITY_FOR_OBJECT_ID;
+import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_ENUMS_USING_TO_STRING;
 import static java.util.Objects.requireNonNull;
 
 import java.io.OutputStream;
-import java.util.*;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -48,8 +53,8 @@ import schemacrawler.schemacrawler.BaseCatalogDecorator;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
- * Decorates a database to allow for serialization to and from plain
- * Java serialization.
+ * Decorates a database to allow for serialization to and from plain Java
+ * serialization.
  */
 public abstract class BaseJacksonSerializedCatalog
   extends BaseCatalogDecorator
@@ -75,8 +80,10 @@ public abstract class BaseJacksonSerializedCatalog
   /**
    * Serializes the database to the writer, as JSON.
    *
-   * @param out Output stream to save to
-   * @throws SchemaCrawlerException On an exception
+   * @param out
+   *   Output stream to save to
+   * @throws SchemaCrawlerException
+   *   On an exception
    */
   @Override
   public void save(final OutputStream out)
@@ -90,7 +97,8 @@ public abstract class BaseJacksonSerializedCatalog
                               "parent",
                               "referenced-column",
                               "exported-foreign-keys",
-                              "imported-foreign-keys" })
+                              "imported-foreign-keys"
+                            })
       @JsonPropertyOrder(value = {
         "@uuid",
         "name",
@@ -105,7 +113,8 @@ public abstract class BaseJacksonSerializedCatalog
         "schemas",
         "system-column-data-types",
         "column-data-types",
-        "all-table-columns" }, alphabetic = true)
+        "all-table-columns"
+      }, alphabetic = true)
       @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@uuid")
       @JsonNaming(PropertyNamingStrategy.KebabCaseStrategy.class)
       class JacksonAnnotationMixIn

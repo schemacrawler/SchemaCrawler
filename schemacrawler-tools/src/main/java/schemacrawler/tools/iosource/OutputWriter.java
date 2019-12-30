@@ -41,8 +41,8 @@ public final class OutputWriter
   extends Writer
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(ConsoleOutputResource.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(ConsoleOutputResource.class.getName());
 
   private final String description;
   private final Writer writer;
@@ -96,9 +96,8 @@ public final class OutputWriter
     }
     else
     {
-      LOGGER
-        .log(Level.INFO,
-             "Not closing output writer, since output is to an externally provided writer");
+      LOGGER.log(Level.INFO,
+                 "Not closing output writer, since output is to an externally provided writer");
     }
 
     isClosed = true;
@@ -164,8 +163,9 @@ public final class OutputWriter
   {
     if (!isClosed)
     {
-      throw new IllegalStateException(String
-        .format("Could not close output writer <%s>", description));
+      throw new IllegalStateException(String.format(
+        "Could not close output writer <%s>",
+        description));
     }
     super.finalize();
   }

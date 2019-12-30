@@ -46,18 +46,23 @@ public class BundledDistributionTest
   {
 
     final Connection connection = null;
-    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    final DatabaseConnector databaseSystemIdentifier = registry.lookupDatabaseConnector(
-      "sqlite");
-    assertThat(databaseSystemIdentifier.getSchemaRetrievalOptionsBuilder(
-      connection).toOptions().getInformationSchemaViews().size(), is(3));
+    final DatabaseConnectorRegistry registry =
+      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnector databaseSystemIdentifier =
+      registry.lookupDatabaseConnector("sqlite");
+    assertThat(databaseSystemIdentifier
+                 .getSchemaRetrievalOptionsBuilder(connection)
+                 .toOptions()
+                 .getInformationSchemaViews()
+                 .size(), is(3));
   }
 
   @Test
   public void testPlugin_sqlite()
     throws Exception
   {
-    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry registry =
+      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     assertThat(registry.hasDatabaseSystemIdentifier("sqlite"), is(true));
   }
 

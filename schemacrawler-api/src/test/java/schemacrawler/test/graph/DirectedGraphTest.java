@@ -35,7 +35,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
-
 import sf.util.graph.DirectedGraph;
 import sf.util.graph.GraphException;
 
@@ -106,7 +105,9 @@ public class DirectedGraphTest
 
     assertThrows(GraphException.class,
                  () -> topologicalSort(graph),
-                 () -> Arrays.asList("E", "A", "D", "B", "C").toString());
+                 () -> Arrays
+                   .asList("E", "A", "D", "B", "C")
+                   .toString());
   }
 
   @Test
@@ -116,7 +117,8 @@ public class DirectedGraphTest
     final DirectedGraph<String> graph = makeGraph();
 
     assertThat(graph.toString(),
-               is("digraph {\n  A;\n  B;\n  C;\n  D;\n  E;\n  A -> B;\n  B -> C;\n  A -> D;\n}\n"));
+               is(
+                 "digraph {\n  A;\n  B;\n  C;\n  D;\n  E;\n  A -> B;\n  B -> C;\n  A -> D;\n}\n"));
 
   }
 

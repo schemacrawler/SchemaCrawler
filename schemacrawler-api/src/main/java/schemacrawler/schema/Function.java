@@ -69,7 +69,7 @@ public interface Function
    * Gets a column by name.
    *
    * @param name
-   *        Name
+   *   Name
    * @return Column of the procedure
    */
   @Override

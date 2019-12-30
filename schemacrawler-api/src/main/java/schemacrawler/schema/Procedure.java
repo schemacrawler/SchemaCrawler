@@ -61,7 +61,7 @@ public interface Procedure
    * Gets a column by unqualified name.
    *
    * @param name
-   *        Name
+   *   Name
    * @return Column of the procedure
    */
   @Override

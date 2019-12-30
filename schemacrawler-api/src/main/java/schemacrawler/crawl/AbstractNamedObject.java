@@ -55,7 +55,7 @@ abstract class AbstractNamedObject
    * constructors make a class effectively final
    *
    * @param name
-   *        Name of the named object
+   *   Name of the named object
    */
   AbstractNamedObject(final String name)
   {
@@ -74,6 +74,36 @@ abstract class AbstractNamedObject
     }
 
     return NamedObjectSort.alphabetical.compare(this, obj);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getFullName()
+  {
+    return getName();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final String getName()
+  {
+    return name;
+  }
+
+  @Override
+  public List<String> toUniqueLookupKey()
+  {
+    return new ArrayList<>(Arrays.asList(name));
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return Objects.hash(name);
   }
 
   @Override
@@ -98,39 +128,9 @@ abstract class AbstractNamedObject
    * {@inheritDoc}
    */
   @Override
-  public String getFullName()
-  {
-    return getName();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final String getName()
-  {
-    return name;
-  }
-
-  @Override
-  public int hashCode()
-  {
-    return Objects.hash(name);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public final String toString()
   {
     return getFullName();
-  }
-
-  @Override
-  public List<String> toUniqueLookupKey()
-  {
-    return new ArrayList<>(Arrays.asList(name));
   }
 
 }

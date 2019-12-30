@@ -69,16 +69,24 @@ final class TableCandidateKeys
     final Set<Column> tableKeys = new HashSet<>();
 
     final PrimaryKey primaryKey = table.getPrimaryKey();
-    if (primaryKey != null && primaryKey.getColumns().size() == 1)
+    if (primaryKey != null && primaryKey
+                                .getColumns()
+                                .size() == 1)
     {
-      tableKeys.add(primaryKey.getColumns().get(0));
+      tableKeys.add(primaryKey
+                      .getColumns()
+                      .get(0));
     }
 
-    for (final Index index: table.getIndexes())
+    for (final Index index : table.getIndexes())
     {
-      if (index != null && index.isUnique() && index.getColumns().size() == 1)
+      if (index != null && index.isUnique() && index
+                                                 .getColumns()
+                                                 .size() == 1)
       {
-        tableKeys.add(index.getColumns().get(0));
+        tableKeys.add(index
+                        .getColumns()
+                        .get(0));
       }
     }
 

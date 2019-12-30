@@ -35,27 +35,26 @@ import java.sql.DatabaseMetaData;
  * An enumeration wrapper around JDBC procedure types.
  */
 public enum ProcedureReturnType
-  implements
-  RoutineReturnType
+  implements RoutineReturnType
 {
 
- /**
-  * Result unknown.
-  */
- unknown(DatabaseMetaData.procedureResultUnknown, "result unknown"),
- /**
-  * No result.
-  */
- noResult(DatabaseMetaData.procedureNoResult, "no result"),
- /**
-  * Returns result.
-  */
- returnsResult(DatabaseMetaData.procedureReturnsResult, "returns result");
+  /**
+   * Result unknown.
+   */
+  unknown(DatabaseMetaData.procedureResultUnknown, "result unknown"),
+  /**
+   * No result.
+   */
+  noResult(DatabaseMetaData.procedureNoResult, "no result"),
+  /**
+   * Returns result.
+   */
+  returnsResult(DatabaseMetaData.procedureReturnsResult, "returns result");
 
   private final int id;
   private final String text;
 
-  private ProcedureReturnType(final int id, final String text)
+  ProcedureReturnType(final int id, final String text)
   {
     this.id = id;
     this.text = text;

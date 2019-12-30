@@ -61,7 +61,8 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 public class SpinThroughOperationsExecutableTest
 {
 
-  private static final String SPIN_THROUGH_OPERATIONS_OUTPUT = "spin_through_operations_output/";
+  private static final String SPIN_THROUGH_OPERATIONS_OUTPUT =
+    "spin_through_operations_output/";
 
   @BeforeAll
   public static void clean()
@@ -72,8 +73,9 @@ public class SpinThroughOperationsExecutableTest
 
   private static Stream<InfoLevel> infoLevels()
   {
-    return Arrays.stream(InfoLevel.values())
-                 .filter(infoLevel -> infoLevel != InfoLevel.unknown);
+    return Arrays
+      .stream(InfoLevel.values())
+      .filter(infoLevel -> infoLevel != InfoLevel.unknown);
   }
 
   private static Stream<Operation> operations()
@@ -115,25 +117,25 @@ public class SpinThroughOperationsExecutableTest
           return;
         }
 
-        final String referenceFile = referenceFile(operation,
-                                                   infoLevel,
-                                                   outputFormat);
+        final String referenceFile =
+          referenceFile(operation, infoLevel, outputFormat);
 
-        final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-          .builder()
-          .withSchemaInfoLevel(infoLevel.toSchemaInfoLevel())
-          .includeAllSequences()
-          .includeAllSynonyms()
-          .includeAllRoutines();
-        final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-          .toOptions();
+        final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+          SchemaCrawlerOptionsBuilder
+            .builder()
+            .withSchemaInfoLevel(infoLevel.toSchemaInfoLevel())
+            .includeAllSequences()
+            .includeAllSynonyms()
+            .includeAllRoutines();
+        final SchemaCrawlerOptions schemaCrawlerOptions =
+          schemaCrawlerOptionsBuilder.toOptions();
 
-        final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder
-          .builder();
+        final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
+          SchemaTextOptionsBuilder.builder();
         schemaTextOptionsBuilder.noInfo(false);
 
-        final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-          operation.name());
+        final SchemaCrawlerExecutable executable =
+          new SchemaCrawlerExecutable(operation.name());
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
 

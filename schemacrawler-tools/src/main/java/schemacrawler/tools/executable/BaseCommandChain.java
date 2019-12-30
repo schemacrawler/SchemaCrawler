@@ -37,16 +37,16 @@ import schemacrawler.tools.options.OutputOptions;
 import sf.util.SchemaCrawlerLogger;
 
 /**
- * Allows chaining multiple scCommands with the same configuration. The
- * catalog is obtained just once, and passed on from executable to
- * executable for efficiency in execution.
+ * Allows chaining multiple scCommands with the same configuration. The catalog
+ * is obtained just once, and passed on from executable to executable for
+ * efficiency in execution.
  */
 abstract class BaseCommandChain
   extends BaseSchemaCrawlerCommand
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
-    BaseCommandChain.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(BaseCommandChain.class.getName());
   private final CommandRegistry commandRegistry;
   private final List<SchemaCrawlerCommand> scCommands;
 
@@ -74,11 +74,11 @@ abstract class BaseCommandChain
   {
     try
     {
-      final SchemaCrawlerCommand scCommand = commandRegistry.configureNewCommand(
-        command,
-        schemaCrawlerOptions,
-        additionalConfiguration,
-        outputOptions);
+      final SchemaCrawlerCommand scCommand =
+        commandRegistry.configureNewCommand(command,
+                                            schemaCrawlerOptions,
+                                            additionalConfiguration,
+                                            outputOptions);
       if (scCommand == null)
       {
         return null;

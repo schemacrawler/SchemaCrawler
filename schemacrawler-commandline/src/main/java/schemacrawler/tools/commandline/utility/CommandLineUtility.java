@@ -32,7 +32,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Level;
 
 import picocli.CommandLine;
 import picocli.CommandLine.IFactory;
@@ -49,24 +48,24 @@ import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.executable.commandline.PluginCommandOption;
 import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
 
 public class CommandLineUtility
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(CommandLineUtility.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(CommandLineUtility.class.getName());
 
   private static void addDatabasePluginHelpCommands(final CommandLine commandLine,
                                                     final boolean addAsMixins)
   {
-    final DatabaseConnectorRegistry databaseConnectorRegistry = DatabaseConnectorRegistry
-      .getDatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry databaseConnectorRegistry =
+      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     for (final DatabaseServerType databaseServerType : databaseConnectorRegistry)
     {
-      final String pluginCommandName = databaseServerType
-        .getDatabaseSystemIdentifier();
-      final CommandSpec pluginCommandSpec = CommandSpec.create()
+      final String pluginCommandName =
+        databaseServerType.getDatabaseSystemIdentifier();
+      final CommandSpec pluginCommandSpec = CommandSpec
+        .create()
         .name(pluginCommandName);
       if (addAsMixins)
       {
@@ -105,10 +104,9 @@ public class CommandLineUtility
     throws SchemaCrawlerException
   {
     // Add commands for plugins
-    final CommandRegistry commandRegistry = CommandRegistry
-      .getCommandRegistry();
-    for (final PluginCommand pluginCommand : commandRegistry
-      .getCommandLineCommands())
+    final CommandRegistry commandRegistry =
+      CommandRegistry.getCommandRegistry();
+    for (final PluginCommand pluginCommand : commandRegistry.getCommandLineCommands())
     {
       addPluginCommand(commandLine, pluginCommand, addAsMixins);
     }
@@ -166,21 +164,22 @@ public class CommandLineUtility
    * plugin-specific options passed in from the command-line, and put them in
    * the configuration.
    *
-   * @param parseResult Result of parsing the command-line
+   * @param parseResult
+   *   Result of parsing the command-line
    * @return Config with additional plugin-specific command-line options
-   * @throws SchemaCrawlerException On an exception
+   * @throws SchemaCrawlerException
+   *   On an exception
    */
   public static Config retrievePluginOptions(final ParseResult parseResult)
     throws SchemaCrawlerException
   {
     requireNonNull(parseResult, "No parse result provided");
 
-    final CommandRegistry commandRegistry = CommandRegistry
-      .getCommandRegistry();
+    final CommandRegistry commandRegistry =
+      CommandRegistry.getCommandRegistry();
     final Config additionalConfig = new Config();
     final Set<String> pluginOptionNames = new HashSet<>();
-    for (final PluginCommand pluginCommand : commandRegistry
-      .getCommandLineCommands())
+    for (final PluginCommand pluginCommand : commandRegistry.getCommandLineCommands())
     {
       if (pluginCommand == null || pluginCommand.isEmpty())
       {
@@ -193,16 +192,17 @@ public class CommandLineUtility
         if (parseResult.hasMatchedOption(optionName))
         {
           final Object value = parseResult.matchedOptionValue(optionName, null);
-          additionalConfig
-            .put(optionName, value == null? null: String.valueOf(value));
+          additionalConfig.put(optionName,
+                               value == null? null: String.valueOf(value));
         }
       }
     }
 
-    final CommandLineArgumentsParser commandLineArgumentsParser = new CommandLineArgumentsParser(
-      parseResult.originalArgs());
+    final CommandLineArgumentsParser commandLineArgumentsParser =
+      new CommandLineArgumentsParser(parseResult.originalArgs());
     commandLineArgumentsParser.parse();
-    additionalConfig.putAll(commandLineArgumentsParser.getFilteredOptionsMap(pluginOptionNames));
+    additionalConfig.putAll(commandLineArgumentsParser.getFilteredOptionsMap(
+      pluginOptionNames));
 
     return additionalConfig;
   }
@@ -224,14 +224,18 @@ public class CommandLineUtility
     usageMessageSpec.customSynopsis(pluginCommandName);
     usageMessageSpec.optionListHeading("Options:%n");
 
-    final CommandSpec pluginCommandSpec = CommandSpec.create()
-      .name(pluginCommandName).usageMessage(usageMessageSpec);
+    final CommandSpec pluginCommandSpec = CommandSpec
+      .create()
+      .name(pluginCommandName)
+      .usageMessage(usageMessageSpec);
     for (final PluginCommandOption option : pluginCommand)
     {
       final String optionName = option.getName();
       final String paramName = String.format("<%s>", optionName);
       final String helpText;
-      if (option.getValueClass().isEnum())
+      if (option
+        .getValueClass()
+        .isEnum())
       {
         helpText = String.format("%s%nUse one of ${COMPLETION-CANDIDATES}",
                                  option.getHelpText());
@@ -240,10 +244,12 @@ public class CommandLineUtility
       {
         helpText = option.getHelpText();
       }
-      pluginCommandSpec
-        .addOption(OptionSpec.builder("--" + optionName).description(helpText)
-                     .paramLabel(paramName).type(option.getValueClass())
-                     .build());
+      pluginCommandSpec.addOption(OptionSpec
+                                    .builder("--" + optionName)
+                                    .description(helpText)
+                                    .paramLabel(paramName)
+                                    .type(option.getValueClass())
+                                    .build());
     }
     return pluginCommandSpec;
   }

@@ -49,8 +49,8 @@ public class LinterTableEmpty
   extends BaseLinter
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(LinterTableEmpty.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(LinterTableEmpty.class.getName());
 
   public LinterTableEmpty()
   {
@@ -73,8 +73,10 @@ public class LinterTableEmpty
     final Query query = new Query("Count", "SELECT COUNT(*) FROM ${table}");
     try
     {
-      final Identifiers identifiers = Identifiers.identifiers()
-        .withConnection(connection).build();
+      final Identifiers identifiers = Identifiers
+        .identifiers()
+        .withConnection(connection)
+        .build();
       final long count = executeForLong(query, connection, table, identifiers);
       if (count == 0)
       {

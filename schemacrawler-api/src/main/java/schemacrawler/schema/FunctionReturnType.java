@@ -35,27 +35,26 @@ import java.sql.DatabaseMetaData;
  * An enumeration wrapper around JDBC function types.
  */
 public enum FunctionReturnType
-  implements
-  RoutineReturnType
+  implements RoutineReturnType
 {
 
- /**
-  * Result unknown.
-  */
- unknown(DatabaseMetaData.functionResultUnknown, "result unknown"),
- /**
-  * Does not return a table.
-  */
- noTable(DatabaseMetaData.functionNoTable, "does not return a table"),
- /**
-  * Returns a table.
-  */
- returnsTable(DatabaseMetaData.functionReturnsTable, "returns table");
+  /**
+   * Result unknown.
+   */
+  unknown(DatabaseMetaData.functionResultUnknown, "result unknown"),
+  /**
+   * Does not return a table.
+   */
+  noTable(DatabaseMetaData.functionNoTable, "does not return a table"),
+  /**
+   * Returns a table.
+   */
+  returnsTable(DatabaseMetaData.functionReturnsTable, "returns table");
 
   private final int id;
   private final String text;
 
-  private FunctionReturnType(final int id, final String text)
+  FunctionReturnType(final int id, final String text)
   {
     this.id = id;
     this.text = text;

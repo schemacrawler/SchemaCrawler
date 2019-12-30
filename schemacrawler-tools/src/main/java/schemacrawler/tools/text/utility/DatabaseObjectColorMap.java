@@ -48,12 +48,11 @@ import sf.util.SchemaCrawlerLogger;
 public class DatabaseObjectColorMap
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(DatabaseObjectColorMap.class.getName());
-
-  private static final String SCHEMACRAWLER_COLORMAP_PROPERTIES = "schemacrawler.colormap.properties";
-
   public static final Color default_object_color = Color.fromHSV(0, 0, 0.95f);
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(DatabaseObjectColorMap.class.getName());
+  private static final String SCHEMACRAWLER_COLORMAP_PROPERTIES =
+    "schemacrawler.colormap.properties";
 
   public static DatabaseObjectColorMap initialize(final boolean noColors)
   {
@@ -66,8 +65,8 @@ public class DatabaseObjectColorMap
     // Load from classpath and also current directory, in that order
     try
     {
-      final ClasspathInputResource classpathColorMap = new ClasspathInputResource("/"
-                                                                                  + SCHEMACRAWLER_COLORMAP_PROPERTIES);
+      final ClasspathInputResource classpathColorMap =
+        new ClasspathInputResource("/" + SCHEMACRAWLER_COLORMAP_PROPERTIES);
       properties.putAll(loadProperties(classpathColorMap));
     }
     catch (final IOException e)
@@ -77,8 +76,8 @@ public class DatabaseObjectColorMap
 
     try
     {
-      final FileInputResource fileColorMap = new FileInputResource(Paths
-        .get("./" + SCHEMACRAWLER_COLORMAP_PROPERTIES));
+      final FileInputResource fileColorMap = new FileInputResource(Paths.get(
+        "./" + SCHEMACRAWLER_COLORMAP_PROPERTIES));
 
       properties.putAll(loadProperties(fileColorMap));
     }
@@ -109,7 +108,9 @@ public class DatabaseObjectColorMap
     }
 
     final Color tableColor;
-    final String schemaName = dbObject.getSchema().getFullName();
+    final String schemaName = dbObject
+      .getSchema()
+      .getFullName();
     final Optional<Color> colorMatch = colorMap.match(schemaName);
     if (!colorMatch.isPresent())
     {
@@ -132,7 +133,10 @@ public class DatabaseObjectColorMap
     }
     else
     {
-      final int hash = new StringBuilder(text).reverse().toString().hashCode();
+      final int hash = new StringBuilder(text)
+        .reverse()
+        .toString()
+        .hashCode();
       hue = hash / 32771f % 1;
     }
 

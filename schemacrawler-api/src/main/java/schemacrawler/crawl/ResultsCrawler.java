@@ -41,16 +41,15 @@ import sf.util.SchemaCrawlerLogger;
 import sf.util.StopWatch;
 
 /**
- * SchemaCrawler uses database meta-data to get the details about the
- * schema.
+ * SchemaCrawler uses database meta-data to get the details about the schema.
  *
  * @author Sualeh Fatehi
  */
 public final class ResultsCrawler
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(ResultsCrawler.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(ResultsCrawler.class.getName());
 
   private final ResultSet results;
 
@@ -58,9 +57,9 @@ public final class ResultsCrawler
    * Constructs a SchemaCrawler object, from a result-set.
    *
    * @param results
-   *        Result-set of data.
+   *   Result-set of data.
    * @throws SchemaCrawlerException
-   *         On a SchemaCrawler exception
+   *   On a SchemaCrawler exception
    */
   public ResultsCrawler(final ResultSet results)
   {
@@ -74,7 +73,7 @@ public final class ResultsCrawler
    *
    * @return Result set metadata
    * @throws SchemaCrawlerException
-   *         On an exception
+   *   On an exception
    */
   public ResultsColumns crawl()
     throws SchemaCrawlerException
@@ -87,8 +86,8 @@ public final class ResultsCrawler
     try
     {
       final ResultsRetriever resultsRetriever = new ResultsRetriever(results);
-      final ResultsColumns resultsColumns = stopWatch
-        .time("retrieveResults", resultsRetriever::retrieveResults);
+      final ResultsColumns resultsColumns =
+        stopWatch.time("retrieveResults", resultsRetriever::retrieveResults);
 
       LOGGER.log(Level.INFO, stopWatch.stringify());
 
@@ -104,8 +103,9 @@ public final class ResultsCrawler
     }
     catch (final Exception e)
     {
-      throw new SchemaCrawlerException("Exception retrieving result-set information",
-                                       e);
+      throw new SchemaCrawlerException(
+        "Exception retrieving result-set information",
+        e);
     }
   }
 

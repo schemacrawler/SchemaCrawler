@@ -45,7 +45,12 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.schemacrawler.*;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.InfoLevel;
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
@@ -80,30 +85,35 @@ public class LintOutputTest
 
     final String[] commands = new String[] {
       SchemaTextDetailType.brief + "," + Operation.count + "," + "lint",
-      queryCommand1 + "," + SchemaTextDetailType.brief + "," + "lint", };
+      queryCommand1 + "," + SchemaTextDetailType.brief + "," + "lint",
+      };
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder()
-      .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"))
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"))
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
 
-    assertAll(Arrays.stream(new OutputFormat[] {
-      TextOutputFormat.text, TextOutputFormat.html })
-                .flatMap(outputFormat -> Arrays.stream(commands)
+    assertAll(Arrays
+                .stream(new OutputFormat[] {
+                  TextOutputFormat.text, TextOutputFormat.html
+                })
+                .flatMap(outputFormat -> Arrays
+                  .stream(commands)
                   .map(command -> () -> {
 
                     final String referenceFile =
                       command + "." + outputFormat.getFormat();
 
-                    final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder
-                      .builder();
+                    final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
+                      SchemaTextOptionsBuilder.builder();
                     schemaTextOptionsBuilder.noInfo(false);
                     queriesConfig.putAll(schemaTextOptionsBuilder.toConfig());
 
-                    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-                      command);
+                    final SchemaCrawlerExecutable executable =
+                      new SchemaCrawlerExecutable(command);
                     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
                     executable.setAdditionalConfiguration(queriesConfig);
 
@@ -126,20 +136,24 @@ public class LintOutputTest
     final Map<String, String> additionalArgs = new HashMap<>();
     additionalArgs.put("-schemas", ".*FOR_LINT");
 
-    assertAll(Arrays.stream(new OutputFormat[] {
-      TextOutputFormat.text,
-      TextOutputFormat.html,
-      LintReportOutputFormat.json,
-      LintReportOutputFormat.yaml }).map(outputFormat -> () -> {
+    assertAll(Arrays
+                .stream(new OutputFormat[] {
+                  TextOutputFormat.text,
+                  TextOutputFormat.html,
+                  LintReportOutputFormat.json,
+                  LintReportOutputFormat.yaml
+                })
+                .map(outputFormat -> () -> {
 
-      final String referenceFile = "lint." + outputFormat.getFormat();
+                  final String referenceFile =
+                    "lint." + outputFormat.getFormat();
 
-      executeLintCommandLine(connectionInfo,
-                             outputFormat,
-                             null,
-                             additionalArgs,
-                             TEXT_OUTPUT + referenceFile);
-    }));
+                  executeLintCommandLine(connectionInfo,
+                                         outputFormat,
+                                         null,
+                                         additionalArgs,
+                                         TEXT_OUTPUT + referenceFile);
+                }));
   }
 
   @Test
@@ -150,31 +164,36 @@ public class LintOutputTest
 
     final InfoLevel infoLevel = InfoLevel.standard;
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder()
-      .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"))
-      .withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"))
+        .withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
 
-    assertAll(Arrays.stream(new OutputFormat[] {
-      TextOutputFormat.text,
-      TextOutputFormat.html,
-      LintReportOutputFormat.json,
-      LintReportOutputFormat.yaml }).map(outputFormat -> () -> {
-      final String referenceFile = "lint." + outputFormat.getFormat();
+    assertAll(Arrays
+                .stream(new OutputFormat[] {
+                  TextOutputFormat.text,
+                  TextOutputFormat.html,
+                  LintReportOutputFormat.json,
+                  LintReportOutputFormat.yaml
+                })
+                .map(outputFormat -> () -> {
+                  final String referenceFile =
+                    "lint." + outputFormat.getFormat();
 
-      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-        "lint");
-      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+                  final SchemaCrawlerExecutable executable =
+                    new SchemaCrawlerExecutable("lint");
+                  executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
-      assertThat(outputOf(executableExecution(connection,
-                                              executable,
-                                              outputFormat)),
-                 hasSameContentAndTypeAs(classpathResource(
-                   TEXT_OUTPUT + referenceFile), outputFormat));
+                  assertThat(outputOf(executableExecution(connection,
+                                                          executable,
+                                                          outputFormat)),
+                             hasSameContentAndTypeAs(classpathResource(
+                               TEXT_OUTPUT + referenceFile), outputFormat));
 
-    }));
+                }));
   }
 
 }

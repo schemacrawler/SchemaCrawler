@@ -46,7 +46,6 @@ import java.sql.Connection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -66,11 +65,13 @@ public class LoadSnapshotTest
   public void loadSnapshot()
     throws Exception
   {
-    final FileInputStream inputFileStream = new FileInputStream(serializedCatalogFile
-      .toFile());
-    final JavaSerializedCatalog serializedCatalog = new JavaSerializedCatalog(inputFileStream);
+    final FileInputStream inputFileStream =
+      new FileInputStream(serializedCatalogFile.toFile());
+    final JavaSerializedCatalog serializedCatalog =
+      new JavaSerializedCatalog(inputFileStream);
 
-    final Schema schema = serializedCatalog.lookupSchema("PUBLIC.BOOKS")
+    final Schema schema = serializedCatalog
+      .lookupSchema("PUBLIC.BOOKS")
       .orElse(null);
     assertThat("Could not obtain schema", schema, notNullValue());
     assertThat("Unexpected number of tables in the schema",
@@ -83,7 +84,8 @@ public class LoadSnapshotTest
     throws SchemaCrawlerException, IOException
   {
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     assertThat("Could not obtain catalog", catalog, notNullValue());
@@ -91,18 +93,20 @@ public class LoadSnapshotTest
                catalog.getSchemas(),
                not(empty()));
 
-    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
+    final Schema schema = catalog
+      .lookupSchema("PUBLIC.BOOKS")
+      .orElse(null);
     assertThat("Could not obtain schema", schema, notNullValue());
     assertThat("Unexpected number of tables in the schema",
                catalog.getTables(schema),
                hasSize(10));
 
-    serializedCatalogFile = IOUtility.createTempFilePath("schemacrawler",
-                                                         "ser");
+    serializedCatalogFile =
+      IOUtility.createTempFilePath("schemacrawler", "ser");
 
-    final JavaSerializedCatalog serializedCatalog = new JavaSerializedCatalog(catalog);
-    serializedCatalog
-      .save(new FileOutputStream(serializedCatalogFile.toFile()));
+    final JavaSerializedCatalog serializedCatalog =
+      new JavaSerializedCatalog(catalog);
+    serializedCatalog.save(new FileOutputStream(serializedCatalogFile.toFile()));
     assertThat("Database was not serialized",
                size(serializedCatalogFile),
                greaterThan(0L));

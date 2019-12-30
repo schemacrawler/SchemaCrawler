@@ -115,10 +115,15 @@ public final class TableRow
   private String toHtmlString()
   {
     final StringBuilder buffer = new StringBuilder(1024);
-    buffer.append("\t<tr>").append(System.lineSeparator());
-    for (final TableCell cell: cells)
+    buffer
+      .append("\t<tr>")
+      .append(System.lineSeparator());
+    for (final TableCell cell : cells)
     {
-      buffer.append("\t\t").append(cell).append(System.lineSeparator());
+      buffer
+        .append("\t\t")
+        .append(cell)
+        .append(System.lineSeparator());
     }
     buffer.append("\t</tr>");
 

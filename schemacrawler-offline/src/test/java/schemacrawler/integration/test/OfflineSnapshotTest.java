@@ -30,9 +30,16 @@ package schemacrawler.integration.test;
 
 import static java.nio.file.Files.size;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
@@ -51,7 +58,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.Main;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.*;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -66,7 +77,8 @@ import sf.util.IOUtility;
 public class OfflineSnapshotTest
 {
 
-  private static final String OFFLINE_EXECUTABLE_OUTPUT = "offline_executable_output/";
+  private static final String OFFLINE_EXECUTABLE_OUTPUT =
+    "offline_executable_output/";
 
   private Path serializedCatalogFile;
 
@@ -159,20 +171,22 @@ public class OfflineSnapshotTest
     throws Exception
   {
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-      .includeAllRoutines();
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+        .includeAllRoutines();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
 
-    final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder
-      .builder();
+    final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
+      SchemaTextOptionsBuilder.builder();
     schemaTextOptionsBuilder.noInfo(false);
 
     final Connection connection = new OfflineConnection(serializedCatalogFile);
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-      "details");
+    final SchemaCrawlerExecutable executable =
+      new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
     executable.setConnection(connection);
@@ -185,11 +199,13 @@ public class OfflineSnapshotTest
     throws SchemaCrawlerException, IOException
   {
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-      .includeAllRoutines();
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+        .includeAllRoutines();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
 
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     assertThat("Could not obtain catalog", catalog, notNullValue());
@@ -197,18 +213,19 @@ public class OfflineSnapshotTest
                catalog.getSchemas(),
                not(empty()));
 
-    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
+    final Schema schema = catalog
+      .lookupSchema("PUBLIC.BOOKS")
+      .orElse(null);
     assertThat("Could not obtain schema", schema, notNullValue());
     assertThat("Unexpected number of tables in the schema",
                catalog.getTables(schema),
                hasSize(10));
 
-    serializedCatalogFile = IOUtility
-      .createTempFilePath("schemacrawler", "ser");
-    final JavaSerializedCatalog serializedCatalog = new JavaSerializedCatalog(
-      catalog);
-    serializedCatalog
-      .save(new FileOutputStream(serializedCatalogFile.toFile()));
+    serializedCatalogFile =
+      IOUtility.createTempFilePath("schemacrawler", "ser");
+    final JavaSerializedCatalog serializedCatalog =
+      new JavaSerializedCatalog(catalog);
+    serializedCatalog.save(new FileOutputStream(serializedCatalogFile.toFile()));
     assertThat("Database was not serialized",
                size(serializedCatalogFile),
                greaterThan(0L));
@@ -219,16 +236,15 @@ public class OfflineSnapshotTest
                                  final String referenceFileName)
     throws Exception
   {
-    final OfflineConnection connection = new OfflineConnection(
-      serializedCatalogFile);
+    final OfflineConnection connection =
+      new OfflineConnection(serializedCatalogFile);
 
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
-      .builder();
-    schemaRetrievalOptionsBuilder
-      .withDatabaseServerType(OfflineDatabaseConnector.DB_SERVER_TYPE);
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+      SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder.withDatabaseServerType(
+      OfflineDatabaseConnector.DB_SERVER_TYPE);
 
-    executable
-      .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
 
     assertThat(outputOf(executableExecution(connection, executable)),
                hasSameContentAndTypeAs(classpathResource(referenceFileName),

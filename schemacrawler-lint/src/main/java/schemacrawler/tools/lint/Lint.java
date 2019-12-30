@@ -32,7 +32,11 @@ import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.NamedObject;
@@ -60,7 +64,9 @@ public final class Lint<V extends Serializable>
                                                          final String message,
                                                          final V value)
   {
-    lintId = UUID.randomUUID().toString();
+    lintId = UUID
+      .randomUUID()
+      .toString();
 
     if (isBlank(linterId))
     {
@@ -101,13 +107,13 @@ public final class Lint<V extends Serializable>
   public boolean equals(final Object o)
   {
     if (this == o)
-      return true;
+    { return true; }
     if (!(o instanceof Lint))
-      return false;
+    { return false; }
     final Lint<?> lint = (Lint<?>) o;
-    return Objects.equals(linterId, lint.linterId) && Objects
-      .equals(message, lint.message) && Objects
-             .equals(objectName, lint.objectName)
+    return Objects.equals(linterId, lint.linterId) && Objects.equals(message,
+                                                                     lint.message)
+           && Objects.equals(objectName, lint.objectName)
            && objectType == lint.objectType && severity == lint.severity
            && Objects.equals(value, lint.value);
   }
@@ -115,8 +121,12 @@ public final class Lint<V extends Serializable>
   @Override
   public int hashCode()
   {
-    return Objects
-      .hash(linterId, message, objectName, objectType, severity, value);
+    return Objects.hash(linterId,
+                        message,
+                        objectName,
+                        objectType,
+                        severity,
+                        value);
   }
 
   @Override
@@ -219,8 +229,8 @@ public final class Lint<V extends Serializable>
       final Class<? extends Object> valueClass = value.getClass();
       Object valueObject = value;
 
-      if (valueClass.isArray() && NamedObject.class
-        .isAssignableFrom(valueClass.getComponentType()))
+      if (valueClass.isArray()
+          && NamedObject.class.isAssignableFrom(valueClass.getComponentType()))
       {
         valueObject = Arrays.asList(Arrays.copyOf((Object[]) value,
                                                   ((Object[]) value).length,

@@ -42,8 +42,8 @@ public final class PostgreSQLDatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
-    PostgreSQLDatabaseConnector.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(PostgreSQLDatabaseConnector.class.getName());
 
   public PostgreSQLDatabaseConnector()
     throws IOException
@@ -51,32 +51,33 @@ public final class PostgreSQLDatabaseConnector
     super(new DatabaseServerType("postgresql", "PostgreSQL"),
           new ClasspathInputResource(
             "/schemacrawler-postgresql.config.properties"),
-          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder
-            .fromResourceFolder("/postgresql.information_schema"));
+          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
+            "/postgresql.information_schema"));
   }
 
   @Override
   public PluginCommand getHelpCommand()
   {
     final PluginCommand pluginCommand = super.getHelpCommand();
-    pluginCommand.addOption("server",
-                            "--server=postgresql%n"
-                            + "Loads SchemaCrawler plug-in for PostgreSQL",
-                            String.class)
-                 .addOption("host",
-                            "Host name%n"
-                            + "Optional, uses the PGHOSTADDR and PGHOST environmental variables "
-                            + "if available, or defaults to localhost",
-                            String.class)
-                 .addOption("port",
-                            "Port number%n"
-                            + "Optional, uses the PGPORT environmental variable "
-                            + "if available, or defaults to 5432",
-                            Integer.class)
-                 .addOption("database",
-                            "Database name%n"
-                            + "Optional, uses the PGDATABASE environmental variable if available",
-                            String.class);
+    pluginCommand
+      .addOption("server",
+                 "--server=postgresql%n"
+                 + "Loads SchemaCrawler plug-in for PostgreSQL",
+                 String.class)
+      .addOption("host",
+                 "Host name%n"
+                 + "Optional, uses the PGHOSTADDR and PGHOST environmental variables "
+                 + "if available, or defaults to localhost",
+                 String.class)
+      .addOption("port",
+                 "Port number%n"
+                 + "Optional, uses the PGPORT environmental variable "
+                 + "if available, or defaults to 5432",
+                 Integer.class)
+      .addOption("database",
+                 "Database name%n"
+                 + "Optional, uses the PGDATABASE environmental variable if available",
+                 String.class);
     return pluginCommand;
   }
 

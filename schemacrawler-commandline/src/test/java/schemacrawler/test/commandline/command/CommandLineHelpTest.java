@@ -29,7 +29,10 @@ package schemacrawler.test.commandline.command;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasNoContent;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
@@ -49,7 +52,8 @@ import schemacrawler.tools.commandline.command.CommandLineHelpCommand;
 public class CommandLineHelpTest
 {
 
-  private static final String COMMANDLINE_HELP_OUTPUT = "commandline_help_output/";
+  private static final String COMMANDLINE_HELP_OUTPUT =
+    "commandline_help_output/";
 
   private TestOutputStream err;
   private TestOutputStream out;
@@ -77,7 +81,8 @@ public class CommandLineHelpTest
   public void helpConnect(final TestContext testContext)
   {
     final String[] args = {
-      "--help", "connect" };
+      "--help", "connect"
+    };
 
     assertHelpMessage(testContext, args, true);
   }
@@ -86,7 +91,8 @@ public class CommandLineHelpTest
   public void helpCommand(final TestContext testContext)
   {
     final String[] args = {
-      "--help", "test-command" };
+      "--help", "test-command"
+    };
 
     assertHelpMessage(testContext, args, true);
   }
@@ -95,7 +101,8 @@ public class CommandLineHelpTest
   public void helpBadCommand(final TestContext testContext)
   {
     final String[] args = {
-      "--help", "bad-command" };
+      "--help", "bad-command"
+    };
 
     assertHelpMessage(testContext, args, false);
   }
@@ -104,7 +111,8 @@ public class CommandLineHelpTest
   public void helpDatabaseServer(final TestContext testContext)
   {
     final String[] args = {
-      "--help", "test-db" };
+      "--help", "test-db"
+    };
 
     assertHelpMessage(testContext, args, true);
   }

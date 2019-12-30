@@ -58,8 +58,8 @@ abstract class BaseEnvironmentalVariableBuildCondition
   {
     if (!shouldExecute())
     {
-      return ConditionEvaluationResult
-        .disabled("Development build - disable long running tests");
+      return ConditionEvaluationResult.disabled(
+        "Development build - disable long running tests");
     }
 
     return ConditionEvaluationResult.enabled("Complete build - run all tests");
@@ -69,11 +69,11 @@ abstract class BaseEnvironmentalVariableBuildCondition
 
   private boolean shouldExecute()
   {
-    final String systemBooleanValue = System
-      .getProperty(getSystemBooleanVariable());
+    final String systemBooleanValue =
+      System.getProperty(getSystemBooleanVariable());
     final boolean shouldExecute =
-      systemBooleanValue != null && isBlank(systemBooleanValue) || Boolean
-        .parseBoolean(systemBooleanValue);
+      systemBooleanValue != null && isBlank(systemBooleanValue)
+      || Boolean.parseBoolean(systemBooleanValue);
     return shouldExecute;
   }
 

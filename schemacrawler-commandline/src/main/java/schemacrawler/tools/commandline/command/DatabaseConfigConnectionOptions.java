@@ -87,8 +87,8 @@ public class DatabaseConfigConnectionOptions
     final String connectionUrl = connectionProperties.get(URL);
 
     // Check that all required parameters have been substituted
-    final Set<String> unmatchedVariables = TemplatingUtility.extractTemplateVariables(
-      connectionUrl);
+    final Set<String> unmatchedVariables =
+      TemplatingUtility.extractTemplateVariables(connectionUrl);
     if (!unmatchedVariables.isEmpty())
     {
       throw new IllegalArgumentException(String.format(
@@ -104,42 +104,34 @@ public class DatabaseConfigConnectionOptions
 
   @Option(names = {
     "--database"
-  },
-          description = "Database name")
+  }, description = "Database name")
   private String database;
   @Option(names = {
     "--server"
-  },
-          required = true,
-          description = {
-            "Where <database system identifier> is a database for "
-            + "which a SchemaCrawler plug-in is available",
-            "Use one of ${COMPLETION-CANDIDATES}"
-          },
-          completionCandidates = AvailableServers.class,
-          paramLabel = "<database system identifier>")
+  }, required = true, description = {
+    "Where <database system identifier> is a database for "
+    + "which a SchemaCrawler plug-in is available",
+    "Use one of ${COMPLETION-CANDIDATES}"
+  }, completionCandidates = AvailableServers.class, paramLabel = "<database system identifier>")
   private String databaseSystemIdentifier;
   @Option(names = {
     "--host"
-  },
-          description = "Database server host")
+  }, description = "Database server host")
   private String host;
   @Option(names = {
     "--port"
-  },
-          description = "Database server port")
+  }, description = "Database server port")
   private Integer port;
   @Option(names = {
     "--urlx"
-  },
-          description = "JDBC URL additional properties")
+  }, description = "JDBC URL additional properties")
   private Map<String, String> urlx;
 
   @Override
   public DatabaseConnector getDatabaseConnector()
   {
-    final DatabaseConnectorRegistry databaseConnectorRegistry = DatabaseConnectorRegistry
-      .getDatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry databaseConnectorRegistry =
+      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     return databaseConnectorRegistry.lookupDatabaseConnector(
       databaseSystemIdentifier);
   }
@@ -153,12 +145,11 @@ public class DatabaseConfigConnectionOptions
     // Substitute templated URL with provided value
     final String connectionUrl = parseConnectionUrl(config);
     // Get additional driver properties
-    final Map<String, String> connectionProperties = parseConnectionProperties(
-      config);
+    final Map<String, String> connectionProperties =
+      parseConnectionProperties(config);
 
-    final DatabaseConnectionSource databaseConnectionSource = new DatabaseConnectionSource(
-      connectionUrl,
-      connectionProperties);
+    final DatabaseConnectionSource databaseConnectionSource =
+      new DatabaseConnectionSource(connectionUrl, connectionProperties);
     return databaseConnectionSource;
   }
 
@@ -190,10 +181,11 @@ public class DatabaseConfigConnectionOptions
 
     if (urlx != null && !urlx.isEmpty())
     {
-      final String urlxValue = urlx.entrySet()
-                                   .stream()
-                                   .map(Object::toString)
-                                   .collect(joining("&"));
+      final String urlxValue = urlx
+        .entrySet()
+        .stream()
+        .map(Object::toString)
+        .collect(joining("&"));
       config.put("urlx", urlxValue);
     }
 

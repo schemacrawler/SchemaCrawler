@@ -29,7 +29,10 @@ package schemacrawler.integration.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasNoContent;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
@@ -48,7 +51,8 @@ import schemacrawler.test.utility.TestOutputStream;
 public class CommandLineHelpTest
 {
 
-  private static final String COMMAND_LINE_HELP_OUTPUT = "command_line_help_output/";
+  private static final String COMMAND_LINE_HELP_OUTPUT =
+    "command_line_help_output/";
 
   private TestOutputStream err;
   private TestOutputStream out;

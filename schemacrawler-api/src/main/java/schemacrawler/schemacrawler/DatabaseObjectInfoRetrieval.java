@@ -31,10 +31,10 @@ package schemacrawler.schemacrawler;
 public enum DatabaseObjectInfoRetrieval
 {
 
- base,
- table,
- routine,
- database,
- other
+  base,
+  table,
+  routine,
+  database,
+  other
 
 }

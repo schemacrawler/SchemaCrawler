@@ -73,9 +73,10 @@ final class MutableTableConstraintColumn
 
     if (obj instanceof MutableTableConstraintColumn)
     {
-      final MutableTableConstraintColumn other = (MutableTableConstraintColumn) obj;
-      comparison = tableConstraintOrdinalPosition
-                   - other.tableConstraintOrdinalPosition;
+      final MutableTableConstraintColumn other =
+        (MutableTableConstraintColumn) obj;
+      comparison =
+        tableConstraintOrdinalPosition - other.tableConstraintOrdinalPosition;
     }
 
     if (comparison == 0)
@@ -108,18 +109,45 @@ final class MutableTableConstraintColumn
    * {@inheritDoc}
    */
   @Override
-  public String getDefaultValue()
+  public int getOrdinalPosition()
   {
-    return column.getDefaultValue();
+    return column.getOrdinalPosition();
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public int getOrdinalPosition()
+  public int getSize()
   {
-    return column.getOrdinalPosition();
+    return column.getSize();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getWidth()
+  {
+    return column.getWidth();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public boolean isNullable()
+  {
+    return column.isNullable();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getDefaultValue()
+  {
+    return column.getDefaultValue();
   }
 
   /**
@@ -138,51 +166,6 @@ final class MutableTableConstraintColumn
   public Column getReferencedColumn()
   {
     return column.getReferencedColumn();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public int getSize()
-  {
-    return column.getSize();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public TableConstraint getTableConstraint()
-  {
-    return tableConstraint;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public int getTableConstraintOrdinalPosition()
-  {
-    return tableConstraintOrdinalPosition;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public ColumnDataType getType()
-  {
-    return column.getType();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String getWidth()
-  {
-    return column.getWidth();
   }
 
   /**
@@ -210,15 +193,6 @@ final class MutableTableConstraintColumn
   public boolean isHidden()
   {
     return column.isHidden();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isNullable()
-  {
-    return column.isNullable();
   }
 
   /**
@@ -266,9 +240,36 @@ final class MutableTableConstraintColumn
     return column.lookupPrivilege(name);
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public TableConstraint getTableConstraint()
+  {
+    return tableConstraint;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public int getTableConstraintOrdinalPosition()
+  {
+    return tableConstraintOrdinalPosition;
+  }
+
   void setTableConstraintOrdinalPosition(final int indexOrdinalPosition)
   {
     tableConstraintOrdinalPosition = indexOrdinalPosition;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public ColumnDataType getType()
+  {
+    return column.getType();
   }
 
 }

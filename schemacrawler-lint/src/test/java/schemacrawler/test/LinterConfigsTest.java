@@ -41,7 +41,6 @@ import java.io.Reader;
 import java.io.StringReader;
 
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.LintSeverity;
@@ -55,27 +54,35 @@ public class LinterConfigsTest
   public void testParseBadLinterConfigs1()
     throws SchemaCrawlerException, IOException
   {
-    final Reader reader = readerForResource("bad-schemacrawler-linter-configs-a.xml",
-                                            UTF_8);
+    final Reader reader =
+      readerForResource("bad-schemacrawler-linter-configs-a.xml", UTF_8);
     final LinterConfigs linterConfigs = new LinterConfigs(new Config());
     linterConfigs.parse(reader);
     assertThat(linterConfigs.size(), is(3));
 
-    for (final LinterConfig linterConfig: linterConfigs)
+    for (final LinterConfig linterConfig : linterConfigs)
     {
-      if (linterConfig.getLinterId().equals("linter.Linter1"))
+      if (linterConfig
+        .getLinterId()
+        .equals("linter.Linter1"))
       {
-        assertThat(linterConfig.getConfig().getStringValue("exclude", null),
-                   nullValue());
+        assertThat(linterConfig
+                     .getConfig()
+                     .getStringValue("exclude", null), nullValue());
       }
 
-      if (linterConfig.getLinterId().equals("linter.Linter2"))
+      if (linterConfig
+        .getLinterId()
+        .equals("linter.Linter2"))
       {
-        assertThat(linterConfig.getConfig().getStringValue("exclude", null),
-                   is(".*"));
+        assertThat(linterConfig
+                     .getConfig()
+                     .getStringValue("exclude", null), is(".*"));
       }
 
-      if (linterConfig.getLinterId().equals("linter.Linter3"))
+      if (linterConfig
+        .getLinterId()
+        .equals("linter.Linter3"))
       {
         assertThat(linterConfig.getSeverity(), equalTo(LintSeverity.medium));
       }
@@ -97,7 +104,8 @@ public class LinterConfigsTest
     throws SchemaCrawlerException, IOException
   {
     assertThrows(SchemaCrawlerException.class, () -> {
-      final Reader reader = new StringReader("some random string that is not XML");
+      final Reader reader =
+        new StringReader("some random string that is not XML");
       final LinterConfigs linterConfigs = new LinterConfigs(new Config());
       linterConfigs.parse(reader);
     });
@@ -107,8 +115,8 @@ public class LinterConfigsTest
   public void testParseBadXml2()
     throws SchemaCrawlerException, IOException
   {
-    final Reader reader = readerForResource("bad-schemacrawler-linter-configs-2.xml",
-                                            UTF_8);
+    final Reader reader =
+      readerForResource("bad-schemacrawler-linter-configs-2.xml", UTF_8);
     final LinterConfigs linterConfigs = new LinterConfigs(new Config());
     linterConfigs.parse(reader);
   }
@@ -117,29 +125,36 @@ public class LinterConfigsTest
   public void testParseGoodLinterConfigs()
     throws SchemaCrawlerException, IOException
   {
-    final Reader reader = readerForResource("schemacrawler-linter-configs-1.xml",
-                                            UTF_8);
+    final Reader reader =
+      readerForResource("schemacrawler-linter-configs-1.xml", UTF_8);
     final LinterConfigs linterConfigs = new LinterConfigs(new Config());
     linterConfigs.parse(reader);
 
     assertThat(linterConfigs.size(), is(3));
-    for (final LinterConfig linterConfig: linterConfigs)
+    for (final LinterConfig linterConfig : linterConfigs)
     {
-      if (linterConfig.getLinterId().equals("linter.Linter1"))
+      if (linterConfig
+        .getLinterId()
+        .equals("linter.Linter1"))
       {
         assertThat(linterConfig.getSeverity(), equalTo(LintSeverity.medium));
         assertThat(linterConfig.isRunLinter(), is(true));
       }
 
-      if (linterConfig.getLinterId().equals("linter.Linter2"))
+      if (linterConfig
+        .getLinterId()
+        .equals("linter.Linter2"))
       {
         assertThat(linterConfig.getSeverity(), nullValue());
         assertThat(linterConfig.isRunLinter(), is(false));
-        assertThat(linterConfig.getConfig().getStringValue("exclude", null),
-                   is(".*"));
+        assertThat(linterConfig
+                     .getConfig()
+                     .getStringValue("exclude", null), is(".*"));
       }
 
-      if (linterConfig.getLinterId().equals("linter.Linter3"))
+      if (linterConfig
+        .getLinterId()
+        .equals("linter.Linter3"))
       {
         assertThat(linterConfig.getSeverity(), equalTo(LintSeverity.high));
         assertThat(linterConfig.isRunLinter(), is(true));

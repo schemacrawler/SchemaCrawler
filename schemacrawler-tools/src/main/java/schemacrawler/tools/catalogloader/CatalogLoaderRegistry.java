@@ -39,16 +39,15 @@ import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
- * Registry for mapping database connectors from DatabaseConnector-line
- * switch.
+ * Registry for mapping database connectors from DatabaseConnector-line switch.
  *
  * @author Sualeh Fatehi
  */
 public final class CatalogLoaderRegistry
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(CatalogLoaderRegistry.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(CatalogLoaderRegistry.class.getName());
 
   private static Map<String, CatalogLoader> loadCatalogLoaderRegistry()
     throws SchemaCrawlerException
@@ -58,18 +57,20 @@ public final class CatalogLoaderRegistry
 
     try
     {
-      final ServiceLoader<CatalogLoader> serviceLoader = ServiceLoader
-        .load(CatalogLoader.class);
-      for (final CatalogLoader catalogLoader: serviceLoader)
+      final ServiceLoader<CatalogLoader> serviceLoader =
+        ServiceLoader.load(CatalogLoader.class);
+      for (final CatalogLoader catalogLoader : serviceLoader)
       {
-        final String databaseSystemIdentifier = catalogLoader
-          .getDatabaseSystemIdentifier();
+        final String databaseSystemIdentifier =
+          catalogLoader.getDatabaseSystemIdentifier();
         try
         {
           LOGGER.log(Level.CONFIG,
                      new StringFormat("Loading catalog loader, %s=%s",
                                       databaseSystemIdentifier,
-                                      catalogLoader.getClass().getName()));
+                                      catalogLoader
+                                        .getClass()
+                                        .getName()));
 
           catalogLoaderRegistry.put(databaseSystemIdentifier, catalogLoader);
         }
@@ -78,7 +79,9 @@ public final class CatalogLoaderRegistry
           LOGGER.log(Level.CONFIG,
                      new StringFormat("Could not load catalog loader, %s=%s",
                                       databaseSystemIdentifier,
-                                      catalogLoader.getClass().getName()),
+                                      catalogLoader
+                                        .getClass()
+                                        .getName()),
                      e);
         }
       }

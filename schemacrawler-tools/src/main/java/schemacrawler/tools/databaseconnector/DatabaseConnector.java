@@ -35,7 +35,12 @@ import java.sql.Connection;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
-import schemacrawler.schemacrawler.*;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.DatabaseServerType;
+import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
+import schemacrawler.schemacrawler.Options;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.iosource.InputResource;
 import schemacrawler.utility.PropertiesUtility;
@@ -54,24 +59,26 @@ public abstract class DatabaseConnector
   };
   private final InputResource configResource;
   private final DatabaseServerType dbServerType;
-  private final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection;
+  private final BiConsumer<InformationSchemaViewsBuilder, Connection>
+    informationSchemaViewsBuilderForConnection;
 
   protected DatabaseConnector(final DatabaseServerType dbServerType,
                               final InputResource configResource,
                               final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection)
   {
-    this.dbServerType = requireNonNull(dbServerType,
-                                       "No database server type provided");
+    this.dbServerType =
+      requireNonNull(dbServerType, "No database server type provided");
 
-    this.configResource = requireNonNull(configResource,
-                                         "No config resource provided");
+    this.configResource =
+      requireNonNull(configResource, "No config resource provided");
 
-    this.informationSchemaViewsBuilderForConnection = informationSchemaViewsBuilderForConnection;
+    this.informationSchemaViewsBuilderForConnection =
+      informationSchemaViewsBuilderForConnection;
   }
 
   /**
-   * Constructor for unknown databases. Bypass the null-checks of the
-   * main constructor
+   * Constructor for unknown databases. Bypass the null-checks of the main
+   * constructor
    */
   private DatabaseConnector()
   {
@@ -81,8 +88,8 @@ public abstract class DatabaseConnector
   }
 
   /**
-   * Gets the complete bundled database configuration set. This is
-   * useful in building the SchemaCrawler options.
+   * Gets the complete bundled database configuration set. This is useful in
+   * building the SchemaCrawler options.
    */
   public final Config getConfig()
   {
@@ -99,30 +106,32 @@ public abstract class DatabaseConnector
   }
 
   /**
-   * Gets the complete bundled database specific configuration set,
-   * including the SQL for information schema views.
+   * Gets the complete bundled database specific configuration set, including
+   * the SQL for information schema views.
    *
-   * @param connection Database connection
+   * @param connection
+   *   Database connection
    */
   public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(final Connection connection)
   {
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
-      .builder()
-      .withDatabaseServerType(dbServerType)
-      .withInformationSchemaViewsForConnection(
-        informationSchemaViewsBuilderForConnection,
-        connection)
-      .fromConnnection(connection);
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+      SchemaRetrievalOptionsBuilder
+        .builder()
+        .withDatabaseServerType(dbServerType)
+        .withInformationSchemaViewsForConnection(
+          informationSchemaViewsBuilderForConnection,
+          connection)
+        .fromConnnection(connection);
 
     return schemaRetrievalOptionsBuilder;
   }
 
   /**
-   * Creates a datasource for connecting to a database. Additional
-   * connection options are provided, from the command-line, and
-   * configuration file.
+   * Creates a datasource for connecting to a database. Additional connection
+   * options are provided, from the command-line, and configuration file.
    *
-   * @param databaseConnectorOptions Configuration from the command-line
+   * @param databaseConnectorOptions
+   *   Configuration from the command-line
    */
   public DatabaseConnectionSource newDatabaseConnectionSource(final DatabaseConnectorOptions databaseConnectorOptions)
     throws SchemaCrawlerException
@@ -130,8 +139,8 @@ public abstract class DatabaseConnector
     requireNonNull(databaseConnectorOptions,
                    "No database connection options provided");
 
-    final DatabaseConnectionSource connectionOptions = databaseConnectorOptions.toDatabaseConnectionSource(
-      getConfig());
+    final DatabaseConnectionSource connectionOptions =
+      databaseConnectorOptions.toDatabaseConnectionSource(getConfig());
 
     return connectionOptions;
   }
@@ -161,9 +170,10 @@ public abstract class DatabaseConnector
   public PluginCommand getHelpCommand()
   {
 
-    final PluginCommand pluginCommand = new PluginCommand(dbServerType.getDatabaseSystemIdentifier(),
-                                                          "** Connect to "
-                                                          + dbServerType.getDatabaseSystemName());
+    final PluginCommand pluginCommand =
+      new PluginCommand(dbServerType.getDatabaseSystemIdentifier(),
+                        "** Connect to "
+                        + dbServerType.getDatabaseSystemName());
     return pluginCommand;
   }
 

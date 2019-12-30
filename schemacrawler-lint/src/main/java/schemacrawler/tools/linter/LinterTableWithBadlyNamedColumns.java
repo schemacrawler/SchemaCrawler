@@ -61,8 +61,8 @@ public class LinterTableWithBadlyNamedColumns
   {
     requireNonNull(config, "No configuration provided");
 
-    final String badColumnNames = config.getStringValue("bad-column-names",
-                                                        null);
+    final String badColumnNames =
+      config.getStringValue("bad-column-names", null);
     if (isBlank(badColumnNames))
     {
       columnNames = new IncludeAll();
@@ -79,8 +79,9 @@ public class LinterTableWithBadlyNamedColumns
   {
     requireNonNull(table, "No table provided");
 
-    final List<Column> badlyNamedColumns = findBadlyNamedColumns(getColumns(table));
-    for (final Column column: badlyNamedColumns)
+    final List<Column> badlyNamedColumns =
+      findBadlyNamedColumns(getColumns(table));
+    for (final Column column : badlyNamedColumns)
     {
       addTableLint(table, getSummary(), column);
     }
@@ -94,7 +95,7 @@ public class LinterTableWithBadlyNamedColumns
       return badlyNamedColumns;
     }
 
-    for (final Column column: columns)
+    for (final Column column : columns)
     {
       if (columnNames.test(column.getFullName()))
       {

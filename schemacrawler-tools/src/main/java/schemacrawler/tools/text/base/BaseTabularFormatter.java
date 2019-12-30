@@ -34,7 +34,12 @@ import static sf.util.Utility.isBlank;
 import java.util.Collection;
 
 import schemacrawler.SchemaCrawlerInfo;
-import schemacrawler.schema.*;
+import schemacrawler.schema.CrawlInfo;
+import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.DatabaseProperty;
+import schemacrawler.schema.JdbcDriverInfo;
+import schemacrawler.schema.JdbcDriverProperty;
+import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
@@ -108,8 +113,8 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
       return;
     }
 
-    formattingHelper
-      .writeHeader(DocumentHeaderType.subTitle, "System Information");
+    formattingHelper.writeHeader(DocumentHeaderType.subTitle,
+                                 "System Information");
 
     formattingHelper.writeObjectStart();
 
@@ -119,8 +124,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
                                          crawlInfo.getSchemaCrawlerInfo(),
                                          Alignment.inherit);
       formattingHelper.writeNameValueRow("generated on",
-                                         formatTimestamp(crawlInfo
-                                                           .getCrawlTimestamp()),
+                                         formatTimestamp(crawlInfo.getCrawlTimestamp()),
                                          Alignment.inherit);
     }
 
@@ -153,8 +157,8 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
     final Collection<Property> serverInfo = dbInfo.getServerInfo();
     if (!serverInfo.isEmpty())
     {
-      formattingHelper
-        .writeHeader(DocumentHeaderType.section, "Database Server Information");
+      formattingHelper.writeHeader(DocumentHeaderType.section,
+                                   "Database Server Information");
       formattingHelper.writeObjectStart();
       for (final Property property : serverInfo)
       {
@@ -171,8 +175,8 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
       formattingHelper.writeObjectEnd();
     }
 
-    formattingHelper
-      .writeHeader(DocumentHeaderType.section, "Database Information");
+    formattingHelper.writeHeader(DocumentHeaderType.section,
+                                 "Database Information");
 
     formattingHelper.writeObjectStart();
     formattingHelper.writeNameValueRow("database product name",
@@ -189,8 +193,8 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
     final Collection<DatabaseProperty> dbProperties = dbInfo.getProperties();
     if (!dbProperties.isEmpty())
     {
-      formattingHelper
-        .writeHeader(DocumentHeaderType.section, "Database Characteristics");
+      formattingHelper.writeHeader(DocumentHeaderType.section,
+                                   "Database Characteristics");
       formattingHelper.writeObjectStart();
       for (final DatabaseProperty property : dbProperties)
       {
@@ -217,8 +221,8 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
       return;
     }
 
-    formattingHelper
-      .writeHeader(DocumentHeaderType.section, "JDBC Driver Information");
+    formattingHelper.writeHeader(DocumentHeaderType.section,
+                                 "JDBC Driver Information");
 
     formattingHelper.writeObjectStart();
     formattingHelper.writeNameValueRow("driver name",
@@ -234,17 +238,16 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
                                        driverInfo.getConnectionUrl(),
                                        Alignment.inherit);
     formattingHelper.writeNameValueRow("is JDBC compliant",
-                                       Boolean.toString(driverInfo
-                                                          .isJdbcCompliant()),
+                                       Boolean.toString(driverInfo.isJdbcCompliant()),
                                        Alignment.inherit);
     formattingHelper.writeObjectEnd();
 
-    final Collection<JdbcDriverProperty> jdbcDriverProperties = driverInfo
-      .getDriverProperties();
+    final Collection<JdbcDriverProperty> jdbcDriverProperties =
+      driverInfo.getDriverProperties();
     if (!jdbcDriverProperties.isEmpty())
     {
-      formattingHelper
-        .writeHeader(DocumentHeaderType.section, "JDBC Driver Properties");
+      formattingHelper.writeHeader(DocumentHeaderType.section,
+                                   "JDBC Driver Properties");
       for (final JdbcDriverProperty driverProperty : jdbcDriverProperties)
       {
         formattingHelper.writeObjectStart();
@@ -263,8 +266,8 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
       return;
     }
 
-    formattingHelper
-      .writeHeader(DocumentHeaderType.section, "SchemaCrawler Information");
+    formattingHelper.writeHeader(DocumentHeaderType.section,
+                                 "SchemaCrawler Information");
 
     formattingHelper.writeObjectStart();
     formattingHelper.writeNameValueRow("product name",
@@ -306,8 +309,8 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
       return;
     }
 
-    formattingHelper
-      .writeHeader(DocumentHeaderType.subTitle, "System Information");
+    formattingHelper.writeHeader(DocumentHeaderType.subTitle,
+                                 "System Information");
   }
 
   private void printJdbcDriverProperty(final JdbcDriverProperty driverProperty)
@@ -315,15 +318,16 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
     final String required =
       (driverProperty.isRequired()? "": "not ") + "required";
     String details = required;
-    if (driverProperty.getChoices() != null && !driverProperty.getChoices()
+    if (driverProperty.getChoices() != null && !driverProperty
+      .getChoices()
       .isEmpty())
     {
       details = details + "; choices " + driverProperty.getChoices();
     }
     final String value = driverProperty.getValue();
 
-    formattingHelper
-      .writeNameRow(driverProperty.getName(), "[driver property]");
+    formattingHelper.writeNameRow(driverProperty.getName(),
+                                  "[driver property]");
     formattingHelper.writeDescriptionRow(driverProperty.getDescription());
     formattingHelper.writeDescriptionRow(details);
     formattingHelper.writeDetailRow("", "value", value);

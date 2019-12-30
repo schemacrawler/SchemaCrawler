@@ -35,8 +35,8 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Sequence;
 
 /**
- * Represents a database sequence. Created from metadata returned by a
- * JDBC call.
+ * Represents a database sequence. Created from metadata returned by a JDBC
+ * call.
  *
  * @author Sualeh Fatehi
  */
@@ -46,11 +46,10 @@ final class MutableSequence
 {
 
   private static final long serialVersionUID = -4774695374454532899L;
-
-  private BigInteger minimumValue;
-  private BigInteger maximumValue;
-  private long increment;
   private boolean cycle;
+  private long increment;
+  private BigInteger maximumValue;
+  private BigInteger minimumValue;
 
   MutableSequence(final Schema schema, final String name)
   {
@@ -66,6 +65,11 @@ final class MutableSequence
     return increment;
   }
 
+  void setIncrement(final long increment)
+  {
+    this.increment = increment;
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -75,6 +79,11 @@ final class MutableSequence
     return maximumValue;
   }
 
+  void setMaximumValue(final BigInteger maximumValue)
+  {
+    this.maximumValue = maximumValue;
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -82,6 +91,11 @@ final class MutableSequence
   public BigInteger getMinimumValue()
   {
     return minimumValue;
+  }
+
+  void setMinimumValue(final BigInteger minimumValue)
+  {
+    this.minimumValue = minimumValue;
   }
 
   /**
@@ -96,21 +110,6 @@ final class MutableSequence
   void setCycle(final boolean cycle)
   {
     this.cycle = cycle;
-  }
-
-  void setIncrement(final long increment)
-  {
-    this.increment = increment;
-  }
-
-  void setMaximumValue(final BigInteger maximumValue)
-  {
-    this.maximumValue = maximumValue;
-  }
-
-  void setMinimumValue(final BigInteger minimumValue)
-  {
-    this.minimumValue = minimumValue;
   }
 
 }

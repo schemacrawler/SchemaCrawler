@@ -41,25 +41,19 @@ import picocli.CommandLine.Help.TextTable;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
-@Command(name = "servers",
-         header = "** List available SchemaCrawler database plugins",
-         headerHeading = "",
-         synopsisHeading = "Shell Command:%n",
-         customSynopsis = {
-           "servers"
-         },
-         optionListHeading = "Options:%n")
+@Command(name = "servers", header = "** List available SchemaCrawler database plugins", headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
+  "servers"
+}, optionListHeading = "Options:%n")
 public class AvailableServersCommand
   implements Runnable
 {
   private static String availableServersDescriptive()
   {
-    final TextTable textTable = forColumns(Ansi.OFF,
-                                           new Column(15, 1, SPAN),
-                                           new Column(65, 1, WRAP));
+    final TextTable textTable =
+      forColumns(Ansi.OFF, new Column(15, 1, SPAN), new Column(65, 1, WRAP));
 
-    final DatabaseConnectorRegistry databaseConnectorRegistry = DatabaseConnectorRegistry
-      .getDatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry databaseConnectorRegistry =
+      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     for (final DatabaseServerType serverType : databaseConnectorRegistry)
     {
       textTable.addRowValues(serverType.getDatabaseSystemIdentifier(),

@@ -47,18 +47,23 @@ public class BundledDistributionTest
   {
 
     final Connection connection = null;
-    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    final DatabaseConnector databaseSystemIdentifier = registry.lookupDatabaseConnector(
-      "postgresql");
-    assertThat(databaseSystemIdentifier.getSchemaRetrievalOptionsBuilder(
-      connection).toOptions().getInformationSchemaViews().size(), is(9));
+    final DatabaseConnectorRegistry registry =
+      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnector databaseSystemIdentifier =
+      registry.lookupDatabaseConnector("postgresql");
+    assertThat(databaseSystemIdentifier
+                 .getSchemaRetrievalOptionsBuilder(connection)
+                 .toOptions()
+                 .getInformationSchemaViews()
+                 .size(), is(9));
   }
 
   @Test
   public void testPlugin_postgresql()
     throws Exception
   {
-    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry registry =
+      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     assertTrue(registry.hasDatabaseSystemIdentifier("postgresql"));
   }
 

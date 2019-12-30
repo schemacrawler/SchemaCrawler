@@ -44,21 +44,21 @@ public class ClasspathInputResource
   implements InputResource
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(ClasspathInputResource.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(ClasspathInputResource.class.getName());
 
   private final String classpathResource;
 
   public ClasspathInputResource(final String classpathResource)
     throws IOException
   {
-    this.classpathResource = requireNonNull(classpathResource,
-                                            "No classpath resource provided");
-    if (ClasspathInputResource.class
-      .getResource(this.classpathResource) == null)
+    this.classpathResource =
+      requireNonNull(classpathResource, "No classpath resource provided");
+    if (ClasspathInputResource.class.getResource(this.classpathResource)
+        == null)
     {
-      final IOException e = new IOException("Cannot read classpath resource, "
-                                            + this.classpathResource);
+      final IOException e = new IOException(
+        "Cannot read classpath resource, " + this.classpathResource);
       LOGGER.log(Level.FINE, e.getMessage(), e);
       throw e;
     }
@@ -72,7 +72,9 @@ public class ClasspathInputResource
   @Override
   public String getDescription()
   {
-    return InputReader.class.getResource(classpathResource).toExternalForm();
+    return InputReader.class
+      .getResource(classpathResource)
+      .toExternalForm();
   }
 
   @Override
@@ -80,13 +82,13 @@ public class ClasspathInputResource
     throws IOException
   {
     requireNonNull(charset, "No input charset provided");
-    final InputStream inputStream = ClasspathInputResource.class
-      .getResourceAsStream(classpathResource);
-    final Reader reader = new BufferedReader(new InputStreamReader(inputStream,
-                                                                   charset));
-    LOGGER
-      .log(Level.INFO,
-           "Opened input reader to classpath resource, " + classpathResource);
+    final InputStream inputStream =
+      ClasspathInputResource.class.getResourceAsStream(classpathResource);
+    final Reader reader =
+      new BufferedReader(new InputStreamReader(inputStream, charset));
+    LOGGER.log(Level.INFO,
+               "Opened input reader to classpath resource, "
+               + classpathResource);
 
     return new InputReader(getDescription(), reader, true);
   }

@@ -47,11 +47,12 @@ public class SqlScript
   implements Runnable
 {
 
-  private static final Logger LOGGER = Logger
-    .getLogger(SqlScript.class.getName());
+  private static final Logger LOGGER =
+    Logger.getLogger(SqlScript.class.getName());
 
-  private static final boolean debug = Boolean.valueOf(System
-    .getProperty("schemacrawler.testdb.SqlScript.debug", "false"));
+  private static final boolean debug = Boolean.valueOf(System.getProperty(
+    "schemacrawler.testdb.SqlScript.debug",
+    "false"));
 
   private final String scriptResource;
   private final String delimiter;
@@ -83,8 +84,8 @@ public class SqlScript
       throw new RuntimeException("Too many fields in " + scriptResourceLine);
     }
 
-    this.connection = requireNonNull(connection,
-                                     "No database connection provided");
+    this.connection =
+      requireNonNull(connection, "No database connection provided");
   }
 
   @Override
@@ -108,13 +109,16 @@ public class SqlScript
     }
 
     try (
-        final BufferedReader lineReader = new BufferedReader(new InputStreamReader(this
-          .getClass().getResourceAsStream(scriptResource), UTF_8));
-    // NOTE: Do not close connection, since we did not open it
+      final BufferedReader lineReader = new BufferedReader(new InputStreamReader(
+        this
+          .getClass()
+          .getResourceAsStream(scriptResource),
+        UTF_8));
+      // NOTE: Do not close connection, since we did not open it
     )
     {
       final List<String> sqlList = readSql(lineReader);
-      for (final String sql: sqlList)
+      for (final String sql : sqlList)
       {
         try (final Statement statement = connection.createStatement();)
         {
@@ -132,7 +136,9 @@ public class SqlScript
           final SQLWarning warnings = statement.getWarnings();
           if (warnings != null)
           {
-            if (!warnings.getMessage().startsWith("Can't drop database"))
+            if (!warnings
+              .getMessage()
+              .startsWith("Can't drop database"))
             {
               throw warnings;
             }
@@ -163,8 +169,9 @@ public class SqlScript
     catch (final Exception e)
     {
       final Throwable throwable = getCause(e);
-      final String message = String
-        .format("Script: %s -- %s", scriptResource, throwable.getMessage());
+      final String message = String.format("Script: %s -- %s",
+                                           scriptResource,
+                                           throwable.getMessage());
       System.err.println(message);
       LOGGER.log(Level.WARNING, message, throwable);
       throw new RuntimeException(e);
@@ -193,8 +200,8 @@ public class SqlScript
     while ((line = lineReader.readLine()) != null)
     {
       final String trimmedLine = line.trim();
-      final boolean isComment = trimmedLine.startsWith("--")
-                                || trimmedLine.startsWith("//");
+      final boolean isComment =
+        trimmedLine.startsWith("--") || trimmedLine.startsWith("//");
       if (!isComment && trimmedLine.endsWith(delimiter))
       {
         sql.append(line.substring(0, line.lastIndexOf(delimiter)));

@@ -30,7 +30,9 @@ package schemacrawler.test.utility;
 
 
 import static java.nio.file.Files.newBufferedWriter;
-import static java.nio.file.StandardOpenOption.*;
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.nio.file.StandardOpenOption.WRITE;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
@@ -42,12 +44,15 @@ import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Supplier;
 
 import picocli.CommandLine;
 import schemacrawler.Main;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.*;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.options.OutputFormat;
 import sf.util.IOUtility;
@@ -161,14 +166,17 @@ public final class CommandlineTestUtility
     return out;
   }
 
-  public static SchemaCrawlerShellState createLoadedSchemaCrawlerShellState(final Connection connection)
+  public static SchemaCrawlerShellState createLoadedSchemaCrawlerShellState(
+    final Connection connection)
     throws SchemaCrawlerException
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    state.setSchemaCrawlerOptionsBuilder(SchemaCrawlerOptionsBuilder.builder()
+    state.setSchemaCrawlerOptionsBuilder(SchemaCrawlerOptionsBuilder
+                                           .builder()
                                            .fromOptions(schemaCrawlerOptions));
     state.setSchemaRetrievalOptionsBuilder(SchemaRetrievalOptionsBuilder.builder());
     state.setDataSource(() -> connection); // is-connected
@@ -226,7 +234,8 @@ public final class CommandlineTestUtility
       }
     }
 
-    final SaveExceptionHandler saveExceptionHandler = new SaveExceptionHandler();
+    final SaveExceptionHandler saveExceptionHandler =
+      new SaveExceptionHandler();
     final CommandLine commandLine = newCommandLine(object, null, true);
     commandLine.setParameterExceptionHandler(saveExceptionHandler);
     commandLine.setExecutionExceptionHandler(saveExceptionHandler);
@@ -245,14 +254,15 @@ public final class CommandlineTestUtility
       return null;
     }
 
-    final Path tempFile = IOUtility.createTempFilePath("test", ".properties")
-      .normalize().toAbsolutePath();
+    final Path tempFile = IOUtility
+      .createTempFilePath("test", ".properties")
+      .normalize()
+      .toAbsolutePath();
 
-    final Writer tempFileWriter = newBufferedWriter(tempFile,
-                                                    WRITE,
-                                                    TRUNCATE_EXISTING,
-                                                    CREATE);
-    config.toProperties()
+    final Writer tempFileWriter =
+      newBufferedWriter(tempFile, WRITE, TRUNCATE_EXISTING, CREATE);
+    config
+      .toProperties()
       .store(tempFileWriter, "Store config to temporary file for testing");
 
     return tempFile;

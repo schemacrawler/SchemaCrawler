@@ -46,19 +46,21 @@ public interface SchemaCrawlerCommand
 {
 
   /**
-   * Checks whether a command is available, and throws an exception if
-   * it is not available.
+   * Checks whether a command is available, and throws an exception if it is not
+   * available.
    *
-   * @throws Exception On an exception
+   * @throws Exception
+   *   On an exception
    */
   void checkAvailability()
     throws Exception;
 
   /**
-   * Executes functionality for SchemaCrawler, after database metadata
-   * has been obtained.
+   * Executes functionality for SchemaCrawler, after database metadata has been
+   * obtained.
    *
-   * @throws Exception On an exception
+   * @throws Exception
+   *   On an exception
    */
   void execute()
     throws Exception;
@@ -92,7 +94,8 @@ public interface SchemaCrawlerCommand
   /**
    * Initializes the command for execution.
    *
-   * @throws Exception On an exception
+   * @throws Exception
+   *   On an exception
    */
   void initialize()
     throws Exception;

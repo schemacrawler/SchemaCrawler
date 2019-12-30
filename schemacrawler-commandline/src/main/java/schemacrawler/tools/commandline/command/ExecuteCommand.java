@@ -35,7 +35,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
-import picocli.CommandLine.*;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.ExecutionException;
+import picocli.CommandLine.Mixin;
+import picocli.CommandLine.Model;
+import picocli.CommandLine.Spec;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -50,23 +54,17 @@ import sf.util.ObjectToStringFormat;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
-@Command(name = "execute",
-         header = "** Execute a SchemaCrawler command",
-         description = {
-           ""
-         },
-         headerHeading = "",
-         synopsisHeading = "Shell Command:%n",
-         customSynopsis = {
-           "execute"
-         },
-         optionListHeading = "Options:%n")
+@Command(name = "execute", header = "** Execute a SchemaCrawler command", description = {
+  ""
+}, headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
+  "execute"
+}, optionListHeading = "Options:%n")
 public class ExecuteCommand
   implements Runnable
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
-    AvailableCommandsCommand.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(AvailableCommandsCommand.class.getName());
 
   private final SchemaCrawlerShellState state;
 
@@ -94,32 +92,41 @@ public class ExecuteCommand
     Connection connection = null;
     if (state.isConnected())
     {
-      connection = state.getDataSource().get();
+      connection = state
+        .getDataSource()
+        .get();
     }
 
     try
     {
-      final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder.builder()
-                                                                            .fromConfig(
-                                                                              state
-                                                                                .getAdditionalConfiguration());
-      if (commandOutputOptions.getOutputFile().isPresent())
+      final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
+        .builder()
+        .fromConfig(state.getAdditionalConfiguration());
+      if (commandOutputOptions
+        .getOutputFile()
+        .isPresent())
       {
-        outputOptionsBuilder.withOutputFile(commandOutputOptions.getOutputFile()
-                                                                .get());
+        outputOptionsBuilder.withOutputFile(commandOutputOptions
+                                              .getOutputFile()
+                                              .get());
       }
       else
       {
         outputOptionsBuilder.withConsoleOutput();
       }
-      commandOutputOptions.getOutputFormatValue()
-                          .ifPresent(outputOptionsBuilder::withOutputFormatValue);
-      commandOutputOptions.getTitle().ifPresent(outputOptionsBuilder::title);
+      commandOutputOptions
+        .getOutputFormatValue()
+        .ifPresent(outputOptionsBuilder::withOutputFormatValue);
+      commandOutputOptions
+        .getTitle()
+        .ifPresent(outputOptionsBuilder::title);
 
-      final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptionsBuilder()
-                                                             .toOptions();
-      final SchemaRetrievalOptions schemaRetrievalOptions = state.getSchemaRetrievalOptionsBuilder()
-                                                                 .toOptions();
+      final SchemaCrawlerOptions schemaCrawlerOptions = state
+        .getSchemaCrawlerOptionsBuilder()
+        .toOptions();
+      final SchemaRetrievalOptions schemaRetrievalOptions = state
+        .getSchemaRetrievalOptionsBuilder()
+        .toOptions();
       final OutputOptions outputOptions = outputOptionsBuilder.toOptions();
       final Config additionalConfiguration = state.getAdditionalConfiguration();
 
@@ -127,7 +134,9 @@ public class ExecuteCommand
       // (Check after output options have been built)
       if (
         GraphOutputFormat.isSupportedFormat(outputOptions.getOutputFormatValue())
-        && !commandOutputOptions.getOutputFile().isPresent())
+        && !commandOutputOptions
+          .getOutputFile()
+          .isPresent())
       {
         throw new RuntimeException(
           "Output file has to be specified for schema diagrams");
@@ -139,11 +148,10 @@ public class ExecuteCommand
       LOGGER.log(Level.INFO,
                  new StringFormat("Executing SchemaCrawler command <%s>",
                                   command));
-      LOGGER.log(Level.INFO,
-                 new ObjectToStringFormat(outputOptions));
+      LOGGER.log(Level.INFO, new ObjectToStringFormat(outputOptions));
 
-      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-        command);
+      final SchemaCrawlerExecutable executable =
+        new SchemaCrawlerExecutable(command);
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
       executable.setAdditionalConfiguration(additionalConfiguration);

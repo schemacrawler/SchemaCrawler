@@ -40,8 +40,8 @@ import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
 public final class OperationOptionsBuilder
   extends BaseTextOptionsBuilder<OperationOptionsBuilder, OperationOptions>
 {
-  private static final String SHOW_LOBS = SCHEMACRAWLER_FORMAT_PREFIX
-                                          + "data.show_lobs";
+  private static final String SHOW_LOBS =
+    SCHEMACRAWLER_FORMAT_PREFIX + "data.show_lobs";
 
   public static OperationOptionsBuilder builder()
   {
@@ -60,7 +60,9 @@ public final class OperationOptionsBuilder
 
   public static OperationOptions newOperationOptions(final Config config)
   {
-    return new OperationOptionsBuilder().fromConfig(config).toOptions();
+    return new OperationOptionsBuilder()
+      .fromConfig(config)
+      .toOptions();
   }
 
   protected boolean isShowLobs;
@@ -108,7 +110,7 @@ public final class OperationOptionsBuilder
    * Show LOB data, or not.
    *
    * @param value
-   *        Whether to show LOB data.
+   *   Whether to show LOB data.
    * @return Builder
    */
   public OperationOptionsBuilder showLobs(final boolean value)

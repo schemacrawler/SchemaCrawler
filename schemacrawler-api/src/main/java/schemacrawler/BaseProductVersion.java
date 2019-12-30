@@ -49,16 +49,35 @@ public class BaseProductVersion
 
   public BaseProductVersion(final ProductVersion productVersion)
   {
-    this(requireNonNull(productVersion, "No product name provided")
-      .getProductName(), productVersion.getProductVersion());
+    this(requireNonNull(productVersion,
+                        "No product name provided").getProductName(),
+         productVersion.getProductVersion());
   }
 
   public BaseProductVersion(final String productName,
                             final String productVersion)
   {
     this.productName = requireNonNull(productName, "No product name provided");
-    this.productVersion = requireNonNull(productVersion,
-                                         "No product version provided");
+    this.productVersion =
+      requireNonNull(productVersion, "No product version provided");
+  }
+
+  @Override
+  public String getProductName()
+  {
+    return productName;
+  }
+
+  @Override
+  public String getProductVersion()
+  {
+    return productVersion;
+  }
+
+  @Override
+  public final int hashCode()
+  {
+    return Objects.hash(productName, productVersion);
   }
 
   @Override
@@ -79,24 +98,6 @@ public class BaseProductVersion
     final ProductVersion other = (ProductVersion) obj;
     return Objects.equals(productName, other.getProductName())
            && Objects.equals(productVersion, other.getProductVersion());
-  }
-
-  @Override
-  public String getProductName()
-  {
-    return productName;
-  }
-
-  @Override
-  public String getProductVersion()
-  {
-    return productVersion;
-  }
-
-  @Override
-  public final int hashCode()
-  {
-    return Objects.hash(productName, productVersion);
   }
 
   /**

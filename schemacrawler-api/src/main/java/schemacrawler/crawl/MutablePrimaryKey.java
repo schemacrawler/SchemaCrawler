@@ -50,7 +50,7 @@ final class MutablePrimaryKey
    * Copies information from an index.
    *
    * @param index
-   *        Index
+   *   Index
    */
   MutablePrimaryKey(final MutableIndex index)
   {
@@ -61,7 +61,7 @@ final class MutablePrimaryKey
     setIndexType(index.getIndexType());
     setUnique(index.isUnique());
     // Copy columns
-    for (final IndexColumn column: index)
+    for (final IndexColumn column : index)
     {
       addColumn((MutableIndexColumn) column);
     }

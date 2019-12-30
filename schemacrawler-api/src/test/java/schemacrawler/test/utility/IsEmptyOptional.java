@@ -58,7 +58,8 @@ public class IsEmptyOptional<T>
   {
     if (item.isPresent())
     {
-      mismatchDescription.appendText("was present with ")
+      mismatchDescription
+        .appendText("was present with ")
         .appendValue(item.get());
       return false;
     }

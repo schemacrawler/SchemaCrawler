@@ -74,9 +74,10 @@ public interface Routine
    * Gets a parameter by unqualified name.
    *
    * @param name
-   *        Unqualified name
+   *   Unqualified name
    * @return Parameter.
    */
-  <C extends RoutineParameter<? extends Routine>> Optional<C> lookupParameter(String name);
+  <C extends RoutineParameter<? extends Routine>> Optional<C> lookupParameter(
+    String name);
 
 }

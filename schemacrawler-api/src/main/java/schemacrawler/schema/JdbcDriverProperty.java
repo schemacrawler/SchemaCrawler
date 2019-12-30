@@ -50,11 +50,11 @@ public interface JdbcDriverProperty
   Collection<String> getChoices();
 
   /**
-   * Gets the the current value of the property, based on a combination
-   * of the information supplied to the method
+   * Gets the the current value of the property, based on a combination of the
+   * information supplied to the method
    * <code>getPropertyInfo</code>, the Java environment, and the
-   * driver-supplied default values. This field may be null if no value
-   * is known.
+   * driver-supplied default values. This field may be null if no value is
+   * known.
    *
    * @return Value of the property
    */
@@ -62,8 +62,8 @@ public interface JdbcDriverProperty
   String getValue();
 
   /**
-   * The <code>required</code> field is <code>true</code> if a value
-   * must be supplied for this property during
+   * The <code>required</code> field is <code>true</code> if a value must be
+   * supplied for this property during
    * <code>Driver.connect</code> and <code>false</code> otherwise.
    *
    * @return Whether the property is required

@@ -40,7 +40,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -49,21 +48,22 @@ import schemacrawler.tools.options.TextOutputFormat;
 public class SpringIntegrationTest
 {
 
-  private final ApplicationContext appContext = new ClassPathXmlApplicationContext("context.xml");
+  private final ApplicationContext appContext =
+    new ClassPathXmlApplicationContext("context.xml");
 
   @Test
   public void testExecutables(final Connection connection)
     throws Exception
   {
     final String beanDefinitionName = "executableForSchema";
-    final SchemaCrawlerExecutable executable = appContext
-      .getBean(beanDefinitionName, SchemaCrawlerExecutable.class);
+    final SchemaCrawlerExecutable executable =
+      appContext.getBean(beanDefinitionName, SchemaCrawlerExecutable.class);
 
     assertThat(outputOf(executableExecution(connection,
                                             executable,
                                             TextOutputFormat.text)),
-               hasSameContentAs(classpathResource(beanDefinitionName
-                                                  + ".txt")));
+               hasSameContentAs(classpathResource(
+                 beanDefinitionName + ".txt")));
   }
 
 }

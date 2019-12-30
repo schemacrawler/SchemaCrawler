@@ -40,9 +40,9 @@ public class NotLoadedException
 
   public NotLoadedException(final Constraint constraint)
   {
-    super(String
-      .format("Complete metadata has not been loaded for table constraint <%s>",
-              constraint));
+    super(String.format(
+      "Complete metadata has not been loaded for table constraint <%s>",
+      constraint));
   }
 
   public NotLoadedException(final PartialDatabaseObject databaseObject)

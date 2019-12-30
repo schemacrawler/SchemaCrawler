@@ -126,8 +126,9 @@ public class PlainTextFormattingHelper
             break;
         }
       }
-      out.println(System.lineSeparator() + prefix + header
-                  + System.lineSeparator() + separator + prefix);
+      out.println(
+        System.lineSeparator() + prefix + header + System.lineSeparator()
+        + separator + prefix);
     }
   }
 

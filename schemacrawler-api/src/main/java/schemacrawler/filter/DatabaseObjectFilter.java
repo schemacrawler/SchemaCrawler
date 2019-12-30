@@ -39,8 +39,8 @@ final class DatabaseObjectFilter<D extends DatabaseObject>
   implements Predicate<D>
 {
 
-  private final InclusionRule schemaInclusionRule;
   private final InclusionRule databaseObjectInclusionRule;
+  private final InclusionRule schemaInclusionRule;
 
   DatabaseObjectFilter(final SchemaCrawlerOptions options,
                        final InclusionRule databaseObjectInclusionRule)
@@ -68,7 +68,7 @@ final class DatabaseObjectFilter<D extends DatabaseObject>
    * Check for database object limiting rules.
    *
    * @param databaseObject
-   *        Database object to check
+   *   Database object to check
    * @return Whether the table should be included
    */
   @Override
@@ -83,8 +83,9 @@ final class DatabaseObjectFilter<D extends DatabaseObject>
 
     if (include && schemaInclusionRule != null)
     {
-      include = schemaInclusionRule
-        .test(databaseObject.getSchema().getFullName());
+      include = schemaInclusionRule.test(databaseObject
+                                           .getSchema()
+                                           .getFullName());
     }
     if (include && databaseObjectInclusionRule != null)
     {

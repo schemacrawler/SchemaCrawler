@@ -37,7 +37,8 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
   implements OptionsBuilder<BaseTextOptionsBuilder<B, O>, O>
 {
 
-  protected static final String SCHEMACRAWLER_FORMAT_PREFIX = "schemacrawler.format.";
+  protected static final String SCHEMACRAWLER_FORMAT_PREFIX =
+    "schemacrawler.format.";
 
   private static final String NO_HEADER =
     SCHEMACRAWLER_FORMAT_PREFIX + "no_header";
@@ -115,8 +116,9 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
 
     isShowUnqualifiedNames = config.getBooleanValue(SHOW_UNQUALIFIED_NAMES);
 
-    isAlphabeticalSortForTables = config
-      .getBooleanValue(SORT_ALPHABETICALLY_TABLES, isAlphabeticalSortForTables);
+    isAlphabeticalSortForTables = config.getBooleanValue(
+      SORT_ALPHABETICALLY_TABLES,
+      isAlphabeticalSortForTables);
     isAlphabeticalSortForTableColumns = config.getBooleanValue(
       SORT_ALPHABETICALLY_TABLE_COLUMNS,
       isAlphabeticalSortForTableColumns);
@@ -154,12 +156,12 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
     isShowUnqualifiedNames = options.isShowUnqualifiedNames();
 
     isAlphabeticalSortForTables = options.isAlphabeticalSortForTables();
-    isAlphabeticalSortForTableColumns = options
-      .isAlphabeticalSortForTableColumns();
+    isAlphabeticalSortForTableColumns =
+      options.isAlphabeticalSortForTableColumns();
 
     isAlphabeticalSortForRoutines = options.isAlphabeticalSortForRoutines();
-    isAlphabeticalSortForRoutineParameters = options
-      .isAlphabeticalSortForRoutineParameters();
+    isAlphabeticalSortForRoutineParameters =
+      options.isAlphabeticalSortForRoutineParameters();
 
     isNoSchemaColors = options.isNoSchemaColors();
 
@@ -308,8 +310,7 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
   }
 
   /**
-   * Corresponds to the --sort-columns=&lt;boolean&gt; command-line
-   * argument.
+   * Corresponds to the --sort-columns=&lt;boolean&gt; command-line argument.
    */
   public final B sortTableColumns(final boolean value)
   {
@@ -326,8 +327,7 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
   }
 
   /**
-   * Corresponds to the --sort-tables=&lt;boolean&gt; command-line
-   * argument.
+   * Corresponds to the --sort-tables=&lt;boolean&gt; command-line argument.
    */
   public final B sortTables(final boolean value)
   {
@@ -349,8 +349,8 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
 
     config.setBooleanValue(SHOW_UNQUALIFIED_NAMES, isShowUnqualifiedNames);
 
-    config
-      .setBooleanValue(SORT_ALPHABETICALLY_TABLES, isAlphabeticalSortForTables);
+    config.setBooleanValue(SORT_ALPHABETICALLY_TABLES,
+                           isAlphabeticalSortForTables);
     config.setBooleanValue(SORT_ALPHABETICALLY_TABLE_COLUMNS,
                            isAlphabeticalSortForTableColumns);
 

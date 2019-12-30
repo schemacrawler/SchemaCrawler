@@ -62,7 +62,7 @@ public class LinterTableAllNullableColumns
   private boolean hasAllNullableColumns(final Collection<Column> columns)
   {
     boolean hasAllNullableColumns = true;
-    for (final Column column: columns)
+    for (final Column column : columns)
     {
       if (!column.isPartOfPrimaryKey() && !column.isNullable())
       {

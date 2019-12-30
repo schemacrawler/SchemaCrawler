@@ -18,39 +18,12 @@ import schemacrawler.tools.options.TextOutputFormat;
 public final class ExecutableExample
 {
 
-  public static void main(final String[] args)
-    throws Exception
-  {
-
-    // Create the options
-    final SchemaCrawlerOptionsBuilder optionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder()
-      // Set what details are required in the schema - this affects the
-      // time taken to crawl the schema
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
-      .includeSchemas(new RegularExpressionInclusionRule("PUBLIC.BOOKS"));
-    final SchemaCrawlerOptions options = optionsBuilder.toOptions();
-
-    final Path outputFile = getOutputFile(args);
-    final OutputOptions outputOptions = OutputOptionsBuilder
-      .newOutputOptions(TextOutputFormat.html, outputFile);
-    final String command = "schema";
-
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-      command);
-    executable.setSchemaCrawlerOptions(options);
-    executable.setOutputOptions(outputOptions);
-    executable.setConnection(getConnection());
-    executable.execute();
-
-    System.out.println("Created output file, " + outputFile);
-  }
-
   private static Connection getConnection()
   {
-    final String connectionUrl = "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
-    final DatabaseConnectionSource dataSource = new DatabaseConnectionSource(
-      connectionUrl);
+    final String connectionUrl =
+      "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
+    final DatabaseConnectionSource dataSource =
+      new DatabaseConnectionSource(connectionUrl);
     dataSource.setUserCredentials(new SingleUseUserCredentials("sa", ""));
     return dataSource.get();
   }
@@ -66,8 +39,39 @@ public final class ExecutableExample
     {
       outputfile = "./schemacrawler_output.html";
     }
-    final Path outputFile = Paths.get(outputfile).toAbsolutePath().normalize();
+    final Path outputFile = Paths
+      .get(outputfile)
+      .toAbsolutePath()
+      .normalize();
     return outputFile;
+  }
+
+  public static void main(final String[] args)
+    throws Exception
+  {
+
+    // Create the options
+    final SchemaCrawlerOptionsBuilder optionsBuilder =
+      SchemaCrawlerOptionsBuilder.builder()
+        // Set what details are required in the schema - this affects the
+        // time taken to crawl the schema
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
+        .includeSchemas(new RegularExpressionInclusionRule("PUBLIC.BOOKS"));
+    final SchemaCrawlerOptions options = optionsBuilder.toOptions();
+
+    final Path outputFile = getOutputFile(args);
+    final OutputOptions outputOptions =
+      OutputOptionsBuilder.newOutputOptions(TextOutputFormat.html, outputFile);
+    final String command = "schema";
+
+    final SchemaCrawlerExecutable executable =
+      new SchemaCrawlerExecutable(command);
+    executable.setSchemaCrawlerOptions(options);
+    executable.setOutputOptions(outputOptions);
+    executable.setConnection(getConnection());
+    executable.execute();
+
+    System.out.println("Created output file, " + outputFile);
   }
 
 }

@@ -53,7 +53,8 @@ public class ConnectionOptionsTest
   {
     final String[] args = new String[0];
 
-    final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
+    final ConnectCommand optionsParser =
+      new ConnectCommand(new SchemaCrawlerShellState());
     new CommandLine(optionsParser).parseArgs(args);
     assertThrows(CommandLine.ParameterException.class,
                  () -> optionsParser.getDatabaseConnectable());
@@ -64,7 +65,8 @@ public class ConnectionOptionsTest
   {
     final String[] args = { "--some-option" };
 
-    final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
+    final ConnectCommand optionsParser =
+      new ConnectCommand(new SchemaCrawlerShellState());
     final CommandLine commandLine = newCommandLine(optionsParser, null, true);
     commandLine.parseArgs(args);
     assertThrows(CommandLine.ParameterException.class,
@@ -76,7 +78,8 @@ public class ConnectionOptionsTest
   {
     final String[] args = { "--url" };
 
-    final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
+    final ConnectCommand optionsParser =
+      new ConnectCommand(new SchemaCrawlerShellState());
     assertThrows(CommandLine.ParameterException.class,
                  () -> new CommandLine(optionsParser).parseArgs(args));
   }
@@ -85,12 +88,15 @@ public class ConnectionOptionsTest
   public void blankConnectCommand()
   {
     final String[] args = {
-      "--url", " " };
+      "--url", " "
+    };
 
-    final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
+    final ConnectCommand optionsParser =
+      new ConnectCommand(new SchemaCrawlerShellState());
     new CommandLine(optionsParser).parseArgs(args);
     assertThrows(IllegalArgumentException.class,
-                 () -> optionsParser.getDatabaseConnectable()
+                 () -> optionsParser
+                   .getDatabaseConnectable()
                    .toDatabaseConnectionSource(new Config()));
   }
 
@@ -98,18 +104,22 @@ public class ConnectionOptionsTest
   public void url()
   {
     final String[] args = {
-      "--url", "jdbc:database_url", "additional", "--extra" };
+      "--url", "jdbc:database_url", "additional", "--extra"
+    };
 
-    final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
+    final ConnectCommand optionsParser =
+      new ConnectCommand(new SchemaCrawlerShellState());
     final CommandLine commandLine = newCommandLine(optionsParser, null, true);
     commandLine.parseArgs(args);
 
-    final DatabaseConnectable databaseConnectable = optionsParser
-      .getDatabaseConnectable();
-    final DatabaseConnectionSource databaseConnectionSource = databaseConnectable
-      .toDatabaseConnectionSource(new Config());
+    final DatabaseConnectable databaseConnectable =
+      optionsParser.getDatabaseConnectable();
+    final DatabaseConnectionSource databaseConnectionSource =
+      databaseConnectable.toDatabaseConnectionSource(new Config());
 
-    assertThat(databaseConnectionSource.toString().replaceAll("\r", ""),
+    assertThat(databaseConnectionSource
+                 .toString()
+                 .replaceAll("\r", ""),
                is("driver=<unknown>\nurl=jdbc:database_url\n"));
   }
 
@@ -122,9 +132,11 @@ public class ConnectionOptionsTest
       "--urlx",
       "key1=value1;key2=value2",
       "additional",
-      "--extra" };
+      "--extra"
+    };
 
-    final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
+    final ConnectCommand optionsParser =
+      new ConnectCommand(new SchemaCrawlerShellState());
 
     assertThrows(CommandLine.MissingParameterException.class, () -> {
       final CommandLine commandLine = newCommandLine(optionsParser, null, true);
@@ -142,26 +154,29 @@ public class ConnectionOptionsTest
       "--urlx",
       "key1=value1;key2=value2",
       "additional",
-      "--extra" };
+      "--extra"
+    };
 
     final Config config = new Config();
     config.put("url", "jdbc:test-db://some-url");
 
-    final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
+    final ConnectCommand optionsParser =
+      new ConnectCommand(new SchemaCrawlerShellState());
     final CommandLine commandLine = newCommandLine(optionsParser, null, true);
     commandLine.parseArgs(args);
 
-    final DatabaseConnectable databaseConnectable = optionsParser
-      .getDatabaseConnectable();
-    final DatabaseConnectionSource databaseConnectionSource = databaseConnectable
-      .toDatabaseConnectionSource(config);
+    final DatabaseConnectable databaseConnectable =
+      optionsParser.getDatabaseConnectable();
+    final DatabaseConnectionSource databaseConnectionSource =
+      databaseConnectable.toDatabaseConnectionSource(config);
 
     // Assert internal field for connection properties
-    final Field f = databaseConnectionSource.getClass()
+    final Field f = databaseConnectionSource
+      .getClass()
       .getDeclaredField("connectionProperties");
     f.setAccessible(true);
-    final Map<String, String> connectionProperties = (Map<String, String>) f
-      .get(databaseConnectionSource);
+    final Map<String, String> connectionProperties =
+      (Map<String, String>) f.get(databaseConnectionSource);
 
     assertThat(connectionProperties, hasEntry("key1", "value1"));
     assertThat(connectionProperties, hasEntry("key2", "value2"));
@@ -172,12 +187,14 @@ public class ConnectionOptionsTest
     throws NoSuchFieldException, IllegalAccessException
   {
     final String[] args = {
-      "--server", "test-db", "--urlx" };
+      "--server", "test-db", "--urlx"
+    };
 
     final Config config = new Config();
     config.put("url", "jdbc:test-db://some-url");
 
-    final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
+    final ConnectCommand optionsParser =
+      new ConnectCommand(new SchemaCrawlerShellState());
 
     assertThrows(CommandLine.MissingParameterException.class, () -> {
       final CommandLine commandLine = newCommandLine(optionsParser, null, true);
@@ -190,12 +207,14 @@ public class ConnectionOptionsTest
     throws NoSuchFieldException, IllegalAccessException
   {
     final String[] args = {
-      "--server", "test-db", "--urlx", "key1", "additional", "--extra" };
+      "--server", "test-db", "--urlx", "key1", "additional", "--extra"
+    };
 
     final Config config = new Config();
     config.put("url", "jdbc:test-db://some-url");
 
-    final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
+    final ConnectCommand optionsParser =
+      new ConnectCommand(new SchemaCrawlerShellState());
 
     assertThrows(CommandLine.ParameterException.class, () -> {
       final CommandLine commandLine = newCommandLine(optionsParser, null, true);
@@ -216,21 +235,25 @@ public class ConnectionOptionsTest
       "--database",
       "adatabase",
       "additional",
-      "--extra" };
+      "--extra"
+    };
 
     final Config config = new Config();
     config.put("url", "jdbc:test-db://${host}:${port}/${database}");
 
-    final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
+    final ConnectCommand optionsParser =
+      new ConnectCommand(new SchemaCrawlerShellState());
     final CommandLine commandLine = newCommandLine(optionsParser, null, true);
     commandLine.parseArgs(args);
 
-    final DatabaseConnectable databaseConnectable = optionsParser
-      .getDatabaseConnectable();
-    final DatabaseConnectionSource databaseConnectionSource = databaseConnectable
-      .toDatabaseConnectionSource(config);
+    final DatabaseConnectable databaseConnectable =
+      optionsParser.getDatabaseConnectable();
+    final DatabaseConnectionSource databaseConnectionSource =
+      databaseConnectable.toDatabaseConnectionSource(config);
 
-    assertThat(databaseConnectionSource.toString().replaceAll("\r", ""),
+    assertThat(databaseConnectionSource
+                 .toString()
+                 .replaceAll("\r", ""),
                is(
                  "driver=<unknown>\nurl=jdbc:test-db://somehost:1234/adatabase\n"));
   }
@@ -250,9 +273,11 @@ public class ConnectionOptionsTest
       "--database",
       "adatabase",
       "additional",
-      "--extra" };
+      "--extra"
+    };
 
-    final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
+    final ConnectCommand optionsParser =
+      new ConnectCommand(new SchemaCrawlerShellState());
 
     assertThrows(CommandLine.MutuallyExclusiveArgsException.class, () -> {
       final CommandLine commandLine = newCommandLine(optionsParser, null, true);

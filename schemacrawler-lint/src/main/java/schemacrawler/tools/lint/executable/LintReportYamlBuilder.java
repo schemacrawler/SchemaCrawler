@@ -1,8 +1,6 @@
 package schemacrawler.tools.lint.executable;
 
 
-import static sf.util.Utility.isBlank;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import schemacrawler.schemacrawler.SchemaCrawlerException;

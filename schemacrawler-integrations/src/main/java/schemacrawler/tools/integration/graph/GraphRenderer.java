@@ -116,17 +116,16 @@ public final class GraphRenderer
     if (graphOptions.isShowRowCounts()
         || schemaCrawlerOptions.isNoEmptyTables())
     {
-      aCatalog = new CatalogWithCounts(aCatalog,
-                                       connection,
-                                       schemaCrawlerOptions);
+      aCatalog =
+        new CatalogWithCounts(aCatalog, connection, schemaCrawlerOptions);
     }
 
     // Set the format, in case we are using the default
-    outputOptions = OutputOptionsBuilder.builder(outputOptions)
-                                        .withOutputFormat(graphOutputFormat)
-                                        .withOutputFormatValue(graphOutputFormat
-                                                                 .getFormat())
-                                        .toOptions();
+    outputOptions = OutputOptionsBuilder
+      .builder(outputOptions)
+      .withOutputFormat(graphOutputFormat)
+      .withOutputFormatValue(graphOutputFormat.getFormat())
+      .toOptions();
 
     // Create dot file
     final Path dotFile = createTempFilePath("schemacrawler.", "dot");
@@ -137,13 +136,12 @@ public final class GraphRenderer
     }
     else
     {
-      dotFileOutputOptions = OutputOptionsBuilder.newOutputOptions(
-        GraphOutputFormat.dot,
-        dotFile);
+      dotFileOutputOptions =
+        OutputOptionsBuilder.newOutputOptions(GraphOutputFormat.dot, dotFile);
     }
 
-    final SchemaTraversalHandler formatter = getSchemaTraversalHandler(
-      dotFileOutputOptions);
+    final SchemaTraversalHandler formatter =
+      getSchemaTraversalHandler(dotFileOutputOptions);
 
     final SchemaTraverser traverser = new SchemaTraverser();
     traverser.setCatalog(aCatalog);
@@ -167,22 +165,23 @@ public final class GraphRenderer
 
   public final void setGraphOptions(final GraphOptions graphOptions)
   {
-    this.graphOptions = requireNonNull(graphOptions,
-                                       "No graph options provided");
+    this.graphOptions =
+      requireNonNull(graphOptions, "No graph options provided");
   }
 
   private GraphExecutor getGraphExecutor(final Path dotFile)
     throws SchemaCrawlerException
   {
-    final Path outputFile = outputOptions.getOutputFile(outputOptions.getOutputFormatValue());
+    final Path outputFile =
+      outputOptions.getOutputFile(outputOptions.getOutputFormatValue());
 
     // Set the format, in case we are using the default
-    outputOptions = OutputOptionsBuilder.builder(outputOptions)
-                                        .withOutputFormat(graphOutputFormat)
-                                        .withOutputFormatValue(graphOutputFormat
-                                                                 .getFormat())
-                                        .withOutputFile(outputFile)
-                                        .toOptions();
+    outputOptions = OutputOptionsBuilder
+      .builder(outputOptions)
+      .withOutputFormat(graphOutputFormat)
+      .withOutputFormatValue(graphOutputFormat.getFormat())
+      .withOutputFile(outputFile)
+      .toOptions();
 
     GraphExecutor graphExecutor;
     if (graphOutputFormat != GraphOutputFormat.scdot)
@@ -200,9 +199,8 @@ public final class GraphRenderer
       // Try 2: Use Java library for Graphviz
       if (!graphExecutorAvailable)
       {
-        graphExecutor = new GraphJavaExecutor(dotFile,
-                                              outputFile,
-                                              graphOutputFormat);
+        graphExecutor =
+          new GraphJavaExecutor(dotFile, outputFile, graphOutputFormat);
         graphExecutorAvailable = graphExecutor.canGenerate();
       }
 
@@ -254,9 +252,11 @@ public final class GraphRenderer
   {
     if (graphOptions == null)
     {
-      graphOptions = GraphOptionsBuilder.newGraphOptions(additionalConfiguration);
+      graphOptions =
+        GraphOptionsBuilder.newGraphOptions(additionalConfiguration);
     }
-    graphOutputFormat = GraphOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
+    graphOutputFormat =
+      GraphOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
   }
 
 }

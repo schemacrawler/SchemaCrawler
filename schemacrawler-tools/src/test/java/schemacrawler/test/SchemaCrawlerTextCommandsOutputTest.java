@@ -41,7 +41,6 @@ import java.sql.Connection;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -85,9 +84,8 @@ public class SchemaCrawlerTextCommandsOutputTest
   {
     final String queryCommand = "all_tables";
     final Config config = new Config();
-    config
-      .put(queryCommand,
-           "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES ORDER BY TABLE_SCHEM, TABLE_NAME");
+    config.put(queryCommand,
+               "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES ORDER BY TABLE_SCHEM, TABLE_NAME");
 
     textOutputTest(queryCommand, connection, config);
   }
@@ -98,9 +96,8 @@ public class SchemaCrawlerTextCommandsOutputTest
   {
     final String queryCommand = "dump_tables";
     final Config config = new Config();
-    config
-      .put(queryCommand,
-           "SELECT ${orderbycolumns} FROM ${table} ORDER BY ${orderbycolumns}");
+    config.put(queryCommand,
+               "SELECT ${orderbycolumns} FROM ${table} ORDER BY ${orderbycolumns}");
 
     textOutputTest(queryCommand, connection, config);
   }
@@ -145,15 +142,16 @@ public class SchemaCrawlerTextCommandsOutputTest
                               final Config config)
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder()
-      .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
-      .includeAllRoutines();
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
+        .includeAllRoutines();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
 
-    final CommonTextOptionsBuilder commonTextOptions = CommonTextOptionsBuilder
-      .builder();
+    final CommonTextOptionsBuilder commonTextOptions =
+      CommonTextOptionsBuilder.builder();
     commonTextOptions.fromConfig(config);
     commonTextOptions.noInfo();
     commonTextOptions.noHeader();
@@ -161,13 +159,14 @@ public class SchemaCrawlerTextCommandsOutputTest
     commonTextOptions.sortTables(true);
     config.putAll(commonTextOptions.toConfig());
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
+    final SchemaCrawlerExecutable executable =
+      new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(config);
 
     assertThat(outputOf(executableExecution(connection, executable)),
-               hasSameContentAs(classpathResource(COMMAND_OUTPUT + command
-                                                  + ".txt")));
+               hasSameContentAs(classpathResource(
+                 COMMAND_OUTPUT + command + ".txt")));
   }
 
 }

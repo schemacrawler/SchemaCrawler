@@ -41,7 +41,6 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
@@ -128,33 +127,41 @@ public class TableTypesTest
     throws Exception
   {
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout;)
+    try (final TestWriter out = testout)
     {
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
-        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+        SchemaCrawlerOptionsBuilder
+          .builder()
+          .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
+          .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
       if (!"default".equals(tableTypes))
       {
         schemaCrawlerOptionsBuilder.tableTypes(tableTypes);
       }
 
-      final Catalog catalog = getCatalog(connection,
-                                         schemaCrawlerOptionsBuilder
-                                           .toOptions());
-      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
+      final Catalog catalog =
+        getCatalog(connection, schemaCrawlerOptionsBuilder.toOptions());
+      final Schema[] schemas = catalog
+        .getSchemas()
+        .toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(5));
-      for (final Schema schema: schemas)
+      for (final Schema schema : schemas)
       {
         out.println(String.format("%s", schema.getFullName()));
-        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
+        final Table[] tables = catalog
+          .getTables(schema)
+          .toArray(new Table[0]);
         Arrays.sort(tables, NamedObjectSort.alphabetical);
-        for (final Table table: tables)
+        for (final Table table : tables)
         {
-          out.println(String
-            .format("  %s [%s]", table.getName(), table.getTableType()));
-          final Column[] columns = table.getColumns().toArray(new Column[0]);
+          out.println(String.format("  %s [%s]",
+                                    table.getName(),
+                                    table.getTableType()));
+          final Column[] columns = table
+            .getColumns()
+            .toArray(new Column[0]);
           Arrays.sort(columns);
-          for (final Column column: columns)
+          for (final Column column : columns)
           {
             out.println(String.format("    %s [%s]",
                                       column.getName(),
@@ -164,8 +171,8 @@ public class TableTypesTest
       }
     }
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(TABLE_TYPES_OUTPUT
-                                                  + referenceFile)));
+               hasSameContentAs(classpathResource(
+                 TABLE_TYPES_OUTPUT + referenceFile)));
   }
 
 }

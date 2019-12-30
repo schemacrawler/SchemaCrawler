@@ -56,8 +56,7 @@ public interface Column
   Collection<Privilege<Column>> getPrivileges();
 
   /**
-   * Referenced column if this column is part of a foreign key, null
-   * otherwise.
+   * Referenced column if this column is part of a foreign key, null otherwise.
    *
    * @return Referenced column
    */
@@ -116,7 +115,7 @@ public interface Column
    * Gets a privilege by unqualified name.
    *
    * @param name
-   *        Unqualified name
+   *   Unqualified name
    * @return Privilege.
    */
   <P extends Privilege<Column>> Optional<P> lookupPrivilege(String name);

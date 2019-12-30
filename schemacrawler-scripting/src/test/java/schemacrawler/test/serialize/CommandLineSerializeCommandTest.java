@@ -54,10 +54,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.InfoLevel;
-import schemacrawler.test.utility.*;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
+import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.integration.serialize.SerializationFormat;
 import schemacrawler.tools.options.OutputFormat;
-import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -82,8 +87,7 @@ public class CommandLineSerializeCommandTest
     {
       return;
     }
-    directory = testContext
-      .resolveTargetFromRootPath(".");
+    directory = testContext.resolveTargetFromRootPath(".");
   }
 
   @AfterEach
@@ -161,8 +165,8 @@ public class CommandLineSerializeCommandTest
     {
       if (serializationFormat != null)
       {
-        final Path copied = directory
-          .resolve("serialize." + serializationFormat.getFileExtension());
+        final Path copied = directory.resolve(
+          "serialize." + serializationFormat.getFileExtension());
         Files.copy(testOutputFile, copied, StandardCopyOption.REPLACE_EXISTING);
         // System.out.println(copied.toAbsolutePath());
       }

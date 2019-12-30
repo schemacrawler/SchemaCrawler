@@ -38,31 +38,33 @@ import sf.util.StringFormat;
  * Table constraint type.
  */
 public enum TableConstraintType
-  implements
-  ConstraintType
+  implements ConstraintType
 {
 
- unknown("unknown"),
- primary_key("PRIMARY KEY"),
- foreign_key("FOREIGN KEY"),
- unique("UNIQUE"),
- check("CHECK"),;
+  unknown("unknown"),
+  primary_key("PRIMARY KEY"),
+  foreign_key("FOREIGN KEY"),
+  unique("UNIQUE"),
+  check("CHECK"),
+  ;
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(TableConstraintType.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(TableConstraintType.class.getName());
 
   /**
    * Find the enumeration value corresponding to the string.
    *
    * @param value
-   *        Sort sequence code.
+   *   Sort sequence code.
    * @return Enumeration value
    */
   public static TableConstraintType valueOfFromValue(final String value)
   {
-    for (final TableConstraintType type: TableConstraintType.values())
+    for (final TableConstraintType type : TableConstraintType.values())
     {
-      if (type.getValue().equalsIgnoreCase(value))
+      if (type
+        .getValue()
+        .equalsIgnoreCase(value))
       {
         return type;
       }
@@ -73,7 +75,7 @@ public enum TableConstraintType
 
   private final String value;
 
-  private TableConstraintType(final String value)
+  TableConstraintType(final String value)
   {
     this.value = value;
   }

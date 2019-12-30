@@ -42,8 +42,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.utility.JavaSqlTypes;
 
 /**
- * A retriever uses database metadata to get the details about a result
- * set.
+ * A retriever uses database metadata to get the details about a result set.
  *
  * @author Sualeh Fatehi
  */
@@ -63,14 +62,13 @@ final class ResultsRetriever
   }
 
   /**
-   * Retrieves a list of columns from the results. There is no attempt
-   * to share table objects, since the tables cannot have children that
-   * are ResultColumns. Likewise, there is no attempt to share column
-   * data types.
+   * Retrieves a list of columns from the results. There is no attempt to share
+   * table objects, since the tables cannot have children that are
+   * ResultColumns. Likewise, there is no attempt to share column data types.
    *
    * @return List of columns from the results
    * @throws SchemaCrawlerException
-   *         On an exception
+   *   On an exception
    */
   ResultsColumns retrieveResults()
     throws SQLException
@@ -93,12 +91,12 @@ final class ResultsRetriever
       final MutableTable table = new MutableTable(schema, tableName);
       catalog.addTable(table);
 
-      final String databaseSpecificTypeName = resultsMetaData
-        .getColumnTypeName(i);
+      final String databaseSpecificTypeName =
+        resultsMetaData.getColumnTypeName(i);
       final int javaSqlType = resultsMetaData.getColumnType(i);
       final String columnClassName = resultsMetaData.getColumnClassName(i);
-      final MutableColumnDataType columnDataType = new MutableColumnDataType(schema,
-                                                                             databaseSpecificTypeName);
+      final MutableColumnDataType columnDataType =
+        new MutableColumnDataType(schema, databaseSpecificTypeName);
       columnDataType.setJavaSqlType(javaSqlTypes.valueOf(javaSqlType));
       columnDataType.setTypeMappedClass(columnClassName);
       columnDataType.setPrecision(resultsMetaData.getPrecision(i));
@@ -107,16 +105,16 @@ final class ResultsRetriever
       columnDataType.setMinimumScale(scale);
 
       final String columnName = resultsMetaData.getColumnName(i);
-      final MutableResultsColumn column = new MutableResultsColumn(table,
-                                                                   columnName);
+      final MutableResultsColumn column =
+        new MutableResultsColumn(table, columnName);
       column.setOrdinalPosition(i);
       column.setColumnDataType(columnDataType);
 
       column.setLabel(resultsMetaData.getColumnLabel(i));
       column.setDisplaySize(resultsMetaData.getColumnDisplaySize(i));
 
-      final boolean isNullable = resultsMetaData
-        .isNullable(i) == ResultSetMetaData.columnNullable;
+      final boolean isNullable =
+        resultsMetaData.isNullable(i) == ResultSetMetaData.columnNullable;
       column.setAutoIncrement(resultsMetaData.isAutoIncrement(i));
       column.setCaseSensitive(resultsMetaData.isCaseSensitive(i));
       column.setCurrency(resultsMetaData.isCurrency(i));

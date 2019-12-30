@@ -37,18 +37,11 @@ import schemacrawler.SchemaCrawlerInfo;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.commandline.state.StateUtility;
 
-@Command(name = "system",
-         aliases = {
-          "sys",
-          "sys-info"
-         },
-         header = "** Display SchemaCrawler version and system information",
-         headerHeading = "",
-         synopsisHeading = "Shell Command:%n",
-         customSynopsis = {
-           "system"
-         },
-         optionListHeading = "Options:%n")
+@Command(name = "system", aliases = {
+  "sys", "sys-info"
+}, header = "** Display SchemaCrawler version and system information", headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
+  "system"
+}, optionListHeading = "Options:%n")
 public class SystemCommand
   implements Runnable
 {
@@ -64,8 +57,8 @@ public class SystemCommand
   @Option(names = "--show-state", description = "Shows internal state")
   private boolean showstate;
   @Option(names = {
-    "-V",
-    "--version" }, description = "Display SchemaCrawler version and system information")
+    "-V", "--version"
+  }, description = "Display SchemaCrawler version and system information")
   private boolean versionRequested;
 
   public SystemCommand(final SchemaCrawlerShellState state)
@@ -88,13 +81,14 @@ public class SystemCommand
     if (isconnected)
     {
       final boolean isConnectedState = state.isConnected();
-      System.out
-        .println(String.format("%sonnected to the database", isConnectedState? "C": "Not c"));
+      System.out.println(String.format("%sonnected to the database",
+                                       isConnectedState? "C": "Not c"));
     }
     if (isloaded)
     {
       final boolean isLoadedState = state.isLoaded();
-      System.out.println(String.format("Database metadata is %sloaded", isLoadedState? "": "not "));
+      System.out.println(String.format("Database metadata is %sloaded",
+                                       isLoadedState? "": "not "));
     }
     if (showstacktrace)
     {

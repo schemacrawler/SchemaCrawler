@@ -46,13 +46,12 @@ class MutableTrigger
 {
 
   private static final long serialVersionUID = -1619291073229701764L;
-
-  private EventManipulationType eventManipulationType;
-  private int actionOrder;
   private final StringBuilder actionCondition;
   private final StringBuilder actionStatement;
+  private int actionOrder;
   private ActionOrientationType actionOrientation;
   private ConditionTimingType conditionTiming;
+  private EventManipulationType eventManipulationType;
 
   MutableTrigger(final Table parent, final String name)
   {
@@ -83,6 +82,11 @@ class MutableTrigger
     return actionOrder;
   }
 
+  void setActionOrder(final int actionOrder)
+  {
+    this.actionOrder = actionOrder;
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -90,6 +94,11 @@ class MutableTrigger
   public ActionOrientationType getActionOrientation()
   {
     return actionOrientation;
+  }
+
+  void setActionOrientation(final ActionOrientationType actionOrientation)
+  {
+    this.actionOrientation = actionOrientation;
   }
 
   /**
@@ -110,6 +119,11 @@ class MutableTrigger
     return conditionTiming;
   }
 
+  void setConditionTiming(final ConditionTimingType conditionTiming)
+  {
+    this.conditionTiming = conditionTiming;
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -117,6 +131,11 @@ class MutableTrigger
   public EventManipulationType getEventManipulationType()
   {
     return eventManipulationType;
+  }
+
+  void setEventManipulationType(final EventManipulationType eventManipulationType)
+  {
+    this.eventManipulationType = eventManipulationType;
   }
 
   void appendActionCondition(final String actionCondition)
@@ -133,26 +152,6 @@ class MutableTrigger
     {
       this.actionStatement.append(actionStatement);
     }
-  }
-
-  void setActionOrder(final int actionOrder)
-  {
-    this.actionOrder = actionOrder;
-  }
-
-  void setActionOrientation(final ActionOrientationType actionOrientation)
-  {
-    this.actionOrientation = actionOrientation;
-  }
-
-  void setConditionTiming(final ConditionTimingType conditionTiming)
-  {
-    this.conditionTiming = conditionTiming;
-  }
-
-  void setEventManipulationType(final EventManipulationType eventManipulationType)
-  {
-    this.eventManipulationType = eventManipulationType;
   }
 
 }

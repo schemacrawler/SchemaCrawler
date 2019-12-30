@@ -58,7 +58,7 @@ public final class OutputFormatState
     formatSpecifiers.add(formatSpecifier);
     if (additionalFormatSpecifiers != null)
     {
-      for (final String additionalFormatSpecifier: additionalFormatSpecifiers)
+      for (final String additionalFormatSpecifier : additionalFormatSpecifiers)
       {
         if (!isBlank(additionalFormatSpecifier))
         {
@@ -90,12 +90,12 @@ public final class OutputFormatState
    * Checks if the provided format is supported.
    *
    * @param format
-   *        Format to check
+   *   Format to check
    * @return If the format is supported, ignoring case.
    */
   public boolean isSupportedFormat(final String format)
   {
-    for (final String formatSpecifier: formatSpecifiers)
+    for (final String formatSpecifier : formatSpecifiers)
     {
       if (formatSpecifier.equalsIgnoreCase(format))
       {

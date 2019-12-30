@@ -48,9 +48,21 @@ public class SchemaCrawlerCatalogLoader
   }
 
   @Override
+  public void setAdditionalConfiguration(final Config additionalConfiguration)
+  {
+    this.additionalConfiguration = additionalConfiguration;
+  }
+
+  @Override
   public Connection getConnection()
   {
     return connection;
+  }
+
+  @Override
+  public void setConnection(final Connection connection)
+  {
+    this.connection = connection;
   }
 
   @Override
@@ -73,6 +85,12 @@ public class SchemaCrawlerCatalogLoader
   }
 
   @Override
+  public void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
+  {
+    this.schemaCrawlerOptions = schemaCrawlerOptions;
+  }
+
+  @Override
   public SchemaRetrievalOptions getSchemaRetrievalOptions()
   {
     if (schemaRetrievalOptions == null)
@@ -83,6 +101,12 @@ public class SchemaCrawlerCatalogLoader
     {
       return schemaRetrievalOptions;
     }
+  }
+
+  @Override
+  public void setSchemaRetrievalOptions(final SchemaRetrievalOptions schemaRetrievalOptions)
+  {
+    this.schemaRetrievalOptions = schemaRetrievalOptions;
   }
 
   @Override
@@ -99,29 +123,5 @@ public class SchemaCrawlerCatalogLoader
     final Catalog catalog = schemaCrawler.crawl();
 
     return catalog;
-  }
-
-  @Override
-  public void setAdditionalConfiguration(final Config additionalConfiguration)
-  {
-    this.additionalConfiguration = additionalConfiguration;
-  }
-
-  @Override
-  public void setConnection(final Connection connection)
-  {
-    this.connection = connection;
-  }
-
-  @Override
-  public void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
-  {
-    this.schemaCrawlerOptions = schemaCrawlerOptions;
-  }
-
-  @Override
-  public void setSchemaRetrievalOptions(final SchemaRetrievalOptions schemaRetrievalOptions)
-  {
-    this.schemaRetrievalOptions = schemaRetrievalOptions;
   }
 }

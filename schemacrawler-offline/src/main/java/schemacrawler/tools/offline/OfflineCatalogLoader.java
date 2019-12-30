@@ -7,7 +7,11 @@ import java.sql.Connection;
 import java.util.logging.Level;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.*;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.integration.serialize.JavaSerializedCatalog;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
@@ -17,8 +21,8 @@ public final class OfflineCatalogLoader
   implements CatalogLoader
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(OfflineCatalogLoader.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(OfflineCatalogLoader.class.getName());
 
   private static void checkConnection(final Connection connection)
   {
@@ -28,6 +32,7 @@ public final class OfflineCatalogLoader
                  "Offline database connection not provided for the offline snapshot");
     }
   }
+
   private final String databaseSystemIdentifier;
   private Config additionalConfiguration;
   private Connection connection;
@@ -51,9 +56,21 @@ public final class OfflineCatalogLoader
   }
 
   @Override
+  public void setAdditionalConfiguration(final Config additionalConfiguration)
+  {
+    this.additionalConfiguration = additionalConfiguration;
+  }
+
+  @Override
   public Connection getConnection()
   {
     return connection;
+  }
+
+  @Override
+  public void setConnection(final Connection connection)
+  {
+    this.connection = connection;
   }
 
   @Override
@@ -69,11 +86,24 @@ public final class OfflineCatalogLoader
   }
 
   @Override
+  public void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
+  {
+    // No-op
+  }
+
+  @Override
   public SchemaRetrievalOptions getSchemaRetrievalOptions()
   {
-    return SchemaRetrievalOptionsBuilder.builder()
+    return SchemaRetrievalOptionsBuilder
+      .builder()
       .withDatabaseServerType(OfflineDatabaseConnector.DB_SERVER_TYPE)
       .toOptions();
+  }
+
+  @Override
+  public void setSchemaRetrievalOptions(final SchemaRetrievalOptions schemaRetrievalOptions)
+  {
+    // No-op
   }
 
   @Override
@@ -93,35 +123,11 @@ public final class OfflineCatalogLoader
     }
 
     final Path offlineDatabasePath = dbConnection.getOfflineDatabasePath();
-    final FileInputStream inputFileStream = new FileInputStream(
-      offlineDatabasePath.toFile());
-    final JavaSerializedCatalog catalog = new JavaSerializedCatalog(
-      inputFileStream);
+    final FileInputStream inputFileStream =
+      new FileInputStream(offlineDatabasePath.toFile());
+    final JavaSerializedCatalog catalog =
+      new JavaSerializedCatalog(inputFileStream);
     return catalog;
-  }
-
-  @Override
-  public void setSchemaRetrievalOptions(final SchemaRetrievalOptions schemaRetrievalOptions)
-  {
-    // No-op
-  }
-
-  @Override
-  public void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
-  {
-    // No-op
-  }
-
-  @Override
-  public void setConnection(final Connection connection)
-  {
-    this.connection = connection;
-  }
-
-  @Override
-  public void setAdditionalConfiguration(final Config additionalConfiguration)
-  {
-    this.additionalConfiguration = additionalConfiguration;
   }
 
 }

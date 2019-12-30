@@ -40,7 +40,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
-
 import sf.util.FileContents;
 import sf.util.IOUtility;
 
@@ -54,10 +53,10 @@ public class FileContentsTest
     final String text = "Hello, World!";
 
     final Path tempFilePath = IOUtility.createTempFilePath("test", ".dat");
-    Files.write(tempFilePath, text.getBytes("UTF-8"));
+    Files.write(tempFilePath, text.getBytes(StandardCharsets.UTF_8));
 
-    final FileContents fileContents = new FileContents(tempFilePath,
-                                                       StandardCharsets.UTF_16);
+    final FileContents fileContents =
+      new FileContents(tempFilePath, StandardCharsets.UTF_16);
     assertThat(fileContents.get(), is(not(text)));
   }
 
@@ -68,7 +67,7 @@ public class FileContentsTest
     final String text = "Hello, World!";
 
     final Path tempFilePath = IOUtility.createTempFilePath("test", ".dat");
-    Files.write(tempFilePath, text.getBytes("UTF-8"));
+    Files.write(tempFilePath, text.getBytes(StandardCharsets.UTF_8));
 
     final FileContents fileContents = new FileContents(tempFilePath);
     assertThat(fileContents.get(), is(text));

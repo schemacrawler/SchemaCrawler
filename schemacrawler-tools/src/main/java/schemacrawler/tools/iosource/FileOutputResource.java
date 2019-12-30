@@ -49,14 +49,15 @@ public final class FileOutputResource
   implements OutputResource
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(FileOutputResource.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(FileOutputResource.class.getName());
 
   private final Path outputFile;
 
   public FileOutputResource(final Path filePath)
   {
-    outputFile = requireNonNull(filePath, "No file path provided").normalize()
+    outputFile = requireNonNull(filePath, "No file path provided")
+      .normalize()
       .toAbsolutePath();
   }
 
@@ -81,9 +82,9 @@ public final class FileOutputResource
       openOptions = new OpenOption[] { WRITE, CREATE, TRUNCATE_EXISTING };
     }
     final Writer writer = newBufferedWriter(outputFile, charset, openOptions);
-    LOGGER
-      .log(Level.INFO,
-           new StringFormat("Opened output writer to file <%s>", outputFile));
+    LOGGER.log(Level.INFO,
+               new StringFormat("Opened output writer to file <%s>",
+                                outputFile));
     return new OutputWriter(getDescription(), writer, true);
   }
 

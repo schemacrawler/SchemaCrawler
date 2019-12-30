@@ -31,7 +31,22 @@ package schemacrawler.tools.offline.jdbc;
 import static java.util.Objects.requireNonNull;
 
 import java.nio.file.Path;
-import java.sql.*;
+import java.sql.Array;
+import java.sql.Blob;
+import java.sql.CallableStatement;
+import java.sql.Clob;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.NClob;
+import java.sql.PreparedStatement;
+import java.sql.SQLClientInfoException;
+import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
+import java.sql.SQLWarning;
+import java.sql.SQLXML;
+import java.sql.Savepoint;
+import java.sql.Statement;
+import java.sql.Struct;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
@@ -44,8 +59,8 @@ public class OfflineConnection
 
   public OfflineConnection(final Path offlineDatabasePath)
   {
-    this.offlineDatabasePath = requireNonNull(offlineDatabasePath,
-                                              "No offline database path provided");
+    this.offlineDatabasePath =
+      requireNonNull(offlineDatabasePath, "No offline database path provided");
   }
 
   @Override
@@ -188,7 +203,20 @@ public class OfflineConnection
   }
 
   @Override
+  public void setAutoCommit(final boolean autoCommit)
+    throws SQLException
+  {
+  }
+
+  @Override
   public String getCatalog()
+    throws SQLException
+  {
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
+  }
+
+  @Override
+  public void setCatalog(final String catalog)
     throws SQLException
   {
     throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
@@ -202,6 +230,13 @@ public class OfflineConnection
   }
 
   @Override
+  public void setClientInfo(final Properties properties)
+    throws SQLClientInfoException
+  {
+    throw new SQLClientInfoException("Not supported", "HYC00", null);
+  }
+
+  @Override
   public String getClientInfo(final String name)
     throws SQLException
   {
@@ -210,6 +245,13 @@ public class OfflineConnection
 
   @Override
   public int getHoldability()
+    throws SQLException
+  {
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
+  }
+
+  @Override
+  public void setHoldability(final int holdability)
     throws SQLException
   {
     throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
@@ -237,6 +279,13 @@ public class OfflineConnection
   }
 
   @Override
+  public void setSchema(final String schema)
+    throws SQLException
+  {
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
+  }
+
+  @Override
   public int getTransactionIsolation()
     throws SQLException
   {
@@ -244,7 +293,21 @@ public class OfflineConnection
   }
 
   @Override
+  public void setTransactionIsolation(final int level)
+    throws SQLException
+  {
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
+  }
+
+  @Override
   public Map<String, Class<?>> getTypeMap()
+    throws SQLException
+  {
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
+  }
+
+  @Override
+  public void setTypeMap(final Map<String, Class<?>> map)
     throws SQLException
   {
     throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
@@ -269,6 +332,13 @@ public class OfflineConnection
     throws SQLException
   {
     return false;
+  }
+
+  @Override
+  public void setReadOnly(final boolean readOnly)
+    throws SQLException
+  {
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
@@ -361,26 +431,6 @@ public class OfflineConnection
   }
 
   @Override
-  public void setAutoCommit(final boolean autoCommit)
-    throws SQLException
-  {
-  }
-
-  @Override
-  public void setCatalog(final String catalog)
-    throws SQLException
-  {
-    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
-  }
-
-  @Override
-  public void setClientInfo(final Properties properties)
-    throws SQLClientInfoException
-  {
-    throw new SQLClientInfoException("Not supported", "HYC00", null);
-  }
-
-  @Override
   public void setClientInfo(final String name, final String value)
     throws SQLClientInfoException
   {
@@ -388,21 +438,7 @@ public class OfflineConnection
   }
 
   @Override
-  public void setHoldability(final int holdability)
-    throws SQLException
-  {
-    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
-  }
-
-  @Override
   public void setNetworkTimeout(final Executor executor, final int milliseconds)
-    throws SQLException
-  {
-    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
-  }
-
-  @Override
-  public void setReadOnly(final boolean readOnly)
     throws SQLException
   {
     throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
@@ -417,27 +453,6 @@ public class OfflineConnection
 
   @Override
   public Savepoint setSavepoint(final String name)
-    throws SQLException
-  {
-    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
-  }
-
-  @Override
-  public void setSchema(final String schema)
-    throws SQLException
-  {
-    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
-  }
-
-  @Override
-  public void setTransactionIsolation(final int level)
-    throws SQLException
-  {
-    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
-  }
-
-  @Override
-  public void setTypeMap(final Map<String, Class<?>> map)
     throws SQLException
   {
     throw new SQLFeatureNotSupportedException("Not supported", "HYC00");

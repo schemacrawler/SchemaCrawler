@@ -42,7 +42,6 @@ import java.util.logging.Level;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import schemacrawler.crawl.ResultsCrawler;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
@@ -57,8 +56,8 @@ import sf.util.SchemaCrawlerLogger;
 public class ResultColumnsTest
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(ResultColumnsTest.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(ResultColumnsTest.class.getName());
 
   @Test
   public void columns(final TestContext testContext, final Connection cxn)
@@ -66,7 +65,7 @@ public class ResultColumnsTest
   {
 
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout;)
+    try (final TestWriter out = testout)
     {
       final String sql = ""
                          + "SELECT                                                                    "
@@ -80,13 +79,15 @@ public class ResultColumnsTest
                          + " INNER JOIN PUBLIC.BOOKS.AUTHORS                                          "
                          + "   ON PUBLIC.BOOKS.AUTHORS.ID = PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID         ";
 
-      try (final Connection connection = cxn;
-          final Statement statement = connection.createStatement();
-          final ResultSet resultSet = statement.executeQuery(sql);)
+      try (
+        final Connection connection = cxn;
+        final Statement statement = connection.createStatement();
+        final ResultSet resultSet = statement.executeQuery(sql)
+      )
       {
 
-        final ResultsColumns resultColumns = new ResultsCrawler(resultSet)
-          .crawl();
+        final ResultsColumns resultColumns =
+          new ResultsCrawler(resultSet).crawl();
 
         assertThat("Could not obtain result columns",
                    resultColumns,
@@ -96,32 +97,38 @@ public class ResultColumnsTest
         out.println("columns: " + resultColumns.getColumnsListAsString());
         out.println();
 
-        final ResultsColumn[] columns = resultColumns.getColumns()
+        final ResultsColumn[] columns = resultColumns
+          .getColumns()
           .toArray(new ResultsColumn[0]);
-        for (final ResultsColumn column: columns)
+        for (final ResultsColumn column : columns)
         {
           LOGGER.log(Level.FINE, column.toString());
           out.println("column: " + column.getFullName());
-          out.println("  database type: " + column.getColumnDataType()
+          out.println("  database type: " + column
+            .getColumnDataType()
             .getDatabaseSpecificTypeName());
-          out.println("  type: "
-                      + column.getColumnDataType().getJavaSqlType().getName());
+          out.println("  type: " + column
+            .getColumnDataType()
+            .getJavaSqlType()
+            .getName());
         }
 
         out.println();
         out.println();
-        out.println("lookup C2: "
-                    + resultColumns.lookupColumn("C2").orElse(null));
-        out.println("lookup PRICE: "
-                    + resultColumns.lookupColumn("PRICE").orElse(null));
-        out.println("lookup NOT_A_COLUMN: "
-                    + resultColumns.lookupColumn("NOT_A_COLUMN").orElse(null));
+        out.println("lookup C2: " + resultColumns
+          .lookupColumn("C2")
+          .orElse(null));
+        out.println("lookup PRICE: " + resultColumns
+          .lookupColumn("PRICE")
+          .orElse(null));
+        out.println("lookup NOT_A_COLUMN: " + resultColumns
+          .lookupColumn("NOT_A_COLUMN")
+          .orElse(null));
       }
 
     }
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext
-                 .testMethodFullName())));
+               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
 }

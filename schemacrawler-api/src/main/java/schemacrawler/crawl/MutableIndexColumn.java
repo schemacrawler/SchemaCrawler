@@ -48,10 +48,10 @@ final class MutableIndexColumn
   private static final long serialVersionUID = -6923211341742623556L;
 
   private final Column column;
+  private final StringBuilder definition;
   private final Index index;
   private int indexOrdinalPosition;
   private IndexColumnSortSequence sortSequence;
-  private final StringBuilder definition;
 
   MutableIndexColumn(final Index index, final Column column)
   {
@@ -110,45 +110,45 @@ final class MutableIndexColumn
    * {@inheritDoc}
    */
   @Override
-  public String getDefaultValue()
-  {
-    return column.getDefaultValue();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String getDefinition()
-  {
-    return definition.toString();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Index getIndex()
-  {
-    return index;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public int getIndexOrdinalPosition()
-  {
-    return indexOrdinalPosition;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public int getOrdinalPosition()
   {
     return column.getOrdinalPosition();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public int getSize()
+  {
+    return column.getSize();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getWidth()
+  {
+    return column.getWidth();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public boolean isNullable()
+  {
+    return column.isNullable();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getDefaultValue()
+  {
+    return column.getDefaultValue();
   }
 
   /**
@@ -173,48 +173,6 @@ final class MutableIndexColumn
    * {@inheritDoc}
    */
   @Override
-  public int getSize()
-  {
-    return column.getSize();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public IndexColumnSortSequence getSortSequence()
-  {
-    return sortSequence;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public ColumnDataType getType()
-  {
-    return column.getType();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String getWidth()
-  {
-    return column.getWidth();
-  }
-
-  @Override
-  public boolean hasDefinition()
-  {
-    return definition.length() > 0;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public boolean isAutoIncremented()
   {
     return column.isAutoIncremented();
@@ -229,6 +187,14 @@ final class MutableIndexColumn
     return column.isGenerated();
   }
 
+  void setGenerated(final boolean isGenerated)
+  {
+    if (column instanceof MutableColumn)
+    {
+      ((MutableColumn) column).setGenerated(isGenerated);
+    }
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -236,15 +202,6 @@ final class MutableIndexColumn
   public boolean isHidden()
   {
     return column.isHidden();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isNullable()
-  {
-    return column.isNullable();
   }
 
   /**
@@ -292,20 +249,37 @@ final class MutableIndexColumn
     return column.lookupPrivilege(name);
   }
 
-  void appendDefinition(final String definition)
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getDefinition()
   {
-    if (definition != null)
-    {
-      this.definition.append(definition);
-    }
+    return definition.toString();
   }
 
-  void setGenerated(final boolean isGenerated)
+  @Override
+  public boolean hasDefinition()
   {
-    if (column instanceof MutableColumn)
-    {
-      ((MutableColumn) column).setGenerated(isGenerated);
-    }
+    return definition.length() > 0;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Index getIndex()
+  {
+    return index;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public int getIndexOrdinalPosition()
+  {
+    return indexOrdinalPosition;
   }
 
   void setIndexOrdinalPosition(final int indexOrdinalPosition)
@@ -313,9 +287,35 @@ final class MutableIndexColumn
     this.indexOrdinalPosition = indexOrdinalPosition;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public IndexColumnSortSequence getSortSequence()
+  {
+    return sortSequence;
+  }
+
   void setSortSequence(final IndexColumnSortSequence sortSequence)
   {
     this.sortSequence = sortSequence;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public ColumnDataType getType()
+  {
+    return column.getType();
+  }
+
+  void appendDefinition(final String definition)
+  {
+    if (definition != null)
+    {
+      this.definition.append(definition);
+    }
   }
 
 }

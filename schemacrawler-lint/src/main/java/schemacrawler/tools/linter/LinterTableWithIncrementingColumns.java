@@ -96,9 +96,9 @@ public class LinterTableWithIncrementingColumns
   {
     requireNonNull(table, "No table provided");
 
-    final Multimap<String, IncrementingColumn> incrementingColumns = findIncrementingColumns(getColumns(table));
-    for (final List<IncrementingColumn> incrementingColumnsList: incrementingColumns
-      .values())
+    final Multimap<String, IncrementingColumn> incrementingColumns =
+      findIncrementingColumns(getColumns(table));
+    for (final List<IncrementingColumn> incrementingColumnsList : incrementingColumns.values())
     {
       addIncrementingColumnsLints(table, incrementingColumnsList);
     }
@@ -110,18 +110,18 @@ public class LinterTableWithIncrementingColumns
 
     int minIncrement = Integer.MAX_VALUE;
     int maxIncrement = Integer.MIN_VALUE;
-    final ArrayList<Column> incrementingColumns = new ArrayList<>(incrementingColumnsList
-      .size());
+    final ArrayList<Column> incrementingColumns =
+      new ArrayList<>(incrementingColumnsList.size());
     for (int i = 0; i < incrementingColumnsList.size(); i++)
     {
-      final IncrementingColumn incrementingColumn = incrementingColumnsList
-        .get(i);
+      final IncrementingColumn incrementingColumn =
+        incrementingColumnsList.get(i);
       incrementingColumns.add(i, incrementingColumn.getColumn());
 
-      minIncrement = Math.min(minIncrement,
-                              incrementingColumn.getColumnIncrement());
-      maxIncrement = Math.max(maxIncrement,
-                              incrementingColumn.getColumnIncrement());
+      minIncrement =
+        Math.min(minIncrement, incrementingColumn.getColumnIncrement());
+      maxIncrement =
+        Math.max(maxIncrement, incrementingColumn.getColumnIncrement());
     }
     incrementingColumns.sort(naturalOrder());
     addTableLint(table, getSummary(), incrementingColumns);
@@ -135,13 +135,20 @@ public class LinterTableWithIncrementingColumns
     }
 
     // Check for consistent column data-types
-    final ColumnDataType columnDataType = incrementingColumns.get(0)
+    final ColumnDataType columnDataType = incrementingColumns
+      .get(0)
       .getColumnDataType();
-    final int columnSize = incrementingColumns.get(0).getSize();
+    final int columnSize = incrementingColumns
+      .get(0)
+      .getSize();
     for (int i = 1; i < incrementingColumns.size(); i++)
     {
-      if (!columnDataType.equals(incrementingColumns.get(i).getColumnDataType())
-          || columnSize != incrementingColumns.get(i).getSize())
+      if (!columnDataType.equals(incrementingColumns
+                                   .get(i)
+                                   .getColumnDataType())
+          || columnSize != incrementingColumns
+        .get(i)
+        .getSize())
       {
         addTableLint(table,
                      "incrementing columns don't have the same data-type",
@@ -162,7 +169,7 @@ public class LinterTableWithIncrementingColumns
     final Pattern pattern = Pattern.compile("(.*[^0-9])([0-9]+)");
 
     final Map<String, Integer> incrementingColumnsMap = new HashMap<>();
-    for (final Column column: columns)
+    for (final Column column : columns)
     {
       final String columnName = Utility.convertForComparison(column.getName());
       incrementingColumnsMap.put(columnName, 1);
@@ -172,9 +179,9 @@ public class LinterTableWithIncrementingColumns
         final String columnNameBase = matcher.group(1);
         if (incrementingColumnsMap.containsKey(columnNameBase))
         {
-          incrementingColumnsMap
-            .put(columnNameBase,
-                 incrementingColumnsMap.get(columnNameBase) + 1);
+          incrementingColumnsMap.put(columnNameBase,
+                                     incrementingColumnsMap.get(columnNameBase)
+                                     + 1);
         }
         else
         {
@@ -183,9 +190,9 @@ public class LinterTableWithIncrementingColumns
       }
     }
 
-    final Set<String> columnNameBases = new HashSet<>(incrementingColumnsMap
-      .keySet());
-    for (final String columnNameBase: columnNameBases)
+    final Set<String> columnNameBases =
+      new HashSet<>(incrementingColumnsMap.keySet());
+    for (final String columnNameBase : columnNameBases)
     {
       if (incrementingColumnsMap.get(columnNameBase) == 1)
       {
@@ -193,9 +200,10 @@ public class LinterTableWithIncrementingColumns
       }
     }
 
-    final Multimap<String, IncrementingColumn> incrementingColumns = new Multimap<>();
+    final Multimap<String, IncrementingColumn> incrementingColumns =
+      new Multimap<>();
 
-    for (final Column column: columns)
+    for (final Column column : columns)
     {
       final String columnName = Utility.convertForComparison(column.getName());
       if (incrementingColumnsMap.containsKey(columnName))
@@ -210,9 +218,9 @@ public class LinterTableWithIncrementingColumns
         final String columnIncrement = matcher.group(2);
         if (incrementingColumnsMap.containsKey(columnNameBase))
         {
-          incrementingColumns
-            .add(columnNameBase,
-                 new IncrementingColumn(columnIncrement, column));
+          incrementingColumns.add(columnNameBase,
+                                  new IncrementingColumn(columnIncrement,
+                                                         column));
         }
       }
     }

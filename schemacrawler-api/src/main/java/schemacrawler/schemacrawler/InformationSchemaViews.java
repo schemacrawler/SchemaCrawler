@@ -39,8 +39,8 @@ import schemacrawler.utility.Query;
 import sf.util.ObjectToString;
 
 /**
- * The database specific views to get additional database metadata in a
- * standard format.
+ * The database specific views to get additional database metadata in a standard
+ * format.
  *
  * @author Sualeh Fatehi
  */
@@ -62,7 +62,7 @@ public final class InformationSchemaViews
    * Information schema views from a map.
    *
    * @param informationSchemaViewsQueries
-   *        Map of information schema view definitions.
+   *   Map of information schema view definitions.
    */
   InformationSchemaViews(final Map<InformationSchemaKey, String> informationSchemaViewsQueries)
   {

@@ -222,7 +222,7 @@ abstract class BaseTextFormattingHelper
    * {@inheritDoc}
    *
    * @see schemacrawler.tools.text.utility.TextFormattingHelper#writeNameRow(java.lang.String,
-   *      java.lang.String)
+   *   java.lang.String)
    */
   @Override
   public void writeNameRow(final String name, final String description)
@@ -232,15 +232,15 @@ abstract class BaseTextFormattingHelper
     // Adjust widths
     if (name.length() > nameWidth && description.length() < descriptionWidth)
     {
-      descriptionWidth = Math
-        .max(description.length(),
-             descriptionWidth - (name.length() - nameWidth));
+      descriptionWidth = Math.max(description.length(),
+                                  descriptionWidth - (name.length()
+                                                      - nameWidth));
     }
     if (description.length() > descriptionWidth && name.length() < nameWidth)
     {
-      nameWidth = Math
-        .max(name.length(),
-             nameWidth - (description.length() - descriptionWidth));
+      nameWidth = Math.max(name.length(),
+                           nameWidth - (description.length()
+                                        - descriptionWidth));
     }
 
     final TableRow row = new TableRow(outputFormat);
@@ -270,7 +270,7 @@ abstract class BaseTextFormattingHelper
    * {@inheritDoc}
    *
    * @see TextFormattingHelper#writeNameValueRow(java.lang.String,
-   *      java.lang.String, Alignment)
+   *   java.lang.String, Alignment)
    */
   @Override
   public void writeNameValueRow(final String name,
@@ -280,11 +280,10 @@ abstract class BaseTextFormattingHelper
     final int nameWidth = 40;
     final int valueWidth = 70 - nameWidth;
 
-    final Alignment alignmentForValue = valueAlignment == null? Alignment.inherit
-                                                              : valueAlignment;
-    final String valueStyle = "property_value"
-                              + (alignmentForValue == Alignment.inherit? ""
-                                                                       : " right");
+    final Alignment alignmentForValue =
+      valueAlignment == null? Alignment.inherit: valueAlignment;
+    final String valueStyle =
+      "property_value" + (alignmentForValue == Alignment.inherit? "": " right");
 
     final TableRow row = new TableRow(outputFormat);
     row.add(new TableCell(name,
@@ -313,7 +312,7 @@ abstract class BaseTextFormattingHelper
    * Called to handle the row output.
    *
    * @param columnData
-   *        Column data
+   *   Column data
    */
   @Override
   public void writeRow(final Object... columnData)
@@ -324,7 +323,7 @@ abstract class BaseTextFormattingHelper
       outputFormat = TextOutputFormat.tsv;
     }
     final TableRow row = new TableRow(outputFormat);
-    for (final Object element: columnData)
+    for (final Object element : columnData)
     {
       if (element == null)
       {
@@ -348,11 +347,10 @@ abstract class BaseTextFormattingHelper
   }
 
   /**
-   * Called to handle the header output. Handler to be implemented by
-   * subclass.
+   * Called to handle the header output. Handler to be implemented by subclass.
    *
    * @param columnNames
-   *        Column names
+   *   Column names
    */
   @Override
   public void writeRowHeader(final String... columnNames)
@@ -363,7 +361,7 @@ abstract class BaseTextFormattingHelper
       outputFormat = TextOutputFormat.tsv;
     }
     final TableRow row = new TableRow(outputFormat);
-    for (final String columnName: columnNames)
+    for (final String columnName : columnNames)
     {
       final TableHeaderCell headerCell = new TableHeaderCell(columnName,
                                                              0,

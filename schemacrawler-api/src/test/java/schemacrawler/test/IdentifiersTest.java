@@ -33,19 +33,20 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.utility.Identifiers;
 
 public class IdentifiersTest
 {
 
-  private final Identifiers identifiers = Identifiers.identifiers().build();
+  private final Identifiers identifiers = Identifiers
+    .identifiers()
+    .build();
 
   @Test
   public void blank()
   {
     final String[] words = new String[] { "  ", "\t", };
-    for (final String word: words)
+    for (final String word : words)
     {
       assertThat(word, identifiers.isReservedWord(word), is(false));
       assertThat(word, identifiers.isToBeQuoted(word), is(true));
@@ -56,7 +57,7 @@ public class IdentifiersTest
   public void empty()
   {
     final String[] words = new String[] { "", null, };
-    for (final String word: words)
+    for (final String word : words)
     {
       assertThat(word, identifiers.isReservedWord(word), is(false));
       assertThat(word, identifiers.isToBeQuoted(word), is(false));
@@ -67,14 +68,9 @@ public class IdentifiersTest
   public void quotedIdentifiers()
   {
     final String[] words = new String[] {
-                                          "1234",
-                                          "w@w",
-                                          "e.e",
-                                          "१२३४५६७८९०",
-                                          "Global Counts",
-                                          "Trail ",
-                                          " leaD" };
-    for (final String word: words)
+      "1234", "w@w", "e.e", "१२३४५६७८९०", "Global Counts", "Trail ", " leaD"
+    };
+    for (final String word : words)
     {
       assertThat(word, identifiers.isReservedWord(word), is(false));
       assertThat(word, identifiers.isToBeQuoted(word), is(true));
@@ -85,17 +81,11 @@ public class IdentifiersTest
   public void quotedNames()
   {
     final String[] names = new String[] {
-                                          "one name",
-                                          "\"UPDATE\"",
-                                          "1234",
-                                          "goodname",
-                                          "\"goodname\"" };
+      "one name", "\"UPDATE\"", "1234", "goodname", "\"goodname\""
+    };
     final String[] quotedNames = new String[] {
-                                                "\"one name\"",
-                                                "\"UPDATE\"",
-                                                "\"1234\"",
-                                                "goodname",
-                                                "\"goodname\"" };
+      "\"one name\"", "\"UPDATE\"", "\"1234\"", "goodname", "\"goodname\""
+    };
     for (int i = 0; i < names.length; i++)
     {
       final String name = names[i];
@@ -108,7 +98,7 @@ public class IdentifiersTest
   public void sqlReservedWords()
   {
     final String[] words = new String[] { "update", "UPDATE", };
-    for (final String word: words)
+    for (final String word : words)
     {
       assertThat(word, identifiers.isReservedWord(word), is(true));
       assertThat(word, identifiers.isToBeQuoted(word), is(true));
@@ -119,25 +109,26 @@ public class IdentifiersTest
   public void unquotedIdentifiers()
   {
     final String[] words = new String[] {
-                                          "qwer",
-                                          "Qwer",
-                                          "qweR",
-                                          "qwEr",
-                                          "QWER",
-                                          "Q2w",
-                                          "q2W",
-                                          "q2w",
-                                          "w_w",
-                                          "W_W",
-                                          "_W",
-                                          "W_",
-                                          "हम",
-                                          "ह७म",
-                                          "७म",
-                                          "ह७",
-                                          "हिंदी",
-                                          "दी८दी" };
-    for (final String word: words)
+      "qwer",
+      "Qwer",
+      "qweR",
+      "qwEr",
+      "QWER",
+      "Q2w",
+      "q2W",
+      "q2w",
+      "w_w",
+      "W_W",
+      "_W",
+      "W_",
+      "हम",
+      "ह७म",
+      "७म",
+      "ह७",
+      "हिंदी",
+      "दी८दी"
+    };
+    for (final String word : words)
     {
       assertThat(word, identifiers.isReservedWord(word), is(false));
       assertThat(word, identifiers.isToBeQuoted(word), is(false));

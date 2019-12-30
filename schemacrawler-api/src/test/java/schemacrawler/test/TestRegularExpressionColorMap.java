@@ -36,7 +36,6 @@ import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
 import java.util.Properties;
 
 import org.junit.jupiter.api.Test;
-
 import sf.util.Color;
 import sf.util.RegularExpressionColorMap;
 
@@ -53,10 +52,16 @@ public class TestRegularExpressionColorMap
     colorMap.put("SC.*", "1A3B5");
     assertThat(colorMap.match("SCH"), emptyOptional());
 
-    colorMap.put("SC.*", test_color.toString().substring(1) + "A");
+    colorMap.put("SC.*",
+                 test_color
+                   .toString()
+                   .substring(1) + "A");
     assertThat(colorMap.match("SCH"), emptyOptional());
 
-    colorMap.put("SC.*", test_color.toString().substring(1));
+    colorMap.put("SC.*",
+                 test_color
+                   .toString()
+                   .substring(1));
     assertThat(colorMap.match("SCH"), emptyOptional());
   }
 
@@ -74,14 +79,22 @@ public class TestRegularExpressionColorMap
   public void fromProperties()
   {
     final Properties properties = new Properties();
-    properties.put(test_color.toString().substring(1), "SC.*");
-    properties.put(test_color.toString().substring(1) + "A", "SC.*");
+    properties.put(test_color
+                     .toString()
+                     .substring(1), "SC.*");
+    properties.put(test_color
+                     .toString()
+                     .substring(1) + "A", "SC.*");
     properties.put("000000", "QW.*");
-    final RegularExpressionColorMap colorMap = new RegularExpressionColorMap(properties);
+    final RegularExpressionColorMap colorMap =
+      new RegularExpressionColorMap(properties);
 
     assertThat(colorMap.size(), is(2));
     assertThat(colorMap.match("SCH"), is(not(emptyOptional())));
-    assertThat(colorMap.match("SCH").get().equals(test_color), is(true));
+    assertThat(colorMap
+                 .match("SCH")
+                 .get()
+                 .equals(test_color), is(true));
     assertThat(colorMap.match("SHC"), emptyOptional());
     assertThat(colorMap.match("QW"), is(not(emptyOptional())));
   }
@@ -93,7 +106,10 @@ public class TestRegularExpressionColorMap
 
     colorMap.put("SC.*", test_color.toString());
     assertThat(colorMap.match("SCH"), is(not(emptyOptional())));
-    assertThat(colorMap.match("SCH").get().equals(test_color), is(true));
+    assertThat(colorMap
+                 .match("SCH")
+                 .get()
+                 .equals(test_color), is(true));
     assertThat(colorMap.match("SC.*"), is(not(emptyOptional())));
     assertThat(colorMap.match("SHC"), emptyOptional());
   }

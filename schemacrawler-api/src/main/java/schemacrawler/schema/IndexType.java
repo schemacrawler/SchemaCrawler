@@ -37,34 +37,33 @@ import sf.util.IdentifiedEnum;
  * An enumeration wrapper around index types.
  */
 public enum IndexType
-  implements
-  IdentifiedEnum
+  implements IdentifiedEnum
 {
 
- /**
-  * Unknown
-  */
- unknown(-1),
- /**
-  * Statistic.
-  */
- statistic(DatabaseMetaData.tableIndexStatistic),
- /**
-  * Clustered.
-  */
- clustered(DatabaseMetaData.tableIndexClustered),
- /**
-  * Hashed.
-  */
- hashed(DatabaseMetaData.tableIndexHashed),
- /**
-  * Other.
-  */
- other(DatabaseMetaData.tableIndexOther);
+  /**
+   * Unknown
+   */
+  unknown(-1),
+  /**
+   * Statistic.
+   */
+  statistic(DatabaseMetaData.tableIndexStatistic),
+  /**
+   * Clustered.
+   */
+  clustered(DatabaseMetaData.tableIndexClustered),
+  /**
+   * Hashed.
+   */
+  hashed(DatabaseMetaData.tableIndexHashed),
+  /**
+   * Other.
+   */
+  other(DatabaseMetaData.tableIndexOther);
 
   private final int id;
 
-  private IndexType(final int id)
+  IndexType(final int id)
   {
     this.id = id;
   }

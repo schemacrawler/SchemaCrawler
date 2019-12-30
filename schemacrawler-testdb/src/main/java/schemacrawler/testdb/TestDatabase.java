@@ -59,13 +59,12 @@ import org.hsqldb.server.Server;
 public class TestDatabase
 {
 
-  private static final Logger LOGGER = Logger
-    .getLogger(TestDatabase.class.getName());
+  private static final Logger LOGGER =
+    Logger.getLogger(TestDatabase.class.getName());
 
-  private static final String CONNECTION_STRING = "jdbc:hsqldb:hsql://${host}:${port}/${database}";
+  private static final String CONNECTION_STRING =
+    "jdbc:hsqldb:hsql://${host}:${port}/${database}";
   private static final String serverFileStem = "hsqldb.schemacrawler";
-
-  private static TestDatabase testDatabase;
 
   /**
    * Delete files from the previous run of the database server.
@@ -75,7 +74,10 @@ public class TestDatabase
   private static void deleteServerFiles()
     throws IOException
   {
-    final Path start = Paths.get(".").normalize().toAbsolutePath();
+    final Path start = Paths
+      .get(".")
+      .normalize()
+      .toAbsolutePath();
     walkFileTree(start, new SimpleFileVisitor<Path>()
     {
       @Override
@@ -83,12 +85,13 @@ public class TestDatabase
                                        final BasicFileAttributes attrs)
         throws IOException
       {
-        for (final String filename: new String[] {
-                                                   serverFileStem + ".lck",
-                                                   serverFileStem + ".log",
-                                                   serverFileStem + ".lobs",
-                                                   serverFileStem + ".script",
-                                                   serverFileStem + ".properties" })
+        for (final String filename : new String[] {
+          serverFileStem + ".lck",
+          serverFileStem + ".log",
+          serverFileStem + ".lobs",
+          serverFileStem + ".script",
+          serverFileStem + ".properties"
+        })
         {
           if (!attrs.isDirectory() && file.endsWith(filename))
           {
@@ -137,7 +140,9 @@ public class TestDatabase
     try (ServerSocket socket = new ServerSocket(0))
     {
       socket.setReuseAddress(true);
-      return socket.getInetAddress().getHostAddress();
+      return socket
+        .getInetAddress()
+        .getHostAddress();
     }
     catch (final IOException e)
     {
@@ -168,14 +173,25 @@ public class TestDatabase
     return testDatabase;
   }
 
+  /**
+   * Starts up a test database in server mode.
+   *
+   * @param args
+   *   Command-line arguments
+   * @throws Exception
+   */
+  public static void main(final String[] args)
+    throws Exception
+  {
+    startDefaultTestDatabase(true);
+  }
+
   public static TestDatabase startDefaultTestDatabase(final boolean trace)
   {
     try
     {
-      final TestDatabase testDatabase = new TestDatabase(trace,
-                                                         "localhost",
-                                                         9001,
-                                                         "schemacrawler");
+      final TestDatabase testDatabase =
+        new TestDatabase(trace, "localhost", 9001, "schemacrawler");
 
       testDatabase.start();
 
@@ -188,20 +204,7 @@ public class TestDatabase
       return null;
     }
   }
-
-  /**
-   * Starts up a test database in server mode.
-   *
-   * @param args
-   *        Command-line arguments
-   * @throws Exception
-   */
-  public static void main(final String[] args)
-    throws Exception
-  {
-    startDefaultTestDatabase(true);
-  }
-
+  private static TestDatabase testDatabase;
   private final boolean trace;
   private final String host;
   private final int port;
@@ -218,7 +221,8 @@ public class TestDatabase
     this.port = port;
     this.database = requireNonNull(database);
 
-    url = CONNECTION_STRING.replace("${host}", host)
+    url = CONNECTION_STRING
+      .replace("${host}", host)
       .replace("${port}", String.valueOf(port))
       .replace("${database}", database);
 
@@ -262,7 +266,9 @@ public class TestDatabase
     // Attempt to delete the database files
     deleteServerFiles();
 
-    Runtime.getRuntime().addShutdownHook(new Thread(() -> stop()));
+    Runtime
+      .getRuntime()
+      .addShutdownHook(new Thread(() -> stop()));
 
     // Set up writers
     final PrintWriter logWriter;
@@ -303,8 +309,8 @@ public class TestDatabase
 
     final Connection connection = getConnection();
     connection.setAutoCommit(true);
-    final TestSchemaCreator schemaCreator = new TestSchemaCreator(connection,
-                                                                  "/hsqldb.scripts.txt");
+    final TestSchemaCreator schemaCreator =
+      new TestSchemaCreator(connection, "/hsqldb.scripts.txt");
     schemaCreator.run();
   }
 
@@ -313,8 +319,10 @@ public class TestDatabase
    */
   public void stop()
   {
-    try (final Connection connection = getConnection();
-        final Statement statement = connection.createStatement();)
+    try (
+      final Connection connection = getConnection();
+      final Statement statement = connection.createStatement();
+    )
     {
       statement.execute("SHUTDOWN");
     }

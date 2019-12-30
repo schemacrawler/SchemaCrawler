@@ -21,9 +21,8 @@ public class ConfigFileCommandTest
     final String[] args = new String[0];
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    final CommandLine commandLine = newCommandLine(new ConfigFileCommand(state),
-                                                   null,
-                                                   false);
+    final CommandLine commandLine =
+      newCommandLine(new ConfigFileCommand(state), null, false);
     commandLine.execute(args);
     final Config config = state.getBaseConfiguration();
 
@@ -36,9 +35,8 @@ public class ConfigFileCommandTest
     final String[] args = { "--some-option" };
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    final CommandLine commandLine = newCommandLine(new ConfigFileCommand(state),
-                                                   null,
-                                                   false);
+    final CommandLine commandLine =
+      newCommandLine(new ConfigFileCommand(state), null, false);
     commandLine.execute(args);
     final Config config = state.getBaseConfiguration();
 
@@ -51,9 +49,8 @@ public class ConfigFileCommandTest
     final String[] args = { "-g" };
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    final CommandLine commandLine = newCommandLine(new ConfigFileCommand(state),
-                                                   null,
-                                                   false);
+    final CommandLine commandLine =
+      newCommandLine(new ConfigFileCommand(state), null, false);
     commandLine.execute(args);
     final Config config = state.getBaseConfiguration();
 
@@ -68,9 +65,8 @@ public class ConfigFileCommandTest
     };
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    final CommandLine commandLine = newCommandLine(new ConfigFileCommand(state),
-                                                   null,
-                                                   false);
+    final CommandLine commandLine =
+      newCommandLine(new ConfigFileCommand(state), null, false);
     commandLine.execute(args);
     final Config config = state.getBaseConfiguration();
 

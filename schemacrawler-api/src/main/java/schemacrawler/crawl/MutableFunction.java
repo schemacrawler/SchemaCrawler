@@ -42,8 +42,8 @@ import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
 
 /**
- * Represents a database function. Created from metadata returned by a
- * JDBC call.
+ * Represents a database function. Created from metadata returned by a JDBC
+ * call.
  *
  * @author Sualeh Fatehi
  */
@@ -53,9 +53,9 @@ final class MutableFunction
 {
 
   private static final long serialVersionUID = 3906925686089134130L;
-
+  private final NamedObjectList<MutableFunctionParameter> columns =
+    new NamedObjectList<>();
   private FunctionReturnType returnType;
-  private final NamedObjectList<MutableFunctionParameter> columns = new NamedObjectList<>();
 
   MutableFunction(final Schema schema, final String name)
   {
@@ -82,10 +82,9 @@ final class MutableFunction
     return returnType;
   }
 
-  @Override
-  public RoutineType getRoutineType()
+  void setReturnType(final FunctionReturnType returnType)
   {
-    return RoutineType.function;
+    this.returnType = requireNonNull(returnType, "Null function return type");
   }
 
   /**
@@ -97,14 +96,15 @@ final class MutableFunction
     return columns.lookup(this, name);
   }
 
+  @Override
+  public RoutineType getRoutineType()
+  {
+    return RoutineType.function;
+  }
+
   void addParameter(final MutableFunctionParameter column)
   {
     columns.add(column);
-  }
-
-  void setReturnType(final FunctionReturnType returnType)
-  {
-    this.returnType = requireNonNull(returnType, "Null function return type");
   }
 
 }

@@ -31,7 +31,11 @@ package schemacrawler.tools.lint;
 import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 
 import schemacrawler.schema.Catalog;
@@ -43,8 +47,8 @@ public final class Linters
   implements Iterable<Linter>
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(Linters.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(Linters.class.getName());
 
   private final List<Linter> linters;
   private final LintCollector collector;
@@ -144,7 +148,9 @@ public final class Linters
 
         if (comparison == 0)
         {
-          comparison = linter1.getSeverity().compareTo(linter2.getSeverity());
+          comparison = linter1
+            .getSeverity()
+            .compareTo(linter2.getSeverity());
         }
 
         if (comparison == 0)
@@ -154,7 +160,9 @@ public final class Linters
 
         if (comparison == 0)
         {
-          comparison = linter1.getLinterId().compareTo(linter2.getLinterId());
+          comparison = linter1
+            .getLinterId()
+            .compareTo(linter2.getLinterId());
         }
 
         return comparison;
@@ -228,8 +236,8 @@ public final class Linters
     }
     else
     {
-      LOGGER
-        .log(Level.FINE, new StringFormat("Cannot find linter <%s>", linterId));
+      LOGGER.log(Level.FINE,
+                 new StringFormat("Cannot find linter <%s>", linterId));
     }
     return linter;
   }

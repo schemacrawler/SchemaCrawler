@@ -43,9 +43,9 @@ public interface Index
 {
 
   /**
-   * Gets the cardinality. When the index type is statistic, then this
-   * is the number of rows in the table; otherwise, it is the number of
-   * unique values in the index.
+   * Gets the cardinality. When the index type is statistic, then this is the
+   * number of rows in the table; otherwise, it is the number of unique values
+   * in the index.
    *
    * @return Cardinality
    */
@@ -66,9 +66,9 @@ public interface Index
   IndexType getIndexType();
 
   /**
-   * Gets the pages. When the index type is statistic, then this is the
-   * number of pages used for the table, otherwise it is the number of
-   * pages used for the current index.
+   * Gets the pages. When the index type is statistic, then this is the number
+   * of pages used for the table, otherwise it is the number of pages used for
+   * the current index.
    *
    * @return Pages
    */
@@ -85,7 +85,7 @@ public interface Index
    * Gets a column by unqualified name.
    *
    * @param name
-   *        Unqualified name
+   *   Unqualified name
    * @return Column.
    */
   <C extends IndexColumn> Optional<C> lookupColumn(String name);

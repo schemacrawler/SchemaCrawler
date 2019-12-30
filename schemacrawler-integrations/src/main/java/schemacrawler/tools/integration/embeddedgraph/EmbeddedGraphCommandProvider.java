@@ -68,8 +68,8 @@ public final class EmbeddedGraphCommandProvider
     {
       return false;
     }
-    final GraphOutputFormat graphOutputFormat = GraphOutputFormat.fromFormat(
-      format);
+    final GraphOutputFormat graphOutputFormat =
+      GraphOutputFormat.fromFormat(format);
     final boolean supportsSchemaCrawlerCommand =
       supportsCommand(command) && graphOutputFormat == GraphOutputFormat.htmlx;
     return supportsSchemaCrawlerCommand;

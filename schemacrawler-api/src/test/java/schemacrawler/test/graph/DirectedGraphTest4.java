@@ -32,12 +32,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import org.junit.jupiter.api.Test;
-
 import sf.util.graph.DirectedGraph;
 
 /**
- * Exercises from
- * https://algocoding.wordpress.com/2015/04/02/detecting-cycles-in-a-
+ * Exercises from https://algocoding.wordpress.com/2015/04/02/detecting-cycles-in-a-
  * directed-graph-with-dfs-python/
  */
 public class DirectedGraphTest4

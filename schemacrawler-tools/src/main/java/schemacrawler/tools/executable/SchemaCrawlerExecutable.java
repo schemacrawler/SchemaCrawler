@@ -29,39 +29,51 @@ package schemacrawler.tools.executable;
 
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.filter.ReducerFactory.*;
+import static schemacrawler.filter.ReducerFactory.getRoutineReducer;
+import static schemacrawler.filter.ReducerFactory.getSchemaReducer;
+import static schemacrawler.filter.ReducerFactory.getSequenceReducer;
+import static schemacrawler.filter.ReducerFactory.getSynonymReducer;
+import static schemacrawler.filter.ReducerFactory.getTableReducer;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
-import schemacrawler.schema.*;
-import schemacrawler.schemacrawler.*;
+import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Reducible;
+import schemacrawler.schema.Routine;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.Sequence;
+import schemacrawler.schema.Synonym;
+import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.utility.SchemaCrawlerUtility;
-import sf.util.ObjectToString;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
- * Wrapper executable for any SchemaCrawler command. Looks up the
- * command registry, and instantiates the registered executable for the
- * command. If the command is not a known command,
- * SchemaCrawlerExecutable will check if it is a query configured in the
- * properties. If not, it will assume that a query is specified on the
- * command-line, and execute that.
+ * Wrapper executable for any SchemaCrawler command. Looks up the command
+ * registry, and instantiates the registered executable for the command. If the
+ * command is not a known command, SchemaCrawlerExecutable will check if it is a
+ * query configured in the properties. If not, it will assume that a query is
+ * specified on the command-line, and execute that.
  *
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawlerExecutable
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
-    SchemaCrawlerExecutable.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(SchemaCrawlerExecutable.class.getName());
 
   private final String command;
   private Config additionalConfiguration;
@@ -79,7 +91,8 @@ public final class SchemaCrawlerExecutable
     }
     this.command = command;
 
-    schemaCrawlerOptions = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    schemaCrawlerOptions =
+      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     outputOptions = OutputOptionsBuilder.newOutputOptions();
     additionalConfiguration = new Config();
   }
@@ -93,7 +106,8 @@ public final class SchemaCrawlerExecutable
   {
     if (schemaCrawlerOptions == null)
     {
-      this.schemaCrawlerOptions = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+      this.schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     }
     else
     {
@@ -134,8 +148,8 @@ public final class SchemaCrawlerExecutable
 
     if (schemaRetrievalOptions == null)
     {
-      schemaRetrievalOptions = SchemaCrawlerUtility.matchSchemaRetrievalOptions(
-        connection);
+      schemaRetrievalOptions =
+        SchemaCrawlerUtility.matchSchemaRetrievalOptions(connection);
     }
 
     // Load the command to see if it is available
@@ -206,10 +220,12 @@ public final class SchemaCrawlerExecutable
   private void loadCatalog()
     throws Exception
   {
-    final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
-    final CatalogLoader catalogLoader = catalogLoaderRegistry.lookupCatalogLoader(
-      schemaRetrievalOptions.getDatabaseServerType()
-                            .getDatabaseSystemIdentifier());
+    final CatalogLoaderRegistry catalogLoaderRegistry =
+      new CatalogLoaderRegistry();
+    final CatalogLoader catalogLoader =
+      catalogLoaderRegistry.lookupCatalogLoader(schemaRetrievalOptions
+                                                  .getDatabaseServerType()
+                                                  .getDatabaseSystemIdentifier());
     LOGGER.log(Level.CONFIG,
                new StringFormat("Catalog loader: %s", getClass().getName()));
 

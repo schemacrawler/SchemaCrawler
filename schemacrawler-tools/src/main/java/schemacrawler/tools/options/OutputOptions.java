@@ -66,14 +66,14 @@ public final class OutputOptions
                 final String outputFormatValue,
                 final String title)
   {
-    this.inputEncodingCharset = requireNonNull(inputEncodingCharset,
-                                               "No input encoding provided");
-    this.outputResource = requireNonNull(outputResource,
-                                         "No output resource provided");
-    this.outputEncodingCharset = requireNonNull(outputEncodingCharset,
-                                                "No output encoding provided");
-    this.outputFormatValue = requireNonNull(outputFormatValue,
-                                            "No output format value provided");
+    this.inputEncodingCharset =
+      requireNonNull(inputEncodingCharset, "No input encoding provided");
+    this.outputResource =
+      requireNonNull(outputResource, "No output resource provided");
+    this.outputEncodingCharset =
+      requireNonNull(outputEncodingCharset, "No output encoding provided");
+    this.outputFormatValue =
+      requireNonNull(outputFormatValue, "No output format value provided");
     this.title = title;
   }
 
@@ -121,12 +121,13 @@ public final class OutputOptions
       {
         fileExtension = extension;
       }
-      outputFile = Paths.get(".",
-                             String.format("schemacrawler-%s.%s",
-                                           UUID.randomUUID(),
-                                           fileExtension))
-                        .normalize()
-                        .toAbsolutePath();
+      outputFile = Paths
+        .get(".",
+             String.format("schemacrawler-%s.%s",
+                           UUID.randomUUID(),
+                           fileExtension))
+        .normalize()
+        .toAbsolutePath();
     }
     return outputFile;
   }
@@ -142,11 +143,12 @@ public final class OutputOptions
   }
 
   /**
-   * Gets the output reader. If the output resource is null, first set
-   * it to console output.
+   * Gets the output reader. If the output resource is null, first set it to
+   * console output.
    *
    * @return Output writer
-   * @throws IOException On an exception
+   * @throws IOException
+   *   On an exception
    */
   public Writer openNewOutputWriter()
     throws IOException
@@ -155,8 +157,8 @@ public final class OutputOptions
   }
 
   /**
-   * Gets the output reader. If the output resource is null, first set
-   * it to console output.
+   * Gets the output reader. If the output resource is null, first set it to
+   * console output.
    *
    * @throws SchemaCrawlerException
    */

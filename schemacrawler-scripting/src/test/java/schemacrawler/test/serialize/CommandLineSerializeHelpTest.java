@@ -29,7 +29,10 @@ package schemacrawler.test.serialize;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasNoContent;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
@@ -37,7 +40,6 @@ import java.io.PrintStream;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import picocli.CommandLine;
@@ -50,7 +52,8 @@ import schemacrawler.tools.commandline.command.CommandLineHelpCommand;
 public class CommandLineSerializeHelpTest
 {
 
-  private static final String COMMANDLINE_HELP_OUTPUT = "commandline_help_output/";
+  private static final String COMMANDLINE_HELP_OUTPUT =
+    "commandline_help_output/";
 
   private TestOutputStream err;
   private TestOutputStream out;
@@ -66,7 +69,8 @@ public class CommandLineSerializeHelpTest
   public void helpSerialize(final TestContext testContext)
   {
     final String[] args = {
-      "--help", "serialize" };
+      "--help", "serialize"
+    };
 
     final CommandLineHelpCommand optionsParser = new CommandLineHelpCommand();
     new CommandLine(optionsParser).parseArgs(args);

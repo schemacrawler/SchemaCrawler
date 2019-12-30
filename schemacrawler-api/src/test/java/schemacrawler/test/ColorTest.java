@@ -34,7 +34,6 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
-
 import sf.util.Color;
 
 public class ColorTest
@@ -42,26 +41,52 @@ public class ColorTest
   @Test
   public void fromHSV()
   {
-    assertThat(Color.fromHSV(0, 0, 0).toString(), is("#000000"));
+    assertThat(Color
+                 .fromHSV(0, 0, 0)
+                 .toString(), is("#000000"));
 
-    assertThat(Color.fromHSV(0, 1, 0).toString(), is("#000000"));
-    assertThat(Color.fromHSV(0, -1, 0).toString(), is("#000000"));
-    assertThat(Color.fromHSV(0, 0, 1).toString(), is("#FFFFFF"));
-    assertThat(Color.fromHSV(0, 0, -1).toString(), is("#000000"));
+    assertThat(Color
+                 .fromHSV(0, 1, 0)
+                 .toString(), is("#000000"));
+    assertThat(Color
+                 .fromHSV(0, -1, 0)
+                 .toString(), is("#000000"));
+    assertThat(Color
+                 .fromHSV(0, 0, 1)
+                 .toString(), is("#FFFFFF"));
+    assertThat(Color
+                 .fromHSV(0, 0, -1)
+                 .toString(), is("#000000"));
 
-    assertThat(Color.fromHSV(1, 1, 0).toString(), is("#000000"));
-    assertThat(Color.fromHSV(1, 1, 0.2f).toString(), is("#330000"));
-    assertThat(Color.fromHSV(1, 0.2f, 0.2f).toString(), is("#332929"));
-    assertThat(Color.fromHSV(0.2f, 0.2f, 0.2f).toString(), is("#313329"));
-    assertThat(Color.fromHSV(-0.2f, 0.2f, 0.2f).toString(), is("#312933"));
-    assertThat(Color.fromHSV(0.2f, -0.2f, 0.2f).toString(), is("#35333D"));
-    assertThat(Color.fromHSV(0.2f, 0.2f, -0.2f).toString(), is("#000000"));
+    assertThat(Color
+                 .fromHSV(1, 1, 0)
+                 .toString(), is("#000000"));
+    assertThat(Color
+                 .fromHSV(1, 1, 0.2f)
+                 .toString(), is("#330000"));
+    assertThat(Color
+                 .fromHSV(1, 0.2f, 0.2f)
+                 .toString(), is("#332929"));
+    assertThat(Color
+                 .fromHSV(0.2f, 0.2f, 0.2f)
+                 .toString(), is("#313329"));
+    assertThat(Color
+                 .fromHSV(-0.2f, 0.2f, 0.2f)
+                 .toString(), is("#312933"));
+    assertThat(Color
+                 .fromHSV(0.2f, -0.2f, 0.2f)
+                 .toString(), is("#35333D"));
+    assertThat(Color
+                 .fromHSV(0.2f, 0.2f, -0.2f)
+                 .toString(), is("#000000"));
   }
 
   @Test
   public void fromHexTriplet()
   {
-    assertThat(Color.fromHexTriplet("#010203").toString(), is("#010203"));
+    assertThat(Color
+                 .fromHexTriplet("#010203")
+                 .toString(), is("#010203"));
 
     assertThrows(IllegalArgumentException.class,
                  () -> Color.fromHexTriplet(null));

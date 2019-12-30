@@ -40,8 +40,8 @@ import sf.util.SchemaCrawlerLogger;
 public final class StateUtility
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(StateUtility.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(StateUtility.class.getName());
 
   private static void log(final Level level,
                           final Supplier<String> toLog,
@@ -72,7 +72,8 @@ public final class StateUtility
     if (state.getSchemaCrawlerOptionsBuilder() != null)
     {
       final SchemaCrawlerOptions schemaCrawlerOptions = state
-        .getSchemaCrawlerOptionsBuilder().toOptions();
+        .getSchemaCrawlerOptionsBuilder()
+        .toOptions();
       log(Level.CONFIG,
           new ObjectToStringFormat(schemaCrawlerOptions),
           showlog);
@@ -80,7 +81,8 @@ public final class StateUtility
     if (state.getSchemaRetrievalOptionsBuilder() != null)
     {
       final SchemaRetrievalOptions schemaRetrievalOptions = state
-        .getSchemaRetrievalOptionsBuilder().toOptions();
+        .getSchemaRetrievalOptionsBuilder()
+        .toOptions();
       log(Level.CONFIG,
           new ObjectToStringFormat(schemaRetrievalOptions),
           showlog);

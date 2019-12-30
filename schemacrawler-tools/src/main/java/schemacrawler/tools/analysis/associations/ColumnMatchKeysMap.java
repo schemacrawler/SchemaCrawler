@@ -48,7 +48,7 @@ final class ColumnMatchKeysMap
     columnsForMatchKey = new Multimap<>();
     matchKeysForColumn = new Multimap<>();
 
-    for (final Table table: tables)
+    for (final Table table : tables)
     {
       mapColumnNameMatches(table);
     }
@@ -82,18 +82,20 @@ final class ColumnMatchKeysMap
 
   private void mapColumnNameMatches(final Table table)
   {
-    for (final Column column: table.getColumns())
+    for (final Column column : table.getColumns())
     {
-      String matchColumnName = column.getName().toLowerCase();
+      String matchColumnName = column
+        .getName()
+        .toLowerCase();
       if (matchColumnName.endsWith("_id"))
       {
-        matchColumnName = matchColumnName
-          .substring(0, matchColumnName.length() - 3);
+        matchColumnName =
+          matchColumnName.substring(0, matchColumnName.length() - 3);
       }
       if (matchColumnName.endsWith("id") && !matchColumnName.equals("id"))
       {
-        matchColumnName = matchColumnName
-          .substring(0, matchColumnName.length() - 2);
+        matchColumnName =
+          matchColumnName.substring(0, matchColumnName.length() - 2);
       }
       if (!matchColumnName.equals("id"))
       {

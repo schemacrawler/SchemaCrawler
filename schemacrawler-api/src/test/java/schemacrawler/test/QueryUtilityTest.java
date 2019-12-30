@@ -45,7 +45,6 @@ import java.sql.Statement;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.test.utility.TestContext;
@@ -67,7 +66,8 @@ public class QueryUtilityTest
   {
     final Query query = new Query("Tables for schema",
                                   "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE REGEXP_MATCHES(TABLE_SCHEMA, '${schemas}') ORDER BY TABLE_NAME");
-    final InclusionRule schemaInclusionRule = new RegularExpressionInclusionRule("BOOKS");
+    final InclusionRule schemaInclusionRule =
+      new RegularExpressionInclusionRule("BOOKS");
 
     executeAgainstSchemaTest(testContext, cxn, query, schemaInclusionRule);
   }
@@ -79,13 +79,17 @@ public class QueryUtilityTest
   {
     final Query query = new Query("Tables for schema",
                                   "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE REGEXP_MATCHES(TABLE_SCHEMA, '${schemas}') ORDER BY TABLE_NAME");
-    final InclusionRule schemaInclusionRule = new RegularExpressionInclusionRule("NONE");
+    final InclusionRule schemaInclusionRule =
+      new RegularExpressionInclusionRule("NONE");
 
     int rows = 0;
-    try (final Connection connection = cxn;
-        final Statement statement = connection.createStatement();
-        final ResultSet resultSet = QueryUtility
-          .executeAgainstSchema(query, statement, schemaInclusionRule);)
+    try (
+      final Connection connection = cxn;
+      final Statement statement = connection.createStatement();
+      final ResultSet resultSet = QueryUtility.executeAgainstSchema(query,
+                                                                    statement,
+                                                                    schemaInclusionRule)
+    )
     {
       while (resultSet.next())
       {
@@ -103,7 +107,8 @@ public class QueryUtilityTest
   {
     final Query query = new Query("Tables for schema",
                                   "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA= 'BOOKS' ORDER BY TABLE_NAME");
-    final InclusionRule schemaInclusionRule = new RegularExpressionInclusionRule("NONE");
+    final InclusionRule schemaInclusionRule =
+      new RegularExpressionInclusionRule("NONE");
 
     executeAgainstSchemaTest(testContext, cxn, query, schemaInclusionRule);
   }
@@ -142,12 +147,15 @@ public class QueryUtilityTest
     throws IOException, SQLException
   {
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout;)
+    try (final TestWriter out = testout)
     {
-      try (final Connection connection = cxn;
-          final Statement statement = connection.createStatement();
-          final ResultSet resultSet = QueryUtility
-            .executeAgainstSchema(query, statement, schemaInclusionRule);)
+      try (
+        final Connection connection = cxn;
+        final Statement statement = connection.createStatement();
+        final ResultSet resultSet = QueryUtility.executeAgainstSchema(query,
+                                                                      statement,
+                                                                      schemaInclusionRule)
+      )
       {
         while (resultSet.next())
         {
@@ -157,8 +165,7 @@ public class QueryUtilityTest
 
     }
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext
-                 .testMethodFullName())));
+               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
 }

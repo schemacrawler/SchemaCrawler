@@ -31,7 +31,9 @@ package schemacrawler;
 
 import static java.util.Objects.requireNonNull;
 import static picocli.CommandLine.populateCommand;
-import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.*;
+import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSafeArguments;
+import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSystemClasspath;
+import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSystemProperties;
 
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
@@ -61,7 +63,8 @@ public final class Main
     logSystemClasspath();
     logSystemProperties();
 
-    final InteractiveShellOptions interactiveShellOptions = new InteractiveShellOptions();
+    final InteractiveShellOptions interactiveShellOptions =
+      new InteractiveShellOptions();
     populateCommand(interactiveShellOptions, args);
 
     final boolean isInteractive = interactiveShellOptions.isInteractive();
@@ -86,7 +89,8 @@ public final class Main
 
   private static boolean showHelpIfRequested(final String[] args)
   {
-    final CommandLineHelpCommand commandLineHelpCommand = new CommandLineHelpCommand();
+    final CommandLineHelpCommand commandLineHelpCommand =
+      new CommandLineHelpCommand();
     final CommandLine commandLine = new CommandLine(commandLineHelpCommand);
     commandLine.setUnmatchedArgumentsAllowed(true);
     commandLine.parseArgs(args);
@@ -100,7 +104,8 @@ public final class Main
 
   private static boolean showVersionIfRequested(final String[] args)
   {
-    final SystemCommand systemCommand = new SystemCommand(new SchemaCrawlerShellState());
+    final SystemCommand systemCommand =
+      new SystemCommand(new SchemaCrawlerShellState());
     final CommandLine commandLine = new CommandLine(systemCommand);
     commandLine.setUnmatchedArgumentsAllowed(true);
     commandLine.parseArgs(args);

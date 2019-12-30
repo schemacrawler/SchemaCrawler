@@ -31,7 +31,9 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 
 import java.nio.file.Path;
 
@@ -83,9 +85,10 @@ public class SQLiteExecutableTest
                    final String command)
     throws Exception
   {
-    final Path sqliteDbFile = IOUtility.createTempFilePath("sc", ".db")
-                                       .normalize()
-                                       .toAbsolutePath();
+    final Path sqliteDbFile = IOUtility
+      .createTempFilePath("sc", ".db")
+      .normalize()
+      .toAbsolutePath();
 
     TestSchemaCreator.main(new String[] {
       "jdbc:sqlite:" + sqliteDbFile, null, null, "/sqlite.scripts.txt"
@@ -95,18 +98,20 @@ public class SQLiteExecutableTest
     config.put("server", "sqlite");
     config.put("database", sqliteDbFile.toString());
 
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.builder()
-                                                                    .withSchemaInfoLevel(
-                                                                      infoLevel.toSchemaInfoLevel())
-                                                                    .toOptions();
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder
+      .builder()
+      .withSchemaInfoLevel(infoLevel.toSchemaInfoLevel())
+      .toOptions();
 
-    final SchemaTextOptions textOptions = SchemaTextOptionsBuilder.newSchemaTextOptions();
+    final SchemaTextOptions textOptions =
+      SchemaTextOptionsBuilder.newSchemaTextOptions();
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-      command);
+    final SchemaCrawlerExecutable executable =
+      new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(options);
-    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(
-      textOptions).toConfig());
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
+                                            .builder(textOptions)
+                                            .toConfig());
 
     assertThat(outputOf(executableExecution(createConnection(sqliteDbFile),
                                             executable)),

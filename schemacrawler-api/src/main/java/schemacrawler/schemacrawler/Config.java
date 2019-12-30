@@ -33,7 +33,12 @@ import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.enumValue;
 import static sf.util.Utility.isBlank;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Properties;
+import java.util.Set;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 
@@ -50,13 +55,14 @@ public final class Config
   implements Options, Map<String, String>
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(Config.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(Config.class.getName());
 
   /**
    * Copies properties into a map.
    *
-   * @param properties Properties to copy
+   * @param properties
+   *   Properties to copy
    * @return Map of properties and values
    */
   private static Map<String, String> propertiesMap(final Properties properties)
@@ -86,7 +92,8 @@ public final class Config
   /**
    * Copies config into a map.
    *
-   * @param config Config to copy
+   * @param config
+   *   Config to copy
    */
   public Config(final Map<String, String> config)
   {
@@ -100,47 +107,19 @@ public final class Config
   /**
    * Copies properties into a map.
    *
-   * @param properties Properties to copy
+   * @param properties
+   *   Properties to copy
    */
   public Config(final Properties properties)
   {
     this(propertiesMap(properties));
   }
 
-  @Override
-  public void clear()
-  {
-    config.clear();
-  }
-
-  @Override
-  public boolean containsKey(final Object key)
-  {
-    return config.containsKey(key);
-  }
-
-  @Override
-  public boolean containsValue(final Object value)
-  {
-    return config.containsValue(value);
-  }
-
-  @Override
-  public Set<java.util.Map.Entry<String, String>> entrySet()
-  {
-    return config.entrySet();
-  }
-
-  @Override
-  public String get(final Object key)
-  {
-    return config.get(key);
-  }
-
   /**
    * Gets the value of a property as a boolean.
    *
-   * @param propertyName Property name
+   * @param propertyName
+   *   Property name
    * @return Boolean value
    */
   public boolean getBooleanValue(final String propertyName)
@@ -158,7 +137,8 @@ public final class Config
   /**
    * Gets the value of a property as an double.
    *
-   * @param propertyName Property name
+   * @param propertyName
+   *   Property name
    * @return Double value
    */
   public double getDoubleValue(final String propertyName,
@@ -183,7 +163,8 @@ public final class Config
   /**
    * Gets the value of a property as an enum.
    *
-   * @param propertyName Property name
+   * @param propertyName
+   *   Property name
    * @return Enum value
    */
   public <E extends Enum<E>> E getEnumValue(final String propertyName,
@@ -195,11 +176,12 @@ public final class Config
   }
 
   /**
-   * Creates an exclusion rule, which includes everything, and then
-   * excludes a pattern. If no pattern is provided, include everything,
-   * since there are no excludes specified.
+   * Creates an exclusion rule, which includes everything, and then excludes a
+   * pattern. If no pattern is provided, include everything, since there are no
+   * excludes specified.
    *
-   * @param optionName Option to look up.
+   * @param optionName
+   *   Option to look up.
    * @return Inclusion rule.
    */
   public InclusionRule getExclusionRule(final String optionName)
@@ -210,11 +192,12 @@ public final class Config
   }
 
   /**
-   * Creates an inclusion rule, which includes a pattern has no
-   * excludes. If no pattern is provided, exclude everything, since
-   * there are no includes specified.
+   * Creates an inclusion rule, which includes a pattern has no excludes. If no
+   * pattern is provided, exclude everything, since there are no includes
+   * specified.
    *
-   * @param optionName Option to look up.
+   * @param optionName
+   *   Option to look up.
    * @return Inclusion rule.
    */
   public InclusionRule getInclusionRule(final String optionName)
@@ -229,24 +212,24 @@ public final class Config
                                                    final Supplier<InclusionRule> supplier)
   {
     requireNonNull(supplier);
-    final Optional<InclusionRule> optionalInclusionRule = getOptionalInclusionRule(
-      includePatternProperty,
-      excludePatternProperty);
+    final Optional<InclusionRule> optionalInclusionRule =
+      getOptionalInclusionRule(includePatternProperty, excludePatternProperty);
     return optionalInclusionRule.orElse(supplier.get());
   }
 
   /**
    * Gets the value of a property as an integer.
    *
-   * @param propertyName Property name
+   * @param propertyName
+   *   Property name
    * @return Integer value
    */
   public int getIntegerValue(final String propertyName, final int defaultValue)
   {
     try
     {
-      return Integer
-        .parseInt(getStringValue(propertyName, String.valueOf(defaultValue)));
+      return Integer.parseInt(getStringValue(propertyName,
+                                             String.valueOf(defaultValue)));
     }
     catch (final NumberFormatException e)
     {
@@ -262,15 +245,16 @@ public final class Config
   /**
    * Gets the value of a property as an long.
    *
-   * @param propertyName Property name
+   * @param propertyName
+   *   Property name
    * @return Long value
    */
   public long getLongValue(final String propertyName, final long defaultValue)
   {
     try
     {
-      return Long
-        .parseLong(getStringValue(propertyName, String.valueOf(defaultValue)));
+      return Long.parseLong(getStringValue(propertyName,
+                                           String.valueOf(defaultValue)));
     }
     catch (final NumberFormatException e)
     {
@@ -293,16 +277,18 @@ public final class Config
     }
     else
     {
-      return Optional
-        .of(new RegularExpressionRule(includePattern, excludePattern));
+      return Optional.of(new RegularExpressionRule(includePattern,
+                                                   excludePattern));
     }
   }
 
   /**
    * Gets the value of a property as a string.
    *
-   * @param propertyName Property name
-   * @param defaultValue Default value
+   * @param propertyName
+   *   Property name
+   * @param defaultValue
+   *   Default value
    * @return String value
    */
   public String getStringValue(final String propertyName,
@@ -319,7 +305,8 @@ public final class Config
   /**
    * Checks if a value is available.
    *
-   * @param propertyName Property name
+   * @param propertyName
+   *   Property name
    * @return True if a value ia available.
    */
   public boolean hasValue(final String propertyName)
@@ -327,43 +314,9 @@ public final class Config
     return config.containsKey(propertyName);
   }
 
-  @Override
-  public boolean isEmpty()
-  {
-    return config.isEmpty();
-  }
-
-  @Override
-  public Set<String> keySet()
-  {
-    return config.keySet();
-  }
-
-  @Override
-  public String put(final String key, final String value)
-  {
-    return config.put(key, value);
-  }
-
-  @Override
-  public void putAll(final Map<? extends String, ? extends String> m)
-  {
-    if (m == null)
-    {
-      return;
-    }
-    config.putAll(m);
-  }
-
   public void putAll(final Properties properties)
   {
     config.putAll(propertiesMap(properties));
-  }
-
-  @Override
-  public String remove(final Object key)
-  {
-    return config.remove(key);
   }
 
   public void setBooleanValue(final String propertyName, final boolean value)
@@ -402,6 +355,76 @@ public final class Config
     return config.size();
   }
 
+  @Override
+  public boolean isEmpty()
+  {
+    return config.isEmpty();
+  }
+
+  @Override
+  public boolean containsKey(final Object key)
+  {
+    return config.containsKey(key);
+  }
+
+  @Override
+  public boolean containsValue(final Object value)
+  {
+    return config.containsValue(value);
+  }
+
+  @Override
+  public String get(final Object key)
+  {
+    return config.get(key);
+  }
+
+  @Override
+  public String put(final String key, final String value)
+  {
+    return config.put(key, value);
+  }
+
+  @Override
+  public String remove(final Object key)
+  {
+    return config.remove(key);
+  }
+
+  @Override
+  public void putAll(final Map<? extends String, ? extends String> m)
+  {
+    if (m == null)
+    {
+      return;
+    }
+    config.putAll(m);
+  }
+
+  @Override
+  public void clear()
+  {
+    config.clear();
+  }
+
+  @Override
+  public Set<String> keySet()
+  {
+    return config.keySet();
+  }
+
+  @Override
+  public Collection<String> values()
+  {
+    return config.values();
+  }
+
+  @Override
+  public Set<java.util.Map.Entry<String, String>> entrySet()
+  {
+    return config.entrySet();
+  }
+
   /**
    * Convert config to Properties
    *
@@ -421,12 +444,6 @@ public final class Config
   public String toString()
   {
     return ObjectToString.toString(this);
-  }
-
-  @Override
-  public Collection<String> values()
-  {
-    return config.values();
   }
 
 }

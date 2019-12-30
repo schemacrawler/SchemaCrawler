@@ -52,14 +52,16 @@ final class MutablePrivilege<D extends DatabaseObject>
   implements Privilege<D>
 {
 
+  private static final long serialVersionUID = -1117664231494271886L;
+
+
   private final class PrivilegeGrant
     implements Grant<D>
   {
 
     private static final long serialVersionUID = 356151825191631484L;
-
-    private final String grantor;
     private final String grantee;
+    private final String grantor;
     private final boolean isGrantable;
 
     PrivilegeGrant(final String grantor,
@@ -84,6 +86,51 @@ final class MutablePrivilege<D extends DatabaseObject>
         compare = grantee.compareTo(otherGrant.getGrantee());
       }
       return compare;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getGrantee()
+    {
+      return grantee;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getGrantor()
+    {
+      return grantor;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isGrantable()
+    {
+      return isGrantable;
+    }
+
+    @Override
+    public MutablePrivilege<D> getParent()
+    {
+      return MutablePrivilege.this;
+    }
+
+    @Override
+    public int hashCode()
+    {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + getParent().hashCode();
+      result = prime * result + (grantee == null? 0: grantee.hashCode());
+      result = prime * result + (grantor == null? 0: grantor.hashCode());
+      result = prime * result + (isGrantable? 1231: 1237);
+      return result;
     }
 
     @Override
@@ -128,61 +175,11 @@ final class MutablePrivilege<D extends DatabaseObject>
       {
         return false;
       }
-      if (isGrantable != other.isGrantable)
-      {
-        return false;
-      }
-      return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getGrantee()
-    {
-      return grantee;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getGrantor()
-    {
-      return grantor;
-    }
-
-    @Override
-    public MutablePrivilege<D> getParent()
-    {
-      return MutablePrivilege.this;
-    }
-
-    @Override
-    public int hashCode()
-    {
-      final int prime = 31;
-      int result = 1;
-      result = prime * result + getParent().hashCode();
-      result = prime * result + (grantee == null? 0: grantee.hashCode());
-      result = prime * result + (grantor == null? 0: grantor.hashCode());
-      result = prime * result + (isGrantable? 1231: 1237);
-      return result;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isGrantable()
-    {
-      return isGrantable;
+      return isGrantable == other.isGrantable;
     }
 
   }
 
-  private static final long serialVersionUID = -1117664231494271886L;
 
   private final Set<Grant<D>> grants = new HashSet<>();
 

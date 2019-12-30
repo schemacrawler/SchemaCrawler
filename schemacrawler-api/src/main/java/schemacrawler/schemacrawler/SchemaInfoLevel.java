@@ -45,8 +45,8 @@ public final class SchemaInfoLevel
   implements Options
 {
 
-  private final String tag;
   private final boolean[] schemaInfoRetrievals;
+  private final String tag;
 
   SchemaInfoLevel(final String tag,
                   final Map<SchemaInfoRetrieval, Boolean> schemaInfoRetrievalsMap)
@@ -56,16 +56,31 @@ public final class SchemaInfoLevel
 
     requireNonNull(schemaInfoRetrievalsMap,
                    "No schema info retrievals provided");
-    final SchemaInfoRetrieval[] schemaInfoRetrievalsArray = SchemaInfoRetrieval
-      .values();
+    final SchemaInfoRetrieval[] schemaInfoRetrievalsArray =
+      SchemaInfoRetrieval.values();
     schemaInfoRetrievals = new boolean[schemaInfoRetrievalsArray.length];
-    for (final SchemaInfoRetrieval schemaInfoRetrieval: schemaInfoRetrievalsArray)
+    for (final SchemaInfoRetrieval schemaInfoRetrieval : schemaInfoRetrievalsArray)
     {
-      final boolean schemaInfoRetrievalValue = schemaInfoRetrievalsMap
-        .getOrDefault(schemaInfoRetrieval, false);
-      schemaInfoRetrievals[schemaInfoRetrieval
-        .ordinal()] = schemaInfoRetrievalValue;
+      final boolean schemaInfoRetrievalValue =
+        schemaInfoRetrievalsMap.getOrDefault(schemaInfoRetrieval, false);
+      schemaInfoRetrievals[schemaInfoRetrieval.ordinal()] =
+        schemaInfoRetrievalValue;
     }
+  }
+
+  public String getTag()
+  {
+    return tag;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + Arrays.hashCode(schemaInfoRetrievals);
+    result = prime * result + Objects.hash(tag);
+    return result;
   }
 
   @Override
@@ -88,19 +103,17 @@ public final class SchemaInfoLevel
            && Objects.equals(tag, other.tag);
   }
 
-  public String getTag()
-  {
-    return tag;
-  }
-
   @Override
-  public int hashCode()
+  public String toString()
   {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + Arrays.hashCode(schemaInfoRetrievals);
-    result = prime * result + Objects.hash(tag);
-    return result;
+    final StringJoiner settings = new StringJoiner(System.lineSeparator());
+    for (final SchemaInfoRetrieval schemaInfoRetrieval : SchemaInfoRetrieval.values())
+    {
+      settings.add(String.format("  %s=%b",
+                                 schemaInfoRetrieval.name(),
+                                 is(schemaInfoRetrieval)));
+    }
+    return String.format("SchemaInfoLevel <%s>%n{%n%s%n}%n", tag, settings);
   }
 
   public boolean is(final SchemaInfoRetrieval schemaInfoRetrieval)
@@ -250,20 +263,6 @@ public final class SchemaInfoLevel
   public boolean isRetrieveViewInformation()
   {
     return is(SchemaInfoRetrieval.retrieveViewInformation);
-  }
-
-  @Override
-  public String toString()
-  {
-    final StringJoiner settings = new StringJoiner(System.lineSeparator());
-    for (final SchemaInfoRetrieval schemaInfoRetrieval: SchemaInfoRetrieval
-      .values())
-    {
-      settings.add(String.format("  %s=%b",
-                                 schemaInfoRetrieval.name(),
-                                 is(schemaInfoRetrieval)));
-    }
-    return String.format("SchemaInfoLevel <%s>%n{%n%s%n}%n", tag, settings);
   }
 
 }

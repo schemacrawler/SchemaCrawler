@@ -53,7 +53,9 @@ public final class SchemaTextOptionsBuilder
 
   public static SchemaTextOptions newSchemaTextOptions(final Config config)
   {
-    return new SchemaTextOptionsBuilder().fromConfig(config).toOptions();
+    return new SchemaTextOptionsBuilder()
+      .fromConfig(config)
+      .toOptions();
   }
 
   private SchemaTextOptionsBuilder()

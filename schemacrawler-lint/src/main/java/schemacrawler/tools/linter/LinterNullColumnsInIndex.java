@@ -56,9 +56,9 @@ public class LinterNullColumnsInIndex
   {
     requireNonNull(table, "No table provided");
 
-    final List<Index> nullableColumnsInUniqueIndex = findNullableColumnsInUniqueIndex(table
-      .getIndexes());
-    for (final Index index: nullableColumnsInUniqueIndex)
+    final List<Index> nullableColumnsInUniqueIndex =
+      findNullableColumnsInUniqueIndex(table.getIndexes());
+    for (final Index index : nullableColumnsInUniqueIndex)
     {
       addTableLint(table, getSummary(), index);
     }
@@ -67,11 +67,11 @@ public class LinterNullColumnsInIndex
   private List<Index> findNullableColumnsInUniqueIndex(final Collection<Index> indexes)
   {
     final List<Index> nullableColumnsInUniqueIndex = new ArrayList<>();
-    for (final Index index: indexes)
+    for (final Index index : indexes)
     {
       if (index.isUnique())
       {
-        for (final IndexColumn indexColumn: index)
+        for (final IndexColumn indexColumn : index)
         {
           try
           {

@@ -62,6 +62,11 @@ class MutableView
     return checkOption;
   }
 
+  void setCheckOption(final CheckOptionType checkOption)
+  {
+    this.checkOption = checkOption;
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -69,11 +74,6 @@ class MutableView
   public boolean isUpdatable()
   {
     return updatable;
-  }
-
-  void setCheckOption(final CheckOptionType checkOption)
-  {
-    this.checkOption = checkOption;
   }
 
   void setUpdatable(final boolean updatable)

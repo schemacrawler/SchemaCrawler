@@ -64,8 +64,8 @@ public class MySQLEnumColumnTest
 {
 
   @Container
-  private JdbcDatabaseContainer dbContainer = new HeavyDatabaseBuildCondition()
-    .getJdbcDatabaseContainer(() -> new MySQLContainer<>()
+  private JdbcDatabaseContainer dbContainer =
+    new HeavyDatabaseBuildCondition().getJdbcDatabaseContainer(() -> new MySQLContainer<>()
       .withCommand("mysqld", "--lower_case_table_names=1")
       .withUsername("schemacrawler"));
 
@@ -82,25 +82,35 @@ public class MySQLEnumColumnTest
   public void columnWithEnum()
     throws Exception
   {
-    try (final Connection connection = getConnection();
-      final Statement stmt = connection.createStatement();)
+    try (
+      final Connection connection = getConnection();
+      final Statement stmt = connection.createStatement();
+    )
     {
       stmt.execute(
         "CREATE TABLE shirts (name VARCHAR(40), size ENUM('small', 'medium', 'large'))");
       connection.commit();
     }
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
 
     final Catalog catalog = getCatalog(getConnection(), schemaCrawlerOptions);
-    final Schema schema = catalog.lookupSchema("test").orElse(null);
+    final Schema schema = catalog
+      .lookupSchema("test")
+      .orElse(null);
     assertThat(schema, notNullValue());
-    final Table table = catalog.lookupTable(schema, "shirts").orElse(null);
+    final Table table = catalog
+      .lookupTable(schema, "shirts")
+      .orElse(null);
     assertThat(table, notNullValue());
-    final Column column = table.lookupColumn("size").orElse(null);
+    final Column column = table
+      .lookupColumn("size")
+      .orElse(null);
     assertThat(column, notNullValue());
     final List<String> enumValues = MySQLUtility.getEnumValues(column);
     assertThat(enumValues, containsInAnyOrder("small", "medium", "large"));

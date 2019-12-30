@@ -62,9 +62,9 @@ public interface Sequence
   BigInteger getMinimumValue();
 
   /**
-   * Indicates whether or not the sequence can continue to generate
-   * values after reaching its maximum or minimum value. return True if
-   * the sequence continues to generate values.
+   * Indicates whether or not the sequence can continue to generate values after
+   * reaching its maximum or minimum value. return True if the sequence
+   * continues to generate values.
    */
   boolean isCycle();
 

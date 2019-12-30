@@ -42,8 +42,8 @@ public final class TemplateCommand
 
   static final String COMMAND = "template";
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
-    TemplateCommand.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(TemplateCommand.class.getName());
 
   private final TemplateLanguage templateLanguage;
 
@@ -72,15 +72,18 @@ public final class TemplateCommand
 
     templateLanguage.addConfig(getAdditionalConfiguration());
 
-    final TemplateLanguageType languageType = templateLanguage.getTemplateLanguageType();
+    final TemplateLanguageType languageType =
+      templateLanguage.getTemplateLanguageType();
     if (languageType == TemplateLanguageType.unknown)
     {
       throw new SchemaCrawlerException("No template language provided");
     }
-    final String templateRendererClassName = languageType.getTemplateRendererClassName();
-    final Class<TemplateRenderer> templateRendererClass = (Class<TemplateRenderer>) Class
-      .forName(templateRendererClassName);
-    final TemplateRenderer templateRenderer = templateRendererClass.newInstance();
+    final String templateRendererClassName =
+      languageType.getTemplateRendererClassName();
+    final Class<TemplateRenderer> templateRendererClass =
+      (Class<TemplateRenderer>) Class.forName(templateRendererClassName);
+    final TemplateRenderer templateRenderer =
+      templateRendererClass.newInstance();
 
     final Map<String, Object> context = new HashMap<>();
     context.put("catalog", catalog);

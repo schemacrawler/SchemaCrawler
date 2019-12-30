@@ -46,18 +46,23 @@ public class BundledDistributionTest
   {
 
     final Connection connection = null;
-    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    final DatabaseConnector databaseSystemIdentifier = registry.lookupDatabaseConnector(
-      "mysql");
-    assertThat(databaseSystemIdentifier.getSchemaRetrievalOptionsBuilder(
-      connection).toOptions().getInformationSchemaViews().size(), is(8));
+    final DatabaseConnectorRegistry registry =
+      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnector databaseSystemIdentifier =
+      registry.lookupDatabaseConnector("mysql");
+    assertThat(databaseSystemIdentifier
+                 .getSchemaRetrievalOptionsBuilder(connection)
+                 .toOptions()
+                 .getInformationSchemaViews()
+                 .size(), is(8));
   }
 
   @Test
   public void testPlugin_mysql()
     throws Exception
   {
-    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry registry =
+      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     assertThat(registry.hasDatabaseSystemIdentifier("mysql"), is(true));
   }
 

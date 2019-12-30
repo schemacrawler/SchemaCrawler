@@ -58,99 +58,31 @@ import sf.util.UtilityMarker;
 public final class SchemaCrawlerUtility
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(SchemaCrawlerUtility.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(SchemaCrawlerUtility.class.getName());
 
   /**
-   * Crawls a database, and returns a catalog.
-   *
-   * @param connection
-   *        Live database connection.
-   * @param schemaCrawlerOptions
-   *        Options.
-   * @return Database catalog.
-   * @throws SchemaCrawlerException
-   *         On an exception.
-   */
-  public static Catalog getCatalog(final Connection connection,
-                                   final SchemaCrawlerOptions schemaCrawlerOptions)
-    throws SchemaCrawlerException
-  {
-    checkConnection(connection);
-    if (LOGGER.isLoggable(Level.CONFIG))
-    {
-      LOGGER.log(Level.CONFIG, ObjectToString.toString(schemaCrawlerOptions));
-    }
-
-    final SchemaRetrievalOptions schemaRetrievalOptions = matchSchemaRetrievalOptions(connection);
-    final SchemaCrawler schemaCrawler = new SchemaCrawler(connection,
-                                                          schemaRetrievalOptions,
-                                                          schemaCrawlerOptions);
-    final Catalog catalog = schemaCrawler.crawl();
-
-    return catalog;
-  }
-
-  /**
-   * Obtains result-set metadata from a live result-set.
-   *
-   * @param resultSet
-   *        Live result-set.
-   * @return Result-set metadata.
-   * @throws SchemaCrawlerException
-   *         On an exception.
-   */
-  public static ResultsColumns getResultsColumns(final ResultSet resultSet)
-    throws SchemaCrawlerException
-  {
-    // NOTE: Some JDBC drivers like SQLite may not work with closed
-    // result-sets
-    checkResultSet(resultSet);
-    final ResultsCrawler resultSetCrawler = new ResultsCrawler(resultSet);
-    final ResultsColumns resultsColumns = resultSetCrawler.crawl();
-    return resultsColumns;
-  }
-
-  /**
-   * Returns database specific options using an existing SchemaCrawler
-   * database plugin.
-   *
-   * @return SchemaRetrievalOptions
-   * @throws SchemaCrawlerException
-   *         On an exception.
-   */
-  public static SchemaRetrievalOptions matchSchemaRetrievalOptions(final Connection connection)
-    throws SchemaCrawlerException
-  {
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = buildSchemaRetrievalOptions(connection);
-
-    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder
-      .toOptions();
-
-    return schemaRetrievalOptions;
-  }
-
-  /**
-   * Allows building of database specific options programatically, using
-   * an existing SchemaCrawler database plugin as a starting point.
+   * Allows building of database specific options programatically, using an
+   * existing SchemaCrawler database plugin as a starting point.
    *
    * @return SchemaRetrievalOptionsBuilder
    * @throws SchemaCrawlerException
-   *         On an exception.
+   *   On an exception.
    */
   private static SchemaRetrievalOptionsBuilder buildSchemaRetrievalOptions(final Connection connection)
     throws SchemaCrawlerException
   {
     checkConnection(connection);
-    final DatabaseConnectorRegistry registry =  DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    final DatabaseConnector dbConnector = registry
-      .lookupDatabaseConnector(connection);
-    LOGGER
-      .log(Level.INFO,
-           "Using database plugin for " + dbConnector.getDatabaseServerType());
+    final DatabaseConnectorRegistry registry =
+      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnector dbConnector =
+      registry.lookupDatabaseConnector(connection);
+    LOGGER.log(Level.INFO,
+               "Using database plugin for "
+               + dbConnector.getDatabaseServerType());
 
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = dbConnector
-      .getSchemaRetrievalOptionsBuilder(connection);
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+      dbConnector.getSchemaRetrievalOptionsBuilder(connection);
     return schemaRetrievalOptionsBuilder;
   }
 
@@ -178,6 +110,77 @@ public final class SchemaCrawlerUtility
     {
       throw new SchemaCrawlerException("Bad result-set", e);
     }
+  }
+
+  /**
+   * Crawls a database, and returns a catalog.
+   *
+   * @param connection
+   *   Live database connection.
+   * @param schemaCrawlerOptions
+   *   Options.
+   * @return Database catalog.
+   * @throws SchemaCrawlerException
+   *   On an exception.
+   */
+  public static Catalog getCatalog(final Connection connection,
+                                   final SchemaCrawlerOptions schemaCrawlerOptions)
+    throws SchemaCrawlerException
+  {
+    checkConnection(connection);
+    if (LOGGER.isLoggable(Level.CONFIG))
+    {
+      LOGGER.log(Level.CONFIG, ObjectToString.toString(schemaCrawlerOptions));
+    }
+
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+      matchSchemaRetrievalOptions(connection);
+    final SchemaCrawler schemaCrawler = new SchemaCrawler(connection,
+                                                          schemaRetrievalOptions,
+                                                          schemaCrawlerOptions);
+    final Catalog catalog = schemaCrawler.crawl();
+
+    return catalog;
+  }
+
+  /**
+   * Obtains result-set metadata from a live result-set.
+   *
+   * @param resultSet
+   *   Live result-set.
+   * @return Result-set metadata.
+   * @throws SchemaCrawlerException
+   *   On an exception.
+   */
+  public static ResultsColumns getResultsColumns(final ResultSet resultSet)
+    throws SchemaCrawlerException
+  {
+    // NOTE: Some JDBC drivers like SQLite may not work with closed
+    // result-sets
+    checkResultSet(resultSet);
+    final ResultsCrawler resultSetCrawler = new ResultsCrawler(resultSet);
+    final ResultsColumns resultsColumns = resultSetCrawler.crawl();
+    return resultsColumns;
+  }
+
+  /**
+   * Returns database specific options using an existing SchemaCrawler database
+   * plugin.
+   *
+   * @return SchemaRetrievalOptions
+   * @throws SchemaCrawlerException
+   *   On an exception.
+   */
+  public static SchemaRetrievalOptions matchSchemaRetrievalOptions(final Connection connection)
+    throws SchemaCrawlerException
+  {
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+      buildSchemaRetrievalOptions(connection);
+
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+      schemaRetrievalOptionsBuilder.toOptions();
+
+    return schemaRetrievalOptions;
   }
 
   private SchemaCrawlerUtility()

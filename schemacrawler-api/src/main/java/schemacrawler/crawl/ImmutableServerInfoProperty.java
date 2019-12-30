@@ -65,8 +65,11 @@ final class ImmutableServerInfoProperty
     }
     else
     {
-      return getName().toLowerCase()
-        .compareTo(otherDbProperty.getName().toLowerCase());
+      return getName()
+        .toLowerCase()
+        .compareTo(otherDbProperty
+                     .getName()
+                     .toLowerCase());
     }
   }
 

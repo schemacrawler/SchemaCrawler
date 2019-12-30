@@ -53,6 +53,12 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 public final class DatabaseTestUtility
 {
 
+  public final static SchemaCrawlerOptions
+    schemaCrawlerOptionsWithMaximumSchemaInfoLevel = SchemaCrawlerOptionsBuilder
+    .builder()
+    .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+    .toOptions();
+
   public static Catalog getCatalog(final Connection connection,
                                    final SchemaCrawlerOptions schemaCrawlerOptions)
     throws SchemaCrawlerException
@@ -79,20 +85,20 @@ public final class DatabaseTestUtility
    * Loads a properties file from a CLASSPATH resource.
    *
    * @param resource
-   *        A CLASSPATH resource.
+   *   A CLASSPATH resource.
    * @return Config loaded from classpath resource
    * @throws IOException
-   *         On an exception
+   *   On an exception
    */
   protected static Config loadConfigFromClasspathResource(final String resource)
     throws IOException
   {
-    final InputStream stream = DatabaseTestUtility.class
-      .getResourceAsStream(resource);
+    final InputStream stream =
+      DatabaseTestUtility.class.getResourceAsStream(resource);
     requireNonNull(stream, "Could not load config from resource, " + resource);
     final Reader reader = new InputStreamReader(stream, StandardCharsets.UTF_8);
     final Properties properties = new Properties();
-    try (final BufferedReader bufferedReader = new BufferedReader(reader);)
+    try (final BufferedReader bufferedReader = new BufferedReader(reader))
     {
       properties.load(bufferedReader);
     }
@@ -102,12 +108,9 @@ public final class DatabaseTestUtility
   public static Config loadHsqldbConfig()
     throws IOException
   {
-    return loadConfigFromClasspathResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+    return loadConfigFromClasspathResource(
+      "/hsqldb.INFORMATION_SCHEMA.config.properties");
   }
-
-  public final static SchemaCrawlerOptions schemaCrawlerOptionsWithMaximumSchemaInfoLevel = SchemaCrawlerOptionsBuilder
-    .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-    .toOptions();
 
   private DatabaseTestUtility()
   {

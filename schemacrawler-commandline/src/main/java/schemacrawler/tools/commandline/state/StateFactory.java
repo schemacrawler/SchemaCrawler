@@ -53,12 +53,15 @@ public class StateFactory
     }
     try
     {
-      return cls.getConstructor(SchemaCrawlerShellState.class)
-                .newInstance(state);
+      return cls
+        .getConstructor(SchemaCrawlerShellState.class)
+        .newInstance(state);
     }
     catch (final Exception e)
     {
-      return cls.getConstructor().newInstance();
+      return cls
+        .getConstructor()
+        .newInstance();
     }
   }
 

@@ -37,8 +37,8 @@ public final class StringFormat
   implements Supplier<String>
 {
 
-  private final String format;
   private final Object[] args;
+  private final String format;
 
   public StringFormat(final String format, final Object... args)
   {
@@ -54,9 +54,11 @@ public final class StringFormat
       return format;
     }
 
-    try (final Formatter formatter = new Formatter();)
+    try (final Formatter formatter = new Formatter())
     {
-      return formatter.format(format, args).toString();
+      return formatter
+        .format(format, args)
+        .toString();
     }
   }
 

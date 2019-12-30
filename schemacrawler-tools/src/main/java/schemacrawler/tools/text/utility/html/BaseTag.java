@@ -110,23 +110,38 @@ abstract class BaseTag
   private String toHtmlString()
   {
     final StringBuilder buffer = new StringBuilder(1024);
-    buffer.append("<").append(getTag());
-    for (final Entry<String, String> attribute: attributes.entrySet())
+    buffer
+      .append("<")
+      .append(getTag());
+    for (final Entry<String, String> attribute : attributes.entrySet())
     {
-      buffer.append(" ").append(attribute.getKey()).append("='")
-        .append(attribute.getValue()).append("'");
+      buffer
+        .append(" ")
+        .append(attribute.getKey())
+        .append("='")
+        .append(attribute.getValue())
+        .append("'");
     }
     if (bgColor != null && !bgColor.equals(Color.white))
     {
-      buffer.append(" bgcolor='").append(bgColor).append("'");
+      buffer
+        .append(" bgcolor='")
+        .append(bgColor)
+        .append("'");
     }
     if (!isBlank(styleClass))
     {
-      buffer.append(" class='").append(styleClass).append("'");
+      buffer
+        .append(" class='")
+        .append(styleClass)
+        .append("'");
     }
     else if (align != null && align != Alignment.inherit)
     {
-      buffer.append(" align='").append(align).append("'");
+      buffer
+        .append(" align='")
+        .append(align)
+        .append("'");
     }
     buffer.append(">");
     if (emphasizeText)
@@ -138,7 +153,10 @@ abstract class BaseTag
     {
       buffer.append("</i></b>");
     }
-    buffer.append("</").append(getTag()).append(">");
+    buffer
+      .append("</")
+      .append(getTag())
+      .append(">");
 
     return buffer.toString();
   }
@@ -158,8 +176,9 @@ abstract class BaseTag
     {
       if (characterWidth > 0)
       {
-        final String format = String
-          .format("%%%s%ds", align == Alignment.right? "": "-", characterWidth);
+        final String format = String.format("%%%s%ds",
+                                            align == Alignment.right? "": "-",
+                                            characterWidth);
         return String.format(format, text);
       }
       else

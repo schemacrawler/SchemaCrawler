@@ -43,62 +43,48 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
  *
  * @author Sualeh Fatehi
  */
-@Command(name = "grep",
-         header = "** Grep for database object metadata",
-         description = {
-           "",
-         },
-         headerHeading = "",
-         synopsisHeading = "Shell Command:%n",
-         customSynopsis = {
-           "grep"
-         },
-         optionListHeading = "Options:%n")
+@Command(name = "grep", header = "** Grep for database object metadata", description = {
+  "",
+}, headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
+  "grep"
+}, optionListHeading = "Options:%n")
 public final class GrepCommand
   implements Runnable
 {
 
   private final SchemaCrawlerShellState state;
 
-  @Option(names = "--grep-columns",
-          description = {
-            "<grepcolumns> is a regular expression to match fully qualified column names, "
-            + "in the form \"SCHEMANAME.TABLENAME.COLUMNNAME\" "
-            + "- for example, --grep-columns=.*\\.STREET|.*\\.PRICE "
-            + "matches columns named STREET or PRICE in any table",
-            "Optional, default is no grep"
-          })
+  @Option(names = "--grep-columns", description = {
+    "<grepcolumns> is a regular expression to match fully qualified column names, "
+    + "in the form \"SCHEMANAME.TABLENAME.COLUMNNAME\" "
+    + "- for example, --grep-columns=.*\\.STREET|.*\\.PRICE "
+    + "matches columns named STREET or PRICE in any table",
+    "Optional, default is no grep"
+  })
   private Pattern grepcolumns;
-  @Option(names = "--grep-def",
-          description = {
-            "<grepdef> is a regular expression to match text within remarks and definitions "
-            + "of views, stored proedures and triggers, if available",
-            "Optional, default is no grep"
-          })
+  @Option(names = "--grep-def", description = {
+    "<grepdef> is a regular expression to match text within remarks and definitions "
+    + "of views, stored proedures and triggers, if available",
+    "Optional, default is no grep"
+  })
   private Pattern grepdef;
-  @Option(names = "--grep-parameters",
-          description = {
-            "<grepparameters> is a regular expression to match fully qualified routine parameter names, "
-            + "in the form \"SCHEMANAME.ROUTINENAME.INOUTNAME\" "
-            + "- for example, --grep-parameters=.*\\.STREET|.*\\.PRICE "
-            + "matches routine parameters named STREET or PRICE in any routine",
-            "Optional, default is no grep"
-          })
+  @Option(names = "--grep-parameters", description = {
+    "<grepparameters> is a regular expression to match fully qualified routine parameter names, "
+    + "in the form \"SCHEMANAME.ROUTINENAME.INOUTNAME\" "
+    + "- for example, --grep-parameters=.*\\.STREET|.*\\.PRICE "
+    + "matches routine parameters named STREET or PRICE in any routine",
+    "Optional, default is no grep"
+  })
   private Pattern grepparameters;
-  @Option(names = "--invert-match",
-          description = {
-            "Inverts the sense of matching, and shows non-matching tables and columns",
-            "Optional, default is false"
-          },
-          negatable = true)
+  @Option(names = "--invert-match", description = {
+    "Inverts the sense of matching, and shows non-matching tables and columns",
+    "Optional, default is false"
+  }, negatable = true)
   private Boolean invertMatch;
-  @Option(names = "--only-matching",
-          description = {
-            "Shows only matching tables, and does not show foreign keys "
-            + "that reference other non-matching tables",
-            "Optional, default is false"
-          },
-          negatable = true)
+  @Option(names = "--only-matching", description = {
+    "Shows only matching tables, and does not show foreign keys "
+    + "that reference other non-matching tables", "Optional, default is false"
+  }, negatable = true)
   private Boolean onlyMatching;
 
   public GrepCommand(final SchemaCrawlerShellState state)
@@ -109,7 +95,8 @@ public final class GrepCommand
   @Override
   public void run()
   {
-    final SchemaCrawlerOptionsBuilder optionsBuilder = state.getSchemaCrawlerOptionsBuilder();
+    final SchemaCrawlerOptionsBuilder optionsBuilder =
+      state.getSchemaCrawlerOptionsBuilder();
 
     if (grepcolumns != null)
     {

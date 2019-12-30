@@ -42,8 +42,8 @@ public class SchemaCrawlerOutputTest
   public Stream<OutputFormat> outputFormats()
   {
     return Arrays.stream(new OutputFormat[] {
-                                              TextOutputFormat.text,
-                                              TextOutputFormat.html });
+      TextOutputFormat.text, TextOutputFormat.html
+    });
   }
 
 }

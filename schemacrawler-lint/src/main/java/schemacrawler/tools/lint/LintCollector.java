@@ -33,7 +33,6 @@ import static java.util.Comparator.naturalOrder;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import schemacrawler.schema.AttributedObject;
@@ -54,13 +53,14 @@ public final class LintCollector
   public <N extends NamedObject & AttributedObject> void addLint(final N namedObject,
                                                                  final Lint<?> lint)
   {
-    if (namedObject != null && lint != null && namedObject.getFullName()
+    if (namedObject != null && lint != null && namedObject
+      .getFullName()
       .equals(lint.getObjectName()))
     {
       lints.add(lint);
 
-      final Collection<Lint<?>> columnLints = namedObject
-        .getAttribute(LINT_KEY, new ArrayList<>());
+      final Collection<Lint<?>> columnLints =
+        namedObject.getAttribute(LINT_KEY, new ArrayList<>());
       columnLints.add(lint);
       namedObject.setAttribute(LINT_KEY, columnLints);
     }

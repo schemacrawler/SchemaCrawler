@@ -41,7 +41,8 @@ public class TestCommandProvider
 {
 
   public static final String COMMAND = "test-command";
-  public static final String DESCRIPTION_HEADER = "Test command which is not deployed with the release";
+  public static final String DESCRIPTION_HEADER =
+    "Test command which is not deployed with the release";
 
   public TestCommandProvider()
   {
@@ -66,9 +67,8 @@ public class TestCommandProvider
   @Override
   public PluginCommand getCommandLineCommand()
   {
-    final PluginCommand pluginCommand = new PluginCommand(COMMAND,
-                                                          "** "
-                                                          + DESCRIPTION_HEADER);
+    final PluginCommand pluginCommand =
+      new PluginCommand(COMMAND, "** " + DESCRIPTION_HEADER);
     pluginCommand.addOption("test-command-parameter",
                             "Parameter for test command",
                             String.class);

@@ -39,7 +39,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.logging.Level;
 
 import schemacrawler.schema.Catalog;
@@ -57,8 +56,8 @@ public final class CatalogWithCounts
   extends BaseCatalogDecorator
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(CatalogWithCounts.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(CatalogWithCounts.class.getName());
 
   private static final long serialVersionUID = -3953296149824921463L;
 
@@ -77,7 +76,9 @@ public final class CatalogWithCounts
     try
     {
       checkConnection(connection);
-      identifiers = Identifiers.identifiers().withConnection(connection)
+      identifiers = Identifiers
+        .identifiers()
+        .withConnection(connection)
         .build();
     }
     catch (final SQLException e)
@@ -86,7 +87,9 @@ public final class CatalogWithCounts
       // so we cannot fail with an exception. Log and continue.
       LOGGER.log(Level.WARNING, "No connection provided", e);
 
-      identifiers = Identifiers.identifiers().withIdentifierQuoteString("\"")
+      identifiers = Identifiers
+        .identifiers()
+        .withIdentifierQuoteString("\"")
         .build();
 
       return;
@@ -94,14 +97,12 @@ public final class CatalogWithCounts
 
     final Query query = Operation.count.getQuery();
     final List<Table> allTables = new ArrayList<>(catalog.getTables());
-    for (final Table table: allTables)
+    for (final Table table : allTables)
     {
       try
       {
-        final long count = executeForLong(query,
-                                          connection,
-                                          table,
-                                          identifiers);
+        final long count =
+          executeForLong(query, connection, table, identifiers);
         counts.put(table, count);
         addRowCountToTable(table, count);
       }

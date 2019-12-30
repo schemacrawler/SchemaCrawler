@@ -42,8 +42,8 @@ import schemacrawler.schema.JdbcDriverProperty;
 import schemacrawler.schema.Property;
 
 /**
- * Represents a JDBC driver property, and it's value. Created from
- * metadata returned by a JDBC call, and other sources of information.
+ * Represents a JDBC driver property, and it's value. Created from metadata
+ * returned by a JDBC call, and other sources of information.
  *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
@@ -53,10 +53,9 @@ final class ImmutableJdbcDriverProperty
 {
 
   private static final long serialVersionUID = 8030156654422512161L;
-
+  private final List<String> choices;
   private final String description;
   private final boolean required;
-  private final List<String> choices;
 
   ImmutableJdbcDriverProperty(final DriverPropertyInfo driverPropertyInfo)
   {
@@ -84,8 +83,11 @@ final class ImmutableJdbcDriverProperty
     }
     else
     {
-      return getName().toLowerCase()
-        .compareTo(otherProperty.getName().toLowerCase());
+      return getName()
+        .toLowerCase()
+        .compareTo(otherProperty
+                     .getName()
+                     .toLowerCase());
     }
   }
 
@@ -96,6 +98,15 @@ final class ImmutableJdbcDriverProperty
   public Collection<String> getChoices()
   {
     return new ArrayList<>(choices);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public boolean isRequired()
+  {
+    return required;
   }
 
   /**
@@ -121,15 +132,6 @@ final class ImmutableJdbcDriverProperty
   public String getValue()
   {
     return (String) super.getValue();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isRequired()
-  {
-    return required;
   }
 
 }

@@ -60,7 +60,9 @@ public class LinterTableWithQuotedNames
     Identifiers identifiers;
     try
     {
-      identifiers = Identifiers.identifiers().withConnection(connection)
+      identifiers = Identifiers
+        .identifiers()
+        .withConnection(connection)
         .build();
     }
     catch (final SQLException e)
@@ -74,9 +76,9 @@ public class LinterTableWithQuotedNames
       addTableLint(table, getSummary());
     }
 
-    final List<String> spacesInNamesList = findColumnsWithQuotedNames(getColumns(table),
-                                                                      identifiers);
-    for (final String spacesInName: spacesInNamesList)
+    final List<String> spacesInNamesList =
+      findColumnsWithQuotedNames(getColumns(table), identifiers);
+    for (final String spacesInName : spacesInNamesList)
     {
       addTableLint(table, getSummary(), spacesInName);
     }
@@ -86,7 +88,7 @@ public class LinterTableWithQuotedNames
                                                   final Identifiers identifiers)
   {
     final List<String> columnsWithQuotedNames = new ArrayList<>();
-    for (final Column column: columns)
+    for (final Column column : columns)
     {
       final String columnName = column.getName();
       if (identifiers.isToBeQuoted(columnName))

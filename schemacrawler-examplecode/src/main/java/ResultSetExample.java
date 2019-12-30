@@ -11,6 +11,16 @@ import schemacrawler.utility.SchemaCrawlerUtility;
 public final class ResultSetExample
 {
 
+  private static Connection getConnection()
+  {
+    final String connectionUrl =
+      "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
+    final DatabaseConnectionSource dataSource =
+      new DatabaseConnectionSource(connectionUrl);
+    dataSource.setUserCredentials(new SingleUseUserCredentials("sa", ""));
+    return dataSource.get();
+  }
+
   public static void main(final String[] args)
     throws Exception
   {
@@ -25,13 +35,15 @@ public final class ResultSetExample
       + "    ON BOOKS.ID = BOOKAUTHORS.BOOKID                      \n"
       + "  INNER JOIN PUBLIC.BOOKS.AUTHORS AS AUTHORS              \n"
       + "    ON BOOKAUTHORS.AUTHORID = AUTHORS.ID                  \n";
-    try (final Connection connection = getConnection();
+    try (
+      final Connection connection = getConnection();
       final Statement statement = connection.createStatement();
-      final ResultSet results = statement.executeQuery(query))
+      final ResultSet results = statement.executeQuery(query)
+    )
     {
       // Get result set metadata
-      final ResultsColumns resultColumns = SchemaCrawlerUtility
-        .getResultsColumns(results);
+      final ResultsColumns resultColumns =
+        SchemaCrawlerUtility.getResultsColumns(results);
       for (final ResultsColumn column : resultColumns)
       {
         System.out.println("o--> " + column);
@@ -41,15 +53,6 @@ public final class ResultSetExample
       }
     }
 
-  }
-
-  private static Connection getConnection()
-  {
-    final String connectionUrl = "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
-    final DatabaseConnectionSource dataSource = new DatabaseConnectionSource(
-      connectionUrl);
-    dataSource.setUserCredentials(new SingleUseUserCredentials("sa", ""));
-    return dataSource.get();
   }
 
 }

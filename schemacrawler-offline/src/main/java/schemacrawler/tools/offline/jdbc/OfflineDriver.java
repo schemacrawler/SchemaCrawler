@@ -47,8 +47,8 @@ public class OfflineDriver
   implements Driver
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(OfflineDriver.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(OfflineDriver.class.getName());
 
   private static final String JDBC_URL_PREFIX = "jdbc:offline:";
 

@@ -44,14 +44,18 @@ import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.schema.ParameterModeType;
 import schemacrawler.schema.ProcedureParameter;
 import schemacrawler.schema.RoutineType;
-import schemacrawler.schemacrawler.*;
+import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.InformationSchemaKey;
+import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.utility.Query;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
- * A retriever uses database metadata to get the details about the
- * database procedure parameters.
+ * A retriever uses database metadata to get the details about the database
+ * procedure parameters.
  *
  * @author Sualeh Fatehi
  */
@@ -59,8 +63,8 @@ final class ProcedureParameterRetriever
   extends AbstractRetriever
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(ProcedureParameterRetriever.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(ProcedureParameterRetriever.class.getName());
 
   ProcedureParameterRetriever(final RetrieverConnection retrieverConnection,
                               final MutableCatalog catalog,
@@ -75,9 +79,8 @@ final class ProcedureParameterRetriever
   {
     requireNonNull(allRoutines, "No procedures provided");
 
-    final InclusionRuleFilter<ProcedureParameter> parameterFilter = new InclusionRuleFilter<>(
-      parameterInclusionRule,
-      true);
+    final InclusionRuleFilter<ProcedureParameter> parameterFilter =
+      new InclusionRuleFilter<>(parameterInclusionRule, true);
     if (parameterFilter.isExcludeAll())
     {
       LOGGER.log(Level.INFO,
@@ -85,14 +88,15 @@ final class ProcedureParameterRetriever
       return;
     }
 
-    final MetadataRetrievalStrategy procedureParameterRetrievalStrategy = getRetrieverConnection()
-      .getProcedureColumnRetrievalStrategy();
+    final MetadataRetrievalStrategy procedureParameterRetrievalStrategy =
+      getRetrieverConnection().getProcedureColumnRetrievalStrategy();
     switch (procedureParameterRetrievalStrategy)
     {
       case data_dictionary_all:
         LOGGER.log(Level.INFO,
                    "Retrieving procedure parameters, using fast data dictionary retrieval");
-        retrieveProcedureParametersFromDataDictionary(allRoutines, parameterFilter);
+        retrieveProcedureParametersFromDataDictionary(allRoutines,
+                                                      parameterFilter);
         break;
 
       case metadata_all:
@@ -117,26 +121,26 @@ final class ProcedureParameterRetriever
                                         final NamedObjectList<MutableRoutine> allRoutines,
                                         final InclusionRuleFilter<ProcedureParameter> parameterFilter)
   {
-    final String columnCatalogName = normalizeCatalogName(results.getString(
-      "PROCEDURE_CAT"));
-    final String schemaName = normalizeSchemaName(results
-                                                    .getString("PROCEDURE_SCHEM"));
+    final String columnCatalogName =
+      normalizeCatalogName(results.getString("PROCEDURE_CAT"));
+    final String schemaName =
+      normalizeSchemaName(results.getString("PROCEDURE_SCHEM"));
     final String procedureName = results.getString("PROCEDURE_NAME");
     String columnName = results.getString("COLUMN_NAME");
     final String specificName = results.getString("SPECIFIC_NAME");
 
-    final ParameterModeType parameterMode = getProcedureParameterMode(results
-                                                                        .getInt(
-                                                                          "COLUMN_TYPE",
-                                                                          DatabaseMetaData.procedureColumnUnknown));
+    final ParameterModeType parameterMode =
+      getProcedureParameterMode(results.getInt("COLUMN_TYPE",
+                                               DatabaseMetaData.procedureColumnUnknown));
 
     LOGGER.log(Level.FINE,
-               new StringFormat("Retrieving procedure parameter <%s.%s.%s.%s.%s>",
-                                columnCatalogName,
-                                schemaName,
-                                procedureName,
-                                specificName,
-                                columnName));
+               new StringFormat(
+                 "Retrieving procedure parameter <%s.%s.%s.%s.%s>",
+                 columnCatalogName,
+                 schemaName,
+                 procedureName,
+                 specificName,
+                 columnName));
     if (isBlank(columnName) && parameterMode == ParameterModeType.result)
     {
       columnName = "<return value>";
@@ -146,12 +150,11 @@ final class ProcedureParameterRetriever
       return;
     }
 
-    final Optional<MutableRoutine> optionalRoutine = allRoutines.lookup(Arrays
-                                                                          .asList(
-                                                                            columnCatalogName,
-                                                                            schemaName,
-                                                                            procedureName,
-                                                                            specificName));
+    final Optional<MutableRoutine> optionalRoutine =
+      allRoutines.lookup(Arrays.asList(columnCatalogName,
+                                       schemaName,
+                                       procedureName,
+                                       specificName));
     if (!optionalRoutine.isPresent())
     {
       return;
@@ -164,12 +167,11 @@ final class ProcedureParameterRetriever
     }
 
     final MutableProcedure procedure = (MutableProcedure) routine;
-    final MutableProcedureParameter parameter = lookupOrCreateProcedureParameter(
-      procedure,
-      columnName);
+    final MutableProcedureParameter parameter =
+      lookupOrCreateProcedureParameter(procedure, columnName);
     if (parameterFilter.test(parameter) && belongsToSchema(procedure,
-                                                     columnCatalogName,
-                                                     schemaName))
+                                                           columnCatalogName,
+                                                           schemaName))
     {
       final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
       final int dataType = results.getInt("DATA_TYPE", 0);
@@ -182,10 +184,9 @@ final class ProcedureParameterRetriever
       final String remarks = results.getString("REMARKS");
       parameter.setOrdinalPosition(ordinalPosition);
       parameter.setParameterMode(parameterMode);
-      parameter
-        .setColumnDataType(lookupOrCreateColumnDataType(procedure.getSchema(),
-                                                        dataType,
-                                                        typeName));
+      parameter.setColumnDataType(lookupOrCreateColumnDataType(procedure.getSchema(),
+                                                               dataType,
+                                                               typeName));
       parameter.setSize(length);
       parameter.setPrecision(precision);
       parameter.setNullable(isNullable);
@@ -223,8 +224,8 @@ final class ProcedureParameterRetriever
   private MutableProcedureParameter lookupOrCreateProcedureParameter(final MutableProcedure procedure,
                                                                      final String columnName)
   {
-    final Optional<MutableProcedureParameter> parameterOptional = procedure
-      .lookupParameter(columnName);
+    final Optional<MutableProcedureParameter> parameterOptional =
+      procedure.lookupParameter(columnName);
     final MutableProcedureParameter parameter;
     if (parameterOptional.isPresent())
     {
@@ -241,22 +242,23 @@ final class ProcedureParameterRetriever
                                                              final InclusionRuleFilter<ProcedureParameter> parameterFilter)
     throws SQLException
   {
-    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-      .getInformationSchemaViews();
-    if (!informationSchemaViews
-      .hasQuery(InformationSchemaKey.PROCEDURE_COLUMNS))
+    final InformationSchemaViews informationSchemaViews =
+      getRetrieverConnection().getInformationSchemaViews();
+    if (!informationSchemaViews.hasQuery(InformationSchemaKey.PROCEDURE_COLUMNS))
     {
       throw new SchemaCrawlerSQLException("No procedure parameters SQL provided",
                                           null);
     }
-    final Query procedureColumnsSql = informationSchemaViews
-      .getQuery(InformationSchemaKey.PROCEDURE_COLUMNS);
+    final Query procedureColumnsSql =
+      informationSchemaViews.getQuery(InformationSchemaKey.PROCEDURE_COLUMNS);
     final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
+    try (
+      final Statement statement = connection.createStatement();
       final MetadataResultSet results = new MetadataResultSet(
         procedureColumnsSql,
         statement,
-        getSchemaInclusionRule());)
+        getSchemaInclusionRule())
+    )
     {
       results.setDescription("retrieveProcedureParametersFromDataDictionary");
       while (results.next())
@@ -278,18 +280,19 @@ final class ProcedureParameterRetriever
       }
 
       final MutableProcedure procedure = (MutableProcedure) routine;
-      LOGGER.log(Level.FINE, "Retrieving procedure parameters for " + procedure);
-      try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-                                                                     .getProcedureColumns(
-                                                                       procedure
-                                                                         .getSchema()
-                                                                         .getCatalogName(),
-                                                                       procedure
-                                                                         .getSchema()
-                                                                         .getName(),
-                                                                       procedure
-                                                                         .getName(),
-                                                                       null));)
+      LOGGER.log(Level.FINE,
+                 "Retrieving procedure parameters for " + procedure);
+      try (
+        final MetadataResultSet results = new MetadataResultSet(getMetaData().getProcedureColumns(
+          procedure
+            .getSchema()
+            .getCatalogName(),
+          procedure
+            .getSchema()
+            .getName(),
+          procedure.getName(),
+          null))
+      )
       {
         while (results.next())
         {
@@ -309,12 +312,13 @@ final class ProcedureParameterRetriever
                                                                        final InclusionRuleFilter<ProcedureParameter> parameterFilter)
     throws SQLException
   {
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-                                                                   .getProcedureColumns(
-                                                                     null,
-                                                                     null,
-                                                                     "%",
-                                                                     "%"));)
+    try (
+      final MetadataResultSet results = new MetadataResultSet(getMetaData().getProcedureColumns(
+        null,
+        null,
+        "%",
+        "%"))
+    )
     {
       while (results.next())
       {

@@ -63,7 +63,9 @@ public final class FreeMarkerRenderer
     final File templateFilePath = new File(templateLocation);
     if (templateFilePath.exists())
     {
-      templatePath = templateFilePath.getAbsoluteFile().getParent();
+      templatePath = templateFilePath
+        .getAbsoluteFile()
+        .getParent();
       templateLocation = templateFilePath.getName();
     }
 
@@ -73,15 +75,17 @@ public final class FreeMarkerRenderer
     // Create a new instance of the configuration
     final Configuration cfg = new Configuration(Configuration.VERSION_2_3_28);
 
-    final TemplateLoader ctl = new ClassTemplateLoader(FreeMarkerRenderer.class,
-                                                       "/");
+    final TemplateLoader ctl =
+      new ClassTemplateLoader(FreeMarkerRenderer.class, "/");
     final TemplateLoader ftl = new FileTemplateLoader(new File(templatePath));
     final TemplateLoader mtl = new MultiTemplateLoader(new TemplateLoader[] {
       ctl, ftl
     });
     cfg.setTemplateLoader(mtl);
     cfg.setEncoding(Locale.getDefault(),
-                    outputOptions.getInputCharset().name());
+                    outputOptions
+                      .getInputCharset()
+                      .name());
     cfg.setWhitespaceStripping(true);
 
     try (final Writer writer = outputOptions.openNewOutputWriter())

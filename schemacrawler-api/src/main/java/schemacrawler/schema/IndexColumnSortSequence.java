@@ -40,34 +40,36 @@ import sf.util.StringFormat;
 public enum IndexColumnSortSequence
 {
 
- /**
-  * Unknown
-  */
- unknown("unknown"),
- /**
-  * Ascending.
-  */
- ascending("A"),
- /**
-  * Descending.
-  */
- descending("D");
+  /**
+   * Unknown
+   */
+  unknown("unknown"),
+  /**
+   * Ascending.
+   */
+  ascending("A"),
+  /**
+   * Descending.
+   */
+  descending("D");
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(IndexColumnSortSequence.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(IndexColumnSortSequence.class.getName());
 
   /**
    * Find the enumeration value corresponding to the string.
    *
    * @param code
-   *        Sort sequence code.
+   *   Sort sequence code.
    * @return Enumeration value
    */
   public static IndexColumnSortSequence valueOfFromCode(final String code)
   {
-    for (final IndexColumnSortSequence type: IndexColumnSortSequence.values())
+    for (final IndexColumnSortSequence type : IndexColumnSortSequence.values())
     {
-      if (type.getCode().equalsIgnoreCase(code))
+      if (type
+        .getCode()
+        .equalsIgnoreCase(code))
       {
         return type;
       }
@@ -78,7 +80,7 @@ public enum IndexColumnSortSequence
 
   private final String code;
 
-  private IndexColumnSortSequence(final String code)
+  IndexColumnSortSequence(final String code)
   {
     this.code = code;
   }

@@ -43,10 +43,6 @@ class ImmutableDatabaseProperty
   implements DatabaseProperty
 {
 
-  private static final long serialVersionUID = -7150431683440256142L;
-
-  private static final Set<Entry<String, String>> acronyms;
-
   static
   {
     final Map<String, String> acronymsMap = new HashMap<>();
@@ -59,6 +55,9 @@ class ImmutableDatabaseProperty
     acronymsMap.put("TYPE_SCROLL_SENSITIVE", "Type_scroll_sensitive");
     acronyms = Collections.unmodifiableSet(acronymsMap.entrySet());
   }
+
+  private static final Set<Entry<String, String>> acronyms;
+  private static final long serialVersionUID = -7150431683440256142L;
 
   ImmutableDatabaseProperty(final String name, final Object value)
   {
@@ -74,8 +73,11 @@ class ImmutableDatabaseProperty
     }
     else
     {
-      return getDescription().toLowerCase()
-        .compareTo(otherDbProperty.getDescription().toLowerCase());
+      return getDescription()
+        .toLowerCase()
+        .compareTo(otherDbProperty
+                     .getDescription()
+                     .toLowerCase());
     }
   }
 
@@ -92,10 +94,10 @@ class ImmutableDatabaseProperty
       description = description.substring(get.length());
     }
 
-    for (final Entry<String, String> acronym: acronyms)
+    for (final Entry<String, String> acronym : acronyms)
     {
-      description = description.replaceAll(acronym.getKey(),
-                                           acronym.getValue());
+      description =
+        description.replaceAll(acronym.getKey(), acronym.getValue());
     }
 
     final int strLen = description.length();
@@ -105,7 +107,9 @@ class ImmutableDatabaseProperty
       final char ch = description.charAt(i);
       if (Character.isUpperCase(ch) || Character.isTitleCase(ch))
       {
-        buffer.append(' ').append(Character.toLowerCase(ch));
+        buffer
+          .append(' ')
+          .append(Character.toLowerCase(ch));
       }
       else
       {
@@ -114,12 +118,13 @@ class ImmutableDatabaseProperty
     }
     description = buffer.toString();
 
-    for (final Entry<String, String> acronym: acronyms)
+    for (final Entry<String, String> acronym : acronyms)
     {
-      description = description.replaceAll(acronym.getValue().toLowerCase(),
-                                           acronym.getKey());
-      description = description.replaceAll(acronym.getValue(),
-                                           acronym.getKey());
+      description = description.replaceAll(acronym
+                                             .getValue()
+                                             .toLowerCase(), acronym.getKey());
+      description =
+        description.replaceAll(acronym.getValue(), acronym.getKey());
     }
 
     description = description.trim();

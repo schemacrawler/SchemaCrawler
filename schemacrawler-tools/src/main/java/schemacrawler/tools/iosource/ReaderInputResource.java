@@ -42,8 +42,8 @@ public class ReaderInputResource
   implements InputResource
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(ReaderInputResource.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(ReaderInputResource.class.getName());
 
   private final Reader reader;
 

@@ -29,10 +29,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.serialize;
 
 
-import static java.nio.file.Files.probeContentType;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.TestUtility.probeFileHeader;
 import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
@@ -61,7 +64,8 @@ public class CatalogJavaSerializationTest
   public void catalogSerializationWithJava(final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     assertThat("Could not obtain catalog", catalog, notNullValue());
@@ -69,17 +73,20 @@ public class CatalogJavaSerializationTest
                catalog.getSchemas(),
                not(empty()));
 
-    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
+    final Schema schema = catalog
+      .lookupSchema("PUBLIC.BOOKS")
+      .orElse(null);
     assertThat("Could not obtain schema", schema, notNullValue());
     assertThat("Unexpected number of tables in the schema",
                catalog.getTables(schema),
                hasSize(10));
 
-    final Path testOutputFile = IOUtility.createTempFilePath(
-      "sc_java_serialization",
-      "ser");
-    try (final ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(
-      testOutputFile.toFile())))
+    final Path testOutputFile =
+      IOUtility.createTempFilePath("sc_java_serialization", "ser");
+    try (
+      final ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(
+        testOutputFile.toFile()))
+    )
     {
       out.writeObject(catalog);
     }
@@ -89,14 +96,17 @@ public class CatalogJavaSerializationTest
     assertThat(probeFileHeader(testOutputFile), is("ACED"));
 
     Catalog catalogDeserialized = null;
-    try (final ObjectInputStream in = new ObjectInputStream(new FileInputStream(
-      testOutputFile.toFile())))
+    try (
+      final ObjectInputStream in = new ObjectInputStream(new FileInputStream(
+        testOutputFile.toFile()))
+    )
     {
       catalogDeserialized = (Catalog) in.readObject();
     }
 
-    final Schema schemaDeserialized = catalogDeserialized.lookupSchema(
-      "PUBLIC.BOOKS").orElse(null);
+    final Schema schemaDeserialized = catalogDeserialized
+      .lookupSchema("PUBLIC.BOOKS")
+      .orElse(null);
     assertThat("Could not obtain schema", schemaDeserialized, notNullValue());
     assertThat("Unexpected number of tables in the schema",
                catalogDeserialized.getTables(schemaDeserialized),

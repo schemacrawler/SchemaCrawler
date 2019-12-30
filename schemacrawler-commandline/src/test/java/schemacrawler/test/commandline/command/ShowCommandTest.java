@@ -23,13 +23,15 @@ public class ShowCommandTest
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     runCommandInTest(new ShowCommand(state), args);
 
-    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder()
-                                                                     .fromConfig(
-                                                                       state.getAdditionalConfiguration());
+    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder
+      .builder()
+      .fromConfig(state.getAdditionalConfiguration());
 
     assertThat("No options are set",
                builder.toOptions(),
-               is(equalTo(SchemaTextOptionsBuilder.builder().toOptions())));
+               is(equalTo(SchemaTextOptionsBuilder
+                            .builder()
+                            .toOptions())));
   }
 
   @Test
@@ -40,13 +42,15 @@ public class ShowCommandTest
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     runCommandInTest(new ShowCommand(state), args);
 
-    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder()
-                                                                     .fromConfig(
-                                                                       state.getAdditionalConfiguration());
+    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder
+      .builder()
+      .fromConfig(state.getAdditionalConfiguration());
 
     assertThat("No options are set",
                builder.toOptions(),
-               is(equalTo(SchemaTextOptionsBuilder.builder().toOptions())));
+               is(equalTo(SchemaTextOptionsBuilder
+                            .builder()
+                            .toOptions())));
   }
 
   @Test
@@ -59,13 +63,15 @@ public class ShowCommandTest
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     runCommandInTest(new ShowCommand(state), args);
 
-    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder()
-                                                                     .fromConfig(
-                                                                       state.getAdditionalConfiguration());
+    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder
+      .builder()
+      .fromConfig(state.getAdditionalConfiguration());
 
     assertThat("No options are set",
                builder.toOptions(),
-               is(equalTo(SchemaTextOptionsBuilder.builder().toOptions())));
+               is(equalTo(SchemaTextOptionsBuilder
+                            .builder()
+                            .toOptions())));
   }
 
   @Test
@@ -78,22 +84,44 @@ public class ShowCommandTest
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     runCommandInTest(new ShowCommand(state), args);
 
-    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder()
-                                                                     .fromConfig(
-                                                                       state.getAdditionalConfiguration());
+    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder
+      .builder()
+      .fromConfig(state.getAdditionalConfiguration());
 
-    assertThat(builder.toOptions().isNoInfo(), is(true));
-    assertThat(builder.toOptions().isHideRemarks(), is(false));
-    assertThat(builder.toOptions().isShowWeakAssociations(), is(false));
+    assertThat(builder
+                 .toOptions()
+                 .isNoInfo(), is(true));
+    assertThat(builder
+                 .toOptions()
+                 .isHideRemarks(), is(false));
+    assertThat(builder
+                 .toOptions()
+                 .isShowWeakAssociations(), is(false));
     // --
-    assertThat(builder.toOptions().isHideTableConstraintNames(), is(false));
-    assertThat(builder.toOptions().isHideTableConstraintNames(), is(false));
-    assertThat(builder.toOptions().isHideForeignKeyNames(), is(false));
-    assertThat(builder.toOptions().isHideIndexNames(), is(false));
-    assertThat(builder.toOptions().isHidePrimaryKeyNames(), is(false));
-    assertThat(builder.toOptions().isHideTriggerNames(), is(false));
-    assertThat(builder.toOptions().isHideRoutineSpecificNames(), is(false));
-    assertThat(builder.toOptions().isShowUnqualifiedNames(), is(false));
+    assertThat(builder
+                 .toOptions()
+                 .isHideTableConstraintNames(), is(false));
+    assertThat(builder
+                 .toOptions()
+                 .isHideTableConstraintNames(), is(false));
+    assertThat(builder
+                 .toOptions()
+                 .isHideForeignKeyNames(), is(false));
+    assertThat(builder
+                 .toOptions()
+                 .isHideIndexNames(), is(false));
+    assertThat(builder
+                 .toOptions()
+                 .isHidePrimaryKeyNames(), is(false));
+    assertThat(builder
+                 .toOptions()
+                 .isHideTriggerNames(), is(false));
+    assertThat(builder
+                 .toOptions()
+                 .isHideRoutineSpecificNames(), is(false));
+    assertThat(builder
+                 .toOptions()
+                 .isShowUnqualifiedNames(), is(false));
 
   }
 
@@ -112,9 +140,9 @@ public class ShowCommandTest
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     runCommandInTest(new ShowCommand(state), args);
 
-    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder()
-                                                                     .fromConfig(
-                                                                       state.getAdditionalConfiguration());
+    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder
+      .builder()
+      .fromConfig(state.getAdditionalConfiguration());
 
     final SchemaTextOptions options = builder.toOptions();
 

@@ -62,8 +62,9 @@ public class LinterForeignKeySelfReference
   {
     requireNonNull(table, "No table provided");
 
-    final List<ForeignKey> selfReferencingForeignKeys = findSelfReferencingForeignKeys(table);
-    for (final ForeignKey foreignKey: selfReferencingForeignKeys)
+    final List<ForeignKey> selfReferencingForeignKeys =
+      findSelfReferencingForeignKeys(table);
+    for (final ForeignKey foreignKey : selfReferencingForeignKeys)
     {
       addTableLint(table, getSummary(), foreignKey);
     }
@@ -74,9 +75,9 @@ public class LinterForeignKeySelfReference
     final List<ForeignKey> selfReferencingForeignKeys = new ArrayList<>();
     if (table != null && !(table instanceof View))
     {
-      for (final ForeignKey foreignKey: table.getImportedForeignKeys())
+      for (final ForeignKey foreignKey : table.getImportedForeignKeys())
       {
-        for (final ForeignKeyColumnReference columnReference: foreignKey)
+        for (final ForeignKeyColumnReference columnReference : foreignKey)
         {
           final Column pkColumn = columnReference.getPrimaryKeyColumn();
           final Column fkColumn = columnReference.getForeignKeyColumn();

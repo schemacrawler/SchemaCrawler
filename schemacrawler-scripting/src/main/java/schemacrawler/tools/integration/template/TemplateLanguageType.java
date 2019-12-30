@@ -28,8 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.template;
 
 
-import java.util.EnumSet;
-
 public enum TemplateLanguageType
 {
   unknown(null, null),

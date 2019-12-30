@@ -42,14 +42,12 @@ public final class JavaSqlType
   implements SQLType, Serializable, Comparable<JavaSqlType>
 {
 
-  private static final long serialVersionUID = 2614819974745473431L;
-
   /**
    * Unknown SQL data type.
    */
-  public static final JavaSqlType UNKNOWN = new JavaSqlType(unknownSQLType(),
-                                                            Object.class,
-                                                            JavaSqlTypeGroup.unknown);
+  public static final JavaSqlType UNKNOWN =
+    new JavaSqlType(unknownSQLType(), Object.class, JavaSqlTypeGroup.unknown);
+  private static final long serialVersionUID = 2614819974745473431L;
 
   private static SQLType unknownSQLType()
   {
@@ -82,56 +80,27 @@ public final class JavaSqlType
     return new UnknownSQLType();
   }
 
-  private final SQLType sqlType;
   private final Class<?> defaultMappedClass;
   private final JavaSqlTypeGroup javaSqlTypeGroup;
+  private final SQLType sqlType;
 
   public JavaSqlType(final SQLType sqlType,
                      final Class<?> defaultMappedClass,
                      final JavaSqlTypeGroup javaSqlTypeGroup)
   {
     this.sqlType = requireNonNull(sqlType, "No SQLType provided");
-    this.defaultMappedClass = requireNonNull(defaultMappedClass,
-                                             "Np default mapped class provided");
-    this.javaSqlTypeGroup = requireNonNull(javaSqlTypeGroup,
-                                           "No SQLType group provided");
+    this.defaultMappedClass =
+      requireNonNull(defaultMappedClass, "Np default mapped class provided");
+    this.javaSqlTypeGroup =
+      requireNonNull(javaSqlTypeGroup, "No SQLType group provided");
   }
 
   @Override
   public int compareTo(final JavaSqlType otherSqlDataType)
   {
-    return sqlType.getName().compareTo(otherSqlDataType.sqlType.getName());
-  }
-
-  @Override
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
-      return true;
-    }
-    if (obj == null)
-    {
-      return false;
-    }
-    if (getClass() != obj.getClass())
-    {
-      return false;
-    }
-    final JavaSqlType other = (JavaSqlType) obj;
-    if (sqlType == null)
-    {
-      if (other.sqlType != null)
-      {
-        return false;
-      }
-    }
-    else if (!sqlType.getVendorTypeNumber()
-      .equals(other.sqlType.getVendorTypeNumber()))
-    {
-      return false;
-    }
-    return true;
+    return sqlType
+      .getName()
+      .compareTo(otherSqlDataType.sqlType.getName());
   }
 
   public Class<?> getDefaultMappedClass()
@@ -175,9 +144,37 @@ public final class JavaSqlType
   {
     final int prime = 31;
     int result = 1;
-    result = prime * result
-             + (sqlType == null? 0: sqlType.getVendorTypeNumber());
+    result =
+      prime * result + (sqlType == null? 0: sqlType.getVendorTypeNumber());
     return result;
+  }
+
+  @Override
+  public boolean equals(final Object obj)
+  {
+    if (this == obj)
+    {
+      return true;
+    }
+    if (obj == null)
+    {
+      return false;
+    }
+    if (getClass() != obj.getClass())
+    {
+      return false;
+    }
+    final JavaSqlType other = (JavaSqlType) obj;
+    if (sqlType == null)
+    {
+      return other.sqlType == null;
+    }
+    else
+    {
+      return sqlType
+        .getVendorTypeNumber()
+        .equals(other.sqlType.getVendorTypeNumber());
+    }
   }
 
   @Override

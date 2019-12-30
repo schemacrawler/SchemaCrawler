@@ -44,14 +44,14 @@ import sf.util.StringFormat;
 public class PropertiesUtility
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(PropertiesUtility.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(PropertiesUtility.class.getName());
 
   /**
    * Loads a properties file.
    *
    * @param inputResource
-   *        Config resource.
+   *   Config resource.
    * @return Config
    */
   public static Config loadConfig(final InputResource inputResource)
@@ -64,7 +64,7 @@ public class PropertiesUtility
    * Loads a properties file.
    *
    * @param inputResource
-   *        Properties resource.
+   *   Properties resource.
    * @return Properties
    */
   public static Properties loadProperties(final InputResource inputResource)

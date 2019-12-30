@@ -35,7 +35,9 @@ import static org.hamcrest.collection.IsMapContaining.hasKey;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.CommandlineTestUtility.createLoadedSchemaCrawlerShellState;
-import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.retrievePluginOptions;
 
@@ -66,18 +68,18 @@ public class ExecuteCommandTest
     throws SchemaCrawlerException, IOException
   {
 
-    final SchemaCrawlerShellState state = createLoadedSchemaCrawlerShellState(
-      connection);
+    final SchemaCrawlerShellState state =
+      createLoadedSchemaCrawlerShellState(connection);
 
     final Path testOutputFile = IOUtility.createTempFilePath("test", ".txt");
 
     final String[] args = new String[] {
-      "-c", "schema", "-o", testOutputFile.toString() };
+      "-c", "schema", "-o", testOutputFile.toString()
+    };
 
     final ExecuteCommand serializeCommand = new ExecuteCommand(state);
-    final CommandLine commandLine = newCommandLine(serializeCommand,
-                                                   null,
-                                                   false);
+    final CommandLine commandLine =
+      newCommandLine(serializeCommand, null, false);
 
     commandLine.execute(args);
 
@@ -99,12 +101,12 @@ public class ExecuteCommandTest
       "--test-command-parameter",
       "parameter-value",
       "--unknown-parameter",
-      "some-value" };
+      "some-value"
+    };
 
     final ExecuteCommand executeTestCommand = new ExecuteCommand(state);
-    final CommandLine commandLine = newCommandLine(executeTestCommand,
-                                                   null,
-                                                   false);
+    final CommandLine commandLine =
+      newCommandLine(executeTestCommand, null, false);
 
     final CommandLine.ParseResult parseResult = commandLine.parseArgs(args);
     final Config additionalConfig = retrievePluginOptions(parseResult);

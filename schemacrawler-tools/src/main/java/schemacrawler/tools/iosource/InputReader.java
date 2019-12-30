@@ -41,8 +41,8 @@ public class InputReader
   extends Reader
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(InputReader.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(InputReader.class.getName());
 
   private final String description;
   private final Reader reader;
@@ -69,9 +69,8 @@ public class InputReader
     }
     else
     {
-      LOGGER
-        .log(Level.INFO,
-             "Not closing input reader, since output is to an externally provided reader");
+      LOGGER.log(Level.INFO,
+                 "Not closing input reader, since output is to an externally provided reader");
     }
 
     isClosed = true;
@@ -159,8 +158,9 @@ public class InputReader
   {
     if (!isClosed)
     {
-      throw new IllegalStateException(String
-        .format("Could not close input reader <%s>", description));
+      throw new IllegalStateException(String.format(
+        "Could not close input reader <%s>",
+        description));
     }
     super.finalize();
   }

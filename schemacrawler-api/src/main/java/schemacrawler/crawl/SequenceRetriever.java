@@ -49,8 +49,8 @@ import schemacrawler.utility.Query;
 import sf.util.SchemaCrawlerLogger;
 
 /**
- * A retriever that uses database metadata to get the extended details
- * about the database sequences.
+ * A retriever that uses database metadata to get the extended details about the
+ * database sequences.
  *
  * @author Sualeh Fatehi
  */
@@ -58,8 +58,8 @@ final class SequenceRetriever
   extends AbstractRetriever
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(SequenceRetriever.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(SequenceRetriever.class.getName());
 
   SequenceRetriever(final RetrieverConnection retrieverConnection,
                     final MutableCatalog catalog,
@@ -73,15 +73,15 @@ final class SequenceRetriever
    * Retrieves the sequence definitions from the database.
    *
    * @param sequenceInclusionRule
-   *        Rule for including sequences
+   *   Rule for including sequences
    * @throws SQLException
-   *         On a SQL exception
+   *   On a SQL exception
    */
   void retrieveSequenceInformation(final InclusionRule sequenceInclusionRule)
     throws SQLException
   {
-    final InclusionRuleFilter<Sequence> sequenceFilter = new InclusionRuleFilter<>(sequenceInclusionRule,
-                                                                                   false);
+    final InclusionRuleFilter<Sequence> sequenceFilter =
+      new InclusionRuleFilter<>(sequenceInclusionRule, false);
     if (sequenceFilter.isExcludeAll())
     {
       LOGGER.log(Level.INFO,
@@ -91,8 +91,8 @@ final class SequenceRetriever
 
     LOGGER.log(Level.INFO, "Retrieving sequences");
 
-    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-      .getInformationSchemaViews();
+    final InformationSchemaViews informationSchemaViews =
+      getRetrieverConnection().getInformationSchemaViews();
     if (!informationSchemaViews.hasQuery(InformationSchemaKey.SEQUENCES))
     {
       LOGGER.log(Level.FINE,
@@ -102,21 +102,24 @@ final class SequenceRetriever
 
     final NamedObjectList<SchemaReference> schemas = getAllSchemas();
 
-    final Query sequencesDefinitionSql = informationSchemaViews
-      .getQuery(InformationSchemaKey.SEQUENCES);
+    final Query sequencesDefinitionSql =
+      informationSchemaViews.getQuery(InformationSchemaKey.SEQUENCES);
     final Connection connection = getDatabaseConnection();
 
-    try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(sequencesDefinitionSql,
-                                                                statement,
-                                                                getSchemaInclusionRule());)
+    try (
+      final Statement statement = connection.createStatement();
+      final MetadataResultSet results = new MetadataResultSet(
+        sequencesDefinitionSql,
+        statement,
+        getSchemaInclusionRule())
+    )
     {
       while (results.next())
       {
-        final String catalogName = normalizeCatalogName(results
-          .getString("SEQUENCE_CATALOG"));
-        final String schemaName = normalizeSchemaName(results
-          .getString("SEQUENCE_SCHEMA"));
+        final String catalogName =
+          normalizeCatalogName(results.getString("SEQUENCE_CATALOG"));
+        final String schemaName =
+          normalizeSchemaName(results.getString("SEQUENCE_SCHEMA"));
         final String sequenceName = results.getString("SEQUENCE_NAME");
         final BigInteger minimumValue = results.getBigInteger("MINIMUM_VALUE");
         final BigInteger maximumValue = results.getBigInteger("MAXIMUM_VALUE");
@@ -124,16 +127,16 @@ final class SequenceRetriever
         final long longIncrement = increment == null? 1L: increment.longValue();
         final boolean cycle = results.getBoolean("CYCLE_OPTION");
 
-        final Optional<SchemaReference> optionalSchema = schemas
-          .lookup(Arrays.asList(catalogName, schemaName));
+        final Optional<SchemaReference> optionalSchema =
+          schemas.lookup(Arrays.asList(catalogName, schemaName));
         if (!optionalSchema.isPresent())
         {
           continue;
         }
         final Schema schema = optionalSchema.get();
 
-        final MutableSequence sequence = new MutableSequence(schema,
-                                                             sequenceName);
+        final MutableSequence sequence =
+          new MutableSequence(schema, sequenceName);
         sequence.setMaximumValue(maximumValue);
         sequence.setMinimumValue(minimumValue);
         sequence.setIncrement(longIncrement);

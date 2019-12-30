@@ -34,22 +34,16 @@ import java.util.logging.Level;
 import picocli.CommandLine.Command;
 import sf.util.SchemaCrawlerLogger;
 
-@Command(name = "exit",
-         aliases = {
-           "quit", "terminate"
-         },
-         header = "** Terminate the interactive shell",
-         headerHeading = "",
-         synopsisHeading = "Shell Command:%n",
-         customSynopsis = {
-           "exit"
-         },
-         optionListHeading = "Options:%n")
+@Command(name = "exit", aliases = {
+  "quit", "terminate"
+}, header = "** Terminate the interactive shell", headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
+  "exit"
+}, optionListHeading = "Options:%n")
 public class ExitCommand
   implements Runnable
 {
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
-    ExitCommand.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(ExitCommand.class.getName());
 
   @Override
   public void run()

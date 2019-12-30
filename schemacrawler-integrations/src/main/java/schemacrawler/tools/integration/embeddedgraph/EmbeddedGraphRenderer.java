@@ -31,7 +31,9 @@ package schemacrawler.tools.integration.embeddedgraph;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.newBufferedReader;
 import static java.nio.file.Files.newBufferedWriter;
-import static java.nio.file.StandardOpenOption.*;
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.nio.file.StandardOpenOption.WRITE;
 import static sf.util.IOUtility.copy;
 import static sf.util.IOUtility.createTempFilePath;
 
@@ -54,8 +56,8 @@ public class EmbeddedGraphRenderer
   extends BaseSchemaCrawlerCommand
 {
 
-  private static final Pattern svgInsertionPoint = Pattern.compile(
-    "<h2.*Tables.*h2>");
+  private static final Pattern svgInsertionPoint =
+    Pattern.compile("<h2.*Tables.*h2>");
   private static final Pattern svgStart = Pattern.compile("<svg.*");
 
   private static void insertSvg(final BufferedWriter finalHtmlFileWriter,
@@ -70,7 +72,9 @@ public class EmbeddedGraphRenderer
     {
       if (skipLines)
       {
-        isSvgStart = svgStart.matcher(line).matches();
+        isSvgStart = svgStart
+          .matcher(line)
+          .matches();
         skipLines = !isSvgStart;
       }
       if (!skipLines)
@@ -80,7 +84,9 @@ public class EmbeddedGraphRenderer
           line = "<svg";
           isSvgStart = false;
         }
-        finalHtmlFileWriter.append(line).append(System.lineSeparator());
+        finalHtmlFileWriter
+          .append(line)
+          .append(System.lineSeparator());
       }
     }
     finalHtmlFileWriter.append(System.lineSeparator());
@@ -127,25 +133,30 @@ public class EmbeddedGraphRenderer
     chain.execute();
 
     // Interleave HTML and SVG
-    try (final BufferedWriter finalHtmlFileWriter = newBufferedWriter(
-      finalHtmlFile,
-      UTF_8,
-      WRITE,
-      CREATE,
-      TRUNCATE_EXISTING);
+    try (
+      final BufferedWriter finalHtmlFileWriter = newBufferedWriter(finalHtmlFile,
+                                                                   UTF_8,
+                                                                   WRITE,
+                                                                   CREATE,
+                                                                   TRUNCATE_EXISTING);
       final BufferedReader baseHtmlFileReader = newBufferedReader(baseHtmlFile,
                                                                   UTF_8);
       final BufferedReader baseSvgFileReader = newBufferedReader(baseSvgFile,
-                                                                 UTF_8))
+                                                                 UTF_8)
+    )
     {
       String line;
       while ((line = baseHtmlFileReader.readLine()) != null)
       {
-        if (svgInsertionPoint.matcher(line).matches())
+        if (svgInsertionPoint
+          .matcher(line)
+          .matches())
         {
           insertSvg(finalHtmlFileWriter, baseSvgFileReader);
         }
-        finalHtmlFileWriter.append(line).append(System.lineSeparator());
+        finalHtmlFileWriter
+          .append(line)
+          .append(System.lineSeparator());
       }
     }
 

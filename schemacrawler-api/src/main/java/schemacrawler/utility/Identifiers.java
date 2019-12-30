@@ -52,28 +52,67 @@ import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import sf.util.SchemaCrawlerLogger;
 
 /**
- * Allows working with database object identifiers. All SQL 2003
- * keywords are considered identifiers. If a live connection is
- * provided, a list of valid identifiers is obtained from the database
- * server as well. Several utility methods for looking up and quoting
- * and unquoting identifiers are provided.
+ * Allows working with database object identifiers. All SQL 2003 keywords are
+ * considered identifiers. If a live connection is provided, a list of valid
+ * identifiers is obtained from the database server as well. Several utility
+ * methods for looking up and quoting and unquoting identifiers are provided.
  */
 public final class Identifiers
 {
+
+  public static final Identifiers STANDARD = Identifiers
+    .identifiers()
+    .withIdentifierQuoteString("\"")
+    .build();
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(Identifiers.class.getName());
+  private static final Pattern isAllNumeric = Pattern.compile("^\\p{Nd}*$");
+  private static final Pattern isIdentifier =
+    Pattern.compile("^[\\p{Nd}\\p{L}\\p{M}_]*$");
+
+  public static Builder identifiers()
+  {
+    return new Builder();
+  }
+
+  /**
+   * Checks if the name is valid database object identifier, according to the
+   * rules of most databases.
+   *
+   * @param name
+   *   Name to check.
+   * @return Whether the name is valid database object identifier.
+   */
+  private static boolean isIdentifier(final String name)
+  {
+    if (isBlank(name))
+    {
+      return false;
+    }
+    else
+    {
+      return isIdentifier
+               .matcher(name)
+               .matches() && !isAllNumeric
+        .matcher(name)
+        .matches();
+    }
+  }
 
   public static class Builder
   {
 
     /**
-     * Load a list of SQL 2003 reserved words, and normalize them by
-     * converting to uppercase.
+     * Load a list of SQL 2003 reserved words, and normalize them by converting
+     * to uppercase.
      */
     private static Collection<String> loadSql2003ReservedWords()
     {
       final Set<String> reservedWords = new HashSet<>();
       try (
-          final BufferedReader reader = new BufferedReader(new InputStreamReader(Identifiers.class
-            .getResourceAsStream("/sql2003_reserved_words.txt")));)
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(
+          Identifiers.class.getResourceAsStream("/sql2003_reserved_words.txt")))
+      )
       {
         String line;
         while ((line = reader.readLine()) != null)
@@ -92,15 +131,16 @@ public final class Identifiers
       }
       if (reservedWords.isEmpty())
       {
-        throw new SchemaCrawlerRuntimeException("No SQL 2003 reserved words found");
+        throw new SchemaCrawlerRuntimeException(
+          "No SQL 2003 reserved words found");
       }
 
       return toUpperCase(reservedWords);
     }
 
     /**
-     * Lookup a list of reserved words for a database system, using
-     * database metadata.
+     * Lookup a list of reserved words for a database system, using database
+     * metadata.
      */
     private static Collection<String> lookupReservedWords(final DatabaseMetaData metaData)
     {
@@ -111,8 +151,9 @@ public final class Identifiers
       }
       catch (final Exception e)
       {
-        LOGGER
-          .log(Level.WARNING, "Could not retrieve SQL keywords metadata", e);
+        LOGGER.log(Level.WARNING,
+                   "Could not retrieve SQL keywords metadata",
+                   e);
       }
 
       return toUpperCase(Arrays.asList(sqlKeywords.split(",")));
@@ -123,7 +164,7 @@ public final class Identifiers
       final Collection<String> upperCaseWords = new HashSet<>();
       if (words != null)
       {
-        for (final String word: words)
+        for (final String word : words)
         {
           if (!isBlank(word))
           {
@@ -134,14 +175,15 @@ public final class Identifiers
       return upperCaseWords;
     }
 
+    private final Collection<String> reservedWords;
     private String identifierQuoteString;
     private IdentifierQuotingStrategy identifierQuotingStrategy;
-    private final Collection<String> reservedWords;
 
     private Builder()
     {
       reservedWords = loadSql2003ReservedWords();
-      identifierQuotingStrategy = IdentifierQuotingStrategy.quote_if_special_characters_and_reserved_words;
+      identifierQuotingStrategy =
+        IdentifierQuotingStrategy.quote_if_special_characters_and_reserved_words;
     }
 
     public Identifiers build()
@@ -150,28 +192,28 @@ public final class Identifiers
     }
 
     /**
-     * Constructs a list of database object identifiers from SQL 2003
-     * keywords, and from the database server. Also obtains the
-     * identifier quote string from the database server.
+     * Constructs a list of database object identifiers from SQL 2003 keywords,
+     * and from the database server. Also obtains the identifier quote string
+     * from the database server.
      *
      * @param connection
-     *        Live database connection
-     * @throws SQLException
+     *   Live database connection
      * @return Builder
+     * @throws SQLException
      */
     public Builder withConnection(final Connection connection)
       throws SQLException
     {
       requireNonNull(connection, "No connection provided");
-      final DatabaseMetaData metaData = requireNonNull(connection
-        .getMetaData(), "No database metadata obtained");
+      final DatabaseMetaData metaData = requireNonNull(connection.getMetaData(),
+                                                       "No database metadata obtained");
 
       reservedWords.addAll(lookupReservedWords(metaData));
 
       if (!isIdentifierQuoteStringSet())
       {
-        final String metaDataIdentifierQuoteString = metaData
-          .getIdentifierQuoteString();
+        final String metaDataIdentifierQuoteString =
+          metaData.getIdentifierQuoteString();
         if (metaDataIdentifierQuoteString != null)
         {
           identifierQuoteString = metaDataIdentifierQuoteString;
@@ -184,10 +226,10 @@ public final class Identifiers
     /**
      * Tries to use the connection, but does not throw any exceptions.
      *
-     * @see #withConnection(Connection connection)
      * @param connection
-     *        Live database connection
+     *   Live database connection
      * @return Builder
+     * @see #withConnection(Connection connection)
      */
     public Builder withConnectionIfPossible(final Connection connection)
     {
@@ -203,12 +245,10 @@ public final class Identifiers
     }
 
     /**
-     * Uses the string used to quote database object identifiers as
-     * provided.
+     * Uses the string used to quote database object identifiers as provided.
      *
      * @param identifierQuoteString
-     *        Identifier quote string override, or null if not
-     *        overridden
+     *   Identifier quote string override, or null if not overridden
      * @return Builder
      */
     public Builder withIdentifierQuoteString(final String identifierQuoteString)
@@ -230,8 +270,7 @@ public final class Identifiers
      * Specifies how to quote database object identifiers.
      *
      * @param identifierQuotingStrategy
-     *        Set identifier quoting strategy, or turn off quoting if
-     *        null
+     *   Set identifier quoting strategy, or turn off quoting if null
      * @return Builder
      */
     public Builder withIdentifierQuotingStrategy(final IdentifierQuotingStrategy identifierQuotingStrategy)
@@ -254,41 +293,6 @@ public final class Identifiers
 
   }
 
-  public static final Identifiers STANDARD = Identifiers.identifiers()
-    .withIdentifierQuoteString("\"").build();
-
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(Identifiers.class.getName());
-
-  private static final Pattern isIdentifier = Pattern
-    .compile("^[\\p{Nd}\\p{L}\\p{M}_]*$");
-  private static final Pattern isAllNumeric = Pattern.compile("^\\p{Nd}*$");
-
-  public static Builder identifiers()
-  {
-    return new Builder();
-  }
-
-  /**
-   * Checks if the name is valid database object identifier, according
-   * to the rules of most databases.
-   *
-   * @param name
-   *        Name to check.
-   * @return Whether the name is valid database object identifier.
-   */
-  private static boolean isIdentifier(final String name)
-  {
-    if (isBlank(name))
-    {
-      return false;
-    }
-    else
-    {
-      return isIdentifier.matcher(name).matches()
-             && !isAllNumeric.matcher(name).matches();
-    }
-  }
 
   private final String identifierQuoteString;
   private final IdentifierQuotingStrategy identifierQuotingStrategy;
@@ -310,8 +314,8 @@ public final class Identifiers
   }
 
   /**
-   * Gets the string used to quote database object identifiers, as
-   * provided by the database server, or as overridden by the caller.
+   * Gets the string used to quote database object identifiers, as provided by
+   * the database server, or as overridden by the caller.
    *
    * @return Identifier quote string
    */
@@ -340,7 +344,7 @@ public final class Identifiers
    * character.
    *
    * @param name
-   *        Identifier name to check
+   *   Identifier name to check
    * @return Whether the identifier name is quoted
    */
   public boolean isQuotedName(final String name)
@@ -352,31 +356,30 @@ public final class Identifiers
     }
 
     final int quoteLength = identifierQuoteString.length();
-    return name.startsWith(identifierQuoteString)
-           && name.endsWith(identifierQuoteString)
-           && name.length() >= quoteLength * 2;
+    return name.startsWith(identifierQuoteString) && name.endsWith(
+      identifierQuoteString) && name.length() >= quoteLength * 2;
   }
 
   /**
-   * Checks if a given word is a reserved word. Searches are
-   * case-insensitive.
+   * Checks if a given word is a reserved word. Searches are case-insensitive.
    *
    * @param word
-   *        Word to check
+   *   Word to check
    * @return Whether the given word is reserved
    */
   public boolean isReservedWord(final String word)
   {
-    return !isBlank(word) && reservedWords.contains(word.trim().toUpperCase());
+    return !isBlank(word) && reservedWords.contains(word
+                                                      .trim()
+                                                      .toUpperCase());
   }
 
   /**
-   * Checks if a given identifier name needs to be quoted. It uses
-   * generalized rules which are common across the majority of
-   * databases.
+   * Checks if a given identifier name needs to be quoted. It uses generalized
+   * rules which are common across the majority of databases.
    *
    * @param name
-   *        Identifier name to check
+   *   Identifier name to check
    * @return Whether the given name needs to be quoted
    */
   public boolean isToBeQuoted(final String name)
@@ -432,14 +435,14 @@ public final class Identifiers
   }
 
   /**
-   * Quotes an identifier name using the identifier quote string. Does
-   * not quote the identifier name if quoting is not required, per
-   * generalized database rules.
+   * Quotes an identifier name using the identifier quote string. Does not quote
+   * the identifier name if quoting is not required, per generalized database
+   * rules.
    *
    * @param namedObject
-   *        Object name to quote
-   * @return Identifier name after quoting it, or the original name if
-   *         quoting is not required
+   *   Object name to quote
+   * @return Identifier name after quoting it, or the original name if quoting
+   *   is not required
    */
   public String quoteName(final NamedObject namedObject)
   {
@@ -454,14 +457,14 @@ public final class Identifiers
   }
 
   /**
-   * Quotes an identifier name using the identifier quote string. Does
-   * not quote the identifier name if quoting is not required, per
-   * generalized database rules.
+   * Quotes an identifier name using the identifier quote string. Does not quote
+   * the identifier name if quoting is not required, per generalized database
+   * rules.
    *
    * @param name
-   *        Identifier name to quote
-   * @return Identifier name after quoting it, or the original name if
-   *         quoting is not required
+   *   Identifier name to quote
+   * @return Identifier name after quoting it, or the original name if quoting
+   *   is not required
    */
   public String quoteName(final String name)
   {
@@ -568,7 +571,9 @@ public final class Identifiers
 
     if (isToBeQuoted(name))
     {
-      buffer.append(identifierQuoteString).append(name)
+      buffer
+        .append(identifierQuoteString)
+        .append(name)
         .append(identifierQuoteString);
     }
     else

@@ -30,7 +30,9 @@ package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
-import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.clean;
 
 import java.util.HashMap;
@@ -51,7 +53,8 @@ import schemacrawler.tools.text.schema.SchemaTextDetailType;
 public class NoEmptyTablesCommandLineTest
 {
 
-  private static final String HIDE_EMPTY_TABLES_OUTPUT = "no_empty_tables_output/";
+  private static final String HIDE_EMPTY_TABLES_OUTPUT =
+    "no_empty_tables_output/";
 
   @Test
   public void noEmptyTables(final TestContext testContext,

@@ -66,9 +66,9 @@ public class WeakAssociationForeignKey
   /**
    * {@inheritDoc}
    * <p>
-   * Note: Since foreign keys are not always explicitly named in
-   * databases, the sorting routine orders the foreign keys by the names
-   * of the columns in the foreign keys.
+   * Note: Since foreign keys are not always explicitly named in databases, the
+   * sorting routine orders the foreign keys by the names of the columns in the
+   * foreign keys.
    * </p>
    */
   @Override
@@ -80,9 +80,10 @@ public class WeakAssociationForeignKey
     }
 
     final BaseForeignKey<?> other = (BaseForeignKey<?>) obj;
-    final List<? extends ColumnReference> thisColumnReferences = getColumnReferences();
-    final List<? extends ColumnReference> otherColumnReferences = other
-      .getColumnReferences();
+    final List<? extends ColumnReference> thisColumnReferences =
+      getColumnReferences();
+    final List<? extends ColumnReference> otherColumnReferences =
+      other.getColumnReferences();
 
     return CompareUtility.compareLists(thisColumnReferences,
                                        otherColumnReferences);
@@ -133,7 +134,7 @@ public class WeakAssociationForeignKey
 
   public boolean isValid()
   {
-    for (final WeakAssociation weakAssociation: columnReferences)
+    for (final WeakAssociation weakAssociation : columnReferences)
     {
       if (weakAssociation == null)
       {

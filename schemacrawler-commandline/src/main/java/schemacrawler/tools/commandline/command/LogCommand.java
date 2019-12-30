@@ -36,28 +36,21 @@ import java.util.logging.Level;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
-@Command(name = "log",
-         header = "** Turn logging on or off",
-         description = {
-           ""
-         },
-         headerHeading = "",
-         synopsisHeading = "Shell Command:%n",
-         customSynopsis = {
-           "log"
-         },
-         optionListHeading = "Options:%n")
+@Command(name = "log", header = "** Turn logging on or off", description = {
+  ""
+}, headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
+  "log"
+}, optionListHeading = "Options:%n")
 public final class LogCommand
   implements Runnable
 {
 
   @Option(names = {
     "--log-level"
-  },
-          description = {
-            "Set log level using one of ${COMPLETION-CANDIDATES}",
-            "Optional, defaults to OFF"
-          })
+  }, description = {
+    "Set log level using one of ${COMPLETION-CANDIDATES}",
+    "Optional, defaults to OFF"
+  })
   private LogLevel loglevel;
 
   @Override

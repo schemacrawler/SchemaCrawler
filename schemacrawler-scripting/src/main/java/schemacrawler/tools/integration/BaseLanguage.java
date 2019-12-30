@@ -51,8 +51,8 @@ public abstract class BaseLanguage
   {
     this.languageKey = requireNonNull(languageKey, "No language key provided");
     this.resourceKey = requireNonNull(resourceKey, "No resource key provided");
-    this.defaultLanguage = requireNonNull(defaultLanguage,
-                                          "No default language provided");
+    this.defaultLanguage =
+      requireNonNull(defaultLanguage, "No default language provided");
     config = new Config();
   }
 

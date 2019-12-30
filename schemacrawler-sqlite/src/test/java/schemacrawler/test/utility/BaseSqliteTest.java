@@ -28,21 +28,21 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
-import org.apache.commons.dbcp2.BasicDataSource;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.testdb.SqlScript;
-import sf.util.IOUtility;
-
 import javax.sql.DataSource;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.apache.commons.dbcp2.BasicDataSource;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.testdb.SqlScript;
+import sf.util.IOUtility;
+
 public abstract class BaseSqliteTest
 {
 
   protected DataSource createDataSource(final Path sqliteDbFile)
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     final BasicDataSource dataSource = new BasicDataSource();
     dataSource.setUrl("jdbc:sqlite:" + sqliteDbFile);
@@ -54,10 +54,12 @@ public abstract class BaseSqliteTest
   }
 
   protected Path createTestDatabase(final String databaseSqlResource)
-      throws Exception
+    throws Exception
   {
-    final Path sqliteDbFile = IOUtility.createTempFilePath("resource", "db")
-        .normalize().toAbsolutePath();
+    final Path sqliteDbFile = IOUtility
+      .createTempFilePath("resource", "db")
+      .normalize()
+      .toAbsolutePath();
 
     final DataSource dataSource = createDataSource(sqliteDbFile);
 
@@ -65,8 +67,8 @@ public abstract class BaseSqliteTest
     {
       connection.setAutoCommit(false);
 
-      final SqlScript sqlScript = new SqlScript(databaseSqlResource,
-                                                connection);
+      final SqlScript sqlScript =
+        new SqlScript(databaseSqlResource, connection);
       sqlScript.run();
     }
 
@@ -74,7 +76,7 @@ public abstract class BaseSqliteTest
   }
 
   protected Connection createConnection(final Path sqliteDbFile)
-      throws SQLException, SchemaCrawlerException
+    throws SQLException, SchemaCrawlerException
   {
     return createDataSource(sqliteDbFile).getConnection();
   }

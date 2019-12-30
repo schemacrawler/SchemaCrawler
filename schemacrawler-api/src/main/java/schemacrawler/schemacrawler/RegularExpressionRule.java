@@ -39,8 +39,8 @@ import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
- * Specifies inclusion and exclusion patterns that can be applied to the
- * names, definitions, and other attributes of named objects.
+ * Specifies inclusion and exclusion patterns that can be applied to the names,
+ * definitions, and other attributes of named objects.
  *
  * @author Sualeh Fatehi
  */
@@ -48,28 +48,28 @@ public final class RegularExpressionRule
   implements InclusionRuleWithRegularExpression
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(RegularExpressionRule.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(RegularExpressionRule.class.getName());
 
   private static final long serialVersionUID = 3443758881974362293L;
-
-  private final Pattern patternInclude;
   private final Pattern patternExclude;
+  private final Pattern patternInclude;
 
   /**
    * Set include and exclude patterns.
    *
    * @param patternInclude
-   *        Inclusion pattern. If null, includes everything.
+   *   Inclusion pattern. If null, includes everything.
    * @param patternExclude
-   *        Exclusion pattern. If null, excludes nothing.
+   *   Exclusion pattern. If null, excludes nothing.
    */
   public RegularExpressionRule(final Pattern patternInclude,
                                final Pattern patternExclude)
   {
     if (patternInclude == null)
     {
-      this.patternInclude = InclusionRuleWithRegularExpression.super.getInclusionPattern();
+      this.patternInclude =
+        InclusionRuleWithRegularExpression.super.getInclusionPattern();
     }
     else
     {
@@ -78,7 +78,8 @@ public final class RegularExpressionRule
 
     if (patternExclude == null)
     {
-      this.patternExclude = InclusionRuleWithRegularExpression.super.getExclusionPattern();
+      this.patternExclude =
+        InclusionRuleWithRegularExpression.super.getExclusionPattern();
     }
     else
     {
@@ -90,15 +91,39 @@ public final class RegularExpressionRule
    * Set include and exclude patterns.
    *
    * @param patternInclude
-   *        Inclusion pattern. If null, includes everything.
+   *   Inclusion pattern. If null, includes everything.
    * @param patternExclude
-   *        Exclusion pattern. If null, excludes nothing.
+   *   Exclusion pattern. If null, excludes nothing.
    */
   public RegularExpressionRule(final String patternInclude,
                                final String patternExclude)
   {
     this(patternInclude == null? null: Pattern.compile(patternInclude),
          patternExclude == null? null: Pattern.compile(patternExclude));
+  }
+
+  @Override
+  public Pattern getExclusionPattern()
+  {
+    return patternExclude;
+  }
+
+  @Override
+  public Pattern getInclusionPattern()
+  {
+    return patternInclude;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    final int prime = 31;
+    int result = 1;
+    result =
+      prime * result + (patternExclude == null? 0: patternExclude.hashCode());
+    result =
+      prime * result + (patternInclude == null? 0: patternInclude.hashCode());
+    return result;
   }
 
   @Override
@@ -124,46 +149,35 @@ public final class RegularExpressionRule
         return false;
       }
     }
-    else if (!patternExclude.pattern().equals(other.patternExclude.pattern()))
+    else if (!patternExclude
+      .pattern()
+      .equals(other.patternExclude.pattern()))
     {
       return false;
     }
     if (patternInclude == null)
     {
-      if (other.patternInclude != null)
-      {
-        return false;
-      }
+      return other.patternInclude == null;
     }
-    else if (!patternInclude.pattern().equals(other.patternInclude.pattern()))
+    else
     {
-      return false;
+      return patternInclude
+        .pattern()
+        .equals(other.patternInclude.pattern());
     }
-    return true;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
-  public Pattern getExclusionPattern()
+  public String toString()
   {
-    return patternExclude;
-  }
-
-  @Override
-  public Pattern getInclusionPattern()
-  {
-    return patternInclude;
-  }
-
-  @Override
-  public int hashCode()
-  {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result
-             + (patternExclude == null? 0: patternExclude.hashCode());
-    result = prime * result
-             + (patternInclude == null? 0: patternInclude.hashCode());
-    return result;
+    return String.format("%s@%h {+/%s/ -/%s/}",
+                         getClass().getSimpleName(),
+                         System.identityHashCode(this),
+                         patternInclude.pattern(),
+                         patternExclude.pattern());
   }
 
   /**
@@ -177,13 +191,18 @@ public final class RegularExpressionRule
     boolean include = false;
     if (!isBlank(text))
     {
-      if (!patternInclude.matcher(text).matches())
+      if (!patternInclude
+        .matcher(text)
+        .matches())
       {
-        actionMessage = new StringFormat("Excluding <%s> since it does not match /%s/",
-                                         text,
-                                         patternInclude.pattern());
+        actionMessage = new StringFormat(
+          "Excluding <%s> since it does not match /%s/",
+          text,
+          patternInclude.pattern());
       }
-      else if (patternExclude.matcher(text).matches())
+      else if (patternExclude
+        .matcher(text)
+        .matches())
       {
         actionMessage = new StringFormat("Excluding <%s> since it matches /%s/",
                                          text,
@@ -209,19 +228,6 @@ public final class RegularExpressionRule
     }
 
     return include;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String toString()
-  {
-    return String.format("%s@%h {+/%s/ -/%s/}",
-                         getClass().getSimpleName(),
-                         System.identityHashCode(this),
-                         patternInclude.pattern(),
-                         patternExclude.pattern());
   }
 
 }

@@ -45,8 +45,8 @@ final class TablesGraph
   extends DirectedGraph<Table>
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(TablesGraph.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(TablesGraph.class.getName());
 
   TablesGraph(final NamedObjectList<MutableTable> tables)
   {
@@ -57,15 +57,19 @@ final class TablesGraph
       return;
     }
 
-    for (final Table table: tables)
+    for (final Table table : tables)
     {
       addVertex(table);
-      for (final ForeignKey foreignKey: table.getForeignKeys())
+      for (final ForeignKey foreignKey : table.getForeignKeys())
       {
-        for (final ForeignKeyColumnReference columnRef: foreignKey)
+        for (final ForeignKeyColumnReference columnRef : foreignKey)
         {
-          addEdge(columnRef.getPrimaryKeyColumn().getParent(),
-                  columnRef.getForeignKeyColumn().getParent());
+          addEdge(columnRef
+                    .getPrimaryKeyColumn()
+                    .getParent(),
+                  columnRef
+                    .getForeignKeyColumn()
+                    .getParent());
         }
       }
     }
@@ -82,7 +86,7 @@ final class TablesGraph
       final List<Table> sortedTables = topologicalSort();
       final List<View> sortedViews = new ArrayList<>();
       int sortIndex = 0;
-      for (final Table table: sortedTables)
+      for (final Table table : sortedTables)
       {
         if (table instanceof View)
         {
@@ -94,7 +98,7 @@ final class TablesGraph
           sortIndex++;
         }
       }
-      for (final View view: sortedViews)
+      for (final View view : sortedViews)
       {
         if (view instanceof MutableView)
         {

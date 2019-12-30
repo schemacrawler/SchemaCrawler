@@ -50,7 +50,12 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.*;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseBuildCondition;
 
@@ -62,8 +67,8 @@ public class MySQLDotNameTest
 {
 
   @Container
-  private JdbcDatabaseContainer dbContainer = new HeavyDatabaseBuildCondition()
-    .getJdbcDatabaseContainer(() -> new MySQLContainer<>()
+  private JdbcDatabaseContainer dbContainer =
+    new HeavyDatabaseBuildCondition().getJdbcDatabaseContainer(() -> new MySQLContainer<>()
       .withCommand("mysqld", "--lower_case_table_names=1")
       .withUsername("schemacrawler"));
 
@@ -81,8 +86,10 @@ public class MySQLDotNameTest
   public void dotName()
     throws Exception
   {
-    try (final Connection connection = getConnection();
-      final Statement stmt = connection.createStatement();)
+    try (
+      final Connection connection = getConnection();
+      final Statement stmt = connection.createStatement();
+    )
     {
       stmt.execute("CREATE TABLE `test.abc` (`a.b` INT(11) DEFAULT NULL)");
       connection.commit();
@@ -90,27 +97,37 @@ public class MySQLDotNameTest
 
     final Connection connection = getConnection();
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
 
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
-      .builder().fromOptions(matchSchemaRetrievalOptions(connection))
-      .withTableColumnRetrievalStrategy(MetadataRetrievalStrategy.metadata_all);
-    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder
-      .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+      SchemaRetrievalOptionsBuilder
+        .builder()
+        .fromOptions(matchSchemaRetrievalOptions(connection))
+        .withTableColumnRetrievalStrategy(MetadataRetrievalStrategy.metadata_all);
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+      schemaRetrievalOptionsBuilder.toOptions();
 
     final SchemaCrawler schemaCrawler = new SchemaCrawler(connection,
                                                           schemaRetrievalOptions,
                                                           schemaCrawlerOptions);
     final Catalog catalog = schemaCrawler.crawl();
 
-    final Schema schema = catalog.lookupSchema("test").orElse(null);
+    final Schema schema = catalog
+      .lookupSchema("test")
+      .orElse(null);
     assertThat(schema, notNullValue());
-    final Table table = catalog.lookupTable(schema, "test.abc").orElse(null);
+    final Table table = catalog
+      .lookupTable(schema, "test.abc")
+      .orElse(null);
     assertThat(table, notNullValue());
-    final Column column = table.lookupColumn("a.b").orElse(null);
+    final Column column = table
+      .lookupColumn("a.b")
+      .orElse(null);
     assertThat(column, notNullValue());
   }
 

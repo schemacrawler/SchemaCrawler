@@ -50,8 +50,8 @@ import sf.util.Utility;
 final class TableMatchKeys
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(TableMatchKeys.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(TableMatchKeys.class.getName());
 
   private final List<Table> tables;
 
@@ -99,7 +99,7 @@ final class TableMatchKeys
    * Finds table prefixes. A prefix ends with "_".
    *
    * @param tables
-   *        Tables
+   *   Tables
    * @return Table name prefixes
    */
   private Collection<String> findTableNamePrefixes(final List<Table> tables)
@@ -109,8 +109,12 @@ final class TableMatchKeys
     {
       for (int j = i + 1; j < tables.size(); j++)
       {
-        final String table1 = tables.get(i).getName();
-        final String table2 = tables.get(j).getName();
+        final String table1 = tables
+          .get(i)
+          .getName();
+        final String table2 = tables
+          .get(j)
+          .getName();
         final String commonPrefix = Utility.commonPrefix(table1, table2);
         if (!isBlank(commonPrefix) && commonPrefix.endsWith("_"))
         {
@@ -123,7 +127,9 @@ final class TableMatchKeys
               final StringBuilder buffer = new StringBuilder(1024);
               for (int l = 0; l < k; l++)
               {
-                buffer.append(splitPrefix[l]).append("_");
+                buffer
+                  .append(splitPrefix[l])
+                  .append("_");
               }
               if (buffer.length() > 0)
               {
@@ -133,7 +139,7 @@ final class TableMatchKeys
           }
           splitCommonPrefixes.add(commonPrefix);
 
-          for (final String splitCommonPrefix: splitCommonPrefixes)
+          for (final String splitCommonPrefix : splitCommonPrefixes)
           {
             final int prevCount;
             if (prefixesMap.containsKey(splitCommonPrefix))
@@ -176,21 +182,25 @@ final class TableMatchKeys
 
     // Sort prefixes by the number of tables using them, in descending
     // order
-    final List<Map.Entry<String, Integer>> prefixesList = new ArrayList<>(prefixesMap
-      .entrySet());
-    Collections
-      .sort(prefixesList,
-            (entry1, entry2) -> entry1.getValue().compareTo(entry2.getValue()));
+    final List<Map.Entry<String, Integer>> prefixesList =
+      new ArrayList<>(prefixesMap.entrySet());
+    Collections.sort(prefixesList,
+                     (entry1, entry2) -> entry1
+                       .getValue()
+                       .compareTo(entry2.getValue()));
 
     // Reduce the number of prefixes in use
     final List<String> prefixes = new ArrayList<>();
     for (int i = 0; i < prefixesList.size(); i++)
     {
-      final boolean add = i < 5 || prefixesList.get(i)
-        .getValue() > prefixesMap.size() * 0.5;
+      final boolean add = i < 5 || prefixesList
+                                     .get(i)
+                                     .getValue() > prefixesMap.size() * 0.5;
       if (add)
       {
-        prefixes.add(prefixesList.get(i).getKey());
+        prefixes.add(prefixesList
+                       .get(i)
+                       .getKey());
       }
     }
     prefixes.add("");
@@ -201,11 +211,13 @@ final class TableMatchKeys
   private void mapTableNameMatches(final List<Table> tables,
                                    final Collection<String> prefixes)
   {
-    for (final Table table: tables)
+    for (final Table table : tables)
     {
-      for (final String prefix: prefixes)
+      for (final String prefix : prefixes)
       {
-        String matchTableName = table.getName().toLowerCase();
+        String matchTableName = table
+          .getName()
+          .toLowerCase();
         if (matchTableName.startsWith(prefix))
         {
           matchTableName = matchTableName.substring(prefix.length());

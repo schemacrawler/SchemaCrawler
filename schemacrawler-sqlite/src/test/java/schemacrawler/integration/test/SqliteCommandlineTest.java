@@ -30,7 +30,9 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.nio.file.Path;
@@ -63,7 +65,8 @@ public class SqliteCommandlineTest
   public void setup()
     throws SchemaCrawlerException
   {
-    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry registry =
+      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     dbConnector = registry.lookupDatabaseConnector("sqlite");
   }
 
@@ -73,9 +76,10 @@ public class SqliteCommandlineTest
   {
 
     final Connection connection = null;
-    assertThat(dbConnector.getSchemaRetrievalOptionsBuilder(connection)
-                          .toOptions()
-                          .getIdentifierQuoteString(), is("\""));
+    assertThat(dbConnector
+                 .getSchemaRetrievalOptionsBuilder(connection)
+                 .toOptions()
+                 .getIdentifierQuoteString(), is("\""));
   }
 
   @Test
@@ -86,9 +90,10 @@ public class SqliteCommandlineTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final Path sqliteDbFile = IOUtility.createTempFilePath("sc", ".db")
-                                         .normalize()
-                                         .toAbsolutePath();
+      final Path sqliteDbFile = IOUtility
+        .createTempFilePath("sc", ".db")
+        .normalize()
+        .toAbsolutePath();
 
       TestSchemaCreator.main(new String[] {
         "jdbc:sqlite:" + sqliteDbFile, null, null, "/sqlite.scripts.txt"

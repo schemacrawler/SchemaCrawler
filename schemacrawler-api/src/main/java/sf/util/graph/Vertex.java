@@ -37,13 +37,27 @@ import java.util.Map;
 public final class Vertex<T>
 {
 
-  private final T value;
   private final Map<String, Object> attributes;
+  private final T value;
 
   Vertex(final T value)
   {
     this.value = value;
     attributes = new HashMap<>();
+  }
+
+  public T getValue()
+  {
+    return value;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (value == null? 0: value.hashCode());
+    return result;
   }
 
   @Override
@@ -64,16 +78,16 @@ public final class Vertex<T>
     final Vertex<?> other = (Vertex<?>) obj;
     if (value == null)
     {
-      if (other.value != null)
-      {
-        return false;
-      }
+      return other.value == null;
     }
-    else if (!value.equals(other.value))
-    {
-      return false;
-    }
-    return true;
+    else
+    { return value.equals(other.value); }
+  }
+
+  @Override
+  public String toString()
+  {
+    return value.toString();
   }
 
   <V> V getAttribute(final String key)
@@ -81,34 +95,14 @@ public final class Vertex<T>
     return (V) attributes.get(key);
   }
 
-  public T getValue()
-  {
-    return value;
-  }
-
   boolean hasAttribute(final String key)
   {
     return attributes.containsKey(key);
   }
 
-  @Override
-  public int hashCode()
-  {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (value == null? 0: value.hashCode());
-    return result;
-  }
-
   void putAttribute(final String key, final Object value)
   {
     attributes.put(key, value);
-  }
-
-  @Override
-  public String toString()
-  {
-    return value.toString();
   }
 
 }

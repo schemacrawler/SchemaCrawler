@@ -37,33 +37,32 @@ import sf.util.IdentifiedEnum;
  * The deferrability value for foreign keys.
  */
 public enum ForeignKeyDeferrability
-  implements
-  IdentifiedEnum
+  implements IdentifiedEnum
 {
 
- /**
-  * Unknown
-  */
- unknown(-1, "unknown"),
- /**
-  * Initially deferred.
-  */
- initiallyDeferred(DatabaseMetaData.importedKeyInitiallyDeferred,
-   "initially deferred"),
- /**
-  * Initially immediate.
-  */
- initiallyImmediate(DatabaseMetaData.importedKeyInitiallyImmediate,
-   "initially immediate"),
- /**
-  * Not deferrable.
-  */
- keyNotDeferrable(DatabaseMetaData.importedKeyNotDeferrable, "not deferrable");
+  /**
+   * Unknown
+   */
+  unknown(-1, "unknown"),
+  /**
+   * Initially deferred.
+   */
+  initiallyDeferred(DatabaseMetaData.importedKeyInitiallyDeferred,
+                    "initially deferred"),
+  /**
+   * Initially immediate.
+   */
+  initiallyImmediate(DatabaseMetaData.importedKeyInitiallyImmediate,
+                     "initially immediate"),
+  /**
+   * Not deferrable.
+   */
+  keyNotDeferrable(DatabaseMetaData.importedKeyNotDeferrable, "not deferrable");
 
   private final int id;
   private final String text;
 
-  private ForeignKeyDeferrability(final int id, final String text)
+  ForeignKeyDeferrability(final int id, final String text)
   {
     this.id = id;
     this.text = text;

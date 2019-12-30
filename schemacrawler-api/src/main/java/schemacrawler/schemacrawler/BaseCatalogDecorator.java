@@ -71,22 +71,7 @@ public abstract class BaseCatalogDecorator
   @Override
   public final <T> T getAttribute(final String name)
   {
-    return catalog.getAttribute(name, (T) null);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final <T> Optional<T> lookupAttribute(final String name)
-  {
-    return Optional.of(getAttribute(name));
-  }
-
-  @Override
-  public int compareTo(final NamedObject o)
-  {
-    return catalog.compareTo(o);
+    return catalog.getAttribute(name, null);
   }
 
   @Override
@@ -99,6 +84,39 @@ public abstract class BaseCatalogDecorator
   public Map<String, Object> getAttributes()
   {
     return catalog.getAttributes();
+  }
+
+  @Override
+  public boolean hasAttribute(final String name)
+  {
+    return false;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final <T> Optional<T> lookupAttribute(final String name)
+  {
+    return Optional.of(getAttribute(name));
+  }
+
+  @Override
+  public void removeAttribute(final String name)
+  {
+    catalog.removeAttribute(name);
+  }
+
+  @Override
+  public void setAttribute(final String name, final Object value)
+  {
+    catalog.setAttribute(name, value);
+  }
+
+  @Override
+  public int compareTo(final NamedObject o)
+  {
+    return catalog.compareTo(o);
   }
 
   @Override
@@ -126,12 +144,6 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public String getFullName()
-  {
-    return catalog.getFullName();
-  }
-
-  @Override
   public JdbcDriverInfo getJdbcDriverInfo()
   {
     return catalog.getJdbcDriverInfo();
@@ -144,21 +156,9 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public String getName()
-  {
-    return catalog.getName();
-  }
-
-  @Override
   public OperatingSystemInfo getOperatingSystemInfo()
   {
     return catalog.getOperatingSystemInfo();
-  }
-
-  @Override
-  public String getRemarks()
-  {
-    return catalog.getRemarks();
   }
 
   @Override
@@ -234,18 +234,6 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public boolean hasAttribute(final String name)
-  {
-    return false;
-  }
-
-  @Override
-  public boolean hasRemarks()
-  {
-    return catalog.hasRemarks();
-  }
-
-  @Override
   public Optional<? extends ColumnDataType> lookupColumnDataType(final Schema schema,
                                                                  final String name)
   {
@@ -299,28 +287,40 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public <N extends NamedObject> void reduce(final Class<N> clazz,
-                                             final Reducer<N> reducer)
+  public String getFullName()
   {
-    ((Reducible) catalog).reduce(clazz, reducer);
+    return catalog.getFullName();
   }
 
   @Override
-  public void removeAttribute(final String name)
+  public String getName()
   {
-    catalog.removeAttribute(name);
-  }
-
-  @Override
-  public void setAttribute(final String name, final Object value)
-  {
-    catalog.setAttribute(name, value);
+    return catalog.getName();
   }
 
   @Override
   public List<String> toUniqueLookupKey()
   {
     return catalog.toUniqueLookupKey();
+  }
+
+  @Override
+  public String getRemarks()
+  {
+    return catalog.getRemarks();
+  }
+
+  @Override
+  public boolean hasRemarks()
+  {
+    return catalog.hasRemarks();
+  }
+
+  @Override
+  public <N extends NamedObject> void reduce(final Class<N> clazz,
+                                             final Reducer<N> reducer)
+  {
+    ((Reducible) catalog).reduce(clazz, reducer);
   }
 
 }

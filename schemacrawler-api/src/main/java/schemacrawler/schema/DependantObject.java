@@ -30,8 +30,8 @@ package schemacrawler.schema;
 
 
 /**
- * Represents the dependent of a database object, such as a column or an
- * index, which are dependents of a table.
+ * Represents the dependent of a database object, such as a column or an index,
+ * which are dependents of a table.
  *
  * @author Sualeh Fatehi
  */
@@ -40,8 +40,8 @@ public interface DependantObject<P extends DatabaseObject>
 {
 
   /**
-   * Gets the name of the dependent object and the name of the parent.
-   * The parent name is not fully-qualified.
+   * Gets the name of the dependent object and the name of the parent. The
+   * parent name is not fully-qualified.
    */
   String getShortName();
 

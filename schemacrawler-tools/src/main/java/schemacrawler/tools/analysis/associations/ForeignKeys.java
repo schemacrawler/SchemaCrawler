@@ -58,7 +58,7 @@ final class ForeignKeys
 
     // We have to loop through the collection, since we want to use the
     // equals from the WeakAssociation
-    for (final ColumnReference foreignKey: foreignKeys)
+    for (final ColumnReference foreignKey : foreignKeys)
     {
       final boolean equals = columnMap.equals(foreignKey);
       if (equals)
@@ -80,11 +80,11 @@ final class ForeignKeys
     requireNonNull(tables, "No tables provided");
 
     final Collection<ColumnReference> fkColumnsMap = new HashSet<>();
-    for (final Table table: tables)
+    for (final Table table : tables)
     {
-      for (final ForeignKey foreignKey: table.getForeignKeys())
+      for (final ForeignKey foreignKey : table.getForeignKeys())
       {
-        for (final ForeignKeyColumnReference columnRef: foreignKey)
+        for (final ForeignKeyColumnReference columnRef : foreignKey)
         {
           fkColumnsMap.add(columnRef);
         }

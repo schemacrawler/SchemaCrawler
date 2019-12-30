@@ -46,8 +46,8 @@ import sf.util.SchemaCrawlerLogger;
 public final class LintUtility
 {
 
-  public static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(LintUtility.class.getName());
+  public static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(LintUtility.class.getName());
 
   public static final <E> boolean listStartsWith(final List<E> main,
                                                  final List<E> sub)
@@ -65,7 +65,9 @@ public final class LintUtility
       return true;
     }
 
-    return main.subList(0, sub.size()).equals(sub);
+    return main
+      .subList(0, sub.size())
+      .equals(sub);
 
   }
 
@@ -73,7 +75,7 @@ public final class LintUtility
    * Obtain linter configuration from a system property
    *
    * @param config
-   *        SchemaCrawler configuration
+   *   SchemaCrawler configuration
    * @return LinterConfigs
    * @throws SchemaCrawlerException
    */
@@ -87,7 +89,8 @@ public final class LintUtility
       linterConfigsFile = lintOptions.getLinterConfigs();
       if (!isBlank(linterConfigsFile))
       {
-        final Path linterConfigsFilePath = Paths.get(linterConfigsFile)
+        final Path linterConfigsFilePath = Paths
+          .get(linterConfigsFile)
           .toAbsolutePath();
         if (isFileReadable(linterConfigsFilePath))
         {
@@ -95,9 +98,9 @@ public final class LintUtility
         }
         else
         {
-          LOGGER
-            .log(Level.WARNING,
-                 "Could not read linter configs file, " + linterConfigsFile);
+          LOGGER.log(Level.WARNING,
+                     "Could not read linter configs file, "
+                     + linterConfigsFile);
         }
       }
       else
@@ -111,7 +114,7 @@ public final class LintUtility
     {
       LOGGER.log(Level.WARNING,
                  "Could not load linter configs from file, "
-                                + linterConfigsFile,
+                 + linterConfigsFile,
                  e);
       return linterConfigs;
     }

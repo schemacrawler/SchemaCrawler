@@ -43,8 +43,8 @@ import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.Property;
 
 /**
- * Database and connection information. Created from metadata returned
- * by a JDBC call, and other sources of information.
+ * Database and connection information. Created from metadata returned by a JDBC
+ * call, and other sources of information.
  *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
@@ -53,12 +53,11 @@ final class MutableDatabaseInfo
 {
 
   private static final long serialVersionUID = 4051323422934251828L;
-
-  private String userName = "";
+  private final Set<DatabaseProperty> databaseProperties = new HashSet<>();
+  private final Set<Property> serverInfo = new HashSet<>();
   private String productName = "";
   private String productVersion = "";
-  private final Set<Property> serverInfo = new HashSet<>();
-  private final Set<DatabaseProperty> databaseProperties = new HashSet<>();
+  private String userName = "";
 
   /**
    * {@inheritDoc}
@@ -67,6 +66,11 @@ final class MutableDatabaseInfo
   public String getProductName()
   {
     return productName;
+  }
+
+  void setProductName(final String productName)
+  {
+    this.productName = productName;
   }
 
   /**
@@ -78,13 +82,19 @@ final class MutableDatabaseInfo
     return productVersion;
   }
 
+  void setProductVersion(final String productVersion)
+  {
+    this.productVersion = productVersion;
+  }
+
   /**
    * {@inheritDoc}
    */
   @Override
   public Collection<DatabaseProperty> getProperties()
   {
-    final List<DatabaseProperty> properties = new ArrayList<>(databaseProperties);
+    final List<DatabaseProperty> properties =
+      new ArrayList<>(databaseProperties);
     properties.sort(naturalOrder());
     return properties;
   }
@@ -104,6 +114,11 @@ final class MutableDatabaseInfo
     return userName;
   }
 
+  void setUserName(final String userName)
+  {
+    this.userName = userName;
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -111,8 +126,12 @@ final class MutableDatabaseInfo
   public String toString()
   {
     final StringBuilder info = new StringBuilder(1024);
-    info.append("-- database: ").append(getProductName()).append(' ')
-      .append(getProductVersion()).append(System.lineSeparator());
+    info
+      .append("-- database: ")
+      .append(getProductName())
+      .append(' ')
+      .append(getProductVersion())
+      .append(System.lineSeparator());
     return info.toString();
   }
 
@@ -130,21 +149,6 @@ final class MutableDatabaseInfo
     {
       serverInfo.add(property);
     }
-  }
-
-  void setProductName(final String productName)
-  {
-    this.productName = productName;
-  }
-
-  void setProductVersion(final String productVersion)
-  {
-    this.productVersion = productVersion;
-  }
-
-  void setUserName(final String userName)
-  {
-    this.userName = userName;
   }
 
 }

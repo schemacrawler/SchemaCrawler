@@ -51,8 +51,10 @@ public final class CommandChain
   /**
    * Copy configuration settings from another command.
    *
-   * @param scCommand Other command
-   * @throws SchemaCrawlerException On an exception
+   * @param scCommand
+   *   Other command
+   * @throws SchemaCrawlerException
+   *   On an exception
    */
   public CommandChain(final SchemaCrawlerCommand scCommand)
     throws SchemaCrawlerException
@@ -82,7 +84,10 @@ public final class CommandChain
 
     return addNext(command,
                    outputFormat.getFormat(),
-                   outputFile.normalize().toAbsolutePath().toString());
+                   outputFile
+                     .normalize()
+                     .toAbsolutePath()
+                     .toString());
   }
 
   public final SchemaCrawlerCommand addNext(final String command,
@@ -95,13 +100,11 @@ public final class CommandChain
     requireNonNull(outputFileName, "No output file name provided");
 
     final Path outputFile = Paths.get(outputFileName);
-    final OutputOptions outputOptions = OutputOptionsBuilder.builder(
-      getOutputOptions())
-                                                            .withOutputFormatValue(
-                                                              outputFormat)
-                                                            .withOutputFile(
-                                                              outputFile)
-                                                            .toOptions();
+    final OutputOptions outputOptions = OutputOptionsBuilder
+      .builder(getOutputOptions())
+      .withOutputFormatValue(outputFormat)
+      .withOutputFile(outputFile)
+      .toOptions();
 
     return addNextAndConfigureForExecution(command, outputOptions);
   }

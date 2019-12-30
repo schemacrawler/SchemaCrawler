@@ -45,21 +45,8 @@ import java.util.logging.Level;
 public final class ObjectToString
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(ObjectToString.class.getName());
-
-  public static String toString(final Object object)
-  {
-    if (object == null)
-    {
-      return "null";
-    }
-    final int indent = 0;
-
-    final StringBuilder buffer = new StringBuilder(1024);
-    appendObject(object, indent, buffer);
-    return buffer.toString();
-  }
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(ObjectToString.class.getName());
 
   private static void appendFields(final Object object,
                                    final int indent,
@@ -69,7 +56,7 @@ public final class ObjectToString
     {
       return;
     }
-    for (final Field field: getFields(object))
+    for (final Field field : getFields(object))
     {
       try
       {
@@ -85,7 +72,10 @@ public final class ObjectToString
           }
         }
 
-        buffer.append(indent(indent)).append("  ").append(fieldName)
+        buffer
+          .append(indent(indent))
+          .append("  ")
+          .append(fieldName)
           .append(": ");
         if (fieldType.isPrimitive() || fieldType.isEnum()
             || fieldValue instanceof String || fieldValue == null
@@ -110,7 +100,9 @@ public final class ObjectToString
 
   private static void appendFooter(final int indent, final StringBuilder buffer)
   {
-    buffer.append(indent(indent)).append(']');
+    buffer
+      .append(indent(indent))
+      .append(']');
   }
 
   private static void appendHeader(final Object object,
@@ -119,10 +111,15 @@ public final class ObjectToString
   {
     if (object != null)
     {
-      buffer.append(indent(indent)).append(object.getClass().getName())
+      buffer
+        .append(indent(indent))
+        .append(object
+                  .getClass()
+                  .getName())
         .append('@')
         .append(Integer.toHexString(System.identityHashCode(object)))
-        .append('[').append(System.lineSeparator());
+        .append('[')
+        .append(System.lineSeparator());
     }
   }
 
@@ -148,13 +145,15 @@ public final class ObjectToString
     final Class<?> objectClass = object.getClass();
     if (Map.class.isAssignableFrom(objectClass))
     {
-      final Set<Map.Entry<?, ?>> mapEntries = new TreeMap((Map) object)
-        .entrySet();
-      for (final Map.Entry<?, ?> mapEntry: mapEntries)
+      final Set<Map.Entry<?, ?>> mapEntries =
+        new TreeMap((Map) object).entrySet();
+      for (final Map.Entry<?, ?> mapEntry : mapEntries)
       {
         final Object key = mapEntry.getKey();
         final Object value;
-        if (key != null && String.valueOf(key).equals("password"))
+        if (key != null && String
+          .valueOf(key)
+          .equals("password"))
         {
           value = "*****";
         }
@@ -162,8 +161,12 @@ public final class ObjectToString
         {
           value = mapEntry.getValue();
         }
-        buffer.append(System.lineSeparator()).append(indent(indent)).append(key)
-          .append(": ").append(value);
+        buffer
+          .append(System.lineSeparator())
+          .append(indent(indent))
+          .append(key)
+          .append(": ")
+          .append(value);
       }
     }
     else if (Collection.class.isAssignableFrom(objectClass))
@@ -172,22 +175,25 @@ public final class ObjectToString
     }
     else if (objectClass.isArray())
     {
-      appendIterable(Arrays.asList((Object[]) object).iterator(), ", ", buffer);
+      appendIterable(Arrays
+                       .asList((Object[]) object)
+                       .iterator(), ", ", buffer);
     }
     else if (objectClass.isEnum())
     {
       buffer.append(object.toString());
     }
-    else if (Arrays.asList(Integer.class,
-                           Long.class,
-                           Double.class,
-                           Float.class,
-                           Boolean.class,
-                           Character.class,
-                           Byte.class,
-                           Void.class,
-                           Short.class,
-                           String.class)
+    else if (Arrays
+      .asList(Integer.class,
+              Long.class,
+              Double.class,
+              Float.class,
+              Boolean.class,
+              Character.class,
+              Byte.class,
+              Void.class,
+              Short.class,
+              String.class)
       .contains(objectClass))
     {
       buffer.append(object.toString());
@@ -206,7 +212,7 @@ public final class ObjectToString
     final Class<?>[] classes = getClassHierarchy(object);
     if (classes.length > 0)
     {
-      for (final Class<?> clazz: classes)
+      for (final Class<?> clazz : classes)
       {
         try
         {
@@ -250,7 +256,7 @@ public final class ObjectToString
     final List<Field> allFields = new ArrayList<>();
     if (classes != null && classes.length > 0)
     {
-      for (final Class<?> clazz: classes)
+      for (final Class<?> clazz : classes)
       {
         if (clazz.isArray() || clazz.isPrimitive() || clazz.isEnum()
             || String.class.isAssignableFrom(clazz))
@@ -263,8 +269,8 @@ public final class ObjectToString
       }
     }
     // Remove static and transient fields
-    for (final Iterator<Field> iterator = allFields.iterator(); iterator
-      .hasNext();)
+    for (final Iterator<Field> iterator =
+         allFields.iterator(); iterator.hasNext(); )
     {
       final Field field = iterator.next();
       final int modifiers = field.getModifiers();
@@ -275,9 +281,10 @@ public final class ObjectToString
       }
     }
     // Sort fields
-    Collections
-      .sort(allFields,
-            (field1, field2) -> field1.getName().compareTo(field2.getName()));
+    Collections.sort(allFields,
+                     (field1, field2) -> field1
+                       .getName()
+                       .compareTo(field2.getName()));
 
     return allFields.toArray(new Field[allFields.size()]);
   }
@@ -294,6 +301,19 @@ public final class ObjectToString
     {
       return new char[0];
     }
+  }
+
+  public static String toString(final Object object)
+  {
+    if (object == null)
+    {
+      return "null";
+    }
+    final int indent = 0;
+
+    final StringBuilder buffer = new StringBuilder(1024);
+    appendObject(object, indent, buffer);
+    return buffer.toString();
   }
 
   private ObjectToString()

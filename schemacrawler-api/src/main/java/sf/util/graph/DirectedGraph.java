@@ -37,9 +37,9 @@ import java.util.Set;
 public class DirectedGraph<T extends Comparable<? super T>>
 {
 
+  private final Set<DirectedEdge<T>> edges;
   private final String name;
   private final Map<T, Vertex<T>> verticesMap;
-  private final Set<DirectedEdge<T>> edges;
 
   public DirectedGraph(final String name)
   {
@@ -49,14 +49,13 @@ public class DirectedGraph<T extends Comparable<? super T>>
   }
 
   /**
-   * Adds vertices, and a directed edge between them. Simple directed
-   * graphs do not allow self-loops.
-   * https://en.wikipedia.org/wiki/Loop_(graph_theory)
+   * Adds vertices, and a directed edge between them. Simple directed graphs do
+   * not allow self-loops. https://en.wikipedia.org/wiki/Loop_(graph_theory)
    *
    * @param from
-   *        Vertex value at the start of the edge
+   *   Vertex value at the start of the edge
    * @param to
-   *        Vertex value at the end of the edge
+   *   Vertex value at the end of the edge
    */
   public void addEdge(final T from, final T to)
   {
@@ -70,7 +69,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
    * Adds a vertex.
    *
    * @param value
-   *        Vertex value
+   *   Vertex value
    * @return The newly added vertex
    */
   public Vertex<T> addVertex(final T value)
@@ -106,9 +105,11 @@ public class DirectedGraph<T extends Comparable<? super T>>
     Objects.requireNonNull(vertexFrom, "No vertex provided");
 
     final Set<DirectedEdge<T>> outgoingEdges = new HashSet<>();
-    for (final DirectedEdge<T> edge: edges)
+    for (final DirectedEdge<T> edge : edges)
     {
-      if (edge.getFrom().equals(vertexFrom))
+      if (edge
+        .getFrom()
+        .equals(vertexFrom))
       {
         outgoingEdges.add(edge);
       }
@@ -125,9 +126,11 @@ public class DirectedGraph<T extends Comparable<? super T>>
     {
       writer.append(String.format("  [label=\"%s\"]%n", name));
     }
-    for (final Vertex<T> vertex: verticesMap.values())
+    for (final Vertex<T> vertex : verticesMap.values())
     {
-      writer.append("  ").append(vertex);
+      writer
+        .append("  ")
+        .append(vertex);
       if (vertex.hasAttribute("fillcolor"))
       {
         writer.append(String.format(" [fillcolor=%s, style=filled]",
@@ -135,9 +138,12 @@ public class DirectedGraph<T extends Comparable<? super T>>
       }
       writer.append(";\n");
     }
-    for (final DirectedEdge<T> edge: edges)
+    for (final DirectedEdge<T> edge : edges)
     {
-      writer.append("  ").append(edge).append(";\n");
+      writer
+        .append("  ")
+        .append(edge)
+        .append(";\n");
     }
     writer.append("}\n");
     return writer.toString();

@@ -37,36 +37,35 @@ import sf.util.IdentifiedEnum;
  * An enumeration wrapper around JDBC procedure types.
  */
 public enum SearchableType
-  implements
-  IdentifiedEnum
+  implements IdentifiedEnum
 {
 
- /**
-  * Unknown
-  */
- unknown(-1, "unknown"),
- /**
-  * Not searchable.
-  */
- predNone(DatabaseMetaData.typePredNone, "not searchable"),
- /**
-  * Only searchable with where .. like.
-  */
- predChar(DatabaseMetaData.typePredChar, "only searchable with where .. like"),
- /**
-  * Searchable except with where .. like.
-  */
- predBasic(DatabaseMetaData.typePredBasic,
-   "searchable except with where .. like"),
- /**
-  * Searchable.
-  */
- searchable(DatabaseMetaData.typeSearchable, "searchable");
+  /**
+   * Unknown
+   */
+  unknown(-1, "unknown"),
+  /**
+   * Not searchable.
+   */
+  predNone(DatabaseMetaData.typePredNone, "not searchable"),
+  /**
+   * Only searchable with where .. like.
+   */
+  predChar(DatabaseMetaData.typePredChar, "only searchable with where .. like"),
+  /**
+   * Searchable except with where .. like.
+   */
+  predBasic(DatabaseMetaData.typePredBasic,
+            "searchable except with where .. like"),
+  /**
+   * Searchable.
+   */
+  searchable(DatabaseMetaData.typeSearchable, "searchable");
 
   private final int id;
   private final String text;
 
-  private SearchableType(final int id, final String text)
+  SearchableType(final int id, final String text)
   {
     this.id = id;
     this.text = text;

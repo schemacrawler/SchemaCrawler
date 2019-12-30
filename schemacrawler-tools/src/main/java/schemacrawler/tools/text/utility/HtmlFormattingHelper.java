@@ -48,14 +48,16 @@ public final class HtmlFormattingHelper
 {
 
   private static final String HTML_HEADER = htmlHeader();
-  private static final String HTML_FOOTER = "</body>" + System.lineSeparator()
-                                            + "</html>";
+  private static final String HTML_FOOTER =
+    "</body>" + System.lineSeparator() + "</html>";
 
   private static String htmlHeader()
   {
     final StringBuilder styleSheet = new StringBuilder(4096);
-    styleSheet.append(System.lineSeparator())
-      .append(readResourceFully("/sc.css")).append(System.lineSeparator())
+    styleSheet
+      .append(System.lineSeparator())
+      .append(readResourceFully("/sc.css"))
+      .append(System.lineSeparator())
       .append(readResourceFully("/sc_output.css"))
       .append(System.lineSeparator());
 
@@ -131,7 +133,9 @@ public final class HtmlFormattingHelper
   @Override
   public void writeObjectEnd()
   {
-    out.append("</table>").println();
+    out
+      .append("</table>")
+      .println();
     out.println("<p>&#160;</p>");
     out.println();
   }
@@ -146,24 +150,35 @@ public final class HtmlFormattingHelper
                                  final Color backgroundColor)
   {
     final StringBuilder buffer = new StringBuilder(1024);
-    buffer.append("  <caption style='background-color: ")
-      .append(backgroundColor).append(";'>");
+    buffer
+      .append("  <caption style='background-color: ")
+      .append(backgroundColor)
+      .append(";'>");
     if (!isBlank(name))
     {
       buffer.append("<span");
       if (!isBlank(id))
       {
-        buffer.append(" id='").append(id).append("'");
+        buffer
+          .append(" id='")
+          .append(id)
+          .append("'");
       }
-      buffer.append(" class='caption_name'>").append(escapeForXMLElement(name))
+      buffer
+        .append(" class='caption_name'>")
+        .append(escapeForXMLElement(name))
         .append("</span>");
     }
     if (!isBlank(description))
     {
-      buffer.append(" <span class='caption_description'>")
-        .append(escapeForXMLElement(description)).append("</span>");
+      buffer
+        .append(" <span class='caption_description'>")
+        .append(escapeForXMLElement(description))
+        .append("</span>");
     }
-    buffer.append("</caption>").append(System.lineSeparator());
+    buffer
+      .append("</caption>")
+      .append(System.lineSeparator());
 
     out.println(buffer.toString());
   }

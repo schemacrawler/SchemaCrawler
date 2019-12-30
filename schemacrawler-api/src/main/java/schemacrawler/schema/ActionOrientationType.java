@@ -35,17 +35,17 @@ package schemacrawler.schema;
 public enum ActionOrientationType
 {
 
- /**
-  * Unknown
-  */
- unknown,
- /**
-  * Row
-  */
- row,
- /**
-  * Statement
-  */
- statement;
+  /**
+   * Unknown
+   */
+  unknown,
+  /**
+   * Row
+   */
+  row,
+  /**
+   * Statement
+   */
+  statement
 
 }

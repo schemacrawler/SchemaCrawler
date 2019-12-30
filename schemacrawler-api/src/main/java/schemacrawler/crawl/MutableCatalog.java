@@ -40,11 +40,23 @@ import java.util.function.Predicate;
 import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
 import schemacrawler.SchemaCrawlerInfo;
-import schemacrawler.schema.*;
+import schemacrawler.schema.Catalog;
+import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.CrawlInfo;
+import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.Reducer;
+import schemacrawler.schema.Reducible;
+import schemacrawler.schema.Routine;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.SchemaReference;
+import schemacrawler.schema.Sequence;
+import schemacrawler.schema.Synonym;
+import schemacrawler.schema.Table;
 
 /**
- * Database and connection information. Created from metadata returned
- * by a JDBC call, and other sources of information.
+ * Database and connection information. Created from metadata returned by a JDBC
+ * call, and other sources of information.
  *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
@@ -70,24 +82,30 @@ final class MutableCatalog
     @Override
     public boolean test(final DatabaseObject databaseObject)
     {
-      return databaseObject != null && databaseObject.getSchema()
+      return databaseObject != null && databaseObject
+        .getSchema()
         .equals(schema);
     }
 
   }
 
 
+  private final NamedObjectList<MutableColumnDataType> columnDataTypes =
+    new NamedObjectList<>();
   private final MutableDatabaseInfo databaseInfo;
   private final MutableJdbcDriverInfo jdbcDriverInfo;
-  private final SchemaCrawlerInfo schemaCrawlerInfo;
-  private final OperatingSystemInfo osInfo;
   private final JvmSystemInfo jvmInfo;
-  private final NamedObjectList<SchemaReference> schemas = new NamedObjectList<>();
-  private final NamedObjectList<MutableColumnDataType> columnDataTypes = new NamedObjectList<>();
+  private final OperatingSystemInfo osInfo;
+  private final NamedObjectList<MutableRoutine> routines =
+    new NamedObjectList<>();
+  private final SchemaCrawlerInfo schemaCrawlerInfo;
+  private final NamedObjectList<SchemaReference> schemas =
+    new NamedObjectList<>();
+  private final NamedObjectList<MutableSequence> sequences =
+    new NamedObjectList<>();
+  private final NamedObjectList<MutableSynonym> synonyms =
+    new NamedObjectList<>();
   private final NamedObjectList<MutableTable> tables = new NamedObjectList<>();
-  private final NamedObjectList<MutableRoutine> routines = new NamedObjectList<>();
-  private final NamedObjectList<MutableSynonym> synonyms = new NamedObjectList<>();
-  private final NamedObjectList<MutableSequence> sequences = new NamedObjectList<>();
   private ImmutableCrawlInfo crawlInfo;
 
   MutableCatalog(final String name)
@@ -366,11 +384,6 @@ final class MutableCatalog
     return lookupColumnDataType(new SchemaReference(), name);
   }
 
-  public Optional<MutableTable> lookupTable(final List<String> tableLookupKey)
-  {
-    return tables.lookup(tableLookupKey);
-  }
-
   /**
    * {@inheritDoc}
    */
@@ -379,6 +392,11 @@ final class MutableCatalog
                                             final String name)
   {
     return tables.lookup(schemaRef, name);
+  }
+
+  public Optional<MutableTable> lookupTable(final List<String> tableLookupKey)
+  {
+    return tables.lookup(tableLookupKey);
   }
 
   @Override
@@ -474,10 +492,14 @@ final class MutableCatalog
     MutableColumnDataType columnDataType = null;
     for (final MutableColumnDataType currentColumnDataType : columnDataTypes)
     {
-      if (type == currentColumnDataType.getJavaSqlType().getVendorTypeNumber())
+      if (type == currentColumnDataType
+        .getJavaSqlType()
+        .getVendorTypeNumber())
       {
         columnDataType = currentColumnDataType;
-        if (columnDataType.getSchema().equals(systemSchema))
+        if (columnDataType
+          .getSchema()
+          .equals(systemSchema))
         {
           break;
         }

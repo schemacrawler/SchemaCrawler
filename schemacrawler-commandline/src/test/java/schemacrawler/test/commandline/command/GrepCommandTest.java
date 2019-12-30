@@ -24,7 +24,8 @@ public class GrepCommandTest
   {
     final String[] args = new String[0];
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
+    final SchemaCrawlerOptionsBuilder builder =
+      SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
     runCommandInTest(new GrepCommand(state), args);
@@ -42,7 +43,8 @@ public class GrepCommandTest
   {
     final String[] args = { "--some-option" };
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
+    final SchemaCrawlerOptionsBuilder builder =
+      SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
     runCommandInTest(new GrepCommand(state), args);
@@ -60,7 +62,8 @@ public class GrepCommandTest
   {
     final String[] args = { "--grep-columns", "[[" };
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
+    final SchemaCrawlerOptionsBuilder builder =
+      SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
     assertThrows(CommandLine.ParameterException.class,
@@ -72,7 +75,8 @@ public class GrepCommandTest
   {
     final String[] args = { "--grep-columns" };
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
+    final SchemaCrawlerOptionsBuilder builder =
+      SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
 
@@ -96,24 +100,31 @@ public class GrepCommandTest
       "-extra"
     };
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
+    final SchemaCrawlerOptionsBuilder builder =
+      SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
     runCommandInTest(new GrepCommand(state), args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
 
     assertThat(schemaCrawlerOptions.isGrepColumns(), is(true));
-    assertThat(schemaCrawlerOptions.getGrepColumnInclusionRule().get(),
+    assertThat(schemaCrawlerOptions
+                 .getGrepColumnInclusionRule()
+                 .get(),
                is(new RegularExpressionInclusionRule(Pattern.compile(
                  "new.*pattern[1-3]"))));
 
     assertThat(schemaCrawlerOptions.isGrepRoutineParameters(), is(true));
-    assertThat(schemaCrawlerOptions.getGrepRoutineParameterInclusionRule().get(),
+    assertThat(schemaCrawlerOptions
+                 .getGrepRoutineParameterInclusionRule()
+                 .get(),
                is(new RegularExpressionInclusionRule(Pattern.compile(
                  "new.*pattern[4-6]"))));
 
     assertThat(schemaCrawlerOptions.isGrepDefinitions(), is(true));
-    assertThat(schemaCrawlerOptions.getGrepDefinitionInclusionRule().get(),
+    assertThat(schemaCrawlerOptions
+                 .getGrepDefinitionInclusionRule()
+                 .get(),
                is(new RegularExpressionInclusionRule(Pattern.compile(
                  "new.*pattern[7-9]"))));
 

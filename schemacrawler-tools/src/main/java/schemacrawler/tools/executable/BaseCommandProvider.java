@@ -44,8 +44,8 @@ public abstract class BaseCommandProvider
 
   public BaseCommandProvider(final Collection<CommandDescription> supportedCommands)
   {
-    this.supportedCommands = requireNonNull(supportedCommands,
-                                            "No supported commands provided");
+    this.supportedCommands =
+      requireNonNull(supportedCommands, "No supported commands provided");
   }
 
   public BaseCommandProvider(final CommandDescription supportedCommand)

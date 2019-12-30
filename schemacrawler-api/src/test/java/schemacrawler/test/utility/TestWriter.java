@@ -39,8 +39,8 @@ public final class TestWriter
   implements TestOutputCapture
 {
 
-  private static final String lineSeparator = System
-    .getProperty("line.separator");
+  private static final String lineSeparator =
+    System.getProperty("line.separator");
 
   private final TestOutputStream out;
 

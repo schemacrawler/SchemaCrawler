@@ -35,17 +35,11 @@ import static picocli.CommandLine.Command;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.commandline.state.StateUtility;
 
-@Command(name = "showstate",
-         header = "** Show internal state",
-         description = {
-           "",
-         },
-         headerHeading = "",
-         synopsisHeading = "Shell Command:%n",
-         customSynopsis = {
-           "showstate"
-         },
-         optionListHeading = "Options:%n")
+@Command(name = "showstate", header = "** Show internal state", description = {
+  "",
+}, headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
+  "showstate"
+}, optionListHeading = "Options:%n")
 public final class ShowStateCommand
   implements Runnable
 {

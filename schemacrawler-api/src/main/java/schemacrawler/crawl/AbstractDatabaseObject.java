@@ -60,9 +60,9 @@ abstract class AbstractDatabaseObject
    * constructors make a class effectively final
    *
    * @param schema
-   *        Schema of this object
+   *   Schema of this object
    * @param name
-   *        Name of the named object
+   *   Name of the named object
    */
   AbstractDatabaseObject(final Schema schema, final String name)
   {
@@ -80,8 +80,8 @@ abstract class AbstractDatabaseObject
 
     if (obj instanceof DatabaseObject)
     {
-      final int schemaCompareTo = getSchema()
-        .compareTo(((DatabaseObject) obj).getSchema());
+      final int schemaCompareTo =
+        getSchema().compareTo(((DatabaseObject) obj).getSchema());
       if (schemaCompareTo != 0)
       {
         return schemaCompareTo;
@@ -90,7 +90,8 @@ abstract class AbstractDatabaseObject
       {
         try
         {
-          final int typeCompareTo = ((TypedObject) this).getType()
+          final int typeCompareTo = ((TypedObject) this)
+            .getType()
             .compareTo(((TypedObject) obj).getType());
           if (typeCompareTo != 0)
           {
@@ -107,6 +108,33 @@ abstract class AbstractDatabaseObject
     }
 
     return super.compareTo(obj);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getFullName()
+  {
+    return Identifiers.STANDARD.quoteFullName(this);
+  }
+
+  @Override
+  public List<String> toUniqueLookupKey()
+  {
+    // Make a defensive copy
+    final List<String> lookupKey = new ArrayList<>(schema.toUniqueLookupKey());
+    lookupKey.add(getName());
+    return lookupKey;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    final int prime = 31;
+    int result = super.hashCode();
+    result = prime * result + Objects.hash(schema);
+    return result;
   }
 
   @Override
@@ -127,37 +155,10 @@ abstract class AbstractDatabaseObject
     return Objects.equals(schema, ((DatabaseObject) obj).getSchema());
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String getFullName()
-  {
-    return Identifiers.STANDARD.quoteFullName(this);
-  }
-
   @Override
   public final Schema getSchema()
   {
     return schema;
-  }
-
-  @Override
-  public int hashCode()
-  {
-    final int prime = 31;
-    int result = super.hashCode();
-    result = prime * result + Objects.hash(schema);
-    return result;
-  }
-
-  @Override
-  public List<String> toUniqueLookupKey()
-  {
-    // Make a defensive copy
-    final List<String> lookupKey = new ArrayList<>(schema.toUniqueLookupKey());
-    lookupKey.add(getName());
-    return lookupKey;
   }
 
 }

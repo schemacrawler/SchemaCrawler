@@ -43,7 +43,6 @@ import java.sql.Connection;
 import org.apache.commons.lang3.SerializationUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -58,7 +57,8 @@ public class SerializationTest
   public void catalogSerialization(final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     assertThat("Could not obtain catalog", catalog, notNullValue());
@@ -66,7 +66,9 @@ public class SerializationTest
                catalog.getSchemas(),
                is(not(empty())));
 
-    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
+    final Schema schema = catalog
+      .lookupSchema("PUBLIC.BOOKS")
+      .orElse(null);
     assertThat("Could not obtain schema", schema, notNullValue());
     assertThat("Unexpected number of tables in the schema",
                catalog.getTables(schema),
@@ -81,7 +83,8 @@ public class SerializationTest
                clonedCatalog.getSchemas(),
                is(not(empty())));
 
-    final Schema clonedSchema = clonedCatalog.lookupSchema("PUBLIC.BOOKS")
+    final Schema clonedSchema = clonedCatalog
+      .lookupSchema("PUBLIC.BOOKS")
       .orElse(null);
     assertThat("Could not obtain schema", clonedSchema, notNullValue());
     assertThat("Unexpected number of tables in the schema",

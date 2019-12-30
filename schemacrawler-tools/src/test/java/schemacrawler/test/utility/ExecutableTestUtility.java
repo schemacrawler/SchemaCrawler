@@ -71,12 +71,10 @@ public final class ExecutableTestUtility
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder.builder(
-        executable.getOutputOptions())
-                                                                            .withOutputFormatValue(
-                                                                              outputFormatValue)
-                                                                            .withOutputWriter(
-                                                                              out);
+      final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
+        .builder(executable.getOutputOptions())
+        .withOutputFormatValue(outputFormatValue)
+        .withOutputWriter(out);
 
       executable.setOutputOptions(outputOptionsBuilder.toOptions());
       executable.setConnection(connection);
@@ -87,14 +85,15 @@ public final class ExecutableTestUtility
 
   public static SchemaCrawlerExecutable executableOf(final String command)
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder()
-      .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-      command);
+    final SchemaCrawlerExecutable executable =
+      new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     return executable;
   }
@@ -103,7 +102,7 @@ public final class ExecutableTestUtility
                                                               final OutputFormat outputFormat)
   {
     return hasSameContentAndTypeAs(classpathTestResource,
-                                                  outputFormat.getFormat());
+                                   outputFormat.getFormat());
   }
 
   public static Matcher<TestResource> hasSameContentAndTypeAs(final TestResource classpathTestResource,

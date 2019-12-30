@@ -33,19 +33,17 @@ import static sf.util.Utility.isBlank;
 import java.io.Serializable;
 
 /**
- * Represents a type of table in the database. Examples could be a base
- * table, a view, a global temporary table, and so on. The table type
- * name is case-sensitive, as it is known to the database system.
- * However, string comparisons are case-insensitive.
+ * Represents a type of table in the database. Examples could be a base table, a
+ * view, a global temporary table, and so on. The table type name is
+ * case-sensitive, as it is known to the database system. However, string
+ * comparisons are case-insensitive.
  */
 public final class TableType
   implements Serializable, Comparable<TableType>
 {
 
-  private static final long serialVersionUID = -8172248482959041873L;
-
   public static final TableType UNKNOWN = new TableType("unknown");
-
+  private static final long serialVersionUID = -8172248482959041873L;
   private final String tableType;
 
   /**
@@ -107,39 +105,6 @@ public final class TableType
   }
 
   /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
-      return true;
-    }
-    if (obj == null)
-    {
-      return false;
-    }
-    if (!(obj instanceof TableType))
-    {
-      return false;
-    }
-    final TableType other = (TableType) obj;
-    if (tableType == null)
-    {
-      if (other.tableType != null)
-      {
-        return false;
-      }
-    }
-    else if (!tableType.equalsIgnoreCase(other.tableType))
-    {
-      return false;
-    }
-    return true;
-  }
-
-  /**
    * The table type, with the case preserved.
    *
    * @return The table type
@@ -162,8 +127,44 @@ public final class TableType
   }
 
   /**
-   * Checks if a string is equal to this table type. This is a
-   * case-insensitive check.
+   * {@inheritDoc}
+   */
+  @Override
+  public boolean equals(final Object obj)
+  {
+    if (this == obj)
+    {
+      return true;
+    }
+    if (obj == null)
+    {
+      return false;
+    }
+    if (!(obj instanceof TableType))
+    {
+      return false;
+    }
+    final TableType other = (TableType) obj;
+    if (tableType == null)
+    {
+      return other.tableType == null;
+    }
+    else
+    { return tableType.equalsIgnoreCase(other.tableType); }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String toString()
+  {
+    return tableType == null? "": tableType.toLowerCase();
+  }
+
+  /**
+   * Checks if a string is equal to this table type. This is a case-insensitive
+   * check.
    *
    * @return True if the string is the same as this table type
    */
@@ -181,18 +182,11 @@ public final class TableType
    */
   public boolean isView()
   {
-    return tableType != null && (tableType.toUpperCase().contains("VIEW")
-                                 || tableType.toUpperCase()
+    return tableType != null && (tableType
+                                   .toUpperCase()
+                                   .contains("VIEW") || tableType
+                                   .toUpperCase()
                                    .contains("MATERIALIZED"));
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String toString()
-  {
-    return tableType == null? "": tableType.toLowerCase();
   }
 
 }

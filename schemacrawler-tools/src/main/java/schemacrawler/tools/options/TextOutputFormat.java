@@ -41,22 +41,21 @@ import sf.util.StringFormat;
  * Enumeration for text format type.
  */
 public enum TextOutputFormat
-  implements
-  OutputFormat
+  implements OutputFormat
 {
 
- text("Plain text format", "txt"),
- html("HyperText Markup Language (HTML) format"),
- tsv("Tab-separated values (TSV) format");
+  text("Plain text format", "txt"),
+  html("HyperText Markup Language (HTML) format"),
+  tsv("Tab-separated values (TSV) format");
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(TextOutputFormat.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(TextOutputFormat.class.getName());
 
   /**
    * Gets the value from the format.
    *
    * @param format
-   *        Text output format.
+   *   Text output format.
    * @return TextOutputFormat
    */
   public static TextOutputFormat fromFormat(final String format)
@@ -64,15 +63,31 @@ public enum TextOutputFormat
     final TextOutputFormat outputFormat = fromFormatOrNull(format);
     if (outputFormat == null)
     {
-      LOGGER
-        .log(Level.CONFIG,
-             new StringFormat("Unknown format <%s>, using default", format));
+      LOGGER.log(Level.CONFIG,
+                 new StringFormat("Unknown format <%s>, using default",
+                                  format));
       return text;
     }
     else
     {
       return outputFormat;
     }
+  }
+
+  private static TextOutputFormat fromFormatOrNull(final String format)
+  {
+    if (isBlank(format))
+    {
+      return null;
+    }
+    for (final TextOutputFormat outputFormat : TextOutputFormat.values())
+    {
+      if (outputFormat.outputFormatState.isSupportedFormat(format))
+      {
+        return outputFormat;
+      }
+    }
+    return null;
   }
 
   /**
@@ -84,23 +99,6 @@ public enum TextOutputFormat
   {
     return fromFormatOrNull(format) != null;
   }
-
-  private static TextOutputFormat fromFormatOrNull(final String format)
-  {
-    if (isBlank(format))
-    {
-      return null;
-    }
-    for (final TextOutputFormat outputFormat: TextOutputFormat.values())
-    {
-      if (outputFormat.outputFormatState.isSupportedFormat(format))
-      {
-        return outputFormat;
-      }
-    }
-    return null;
-  }
-
   private final OutputFormatState outputFormatState;
 
   private TextOutputFormat(final String description)
@@ -111,9 +109,8 @@ public enum TextOutputFormat
   private TextOutputFormat(final String description,
                            final String... additionalFormatSpecifiers)
   {
-    outputFormatState = new OutputFormatState(name(),
-                                              description,
-                                              additionalFormatSpecifiers);
+    outputFormatState =
+      new OutputFormatState(name(), description, additionalFormatSpecifiers);
   }
 
   @Override

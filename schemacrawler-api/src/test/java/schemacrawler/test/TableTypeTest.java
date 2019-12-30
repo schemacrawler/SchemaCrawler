@@ -37,7 +37,6 @@ import static org.hamcrest.number.OrderingComparison.lessThan;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schema.TableType;
 
 public class TableTypeTest

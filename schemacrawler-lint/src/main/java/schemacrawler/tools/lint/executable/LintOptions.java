@@ -48,7 +48,8 @@ public class LintOptions
   }
 
   /**
-   * Whether to run all linters, including the ones that are not explicitly configured.
+   * Whether to run all linters, including the ones that are not explicitly
+   * configured.
    *
    * @return Whether to run all linters.
    */
