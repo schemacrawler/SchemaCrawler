@@ -42,8 +42,8 @@ final class GraphNoOpExecutor
     requireNonNull(graphOutputFormat, "No graph output format provided");
     if (graphOutputFormat != GraphOutputFormat.scdot)
     {
-      throw new SchemaCrawlerException("Format should be "
-                                       + GraphOutputFormat.scdot);
+      throw new SchemaCrawlerException(
+        "Format should be " + GraphOutputFormat.scdot);
     }
   }
 

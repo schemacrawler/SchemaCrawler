@@ -48,20 +48,21 @@ public final class GraphOptionsBuilder
   extends BaseSchemaTextOptionsBuilder<GraphOptionsBuilder, GraphOptions>
 {
 
-  protected static final String SCHEMACRAWLER_GRAPH_PREFIX = "schemacrawler.graph.";
+  protected static final String SCHEMACRAWLER_GRAPH_PREFIX =
+    "schemacrawler.graph.";
 
-  private static final String GRAPH_SHOW_PRIMARY_KEY_CARDINALITY = SCHEMACRAWLER_GRAPH_PREFIX
-                                                                   + "show.primarykey.cardinality";
-  private static final String GRAPH_SHOW_FOREIGN_KEY_CARDINALITY = SCHEMACRAWLER_GRAPH_PREFIX
-                                                                   + "show.foreignkey.cardinality";
-  private static final String GRAPH_GRAPHVIZ_OPTS = SCHEMACRAWLER_GRAPH_PREFIX
-                                                    + "graphviz_opts";
+  private static final String GRAPH_SHOW_PRIMARY_KEY_CARDINALITY =
+    SCHEMACRAWLER_GRAPH_PREFIX + "show.primarykey.cardinality";
+  private static final String GRAPH_SHOW_FOREIGN_KEY_CARDINALITY =
+    SCHEMACRAWLER_GRAPH_PREFIX + "show.foreignkey.cardinality";
+  private static final String GRAPH_GRAPHVIZ_OPTS =
+    SCHEMACRAWLER_GRAPH_PREFIX + "graphviz_opts";
   private static final String SC_GRAPHVIZ_OPTS = "SC_GRAPHVIZ_OPTS";
-  private static final String GRAPH_GRAPHVIZ_ATTRIBUTES = SCHEMACRAWLER_GRAPH_PREFIX
-                                                          + "graphviz";
+  private static final String GRAPH_GRAPHVIZ_ATTRIBUTES =
+    SCHEMACRAWLER_GRAPH_PREFIX + "graphviz";
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(GraphOptions.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(GraphOptions.class.getName());
 
   public static GraphOptionsBuilder builder()
   {
@@ -71,16 +72,6 @@ public final class GraphOptionsBuilder
   public static GraphOptionsBuilder builder(final GraphOptions options)
   {
     return new GraphOptionsBuilder().fromOptions(options);
-  }
-
-  public static GraphOptions newGraphOptions()
-  {
-    return new GraphOptionsBuilder().toOptions();
-  }
-
-  public static GraphOptions newGraphOptions(final Config config)
-  {
-    return new GraphOptionsBuilder().fromConfig(config).toOptions();
   }
 
   private static Map<String, String> makeDefaultGraphvizAttributes()
@@ -102,6 +93,17 @@ public final class GraphOptionsBuilder
     return graphvizAttributes;
   }
 
+  public static GraphOptions newGraphOptions(final Config config)
+  {
+    return new GraphOptionsBuilder()
+      .fromConfig(config)
+      .toOptions();
+  }
+
+  public static GraphOptions newGraphOptions()
+  {
+    return new GraphOptionsBuilder().toOptions();
+  }
   protected List<String> graphvizOpts;
   protected Map<String, String> graphvizAttributes;
   protected boolean isShowForeignKeyCardinality;
@@ -125,14 +127,15 @@ public final class GraphOptionsBuilder
     }
     super.fromConfig(config);
 
-    isShowPrimaryKeyCardinality = config
-      .getBooleanValue(GRAPH_SHOW_PRIMARY_KEY_CARDINALITY, true);
-    isShowForeignKeyCardinality = config
-      .getBooleanValue(GRAPH_SHOW_FOREIGN_KEY_CARDINALITY, true);
+    isShowPrimaryKeyCardinality =
+      config.getBooleanValue(GRAPH_SHOW_PRIMARY_KEY_CARDINALITY, true);
+    isShowForeignKeyCardinality =
+      config.getBooleanValue(GRAPH_SHOW_FOREIGN_KEY_CARDINALITY, true);
 
     graphvizOpts = listGraphvizOpts(readGraphvizOpts(config));
 
-    final Map<String, String> graphvizAttributes = readGraphvizAttributes(config);
+    final Map<String, String> graphvizAttributes =
+      readGraphvizAttributes(config);
     if (graphvizAttributes != null)
     {
       this.graphvizAttributes = graphvizAttributes;
@@ -233,11 +236,11 @@ public final class GraphOptionsBuilder
   private void graphvizAttributesToConfig(final Map<String, String> graphvizAttributes,
                                           final Config config)
   {
-    for (final Entry<String, String> graphvizAttribute: graphvizAttributes
-      .entrySet())
+    for (final Entry<String, String> graphvizAttribute : graphvizAttributes.entrySet())
     {
-      final String fullKey = String
-        .format("%s.%s", GRAPH_GRAPHVIZ_ATTRIBUTES, graphvizAttribute.getKey());
+      final String fullKey = String.format("%s.%s",
+                                           GRAPH_GRAPHVIZ_ATTRIBUTES,
+                                           graphvizAttribute.getKey());
       final String value = graphvizAttribute.getValue();
       config.put(fullKey, value);
     }
@@ -245,8 +248,8 @@ public final class GraphOptionsBuilder
 
   private List<String> listGraphvizOpts(final String graphVizOptions)
   {
-    final List<String> graphVizOptionsList = Arrays
-      .asList(graphVizOptions.split("\\s+"));
+    final List<String> graphVizOptionsList =
+      Arrays.asList(graphVizOptions.split("\\s+"));
     return graphVizOptionsList;
   }
 
@@ -258,7 +261,7 @@ public final class GraphOptionsBuilder
     }
 
     final Map<String, String> graphvizAttributes = new HashMap<>();
-    for (final Entry<String, String> configEntry: config.entrySet())
+    for (final Entry<String, String> configEntry : config.entrySet())
     {
       final String fullKey = configEntry.getKey();
       if (fullKey == null || !fullKey.startsWith(GRAPH_GRAPHVIZ_ATTRIBUTES))
@@ -266,8 +269,8 @@ public final class GraphOptionsBuilder
         continue;
       }
 
-      final String key = fullKey
-        .substring(GRAPH_GRAPHVIZ_ATTRIBUTES.length() + 1);
+      final String key =
+        fullKey.substring(GRAPH_GRAPHVIZ_ATTRIBUTES.length() + 1);
       final String value = configEntry.getValue();
       graphvizAttributes.put(key, value);
     }
@@ -282,34 +285,34 @@ public final class GraphOptionsBuilder
 
   private String readGraphvizOpts(final Config config)
   {
-    final String scGraphvizOptsCfg = config.getStringValue(GRAPH_GRAPHVIZ_OPTS,
-                                                           "");
+    final String scGraphvizOptsCfg =
+      config.getStringValue(GRAPH_GRAPHVIZ_OPTS, "");
     if (!isBlank(scGraphvizOptsCfg))
     {
-      LOGGER
-        .log(Level.CONFIG,
-             new StringFormat("Using additional Graphviz command-line options from config <%s>",
-                              scGraphvizOptsCfg));
+      LOGGER.log(Level.CONFIG,
+                 new StringFormat(
+                   "Using additional Graphviz command-line options from config <%s>",
+                   scGraphvizOptsCfg));
       return scGraphvizOptsCfg;
     }
 
     final String scGraphvizOptsProp = System.getProperty(SC_GRAPHVIZ_OPTS);
     if (!isBlank(scGraphvizOptsProp))
     {
-      LOGGER
-        .log(Level.CONFIG,
-             new StringFormat("Using additional Graphviz command-line options from SC_GRAPHVIZ_OPTS system property <%s>",
-                              scGraphvizOptsProp));
+      LOGGER.log(Level.CONFIG,
+                 new StringFormat(
+                   "Using additional Graphviz command-line options from SC_GRAPHVIZ_OPTS system property <%s>",
+                   scGraphvizOptsProp));
       return scGraphvizOptsProp;
     }
 
     final String scGraphvizOptsEnv = System.getenv(SC_GRAPHVIZ_OPTS);
     if (!isBlank(scGraphvizOptsEnv))
     {
-      LOGGER
-        .log(Level.CONFIG,
-             new StringFormat("Using additional Graphviz command-line options from SC_GRAPHVIZ_OPTS environmental variable <%s>",
-                              scGraphvizOptsEnv));
+      LOGGER.log(Level.CONFIG,
+                 new StringFormat(
+                   "Using additional Graphviz command-line options from SC_GRAPHVIZ_OPTS environmental variable <%s>",
+                   scGraphvizOptsEnv));
       return scGraphvizOptsEnv;
     }
 

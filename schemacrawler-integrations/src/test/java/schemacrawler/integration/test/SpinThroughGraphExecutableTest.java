@@ -42,8 +42,8 @@ public class SpinThroughGraphExecutableTest
   public Stream<OutputFormat> outputFormats()
   {
     return Arrays.stream(new OutputFormat[] {
-                                              GraphOutputFormat.scdot,
-                                              GraphOutputFormat.htmlx });
+      GraphOutputFormat.scdot, GraphOutputFormat.htmlx
+    });
   }
 
 }

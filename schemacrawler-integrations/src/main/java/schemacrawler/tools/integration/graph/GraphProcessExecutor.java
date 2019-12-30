@@ -47,8 +47,8 @@ final class GraphProcessExecutor
   extends AbstractGraphProcessExecutor
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(GraphProcessExecutor.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(GraphProcessExecutor.class.getName());
 
   private final List<String> graphvizOpts;
 
@@ -60,8 +60,8 @@ final class GraphProcessExecutor
   {
     super(dotFile, outputFile, graphOutputFormat);
 
-    this.graphvizOpts = requireNonNull(graphvizOpts,
-                                       "No Graphviz options provided");
+    this.graphvizOpts =
+      requireNonNull(graphvizOpts, "No Graphviz options provided");
   }
 
   @Override
@@ -93,8 +93,8 @@ final class GraphProcessExecutor
 
     LOGGER.log(Level.INFO,
                new FileContents(processExecutor.getProcessOutput()));
-    final Supplier<String> processError = new FileContents(processExecutor
-      .getProcessError());
+    final Supplier<String> processError =
+      new FileContents(processExecutor.getProcessError());
     if (!successful)
     {
       LOGGER.log(Level.SEVERE,
@@ -144,7 +144,9 @@ final class GraphProcessExecutor
     }
 
     // Find name of DOT file in local directory
-    final Path movedDotFile = outputFile.normalize().getParent()
+    final Path movedDotFile = outputFile
+      .normalize()
+      .getParent()
       .resolve(outputFile.getFileName() + ".dot");
 
     // Print command to run

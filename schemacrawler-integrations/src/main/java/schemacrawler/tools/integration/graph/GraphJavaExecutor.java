@@ -41,8 +41,8 @@ final class GraphJavaExecutor
   extends AbstractGraphProcessExecutor
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(GraphJavaExecutor.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(GraphJavaExecutor.class.getName());
 
   GraphJavaExecutor(final Path dotFile,
                     final Path outputFile,
@@ -76,8 +76,7 @@ final class GraphJavaExecutor
   @Override
   public boolean canGenerate()
   {
-    return GraphvizJavaExecutorUtility
-      .isGraphvizJavaAvailable(graphOutputFormat);
+    return GraphvizJavaExecutorUtility.isGraphvizJavaAvailable(graphOutputFormat);
 
   }
 

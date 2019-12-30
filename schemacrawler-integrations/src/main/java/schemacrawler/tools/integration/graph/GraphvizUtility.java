@@ -13,8 +13,8 @@ import sf.util.StringFormat;
 public final class GraphvizUtility
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(GraphvizUtility.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(GraphvizUtility.class.getName());
 
   public static boolean isGraphvizAvailable()
   {

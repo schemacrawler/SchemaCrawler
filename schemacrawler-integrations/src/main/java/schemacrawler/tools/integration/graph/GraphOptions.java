@@ -48,8 +48,10 @@ public class GraphOptions
 
     graphvizOpts = graphOptionsBuilder.graphvizOpts;
     graphvizAttributes = graphOptionsBuilder.graphvizAttributes;
-    isShowForeignKeyCardinality = graphOptionsBuilder.isShowForeignKeyCardinality;
-    isShowPrimaryKeyCardinality = graphOptionsBuilder.isShowPrimaryKeyCardinality;
+    isShowForeignKeyCardinality =
+      graphOptionsBuilder.isShowForeignKeyCardinality;
+    isShowPrimaryKeyCardinality =
+      graphOptionsBuilder.isShowPrimaryKeyCardinality;
   }
 
   public Map<String, String> getGraphvizAttributes()

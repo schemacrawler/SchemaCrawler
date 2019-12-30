@@ -46,7 +46,12 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.schemacrawler.*;
+import schemacrawler.schemacrawler.IncludeAll;
+import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
@@ -74,24 +79,29 @@ public class GraphRendererOptionsTest
     throws Exception
   {
     SchemaCrawlerOptions schemaCrawlerOptions = options;
-    if (options.getSchemaInclusionRule().equals(new IncludeAll()))
+    if (options
+      .getSchemaInclusionRule()
+      .equals(new IncludeAll()))
     {
-      schemaCrawlerOptions = SchemaCrawlerOptionsBuilder.builder()
-                                                        .fromOptions(options)
-                                                        .includeSchemas(new RegularExpressionExclusionRule(
-                                                          ".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
-                                                        .toOptions();
+      schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
+        .builder()
+        .fromOptions(options)
+        .includeSchemas(new RegularExpressionExclusionRule(
+          ".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
+        .toOptions();
     }
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-      command);
+    final SchemaCrawlerExecutable executable =
+      new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
-    final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder.builder(
-      graphOptions);
+    final GraphOptionsBuilder graphOptionsBuilder =
+      GraphOptionsBuilder.builder(graphOptions);
     graphOptionsBuilder.sortTables(true);
     graphOptionsBuilder.noInfo(graphOptions.isNoInfo());
-    if (!"maximum".equals(options.getSchemaInfoLevel().getTag()))
+    if (!"maximum".equals(options
+                            .getSchemaInfoLevel()
+                            .getTag()))
     {
       graphOptionsBuilder.weakAssociations(true);
     }
@@ -127,14 +137,12 @@ public class GraphRendererOptionsTest
     final Path testDiagramFile = directory.resolve(testMethodName + ".png");
 
     final OutputOptions oldOutputOptions = executable.getOutputOptions();
-    final OutputOptions outputOptions = OutputOptionsBuilder.builder()
-                                                            .fromOptions(
-                                                              oldOutputOptions)
-                                                            .withOutputFile(
-                                                              testDiagramFile)
-                                                            .withOutputFormat(
-                                                              GraphOutputFormat.png)
-                                                            .toOptions();
+    final OutputOptions outputOptions = OutputOptionsBuilder
+      .builder()
+      .fromOptions(oldOutputOptions)
+      .withOutputFile(testDiagramFile)
+      .withOutputFormat(GraphOutputFormat.png)
+      .toOptions();
 
     executable.setOutputOptions(outputOptions);
 
@@ -158,8 +166,11 @@ public class GraphRendererOptionsTest
                                     final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
-    final GraphOptions graphOptions = GraphOptionsBuilder.builder().toOptions();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    final GraphOptions graphOptions = GraphOptionsBuilder
+      .builder()
+      .toOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
                     connection,
@@ -173,7 +184,8 @@ public class GraphRendererOptionsTest
                                     final Connection connection)
     throws Exception
   {
-    final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder.builder();
+    final GraphOptionsBuilder graphOptionsBuilder =
+      GraphOptionsBuilder.builder();
     graphOptionsBuilder.sortTableColumns();
     graphOptionsBuilder.showOrdinalNumbers();
     final GraphOptions graphOptions = graphOptionsBuilder.toOptions();
@@ -190,7 +202,8 @@ public class GraphRendererOptionsTest
                                     final Connection connection)
     throws Exception
   {
-    final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder.builder();
+    final GraphOptionsBuilder graphOptionsBuilder =
+      GraphOptionsBuilder.builder();
     graphOptionsBuilder.noForeignKeyNames();
     final GraphOptions graphOptions = graphOptionsBuilder.toOptions();
 
@@ -206,7 +219,8 @@ public class GraphRendererOptionsTest
                                     final Connection connection)
     throws Exception
   {
-    final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder.builder();
+    final GraphOptionsBuilder graphOptionsBuilder =
+      GraphOptionsBuilder.builder();
     graphOptionsBuilder.noSchemaCrawlerInfo(true);
     graphOptionsBuilder.showDatabaseInfo(false);
     graphOptionsBuilder.showJdbcDriverInfo(false);
@@ -224,7 +238,8 @@ public class GraphRendererOptionsTest
                                     final Connection connection)
     throws Exception
   {
-    final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder.builder();
+    final GraphOptionsBuilder graphOptionsBuilder =
+      GraphOptionsBuilder.builder();
     graphOptionsBuilder.showUnqualifiedNames();
     final GraphOptions graphOptions = graphOptionsBuilder.toOptions();
 
@@ -240,13 +255,16 @@ public class GraphRendererOptionsTest
                                     final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder()
-      .includeTables(new RegularExpressionInclusionRule(".*BOOKS"));
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .includeTables(new RegularExpressionInclusionRule(".*BOOKS"));
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
 
-    final GraphOptions graphOptions = GraphOptionsBuilder.builder().toOptions();
+    final GraphOptions graphOptions = GraphOptionsBuilder
+      .builder()
+      .toOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
                     connection,
@@ -260,8 +278,11 @@ public class GraphRendererOptionsTest
                                     final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
-    final GraphOptions graphOptions = GraphOptionsBuilder.builder().toOptions();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    final GraphOptions graphOptions = GraphOptionsBuilder
+      .builder()
+      .toOptions();
 
     executableGraph(SchemaTextDetailType.brief.name(),
                     connection,
@@ -275,8 +296,11 @@ public class GraphRendererOptionsTest
                                     final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
-    final GraphOptions graphOptions = GraphOptionsBuilder.builder().toOptions();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    final GraphOptions graphOptions = GraphOptionsBuilder
+      .builder()
+      .toOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
                     connection,
@@ -290,14 +314,18 @@ public class GraphRendererOptionsTest
                                     final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder()
-      .includeTables(new RegularExpressionInclusionRule(".*BOOKS"));
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .includeTables(new RegularExpressionInclusionRule(".*BOOKS"));
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
 
-    final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder.builder();
-    graphOptionsBuilder.noForeignKeyNames().showUnqualifiedNames();
+    final GraphOptionsBuilder graphOptionsBuilder =
+      GraphOptionsBuilder.builder();
+    graphOptionsBuilder
+      .noForeignKeyNames()
+      .showUnqualifiedNames();
     final GraphOptions graphOptions = graphOptionsBuilder.toOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
@@ -312,15 +340,19 @@ public class GraphRendererOptionsTest
                                     final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder()
-      .includeTables(new RegularExpressionInclusionRule(".*BOOKS"))
-      .grepOnlyMatching(true);
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .includeTables(new RegularExpressionInclusionRule(".*BOOKS"))
+        .grepOnlyMatching(true);
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
 
-    final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder.builder();
-    graphOptionsBuilder.noForeignKeyNames().showUnqualifiedNames();
+    final GraphOptionsBuilder graphOptionsBuilder =
+      GraphOptionsBuilder.builder();
+    graphOptionsBuilder
+      .noForeignKeyNames()
+      .showUnqualifiedNames();
     final GraphOptions graphOptions = graphOptionsBuilder.toOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
@@ -335,13 +367,16 @@ public class GraphRendererOptionsTest
                                     final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-      .builder()
-      .includeGreppedColumns(new RegularExpressionInclusionRule(
-        ".*\\.REGIONS\\..*"))
-      .toOptions();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .includeGreppedColumns(new RegularExpressionInclusionRule(
+          ".*\\.REGIONS\\..*"))
+        .toOptions();
 
-    final GraphOptions graphOptions = GraphOptionsBuilder.builder().toOptions();
+    final GraphOptions graphOptions = GraphOptionsBuilder
+      .builder()
+      .toOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
                     connection,
@@ -355,14 +390,17 @@ public class GraphRendererOptionsTest
                                     final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-      .builder()
-      .includeGreppedColumns(new RegularExpressionInclusionRule(
-        ".*\\.REGIONS\\..*"))
-      .grepOnlyMatching(true)
-      .toOptions();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .includeGreppedColumns(new RegularExpressionInclusionRule(
+          ".*\\.REGIONS\\..*"))
+        .grepOnlyMatching(true)
+        .toOptions();
 
-    final GraphOptions graphOptions = GraphOptionsBuilder.builder().toOptions();
+    final GraphOptions graphOptions = GraphOptionsBuilder
+      .builder()
+      .toOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
                     connection,
@@ -376,11 +414,13 @@ public class GraphRendererOptionsTest
                                     final Connection connection)
     throws Exception
   {
-    final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder.builder();
+    final GraphOptionsBuilder graphOptionsBuilder =
+      GraphOptionsBuilder.builder();
     graphOptionsBuilder.showRowCounts();
     final GraphOptions graphOptions = graphOptionsBuilder.toOptions();
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     executableGraph(SchemaTextDetailType.schema.name(),
                     connection,
@@ -402,11 +442,13 @@ public class GraphRendererOptionsTest
     final String NODE = "node.";
     graphvizAttributes.put(NODE + "shape", "none");
 
-    final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder.builder();
+    final GraphOptionsBuilder graphOptionsBuilder =
+      GraphOptionsBuilder.builder();
     graphOptionsBuilder.withGraphvizAttributes(graphvizAttributes);
     final GraphOptions graphOptions = graphOptionsBuilder.toOptions();
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     executableGraph(SchemaTextDetailType.schema.name(),
                     connection,
@@ -420,14 +462,17 @@ public class GraphRendererOptionsTest
                                             final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-      .includeSchemas(new RegularExpressionInclusionRule(".*\\.FOR_LINT"));
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+        .includeSchemas(new RegularExpressionInclusionRule(".*\\.FOR_LINT"));
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
 
-    final GraphOptions graphOptions = GraphOptionsBuilder.builder().toOptions();
+    final GraphOptions graphOptions = GraphOptionsBuilder
+      .builder()
+      .toOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
                     connection,

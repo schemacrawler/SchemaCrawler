@@ -67,8 +67,8 @@ public final class GraphCommandProvider
     {
       return false;
     }
-    final GraphOutputFormat graphOutputFormat = GraphOutputFormat.fromFormat(
-      format);
+    final GraphOutputFormat graphOutputFormat =
+      GraphOutputFormat.fromFormat(format);
     final boolean supportsSchemaCrawlerCommand =
       supportsCommand(command) && GraphOutputFormat.isSupportedFormat(format)
       && graphOutputFormat != GraphOutputFormat.htmlx;

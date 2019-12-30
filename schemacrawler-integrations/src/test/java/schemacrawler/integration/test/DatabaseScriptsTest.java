@@ -55,8 +55,8 @@ import org.springframework.core.io.support.ResourcePatternUtils;
 public class DatabaseScriptsTest
 {
 
-  private final static Pattern fileNamePattern = Pattern
-    .compile(".*\\/(.*\\..*)");
+  private final static Pattern fileNamePattern =
+    Pattern.compile(".*\\/(.*\\..*)");
 
   private List<String> sqlScripts;
 
@@ -76,14 +76,18 @@ public class DatabaseScriptsTest
   {
     final List<String> scripts = loadResources("classpath*:/**/*.scripts.txt");
     final Set<String> failedScripts = new HashSet<>();
-    for (final String scriptName: scripts)
+    for (final String scriptName : scripts)
     {
       final String scriptsResource = "/" + scriptName;
       try (
-          final BufferedReader reader = new BufferedReader(new InputStreamReader(DatabaseScriptsTest.class
-            .getResourceAsStream(scriptsResource), UTF_8));)
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(
+          DatabaseScriptsTest.class.getResourceAsStream(scriptsResource),
+          UTF_8));
+      )
       {
-        final List<String> lines = reader.lines().collect(Collectors.toList());
+        final List<String> lines = reader
+          .lines()
+          .collect(Collectors.toList());
         for (int i = 0; i < lines.size(); i++)
         {
           final String line = lines.get(i);
@@ -95,8 +99,9 @@ public class DatabaseScriptsTest
           if (!line.endsWith(sqlResource))
           {
             failedScripts.add(scriptName);
-            System.out.println("#,/db/books/" + sqlResource + " - " + line
-                               + " in " + scriptName);
+            System.out.println(
+              "#,/db/books/" + sqlResource + " - " + line + " in "
+              + scriptName);
             continue;
           }
         }
@@ -108,7 +113,9 @@ public class DatabaseScriptsTest
     }
     if (!failedScripts.isEmpty())
     {
-      fail(failedScripts.stream().collect(Collectors.joining("\n")));
+      fail(failedScripts
+             .stream()
+             .collect(Collectors.joining("\n")));
     }
   }
 
@@ -131,12 +138,14 @@ public class DatabaseScriptsTest
     throws IOException
   {
     final Resource[] resources = ResourcePatternUtils
-      .getResourcePatternResolver(resourceLoader).getResources(pattern);
+      .getResourcePatternResolver(resourceLoader)
+      .getResources(pattern);
     final List<String> scripts = new ArrayList<>();
-    for (final Resource classpathResource: resources)
+    for (final Resource classpathResource : resources)
     {
-      final String scriptName = getScriptName(classpathResource.getURL()
-        .getPath());
+      final String scriptName = getScriptName(classpathResource
+                                                .getURL()
+                                                .getPath());
       scripts.add(scriptName);
     }
     scripts.sort(naturalOrder());
