@@ -13,7 +13,7 @@ SchemaCrawler questions from users.
 -  How [system administrators](http://serverfault.com/search?q=schemacrawler) use SchemaCrawler. 
 -  How [software testers](http://sqa.stackexchange.com/search?q=schemacrawler) use SchemaCrawler. 
 
-## Companies
+## Companies and Projects
 
 - The [Neo4j APOC](https://neo4j-contrib.github.io/neo4j-apoc-procedures/#database-modeling) project provides a plugin for database modeling that uses SchemaCrawler to model a relational schema as a graph. 
 - [Goldman Sachs Obevo](https://github.com/goldmansachs/obevo) project, a database deployment tool 
@@ -21,6 +21,7 @@ SchemaCrawler questions from users.
 - [Atlassian JIRA database schema](https://developer.atlassian.com/display/JIRADEV/Database+Schema)
 - [RedG test data generation library](https://btc-ag.github.io/redg/)
 - [Data Platform at Zoomcar](https://medium.com/@shanker.sneh/https-medium-com-shanker-sneh-data-platform-at-zoomcar-a-narrative-part-i-f2455e3e2ae5)
+- [Relational to Neo4j Importer](https://github.com/jexp/neo4j-rdbms-import)
 - Architect at Nestlé Nespresso SA: 
 "I run a daily cron to export the content (metadata and data) of a 
 schema, and I compare it to another reference schema to check which 
@@ -73,3 +74,4 @@ SchemaCrawler in the press, and in online articles and blogs.
 - [Adrien Sales](https://www.linkedin.com/in/adrien-sales)' presentation, [database continuous deployment and development](http://dsi-ville-noumea.github.io/presentation-continuous-database/)
 - Tobias Weis' blog, [Short: Schema diagram from an existing sqlite database](http://blog.tobias-weis.de/short-schema-diagram-from-an-existing-sqlite-database/)
 - Joost Hietbrink's article [Create a database ERD in your CI/CD pipeline](https://www.webuildinternet.com/2018/01/21/create_database_erd_in_your_ci_cd_pipeline/)
+- Knut Behrends's [Soccer-Database: Generating schema diagrams](https://kbehrends.netlify.com/post/2017/12/soccerdb-schema-diagrams/)
