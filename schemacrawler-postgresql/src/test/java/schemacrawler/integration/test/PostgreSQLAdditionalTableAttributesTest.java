@@ -68,8 +68,8 @@ public class PostgreSQLAdditionalTableAttributesTest
 {
 
   @Container
-  private JdbcDatabaseContainer dbContainer = new HeavyDatabaseBuildCondition()
-    .getJdbcDatabaseContainer(() -> new PostgreSQLContainer<>());
+  private JdbcDatabaseContainer dbContainer =
+    new HeavyDatabaseBuildCondition().getJdbcDatabaseContainer(() -> new PostgreSQLContainer<>());
 
   @BeforeEach
   public void createDatabase()
@@ -84,39 +84,49 @@ public class PostgreSQLAdditionalTableAttributesTest
   public void testAdditionalTableAttibutes()
     throws Exception
   {
-    try (final Connection connection = getConnection();
-      Statement stmt = connection.createStatement();)
+    try (
+      final Connection connection = getConnection();
+      Statement stmt = connection.createStatement();
+    )
     {
       stmt.execute("CREATE TABLE AIRCRAFT (NAME VARCHAR(100)) WITH OIDS");
       stmt.execute("INSERT INTO AIRCRAFT VALUES ('Boeing 747')");
       connection.commit();
     }
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum()).toOptions();
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+      .toOptions();
 
     final Connection connection = checkConnection(getConnection());
-    final DatabaseConnector postgreSQLDatabaseConnector = new PostgreSQLDatabaseConnector();
+    final DatabaseConnector postgreSQLDatabaseConnector =
+      new PostgreSQLDatabaseConnector();
 
-    final SchemaRetrievalOptions schemaRetrievalOptions = postgreSQLDatabaseConnector
-      .getSchemaRetrievalOptionsBuilder(connection).toOptions();
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+      postgreSQLDatabaseConnector
+        .getSchemaRetrievalOptionsBuilder(connection)
+        .toOptions();
 
-    final SchemaCrawler schemaCrawler = new SchemaCrawler(getConnection(),
-                                                          schemaRetrievalOptions,
-                                                          options);
+    final SchemaCrawler schemaCrawler =
+      new SchemaCrawler(getConnection(), schemaRetrievalOptions, options);
     final Catalog catalog = schemaCrawler.crawl();
 
     final Collection<Table> tables = catalog.getTables();
     assertThat("Did not retrieve all tables", tables.size(), equalTo(1));
 
-    final Table table = tables.stream().findFirst().get();
+    final Table table = tables
+      .stream()
+      .findFirst()
+      .get();
     assertThat("Got wrong table",
                table.getName(),
                equalToIgnoringCase("AIRCRAFT"));
     assertThat("Got no oim attributes",
-               table.getAttributes().get("RELHASOIDS"),
+               table
+                 .getAttributes()
+                 .get("RELHASOIDS"),
                is(true));
 
     final List<Column> columns = table.getColumns();
@@ -124,12 +134,17 @@ public class PostgreSQLAdditionalTableAttributesTest
                columns.size(),
                equalTo(1));
 
-    final Column column = columns.stream().findFirst().get();
+    final Column column = columns
+      .stream()
+      .findFirst()
+      .get();
     assertThat("Got wrong column",
                column.getName(),
                equalToIgnoringCase("NAME"));
     assertThat("Got wrong column data type",
-               column.getColumnDataType().getDatabaseSpecificTypeName(),
+               column
+                 .getColumnDataType()
+                 .getDatabaseSpecificTypeName(),
                equalToIgnoringCase("VARCHAR"));
   }
 
