@@ -67,15 +67,15 @@ public class TemplateCommandProvider
   @Override
   public PluginCommand getCommandLineCommand()
   {
-    final PluginCommand pluginCommand = new PluginCommand(TemplateCommand.COMMAND,
-                                                          "** "
-                                                          + DESCRIPTION_HEADER);
-    pluginCommand.addOption("template",
-                            "Path to the template file or to the CLASSPATH resource",
-                            String.class)
-                 .addOption("templating-language",
-                            "Templating language",
-                            TemplateLanguageType.class);
+    final PluginCommand pluginCommand =
+      new PluginCommand(TemplateCommand.COMMAND, "** " + DESCRIPTION_HEADER);
+    pluginCommand
+      .addOption("template",
+                 "Path to the template file or to the CLASSPATH resource",
+                 String.class)
+      .addOption("templating-language",
+                 "Templating language",
+                 TemplateLanguageType.class);
     return pluginCommand;
   }
 

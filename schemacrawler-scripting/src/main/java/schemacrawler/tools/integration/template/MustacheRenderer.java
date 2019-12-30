@@ -60,14 +60,17 @@ public final class MustacheRenderer
     final InputResource inputResource = createInputResource(templateLocation);
 
     final MustacheFactory mustacheFactory = new DefaultMustacheFactory();
-    final Mustache mustache = mustacheFactory.compile(inputResource.openNewInputReader(
-      StandardCharsets.UTF_8), templateLocation);
+    final Mustache mustache =
+      mustacheFactory.compile(inputResource.openNewInputReader(StandardCharsets.UTF_8),
+                              templateLocation);
 
     try (final Writer writer = outputOptions.openNewOutputWriter())
     {
       // Evaluate the template
       final Map<String, Object> context = getContext();
-      mustache.execute(writer, context).flush();
+      mustache
+        .execute(writer, context)
+        .flush();
     }
 
   }

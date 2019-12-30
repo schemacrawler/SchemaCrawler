@@ -35,10 +35,8 @@ import java.io.OutputStream;
 import java.nio.file.Path;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.options.OutputOptionsBuilder;
-import schemacrawler.tools.options.TextOutputFormat;
 
 /**
  * Main executor for the serialization integration.
@@ -50,7 +48,6 @@ public final class SerializationCommand
 {
 
   static final String COMMAND = "serialize";
-
 
   public SerializationCommand()
   {
@@ -74,22 +71,25 @@ public final class SerializationCommand
   {
     checkCatalog();
 
-    final SerializationFormat serializationFormat = SerializationFormat.fromFormat(
-      outputOptions.getOutputFormatValue());
+    final SerializationFormat serializationFormat =
+      SerializationFormat.fromFormat(outputOptions.getOutputFormatValue());
 
-    final String serializerClassName = serializationFormat
-      .getSerializerClassName();
-    final Class<SerializableCatalog> serializableCatalogClass = (Class<SerializableCatalog>) Class
-      .forName(serializerClassName);
+    final String serializerClassName =
+      serializationFormat.getSerializerClassName();
+    final Class<SerializableCatalog> serializableCatalogClass =
+      (Class<SerializableCatalog>) Class.forName(serializerClassName);
     final SerializableCatalog serializableCatalog = serializableCatalogClass
-      .getDeclaredConstructor(Catalog.class).newInstance(catalog);
+      .getDeclaredConstructor(Catalog.class)
+      .newInstance(catalog);
 
     // Force a file to be created
-    final Path outputFile = outputOptions
-      .getOutputFile(serializationFormat.getFileExtension());
+    final Path outputFile =
+      outputOptions.getOutputFile(serializationFormat.getFileExtension());
 
-    outputOptions = OutputOptionsBuilder.builder(outputOptions)
-      .withOutputFile(outputFile).toOptions();
+    outputOptions = OutputOptionsBuilder
+      .builder(outputOptions)
+      .withOutputFile(outputFile)
+      .toOptions();
 
     try (final OutputStream out = newOutputStream(outputFile))
     {

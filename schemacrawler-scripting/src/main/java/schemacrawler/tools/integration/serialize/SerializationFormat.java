@@ -51,13 +51,14 @@ public enum SerializationFormat
        "schemacrawler.tools.integration.serialize.YamlSerializedCatalog",
        "yaml");
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(SerializationFormat.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(SerializationFormat.class.getName());
 
   /**
    * Gets the value from the format.
    *
-   * @param format Text output format.
+   * @param format
+   *   Text output format.
    * @return SerializationFormat
    */
   public static SerializationFormat fromFormat(final String format)
@@ -109,9 +110,8 @@ public enum SerializationFormat
                               final String serializerClassName,
                               final String... additionalFormatSpecifiers)
   {
-    outputFormatState = new OutputFormatState(name(),
-                                              description,
-                                              additionalFormatSpecifiers);
+    outputFormatState =
+      new OutputFormatState(name(), description, additionalFormatSpecifiers);
     this.serializerClassName = serializerClassName;
   }
 

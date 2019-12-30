@@ -30,7 +30,9 @@ package schemacrawler.test.template;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.ScriptTestUtility.templateExecution;
 
 import java.sql.Connection;

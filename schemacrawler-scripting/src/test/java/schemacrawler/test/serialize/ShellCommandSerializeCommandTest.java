@@ -94,11 +94,11 @@ public class ShellCommandSerializeCommandTest
 
     final SerializationFormat serializationFormat = SerializationFormat.json;
 
-    final SchemaCrawlerShellState state = createLoadedSchemaCrawlerShellState(
-      connection);
+    final SchemaCrawlerShellState state =
+      createLoadedSchemaCrawlerShellState(connection);
 
-    final Path testOutputFile = IOUtility
-      .createTempFilePath("test", "." + serializationFormat.name());
+    final Path testOutputFile =
+      IOUtility.createTempFilePath("test", "." + serializationFormat.name());
 
     final String[] args = new String[] {
       "-c",
@@ -106,12 +106,12 @@ public class ShellCommandSerializeCommandTest
       "--serialization-format",
       serializationFormat.name(),
       "-o",
-      testOutputFile.toString() };
+      testOutputFile.toString()
+    };
 
     final ExecuteCommand serializeCommand = new ExecuteCommand(state);
-    final CommandLine commandLine = newCommandLine(serializeCommand,
-                                                   null,
-                                                   false);
+    final CommandLine commandLine =
+      newCommandLine(serializeCommand, null, false);
 
     final CommandLine.ParseResult parseResult = commandLine.parseArgs(args);
     final Config additionalConfig = retrievePluginOptions(parseResult);

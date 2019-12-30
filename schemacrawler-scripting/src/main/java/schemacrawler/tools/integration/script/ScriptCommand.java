@@ -29,7 +29,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.script;
 
 
-import javax.script.*;
+import javax.script.Compilable;
+import javax.script.CompiledScript;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineFactory;
+import javax.script.ScriptEngineManager;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.Charset;
@@ -53,8 +57,8 @@ public final class ScriptCommand
 {
 
   static final String COMMAND = "script";
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
-    ScriptCommand.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(ScriptCommand.class.getName());
 
   private static void logScriptEngineDetails(final Level level,
                                              final ScriptEngineFactory scriptEngineFactory)
@@ -105,13 +109,17 @@ public final class ScriptCommand
 
     final ScriptEngine scriptEngine = getScriptEngine();
     final InputResource inputResource = scriptLanguage.getResource();
-    try (final Reader reader = inputResource.openNewInputReader(inputCharset);
-      final Writer writer = outputOptions.openNewOutputWriter())
+    try (
+      final Reader reader = inputResource.openNewInputReader(inputCharset);
+      final Writer writer = outputOptions.openNewOutputWriter()
+    )
     {
       final CommandChain chain = new CommandChain(this);
 
       // Set up the context
-      scriptEngine.getContext().setWriter(writer);
+      scriptEngine
+        .getContext()
+        .setWriter(writer);
       scriptEngine.put("catalog", catalog);
       scriptEngine.put("connection", connection);
       scriptEngine.put("chain", chain);
@@ -119,7 +127,8 @@ public final class ScriptCommand
       // Evaluate the script
       if (scriptEngine instanceof Compilable)
       {
-        final CompiledScript script = ((Compilable) scriptEngine).compile(reader);
+        final CompiledScript script =
+          ((Compilable) scriptEngine).compile(reader);
         script.eval();
       }
       else
@@ -156,7 +165,8 @@ public final class ScriptCommand
 
     if (scriptEngine == null)
     {
-      scriptEngine = scriptEngineManager.getEngineByExtension(scriptingLanguage);
+      scriptEngine =
+        scriptEngineManager.getEngineByExtension(scriptingLanguage);
     }
 
     if (scriptEngine == null)

@@ -73,20 +73,6 @@ public class ScriptTestUtility
     return commandlineExecution(connectionInfo, "template", argsMap, "text");
   }
 
-  public static Path templateExecution(final Connection connection,
-                                        final TemplateLanguageType templateLanguage,
-                                        final String templateResource)
-    throws Exception
-  {
-    final SchemaCrawlerExecutable executable = executableOf("template");
-    final Config additionalConfiguration = new Config();
-    additionalConfiguration.put("template", templateResource);
-    additionalConfiguration.put("templating-language", templateLanguage.name());
-    executable.setAdditionalConfiguration(additionalConfiguration);
-
-    return executableExecution(connection, executable, "text");
-  }
-
   public static Path scriptExecution(final Connection connection,
                                      final String script)
     throws Exception
@@ -94,6 +80,20 @@ public class ScriptTestUtility
     final SchemaCrawlerExecutable executable = executableOf("script");
     final Config additionalConfiguration = new Config();
     additionalConfiguration.put("script", script);
+    executable.setAdditionalConfiguration(additionalConfiguration);
+
+    return executableExecution(connection, executable, "text");
+  }
+
+  public static Path templateExecution(final Connection connection,
+                                       final TemplateLanguageType templateLanguage,
+                                       final String templateResource)
+    throws Exception
+  {
+    final SchemaCrawlerExecutable executable = executableOf("template");
+    final Config additionalConfiguration = new Config();
+    additionalConfiguration.put("template", templateResource);
+    additionalConfiguration.put("templating-language", templateLanguage.name());
     executable.setAdditionalConfiguration(additionalConfiguration);
 
     return executableExecution(connection, executable, "text");

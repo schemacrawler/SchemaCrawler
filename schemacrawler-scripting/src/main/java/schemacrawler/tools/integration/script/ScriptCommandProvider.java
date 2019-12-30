@@ -67,15 +67,13 @@ public class ScriptCommandProvider
   @Override
   public PluginCommand getCommandLineCommand()
   {
-    final PluginCommand pluginCommand = new PluginCommand(ScriptCommand.COMMAND,
-                                                          "** "
-                                                          + DESCRIPTION_HEADER);
-    pluginCommand.addOption("script",
-                            "Path to the script file or to the CLASSPATH resource",
-                            String.class)
-                 .addOption("script-language",
-                            "Scripting language",
-                            String.class);
+    final PluginCommand pluginCommand =
+      new PluginCommand(ScriptCommand.COMMAND, "** " + DESCRIPTION_HEADER);
+    pluginCommand
+      .addOption("script",
+                 "Path to the script file or to the CLASSPATH resource",
+                 String.class)
+      .addOption("script-language", "Scripting language", String.class);
     return pluginCommand;
   }
 

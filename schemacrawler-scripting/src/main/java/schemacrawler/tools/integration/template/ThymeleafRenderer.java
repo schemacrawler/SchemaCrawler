@@ -34,7 +34,11 @@ import java.nio.charset.Charset;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-import org.thymeleaf.templateresolver.*;
+import org.thymeleaf.templateresolver.AbstractConfigurableTemplateResolver;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+import org.thymeleaf.templateresolver.FileTemplateResolver;
+import org.thymeleaf.templateresolver.ITemplateResolver;
+import org.thymeleaf.templateresolver.UrlTemplateResolver;
 import schemacrawler.tools.options.OutputOptions;
 
 /**
@@ -70,7 +74,8 @@ public final class ThymeleafRenderer
     fileResolver.setCheckExistence(true);
     templateEngine.addTemplateResolver(configure(fileResolver, inputCharset));
 
-    final ClassLoaderTemplateResolver classpathResolver = new ClassLoaderTemplateResolver();
+    final ClassLoaderTemplateResolver classpathResolver =
+      new ClassLoaderTemplateResolver();
     classpathResolver.setCheckExistence(true);
     templateEngine.addTemplateResolver(configure(classpathResolver,
                                                  inputCharset));

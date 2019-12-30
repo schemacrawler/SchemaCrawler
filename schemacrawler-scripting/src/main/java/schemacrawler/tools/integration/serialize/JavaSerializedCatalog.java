@@ -35,15 +35,14 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.util.Optional;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.BaseCatalogDecorator;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
- * Decorates a database to allow for serialization to and from plain
- * Java serialization.
+ * Decorates a database to allow for serialization to and from plain Java
+ * serialization.
  */
 public final class JavaSerializedCatalog
   extends BaseCatalogDecorator
@@ -81,9 +80,9 @@ public final class JavaSerializedCatalog
    * Serializes the database to the writer, as XML.
    *
    * @param out
-   *        Writer to save to
+   *   Writer to save to
    * @throws SchemaCrawlerException
-   *         On an exception
+   *   On an exception
    */
   @Override
   public void save(final OutputStream out)

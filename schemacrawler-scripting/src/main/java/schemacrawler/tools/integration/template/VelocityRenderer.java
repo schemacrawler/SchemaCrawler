@@ -77,8 +77,9 @@ public final class VelocityRenderer
     final File templateFilePath = new File(templateLocation);
     if (templateFilePath.exists())
     {
-      templatePath =
-        templatePath + "," + templateFilePath.getAbsoluteFile().getParent();
+      templatePath = templatePath + "," + templateFilePath
+        .getAbsoluteFile()
+        .getParent();
       templateLocation = templateFilePath.getName();
     }
 
@@ -112,9 +113,11 @@ public final class VelocityRenderer
 
     try (final Writer writer = outputOptions.openNewOutputWriter())
     {
-      final String templateEncoding = outputOptions.getInputCharset().name();
-      final Template template = ve.getTemplate(templateLocation,
-                                               templateEncoding);
+      final String templateEncoding = outputOptions
+        .getInputCharset()
+        .name();
+      final Template template =
+        ve.getTemplate(templateLocation, templateEncoding);
       template.merge(context, writer);
     }
     catch (final ResourceNotFoundException e)

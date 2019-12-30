@@ -31,9 +31,14 @@ package schemacrawler.test.serialize;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.oneOf;
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.probeFileHeader;
 import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
@@ -54,7 +59,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.test.utility.*;
+import schemacrawler.test.utility.DatabaseTestUtility;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.integration.serialize.JsonSerializedCatalog;
 import sf.util.IOUtility;
 
@@ -82,12 +91,13 @@ public class CatalogJsonSerializationTest
                                            final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
 
-    final Path testOutputFile = IOUtility
-      .createTempFilePath("sc_serialized_catalog", "json");
+    final Path testOutputFile =
+      IOUtility.createTempFilePath("sc_serialized_catalog", "json");
     try (final OutputStream out = new FileOutputStream(testOutputFile.toFile()))
     {
       new JsonSerializedCatalog(catalog).save(out);
@@ -99,8 +109,8 @@ public class CatalogJsonSerializationTest
 
     if (DEBUG)
     {
-      final Path copied = directory
-        .resolve(testContext.testMethodFullName() + ".json");
+      final Path copied =
+        directory.resolve(testContext.testMethodFullName() + ".json");
       Files.copy(testOutputFile, copied, StandardCopyOption.REPLACE_EXISTING);
     }
 
@@ -111,8 +121,8 @@ public class CatalogJsonSerializationTest
                catalogNode.findPath("schemas"),
                not(instanceOf(MissingNode.class)));
 
-    final JsonNode allTableColumnsNode = catalogNode
-      .findPath("all-table-columns");
+    final JsonNode allTableColumnsNode =
+      catalogNode.findPath("all-table-columns");
     assertThat("Table columns were not serialized",
                allTableColumnsNode,
                not(instanceOf(MissingNode.class)));
@@ -120,23 +130,26 @@ public class CatalogJsonSerializationTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      allTableColumnsNode.elements().forEachRemaining(columnNode -> {
-        final JsonNode columnFullnameNode = columnNode.get("full-name");
-        if (columnFullnameNode != null)
-        {
-          out.println("- column @uuid: " + columnNode.get("@uuid").asText());
-          out.println("  " + columnFullnameNode.asText());
-        }
-        else
-        {
-          fail("Table column object not found - " + columnNode.asText());
-        }
-      });
+      allTableColumnsNode
+        .elements()
+        .forEachRemaining(columnNode -> {
+          final JsonNode columnFullnameNode = columnNode.get("full-name");
+          if (columnFullnameNode != null)
+          {
+            out.println("- column @uuid: " + columnNode
+              .get("@uuid")
+              .asText());
+            out.println("  " + columnFullnameNode.asText());
+          }
+          else
+          {
+            fail("Table column object not found - " + columnNode.asText());
+          }
+        });
     }
 
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext
-                                                    .testMethodFullName())));
+               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
 
   }
 
