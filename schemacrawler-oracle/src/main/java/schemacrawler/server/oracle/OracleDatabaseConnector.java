@@ -54,11 +54,10 @@ public final class OracleDatabaseConnector
   extends DatabaseConnector
 {
 
-  static final DatabaseServerType DB_SERVER_TYPE = new DatabaseServerType(
-    "oracle",
-    "Oracle");
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
-    OracleDatabaseConnector.class.getName());
+  static final DatabaseServerType DB_SERVER_TYPE =
+    new DatabaseServerType("oracle", "Oracle");
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(OracleDatabaseConnector.class.getName());
 
 
   private static class OracleInformationSchemaViewsBuilder
@@ -145,26 +144,18 @@ public final class OracleDatabaseConnector
   @Override
   public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(final Connection connection)
   {
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = super.getSchemaRetrievalOptionsBuilder(
-      connection);
-    schemaRetrievalOptionsBuilder.withTableRetrievalStrategy(
-      MetadataRetrievalStrategy.data_dictionary_all)
-                                 .withTableColumnRetrievalStrategy(
-                                   MetadataRetrievalStrategy.data_dictionary_all)
-                                 .withPrimaryKeyRetrievalStrategy(
-                                   MetadataRetrievalStrategy.data_dictionary_all)
-                                 .withForeignKeyRetrievalStrategy(
-                                   MetadataRetrievalStrategy.data_dictionary_all)
-                                 .withIndexRetrievalStrategy(
-                                   MetadataRetrievalStrategy.data_dictionary_all)
-                                 .withProcedureRetrievalStrategy(
-                                   MetadataRetrievalStrategy.data_dictionary_all)
-                                 .withProcedureColumnRetrievalStrategy(
-                                   MetadataRetrievalStrategy.data_dictionary_all)
-                                 .withFunctionRetrievalStrategy(
-                                   MetadataRetrievalStrategy.data_dictionary_all)
-                                 .withFunctionColumnRetrievalStrategy(
-                                   MetadataRetrievalStrategy.data_dictionary_all);
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+      super.getSchemaRetrievalOptionsBuilder(connection);
+    schemaRetrievalOptionsBuilder
+      .withTableRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
+      .withTableColumnRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
+      .withPrimaryKeyRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
+      .withForeignKeyRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
+      .withIndexRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
+      .withProcedureRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
+      .withProcedureColumnRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
+      .withFunctionRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
+      .withFunctionColumnRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all);
     return schemaRetrievalOptionsBuilder;
   }
 
@@ -172,21 +163,21 @@ public final class OracleDatabaseConnector
   public PluginCommand getHelpCommand()
   {
     final PluginCommand pluginCommand = super.getHelpCommand();
-    pluginCommand.addOption("server",
-                            "--server=oracle%n"
-                            + "Loads SchemaCrawler plug-in for Oracle",
-                            String.class)
-                 .addOption("host",
-                            "Host name%n" + "Optional, defaults to localhost",
-                            String.class)
-                 .addOption("port",
-                            "Port number%n" + "Optional, defaults to 1521",
-                            Integer.class)
-                 .addOption("database",
-                            "Oracle Service Name%n"
-                            + "You can use a query similar to the one below to find it.%n"
-                            + "SELECT GLOBAL_NAME FROM GLOBAL_NAME",
-                            String.class);
+    pluginCommand
+      .addOption("server",
+                 "--server=oracle%n" + "Loads SchemaCrawler plug-in for Oracle",
+                 String.class)
+      .addOption("host",
+                 "Host name%n" + "Optional, defaults to localhost",
+                 String.class)
+      .addOption("port",
+                 "Port number%n" + "Optional, defaults to 1521",
+                 Integer.class)
+      .addOption("database",
+                 "Oracle Service Name%n"
+                 + "You can use a query similar to the one below to find it.%n"
+                 + "SELECT GLOBAL_NAME FROM GLOBAL_NAME",
+                 String.class);
     return pluginCommand;
   }
 

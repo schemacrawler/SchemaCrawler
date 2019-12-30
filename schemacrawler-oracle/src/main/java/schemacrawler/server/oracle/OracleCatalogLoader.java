@@ -39,7 +39,9 @@ public final class OracleCatalogLoader
 
     final Config additionalConfiguration = getAdditionalConfiguration();
     final SchemaTextOptions schemaTextOptions = SchemaTextOptionsBuilder
-      .builder().fromConfig(additionalConfiguration).toOptions();
+      .builder()
+      .fromConfig(additionalConfiguration)
+      .toOptions();
     if (schemaTextOptions.isShowUnqualifiedNames())
     {
       executeScriptFromResource(connection,

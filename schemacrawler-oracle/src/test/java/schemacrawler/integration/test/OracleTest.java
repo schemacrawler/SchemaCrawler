@@ -32,7 +32,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.matchesPattern;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static sf.util.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
@@ -50,7 +52,13 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Property;
-import schemacrawler.schemacrawler.*;
+import schemacrawler.schemacrawler.InfoLevel;
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.server.oracle.OracleDatabaseConnector;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseBuildCondition;
@@ -66,15 +74,16 @@ public class OracleTest
 {
 
   @Container
-  private JdbcDatabaseContainer dbContainer = new HeavyDatabaseBuildCondition()
-    .getJdbcDatabaseContainer(() -> new OracleContainer(
+  private JdbcDatabaseContainer dbContainer =
+    new HeavyDatabaseBuildCondition().getJdbcDatabaseContainer(() -> new OracleContainer(
       "wnameless/oracle-xe-11g-r2"));
 
   @BeforeEach
   public void createDatabase()
     throws SQLException, SchemaCrawlerException
   {
-    final String urlx = "restrictGetTables=true;useFetchSizeWithLongColumn=true";
+    final String urlx =
+      "restrictGetTables=true;useFetchSizeWithLongColumn=true";
     createDataSource(dbContainer.getJdbcUrl(),
                      dbContainer.getUsername(),
                      dbContainer.getPassword(),
@@ -87,30 +96,35 @@ public class OracleTest
   public void testOracleCatalogServerInfo()
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder.builder();
     schemaCrawlerOptionsBuilder
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
       .includeSchemas(new RegularExpressionInclusionRule("BOOKS"));
-    final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptions options =
+      schemaCrawlerOptionsBuilder.toOptions();
 
     final Connection connection = checkConnection(getConnection());
     final DatabaseConnector databaseConnector = new OracleDatabaseConnector();
 
     final SchemaRetrievalOptions schemaRetrievalOptions = databaseConnector
-      .getSchemaRetrievalOptionsBuilder(connection).toOptions();
+      .getSchemaRetrievalOptionsBuilder(connection)
+      .toOptions();
 
-    final SchemaCrawler schemaCrawler = new SchemaCrawler(getConnection(),
-                                                          schemaRetrievalOptions,
-                                                          options);
+    final SchemaCrawler schemaCrawler =
+      new SchemaCrawler(getConnection(), schemaRetrievalOptions, options);
     final Catalog catalog = schemaCrawler.crawl();
-    final List<Property> serverInfo = new ArrayList<>(catalog.getDatabaseInfo()
+    final List<Property> serverInfo = new ArrayList<>(catalog
+                                                        .getDatabaseInfo()
                                                         .getServerInfo());
 
     assertThat(serverInfo.size(), equalTo(1));
-    assertThat(serverInfo.get(0).getName(), equalTo("GLOBAL_NAME"));
-    assertThat(String.valueOf(serverInfo.get(0).getValue()),
+    assertThat(serverInfo
+                 .get(0)
+                 .getName(), equalTo("GLOBAL_NAME"));
+    assertThat(String.valueOf(serverInfo
+                                .get(0)
+                                .getValue()),
                matchesPattern("[0-9a-zA-Z]{1,12}"));
   }
 
@@ -119,7 +133,9 @@ public class OracleTest
     throws Exception
   {
     final SchemaInfoLevelBuilder infoLevelBuilder = SchemaInfoLevelBuilder
-      .builder().withTag("maximum").withInfoLevel(InfoLevel.maximum)
+      .builder()
+      .withTag("maximum")
+      .withInfoLevel(InfoLevel.maximum)
       /*
       .setRetrievePrimaryKeyDefinitions(false)
       .setRetrieveForeignKeyDefinitions(false)
@@ -130,28 +146,31 @@ public class OracleTest
       .setRetrieveRoutineInformation(false);
       */;
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder.builder();
     schemaCrawlerOptionsBuilder
       .withSchemaInfoLevel(infoLevelBuilder.toOptions())
       .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
-      .includeAllSequences().includeAllSynonyms()
+      .includeAllSequences()
+      .includeAllSynonyms()
       .includeRoutines(new RegularExpressionInclusionRule("[0-9a-zA-Z_\\.]*"))
       .tableTypes("TABLE,VIEW");
-    final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptions options =
+      schemaCrawlerOptionsBuilder.toOptions();
 
-    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
-      .builder();
-    textOptionsBuilder.showDatabaseInfo().showJdbcDriverInfo();
+    final SchemaTextOptionsBuilder textOptionsBuilder =
+      SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder
+      .showDatabaseInfo()
+      .showJdbcDriverInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-      "details");
+    final SchemaCrawlerExecutable executable =
+      new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(options);
-    executable
-      .setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions)
-                                    .toConfig());
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
+                                            .builder(textOptions)
+                                            .toConfig());
 
     assertThat(outputOf(executableExecution(getConnection(), executable)),
                hasSameContentAs(classpathResource("testOracleWithConnection.txt")));
