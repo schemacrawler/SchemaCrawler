@@ -31,7 +31,9 @@ package schemacrawler.integration.test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.is;
-import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
 import java.nio.file.Path;
@@ -42,9 +44,17 @@ import de.danielbechler.diff.node.DiffNode.State;
 import de.danielbechler.diff.node.Visit;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.schema.*;
+import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Column;
+import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.test.utility.*;
+import schemacrawler.test.utility.DatabaseTestUtility;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
+import schemacrawler.test.utility.TestLoggingExtension;
+import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.integration.objectdiffer.SchemaCrawlerDifferBuilder;
@@ -66,12 +76,14 @@ public class DiffTest
 
     final String currentMethodFullName = testContext.testMethodFullName();
 
-    final SchemaCrawlerDifferBuilder objectDifferBuilder = new SchemaCrawlerDifferBuilder();
+    final SchemaCrawlerDifferBuilder objectDifferBuilder =
+      new SchemaCrawlerDifferBuilder();
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final DiffNode diff = objectDifferBuilder.build()
+      final DiffNode diff = objectDifferBuilder
+        .build()
         .compare(catalog1, catalog2);
       diff.visit(new DiffNode.Visitor()
       {
@@ -79,8 +91,8 @@ public class DiffTest
         public void node(final DiffNode node, final Visit visit)
         {
           final State nodeState = node.getState();
-          final boolean print = DatabaseObject.class
-            .isAssignableFrom(node.getValueType());
+          final boolean print =
+            DatabaseObject.class.isAssignableFrom(node.getValueType());
 
           if (print)
           {
@@ -122,16 +134,19 @@ public class DiffTest
   {
     final Path sqliteDbFile = copyResourceToTempFile(database);
 
-    final EmbeddedSQLiteWrapper sqLiteDatabaseLoader = new EmbeddedSQLiteWrapper();
+    final EmbeddedSQLiteWrapper sqLiteDatabaseLoader =
+      new EmbeddedSQLiteWrapper();
     sqLiteDatabaseLoader.loadDatabaseFile(sqliteDbFile);
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
-    final DatabaseConnectionSource connectionOptions = sqLiteDatabaseLoader
-      .createDatabaseConnectionSource();
+    final DatabaseConnectionSource connectionOptions =
+      sqLiteDatabaseLoader.createDatabaseConnectionSource();
 
-    final Catalog catalog = SchemaCrawlerUtility
-      .getCatalog(connectionOptions.get(), schemaCrawlerOptions);
+    final Catalog catalog =
+      SchemaCrawlerUtility.getCatalog(connectionOptions.get(),
+                                      schemaCrawlerOptions);
 
     return catalog;
   }
@@ -145,14 +160,18 @@ public class DiffTest
     try (final TestWriter out = testout)
     {
       final Catalog baseCatalog = getCatalog(database);
-      final CatalogWithAssociations catalog = new CatalogWithAssociations(
-        baseCatalog);
-      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
+      final CatalogWithAssociations catalog =
+        new CatalogWithAssociations(baseCatalog);
+      final Schema[] schemas = catalog
+        .getSchemas()
+        .toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, is(arrayWithSize(1)));
       for (final Schema schema : schemas)
       {
         out.println("schema: " + schema.getFullName());
-        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
+        final Table[] tables = catalog
+          .getTables(schema)
+          .toArray(new Table[0]);
         Arrays.sort(tables, NamedObjectSort.alphabetical);
         for (final Table table : tables)
         {

@@ -41,16 +41,36 @@ public class SchemaCrawlerDifferBuilder
   {
 
     objectDifferBuilder = ObjectDifferBuilder.startBuilding();
-    objectDifferBuilder.filtering().omitNodesWithState(State.UNTOUCHED);
-    objectDifferBuilder.filtering().omitNodesWithState(State.CIRCULAR);
-    objectDifferBuilder.inclusion().exclude().propertyName("fullName");
-    objectDifferBuilder.inclusion().exclude().propertyName("parent");
-    objectDifferBuilder.inclusion().exclude()
+    objectDifferBuilder
+      .filtering()
+      .omitNodesWithState(State.UNTOUCHED);
+    objectDifferBuilder
+      .filtering()
+      .omitNodesWithState(State.CIRCULAR);
+    objectDifferBuilder
+      .inclusion()
+      .exclude()
+      .propertyName("fullName");
+    objectDifferBuilder
+      .inclusion()
+      .exclude()
+      .propertyName("parent");
+    objectDifferBuilder
+      .inclusion()
+      .exclude()
       .propertyName("exportedForeignKeys");
-    objectDifferBuilder.inclusion().exclude()
+    objectDifferBuilder
+      .inclusion()
+      .exclude()
       .propertyName("importedForeignKeys");
-    objectDifferBuilder.inclusion().exclude().propertyName("deferrable");
-    objectDifferBuilder.inclusion().exclude().propertyName("initiallyDeferred");
+    objectDifferBuilder
+      .inclusion()
+      .exclude()
+      .propertyName("deferrable");
+    objectDifferBuilder
+      .inclusion()
+      .exclude()
+      .propertyName("initiallyDeferred");
   }
 
   public ObjectDiffer build()
