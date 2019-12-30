@@ -42,37 +42,38 @@ class RoutineGrepFilter
   implements Predicate<Routine>
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(RoutineGrepFilter.class.getName());
-
-  private final boolean invertMatch;
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(RoutineGrepFilter.class.getName());
   private final InclusionRule grepColumnInclusionRule;
   private final InclusionRule grepDefinitionInclusionRule;
+  private final boolean invertMatch;
 
   public RoutineGrepFilter(final SchemaCrawlerOptions options)
   {
     invertMatch = options.isGrepInvertMatch();
 
-    grepColumnInclusionRule = options.getGrepRoutineParameterInclusionRule()
+    grepColumnInclusionRule = options
+      .getGrepRoutineParameterInclusionRule()
       .orElse(null);
-    grepDefinitionInclusionRule = options.getGrepDefinitionInclusionRule()
+    grepDefinitionInclusionRule = options
+      .getGrepDefinitionInclusionRule()
       .orElse(null);
   }
 
   /**
-   * Special case for "grep" like functionality. Handle table if a table
-   * column inclusion rule is found, and at least one column matches the
-   * rule.
+   * Special case for "grep" like functionality. Handle table if a table column
+   * inclusion rule is found, and at least one column matches the rule.
    *
    * @param routine
-   *        Table to check
+   *   Table to check
    * @return Whether the column should be included
    */
   @Override
   public boolean test(final Routine routine)
   {
     final boolean checkIncludeForColumns = grepColumnInclusionRule != null;
-    final boolean checkIncludeForDefinitions = grepDefinitionInclusionRule != null;
+    final boolean checkIncludeForDefinitions =
+      grepDefinitionInclusionRule != null;
 
     if (!checkIncludeForColumns && !checkIncludeForDefinitions)
     {
@@ -81,7 +82,7 @@ class RoutineGrepFilter
 
     boolean includeForColumns = false;
     boolean includeForDefinitions = false;
-    for (final RoutineParameter<?> parameter: routine.getParameters())
+    for (final RoutineParameter<?> parameter : routine.getParameters())
     {
       if (checkIncludeForColumns)
       {

@@ -30,19 +30,19 @@ package schemacrawler.schema;
 
 public enum JavaSqlTypeGroup
 {
- unknown,
- binary,
- bit,
- character,
- id,
- integer,
- real,
- reference,
- temporal,
- url,
- xml,
- large_object,
- object;
+  unknown,
+  binary,
+  bit,
+  character,
+  id,
+  integer,
+  real,
+  reference,
+  temporal,
+  url,
+  xml,
+  large_object,
+  object;
 
   public static JavaSqlTypeGroup valueOf(final int type)
   {

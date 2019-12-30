@@ -43,6 +43,29 @@ public final class DirectedEdge<T>
     this.to = to;
   }
 
+  public Vertex<T> getFrom()
+  {
+    return from;
+  }
+
+  public Vertex<T> getTo()
+  {
+    return to;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public int hashCode()
+  {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (from == null? 0: from.hashCode());
+    result = prime * result + (to == null? 0: to.hashCode());
+    return result;
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -75,39 +98,16 @@ public final class DirectedEdge<T>
     }
     if (to == null)
     {
-      if (other.to != null)
-      {
-        return false;
-      }
+      return other.to == null;
     }
-    else if (!to.equals(other.to))
-    {
-      return false;
-    }
-    return true;
+    else
+    { return to.equals(other.to); }
   }
 
-  public Vertex<T> getFrom()
-  {
-    return from;
-  }
-
-  public Vertex<T> getTo()
-  {
-    return to;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public int hashCode()
+  public String toString()
   {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (from == null? 0: from.hashCode());
-    result = prime * result + (to == null? 0: to.hashCode());
-    return result;
+    return from + " -> " + to;
   }
 
   public boolean isFrom(final Vertex<T> vertex)
@@ -118,12 +118,6 @@ public final class DirectedEdge<T>
   public boolean isTo(final Vertex<T> vertex)
   {
     return vertex != null && vertex.equals(to);
-  }
-
-  @Override
-  public String toString()
-  {
-    return from + " -> " + to;
   }
 
 }

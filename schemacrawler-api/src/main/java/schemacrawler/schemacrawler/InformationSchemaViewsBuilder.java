@@ -41,8 +41,8 @@ import sf.util.ObjectToString;
 import sf.util.TemplatingUtility;
 
 /**
- * The database specific views to get additional database metadata in a
- * standard format.
+ * The database specific views to get additional database metadata in a standard
+ * format.
  *
  * @author Sualeh Fatehi
  */
@@ -58,8 +58,8 @@ public final class InformationSchemaViewsBuilder
 
   public static InformationSchemaViewsBuilder builder(final InformationSchemaViews informationSchemaViews)
   {
-    return new InformationSchemaViewsBuilder()
-      .fromOptions(informationSchemaViews);
+    return new InformationSchemaViewsBuilder().fromOptions(
+      informationSchemaViews);
   }
 
   public static InformationSchemaViews newInformationSchemaViews()
@@ -69,7 +69,9 @@ public final class InformationSchemaViewsBuilder
 
   public static InformationSchemaViews newInformationSchemaViews(final Config config)
   {
-    return new InformationSchemaViewsBuilder().fromConfig(config).toOptions();
+    return new InformationSchemaViewsBuilder()
+      .fromConfig(config)
+      .toOptions();
   }
 
   private final Map<InformationSchemaKey, String> informationSchemaQueries;
@@ -83,7 +85,7 @@ public final class InformationSchemaViewsBuilder
    * Information schema views from a map.
    *
    * @param informationSchemaViewsSql
-   *        Map of information schema view definitions.
+   *   Map of information schema view definitions.
    */
   @Override
   public InformationSchemaViewsBuilder fromConfig(final Config informationSchemaViewsSql)
@@ -93,14 +95,14 @@ public final class InformationSchemaViewsBuilder
       return this;
     }
 
-    for (final InformationSchemaKey key: InformationSchemaKey.values())
+    for (final InformationSchemaKey key : InformationSchemaKey.values())
     {
       if (informationSchemaViewsSql.containsKey(key.getLookupKey()))
       {
         try
         {
-          informationSchemaQueries
-            .put(key, informationSchemaViewsSql.get(key.getLookupKey()));
+          informationSchemaQueries.put(key,
+                                       informationSchemaViewsSql.get(key.getLookupKey()));
         }
         catch (final IllegalArgumentException e)
         {
@@ -120,17 +122,28 @@ public final class InformationSchemaViewsBuilder
       return this;
     }
 
-    informationSchemaQueries
-      .putAll(informationSchemaViews.getInformationSchemaQueries());
+    informationSchemaQueries.putAll(informationSchemaViews.getInformationSchemaQueries());
 
     return this;
+  }
+
+  @Override
+  public Config toConfig()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public InformationSchemaViews toOptions()
+  {
+    return new InformationSchemaViews(informationSchemaQueries);
   }
 
   /**
    * Information schema views from a map.
    *
    * @param classpath
-   *        Classpath location for SQL queries.
+   *   Classpath location for SQL queries.
    * @return Builder
    */
   public InformationSchemaViewsBuilder fromResourceFolder(final String classpath)
@@ -140,7 +153,7 @@ public final class InformationSchemaViewsBuilder
       return this;
     }
 
-    for (final InformationSchemaKey key: InformationSchemaKey.values())
+    for (final InformationSchemaKey key : InformationSchemaKey.values())
     {
       final String resource;
       if (classpath == null)
@@ -166,25 +179,12 @@ public final class InformationSchemaViewsBuilder
   {
     final Map<String, String> map = new HashMap<>();
     map.put(templateKey, templateValue);
-    for (final Map.Entry<InformationSchemaKey, String> query: informationSchemaQueries
-      .entrySet())
+    for (final Map.Entry<InformationSchemaKey, String> query : informationSchemaQueries.entrySet())
     {
       String sql = query.getValue();
       sql = TemplatingUtility.expandTemplate(sql, map);
       query.setValue(sql);
     }
-  }
-
-  @Override
-  public Config toConfig()
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public InformationSchemaViews toOptions()
-  {
-    return new InformationSchemaViews(informationSchemaQueries);
   }
 
   @Override
@@ -197,9 +197,9 @@ public final class InformationSchemaViewsBuilder
    * Sets definitions SQL.
    *
    * @param key
-   *        SQL query key
+   *   SQL query key
    * @param sql
-   *        Definitions SQL.
+   *   Definitions SQL.
    * @return Builder
    */
   public InformationSchemaViewsBuilder withSql(final InformationSchemaKey key,

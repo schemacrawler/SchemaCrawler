@@ -35,21 +35,21 @@ package schemacrawler.schema;
 public enum EventManipulationType
 {
 
- /**
-  * Unknown
-  */
- unknown,
- /**
-  * Insert
-  */
- insert,
- /**
-  * Delete
-  */
- delete,
- /**
-  * Update
-  */
- update;
+  /**
+   * Unknown
+   */
+  unknown,
+  /**
+   * Insert
+   */
+  insert,
+  /**
+   * Delete
+   */
+  delete,
+  /**
+   * Update
+   */
+  update
 
 }

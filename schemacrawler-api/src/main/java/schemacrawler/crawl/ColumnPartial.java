@@ -74,13 +74,31 @@ final class ColumnPartial
   }
 
   @Override
-  public String getDefaultValue()
+  public int getOrdinalPosition()
   {
     throw new NotLoadedException(this);
   }
 
   @Override
-  public int getOrdinalPosition()
+  public int getSize()
+  {
+    throw new NotLoadedException(this);
+  }
+
+  @Override
+  public String getWidth()
+  {
+    throw new NotLoadedException(this);
+  }
+
+  @Override
+  public boolean isNullable()
+  {
+    throw new NotLoadedException(this);
+  }
+
+  @Override
+  public String getDefaultValue()
   {
     throw new NotLoadedException(this);
   }
@@ -97,22 +115,9 @@ final class ColumnPartial
     return referencedColumn;
   }
 
-  @Override
-  public int getSize()
+  void setReferencedColumn(final Column referencedColumn)
   {
-    throw new NotLoadedException(this);
-  }
-
-  @Override
-  public ColumnDataType getType()
-  {
-    throw new NotLoadedException(this);
-  }
-
-  @Override
-  public String getWidth()
-  {
-    throw new NotLoadedException(this);
+    this.referencedColumn = referencedColumn;
   }
 
   /**
@@ -138,12 +143,6 @@ final class ColumnPartial
    */
   @Override
   public boolean isHidden()
-  {
-    throw new NotLoadedException(this);
-  }
-
-  @Override
-  public boolean isNullable()
   {
     throw new NotLoadedException(this);
   }
@@ -178,9 +177,10 @@ final class ColumnPartial
     throw new NotLoadedException(this);
   }
 
-  void setReferencedColumn(final Column referencedColumn)
+  @Override
+  public ColumnDataType getType()
   {
-    this.referencedColumn = referencedColumn;
+    throw new NotLoadedException(this);
   }
 
 }

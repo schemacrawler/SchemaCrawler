@@ -58,7 +58,7 @@ public enum ParameterModeType
 
   private final String text;
 
-  private ParameterModeType(final String text)
+  ParameterModeType(final String text)
   {
     this.text = text;
   }

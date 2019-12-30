@@ -39,9 +39,8 @@ public interface View
 {
 
   /**
-   * Type of WITH CHECK OPTION. Is CASCADE if the original view was
-   * created by using the WITH CHECK OPTION. Otherwise, NONE is
-   * returned.
+   * Type of WITH CHECK OPTION. Is CASCADE if the original view was created by
+   * using the WITH CHECK OPTION. Otherwise, NONE is returned.
    *
    * @return Check option.
    */

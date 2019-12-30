@@ -74,7 +74,7 @@ final class TablesReducer
   {
     // Filter tables, keeping the ones we need
     final Set<Table> reducedTables = new HashSet<>();
-    for (final Table table: allTables)
+    for (final Table table : allTables)
     {
       if (tableFilter.test(table))
       {
@@ -84,13 +84,15 @@ final class TablesReducer
 
     // Add in referenced tables
     final int childTableFilterDepth = options.getChildTableFilterDepth();
-    final Collection<Table> childTables = includeRelatedTables(TableRelationshipType.child,
-                                                               childTableFilterDepth,
-                                                               reducedTables);
+    final Collection<Table> childTables = includeRelatedTables(
+      TableRelationshipType.child,
+      childTableFilterDepth,
+      reducedTables);
     final int parentTableFilterDepth = options.getParentTableFilterDepth();
-    final Collection<Table> parentTables = includeRelatedTables(TableRelationshipType.parent,
-                                                                parentTableFilterDepth,
-                                                                reducedTables);
+    final Collection<Table> parentTables = includeRelatedTables(
+      TableRelationshipType.parent,
+      parentTableFilterDepth,
+      reducedTables);
 
     final Set<Table> keepTables = new HashSet<>();
     keepTables.addAll(reducedTables);
@@ -98,7 +100,7 @@ final class TablesReducer
     keepTables.addAll(parentTables);
 
     // Mark tables as being filtered out
-    for (final Table table: allTables)
+    for (final Table table : allTables)
     {
       if (isTablePartial(table) || !keepTables.contains(table))
       {
@@ -118,10 +120,10 @@ final class TablesReducer
 
     for (int i = 0; i < depth; i++)
     {
-      for (final Table table: new HashSet<>(includedTables))
+      for (final Table table : new HashSet<>(includedTables))
       {
-        for (final Table relatedTable: table
-          .getRelatedTables(tableRelationshipType))
+        for (final Table relatedTable : table.getRelatedTables(
+          tableRelationshipType))
         {
           if (!isTablePartial(relatedTable))
           {
@@ -150,16 +152,17 @@ final class TablesReducer
 
   private void removeForeignKeys(final ReducibleCollection<? extends Table> allTables)
   {
-    for (final Table table: allTables)
+    for (final Table table : allTables)
     {
-      for (final ForeignKey foreignKey: table.getExportedForeignKeys())
+      for (final ForeignKey foreignKey : table.getExportedForeignKeys())
       {
-        for (final ForeignKeyColumnReference fkColumnRef: foreignKey)
+        for (final ForeignKeyColumnReference fkColumnRef : foreignKey)
         {
-          final Table referencedTable = fkColumnRef.getForeignKeyColumn()
+          final Table referencedTable = fkColumnRef
+            .getForeignKeyColumn()
             .getParent();
-          if (isTablePartial(referencedTable)
-              || allTables.isFiltered(referencedTable))
+          if (isTablePartial(referencedTable) || allTables.isFiltered(
+            referencedTable))
           {
             markTableFilteredOut(referencedTable);
           }

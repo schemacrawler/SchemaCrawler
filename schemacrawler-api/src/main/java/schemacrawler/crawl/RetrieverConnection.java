@@ -53,14 +53,14 @@ import sf.util.StringFormat;
 final class RetrieverConnection
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(RetrieverConnection.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(RetrieverConnection.class.getName());
 
   private final Connection connection;
+  private final JavaSqlTypes javaSqlTypes;
   private final DatabaseMetaData metaData;
   private final SchemaRetrievalOptions schemaRetrievalOptions;
   private final TableTypes tableTypes;
-  private final JavaSqlTypes javaSqlTypes;
 
   RetrieverConnection(final Connection connection,
                       final SchemaRetrievalOptions schemaRetrievalOptions)

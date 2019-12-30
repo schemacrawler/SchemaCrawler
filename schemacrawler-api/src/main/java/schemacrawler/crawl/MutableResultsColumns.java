@@ -49,7 +49,8 @@ final class MutableResultsColumns
 
   private static final long serialVersionUID = 5204766782914559188L;
 
-  private final NamedObjectList<MutableResultsColumn> columns = new NamedObjectList<>();
+  private final NamedObjectList<MutableResultsColumn> columns =
+    new NamedObjectList<>();
 
   MutableResultsColumns(final String name)
   {
@@ -90,12 +91,6 @@ final class MutableResultsColumns
     return columnsList;
   }
 
-  @Override
-  public Iterator<ResultsColumn> iterator()
-  {
-    return getColumns().iterator();
-  }
-
   /**
    * {@inheritDoc}
    */
@@ -107,7 +102,7 @@ final class MutableResultsColumns
     {
       return Optional.empty();
     }
-    for (final MutableResultsColumn column: columns)
+    for (final MutableResultsColumn column : columns)
     {
       if (name.equals(column.getLabel()))
       {
@@ -123,6 +118,12 @@ final class MutableResultsColumns
       }
     }
     return Optional.empty();
+  }
+
+  @Override
+  public Iterator<ResultsColumn> iterator()
+  {
+    return getColumns().iterator();
   }
 
   void addColumn(final MutableResultsColumn column)

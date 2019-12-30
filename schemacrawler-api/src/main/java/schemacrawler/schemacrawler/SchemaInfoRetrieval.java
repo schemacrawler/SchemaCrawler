@@ -43,45 +43,46 @@ import static sf.util.Utility.toSnakeCase;
 
 public enum SchemaInfoRetrieval
 {
- retrieveAdditionalColumnAttributes(table, maximum),
- retrieveAdditionalDatabaseInfo(database, maximum),
- retrieveAdditionalJdbcDriverInfo(database, maximum),
- retrieveAdditionalTableAttributes(table, maximum),
- retrieveColumnDataTypes(base, standard),
- retrieveDatabaseInfo(database, minimum),
- retrieveForeignKeyDefinitions(table, maximum),
- retrieveForeignKeys(table, standard),
- retrieveIndexColumnInformation(table, maximum),
- retrieveIndexes(table, standard),
- retrieveIndexInformation(table, maximum),
- retrievePrimaryKeyDefinitions(table, maximum),
- retrieveRoutineParameters(routine, standard),
- retrieveRoutineInformation(routine, detailed),
- retrieveRoutines(routine, minimum),
- retrieveSequenceInformation(other, maximum),
- retrieveServerInfo(database, maximum),
- retrieveSynonymInformation(other, maximum),
- retrieveTableColumnPrivileges(table, maximum),
- retrieveTableColumns(table, standard),
- retrieveTableConstraintDefinitions(table, detailed),
- retrieveTableConstraintInformation(table, detailed),
- retrieveTableDefinitionsInformation(table, maximum),
- retrieveTablePrivileges(table, maximum),
- retrieveTables(table, minimum),
- retrieveTriggerInformation(table, detailed),
- retrieveUserDefinedColumnDataTypes(other, detailed),
- retrieveViewInformation(table, detailed);
+  retrieveAdditionalColumnAttributes(table, maximum),
+  retrieveAdditionalDatabaseInfo(database, maximum),
+  retrieveAdditionalJdbcDriverInfo(database, maximum),
+  retrieveAdditionalTableAttributes(table, maximum),
+  retrieveColumnDataTypes(base, standard),
+  retrieveDatabaseInfo(database, minimum),
+  retrieveForeignKeyDefinitions(table, maximum),
+  retrieveForeignKeys(table, standard),
+  retrieveIndexColumnInformation(table, maximum),
+  retrieveIndexes(table, standard),
+  retrieveIndexInformation(table, maximum),
+  retrievePrimaryKeyDefinitions(table, maximum),
+  retrieveRoutineParameters(routine, standard),
+  retrieveRoutineInformation(routine, detailed),
+  retrieveRoutines(routine, minimum),
+  retrieveSequenceInformation(other, maximum),
+  retrieveServerInfo(database, maximum),
+  retrieveSynonymInformation(other, maximum),
+  retrieveTableColumnPrivileges(table, maximum),
+  retrieveTableColumns(table, standard),
+  retrieveTableConstraintDefinitions(table, detailed),
+  retrieveTableConstraintInformation(table, detailed),
+  retrieveTableDefinitionsInformation(table, maximum),
+  retrieveTablePrivileges(table, maximum),
+  retrieveTables(table, minimum),
+  retrieveTriggerInformation(table, detailed),
+  retrieveUserDefinedColumnDataTypes(other, detailed),
+  retrieveViewInformation(table, detailed);
 
-  private static final String SC_SCHEMA_INFO_LEVEL = "schemacrawler.schema_info_level.";
-
-  private final InfoLevel infoLevel;
+  private static final String SC_SCHEMA_INFO_LEVEL =
+    "schemacrawler.schema_info_level.";
   private final DatabaseObjectInfoRetrieval databaseObjectInfoRetrieval;
+  private final InfoLevel infoLevel;
 
-  private SchemaInfoRetrieval(final DatabaseObjectInfoRetrieval databaseObjectInfoRetrieval,
-                              final InfoLevel infoLevel)
+  SchemaInfoRetrieval(final DatabaseObjectInfoRetrieval databaseObjectInfoRetrieval,
+                      final InfoLevel infoLevel)
   {
     this.infoLevel = requireNonNull(infoLevel);
-    this.databaseObjectInfoRetrieval = requireNonNull(databaseObjectInfoRetrieval);
+    this.databaseObjectInfoRetrieval =
+      requireNonNull(databaseObjectInfoRetrieval);
   }
 
   public DatabaseObjectInfoRetrieval getDatabaseObjectInfoRetrieval()

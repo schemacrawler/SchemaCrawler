@@ -47,11 +47,12 @@ class MutableTableConstraint
 
   private static final long serialVersionUID = 1155277343302693656L;
 
-  private final NamedObjectList<MutableTableConstraintColumn> columns = new NamedObjectList<>();
-  private TableConstraintType tableConstraintType;
+  private final NamedObjectList<MutableTableConstraintColumn> columns =
+    new NamedObjectList<>();
+  private final StringBuilder definition;
   private boolean deferrable;
   private boolean initiallyDeferred;
-  private final StringBuilder definition;
+  private TableConstraintType tableConstraintType;
 
   MutableTableConstraint(final Table parent, final String name)
   {
@@ -87,15 +88,15 @@ class MutableTableConstraint
   }
 
   @Override
-  public TableConstraintType getType()
-  {
-    return getConstraintType();
-  }
-
-  @Override
   public boolean hasDefinition()
   {
     return definition.length() > 0;
+  }
+
+  @Override
+  public TableConstraintType getType()
+  {
+    return getConstraintType();
   }
 
   /**
@@ -107,6 +108,11 @@ class MutableTableConstraint
     return deferrable;
   }
 
+  void setDeferrable(final boolean deferrable)
+  {
+    this.deferrable = deferrable;
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -114,6 +120,11 @@ class MutableTableConstraint
   public boolean isInitiallyDeferred()
   {
     return initiallyDeferred;
+  }
+
+  void setInitiallyDeferred(final boolean initiallyDeferred)
+  {
+    this.initiallyDeferred = initiallyDeferred;
   }
 
   public void setTableConstraintType(final TableConstraintType tableConstraintType)
@@ -132,16 +143,6 @@ class MutableTableConstraint
     {
       this.definition.append(definition);
     }
-  }
-
-  void setDeferrable(final boolean deferrable)
-  {
-    this.deferrable = deferrable;
-  }
-
-  void setInitiallyDeferred(final boolean initiallyDeferred)
-  {
-    this.initiallyDeferred = initiallyDeferred;
   }
 
 }

@@ -31,8 +31,13 @@ package sf.util;
 import static java.util.Objects.requireNonNull;
 
 import java.io.UnsupportedEncodingException;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.StringJoiner;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
@@ -51,7 +56,8 @@ public final class Utility
   /**
    * Sets the application-wide log level.
    *
-   * @param applicationLogLevel Log level to set
+   * @param applicationLogLevel
+   *   Log level to set
    */
   public static void applyApplicationLogLevel(final Level applicationLogLevel)
   {
@@ -66,7 +72,8 @@ public final class Utility
     }
 
     final LogManager logManager = LogManager.getLogManager();
-    final List<String> loggerNames = Collections.list(logManager.getLoggerNames());
+    final List<String> loggerNames =
+      Collections.list(logManager.getLoggerNames());
     for (final String loggerName : loggerNames)
     {
       final Logger logger = logManager.getLogger(loggerName);
@@ -132,14 +139,17 @@ public final class Utility
     }
     else
     {
-      return string1.substring(0, index).toLowerCase();
+      return string1
+        .substring(0, index)
+        .toLowerCase();
     }
   }
 
   /**
    * Checks if the text contains whitespace.
    *
-   * @param text Text to check.
+   * @param text
+   *   Text to check.
    * @return Whether the string contains whitespace.
    */
   public static boolean containsWhitespace(final CharSequence text)
@@ -230,10 +240,33 @@ public final class Utility
     return defaultValue;
   }
 
+  private static int indexOfDifference(final String string1,
+                                       final String string2)
+  {
+    if (string1 == null || string2 == null)
+    {
+      return 0;
+    }
+    int i;
+    for (i = 0; i < string1.length() && i < string2.length(); ++i)
+    {
+      if (string1.charAt(i) != string2.charAt(i))
+      {
+        break;
+      }
+    }
+    if (i < string2.length() || i < string1.length())
+    {
+      return i;
+    }
+    return -1;
+  }
+
   /**
    * Checks if the text is null or empty.
    *
-   * @param text Text to check.
+   * @param text
+   *   Text to check.
    * @return Whether the string is blank.
    */
   public static boolean isBlank(final CharSequence text)
@@ -256,7 +289,8 @@ public final class Utility
   /**
    * Checks if a class is available on the classpath.
    *
-   * @param className Class to check
+   * @param className
+   *   Class to check
    * @return True if the class is available, false otherwise
    */
   public static boolean isClassAvailable(final String className)
@@ -275,7 +309,8 @@ public final class Utility
   /**
    * Checks if the text contains an integer only.
    *
-   * @param text Text to check.
+   * @param text
+   *   Text to check.
    * @return Whether the string is an integer.
    */
   public static boolean isIntegral(final CharSequence text)
@@ -299,7 +334,8 @@ public final class Utility
   /**
    * Checks if the text is all lowercase.
    *
-   * @param text Text to check.
+   * @param text
+   *   Text to check.
    * @return Whether the string is all lowercase.
    */
   public static boolean isLowerCase(final String text)
@@ -348,32 +384,11 @@ public final class Utility
       return identifier;
     }
     final Pattern identifyCamelCase = Pattern.compile("([A-Z])");
-    final String snakeCaseIdentifier = identifyCamelCase.matcher(identifier)
-                                                        .replaceAll("_$1")
-                                                        .toLowerCase();
+    final String snakeCaseIdentifier = identifyCamelCase
+      .matcher(identifier)
+      .replaceAll("_$1")
+      .toLowerCase();
     return snakeCaseIdentifier;
-  }
-
-  private static int indexOfDifference(final String string1,
-                                       final String string2)
-  {
-    if (string1 == null || string2 == null)
-    {
-      return 0;
-    }
-    int i;
-    for (i = 0; i < string1.length() && i < string2.length(); ++i)
-    {
-      if (string1.charAt(i) != string2.charAt(i))
-      {
-        break;
-      }
-    }
-    if (i < string2.length() || i < string1.length())
-    {
-      return i;
-    }
-    return -1;
   }
 
   private Utility()

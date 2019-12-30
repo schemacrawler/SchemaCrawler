@@ -56,25 +56,24 @@ public final class JavaSqlTypes
     // Load default type mappings
     final TypeMap typeMap = new TypeMap();
     javaSqlTypeMap = new HashMap<>();
-    for (final SQLType sqlType: JDBCType.values())
+    for (final SQLType sqlType : JDBCType.values())
     {
       final Integer sqlTypeInt = sqlType.getVendorTypeNumber();
-      final JavaSqlTypeGroup sqlTypeGroup = JavaSqlTypeGroup
-        .valueOf(sqlTypeInt);
+      final JavaSqlTypeGroup sqlTypeGroup =
+        JavaSqlTypeGroup.valueOf(sqlTypeInt);
       final Class<?> mappedClass = typeMap.get(sqlType.getName());
-      final JavaSqlType javaSqlType = new JavaSqlType(sqlType,
-                                                      mappedClass,
-                                                      sqlTypeGroup);
+      final JavaSqlType javaSqlType =
+        new JavaSqlType(sqlType, mappedClass, sqlTypeGroup);
       javaSqlTypeMap.put(sqlTypeInt, javaSqlType);
     }
   }
 
   /**
-   * Lookup java.sql.Types type, and return more detailed information,
-   * including the mapped Java class.
+   * Lookup java.sql.Types type, and return more detailed information, including
+   * the mapped Java class.
    *
    * @param typeName
-   *        java.sql.Types type name
+   *   java.sql.Types type name
    * @return JavaSqlType type
    */
   public JavaSqlType getFromJavaSqlTypeName(final String typeName)
@@ -85,7 +84,7 @@ public final class JavaSqlTypes
       return sqlDataType;
     }
 
-    for (final JavaSqlType javaSqlType: javaSqlTypeMap.values())
+    for (final JavaSqlType javaSqlType : javaSqlTypeMap.values())
     {
       if (typeName.equals(javaSqlType.getName()))
       {
@@ -99,7 +98,9 @@ public final class JavaSqlTypes
   @Override
   public Iterator<JavaSqlType> iterator()
   {
-    return javaSqlTypeMap.values().iterator();
+    return javaSqlTypeMap
+      .values()
+      .iterator();
   }
 
   public int size()

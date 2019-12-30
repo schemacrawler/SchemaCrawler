@@ -34,8 +34,8 @@ import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineParameter;
 
 /**
- * Represents a column in a database routine. Created from metadata
- * returned by a JDBC call.
+ * Represents a column in a database routine. Created from metadata returned by
+ * a JDBC call.
  *
  * @author Sualeh Fatehi
  */
@@ -53,9 +53,9 @@ abstract class MutableRoutineParameter<R extends Routine>
    * constructors make a class effectively final
    *
    * @param parent
-   *        Parent of this object
+   *   Parent of this object
    * @param name
-   *        Name of the named object
+   *   Name of the named object
    */
   MutableRoutineParameter(final DatabaseObjectReference<R> parent,
                           final String name)
@@ -72,6 +72,11 @@ abstract class MutableRoutineParameter<R extends Routine>
     return parameterMode;
   }
 
+  void setParameterMode(final ParameterModeType parameterMode)
+  {
+    this.parameterMode = parameterMode;
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -84,11 +89,6 @@ abstract class MutableRoutineParameter<R extends Routine>
   final void setPrecision(final int precision)
   {
     setDecimalDigits(precision);
-  }
-
-  void setParameterMode(final ParameterModeType parameterMode)
-  {
-    this.parameterMode = parameterMode;
   }
 
 }

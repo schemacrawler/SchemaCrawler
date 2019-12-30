@@ -59,7 +59,7 @@ public interface ResultsColumns
    * Gets a column by name.
    *
    * @param name
-   *        Name
+   *   Name
    * @return Column.
    */
   <C extends ResultsColumn> Optional<C> lookupColumn(String name);

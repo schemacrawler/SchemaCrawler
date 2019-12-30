@@ -36,8 +36,8 @@ import schemacrawler.schema.JavaSqlTypeGroup;
 import schemacrawler.schema.NamedObject;
 
 /**
- * Represents a column in a database for tables and routines. Created
- * from metadata returned by a JDBC call.
+ * Represents a column in a database for tables and routines. Created from
+ * metadata returned by a JDBC call.
  *
  * @author Sualeh Fatehi
  */
@@ -49,19 +49,19 @@ abstract class AbstractColumn<P extends DatabaseObject>
   private static final long serialVersionUID = -8492662324895309485L;
 
   private ColumnDataType columnDataType;
-  private int ordinalPosition;
-  private int size;
   private int decimalDigits;
   private boolean nullable;
+  private int ordinalPosition;
+  private int size;
 
   /**
    * Effective Java - Item 17 - Minimize Mutability - Package-private
    * constructors make a class effectively final
    *
    * @param parent
-   *        Parent of this object
+   *   Parent of this object
    * @param name
-   *        Name of the named object
+   *   Name of the named object
    */
   AbstractColumn(final DatabaseObjectReference<P> parent, final String name)
   {
@@ -103,6 +103,11 @@ abstract class AbstractColumn<P extends DatabaseObject>
     return columnDataType;
   }
 
+  final void setColumnDataType(final ColumnDataType columnDataType)
+  {
+    this.columnDataType = columnDataType;
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -112,6 +117,11 @@ abstract class AbstractColumn<P extends DatabaseObject>
     return decimalDigits;
   }
 
+  final void setDecimalDigits(final int decimalDigits)
+  {
+    this.decimalDigits = decimalDigits;
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -119,6 +129,11 @@ abstract class AbstractColumn<P extends DatabaseObject>
   public final int getOrdinalPosition()
   {
     return ordinalPosition;
+  }
+
+  final void setOrdinalPosition(final int ordinalPosition)
+  {
+    this.ordinalPosition = ordinalPosition;
   }
 
   /**
@@ -131,12 +146,14 @@ abstract class AbstractColumn<P extends DatabaseObject>
   }
 
   /**
-   * {@inheritDoc}
+   * Sets the column size.
+   *
+   * @param size
+   *   Size of the column
    */
-  @Override
-  public final ColumnDataType getType()
+  final void setSize(final int size)
   {
-    return getColumnDataType();
+    this.size = size;
   }
 
   /**
@@ -157,7 +174,8 @@ abstract class AbstractColumn<P extends DatabaseObject>
       return "";
     }
 
-    final JavaSqlTypeGroup sqlDataTypeGroup = columnDataType.getJavaSqlType()
+    final JavaSqlTypeGroup sqlDataTypeGroup = columnDataType
+      .getJavaSqlType()
       .getJavaSqlTypeGroup();
     final boolean needWidth = sqlDataTypeGroup == JavaSqlTypeGroup.character
                               || sqlDataTypeGroup == JavaSqlTypeGroup.real;
@@ -169,7 +187,9 @@ abstract class AbstractColumn<P extends DatabaseObject>
       columnWidthBuffer.append(size);
       if (sqlDataTypeGroup == JavaSqlTypeGroup.real)
       {
-        columnWidthBuffer.append(", ").append(getDecimalDigits());
+        columnWidthBuffer
+          .append(", ")
+          .append(getDecimalDigits());
       }
       columnWidthBuffer.append(')');
     }
@@ -187,35 +207,18 @@ abstract class AbstractColumn<P extends DatabaseObject>
     return nullable;
   }
 
-  final void setColumnDataType(final ColumnDataType columnDataType)
-  {
-    this.columnDataType = columnDataType;
-  }
-
-  final void setDecimalDigits(final int decimalDigits)
-  {
-    this.decimalDigits = decimalDigits;
-  }
-
   final void setNullable(final boolean nullable)
   {
     this.nullable = nullable;
   }
 
-  final void setOrdinalPosition(final int ordinalPosition)
-  {
-    this.ordinalPosition = ordinalPosition;
-  }
-
   /**
-   * Sets the column size.
-   *
-   * @param size
-   *        Size of the column
+   * {@inheritDoc}
    */
-  final void setSize(final int size)
+  @Override
+  public final ColumnDataType getType()
   {
-    this.size = size;
+    return getColumnDataType();
   }
 
 }

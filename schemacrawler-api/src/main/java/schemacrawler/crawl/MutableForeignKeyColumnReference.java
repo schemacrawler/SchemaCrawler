@@ -34,8 +34,8 @@ import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKeyColumnReference;
 
 /**
- * Represents a single column mapping from a primary key column to a
- * foreign key column.
+ * Represents a single column mapping from a primary key column to a foreign key
+ * column.
  *
  * @author Sualeh Fatehi
  */

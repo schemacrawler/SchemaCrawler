@@ -35,17 +35,17 @@ package schemacrawler.schema;
 public enum CheckOptionType
 {
 
- /**
-  * Unknown.
-  */
- unknown,
- /**
-  * Check option none.
-  */
- none,
- /**
-  * Check option cascade.
-  */
- cascade;
+  /**
+   * Unknown.
+   */
+  unknown,
+  /**
+   * Check option none.
+   */
+  none,
+  /**
+   * Check option cascade.
+   */
+  cascade
 
 }

@@ -44,31 +44,25 @@ public final class SchemaCrawlerOptions
   implements Options
 {
 
-  private final SchemaInfoLevel schemaInfoLevel;
-
-  private final InclusionRule schemaInclusionRule;
-  private final InclusionRule synonymInclusionRule;
-  private final InclusionRule sequenceInclusionRule;
-
-  private final Collection<String> tableTypes;
-  private final String tableNamePattern;
-  private final InclusionRule tableInclusionRule;
+  private final int childTableFilterDepth;
   private final InclusionRule columnInclusionRule;
-
-  private final Collection<RoutineType> routineTypes;
-  private final InclusionRule routineInclusionRule;
-  private final InclusionRule routineParameterInclusionRule;
-
   private final InclusionRule grepColumnInclusionRule;
-  private final InclusionRule grepRoutineParameterInclusionRule;
   private final InclusionRule grepDefinitionInclusionRule;
   private final boolean grepInvertMatch;
   private final boolean grepOnlyMatching;
-
+  private final InclusionRule grepRoutineParameterInclusionRule;
   private final boolean isNoEmptyTables;
-
-  private final int childTableFilterDepth;
   private final int parentTableFilterDepth;
+  private final InclusionRule routineInclusionRule;
+  private final InclusionRule routineParameterInclusionRule;
+  private final Collection<RoutineType> routineTypes;
+  private final InclusionRule schemaInclusionRule;
+  private final SchemaInfoLevel schemaInfoLevel;
+  private final InclusionRule sequenceInclusionRule;
+  private final InclusionRule synonymInclusionRule;
+  private final InclusionRule tableInclusionRule;
+  private final String tableNamePattern;
+  private final Collection<String> tableTypes;
 
   SchemaCrawlerOptions(final SchemaInfoLevel schemaInfoLevel,
                        final InclusionRule schemaInclusionRule,
@@ -204,8 +198,8 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Gets the schema information level, identifying to what level the
-   * schema should be crawled.
+   * Gets the schema information level, identifying to what level the schema
+   * should be crawled.
    *
    * @return Schema information level.
    */
@@ -245,8 +239,8 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Gets the table name pattern. A null value indicates do not take
-   * table pattern into account.
+   * Gets the table name pattern. A null value indicates do not take table
+   * pattern into account.
    *
    * @return Table name pattern
    */
@@ -256,8 +250,8 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Returns the table types requested for output. This can be null, if
-   * all supported table types are required in the output.
+   * Returns the table types requested for output. This can be null, if all
+   * supported table types are required in the output.
    *
    * @return All table types requested for output
    */
@@ -294,8 +288,8 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Whether grep includes show foreign keys that reference other
-   * non-matching tables.
+   * Whether grep includes show foreign keys that reference other non-matching
+   * tables.
    */
   public boolean isGrepOnlyMatching()
   {
@@ -308,8 +302,8 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * If infolevel=maximum, this option will remove empty tables (that
-   * is, tables with no rows of data) from the catalog.
+   * If infolevel=maximum, this option will remove empty tables (that is, tables
+   * with no rows of data) from the catalog.
    *
    * @return Whether to hide empty tables
    */

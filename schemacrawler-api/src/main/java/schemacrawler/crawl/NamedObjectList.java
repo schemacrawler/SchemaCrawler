@@ -49,10 +49,10 @@ import sf.util.ObjectToString;
 
 /**
  * Ordered list of named objects, that can be searched associatively.
- * NamedObjectList has the ability to look up by dependent object which
- * is not created yet. That is, by NamedObject + String. Returns values
- * sorted in natural sort order, and is iterable. The iterator does not
- * allow modifications to the underlying data structure.
+ * NamedObjectList has the ability to look up by dependent object which is not
+ * created yet. That is, by NamedObject + String. Returns values sorted in
+ * natural sort order, and is iterable. The iterator does not allow
+ * modifications to the underlying data structure.
  */
 final class NamedObjectList<N extends NamedObject>
   implements Serializable, ReducibleCollection<N>
@@ -96,8 +96,8 @@ final class NamedObjectList<N extends NamedObject>
     }
 
     final Set<Entry<List<String>, N>> entrySet = objects.entrySet();
-    for (final Iterator<Entry<List<String>, N>> iterator = entrySet
-      .iterator(); iterator.hasNext();)
+    for (final Iterator<Entry<List<String>, N>> iterator =
+         entrySet.iterator(); iterator.hasNext(); )
     {
       final Entry<List<String>, N> entry = iterator.next();
       if (!predicate.test(entry.getValue()))
@@ -165,7 +165,7 @@ final class NamedObjectList<N extends NamedObject>
    * Add a named object to the list.
    *
    * @param namedObject
-   *        Named object
+   *   Named object
    */
   boolean add(final N namedObject)
   {
@@ -189,7 +189,7 @@ final class NamedObjectList<N extends NamedObject>
    * Looks up a named object by lookup key.
    *
    * @param fullName
-   *        Fully qualified name
+   *   Fully qualified name
    * @return Named object
    */
   Optional<N> lookup(final List<String> lookupKey)

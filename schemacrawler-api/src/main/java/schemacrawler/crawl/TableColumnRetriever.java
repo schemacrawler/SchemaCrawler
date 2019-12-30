@@ -55,8 +55,8 @@ import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
- * A retriever uses database metadata to get the details about the
- * database table columns.
+ * A retriever uses database metadata to get the details about the database
+ * table columns.
  *
  * @author Sualeh Fatehi
  */
@@ -64,8 +64,8 @@ final class TableColumnRetriever
   extends AbstractRetriever
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(TableColumnRetriever.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(TableColumnRetriever.class.getName());
 
   TableColumnRetriever(final RetrieverConnection retrieverConnection,
                        final MutableCatalog catalog,
@@ -81,8 +81,8 @@ final class TableColumnRetriever
   {
     requireNonNull(allTables, "No tables provided");
 
-    final InclusionRuleFilter<Column> columnFilter = new InclusionRuleFilter<>(columnInclusionRule,
-                                                                               true);
+    final InclusionRuleFilter<Column> columnFilter =
+      new InclusionRuleFilter<>(columnInclusionRule, true);
     if (columnFilter.isExcludeAll())
     {
       LOGGER.log(Level.INFO,
@@ -92,14 +92,13 @@ final class TableColumnRetriever
 
     final Set<List<String>> hiddenColumns = retrieveHiddenTableColumns();
 
-    final MetadataRetrievalStrategy tableColumnRetrievalStrategy = getRetrieverConnection()
-      .getTableColumnRetrievalStrategy();
+    final MetadataRetrievalStrategy tableColumnRetrievalStrategy =
+      getRetrieverConnection().getTableColumnRetrievalStrategy();
     switch (tableColumnRetrievalStrategy)
     {
       case data_dictionary_all:
-        LOGGER
-          .log(Level.INFO,
-               "Retrieving table columns, using fast data dictionary retrieval");
+        LOGGER.log(Level.INFO,
+                   "Retrieving table columns, using fast data dictionary retrieval");
         retrieveTableColumnsFromDataDictionary(allTables,
                                                columnFilter,
                                                hiddenColumns);
@@ -138,10 +137,10 @@ final class TableColumnRetriever
     final String defaultValue = results.getString("COLUMN_DEF");
     //
 
-    final String columnCatalogName = normalizeCatalogName(results
-      .getString("TABLE_CAT"));
-    final String schemaName = normalizeSchemaName(results
-      .getString("TABLE_SCHEM"));
+    final String columnCatalogName =
+      normalizeCatalogName(results.getString("TABLE_CAT"));
+    final String schemaName =
+      normalizeSchemaName(results.getString("TABLE_SCHEM"));
     final String tableName = results.getString("TABLE_NAME");
     final String columnName = results.getString("COLUMN_NAME");
     LOGGER.log(Level.FINE,
@@ -155,8 +154,8 @@ final class TableColumnRetriever
       return;
     }
 
-    final Optional<MutableTable> optionalTable = allTables
-      .lookup(Arrays.asList(columnCatalogName, schemaName, tableName));
+    final Optional<MutableTable> optionalTable =
+      allTables.lookup(Arrays.asList(columnCatalogName, schemaName, tableName));
     if (!optionalTable.isPresent())
     {
       return;
@@ -164,23 +163,24 @@ final class TableColumnRetriever
 
     final MutableTable table = optionalTable.get();
     final MutableColumn column = lookupOrCreateTableColumn(table, columnName);
-    if (columnFilter.test(column)
-        && belongsToSchema(table, columnCatalogName, schemaName))
+    if (columnFilter.test(column) && belongsToSchema(table,
+                                                     columnCatalogName,
+                                                     schemaName))
     {
       final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
       final int dataType = results.getInt("DATA_TYPE", 0);
       final String typeName = results.getString("TYPE_NAME");
       final int size = results.getInt("COLUMN_SIZE", 0);
       final int decimalDigits = results.getInt("DECIMAL_DIGITS", 0);
-      final boolean isNullable = results
-        .getInt("NULLABLE",
-                DatabaseMetaData.columnNullableUnknown) == DatabaseMetaData.columnNullable;
+      final boolean isNullable =
+        results.getInt("NULLABLE", DatabaseMetaData.columnNullableUnknown)
+        == DatabaseMetaData.columnNullable;
       final boolean isAutoIncremented = results.getBoolean("IS_AUTOINCREMENT");
       final boolean isGenerated = results.getBoolean("IS_GENERATEDCOLUMN");
       final String remarks = results.getString("REMARKS");
 
-      final List<String> lookupKey = Arrays
-        .asList(columnCatalogName, schemaName, tableName, columnName);
+      final List<String> lookupKey =
+        Arrays.asList(columnCatalogName, schemaName, tableName, columnName);
       final boolean isHidden = hiddenColumns.contains(lookupKey);
 
       String columnDataTypeName = null;
@@ -198,10 +198,9 @@ final class TableColumnRetriever
       }
 
       column.setOrdinalPosition(ordinalPosition);
-      column
-        .setColumnDataType(lookupOrCreateColumnDataType(table.getSchema(),
-                                                        dataType,
-                                                        columnDataTypeName));
+      column.setColumnDataType(lookupOrCreateColumnDataType(table.getSchema(),
+                                                            dataType,
+                                                            columnDataTypeName));
       column.setSize(size);
       column.setDecimalDigits(decimalDigits);
       column.setNullable(isNullable);
@@ -235,8 +234,8 @@ final class TableColumnRetriever
   private MutableColumn lookupOrCreateTableColumn(final MutableTable table,
                                                   final String columnName)
   {
-    final Optional<MutableColumn> columnOptional = table
-      .lookupColumn(columnName);
+    final Optional<MutableColumn> columnOptional =
+      table.lookupColumn(columnName);
     final MutableColumn column;
     if (columnOptional.isPresent())
     {
@@ -255,31 +254,32 @@ final class TableColumnRetriever
 
     final Set<List<String>> hiddenColumns = new HashSet<>();
 
-    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-      .getInformationSchemaViews();
-    if (!informationSchemaViews
-      .hasQuery(InformationSchemaKey.EXT_HIDDEN_TABLE_COLUMNS))
+    final InformationSchemaViews informationSchemaViews =
+      getRetrieverConnection().getInformationSchemaViews();
+    if (!informationSchemaViews.hasQuery(InformationSchemaKey.EXT_HIDDEN_TABLE_COLUMNS))
     {
       LOGGER.log(Level.INFO, "No hidden table columns SQL provided");
       return hiddenColumns;
     }
-    final Query hiddenColumnsSql = informationSchemaViews
-      .getQuery(InformationSchemaKey.EXT_HIDDEN_TABLE_COLUMNS);
+    final Query hiddenColumnsSql =
+      informationSchemaViews.getQuery(InformationSchemaKey.EXT_HIDDEN_TABLE_COLUMNS);
     final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(hiddenColumnsSql,
-                                                                statement,
-                                                                getSchemaInclusionRule());)
+    try (
+      final Statement statement = connection.createStatement();
+      final MetadataResultSet results = new MetadataResultSet(hiddenColumnsSql,
+                                                              statement,
+                                                              getSchemaInclusionRule())
+    )
     {
       results.setDescription("retrieveHiddenColumns");
       while (results.next())
       {
         // NOTE: The column names in the extension table are different
         // than the database metadata column names
-        final String catalogName = normalizeCatalogName(results
-          .getString("TABLE_CATALOG"));
-        final String schemaName = normalizeSchemaName(results
-          .getString("TABLE_SCHEMA"));
+        final String catalogName =
+          normalizeCatalogName(results.getString("TABLE_CATALOG"));
+        final String schemaName =
+          normalizeSchemaName(results.getString("TABLE_SCHEMA"));
         final String tableName = results.getString("TABLE_NAME");
         final String columnName = results.getString("COLUMN_NAME");
 
@@ -290,8 +290,8 @@ final class TableColumnRetriever
                                     tableName,
                                     columnName));
 
-        final List<String> lookupKey = Arrays
-          .asList(catalogName, schemaName, tableName, columnName);
+        final List<String> lookupKey =
+          Arrays.asList(catalogName, schemaName, tableName, columnName);
         hiddenColumns.add(lookupKey);
       }
     }
@@ -304,20 +304,22 @@ final class TableColumnRetriever
                                                       final Set<List<String>> hiddenColumns)
     throws SQLException
   {
-    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-      .getInformationSchemaViews();
+    final InformationSchemaViews informationSchemaViews =
+      getRetrieverConnection().getInformationSchemaViews();
     if (!informationSchemaViews.hasQuery(InformationSchemaKey.TABLE_COLUMNS))
     {
       throw new SchemaCrawlerSQLException("No table columns SQL provided",
                                           null);
     }
-    final Query tableColumnsSql = informationSchemaViews
-      .getQuery(InformationSchemaKey.TABLE_COLUMNS);
+    final Query tableColumnsSql =
+      informationSchemaViews.getQuery(InformationSchemaKey.TABLE_COLUMNS);
     final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(tableColumnsSql,
-                                                                statement,
-                                                                getSchemaInclusionRule());)
+    try (
+      final Statement statement = connection.createStatement();
+      final MetadataResultSet results = new MetadataResultSet(tableColumnsSql,
+                                                              statement,
+                                                              getSchemaInclusionRule())
+    )
     {
       results.setDescription("retrieveTableColumnsFromDataDictionary");
       while (results.next())
@@ -332,14 +334,20 @@ final class TableColumnRetriever
                                                 final Set<List<String>> hiddenColumns)
     throws SchemaCrawlerSQLException
   {
-    for (final MutableTable table: allTables)
+    for (final MutableTable table : allTables)
     {
       LOGGER.log(Level.FINE, "Retrieving table columns for " + table);
-      try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-        .getColumns(table.getSchema().getCatalogName(),
-                    table.getSchema().getName(),
-                    table.getName(),
-                    null));)
+      try (
+        final MetadataResultSet results = new MetadataResultSet(getMetaData().getColumns(
+          table
+            .getSchema()
+            .getCatalogName(),
+          table
+            .getSchema()
+            .getName(),
+          table.getName(),
+          null))
+      )
       {
         while (results.next())
         {
@@ -348,10 +356,10 @@ final class TableColumnRetriever
       }
       catch (final SQLException e)
       {
-        throw new SchemaCrawlerSQLException(String
-          .format("Could not retrieve table columns for %s <%s>",
-                  table.getTableType(),
-                  table), e);
+        throw new SchemaCrawlerSQLException(String.format(
+          "Could not retrieve table columns for %s <%s>",
+          table.getTableType(),
+          table), e);
       }
     }
   }
@@ -361,8 +369,13 @@ final class TableColumnRetriever
                                                             final Set<List<String>> hiddenColumns)
     throws SQLException
   {
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getColumns(null, null, "%", "%"));)
+    try (
+      final MetadataResultSet results = new MetadataResultSet(getMetaData().getColumns(
+        null,
+        null,
+        "%",
+        "%"))
+    )
     {
       while (results.next())
       {

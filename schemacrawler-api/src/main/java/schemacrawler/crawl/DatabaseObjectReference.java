@@ -55,8 +55,8 @@ class DatabaseObjectReference<D extends DatabaseObject>
     databaseObjectRef = new SoftReference<>(requireNonNull(databaseObject,
                                                            "Database object not provided"));
 
-    this.partial = requireNonNull(partial,
-                                  "Partial database object not provided");
+    this.partial =
+      requireNonNull(partial, "Partial database object not provided");
     if (!(partial instanceof PartialDatabaseObject))
     {
       throw new IllegalArgumentException("Partial database object not provided");
@@ -64,19 +64,14 @@ class DatabaseObjectReference<D extends DatabaseObject>
 
     if (!partial.equals(databaseObject))
     {
-      throw new IllegalArgumentException("Inconsistent database object reference");
+      throw new IllegalArgumentException(
+        "Inconsistent database object reference");
     }
   }
 
-  @Override
-  public final boolean equals(final Object obj)
-  {
-    return partial.equals(obj);
-  }
-
   /**
-   * {@inheritDoc} Modification over the Reference, always returns a
-   * non-null value.
+   * {@inheritDoc} Modification over the Reference, always returns a non-null
+   * value.
    *
    * @see java.lang.ref.SoftReference#get()
    */
@@ -108,9 +103,10 @@ class DatabaseObjectReference<D extends DatabaseObject>
     return partial.hashCode();
   }
 
-  public boolean isPartialDatabaseObjectReference()
+  @Override
+  public final boolean equals(final Object obj)
   {
-    return this.get() instanceof PartialDatabaseObject;
+    return partial.equals(obj);
   }
 
   @Override
@@ -119,11 +115,15 @@ class DatabaseObjectReference<D extends DatabaseObject>
     return partial.toString();
   }
 
+  public boolean isPartialDatabaseObjectReference()
+  {
+    return this.get() instanceof PartialDatabaseObject;
+  }
+
   /**
-   * Read saved content of the reference, construct new reference, and
-   * the partial.
+   * Read saved content of the reference, construct new reference, and the
+   * partial.
    *
-   * @param in
    * @throws IOException
    * @throws ClassNotFoundException
    */
@@ -141,7 +141,6 @@ class DatabaseObjectReference<D extends DatabaseObject>
    * Write only content of the reference. A Reference itself is not
    * serializable.
    *
-   * @param out
    * @throws java.io.IOException
    */
   private void writeObject(final ObjectOutputStream out)

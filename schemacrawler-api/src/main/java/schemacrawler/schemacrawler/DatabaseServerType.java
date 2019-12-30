@@ -36,10 +36,8 @@ public final class DatabaseServerType
   implements Serializable, Comparable<DatabaseServerType>
 {
 
-  private static final long serialVersionUID = 2160456864554076419L;
-
   public static final DatabaseServerType UNKNOWN = new DatabaseServerType();
-
+  private static final long serialVersionUID = 2160456864554076419L;
   private final String databaseSystemIdentifier;
   private final String databaseSystemName;
 
@@ -48,7 +46,8 @@ public final class DatabaseServerType
   {
     if (isBlank(databaseSystemIdentifier))
     {
-      throw new IllegalArgumentException("No database system identifier provided");
+      throw new IllegalArgumentException(
+        "No database system identifier provided");
     }
     this.databaseSystemIdentifier = databaseSystemIdentifier;
 
@@ -87,9 +86,28 @@ public final class DatabaseServerType
     }
     else
     {
-      return getDatabaseSystemIdentifier()
-        .compareTo(other.getDatabaseSystemIdentifier());
+      return getDatabaseSystemIdentifier().compareTo(other.getDatabaseSystemIdentifier());
     }
+  }
+
+  public String getDatabaseSystemIdentifier()
+  {
+    return databaseSystemIdentifier;
+  }
+
+  public String getDatabaseSystemName()
+  {
+    return databaseSystemName;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (databaseSystemIdentifier == null? 0:
+                               databaseSystemIdentifier.hashCode());
+    return result;
   }
 
   @Override
@@ -110,42 +128,10 @@ public final class DatabaseServerType
     final DatabaseServerType other = (DatabaseServerType) obj;
     if (databaseSystemIdentifier == null)
     {
-      if (other.databaseSystemIdentifier != null)
-      {
-        return false;
-      }
+      return other.databaseSystemIdentifier == null;
     }
-    else if (!databaseSystemIdentifier.equals(other.databaseSystemIdentifier))
-    {
-      return false;
-    }
-    return true;
-  }
-
-  public String getDatabaseSystemIdentifier()
-  {
-    return databaseSystemIdentifier;
-  }
-
-  public String getDatabaseSystemName()
-  {
-    return databaseSystemName;
-  }
-
-  @Override
-  public int hashCode()
-  {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result
-             + (databaseSystemIdentifier == null? 0: databaseSystemIdentifier
-               .hashCode());
-    return result;
-  }
-
-  public boolean isUnknownDatabaseSystem()
-  {
-    return isBlank(databaseSystemIdentifier);
+    else
+    { return databaseSystemIdentifier.equals(other.databaseSystemIdentifier); }
   }
 
   @Override
@@ -157,9 +143,15 @@ public final class DatabaseServerType
     }
     else
     {
-      return String
-        .format("%s - %s", databaseSystemIdentifier, databaseSystemName);
+      return String.format("%s - %s",
+                           databaseSystemIdentifier,
+                           databaseSystemName);
     }
+  }
+
+  public boolean isUnknownDatabaseSystem()
+  {
+    return isBlank(databaseSystemIdentifier);
   }
 
 }

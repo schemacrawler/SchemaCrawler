@@ -41,20 +41,14 @@ import sf.util.StringFormat;
 public enum InfoLevel
 {
 
- unknown(() -> standard()),
- minimum(() -> minimum()),
- standard(() -> standard()),
- detailed(() -> detailed()),
- maximum(() -> maximum());
+  unknown(() -> standard()),
+  minimum(() -> minimum()),
+  standard(() -> standard()),
+  detailed(() -> detailed()),
+  maximum(() -> maximum());
 
-  @FunctionalInterface
-  private interface ToSchemaInfoLevelFunction
-  {
-    SchemaInfoLevel toSchemaInfoLevel();
-  }
-
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(InfoLevel.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(InfoLevel.class.getName());
 
   public static InfoLevel valueOfFromString(final String infoLevelValue)
   {
@@ -70,9 +64,16 @@ public enum InfoLevel
     }
   }
 
+  @FunctionalInterface
+  private interface ToSchemaInfoLevelFunction
+  {
+    SchemaInfoLevel toSchemaInfoLevel();
+  }
+
+
   private final ToSchemaInfoLevelFunction toSchemaInfoLevelFunction;
 
-  private InfoLevel(final ToSchemaInfoLevelFunction toSchemaInfoLevelFunction)
+  InfoLevel(final ToSchemaInfoLevelFunction toSchemaInfoLevelFunction)
   {
     this.toSchemaInfoLevelFunction = toSchemaInfoLevelFunction;
   }

@@ -42,8 +42,8 @@ import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
 
 /**
- * Represents a database procedure. Created from metadata returned by a
- * JDBC call.
+ * Represents a database procedure. Created from metadata returned by a JDBC
+ * call.
  *
  * @author Sualeh Fatehi
  */
@@ -53,9 +53,9 @@ final class MutableProcedure
 {
 
   private static final long serialVersionUID = 3906925686089134130L;
-
+  private final NamedObjectList<MutableProcedureParameter> columns =
+    new NamedObjectList<>();
   private ProcedureReturnType returnType;
-  private final NamedObjectList<MutableProcedureParameter> columns = new NamedObjectList<>();
 
   MutableProcedure(final Schema schema, final String name)
   {
@@ -82,10 +82,9 @@ final class MutableProcedure
     return returnType;
   }
 
-  @Override
-  public RoutineType getRoutineType()
+  void setReturnType(final ProcedureReturnType returnType)
   {
-    return RoutineType.procedure;
+    this.returnType = requireNonNull(returnType, "Null procedure return type");
   }
 
   /**
@@ -97,14 +96,15 @@ final class MutableProcedure
     return columns.lookup(this, name);
   }
 
+  @Override
+  public RoutineType getRoutineType()
+  {
+    return RoutineType.procedure;
+  }
+
   void addParameter(final MutableProcedureParameter column)
   {
     columns.add(column);
-  }
-
-  void setReturnType(final ProcedureReturnType returnType)
-  {
-    this.returnType = requireNonNull(returnType, "Null procedure return type");
   }
 
 }

@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.filter;
 
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.function.Predicate;
@@ -59,7 +58,7 @@ public class TableTypesFilter
       else
       {
         tableTypes = new HashSet<>();
-        for (final String tableType: tableTypesOptions)
+        for (final String tableType : tableTypesOptions)
         {
           tableTypes.add(tableType.toLowerCase());
         }
@@ -75,10 +74,9 @@ public class TableTypesFilter
   {
     if (tableTypesFiltered != null)
     {
-      final Collection<String> tableTypesOptions = Arrays
-        .asList(tableTypesFiltered);
+      final String[] tableTypesOptions = tableTypesFiltered;
       tableTypes = new HashSet<>();
-      for (final String tableType: tableTypesOptions)
+      for (final String tableType : tableTypesOptions)
       {
         tableTypes.add(tableType.toLowerCase());
       }
@@ -93,7 +91,7 @@ public class TableTypesFilter
    * Check for table limiting rules.
    *
    * @param table
-   *        Table to check
+   *   Table to check
    * @return Whether the table should be included
    */
   @Override
@@ -103,8 +101,10 @@ public class TableTypesFilter
 
     if (tableTypes != null)
     {
-      include = tableTypes
-        .contains(table.getTableType().getTableType().toLowerCase());
+      include = tableTypes.contains(table
+                                      .getTableType()
+                                      .getTableType()
+                                      .toLowerCase());
     }
     else
     {

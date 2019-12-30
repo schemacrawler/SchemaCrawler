@@ -50,16 +50,16 @@ public interface Table
   List<Column> getColumns();
 
   /**
-   * Gets the list of exported foreign keys. That is, only those whose
-   * primary key is referenced in another table.
+   * Gets the list of exported foreign keys. That is, only those whose primary
+   * key is referenced in another table.
    *
    * @return Exported foreign keys of the table.
    */
   Collection<ForeignKey> getExportedForeignKeys();
 
   /**
-   * Gets the list of all foreign keys of the table, including imported
-   * and exported foreign keys.
+   * Gets the list of all foreign keys of the table, including imported and
+   * exported foreign keys.
    *
    * @return Foreign keys of the table.
    */
@@ -73,8 +73,8 @@ public interface Table
   Collection<Column> getHiddenColumns();
 
   /**
-   * Gets the list of imported foreign keys. That is, only those that
-   * reference a primary key another table.
+   * Gets the list of imported foreign keys. That is, only those that reference
+   * a primary key another table.
    *
    * @return Imported foreign keys of the table.
    */
@@ -102,13 +102,12 @@ public interface Table
   Collection<Privilege<Table>> getPrivileges();
 
   /**
-   * Gets the tables related to this one, based on the specified
-   * relationship type. Child tables are those who have a foreign key
-   * from this table. Parent tables are those to which this table has a
-   * foreign key.
+   * Gets the tables related to this one, based on the specified relationship
+   * type. Child tables are those who have a foreign key from this table. Parent
+   * tables are those to which this table has a foreign key.
    *
    * @param tableRelationshipType
-   *        Table relationship type
+   *   Table relationship type
    * @return Related tables.
    */
   Collection<Table> getRelatedTables(final TableRelationshipType tableRelationshipType);
@@ -145,7 +144,7 @@ public interface Table
    * Gets a column by unqualified name.
    *
    * @param name
-   *        Unqualified name
+   *   Unqualified name
    * @return Column.
    */
   <C extends Column> Optional<C> lookupColumn(String name);
@@ -154,7 +153,7 @@ public interface Table
    * Gets a foreign key by name.
    *
    * @param name
-   *        Name
+   *   Name
    * @return Foreign key.
    */
   <F extends ForeignKey> Optional<F> lookupForeignKey(String name);
@@ -163,7 +162,7 @@ public interface Table
    * Gets an index by unqualified name.
    *
    * @param name
-   *        Name
+   *   Name
    * @return Index.
    */
   <I extends Index> Optional<I> lookupIndex(String name);
@@ -172,7 +171,7 @@ public interface Table
    * Gets a privilege by unqualified name.
    *
    * @param name
-   *        Name
+   *   Name
    * @return Privilege.
    */
   <P extends Privilege<Table>> Optional<P> lookupPrivilege(String name);
@@ -181,7 +180,7 @@ public interface Table
    * Gets a trigger by unqualified name.
    *
    * @param name
-   *        Name
+   *   Name
    * @return Trigger.
    */
   <T extends Trigger> Optional<T> lookupTrigger(String name);

@@ -39,6 +39,6 @@ public enum MetadataRetrievalStrategy
   metadata_all,
   // use the INFORMATION_SCHEMA or database-specific data dictionary queries to
   // retrieve information for all database objects together
-  data_dictionary_all;
+  data_dictionary_all
 
 }

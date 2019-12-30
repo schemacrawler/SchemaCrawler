@@ -145,7 +145,7 @@ public interface Catalog
    * Gets the column data types defined in the schema, by name.
    *
    * @param name
-   *        Name
+   *   Name
    * @return Column data types
    */
   <C extends ColumnDataType> Optional<C> lookupColumnDataType(Schema schema,
@@ -155,7 +155,7 @@ public interface Catalog
    * Gets a routine by unqualified name.
    *
    * @param name
-   *        Name
+   *   Name
    * @return Routine.
    */
   <R extends Routine> Optional<R> lookupRoutine(Schema schema, String name);
@@ -164,7 +164,7 @@ public interface Catalog
    * Gets a schema by name.
    *
    * @param name
-   *        Schema name
+   *   Schema name
    * @return Schema.
    */
   <S extends Schema> Optional<S> lookupSchema(String name);
@@ -173,7 +173,7 @@ public interface Catalog
    * Gets the sequence by unqualified name.
    *
    * @param name
-   *        Name
+   *   Name
    * @return Sequence.
    */
   <S extends Sequence> Optional<S> lookupSequence(Schema schema, String name);
@@ -182,7 +182,7 @@ public interface Catalog
    * Gets the synonym by unqualified name.
    *
    * @param name
-   *        Name
+   *   Name
    * @return Synonym.
    */
   <S extends Synonym> Optional<S> lookupSynonym(Schema schema, String name);
@@ -191,7 +191,7 @@ public interface Catalog
    * Gets the column data types defined by the RDBMS system, by name.
    *
    * @param name
-   *        Column data type name
+   *   Column data type name
    * @return Column data type
    */
   <C extends ColumnDataType> Optional<C> lookupSystemColumnDataType(String name);
@@ -200,7 +200,7 @@ public interface Catalog
    * Gets a table by unqualified name.
    *
    * @param name
-   *        Name
+   *   Name
    * @return Table.
    */
   <T extends Table> Optional<T> lookupTable(Schema schema, String name);

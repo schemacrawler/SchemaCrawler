@@ -47,9 +47,9 @@ abstract class RoutinePartial
    * constructors make a class effectively final
    *
    * @param schema
-   *        Schema of this object
+   *   Schema of this object
    * @param name
-   *        Name of the named object
+   *   Name of the named object
    */
   RoutinePartial(final Schema schema, final String name)
   {
@@ -58,6 +58,12 @@ abstract class RoutinePartial
 
   @Override
   public final String getDefinition()
+  {
+    throw new NotLoadedException(this);
+  }
+
+  @Override
+  public final boolean hasDefinition()
   {
     throw new NotLoadedException(this);
   }
@@ -81,12 +87,6 @@ abstract class RoutinePartial
   public final RoutineType getType()
   {
     return getRoutineType();
-  }
-
-  @Override
-  public final boolean hasDefinition()
-  {
-    throw new NotLoadedException(this);
   }
 
 }

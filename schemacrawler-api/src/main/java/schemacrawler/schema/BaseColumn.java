@@ -60,18 +60,16 @@ public interface BaseColumn<D extends DatabaseObject>
   int getOrdinalPosition();
 
   /**
-   * Get the column size. For char or date types this is the maximum
-   * number of characters, for numeric or decimal types this is
-   * precision.
+   * Get the column size. For char or date types this is the maximum number of
+   * characters, for numeric or decimal types this is precision.
    *
    * @return Column size
    */
   int getSize();
 
   /**
-   * Gets the width of the column, if the column width is required.
-   * (Column width is not significant for column types such as TIME and
-   * DATE.)
+   * Gets the width of the column, if the column width is required. (Column
+   * width is not significant for column types such as TIME and DATE.)
    *
    * @return Column width as a String
    */

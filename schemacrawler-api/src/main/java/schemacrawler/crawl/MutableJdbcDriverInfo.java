@@ -41,8 +41,8 @@ import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
 
 /**
- * JDBC driver information. Created from metadata returned by a JDBC
- * call, and other sources of information.
+ * JDBC driver information. Created from metadata returned by a JDBC call, and
+ * other sources of information.
  *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
@@ -51,13 +51,13 @@ final class MutableJdbcDriverInfo
 {
 
   private static final long serialVersionUID = 8030156654422512161L;
-
-  private String driverName = "";
-  private String driverClassName = "";
-  private String driverVersion = "";
+  private final Set<ImmutableJdbcDriverProperty> jdbcDriverProperties =
+    new HashSet<>();
   private String connectionUrl = "";
+  private String driverClassName = "";
+  private String driverName = "";
+  private String driverVersion = "";
   private boolean jdbcCompliant;
-  private final Set<ImmutableJdbcDriverProperty> jdbcDriverProperties = new HashSet<>();
 
   /**
    * {@inheritDoc}
@@ -66,6 +66,11 @@ final class MutableJdbcDriverInfo
   public String getConnectionUrl()
   {
     return connectionUrl;
+  }
+
+  void setConnectionUrl(final String connectionUrl)
+  {
+    this.connectionUrl = connectionUrl;
   }
 
   /**
@@ -83,9 +88,24 @@ final class MutableJdbcDriverInfo
   @Override
   public Collection<JdbcDriverProperty> getDriverProperties()
   {
-    final List<JdbcDriverProperty> properties = new ArrayList<>(jdbcDriverProperties);
+    final List<JdbcDriverProperty> properties =
+      new ArrayList<>(jdbcDriverProperties);
     properties.sort(naturalOrder());
     return properties;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public boolean isJdbcCompliant()
+  {
+    return jdbcCompliant;
+  }
+
+  void setJdbcCompliant(final boolean jdbcCompliant)
+  {
+    this.jdbcCompliant = jdbcCompliant;
   }
 
   /**
@@ -110,25 +130,26 @@ final class MutableJdbcDriverInfo
    * {@inheritDoc}
    */
   @Override
-  public boolean isJdbcCompliant()
-  {
-    return jdbcCompliant;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public String toString()
   {
     final StringBuilder info = new StringBuilder(1024);
-    info.append("-- driver: ").append(getProductName()).append(' ')
-      .append(getProductVersion()).append(System.lineSeparator());
-    info.append("-- driver class: ").append(getDriverClassName())
+    info
+      .append("-- driver: ")
+      .append(getProductName())
+      .append(' ')
+      .append(getProductVersion())
       .append(System.lineSeparator());
-    info.append("-- url: ").append(getConnectionUrl())
+    info
+      .append("-- driver class: ")
+      .append(getDriverClassName())
       .append(System.lineSeparator());
-    info.append("-- jdbc compliant: ").append(isJdbcCompliant());
+    info
+      .append("-- url: ")
+      .append(getConnectionUrl())
+      .append(System.lineSeparator());
+    info
+      .append("-- jdbc compliant: ")
+      .append(isJdbcCompliant());
     return info.toString();
   }
 
@@ -136,16 +157,11 @@ final class MutableJdbcDriverInfo
    * Adds a JDBC driver property.
    *
    * @param jdbcDriverProperty
-   *        JDBC driver property
+   *   JDBC driver property
    */
   void addJdbcDriverProperty(final ImmutableJdbcDriverProperty jdbcDriverProperty)
   {
     jdbcDriverProperties.add(jdbcDriverProperty);
-  }
-
-  void setConnectionUrl(final String connectionUrl)
-  {
-    this.connectionUrl = connectionUrl;
   }
 
   void setDriverName(final String driverName)
@@ -156,11 +172,6 @@ final class MutableJdbcDriverInfo
   void setDriverVersion(final String driverVersion)
   {
     this.driverVersion = driverVersion;
-  }
-
-  void setJdbcCompliant(final boolean jdbcCompliant)
-  {
-    this.jdbcCompliant = jdbcCompliant;
   }
 
   void setJdbcDriverClassName(final String jdbcDriverClassName)

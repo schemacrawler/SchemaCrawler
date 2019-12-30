@@ -37,39 +37,38 @@ import sf.util.IdentifiedEnum;
  * Foreign key update and delete rules.
  */
 public enum ForeignKeyUpdateRule
-  implements
-  IdentifiedEnum
+  implements IdentifiedEnum
 {
 
- /**
-  * Unknown
-  */
- unknown(-1, "unknown"),
- /**
-  * No action.
-  */
- noAction(DatabaseMetaData.importedKeyNoAction, "no action"),
- /**
-  * Cascade.
-  */
- cascade(DatabaseMetaData.importedKeyCascade, "cascade"),
- /**
-  * Set null.
-  */
- setNull(DatabaseMetaData.importedKeySetNull, "set null"),
- /**
-  * Set default.
-  */
- setDefault(DatabaseMetaData.importedKeySetDefault, "set default"),
- /**
-  * Restrict.
-  */
- restrict(DatabaseMetaData.importedKeyRestrict, "restrict");
+  /**
+   * Unknown
+   */
+  unknown(-1, "unknown"),
+  /**
+   * No action.
+   */
+  noAction(DatabaseMetaData.importedKeyNoAction, "no action"),
+  /**
+   * Cascade.
+   */
+  cascade(DatabaseMetaData.importedKeyCascade, "cascade"),
+  /**
+   * Set null.
+   */
+  setNull(DatabaseMetaData.importedKeySetNull, "set null"),
+  /**
+   * Set default.
+   */
+  setDefault(DatabaseMetaData.importedKeySetDefault, "set default"),
+  /**
+   * Restrict.
+   */
+  restrict(DatabaseMetaData.importedKeyRestrict, "restrict");
 
-  private final String text;
   private final int id;
+  private final String text;
 
-  private ForeignKeyUpdateRule(final int id, final String text)
+  ForeignKeyUpdateRule(final int id, final String text)
   {
     this.id = id;
     this.text = text;

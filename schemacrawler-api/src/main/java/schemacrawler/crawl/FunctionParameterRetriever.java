@@ -32,7 +32,11 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -41,14 +45,18 @@ import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.schema.FunctionParameter;
 import schemacrawler.schema.ParameterModeType;
 import schemacrawler.schema.RoutineType;
-import schemacrawler.schemacrawler.*;
+import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.InformationSchemaKey;
+import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.utility.Query;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
- * A retriever uses database metadata to get the details about the
- * database function parameters.
+ * A retriever uses database metadata to get the details about the database
+ * function parameters.
  *
  * @author Sualeh Fatehi
  */
@@ -56,8 +64,8 @@ final class FunctionParameterRetriever
   extends AbstractRetriever
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(FunctionParameterRetriever.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(FunctionParameterRetriever.class.getName());
 
   FunctionParameterRetriever(final RetrieverConnection retrieverConnection,
                              final MutableCatalog catalog,
@@ -72,9 +80,8 @@ final class FunctionParameterRetriever
   {
     requireNonNull(allRoutines, "No functions provided");
 
-    final InclusionRuleFilter<FunctionParameter> parameterFilter = new InclusionRuleFilter<>(
-      parameterInclusionRule,
-      true);
+    final InclusionRuleFilter<FunctionParameter> parameterFilter =
+      new InclusionRuleFilter<>(parameterInclusionRule, true);
     if (parameterFilter.isExcludeAll())
     {
       LOGGER.log(Level.INFO,
@@ -82,14 +89,15 @@ final class FunctionParameterRetriever
       return;
     }
 
-    final MetadataRetrievalStrategy functionParameterRetrievalStrategy = getRetrieverConnection()
-      .getFunctionColumnRetrievalStrategy();
+    final MetadataRetrievalStrategy functionParameterRetrievalStrategy =
+      getRetrieverConnection().getFunctionColumnRetrievalStrategy();
     switch (functionParameterRetrievalStrategy)
     {
       case data_dictionary_all:
         LOGGER.log(Level.INFO,
                    "Retrieving function parameters, using fast data dictionary retrieval");
-        retrieveFunctionParametersFromDataDictionary(allRoutines, parameterFilter);
+        retrieveFunctionParametersFromDataDictionary(allRoutines,
+                                                     parameterFilter);
         break;
 
       case metadata_all:
@@ -114,18 +122,17 @@ final class FunctionParameterRetriever
                                        final NamedObjectList<MutableRoutine> allRoutines,
                                        final InclusionRuleFilter<FunctionParameter> parameterFilter)
   {
-    final String columnCatalogName = normalizeCatalogName(results.getString(
-      "FUNCTION_CAT"));
-    final String schemaName = normalizeSchemaName(results
-                                                    .getString("FUNCTION_SCHEM"));
+    final String columnCatalogName =
+      normalizeCatalogName(results.getString("FUNCTION_CAT"));
+    final String schemaName =
+      normalizeSchemaName(results.getString("FUNCTION_SCHEM"));
     final String functionName = results.getString("FUNCTION_NAME");
     String columnName = results.getString("COLUMN_NAME");
     final String specificName = results.getString("SPECIFIC_NAME");
 
-    final ParameterModeType parameterMode = getFunctionParameterMode(results
-                                                                       .getInt(
-                                                                         "COLUMN_TYPE",
-                                                                         DatabaseMetaData.functionColumnUnknown));
+    final ParameterModeType parameterMode =
+      getFunctionParameterMode(results.getInt("COLUMN_TYPE",
+                                              DatabaseMetaData.functionColumnUnknown));
 
     LOGGER.log(Level.FINE,
                new StringFormat("Retrieving function column <%s.%s.%s.%s.%s>",
@@ -143,12 +150,11 @@ final class FunctionParameterRetriever
       return;
     }
 
-    final Optional<MutableRoutine> optionalRoutine = allRoutines.lookup(Arrays
-                                                                          .asList(
-                                                                            columnCatalogName,
-                                                                            schemaName,
-                                                                            functionName,
-                                                                            specificName));
+    final Optional<MutableRoutine> optionalRoutine =
+      allRoutines.lookup(Arrays.asList(columnCatalogName,
+                                       schemaName,
+                                       functionName,
+                                       specificName));
     if (!optionalRoutine.isPresent())
     {
       return;
@@ -161,12 +167,11 @@ final class FunctionParameterRetriever
     }
 
     final MutableFunction function = (MutableFunction) routine;
-    final MutableFunctionParameter parameter = lookupOrCreateFunctionParameter(
-      function,
-      columnName);
+    final MutableFunctionParameter parameter =
+      lookupOrCreateFunctionParameter(function, columnName);
     if (parameterFilter.test(parameter) && belongsToSchema(function,
-                                                     columnCatalogName,
-                                                     schemaName))
+                                                           columnCatalogName,
+                                                           schemaName))
     {
       final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
       final int dataType = results.getInt("DATA_TYPE", 0);
@@ -179,10 +184,9 @@ final class FunctionParameterRetriever
       final String remarks = results.getString("REMARKS");
       parameter.setOrdinalPosition(ordinalPosition);
       parameter.setParameterMode(parameterMode);
-      parameter
-        .setColumnDataType(lookupOrCreateColumnDataType(function.getSchema(),
-                                                        dataType,
-                                                        typeName));
+      parameter.setColumnDataType(lookupOrCreateColumnDataType(function.getSchema(),
+                                                               dataType,
+                                                               typeName));
       parameter.setSize(length);
       parameter.setPrecision(precision);
       parameter.setNullable(isNullable);
@@ -220,8 +224,8 @@ final class FunctionParameterRetriever
   private MutableFunctionParameter lookupOrCreateFunctionParameter(final MutableFunction function,
                                                                    final String columnName)
   {
-    final Optional<MutableFunctionParameter> columnOptional = function
-      .lookupParameter(columnName);
+    final Optional<MutableFunctionParameter> columnOptional =
+      function.lookupParameter(columnName);
     final MutableFunctionParameter column;
     if (columnOptional.isPresent())
     {
@@ -238,20 +242,22 @@ final class FunctionParameterRetriever
                                                             final InclusionRuleFilter<FunctionParameter> parameterFilter)
     throws SQLException
   {
-    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-      .getInformationSchemaViews();
+    final InformationSchemaViews informationSchemaViews =
+      getRetrieverConnection().getInformationSchemaViews();
     if (!informationSchemaViews.hasQuery(InformationSchemaKey.FUNCTION_COLUMNS))
     {
       throw new SchemaCrawlerSQLException("No function columns SQL provided",
                                           null);
     }
-    final Query functionColumnsSql = informationSchemaViews
-      .getQuery(InformationSchemaKey.FUNCTION_COLUMNS);
+    final Query functionColumnsSql =
+      informationSchemaViews.getQuery(InformationSchemaKey.FUNCTION_COLUMNS);
     final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
+    try (
+      final Statement statement = connection.createStatement();
       final MetadataResultSet results = new MetadataResultSet(functionColumnsSql,
                                                               statement,
-                                                              getSchemaInclusionRule());)
+                                                              getSchemaInclusionRule())
+    )
     {
       results.setDescription("retrieveFunctionColumnsFromDataDictionary");
       while (results.next())
@@ -273,17 +279,17 @@ final class FunctionParameterRetriever
       final MutableFunction function = (MutableFunction) routine;
 
       LOGGER.log(Level.FINE, "Retrieving function parameters for " + function);
-      try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-                                                                     .getFunctionColumns(
-                                                                       function
-                                                                         .getSchema()
-                                                                         .getCatalogName(),
-                                                                       function
-                                                                         .getSchema()
-                                                                         .getName(),
-                                                                       function
-                                                                         .getName(),
-                                                                       null));)
+      try (
+        final MetadataResultSet results = new MetadataResultSet(getMetaData().getFunctionColumns(
+          function
+            .getSchema()
+            .getCatalogName(),
+          function
+            .getSchema()
+            .getName(),
+          function.getName(),
+          null))
+      )
       {
         while (results.next())
         {
@@ -308,12 +314,13 @@ final class FunctionParameterRetriever
   private void retrieveFunctionParametersFromMetadataForAllFunctions(final NamedObjectList<MutableRoutine> allRoutines,
                                                                      final InclusionRuleFilter<FunctionParameter> parameterFilter)
   {
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-                                                                   .getFunctionColumns(
-                                                                     null,
-                                                                     null,
-                                                                     "%",
-                                                                     "%"));)
+    try (
+      final MetadataResultSet results = new MetadataResultSet(getMetaData().getFunctionColumns(
+        null,
+        null,
+        "%",
+        "%"))
+    )
     {
       while (results.next())
       {

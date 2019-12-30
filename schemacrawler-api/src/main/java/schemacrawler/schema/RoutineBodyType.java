@@ -35,17 +35,17 @@ package schemacrawler.schema;
 public enum RoutineBodyType
 {
 
- /**
-  * Unknown
-  */
- unknown,
- /**
-  * SQL.
-  */
- sql,
- /**
-  * External.
-  */
- external;
+  /**
+   * Unknown
+   */
+  unknown,
+  /**
+   * SQL.
+   */
+  sql,
+  /**
+   * External.
+   */
+  external
 
 }

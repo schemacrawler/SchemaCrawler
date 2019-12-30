@@ -44,28 +44,30 @@ class TableGrepFilter
   implements Predicate<Table>
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
-    TableGrepFilter.class.getName());
-
-  private final boolean invertMatch;
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(TableGrepFilter.class.getName());
   private final InclusionRule grepColumnInclusionRule;
   private final InclusionRule grepDefinitionInclusionRule;
+  private final boolean invertMatch;
 
   public TableGrepFilter(final SchemaCrawlerOptions options)
   {
     invertMatch = options.isGrepInvertMatch();
 
-    grepColumnInclusionRule = options.getGrepColumnInclusionRule().orElse(null);
-    grepDefinitionInclusionRule = options.getGrepDefinitionInclusionRule()
-                                         .orElse(null);
+    grepColumnInclusionRule = options
+      .getGrepColumnInclusionRule()
+      .orElse(null);
+    grepDefinitionInclusionRule = options
+      .getGrepDefinitionInclusionRule()
+      .orElse(null);
   }
 
   /**
-   * Special case for "grep" like functionality. Handle table if a table
-   * column inclusion rule is found, and at least one column matches the
-   * rule.
+   * Special case for "grep" like functionality. Handle table if a table column
+   * inclusion rule is found, and at least one column matches the rule.
    *
-   * @param table Table to check
+   * @param table
+   *   Table to check
    * @return Whether the column should be included
    */
   @Override

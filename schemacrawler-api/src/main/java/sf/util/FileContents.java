@@ -41,8 +41,8 @@ public final class FileContents
   implements Supplier<String>
 {
 
-  private final Path file;
   private final Charset charset;
+  private final Path file;
 
   public FileContents(final Path file)
   {

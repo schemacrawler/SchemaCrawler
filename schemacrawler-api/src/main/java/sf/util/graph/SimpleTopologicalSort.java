@@ -51,7 +51,8 @@ public class SimpleTopologicalSort<T extends Comparable<? super T>>
   {
     if (containsCycle())
     {
-      throw new GraphException("Graph contains a cycle, so cannot be topologically sorted");
+      throw new GraphException(
+        "Graph contains a cycle, so cannot be topologically sorted");
     }
 
     final Collection<Vertex<T>> vertices = graph.vertexSet();
@@ -66,8 +67,8 @@ public class SimpleTopologicalSort<T extends Comparable<? super T>>
       final List<T> nodesAtLevel = new ArrayList<>(collectionSize);
 
       // Remove unattached nodes
-      for (final Iterator<Vertex<T>> iterator = vertices.iterator(); iterator
-        .hasNext();)
+      for (final Iterator<Vertex<T>> iterator =
+           vertices.iterator(); iterator.hasNext(); )
       {
         final Vertex<T> vertex = iterator.next();
         if (isUnattachedNode(vertex, edges))
@@ -79,7 +80,7 @@ public class SimpleTopologicalSort<T extends Comparable<? super T>>
 
       // Find all nodes at the current level
       final List<Vertex<T>> startNodes = new ArrayList<>(collectionSize);
-      for (final Vertex<T> vertex: vertices)
+      for (final Vertex<T> vertex : vertices)
       {
         if (isStartNode(vertex, edges))
         {
@@ -87,7 +88,7 @@ public class SimpleTopologicalSort<T extends Comparable<? super T>>
         }
       }
 
-      for (final Vertex<T> vertex: startNodes)
+      for (final Vertex<T> vertex : startNodes)
       {
         // Save the vertex value
         nodesAtLevel.add(vertex.getValue());
@@ -106,15 +107,16 @@ public class SimpleTopologicalSort<T extends Comparable<? super T>>
 
   private boolean containsCycle()
   {
-    final SimpleCycleDetector<T> cycleDetector = new SimpleCycleDetector<>(graph);
+    final SimpleCycleDetector<T> cycleDetector =
+      new SimpleCycleDetector<>(graph);
     return cycleDetector.containsCycle();
   }
 
   private void dropOutEdges(final Vertex<T> vertex,
                             final Collection<DirectedEdge<T>> edges)
   {
-    for (final Iterator<DirectedEdge<T>> iterator = edges.iterator(); iterator
-      .hasNext();)
+    for (final Iterator<DirectedEdge<T>> iterator =
+         edges.iterator(); iterator.hasNext(); )
     {
       final DirectedEdge<T> edge = iterator.next();
       if (edge.isFrom(vertex))
@@ -127,7 +129,7 @@ public class SimpleTopologicalSort<T extends Comparable<? super T>>
   private boolean isStartNode(final Vertex<T> vertex,
                               final Collection<DirectedEdge<T>> edges)
   {
-    for (final DirectedEdge<T> edge: edges)
+    for (final DirectedEdge<T> edge : edges)
     {
       if (edge.isTo(vertex))
       {
@@ -140,7 +142,7 @@ public class SimpleTopologicalSort<T extends Comparable<? super T>>
   private boolean isUnattachedNode(final Vertex<T> vertex,
                                    final Collection<DirectedEdge<T>> edges)
   {
-    for (final DirectedEdge<T> edge: edges)
+    for (final DirectedEdge<T> edge : edges)
     {
       if (edge.isTo(vertex) || edge.isFrom(vertex))
       {

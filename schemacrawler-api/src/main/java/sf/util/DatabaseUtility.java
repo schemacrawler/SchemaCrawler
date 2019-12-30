@@ -54,8 +54,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 public final class DatabaseUtility
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(DatabaseUtility.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(DatabaseUtility.class.getName());
 
   public static Connection checkConnection(final Connection connection)
     throws SchemaCrawlerSQLException
@@ -105,12 +105,12 @@ public final class DatabaseUtility
   public static void executeScriptFromResource(final Connection connection,
                                                final String scriptResource)
   {
-    try (final Statement statement = createStatement(connection);)
+    try (final Statement statement = createStatement(connection))
     {
       final String sqlScript = readResourceFully(scriptResource);
       if (!isBlank(sqlScript))
       {
-        for (final String sql: sqlScript.split(";"))
+        for (final String sql : sqlScript.split(";"))
         {
           if (isBlank(sql))
           {
@@ -120,9 +120,9 @@ public final class DatabaseUtility
           final ResultSet resultSet = executeSql(statement, sql, false);
           if (resultSet != null)
           {
-            LOGGER
-              .log(Level.WARNING,
-                   new StringFormat("Ignoring results from query <%s>", sql));
+            LOGGER.log(Level.WARNING,
+                       new StringFormat("Ignoring results from query <%s>",
+                                        sql));
             resultSet.close();
           }
         }
@@ -171,11 +171,11 @@ public final class DatabaseUtility
       else
       {
         final int updateCount = statement.getUpdateCount();
-        LOGGER
-          .log(Level.FINE,
-               new StringFormat("No results. Update count of %d for query: %s",
-                                updateCount,
-                                sql));
+        LOGGER.log(Level.FINE,
+                   new StringFormat(
+                     "No results. Update count of %d for query: %s",
+                     updateCount,
+                     sql));
         return null;
       }
 
@@ -201,7 +201,8 @@ public final class DatabaseUtility
     // Error checking
     if (longValue == null || !(longValue instanceof Number))
     {
-      throw new SchemaCrawlerException("Cannot get an integer value result from SQL");
+      throw new SchemaCrawlerException(
+        "Cannot get an integer value result from SQL");
     }
 
     return ((Number) longValue).longValue();
@@ -211,8 +212,10 @@ public final class DatabaseUtility
                                            final String sql)
     throws SchemaCrawlerException
   {
-    try (final Statement statement = createStatement(connection);
-        final ResultSet resultSet = executeSql(statement, sql);)
+    try (
+      final Statement statement = createStatement(connection);
+      final ResultSet resultSet = executeSql(statement, sql)
+    )
     {
       if (resultSet == null)
       {
@@ -220,7 +223,9 @@ public final class DatabaseUtility
       }
 
       // Error checking
-      if (resultSet.getMetaData().getColumnCount() != 1)
+      if (resultSet
+            .getMetaData()
+            .getColumnCount() != 1)
       {
         throw new SchemaCrawlerException("Too many columns of data returned");
       }
@@ -315,14 +320,34 @@ public final class DatabaseUtility
 
   }
 
+  private static void logSQLWarnings(final SQLWarning sqlWarning)
+  {
+    final Level level = Level.FINER;
+    if (!LOGGER.isLoggable(level))
+    {
+      return;
+    }
+
+    SQLWarning currentSqlWarning = sqlWarning;
+    while (currentSqlWarning != null)
+    {
+      final String message = String.format("%s%nError code: %d, SQL state: %s",
+                                           currentSqlWarning.getMessage(),
+                                           currentSqlWarning.getErrorCode(),
+                                           currentSqlWarning.getSQLState());
+      LOGGER.log(level, message, currentSqlWarning);
+      currentSqlWarning = currentSqlWarning.getNextWarning();
+    }
+  }
+
   /**
    * Reads a single column result set as a list.
    *
    * @param results
-   *        Result set
+   *   Result set
    * @return List
    * @throws SQLException
-   *         On an exception
+   *   On an exception
    */
   public static List<String> readResultsVector(final ResultSet results)
     throws SQLException
@@ -349,26 +374,6 @@ public final class DatabaseUtility
       results.close();
     }
     return values;
-  }
-
-  private static void logSQLWarnings(final SQLWarning sqlWarning)
-  {
-    final Level level = Level.FINER;
-    if (!LOGGER.isLoggable(level))
-    {
-      return;
-    }
-
-    SQLWarning currentSqlWarning = sqlWarning;
-    while (currentSqlWarning != null)
-    {
-      final String message = String.format("%s%nError code: %d, SQL state: %s",
-                                           currentSqlWarning.getMessage(),
-                                           currentSqlWarning.getErrorCode(),
-                                           currentSqlWarning.getSQLState());
-      LOGGER.log(level, message, currentSqlWarning);
-      currentSqlWarning = currentSqlWarning.getNextWarning();
-    }
   }
 
   private DatabaseUtility()

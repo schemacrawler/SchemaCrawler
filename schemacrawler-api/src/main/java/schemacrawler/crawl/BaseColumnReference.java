@@ -36,8 +36,8 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 
 /**
- * Represents a single column mapping from a primary key column to a
- * foreign key column.
+ * Represents a single column mapping from a primary key column to a foreign key
+ * column.
  *
  * @author Sualeh Fatehi
  */
@@ -53,10 +53,10 @@ public abstract class BaseColumnReference
   protected BaseColumnReference(final Column primaryKeyColumn,
                                 final Column foreignKeyColumn)
   {
-    this.primaryKeyColumn = requireNonNull(primaryKeyColumn,
-                                           "No primary key column provided");
-    this.foreignKeyColumn = requireNonNull(foreignKeyColumn,
-                                           "No foreign key column provided");
+    this.primaryKeyColumn =
+      requireNonNull(primaryKeyColumn, "No primary key column provided");
+    this.foreignKeyColumn =
+      requireNonNull(foreignKeyColumn, "No foreign key column provided");
   }
 
   @Override
@@ -70,35 +70,21 @@ public abstract class BaseColumnReference
     int compare = 0;
     if (compare == 0)
     {
-      compare = primaryKeyColumn.getFullName()
-        .compareTo(columnRef.getPrimaryKeyColumn().getFullName());
+      compare = primaryKeyColumn
+        .getFullName()
+        .compareTo(columnRef
+                     .getPrimaryKeyColumn()
+                     .getFullName());
     }
     if (compare == 0)
     {
-      compare = foreignKeyColumn.getFullName()
-        .compareTo(columnRef.getForeignKeyColumn().getFullName());
+      compare = foreignKeyColumn
+        .getFullName()
+        .compareTo(columnRef
+                     .getForeignKeyColumn()
+                     .getFullName());
     }
     return compare;
-  }
-
-  @Override
-  public final boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
-      return true;
-    }
-    if (obj == null)
-    {
-      return false;
-    }
-    if (!(obj instanceof BaseColumnReference))
-    {
-      return false;
-    }
-    final ColumnReference other = (ColumnReference) obj;
-    return Objects.equals(foreignKeyColumn, other.getForeignKeyColumn())
-           && Objects.equals(primaryKeyColumn, other.getPrimaryKeyColumn());
   }
 
   /**
@@ -123,6 +109,26 @@ public abstract class BaseColumnReference
   public final int hashCode()
   {
     return Objects.hash(foreignKeyColumn, primaryKeyColumn);
+  }
+
+  @Override
+  public final boolean equals(final Object obj)
+  {
+    if (this == obj)
+    {
+      return true;
+    }
+    if (obj == null)
+    {
+      return false;
+    }
+    if (!(obj instanceof BaseColumnReference))
+    {
+      return false;
+    }
+    final ColumnReference other = (ColumnReference) obj;
+    return Objects.equals(foreignKeyColumn, other.getForeignKeyColumn())
+           && Objects.equals(primaryKeyColumn, other.getPrimaryKeyColumn());
   }
 
   @Override

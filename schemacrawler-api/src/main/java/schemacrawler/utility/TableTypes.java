@@ -47,16 +47,16 @@ import schemacrawler.schema.TableType;
 import sf.util.SchemaCrawlerLogger;
 
 /**
- * Represents a collection of tables types for a database system, as
- * returned by the database server itself. A live database connection is
- * required to obtain this information. The case of the table type name
- * is preserved, though look-ups are case-insensitive.
+ * Represents a collection of tables types for a database system, as returned by
+ * the database server itself. A live database connection is required to obtain
+ * this information. The case of the table type name is preserved, though
+ * look-ups are case-insensitive.
  */
 public final class TableTypes
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(TableTypes.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(TableTypes.class.getName());
 
   private final Collection<TableType> tableTypes;
 
@@ -68,7 +68,7 @@ public final class TableTypes
     requireNonNull(tableTypeStrings, "No table types provided");
 
     tableTypes = new HashSet<>();
-    for (final String tableTypeString: tableTypeStrings)
+    for (final String tableTypeString : tableTypeStrings)
     {
       if (!isBlank(tableTypeString))
       {
@@ -78,19 +78,23 @@ public final class TableTypes
   }
 
   /**
-   * Obtain a collection of tables types for a database system, as
-   * returned by the database server itself.
+   * Obtain a collection of tables types for a database system, as returned by
+   * the database server itself.
    */
   public TableTypes(final Connection connection)
   {
     requireNonNull(connection, "No connection provided");
 
     tableTypes = new HashSet<>();
-    try (final ResultSet tableTypesResults = connection.getMetaData()
-      .getTableTypes();)
+    try (
+      final ResultSet tableTypesResults = connection
+        .getMetaData()
+        .getTableTypes()
+    )
     {
-      final List<String> tableTypeStrings = readResultsVector(tableTypesResults);
-      for (final String tableTypeString: tableTypeStrings)
+      final List<String> tableTypeStrings =
+        readResultsVector(tableTypesResults);
+      for (final String tableTypeString : tableTypeStrings)
       {
         if (!isBlank(tableTypeString))
         {
@@ -100,22 +104,21 @@ public final class TableTypes
     }
     catch (final Exception e)
     {
-      LOGGER
-        .log(Level.WARNING, "Could not obtain table types from connection", e);
+      LOGGER.log(Level.WARNING,
+                 "Could not obtain table types from connection",
+                 e);
     }
   }
 
   /**
-   * Filters table types not known to the database system. Returns
-   * values in the same case as known to the database system, even
-   * though the search (that is, values in the input collection) is
-   * case-insensitive.
+   * Filters table types not known to the database system. Returns values in the
+   * same case as known to the database system, even though the search (that is,
+   * values in the input collection) is case-insensitive.
    *
    * @param tableTypeStrings
-   *        Can be null, which indicates return all table types, or an
-   *        empty array, which indicates return no table types.
-   * @return Returns values in the same case as known to the database
-   *         system.
+   *   Can be null, which indicates return all table types, or an empty array,
+   *   which indicates return no table types.
+   * @return Returns values in the same case as known to the database system.
    */
   public String[] filterUnknown(final Collection<String> tableTypeStrings)
   {
@@ -129,13 +132,15 @@ public final class TableTypes
     }
 
     final List<String> filteredTableTypes = new ArrayList<>();
-    for (final String tableTypeString: tableTypeStrings)
+    for (final String tableTypeString : tableTypeStrings)
     {
       final Optional<TableType> tableType = lookupTableType(tableTypeString);
       if (tableType.isPresent())
       {
         // Add value in the same case as known to the database system
-        filteredTableTypes.add(tableType.get().getTableType());
+        filteredTableTypes.add(tableType
+                                 .get()
+                                 .getTableType());
       }
     }
     filteredTableTypes.sort(naturalOrder());
@@ -145,7 +150,7 @@ public final class TableTypes
   public Collection<String> getAllTableTypes()
   {
     final Set<String> tableTypesNames = new HashSet<>();
-    for (final TableType tableType: tableTypes)
+    for (final TableType tableType : tableTypes)
     {
       tableTypesNames.add(tableType.getTableType());
     }
@@ -153,14 +158,14 @@ public final class TableTypes
   }
 
   /**
-   * Looks up a table type, from the provided string. The search (that
-   * is, value of the provided string) is case-insensitive.
+   * Looks up a table type, from the provided string. The search (that is, value
+   * of the provided string) is case-insensitive.
    *
    * @return Matched table type
    */
   public Optional<TableType> lookupTableType(final String tableTypeString)
   {
-    for (final TableType tableType: tableTypes)
+    for (final TableType tableType : tableTypes)
     {
       if (tableType.isEqualTo(tableTypeString))
       {

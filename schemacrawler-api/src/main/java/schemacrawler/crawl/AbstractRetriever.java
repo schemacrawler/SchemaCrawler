@@ -50,8 +50,8 @@ import schemacrawler.utility.TypeMap;
 import sf.util.SchemaCrawlerLogger;
 
 /**
- * Base class for retriever that uses database metadata to get the
- * details about the schema.
+ * Base class for retriever that uses database metadata to get the details about
+ * the schema.
  *
  * @author Sualeh Fatehi
  */
@@ -59,33 +59,32 @@ abstract class AbstractRetriever
   implements Retriever
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(AbstractRetriever.class.getName());
-
-  private final RetrieverConnection retrieverConnection;
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(AbstractRetriever.class.getName());
   final MutableCatalog catalog;
   private final SchemaCrawlerOptions options;
+  private final RetrieverConnection retrieverConnection;
 
   AbstractRetriever(final RetrieverConnection retrieverConnection,
                     final MutableCatalog catalog,
                     final SchemaCrawlerOptions options)
   {
-    this.retrieverConnection = requireNonNull(retrieverConnection,
-                                              "No retriever connection provided");
+    this.retrieverConnection =
+      requireNonNull(retrieverConnection, "No retriever connection provided");
     this.catalog = catalog;
     this.options = requireNonNull(options, "No SchemaCrawler options provided");
   }
 
   /**
-   * Checks whether the provided database object belongs to the
-   * specified schema.
+   * Checks whether the provided database object belongs to the specified
+   * schema.
    *
    * @param dbObject
-   *        Database object to check
+   *   Database object to check
    * @param catalogName
-   *        Database catalog to check against
+   *   Database catalog to check against
    * @param schemaName
-   *        Database schema to check against
+   *   Database schema to check against
    * @return Whether the database object belongs to the specified schema
    */
   final boolean belongsToSchema(final DatabaseObject dbObject,
@@ -103,13 +102,17 @@ abstract class AbstractRetriever
     boolean belongsToSchema = true;
     if (supportsCatalogs)
     {
-      final String dbObjectCatalogName = dbObject.getSchema().getCatalogName();
+      final String dbObjectCatalogName = dbObject
+        .getSchema()
+        .getCatalogName();
       if (catalogName != null && !catalogName.equals(dbObjectCatalogName))
       {
         belongsToCatalog = false;
       }
     }
-    final String dbObjectSchemaName = dbObject.getSchema().getName();
+    final String dbObjectSchemaName = dbObject
+      .getSchema()
+      .getName();
     if (schemaName != null && !schemaName.equals(dbObjectSchemaName))
     {
       belongsToSchema = false;
@@ -168,15 +171,15 @@ abstract class AbstractRetriever
   }
 
   /**
-   * Creates a data type from the JDBC data type id, and the database
-   * specific type name, if it does not exist.
+   * Creates a data type from the JDBC data type id, and the database specific
+   * type name, if it does not exist.
    *
    * @param schema
-   *        Schema
+   *   Schema
    * @param javaSqlType
-   *        JDBC data type
+   *   JDBC data type
    * @param databaseSpecificTypeName
-   *        Database specific type name
+   *   Database specific type name
    * @return Column data type
    */
   final MutableColumnDataType lookupOrCreateColumnDataType(final Schema schema,
@@ -190,15 +193,15 @@ abstract class AbstractRetriever
   }
 
   /**
-   * Creates a data type from the JDBC data type id, and the database
-   * specific type name, if it does not exist.
+   * Creates a data type from the JDBC data type id, and the database specific
+   * type name, if it does not exist.
    *
    * @param schema
-   *        Schema
+   *   Schema
    * @param javaSqlTypeInt
-   *        JDBC data type
+   *   JDBC data type
    * @param databaseSpecificTypeName
-   *        Database specific type name
+   *   Database specific type name
    * @return Column data type
    */
   final MutableColumnDataType lookupOrCreateColumnDataType(final Schema schema,
@@ -207,14 +210,17 @@ abstract class AbstractRetriever
                                                            final String mappedClassName)
   {
     MutableColumnDataType columnDataType = catalog
-      .lookupColumnDataType(schema, databaseSpecificTypeName).orElse(catalog
-        .lookupSystemColumnDataType(databaseSpecificTypeName).orElse(null));
+      .lookupColumnDataType(schema, databaseSpecificTypeName)
+      .orElse(catalog
+                .lookupSystemColumnDataType(databaseSpecificTypeName)
+                .orElse(null));
     // Create new data type, if needed
     if (columnDataType == null)
     {
-      columnDataType = new MutableColumnDataType(schema,
-                                                 databaseSpecificTypeName);
-      final JavaSqlType javaSqlType = retrieverConnection.getJavaSqlTypes()
+      columnDataType =
+        new MutableColumnDataType(schema, databaseSpecificTypeName);
+      final JavaSqlType javaSqlType = retrieverConnection
+        .getJavaSqlTypes()
         .valueOf(javaSqlTypeInt);
       columnDataType.setJavaSqlType(javaSqlType);
       if (isBlank(mappedClassName))
@@ -246,16 +252,19 @@ abstract class AbstractRetriever
                                                final String routineName,
                                                final String specificName)
   {
-    return catalog.lookupRoutine(Arrays
-      .asList(catalogName, schemaName, routineName, specificName));
+    return catalog.lookupRoutine(Arrays.asList(catalogName,
+                                               schemaName,
+                                               routineName,
+                                               specificName));
   }
 
   final Optional<MutableTable> lookupTable(final String catalogName,
                                            final String schemaName,
                                            final String tableName)
   {
-    return catalog
-      .lookupTable(Arrays.asList(catalogName, schemaName, tableName));
+    return catalog.lookupTable(Arrays.asList(catalogName,
+                                             schemaName,
+                                             tableName));
   }
 
   final String normalizeCatalogName(final String name)

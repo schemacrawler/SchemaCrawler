@@ -50,16 +50,15 @@ abstract class AbstractNamedObjectWithAttributes
 {
 
   private static final long serialVersionUID = -1486322887991472729L;
-
-  private String remarks;
   private final Map<String, Object> attributeMap;
+  private String remarks;
 
   /**
    * Effective Java - Item 17 - Minimize Mutability - Package-private
    * constructors make a class effectively final
    *
    * @param name
-   *        Name of the named object
+   *   Name of the named object
    */
   AbstractNamedObjectWithAttributes(final String name)
   {
@@ -73,7 +72,7 @@ abstract class AbstractNamedObjectWithAttributes
   @Override
   public final <T> T getAttribute(final String name)
   {
-    return getAttribute(name, (T) null);
+    return getAttribute(name, null);
   }
 
   /**
@@ -113,27 +112,9 @@ abstract class AbstractNamedObjectWithAttributes
    * {@inheritDoc}
    */
   @Override
-  public final String getRemarks()
-  {
-    return remarks;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public final boolean hasAttribute(final String name)
   {
     return attributeMap.containsKey(name);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final boolean hasRemarks()
-  {
-    return remarks != null && !remarks.isEmpty();
   }
 
   /**
@@ -176,12 +157,13 @@ abstract class AbstractNamedObjectWithAttributes
     }
   }
 
-  protected final void addAttributes(final Map<String, Object> values)
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final String getRemarks()
   {
-    if (values != null)
-    {
-      attributeMap.putAll(values);
-    }
+    return remarks;
   }
 
   protected final void setRemarks(final String remarks)
@@ -193,6 +175,23 @@ abstract class AbstractNamedObjectWithAttributes
     else
     {
       this.remarks = remarks;
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final boolean hasRemarks()
+  {
+    return remarks != null && !remarks.isEmpty();
+  }
+
+  protected final void addAttributes(final Map<String, Object> values)
+  {
+    if (values != null)
+    {
+      attributeMap.putAll(values);
     }
   }
 

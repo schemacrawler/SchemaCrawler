@@ -36,8 +36,8 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Synonym;
 
 /**
- * Represents a database synonym. Created from metadata returned by a
- * JDBC call.
+ * Represents a database synonym. Created from metadata returned by a JDBC
+ * call.
  *
  * @author Matt Albrecht, Sualeh Fatehi
  */
@@ -63,8 +63,8 @@ final class MutableSynonym
 
   void setReferencedObject(final DatabaseObject referencedObject)
   {
-    this.referencedObject = requireNonNull(referencedObject,
-                                           "Referenced object not provided");
+    this.referencedObject =
+      requireNonNull(referencedObject, "Referenced object not provided");
   }
 
 }

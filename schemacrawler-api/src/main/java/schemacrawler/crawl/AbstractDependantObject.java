@@ -40,8 +40,8 @@ import schemacrawler.schema.DependantObject;
 import schemacrawler.utility.Identifiers;
 
 /**
- * Represents the dependent of a database object, such as a column or an
- * index, which are dependents of a table.
+ * Represents the dependent of a database object, such as a column or an index,
+ * which are dependents of a table.
  *
  * @author Sualeh Fatehi
  */
@@ -59,16 +59,46 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
    * constructors make a class effectively final
    *
    * @param parent
-   *        Parent of this object
+   *   Parent of this object
    * @param name
-   *        Name of the named object
+   *   Name of the named object
    */
   AbstractDependantObject(final DatabaseObjectReference<D> parent,
                           final String name)
   {
     super(requireNonNull(parent, "Parent of dependent object not provided")
-      .get().getSchema(), name);
+            .get()
+            .getSchema(), name);
     this.parent = parent;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final String getFullName()
+  {
+    return Identifiers.STANDARD.quoteFullName(this);
+  }
+
+  @Override
+  public final List<String> toUniqueLookupKey()
+  {
+    // Make a defensive copy
+    final List<String> lookupKey = new ArrayList<>(parent
+                                                     .get()
+                                                     .toUniqueLookupKey());
+    lookupKey.add(getName());
+    return lookupKey;
+  }
+
+  @Override
+  public final int hashCode()
+  {
+    final int prime = 31;
+    int result = super.hashCode();
+    result = prime * result + Objects.hash(parent);
+    return result;
   }
 
   @Override
@@ -93,15 +123,6 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
    * {@inheritDoc}
    */
   @Override
-  public final String getFullName()
-  {
-    return Identifiers.STANDARD.quoteFullName(this);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public final D getParent()
   {
     // Check if parent is null - this can happen if the object is in an
@@ -120,28 +141,9 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
   }
 
   @Override
-  public final int hashCode()
-  {
-    final int prime = 31;
-    int result = super.hashCode();
-    result = prime * result + Objects.hash(parent);
-    return result;
-  }
-
-  @Override
   public final boolean isParentPartial()
   {
     return parent.isPartialDatabaseObjectReference();
-  }
-
-  @Override
-  public final List<String> toUniqueLookupKey()
-  {
-    // Make a defensive copy
-    final List<String> lookupKey = new ArrayList<>(parent.get()
-      .toUniqueLookupKey());
-    lookupKey.add(getName());
-    return lookupKey;
   }
 
 }

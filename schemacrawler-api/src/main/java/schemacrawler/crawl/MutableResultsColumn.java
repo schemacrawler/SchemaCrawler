@@ -43,13 +43,12 @@ final class MutableResultsColumn
 {
 
   private static final long serialVersionUID = -6983013302549352559L;
-
-  private String label;
-  private int displaySize;
   private boolean autoIncrement;
   private boolean caseSensitive;
   private boolean currency;
   private boolean definitelyWritable;
+  private int displaySize;
+  private String label;
   private boolean readOnly;
   private boolean searchable;
   private boolean signed;
@@ -69,6 +68,11 @@ final class MutableResultsColumn
     return displaySize;
   }
 
+  void setDisplaySize(final int displaySize)
+  {
+    this.displaySize = displaySize;
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -76,6 +80,11 @@ final class MutableResultsColumn
   public String getLabel()
   {
     return label;
+  }
+
+  void setLabel(final String label)
+  {
+    this.label = label;
   }
 
   /**
@@ -87,6 +96,11 @@ final class MutableResultsColumn
     return autoIncrement;
   }
 
+  void setAutoIncrement(final boolean isAutoIncrement)
+  {
+    autoIncrement = isAutoIncrement;
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -94,6 +108,11 @@ final class MutableResultsColumn
   public boolean isCaseSensitive()
   {
     return caseSensitive;
+  }
+
+  void setCaseSensitive(final boolean isCaseSensitive)
+  {
+    caseSensitive = isCaseSensitive;
   }
 
   /**
@@ -105,6 +124,11 @@ final class MutableResultsColumn
     return currency;
   }
 
+  void setCurrency(final boolean isCurrency)
+  {
+    currency = isCurrency;
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -112,6 +136,11 @@ final class MutableResultsColumn
   public boolean isDefinitelyWritable()
   {
     return definitelyWritable;
+  }
+
+  void setDefinitelyWritable(final boolean isDefinitelyWritable)
+  {
+    definitelyWritable = isDefinitelyWritable;
   }
 
   /**
@@ -123,6 +152,11 @@ final class MutableResultsColumn
     return readOnly;
   }
 
+  void setReadOnly(final boolean isReadOnly)
+  {
+    readOnly = isReadOnly;
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -130,6 +164,11 @@ final class MutableResultsColumn
   public boolean isSearchable()
   {
     return searchable;
+  }
+
+  void setSearchable(final boolean isSearchable)
+  {
+    searchable = isSearchable;
   }
 
   /**
@@ -141,6 +180,11 @@ final class MutableResultsColumn
     return signed;
   }
 
+  void setSigned(final boolean isSigned)
+  {
+    signed = isSigned;
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -148,51 +192,6 @@ final class MutableResultsColumn
   public boolean isWritable()
   {
     return writable;
-  }
-
-  void setAutoIncrement(final boolean isAutoIncrement)
-  {
-    autoIncrement = isAutoIncrement;
-  }
-
-  void setCaseSensitive(final boolean isCaseSensitive)
-  {
-    caseSensitive = isCaseSensitive;
-  }
-
-  void setCurrency(final boolean isCurrency)
-  {
-    currency = isCurrency;
-  }
-
-  void setDefinitelyWritable(final boolean isDefinitelyWritable)
-  {
-    definitelyWritable = isDefinitelyWritable;
-  }
-
-  void setDisplaySize(final int displaySize)
-  {
-    this.displaySize = displaySize;
-  }
-
-  void setLabel(final String label)
-  {
-    this.label = label;
-  }
-
-  void setReadOnly(final boolean isReadOnly)
-  {
-    readOnly = isReadOnly;
-  }
-
-  void setSearchable(final boolean isSearchable)
-  {
-    searchable = isSearchable;
-  }
-
-  void setSigned(final boolean isSigned)
-  {
-    signed = isSigned;
   }
 
   void setWritable(final boolean isWritable)

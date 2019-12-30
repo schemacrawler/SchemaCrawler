@@ -52,7 +52,9 @@ abstract class AbstractProperty
       throw new IllegalArgumentException("No property name provided");
     }
     this.name = name.trim();
-    if (value != null && value.getClass().isArray())
+    if (value != null && value
+      .getClass()
+      .isArray())
     {
       this.value = (Serializable) Arrays.asList((Object[]) value);
     }
@@ -60,26 +62,6 @@ abstract class AbstractProperty
     {
       this.value = value;
     }
-  }
-
-  @Override
-  public final boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
-      return true;
-    }
-    if (obj == null)
-    {
-      return false;
-    }
-    if (!(obj instanceof Property))
-    {
-      return false;
-    }
-    final Property other = (Property) obj;
-    return Objects.equals(name, other.getName())
-           && Objects.equals(value, other.getValue());
   }
 
   /**
@@ -104,6 +86,26 @@ abstract class AbstractProperty
   public final int hashCode()
   {
     return Objects.hash(name, value);
+  }
+
+  @Override
+  public final boolean equals(final Object obj)
+  {
+    if (this == obj)
+    {
+      return true;
+    }
+    if (obj == null)
+    {
+      return false;
+    }
+    if (!(obj instanceof Property))
+    {
+      return false;
+    }
+    final Property other = (Property) obj;
+    return Objects.equals(name, other.getName()) && Objects.equals(value,
+                                                                   other.getValue());
   }
 
 }

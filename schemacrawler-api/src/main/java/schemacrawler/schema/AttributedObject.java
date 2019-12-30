@@ -44,7 +44,7 @@ public interface AttributedObject
    * Gets an attribute.
    *
    * @param name
-   *        Attribute name.
+   *   Attribute name.
    * @return Attribute value.
    */
   <T> T getAttribute(final String name);
@@ -53,7 +53,7 @@ public interface AttributedObject
    * Gets an attribute.
    *
    * @param name
-   *        Attribute name.
+   *   Attribute name.
    * @return Attribute value.
    */
   <T> T getAttribute(String name, T defaultValue);
@@ -69,7 +69,7 @@ public interface AttributedObject
    * Checks is an attribute is available.
    *
    * @param name
-   *        Attribute name.
+   *   Attribute name.
    * @return If attribute is available.
    */
   boolean hasAttribute(String name);
@@ -78,7 +78,7 @@ public interface AttributedObject
    * Gets an attribute.
    *
    * @param name
-   *        Attribute name.
+   *   Attribute name.
    * @return Attribute value.
    */
   <T> Optional<T> lookupAttribute(final String name);
@@ -87,7 +87,7 @@ public interface AttributedObject
    * Removes an attribute.
    *
    * @param name
-   *        Attribute name
+   *   Attribute name
    */
   void removeAttribute(String name);
 
@@ -95,9 +95,9 @@ public interface AttributedObject
    * Sets an attribute.
    *
    * @param name
-   *        Attribute name
+   *   Attribute name
    * @param value
-   *        Attribute value
+   *   Attribute value
    */
   <T> void setAttribute(String name, T value);
 

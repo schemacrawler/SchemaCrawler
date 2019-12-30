@@ -36,10 +36,10 @@ import schemacrawler.utility.TypeMap;
 import sf.util.ObjectToString;
 
 /**
- * Provides for database specific overrides for SchemaCrawler
- * functionality. This can add or inject database plugins, or override
- * defaults. It is recommended to build these options using factory
- * methods in SchemaCrawlerUtility.
+ * Provides for database specific overrides for SchemaCrawler functionality.
+ * This can add or inject database plugins, or override defaults. It is
+ * recommended to build these options using factory methods in
+ * SchemaCrawlerUtility.
  *
  * @author Sualeh Fatehi <sualeh@hotmail.com>
  */
@@ -48,26 +48,26 @@ public final class SchemaRetrievalOptions
 {
 
   private final DatabaseServerType dbServerType;
-  private final boolean supportsSchemas;
-  private final boolean supportsCatalogs;
-  private final MetadataRetrievalStrategy tableRetrievalStrategy;
-  private final MetadataRetrievalStrategy tableColumnRetrievalStrategy;
-  private final MetadataRetrievalStrategy pkRetrievalStrategy;
-  private final MetadataRetrievalStrategy indexRetrievalStrategy;
   private final MetadataRetrievalStrategy fkRetrievalStrategy;
-  private final MetadataRetrievalStrategy procedureRetrievalStrategy;
-  private final MetadataRetrievalStrategy procedureColumnRetrievalStrategy;
-  private final MetadataRetrievalStrategy functionRetrievalStrategy;
   private final MetadataRetrievalStrategy functionColumnRetrievalStrategy;
+  private final MetadataRetrievalStrategy functionRetrievalStrategy;
   private final String identifierQuoteString;
-  private final InformationSchemaViews informationSchemaViews;
-  private final TypeMap typeMap;
   private final Identifiers identifiers;
+  private final MetadataRetrievalStrategy indexRetrievalStrategy;
+  private final InformationSchemaViews informationSchemaViews;
+  private final MetadataRetrievalStrategy pkRetrievalStrategy;
+  private final MetadataRetrievalStrategy procedureColumnRetrievalStrategy;
+  private final MetadataRetrievalStrategy procedureRetrievalStrategy;
+  private final boolean supportsCatalogs;
+  private final boolean supportsSchemas;
+  private final MetadataRetrievalStrategy tableColumnRetrievalStrategy;
+  private final MetadataRetrievalStrategy tableRetrievalStrategy;
+  private final TypeMap typeMap;
 
   protected SchemaRetrievalOptions(final SchemaRetrievalOptionsBuilder builder)
   {
-    final SchemaRetrievalOptionsBuilder bldr = builder == null? SchemaRetrievalOptionsBuilder
-      .builder(): builder;
+    final SchemaRetrievalOptionsBuilder bldr =
+      builder == null? SchemaRetrievalOptionsBuilder.builder(): builder;
     dbServerType = bldr.getDatabaseServerType();
     supportsSchemas = bldr.isSupportsSchemas();
     supportsCatalogs = bldr.isSupportsCatalogs();
@@ -77,8 +77,8 @@ public final class SchemaRetrievalOptions
     indexRetrievalStrategy = bldr.getIndexRetrievalStrategy();
     fkRetrievalStrategy = bldr.getForeignKeyRetrievalStrategy();
     procedureRetrievalStrategy = bldr.getProcedureRetrievalStrategy();
-    procedureColumnRetrievalStrategy = bldr
-      .getProcedureColumnRetrievalStrategy();
+    procedureColumnRetrievalStrategy =
+      bldr.getProcedureColumnRetrievalStrategy();
     functionRetrievalStrategy = bldr.getFunctionRetrievalStrategy();
     functionColumnRetrievalStrategy = bldr.getFunctionColumnRetrievalStrategy();
     identifierQuoteString = bldr.getIdentifierQuoteString();

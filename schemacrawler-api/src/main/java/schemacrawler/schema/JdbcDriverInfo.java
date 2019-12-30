@@ -66,12 +66,12 @@ public interface JdbcDriverInfo
   /**
    * Reports whether this JDBC driver is a genuine JDBC Compliant
    * <sup><font size=-2>TM</font></sup> driver.
-   * <P>
-   * JDBC compliance requires full support for the JDBC API and full
-   * support for SQL 92 Entry Level.
+   * <p>
+   * JDBC compliance requires full support for the JDBC API and full support for
+   * SQL 92 Entry Level.
    *
    * @return <code>true</code> if this driver is JDBC Compliant;
-   *         <code>false</code> otherwise
+   *   <code>false</code> otherwise
    */
   boolean isJdbcCompliant();
 

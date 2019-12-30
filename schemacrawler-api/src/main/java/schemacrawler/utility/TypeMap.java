@@ -48,14 +48,13 @@ public final class TypeMap
   implements Map<String, Class<?>>
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(TypeMap.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(TypeMap.class.getName());
 
   /**
-   * The default mappings are from the JDBC Specification 4.2, Appendix
-   * B - Data Type Conversion Tables, Table B-3 - Mapping from JDBC
-   * Types to Java Object Types. A JDBC driver may override these
-   * default mappings.
+   * The default mappings are from the JDBC Specification 4.2, Appendix B - Data
+   * Type Conversion Tables, Table B-3 - Mapping from JDBC Types to Java Object
+   * Types. A JDBC driver may override these default mappings.
    */
   private static Map<SQLType, Class<?>> createDefaultTypeMap()
   {
@@ -112,11 +111,11 @@ public final class TypeMap
     sqlTypeMap = new HashMap<>();
 
     final Map<SQLType, Class<?>> defaultTypeMap = createDefaultTypeMap();
-    for (final Entry<SQLType, Class<?>> sqlTypeMapping: defaultTypeMap
-      .entrySet())
+    for (final Entry<SQLType, Class<?>> sqlTypeMapping : defaultTypeMap.entrySet())
     {
-      sqlTypeMap.put(sqlTypeMapping.getKey().getName(),
-                     sqlTypeMapping.getValue());
+      sqlTypeMap.put(sqlTypeMapping
+                       .getKey()
+                       .getName(), sqlTypeMapping.getValue());
     }
   }
 
@@ -159,58 +158,15 @@ public final class TypeMap
     }
   }
 
-  @Override
-  public void clear()
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public boolean containsKey(final Object key)
-  {
-    return sqlTypeMap.containsKey(key);
-  }
-
-  @Override
-  public boolean containsValue(final Object value)
-  {
-    return sqlTypeMap.containsValue(value);
-  }
-
-  @Override
-  public Set<Entry<String, Class<?>>> entrySet()
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public boolean equals(final Object o)
-  {
-    return sqlTypeMap.equals(o);
-  }
-
-  @Override
-  public Class<?> get(final Object key)
-  {
-    if (containsKey(key))
-    {
-      return sqlTypeMap.get(key);
-    }
-    else
-    {
-      return Object.class;
-    }
-  }
-
   /**
-   * Gets the Java type mapping for a data type. If no mapping exists,
-   * returns null. If a class name is passed in, it overrides the
-   * mapping in the type map.
+   * Gets the Java type mapping for a data type. If no mapping exists, returns
+   * null. If a class name is passed in, it overrides the mapping in the type
+   * map.
    *
    * @param typeName
-   *        Type name to find a mapping for.
+   *   Type name to find a mapping for.
    * @param className
-   *        Overridden class name
+   *   Overridden class name
    * @return Mapped class
    */
   public Class<?> get(final String typeName, final String className)
@@ -227,11 +183,11 @@ public final class TypeMap
       }
       catch (final ClassNotFoundException e)
       {
-        LOGGER
-          .log(Level.WARNING,
-               new StringFormat("Could not obtain class mapping for data type <%s>",
-                                typeName),
-               e);
+        LOGGER.log(Level.WARNING,
+                   new StringFormat(
+                     "Could not obtain class mapping for data type <%s>",
+                     typeName),
+                   e);
         return null;
       }
     }
@@ -244,25 +200,63 @@ public final class TypeMap
   }
 
   @Override
+  public boolean equals(final Object o)
+  {
+    return sqlTypeMap.equals(o);
+  }
+
+  @Override
+  public String toString()
+  {
+    final Map<String, String> typeClassNameMap = sqlTypeMap
+      .entrySet()
+      .stream()
+      .collect(toMap(Map.Entry::getKey,
+                     e -> e
+                       .getValue()
+                       .getCanonicalName()));
+    return typeClassNameMap.toString();
+  }
+
+  @Override
+  public int size()
+  {
+    return sqlTypeMap.size();
+  }
+
+  @Override
   public boolean isEmpty()
   {
     return sqlTypeMap.isEmpty();
   }
 
   @Override
-  public Set<String> keySet()
+  public boolean containsKey(final Object key)
   {
-    return new HashSet<>(sqlTypeMap.keySet());
+    return sqlTypeMap.containsKey(key);
+  }
+
+  @Override
+  public boolean containsValue(final Object value)
+  {
+    return sqlTypeMap.containsValue(value);
+  }
+
+  @Override
+  public Class<?> get(final Object key)
+  {
+    if (containsKey(key))
+    {
+      return sqlTypeMap.get(key);
+    }
+    else
+    {
+      return Object.class;
+    }
   }
 
   @Override
   public Class<?> put(final String key, final Class<?> value)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public void putAll(final Map<? extends String, ? extends Class<?>> m)
   {
     throw new UnsupportedOperationException();
   }
@@ -274,23 +268,33 @@ public final class TypeMap
   }
 
   @Override
-  public int size()
+  public void putAll(final Map<? extends String, ? extends Class<?>> m)
   {
-    return sqlTypeMap.size();
+    throw new UnsupportedOperationException();
   }
 
   @Override
-  public String toString()
+  public void clear()
   {
-    final Map<String, String> typeClassNameMap = sqlTypeMap.entrySet().stream()
-      .collect(toMap(Map.Entry::getKey, e -> e.getValue().getCanonicalName()));
-    return typeClassNameMap.toString();
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public Set<String> keySet()
+  {
+    return new HashSet<>(sqlTypeMap.keySet());
   }
 
   @Override
   public Collection<Class<?>> values()
   {
     return new HashSet<>(sqlTypeMap.values());
+  }
+
+  @Override
+  public Set<Entry<String, Class<?>>> entrySet()
+  {
+    throw new UnsupportedOperationException();
   }
 
 }

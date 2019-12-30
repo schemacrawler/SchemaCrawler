@@ -41,8 +41,8 @@ public final class SchemaInfoLevelBuilder
   implements OptionsBuilder<SchemaInfoLevelBuilder, SchemaInfoLevel>
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(SchemaInfoLevelBuilder.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(SchemaInfoLevelBuilder.class.getName());
 
   public static SchemaInfoLevelBuilder builder()
   {
@@ -57,7 +57,9 @@ public final class SchemaInfoLevelBuilder
    */
   public static SchemaInfoLevel detailed()
   {
-    return builder().withTag("detailed").withInfoLevel(InfoLevel.detailed)
+    return builder()
+      .withTag("detailed")
+      .withInfoLevel(InfoLevel.detailed)
       .toOptions();
   }
 
@@ -69,7 +71,9 @@ public final class SchemaInfoLevelBuilder
    */
   public static SchemaInfoLevel maximum()
   {
-    return builder().withTag("maximum").withInfoLevel(InfoLevel.maximum)
+    return builder()
+      .withTag("maximum")
+      .withInfoLevel(InfoLevel.maximum)
       .toOptions();
   }
 
@@ -81,7 +85,9 @@ public final class SchemaInfoLevelBuilder
    */
   public static SchemaInfoLevel minimum()
   {
-    return builder().withTag("minimum").withInfoLevel(InfoLevel.minimum)
+    return builder()
+      .withTag("minimum")
+      .withInfoLevel(InfoLevel.minimum)
       .toOptions();
   }
 
@@ -103,12 +109,14 @@ public final class SchemaInfoLevelBuilder
    */
   public static SchemaInfoLevel standard()
   {
-    return builder().withTag("standard").withInfoLevel(InfoLevel.standard)
+    return builder()
+      .withTag("standard")
+      .withInfoLevel(InfoLevel.standard)
       .toOptions();
   }
 
-  private String tag;
   private final Map<SchemaInfoRetrieval, Boolean> schemaInfoRetrievals;
+  private String tag;
 
   private SchemaInfoLevelBuilder()
   {
@@ -125,8 +133,7 @@ public final class SchemaInfoLevelBuilder
       return this;
     }
 
-    for (final SchemaInfoRetrieval schemaInfoRetrieval: SchemaInfoRetrieval
-      .values())
+    for (final SchemaInfoRetrieval schemaInfoRetrieval : SchemaInfoRetrieval.values())
     {
       final String key = schemaInfoRetrieval.getKey();
       if (config.containsKey(key))
@@ -151,8 +158,7 @@ public final class SchemaInfoLevelBuilder
 
     try
     {
-      for (final SchemaInfoRetrieval schemaInfoRetrieval: SchemaInfoRetrieval
-        .values())
+      for (final SchemaInfoRetrieval schemaInfoRetrieval : SchemaInfoRetrieval.values())
       {
         final boolean booleanValue = schemaInfoLevel.is(schemaInfoRetrieval);
         schemaInfoRetrievals.put(schemaInfoRetrieval, booleanValue);
@@ -160,11 +166,25 @@ public final class SchemaInfoLevelBuilder
     }
     catch (final Exception e)
     {
-      LOGGER
-        .log(Level.WARNING, "Could not obtain schema info level settings", e);
+      LOGGER.log(Level.WARNING,
+                 "Could not obtain schema info level settings",
+                 e);
     }
 
     return this;
+  }
+
+  @Override
+  public Config toConfig()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public SchemaInfoLevel toOptions()
+  {
+    reduceMap();
+    return new SchemaInfoLevel(tag, schemaInfoRetrievals);
   }
 
   public String getTag()
@@ -172,11 +192,19 @@ public final class SchemaInfoLevelBuilder
     return tag;
   }
 
+  /**
+   * @deprecated
+   */
+  @Deprecated
+  public SchemaInfoLevelBuilder setTag(final String tag)
+  {
+    return withTag(tag);
+  }
+
   public SchemaInfoLevelBuilder setRetrieveAdditionalColumnAttributes(final boolean retrieveAdditionalColumnAttributes)
   {
-    schemaInfoRetrievals
-      .put(SchemaInfoRetrieval.retrieveAdditionalColumnAttributes,
-           retrieveAdditionalColumnAttributes);
+    schemaInfoRetrievals.put(SchemaInfoRetrieval.retrieveAdditionalColumnAttributes,
+                             retrieveAdditionalColumnAttributes);
     return this;
   }
 
@@ -189,17 +217,15 @@ public final class SchemaInfoLevelBuilder
 
   public SchemaInfoLevelBuilder setRetrieveAdditionalJdbcDriverInfo(final boolean retrieveAdditionalJdbcDriverInfo)
   {
-    schemaInfoRetrievals
-      .put(SchemaInfoRetrieval.retrieveAdditionalJdbcDriverInfo,
-           retrieveAdditionalJdbcDriverInfo);
+    schemaInfoRetrievals.put(SchemaInfoRetrieval.retrieveAdditionalJdbcDriverInfo,
+                             retrieveAdditionalJdbcDriverInfo);
     return this;
   }
 
   public SchemaInfoLevelBuilder setRetrieveAdditionalTableAttributes(final boolean retrieveAdditionalTableAttributes)
   {
-    schemaInfoRetrievals
-      .put(SchemaInfoRetrieval.retrieveAdditionalTableAttributes,
-           retrieveAdditionalTableAttributes);
+    schemaInfoRetrievals.put(SchemaInfoRetrieval.retrieveAdditionalTableAttributes,
+                             retrieveAdditionalTableAttributes);
     return this;
   }
 
@@ -317,25 +343,22 @@ public final class SchemaInfoLevelBuilder
 
   public SchemaInfoLevelBuilder setRetrieveTableConstraintDefinitions(final boolean retrieveTableConstraintDefinitions)
   {
-    schemaInfoRetrievals
-      .put(SchemaInfoRetrieval.retrieveTableConstraintDefinitions,
-           retrieveTableConstraintDefinitions);
+    schemaInfoRetrievals.put(SchemaInfoRetrieval.retrieveTableConstraintDefinitions,
+                             retrieveTableConstraintDefinitions);
     return this;
   }
 
   public SchemaInfoLevelBuilder setRetrieveTableConstraintInformation(final boolean retrieveTableConstraintInformation)
   {
-    schemaInfoRetrievals
-      .put(SchemaInfoRetrieval.retrieveTableConstraintInformation,
-           retrieveTableConstraintInformation);
+    schemaInfoRetrievals.put(SchemaInfoRetrieval.retrieveTableConstraintInformation,
+                             retrieveTableConstraintInformation);
     return this;
   }
 
   public SchemaInfoLevelBuilder setRetrieveTableDefinitionsInformation(final boolean retrieveTableDefinitionsInformation)
   {
-    schemaInfoRetrievals
-      .put(SchemaInfoRetrieval.retrieveTableDefinitionsInformation,
-           retrieveTableDefinitionsInformation);
+    schemaInfoRetrievals.put(SchemaInfoRetrieval.retrieveTableDefinitionsInformation,
+                             retrieveTableDefinitionsInformation);
     return this;
   }
 
@@ -362,9 +385,8 @@ public final class SchemaInfoLevelBuilder
 
   public SchemaInfoLevelBuilder setRetrieveUserDefinedColumnDataTypes(final boolean retrieveUserDefinedColumnDataTypes)
   {
-    schemaInfoRetrievals
-      .put(SchemaInfoRetrieval.retrieveUserDefinedColumnDataTypes,
-           retrieveUserDefinedColumnDataTypes);
+    schemaInfoRetrievals.put(SchemaInfoRetrieval.retrieveUserDefinedColumnDataTypes,
+                             retrieveUserDefinedColumnDataTypes);
     return this;
   }
 
@@ -375,28 +397,6 @@ public final class SchemaInfoLevelBuilder
     return this;
   }
 
-  /**
-   * @deprecated
-   */
-  @Deprecated
-  public SchemaInfoLevelBuilder setTag(final String tag)
-  {
-    return withTag(tag);
-  }
-
-  @Override
-  public Config toConfig()
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public SchemaInfoLevel toOptions()
-  {
-    reduceMap();
-    return new SchemaInfoLevel(tag, schemaInfoRetrievals);
-  }
-
   @Override
   public String toString()
   {
@@ -404,8 +404,7 @@ public final class SchemaInfoLevelBuilder
   }
 
   /**
-   * Updates SchemaInfoLevel builder with settings for a given info
-   * level.
+   * Updates SchemaInfoLevel builder with settings for a given info level.
    *
    * @return SchemaInfoLevel builder
    */
@@ -416,10 +415,10 @@ public final class SchemaInfoLevelBuilder
       return this;
     }
     final int infoLevelOrdinal = infoLevel.ordinal();
-    for (final SchemaInfoRetrieval schemaInfoRetrieval: SchemaInfoRetrieval
-      .values())
+    for (final SchemaInfoRetrieval schemaInfoRetrieval : SchemaInfoRetrieval.values())
     {
-      final int schemaInfoLevelOrdinal = schemaInfoRetrieval.getInfoLevel()
+      final int schemaInfoLevelOrdinal = schemaInfoRetrieval
+        .getInfoLevel()
         .ordinal();
       if (schemaInfoLevelOrdinal <= infoLevelOrdinal)
       {
@@ -431,8 +430,7 @@ public final class SchemaInfoLevelBuilder
   }
 
   /**
-   * Updates SchemaInfoLevel builder by removing settings to retrieve
-   * routines.
+   * Updates SchemaInfoLevel builder by removing settings to retrieve routines.
    *
    * @return SchemaInfoLevel builder
    */
@@ -442,8 +440,7 @@ public final class SchemaInfoLevelBuilder
   }
 
   /**
-   * Updates SchemaInfoLevel builder by removing settings to retrieve
-   * tables.
+   * Updates SchemaInfoLevel builder by removing settings to retrieve tables.
    *
    * @return SchemaInfoLevel builder
    */
@@ -476,8 +473,7 @@ public final class SchemaInfoLevelBuilder
 
   private void reduceMap()
   {
-    for (final SchemaInfoRetrieval schemaInfoRetrieval: SchemaInfoRetrieval
-      .values())
+    for (final SchemaInfoRetrieval schemaInfoRetrieval : SchemaInfoRetrieval.values())
     {
       if (!is(schemaInfoRetrieval))
       {
@@ -488,11 +484,10 @@ public final class SchemaInfoLevelBuilder
 
   private SchemaInfoLevelBuilder withoutDatabaseObjectInfoRetrieval(final DatabaseObjectInfoRetrieval databaseObjectInfoRetrieval)
   {
-    for (final SchemaInfoRetrieval schemaInfoRetrieval: SchemaInfoRetrieval
-      .values())
+    for (final SchemaInfoRetrieval schemaInfoRetrieval : SchemaInfoRetrieval.values())
     {
-      if (schemaInfoRetrieval
-        .getDatabaseObjectInfoRetrieval() == databaseObjectInfoRetrieval)
+      if (schemaInfoRetrieval.getDatabaseObjectInfoRetrieval()
+          == databaseObjectInfoRetrieval)
       {
         schemaInfoRetrievals.remove(schemaInfoRetrieval);
       }

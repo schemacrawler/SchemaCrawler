@@ -46,11 +46,21 @@ import java.util.function.Supplier;
 public final class StopWatch
 {
 
+  private static final DateTimeFormatter df = new DateTimeFormatterBuilder()
+    .appendValue(HOUR_OF_DAY, 2)
+    .appendLiteral(':')
+    .appendValue(MINUTE_OF_HOUR, 2)
+    .appendLiteral(':')
+    .appendValue(SECOND_OF_MINUTE, 2)
+    .appendFraction(NANO_OF_SECOND, 3, 3, true)
+    .toFormatter();
+
+
   private static final class TaskInfo
   {
 
-    private final String taskName;
     private final Duration duration;
+    private final String taskName;
 
     TaskInfo(final String taskName, final Duration duration)
     {
@@ -72,20 +82,14 @@ public final class StopWatch
 
   }
 
-  private static final DateTimeFormatter df = new DateTimeFormatterBuilder()
-    .appendValue(HOUR_OF_DAY, 2).appendLiteral(':')
-    .appendValue(MINUTE_OF_HOUR, 2).appendLiteral(':')
-    .appendValue(SECOND_OF_MINUTE, 2).appendFraction(NANO_OF_SECOND, 3, 3, true)
-    .toFormatter();
 
   private final String id;
   private final List<TaskInfo> tasks = new LinkedList<>();
-
+  private String currentTaskName;
+  private boolean running;
   // State for current task
   private Instant start;
-  private boolean running;
   private Duration totalDuration;
-  private String currentTaskName;
 
   public StopWatch(final String id)
   {
@@ -108,40 +112,6 @@ public final class StopWatch
     return running;
   }
 
-  private void start(final String taskName)
-  {
-    if (running)
-    {
-      throw new IllegalStateException(String
-        .format("Cannot stop <%s>, since it is already running", id));
-    }
-
-    running = true;
-    currentTaskName = taskName;
-    start = Instant.now();
-  }
-
-  private void stop()
-  {
-    if (!running)
-    {
-      throw new IllegalStateException(String
-        .format("Cannot stop <%s>, since it is not running", id));
-    }
-
-    final Instant stop = Instant.now();
-    final Duration runTime = Duration.between(start, stop);
-
-    totalDuration = totalDuration.plus(runTime);
-
-    final TaskInfo lastTaskInfo = new TaskInfo(currentTaskName, runTime);
-    tasks.add(lastTaskInfo);
-
-    running = false;
-    currentTaskName = null;
-    start = null;
-  }
-
   /**
    * Allows for a deferred conversion to a string. Useful in logging.
    *
@@ -152,13 +122,13 @@ public final class StopWatch
     return () -> {
       final StringBuilder buffer = new StringBuilder(1024);
 
-      final LocalTime totalDurationLocal = LocalTime
-        .ofNanoOfDay(totalDuration.toNanos());
+      final LocalTime totalDurationLocal =
+        LocalTime.ofNanoOfDay(totalDuration.toNanos());
       buffer.append(String.format("Total time taken for <%s> - %s hours%n",
                                   id,
                                   totalDurationLocal.format(df)));
 
-      for (final TaskInfo task: tasks)
+      for (final TaskInfo task : tasks)
       {
         buffer.append(String.format("-%5.1f%% - %s%n",
                                     calculatePercentage(task.getDuration(),
@@ -177,6 +147,42 @@ public final class StopWatch
     final V returnValue = callable.call();
     stop();
     return returnValue;
+  }
+
+  private void start(final String taskName)
+  {
+    if (running)
+    {
+      throw new IllegalStateException(String.format(
+        "Cannot stop <%s>, since it is already running",
+        id));
+    }
+
+    running = true;
+    currentTaskName = taskName;
+    start = Instant.now();
+  }
+
+  private void stop()
+  {
+    if (!running)
+    {
+      throw new IllegalStateException(String.format(
+        "Cannot stop <%s>, since it is not running",
+        id));
+    }
+
+    final Instant stop = Instant.now();
+    final Duration runTime = Duration.between(start, stop);
+
+    totalDuration = totalDuration.plus(runTime);
+
+    final TaskInfo lastTaskInfo = new TaskInfo(currentTaskName, runTime);
+    tasks.add(lastTaskInfo);
+
+    running = false;
+    currentTaskName = null;
+    start = null;
   }
 
   private double calculatePercentage(final Duration duration,

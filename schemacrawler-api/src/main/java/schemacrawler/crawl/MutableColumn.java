@@ -38,8 +38,8 @@ import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Table;
 
 /**
- * Represents a column in a database table or routine. Created from
- * metadata returned by a JDBC call.
+ * Represents a column in a database table or routine. Created from metadata
+ * returned by a JDBC call.
  *
  * @author Sualeh Fatehi
  */
@@ -49,16 +49,16 @@ final class MutableColumn
 {
 
   private static final long serialVersionUID = 3834591019449528633L;
-
+  private final NamedObjectList<MutablePrivilege<Column>> privileges =
+    new NamedObjectList<>();
   private String defaultValue;
   private boolean isAutoIncremented;
   private boolean isGenerated;
   private boolean isHidden;
+  private boolean isPartOfIndex;
   private boolean isPartOfPrimaryKey;
   private boolean isPartOfUniqueIndex;
-  private boolean isPartOfIndex;
   private Column referencedColumn;
-  private final NamedObjectList<MutablePrivilege<Column>> privileges = new NamedObjectList<>();
 
   MutableColumn(final Table parent, final String name)
   {
@@ -72,6 +72,11 @@ final class MutableColumn
   public String getDefaultValue()
   {
     return defaultValue;
+  }
+
+  void setDefaultValue(final String defaultValue)
+  {
+    this.defaultValue = defaultValue;
   }
 
   /**
@@ -92,6 +97,11 @@ final class MutableColumn
     return referencedColumn;
   }
 
+  void setReferencedColumn(final Column referencedColumn)
+  {
+    this.referencedColumn = referencedColumn;
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -99,6 +109,11 @@ final class MutableColumn
   public boolean isAutoIncremented()
   {
     return isAutoIncremented;
+  }
+
+  void setAutoIncremented(final boolean isAutoIncremented)
+  {
+    this.isAutoIncremented = isAutoIncremented;
   }
 
   /**
@@ -110,6 +125,11 @@ final class MutableColumn
     return isGenerated;
   }
 
+  void setGenerated(final boolean isGenerated)
+  {
+    this.isGenerated = isGenerated;
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -117,6 +137,11 @@ final class MutableColumn
   public boolean isHidden()
   {
     return isHidden;
+  }
+
+  void setHidden(final boolean isHidden)
+  {
+    this.isHidden = isHidden;
   }
 
   /**
@@ -182,31 +207,6 @@ final class MutableColumn
   void markAsPartOfUniqueIndex()
   {
     isPartOfUniqueIndex = true;
-  }
-
-  void setAutoIncremented(final boolean isAutoIncremented)
-  {
-    this.isAutoIncremented = isAutoIncremented;
-  }
-
-  void setDefaultValue(final String defaultValue)
-  {
-    this.defaultValue = defaultValue;
-  }
-
-  void setGenerated(final boolean isGenerated)
-  {
-    this.isGenerated = isGenerated;
-  }
-
-  void setHidden(final boolean isHidden)
-  {
-    this.isHidden = isHidden;
-  }
-
-  void setReferencedColumn(final Column referencedColumn)
-  {
-    this.referencedColumn = referencedColumn;
   }
 
 }

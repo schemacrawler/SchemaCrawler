@@ -34,17 +34,20 @@ import java.util.Objects;
 public class SimpleCycleDetector<T extends Comparable<? super T>>
 {
 
+  private static final String ATTRIBUTE_TRAVERSAL_STATE = "traversalstate";
+
+
   enum TraversalState
   {
 
-   notStarted("white"),
-   inProgress("lightgray"),
-   marked("red"),
-   complete("gray");
+    notStarted("white"),
+    inProgress("lightgray"),
+    marked("red"),
+    complete("gray");
 
     private final String color;
 
-    private TraversalState(final String color)
+    TraversalState(final String color)
     {
       this.color = color;
     }
@@ -56,7 +59,6 @@ public class SimpleCycleDetector<T extends Comparable<? super T>>
 
   }
 
-  private static final String ATTRIBUTE_TRAVERSAL_STATE = "traversalstate";
 
   private final DirectedGraph<T> graph;
 
@@ -73,10 +75,10 @@ public class SimpleCycleDetector<T extends Comparable<? super T>>
   public boolean containsCycle()
   {
     final Collection<Vertex<T>> vertices = clearTraversalStates();
-    for (final Vertex<T> vertex: vertices)
+    for (final Vertex<T> vertex : vertices)
     {
-      if (vertex
-        .getAttribute(ATTRIBUTE_TRAVERSAL_STATE) == TraversalState.notStarted)
+      if (vertex.getAttribute(ATTRIBUTE_TRAVERSAL_STATE)
+          == TraversalState.notStarted)
       {
         if (visitForCyles(vertex))
         {
@@ -91,7 +93,7 @@ public class SimpleCycleDetector<T extends Comparable<? super T>>
   private Collection<Vertex<T>> clearTraversalStates()
   {
     final Collection<Vertex<T>> vertices = graph.vertexSet();
-    for (final Vertex<T> vertex: vertices)
+    for (final Vertex<T> vertex : vertices)
     {
       vertex.putAttribute(ATTRIBUTE_TRAVERSAL_STATE, TraversalState.notStarted);
     }
@@ -102,19 +104,19 @@ public class SimpleCycleDetector<T extends Comparable<? super T>>
   {
     vertex.putAttribute(ATTRIBUTE_TRAVERSAL_STATE, TraversalState.inProgress);
 
-    for (final DirectedEdge<T> edge: graph.edgeSet())
+    for (final DirectedEdge<T> edge : graph.edgeSet())
     {
       if (edge.isFrom(vertex))
       {
         final Vertex<T> to = edge.getTo();
-        if (to
-          .getAttribute(ATTRIBUTE_TRAVERSAL_STATE) == TraversalState.inProgress)
+        if (to.getAttribute(ATTRIBUTE_TRAVERSAL_STATE)
+            == TraversalState.inProgress)
         {
           to.putAttribute(ATTRIBUTE_TRAVERSAL_STATE, TraversalState.marked);
           return true;
         }
-        else if (to
-          .getAttribute(ATTRIBUTE_TRAVERSAL_STATE) == TraversalState.notStarted)
+        else if (to.getAttribute(ATTRIBUTE_TRAVERSAL_STATE)
+                 == TraversalState.notStarted)
         {
           if (visitForCyles(to))
           {
