@@ -42,48 +42,48 @@ public interface TextFormattingHelper
 
   enum DocumentHeaderType
   {
-   title
-   {
-     @Override
-     String getHeaderTag()
-     {
-       return "h1";
-     }
+    title
+      {
+        @Override
+        String getHeaderTag()
+        {
+          return "h1";
+        }
 
-     @Override
-     String getPrefix()
-     {
-       return "<p>&#160;</p>";
-     }
-   },
-   subTitle
-   {
-     @Override
-     String getHeaderTag()
-     {
-       return "h2";
-     }
+        @Override
+        String getPrefix()
+        {
+          return "<p>&#160;</p>";
+        }
+      },
+    subTitle
+      {
+        @Override
+        String getHeaderTag()
+        {
+          return "h2";
+        }
 
-     @Override
-     String getPrefix()
-     {
-       return "<p>&#160;</p>";
-     }
-   },
-   section
-   {
-     @Override
-     String getHeaderTag()
-     {
-       return "h3";
-     }
+        @Override
+        String getPrefix()
+        {
+          return "<p>&#160;</p>";
+        }
+      },
+    section
+      {
+        @Override
+        String getHeaderTag()
+        {
+          return "h3";
+        }
 
-     @Override
-     String getPrefix()
-     {
-       return "";
-     }
-   };
+        @Override
+        String getPrefix()
+        {
+          return "";
+        }
+      };
 
     abstract String getHeaderTag();
 
@@ -97,9 +97,9 @@ public interface TextFormattingHelper
    * Creates a new anchor tag.
    *
    * @param text
-   *        Anchor text
+   *   Anchor text
    * @param link
-   *        Anchor link
+   *   Anchor link
    * @return Anchor tag
    */
   String createAnchor(String text, String link);
@@ -138,7 +138,7 @@ public interface TextFormattingHelper
    * Creates a description row with a blank spacer cells.
    *
    * @param description
-   *        Description
+   *   Description
    */
   void writeDescriptionRow(String description);
 
@@ -146,11 +146,11 @@ public interface TextFormattingHelper
    * Creates a detail row, with four fields.
    *
    * @param text1
-   *        Ordinal value
+   *   Ordinal value
    * @param text2
-   *        Name
+   *   Name
    * @param text3
-   *        Type
+   *   Type
    */
   void writeDetailRow(String text1, String text2, String text3);
 
@@ -158,17 +158,17 @@ public interface TextFormattingHelper
    * Creates a detail row, with four fields. The name can be emphasized.
    *
    * @param text1
-   *        Text for field 1
+   *   Text for field 1
    * @param text2
-   *        Text for field 2
+   *   Text for field 2
    * @param text3
-   *        Text for field 3
+   *   Text for field 3
    * @param escapeText
-   *        Escape sequence
+   *   Escape sequence
    * @param emphasize
-   *        Whether to emphasize text
+   *   Whether to emphasize text
    * @param style
-   *        Other CSS style
+   *   Other CSS style
    */
   void writeDetailRow(String text1,
                       String text2,
@@ -196,9 +196,9 @@ public interface TextFormattingHelper
    * Creates a section header.
    *
    * @param type
-   *        Type of header
+   *   Type of header
    * @param header
-   *        Header text
+   *   Header text
    */
   void writeHeader(DocumentHeaderType type, String header);
 
@@ -206,9 +206,9 @@ public interface TextFormattingHelper
    * Create a name and description row.
    *
    * @param name
-   *        Name
+   *   Name
    * @param description
-   *        Description
+   *   Description
    */
   void writeNameRow(String name, String description);
 
@@ -216,11 +216,11 @@ public interface TextFormattingHelper
    * Create a name and value row.
    *
    * @param name
-   *        Name
+   *   Name
    * @param value
-   *        Value
+   *   Value
    * @param valueAlignment
-   *        Alignment of the value
+   *   Alignment of the value
    */
   void writeNameValueRow(String name, String value, Alignment valueAlignment);
 
@@ -233,13 +233,13 @@ public interface TextFormattingHelper
    * Create a name and description row.
    *
    * @param id
-   *        Unique identifier
+   *   Unique identifier
    * @param name
-   *        Name
+   *   Name
    * @param description
-   *        Description
+   *   Description
    * @param backgroundColor
-   *        Background color
+   *   Background color
    */
   void writeObjectNameRow(String id,
                           String name,
@@ -255,7 +255,7 @@ public interface TextFormattingHelper
    * Creates a row of data.
    *
    * @param columnData
-   *        Column data
+   *   Column data
    */
   void writeRow(Object... columnData);
 
@@ -263,7 +263,7 @@ public interface TextFormattingHelper
    * Creates a header row for data.
    *
    * @param columnNames
-   *        Column names
+   *   Column names
    */
   void writeRowHeader(String... columnNames);
 
@@ -271,9 +271,9 @@ public interface TextFormattingHelper
    * Creates a definition row.
    *
    * @param definition
-   *        Definition
+   *   Definition
    * @param style
-   *        CSS style class
+   *   CSS style class
    */
   void writeWideRow(String definition, String style);
 

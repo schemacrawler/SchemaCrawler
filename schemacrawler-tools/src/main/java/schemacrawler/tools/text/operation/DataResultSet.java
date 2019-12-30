@@ -61,8 +61,8 @@ import sf.util.SchemaCrawlerLogger;
 final class DataResultSet
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(DataResultSet.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(DataResultSet.class.getName());
 
   private final ResultSet rows;
   private final List<ResultsColumn> resultsColumns;
@@ -73,7 +73,9 @@ final class DataResultSet
   {
     this.rows = requireNonNull(rows, "Cannot use null results");
     this.showLobs = showLobs;
-    resultsColumns = new ResultsCrawler(rows).crawl().getColumns();
+    resultsColumns = new ResultsCrawler(rows)
+      .crawl()
+      .getColumns();
   }
 
   public String[] getColumnNames()
@@ -82,7 +84,9 @@ final class DataResultSet
     final String[] columnNames = new String[columnCount];
     for (int i = 0; i < columnCount; i++)
     {
-      columnNames[i] = resultsColumns.get(i).getName();
+      columnNames[i] = resultsColumns
+        .get(i)
+        .getName();
     }
     return columnNames;
   }
@@ -114,8 +118,11 @@ final class DataResultSet
   private Object getColumnData(final int i)
     throws SQLException
   {
-    final int javaSqlType = resultsColumns.get(i).getColumnDataType()
-      .getJavaSqlType().getVendorTypeNumber();
+    final int javaSqlType = resultsColumns
+      .get(i)
+      .getColumnDataType()
+      .getJavaSqlType()
+      .getVendorTypeNumber();
     Object columnData;
     if (javaSqlType == Types.CLOB)
     {
@@ -301,11 +308,11 @@ final class DataResultSet
   }
 
   /**
-   * Reads data from an input stream into a string. Default system
-   * encoding is assumed.
+   * Reads data from an input stream into a string. Default system encoding is
+   * assumed.
    *
    * @param columnData
-   *        Column data object returned by JDBC
+   *   Column data object returned by JDBC
    * @return A string with the contents of the LOB
    */
   private BinaryData readStream(final InputStream stream)

@@ -30,7 +30,12 @@ package schemacrawler.tools.executable.commandline;
 
 import static sf.util.Utility.isBlank;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.StringJoiner;
 
 public class PluginCommand
   implements Iterable<PluginCommandOption>
@@ -143,9 +148,8 @@ public class PluginCommand
                                  final String helpText,
                                  final Class<?> valueClass)
   {
-    final PluginCommandOption option = new PluginCommandOption(name,
-                                                               helpText,
-                                                               valueClass);
+    final PluginCommandOption option =
+      new PluginCommandOption(name, helpText, valueClass);
     if (option != null)
     {
       options.add(option);
@@ -163,8 +167,10 @@ public class PluginCommand
   {
     return new StringJoiner(", ",
                             PluginCommand.class.getSimpleName() + "[",
-                            "]").add("name='" + name + "'")
-      .add("options=" + options).toString();
+                            "]")
+      .add("name='" + name + "'")
+      .add("options=" + options)
+      .toString();
   }
 
 }

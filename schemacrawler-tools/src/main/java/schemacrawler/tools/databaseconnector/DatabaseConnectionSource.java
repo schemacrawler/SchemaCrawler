@@ -32,8 +32,17 @@ package schemacrawler.tools.databaseconnector;
 import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.DriverPropertyInfo;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 
@@ -46,8 +55,8 @@ public final class DatabaseConnectionSource
   implements Supplier<Connection>
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(DatabaseConnectionSource.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(DatabaseConnectionSource.class.getName());
 
   private static void logConnection(final Connection connection)
   {
@@ -113,8 +122,8 @@ public final class DatabaseConnectionSource
 
   public void setUserCredentials(final UserCredentials userCredentials)
   {
-    this.userCredentials = requireNonNull(userCredentials,
-                                          "No user credentials provided");
+    this.userCredentials =
+      requireNonNull(userCredentials, "No user credentials provided");
   }
 
   @Override
@@ -138,7 +147,9 @@ public final class DatabaseConnectionSource
     try
     {
       final Driver jdbcDriver = getJdbcDriver();
-      jdbcDriverClass = jdbcDriver.getClass().getName();
+      jdbcDriverClass = jdbcDriver
+        .getClass()
+        .getName();
     }
     catch (final SQLException e)
     {
@@ -146,9 +157,14 @@ public final class DatabaseConnectionSource
     }
 
     final StringBuilder builder = new StringBuilder(1024);
-    builder.append("driver=").append(jdbcDriverClass)
+    builder
+      .append("driver=")
+      .append(jdbcDriverClass)
       .append(System.lineSeparator());
-    builder.append("url=").append(connectionUrl).append(System.lineSeparator());
+    builder
+      .append("url=")
+      .append(connectionUrl)
+      .append(System.lineSeparator());
     return builder.toString();
   }
 
@@ -168,10 +184,8 @@ public final class DatabaseConnectionSource
       LOGGER.log(Level.WARNING, "Database password is not provided");
     }
 
-    final Properties jdbcConnectionProperties = createConnectionProperties(
-      connectionUrl,
-      user,
-      password);
+    final Properties jdbcConnectionProperties =
+      createConnectionProperties(connectionUrl, user, password);
     try
     {
       LOGGER.log(Level.INFO,
@@ -187,8 +201,8 @@ public final class DatabaseConnectionSource
       // (MySQL Connector/J) may raise an exception other than a
       // SQLException in this case.)
       final Driver driver = getJdbcDriver(connectionUrl);
-      final Connection connection = driver
-        .connect(connectionUrl, jdbcConnectionProperties);
+      final Connection connection =
+        driver.connect(connectionUrl, jdbcConnectionProperties);
 
       LOGGER.log(Level.INFO,
                  new StringFormat("Opened database connection <%s>",
@@ -235,8 +249,8 @@ public final class DatabaseConnectionSource
     try
     {
       final Driver jdbcDriver = getJdbcDriver(connectionUrl);
-      final DriverPropertyInfo[] propertyInfo = jdbcDriver
-        .getPropertyInfo(this.connectionUrl, new Properties());
+      final DriverPropertyInfo[] propertyInfo =
+        jdbcDriver.getPropertyInfo(this.connectionUrl, new Properties());
       final Map<String, Boolean> jdbcDriverProperties = new HashMap<>();
       for (final DriverPropertyInfo driverPropertyInfo : propertyInfo)
       {
@@ -259,8 +273,7 @@ public final class DatabaseConnectionSource
       }
       if (connectionProperties != null)
       {
-        for (final Map.Entry<String, String> connectionProperty : connectionProperties
-          .entrySet())
+        for (final Map.Entry<String, String> connectionProperty : connectionProperties.entrySet())
         {
           final String property = connectionProperty.getKey();
           final String value = connectionProperty.getValue();

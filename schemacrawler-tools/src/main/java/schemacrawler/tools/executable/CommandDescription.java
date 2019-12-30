@@ -69,8 +69,11 @@ public final class CommandDescription
     }
     else
     {
-      return getName().toLowerCase()
-        .compareTo(otherProperty.getName().toLowerCase());
+      return getName()
+        .toLowerCase()
+        .compareTo(otherProperty
+                     .getName()
+                     .toLowerCase());
     }
   }
 
@@ -138,7 +141,9 @@ public final class CommandDescription
     builder.append(name);
     if (description != null)
     {
-      builder.append(" - ").append(description);
+      builder
+        .append(" - ")
+        .append(description);
     }
     return builder.toString();
   }

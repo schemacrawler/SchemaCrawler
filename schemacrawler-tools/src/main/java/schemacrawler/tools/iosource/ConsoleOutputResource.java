@@ -41,16 +41,16 @@ public final class ConsoleOutputResource
   implements OutputResource
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(ConsoleOutputResource.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(ConsoleOutputResource.class.getName());
 
   @Override
   public Writer openNewOutputWriter(final Charset charset,
                                     final boolean appendOutput)
     throws IOException
   {
-    final Writer writer = new BufferedWriter(new OutputStreamWriter(System.out,
-                                                                    charset));
+    final Writer writer =
+      new BufferedWriter(new OutputStreamWriter(System.out, charset));
     LOGGER.log(Level.INFO, "Opened output writer to console");
     return new OutputWriter(getDescription(), writer, false);
   }

@@ -35,11 +35,11 @@ public class InputResourceUtility
 {
 
   /**
-   * Creates an input resource from the classpath, or from the file
-   * system. If neither are found, returns an empty input resource.
+   * Creates an input resource from the classpath, or from the file system. If
+   * neither are found, returns an empty input resource.
    *
    * @param inputResourceName
-   *        Name of input resource.
+   *   Name of input resource.
    * @return Input resource
    */
   public static InputResource createInputResource(final String inputResourceName)

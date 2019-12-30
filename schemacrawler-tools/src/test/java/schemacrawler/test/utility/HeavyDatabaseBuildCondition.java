@@ -28,10 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
-import java.util.function.Supplier;
-
-import org.testcontainers.containers.JdbcDatabaseContainer;
-
 public class HeavyDatabaseBuildCondition
   extends BaseEnvironmentalVariableBuildCondition
 {
@@ -41,7 +37,5 @@ public class HeavyDatabaseBuildCondition
   {
     return "heavydb";
   }
-
-
 
 }

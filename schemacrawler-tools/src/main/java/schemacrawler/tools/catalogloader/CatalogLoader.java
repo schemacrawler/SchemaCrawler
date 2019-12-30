@@ -41,23 +41,23 @@ public interface CatalogLoader
 
   Config getAdditionalConfiguration();
 
+  void setAdditionalConfiguration(Config config);
+
   Connection getConnection();
+
+  void setConnection(Connection connection);
 
   String getDatabaseSystemIdentifier();
 
   SchemaCrawlerOptions getSchemaCrawlerOptions();
 
+  void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
+
   SchemaRetrievalOptions getSchemaRetrievalOptions();
+
+  void setSchemaRetrievalOptions(SchemaRetrievalOptions schemaRetrievalOptions);
 
   Catalog loadCatalog()
     throws Exception;
-
-  void setAdditionalConfiguration(Config config);
-
-  void setConnection(Connection connection);
-
-  void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
-
-  void setSchemaRetrievalOptions(SchemaRetrievalOptions schemaRetrievalOptions);
 
 }

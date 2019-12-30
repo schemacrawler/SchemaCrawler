@@ -31,7 +31,6 @@ package schemacrawler.tools.analysis.associations;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
@@ -50,7 +49,8 @@ public final class CatalogWithAssociations
     super(catalog);
 
     final List<Table> allTables = new ArrayList<>(catalog.getTables());
-    final WeakAssociationsAnalyzer weakAssociationsAnalyzer = new WeakAssociationsAnalyzer(allTables);
+    final WeakAssociationsAnalyzer weakAssociationsAnalyzer =
+      new WeakAssociationsAnalyzer(allTables);
     weakAssociations = weakAssociationsAnalyzer.analyzeTables();
   }
 

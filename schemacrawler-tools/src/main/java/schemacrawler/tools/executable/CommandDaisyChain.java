@@ -33,8 +33,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.text.base.CommonTextOptionsBuilder;
 
 /**
- * Allows chaining multiple executables together, that produce shared
- * artifacts, such as a single HTML file.
+ * Allows chaining multiple executables together, that produce shared artifacts,
+ * such as a single HTML file.
  */
 public final class CommandDaisyChain
   extends BaseCommandChain
@@ -62,17 +62,17 @@ public final class CommandDaisyChain
 
     for (final String command : commands)
     {
-      final SchemaCrawlerCommand scCommand = addNextAndConfigureForExecution(
-        command,
-        outputOptions);
+      final SchemaCrawlerCommand scCommand =
+        addNextAndConfigureForExecution(command, outputOptions);
       if (scCommand == null)
       {
         continue;
       }
 
-      final CommonTextOptionsBuilder commonTextOptionsBuilder = CommonTextOptionsBuilder
-        .builder()
-        .fromConfig(additionalConfiguration);
+      final CommonTextOptionsBuilder commonTextOptionsBuilder =
+        CommonTextOptionsBuilder
+          .builder()
+          .fromConfig(additionalConfiguration);
 
       if (commands.hasMultipleCommands())
       {

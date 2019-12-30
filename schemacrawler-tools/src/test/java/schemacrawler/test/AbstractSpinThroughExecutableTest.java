@@ -43,7 +43,12 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.schemacrawler.*;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.InfoLevel;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -70,8 +75,9 @@ public abstract class AbstractSpinThroughExecutableTest
 
   private static Stream<InfoLevel> infoLevels()
   {
-    return Arrays.stream(InfoLevel.values())
-                 .filter(infoLevel -> infoLevel != InfoLevel.unknown);
+    return Arrays
+      .stream(InfoLevel.values())
+      .filter(infoLevel -> infoLevel != InfoLevel.unknown);
   }
 
   private static String referenceFile(final SchemaTextDetailType schemaTextDetailType,
@@ -99,34 +105,34 @@ public abstract class AbstractSpinThroughExecutableTest
 
     final Config config = loadHsqldbConfig();
 
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
-      .builder();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+      SchemaRetrievalOptionsBuilder.builder();
     schemaRetrievalOptionsBuilder.fromConfig(config);
-    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder
-      .toOptions();
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+      schemaRetrievalOptionsBuilder.toOptions();
 
     assertAll(infoLevels().flatMap(infoLevel -> outputFormats().flatMap(
       outputFormat -> schemaTextDetailTypes().map(schemaTextDetailType -> () -> {
 
-        final String referenceFile = referenceFile(schemaTextDetailType,
-                                                   infoLevel,
-                                                   outputFormat);
+        final String referenceFile =
+          referenceFile(schemaTextDetailType, infoLevel, outputFormat);
 
-        final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-          .builder()
-          .withSchemaInfoLevel(infoLevel.toSchemaInfoLevel())
-          .includeAllSequences()
-          .includeAllSynonyms()
-          .includeAllRoutines();
-        final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-          .toOptions();
+        final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+          SchemaCrawlerOptionsBuilder
+            .builder()
+            .withSchemaInfoLevel(infoLevel.toSchemaInfoLevel())
+            .includeAllSequences()
+            .includeAllSynonyms()
+            .includeAllRoutines();
+        final SchemaCrawlerOptions schemaCrawlerOptions =
+          schemaCrawlerOptionsBuilder.toOptions();
 
-        final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder
-          .builder();
+        final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
+          SchemaTextOptionsBuilder.builder();
         schemaTextOptionsBuilder.noInfo(false);
 
-        final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-          schemaTextDetailType.name());
+        final SchemaCrawlerExecutable executable =
+          new SchemaCrawlerExecutable(schemaTextDetailType.name());
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
 

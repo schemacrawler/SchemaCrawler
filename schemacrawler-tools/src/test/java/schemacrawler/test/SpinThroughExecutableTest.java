@@ -41,8 +41,8 @@ public class SpinThroughExecutableTest
   public Stream<OutputFormat> outputFormats()
   {
     return Arrays.stream(new OutputFormat[] {
-                                              TextOutputFormat.text,
-                                              TextOutputFormat.html });
+      TextOutputFormat.text, TextOutputFormat.html
+    });
   }
 
 }

@@ -40,6 +40,21 @@ public final class CountsUtility
   private static final int UNKNOWN_TABLE_ROW_COUNT = -1;
   private static final String TABLE_ROW_COUNT_KEY = "schemacrawler.table.count";
 
+  static void addRowCountToTable(final Table table, final long rowCount)
+  {
+    if (table != null)
+    {
+      if (rowCount >= 0)
+      {
+        table.setAttribute(TABLE_ROW_COUNT_KEY, rowCount);
+      }
+      else
+      {
+        table.removeAttribute(TABLE_ROW_COUNT_KEY);
+      }
+    }
+  }
+
   public static final long getRowCount(final Table table)
   {
     if (table == null)
@@ -47,16 +62,22 @@ public final class CountsUtility
       return UNKNOWN_TABLE_ROW_COUNT;
     }
 
-    final long tableCount = table
-      .getAttribute(TABLE_ROW_COUNT_KEY, Long.valueOf(UNKNOWN_TABLE_ROW_COUNT));
+    final long tableCount = table.getAttribute(TABLE_ROW_COUNT_KEY,
+                                               Long.valueOf(
+                                                 UNKNOWN_TABLE_ROW_COUNT));
     return tableCount;
+  }
+
+  public static final String getRowCountMessage(final Table table)
+  {
+    return getRowCountMessage(getRowCount(table));
   }
 
   /**
    * Message format for the counts.
    *
    * @param number
-   *        Number value in the message
+   *   Number value in the message
    * @return Message format for the counts
    */
   public static String getRowCountMessage(final Number number)
@@ -73,29 +94,9 @@ public final class CountsUtility
     }
   }
 
-  public static final String getRowCountMessage(final Table table)
-  {
-    return getRowCountMessage(getRowCount(table));
-  }
-
   public static final boolean hasRowCount(final Table table)
   {
     return table != null && table.hasAttribute(TABLE_ROW_COUNT_KEY);
-  }
-
-  static void addRowCountToTable(final Table table, final long rowCount)
-  {
-    if (table != null)
-    {
-      if (rowCount >= 0)
-      {
-        table.setAttribute(TABLE_ROW_COUNT_KEY, rowCount);
-      }
-      else
-      {
-        table.removeAttribute(TABLE_ROW_COUNT_KEY);
-      }
-    }
   }
 
   private CountsUtility()

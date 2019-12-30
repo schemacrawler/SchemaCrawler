@@ -72,31 +72,33 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
   {
     this.options = requireNonNull(options, "Options not provided");
 
-    this.outputOptions = requireNonNull(outputOptions,
-                                        "Output options not provided");
+    this.outputOptions =
+      requireNonNull(outputOptions, "Output options not provided");
 
     colorMap = DatabaseObjectColorMap.initialize(options.isNoSchemaColors());
 
-    this.printVerboseDatabaseInfo = !options.isNoInfo()
-                                    && printVerboseDatabaseInfo;
+    this.printVerboseDatabaseInfo =
+      !options.isNoInfo() && printVerboseDatabaseInfo;
 
-    identifiers = Identifiers.identifiers()
+    identifiers = Identifiers
+      .identifiers()
       .withIdentifierQuoteString(identifierQuoteString)
       .withIdentifierQuotingStrategy(options.getIdentifierQuotingStrategy())
       .build();
 
     try
     {
-      out = new PrintWriter(outputOptions
-        .openNewOutputWriter(options.isAppendOutput()), true);
+      out =
+        new PrintWriter(outputOptions.openNewOutputWriter(options.isAppendOutput()),
+                        true);
     }
     catch (final IOException e)
     {
       throw new SchemaCrawlerException("Cannot open output writer", e);
     }
 
-    final TextOutputFormat outputFormat = TextOutputFormat
-      .fromFormat(outputOptions.getOutputFormatValue());
+    final TextOutputFormat outputFormat =
+      TextOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
     switch (outputFormat)
     {
       case html:
@@ -139,14 +141,17 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
 
   protected String formatTimestamp(final TemporalAccessor timestamp)
   {
-    return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(timestamp);
+    return DateTimeFormatter
+      .ofPattern("yyyy-MM-dd HH:mm:ss")
+      .format(timestamp);
   }
 
   protected boolean isColumnSignificant(final Column column)
   {
-    return column != null
-           && (column instanceof IndexColumn || column.isPartOfPrimaryKey()
-               || column.isPartOfForeignKey() || column.isPartOfIndex());
+    return column != null && (column instanceof IndexColumn
+                              || column.isPartOfPrimaryKey()
+                              || column.isPartOfForeignKey()
+                              || column.isPartOfIndex());
   }
 
   protected String nodeId(final DatabaseObject dbObject)
@@ -158,8 +163,8 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
     else
     {
       final List<String> dbObjectLookupKey = dbObject.toUniqueLookupKey();
-      return convertForComparison(dbObject.getName()) + "_" + Integer
-        .toHexString(Arrays.hashCode(dbObjectLookupKey.toArray()));
+      return convertForComparison(dbObject.getName()) + "_"
+             + Integer.toHexString(Arrays.hashCode(dbObjectLookupKey.toArray()));
     }
   }
 

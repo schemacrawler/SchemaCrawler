@@ -37,7 +37,13 @@ import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.ServiceLoader;
 import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
@@ -46,8 +52,7 @@ import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
- * Registry for mapping database connectors from DatabaseConnector-line
- * switch.
+ * Registry for mapping database connectors from DatabaseConnector-line switch.
  *
  * @author Sualeh Fatehi
  */
@@ -55,8 +60,8 @@ public final class DatabaseConnectorRegistry
   implements Iterable<DatabaseServerType>
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
-    DatabaseConnectorRegistry.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(DatabaseConnectorRegistry.class.getName());
 
   public static DatabaseConnectorRegistry getDatabaseConnectorRegistry()
   {
@@ -70,22 +75,26 @@ public final class DatabaseConnectorRegistry
   private static Map<String, DatabaseConnector> loadDatabaseConnectorRegistry()
   {
 
-    final Map<String, DatabaseConnector> databaseConnectorRegistry = new HashMap<>();
+    final Map<String, DatabaseConnector> databaseConnectorRegistry =
+      new HashMap<>();
 
     try
     {
-      final ServiceLoader<DatabaseConnector> serviceLoader = ServiceLoader.load(
-        DatabaseConnector.class);
+      final ServiceLoader<DatabaseConnector> serviceLoader =
+        ServiceLoader.load(DatabaseConnector.class);
       for (final DatabaseConnector databaseConnector : serviceLoader)
       {
-        final String databaseSystemIdentifier = databaseConnector.getDatabaseServerType()
-                                                                 .getDatabaseSystemIdentifier();
+        final String databaseSystemIdentifier = databaseConnector
+          .getDatabaseServerType()
+          .getDatabaseSystemIdentifier();
         try
         {
           LOGGER.log(Level.CONFIG,
                      new StringFormat("Loading database connector, %s=%s",
                                       databaseSystemIdentifier,
-                                      databaseConnector.getClass().getName()));
+                                      databaseConnector
+                                        .getClass()
+                                        .getName()));
           // Put in map
           databaseConnectorRegistry.put(databaseSystemIdentifier,
                                         databaseConnector);
@@ -95,7 +104,9 @@ public final class DatabaseConnectorRegistry
           LOGGER.log(Level.CONFIG,
                      new StringFormat("Could not load database connector, %s=%s",
                                       databaseSystemIdentifier,
-                                      databaseConnector.getClass().getName()),
+                                      databaseConnector
+                                        .getClass()
+                                        .getName()),
                      e);
         }
       }
@@ -124,7 +135,9 @@ public final class DatabaseConnectorRegistry
       for (final Driver driver : Collections.list(DriverManager.getDrivers()))
       {
         buffer.append(String.format("%n%s %d.%d",
-                                    driver.getClass().getName(),
+                                    driver
+                                      .getClass()
+                                      .getName(),
                                     driver.getMajorVersion(),
                                     driver.getMinorVersion()));
       }
@@ -135,6 +148,7 @@ public final class DatabaseConnectorRegistry
       LOGGER.log(Level.FINE, "Could not log registered JDBC drivers", e);
     }
   }
+
   private static DatabaseConnectorRegistry databaseConnectorRegistrySingleton;
   private final Map<String, DatabaseConnector> databaseConnectorRegistry;
 
@@ -166,7 +180,9 @@ public final class DatabaseConnectorRegistry
     try
     {
       checkConnection(connection);
-      final String url = connection.getMetaData().getURL();
+      final String url = connection
+        .getMetaData()
+        .getURL();
       return lookupDatabaseConnectorFromUrl(url);
     }
     catch (final SQLException e)

@@ -40,7 +40,7 @@ public final class Entities
    * XML escapes the characters in some text.
    *
    * @param text
-   *        Text to escape.
+   *   Text to escape.
    * @return XML-escaped text
    */
   public static String escapeForXMLAttribute(final String text)
@@ -78,7 +78,7 @@ public final class Entities
    * XML escapes the characters in some text.
    *
    * @param text
-   *        Text to escape.
+   *   Text to escape.
    * @return XML-escaped text
    */
   public static String escapeForXMLElement(final String text)

@@ -41,7 +41,6 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -71,24 +70,29 @@ public class TableCountsTest
     try (final TestWriter out = testout;)
     {
 
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-        .toOptions();
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+        SchemaCrawlerOptionsBuilder
+          .builder()
+          .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+          .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+        schemaCrawlerOptionsBuilder.toOptions();
 
       final Catalog baseCatalog = getCatalog(connection, schemaCrawlerOptions);
-      final CatalogWithCounts catalog = new CatalogWithCounts(baseCatalog,
-                                                              connection,
-                                                              schemaCrawlerOptions);
-      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
+      final CatalogWithCounts catalog =
+        new CatalogWithCounts(baseCatalog, connection, schemaCrawlerOptions);
+      final Schema[] schemas = catalog
+        .getSchemas()
+        .toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(5));
-      for (final Schema schema: schemas)
+      for (final Schema schema : schemas)
       {
         out.println("schema: " + schema.getFullName());
-        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
+        final Table[] tables = catalog
+          .getTables(schema)
+          .toArray(new Table[0]);
         Arrays.sort(tables, NamedObjectSort.alphabetical);
-        for (final Table table: tables)
+        for (final Table table : tables)
         {
           out.println("  table: " + table.getFullName());
           final long count = CountsUtility.getRowCount(table);
@@ -97,8 +101,7 @@ public class TableCountsTest
       }
     }
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext
-                 .testMethodFullName())));
+               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
 }

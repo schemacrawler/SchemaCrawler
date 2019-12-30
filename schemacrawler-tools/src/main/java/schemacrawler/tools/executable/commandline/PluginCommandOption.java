@@ -107,8 +107,10 @@ public class PluginCommandOption
   {
     return new StringJoiner(", ",
                             PluginCommandOption.class.getSimpleName() + "[",
-                            "]").add("name='" + name + "'")
-      .add("valueClass=" + valueClass.getCanonicalName()).toString();
+                            "]")
+      .add("name='" + name + "'")
+      .add("valueClass=" + valueClass.getCanonicalName())
+      .toString();
   }
 
 }

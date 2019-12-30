@@ -47,8 +47,8 @@ public class FileInputResource
   implements InputResource
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(FileInputResource.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(FileInputResource.class.getName());
 
   private final Path inputFile;
 
@@ -61,7 +61,8 @@ public class FileInputResource
   private FileInputResource(final Path filePath, final boolean allowEmptyFile)
     throws IOException
   {
-    inputFile = requireNonNull(filePath, "No file path provided").normalize()
+    inputFile = requireNonNull(filePath, "No file path provided")
+      .normalize()
       .toAbsolutePath();
     if (!isFileReadable(inputFile))
     {

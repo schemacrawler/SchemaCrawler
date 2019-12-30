@@ -43,36 +43,39 @@ import sf.util.UtilityMarker;
 public final class WeakAssociationsUtility
 {
 
-  private static final String WEAK_ASSOCIATIONS_KEY = "schemacrawler.weak_associations";
-
-  public static final Collection<WeakAssociationForeignKey> getWeakAssociations(final Table table)
-  {
-    if (table == null)
-    {
-      return null;
-    }
-
-    final SortedSet<WeakAssociationForeignKey> weakAssociations = table
-      .getAttribute(WEAK_ASSOCIATIONS_KEY,
-                    new TreeSet<WeakAssociationForeignKey>());
-    final List<WeakAssociationForeignKey> weakAssociationsList = new ArrayList<>(weakAssociations);
-    weakAssociationsList.sort(naturalOrder());
-    return weakAssociationsList;
-  }
+  private static final String WEAK_ASSOCIATIONS_KEY =
+    "schemacrawler.weak_associations";
 
   static void addWeakAssociationToTable(final Table table,
                                         final WeakAssociationForeignKey weakAssociation)
   {
     if (table != null && weakAssociation != null)
     {
-      final SortedSet<WeakAssociationForeignKey> tableWeakAssociations = table
-        .getAttribute(WEAK_ASSOCIATIONS_KEY,
-                      new TreeSet<WeakAssociationForeignKey>());
+      final SortedSet<WeakAssociationForeignKey> tableWeakAssociations =
+        table.getAttribute(WEAK_ASSOCIATIONS_KEY,
+                           new TreeSet<WeakAssociationForeignKey>());
 
       tableWeakAssociations.add(weakAssociation);
 
       table.setAttribute(WEAK_ASSOCIATIONS_KEY, tableWeakAssociations);
     }
+  }
+
+  public static final Collection<WeakAssociationForeignKey> getWeakAssociations(
+    final Table table)
+  {
+    if (table == null)
+    {
+      return null;
+    }
+
+    final SortedSet<WeakAssociationForeignKey> weakAssociations =
+      table.getAttribute(WEAK_ASSOCIATIONS_KEY,
+                         new TreeSet<WeakAssociationForeignKey>());
+    final List<WeakAssociationForeignKey> weakAssociationsList =
+      new ArrayList<>(weakAssociations);
+    weakAssociationsList.sort(naturalOrder());
+    return weakAssociationsList;
   }
 
   private WeakAssociationsUtility()

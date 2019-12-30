@@ -69,16 +69,21 @@ final class DataTextFormatter
     final String message = getRowCountMessage(number);
     return message;
   }
+
   private final Operation operation;
   private int dataBlockCount;
 
   /**
    * Text formatting of data.
    *
-   * @param operation             Options for text formatting of data
-   * @param options               Options for text formatting of data
-   * @param outputOptions         Options for text formatting of data
-   * @param identifierQuoteString Quote character for identifier
+   * @param operation
+   *   Options for text formatting of data
+   * @param options
+   *   Options for text formatting of data
+   * @param outputOptions
+   *   Options for text formatting of data
+   * @param identifierQuoteString
+   *   Quote character for identifier
    */
   DataTextFormatter(final Operation operation,
                     final OperationOptions options,
@@ -157,8 +162,10 @@ final class DataTextFormatter
   /**
    * Handles an aggregate operation, such as a count, for a given table.
    *
-   * @param title   Title
-   * @param results Results
+   * @param title
+   *   Title
+   * @param results
+   *   Results
    */
   private void handleAggregateOperationForTable(final String title,
                                                 final ResultSet results)
@@ -206,8 +213,8 @@ final class DataTextFormatter
       formattingHelper.writeObjectNameRow("", title, "", Color.white);
       try
       {
-        final DataResultSet dataRows = new DataResultSet(rows,
-                                                         options.isShowLobs());
+        final DataResultSet dataRows =
+          new DataResultSet(rows, options.isShowLobs());
 
         formattingHelper.writeRowHeader(dataRows.getColumnNames());
 
@@ -229,7 +236,8 @@ final class DataTextFormatter
     while (dataRows.next())
     {
       final List<Object> currentRow = dataRows.row();
-      final Object[] columnData = currentRow.toArray(new Object[currentRow.size()]);
+      final Object[] columnData =
+        currentRow.toArray(new Object[currentRow.size()]);
       formattingHelper.writeRow(columnData);
     }
   }

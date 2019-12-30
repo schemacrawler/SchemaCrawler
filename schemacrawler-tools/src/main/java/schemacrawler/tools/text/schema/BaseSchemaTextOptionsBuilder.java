@@ -95,8 +95,8 @@ public abstract class BaseSchemaTextOptionsBuilder<B extends BaseSchemaTextOptio
 
     final Config config = new Config(map);
 
-    isShowStandardColumnTypeNames = config
-      .getBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES);
+    isShowStandardColumnTypeNames =
+      config.getBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES);
     isShowOrdinalNumbers = config.getBooleanValue(SHOW_ORDINAL_NUMBERS);
     isShowRowCounts = config.getBooleanValue(SHOW_ROW_COUNTS);
 
@@ -104,16 +104,16 @@ public abstract class BaseSchemaTextOptionsBuilder<B extends BaseSchemaTextOptio
     isHidePrimaryKeyNames = config.getBooleanValue(HIDE_PRIMARY_KEY_NAMES);
     isHideIndexNames = config.getBooleanValue(HIDE_INDEX_NAMES);
     isHideTriggerNames = config.getBooleanValue(HIDE_TRIGGER_NAMES);
-    isHideRoutineSpecificNames = config
-      .getBooleanValue(HIDE_ROUTINE_SPECIFIC_NAMES);
+    isHideRoutineSpecificNames =
+      config.getBooleanValue(HIDE_ROUTINE_SPECIFIC_NAMES);
     isHideTableConstraintNames = config.getBooleanValue(HIDE_CONSTRAINT_NAMES);
     isHideRemarks = config.getBooleanValue(HIDE_REMARKS);
     isShowWeakAssociations = config.getBooleanValue(SHOW_WEAK_ASSOCIATIONS);
 
-    isAlphabeticalSortForForeignKeys = config
-      .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS);
-    isAlphabeticalSortForIndexes = config
-      .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_INDEXES);
+    isAlphabeticalSortForForeignKeys =
+      config.getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS);
+    isAlphabeticalSortForIndexes =
+      config.getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_INDEXES);
 
     return (B) this;
   }
@@ -140,8 +140,8 @@ public abstract class BaseSchemaTextOptionsBuilder<B extends BaseSchemaTextOptio
     isHideRemarks = options.isHideRemarks();
     isShowWeakAssociations = options.isShowWeakAssociations();
 
-    isAlphabeticalSortForForeignKeys = options
-      .isAlphabeticalSortForForeignKeys();
+    isAlphabeticalSortForForeignKeys =
+      options.isAlphabeticalSortForForeignKeys();
     isAlphabeticalSortForIndexes = options.isAlphabeticalSortForIndexes();
 
     return (B) this;
@@ -200,8 +200,7 @@ public abstract class BaseSchemaTextOptionsBuilder<B extends BaseSchemaTextOptio
   }
 
   /**
-   * Corresponds to the -noremarks=&lt;boolean&gt; command-line
-   * argument.
+   * Corresponds to the -noremarks=&lt;boolean&gt; command-line argument.
    */
   public final B noRemarks(final boolean value)
   {
@@ -240,8 +239,7 @@ public abstract class BaseSchemaTextOptionsBuilder<B extends BaseSchemaTextOptio
   }
 
   /**
-   * Corresponds to the --portable-names=&lt;boolean&gt; command-line
-   * argument.
+   * Corresponds to the --portable-names=&lt;boolean&gt; command-line argument.
    */
   public final B portableNames(final boolean value)
   {
@@ -325,8 +323,8 @@ public abstract class BaseSchemaTextOptionsBuilder<B extends BaseSchemaTextOptio
     config.setBooleanValue(HIDE_PRIMARY_KEY_NAMES, isHidePrimaryKeyNames);
     config.setBooleanValue(HIDE_INDEX_NAMES, isHideIndexNames);
     config.setBooleanValue(HIDE_TRIGGER_NAMES, isHideTriggerNames);
-    config
-      .setBooleanValue(HIDE_ROUTINE_SPECIFIC_NAMES, isHideRoutineSpecificNames);
+    config.setBooleanValue(HIDE_ROUTINE_SPECIFIC_NAMES,
+                           isHideRoutineSpecificNames);
     config.setBooleanValue(HIDE_CONSTRAINT_NAMES, isHideTableConstraintNames);
     config.setBooleanValue(HIDE_REMARKS, isHideRemarks);
     config.setBooleanValue(SHOW_WEAK_ASSOCIATIONS, isShowWeakAssociations);

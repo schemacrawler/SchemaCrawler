@@ -32,7 +32,15 @@ package schemacrawler.tools.text.schema;
 import static sf.util.Utility.isBlank;
 
 import schemacrawler.SchemaCrawlerInfo;
-import schemacrawler.schema.*;
+import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.CrawlInfo;
+import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schema.JdbcDriverInfo;
+import schemacrawler.schema.Routine;
+import schemacrawler.schema.Sequence;
+import schemacrawler.schema.Synonym;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseFormatter;
@@ -55,11 +63,16 @@ final class SchemaListFormatter
   /**
    * Text formatting of schema.
    *
-   * @param schemaTextDetailType  Types for text formatting of schema
-   * @param options               Options for text formatting of schema
-   * @param outputOptions         Options for text formatting of schema
-   * @param identifierQuoteString Quote character for identifier
-   * @throws SchemaCrawlerException On an exception
+   * @param schemaTextDetailType
+   *   Types for text formatting of schema
+   * @param options
+   *   Options for text formatting of schema
+   * @param outputOptions
+   *   Options for text formatting of schema
+   * @param identifierQuoteString
+   *   Quote character for identifier
+   * @throws SchemaCrawlerException
+   *   On an exception
    */
   SchemaListFormatter(final SchemaTextDetailType schemaTextDetailType,
                       final SchemaTextOptions options,
@@ -142,8 +155,8 @@ final class SchemaListFormatter
       return;
     }
 
-    formattingHelper
-      .writeHeader(DocumentHeaderType.subTitle, "System Information");
+    formattingHelper.writeHeader(DocumentHeaderType.subTitle,
+                                 "System Information");
 
     if (!options.isNoSchemaCrawlerInfo())
     {
@@ -152,8 +165,7 @@ final class SchemaListFormatter
                                          crawlInfo.getSchemaCrawlerInfo(),
                                          Alignment.inherit);
       formattingHelper.writeNameValueRow("generated on",
-                                         formatTimestamp(crawlInfo
-                                                           .getCrawlTimestamp()),
+                                         formatTimestamp(crawlInfo.getCrawlTimestamp()),
                                          Alignment.inherit);
     }
 
@@ -191,8 +203,9 @@ final class SchemaListFormatter
   @Override
   public void handle(final Routine routine)
   {
-    final String routineTypeDetail = String
-      .format("%s, %s", routine.getRoutineType(), routine.getReturnType());
+    final String routineTypeDetail = String.format("%s, %s",
+                                                   routine.getRoutineType(),
+                                                   routine.getReturnType());
     final String routineName;
     if (options.isShowUnqualifiedNames())
     {

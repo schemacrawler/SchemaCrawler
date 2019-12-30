@@ -64,24 +64,14 @@ public class SchemaTraverser
     return catalog;
   }
 
-  public SchemaTraversalHandler getHandler()
-  {
-    return handler;
-  }
-
-  public Comparator<NamedObject> getRoutinesComparator()
-  {
-    return routinesComparator;
-  }
-
-  public Comparator<NamedObject> getTablesComparator()
-  {
-    return tablesComparator;
-  }
-
   public void setCatalog(final Catalog catalog)
   {
     this.catalog = requireNonNull(catalog, "No catalog provided");
+  }
+
+  public SchemaTraversalHandler getHandler()
+  {
+    return handler;
   }
 
   public void setHandler(final SchemaTraversalHandler handler)
@@ -89,24 +79,34 @@ public class SchemaTraverser
     this.handler = requireNonNull(handler, "No handler provided");
   }
 
+  public Comparator<NamedObject> getRoutinesComparator()
+  {
+    return routinesComparator;
+  }
+
   public void setRoutinesComparator(final Comparator<NamedObject> routinesComparator)
   {
-    this.routinesComparator = requireNonNull(routinesComparator,
-                                             "No routines comparator provided");
+    this.routinesComparator =
+      requireNonNull(routinesComparator, "No routines comparator provided");
+  }
+
+  public Comparator<NamedObject> getTablesComparator()
+  {
+    return tablesComparator;
   }
 
   public void setTablesComparator(final Comparator<NamedObject> tablesComparator)
   {
-    this.tablesComparator = requireNonNull(tablesComparator,
-                                           "No tables comparator provided");
+    this.tablesComparator =
+      requireNonNull(tablesComparator, "No tables comparator provided");
   }
 
   public final void traverse()
     throws SchemaCrawlerException
   {
 
-    final Collection<ColumnDataType> columnDataTypes = catalog
-      .getColumnDataTypes();
+    final Collection<ColumnDataType> columnDataTypes =
+      catalog.getColumnDataTypes();
     final Collection<Table> tables = catalog.getTables();
     final Collection<Routine> routines = catalog.getRoutines();
     final Collection<Synonym> synonyms = catalog.getSynonyms();
@@ -125,7 +125,7 @@ public class SchemaTraverser
 
       final List<? extends Table> tablesList = new ArrayList<>(tables);
       tablesList.sort(tablesComparator);
-      for (final Table table: tablesList)
+      for (final Table table : tablesList)
       {
         handler.handle(table);
       }
@@ -139,7 +139,7 @@ public class SchemaTraverser
 
       final List<? extends Routine> routinesList = new ArrayList<>(routines);
       routinesList.sort(routinesComparator);
-      for (final Routine routine: routinesList)
+      for (final Routine routine : routinesList)
       {
         handler.handle(routine);
       }
@@ -150,7 +150,7 @@ public class SchemaTraverser
     if (!sequences.isEmpty())
     {
       handler.handleSequencesStart();
-      for (final Sequence sequence: sequences)
+      for (final Sequence sequence : sequences)
       {
         handler.handle(sequence);
       }
@@ -160,7 +160,7 @@ public class SchemaTraverser
     if (!synonyms.isEmpty())
     {
       handler.handleSynonymsStart();
-      for (final Synonym synonym: synonyms)
+      for (final Synonym synonym : synonyms)
       {
         handler.handle(synonym);
       }
@@ -170,7 +170,7 @@ public class SchemaTraverser
     if (!columnDataTypes.isEmpty())
     {
       handler.handleColumnDataTypesStart();
-      for (final ColumnDataType columnDataType: columnDataTypes)
+      for (final ColumnDataType columnDataType : columnDataTypes)
       {
         handler.handle(columnDataType);
       }

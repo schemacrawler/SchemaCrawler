@@ -87,9 +87,8 @@ public final class SchemaTextRenderer
     if (schemaTextOptions.isShowRowCounts()
         || schemaCrawlerOptions.isNoEmptyTables())
     {
-      aCatalog = new CatalogWithCounts(aCatalog,
-                                       connection,
-                                       schemaCrawlerOptions);
+      aCatalog =
+        new CatalogWithCounts(aCatalog, connection, schemaCrawlerOptions);
     }
 
     final SchemaTraversalHandler formatter = getSchemaTraversalHandler();
@@ -119,8 +118,8 @@ public final class SchemaTextRenderer
 
   public final void setSchemaTextOptions(final SchemaTextOptions schemaTextOptions)
   {
-    this.schemaTextOptions = requireNonNull(schemaTextOptions,
-                                            "No schema text options provided");
+    this.schemaTextOptions =
+      requireNonNull(schemaTextOptions, "No schema text options provided");
   }
 
   private SchemaTextDetailType getSchemaTextDetailType()
@@ -144,8 +143,8 @@ public final class SchemaTextRenderer
     final SchemaTraversalHandler formatter;
 
     final String identifierQuoteString = identifiers.getIdentifierQuoteString();
-    final TextOutputFormat outputFormat = TextOutputFormat.fromFormat(
-      outputOptions.getOutputFormatValue());
+    final TextOutputFormat outputFormat =
+      TextOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
     if (schemaTextDetailType == SchemaTextDetailType.list)
     {
       formatter = new SchemaListFormatter(schemaTextDetailType,
@@ -168,10 +167,10 @@ public final class SchemaTextRenderer
   {
     if (schemaTextOptions == null)
     {
-      schemaTextOptions = SchemaTextOptionsBuilder.builder()
-                                                  .fromConfig(
-                                                    additionalConfiguration)
-                                                  .toOptions();
+      schemaTextOptions = SchemaTextOptionsBuilder
+        .builder()
+        .fromConfig(additionalConfiguration)
+        .toOptions();
     }
   }
 

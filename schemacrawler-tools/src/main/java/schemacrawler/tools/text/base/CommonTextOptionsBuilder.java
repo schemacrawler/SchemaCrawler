@@ -51,7 +51,9 @@ public final class CommonTextOptionsBuilder
 
   public static CommonTextOptions newCommonTextOptions(final Config config)
   {
-    return new CommonTextOptionsBuilder().fromConfig(config).toOptions();
+    return new CommonTextOptionsBuilder()
+      .fromConfig(config)
+      .toOptions();
   }
 
   private CommonTextOptionsBuilder()

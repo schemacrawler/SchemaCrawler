@@ -44,7 +44,14 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.schemacrawler.*;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.ExcludeAll;
+import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
@@ -63,15 +70,21 @@ public abstract class AbstractSchemaCrawlerOutputTest
 
   private static final String COMPOSITE_OUTPUT = "composite_output/";
   private static final String ORDINAL_OUTPUT = "ordinal_output/";
-  private static final String TABLE_ROW_COUNT_OUTPUT = "table_row_count_output/";
-  private static final String SHOW_WEAK_ASSOCIATIONS_OUTPUT = "show_weak_associations_output/";
-  private static final String HIDE_CONSTRAINT_NAMES_OUTPUT = "hide_constraint_names_output/";
-  private static final String UNQUALIFIED_NAMES_OUTPUT = "unqualified_names_output/";
+  private static final String TABLE_ROW_COUNT_OUTPUT =
+    "table_row_count_output/";
+  private static final String SHOW_WEAK_ASSOCIATIONS_OUTPUT =
+    "show_weak_associations_output/";
+  private static final String HIDE_CONSTRAINT_NAMES_OUTPUT =
+    "hide_constraint_names_output/";
+  private static final String UNQUALIFIED_NAMES_OUTPUT =
+    "unqualified_names_output/";
   private static final String ROUTINES_OUTPUT = "routines_output/";
   private static final String NO_REMARKS_OUTPUT = "no_remarks_output/";
   private static final String WITH_TITLE_OUTPUT = "with_title_output/";
-  private static final String NO_SCHEMA_COLORS_OUTPUT = "no_schema_colors_output/";
-  private static final String IDENTIFIER_QUOTING_OUTPUT = "identifier_quoting_output/";
+  private static final String NO_SCHEMA_COLORS_OUTPUT =
+    "no_schema_colors_output/";
+  private static final String IDENTIFIER_QUOTING_OUTPUT =
+    "identifier_quoting_output/";
 
   @Test
   public void compareCompositeOutput(final Connection connection)
@@ -92,41 +105,50 @@ public abstract class AbstractSchemaCrawlerOutputTest
       + Operation.dump,
       SchemaTextDetailType.brief + "," + Operation.count,
       queryCommand1 + "," + queryCommand2 + "," + Operation.count + ","
-      + SchemaTextDetailType.brief, };
+      + SchemaTextDetailType.brief,
+      };
 
-    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
-      .builder();
-    textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo()
+    final SchemaTextOptionsBuilder textOptionsBuilder =
+      SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder
+      .noSchemaCrawlerInfo(false)
+      .showDatabaseInfo()
       .showJdbcDriverInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    assertAll(outputFormats().flatMap(outputFormat -> Arrays.stream(commands)
+    assertAll(outputFormats().flatMap(outputFormat -> Arrays
+      .stream(commands)
       .map(command -> () -> {
 
         final String referenceFile = command + "." + outputFormat.getFormat();
 
         final Config config = loadHsqldbConfig();
 
-        final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
-          .builder().fromConfig(config);
+        final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+          SchemaRetrievalOptionsBuilder
+            .builder()
+            .fromConfig(config);
 
-        final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-          .builder().includeSchemas(new RegularExpressionExclusionRule(
-            ".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
-          .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-          .includeAllSequences().includeAllRoutines();
-        final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-          .toOptions();
+        final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+          SchemaCrawlerOptionsBuilder
+            .builder()
+            .includeSchemas(new RegularExpressionExclusionRule(
+              ".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
+            .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+            .includeAllSequences()
+            .includeAllRoutines();
+        final SchemaCrawlerOptions schemaCrawlerOptions =
+          schemaCrawlerOptionsBuilder.toOptions();
 
-        queriesConfig
-          .putAll(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
+        queriesConfig.putAll(SchemaTextOptionsBuilder
+                               .builder(textOptions)
+                               .toConfig());
 
-        final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-          command);
+        final SchemaCrawlerExecutable executable =
+          new SchemaCrawlerExecutable(command);
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setAdditionalConfiguration(queriesConfig);
-        executable
-          .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
+        executable.setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
 
         assertThat(outputOf(executableExecution(connection,
                                                 executable,
@@ -142,12 +164,18 @@ public abstract class AbstractSchemaCrawlerOutputTest
   {
     clean(HIDE_CONSTRAINT_NAMES_OUTPUT);
 
-    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
-      .builder();
-    textOptionsBuilder.noHeader(false).noFooter(false)
-      .noSchemaCrawlerInfo(false).showDatabaseInfo(true)
-      .showJdbcDriverInfo(true).noPrimaryKeyNames().noForeignKeyNames()
-      .noIndexNames().noConstraintNames();
+    final SchemaTextOptionsBuilder textOptionsBuilder =
+      SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder
+      .noHeader(false)
+      .noFooter(false)
+      .noSchemaCrawlerInfo(false)
+      .showDatabaseInfo(true)
+      .showJdbcDriverInfo(true)
+      .noPrimaryKeyNames()
+      .noForeignKeyNames()
+      .noIndexNames()
+      .noConstraintNames();
     textOptionsBuilder.noConstraintNames();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
@@ -158,32 +186,35 @@ public abstract class AbstractSchemaCrawlerOutputTest
 
       final Config config = loadHsqldbConfig();
 
-      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
-        .builder().fromConfig(config);
+      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+        SchemaRetrievalOptionsBuilder
+          .builder()
+          .fromConfig(config);
 
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-        .includeSchemas(new RegularExpressionExclusionRule(
-          ".*\\.SYSTEM_LOBS|.*\\.FOR_LINT")).includeAllSequences()
-        .includeAllRoutines();
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-        .toOptions();
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+        SchemaCrawlerOptionsBuilder
+          .builder()
+          .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+          .includeSchemas(new RegularExpressionExclusionRule(
+            ".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
+          .includeAllSequences()
+          .includeAllRoutines();
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+        schemaCrawlerOptionsBuilder.toOptions();
 
-      final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder
-        .builder(textOptions);
+      final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
+        SchemaTextOptionsBuilder.builder(textOptions);
       schemaTextOptionsBuilder.sortTables(true);
 
       final String command = String.format("%s,%s,%s",
                                            SchemaTextDetailType.details,
                                            Operation.count,
                                            Operation.dump);
-      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-        command);
+      final SchemaCrawlerExecutable executable =
+        new SchemaCrawlerExecutable(command);
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-      executable
-        .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-      executable
-        .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
+      executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
+      executable.setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
 
       assertThat(outputOf(executableExecution(connection,
                                               executable,
@@ -200,34 +231,40 @@ public abstract class AbstractSchemaCrawlerOutputTest
   {
     clean(IDENTIFIER_QUOTING_OUTPUT);
 
-    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
-      .builder();
-    textOptionsBuilder.noRemarks().noSchemaCrawlerInfo().showDatabaseInfo(false)
+    final SchemaTextOptionsBuilder textOptionsBuilder =
+      SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder
+      .noRemarks()
+      .noSchemaCrawlerInfo()
+      .showDatabaseInfo(false)
       .showJdbcDriverInfo(false);
 
-    assertAll(Arrays.stream(IdentifierQuotingStrategy.values())
+    assertAll(Arrays
+                .stream(IdentifierQuotingStrategy.values())
                 .map(identifierQuotingStrategy -> () -> {
 
                   final OutputFormat outputFormat = TextOutputFormat.text;
-                  textOptionsBuilder
-                    .withIdentifierQuotingStrategy(identifierQuotingStrategy);
-                  final SchemaTextOptions textOptions = textOptionsBuilder
-                    .toOptions();
+                  textOptionsBuilder.withIdentifierQuotingStrategy(
+                    identifierQuotingStrategy);
+                  final SchemaTextOptions textOptions =
+                    textOptionsBuilder.toOptions();
 
                   final String referenceFile =
                     "schema_" + identifierQuotingStrategy.name() + "."
                     + outputFormat.getFormat();
 
-                  final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+                  final SchemaCrawlerOptionsBuilder
+                    schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
                     .builder()
                     .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
                     .includeSchemas(new RegularExpressionInclusionRule(
-                      ".*\\.BOOKS")).includeAllRoutines();
-                  final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-                    .toOptions();
+                      ".*\\.BOOKS"))
+                    .includeAllRoutines();
+                  final SchemaCrawlerOptions schemaCrawlerOptions =
+                    schemaCrawlerOptionsBuilder.toOptions();
 
-                  final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-                    SchemaTextDetailType.schema.name());
+                  final SchemaCrawlerExecutable executable =
+                    new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
                   executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
                   executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
                                                           .builder(textOptions)
@@ -248,9 +285,12 @@ public abstract class AbstractSchemaCrawlerOutputTest
   {
     clean(NO_REMARKS_OUTPUT);
 
-    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
-      .builder();
-    textOptionsBuilder.noRemarks().noSchemaCrawlerInfo().showDatabaseInfo(false)
+    final SchemaTextOptionsBuilder textOptionsBuilder =
+      SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder
+      .noRemarks()
+      .noSchemaCrawlerInfo()
+      .showDatabaseInfo(false)
       .showJdbcDriverInfo(false);
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
@@ -259,18 +299,21 @@ public abstract class AbstractSchemaCrawlerOutputTest
       final String referenceFile =
         "schema_detailed." + outputFormat.getFormat();
 
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.detailed())
-        .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
-        .includeAllRoutines();
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-        .toOptions();
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+        SchemaCrawlerOptionsBuilder
+          .builder()
+          .withSchemaInfoLevel(SchemaInfoLevelBuilder.detailed())
+          .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
+          .includeAllRoutines();
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+        schemaCrawlerOptionsBuilder.toOptions();
 
-      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-        SchemaTextDetailType.schema.name());
+      final SchemaCrawlerExecutable executable =
+        new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
-                                              .builder(textOptions).toConfig());
+                                              .builder(textOptions)
+                                              .toConfig());
 
       assertThat(outputOf(executableExecution(connection,
                                               executable,
@@ -286,10 +329,14 @@ public abstract class AbstractSchemaCrawlerOutputTest
   {
     clean(NO_SCHEMA_COLORS_OUTPUT);
 
-    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
-      .builder();
-    textOptionsBuilder.noRemarks().noSchemaCrawlerInfo().showDatabaseInfo(false)
-      .showJdbcDriverInfo(false).noSchemaColors();
+    final SchemaTextOptionsBuilder textOptionsBuilder =
+      SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder
+      .noRemarks()
+      .noSchemaCrawlerInfo()
+      .showDatabaseInfo(false)
+      .showJdbcDriverInfo(false)
+      .noSchemaColors();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
     assertAll(outputFormats().map(outputFormat -> () -> {
@@ -297,18 +344,21 @@ public abstract class AbstractSchemaCrawlerOutputTest
       final String referenceFile =
         "schema_detailed." + outputFormat.getFormat();
 
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
-        .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
-        .includeAllRoutines();
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-        .toOptions();
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+        SchemaCrawlerOptionsBuilder
+          .builder()
+          .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
+          .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
+          .includeAllRoutines();
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+        schemaCrawlerOptionsBuilder.toOptions();
 
-      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-        SchemaTextDetailType.schema.name());
+      final SchemaCrawlerExecutable executable =
+        new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
-                                              .builder(textOptions).toConfig());
+                                              .builder(textOptions)
+                                              .toConfig());
 
       assertThat(outputOf(executableExecution(connection,
                                               executable,
@@ -324,9 +374,11 @@ public abstract class AbstractSchemaCrawlerOutputTest
   {
     clean(ORDINAL_OUTPUT);
 
-    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
-      .builder();
-    textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo()
+    final SchemaTextOptionsBuilder textOptionsBuilder =
+      SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder
+      .noSchemaCrawlerInfo(false)
+      .showDatabaseInfo()
       .showJdbcDriverInfo();
     textOptionsBuilder.showOrdinalNumbers();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
@@ -338,32 +390,35 @@ public abstract class AbstractSchemaCrawlerOutputTest
 
       final Config config = loadHsqldbConfig();
 
-      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
-        .builder().fromConfig(config);
+      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+        SchemaRetrievalOptionsBuilder
+          .builder()
+          .fromConfig(config);
 
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-        .includeSchemas(new RegularExpressionExclusionRule(
-          ".*\\.SYSTEM_LOBS|.*\\.FOR_LINT")).includeAllSequences()
-        .includeAllRoutines();
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-        .toOptions();
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+        SchemaCrawlerOptionsBuilder
+          .builder()
+          .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+          .includeSchemas(new RegularExpressionExclusionRule(
+            ".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
+          .includeAllSequences()
+          .includeAllRoutines();
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+        schemaCrawlerOptionsBuilder.toOptions();
 
-      final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder
-        .builder(textOptions);
+      final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
+        SchemaTextOptionsBuilder.builder(textOptions);
       schemaTextOptionsBuilder.sortTables(true);
 
       final String command = String.format("%s,%s,%s",
                                            SchemaTextDetailType.details,
                                            Operation.count,
                                            Operation.dump);
-      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-        command);
+      final SchemaCrawlerExecutable executable =
+        new SchemaCrawlerExecutable(command);
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-      executable
-        .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-      executable
-        .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
+      executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
+      executable.setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
 
       assertThat(outputOf(executableExecution(connection,
                                               executable,
@@ -379,10 +434,13 @@ public abstract class AbstractSchemaCrawlerOutputTest
   {
     clean(ROUTINES_OUTPUT);
 
-    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
-      .builder();
-    textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo()
-      .showJdbcDriverInfo().showUnqualifiedNames();
+    final SchemaTextOptionsBuilder textOptionsBuilder =
+      SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder
+      .noSchemaCrawlerInfo(false)
+      .showDatabaseInfo()
+      .showJdbcDriverInfo()
+      .showUnqualifiedNames();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
     assertAll(outputFormats().map(outputFormat -> () -> {
@@ -391,29 +449,33 @@ public abstract class AbstractSchemaCrawlerOutputTest
 
       final Config config = loadHsqldbConfig();
 
-      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
-        .builder().fromConfig(config);
+      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+        SchemaRetrievalOptionsBuilder
+          .builder()
+          .fromConfig(config);
 
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder().includeSchemas(new RegularExpressionExclusionRule(
-          ".*\\.SYSTEM_LOBS|.*\\.FOR_LINT")).includeTables(new ExcludeAll())
-        .includeAllRoutines().includeSequences(new ExcludeAll())
-        .includeSynonyms(new ExcludeAll())
-        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-        .toOptions();
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+        SchemaCrawlerOptionsBuilder
+          .builder()
+          .includeSchemas(new RegularExpressionExclusionRule(
+            ".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
+          .includeTables(new ExcludeAll())
+          .includeAllRoutines()
+          .includeSequences(new ExcludeAll())
+          .includeSynonyms(new ExcludeAll())
+          .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+        schemaCrawlerOptionsBuilder.toOptions();
 
-      final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder
-        .builder(textOptions);
+      final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
+        SchemaTextOptionsBuilder.builder(textOptions);
       schemaTextOptionsBuilder.sortTables(true);
 
-      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-        SchemaTextDetailType.details.name());
+      final SchemaCrawlerExecutable executable =
+        new SchemaCrawlerExecutable(SchemaTextDetailType.details.name());
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-      executable
-        .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-      executable
-        .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
+      executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
+      executable.setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
 
       assertThat(outputOf(executableExecution(connection,
                                               executable,
@@ -429,9 +491,11 @@ public abstract class AbstractSchemaCrawlerOutputTest
   {
     clean(SHOW_WEAK_ASSOCIATIONS_OUTPUT);
 
-    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
-      .builder();
-    textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo()
+    final SchemaTextOptionsBuilder textOptionsBuilder =
+      SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder
+      .noSchemaCrawlerInfo(false)
+      .showDatabaseInfo()
       .showJdbcDriverInfo();
     textOptionsBuilder.weakAssociations();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
@@ -441,22 +505,24 @@ public abstract class AbstractSchemaCrawlerOutputTest
       final String referenceFile =
         "schema_standard." + outputFormat.getFormat();
 
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
-        .includeSchemas(new RegularExpressionExclusionRule(
-          ".*\\.SYSTEM_LOBS|.*\\.FOR_LINT")).includeAllRoutines();
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-        .toOptions();
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+        SchemaCrawlerOptionsBuilder
+          .builder()
+          .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
+          .includeSchemas(new RegularExpressionExclusionRule(
+            ".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
+          .includeAllRoutines();
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+        schemaCrawlerOptionsBuilder.toOptions();
 
-      final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder
-        .builder(textOptions);
+      final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
+        SchemaTextOptionsBuilder.builder(textOptions);
       schemaTextOptionsBuilder.sortTables(true);
 
-      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-        SchemaTextDetailType.schema.name());
+      final SchemaCrawlerExecutable executable =
+        new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-      executable
-        .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
+      executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
 
       assertThat(outputOf(executableExecution(connection,
                                               executable,
@@ -473,9 +539,11 @@ public abstract class AbstractSchemaCrawlerOutputTest
   {
     clean(TABLE_ROW_COUNT_OUTPUT);
 
-    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
-      .builder();
-    textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo()
+    final SchemaTextOptionsBuilder textOptionsBuilder =
+      SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder
+      .noSchemaCrawlerInfo(false)
+      .showDatabaseInfo()
       .showJdbcDriverInfo();
     textOptionsBuilder.showRowCounts();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
@@ -485,22 +553,24 @@ public abstract class AbstractSchemaCrawlerOutputTest
       final String referenceFile =
         "details_maximum." + outputFormat.getFormat();
 
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-        .includeSchemas(new RegularExpressionExclusionRule(
-          ".*\\.SYSTEM_LOBS|.*\\.FOR_LINT")).includeAllRoutines();
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-        .toOptions();
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+        SchemaCrawlerOptionsBuilder
+          .builder()
+          .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+          .includeSchemas(new RegularExpressionExclusionRule(
+            ".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
+          .includeAllRoutines();
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+        schemaCrawlerOptionsBuilder.toOptions();
 
-      final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder
-        .builder(textOptions);
+      final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
+        SchemaTextOptionsBuilder.builder(textOptions);
       schemaTextOptionsBuilder.sortTables(true);
 
-      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-        SchemaTextDetailType.details.name());
+      final SchemaCrawlerExecutable executable =
+        new SchemaCrawlerExecutable(SchemaTextDetailType.details.name());
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-      executable
-        .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
+      executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
 
       assertThat(outputOf(executableExecution(connection,
                                               executable,
@@ -516,10 +586,13 @@ public abstract class AbstractSchemaCrawlerOutputTest
   {
     clean(UNQUALIFIED_NAMES_OUTPUT);
 
-    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
-      .builder();
-    textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo()
-      .showJdbcDriverInfo().showUnqualifiedNames();
+    final SchemaTextOptionsBuilder textOptionsBuilder =
+      SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder
+      .noSchemaCrawlerInfo(false)
+      .showDatabaseInfo()
+      .showJdbcDriverInfo()
+      .showUnqualifiedNames();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
     assertAll(outputFormats().map(outputFormat -> () -> {
@@ -529,29 +602,32 @@ public abstract class AbstractSchemaCrawlerOutputTest
 
       final Config config = loadHsqldbConfig();
 
-      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
-        .builder().fromConfig(config);
+      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+        SchemaRetrievalOptionsBuilder
+          .builder()
+          .fromConfig(config);
 
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-        .includeSchemas(new RegularExpressionExclusionRule(
-          ".*\\.SYSTEM_LOBS|.*\\.FOR_LINT")).includeAllSequences()
-        .includeAllRoutines();
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-        .toOptions();
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+        SchemaCrawlerOptionsBuilder
+          .builder()
+          .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+          .includeSchemas(new RegularExpressionExclusionRule(
+            ".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
+          .includeAllSequences()
+          .includeAllRoutines();
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+        schemaCrawlerOptionsBuilder.toOptions();
 
-      final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder
-        .builder(textOptions);
+      final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
+        SchemaTextOptionsBuilder.builder(textOptions);
       schemaTextOptionsBuilder.sortTables(true);
 
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
         SchemaTextDetailType.details + "," + Operation.count + ","
         + Operation.dump);
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-      executable
-        .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-      executable
-        .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
+      executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
+      executable.setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
 
       assertThat(outputOf(executableExecution(connection,
                                               executable,
@@ -567,36 +643,42 @@ public abstract class AbstractSchemaCrawlerOutputTest
   {
     clean(WITH_TITLE_OUTPUT);
 
-    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
-      .builder();
-    textOptionsBuilder.noRemarks().noSchemaCrawlerInfo().showDatabaseInfo(false)
+    final SchemaTextOptionsBuilder textOptionsBuilder =
+      SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder
+      .noRemarks()
+      .noSchemaCrawlerInfo()
+      .showDatabaseInfo(false)
       .showJdbcDriverInfo(false);
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    assertAll(Arrays.asList("list", "schema").stream()
+    assertAll(Arrays
+                .asList("list", "schema")
+                .stream()
                 .flatMap(command -> outputFormats().map(outputFormat -> () -> {
 
                   final String referenceFile = String.format("%s_with_title.%s",
                                                              command,
-                                                             outputFormat
-                                                               .getFormat());
+                                                             outputFormat.getFormat());
 
-                  final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+                  final SchemaCrawlerOptionsBuilder
+                    schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
                     .builder()
                     .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
                     .includeSchemas(new RegularExpressionInclusionRule(
                       ".*\\.BOOKS"));
-                  final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-                    .toOptions();
+                  final SchemaCrawlerOptions schemaCrawlerOptions =
+                    schemaCrawlerOptionsBuilder.toOptions();
 
-                  final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
-                    .builder()
-                    .title("Database Design for Books and Publishers");
-                  final OutputOptions outputOptions = outputOptionsBuilder
-                    .toOptions();
+                  final OutputOptionsBuilder outputOptionsBuilder =
+                    OutputOptionsBuilder
+                      .builder()
+                      .title("Database Design for Books and Publishers");
+                  final OutputOptions outputOptions =
+                    outputOptionsBuilder.toOptions();
 
-                  final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-                    command);
+                  final SchemaCrawlerExecutable executable =
+                    new SchemaCrawlerExecutable(command);
                   executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
                   executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
                                                           .builder(textOptions)

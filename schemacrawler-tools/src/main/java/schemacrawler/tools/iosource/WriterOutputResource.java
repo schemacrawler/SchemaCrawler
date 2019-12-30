@@ -42,8 +42,8 @@ public final class WriterOutputResource
   implements OutputResource
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(WriterOutputResource.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(WriterOutputResource.class.getName());
 
   private final Writer writer;
 

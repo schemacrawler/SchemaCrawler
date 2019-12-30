@@ -34,8 +34,8 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Table;
 
 /**
- * Represents a single column mapping from a primary key column to a
- * foreign key column.
+ * Represents a single column mapping from a primary key column to a foreign key
+ * column.
  *
  * @author Sualeh Fatehi
  */
@@ -66,8 +66,12 @@ public final class WeakAssociation
 
     final ColumnDataType fkColumnType = foreignKeyColumn.getColumnDataType();
     final ColumnDataType pkColumnType = primaryKeyColumn.getColumnDataType();
-    final boolean isValid = fkColumnType.getJavaSqlType().getName()
-      .equals(pkColumnType.getJavaSqlType().getName());
+    final boolean isValid = fkColumnType
+      .getJavaSqlType()
+      .getName()
+      .equals(pkColumnType
+                .getJavaSqlType()
+                .getName());
     return isValid;
   }
 

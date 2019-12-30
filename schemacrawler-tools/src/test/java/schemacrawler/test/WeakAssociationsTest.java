@@ -43,7 +43,6 @@ import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -75,31 +74,38 @@ public class WeakAssociationsTest
     try (final TestWriter out = testout;)
     {
 
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-        .toOptions();
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+        SchemaCrawlerOptionsBuilder
+          .builder()
+          .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+          .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+        schemaCrawlerOptionsBuilder.toOptions();
 
       final Catalog baseCatalog = getCatalog(connection, schemaCrawlerOptions);
-      final CatalogWithAssociations catalog = new CatalogWithAssociations(baseCatalog);
-      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
+      final CatalogWithAssociations catalog =
+        new CatalogWithAssociations(baseCatalog);
+      final Schema[] schemas = catalog
+        .getSchemas()
+        .toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(5));
-      for (final Schema schema: schemas)
+      for (final Schema schema : schemas)
       {
         out.println("schema: " + schema.getFullName());
-        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
+        final Table[] tables = catalog
+          .getTables(schema)
+          .toArray(new Table[0]);
         Arrays.sort(tables, NamedObjectSort.alphabetical);
-        for (final Table table: tables)
+        for (final Table table : tables)
         {
           out.println("  table: " + table.getFullName());
-          final Collection<WeakAssociationForeignKey> weakAssociations = WeakAssociationsUtility
-            .getWeakAssociations(table);
-          for (final WeakAssociationForeignKey weakFk: weakAssociations)
+          final Collection<WeakAssociationForeignKey> weakAssociations =
+            WeakAssociationsUtility.getWeakAssociations(table);
+          for (final WeakAssociationForeignKey weakFk : weakAssociations)
           {
             out.println(String.format("    weak association (1 to %s):",
                                       findForeignKeyCardinality(weakFk)));
-            for (final WeakAssociation weakAssociation: weakFk)
+            for (final WeakAssociation weakAssociation : weakFk)
             {
               out.println(String.format("      column reference: %s",
                                         weakAssociation));
@@ -110,8 +116,7 @@ public class WeakAssociationsTest
     }
 
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext
-                 .testMethodFullName())));
+               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
 }

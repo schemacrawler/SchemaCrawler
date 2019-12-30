@@ -31,7 +31,11 @@ package schemacrawler.tools.executable;
 
 import static java.util.Comparator.naturalOrder;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.ServiceLoader;
 import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.Config;
@@ -51,8 +55,8 @@ import sf.util.StringFormat;
 public final class CommandRegistry
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
-    CommandRegistry.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(CommandRegistry.class.getName());
 
   public static CommandRegistry getCommandRegistry()
     throws SchemaCrawlerException
@@ -72,14 +76,16 @@ public final class CommandRegistry
 
     try
     {
-      final ServiceLoader<CommandProvider> serviceLoader = ServiceLoader.load(
-        CommandProvider.class);
+      final ServiceLoader<CommandProvider> serviceLoader =
+        ServiceLoader.load(CommandProvider.class);
       for (final CommandProvider commandProvider : serviceLoader)
       {
         LOGGER.log(Level.CONFIG,
                    new StringFormat("Loading command %s, provided by %s",
                                     commandProvider.getSupportedCommands(),
-                                    commandProvider.getClass().getName()));
+                                    commandProvider
+                                      .getClass()
+                                      .getName()));
         commandProviders.add(commandProvider);
       }
     }
@@ -95,6 +101,7 @@ public final class CommandRegistry
 
     return commandProviders;
   }
+
   private static CommandRegistry commandRegistrySingleton;
 
   private final List<CommandProvider> commandRegistry;
@@ -117,14 +124,15 @@ public final class CommandRegistry
 
   public Collection<CommandDescription> getSupportedCommands()
   {
-    final Collection<CommandDescription> supportedCommandDescriptions = new HashSet<>();
+    final Collection<CommandDescription> supportedCommandDescriptions =
+      new HashSet<>();
     for (final CommandProvider commandProvider : commandRegistry)
     {
       supportedCommandDescriptions.addAll(commandProvider.getSupportedCommands());
     }
 
-    final List<CommandDescription> supportedCommandsOrdered = new ArrayList<>(
-      supportedCommandDescriptions);
+    final List<CommandDescription> supportedCommandsOrdered =
+      new ArrayList<>(supportedCommandDescriptions);
     supportedCommandsOrdered.sort(naturalOrder());
     return supportedCommandsOrdered;
   }
@@ -150,7 +158,8 @@ public final class CommandRegistry
     }
     if (executableCommandProvider == null)
     {
-      throw new SchemaCrawlerException(String.format("Unknown command <%s>", command));
+      throw new SchemaCrawlerException(String.format("Unknown command <%s>",
+                                                     command));
     }
 
     final SchemaCrawlerCommand scCommand;

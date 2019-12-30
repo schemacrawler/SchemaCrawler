@@ -30,7 +30,7 @@ package schemacrawler.tools.text.utility.html;
 
 public enum Alignment
 {
- inherit,
- left,
- right;
+  inherit,
+  left,
+  right;
 }
