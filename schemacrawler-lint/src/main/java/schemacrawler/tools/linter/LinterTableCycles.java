@@ -61,11 +61,11 @@ public class LinterTableCycles
   {
     requireNonNull(tablesGraph, "Not initialized");
 
-    final Collection<List<Table>> sccs = new TarjanStronglyConnectedComponentFinder<>(tablesGraph)
-      .detectCycles();
+    final Collection<List<Table>> sccs =
+      new TarjanStronglyConnectedComponentFinder<>(tablesGraph).detectCycles();
     if (!sccs.isEmpty())
     {
-      for (final List<Table> list: sccs)
+      for (final List<Table> list : sccs)
       {
         addCatalogLint(getSummary(), new ArrayList<>(list));
       }
@@ -83,12 +83,16 @@ public class LinterTableCycles
     requireNonNull(tablesGraph, "Not initialized");
 
     tablesGraph.addVertex(table);
-    for (final ForeignKey foreignKey: table.getForeignKeys())
+    for (final ForeignKey foreignKey : table.getForeignKeys())
     {
-      for (final ForeignKeyColumnReference columnReference: foreignKey)
+      for (final ForeignKeyColumnReference columnReference : foreignKey)
       {
-        tablesGraph.addEdge(columnReference.getPrimaryKeyColumn().getParent(),
-                            columnReference.getForeignKeyColumn().getParent());
+        tablesGraph.addEdge(columnReference
+                              .getPrimaryKeyColumn()
+                              .getParent(),
+                            columnReference
+                              .getForeignKeyColumn()
+                              .getParent());
       }
     }
 

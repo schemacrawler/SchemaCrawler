@@ -68,9 +68,9 @@ public class LinterRedundantIndexes
   {
     requireNonNull(table, "No table provided");
 
-    final Set<Index> redundantIndexes = findRedundantIndexes(table
-      .getIndexes());
-    for (final Index index: redundantIndexes)
+    final Set<Index> redundantIndexes =
+      findRedundantIndexes(table.getIndexes());
+    for (final Index index : redundantIndexes)
     {
       addTableLint(table, getSummary(), index);
     }
@@ -86,16 +86,14 @@ public class LinterRedundantIndexes
     }
 
     final Map<Index, List<String>> indexColumns = new HashMap<>(indexes.size());
-    for (final Index index: indexes)
+    for (final Index index : indexes)
     {
       indexColumns.put(index, MetaDataUtility.columnNames(index));
     }
 
-    for (final Entry<Index, List<String>> indexColumnEntry1: indexColumns
-      .entrySet())
+    for (final Entry<Index, List<String>> indexColumnEntry1 : indexColumns.entrySet())
     {
-      for (final Entry<Index, List<String>> indexColumnEntry2: indexColumns
-        .entrySet())
+      for (final Entry<Index, List<String>> indexColumnEntry2 : indexColumns.entrySet())
       {
         if (!indexColumnEntry1.equals(indexColumnEntry2))
         {

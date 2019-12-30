@@ -64,8 +64,9 @@ public class LinterForeignKeyWithNoIndexes
   {
     requireNonNull(table, "No table provided");
 
-    final List<ForeignKey> foreignKeysWithoutIndexes = findForeignKeysWithoutIndexes(table);
-    for (final ForeignKey foreignKey: foreignKeysWithoutIndexes)
+    final List<ForeignKey> foreignKeysWithoutIndexes =
+      findForeignKeysWithoutIndexes(table);
+    for (final ForeignKey foreignKey : foreignKeysWithoutIndexes)
     {
       addTableLint(table, getSummary(), foreignKey);
     }
@@ -77,11 +78,12 @@ public class LinterForeignKeyWithNoIndexes
     if (!(table instanceof View))
     {
       final Collection<List<String>> allIndexCoumns = allIndexCoumnNames(table);
-      for (final ForeignKey foreignKey: table.getImportedForeignKeys())
+      for (final ForeignKey foreignKey : table.getImportedForeignKeys())
       {
-        final List<String> foreignKeyColumns = foreignKeyColumnNames(foreignKey);
+        final List<String> foreignKeyColumns =
+          foreignKeyColumnNames(foreignKey);
         boolean hasIndex = false;
-        for (final List<String> indexColumns: allIndexCoumns)
+        for (final List<String> indexColumns : allIndexCoumns)
         {
           if (listStartsWith(indexColumns, foreignKeyColumns))
           {

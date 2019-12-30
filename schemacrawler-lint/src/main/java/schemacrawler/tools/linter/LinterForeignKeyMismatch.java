@@ -62,8 +62,9 @@ public class LinterForeignKeyMismatch
   {
     requireNonNull(table, "No table provided");
 
-    final List<ForeignKey> mismatchedForeignKeys = findMismatchedForeignKeys(table);
-    for (final ForeignKey foreignKey: mismatchedForeignKeys)
+    final List<ForeignKey> mismatchedForeignKeys =
+      findMismatchedForeignKeys(table);
+    for (final ForeignKey foreignKey : mismatchedForeignKeys)
     {
       addTableLint(table, getSummary(), foreignKey);
     }
@@ -74,14 +75,18 @@ public class LinterForeignKeyMismatch
     final List<ForeignKey> mismatchedForeignKeys = new ArrayList<>();
     if (table != null && !(table instanceof View))
     {
-      for (final ForeignKey foreignKey: table.getImportedForeignKeys())
+      for (final ForeignKey foreignKey : table.getImportedForeignKeys())
       {
-        for (final ForeignKeyColumnReference columnReference: foreignKey)
+        for (final ForeignKeyColumnReference columnReference : foreignKey)
         {
           final Column pkColumn = columnReference.getPrimaryKeyColumn();
           final Column fkColumn = columnReference.getForeignKeyColumn();
-          if (!pkColumn.getColumnDataType().getJavaSqlType()
-            .equals(fkColumn.getColumnDataType().getJavaSqlType())
+          if (!pkColumn
+            .getColumnDataType()
+            .getJavaSqlType()
+            .equals(fkColumn
+                      .getColumnDataType()
+                      .getJavaSqlType())
               || pkColumn.getSize() != fkColumn.getSize())
           {
             mismatchedForeignKeys.add(foreignKey);

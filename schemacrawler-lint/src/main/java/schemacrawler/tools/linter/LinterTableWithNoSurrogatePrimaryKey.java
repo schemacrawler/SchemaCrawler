@@ -70,7 +70,9 @@ public class LinterTableWithNoSurrogatePrimaryKey
     final PrimaryKey primaryKey = table.getPrimaryKey();
     if (primaryKey != null)
     {
-      final int pkColumnCount = primaryKey.getColumns().size();
+      final int pkColumnCount = primaryKey
+        .getColumns()
+        .size();
       return pkColumnCount > 1;
     }
 

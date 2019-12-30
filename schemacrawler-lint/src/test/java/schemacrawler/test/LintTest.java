@@ -30,8 +30,12 @@ package schemacrawler.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static schemacrawler.test.utility.FileHasContent.*;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.sql.Connection;
@@ -41,10 +45,18 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.*;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
-import schemacrawler.tools.lint.*;
+import schemacrawler.tools.lint.Lint;
+import schemacrawler.tools.lint.LintCollector;
+import schemacrawler.tools.lint.LinterConfig;
+import schemacrawler.tools.lint.LinterConfigs;
+import schemacrawler.tools.lint.Linters;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class LintTest
@@ -56,16 +68,22 @@ public class LintTest
   public void lints(final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder().tableTypes(Arrays.asList("TABLE", "VIEW", "GLOBAL TEMPORARY"))
-      .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .tableTypes(Arrays.asList("TABLE", "VIEW", "GLOBAL TEMPORARY"))
+        .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
 
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     assertThat(catalog, notNullValue());
-    assertThat(catalog.getSchemas().size(), is(1));
-    final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
+    assertThat(catalog
+                 .getSchemas()
+                 .size(), is(1));
+    final Schema schema = catalog
+      .lookupSchema("PUBLIC.FOR_LINT")
+      .orElse(null);
     assertThat("FOR_LINT schema not found", schema, notNullValue());
     assertThat("FOR_LINT tables not found",
                catalog.getTables(schema),
@@ -109,17 +127,23 @@ public class LintTest
   public void lintsWithExcludedColumns(final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder().tableTypes(Arrays.asList("TABLE", "VIEW", "GLOBAL TEMPORARY"))
-      .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"))
-      .includeColumns(new RegularExpressionExclusionRule(".*\\..*\\..*[123]"));
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .tableTypes(Arrays.asList("TABLE", "VIEW", "GLOBAL TEMPORARY"))
+        .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"))
+        .includeColumns(new RegularExpressionExclusionRule(".*\\..*\\..*[123]"));
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
 
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     assertThat(catalog, notNullValue());
-    assertThat(catalog.getSchemas().size(), is(1));
-    final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
+    assertThat(catalog
+                 .getSchemas()
+                 .size(), is(1));
+    final Schema schema = catalog
+      .lookupSchema("PUBLIC.FOR_LINT")
+      .orElse(null);
     assertThat("FOR_LINT schema not found", schema, notNullValue());
     assertThat("FOR_LINT tables not found",
                catalog.getTables(schema),
@@ -148,16 +172,21 @@ public class LintTest
   public void runNoLinters(final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder()
-      .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
 
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     assertThat(catalog, notNullValue());
-    assertThat(catalog.getSchemas().size(), is(1));
-    final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
+    assertThat(catalog
+                 .getSchemas()
+                 .size(), is(1));
+    final Schema schema = catalog
+      .lookupSchema("PUBLIC.FOR_LINT")
+      .orElse(null);
     assertThat("FOR_LINT schema not found", schema, notNullValue());
     assertThat("FOR_LINT tables not found",
                catalog.getTables(schema),

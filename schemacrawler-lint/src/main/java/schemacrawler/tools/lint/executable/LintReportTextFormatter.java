@@ -29,10 +29,13 @@ package schemacrawler.tools.lint.executable;
 
 
 import static java.util.Comparator.naturalOrder;
-import static sf.util.Utility.isBlank;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.Catalog;
@@ -62,13 +65,12 @@ final class LintReportTextFormatter
       return null;
     }
 
-    final List<Lint<? extends Serializable>> lints = new ArrayList<>(namedObject
-                                                                       .getAttribute(
-                                                                         LINT_KEY,
-                                                                         new ArrayList<>()));
+    final List<Lint<? extends Serializable>> lints =
+      new ArrayList<>(namedObject.getAttribute(LINT_KEY, new ArrayList<>()));
     lints.sort(naturalOrder());
     return lints;
   }
+
   private final Catalog catalog;
   private final LintOptions lintOptions;
 
@@ -98,11 +100,10 @@ final class LintReportTextFormatter
     this.handleStart();
     this.handle(catalog);
 
-    final List<? extends Table> tablesList = new ArrayList<>(catalog
-                                                               .getTables());
+    final List<? extends Table> tablesList =
+      new ArrayList<>(catalog.getTables());
     Collections.sort(tablesList,
-                     NamedObjectSort.getNamedObjectSort(lintOptions
-                                                          .isAlphabeticalSortForTables()));
+                     NamedObjectSort.getNamedObjectSort(lintOptions.isAlphabeticalSortForTables()));
     for (final Table table : tablesList)
     {
       this.handle(table);
@@ -120,8 +121,10 @@ final class LintReportTextFormatter
     {
       formattingHelper.writeObjectStart();
 
-      formattingHelper
-        .writeObjectNameRow("", "Database", "[database]", Color.white);
+      formattingHelper.writeObjectNameRow("",
+                                          "Database",
+                                          "[database]",
+                                          Color.white);
 
       printLints(lints);
       formattingHelper.writeObjectEnd();
@@ -190,8 +193,9 @@ final class LintReportTextFormatter
         }
         else
         {
-          formattingHelper
-            .writeRow("", lint.getMessage(), lint.getValueAsString());
+          formattingHelper.writeRow("",
+                                    lint.getMessage(),
+                                    lint.getValueAsString());
         }
       }
     }

@@ -70,7 +70,7 @@ public class LinterTableWithNoPrimaryKey
     if (table.getPrimaryKey() == null)
     {
       boolean hasDataColumn = false;
-      for (final Column column: getColumns(table))
+      for (final Column column : getColumns(table))
       {
         if (!column.isPartOfForeignKey())
         {

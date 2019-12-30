@@ -73,16 +73,18 @@ public class LintCommand
     checkCatalog();
 
     // Lint the catalog
-    final LinterConfigs linterConfigs = readLinterConfigs(lintOptions,
-                                                          additionalConfiguration);
-    final Linters linters = new Linters(linterConfigs,
-                                        lintOptions.isRunAllLinters());
+    final LinterConfigs linterConfigs =
+      readLinterConfigs(lintOptions, additionalConfiguration);
+    final Linters linters =
+      new Linters(linterConfigs, lintOptions.isRunAllLinters());
     linters.lint(catalog, connection);
 
     // Produce the lint report
     final LintReport lintReport = new LintReport(outputOptions.getTitle(),
                                                  catalog.getCrawlInfo(),
-                                                 linters.getCollector().getLints());
+                                                 linters
+                                                   .getCollector()
+                                                   .getLints());
 
     // Write out the lint report
     getLintReportBuilder().generateLintReport(lintReport);
@@ -121,8 +123,8 @@ public class LintCommand
   private LintReportBuilder getLintReportBuilder()
     throws SchemaCrawlerException
   {
-    final LintReportOutputFormat outputFormat = LintReportOutputFormat
-      .fromFormat(outputOptions.getOutputFormatValue());
+    final LintReportOutputFormat outputFormat =
+      LintReportOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
 
     final LintReportBuilder lintReportBuilder;
     switch (outputFormat)
@@ -137,8 +139,7 @@ public class LintCommand
         lintReportBuilder = new LintReportTextFormatter(catalog,
                                                         lintOptions,
                                                         outputOptions,
-                                                        identifiers
-                                                          .getIdentifierQuoteString());
+                                                        identifiers.getIdentifierQuoteString());
     }
 
     return lintReportBuilder;
@@ -148,8 +149,10 @@ public class LintCommand
   {
     if (lintOptions == null)
     {
-      lintOptions = LintOptionsBuilder.builder()
-        .fromConfig(additionalConfiguration).toOptions();
+      lintOptions = LintOptionsBuilder
+        .builder()
+        .fromConfig(additionalConfiguration)
+        .toOptions();
     }
   }
 

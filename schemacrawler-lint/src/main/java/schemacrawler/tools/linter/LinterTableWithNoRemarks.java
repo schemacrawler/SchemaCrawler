@@ -69,7 +69,8 @@ public class LinterTableWithNoRemarks
       addTableLint(table, getSummary());
     }
 
-    final ArrayList<String> columnsWithNoRemarks = findColumnsWithNoRemarks(getColumns(table));
+    final ArrayList<String> columnsWithNoRemarks =
+      findColumnsWithNoRemarks(getColumns(table));
     if (!columnsWithNoRemarks.isEmpty())
     {
       addTableLint(table, getSummary(), columnsWithNoRemarks);
@@ -79,7 +80,7 @@ public class LinterTableWithNoRemarks
   private ArrayList<String> findColumnsWithNoRemarks(final List<Column> columns)
   {
     final ArrayList<String> names = new ArrayList<>();
-    for (final Column column: columns)
+    for (final Column column : columns)
     {
       if (!column.hasRemarks())
       {

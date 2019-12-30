@@ -36,17 +36,23 @@ public final class LinterHelp
   {
     final StringBuilder buffer = new StringBuilder(1024);
 
-    buffer.append("--- Available Linters ---").append(System.lineSeparator())
+    buffer
+      .append("--- Available Linters ---")
+      .append(System.lineSeparator())
       .append(System.lineSeparator());
 
     final LinterRegistry registry = new LinterRegistry();
-    for (final String linterId: registry)
+    for (final String linterId : registry)
     {
       final Linter linter = registry.newLinter(linterId);
 
-      buffer.append("Linter: ").append(linter.getLinterId())
+      buffer
+        .append("Linter: ")
+        .append(linter.getLinterId())
         .append(System.lineSeparator());
-      buffer.append(linter.getDescription()).append(System.lineSeparator());
+      buffer
+        .append(linter.getDescription())
+        .append(System.lineSeparator());
     }
 
     return buffer.toString();

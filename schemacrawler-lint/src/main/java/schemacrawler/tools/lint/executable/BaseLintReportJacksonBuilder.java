@@ -1,9 +1,11 @@
 package schemacrawler.tools.lint.executable;
 
 
-import static com.fasterxml.jackson.databind.SerializationFeature.*;
+import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;
+import static com.fasterxml.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS;
+import static com.fasterxml.jackson.databind.SerializationFeature.USE_EQUALITY_FOR_OBJECT_ID;
+import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_ENUMS_USING_TO_STRING;
 import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.isBlank;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -53,18 +55,17 @@ abstract class BaseLintReportJacksonBuilder
       @JsonPropertyOrder(alphabetic = true)
       abstract class JacksonAnnotationMixIn
       {
-        @JsonProperty("value")
-        public abstract Object getValueAsString();
-
         @JsonIgnore
         public Object value;
+
+        @JsonProperty("value")
+        public abstract Object getValueAsString();
       }
 
       final JavaTimeModule timeModule = new JavaTimeModule();
       timeModule.addSerializer(LocalDateTime.class,
-                               new LocalDateTimeSerializer(DateTimeFormatter
-                                                             .ofPattern(
-                                                               "yyyy-MM-dd HH:mm:ss")));
+                               new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(
+                                 "yyyy-MM-dd HH:mm:ss")));
 
       final ObjectMapper mapper = newObjectMapper();
       mapper.enable(ORDER_MAP_ENTRIES_BY_KEYS,

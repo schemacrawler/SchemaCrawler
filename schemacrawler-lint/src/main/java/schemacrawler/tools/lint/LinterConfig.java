@@ -44,10 +44,10 @@ public class LinterConfig
   private static final long serialVersionUID = 83079182550531365L;
 
   private final String linterId;
+  private final Config config;
   private boolean runLinter;
   private LintSeverity severity;
   private int threshold;
-  private final Config config;
   private String tableInclusionPattern;
   private String tableExclusionPattern;
   private String columnInclusionPattern;
@@ -77,8 +77,8 @@ public class LinterConfig
 
     if (comparison == 0)
     {
-      comparison = (severity == null? LintSeverity.low: severity)
-        .compareTo(other.severity == null? LintSeverity.low: other.severity);
+      comparison = (severity == null? LintSeverity.low: severity).compareTo(
+        other.severity == null? LintSeverity.low: other.severity);
     }
 
     if (comparison == 0)
@@ -144,6 +144,11 @@ public class LinterConfig
     return severity;
   }
 
+  public void setSeverity(final LintSeverity severity)
+  {
+    this.severity = severity;
+  }
+
   public InclusionRule getTableInclusionRule()
   {
     return new RegularExpressionRule(tableInclusionPattern,
@@ -153,6 +158,11 @@ public class LinterConfig
   public int getThreshold()
   {
     return threshold;
+  }
+
+  public void setThreshold(final int threshold)
+  {
+    this.threshold = threshold;
   }
 
   @Override
@@ -168,6 +178,11 @@ public class LinterConfig
   public boolean isRunLinter()
   {
     return runLinter;
+  }
+
+  public void setRunLinter(final boolean runLinter)
+  {
+    this.runLinter = runLinter;
   }
 
   public void put(final String key, final String value)
@@ -190,16 +205,6 @@ public class LinterConfig
     this.columnInclusionPattern = columnInclusionPattern;
   }
 
-  public void setRunLinter(final boolean runLinter)
-  {
-    this.runLinter = runLinter;
-  }
-
-  public void setSeverity(final LintSeverity severity)
-  {
-    this.severity = severity;
-  }
-
   public void setTableExclusionPattern(final String tableExclusionPattern)
   {
     this.tableExclusionPattern = tableExclusionPattern;
@@ -208,11 +213,6 @@ public class LinterConfig
   public void setTableInclusionPattern(final String tableInclusionPattern)
   {
     this.tableInclusionPattern = tableInclusionPattern;
-  }
-
-  public void setThreshold(final int threshold)
-  {
-    this.threshold = threshold;
   }
 
   @Override

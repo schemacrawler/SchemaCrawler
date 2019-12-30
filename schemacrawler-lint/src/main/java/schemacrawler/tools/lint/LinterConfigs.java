@@ -31,6 +31,9 @@ package schemacrawler.tools.lint;
 import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
@@ -38,17 +41,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.ObjectToString;
@@ -58,15 +56,16 @@ public class LinterConfigs
   implements Iterable<LinterConfig>
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(LinterConfig.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(LinterConfig.class.getName());
 
   private static Element getSubElement(final Element element,
                                        final String tagName)
   {
     if (isBlank(tagName))
     {
-      throw new IllegalArgumentException("Cannot get sub-element, since no name is provided");
+      throw new IllegalArgumentException(
+        "Cannot get sub-element, since no name is provided");
     }
     requireNonNull(element, "Cannot get sub-element for tag " + tagName);
 
@@ -99,8 +98,8 @@ public class LinterConfigs
   public LinterConfigs(final Config additionalConfig)
   {
     linterConfigs = new ArrayList<>();
-    this.additionalConfig = requireNonNull(additionalConfig,
-                                           "No config provided");
+    this.additionalConfig =
+      requireNonNull(additionalConfig, "No config provided");
   }
 
   public void add(final LinterConfig linterConfig)
@@ -133,7 +132,7 @@ public class LinterConfigs
     }
 
     final List<LinterConfig> linterConfigs = parseDocument(document);
-    for (final LinterConfig linterConfig: linterConfigs)
+    for (final LinterConfig linterConfig : linterConfigs)
     {
       this.linterConfigs.add(linterConfig);
     }
@@ -160,15 +159,17 @@ public class LinterConfigs
       return config;
     }
 
-    final NodeList propertiesList = configElement
-      .getElementsByTagName("property");
+    final NodeList propertiesList =
+      configElement.getElementsByTagName("property");
     if (propertiesList != null && propertiesList.getLength() > 0)
     {
       for (int i = 0; i < propertiesList.getLength(); i++)
       {
         final Element propertyElement = (Element) propertiesList.item(i);
         final String name = propertyElement.getAttribute("name");
-        final String value = propertyElement.getFirstChild().getNodeValue();
+        final String value = propertyElement
+          .getFirstChild()
+          .getNodeValue();
         if (!isBlank(name))
         {
           config.put(name, value);
@@ -212,8 +213,8 @@ public class LinterConfigs
           }
           if (cfg.hasValue("severity"))
           {
-            linterConfig
-              .setSeverity(cfg.getEnumValue("severity", LintSeverity.medium));
+            linterConfig.setSeverity(cfg.getEnumValue("severity",
+                                                      LintSeverity.medium));
           }
           if (cfg.hasValue("threshold"))
           {
@@ -221,25 +222,25 @@ public class LinterConfigs
                                                           Integer.MAX_VALUE));
           }
 
-          final String tableInclusionPattern = parseRegularExpressionPattern(cfg,
-                                                                             "table-inclusion-pattern");
+          final String tableInclusionPattern =
+            parseRegularExpressionPattern(cfg, "table-inclusion-pattern");
           linterConfig.setTableInclusionPattern(tableInclusionPattern);
 
-          final String tableExclusionPattern = parseRegularExpressionPattern(cfg,
-                                                                             "table-exclusion-pattern");
+          final String tableExclusionPattern =
+            parseRegularExpressionPattern(cfg, "table-exclusion-pattern");
           linterConfig.setTableExclusionPattern(tableExclusionPattern);
 
-          final String columnInclusionPattern = parseRegularExpressionPattern(cfg,
-                                                                              "column-inclusion-pattern");
+          final String columnInclusionPattern =
+            parseRegularExpressionPattern(cfg, "column-inclusion-pattern");
           linterConfig.setColumnInclusionPattern(columnInclusionPattern);
 
-          final String columnExclusionPattern = parseRegularExpressionPattern(cfg,
-                                                                              "column-exclusion-pattern");
+          final String columnExclusionPattern =
+            parseRegularExpressionPattern(cfg, "column-exclusion-pattern");
           linterConfig.setColumnExclusionPattern(columnExclusionPattern);
 
           // Linter-specific config
-          final Config config = parseConfig(getSubElement(linterElement,
-                                                          "config"));
+          final Config config =
+            parseConfig(getSubElement(linterElement, "config"));
           linterConfig.putAll(config);
 
           linterConfigs.add(linterConfig);

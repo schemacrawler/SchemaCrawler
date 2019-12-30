@@ -83,10 +83,12 @@ public class LinterTooManyLobs
   private ArrayList<Column> findLobColumns(final List<Column> columns)
   {
     final ArrayList<Column> lobColumns = new ArrayList<>();
-    for (final Column column: columns)
+    for (final Column column : columns)
     {
-      final JavaSqlTypeGroup javaSqlTypeGroup = column.getColumnDataType()
-        .getJavaSqlType().getJavaSqlTypeGroup();
+      final JavaSqlTypeGroup javaSqlTypeGroup = column
+        .getColumnDataType()
+        .getJavaSqlType()
+        .getJavaSqlTypeGroup();
       if (javaSqlTypeGroup == JavaSqlTypeGroup.large_object)
       {
         lobColumns.add(column);

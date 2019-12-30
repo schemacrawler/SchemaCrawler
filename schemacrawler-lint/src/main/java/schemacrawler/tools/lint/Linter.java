@@ -43,17 +43,17 @@ import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
- * Evaluates a catalog and creates lints. This base class has core
- * functionality for maintaining state, but not for visiting a catalog.
- * Includes code for dispatching a linter.
+ * Evaluates a catalog and creates lints. This base class has core functionality
+ * for maintaining state, but not for visiting a catalog. Includes code for
+ * dispatching a linter.
  *
  * @author Sualeh Fatehi
  */
 public abstract class Linter
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(Linter.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(Linter.class.getName());
 
   private LintCollector collector;
   private LintSeverity severity;
@@ -72,16 +72,19 @@ public abstract class Linter
   }
 
   /**
-   * Gets a lengthy description of the linter. By default, reads a
-   * resource file called /help/<class-name>.txt and if that is not
-   * present, returns the summary. Can be overridden.
+   * Gets a lengthy description of the linter. By default, reads a resource file
+   * called /help/<class-name>.txt and if that is not present, returns the
+   * summary. Can be overridden.
    *
    * @return Lengthy description of the linter
    */
   public String getDescription()
   {
-    final String descriptionResource = String
-      .format("/help/%s.txt", this.getClass().getName().replace(".", "/"));
+    final String descriptionResource = String.format("/help/%s.txt",
+                                                     this
+                                                       .getClass()
+                                                       .getName()
+                                                       .replace(".", "/"));
 
     final String descriptionText;
     if (Linter.class.getResource(descriptionResource) == null)
@@ -136,6 +139,20 @@ public abstract class Linter
   }
 
   /**
+   * Set the severity of the lints created by this linter.
+   *
+   * @param severity
+   *   Severity to set. No changes are made if the parameter is null.
+   */
+  protected final void setSeverity(final LintSeverity severity)
+  {
+    if (severity != null)
+    {
+      this.severity = severity;
+    }
+  }
+
+  /**
    * Gets a brief summary of this linter. Needs to be overridden.
    *
    * @return Brief summary of this linter
@@ -149,6 +166,24 @@ public abstract class Linter
                          getLinterInstanceId(),
                          getSeverity(),
                          getSummary());
+  }
+
+  void configure(final LinterConfig linterConfig)
+  {
+    if (linterConfig != null)
+    {
+      setSeverity(linterConfig.getSeverity());
+      setThreshold(linterConfig.getThreshold());
+      configure(linterConfig.getConfig());
+    }
+  }
+
+  abstract void lint(Catalog catalog, Connection connection)
+    throws SchemaCrawlerException;
+
+  final void setLintCollector(final LintCollector lintCollector)
+  {
+    collector = lintCollector;
   }
 
   protected final <N extends NamedObject & AttributedObject, V extends Serializable> void addLint(
@@ -177,48 +212,15 @@ public abstract class Linter
   }
 
   /**
-   * Allows subclasses to configure themselves with custom parameters.
-   * Can be overridden.
+   * Allows subclasses to configure themselves with custom parameters. Can be
+   * overridden.
    *
    * @param config
-   *        Custom configuration
+   *   Custom configuration
    */
   protected void configure(final Config config)
   {
 
-  }
-
-  /**
-   * Set the severity of the lints created by this linter.
-   *
-   * @param severity
-   *        Severity to set. No changes are made if the parameter is
-   *        null.
-   */
-  protected final void setSeverity(final LintSeverity severity)
-  {
-    if (severity != null)
-    {
-      this.severity = severity;
-    }
-  }
-
-  void configure(final LinterConfig linterConfig)
-  {
-    if (linterConfig != null)
-    {
-      setSeverity(linterConfig.getSeverity());
-      setThreshold(linterConfig.getThreshold());
-      configure(linterConfig.getConfig());
-    }
-  }
-
-  abstract void lint(Catalog catalog, Connection connection)
-    throws SchemaCrawlerException;
-
-  final void setLintCollector(final LintCollector lintCollector)
-  {
-    collector = lintCollector;
   }
 
   private void setThreshold(final int threshold)

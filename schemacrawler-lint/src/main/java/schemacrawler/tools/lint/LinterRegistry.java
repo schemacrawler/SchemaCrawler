@@ -50,8 +50,8 @@ public final class LinterRegistry
   implements Iterable<String>
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(LinterRegistry.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(LinterRegistry.class.getName());
 
   private static Map<String, Class<Linter>> loadLinterRegistry()
     throws SchemaCrawlerException
@@ -60,9 +60,9 @@ public final class LinterRegistry
     final Map<String, Class<Linter>> linterRegistry = new HashMap<>();
     try
     {
-      final ServiceLoader<Linter> serviceLoader = ServiceLoader
-        .load(Linter.class);
-      for (final Linter linter: serviceLoader)
+      final ServiceLoader<Linter> serviceLoader =
+        ServiceLoader.load(Linter.class);
+      for (final Linter linter : serviceLoader)
       {
         final String linterId = linter.getLinterId();
         final Class<Linter> linterClass = (Class<Linter>) linter.getClass();

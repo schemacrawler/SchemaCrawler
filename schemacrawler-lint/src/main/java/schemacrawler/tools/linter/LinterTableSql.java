@@ -49,8 +49,8 @@ public class LinterTableSql
   extends BaseLinter
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(LinterTableSql.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(LinterTableSql.class.getName());
 
   private String message;
   private String sql;
@@ -93,12 +93,12 @@ public class LinterTableSql
     final Query query = new Query(message, sql);
     try
     {
-      final Identifiers identifiers = Identifiers.identifiers()
-        .withConnection(connection).build();
-      final Object queryResult = executeForScalar(query,
-                                                  connection,
-                                                  table,
-                                                  identifiers);
+      final Identifiers identifiers = Identifiers
+        .identifiers()
+        .withConnection(connection)
+        .build();
+      final Object queryResult =
+        executeForScalar(query, connection, table, identifiers);
       if (queryResult != null)
       {
         addTableLint(table, getSummary() + " " + queryResult);

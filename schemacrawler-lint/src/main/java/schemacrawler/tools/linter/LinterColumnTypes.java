@@ -61,11 +61,10 @@ public class LinterColumnTypes
   {
     requireNonNull(columnTypes, "Not initialized");
 
-    for (final Entry<String, List<ColumnDataType>> entry: columnTypes
-      .entrySet())
+    for (final Entry<String, List<ColumnDataType>> entry : columnTypes.entrySet())
     {
-      final SortedSet<ColumnDataType> currentColumnTypes = new TreeSet<>(entry
-        .getValue());
+      final SortedSet<ColumnDataType> currentColumnTypes =
+        new TreeSet<>(entry.getValue());
       if (currentColumnTypes.size() > 1)
       {
         addCatalogLint(getSummary(), entry.getKey() + " " + currentColumnTypes);
@@ -83,7 +82,7 @@ public class LinterColumnTypes
     requireNonNull(table, "No table provided");
     requireNonNull(columnTypes, "Not initialized");
 
-    for (final Column column: getColumns(table))
+    for (final Column column : getColumns(table))
     {
       columnTypes.add(column.getName(), column.getColumnDataType());
     }

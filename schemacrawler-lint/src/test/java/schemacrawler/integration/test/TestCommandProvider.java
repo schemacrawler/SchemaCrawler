@@ -46,8 +46,8 @@ public class TestCommandProvider
     throws Exception
   {
     final LintCommandProvider lintCommandProvider = new LintCommandProvider();
-    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-      .newSchemaCrawlerOptions();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     final OutputOptions outputOptions = OutputOptionsBuilder.newOutputOptions();
     assertThat(lintCommandProvider.supportsSchemaCrawlerCommand("lint",
                                                                 schemaCrawlerOptions,

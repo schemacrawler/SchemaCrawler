@@ -32,12 +32,19 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasNoContent;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.LintTestUtility.executableLint;
 import static schemacrawler.test.utility.LintTestUtility.executeLintCommandLine;
 import static schemacrawler.test.utility.TestUtility.readerForResource;
 
-import java.io.*;
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.io.Reader;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,7 +56,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.test.utility.*;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
+import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.LinterConfig;
@@ -106,9 +119,9 @@ public class LinterConfigsDispatchTest
     boolean asserted = false;
     for (final LinterConfig linterConfig : linterConfigs)
     {
-      if (linterConfig.getLinterId()
-                      .equals(
-                        "schemacrawler.tools.linter.LinterTableWithNoIndexes"))
+      if (linterConfig
+        .getLinterId()
+        .equals("schemacrawler.tools.linter.LinterTableWithNoIndexes"))
       {
         assertThat(linterConfig.getSeverity(), is(LintSeverity.critical));
         assertThat(linterConfig.getThreshold(), is(1));

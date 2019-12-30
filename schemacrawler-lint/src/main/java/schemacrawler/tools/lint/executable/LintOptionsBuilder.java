@@ -66,7 +66,9 @@ public final class LintOptionsBuilder
 
   public static LintOptions newLintOptions(final Config config)
   {
-    return new LintOptionsBuilder().fromConfig(config).toOptions();
+    return new LintOptionsBuilder()
+      .fromConfig(config)
+      .toOptions();
   }
 
   LintDispatch lintDispatch;
