@@ -29,7 +29,10 @@ package schemacrawler.test.commandline.command;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.startsWith;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
@@ -38,7 +41,6 @@ import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.sql.Connection;
-import java.util.function.Supplier;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -86,7 +88,8 @@ public class ConnectionShellCommandsTest
     state.setDataSource(() -> connection); // is-connected
 
     final String[] args = new String[] {
-      "--is-connected" };
+      "--is-connected"
+    };
 
     final SystemCommand optionsParser = new SystemCommand(state);
     final CommandLine commandLine = newCommandLine(optionsParser, null, false);
@@ -102,14 +105,16 @@ public class ConnectionShellCommandsTest
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
 
     final String[] args = new String[] {
-      "--is-connected" };
+      "--is-connected"
+    };
 
     final SystemCommand optionsParser = new SystemCommand(state);
     final CommandLine commandLine = newCommandLine(optionsParser, null, false);
     commandLine.execute(args);
 
     assertThat(outputOf(err), hasNoContent());
-    assertThat(out.getFileContents(), startsWith("Not connected to the database"));
+    assertThat(out.getFileContents(),
+               startsWith("Not connected to the database"));
   }
 
   @Test

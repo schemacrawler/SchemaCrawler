@@ -31,7 +31,11 @@ package schemacrawler.tools.commandline.command;
 
 import static java.util.Objects.requireNonNull;
 
-import picocli.CommandLine.*;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Model;
+import picocli.CommandLine.Option;
+import picocli.CommandLine.ParameterException;
+import picocli.CommandLine.Spec;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
@@ -40,44 +44,34 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
  *
  * @author Sualeh Fatehi
  */
-@Command(name = "filter",
-         header = "** Filter database object metadata",
-         description = {
-           "",
-         },
-         headerHeading = "",
-         synopsisHeading = "Shell Command:%n",
-         customSynopsis = {
-           "filter"
-         },
-         optionListHeading = "Options:%n")
+@Command(name = "filter", header = "** Filter database object metadata", description = {
+  "",
+}, headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
+  "filter"
+}, optionListHeading = "Options:%n")
 public final class FilterCommand
   implements Runnable
 {
 
   private final SchemaCrawlerShellState state;
 
-  @Option(names = "--children",
-          description = {
-            "<children> is the number of generations of descendants for the tables "
-            + "selected by grep, and shown in the results",
-            "Optional, default is 0"
-          })
+  @Option(names = "--children", description = {
+    "<children> is the number of generations of descendants for the tables "
+    + "selected by grep, and shown in the results",
+    "Optional, default is 0"
+  })
   private Integer children;
-  @Option(names = "--no-empty-tables",
-          description = {
-            "Includes only tables that have rows of data",
-            "Will work only if infolevel is maximum",
-            "Optional, default is false"
-          },
-          negatable = true)
+  @Option(names = "--no-empty-tables", description = {
+    "Includes only tables that have rows of data",
+    "Will work only if infolevel is maximum",
+    "Optional, default is false"
+  }, negatable = true)
   private Boolean noemptytables;
-  @Option(names = "--parents",
-          description = {
-            "<parents> is the number of generations of ancestors for the tables "
-            + "selected by grep, and shown in the results",
-            "Optional, default is 0"
-          })
+  @Option(names = "--parents", description = {
+    "<parents> is the number of generations of ancestors for the tables "
+    + "selected by grep, and shown in the results",
+    "Optional, default is 0"
+  })
   private Integer parents;
 
   @Spec
@@ -92,7 +86,8 @@ public final class FilterCommand
   public void run()
   {
 
-    final SchemaCrawlerOptionsBuilder optionsBuilder = state.getSchemaCrawlerOptionsBuilder();
+    final SchemaCrawlerOptionsBuilder optionsBuilder =
+      state.getSchemaCrawlerOptionsBuilder();
 
     if (parents != null)
     {

@@ -31,8 +31,12 @@ package schemacrawler.tools.commandline.utility;
 import static sf.util.Utility.join;
 
 import java.io.File;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Map.Entry;
+import java.util.SortedMap;
+import java.util.StringJoiner;
+import java.util.TreeMap;
 import java.util.logging.Level;
 
 import schemacrawler.JvmSystemInfo;
@@ -47,8 +51,8 @@ import sf.util.UtilityMarker;
 public final class CommandLineLoggingUtility
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
-    CommandLineLoggingUtility.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(CommandLineLoggingUtility.class.getName());
 
   /**
    * Sets the application-wide log level.
@@ -92,8 +96,9 @@ public final class CommandLineLoggingUtility
     }
 
     final StringJoiner argsList = new StringJoiner(System.lineSeparator());
-    for (final Iterator<String> iterator = Arrays.asList(args)
-                                                 .iterator(); iterator.hasNext(); )
+    for (final Iterator<String> iterator = Arrays
+      .asList(args)
+      .iterator(); iterator.hasNext(); )
     {
       final String arg = iterator.next();
       if (arg == null)
@@ -147,8 +152,9 @@ public final class CommandLineLoggingUtility
     }
 
     final SortedMap<String, String> systemProperties = new TreeMap<>();
-    for (final Entry<Object, Object> propertyValue : System.getProperties()
-                                                           .entrySet())
+    for (final Entry<Object, Object> propertyValue : System
+      .getProperties()
+      .entrySet())
     {
       final String name = (String) propertyValue.getKey();
       if ((name.startsWith("java.") || name.startsWith("os."))

@@ -11,7 +11,12 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.newComm
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 import schemacrawler.schema.RoutineType;
-import schemacrawler.schemacrawler.*;
+import schemacrawler.schemacrawler.ExcludeAll;
+import schemacrawler.schemacrawler.IncludeAll;
+import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.commandline.command.LimitCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
@@ -21,7 +26,8 @@ public class LimitCommandTest
 
   private static void runBadCommand(final String[] args)
   {
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
+    final SchemaCrawlerOptionsBuilder builder =
+      SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
     assertThrows(CommandLine.ParameterException.class,
@@ -33,7 +39,8 @@ public class LimitCommandTest
   {
     final String[] args = new String[0];
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
+    final SchemaCrawlerOptionsBuilder builder =
+      SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
     newCommandLine(LimitCommand.class, new StateFactory(state), true).parseArgs(
@@ -67,7 +74,8 @@ public class LimitCommandTest
   {
     final String[] args = { "--some-option" };
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
+    final SchemaCrawlerOptionsBuilder builder =
+      SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
     runCommandInTest(new LimitCommand(state), args);
@@ -188,12 +196,12 @@ public class LimitCommandTest
       "-extra"
     };
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
+    final SchemaCrawlerOptionsBuilder builder =
+      SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
-    final CommandLine commandLine = newCommandLine(LimitCommand.class,
-                                                   new StateFactory(state),
-                                                   true);
+    final CommandLine commandLine =
+      newCommandLine(LimitCommand.class, new StateFactory(state), true);
     commandLine.execute(args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
 

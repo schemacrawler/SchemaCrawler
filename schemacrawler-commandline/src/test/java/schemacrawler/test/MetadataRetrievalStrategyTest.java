@@ -29,10 +29,11 @@ package schemacrawler.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.StringContains.containsString;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
-import static schemacrawler.test.utility.FileHasContent.*;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasNoContent;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.clean;
 
 import java.io.FileDescriptor;
@@ -48,7 +49,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.crawl.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InfoLevel;
-import schemacrawler.test.utility.*;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
@@ -58,7 +63,8 @@ import schemacrawler.tools.text.schema.SchemaTextDetailType;
 public class MetadataRetrievalStrategyTest
 {
 
-  private static final String METADATA_RETRIEVAL_STRATEGY_OUTPUT = "metadata_retrieval_strategy_output/";
+  private static final String METADATA_RETRIEVAL_STRATEGY_OUTPUT =
+    "metadata_retrieval_strategy_output/";
 
   private TestOutputStream out;
   private TestOutputStream err;
@@ -77,7 +83,8 @@ public class MetadataRetrievalStrategyTest
   {
     clean(METADATA_RETRIEVAL_STRATEGY_OUTPUT);
 
-    final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType.schema;
+    final SchemaTextDetailType schemaTextDetailType =
+      SchemaTextDetailType.schema;
     final InfoLevel infoLevel = InfoLevel.minimum;
     final OutputFormat outputFormat = TextOutputFormat.text;
 
@@ -98,8 +105,8 @@ public class MetadataRetrievalStrategyTest
 
     assertThat(outputOf(err),
                hasSameContentAs(classpathResource(
-                 METADATA_RETRIEVAL_STRATEGY_OUTPUT + testContext.testMethodName()
-                 + ".stderr.txt")));
+                 METADATA_RETRIEVAL_STRATEGY_OUTPUT
+                 + testContext.testMethodName() + ".stderr.txt")));
   }
 
   @BeforeEach

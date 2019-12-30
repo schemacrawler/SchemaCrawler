@@ -30,7 +30,9 @@ package schemacrawler.test;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.newBufferedWriter;
-import static java.nio.file.StandardOpenOption.*;
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.nio.file.StandardOpenOption.WRITE;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
@@ -69,26 +71,29 @@ public class GrepCommandLineTest
 
     final String[][] grepArgs = new String[][] {
       new String[] {
-        "--grep-columns=.*\\.STREET|.*\\.PRICE", },
-      new String[] {
-        "--grep-columns=.*\\..*NAME", },
-      new String[] {
-        "--grep-def=.*book authors.*", },
-      new String[] {
-        "--tables=", "--routines=.*", "--grep-parameters=.*\\.B_COUNT", },
-      new String[] {
-        "--tables=", "--routines=.*", "--grep-parameters=.*\\.B_OFFSET", },
-      new String[] {
         "--grep-columns=.*\\.STREET|.*\\.PRICE",
-        "--grep-def=.*book authors.*", }, };
+        }, new String[] {
+      "--grep-columns=.*\\..*NAME",
+      }, new String[] {
+      "--grep-def=.*book authors.*",
+      }, new String[] {
+      "--tables=", "--routines=.*", "--grep-parameters=.*\\.B_COUNT",
+      }, new String[] {
+      "--tables=", "--routines=.*", "--grep-parameters=.*\\.B_OFFSET",
+      }, new String[] {
+      "--grep-columns=.*\\.STREET|.*\\.PRICE", "--grep-def=.*book authors.*",
+      },
+      };
     for (int i = 0; i < grepArgs.length; i++)
     {
       final String[] grepArgsForRun = grepArgs[i];
 
-      final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType.details;
+      final SchemaTextDetailType schemaTextDetailType =
+        SchemaTextDetailType.details;
       final InfoLevel infoLevel = InfoLevel.detailed;
-      final Path additionalProperties = IOUtility
-        .createTempFilePath("hsqldb.INFORMATION_SCHEMA.config", "properties");
+      final Path additionalProperties = IOUtility.createTempFilePath(
+        "hsqldb.INFORMATION_SCHEMA.config",
+        "properties");
       final Writer writer = newBufferedWriter(additionalProperties,
                                               UTF_8,
                                               WRITE,
@@ -101,8 +106,8 @@ public class GrepCommandLineTest
 
       final String referenceFile = String.format("grep%02d.txt", i + 1);
 
-      final Path testOutputFile = IOUtility
-        .createTempFilePath(referenceFile, "data");
+      final Path testOutputFile =
+        IOUtility.createTempFilePath(referenceFile, "data");
 
       final OutputFormat outputFormat = TextOutputFormat.text;
 

@@ -29,7 +29,10 @@ package schemacrawler.test.commandline.command;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasNoContent;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 import java.io.FileDescriptor;
@@ -106,8 +109,8 @@ public class ShellCommandsTest
     final String[] args = new String[] { "--version" };
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    newCommandLine(SystemCommand.class, new StateFactory(state), false)
-      .execute(args);
+    newCommandLine(SystemCommand.class, new StateFactory(state), false).execute(
+      args);
 
     assertThat(outputOf(err), hasNoContent());
     assertThat(outputOf(out),
@@ -121,15 +124,15 @@ public class ShellCommandsTest
   {
     final String[] args = new String[] { "--show-stacktrace" };
 
-    final RuntimeException exception = new RuntimeException(
-      "Test to display stacktrace");
+    final RuntimeException exception =
+      new RuntimeException("Test to display stacktrace");
     exception.setStackTrace(new StackTraceElement[0]);
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setLastException(exception);
 
-    newCommandLine(SystemCommand.class, new StateFactory(state), false)
-      .execute(args);
+    newCommandLine(SystemCommand.class, new StateFactory(state), false).execute(
+      args);
 
     assertThat(outputOf(err), hasNoContent());
     assertThat(outputOf(out),
@@ -145,8 +148,8 @@ public class ShellCommandsTest
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
 
-    newCommandLine(SystemCommand.class, new StateFactory(state), false)
-      .execute(args);
+    newCommandLine(SystemCommand.class, new StateFactory(state), false).execute(
+      args);
 
     assertThat(outputOf(err), hasNoContent());
     assertThat(outputOf(out), hasNoContent());

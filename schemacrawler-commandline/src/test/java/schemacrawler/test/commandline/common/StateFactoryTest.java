@@ -29,7 +29,9 @@ package schemacrawler.test.commandline.common;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
 
 import org.junit.jupiter.api.Test;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;

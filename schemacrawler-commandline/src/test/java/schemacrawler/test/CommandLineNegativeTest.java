@@ -32,7 +32,10 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.newBufferedWriter;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
-import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasNoContent;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.io.FileDescriptor;
@@ -50,7 +53,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.test.utility.*;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.TestOutputStream;
+import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;
 
@@ -59,7 +67,8 @@ import sf.util.IOUtility;
 public class CommandLineNegativeTest
 {
 
-  private static final String COMMAND_LINE_NEGATIVE_OUTPUT = "command_line_negative_output/";
+  private static final String COMMAND_LINE_NEGATIVE_OUTPUT =
+    "command_line_negative_output/";
 
   private static Path createConfig(final Map<String, String> config)
     throws IOException
@@ -71,6 +80,7 @@ public class CommandLineNegativeTest
     configProperties.store(newBufferedWriter(configFile, UTF_8), prefix);
     return configFile;
   }
+
   private TestOutputStream err;
   private TestOutputStream out;
 

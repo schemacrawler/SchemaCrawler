@@ -42,58 +42,44 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
  *
  * @author Sualeh Fatehi
  */
-@Command(name = "sort",
-         header = "** Sort database objects in output",
-         description = {
-           ""
-         },
-         headerHeading = "",
-         synopsisHeading = "Shell Command:%n",
-         customSynopsis = {
-           "sort"
-         },
-         optionListHeading = "Options:%n")
+@Command(name = "sort", header = "** Sort database objects in output", description = {
+  ""
+}, headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
+  "sort"
+}, optionListHeading = "Options:%n")
 public final class SortCommand
   implements Runnable
 {
 
   private final SchemaCrawlerShellState state;
 
-  @Option(names = { "--sort-columns" },
-          description = {
-            "Sort columns in a table alphabetically",
-            "--sort-columns=<sortcolumns>",
-            "<sortcolumns> can be true or false",
-            "Optional, defaults to false"
-          },
-          negatable = true)
+  @Option(names = { "--sort-columns" }, description = {
+    "Sort columns in a table alphabetically",
+    "--sort-columns=<sortcolumns>",
+    "<sortcolumns> can be true or false",
+    "Optional, defaults to false"
+  }, negatable = true)
   private Boolean sortcolumns;
-  @Option(names = { "--sort-parameters" },
-          description = {
-            "Sort parameters in a routine alphabetically",
-            "--sort-parameters=<sortparameters>",
-            "<sortparameters> can be true or false",
-            "Optional, defaults to false"
-          },
-          negatable = true)
+  @Option(names = { "--sort-parameters" }, description = {
+    "Sort parameters in a routine alphabetically",
+    "--sort-parameters=<sortparameters>",
+    "<sortparameters> can be true or false",
+    "Optional, defaults to false"
+  }, negatable = true)
   private Boolean sortparameters;
-  @Option(names = { "--sort-routines" },
-          description = {
-            "Sort routines alphabetically",
-            "--sort-routines=<sortroutines>",
-            "<sortroutines> can be true or false",
-            "Optional, defaults to true"
-          },
-          negatable = true)
+  @Option(names = { "--sort-routines" }, description = {
+    "Sort routines alphabetically",
+    "--sort-routines=<sortroutines>",
+    "<sortroutines> can be true or false",
+    "Optional, defaults to true"
+  }, negatable = true)
   private Boolean sortroutines;
-  @Option(names = { "--sort-tables" },
-          description = {
-            "Sort tables alphabetically",
-            "--sort-tables=<sorttables>",
-            "<sorttables> can be true or false",
-            "Optional, defaults to true"
-          },
-          negatable = true)
+  @Option(names = { "--sort-tables" }, description = {
+    "Sort tables alphabetically",
+    "--sort-tables=<sorttables>",
+    "<sorttables> can be true or false",
+    "Optional, defaults to true"
+  }, negatable = true)
   private Boolean sorttables;
 
   public SortCommand(final SchemaCrawlerShellState state)
@@ -104,10 +90,9 @@ public final class SortCommand
   @Override
   public void run()
   {
-    final SchemaTextOptionsBuilder optionsBuilder = SchemaTextOptionsBuilder.builder()
-                                                                            .fromConfig(
-                                                                              state
-                                                                                .getAdditionalConfiguration());
+    final SchemaTextOptionsBuilder optionsBuilder = SchemaTextOptionsBuilder
+      .builder()
+      .fromConfig(state.getAdditionalConfiguration());
 
     if (sorttables != null)
     {

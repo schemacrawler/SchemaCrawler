@@ -31,7 +31,9 @@ package schemacrawler.test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
-import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 
 import java.util.HashMap;
 import java.util.Map;

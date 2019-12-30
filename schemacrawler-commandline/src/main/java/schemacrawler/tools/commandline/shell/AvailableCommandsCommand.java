@@ -45,23 +45,17 @@ import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.CommandRegistry;
 
-@Command(name = "commands",
-         header = "** List available SchemaCrawler commands",
-         headerHeading = "",
-         synopsisHeading = "Shell Command:%n",
-         customSynopsis = {
-           "commands"
-         },
-         optionListHeading = "Options:%n")
+@Command(name = "commands", header = "** List available SchemaCrawler commands", headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
+  "commands"
+}, optionListHeading = "Options:%n")
 public class AvailableCommandsCommand
   implements Runnable
 {
 
   private static String availableCommandsDescriptive()
   {
-    final TextTable textTable = forColumns(Ansi.OFF,
-                                           new Column(15, 1, SPAN),
-                                           new Column(65, 1, WRAP));
+    final TextTable textTable =
+      forColumns(Ansi.OFF, new Column(15, 1, SPAN), new Column(65, 1, WRAP));
     try
     {
       final Collection<CommandDescription> commandDescriptions = CommandRegistry

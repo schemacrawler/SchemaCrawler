@@ -29,7 +29,9 @@ package schemacrawler.test.commandline.common;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.anEmptyMap;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -48,8 +50,8 @@ public class SchemaCrawlerStateTest
 
     assertThat(state.getBaseConfiguration(), is(anEmptyMap()));
     // Assert internal field
-    final Map<String, String> baseConfigurationBefore = getBaseConfiguration(
-      state);
+    final Map<String, String> baseConfigurationBefore =
+      getBaseConfiguration(state);
     assertThat(baseConfigurationBefore, is(nullValue()));
 
     // TEST
@@ -57,15 +59,17 @@ public class SchemaCrawlerStateTest
 
     assertThat(state.getBaseConfiguration(), is(anEmptyMap()));
     // Assert internal field
-    final Map<String, String> baseConfigurationAfter = getBaseConfiguration(
-      state);
+    final Map<String, String> baseConfigurationAfter =
+      getBaseConfiguration(state);
     assertThat(baseConfigurationAfter, is(anEmptyMap()));
   }
 
   private Map<String, String> getBaseConfiguration(final SchemaCrawlerShellState state)
     throws NoSuchFieldException, IllegalAccessException
   {
-    final Field f = state.getClass().getDeclaredField("baseConfiguration");
+    final Field f = state
+      .getClass()
+      .getDeclaredField("baseConfiguration");
     f.setAccessible(true);
     return (Map<String, String>) f.get(state);
   }

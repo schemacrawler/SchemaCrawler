@@ -41,16 +41,14 @@ public class DatabaseUrlConnectionOptions
 
   @Option(names = {
     "--url"
-  },
-          required = true,
-          description = "JDBC connection URL to the database")
+  }, required = true, description = "JDBC connection URL to the database")
   private String connectionUrl;
 
   @Override
   public DatabaseConnector getDatabaseConnector()
   {
-    final DatabaseConnectorRegistry databaseConnectorRegistry = DatabaseConnectorRegistry
-      .getDatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry databaseConnectorRegistry =
+      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     return databaseConnectorRegistry.lookupDatabaseConnectorFromUrl(
       connectionUrl);
   }
@@ -58,9 +56,8 @@ public class DatabaseUrlConnectionOptions
   @Override
   public DatabaseConnectionSource toDatabaseConnectionSource(final Config config)
   {
-    final DatabaseConnectionSource databaseConnectionSource = new DatabaseConnectionSource(
-      connectionUrl,
-      config);
+    final DatabaseConnectionSource databaseConnectionSource =
+      new DatabaseConnectionSource(connectionUrl, config);
     return databaseConnectionSource;
   }
 

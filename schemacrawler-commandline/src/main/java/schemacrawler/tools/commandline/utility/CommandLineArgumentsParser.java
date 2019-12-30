@@ -31,11 +31,17 @@ package schemacrawler.tools.commandline.utility;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
- * Command-line options parser. Not POSIX compliant. Follows these POSIX
- * rules:
+ * Command-line options parser. Not POSIX compliant. Follows these POSIX rules:
  * <ul>
  * <li>Arguments are options if they begin with a hyphen delimiter
  * ('-').</li>
@@ -165,7 +171,8 @@ public class CommandLineArgumentsParser
 
     if (pluginOptionNames != null)
     {
-      filteredOptionsMap.entrySet()
+      filteredOptionsMap
+        .entrySet()
         .removeIf(entry -> !pluginOptionNames.contains(entry.getKey()));
     }
     return filteredOptionsMap;

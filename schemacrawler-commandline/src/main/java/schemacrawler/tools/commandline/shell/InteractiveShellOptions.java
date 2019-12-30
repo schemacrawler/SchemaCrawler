@@ -42,8 +42,7 @@ public final class InteractiveShellOptions
 
   @Option(names = {
     "--interactive", "--shell"
-  },
-          description = "Start SchemaCrawler interactive shell")
+  }, description = "Start SchemaCrawler interactive shell")
   private boolean interactive;
 
   @Unmatched

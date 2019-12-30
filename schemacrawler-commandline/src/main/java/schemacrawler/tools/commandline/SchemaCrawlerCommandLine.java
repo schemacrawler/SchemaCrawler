@@ -49,8 +49,8 @@ import sf.util.SchemaCrawlerLogger;
 public final class SchemaCrawlerCommandLine
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(SchemaCrawlerCommandLine.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(SchemaCrawlerCommandLine.class.getName());
 
   public static void execute(final String[] args)
   {
@@ -61,10 +61,10 @@ public final class SchemaCrawlerCommandLine
       final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
       final StateFactory stateFactory = new StateFactory(state);
 
-      final SchemaCrawlerCommandLineCommands commands = new SchemaCrawlerCommandLineCommands();
-      final CommandLine commandLine = newCommandLine(commands,
-                                                     stateFactory,
-                                                     true);
+      final SchemaCrawlerCommandLineCommands commands =
+        new SchemaCrawlerCommandLineCommands();
+      final CommandLine commandLine =
+        newCommandLine(commands, stateFactory, true);
       final ParseResult parseResult = commandLine.parseArgs(args);
       final Config additionalConfig = retrievePluginOptions(parseResult);
       state.addAdditionalConfiguration(additionalConfig);
@@ -78,31 +78,35 @@ public final class SchemaCrawlerCommandLine
 
       final String errorMessage;
       if (throwable instanceof picocli.CommandLine.PicocliException)
+      {
+        final Throwable cause = throwable.getCause();
+        if (cause != null && !isBlank(cause.getMessage()))
         {
-          final Throwable cause = throwable.getCause();
-          if (cause != null && !isBlank(cause.getMessage()))
-          {
-            errorMessage = cause.getMessage();
-          } else {
-            errorMessage = throwable.getMessage();
+          errorMessage = cause.getMessage();
         }
-      } else {
+        else
+        {
+          errorMessage = throwable.getMessage();
+        }
+      }
+      else
+      {
         errorMessage = throwable.getMessage();
       }
 
-      System.err
-        .printf("%s %s%n%n", Version.getProductName(), Version.getVersion());
+      System.err.printf("%s %s%n%n",
+                        Version.getProductName(),
+                        Version.getVersion());
       if (!isBlank(errorMessage))
       {
         System.err.printf("Error: %s%n%n", errorMessage);
       }
       else
       {
-        System.err
-          .printf("Error: Unknown error%n%n");
+        System.err.printf("Error: Unknown error%n%n");
       }
-      System.err.printf(
-        "Re-run SchemaCrawler with just the%n" + "-h%n" + "option for help%n%n");
+      System.err.printf("Re-run SchemaCrawler with just the%n" + "-h%n"
+                        + "option for help%n%n");
       System.err.printf(
         "Or, re-run SchemaCrawler with an additional%n" + "--log-level=CONFIG%n"
         + "option for details on the error%n");
@@ -125,11 +129,14 @@ public final class SchemaCrawlerCommandLine
       "sort",
       "showstate",
       "load",
-      "execute" })
+      "execute"
+    })
     {
       final Runnable command = (Runnable) subcommands.get(commandName);
       LOGGER.log(Level.INFO,
-                 "Running command " + command.getClass().getSimpleName());
+                 "Running command " + command
+                   .getClass()
+                   .getSimpleName());
       command.run();
     }
   }

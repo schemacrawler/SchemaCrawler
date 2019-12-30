@@ -36,7 +36,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-import picocli.CommandLine.*;
+import picocli.CommandLine.ArgGroup;
+import picocli.CommandLine.Model;
+import picocli.CommandLine.Option;
+import picocli.CommandLine.ParameterException;
+import picocli.CommandLine.Spec;
 import schemacrawler.tools.commandline.state.MultiUseUserCredentials;
 import schemacrawler.tools.databaseconnector.UserCredentials;
 import sf.util.SchemaCrawlerLogger;
@@ -49,34 +53,26 @@ import sf.util.SchemaCrawlerLogger;
 public final class UserCredentialsOptions
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
-    UserCredentialsOptions.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(UserCredentialsOptions.class.getName());
 
 
   public static class PasswordOptions
   {
-    @Option(names = "--password:env",
-            description = "Database password, from an environmental variable value",
-            paramLabel = "<environment variable name>")
+    @Option(names = "--password:env", description = "Database password, from an environmental variable value", paramLabel = "<environment variable name>")
     private String passwordEnvironmentVariable;
-    @Option(names = "--password:file",
-            description = "Database password, read from a file",
-            paramLabel = "<path to password file>")
+    @Option(names = "--password:file", description = "Database password, read from a file", paramLabel = "<path to password file>")
     private Path passwordFile;
-    @Option(names = "--password:prompt",
-            interactive = true,
-            description = "Database password, prompted from the console")
+    @Option(names = "--password:prompt", interactive = true, description = "Database password, prompted from the console")
     private String passwordPrompted;
     @Option(names = {
       "--password"
-    },
-            description = "Database password",
-            paramLabel = "<password>")
+    }, description = "Database password", paramLabel = "<password>")
     private String passwordProvided;
 
     /**
-     * Get password from various sources, in order of precedence.
-     * The password cannot be specified in more than one way.
+     * Get password from various sources, in order of precedence. The password
+     * cannot be specified in more than one way.
      *
      * @return Password, can be null
      */
@@ -164,8 +160,7 @@ public final class UserCredentialsOptions
   private Model.CommandSpec spec;
   @Option(names = {
     "--user"
-  },
-          description = "Database user name")
+  }, description = "Database user name")
   private String user;
 
   public UserCredentials getUserCredentials()

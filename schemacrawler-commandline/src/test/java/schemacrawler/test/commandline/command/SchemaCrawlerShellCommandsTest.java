@@ -44,10 +44,11 @@ public class SchemaCrawlerShellCommandsTest
   {
     final String[] args = new String[] { "bad-command" };
 
-    final SchemaCrawlerShellCommands optionsParser = new SchemaCrawlerShellCommands();
+    final SchemaCrawlerShellCommands optionsParser =
+      new SchemaCrawlerShellCommands();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    final CommandLine commandLine = new CommandLine(optionsParser,
-                                                    new StateFactory(state));
+    final CommandLine commandLine =
+      new CommandLine(optionsParser, new StateFactory(state));
 
     assertThrows(CommandLine.UnmatchedArgumentException.class,
                  () -> commandLine.parseArgs(args));

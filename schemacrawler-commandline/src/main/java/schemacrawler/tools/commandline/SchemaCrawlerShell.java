@@ -36,7 +36,12 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.retriev
 import java.io.PrintWriter;
 import java.util.logging.Level;
 
-import org.jline.reader.*;
+import org.jline.reader.EndOfFileException;
+import org.jline.reader.LineReader;
+import org.jline.reader.LineReaderBuilder;
+import org.jline.reader.MaskingCallback;
+import org.jline.reader.ParsedLine;
+import org.jline.reader.UserInterruptException;
 import org.jline.reader.impl.DefaultParser;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
@@ -53,8 +58,8 @@ import sf.util.SchemaCrawlerLogger;
 public final class SchemaCrawlerShell
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(SchemaCrawlerShell.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(SchemaCrawlerShell.class.getName());
 
   public static void execute(final String[] args)
     throws Exception
@@ -64,24 +69,35 @@ public final class SchemaCrawlerShell
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     final StateFactory stateFactory = new StateFactory(state);
 
-    final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
-    final CommandLine commandLine = newCommandLine(commands,
-                                                   stateFactory,
-                                                   false);
+    final SchemaCrawlerShellCommands commands =
+      new SchemaCrawlerShellCommands();
+    final CommandLine commandLine =
+      newCommandLine(commands, stateFactory, false);
 
-    final Terminal terminal = TerminalBuilder.builder().build();
-    final LineReader reader = LineReaderBuilder.builder().terminal(terminal)
+    final Terminal terminal = TerminalBuilder
+      .builder()
+      .build();
+    final LineReader reader = LineReaderBuilder
+      .builder()
+      .terminal(terminal)
       .completer(new PicocliJLineCompleter(commandLine.getCommandSpec()))
-      .parser(new DefaultParser()).build();
+      .parser(new DefaultParser())
+      .build();
 
     while (true)
     {
       try
       {
-        final String line = reader
-          .readLine("schemacrawler> ", null, (MaskingCallback) null, null);
-        final ParsedLine pl = reader.getParser().parse(line, 0);
-        final String[] arguments = pl.words().toArray(new String[0]);
+        final String line = reader.readLine("schemacrawler> ",
+                                            null,
+                                            (MaskingCallback) null,
+                                            null);
+        final ParsedLine pl = reader
+          .getParser()
+          .parse(line, 0);
+        final String[] arguments = pl
+          .words()
+          .toArray(new String[0]);
 
         parseAndRun(state, commandLine, arguments);
       }
@@ -120,7 +136,8 @@ public final class SchemaCrawlerShell
 
     if (parseResult.hasSubcommand())
     {
-      for (final CommandLine subcommandLine : parseResult.subcommand()
+      for (final CommandLine subcommandLine : parseResult
+        .subcommand()
         .asCommandLineList())
       {
         try
@@ -129,7 +146,9 @@ public final class SchemaCrawlerShell
           if (command != null)
           {
             LOGGER.log(Level.INFO,
-                       "Running command " + command.getClass().getSimpleName());
+                       "Running command " + command
+                         .getClass()
+                         .getSimpleName());
             command.run();
 
             badCommand = false;

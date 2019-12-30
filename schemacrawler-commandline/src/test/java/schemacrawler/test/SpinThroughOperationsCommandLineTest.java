@@ -44,7 +44,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.InfoLevel;
-import schemacrawler.test.utility.*;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
+import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.operation.Operation;
@@ -55,7 +59,8 @@ import schemacrawler.tools.text.operation.Operation;
 public class SpinThroughOperationsCommandLineTest
 {
 
-  private static final String SPIN_THROUGH_OPERATIONS_OUTPUT = "spin_through_operations_output/";
+  private static final String SPIN_THROUGH_OPERATIONS_OUTPUT =
+    "spin_through_operations_output/";
 
   @BeforeAll
   public static void clean()
@@ -66,8 +71,9 @@ public class SpinThroughOperationsCommandLineTest
 
   private static Stream<InfoLevel> infoLevels()
   {
-    return Arrays.stream(InfoLevel.values())
-                 .filter(infoLevel -> infoLevel != InfoLevel.unknown);
+    return Arrays
+      .stream(InfoLevel.values())
+      .filter(infoLevel -> infoLevel != InfoLevel.unknown);
   }
 
   private static Stream<Operation> operations()
@@ -108,9 +114,8 @@ public class SpinThroughOperationsCommandLineTest
           return;
         }
 
-        final String referenceFile = referenceFile(operation,
-                                                   infoLevel,
-                                                   outputFormat);
+        final String referenceFile =
+          referenceFile(operation, infoLevel, outputFormat);
 
         final String command = operation.name();
 

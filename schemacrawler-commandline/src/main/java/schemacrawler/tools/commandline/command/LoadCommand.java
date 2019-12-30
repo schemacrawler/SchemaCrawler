@@ -34,7 +34,11 @@ import static java.util.Objects.requireNonNull;
 import java.sql.Connection;
 import java.util.logging.Level;
 
-import picocli.CommandLine.*;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.ExecutionException;
+import picocli.CommandLine.Model;
+import picocli.CommandLine.Option;
+import picocli.CommandLine.Spec;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InfoLevel;
@@ -46,36 +50,28 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
-@Command(name = "load",
-         header = "** Load database metadata into memory",
-         description = {
-           ""
-         },
-         headerHeading = "",
-         synopsisHeading = "Shell Command:%n",
-         customSynopsis = {
-           "load"
-         },
-         optionListHeading = "Options:%n")
+@Command(name = "load", header = "** Load database metadata into memory", description = {
+  ""
+}, headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
+  "load"
+}, optionListHeading = "Options:%n")
 public class LoadCommand
   implements Runnable
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
-    LoadCommand.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(LoadCommand.class.getName());
 
   private final SchemaCrawlerShellState state;
 
   @Option(names = {
     "-i", "--info-level"
-  },
-          required = true,
-          description = {
-            "<infolevel> is one of ${COMPLETION-CANDIDATES}",
-            "The info level determines the amount of database metadata retrieved, "
-            + "and also determines the time taken to crawl the schema",
-            "Optional, defaults to standard\n"
-          })
+  }, required = true, description = {
+    "<infolevel> is one of ${COMPLETION-CANDIDATES}",
+    "The info level determines the amount of database metadata retrieved, "
+    + "and also determines the time taken to crawl the schema",
+    "Optional, defaults to standard\n"
+  })
   private InfoLevel infolevel;
 
   @Spec
@@ -102,24 +98,33 @@ public class LoadCommand
 
     if (infolevel != null)
     {
-      state.getSchemaCrawlerOptionsBuilder()
-           .withSchemaInfoLevel(infolevel.toSchemaInfoLevel());
+      state
+        .getSchemaCrawlerOptionsBuilder()
+        .withSchemaInfoLevel(infolevel.toSchemaInfoLevel());
     }
 
-    try (final Connection connection = state.getDataSource().get())
+    try (
+      final Connection connection = state
+        .getDataSource()
+        .get()
+    )
     {
       LOGGER.log(Level.INFO, new StringFormat("infolevel=%s", infolevel));
 
       final Config additionalConfiguration = state.getAdditionalConfiguration();
-      final SchemaRetrievalOptions schemaRetrievalOptions = state.getSchemaRetrievalOptionsBuilder()
-                                                                 .toOptions();
-      final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptionsBuilder()
-                                                             .toOptions();
+      final SchemaRetrievalOptions schemaRetrievalOptions = state
+        .getSchemaRetrievalOptionsBuilder()
+        .toOptions();
+      final SchemaCrawlerOptions schemaCrawlerOptions = state
+        .getSchemaCrawlerOptionsBuilder()
+        .toOptions();
 
-      final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
-      final CatalogLoader catalogLoader = catalogLoaderRegistry.lookupCatalogLoader(
-        schemaRetrievalOptions.getDatabaseServerType()
-                              .getDatabaseSystemIdentifier());
+      final CatalogLoaderRegistry catalogLoaderRegistry =
+        new CatalogLoaderRegistry();
+      final CatalogLoader catalogLoader =
+        catalogLoaderRegistry.lookupCatalogLoader(schemaRetrievalOptions
+                                                    .getDatabaseServerType()
+                                                    .getDatabaseSystemIdentifier());
       LOGGER.log(Level.CONFIG,
                  new StringFormat("Catalog loader: %s", getClass().getName()));
 

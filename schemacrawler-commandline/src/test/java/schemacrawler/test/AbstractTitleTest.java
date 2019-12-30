@@ -44,7 +44,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.InfoLevel;
-import schemacrawler.test.utility.*;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
+import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.options.OutputFormat;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
@@ -66,31 +70,30 @@ public abstract class AbstractTitleTest
   public void commandLineWithTitle(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    assertAll(outputFormats()
-                .flatMap(outputFormat -> commands().map(command -> () -> {
+    assertAll(outputFormats().flatMap(outputFormat -> commands().map(command -> () -> {
 
-                  final String referenceFile = referenceFile(command,
-                                                             outputFormat);
+      final String referenceFile = referenceFile(command, outputFormat);
 
-                  final Map<String, String> argsMap = new HashMap<>();
-                  argsMap.put("-schemas", ".*\\.(?!FOR_LINT).*");
-                  argsMap.put("-info-level", InfoLevel.standard.name());
-                  argsMap
-                    .put("-title", "Database Design for Books and Publishers");
+      final Map<String, String> argsMap = new HashMap<>();
+      argsMap.put("-schemas", ".*\\.(?!FOR_LINT).*");
+      argsMap.put("-info-level", InfoLevel.standard.name());
+      argsMap.put("-title", "Database Design for Books and Publishers");
 
-                  assertThat(outputOf(commandlineExecution(connectionInfo,
-                                                           command,
-                                                           argsMap,
-                                                           outputFormat)),
-                             hasSameContentAndTypeAs(classpathResource(
-                               TITLE_OUTPUT + referenceFile), outputFormat));
+      assertThat(outputOf(commandlineExecution(connectionInfo,
+                                               command,
+                                               argsMap,
+                                               outputFormat)),
+                 hasSameContentAndTypeAs(classpathResource(
+                   TITLE_OUTPUT + referenceFile), outputFormat));
 
-                })));
+    })));
   }
 
   protected Stream<String> commands()
   {
-    return Arrays.asList("schema", "list").stream();
+    return Arrays
+      .asList("schema", "list")
+      .stream();
   }
 
   protected abstract Stream<OutputFormat> outputFormats();
@@ -98,8 +101,9 @@ public abstract class AbstractTitleTest
   private String referenceFile(final String command,
                                final OutputFormat outputFormat)
   {
-    final String referenceFile = String
-      .format("commandLineWithTitle_%s.%s", command, outputFormat.getFormat());
+    final String referenceFile = String.format("commandLineWithTitle_%s.%s",
+                                               command,
+                                               outputFormat.getFormat());
     return referenceFile;
   }
 

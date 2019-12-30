@@ -12,7 +12,7 @@ import schemacrawler.tools.iosource.ClasspathInputResource;
 
 /**
  * SchemaCrawler database support plug-in.
- *
+ * <p>
  * Plug-in to support a hypothetical RMDBS, NewDB.
  *
  * @see <a href="https://www.schemacrawler.com">SchemaCrawler</a>
@@ -21,9 +21,8 @@ public final class TestDatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final DatabaseServerType DB_SERVER_TYPE = new DatabaseServerType(
-    "test-db",
-    "Test Database");
+  private static final DatabaseServerType DB_SERVER_TYPE =
+    new DatabaseServerType("test-db", "Test Database");
 
   public TestDatabaseConnector()
     throws IOException
@@ -31,14 +30,8 @@ public final class TestDatabaseConnector
     super(DB_SERVER_TYPE,
           new ClasspathInputResource(
             "/META-INF/schemacrawler-test-db.config.properties"),
-          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder
-            .fromResourceFolder("/test-db.information_schema"));
-  }
-
-  @Override
-  protected Predicate<String> supportsUrlPredicate()
-  {
-    return url -> Pattern.matches("jdbc:test-db:.*", url);
+          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
+            "/test-db.information_schema"));
   }
 
   @Override
@@ -50,6 +43,12 @@ public final class TestDatabaseConnector
                             + "Loads SchemaCrawler plug-in for Test Database",
                             String.class);
     return pluginCommand;
+  }
+
+  @Override
+  protected Predicate<String> supportsUrlPredicate()
+  {
+    return url -> Pattern.matches("jdbc:test-db:.*", url);
   }
 
 }

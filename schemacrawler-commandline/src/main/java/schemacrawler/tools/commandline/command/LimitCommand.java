@@ -50,118 +50,100 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
  *
  * @author Sualeh Fatehi
  */
-@Command(name = "limit",
-         header = "** Limit database object metadata",
-         description = {
-           "",
-           "When you limit database object metadata, it reduces SchemaCrawler's visibility into other database objects.",
-           "From SchemaCrawler's perspective, the other database objects do not exist.",
-           ""
-         },
-         headerHeading = "",
-         synopsisHeading = "Shell Command:%n",
-         customSynopsis = {
-           "limit"
-         },
-         optionListHeading = "Options:%n")
+@Command(name = "limit", header = "** Limit database object metadata", description = {
+  "",
+  "When you limit database object metadata, it reduces SchemaCrawler's visibility into other database objects.",
+  "From SchemaCrawler's perspective, the other database objects do not exist.",
+  ""
+}, headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
+  "limit"
+}, optionListHeading = "Options:%n")
 public final class LimitCommand
   implements Runnable
 {
 
   private final SchemaCrawlerShellState state;
 
-  @Option(names = { "--exclude-columns" },
-          description = {
-            "<excludecolumns> is a regular expression to match fully qualified column names, "
-            + "in the form \"CATALOGNAME.SCHEMANAME.TABLENAME.COLUMNNAME\" - "
-            + "for example, --exclude-columns=.*\\.STREET|.*\\.PRICE matches columns named "
-            + "STREET or PRICE in any table",
-            "Columns that match the pattern are not displayed",
-            "Optional, default is to show all columns"
-          })
+  @Option(names = { "--exclude-columns" }, description = {
+    "<excludecolumns> is a regular expression to match fully qualified column names, "
+    + "in the form \"CATALOGNAME.SCHEMANAME.TABLENAME.COLUMNNAME\" - "
+    + "for example, --exclude-columns=.*\\.STREET|.*\\.PRICE matches columns named "
+    + "STREET or PRICE in any table",
+    "Columns that match the pattern are not displayed",
+    "Optional, default is to show all columns"
+  })
   private Pattern excludecolumns;
-  @Option(names = { "--exclude-parameters" },
-          description = {
-            "<excludeparameters> is a regular expression to match fully qualified parameter names "
-            + "- for example, --exclude-parameters=@p1|@p2 matches parameters named @p1 or @p2 "
-            + "in any procedure",
-            "Parameters that match the pattern are not displayed",
-            "Optional, default is to show all parameters"
-          })
+  @Option(names = { "--exclude-parameters" }, description = {
+    "<excludeparameters> is a regular expression to match fully qualified parameter names "
+    + "- for example, --exclude-parameters=@p1|@p2 matches parameters named @p1 or @p2 "
+    + "in any procedure",
+    "Parameters that match the pattern are not displayed",
+    "Optional, default is to show all parameters"
+  })
   private Pattern excludeparameters;
-  @Option(names = { "--routines" },
-          description = {
-            "<routines> is a regular expression to match fully qualified stored procedure "
-            + "or function names, in the form \"CATALOGNAME.SCHEMANAME.ROUTINENAME\" "
-            + "- for example, --routines=.*\\.C.*|.*\\.P.* matches any routines "
-            + "whose names start with C or P",
-            "Routines that do not match the pattern are not displayed",
-            "Use --routines= to omit routines",
-            "Optional, defaults to showing no routines"
-          })
+  @Option(names = { "--routines" }, description = {
+    "<routines> is a regular expression to match fully qualified stored procedure "
+    + "or function names, in the form \"CATALOGNAME.SCHEMANAME.ROUTINENAME\" "
+    + "- for example, --routines=.*\\.C.*|.*\\.P.* matches any routines "
+    + "whose names start with C or P",
+    "Routines that do not match the pattern are not displayed",
+    "Use --routines= to omit routines",
+    "Optional, defaults to showing no routines"
+  })
   private Pattern routines;
-  @Option(names = { "--routine-types" },
-          split = ",",
-          description = {
-            "<routinetypes> is a comma-separated list of routine types "
-            + "of PROCEDURE,FUNCTION",
-            "Optional, defaults to PROCEDURE,FUNCTION"
-          })
+  @Option(names = { "--routine-types" }, split = ",", description = {
+    "<routinetypes> is a comma-separated list of routine types "
+    + "of PROCEDURE,FUNCTION", "Optional, defaults to PROCEDURE,FUNCTION"
+  })
   private String[] routinetypes;
-  @Option(names = { "--schemas" },
-          description = {
-            "<schemas> is a regular expression to match fully qualified schema names, "
-            + "in the form \"CATALOGNAME.SCHEMANAME\" - for example, "
-            + "--schemas=.*\\.C.*|.*\\.P.* matches any schemas whose names start "
-            + "with C or P",
-            "Schemas that do not match the pattern are not displayed",
-            "Optional, defaults to showing all schemas"
-          })
+  @Option(names = { "--schemas" }, description = {
+    "<schemas> is a regular expression to match fully qualified schema names, "
+    + "in the form \"CATALOGNAME.SCHEMANAME\" - for example, "
+    + "--schemas=.*\\.C.*|.*\\.P.* matches any schemas whose names start "
+    + "with C or P",
+    "Schemas that do not match the pattern are not displayed",
+    "Optional, defaults to showing all schemas"
+  })
   private Pattern schemas;
-  @Option(names = { "--sequences" },
-          description = {
-            "<sequences> is a regular expression to match fully qualified "
-            + "sequence names, in the form \"CATALOGNAME.SCHEMANAME.SEQUENCENAME\" "
-            + "- for example, --sequences=.*\\.C.*|.*\\.P.* matches any sequences "
-            + "whose names start with C or P",
-            "Sequences that do not match the pattern are not displayed",
-            "Use --sequences= to omit sequences",
-            "Sequences will only be shown when -infolevel=maximum",
-            "Optional, defaults to showing no sequences"
-          })
+  @Option(names = { "--sequences" }, description = {
+    "<sequences> is a regular expression to match fully qualified "
+    + "sequence names, in the form \"CATALOGNAME.SCHEMANAME.SEQUENCENAME\" "
+    + "- for example, --sequences=.*\\.C.*|.*\\.P.* matches any sequences "
+    + "whose names start with C or P",
+    "Sequences that do not match the pattern are not displayed",
+    "Use --sequences= to omit sequences",
+    "Sequences will only be shown when -infolevel=maximum",
+    "Optional, defaults to showing no sequences"
+  })
   private Pattern sequences;
-  @Option(names = { "--synonyms" },
-          description = {
-            "<synonyms> is a regular expression to match fully "
-            + "qualified synonym names, in the form \"CATALOGNAME.SCHEMANAME.SYNONYMNAME\" "
-            + "- for example, --synonyms=.*\\.C.*|.*\\.P.* matches any synonyms "
-            + "whose names start with C or P",
-            "Synonyms that do not match the pattern are not displayed",
-            "Synonyms will only be shown when -infolevel=maximum",
-            "Use --synonyms= to omit synonyms",
-            "Optional, defaults to showing no synonyms"
-          })
+  @Option(names = { "--synonyms" }, description = {
+    "<synonyms> is a regular expression to match fully "
+    + "qualified synonym names, in the form \"CATALOGNAME.SCHEMANAME.SYNONYMNAME\" "
+    + "- for example, --synonyms=.*\\.C.*|.*\\.P.* matches any synonyms "
+    + "whose names start with C or P",
+    "Synonyms that do not match the pattern are not displayed",
+    "Synonyms will only be shown when -infolevel=maximum",
+    "Use --synonyms= to omit synonyms",
+    "Optional, defaults to showing no synonyms"
+  })
   private Pattern synonyms;
-  @Option(names = { "--tables" },
-          description = {
-            "<regular-expression> is a regular expression to match fully qualified "
-            + "table names, in the form \"CATALOGNAME.SCHEMANAME.TABLENAME\" "
-            + "- for example, --tables=.*\\.C.*|.*\\.P.* matches any tables "
-            + "whose names start with C or P",
-            "Tables that do not match the pattern are not displayed",
-            "Use with care, since --tables= actually takes tables out of consideration "
-            + "from the perspective of SchemaCrawler - to filter tables, look into the "
-            + "grep options",
-            "Optional, defaults to showing all tables"
-          })
+  @Option(names = { "--tables" }, description = {
+    "<regular-expression> is a regular expression to match fully qualified "
+    + "table names, in the form \"CATALOGNAME.SCHEMANAME.TABLENAME\" "
+    + "- for example, --tables=.*\\.C.*|.*\\.P.* matches any tables "
+    + "whose names start with C or P",
+    "Tables that do not match the pattern are not displayed",
+    "Use with care, since --tables= actually takes tables out of consideration "
+    + "from the perspective of SchemaCrawler - to filter tables, look into the "
+    + "grep options",
+    "Optional, defaults to showing all tables"
+  })
   private Pattern tables;
-  @Option(names = { "--table-types" },
-          split = ",",
-          description = {
-            "<tabletypes> is a comma-separated list of table types supported by the database",
-            "If no value is specified, all types of tables are shown",
-            "Optional, defaults to TABLE,VIEW"
-          })
+  @Option(names = { "--table-types" }, split = ",", description = {
+    "<tabletypes> is a comma-separated list of table types supported by the database",
+    "If no value is specified, all types of tables are shown",
+    "Optional, defaults to TABLE,VIEW"
+  })
   private String[] tabletypes;
 
   public LimitCommand(final SchemaCrawlerShellState state)
@@ -172,7 +154,8 @@ public final class LimitCommand
   @Override
   public void run()
   {
-    final SchemaCrawlerOptionsBuilder optionsBuilder = state.getSchemaCrawlerOptionsBuilder();
+    final SchemaCrawlerOptionsBuilder optionsBuilder =
+      state.getSchemaCrawlerOptionsBuilder();
 
     if (schemas != null)
     {
@@ -229,8 +212,9 @@ public final class LimitCommand
     final Collection<RoutineType> routineTypesCollection = new HashSet<>();
     for (final String routineTypeString : routinetypes)
     {
-      final RoutineType routineType = enumValue(routineTypeString.toLowerCase(
-        Locale.ENGLISH), RoutineType.unknown);
+      final RoutineType routineType =
+        enumValue(routineTypeString.toLowerCase(Locale.ENGLISH),
+                  RoutineType.unknown);
       routineTypesCollection.add(routineType);
     }
     return routineTypesCollection;

@@ -25,8 +25,12 @@ public class CommandOutputOptionsTest
     final CommandLine commandLine = newCommandLine(options, null, true);
     commandLine.parseArgs(args);
 
-    assertThat(options.getOutputFile().isPresent(), is(false));
-    assertThat(options.getOutputFormatValue().isPresent(), is(false));
+    assertThat(options
+                 .getOutputFile()
+                 .isPresent(), is(false));
+    assertThat(options
+                 .getOutputFormatValue()
+                 .isPresent(), is(false));
   }
 
   @Test
@@ -38,8 +42,12 @@ public class CommandOutputOptionsTest
     final CommandLine commandLine = newCommandLine(options, null, true);
     commandLine.parseArgs(args);
 
-    assertThat(options.getOutputFile().isPresent(), is(false));
-    assertThat(options.getOutputFormatValue().isPresent(), is(false));
+    assertThat(options
+                 .getOutputFile()
+                 .isPresent(), is(false));
+    assertThat(options
+                 .getOutputFormatValue()
+                 .isPresent(), is(false));
   }
 
   @Test
@@ -48,9 +56,8 @@ public class CommandOutputOptionsTest
     final String[] args = { "--output-file" };
 
     assertThrows(CommandLine.MissingParameterException.class, () -> {
-      final CommandLine commandLine = newCommandLine(new CommandOutputOptions(),
-                                                     null,
-                                                     true);
+      final CommandLine commandLine =
+        newCommandLine(new CommandOutputOptions(), null, true);
       commandLine.parseArgs(args);
     });
   }
@@ -61,9 +68,8 @@ public class CommandOutputOptionsTest
     final String[] args = { "--output-format" };
 
     assertThrows(CommandLine.MissingParameterException.class, () -> {
-      final CommandLine commandLine = newCommandLine(new CommandOutputOptions(),
-                                                     null,
-                                                     true);
+      final CommandLine commandLine =
+        newCommandLine(new CommandOutputOptions(), null, true);
       commandLine.parseArgs(args);
     });
   }
@@ -84,10 +90,10 @@ public class CommandOutputOptionsTest
     final CommandLine commandLine = newCommandLine(options, null, true);
     commandLine.parseArgs(args);
 
-    assertThat(options.getOutputFile()
-                      .orElseThrow(() -> new IllegalArgumentException(
-                        "No file found"))
-                      .getFileName(), is(Paths.get("file.txt")));
+    assertThat(options
+                 .getOutputFile()
+                 .orElseThrow(() -> new IllegalArgumentException("No file found"))
+                 .getFileName(), is(Paths.get("file.txt")));
     assertThat(options.getOutputFormatValue(), is(Optional.of("tables.js")));
   }
 

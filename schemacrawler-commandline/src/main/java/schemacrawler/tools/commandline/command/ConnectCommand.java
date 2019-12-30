@@ -35,7 +35,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
-import picocli.CommandLine.*;
+import picocli.CommandLine.ArgGroup;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Mixin;
+import picocli.CommandLine.Model;
+import picocli.CommandLine.ParameterException;
+import picocli.CommandLine.Spec;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -47,27 +52,21 @@ import schemacrawler.tools.databaseconnector.UserCredentials;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
-@Command(name = "connect",
-         header = "** Connect to the database",
-         description = {
-           "",
-           "For database connections, please read",
-           "https://www.schemacrawler.com/database-support.html",
-           "first, before running SchemaCrawler",
-           ""
-         },
-         headerHeading = "",
-         synopsisHeading = "Shell Command:%n",
-         customSynopsis = {
-           "connect"
-         },
-         optionListHeading = "Options:%n")
+@Command(name = "connect", header = "** Connect to the database", description = {
+  "",
+  "For database connections, please read",
+  "https://www.schemacrawler.com/database-support.html",
+  "first, before running SchemaCrawler",
+  ""
+}, headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
+  "connect"
+}, optionListHeading = "Options:%n")
 public class ConnectCommand
   implements Runnable
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
-    ConnectCommand.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(ConnectCommand.class.getName());
 
   private final SchemaCrawlerShellState state;
   @ArgGroup(exclusive = true)
@@ -93,7 +92,8 @@ public class ConnectCommand
       final DatabaseConnectable databaseConnectable = getDatabaseConnectable();
       requireNonNull(databaseConnectable,
                      "No database connection options provided");
-      final DatabaseConnector databaseConnector = databaseConnectable.getDatabaseConnector();
+      final DatabaseConnector databaseConnector =
+        databaseConnectable.getDatabaseConnector();
       requireNonNull(databaseConnector,
                      "No database connection options provided");
       LOGGER.log(Level.INFO,
@@ -129,7 +129,8 @@ public class ConnectCommand
                                    "No database connection options provided");
     }
 
-    final DatabaseConnectable databaseConnectable = databaseConnectionOptions.getDatabaseConnectable();
+    final DatabaseConnectable databaseConnectable =
+      databaseConnectionOptions.getDatabaseConnectable();
     if (databaseConnectable == null)
     {
       throw new ParameterException(spec.commandLine(),
@@ -147,7 +148,8 @@ public class ConnectCommand
       throw new ParameterException(spec.commandLine(),
                                    "No database connection credentials provided");
     }
-    final UserCredentials userCredentials = userCredentialsOptions.getUserCredentials();
+    final UserCredentials userCredentials =
+      userCredentialsOptions.getUserCredentials();
     return userCredentials;
   }
 
@@ -167,8 +169,8 @@ public class ConnectCommand
 
     // Connect using connection options provided from the command-line,
     // provided configuration, and bundled configuration
-    final DatabaseConnectionSource databaseConnectionSource = databaseConnector.newDatabaseConnectionSource(
-      databaseConnectable);
+    final DatabaseConnectionSource databaseConnectionSource =
+      databaseConnector.newDatabaseConnectionSource(databaseConnectable);
     databaseConnectionSource.setUserCredentials(userCredentials);
 
     state.setDataSource(databaseConnectionSource);
@@ -179,9 +181,10 @@ public class ConnectCommand
     LOGGER.log(Level.FINE, () -> "Creating SchemaCrawler options builder");
 
     final Config config = state.getAdditionalConfiguration();
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder()
-      .fromConfig(config);
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .fromConfig(config);
     state.setSchemaCrawlerOptionsBuilder(schemaCrawlerOptionsBuilder);
   }
 
@@ -195,10 +198,14 @@ public class ConnectCommand
                () -> "Creating SchemaCrawler retrieval options builder");
 
     final Config config = state.getAdditionalConfiguration();
-    try (final Connection connection = state.getDataSource().get())
+    try (
+      final Connection connection = state
+        .getDataSource()
+        .get()
+    )
     {
-      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = databaseConnector
-        .getSchemaRetrievalOptionsBuilder(connection);
+      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+        databaseConnector.getSchemaRetrievalOptionsBuilder(connection);
       schemaRetrievalOptionsBuilder.fromConfig(config);
       state.setSchemaRetrievalOptionsBuilder(schemaRetrievalOptionsBuilder);
     }

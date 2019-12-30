@@ -22,13 +22,15 @@ public class SortCommandTest
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     runCommandInTest(new SortCommand(state), args);
 
-    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder()
-                                                                     .fromConfig(
-                                                                       state.getAdditionalConfiguration());
+    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder
+      .builder()
+      .fromConfig(state.getAdditionalConfiguration());
 
     assertThat("No options are set",
                builder.toOptions(),
-               is(equalTo(SchemaTextOptionsBuilder.builder().toOptions())));
+               is(equalTo(SchemaTextOptionsBuilder
+                            .builder()
+                            .toOptions())));
   }
 
   @Test
@@ -39,13 +41,15 @@ public class SortCommandTest
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     runCommandInTest(new SortCommand(state), args);
 
-    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder()
-                                                                     .fromConfig(
-                                                                       state.getAdditionalConfiguration());
+    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder
+      .builder()
+      .fromConfig(state.getAdditionalConfiguration());
 
     assertThat("No options are set",
                builder.toOptions(),
-               is(equalTo(SchemaTextOptionsBuilder.builder().toOptions())));
+               is(equalTo(SchemaTextOptionsBuilder
+                            .builder()
+                            .toOptions())));
   }
 
   @Test
@@ -58,13 +62,15 @@ public class SortCommandTest
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     runCommandInTest(new SortCommand(state), args);
 
-    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder()
-                                                                     .fromConfig(
-                                                                       state.getAdditionalConfiguration());
+    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder
+      .builder()
+      .fromConfig(state.getAdditionalConfiguration());
 
     assertThat("No options are set",
                builder.toOptions(),
-               is(equalTo(SchemaTextOptionsBuilder.builder().toOptions())));
+               is(equalTo(SchemaTextOptionsBuilder
+                            .builder()
+                            .toOptions())));
   }
 
   @Test
@@ -77,15 +83,21 @@ public class SortCommandTest
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     runCommandInTest(new SortCommand(state), args);
 
-    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder()
-                                                                     .fromConfig(
-                                                                       state.getAdditionalConfiguration());
-    assertThat(builder.toOptions().isAlphabeticalSortForTables(), is(true));
-    assertThat(builder.toOptions().isAlphabeticalSortForTableColumns(),
-               is(false));
-    assertThat(builder.toOptions().isAlphabeticalSortForRoutines(), is(false));
-    assertThat(builder.toOptions().isAlphabeticalSortForRoutineParameters(),
-               is(false));
+    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder
+      .builder()
+      .fromConfig(state.getAdditionalConfiguration());
+    assertThat(builder
+                 .toOptions()
+                 .isAlphabeticalSortForTables(), is(true));
+    assertThat(builder
+                 .toOptions()
+                 .isAlphabeticalSortForTableColumns(), is(false));
+    assertThat(builder
+                 .toOptions()
+                 .isAlphabeticalSortForRoutines(), is(false));
+    assertThat(builder
+                 .toOptions()
+                 .isAlphabeticalSortForRoutineParameters(), is(false));
 
   }
 
@@ -104,16 +116,22 @@ public class SortCommandTest
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     runCommandInTest(new SortCommand(state), args);
 
-    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder()
-                                                                     .fromConfig(
-                                                                       state.getAdditionalConfiguration());
+    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder
+      .builder()
+      .fromConfig(state.getAdditionalConfiguration());
 
-    assertThat(builder.toOptions().isAlphabeticalSortForTables(), is(true));
-    assertThat(builder.toOptions().isAlphabeticalSortForTableColumns(),
-               is(true));
-    assertThat(builder.toOptions().isAlphabeticalSortForRoutines(), is(true));
-    assertThat(builder.toOptions().isAlphabeticalSortForRoutineParameters(),
-               is(true));
+    assertThat(builder
+                 .toOptions()
+                 .isAlphabeticalSortForTables(), is(true));
+    assertThat(builder
+                 .toOptions()
+                 .isAlphabeticalSortForTableColumns(), is(true));
+    assertThat(builder
+                 .toOptions()
+                 .isAlphabeticalSortForRoutines(), is(true));
+    assertThat(builder
+                 .toOptions()
+                 .isAlphabeticalSortForRoutineParameters(), is(true));
 
   }
 

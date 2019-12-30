@@ -45,11 +45,11 @@ public class CommandLineArgumentsParserTest
   @Test
   public void mixed1()
   {
-    final List<String> args = Arrays
-      .asList("--blah", "value with spaces", "othernonoption");
+    final List<String> args =
+      Arrays.asList("--blah", "value with spaces", "othernonoption");
 
-    final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(
-      args);
+    final CommandLineArgumentsParser parser =
+      new CommandLineArgumentsParser(args);
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
@@ -72,8 +72,8 @@ public class CommandLineArgumentsParserTest
                                             "othernonoption",
                                             "--other option");
 
-    final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(
-      args);
+    final CommandLineArgumentsParser parser =
+      new CommandLineArgumentsParser(args);
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
@@ -95,8 +95,8 @@ public class CommandLineArgumentsParserTest
   {
     final List<String> args = Arrays.asList("nonoption with spaces");
 
-    final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(
-      args);
+    final CommandLineArgumentsParser parser =
+      new CommandLineArgumentsParser(args);
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
@@ -112,11 +112,11 @@ public class CommandLineArgumentsParserTest
   @Test
   public void nonOptionArguments2()
   {
-    final List<String> args = Arrays
-      .asList("nonoption with spaces", "othernonoption");
+    final List<String> args =
+      Arrays.asList("nonoption with spaces", "othernonoption");
 
-    final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(
-      args);
+    final CommandLineArgumentsParser parser =
+      new CommandLineArgumentsParser(args);
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
@@ -135,8 +135,8 @@ public class CommandLineArgumentsParserTest
   {
     final List<String> args = Arrays.asList("--=blah");
 
-    final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(
-      args);
+    final CommandLineArgumentsParser parser =
+      new CommandLineArgumentsParser(args);
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
@@ -155,8 +155,8 @@ public class CommandLineArgumentsParserTest
   {
     final List<String> args = Arrays.asList("--");
 
-    final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(
-      args);
+    final CommandLineArgumentsParser parser =
+      new CommandLineArgumentsParser(args);
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
@@ -175,8 +175,8 @@ public class CommandLineArgumentsParserTest
   {
     final List<String> args = Arrays.asList("--=");
 
-    final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(
-      args);
+    final CommandLineArgumentsParser parser =
+      new CommandLineArgumentsParser(args);
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
@@ -195,8 +195,8 @@ public class CommandLineArgumentsParserTest
   {
     final List<String> args = Arrays.asList("--blah");
 
-    final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(
-      args);
+    final CommandLineArgumentsParser parser =
+      new CommandLineArgumentsParser(args);
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
@@ -215,8 +215,8 @@ public class CommandLineArgumentsParserTest
   {
     final List<String> args = Arrays.asList("--blah", "--foo");
 
-    final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(
-      args);
+    final CommandLineArgumentsParser parser =
+      new CommandLineArgumentsParser(args);
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
@@ -237,8 +237,8 @@ public class CommandLineArgumentsParserTest
   {
     final List<String> args = Arrays.asList("--blah=");
 
-    final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(
-      args);
+    final CommandLineArgumentsParser parser =
+      new CommandLineArgumentsParser(args);
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
@@ -257,8 +257,8 @@ public class CommandLineArgumentsParserTest
   {
     final List<String> args = Arrays.asList("--blah=3");
 
-    final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(
-      args);
+    final CommandLineArgumentsParser parser =
+      new CommandLineArgumentsParser(args);
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
@@ -289,8 +289,8 @@ public class CommandLineArgumentsParserTest
   {
     final List<String> args = Arrays.asList("--blah=4", "--blah=3");
 
-    final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(
-      args);
+    final CommandLineArgumentsParser parser =
+      new CommandLineArgumentsParser(args);
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
