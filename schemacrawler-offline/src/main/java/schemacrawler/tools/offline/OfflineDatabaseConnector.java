@@ -41,9 +41,10 @@ public final class OfflineDatabaseConnector
   extends DatabaseConnector
 {
 
-  public static final DatabaseServerType DB_SERVER_TYPE = new DatabaseServerType(
-    "offline",
-    "SchemaCrawler " + "Offline " + "Catalog " + "Snapshot");
+  public static final DatabaseServerType DB_SERVER_TYPE =
+    new DatabaseServerType("offline",
+                           "SchemaCrawler " + "Offline " + "Catalog "
+                           + "Snapshot");
 
   public OfflineDatabaseConnector()
     throws IOException
@@ -57,15 +58,16 @@ public final class OfflineDatabaseConnector
   public PluginCommand getHelpCommand()
   {
     final PluginCommand pluginCommand = super.getHelpCommand();
-    pluginCommand.addOption("server",
-                            "--server=offline%n"
-                            + "Loads SchemaCrawler plug-in for offline snapshots",
-                            String.class)
-                 .addOption("host", "Should be omitted", String.class)
-                 .addOption("port", "Should be omitted", Integer.class)
-                 .addOption("database",
-                            "File name and location of the database metadata snapshot",
-                            String.class);
+    pluginCommand
+      .addOption("server",
+                 "--server=offline%n"
+                 + "Loads SchemaCrawler plug-in for offline snapshots",
+                 String.class)
+      .addOption("host", "Should be omitted", String.class)
+      .addOption("port", "Should be omitted", Integer.class)
+      .addOption("database",
+                 "File name and location of the database metadata snapshot",
+                 String.class);
     return pluginCommand;
   }
 

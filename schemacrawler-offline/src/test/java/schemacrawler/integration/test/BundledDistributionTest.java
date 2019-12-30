@@ -41,7 +41,8 @@ public class BundledDistributionTest
   public void testPlugin_offline()
     throws Exception
   {
-    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry registry =
+      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     assertThat(registry.hasDatabaseSystemIdentifier("offline"), is(true));
   }
 
