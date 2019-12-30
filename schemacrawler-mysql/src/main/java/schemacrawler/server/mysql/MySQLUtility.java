@@ -41,8 +41,6 @@ import schemacrawler.schema.Column;
 public class MySQLUtility
 {
 
-  private static Pattern enumPattern = Pattern.compile("enum\\((.*)\\)");
-
   public static List<String> getEnumValues(final Column column)
   {
     requireNonNull(column, "No column provided");
@@ -62,19 +60,20 @@ public class MySQLUtility
     if (!isBlank(group))
     {
       final String[] enumValuesQuoted = group.split(",");
-      for (final String enumValueQuoted: enumValuesQuoted)
+      for (final String enumValueQuoted : enumValuesQuoted)
       {
         if (!isBlank(enumValueQuoted) && enumValueQuoted.length() >= 2
             && enumValueQuoted.startsWith("'") && enumValueQuoted.endsWith("'"))
         {
-          final String enumValue = enumValueQuoted
-            .substring(1, enumValueQuoted.length() - 1);
+          final String enumValue =
+            enumValueQuoted.substring(1, enumValueQuoted.length() - 1);
           enumValues.add(enumValue);
         }
       }
     }
     return enumValues;
   }
+  private static Pattern enumPattern = Pattern.compile("enum\\((.*)\\)");
 
   private MySQLUtility()
   {

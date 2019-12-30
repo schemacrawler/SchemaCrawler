@@ -48,25 +48,25 @@ public final class MySQLDatabaseConnector
   {
     super(new DatabaseServerType("mysql", "MySQL"),
           new ClasspathInputResource("/schemacrawler-mysql.config.properties"),
-          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder
-            .fromResourceFolder("/mysql.information_schema"));
+          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
+            "/mysql.information_schema"));
   }
 
   @Override
   public PluginCommand getHelpCommand()
   {
     final PluginCommand pluginCommand = super.getHelpCommand();
-    pluginCommand.addOption("server",
-                            "--server=mysql%n"
-                            + "Loads SchemaCrawler plug-in for MySQL",
-                            String.class)
-                 .addOption("host",
-                            "Host name%n" + "Optional, defaults to localhost",
-                            String.class)
-                 .addOption("port",
-                            "Port number%n" + "Optional, defaults to 3306",
-                            Integer.class)
-                 .addOption("database", "Database name", String.class);
+    pluginCommand
+      .addOption("server",
+                 "--server=mysql%n" + "Loads SchemaCrawler plug-in for MySQL",
+                 String.class)
+      .addOption("host",
+                 "Host name%n" + "Optional, defaults to localhost",
+                 String.class)
+      .addOption("port",
+                 "Port number%n" + "Optional, defaults to 3306",
+                 Integer.class)
+      .addOption("database", "Database name", String.class);
     return pluginCommand;
   }
 
