@@ -48,25 +48,26 @@ public final class HyperSQLDatabaseConnector
   {
     super(new DatabaseServerType("hsqldb", "HyperSQL DataBase"),
           new ClasspathInputResource("/schemacrawler-hsqldb.config.properties"),
-          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder
-            .fromResourceFolder("/hsqldb.information_schema"));
+          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
+            "/hsqldb.information_schema"));
   }
 
   @Override
   public PluginCommand getHelpCommand()
   {
     final PluginCommand pluginCommand = super.getHelpCommand();
-    pluginCommand.addOption("server",
-                            "--server=hsqldb%n"
-                            + "Loads SchemaCrawler plug-in for HyperSQL",
-                            String.class)
-                 .addOption("host",
-                            "Host name%n" + "Optional, defaults to localhost",
-                            String.class)
-                 .addOption("port",
-                            "Port number%n" + "Optional, defaults to 9001",
-                            Integer.class)
-                 .addOption("database", "Database name", String.class);
+    pluginCommand
+      .addOption("server",
+                 "--server=hsqldb%n"
+                 + "Loads SchemaCrawler plug-in for HyperSQL",
+                 String.class)
+      .addOption("host",
+                 "Host name%n" + "Optional, defaults to localhost",
+                 String.class)
+      .addOption("port",
+                 "Port number%n" + "Optional, defaults to 9001",
+                 Integer.class)
+      .addOption("database", "Database name", String.class);
     return pluginCommand;
   }
 

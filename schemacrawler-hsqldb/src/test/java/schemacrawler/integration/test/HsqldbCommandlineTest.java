@@ -30,11 +30,18 @@ package schemacrawler.integration.test;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.newBufferedWriter;
-import static java.nio.file.StandardOpenOption.*;
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.nio.file.StandardOpenOption.WRITE;
 import static java.util.Objects.requireNonNull;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static schemacrawler.test.utility.FileHasContent.*;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
@@ -74,13 +81,15 @@ public class HsqldbCommandlineTest
     throws Exception
   {
 
-    final Path testConfigFile = IOUtility
-      .createTempFilePath("test", "properties");
-    try (final Writer writer = new PrintWriter(newBufferedWriter(testConfigFile,
-                                                                 UTF_8,
-                                                                 WRITE,
-                                                                 TRUNCATE_EXISTING,
-                                                                 CREATE)))
+    final Path testConfigFile =
+      IOUtility.createTempFilePath("test", "properties");
+    try (
+      final Writer writer = new PrintWriter(newBufferedWriter(testConfigFile,
+                                                              UTF_8,
+                                                              WRITE,
+                                                              TRUNCATE_EXISTING,
+                                                              CREATE))
+    )
     {
       final Properties properties = new Properties();
       properties.setProperty("hsqldb.tables",
@@ -119,12 +128,15 @@ public class HsqldbCommandlineTest
     throws Exception
   {
 
-    final DatabaseConnector hsqldbSystemConnector = new HyperSQLDatabaseConnector();
+    final DatabaseConnector hsqldbSystemConnector =
+      new HyperSQLDatabaseConnector();
 
     final SchemaRetrievalOptions schemaRetrievalOptions = hsqldbSystemConnector
-      .getSchemaRetrievalOptionsBuilder(connection).toOptions();
+      .getSchemaRetrievalOptionsBuilder(connection)
+      .toOptions();
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
     requireNonNull(schemaRetrievalOptions,
                    "No database specific override options provided");
 
@@ -137,11 +149,15 @@ public class HsqldbCommandlineTest
     assertThat(catalog, notNullValue());
 
     assertThat(catalog.getSchemas(), hasSize(6));
-    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
+    final Schema schema = catalog
+      .lookupSchema("PUBLIC.BOOKS")
+      .orElse(null);
     assertThat(schema, notNullValue());
 
     assertThat(catalog.getTables(schema), hasSize(10));
-    final Table table = catalog.lookupTable(schema, "AUTHORS").orElse(null);
+    final Table table = catalog
+      .lookupTable(schema, "AUTHORS")
+      .orElse(null);
     assertThat(table, notNullValue());
 
     assertThat(table.getTriggers(), hasSize(1));

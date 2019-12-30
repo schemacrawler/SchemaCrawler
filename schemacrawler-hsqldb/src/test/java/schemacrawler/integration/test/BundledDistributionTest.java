@@ -34,7 +34,6 @@ import static org.hamcrest.Matchers.is;
 import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
@@ -45,20 +44,24 @@ public class BundledDistributionTest
   public void testContextrmationSchema_hsqldb()
     throws Exception
   {
-    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    final DatabaseConnector databaseSystemIdentifier = registry
-      .lookupDatabaseConnector("hsqldb");
+    final DatabaseConnectorRegistry registry =
+      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnector databaseSystemIdentifier =
+      registry.lookupDatabaseConnector("hsqldb");
     final Connection connection = null;
     assertThat(databaseSystemIdentifier
-      .getSchemaRetrievalOptionsBuilder(connection).toOptions()
-      .getInformationSchemaViews().size(), is(11));
+                 .getSchemaRetrievalOptionsBuilder(connection)
+                 .toOptions()
+                 .getInformationSchemaViews()
+                 .size(), is(11));
   }
 
   @Test
   public void testPlugin_hsqldb()
     throws Exception
   {
-    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry registry =
+      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     assertThat(registry.hasDatabaseSystemIdentifier("hsqldb"), is(true));
   }
 
