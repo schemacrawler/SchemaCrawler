@@ -33,7 +33,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNull.nullValue;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static sf.util.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
@@ -51,7 +53,12 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Property;
-import schemacrawler.schemacrawler.*;
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.server.sqlserver.SqlServerDatabaseConnector;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseBuildCondition;
@@ -67,8 +74,8 @@ public class SqlServerTest
 {
 
   @Container
-  private JdbcDatabaseContainer dbContainer = new HeavyDatabaseBuildCondition()
-    .getJdbcDatabaseContainer(() -> new MSSQLServerContainer<>());
+  private JdbcDatabaseContainer dbContainer =
+    new HeavyDatabaseBuildCondition().getJdbcDatabaseContainer(() -> new MSSQLServerContainer<>());
 
   @BeforeEach
   public void createDatabase()
@@ -85,59 +92,71 @@ public class SqlServerTest
   public void testSQLServerCatalog()
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder.builder();
     schemaCrawlerOptionsBuilder
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
       .includeSchemas(new RegularExpressionInclusionRule("BOOKS\\.dbo"))
-      .includeAllSequences().includeAllSynonyms().includeAllRoutines()
+      .includeAllSequences()
+      .includeAllSynonyms()
+      .includeAllRoutines()
       .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
-    final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptions options =
+      schemaCrawlerOptionsBuilder.toOptions();
 
     final Connection connection = checkConnection(getConnection());
-    final DatabaseConnector databaseConnector = new SqlServerDatabaseConnector();
+    final DatabaseConnector databaseConnector =
+      new SqlServerDatabaseConnector();
 
     final SchemaRetrievalOptions schemaRetrievalOptions = databaseConnector
-      .getSchemaRetrievalOptionsBuilder(connection).toOptions();
+      .getSchemaRetrievalOptionsBuilder(connection)
+      .toOptions();
 
-    final SchemaCrawler schemaCrawler = new SchemaCrawler(getConnection(),
-                                                          schemaRetrievalOptions,
-                                                          options);
+    final SchemaCrawler schemaCrawler =
+      new SchemaCrawler(getConnection(), schemaRetrievalOptions, options);
     final Catalog catalog = schemaCrawler.crawl();
-    final List<Property> serverInfo = new ArrayList<>(catalog.getDatabaseInfo()
+    final List<Property> serverInfo = new ArrayList<>(catalog
+                                                        .getDatabaseInfo()
                                                         .getServerInfo());
     System.out.println(serverInfo);
     assertThat(serverInfo.size(), equalTo(3));
-    assertThat(serverInfo.get(0).getName(), equalTo("InstanceName"));
-    assertThat(serverInfo.get(0).getValue(), is(nullValue()));
+    assertThat(serverInfo
+                 .get(0)
+                 .getName(), equalTo("InstanceName"));
+    assertThat(serverInfo
+                 .get(0)
+                 .getValue(), is(nullValue()));
   }
 
   @Test
   public void testSQLServerWithConnection()
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder.builder();
     schemaCrawlerOptionsBuilder
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
       .includeSchemas(new RegularExpressionInclusionRule("BOOKS\\.dbo"))
-      .includeAllSequences().includeAllSynonyms().includeAllRoutines()
+      .includeAllSequences()
+      .includeAllSynonyms()
+      .includeAllRoutines()
       .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
-    final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder
-      .toOptions();
+    final SchemaCrawlerOptions options =
+      schemaCrawlerOptionsBuilder.toOptions();
 
-    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
-      .builder();
-    textOptionsBuilder.showDatabaseInfo().showJdbcDriverInfo();
+    final SchemaTextOptionsBuilder textOptionsBuilder =
+      SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder
+      .showDatabaseInfo()
+      .showJdbcDriverInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-      "details");
+    final SchemaCrawlerExecutable executable =
+      new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(options);
-    executable
-      .setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions)
-                                    .toConfig());
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
+                                            .builder(textOptions)
+                                            .toConfig());
 
     assertThat(outputOf(executableExecution(getConnection(), executable)),
                hasSameContentAs(classpathResource(
