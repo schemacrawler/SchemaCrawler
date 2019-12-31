@@ -20,9 +20,10 @@ jobs:
       env:
         TZ: GMT
       run: |
-        echo ${{ github.repository }}
-        echo ${{ github.head_ref || github.ref }}
-        echo ${{ github.sha }}
+        echo github.repository: ${{ github.repository }}
+        echo github.ref: ${{ github.head_ref || github.ref }}
+        echo github.sha: ${{ github.sha }}
+        mvn -v
         mvn \
           --no-transfer-progress \
           --batch-mode \
