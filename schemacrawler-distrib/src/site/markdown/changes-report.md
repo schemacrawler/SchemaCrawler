@@ -1244,7 +1244,7 @@
 
 * Added Maven 2.0 plugin for generation of schema reports
 * Added command-line option to provide database connection information
-* Worked around a bug in the Oracle driver as described in http://issues.apache.org/jira/browse/DDLUTILS-29?page=all
+* Worked around a bug in the Oracle driver as described in https://issues.apache.org/jira/browse/DDLUTILS-29?page=all
 
 ## Release 3.7 - 2006-06-12
 <a name="a3.7"></a>

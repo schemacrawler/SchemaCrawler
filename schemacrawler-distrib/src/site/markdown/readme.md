@@ -104,6 +104,6 @@ Additional installation options are available from the [SchemaCrawler ecosystem]
 [Python]: https://www.python.org/
 [Graphviz]: http://www.graphviz.org/
 [Spring Framework]: http://www.springsource.org/spring-framework
-[Apache Velocity]: http://velocity.apache.org/
-[Apache Maven]: http://maven.apache.org/
-[Apache ant]: http://ant.apache.org/
+[Apache Velocity]: https://velocity.apache.org/
+[Apache Maven]: https://maven.apache.org/
+[Apache ant]: https://ant.apache.org/

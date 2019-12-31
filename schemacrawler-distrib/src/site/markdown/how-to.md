@@ -208,7 +208,7 @@ SchemaCrawler has built-in support to be used with JavaScript scripts. Write you
 
 ### <a name="velocity">How to create your own output format</a>
 
-SchemaCrawler integrates with [Apache Velocity](http://velocity.apache.org/) to allow for templated output. Put Velocity on your classpath, and create your template, and run SchemaCrawler with the command-line options `--command velocity --template <your Velocity template>`. See the Velocity example in the [SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) download.
+SchemaCrawler integrates with [Apache Velocity](https://velocity.apache.org/) to allow for templated output. Put Velocity on your classpath, and create your template, and run SchemaCrawler with the command-line options `--command velocity --template <your Velocity template>`. See the Velocity example in the [SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) download.
 
 ----------
 

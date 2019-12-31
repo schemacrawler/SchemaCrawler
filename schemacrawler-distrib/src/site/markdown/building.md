@@ -67,14 +67,14 @@ Similarly, download the [Oracle JDBC drivers] put them into the `schemacrawler-o
 [SchemaCrawler examples]: http://github.com/schemacrawler/SchemaCrawler/releases/
 [SchemaCrawler jars]: https://search.maven.org/search?q=g:us.fatehi%20a:schemacrawler*
 [SchemaCrawler Docker image]: https://hub.docker.com/r/schemacrawler/schemacrawler/
-[Apache ant]: http://ant.apache.org/
+[Apache ant]: https://ant.apache.org/
 [Gradle]: https://gradle.org/
 [Groovy]: http://www.groovy-lang.org/
 [Ruby]: http://www.ruby-lang.org/en/
 [Python]: https://www.python.org/
 [Graphviz]: http://www.graphviz.org/
-[Apache Velocity]: http://velocity.apache.org/
-[Apache Maven]: http://maven.apache.org/
+[Apache Velocity]: https://velocity.apache.org/
+[Apache Maven]: https://maven.apache.org/
 [m2e Maven Integration for Eclipse]: http://eclipse.org/m2e/
 [IBM DB2 JDBC drivers]: http://www-306.ibm.com/software/data/db2/express/download.html
 [Oracle JDBC drivers]: http://www.oracle.com/technetwork/database/enterprise-edition/jdbc-112010-090769.html
