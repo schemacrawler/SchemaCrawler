@@ -302,9 +302,7 @@
               <additionalOptions>
                 <additionalOption>-Xdoclint:none</additionalOption>
               </additionalOptions>
-              <bottom>Copyright © 2000-2020 {organizationName}. All
-                rights
-                reserved.
+              <bottom>Copyright © 2000-2020 {organizationName}. All rights reserved.
               </bottom>
               <doctitle>SchemaCrawler ${project.version}</doctitle>
             </configuration>
