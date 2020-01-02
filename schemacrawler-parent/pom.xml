@@ -99,10 +99,12 @@
         <module>../schemacrawler-docker</module>
         <module>../schemacrawler-distrib</module>
       </modules>
+      <!-- Use these properties to deploy to Nexus
       <properties>
         <maven.javadoc.skip>false</maven.javadoc.skip>
         <skip.signing.artifacts>false</skip.signing.artifacts>
       </properties>
+      -->
     </profile>
   </profiles>
   <dependencies>
