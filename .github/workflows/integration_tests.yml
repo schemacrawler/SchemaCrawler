@@ -27,6 +27,7 @@ jobs:
         mvn \
           --no-transfer-progress \
           --batch-mode \
+          -Dtestcoverage \
           -Dlightdb \
           -Dheavydb \
           -f schemacrawler-parent/pom.xml \
