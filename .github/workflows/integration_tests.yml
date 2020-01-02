@@ -19,6 +19,7 @@ jobs:
     - name: Run integration tests, and upload coverage
       env:
         TZ: GMT
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         echo github.repository: ${{ github.repository }}
         echo github.ref: ${{ github.head_ref || github.ref }}
@@ -28,8 +29,6 @@ jobs:
           --no-transfer-progress \
           --batch-mode \
           -Dtestcoverage \
-          -Dlightdb \
-          -Dheavydb \
           -f schemacrawler-parent/pom.xml \
           clean install \
           jacoco:report
