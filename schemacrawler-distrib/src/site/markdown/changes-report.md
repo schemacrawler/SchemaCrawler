@@ -1,7 +1,7 @@
 # SchemaCrawler Change History
 
 <a name="a16.3.0"></a>
-## Release 16.3.0 - 2019-12-30
+## Release 16.3.0 - 2020-01-02
 
 - Remove ability to run SQL commands directly from command-line - only named  
   queries are supported
