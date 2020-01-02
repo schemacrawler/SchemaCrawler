@@ -101,6 +101,7 @@
       </modules>
       <properties>
         <maven.javadoc.skip>false</maven.javadoc.skip>
+        <skip.signing.artifacts>false</skip.signing.artifacts>
       </properties>
     </profile>
   </profiles>
@@ -206,13 +207,6 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
           <version>3.1.1</version>
-          <dependencies>
-            <dependency>
-              <groupId>org.codehaus.plexus</groupId>
-              <artifactId>plexus-archiver</artifactId>
-              <version>4.2.1</version>
-            </dependency>
-          </dependencies>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
