@@ -124,7 +124,6 @@
           <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
-            <version>0.8.5</version>
             <executions>
               <execution>
                 <id>prepare-agent</id>
@@ -152,10 +151,20 @@
         <pluginManagement>
           <plugins>
             <plugin>
+							<groupId>org.jacoco</groupId>
+							<artifactId>jacoco-maven-plugin</artifactId>
+							<version>0.8.5</version>
+            </plugin>					
+            <plugin>
               <groupId>org.eluder.coveralls</groupId>
               <artifactId>coveralls-maven-plugin</artifactId>
               <version>4.3.0</version>
             </plugin>
+						<plugin>
+							<groupId>org.sonarsource.scanner.maven</groupId>
+							<artifactId>sonar-maven-plugin</artifactId>
+							<version>3.7.0.1746</version>
+						</plugin>						
           </plugins>
         </pluginManagement>
       </build>
