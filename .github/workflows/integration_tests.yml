@@ -35,6 +35,8 @@ jobs:
           --no-transfer-progress \
           --batch-mode \
           -Dtestcoverage \
+          -Dlightdb \
+          -Dheavydb \
           -f schemacrawler-parent/pom.xml \
           clean install \
           jacoco:report
@@ -43,10 +45,4 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        bash <(curl -s https://codecov.io/bash) -t 4456b669-238d-485f-a64a-250449710514      
-        mvn \
-          --no-transfer-progress \
-          --batch-mode \
-          -Dtestcoverage \
-          -f schemacrawler-parent/pom.xml \
-          sonar:sonar
+        bash <(curl -s https://codecov.io/bash) -t 4456b669-238d-485f-a64a-250449710514
