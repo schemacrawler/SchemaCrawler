@@ -4,27 +4,32 @@ on: [push]
 
 jobs:
   build:
-
+    name: Build, test, and publish results
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
+    - id: checkout-code
+      name: Checkout code
       uses: actions/checkout@v1
     - name: Set up JDK 1.8
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-    - name: Install packages
+    - id: install-packages
+      name: Install packages
       run: sudo apt-get update; sudo apt-get install graphviz
-    - name: Run integration tests, and upload coverage
+    - id: show-environment
+      name: Show environment
       env:
-        TZ: GMT
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         echo github.repository: ${{ github.repository }}
         echo github.ref: ${{ github.head_ref || github.ref }}
         echo github.sha: ${{ github.sha }}
         mvn -v
+    - id: build-test
+      name: Build and run integration tests
+      env:
+        TZ: GMT
+      run: |
         mvn \
           --no-transfer-progress \
           --batch-mode \
@@ -32,7 +37,14 @@ jobs:
           -f schemacrawler-parent/pom.xml \
           clean install \
           jacoco:report
+    - id: publish-results
+      name: Upload results and coverage
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
         mvn \
+          --no-transfer-progress \
+          --batch-mode \
           -Dtestcoverage \
           -f schemacrawler-parent/pom.xml \
           sonar:sonar

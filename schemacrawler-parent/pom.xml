@@ -116,7 +116,7 @@
       <properties>
         <sonar.organization>schemacrawler-github</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.login>64d81bc6eb990c8ec4a5237cbe6bc1d0aad9efe6</sonar.login>
+        <sonar.login>4bad0ed1fb03a721eeec0b85b9d7db6aa2b8fee2</sonar.login>
       </properties>
       <build>
         <plugins>
@@ -150,20 +150,20 @@
         <pluginManagement>
           <plugins>
             <plugin>
-							<groupId>org.jacoco</groupId>
-							<artifactId>jacoco-maven-plugin</artifactId>
-							<version>0.8.5</version>
-            </plugin>					
+              <groupId>org.jacoco</groupId>
+              <artifactId>jacoco-maven-plugin</artifactId>
+              <version>0.8.5</version>
+            </plugin>
             <plugin>
               <groupId>org.eluder.coveralls</groupId>
               <artifactId>coveralls-maven-plugin</artifactId>
               <version>4.3.0</version>
             </plugin>
-						<plugin>
-							<groupId>org.sonarsource.scanner.maven</groupId>
-							<artifactId>sonar-maven-plugin</artifactId>
-							<version>3.7.0.1746</version>
-						</plugin>						
+            <plugin>
+              <groupId>org.sonarsource.scanner.maven</groupId>
+              <artifactId>sonar-maven-plugin</artifactId>
+              <version>3.7.0.1746</version>
+            </plugin>
           </plugins>
         </pluginManagement>
       </build>
