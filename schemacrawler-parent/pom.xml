@@ -113,12 +113,12 @@
           <name>testcoverage</name>
         </property>
       </activation>
-			<properties>
-				<sonar.projectKey>us.fatehi:schemacrawler-parent</sonar.projectKey>
-				<sonar.organization>schemacrawler-github</sonar.organization>
-				<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-				<sonar.login>64d81bc6eb990c8ec4a5237cbe6bc1d0aad9efe6</sonar.login>
-			</properties>			
+      <properties>
+        <sonar.projectKey>us.fatehi:schemacrawler-parent</sonar.projectKey>
+        <sonar.organization>schemacrawler-github</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.login>64d81bc6eb990c8ec4a5237cbe6bc1d0aad9efe6</sonar.login>
+      </properties>
       <build>
         <plugins>
           <plugin>
@@ -368,33 +368,6 @@
             <goals>
               <goal>sign</goal>
             </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.5</version>
-        <executions>
-          <execution>
-            <id>prepare-agent</id>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>report</id>
-            <phase>test</phase>
-            <goals>
-              <goal>report</goal>
-            </goals>
-            <configuration>
-              <excludes>
-                <exclude>**/JSON*.*</exclude>
-                <exclude>**/*Test.*</exclude>
-                <exclude>**/Test*.*</exclude>
-              </excludes>
-            </configuration>
           </execution>
         </executions>
       </plugin>
