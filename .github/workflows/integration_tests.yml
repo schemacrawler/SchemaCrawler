@@ -16,7 +16,9 @@ jobs:
         java-version: 1.8
     - id: install-packages
       name: Install packages
-      run: sudo apt-get update; sudo apt-get install graphviz
+      run: |
+        sudo apt-get update
+        sudo apt-get install graphviz -qq
     - id: show-environment
       name: Show environment
       run: |
@@ -41,10 +43,10 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
+        bash <(curl -s https://codecov.io/bash) -t 4456b669-238d-485f-a64a-250449710514      
         mvn \
           --no-transfer-progress \
           --batch-mode \
           -Dtestcoverage \
           -f schemacrawler-parent/pom.xml \
           sonar:sonar
-        bash <(curl -s https://codecov.io/bash) -t 4456b669-238d-485f-a64a-250449710514

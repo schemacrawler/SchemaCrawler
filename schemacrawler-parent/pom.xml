@@ -114,15 +114,19 @@
         </property>
       </activation>
       <properties>
+        <sonar.projectKey>us.fatehi:${project.artifactId}</sonar.projectKey>
         <sonar.organization>schemacrawler-github</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.login>4bad0ed1fb03a721eeec0b85b9d7db6aa2b8fee2</sonar.login>
+        <sonar.login>018cc67546eeda29b185b51e854f81b026739d2c</sonar.login>
       </properties>
       <build>
         <plugins>
           <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
+            <configuration>
+              <append>true</append>
+            </configuration>
             <executions>
               <execution>
                 <id>prepare-agent</id>
@@ -132,7 +136,7 @@
               </execution>
               <execution>
                 <id>report</id>
-                <phase>test</phase>
+                <phase>verify</phase>
                 <goals>
                   <goal>report</goal>
                 </goals>
