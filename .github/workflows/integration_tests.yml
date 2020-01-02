@@ -34,5 +34,7 @@ jobs:
           clean install \
           jacoco:report
         mvn \
-          sonar:sonar          
+          -Dtestcoverage \
+          -f schemacrawler-parent/pom.xml \
+          sonar:sonar
         bash <(curl -s https://codecov.io/bash) -t 4456b669-238d-485f-a64a-250449710514
