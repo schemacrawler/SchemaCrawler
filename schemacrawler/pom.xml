@@ -76,22 +76,6 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>report-aggregate</id>
-            <phase>package</phase>
-            <goals>
-              <goal>report-aggregate</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
     </plugins>
   </build>
 </project>

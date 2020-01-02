@@ -27,7 +27,7 @@ addons:
 script:
   - echo $SC_BUILD_DIR
   - mvn -v
-  - mvn -Ddistrib -f ./schemacrawler-parent/pom.xml clean install jacoco:report coveralls:report
+  - mvn -Ddistrib -f ./schemacrawler-parent/pom.xml clean install
 before_deploy:
   - git fetch --tags
 deploy:
