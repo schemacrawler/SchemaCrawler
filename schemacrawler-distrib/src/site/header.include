@@ -14,20 +14,29 @@
       <meta property="og:url" content="https://www.schemacrawler.com/" />
       <meta property="og:site_name" content="SchemaCrawler" />
       <script type="application/ld+json">
-         {
-         "name":"SchemaCrawler",
-         "description":"Free database schema discovery and comprehension tool","
-         author":"Sualeh Fatehi",
-         "@type":"WebSite",
-         "url":"https://www.schemacrawler.com",
-         "logo":"https://www.schemacrawler.com/images/schemacrawler_logo.svg",
-         "headline":"SchemaCrawler",
-         "sameAs": [
-             "https://github.com/schemacrawler/SchemaCrawler",
-             "https://www.linkedin.com/company/2826059/"
-         ],
-         "@context":"http://schema.org"
-         }
+{
+  "@context":"http://schema.org",
+  "@type":"SoftwareApplication",
+  "name":"SchemaCrawler",
+  "description":"Free database schema discovery and comprehension tool",
+  "author":{
+    "@type":"Person",
+    "name":"Sualeh Fatehi",
+    "email":"sualeh@hotmail.com"
+  },
+  "url":"https://www.schemacrawler.com",
+  "image":"https://www.schemacrawler.com/images/schemacrawler_logo.svg",
+  "headline":"SchemaCrawler",
+  "sameAs":[
+    "https://github.com/schemacrawler/SchemaCrawler",
+    "https://www.linkedin.com/company/2826059/"
+  ],
+  "downloadUrl":"http://github.com/schemacrawler/SchemaCrawler/releases/",
+  "softwareVersion":"SchemaCrawler, v16.3.0",
+  "applicationCategory": "Databases, QA, Java, JDBC",
+  "operatingSystem": "Any",
+  "releaseNotes": "https://www.schemacrawler.com/changes-report.html"
+}
       </script>
       <!-- End SEO -->
       <!-- Bootstrap 4.2.1 -->
