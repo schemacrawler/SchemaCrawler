@@ -19,6 +19,17 @@ digraph "SchemaCrawler_Diagram" {
   ];
 
 
+  /* Title Block -=-=-=-=-=-=-=-=-=-=-=-=-=- */
+  graph [ 
+    label=<
+      <table border="1" cellborder="0" cellspacing="0" color="#888888">
+	<tr>
+		<td colspan='2' align='left'><b><i>Database Design for Books and Publishers</i></b></td>
+	</tr>
+      </table>
+    >
+  ];
+
   /* PUBLIC.BOOKS.AUTHORS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "authors_f521e766" [
     label=<

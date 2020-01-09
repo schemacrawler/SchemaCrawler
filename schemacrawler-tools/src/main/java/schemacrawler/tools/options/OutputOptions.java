@@ -88,6 +88,16 @@ public final class OutputOptions
   }
 
   /**
+   * Checks whether there is a title for the output.
+   *
+   * @return Whether there is a title
+   */
+  public boolean hasTitle()
+  {
+    return !isBlank(title);
+  }
+
+  /**
    * Character encoding for input files, such as scripts and templates.
    */
   public Charset getInputCharset()

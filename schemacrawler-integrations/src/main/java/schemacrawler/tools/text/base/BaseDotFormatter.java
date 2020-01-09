@@ -92,22 +92,27 @@ public abstract class BaseDotFormatter
   @Override
   public void handle(final CrawlInfo crawlInfo)
   {
-    if (options.isNoInfo() || crawlInfo == null)
+    if (crawlInfo == null)
     {
       return;
     }
 
     TableRow row;
 
-    final String title = outputOptions.getTitle();
-    if (!isBlank(title))
+    if (outputOptions.hasTitle())
     {
+      final String title = outputOptions.getTitle();
       row = new TableRow(TextOutputFormat.html);
       row.add(newTableCell(title, Alignment.left, true, Color.white, 2));
 
       formattingHelper
         .append(row.toString())
         .println();
+    }
+
+    if (options.isNoInfo())
+    {
+      return;
     }
 
     if (!options.isNoSchemaCrawlerInfo())
@@ -187,7 +192,7 @@ public abstract class BaseDotFormatter
   public void handleHeaderEnd()
     throws SchemaCrawlerException
   {
-    if (options.isNoInfo())
+    if (options.isNoInfo() && !outputOptions.hasTitle())
     {
       return;
     }
@@ -208,10 +213,11 @@ public abstract class BaseDotFormatter
   public void handleHeaderStart()
     throws SchemaCrawlerException
   {
-    if (options.isNoInfo())
+    if (options.isNoInfo() && !outputOptions.hasTitle())
     {
       return;
     }
+
     formattingHelper
       .append("  /* ")
       .append("Title Block")
