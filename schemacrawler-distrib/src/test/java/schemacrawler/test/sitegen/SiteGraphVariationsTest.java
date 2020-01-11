@@ -61,8 +61,6 @@ public class SiteGraphVariationsTest
   {
     deleteIfExists(outputFile);
 
-    argsMap.put("-title", "Details of Example Database");
-
     final Config runConfig = new Config();
     final Config informationSchema = loadHsqldbConfig();
     runConfig.putAll(informationSchema);

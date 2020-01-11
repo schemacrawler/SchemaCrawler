@@ -136,8 +136,11 @@ public final class GraphRenderer
     }
     else
     {
-      dotFileOutputOptions =
-        OutputOptionsBuilder.newOutputOptions(GraphOutputFormat.dot, dotFile);
+      dotFileOutputOptions = OutputOptionsBuilder
+        .builder(outputOptions)
+        .withOutputFormat(GraphOutputFormat.scdot)
+        .withOutputFile(dotFile)
+        .toOptions();
     }
 
     final SchemaTraversalHandler formatter =
