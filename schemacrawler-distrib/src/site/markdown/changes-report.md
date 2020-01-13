@@ -1,5 +1,10 @@
 # SchemaCrawler Change History
 
+<a name="a16.3.1"></a>
+## Release 16.3.1 - 2020-01-12
+
+- Fix bug with generating titles in graphs (issue #281)
+
 <a name="a16.3.0"></a>
 ## Release 16.3.0 - 2020-01-02
 
