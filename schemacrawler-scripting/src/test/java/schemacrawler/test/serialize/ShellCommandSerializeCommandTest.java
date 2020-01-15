@@ -103,8 +103,6 @@ public class ShellCommandSerializeCommandTest
     final String[] args = new String[] {
       "-c",
       "serialize",
-      "--serialization-format",
-      serializationFormat.name(),
       "-o",
       testOutputFile.toString()
     };

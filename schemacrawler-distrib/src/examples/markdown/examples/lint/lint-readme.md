@@ -29,5 +29,5 @@ below to run SchemaCrawler Lint.
 5. Try creating your own database lints in a new jar - see [SchemaCrawler Lint](https://www.schemacrawler.com/lint.html). 
 6. Generate lint reports in JSON format. First download Jackson using instructions in the `serialize` example.
    Then run, 
-   `schemacrawler.cmd --server=hsqldb --database=schemacrawler --password= --info-level=standard --command=lint,serialize --serialization-format=json` 
+   `schemacrawler.cmd --server=hsqldb --database=schemacrawler --password= --info-level=standard --command=lint,serialize --output-format=json` 
    (use `schemacrawler.sh` instead of `schemacrawler.cmd` on Unix)
