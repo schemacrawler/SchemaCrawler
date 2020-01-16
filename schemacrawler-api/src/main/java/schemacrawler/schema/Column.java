@@ -49,6 +49,16 @@ public interface Column
   String getDefaultValue();
 
   /**
+   * Checks whether there is a default data value for the column.
+   *
+   * @return Whether there is a default data value
+   */
+  default boolean hasDefaultValue()
+  {
+    return getDefaultValue() != null;
+  }
+
+  /**
    * Gets the list of privileges for the table.
    *
    * @return Privileges for the table
