@@ -63,7 +63,7 @@ public class MySQLTest
   @Container
   private JdbcDatabaseContainer dbContainer =
     new HeavyDatabaseBuildCondition().getJdbcDatabaseContainer(() -> new MySQLContainer<>(
-      "mysql:8.0.18")
+      "mysql:8.0.19")
       .withCommand("mysqld",
                    "--lower_case_table_names=1",
                    "--log_bin_trust_function_creators=1")

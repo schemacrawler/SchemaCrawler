@@ -5,13 +5,13 @@
   <info organisation="us.fatehi" module="schemacrawler"/>
   <dependencies>
     <dependency org="com.fasterxml.jackson.core"
-                name="jackson-core" rev="2.10.1" />
+                name="jackson-core" rev="2.10.2" />
     <dependency org="com.fasterxml.jackson.datatype"
-                name="jackson-datatype-jsr310" rev="2.10.1" />
+                name="jackson-datatype-jsr310" rev="2.10.2" />
     <dependency org="com.fasterxml.jackson.core"
-                name="jackson-databind" rev="2.10.1" />
+                name="jackson-databind" rev="2.10.2" />
     <dependency org="com.fasterxml.jackson.dataformat"
-                name="jackson-dataformat-yaml" rev="2.10.1" />
+                name="jackson-dataformat-yaml" rev="2.10.2" />
 
     <exclude type="source" ext="jar" />
     <exclude type="sources" ext="jar" />
