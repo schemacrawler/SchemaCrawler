@@ -10,12 +10,8 @@ SET SCHEMA $schema.fullName;
 CREATE TABLE $identifiers.quoteName($table)
 (
 #foreach($column in $table.columns)
-#if($foreach.count > 1)
-,
+  $identifiers.quoteName($column) $column.columnDataType#if(!$column.isNullable()) NOT NULL#end#if($foreach.count < $table.columns.size()),#end
 #end
-  $identifiers.quoteName($column) $column.columnDataType#if(!$column.isNullable()) NOT NULL#end
-#end
-
 );
 
 #end

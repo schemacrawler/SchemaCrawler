@@ -7,13 +7,9 @@ SET SCHEMA $schema.fullName;
 #if ($table.tableType == "table")
 CREATE TABLE $identifiers.quoteName($table)
 (
-#foreach($column in $table.columns)
-#if($foreach.count > 1)
-,
-#end
-  $identifiers.quoteName($column) $column.columnDataType#if(!$column.isNullable()) NOT NULL#end
-#end
-
+  #foreach($column in $table.columns)
+    $identifiers.quoteName($column) $column.columnDataType#if(!$column.isNullable()) NOT NULL#end#if($foreach.count < $table.columns.size()),#end
+  #end
 );
 
 #end
