@@ -6,10 +6,6 @@
   <dependencies>
     <dependency org="org.apache.velocity"
       name="velocity-engine-scripting" rev="2.1" />
-    <dependency org="org.slf4j" name="slf4j-jdk14"
-      rev="1.7.26" />
-
-    <exclude org="org.slf4j" module="slf4j-simple" />
 
     <exclude type="source" ext="jar" />
     <exclude type="sources" ext="jar" />
