@@ -217,7 +217,7 @@
     <skip.signing.artifacts>true</skip.signing.artifacts>
     <maven.javadoc.skip>true</maven.javadoc.skip>
     <springframework.version>4.3.12.RELEASE</springframework.version>
-    <velocity.version>2.0</velocity.version>
+    <velocity.version>2.1</velocity.version>
     <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
     <freemarker.version>2.3.29</freemarker.version>
     <mustache.version>0.9.6</mustache.version>
