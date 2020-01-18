@@ -5,9 +5,9 @@
   <info organisation="us.fatehi" module="schemacrawler"/>
   <dependencies>
     <dependency org="us.fatehi" name="schemacrawler-timesten"
-      rev="16.3.1" />
+      rev="16.3.2" />
     <dependency org="us.fatehi" name="schemacrawler-sapiq"
-      rev="16.3.1" />
+      rev="16.3.2" />
 
     <exclude org="us.fatehi" module="schemacrawler" />
     <exclude org="org.hsqldb" module="hsqldb" />
