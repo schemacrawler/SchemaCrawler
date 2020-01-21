@@ -74,6 +74,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -239,11 +240,16 @@ public final class TestUtility
         actualInputReader).lines()
     )
     {
+      final Function<String, String> stripAnsiCodes = line -> line.replaceAll("\u001B\\[[;\\d]*m", "");
+      final Function<String, String> stripColorCodes = line -> line.replaceAll("\u2592", "");
+
+
       final Iterator<String> expectedLinesIterator = expectedLinesStream
         .filter(keepLines)
         .iterator();
       final Iterator<String> actualLinesIterator = actualLinesStream
         .filter(keepLines)
+        .map(stripAnsiCodes.andThen(stripColorCodes))
         .iterator();
 
       while (expectedLinesIterator.hasNext() && actualLinesIterator.hasNext())
