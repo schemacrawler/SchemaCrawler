@@ -29,6 +29,8 @@ package schemacrawler.integration.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.core.IsNull.notNullValue;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -36,7 +38,9 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 
 import java.sql.Connection;
 import java.sql.Statement;
+import java.util.List;
 
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,6 +49,10 @@ import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Column;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
@@ -102,17 +110,24 @@ public class PostgreSQLEnumColumnTest
                hasSameContentAs(classpathResource(
                  "testColumnWithEnum.txt")));
 
-/*
     // Additional programmatic test
     final Catalog catalog = executable.getCatalog();
     final Schema schema = catalog
-      .lookupSchema("test")
+      .lookupSchema("public")
       .orElse(null);
     assertThat(schema, notNullValue());
     final Table table = catalog
       .lookupTable(schema, "person")
       .orElse(null);
     assertThat(table, notNullValue());
+
+    final Column currentMoodColumn = table
+      .lookupColumn("current_mood")
+      .orElse(null);
+    assertThat(currentMoodColumn, Matchers.notNullValue());
+    /*
+    final List<String> enumValues = MySQLUtility.getEnumValues(sizeColumn);
+    assertThat(enumValues, containsInAnyOrder("small", "medium", "large"));
     */
   }
 
