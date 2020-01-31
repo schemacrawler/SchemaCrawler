@@ -55,8 +55,8 @@ public class PostgreSQLUtility
   {
     requireNonNull(columnDataType, "No column provided");
     final String sql = String.format(
-      "SELECT unnest(enum_range(NULL::%s))::text AS enum_values",
-      columnDataType.getFullName());
+      "SELECT e.enumlabel FROM pg_enum e JOIN pg_type t ON e.enumtypid = t.oid WHERE t.typname = '%s'",
+      columnDataType.getName());
     try (final Statement statement = connection.createStatement();)
     {
       final ResultSet resultSet = executeSql(statement, sql);

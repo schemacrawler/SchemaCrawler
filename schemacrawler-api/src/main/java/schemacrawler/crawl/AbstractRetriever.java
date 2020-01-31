@@ -40,6 +40,8 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 
+import schemacrawler.plugin.EnumDataTypeHelper;
+import schemacrawler.plugin.EnumDataTypeInfo;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.Schema;

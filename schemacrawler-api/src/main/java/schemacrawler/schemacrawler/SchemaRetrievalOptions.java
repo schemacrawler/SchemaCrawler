@@ -31,6 +31,7 @@ package schemacrawler.schemacrawler;
 import static sf.util.Utility.isBlank;
 
 import schemacrawler.crawl.MetadataRetrievalStrategy;
+import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.TypeMap;
 import sf.util.ObjectToString;
@@ -63,6 +64,7 @@ public final class SchemaRetrievalOptions
   private final MetadataRetrievalStrategy tableColumnRetrievalStrategy;
   private final MetadataRetrievalStrategy tableRetrievalStrategy;
   private final TypeMap typeMap;
+  private final EnumDataTypeHelper enumDataTypeHelper;
 
   protected SchemaRetrievalOptions(final SchemaRetrievalOptionsBuilder builder)
   {
@@ -85,6 +87,12 @@ public final class SchemaRetrievalOptions
     informationSchemaViews = bldr.getInformationSchemaViews();
     identifiers = bldr.getIdentifiers();
     typeMap = bldr.getTypeMap();
+    enumDataTypeHelper = bldr.getEnumDataTypeHelper();
+  }
+
+  public EnumDataTypeHelper getEnumDataTypeHelper()
+  {
+    return enumDataTypeHelper;
   }
 
   public DatabaseServerType getDatabaseServerType()

@@ -31,6 +31,8 @@ package schemacrawler.crawl;
 
 import static sf.util.Utility.isBlank;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 import schemacrawler.schema.ColumnDataType;
@@ -54,7 +56,9 @@ final class MutableColumnDataType
 
   private static final SchemaCrawlerLogger LOGGER =
     SchemaCrawlerLogger.getLogger(SchemaCrawler.class.getName());
+
   private static final long serialVersionUID = 3688503281676530744L;
+
   private boolean autoIncrementable;
   private ColumnDataType baseType;
   private boolean caseSensitive;
@@ -74,6 +78,32 @@ final class MutableColumnDataType
   private SearchableType searchable;
   private boolean unsigned;
   private boolean userDefined;
+  private List<String> enumValues;
+
+  MutableColumnDataType(final ColumnDataType columnDataType)
+  {
+    this(columnDataType.getSchema(), columnDataType.getName());
+
+    autoIncrementable = columnDataType.isAutoIncrementable();
+    baseType = columnDataType.getBaseType();
+    caseSensitive = columnDataType.isCaseSensitive();
+    createParameters = columnDataType.getCreateParameters();
+    fixedPrecisionScale = columnDataType.isFixedPrecisionScale();
+    javaSqlType = columnDataType.getJavaSqlType();
+    javaSqlTypeMappedClass = columnDataType.getTypeMappedClass();
+    literalPrefix = columnDataType.getLiteralPrefix();
+    literalSuffix = columnDataType.getLiteralSuffix();
+    localizedTypeName = columnDataType.getLocalTypeName();
+    maximumScale = columnDataType.getMaximumScale();
+    minimumScale = columnDataType.getMinimumScale();
+    nullable = columnDataType.isNullable();
+    numPrecisionRadix = columnDataType.getNumPrecisionRadix();
+    precision = columnDataType.getPrecision();
+    searchable = columnDataType.getSearchable();
+    unsigned = columnDataType.isUnsigned();
+    userDefined = columnDataType.isUserDefined();
+    enumValues = new ArrayList<>(columnDataType.getEnumValues());
+  }
 
   MutableColumnDataType(final Schema schema, final String name)
   {
@@ -87,6 +117,8 @@ final class MutableColumnDataType
     literalSuffix = "";
     createParameters = "";
     localizedTypeName = "";
+
+    enumValues = new ArrayList<>();
   }
 
   /**
@@ -124,6 +156,33 @@ final class MutableColumnDataType
   public String getDatabaseSpecificTypeName()
   {
     return getName();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public List<String> getEnumValues()
+  {
+    return enumValues;
+  }
+
+  void setEnumValues(final List<String> enumValues)
+  {
+    if (enumValues == null)
+    {
+      this.enumValues = new ArrayList<>();
+    }
+    else
+    {
+      this.enumValues = enumValues;
+    }
+  }
+
+  @Override
+  public boolean isEnumerated()
+  {
+    return !enumValues.isEmpty();
   }
 
   @Override

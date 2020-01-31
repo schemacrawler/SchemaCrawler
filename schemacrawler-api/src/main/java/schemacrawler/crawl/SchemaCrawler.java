@@ -683,6 +683,13 @@ public final class SchemaCrawler
         }
         return null;
       });
+      stopWatch.time("retrieveAdditionalColumnMetadata", () -> {
+        if (infoLevel.isRetrieveAdditionalColumnMetadata())
+        {
+          retrieverExtra.retrieveAdditionalColumnMetadata();
+        }
+        return null;
+      });
       stopWatch.time("retrieveTableColumnPrivileges", () -> {
         if (infoLevel.isRetrieveTableColumnPrivileges())
         {

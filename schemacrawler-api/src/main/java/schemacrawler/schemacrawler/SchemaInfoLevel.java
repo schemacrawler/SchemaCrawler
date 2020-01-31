@@ -130,6 +130,11 @@ public final class SchemaInfoLevel
     return is(SchemaInfoRetrieval.retrieveAdditionalColumnAttributes);
   }
 
+  public boolean isRetrieveAdditionalColumnMetadata()
+  {
+    return is(SchemaInfoRetrieval.retrieveAdditionalColumnMetadata);
+  }
+
   public boolean isRetrieveAdditionalDatabaseInfo()
   {
     return is(SchemaInfoRetrieval.retrieveAdditionalDatabaseInfo);

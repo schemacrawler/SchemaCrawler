@@ -29,7 +29,7 @@ package schemacrawler.tools.databaseconnector;
 
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.plugin.EnumDataTypeHelper.noOpEnumDataTypeHelper;
+import static schemacrawler.plugin.EnumDataTypeHelper.NO_OP_ENUM_DATA_TYPE_HELPER;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
@@ -37,9 +37,6 @@ import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
 import schemacrawler.plugin.EnumDataTypeHelper;
-import schemacrawler.plugin.EnumDataTypeInfo;
-import schemacrawler.schema.Column;
-import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
@@ -95,7 +92,7 @@ public abstract class DatabaseConnector
     dbServerType = DatabaseServerType.UNKNOWN;
     configResource = null;
     informationSchemaViewsBuilderForConnection = null;
-    enumDataTypeHelper = noOpEnumDataTypeHelper;
+    enumDataTypeHelper = NO_OP_ENUM_DATA_TYPE_HELPER;
   }
 
   /**
@@ -134,6 +131,7 @@ public abstract class DatabaseConnector
       SchemaRetrievalOptionsBuilder
         .builder()
         .withDatabaseServerType(dbServerType)
+        .withEnumDataTypeHelper(enumDataTypeHelper)
         .withInformationSchemaViewsForConnection(
           informationSchemaViewsBuilderForConnection,
           connection)

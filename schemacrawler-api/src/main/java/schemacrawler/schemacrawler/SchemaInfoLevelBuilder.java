@@ -208,6 +208,13 @@ public final class SchemaInfoLevelBuilder
     return this;
   }
 
+  public SchemaInfoLevelBuilder setRetrieveAdditionalColumnMetadata(final boolean retrieveAdditionalColumnMetadata)
+  {
+    schemaInfoRetrievals.put(SchemaInfoRetrieval.retrieveAdditionalColumnMetadata,
+                             retrieveAdditionalColumnMetadata);
+    return this;
+  }
+
   public SchemaInfoLevelBuilder setRetrieveAdditionalDatabaseInfo(final boolean retrieveAdditionalDatabaseInfo)
   {
     schemaInfoRetrievals.put(SchemaInfoRetrieval.retrieveAdditionalDatabaseInfo,

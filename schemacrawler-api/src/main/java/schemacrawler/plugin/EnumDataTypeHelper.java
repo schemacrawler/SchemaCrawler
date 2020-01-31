@@ -44,7 +44,7 @@ public interface EnumDataTypeHelper
                                        ColumnDataType columnDataType,
                                        Connection connection);
 
-  EnumDataTypeHelper noOpEnumDataTypeHelper =
+  EnumDataTypeHelper NO_OP_ENUM_DATA_TYPE_HELPER =
     (column, columnDataType, connection) -> EMPTY_ENUM_DATA_TYPE_INFO;
 
 }

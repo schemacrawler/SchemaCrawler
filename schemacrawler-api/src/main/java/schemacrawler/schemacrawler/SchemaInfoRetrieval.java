@@ -44,6 +44,7 @@ import static sf.util.Utility.toSnakeCase;
 public enum SchemaInfoRetrieval
 {
   retrieveAdditionalColumnAttributes(table, maximum),
+  retrieveAdditionalColumnMetadata(table, maximum),
   retrieveAdditionalDatabaseInfo(database, maximum),
   retrieveAdditionalJdbcDriverInfo(database, maximum),
   retrieveAdditionalTableAttributes(table, maximum),

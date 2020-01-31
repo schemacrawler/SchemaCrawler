@@ -496,4 +496,9 @@ class MutableTable
     return foreignKeysList;
   }
 
+  NamedObjectList<MutableColumn> getAllColumns()
+  {
+    return columns;
+  }
+
 }

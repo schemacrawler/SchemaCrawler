@@ -37,6 +37,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
+import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.utility.JavaSqlTypes;
@@ -112,6 +113,10 @@ final class RetrieverConnection
   InformationSchemaViews getInformationSchemaViews()
   {
     return schemaRetrievalOptions.getInformationSchemaViews();
+  }
+
+  EnumDataTypeHelper getEnumDataTypeHelper() {
+    return schemaRetrievalOptions.getEnumDataTypeHelper();
   }
 
   JavaSqlTypes getJavaSqlTypes()

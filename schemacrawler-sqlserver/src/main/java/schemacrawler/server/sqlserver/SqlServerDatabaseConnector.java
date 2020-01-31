@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.sqlserver;
 
 
-import static schemacrawler.plugin.EnumDataTypeHelper.noOpEnumDataTypeHelper;
+import static schemacrawler.plugin.EnumDataTypeHelper.NO_OP_ENUM_DATA_TYPE_HELPER;
 
 import java.io.IOException;
 import java.util.function.Predicate;
@@ -54,7 +54,7 @@ public final class SqlServerDatabaseConnector
           new ClasspathInputResource(
             "/schemacrawler-sqlserver.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
-            "/sqlserver.information_schema"), noOpEnumDataTypeHelper);
+            "/sqlserver.information_schema"), NO_OP_ENUM_DATA_TYPE_HELPER);
   }
 
   @Override
