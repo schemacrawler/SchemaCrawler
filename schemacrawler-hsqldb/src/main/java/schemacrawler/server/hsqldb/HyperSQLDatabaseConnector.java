@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.hsqldb;
 
 
+import static schemacrawler.plugin.EnumDataTypeHelper.noOpEnumDataTypeHelper;
+
 import java.io.IOException;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
@@ -49,7 +51,7 @@ public final class HyperSQLDatabaseConnector
     super(new DatabaseServerType("hsqldb", "HyperSQL DataBase"),
           new ClasspathInputResource("/schemacrawler-hsqldb.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
-            "/hsqldb.information_schema"));
+            "/hsqldb.information_schema"), noOpEnumDataTypeHelper);
   }
 
   @Override

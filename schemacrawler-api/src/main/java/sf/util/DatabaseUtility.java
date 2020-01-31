@@ -261,17 +261,6 @@ public final class DatabaseUtility
     }
   }
 
-  public static String getDatabaseVersion(final Connection connection)
-    throws SQLException
-  {
-    checkConnection(connection);
-
-    final DatabaseMetaData dbMetaData = connection.getMetaData();
-    final String dbProductName = dbMetaData.getDatabaseProductName();
-    final String dbProductVersion = dbMetaData.getDatabaseProductVersion();
-    return dbProductName + " " + dbProductVersion;
-  }
-
   public static void logSQLWarnings(final ResultSet resultSet)
   {
     if (resultSet == null)

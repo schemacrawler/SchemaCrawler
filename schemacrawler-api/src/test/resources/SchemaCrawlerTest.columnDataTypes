@@ -323,7 +323,7 @@ PUBLIC.BOOKS.NAME_TYPE
   minimum scale 0
   maximum scale 0
   java.sql.Types: DISTINCT
-  based on NVARCHAR
+  based on 
 PUBLIC.BOOKS.VALID_STRING
   column data-type
   defined with no parameters

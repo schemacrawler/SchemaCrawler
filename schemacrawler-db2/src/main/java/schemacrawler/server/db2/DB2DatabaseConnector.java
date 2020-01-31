@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.db2;
 
 
+import static schemacrawler.plugin.EnumDataTypeHelper.noOpEnumDataTypeHelper;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.function.Predicate;
@@ -54,7 +56,7 @@ public final class DB2DatabaseConnector
     super(new DatabaseServerType("db2", "IBM DB2"),
           new ClasspathInputResource("/schemacrawler-db2.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
-            "/db2.information_schema"));
+            "/db2.information_schema"), noOpEnumDataTypeHelper);
   }
 
   @Override

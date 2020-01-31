@@ -29,12 +29,17 @@ package schemacrawler.tools.databaseconnector;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.plugin.EnumDataTypeHelper.noOpEnumDataTypeHelper;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
+import schemacrawler.plugin.EnumDataTypeHelper;
+import schemacrawler.plugin.EnumDataTypeInfo;
+import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
@@ -61,10 +66,12 @@ public abstract class DatabaseConnector
   private final DatabaseServerType dbServerType;
   private final BiConsumer<InformationSchemaViewsBuilder, Connection>
     informationSchemaViewsBuilderForConnection;
+  private final EnumDataTypeHelper enumDataTypeHelper;
 
   protected DatabaseConnector(final DatabaseServerType dbServerType,
                               final InputResource configResource,
-                              final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection)
+                              final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection,
+                              final EnumDataTypeHelper enumDataTypeHelper)
   {
     this.dbServerType =
       requireNonNull(dbServerType, "No database server type provided");
@@ -74,6 +81,9 @@ public abstract class DatabaseConnector
 
     this.informationSchemaViewsBuilderForConnection =
       informationSchemaViewsBuilderForConnection;
+
+    this.enumDataTypeHelper =
+      requireNonNull(enumDataTypeHelper, "No database server type provided");
   }
 
   /**
@@ -85,6 +95,7 @@ public abstract class DatabaseConnector
     dbServerType = DatabaseServerType.UNKNOWN;
     configResource = null;
     informationSchemaViewsBuilderForConnection = null;
+    enumDataTypeHelper = noOpEnumDataTypeHelper;
   }
 
   /**
@@ -103,6 +114,11 @@ public abstract class DatabaseConnector
   public DatabaseServerType getDatabaseServerType()
   {
     return dbServerType;
+  }
+
+  public EnumDataTypeHelper getEnumDataTypeHelper()
+  {
+    return enumDataTypeHelper;
   }
 
   /**

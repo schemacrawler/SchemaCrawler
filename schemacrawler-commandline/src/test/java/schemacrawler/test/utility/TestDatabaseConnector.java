@@ -1,6 +1,8 @@
 package schemacrawler.test.utility;
 
 
+import static schemacrawler.plugin.EnumDataTypeHelper.noOpEnumDataTypeHelper;
+
 import java.io.IOException;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
@@ -31,7 +33,7 @@ public final class TestDatabaseConnector
           new ClasspathInputResource(
             "/META-INF/schemacrawler-test-db.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
-            "/test-db.information_schema"));
+            "/test-db.information_schema"), noOpEnumDataTypeHelper);
   }
 
   @Override

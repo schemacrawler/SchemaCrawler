@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.sqlserver;
 
 
+import static schemacrawler.plugin.EnumDataTypeHelper.noOpEnumDataTypeHelper;
+
 import java.io.IOException;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
@@ -52,7 +54,7 @@ public final class SqlServerDatabaseConnector
           new ClasspathInputResource(
             "/schemacrawler-sqlserver.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
-            "/sqlserver.information_schema"));
+            "/sqlserver.information_schema"), noOpEnumDataTypeHelper);
   }
 
   @Override

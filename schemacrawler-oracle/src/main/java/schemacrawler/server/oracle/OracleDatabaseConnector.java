@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.oracle;
 
 
+import static schemacrawler.plugin.EnumDataTypeHelper.noOpEnumDataTypeHelper;
 import static schemacrawler.utility.QueryUtility.executeForScalar;
 
 import java.io.IOException;
@@ -136,7 +137,7 @@ public final class OracleDatabaseConnector
   {
     super(DB_SERVER_TYPE,
           new ClasspathInputResource("/schemacrawler-oracle.config.properties"),
-          new OracleInformationSchemaViewsBuilder());
+          new OracleInformationSchemaViewsBuilder(), noOpEnumDataTypeHelper);
 
     System.setProperty("oracle.jdbc.Trace", "true");
   }
