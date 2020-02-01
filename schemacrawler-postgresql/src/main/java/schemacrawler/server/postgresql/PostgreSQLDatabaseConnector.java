@@ -57,22 +57,7 @@ public final class PostgreSQLDatabaseConnector
   private static final SchemaCrawlerLogger LOGGER =
     SchemaCrawlerLogger.getLogger(PostgreSQLDatabaseConnector.class.getName());
 
-  private static final EnumDataTypeHelper enumDataTypeHelper =
-    (column, columnDataType, connection) -> {
-      requireNonNull(columnDataType, "No column data type provided");
-      try
-      {
-        checkConnection(connection);
-      }
-      catch (SchemaCrawlerSQLException e)
-      {
-        LOGGER.log(Level.WARNING,
-                   "Could not obtain enumerated column values",
-                   e);
-      }
-      final List<String> enumValues = getEnumValues(columnDataType, connection);
-      return new EnumDataTypeInfo(false, !enumValues.isEmpty(), enumValues);
-    };
+  private static final EnumDataTypeHelper enumDataTypeHelper = new PostgreSQLEnumDataTypeHelper();
   public static final BiConsumer<InformationSchemaViewsBuilder, Connection>
     informationSchemaBuilderConsumer =
     (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
