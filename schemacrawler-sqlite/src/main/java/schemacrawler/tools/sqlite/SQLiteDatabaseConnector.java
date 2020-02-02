@@ -28,8 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.sqlite;
 
 
-import static schemacrawler.plugin.EnumDataTypeHelper.NO_OP_ENUM_DATA_TYPE_HELPER;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.function.Predicate;
@@ -54,7 +52,7 @@ public final class SQLiteDatabaseConnector
     super(new DatabaseServerType("sqlite", "SQLite"),
           new ClasspathInputResource("/schemacrawler-sqlite.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
-            "/sqlite.information_schema"), NO_OP_ENUM_DATA_TYPE_HELPER);
+            "/sqlite.information_schema"));
   }
 
   @Override

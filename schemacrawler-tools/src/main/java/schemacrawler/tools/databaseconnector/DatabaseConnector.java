@@ -63,12 +63,10 @@ public abstract class DatabaseConnector
   private final DatabaseServerType dbServerType;
   private final BiConsumer<InformationSchemaViewsBuilder, Connection>
     informationSchemaViewsBuilderForConnection;
-  private final EnumDataTypeHelper enumDataTypeHelper;
 
   protected DatabaseConnector(final DatabaseServerType dbServerType,
                               final InputResource configResource,
-                              final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection,
-                              final EnumDataTypeHelper enumDataTypeHelper)
+                              final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection)
   {
     this.dbServerType =
       requireNonNull(dbServerType, "No database server type provided");
@@ -78,9 +76,6 @@ public abstract class DatabaseConnector
 
     this.informationSchemaViewsBuilderForConnection =
       informationSchemaViewsBuilderForConnection;
-
-    this.enumDataTypeHelper =
-      requireNonNull(enumDataTypeHelper, "No database server type provided");
   }
 
   /**
@@ -92,7 +87,6 @@ public abstract class DatabaseConnector
     dbServerType = DatabaseServerType.UNKNOWN;
     configResource = null;
     informationSchemaViewsBuilderForConnection = null;
-    enumDataTypeHelper = NO_OP_ENUM_DATA_TYPE_HELPER;
   }
 
   /**
@@ -115,7 +109,7 @@ public abstract class DatabaseConnector
 
   public EnumDataTypeHelper getEnumDataTypeHelper()
   {
-    return enumDataTypeHelper;
+    return NO_OP_ENUM_DATA_TYPE_HELPER;
   }
 
   /**
@@ -131,7 +125,7 @@ public abstract class DatabaseConnector
       SchemaRetrievalOptionsBuilder
         .builder()
         .withDatabaseServerType(dbServerType)
-        .withEnumDataTypeHelper(enumDataTypeHelper)
+        .withEnumDataTypeHelper(getEnumDataTypeHelper())
         .withInformationSchemaViewsForConnection(
           informationSchemaViewsBuilderForConnection,
           connection)

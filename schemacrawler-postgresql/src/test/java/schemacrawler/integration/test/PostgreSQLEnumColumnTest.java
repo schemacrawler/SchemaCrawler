@@ -28,18 +28,28 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
+import static java.nio.file.Files.lines;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.matchesPattern;
+import static org.hamcrest.collection.IsEmptyCollection.empty;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.Statement;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -93,7 +103,7 @@ public class PostgreSQLEnumColumnTest
   }
 
   @Test
-  public void columnWithEnum()
+  public void columnWithEnumOutputFormats()
     throws Exception
   {
 
@@ -104,8 +114,7 @@ public class PostgreSQLEnumColumnTest
     final SchemaCrawlerOptions schemaCrawlerOptions =
       schemaCrawlerOptionsBuilder.toOptions();
 
-    SchemaCrawlerExecutable executable;
-
+    final SchemaCrawlerExecutable executable;
     executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
@@ -119,9 +128,53 @@ public class PostgreSQLEnumColumnTest
                  hasSameContentAs(classpathResource(
                    "testColumnWithEnum." + outputFormat.getFormat())));
     }
+  }
 
-    // Additional programmatic test
-    final Catalog catalog = executable.getCatalog();
+  @Test
+  @Disabled("TODO - fix tests")
+  public void columnWithEnumSerialization()
+    throws Exception
+  {
+
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
+
+    SchemaCrawlerExecutable executable;
+
+    executable = new SchemaCrawlerExecutable("serialize");
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+
+    for (final OutputFormat outputFormat : new OutputFormat[] {
+      SerializationFormat.json, SerializationFormat.yaml
+    })
+    {
+      final Path outputFile =
+        executableExecution(getConnection(), executable, outputFormat);
+      final List<String> enumOutput = lines(outputFile)
+        .filter(line -> line.contains("'sad', ok', happy'"))
+        .collect(Collectors.toList());
+      assertThat(enumOutput, is(not(empty())));
+      assertThat(enumOutput.get(0), matchesPattern(".*'sad', ok', happy'.*"));
+    }
+  }
+
+  @Test
+  public void columnWithEnum()
+    throws Exception
+  {
+
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
+
+    final Catalog catalog = getCatalog(getConnection(), schemaCrawlerOptions);
     final Schema schema = catalog
       .lookupSchema("public")
       .orElse(null);
@@ -134,11 +187,13 @@ public class PostgreSQLEnumColumnTest
     final Column currentMoodColumn = table
       .lookupColumn("current_mood")
       .orElse(null);
-    assertThat(currentMoodColumn, Matchers.notNullValue());
-    /*
-    final List<String> enumValues = MySQLUtility.getEnumValues(sizeColumn);
-    assertThat(enumValues, containsInAnyOrder("small", "medium", "large"));
-    */
+    assertThat(currentMoodColumn, notNullValue());
+    assertThat(currentMoodColumn
+                 .getColumnDataType()
+                 .isEnumerated(), is(true));
+    assertThat(currentMoodColumn
+                 .getColumnDataType()
+                 .getEnumValues(), containsInAnyOrder("sad", "ok", "happy"));
   }
 
 }

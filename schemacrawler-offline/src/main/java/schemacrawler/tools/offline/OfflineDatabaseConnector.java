@@ -28,8 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.offline;
 
 
-import static schemacrawler.plugin.EnumDataTypeHelper.NO_OP_ENUM_DATA_TYPE_HELPER;
-
 import java.io.IOException;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
@@ -53,7 +51,7 @@ public final class OfflineDatabaseConnector
   {
     super(DB_SERVER_TYPE,
           new ClasspathInputResource("/schemacrawler-offline.config.properties"),
-          null, NO_OP_ENUM_DATA_TYPE_HELPER);
+          null);
   }
 
   @Override

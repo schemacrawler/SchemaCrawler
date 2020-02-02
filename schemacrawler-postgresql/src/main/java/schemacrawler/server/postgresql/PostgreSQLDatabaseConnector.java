@@ -28,40 +28,19 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.postgresql;
 
 
-import static java.util.Objects.requireNonNull;
-import static schemacrawler.server.postgresql.PostgreSQLUtility.getEnumValues;
-import static sf.util.DatabaseUtility.checkConnection;
-
 import java.io.IOException;
-import java.sql.Connection;
-import java.util.List;
-import java.util.function.BiConsumer;
 import java.util.function.Predicate;
-import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 import schemacrawler.plugin.EnumDataTypeHelper;
-import schemacrawler.plugin.EnumDataTypeInfo;
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
-import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.iosource.ClasspathInputResource;
-import sf.util.SchemaCrawlerLogger;
 
 public final class PostgreSQLDatabaseConnector
   extends DatabaseConnector
 {
-
-  private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(PostgreSQLDatabaseConnector.class.getName());
-
-  private static final EnumDataTypeHelper enumDataTypeHelper = new PostgreSQLEnumDataTypeHelper();
-  public static final BiConsumer<InformationSchemaViewsBuilder, Connection>
-    informationSchemaBuilderConsumer =
-    (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
-      "/postgresql.information_schema");
 
   public PostgreSQLDatabaseConnector()
     throws IOException
@@ -69,8 +48,14 @@ public final class PostgreSQLDatabaseConnector
     super(new DatabaseServerType("postgresql", "PostgreSQL"),
           new ClasspathInputResource(
             "/schemacrawler-postgresql.config.properties"),
-          informationSchemaBuilderConsumer,
-          enumDataTypeHelper);
+          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
+            "/postgresql.information_schema"));
+  }
+
+  @Override
+  public EnumDataTypeHelper getEnumDataTypeHelper()
+  {
+    return new PostgreSQLEnumDataTypeHelper();
   }
 
   @Override

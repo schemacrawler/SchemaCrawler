@@ -32,16 +32,13 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.server.mysql.MySQLUtility.getEnumValues;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.List;
-import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.plugin.EnumDataTypeInfo;
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.iosource.ClasspathInputResource;
@@ -50,26 +47,23 @@ public final class MySQLDatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final long serialVersionUID = 1456580846425210048L;
-
-  private static final EnumDataTypeHelper enumDataTypeHelper =
-    (column, columnDataType, connection) -> {
-      requireNonNull(column, "No column provided");
-      final List<String> enumValues = getEnumValues(column);
-      return new EnumDataTypeInfo(!enumValues.isEmpty(), false, enumValues);
-    };
-  public static final BiConsumer<InformationSchemaViewsBuilder, Connection>
-    informationSchemaBuilderConsumer =
-    (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
-      "/mysql.information_schema");
-
   public MySQLDatabaseConnector()
     throws IOException
   {
     super(new DatabaseServerType("mysql", "MySQL"),
           new ClasspathInputResource("/schemacrawler-mysql.config.properties"),
-          informationSchemaBuilderConsumer,
-          enumDataTypeHelper);
+          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
+            "/mysql.information_schema"));
+  }
+
+  @Override
+  public EnumDataTypeHelper getEnumDataTypeHelper()
+  {
+    return (column, columnDataType, connection) -> {
+      requireNonNull(column, "No column provided");
+      final List<String> enumValues = getEnumValues(column);
+      return new EnumDataTypeInfo(!enumValues.isEmpty(), false, enumValues);
+    };
   }
 
   @Override
