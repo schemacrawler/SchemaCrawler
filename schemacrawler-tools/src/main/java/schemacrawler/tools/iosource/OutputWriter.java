@@ -86,6 +86,11 @@ public final class OutputWriter
   public void close()
     throws IOException
   {
+    if (isClosed) {
+      throw new IOException(String.format("Repeated attempt to close writer <%s>",
+                                          description));
+    }
+
     flush();
 
     if (shouldCloseWriter)

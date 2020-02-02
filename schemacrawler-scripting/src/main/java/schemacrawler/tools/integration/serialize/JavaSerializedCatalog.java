@@ -35,6 +35,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.Writer;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.BaseCatalogDecorator;
@@ -77,12 +78,7 @@ public final class JavaSerializedCatalog
   }
 
   /**
-   * Serializes the database to the writer, as XML.
-   *
-   * @param out
-   *   Writer to save to
-   * @throws SchemaCrawlerException
-   *   On an exception
+   * {@inheritDoc}
    */
   @Override
   public void save(final OutputStream out)
@@ -97,6 +93,16 @@ public final class JavaSerializedCatalog
     {
       throw new SchemaCrawlerException("Could not serialize catalog", e);
     }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void save(final Writer out)
+    throws SchemaCrawlerException
+  {
+    throw new UnsupportedOperationException("Cannot serialize binary format using character data");
   }
 
 }
