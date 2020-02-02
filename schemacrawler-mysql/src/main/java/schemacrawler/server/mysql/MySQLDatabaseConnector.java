@@ -28,16 +28,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.mysql;
 
 
-import static java.util.Objects.requireNonNull;
-import static schemacrawler.server.mysql.MySQLUtility.getEnumValues;
-
 import java.io.IOException;
-import java.util.List;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 import schemacrawler.plugin.EnumDataTypeHelper;
-import schemacrawler.plugin.EnumDataTypeInfo;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -59,11 +54,7 @@ public final class MySQLDatabaseConnector
   @Override
   public EnumDataTypeHelper getEnumDataTypeHelper()
   {
-    return (column, columnDataType, connection) -> {
-      requireNonNull(column, "No column provided");
-      final List<String> enumValues = getEnumValues(column);
-      return new EnumDataTypeInfo(!enumValues.isEmpty(), false, enumValues);
-    };
+    return new MySQLEnumDataTypeHelper();
   }
 
   @Override

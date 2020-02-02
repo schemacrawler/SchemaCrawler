@@ -37,7 +37,6 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -56,17 +55,14 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.server.mysql.MySQLUtility;
+import schemacrawler.server.mysql.MySQLEnumDataTypeHelper;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseBuildCondition;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.text.schema.SchemaTextOptions;
-import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 @Testcontainers(disabledWithoutDocker = true)
 @ExtendWith(HeavyDatabaseBuildCondition.class)
@@ -135,14 +131,14 @@ public class MySQLEnumColumnTest
       .lookupColumn("name")
       .orElse(null);
     assertThat(nameColumn, notNullValue());
-    final List<String> nameEnumValues = MySQLUtility.getEnumValues(nameColumn);
+    final List<String> nameEnumValues = nameColumn.getColumnDataType().getEnumValues();
     assertThat(nameEnumValues, is(empty()));
 
     final Column sizeColumn = table
       .lookupColumn("size")
       .orElse(null);
     assertThat(sizeColumn, notNullValue());
-    final List<String> enumValues = MySQLUtility.getEnumValues(sizeColumn);
+    final List<String> enumValues = sizeColumn.getColumnDataType().getEnumValues();
     assertThat(enumValues, containsInAnyOrder("small", "medium", "large"));
   }
 

@@ -35,6 +35,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.matchesPattern;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
+import static org.hamcrest.collection.IsEmptyCollection.emptyCollectionOf;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -181,6 +182,17 @@ public class PostgreSQLEnumColumnTest
       .lookupTable(schema, "person")
       .orElse(null);
     assertThat(table, notNullValue());
+
+    final Column nameColumn = table
+      .lookupColumn("name")
+      .orElse(null);
+    assertThat(nameColumn, notNullValue());
+    assertThat(nameColumn
+                 .getColumnDataType()
+                 .isEnumerated(), is(false));
+    assertThat(nameColumn
+                 .getColumnDataType()
+                 .getEnumValues(), emptyCollectionOf(String.class));
 
     final Column currentMoodColumn = table
       .lookupColumn("current_mood")
