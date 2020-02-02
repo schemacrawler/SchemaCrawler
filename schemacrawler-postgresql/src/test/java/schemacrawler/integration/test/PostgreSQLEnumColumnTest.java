@@ -29,7 +29,6 @@ package schemacrawler.integration.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -38,7 +37,6 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 
 import java.sql.Connection;
 import java.sql.Statement;
-import java.util.List;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -59,6 +57,7 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseBuildCondition;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.integration.graph.GraphOutputFormat;
 
 @Testcontainers(disabledWithoutDocker = true)
 @ExtendWith(HeavyDatabaseBuildCondition.class)
@@ -73,27 +72,49 @@ public class PostgreSQLEnumColumnTest
 
   @BeforeEach
   public void createDatabase()
+    throws Exception
   {
     createDataSource(dbContainer.getJdbcUrl(),
                      dbContainer.getUsername(),
                      dbContainer.getPassword());
+
+    try (
+      final Connection connection = getConnection();
+      final Statement stmt = connection.createStatement();
+    )
+    {
+      stmt.execute("CREATE TYPE mood AS ENUM ('sad', 'ok', 'happy')");
+      stmt.execute("CREATE TABLE person (name text, current_mood mood)");
+      connection.commit();
+    }
+  }
+
+  @Test
+  public void columnWithEnumGraph()
+    throws Exception
+  {
+
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
+
+    final SchemaCrawlerExecutable executable =
+      new SchemaCrawlerExecutable("details");
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+
+    assertThat(outputOf(executableExecution(getConnection(),
+                                            executable,
+                                            GraphOutputFormat.scdot)),
+               hasSameContentAs(classpathResource("testColumnWithEnum.dot")));
   }
 
   @Test
   public void columnWithEnum()
     throws Exception
   {
-    try (
-      final Connection connection = getConnection();
-      final Statement stmt = connection.createStatement();
-    )
-    {
-      stmt.execute(
-        "CREATE TYPE mood AS ENUM ('sad', 'ok', 'happy')");
-      stmt.execute(
-        "CREATE TABLE person (name text, current_mood mood)");
-      connection.commit();
-    }
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
       SchemaCrawlerOptionsBuilder
@@ -107,8 +128,7 @@ public class PostgreSQLEnumColumnTest
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
     assertThat(outputOf(executableExecution(getConnection(), executable)),
-               hasSameContentAs(classpathResource(
-                 "testColumnWithEnum.txt")));
+               hasSameContentAs(classpathResource("testColumnWithEnum.txt")));
 
     // Additional programmatic test
     final Catalog catalog = executable.getCatalog();

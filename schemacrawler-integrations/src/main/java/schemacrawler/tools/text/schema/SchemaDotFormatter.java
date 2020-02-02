@@ -530,6 +530,51 @@ public final class SchemaDotFormatter
       .println();
   }
 
+  private void printTableColumnEnumValues(final Column column)
+  {
+    if (column == null)
+    {
+      return;
+    }
+    try
+    {
+      if (!column
+        .getColumnDataType()
+        .isEnumerated())
+      {
+        return;
+      }
+    }
+    catch (final NotLoadedException e)
+    {
+      // The column may be partial for index pseudo-columns
+      return;
+    }
+
+    final String enumValues = String.format("'%s'",
+                                            String.join("', ",
+                                                        column
+                                                          .getColumnDataType()
+                                                          .getEnumValues()));
+
+    final TableRow row = new TableRow(TextOutputFormat.html);
+    if (options.isShowOrdinalNumbers())
+    {
+      row.add(newTableCell("", Alignment.right, false, Color.white, 1));
+    }
+    row
+      .add(newTableCell("", Alignment.left, false, Color.white, 1))
+      .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
+      .add(newTableCell(enumValues,
+                        Alignment.left,
+                        false,
+                        Color.white,
+                        1));
+    formattingHelper
+      .append(row.toString())
+      .println();
+  }
+
   private void printTableColumnHidden(final Column column)
   {
     if (column == null)
@@ -658,6 +703,7 @@ public final class SchemaDotFormatter
         .append(row.toString())
         .println();
 
+      printTableColumnEnumValues(column);
       printTableColumnHidden(column);
       printTableColumnAutoIncremented(column);
       printTableColumnGenerated(column);
