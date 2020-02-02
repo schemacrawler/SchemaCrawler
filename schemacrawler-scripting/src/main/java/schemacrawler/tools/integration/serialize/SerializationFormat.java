@@ -43,12 +43,15 @@ public enum SerializationFormat
 {
   java("Java serialization",
        "schemacrawler.tools.integration.serialize.JavaSerializedCatalog",
+       true,
        "ser"),
   json("JavaScript Object Notation (JSON) serialization format",
        "schemacrawler.tools.integration.serialize.JsonSerializedCatalog",
+       false,
        "json"),
   yaml("YAML Ain't Markup Language (YAML) serialization format",
        "schemacrawler.tools.integration.serialize.YamlSerializedCatalog",
+       false,
        "yaml");
 
   private static final SchemaCrawlerLogger LOGGER =
@@ -105,14 +108,22 @@ public enum SerializationFormat
 
   private final OutputFormatState outputFormatState;
   private final String serializerClassName;
+  private final boolean isBinaryFormat;
+
+  public boolean isBinaryFormat()
+  {
+    return isBinaryFormat;
+  }
 
   private SerializationFormat(final String description,
                               final String serializerClassName,
+                              final boolean isBinaryFormat,
                               final String... additionalFormatSpecifiers)
   {
     outputFormatState =
       new OutputFormatState(name(), description, additionalFormatSpecifiers);
     this.serializerClassName = serializerClassName;
+    this.isBinaryFormat = isBinaryFormat;
   }
 
   public String getFileExtension()

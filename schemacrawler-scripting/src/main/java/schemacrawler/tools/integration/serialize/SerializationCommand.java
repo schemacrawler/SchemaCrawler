@@ -32,6 +32,7 @@ package schemacrawler.tools.integration.serialize;
 import static java.nio.file.Files.newOutputStream;
 
 import java.io.OutputStream;
+import java.io.Writer;
 import java.nio.file.Path;
 
 import schemacrawler.schema.Catalog;
@@ -82,18 +83,27 @@ public final class SerializationCommand
       .getDeclaredConstructor(Catalog.class)
       .newInstance(catalog);
 
-    // Force a file to be created
-    final Path outputFile =
-      outputOptions.getOutputFile(serializationFormat.getFileExtension());
-
-    outputOptions = OutputOptionsBuilder
-      .builder(outputOptions)
-      .withOutputFile(outputFile)
-      .toOptions();
-
-    try (final OutputStream out = newOutputStream(outputFile))
+    if (serializationFormat.isBinaryFormat())
     {
+      // Force a file to be created for binary formats such as Java serialization
+      final Path outputFile =
+        outputOptions.getOutputFile(serializationFormat.getFileExtension());
+
+      outputOptions = OutputOptionsBuilder
+        .builder(outputOptions)
+        .withOutputFile(outputFile)
+        .toOptions();
+
+      try (final OutputStream out = newOutputStream(outputFile))
+      {
+        serializableCatalog.save(out);
+      }
+    }
+    else
+    {
+      final Writer out = outputOptions.openNewOutputWriter();
       serializableCatalog.save(out);
+      // NOTE: Jackson closes the output writer, so no need for a try-with-resources block
     }
   }
 

@@ -35,7 +35,7 @@ import static org.hamcrest.Matchers.oneOf;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.probeFileHeader;
+import static schemacrawler.test.utility.TestUtility.fileHeaderOf;
 
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
@@ -142,7 +142,7 @@ public class CommandLineSerializeCommandTest
     assertThat(outputOf(err), hasNoContent());
     assertThat(outputOf(out), hasNoContent());
     assertThat(Files.size(testOutputFile), greaterThan(0L));
-    assertThat(probeFileHeader(testOutputFile), fileHeaderMatcher);
+    assertThat(fileHeaderOf(testOutputFile), fileHeaderMatcher);
   }
 
   private Path commandlineSerialize(final DatabaseConnectionInfo connectionInfo,

@@ -35,6 +35,7 @@ import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_ENUMS_US
 import static java.util.Objects.requireNonNull;
 
 import java.io.OutputStream;
+import java.io.Writer;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -78,12 +79,7 @@ public abstract class BaseJacksonSerializedCatalog
   }
 
   /**
-   * Serializes the database to the writer, as JSON.
-   *
-   * @param out
-   *   Output stream to save to
-   * @throws SchemaCrawlerException
-   *   On an exception
+   * {@inheritDoc}
    */
   @Override
   public void save(final OutputStream out)
@@ -92,50 +88,72 @@ public abstract class BaseJacksonSerializedCatalog
     requireNonNull(out, "No output stream provided");
     try
     {
-
-      @JsonIgnoreProperties({
-                              "parent",
-                              "referenced-column",
-                              "exported-foreign-keys",
-                              "imported-foreign-keys"
-                            })
-      @JsonPropertyOrder(value = {
-        "@uuid",
-        "name",
-        "short-name",
-        "full-name",
-        "crawl-info",
-        "schema-crawler-info",
-        "jvm-system-info",
-        "operating-system-info",
-        "database-info",
-        "jdbc-driver-info",
-        "schemas",
-        "system-column-data-types",
-        "column-data-types",
-        "all-table-columns"
-      }, alphabetic = true)
-      @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@uuid")
-      @JsonNaming(PropertyNamingStrategy.KebabCaseStrategy.class)
-      class JacksonAnnotationMixIn
-      {
-
-      }
-
-      final ObjectMapper mapper = newObjectMapper();
-      mapper.enable(ORDER_MAP_ENTRIES_BY_KEYS,
-                    INDENT_OUTPUT,
-                    USE_EQUALITY_FOR_OBJECT_ID,
-                    WRITE_ENUMS_USING_TO_STRING);
-      mapper.addMixIn(Object.class, JacksonAnnotationMixIn.class);
-
-      // Write JSON to stream
+      final ObjectMapper mapper = newConfiguredObjectMapper();
       mapper.writeValue(out, this);
     }
     catch (final Exception e)
     {
       throw new SchemaCrawlerException("Could not serialize catalog", e);
     }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void save(final Writer out)
+    throws SchemaCrawlerException
+  {
+    requireNonNull(out, "No writer provided");
+    try
+    {
+      final ObjectMapper mapper = newConfiguredObjectMapper();
+      mapper.writeValue(out, this);
+    }
+    catch (final Exception e)
+    {
+      throw new SchemaCrawlerException("Could not serialize catalog", e);
+    }
+  }
+
+  private ObjectMapper newConfiguredObjectMapper()
+  {
+    @JsonIgnoreProperties({
+                            "parent",
+                            "referenced-column",
+                            "exported-foreign-keys",
+                            "imported-foreign-keys"
+                          })
+    @JsonPropertyOrder(value = {
+      "@uuid",
+      "name",
+      "short-name",
+      "full-name",
+      "crawl-info",
+      "schema-crawler-info",
+      "jvm-system-info",
+      "operating-system-info",
+      "database-info",
+      "jdbc-driver-info",
+      "schemas",
+      "system-column-data-types",
+      "column-data-types",
+      "all-table-columns"
+    }, alphabetic = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@uuid")
+    @JsonNaming(PropertyNamingStrategy.KebabCaseStrategy.class)
+    class JacksonAnnotationMixIn
+    {
+
+    }
+
+    final ObjectMapper mapper = newObjectMapper();
+    mapper.enable(ORDER_MAP_ENTRIES_BY_KEYS,
+                  INDENT_OUTPUT,
+                  USE_EQUALITY_FOR_OBJECT_ID,
+                  WRITE_ENUMS_USING_TO_STRING);
+    mapper.addMixIn(Object.class, JacksonAnnotationMixIn.class);
+    return mapper;
   }
 
   protected abstract ObjectMapper newObjectMapper();

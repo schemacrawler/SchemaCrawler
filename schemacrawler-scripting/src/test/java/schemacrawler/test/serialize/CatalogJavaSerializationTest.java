@@ -36,7 +36,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
-import static schemacrawler.test.utility.TestUtility.probeFileHeader;
+import static schemacrawler.test.utility.TestUtility.fileHeaderOf;
 import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.io.FileInputStream;
@@ -93,7 +93,7 @@ public class CatalogJavaSerializationTest
     assertThat("Catalog was not serialized",
                Files.size(testOutputFile),
                greaterThan(0L));
-    assertThat(probeFileHeader(testOutputFile), is("ACED"));
+    assertThat(fileHeaderOf(testOutputFile), is("ACED"));
 
     Catalog catalogDeserialized = null;
     try (
