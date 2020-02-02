@@ -542,7 +542,7 @@ final class DatabaseInfoRetriever
         final ColumnDataType baseType;
         if (baseTypeValue != 0)
         {
-          baseType = catalog.lookupColumnDataTypeByType(baseTypeValue);
+          baseType = catalog.lookupBaseColumnDataTypeByType(baseTypeValue);
         }
         else
         {

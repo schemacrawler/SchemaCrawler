@@ -982,6 +982,7 @@ final class SchemaTextFormatter
 
       if (extraDetails)
       {
+        printTableColumnEnumValues(column);
         printTableColumnHidden(column);
         printTableColumnAutoIncremented(column);
         printTableColumnGenerated(column);
@@ -993,6 +994,34 @@ final class SchemaTextFormatter
         }
       }
     }
+  }
+
+  private void printTableColumnEnumValues(final Column column)
+  {
+    if (column == null)
+    {
+      return;
+    }
+    try
+    {
+      if (!column
+        .getColumnDataType()
+        .isEnumerated())
+      {
+        return;
+      }
+    }
+    catch (final NotLoadedException e)
+    {
+      // The column may be partial for index pseudo-columns
+      return;
+    }
+    final String enumValues = String.format("'%s'",
+                                            String.join("', ",
+                                                        column
+                                                          .getColumnDataType()
+                                                          .getEnumValues()));
+    formattingHelper.writeDetailRow("", "", enumValues);
   }
 
   private void printTableConstraints(final Collection<TableConstraint> constraintsCollection)

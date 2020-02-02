@@ -30,8 +30,13 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
+import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -39,6 +44,7 @@ import java.sql.Statement;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testcontainers.containers.JdbcDatabaseContainer;
@@ -53,12 +59,14 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.server.mysql.MySQLUtility;
+import schemacrawler.server.mysql.MySQLEnumDataTypeHelper;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseBuildCondition;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
 @Testcontainers(disabledWithoutDocker = true)
 @ExtendWith(HeavyDatabaseBuildCondition.class)
+@DisplayName("Test for support of enum values")
 public class MySQLEnumColumnTest
   extends BaseAdditionalDatabaseTest
 {
@@ -99,7 +107,17 @@ public class MySQLEnumColumnTest
     final SchemaCrawlerOptions schemaCrawlerOptions =
       schemaCrawlerOptionsBuilder.toOptions();
 
-    final Catalog catalog = getCatalog(getConnection(), schemaCrawlerOptions);
+    final SchemaCrawlerExecutable executable =
+      new SchemaCrawlerExecutable("details");
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+
+    assertThat(outputOf(executableExecution(getConnection(), executable)),
+               hasSameContentAs(classpathResource(
+                 "testColumnWithEnum.txt")));
+
+
+    // Additional programmatic test
+    final Catalog catalog = executable.getCatalog();
     final Schema schema = catalog
       .lookupSchema("test")
       .orElse(null);
@@ -108,11 +126,19 @@ public class MySQLEnumColumnTest
       .lookupTable(schema, "shirts")
       .orElse(null);
     assertThat(table, notNullValue());
-    final Column column = table
+
+    final Column nameColumn = table
+      .lookupColumn("name")
+      .orElse(null);
+    assertThat(nameColumn, notNullValue());
+    final List<String> nameEnumValues = nameColumn.getColumnDataType().getEnumValues();
+    assertThat(nameEnumValues, is(empty()));
+
+    final Column sizeColumn = table
       .lookupColumn("size")
       .orElse(null);
-    assertThat(column, notNullValue());
-    final List<String> enumValues = MySQLUtility.getEnumValues(column);
+    assertThat(sizeColumn, notNullValue());
+    final List<String> enumValues = sizeColumn.getColumnDataType().getEnumValues();
     assertThat(enumValues, containsInAnyOrder("small", "medium", "large"));
   }
 

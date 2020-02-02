@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
+import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -41,8 +42,6 @@ public final class MySQLDatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final long serialVersionUID = 1456580846425210048L;
-
   public MySQLDatabaseConnector()
     throws IOException
   {
@@ -50,6 +49,12 @@ public final class MySQLDatabaseConnector
           new ClasspathInputResource("/schemacrawler-mysql.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
             "/mysql.information_schema"));
+  }
+
+  @Override
+  public EnumDataTypeHelper getEnumDataTypeHelper()
+  {
+    return new MySQLEnumDataTypeHelper();
   }
 
   @Override

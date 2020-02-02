@@ -39,6 +39,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 
+import schemacrawler.plugin.EnumDataTypeHelper;
+import schemacrawler.plugin.EnumDataTypeInfo;
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.CheckOptionType;
 import schemacrawler.schema.Column;
@@ -156,6 +158,48 @@ final class TableExtRetriever
                  e);
     }
 
+  }
+
+  /**
+   * Retrieves additional column metadata.
+   */
+  void retrieveAdditionalColumnMetadata()
+  {
+    final EnumDataTypeHelper enumDataTypeHelper =
+      getRetrieverConnection().getEnumDataTypeHelper();
+
+    final NamedObjectList<MutableTable> tables = catalog.getAllTables();
+    for (final MutableTable table : tables)
+    {
+      final NamedObjectList<MutableColumn> columns = table.getAllColumns();
+      for (MutableColumn column : columns)
+      {
+        MutableColumnDataType columnDataType =
+          (MutableColumnDataType) column.getColumnDataType();
+
+        // Check for enumerated column data types
+        final EnumDataTypeInfo enumDataTypeInfo =
+          enumDataTypeHelper.getEnumDataTypeInfo(column,
+                                                 columnDataType,
+                                                 getRetrieverConnection().getConnection());
+        if (enumDataTypeInfo.isColumnEnumerated())
+        {
+          // Create new column datatype with enumeration
+          final MutableColumnDataType copiedColumnDataType =
+            new MutableColumnDataType(columnDataType);
+          columnDataType =
+            copiedColumnDataType; // overwrite with new column data type
+          columnDataType.setEnumValues(enumDataTypeInfo.getEnumValues());
+        }
+        if (enumDataTypeInfo.isColumnDataTypeEnumerated())
+        {
+          // Update column datatype with enumeration
+          columnDataType.setEnumValues(enumDataTypeInfo.getEnumValues());
+        }
+
+        column.setColumnDataType(columnDataType);
+      }
+    }
   }
 
   /**

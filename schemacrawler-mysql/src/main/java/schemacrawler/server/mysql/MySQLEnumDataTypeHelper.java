@@ -29,19 +29,35 @@ package schemacrawler.server.mysql;
 
 
 import static java.util.Objects.requireNonNull;
+import static java.util.regex.Pattern.CASE_INSENSITIVE;
 import static sf.util.Utility.isBlank;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import schemacrawler.plugin.EnumDataTypeHelper;
+import schemacrawler.plugin.EnumDataTypeInfo;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnDataType;
 
-public class MySQLUtility
+public class MySQLEnumDataTypeHelper
+  implements EnumDataTypeHelper
 {
 
-  public static List<String> getEnumValues(final Column column)
+  @Override
+  public EnumDataTypeInfo getEnumDataTypeInfo(final Column column,
+                                              final ColumnDataType columnDataType,
+                                              final Connection connection)
+  {
+    requireNonNull(column, "No column provided");
+    final List<String> enumValues = getEnumValues(column);
+    return new EnumDataTypeInfo(!enumValues.isEmpty(), false, enumValues);
+  }
+
+  private static List<String> getEnumValues(final Column column)
   {
     requireNonNull(column, "No column provided");
     final ArrayList<String> enumValues = new ArrayList<>();
@@ -73,11 +89,8 @@ public class MySQLUtility
     }
     return enumValues;
   }
-  private static Pattern enumPattern = Pattern.compile("enum\\((.*)\\)");
 
-  private MySQLUtility()
-  {
-    // Prevent instantiation
-  }
+  private static Pattern enumPattern =
+    Pattern.compile("enum.*\\((.*)\\)", CASE_INSENSITIVE);
 
 }

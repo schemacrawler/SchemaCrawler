@@ -486,26 +486,34 @@ final class MutableCatalog
     return tables;
   }
 
-  MutableColumnDataType lookupColumnDataTypeByType(final int type)
+  MutableColumnDataType lookupBaseColumnDataTypeByType(final int baseType)
   {
     final SchemaReference systemSchema = new SchemaReference();
     MutableColumnDataType columnDataType = null;
+    int count = 0;
     for (final MutableColumnDataType currentColumnDataType : columnDataTypes)
     {
-      if (type == currentColumnDataType
+      if (baseType == currentColumnDataType
         .getJavaSqlType()
         .getVendorTypeNumber())
       {
-        columnDataType = currentColumnDataType;
-        if (columnDataType
+        if (currentColumnDataType
           .getSchema()
           .equals(systemSchema))
         {
-          break;
+          columnDataType = currentColumnDataType;
+          count = count + 1;
         }
       }
     }
-    return columnDataType;
+    if (count == 1)
+    {
+      return columnDataType;
+    }
+    else
+    {
+      return null;
+    }
   }
 
   Optional<MutableRoutine> lookupRoutine(final List<String> routineLookupKey)

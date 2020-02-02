@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
+import static schemacrawler.plugin.EnumDataTypeHelper.NO_OP_ENUM_DATA_TYPE_HELPER;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
@@ -38,6 +39,7 @@ import java.util.Optional;
 import java.util.function.BiConsumer;
 
 import schemacrawler.crawl.MetadataRetrievalStrategy;
+import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.TypeMap;
 
@@ -106,6 +108,7 @@ public final class SchemaRetrievalOptionsBuilder
   private boolean supportsSchemas;
   private MetadataRetrievalStrategy tableColumnRetrievalStrategy;
   private MetadataRetrievalStrategy tableRetrievalStrategy;
+  private EnumDataTypeHelper enumDataTypeHelper;
 
   private SchemaRetrievalOptionsBuilder()
   {
@@ -127,6 +130,7 @@ public final class SchemaRetrievalOptionsBuilder
     functionRetrievalStrategy = MetadataRetrievalStrategy.metadata;
     functionColumnRetrievalStrategy = MetadataRetrievalStrategy.metadata;
     overridesTypeMap = Optional.empty();
+    enumDataTypeHelper = NO_OP_ENUM_DATA_TYPE_HELPER;
   }
 
   @Override
@@ -580,6 +584,22 @@ public final class SchemaRetrievalOptionsBuilder
       overridesTypeMap = Optional.of(new TypeMap(typeMap));
     }
     return this;
+  }
+
+  public SchemaRetrievalOptionsBuilder withEnumDataTypeHelper(final EnumDataTypeHelper enumDataTypeHelper)
+  {
+    if (enumDataTypeHelper != null) {
+      this.enumDataTypeHelper = enumDataTypeHelper;
+    } else {
+      this.enumDataTypeHelper = NO_OP_ENUM_DATA_TYPE_HELPER;
+    }
+
+    return this;
+  }
+
+  public EnumDataTypeHelper getEnumDataTypeHelper()
+  {
+    return enumDataTypeHelper;
   }
 
   private String lookupIdentifierQuoteString(final DatabaseMetaData metaData)

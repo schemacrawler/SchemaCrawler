@@ -32,18 +32,15 @@ import java.io.IOException;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
+import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.iosource.ClasspathInputResource;
-import sf.util.SchemaCrawlerLogger;
 
 public final class PostgreSQLDatabaseConnector
   extends DatabaseConnector
 {
-
-  private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(PostgreSQLDatabaseConnector.class.getName());
 
   public PostgreSQLDatabaseConnector()
     throws IOException
@@ -53,6 +50,12 @@ public final class PostgreSQLDatabaseConnector
             "/schemacrawler-postgresql.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
             "/postgresql.information_schema"));
+  }
+
+  @Override
+  public EnumDataTypeHelper getEnumDataTypeHelper()
+  {
+    return new PostgreSQLEnumDataTypeHelper();
   }
 
   @Override
