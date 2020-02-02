@@ -45,6 +45,7 @@ import java.sql.Statement;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testcontainers.containers.JdbcDatabaseContainer;
@@ -69,6 +70,7 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 @Testcontainers(disabledWithoutDocker = true)
 @ExtendWith(HeavyDatabaseBuildCondition.class)
+@DisplayName("Test for support of enum values")
 public class MySQLEnumColumnTest
   extends BaseAdditionalDatabaseTest
 {

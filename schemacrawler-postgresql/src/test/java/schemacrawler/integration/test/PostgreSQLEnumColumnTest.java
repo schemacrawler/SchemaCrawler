@@ -58,10 +58,13 @@ import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseBuildCondition;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
+import schemacrawler.tools.integration.serialize.SerializationFormat;
+import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.TextOutputFormat;
 
 @Testcontainers(disabledWithoutDocker = true)
 @ExtendWith(HeavyDatabaseBuildCondition.class)
-@DisplayName("Test for issue #284 on GitHub")
+@DisplayName("Test for issue #284 - support enum values")
 public class PostgreSQLEnumColumnTest
   extends BaseAdditionalDatabaseTest
 {
@@ -90,28 +93,6 @@ public class PostgreSQLEnumColumnTest
   }
 
   @Test
-  public void columnWithEnumGraph()
-    throws Exception
-  {
-
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-      schemaCrawlerOptionsBuilder.toOptions();
-
-    final SchemaCrawlerExecutable executable =
-      new SchemaCrawlerExecutable("details");
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-
-    assertThat(outputOf(executableExecution(getConnection(),
-                                            executable,
-                                            GraphOutputFormat.scdot)),
-               hasSameContentAs(classpathResource("testColumnWithEnum.dot")));
-  }
-
-  @Test
   public void columnWithEnum()
     throws Exception
   {
@@ -123,12 +104,21 @@ public class PostgreSQLEnumColumnTest
     final SchemaCrawlerOptions schemaCrawlerOptions =
       schemaCrawlerOptionsBuilder.toOptions();
 
-    final SchemaCrawlerExecutable executable =
-      new SchemaCrawlerExecutable("details");
+    SchemaCrawlerExecutable executable;
+
+    executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
-    assertThat(outputOf(executableExecution(getConnection(), executable)),
-               hasSameContentAs(classpathResource("testColumnWithEnum.txt")));
+    for (final OutputFormat outputFormat : new OutputFormat[] {
+      GraphOutputFormat.scdot, TextOutputFormat.text, TextOutputFormat.html
+    })
+    {
+      assertThat(outputOf(executableExecution(getConnection(),
+                                              executable,
+                                              outputFormat)),
+                 hasSameContentAs(classpathResource(
+                   "testColumnWithEnum." + outputFormat.getFormat())));
+    }
 
     // Additional programmatic test
     final Catalog catalog = executable.getCatalog();
