@@ -381,7 +381,7 @@ public final class TestUtility
     return new InputStreamReader(zipInputStream, charset);
   }
 
-  public static String probeFileHeader(final Path tempFile)
+  public static String fileHeaderOf(final Path tempFile)
     throws IOException
   {
     try (

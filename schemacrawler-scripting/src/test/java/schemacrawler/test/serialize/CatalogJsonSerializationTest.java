@@ -39,7 +39,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.probeFileHeader;
+import static schemacrawler.test.utility.TestUtility.fileHeaderOf;
 import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.io.FileOutputStream;
@@ -105,7 +105,7 @@ public class CatalogJsonSerializationTest
     assertThat("Catalog was not serialized",
                Files.size(testOutputFile),
                greaterThan(0L));
-    assertThat(probeFileHeader(testOutputFile), is(oneOf("7B0D", "7B0A")));
+    assertThat(fileHeaderOf(testOutputFile), is(oneOf("7B0D", "7B0A")));
 
     if (DEBUG)
     {
