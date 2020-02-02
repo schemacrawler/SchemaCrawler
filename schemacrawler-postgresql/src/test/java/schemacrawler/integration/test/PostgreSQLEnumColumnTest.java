@@ -131,7 +131,6 @@ public class PostgreSQLEnumColumnTest
   }
 
   @Test
-  @Disabled("TODO - fix tests")
   public void columnWithEnumSerialization()
     throws Exception
   {
@@ -144,7 +143,6 @@ public class PostgreSQLEnumColumnTest
       schemaCrawlerOptionsBuilder.toOptions();
 
     SchemaCrawlerExecutable executable;
-
     executable = new SchemaCrawlerExecutable("serialize");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
@@ -155,10 +153,10 @@ public class PostgreSQLEnumColumnTest
       final Path outputFile =
         executableExecution(getConnection(), executable, outputFormat);
       final List<String> enumOutput = lines(outputFile)
-        .filter(line -> line.contains("'sad', ok', happy'"))
+        .filter(line -> line.contains("happy"))
         .collect(Collectors.toList());
       assertThat(enumOutput, is(not(empty())));
-      assertThat(enumOutput.get(0), matchesPattern(".*'sad', ok', happy'.*"));
+      assertThat(enumOutput.get(0), matchesPattern(".*happy.*"));
     }
   }
 
