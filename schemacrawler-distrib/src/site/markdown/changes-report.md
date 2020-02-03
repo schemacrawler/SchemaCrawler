@@ -1,9 +1,23 @@
 # SchemaCrawler Change History
 
+<a name="a16.4.1"></a>
+## Release 16.4.1 - 2020-02-06
+
+- Support enum values for MySQL and PostgreSQL as first-class schema metadata
+- Add MariaDB test cases 
+
+
+<a name="a16.3.2"></a>
+## Release 16.3.2 - 2020-01-15
+
+- Re-issue of release
+
+
 <a name="a16.3.1"></a>
 ## Release 16.3.1 - 2020-01-12
 
 - Fix bug with generating titles in graphs (issue #281)
+
 
 <a name="a16.3.0"></a>
 ## Release 16.3.0 - 2020-01-02
