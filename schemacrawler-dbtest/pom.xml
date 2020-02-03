@@ -42,6 +42,12 @@
       <artifactId>schemacrawler</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-mysql</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
 
     <dependency>
       <groupId>com.h2database</groupId>
