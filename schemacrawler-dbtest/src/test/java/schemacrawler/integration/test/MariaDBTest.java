@@ -41,7 +41,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.MariaDBContainer;
-import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
@@ -111,7 +110,8 @@ public class MariaDBTest
                                             .toConfig());
 
     assertThat(outputOf(executableExecution(getConnection(), executable)),
-               hasSameContentAs(classpathResource("testMariaDBWithConnection.txt")));
+               hasSameContentAs(classpathResource(
+                 "testMariaDBWithConnection.txt")));
   }
 
 }
