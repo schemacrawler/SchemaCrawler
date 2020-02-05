@@ -166,7 +166,7 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
-      <version>5.5.2</version>
+      <version>5.6.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -178,7 +178,7 @@
     <dependency>
       <groupId>nl.jqno.equalsverifier</groupId>
       <artifactId>equalsverifier</artifactId>
-      <version>3.1.11</version>
+      <version>3.1.12</version>
       <scope>test</scope>
     </dependency>
     <dependency>
