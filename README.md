@@ -2,7 +2,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/schemacrawler/SchemaCrawler/badge.svg)](https://coveralls.io/github/schemacrawler/SchemaCrawler)
 
 [![The Central Repository](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler.svg)](https://search.maven.org/search?q=g:us.fatehi%20a:schemacrawler*)
-[![Main distribution](https://img.shields.io/badge/zip-download-blue.svg)](https://github.com/schemacrawler/SchemaCrawler/releases/latest)
+[![Main distribution](https://img.shields.io/badge/releases-download-blue.svg)](https://github.com/schemacrawler/SchemaCrawler/releases/latest)
 [![Docker Pulls](https://img.shields.io/docker/pulls/schemacrawler/schemacrawler.svg)](https://hub.docker.com/r/schemacrawler/schemacrawler/)
 
 ![SchemaCrawler](https://raw.githubusercontent.com/schemacrawler/SchemaCrawler/master/schemacrawler-distrib/src/site/resources/images/schemacrawler_logo.png) 
@@ -19,9 +19,13 @@ SchemaCrawler supports almost any database that has a JDBC driver, but for conve
 
 SchemaCrawler is also a Java API that makes working with database metadata as easy as working with plain old Java objects.
 
+Explore the SchemaCrawler command-line with a live tutorial on [Katacoda](https://www.katacoda.com/schemacrawler).
+
+
 ## Licensing
 
 SchemaCrawler is available under a number of [licenses](https://www.schemacrawler.com/license.html).
+
 
 ## Distributions and Downloads
 
@@ -29,7 +33,6 @@ SchemaCrawler is available under a number of [licenses](https://www.schemacrawle
 
 Additional SchemaCrawler database plugins are available from the [schemacrawler/SchemaCrawler-Database-Plugins](https://github.com/schemacrawler/SchemaCrawler-Database-Plugins) project.
 
-Explore the SchemaCrawler command-line on [Katacoda](https://www.katacoda.com/schemacrawler).
 
 ## Support
 
