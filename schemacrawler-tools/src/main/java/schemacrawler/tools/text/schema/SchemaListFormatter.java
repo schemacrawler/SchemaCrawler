@@ -58,8 +58,6 @@ final class SchemaListFormatter
   implements SchemaTraversalHandler
 {
 
-  private final boolean isVerbose;
-
   /**
    * Text formatting of schema.
    *
@@ -84,7 +82,6 @@ final class SchemaListFormatter
           schemaTextDetailType == SchemaTextDetailType.details,
           outputOptions,
           identifierQuoteString);
-    isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
   }
 
   /**
@@ -119,21 +116,8 @@ final class SchemaListFormatter
    */
   @Override
   public void handle(final ColumnDataType columnDataType)
-    throws SchemaCrawlerException
   {
-    if (printVerboseDatabaseInfo && isVerbose)
-    {
-      final String databaseSpecificTypeName;
-      if (options.isShowUnqualifiedNames())
-      {
-        databaseSpecificTypeName = columnDataType.getName();
-      }
-      else
-      {
-        databaseSpecificTypeName = columnDataType.getFullName();
-      }
-      formattingHelper.writeNameRow(databaseSpecificTypeName, "[data type]");
-    }
+    // No output required
   }
 
   @Override
@@ -294,10 +278,7 @@ final class SchemaListFormatter
   @Override
   public void handleColumnDataTypesEnd()
   {
-    if (printVerboseDatabaseInfo && isVerbose)
-    {
-      formattingHelper.writeObjectEnd();
-    }
+    // No output required
   }
 
   /**
@@ -306,12 +287,7 @@ final class SchemaListFormatter
   @Override
   public void handleColumnDataTypesStart()
   {
-    if (printVerboseDatabaseInfo && isVerbose)
-    {
-      formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Data Types");
-
-      formattingHelper.writeObjectStart();
-    }
+    // No output required
   }
 
   @Override
@@ -438,4 +414,5 @@ final class SchemaListFormatter
     }
     formattingHelper.writeDescriptionRow(object.getRemarks());
   }
+
 }
