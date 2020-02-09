@@ -13,7 +13,7 @@ import schemacrawler.tools.iosource.ClasspathInputResource;
 /**
  * SchemaCrawler database support plug-in.
  * <p>
- * Plug-in to support a hypothetical RMDBS, NewDB.
+ * Plug-in to support a hypothetical RMDBS, "Test Database".
  *
  * @see <a href="https://www.schemacrawler.com">SchemaCrawler</a>
  */
