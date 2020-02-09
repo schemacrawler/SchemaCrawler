@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.graph;
 
 
+import static schemacrawler.schemacrawler.Config.getSystemConfigurationProperty;
 import static sf.util.Utility.isBlank;
 import static sf.util.Utility.join;
 
@@ -296,27 +297,7 @@ public final class GraphOptionsBuilder
       return scGraphvizOptsCfg;
     }
 
-    final String scGraphvizOptsProp = System.getProperty(SC_GRAPHVIZ_OPTS);
-    if (!isBlank(scGraphvizOptsProp))
-    {
-      LOGGER.log(Level.CONFIG,
-                 new StringFormat(
-                   "Using additional Graphviz command-line options from SC_GRAPHVIZ_OPTS system property <%s>",
-                   scGraphvizOptsProp));
-      return scGraphvizOptsProp;
-    }
-
-    final String scGraphvizOptsEnv = System.getenv(SC_GRAPHVIZ_OPTS);
-    if (!isBlank(scGraphvizOptsEnv))
-    {
-      LOGGER.log(Level.CONFIG,
-                 new StringFormat(
-                   "Using additional Graphviz command-line options from SC_GRAPHVIZ_OPTS environmental variable <%s>",
-                   scGraphvizOptsEnv));
-      return scGraphvizOptsEnv;
-    }
-
-    return "";
+    return getSystemConfigurationProperty(SC_GRAPHVIZ_OPTS, "");
   }
 
 }

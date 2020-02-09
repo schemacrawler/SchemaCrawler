@@ -10,7 +10,9 @@ import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.IsEmptyMap.emptyMap;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junitpioneer.jupiter.SetSystemProperty;
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -106,7 +108,6 @@ public class TestDatabaseConnectorTest
 
   @Test
   public void newMajorDatabaseConnectionWithUnknownConnector()
-    throws SchemaCrawlerException
   {
     final DatabaseConnector databaseConnector = DatabaseConnector.UNKNOWN;
 
@@ -120,6 +121,24 @@ public class TestDatabaseConnectorTest
     assertThrows(SchemaCrawlerException.class,
                  () -> databaseConnector.newDatabaseConnectionSource(
                    databaseConnectorOptions));
+
+  }
+
+  @Test
+  @SetSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "true")
+  public void newMajorDatabaseConnectionWithUnknownConnectorWithOverride()
+    throws SchemaCrawlerException
+  {
+    final DatabaseConnector databaseConnector = DatabaseConnector.UNKNOWN;
+
+    final DatabaseConnectionSource expectedDatabaseConnectionSource =
+      expectedDatabaseConnectionSource(
+        "jdbc:mysql://localhost:9001/schemacrawler");
+
+    final DatabaseConnectionSource databaseConnectionSource =
+      databaseConnector.newDatabaseConnectionSource((config) -> expectedDatabaseConnectionSource);
+    assertThat(databaseConnectionSource.getConnectionUrl(),
+               is(expectedDatabaseConnectionSource.getConnectionUrl()));
 
   }
 

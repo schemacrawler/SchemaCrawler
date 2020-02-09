@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.databaseconnector;
 
 
+import static schemacrawler.schemacrawler.Config.getSystemConfigurationProperty;
+
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
@@ -73,17 +75,23 @@ final class UnknownDatabaseConnector
     final DatabaseConnectionSource databaseConnectionSource =
       super.newDatabaseConnectionSource(databaseConnectorOptions);
 
-    // Check if SchemaCrawler database plugin is in use
-    final String url = databaseConnectionSource.getConnectionUrl();
-    for (final Pattern pattern : patterns)
+    final String withoutDatabasePlugin = getSystemConfigurationProperty(
+      "SC_WITHOUT_DATABASE_PLUGIN",
+      Boolean.FALSE.toString());
+    if (!Boolean.valueOf(withoutDatabasePlugin))
     {
-      if (pattern
-        .matcher(url)
-        .matches())
+      // Check if SchemaCrawler database plugin is in use
+      final String url = databaseConnectionSource.getConnectionUrl();
+      for (final Pattern pattern : patterns)
       {
-        throw new SchemaCrawlerException(String.format(
-          "SchemaCrawler database plugin should be on the CLASSPATH for <%s>",
-          url));
+        if (pattern
+          .matcher(url)
+          .matches())
+        {
+          throw new SchemaCrawlerException(String.format(
+            "SchemaCrawler database plugin should be on the CLASSPATH for <%s>",
+            url));
+        }
       }
     }
 
