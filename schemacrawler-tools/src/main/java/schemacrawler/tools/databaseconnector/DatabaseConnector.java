@@ -35,6 +35,7 @@ import static sf.util.Utility.isBlank;
 import java.sql.Connection;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.schemacrawler.Config;
@@ -51,14 +52,9 @@ public abstract class DatabaseConnector
   implements Options
 {
 
-  protected static final DatabaseConnector UNKNOWN = new DatabaseConnector()
-  {
-    @Override
-    protected Predicate<String> supportsUrlPredicate()
-    {
-      return url -> false;
-    }
-  };
+  protected static final DatabaseConnector UNKNOWN =
+    new UnknownDatabaseConnector();
+
   private final InputResource configResource;
   private final DatabaseServerType dbServerType;
   private final BiConsumer<InformationSchemaViewsBuilder, Connection>
@@ -76,17 +72,6 @@ public abstract class DatabaseConnector
 
     this.informationSchemaViewsBuilderForConnection =
       informationSchemaViewsBuilderForConnection;
-  }
-
-  /**
-   * Constructor for unknown databases. Bypass the null-checks of the main
-   * constructor
-   */
-  private DatabaseConnector()
-  {
-    dbServerType = DatabaseServerType.UNKNOWN;
-    configResource = null;
-    informationSchemaViewsBuilderForConnection = null;
   }
 
   /**
