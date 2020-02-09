@@ -58,6 +58,33 @@ public final class Config
   private static final SchemaCrawlerLogger LOGGER =
     SchemaCrawlerLogger.getLogger(Config.class.getName());
 
+  public static String getSystemConfigurationProperty(final String key,
+                                                      final String defaultValue)
+  {
+    final String systemPropertyValue = System.getProperty(key);
+    if (!isBlank(systemPropertyValue))
+    {
+      LOGGER.log(Level.CONFIG,
+                 new StringFormat("Using value from system property <%s=%s>",
+                                  key,
+                                  systemPropertyValue));
+      return systemPropertyValue;
+    }
+
+    final String envVariableValue = System.getenv(key);
+    if (!isBlank(envVariableValue))
+    {
+      LOGGER.log(Level.CONFIG,
+                 new StringFormat(
+                   "Using value from enivronmental variable <%s=%s>",
+                   key,
+                   envVariableValue));
+      return envVariableValue;
+    }
+
+    return defaultValue;
+  }
+
   /**
    * Copies properties into a map.
    *

@@ -1,5 +1,11 @@
 # SchemaCrawler Change History
 
+<a name="a16.4.2"></a>
+## Release 16.4.2 - 2020-02-10
+
+- Throw exception if the SchemaCrawler database plugin is not on the CLASSPATH for major database systems
+
+
 <a name="a16.4.1"></a>
 ## Release 16.4.1 - 2020-02-06
 
