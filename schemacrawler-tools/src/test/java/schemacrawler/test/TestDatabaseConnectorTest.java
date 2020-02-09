@@ -46,6 +46,8 @@ public class TestDatabaseConnectorTest
 
     assertThat(databaseConnector.supportsUrl("jdbc:test-db:somevalue"), is(true));
     assertThat(databaseConnector.supportsUrl("jdbc:newdb:somevalue"), is(false));
+
+    assertThat(databaseConnector.toString(), is("Database connector for test-db - Test Database"));
   }
 
 }
