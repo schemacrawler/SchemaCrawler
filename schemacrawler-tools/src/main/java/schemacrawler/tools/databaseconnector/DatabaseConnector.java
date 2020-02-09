@@ -80,10 +80,7 @@ public abstract class DatabaseConnector
    */
   public final Config getConfig()
   {
-    if (configResource == null)
-    {
-      return new Config();
-    }
+    // configResource is not null - checked in the constructor
     return PropertiesUtility.loadConfig(configResource);
   }
 

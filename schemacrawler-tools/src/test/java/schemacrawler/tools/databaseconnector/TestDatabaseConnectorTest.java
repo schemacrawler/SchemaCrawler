@@ -54,6 +54,8 @@ public class TestDatabaseConnectorTest
                is(true));
     assertThat(databaseConnector.supportsUrl("jdbc:newdb:somevalue"),
                is(false));
+    assertThat(databaseConnector.supportsUrl(null),
+               is(false));
 
     assertThat(databaseConnector.toString(),
                is("Database connector for test-db - Test Database"));
@@ -83,6 +85,8 @@ public class TestDatabaseConnectorTest
                  .getEnumValues(), is(empty()));
 
     assertThat(databaseConnector.supportsUrl("jdbc:newdb:somevalue"),
+               is(false));
+    assertThat(databaseConnector.supportsUrl(null),
                is(false));
 
     assertThat(databaseConnector.toString(),
