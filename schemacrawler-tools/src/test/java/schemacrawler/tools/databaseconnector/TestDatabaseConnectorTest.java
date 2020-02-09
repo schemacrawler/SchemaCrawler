@@ -7,11 +7,13 @@ import static org.hamcrest.Matchers.aMapWithSize;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.IsEmptyMap.emptyMap;
 
 import org.junit.jupiter.api.Test;
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.TestDatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 
@@ -57,7 +59,6 @@ public class TestDatabaseConnectorTest
 
   @Test
   public void unknownDatabaseConnector()
-    throws Exception
   {
     final DatabaseConnector databaseConnector = DatabaseConnector.UNKNOWN;
 
@@ -84,6 +85,52 @@ public class TestDatabaseConnectorTest
 
     assertThat(databaseConnector.toString(),
                is("Database connector for unknown database system type"));
+  }
+
+  @Test
+  public void newConnectionWithUnknownConnector()
+    throws SchemaCrawlerException
+  {
+    final DatabaseConnector databaseConnector = DatabaseConnector.UNKNOWN;
+
+    final DatabaseConnectionSource expectedDatabaseConnectionSource =
+      expectedDatabaseConnectionSource(
+        "jdbc:hsqldb:hsql://localhost:9001/schemacrawler");
+
+    final DatabaseConnectionSource databaseConnectionSource =
+      databaseConnector.newDatabaseConnectionSource((config) -> expectedDatabaseConnectionSource);
+    assertThat(databaseConnectionSource.getConnectionUrl(),
+               is(expectedDatabaseConnectionSource.getConnectionUrl()));
+
+  }
+
+  @Test
+  public void newMajorDatabaseConnectionWithUnknownConnector()
+    throws SchemaCrawlerException
+  {
+    final DatabaseConnector databaseConnector = DatabaseConnector.UNKNOWN;
+
+    final DatabaseConnectionSource expectedDatabaseConnectionSource =
+      expectedDatabaseConnectionSource(
+        "jdbc:mysql://localhost:9001/schemacrawler");
+
+    final DatabaseConnectorOptions databaseConnectorOptions =
+      (config) -> expectedDatabaseConnectionSource;
+
+    assertThrows(SchemaCrawlerException.class,
+                 () -> databaseConnector.newDatabaseConnectionSource(
+                   databaseConnectorOptions));
+
+  }
+
+  private DatabaseConnectionSource expectedDatabaseConnectionSource(final String connectionUrl)
+  {
+    final DatabaseConnectionSource expectedDatabaseConnectionSource =
+      new DatabaseConnectionSource(connectionUrl);
+    expectedDatabaseConnectionSource.setUserCredentials(new SingleUseUserCredentials(
+      "sa",
+      ""));
+    return expectedDatabaseConnectionSource;
   }
 
 }

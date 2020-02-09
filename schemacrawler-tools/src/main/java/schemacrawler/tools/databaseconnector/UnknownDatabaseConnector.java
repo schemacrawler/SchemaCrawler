@@ -82,7 +82,7 @@ final class UnknownDatabaseConnector
         .matches())
       {
         throw new SchemaCrawlerException(String.format(
-          "SchemaCrawler database plugin not on the CLASSPATH for <%s>",
+          "SchemaCrawler database plugin should be on the CLASSPATH for <%s>",
           url));
       }
     }
