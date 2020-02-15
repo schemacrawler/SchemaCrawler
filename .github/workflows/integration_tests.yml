@@ -37,8 +37,7 @@ jobs:
           -Dtestcoverage \
           -Dlightdb \
           -Dheavydb \
-          clean install \
-          jacoco:report
+          clean install
     - id: publish-results
       name: Upload results and coverage
       env:
