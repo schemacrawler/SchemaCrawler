@@ -37,9 +37,7 @@ jobs:
           -Dtestcoverage \
           -Dlightdb \
           -Dheavydb \
-          -f schemacrawler-parent/pom.xml \
-          clean install \
-          jacoco:report
+          clean install
     - id: publish-results
       name: Upload results and coverage
       env:
