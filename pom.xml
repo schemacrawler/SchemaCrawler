@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns="http://maven.apache.org/POM/4.0.0"
+     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>us.fatehi</groupId>
+  <artifactId>schemacrawler-aggregator</artifactId>
+  <packaging>pom</packaging>
+  <version>16.4.1</version>
+	
+  <name>SchemaCrawler [Aggregator]</name>
+	
+  <modules>
+
+    <module>schemacrawler-testdb</module>
+
+    <module>schemacrawler-api</module>
+    <module>schemacrawler-tools</module>
+    <module>schemacrawler-integrations</module>
+    <module>schemacrawler</module>
+
+    <module>schemacrawler-commandline</module>
+
+    <module>schemacrawler-scripting</module>
+    <module>schemacrawler-lint</module>
+
+    <module>schemacrawler-db2</module>
+    <module>schemacrawler-hsqldb</module>
+    <module>schemacrawler-mysql</module>
+    <module>schemacrawler-oracle</module>
+    <module>schemacrawler-postgresql</module>
+    <module>schemacrawler-sqlite</module>
+    <module>schemacrawler-sqlserver</module>
+    <module>schemacrawler-offline</module>
+
+    <module>schemacrawler-examplecode</module>
+
+  </modules>
+  <profiles>
+    <profile>
+      <id>complete-deployment-build</id>
+      <activation>
+        <property>
+          <name>distrib</name>
+        </property>
+      </activation>
+      <modules>
+        <module>schemacrawler-dbtest</module>
+
+        <module>schemacrawler-diff</module>
+
+        <module>schemacrawler-docs</module>
+        <module>schemacrawler-docker</module>
+        <module>schemacrawler-distrib</module>
+      </modules>
+      <!-- Use these properties to deploy to Nexus
+      <properties>
+        <maven.javadoc.skip>false</maven.javadoc.skip>
+        <skip.signing.artifacts>false</skip.signing.artifacts>
+      </properties>
+      -->
+    </profile>
+    <profile>
+      <id>test-coverage-build</id>
+      <activation>
+        <property>
+          <name>testcoverage</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <configuration>
+              <append>true</append>
+            </configuration>
+            <executions>
+              <execution>
+                <id>prepare-agent</id>
+                <!-- use default phase binding -->
+                <goals>
+                  <goal>prepare-agent</goal>
+                </goals>
+             </execution>
+              <execution>
+                <id>merge-coverage-data</id>
+                <!-- use default phase binding -->
+                <goals>
+                  <goal>merge</goal>
+                </goals>
+                <configuration>
+                  <fileSets>
+                    <fileSet>
+                      <directory>${project.build.directory}</directory>
+                      <includes>
+                        <include>*.exec</include>
+                      </includes>
+                    </fileSet>
+                  </fileSets>
+                </configuration>
+              </execution>
+              <execution>
+                <id>report-aggregate</id>
+                <!-- use default phase binding -->
+                <goals>
+                  <goal>report-aggregate</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.jacoco</groupId>
+              <artifactId>jacoco-maven-plugin</artifactId>
+              <version>0.8.5</version>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
+  </profiles>
+	
+</project>
