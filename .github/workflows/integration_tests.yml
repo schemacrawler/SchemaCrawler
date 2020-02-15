@@ -37,7 +37,7 @@ jobs:
           -Dtestcoverage \
           -Dlightdb \
           -Dheavydb \
-          clean install
+          clean install \
           org.jacoco:jacoco-maven-plugin:0.8.5:report-aggregate
     - id: publish-results
       name: Upload results and coverage
