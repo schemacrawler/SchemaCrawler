@@ -127,6 +127,23 @@
                 <goals>
                   <goal>prepare-agent</goal>
                 </goals>
+             </execution>
+              <execution>
+                <id>merge-coverage-data</id>
+                <phase>prepare-package</phase>
+                <goals>
+                  <goal>merge</goal>
+                </goals>
+                <configuration>
+                  <fileSets>
+                    <fileSet implementation="org.apache.maven.shared.model.fileset.FileSet">
+                      <directory>${project.build.directory}</directory>
+                      <includes>
+                        <include>**/*jacoco*.exec</include>
+                      </includes>
+                    </fileSet>
+                  </fileSets>
+                </configuration>
               </execution>
               <execution>
                 <id>report</id>
