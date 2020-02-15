@@ -124,32 +124,33 @@
             <executions>
               <execution>
                 <id>prepare-agent</id>
+                <!-- use default phase binding -->
                 <goals>
                   <goal>prepare-agent</goal>
                 </goals>
              </execution>
               <execution>
                 <id>merge-coverage-data</id>
-                <phase>prepare-package</phase>
+                <!-- use default phase binding -->
                 <goals>
                   <goal>merge</goal>
                 </goals>
                 <configuration>
                   <fileSets>
-                    <fileSet implementation="org.apache.maven.shared.model.fileset.FileSet">
+                    <fileSet>
                       <directory>${project.build.directory}</directory>
                       <includes>
-                        <include>**/*jacoco*.exec</include>
+                        <include>*.exec</include>
                       </includes>
                     </fileSet>
                   </fileSets>
                 </configuration>
               </execution>
               <execution>
-                <id>report</id>
-                <phase>verify</phase>
+                <id>report-aggregate</id>
+                <!-- use default phase binding -->
                 <goals>
-                  <goal>report</goal>
+                  <goal>report-aggregate</goal>
                 </goals>
                 <configuration>
                   <excludes>
