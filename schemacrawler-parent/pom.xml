@@ -307,9 +307,6 @@
           <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
-            <configuration>
-              <append>true</append>
-            </configuration>
             <executions>
               <execution>
                 <id>prepare-agent</id>
@@ -317,6 +314,9 @@
                 <goals>
                   <goal>prepare-agent</goal>
                 </goals>
+                <configuration>
+                  <append>true</append>
+                </configuration>
              </execution>
               <execution>
                 <id>report</id>
@@ -347,5 +347,5 @@
         </plugins>
       </build>
     </profile>
-  </profiles>	
+  </profiles> 
 </project>
