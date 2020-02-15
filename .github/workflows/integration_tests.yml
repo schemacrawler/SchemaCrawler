@@ -37,7 +37,6 @@ jobs:
           -Dtestcoverage \
           -Dlightdb \
           -Dheavydb \
-          -f schemacrawler-parent/pom.xml \
           clean install \
           jacoco:report
     - id: publish-results
