@@ -55,67 +55,6 @@
         <module>schemacrawler-distrib</module>
       </modules>
     </profile>
-    <profile>
-      <id>test-coverage-build</id>
-      <activation>
-        <property>
-          <name>testcoverage</name>
-        </property>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.jacoco</groupId>
-            <artifactId>jacoco-maven-plugin</artifactId>
-            <configuration>
-              <append>true</append>
-            </configuration>
-            <executions>
-              <execution>
-                <id>prepare-agent</id>
-                <!-- use default phase binding -->
-                <goals>
-                  <goal>prepare-agent</goal>
-                </goals>
-             </execution>
-              <execution>
-                <id>merge-coverage-data</id>
-                <!-- use default phase binding -->
-                <goals>
-                  <goal>merge</goal>
-                </goals>
-                <configuration>
-                  <fileSets>
-                    <fileSet>
-                      <directory>${project.build.directory}</directory>
-                      <includes>
-                        <include>*.exec</include>
-                      </includes>
-                    </fileSet>
-                  </fileSets>
-                </configuration>
-              </execution>
-              <execution>
-                <id>report-aggregate</id>
-                <!-- use default phase binding -->
-                <goals>
-                  <goal>report-aggregate</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.jacoco</groupId>
-              <artifactId>jacoco-maven-plugin</artifactId>
-              <version>0.8.5</version>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-      </build>
-    </profile>
   </profiles>
 
 </project>
