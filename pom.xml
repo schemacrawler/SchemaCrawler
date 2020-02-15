@@ -8,9 +8,9 @@
   <artifactId>schemacrawler-aggregator</artifactId>
   <packaging>pom</packaging>
   <version>16.4.1</version>
-	
+
   <name>SchemaCrawler [Aggregator]</name>
-	
+
   <modules>
 
     <module>schemacrawler-testdb</module>
@@ -54,12 +54,6 @@
         <module>schemacrawler-docker</module>
         <module>schemacrawler-distrib</module>
       </modules>
-      <!-- Use these properties to deploy to Nexus
-      <properties>
-        <maven.javadoc.skip>false</maven.javadoc.skip>
-        <skip.signing.artifacts>false</skip.signing.artifacts>
-      </properties>
-      -->
     </profile>
     <profile>
       <id>test-coverage-build</id>
@@ -111,17 +105,20 @@
             </executions>
           </plugin>
         </plugins>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.jacoco</groupId>
-              <artifactId>jacoco-maven-plugin</artifactId>
-              <version>0.8.5</version>
-            </plugin>
-          </plugins>
-        </pluginManagement>
       </build>
     </profile>
   </profiles>
-	
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>0.8.5</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
 </project>
