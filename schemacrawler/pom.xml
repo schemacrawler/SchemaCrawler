@@ -67,6 +67,7 @@
               </additionalOptions>
               <bottom>Copyright © 2000-2020 {organizationName}. All rights reserved.</bottom>
               <doctitle>SchemaCrawler ${project.version}</doctitle>
+              <skip>false</skip>
             </configuration>
           </execution>
         </executions>
