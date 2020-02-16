@@ -1,16 +1,17 @@
 # SchemaCrawler Change History
 
-<a name="a16.4.2"></a>
-## Release 16.4.2 - 2020-02-10
+<a name="a16.5.0"></a>
+## Release 16.5.0 - 2020-02-20
 
 - Throw exception if the SchemaCrawler database plugin is not on the CLASSPATH for major database systems
+- Rename the integrations module to diagram
 
 
 <a name="a16.4.1"></a>
 ## Release 16.4.1 - 2020-02-06
 
 - Support enum values for MySQL and PostgreSQL as first-class schema metadata
-- Add MariaDB test cases 
+- Add MariaDB test cases
 
 
 <a name="a16.3.2"></a>
@@ -28,7 +29,7 @@
 <a name="a16.3.0"></a>
 ## Release 16.3.0 - 2020-01-02
 
-- Remove ability to run SQL commands directly from command-line - only named  
+- Remove ability to run SQL commands directly from command-line - only named
   queries are supported
 
 
@@ -73,9 +74,9 @@
 ## Release 16.2.2 - 2019-10-20
 
 - Remove ability to generate JSON as an output format, since it has been replaced with
-  the ability to generate JSON as a serialization format (using the `serialize` command, 
+  the ability to generate JSON as a serialization format (using the `serialize` command,
   with a lot more schema information
-- Workaround MySQL JDBC driver issue with retrieving table comments 
+- Workaround MySQL JDBC driver issue with retrieving table comments
   (https://bugs.mysql.com/bug.php?id=80473) by allowing table comments to be obtained
   from `table.getAttribute("TABLE_COMMENT")`
 

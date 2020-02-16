@@ -3,7 +3,7 @@
 ## Using SchemaCrawler in Your Projects
 
 ### Jars from the Central Repository
-All of the [SchemaCrawler jars] are available on The Central Repository. 
+All of the [SchemaCrawler jars] are available on The Central Repository.
 They can be used as dependencies in [Gradle] or [Apache Maven] projects, or with any other
 build system that supports the Central Repository.
 
@@ -16,7 +16,7 @@ In order to use SchemaCrawler in your [Apache Maven] projects, add a dependency 
   <dependency>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler</artifactId>
-    <version>16.4.1</version>
+    <version>16.5.0</version>
   </dependency>
 </dependencies>
 ```
@@ -26,13 +26,13 @@ In order to use SchemaCrawler in your [Gradle] projects, add a dependency to Sch
 
 ```groovy
 dependencies {
-  compile group: 'us.fatehi', name: 'schemacrawler', version: '16.4.1'
+  compile group: 'us.fatehi', name: 'schemacrawler', version: '16.5.0'
 }
 ```
 
 ### SchemaCrawler Docker Image
-The official [SchemaCrawler Docker image] is available on Docker Hub. 
-The SchemaCrawler command-line and the interactive shell are available in the image, 
+The official [SchemaCrawler Docker image] is available on Docker Hub.
+The SchemaCrawler command-line and the interactive shell are available in the image,
 with open-source JDBC drivers.
 
 
@@ -43,21 +43,21 @@ with open-source JDBC drivers.
 - Install [Graphviz], and put it on your system `PATH`
 
 ## Apache Maven Build
-The [Apache Maven] build is a comprehensive build that runs unit tests, constructs the 
-SchemaCrawler jar, and can also create the project web-site. 
+The [Apache Maven] build is a comprehensive build that runs unit tests, constructs the
+SchemaCrawler jar, and can also create the project web-site.
 
-- Install [Apache Maven], and make sure it is on your classpath 
-- Open a command console in the SchemaCrawler `schemacrawler-parent` directory
-- Run `mvn package` from the SchemaCrawler `schemacrawler-parent` directory
+- Install [Apache Maven], and make sure it is on your classpath
+- Open a command console in the SchemaCrawler directory
+- Run `mvn package`
 
 You can create the  SchemaCrawler distribution by running `mvn -Dcomplete package`. The SchemaCrawler distribution will be created in the `target` of the `schemacrawler-distrib` module.
 
 ## Eclipse and IntelliJ IDEA
-Before importing the various SchemaCrawler projects into [Eclipse] or [IntelliJ IDEA], make sure that you have a successful [Apache Maven] build. [Apache Maven] will download all the dependencies needed to build SchemaCrawler. 
+Before importing the various SchemaCrawler projects into [Eclipse] or [IntelliJ IDEA], make sure that you have a successful [Apache Maven] build. [Apache Maven] will download all the dependencies needed to build SchemaCrawler.
 
 ## Proprietary JDBC Drivers
-The Apache Maven build depends on some proprietary JDBC drivers for IBM DB2 and Oracle. 
-Download the [IBM DB2 JDBC drivers] place them in the `schemacrawler-db2` source directory, and install them into your local Apache Maven repository using the provided install command. 
+The Apache Maven build depends on some proprietary JDBC drivers for IBM DB2 and Oracle.
+Download the [IBM DB2 JDBC drivers] place them in the `schemacrawler-db2` source directory, and install them into your local Apache Maven repository using the provided install command.
 Similarly, download the [Oracle JDBC drivers] put them into the `schemacrawler-oracle` source directory, and install them locally.
 
 
