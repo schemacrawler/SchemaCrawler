@@ -58,8 +58,15 @@
               <dependencySourceIncludes>
                 <dependencySourceInclude>us.fatehi:schemacrawler-api</dependencySourceInclude>
                 <dependencySourceInclude>us.fatehi:schemacrawler-tools</dependencySourceInclude>
-                <dependencySourceInclude>us.fatehi:schemacrawler-integrations</dependencySourceInclude>
               </dependencySourceIncludes>
+              <quiet>true</quiet>
+              <show>public</show>
+              <detectOfflineLinks>true</detectOfflineLinks>
+              <additionalOptions>
+                <additionalOption>-Xdoclint:none</additionalOption>
+              </additionalOptions>
+              <bottom>Copyright © 2000-2020 {organizationName}. All rights reserved.</bottom>
+              <doctitle>SchemaCrawler ${project.version}</doctitle>
             </configuration>
           </execution>
         </executions>
