@@ -9,9 +9,9 @@
     <version>16.4.1</version>
     <relativePath>../schemacrawler-parent/pom.xml</relativePath>
   </parent>
-  <artifactId>schemacrawler-integrations</artifactId>
+  <artifactId>schemacrawler-diagram</artifactId>
   <packaging>jar</packaging>
-  <name>SchemaCrawler Integrations</name>
+  <name>SchemaCrawler Diagram</name>
 
   <dependencies>
 
