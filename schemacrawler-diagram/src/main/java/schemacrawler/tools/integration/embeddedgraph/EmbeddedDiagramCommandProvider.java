@@ -38,11 +38,11 @@ import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 
-public final class EmbeddedGraphCommandProvider
+public final class EmbeddedDiagramCommandProvider
   extends BaseCommandProvider
 {
 
-  public EmbeddedGraphCommandProvider()
+  public EmbeddedDiagramCommandProvider()
   {
     super(CommandProviderUtility.schemaTextCommands());
   }
@@ -50,7 +50,7 @@ public final class EmbeddedGraphCommandProvider
   @Override
   public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
   {
-    return new EmbeddedGraphRenderer(command);
+    return new EmbeddedDiagramRenderer(command);
   }
 
   @Override

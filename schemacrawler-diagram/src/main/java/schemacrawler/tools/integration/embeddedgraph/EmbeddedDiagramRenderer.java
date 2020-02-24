@@ -52,7 +52,7 @@ import schemacrawler.tools.integration.graph.GraphvizJavaExecutorUtility;
 import schemacrawler.tools.integration.graph.GraphvizUtility;
 import schemacrawler.tools.options.TextOutputFormat;
 
-public class EmbeddedGraphRenderer
+public class EmbeddedDiagramRenderer
   extends BaseSchemaCrawlerCommand
 {
 
@@ -92,7 +92,7 @@ public class EmbeddedGraphRenderer
     finalHtmlFileWriter.append(System.lineSeparator());
   }
 
-  public EmbeddedGraphRenderer(final String command)
+  public EmbeddedDiagramRenderer(final String command)
   {
     super(command);
   }
