@@ -50,7 +50,7 @@ import schemacrawler.tools.integration.graph.GraphOutputFormat;
 @ExtendWith(TestAssertNoSystemOutOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
-public class SiteGraphVariationsTest
+public class SiteDiagramVariationsTest
 {
 
   private static void run(final DatabaseConnectionInfo connectionInfo,
