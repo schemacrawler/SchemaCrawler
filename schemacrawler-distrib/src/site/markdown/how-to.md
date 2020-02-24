@@ -25,7 +25,7 @@
 5.  [How to show table row counts in output and diagrams](#table-row-counts)
 6.  [How to hide foreign key names, constraint names, trigger names, specific names for procedures, or index and primary key names](#index-names)
 7.  [How to hide catalog and schema names in text output](#hide-schema-names)
-8.  [How to hide catalog and schema colors in HTML output and graphs](#hide-schema-colors)
+8.  [How to hide catalog and schema colors in HTML output and schema diagrams](#hide-schema-colors)
 
 ## Integrations
 
@@ -192,9 +192,9 @@ Change the configuration for the SchemaCrawler `schemacrawler.format.show_unqual
 
 ----------
 
-### <a name="hide-schema-colors">How to hide catalog and schema colors in HTML output and graphs</a>
+### <a name="hide-schema-colors">How to hide catalog and schema colors in HTML output and schema diagrams</a>
 
-Change the configuration for the SchemaCrawler `schemacrawler.format.no_schema_colors=true` in the `schemacrawler.config.properties` file. This setting will not show color-coded catalog and schema names in HTML and graph output.
+Change the configuration for the SchemaCrawler `schemacrawler.format.no_schema_colors=true` in the `schemacrawler.config.properties` file. This setting will not show color-coded catalog and schema names in HTML and schema diagram output.
 
 ----------
 

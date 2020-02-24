@@ -71,7 +71,7 @@ Then download and install SchemaCrawler, and run the provided scripts (`schemacr
 
 SchemaCrawler can produce listings, and standard, or verbose details of your schema. The brief schema option gives you just table, view, stored procedure and function names. The standard schema option gives you the column names and primary keys. The verbose schema option will give you details of data types, indexes, primary and foreign keys, view, stored procedure and function definitions. The SchemaCrawler command can be combined with an _info-level_, which determines the level of detail of schema metadata obtained. The maximum _info-level_ will give you privileges, triggers definitions, and check constraints. Each successive option takes more time to execute.
 
-SchemaCrawler provides commands for producing graphs and running templates, if the appropriate extensions are installed.
+SchemaCrawler provides commands for producing schema diagrams and running templates, if the appropriate extensions are installed.
 
 SchemaCrawler can also manipulate your data. You can get counts of the rows in tables and views. SchemaCrawler can output all the data in your tables and views, or run specific SQL statements against table and views. SchemaCrawler can be fine-tuned using configuration files.
 
