@@ -51,7 +51,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.WeakAssociationForeignKey;
 import schemacrawler.tools.analysis.associations.WeakAssociationsUtility;
-import schemacrawler.tools.integration.graph.GraphOptions;
+import schemacrawler.tools.integration.graph.DiagramOptions;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.base.BaseDotFormatter;
@@ -90,7 +90,7 @@ public final class SchemaDotFormatter
    *   On an exception
    */
   public SchemaDotFormatter(final SchemaTextDetailType schemaTextDetailType,
-                            final GraphOptions options,
+                            final DiagramOptions options,
                             final OutputOptions outputOptions,
                             final String identifierQuoteString)
     throws SchemaCrawlerException
@@ -347,9 +347,9 @@ public final class SchemaDotFormatter
     final String[] pkPortIds = getPortIds(primaryKeyColumn, false);
     final String[] fkPortIds = getPortIds(foreignKeyColumn, isFkColumnFiltered);
 
-    final GraphOptions graphOptions = options;
+    final DiagramOptions diagramOptions = options;
     final String pkSymbol;
-    if (graphOptions.isShowPrimaryKeyCardinality())
+    if (diagramOptions.isShowPrimaryKeyCardinality())
     {
       pkSymbol = "teetee";
     }
@@ -359,7 +359,7 @@ public final class SchemaDotFormatter
     }
 
     final String fkSymbol;
-    if (graphOptions.isShowForeignKeyCardinality())
+    if (diagramOptions.isShowForeignKeyCardinality())
     {
       fkSymbol = arrowhead(fkCardinality);
     }

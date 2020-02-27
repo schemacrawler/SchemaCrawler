@@ -50,17 +50,15 @@ import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
 import schemacrawler.utility.NamedObjectSort;
 
-/**
- * Main executor for the graphing integration.
- */
-public final class GraphRenderer
+
+public final class DiagramRenderer
   extends BaseSchemaCrawlerCommand
 {
 
-  private GraphOptions graphOptions;
+  private DiagramOptions diagramOptions;
   private GraphOutputFormat graphOutputFormat;
 
-  public GraphRenderer(final String command)
+  public DiagramRenderer(final String command)
   {
     super(command);
   }
@@ -109,11 +107,11 @@ public final class GraphRenderer
 
     // Determine what decorators to apply to the database
     Catalog aCatalog = catalog;
-    if (graphOptions.isShowWeakAssociations())
+    if (diagramOptions.isShowWeakAssociations())
     {
       aCatalog = new CatalogWithAssociations(aCatalog);
     }
-    if (graphOptions.isShowRowCounts()
+    if (diagramOptions.isShowRowCounts()
         || schemaCrawlerOptions.isNoEmptyTables())
     {
       aCatalog =
@@ -150,9 +148,9 @@ public final class GraphRenderer
     traverser.setCatalog(aCatalog);
     traverser.setHandler(formatter);
     traverser.setTablesComparator(NamedObjectSort.getNamedObjectSort(
-      graphOptions.isAlphabeticalSortForTables()));
+      diagramOptions.isAlphabeticalSortForTables()));
     traverser.setRoutinesComparator(NamedObjectSort.getNamedObjectSort(
-      graphOptions.isAlphabeticalSortForRoutines()));
+      diagramOptions.isAlphabeticalSortForRoutines()));
 
     traverser.traverse();
 
@@ -166,10 +164,10 @@ public final class GraphRenderer
     return false;
   }
 
-  public final void setGraphOptions(final GraphOptions graphOptions)
+  public final void setDiagramOptions(final DiagramOptions diagramOptions)
   {
-    this.graphOptions =
-      requireNonNull(graphOptions, "No graph options provided");
+    this.diagramOptions =
+      requireNonNull(diagramOptions, "No graph options provided");
   }
 
   private GraphExecutor getGraphExecutor(final Path dotFile)
@@ -189,7 +187,7 @@ public final class GraphRenderer
     GraphExecutor graphExecutor;
     if (graphOutputFormat != GraphOutputFormat.scdot)
     {
-      final List<String> graphvizOpts = graphOptions.getGraphvizOpts();
+      final List<String> graphvizOpts = diagramOptions.getGraphvizOpts();
       boolean graphExecutorAvailable = false;
 
       // Try 1: Use Graphviz
@@ -243,8 +241,7 @@ public final class GraphRenderer
     final SchemaTextDetailType schemaTextDetailType = getSchemaTextDetailType();
 
     final String identifierQuoteString = identifiers.getIdentifierQuoteString();
-    formatter = new SchemaDotFormatter(schemaTextDetailType,
-                                       graphOptions,
+    formatter = new SchemaDotFormatter(schemaTextDetailType, diagramOptions,
                                        outputOptions,
                                        identifierQuoteString);
 
@@ -253,9 +250,9 @@ public final class GraphRenderer
 
   private void loadGraphOptions()
   {
-    if (graphOptions == null)
+    if (diagramOptions == null)
     {
-      graphOptions =
+      diagramOptions =
         GraphOptionsBuilder.newGraphOptions(additionalConfiguration);
     }
     graphOutputFormat =

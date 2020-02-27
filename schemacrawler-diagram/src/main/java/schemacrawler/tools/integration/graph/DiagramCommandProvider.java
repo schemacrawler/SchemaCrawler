@@ -37,11 +37,11 @@ import schemacrawler.tools.executable.CommandProviderUtility;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.options.OutputOptions;
 
-public final class GraphCommandProvider
+public final class DiagramCommandProvider
   extends BaseCommandProvider
 {
 
-  public GraphCommandProvider()
+  public DiagramCommandProvider()
   {
     super(CommandProviderUtility.schemaTextCommands());
   }
@@ -49,7 +49,7 @@ public final class GraphCommandProvider
   @Override
   public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
   {
-    return new GraphRenderer(command);
+    return new DiagramRenderer(command);
   }
 
   @Override

@@ -1,2 +1,2 @@
-schemacrawler.tools.integration.graph.GraphCommandProvider
+schemacrawler.tools.integration.graph.DiagramCommandProvider
 schemacrawler.tools.integration.embeddedgraph.EmbeddedDiagramCommandProvider

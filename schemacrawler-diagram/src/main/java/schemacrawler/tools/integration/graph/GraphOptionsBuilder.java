@@ -46,7 +46,7 @@ import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 public final class GraphOptionsBuilder
-  extends BaseSchemaTextOptionsBuilder<GraphOptionsBuilder, GraphOptions>
+  extends BaseSchemaTextOptionsBuilder<GraphOptionsBuilder, DiagramOptions>
 {
 
   protected static final String SCHEMACRAWLER_GRAPH_PREFIX =
@@ -63,14 +63,14 @@ public final class GraphOptionsBuilder
     SCHEMACRAWLER_GRAPH_PREFIX + "graphviz";
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(GraphOptions.class.getName());
+    SchemaCrawlerLogger.getLogger(DiagramOptions.class.getName());
 
   public static GraphOptionsBuilder builder()
   {
     return new GraphOptionsBuilder();
   }
 
-  public static GraphOptionsBuilder builder(final GraphOptions options)
+  public static GraphOptionsBuilder builder(final DiagramOptions options)
   {
     return new GraphOptionsBuilder().fromOptions(options);
   }
@@ -94,14 +94,14 @@ public final class GraphOptionsBuilder
     return graphvizAttributes;
   }
 
-  public static GraphOptions newGraphOptions(final Config config)
+  public static DiagramOptions newGraphOptions(final Config config)
   {
     return new GraphOptionsBuilder()
       .fromConfig(config)
       .toOptions();
   }
 
-  public static GraphOptions newGraphOptions()
+  public static DiagramOptions newGraphOptions()
   {
     return new GraphOptionsBuilder().toOptions();
   }
@@ -146,7 +146,7 @@ public final class GraphOptionsBuilder
   }
 
   @Override
-  public GraphOptionsBuilder fromOptions(final GraphOptions options)
+  public GraphOptionsBuilder fromOptions(final DiagramOptions options)
   {
     if (options == null)
     {
@@ -203,9 +203,9 @@ public final class GraphOptionsBuilder
   }
 
   @Override
-  public GraphOptions toOptions()
+  public DiagramOptions toOptions()
   {
-    return new GraphOptions(this);
+    return new DiagramOptions(this);
   }
 
   public GraphOptionsBuilder withGraphvizAttributes(final Map<String, String> graphvizAttributes)

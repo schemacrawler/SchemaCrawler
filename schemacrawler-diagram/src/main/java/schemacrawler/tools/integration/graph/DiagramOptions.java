@@ -33,7 +33,7 @@ import java.util.Map;
 
 import schemacrawler.tools.text.schema.BaseSchemaTextOptions;
 
-public class GraphOptions
+public class DiagramOptions
   extends BaseSchemaTextOptions
 {
 
@@ -42,7 +42,7 @@ public class GraphOptions
   private final boolean isShowForeignKeyCardinality;
   private final boolean isShowPrimaryKeyCardinality;
 
-  protected GraphOptions(final GraphOptionsBuilder graphOptionsBuilder)
+  protected DiagramOptions(final GraphOptionsBuilder graphOptionsBuilder)
   {
     super(graphOptionsBuilder);
 

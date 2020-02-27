@@ -30,7 +30,6 @@ package schemacrawler.tools.text.base;
 
 
 import static sf.util.IOUtility.readResourceFully;
-import static sf.util.Utility.isBlank;
 
 import java.util.Map;
 import java.util.Map.Entry;
@@ -40,7 +39,7 @@ import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.integration.graph.GraphOptions;
+import schemacrawler.tools.integration.graph.DiagramOptions;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.utility.html.Alignment;
@@ -54,10 +53,10 @@ import sf.util.Color;
  * @author Sualeh Fatehi
  */
 public abstract class BaseDotFormatter
-  extends BaseFormatter<GraphOptions>
+  extends BaseFormatter<DiagramOptions>
 {
 
-  protected BaseDotFormatter(final GraphOptions options,
+  protected BaseDotFormatter(final DiagramOptions options,
                              final boolean printVerboseDatabaseInfo,
                              final OutputOptions outputOptions,
                              final String identifierQuoteString)
