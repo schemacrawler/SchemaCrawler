@@ -16,7 +16,7 @@ Example shell commands look like:
 ```sh
 help
 connect --server <server> --host <host> --user <host> --password <password> --database <database>
-load-catalog --info-level maximum
+load --info-level maximum
 execute --command list
 ```
 
