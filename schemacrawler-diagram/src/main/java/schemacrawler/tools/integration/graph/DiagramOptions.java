@@ -42,16 +42,16 @@ public class DiagramOptions
   private final boolean isShowForeignKeyCardinality;
   private final boolean isShowPrimaryKeyCardinality;
 
-  protected DiagramOptions(final GraphOptionsBuilder graphOptionsBuilder)
+  protected DiagramOptions(final DiagramOptionsBuilder diagramOptionsBuilder)
   {
-    super(graphOptionsBuilder);
+    super(diagramOptionsBuilder);
 
-    graphvizOpts = graphOptionsBuilder.graphvizOpts;
-    graphvizAttributes = graphOptionsBuilder.graphvizAttributes;
+    graphvizOpts = diagramOptionsBuilder.graphvizOpts;
+    graphvizAttributes = diagramOptionsBuilder.graphvizAttributes;
     isShowForeignKeyCardinality =
-      graphOptionsBuilder.isShowForeignKeyCardinality;
+      diagramOptionsBuilder.isShowForeignKeyCardinality;
     isShowPrimaryKeyCardinality =
-      graphOptionsBuilder.isShowPrimaryKeyCardinality;
+      diagramOptionsBuilder.isShowPrimaryKeyCardinality;
   }
 
   public Map<String, String> getGraphvizAttributes()

@@ -253,7 +253,7 @@ public final class DiagramRenderer
     if (diagramOptions == null)
     {
       diagramOptions =
-        GraphOptionsBuilder.newGraphOptions(additionalConfiguration);
+        DiagramOptionsBuilder.newDiagramOptions(additionalConfiguration);
     }
     graphOutputFormat =
       GraphOutputFormat.fromFormat(outputOptions.getOutputFormatValue());

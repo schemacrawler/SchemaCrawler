@@ -45,8 +45,8 @@ import schemacrawler.tools.text.schema.BaseSchemaTextOptionsBuilder;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
-public final class GraphOptionsBuilder
-  extends BaseSchemaTextOptionsBuilder<GraphOptionsBuilder, DiagramOptions>
+public final class DiagramOptionsBuilder
+  extends BaseSchemaTextOptionsBuilder<DiagramOptionsBuilder, DiagramOptions>
 {
 
   protected static final String SCHEMACRAWLER_GRAPH_PREFIX =
@@ -65,14 +65,14 @@ public final class GraphOptionsBuilder
   private static final SchemaCrawlerLogger LOGGER =
     SchemaCrawlerLogger.getLogger(DiagramOptions.class.getName());
 
-  public static GraphOptionsBuilder builder()
+  public static DiagramOptionsBuilder builder()
   {
-    return new GraphOptionsBuilder();
+    return new DiagramOptionsBuilder();
   }
 
-  public static GraphOptionsBuilder builder(final DiagramOptions options)
+  public static DiagramOptionsBuilder builder(final DiagramOptions options)
   {
-    return new GraphOptionsBuilder().fromOptions(options);
+    return new DiagramOptionsBuilder().fromOptions(options);
   }
 
   private static Map<String, String> makeDefaultGraphvizAttributes()
@@ -94,23 +94,23 @@ public final class GraphOptionsBuilder
     return graphvizAttributes;
   }
 
-  public static DiagramOptions newGraphOptions(final Config config)
+  public static DiagramOptions newDiagramOptions(final Config config)
   {
-    return new GraphOptionsBuilder()
+    return new DiagramOptionsBuilder()
       .fromConfig(config)
       .toOptions();
   }
 
-  public static DiagramOptions newGraphOptions()
+  public static DiagramOptions newDiagramOptions()
   {
-    return new GraphOptionsBuilder().toOptions();
+    return new DiagramOptionsBuilder().toOptions();
   }
   protected List<String> graphvizOpts;
   protected Map<String, String> graphvizAttributes;
   protected boolean isShowForeignKeyCardinality;
   protected boolean isShowPrimaryKeyCardinality;
 
-  private GraphOptionsBuilder()
+  private DiagramOptionsBuilder()
   {
     // Default values
     graphvizOpts = new ArrayList<>();
@@ -120,7 +120,7 @@ public final class GraphOptionsBuilder
   }
 
   @Override
-  public GraphOptionsBuilder fromConfig(final Config config)
+  public DiagramOptionsBuilder fromConfig(final Config config)
   {
     if (config == null)
     {
@@ -146,7 +146,7 @@ public final class GraphOptionsBuilder
   }
 
   @Override
-  public GraphOptionsBuilder fromOptions(final DiagramOptions options)
+  public DiagramOptionsBuilder fromOptions(final DiagramOptions options)
   {
     if (options == null)
     {
@@ -163,23 +163,23 @@ public final class GraphOptionsBuilder
     return this;
   }
 
-  public GraphOptionsBuilder showForeignKeyCardinality()
+  public DiagramOptionsBuilder showForeignKeyCardinality()
   {
     return showForeignKeyCardinality(true);
   }
 
-  public GraphOptionsBuilder showForeignKeyCardinality(final boolean value)
+  public DiagramOptionsBuilder showForeignKeyCardinality(final boolean value)
   {
     isShowForeignKeyCardinality = value;
     return this;
   }
 
-  public GraphOptionsBuilder showPrimaryKeyCardinality()
+  public DiagramOptionsBuilder showPrimaryKeyCardinality()
   {
     return showPrimaryKeyCardinality(true);
   }
 
-  public GraphOptionsBuilder showPrimaryKeyCardinality(final boolean value)
+  public DiagramOptionsBuilder showPrimaryKeyCardinality(final boolean value)
   {
     isShowPrimaryKeyCardinality = value;
     return this;
@@ -208,7 +208,7 @@ public final class GraphOptionsBuilder
     return new DiagramOptions(this);
   }
 
-  public GraphOptionsBuilder withGraphvizAttributes(final Map<String, String> graphvizAttributes)
+  public DiagramOptionsBuilder withGraphvizAttributes(final Map<String, String> graphvizAttributes)
   {
     if (graphvizAttributes == null)
     {
@@ -221,7 +221,7 @@ public final class GraphOptionsBuilder
     return this;
   }
 
-  public GraphOptionsBuilder withGraphvizOpts(final List<String> graphvizOpts)
+  public DiagramOptionsBuilder withGraphvizOpts(final List<String> graphvizOpts)
   {
     if (graphvizOpts == null)
     {

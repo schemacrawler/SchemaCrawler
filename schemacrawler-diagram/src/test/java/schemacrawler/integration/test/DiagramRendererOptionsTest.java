@@ -58,7 +58,7 @@ import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.graph.DiagramOptions;
-import schemacrawler.tools.integration.graph.GraphOptionsBuilder;
+import schemacrawler.tools.integration.graph.DiagramOptionsBuilder;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
@@ -95,17 +95,17 @@ public class DiagramRendererOptionsTest
       new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
-    final GraphOptionsBuilder graphOptionsBuilder =
-      GraphOptionsBuilder.builder(diagramOptions);
-    graphOptionsBuilder.sortTables(true);
-    graphOptionsBuilder.noInfo(diagramOptions.isNoInfo());
+    final DiagramOptionsBuilder diagramOptionsBuilder =
+      DiagramOptionsBuilder.builder(diagramOptions);
+    diagramOptionsBuilder.sortTables(true);
+    diagramOptionsBuilder.noInfo(diagramOptions.isNoInfo());
     if (!"maximum".equals(options
                             .getSchemaInfoLevel()
                             .getTag()))
     {
-      graphOptionsBuilder.weakAssociations(true);
+      diagramOptionsBuilder.weakAssociations(true);
     }
-    executable.setAdditionalConfiguration(graphOptionsBuilder.toConfig());
+    executable.setAdditionalConfiguration(diagramOptionsBuilder.toConfig());
 
     executable.setConnection(connection);
 
@@ -168,7 +168,7 @@ public class DiagramRendererOptionsTest
   {
     final SchemaCrawlerOptions schemaCrawlerOptions =
       DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
-    final DiagramOptions diagramOptions = GraphOptionsBuilder
+    final DiagramOptions diagramOptions = DiagramOptionsBuilder
       .builder()
       .toOptions();
 
@@ -183,11 +183,11 @@ public class DiagramRendererOptionsTest
                                     final Connection connection)
     throws Exception
   {
-    final GraphOptionsBuilder graphOptionsBuilder =
-      GraphOptionsBuilder.builder();
-    graphOptionsBuilder.sortTableColumns();
-    graphOptionsBuilder.showOrdinalNumbers();
-    final DiagramOptions diagramOptions = graphOptionsBuilder.toOptions();
+    final DiagramOptionsBuilder diagramOptionsBuilder =
+      DiagramOptionsBuilder.builder();
+    diagramOptionsBuilder.sortTableColumns();
+    diagramOptionsBuilder.showOrdinalNumbers();
+    final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
                     connection,
@@ -201,10 +201,10 @@ public class DiagramRendererOptionsTest
                                     final Connection connection)
     throws Exception
   {
-    final GraphOptionsBuilder graphOptionsBuilder =
-      GraphOptionsBuilder.builder();
-    graphOptionsBuilder.noForeignKeyNames();
-    final DiagramOptions diagramOptions = graphOptionsBuilder.toOptions();
+    final DiagramOptionsBuilder diagramOptionsBuilder =
+      DiagramOptionsBuilder.builder();
+    diagramOptionsBuilder.noForeignKeyNames();
+    final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
                     connection,
@@ -218,12 +218,12 @@ public class DiagramRendererOptionsTest
                                     final Connection connection)
     throws Exception
   {
-    final GraphOptionsBuilder graphOptionsBuilder =
-      GraphOptionsBuilder.builder();
-    graphOptionsBuilder.noSchemaCrawlerInfo(true);
-    graphOptionsBuilder.showDatabaseInfo(false);
-    graphOptionsBuilder.showJdbcDriverInfo(false);
-    final DiagramOptions diagramOptions = graphOptionsBuilder.toOptions();
+    final DiagramOptionsBuilder diagramOptionsBuilder =
+      DiagramOptionsBuilder.builder();
+    diagramOptionsBuilder.noSchemaCrawlerInfo(true);
+    diagramOptionsBuilder.showDatabaseInfo(false);
+    diagramOptionsBuilder.showJdbcDriverInfo(false);
+    final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
                     connection,
@@ -237,10 +237,10 @@ public class DiagramRendererOptionsTest
                                     final Connection connection)
     throws Exception
   {
-    final GraphOptionsBuilder graphOptionsBuilder =
-      GraphOptionsBuilder.builder();
-    graphOptionsBuilder.showUnqualifiedNames();
-    final DiagramOptions diagramOptions = graphOptionsBuilder.toOptions();
+    final DiagramOptionsBuilder diagramOptionsBuilder =
+      DiagramOptionsBuilder.builder();
+    diagramOptionsBuilder.showUnqualifiedNames();
+    final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
                     connection,
@@ -261,7 +261,7 @@ public class DiagramRendererOptionsTest
     final SchemaCrawlerOptions schemaCrawlerOptions =
       schemaCrawlerOptionsBuilder.toOptions();
 
-    final DiagramOptions diagramOptions = GraphOptionsBuilder
+    final DiagramOptions diagramOptions = DiagramOptionsBuilder
       .builder()
       .toOptions();
 
@@ -278,7 +278,7 @@ public class DiagramRendererOptionsTest
   {
     final SchemaCrawlerOptions schemaCrawlerOptions =
       DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
-    final DiagramOptions diagramOptions = GraphOptionsBuilder
+    final DiagramOptions diagramOptions = DiagramOptionsBuilder
       .builder()
       .toOptions();
 
@@ -295,7 +295,7 @@ public class DiagramRendererOptionsTest
   {
     final SchemaCrawlerOptions schemaCrawlerOptions =
       DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
-    final DiagramOptions diagramOptions = GraphOptionsBuilder
+    final DiagramOptions diagramOptions = DiagramOptionsBuilder
       .builder()
       .toOptions();
 
@@ -317,12 +317,12 @@ public class DiagramRendererOptionsTest
     final SchemaCrawlerOptions schemaCrawlerOptions =
       schemaCrawlerOptionsBuilder.toOptions();
 
-    final GraphOptionsBuilder graphOptionsBuilder =
-      GraphOptionsBuilder.builder();
-    graphOptionsBuilder
+    final DiagramOptionsBuilder diagramOptionsBuilder =
+      DiagramOptionsBuilder.builder();
+    diagramOptionsBuilder
       .noForeignKeyNames()
       .showUnqualifiedNames();
-    final DiagramOptions diagramOptions = graphOptionsBuilder.toOptions();
+    final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
                     connection,
@@ -343,12 +343,12 @@ public class DiagramRendererOptionsTest
     final SchemaCrawlerOptions schemaCrawlerOptions =
       schemaCrawlerOptionsBuilder.toOptions();
 
-    final GraphOptionsBuilder graphOptionsBuilder =
-      GraphOptionsBuilder.builder();
-    graphOptionsBuilder
+    final DiagramOptionsBuilder diagramOptionsBuilder =
+      DiagramOptionsBuilder.builder();
+    diagramOptionsBuilder
       .noForeignKeyNames()
       .showUnqualifiedNames();
-    final DiagramOptions diagramOptions = graphOptionsBuilder.toOptions();
+    final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
                     connection,
@@ -368,7 +368,7 @@ public class DiagramRendererOptionsTest
           ".*\\.REGIONS\\..*"))
         .toOptions();
 
-    final DiagramOptions diagramOptions = GraphOptionsBuilder
+    final DiagramOptions diagramOptions = DiagramOptionsBuilder
       .builder()
       .toOptions();
 
@@ -391,7 +391,7 @@ public class DiagramRendererOptionsTest
         .grepOnlyMatching(true)
         .toOptions();
 
-    final DiagramOptions diagramOptions = GraphOptionsBuilder
+    final DiagramOptions diagramOptions = DiagramOptionsBuilder
       .builder()
       .toOptions();
 
@@ -406,10 +406,10 @@ public class DiagramRendererOptionsTest
                                     final Connection connection)
     throws Exception
   {
-    final GraphOptionsBuilder graphOptionsBuilder =
-      GraphOptionsBuilder.builder();
-    graphOptionsBuilder.showRowCounts();
-    final DiagramOptions diagramOptions = graphOptionsBuilder.toOptions();
+    final DiagramOptionsBuilder diagramOptionsBuilder =
+      DiagramOptionsBuilder.builder();
+    diagramOptionsBuilder.showRowCounts();
+    final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
       DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
@@ -433,10 +433,10 @@ public class DiagramRendererOptionsTest
     final String NODE = "node.";
     graphvizAttributes.put(NODE + "shape", "none");
 
-    final GraphOptionsBuilder graphOptionsBuilder =
-      GraphOptionsBuilder.builder();
-    graphOptionsBuilder.withGraphvizAttributes(graphvizAttributes);
-    final DiagramOptions diagramOptions = graphOptionsBuilder.toOptions();
+    final DiagramOptionsBuilder diagramOptionsBuilder =
+      DiagramOptionsBuilder.builder();
+    diagramOptionsBuilder.withGraphvizAttributes(graphvizAttributes);
+    final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
       DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
@@ -460,7 +460,7 @@ public class DiagramRendererOptionsTest
     final SchemaCrawlerOptions schemaCrawlerOptions =
       schemaCrawlerOptionsBuilder.toOptions();
 
-    final DiagramOptions diagramOptions = GraphOptionsBuilder
+    final DiagramOptions diagramOptions = DiagramOptionsBuilder
       .builder()
       .toOptions();
 
