@@ -64,13 +64,13 @@ public class SimpleCycleDetector<T extends Comparable<? super T>>
 
   public SimpleCycleDetector(final DirectedGraph<T> graph)
   {
-    this.graph = Objects.requireNonNull(graph, "No graph provided");
+    this.graph = Objects.requireNonNull(graph, "No diagram provided");
   }
 
   /**
-   * Checks if the graph contains a cycle.
+   * Checks if the diagram contains a cycle.
    *
-   * @return true if the graph contains a cycle, false otherwise
+   * @return true if the diagram contains a cycle, false otherwise
    */
   public boolean containsCycle()
   {

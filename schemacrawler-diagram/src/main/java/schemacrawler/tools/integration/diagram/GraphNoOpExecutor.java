@@ -25,52 +25,38 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.integration.graph;
+package schemacrawler.tools.integration.diagram;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.IOUtility.isFileReadable;
-import static sf.util.IOUtility.isFileWritable;
-
-import java.nio.file.Path;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
-abstract class AbstractGraphProcessExecutor
+final class GraphNoOpExecutor
   implements GraphExecutor
 {
 
-  protected final Path dotFile;
-  protected final Path outputFile;
-  protected final GraphOutputFormat graphOutputFormat;
-
-  protected AbstractGraphProcessExecutor(final Path dotFile,
-                                         final Path outputFile,
-                                         final GraphOutputFormat graphOutputFormat)
+  GraphNoOpExecutor(final GraphOutputFormat graphOutputFormat)
     throws SchemaCrawlerException
   {
-    requireNonNull(dotFile, "No DOT file provided");
-    requireNonNull(outputFile, "No graph output file provided");
-    requireNonNull(graphOutputFormat, "No graph output format provided");
-
-    this.dotFile = dotFile
-      .normalize()
-      .toAbsolutePath();
-    this.outputFile = outputFile
-      .normalize()
-      .toAbsolutePath();
-    this.graphOutputFormat = graphOutputFormat;
-
-    if (!isFileReadable(this.dotFile))
-    {
-      throw new SchemaCrawlerException("Cannot read DOT file, " + this.dotFile);
-    }
-
-    if (!isFileWritable(this.outputFile))
+    requireNonNull(graphOutputFormat, "No diagram output format provided");
+    if (graphOutputFormat != GraphOutputFormat.scdot)
     {
       throw new SchemaCrawlerException(
-        "Cannot write output file, " + this.outputFile);
+        "Format should be " + GraphOutputFormat.scdot);
     }
+  }
+
+  @Override
+  public Boolean call()
+  {
+    return true;
+  }
+
+  @Override
+  public boolean canGenerate()
+  {
+    return true;
   }
 
 }

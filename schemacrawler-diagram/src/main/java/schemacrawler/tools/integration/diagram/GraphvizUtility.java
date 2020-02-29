@@ -1,4 +1,4 @@
-package schemacrawler.tools.integration.graph;
+package schemacrawler.tools.integration.diagram;
 
 
 import java.util.ArrayList;

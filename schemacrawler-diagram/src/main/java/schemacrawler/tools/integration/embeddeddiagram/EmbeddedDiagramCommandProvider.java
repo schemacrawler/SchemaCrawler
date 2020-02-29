@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.integration.graph;
+package schemacrawler.tools.integration.embeddeddiagram;
 
 
 import static sf.util.Utility.isBlank;
@@ -35,13 +35,14 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandProviderUtility;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
+import schemacrawler.tools.integration.diagram.GraphOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 
-public final class DiagramCommandProvider
+public final class EmbeddedDiagramCommandProvider
   extends BaseCommandProvider
 {
 
-  public DiagramCommandProvider()
+  public EmbeddedDiagramCommandProvider()
   {
     super(CommandProviderUtility.schemaTextCommands());
   }
@@ -49,7 +50,7 @@ public final class DiagramCommandProvider
   @Override
   public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
   {
-    return new DiagramRenderer(command);
+    return new EmbeddedDiagramRenderer(command);
   }
 
   @Override
@@ -70,8 +71,7 @@ public final class DiagramCommandProvider
     final GraphOutputFormat graphOutputFormat =
       GraphOutputFormat.fromFormat(format);
     final boolean supportsSchemaCrawlerCommand =
-      supportsCommand(command) && GraphOutputFormat.isSupportedFormat(format)
-      && graphOutputFormat != GraphOutputFormat.htmlx;
+      supportsCommand(command) && graphOutputFormat == GraphOutputFormat.htmlx;
     return supportsSchemaCrawlerCommand;
   }
 

@@ -43,7 +43,7 @@ public class SimpleTopologicalSort<T extends Comparable<? super T>>
 
   public SimpleTopologicalSort(final DirectedGraph<T> graph)
   {
-    this.graph = Objects.requireNonNull(graph, "No graph provided");
+    this.graph = Objects.requireNonNull(graph, "No diagram provided");
   }
 
   public List<T> topologicalSort()

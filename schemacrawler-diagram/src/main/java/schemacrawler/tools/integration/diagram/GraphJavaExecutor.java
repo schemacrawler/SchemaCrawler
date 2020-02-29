@@ -25,38 +25,59 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.integration.graph;
+package schemacrawler.tools.integration.diagram;
 
 
-import static java.util.Objects.requireNonNull;
+import static schemacrawler.tools.integration.diagram.GraphvizJavaExecutorUtility.generateGraph;
+
+import java.nio.file.Path;
+import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.SchemaCrawlerLogger;
+import sf.util.StringFormat;
 
-final class GraphNoOpExecutor
-  implements GraphExecutor
+final class GraphJavaExecutor
+  extends AbstractGraphProcessExecutor
 {
 
-  GraphNoOpExecutor(final GraphOutputFormat graphOutputFormat)
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(GraphJavaExecutor.class.getName());
+
+  GraphJavaExecutor(final Path dotFile,
+                    final Path outputFile,
+                    final GraphOutputFormat graphOutputFormat)
     throws SchemaCrawlerException
   {
-    requireNonNull(graphOutputFormat, "No graph output format provided");
-    if (graphOutputFormat != GraphOutputFormat.scdot)
-    {
-      throw new SchemaCrawlerException(
-        "Format should be " + GraphOutputFormat.scdot);
-    }
+    super(dotFile, outputFile, graphOutputFormat);
   }
 
   @Override
   public Boolean call()
   {
+    try
+    {
+      generateGraph(dotFile, outputFile, graphOutputFormat);
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      LOGGER.log(Level.INFO,
+                 String.format("Could not generate diagram from:%n%s", dotFile),
+                 e);
+      return false;
+    }
+
+    LOGGER.log(Level.INFO,
+               new StringFormat("Generated diagram <%s>", outputFile));
+
     return true;
   }
 
   @Override
   public boolean canGenerate()
   {
-    return true;
+    return GraphvizJavaExecutorUtility.isGraphvizJavaAvailable(graphOutputFormat);
+
   }
 
 }

@@ -1,4 +1,4 @@
-package schemacrawler.tools.integration.graph;
+package schemacrawler.tools.integration.diagram;
 
 
 import static java.util.Objects.requireNonNull;
@@ -50,8 +50,8 @@ public final class GraphvizJavaExecutorUtility
     throws SchemaCrawlerException
   {
     requireNonNull(dotFile, "No DOT file provided");
-    requireNonNull(outputFile, "No graph output file provided");
-    requireNonNull(graphOutputFormat, "No graph output format provided");
+    requireNonNull(outputFile, "No diagram output file provided");
+    requireNonNull(graphOutputFormat, "No diagram output format provided");
 
     try
     {
@@ -71,7 +71,7 @@ public final class GraphvizJavaExecutorUtility
     }
     catch (final Throwable e)
     {
-      throw new SchemaCrawlerException("Cannot generate graph from " + dotFile,
+      throw new SchemaCrawlerException("Cannot generate diagram from " + dotFile,
                                        e);
     }
   }

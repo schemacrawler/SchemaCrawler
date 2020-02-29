@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.integration.graph;
+package schemacrawler.tools.integration.diagram;
 
 
 import static sf.util.Utility.isBlank;
@@ -42,7 +42,7 @@ public enum GraphOutputFormat
   implements OutputFormat
 {
 
-  htmlx("SchemaCrawler graph embedded in HTML5"),
+  htmlx("SchemaCrawler diagram embedded in HTML5"),
   scdot("SchemaCrawler generated format"),
   //
   bmp("Windows Bitmap Format"),
@@ -130,7 +130,7 @@ public enum GraphOutputFormat
   /**
    * Checks if the value of the format is supported.
    *
-   * @return True if the format is a graph output format
+   * @return True if the format is a diagram output format
    */
   public static boolean isSupportedFormat(final String format)
   {

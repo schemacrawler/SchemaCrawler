@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.integration.graph;
+package schemacrawler.tools.integration.diagram;
 
 
 import static java.util.Objects.requireNonNull;

@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.integration.embeddedgraph;
+package schemacrawler.tools.integration.embeddeddiagram;
 
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -47,9 +47,9 @@ import java.util.regex.Pattern;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.executable.CommandChain;
-import schemacrawler.tools.integration.graph.GraphOutputFormat;
-import schemacrawler.tools.integration.graph.GraphvizJavaExecutorUtility;
-import schemacrawler.tools.integration.graph.GraphvizUtility;
+import schemacrawler.tools.integration.diagram.GraphOutputFormat;
+import schemacrawler.tools.integration.diagram.GraphvizJavaExecutorUtility;
+import schemacrawler.tools.integration.diagram.GraphvizUtility;
 import schemacrawler.tools.options.TextOutputFormat;
 
 public class EmbeddedDiagramRenderer
@@ -112,7 +112,7 @@ public class EmbeddedDiagramRenderer
     }
     else
     {
-      throw new SchemaCrawlerException("Cannot generate graph in SVG format");
+      throw new SchemaCrawlerException("Cannot generate diagram in SVG format");
     }
   }
 

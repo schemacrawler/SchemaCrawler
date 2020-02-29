@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.integration.graph;
+package schemacrawler.tools.integration.diagram;
 
 
 import static java.util.Objects.requireNonNull;
@@ -83,7 +83,7 @@ public final class DiagramRenderer
     else
     {
       throw new SchemaCrawlerException(String.format(
-        "Cannot generate graph in %s output format",
+        "Cannot generate diagram in %s output format",
         graphOutputFormat));
     }
   }
@@ -167,7 +167,7 @@ public final class DiagramRenderer
   public final void setDiagramOptions(final DiagramOptions diagramOptions)
   {
     this.diagramOptions =
-      requireNonNull(diagramOptions, "No graph options provided");
+      requireNonNull(diagramOptions, "No diagram options provided");
   }
 
   private GraphExecutor getGraphExecutor(final Path dotFile)

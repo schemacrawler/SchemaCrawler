@@ -42,7 +42,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.test.utility.*;
-import schemacrawler.tools.integration.graph.GraphOutputFormat;
+import schemacrawler.tools.integration.diagram.GraphOutputFormat;
 import schemacrawler.tools.integration.serialize.SerializationFormat;
 import schemacrawler.tools.lint.executable.LintReportOutputFormat;
 import schemacrawler.tools.options.OutputFormat;

@@ -44,7 +44,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.*;
-import schemacrawler.tools.integration.graph.GraphOutputFormat;
+import schemacrawler.tools.integration.diagram.GraphOutputFormat;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
