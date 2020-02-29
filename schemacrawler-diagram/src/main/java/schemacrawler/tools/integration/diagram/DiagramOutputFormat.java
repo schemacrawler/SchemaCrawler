@@ -92,8 +92,8 @@ public enum DiagramOutputFormat
    * Gets the value from the format.
    *
    * @param format
-   *   Graph output format.
-   * @return GraphOutputFormat
+   *   Diagram output format.
+   * @return DiagramOutputFormat
    */
   public static DiagramOutputFormat fromFormat(final String format)
   {
