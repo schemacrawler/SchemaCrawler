@@ -154,7 +154,7 @@ public class DiagramRendererOptionsTest
     throws Exception
   {
     directory = testContext.resolveTargetFromRootPath(
-      "test-output-graphs/" + DiagramRendererOptionsTest.class.getSimpleName());
+      "test-output-diagrams/" + DiagramRendererOptionsTest.class.getSimpleName());
     deleteDirectory(directory.toFile());
     createDirectories(directory);
   }
