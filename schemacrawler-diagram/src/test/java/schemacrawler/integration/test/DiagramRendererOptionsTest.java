@@ -71,11 +71,11 @@ public class DiagramRendererOptionsTest
 
   private static final String GRAPH_OPTIONS_OUTPUT = "graph_options_output/";
 
-  private static void executableGraph(final String command,
-                                      final Connection connection,
-                                      final SchemaCrawlerOptions options,
-                                      final DiagramOptions diagramOptions,
-                                      final String testMethodName)
+  private static void executableDiagram(final String command,
+                                        final Connection connection,
+                                        final SchemaCrawlerOptions options,
+                                        final DiagramOptions diagramOptions,
+                                        final String testMethodName)
     throws Exception
   {
     SchemaCrawlerOptions schemaCrawlerOptions = options;
@@ -111,7 +111,7 @@ public class DiagramRendererOptionsTest
 
     // Generate diagram, so that we have something to look at, even if
     // the DOT file comparison fails
-    saveGraph(executable, testMethodName);
+    saveDiagram(executable, testMethodName);
 
     // Check DOT file
     final String referenceFileName = testMethodName;
@@ -130,8 +130,8 @@ public class DiagramRendererOptionsTest
     clean(GRAPH_OPTIONS_OUTPUT);
   }
 
-  private static void saveGraph(final SchemaCrawlerExecutable executable,
-                                final String testMethodName)
+  private static void saveDiagram(final SchemaCrawlerExecutable executable,
+                                  final String testMethodName)
     throws Exception
   {
     final Path testDiagramFile = directory.resolve(testMethodName + ".png");
@@ -162,7 +162,7 @@ public class DiagramRendererOptionsTest
   private static Path directory;
 
   @Test
-  public void executableForGraph_00(final TestContext testContext,
+  public void executableForDiagram_00(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -172,14 +172,14 @@ public class DiagramRendererOptionsTest
       .builder()
       .toOptions();
 
-    executableGraph(SchemaTextDetailType.schema.name(),
-                    connection,
-                    schemaCrawlerOptions, diagramOptions,
-                    testContext.testMethodName());
+    executableDiagram(SchemaTextDetailType.schema.name(),
+                      connection,
+                      schemaCrawlerOptions, diagramOptions,
+                      testContext.testMethodName());
   }
 
   @Test
-  public void executableForGraph_01(final TestContext testContext,
+  public void executableForDiagram_01(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -189,15 +189,15 @@ public class DiagramRendererOptionsTest
     diagramOptionsBuilder.showOrdinalNumbers();
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
-    executableGraph(SchemaTextDetailType.schema.name(),
-                    connection,
-                    SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
-                    diagramOptions,
-                    testContext.testMethodName());
+    executableDiagram(SchemaTextDetailType.schema.name(),
+                      connection,
+                      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
+                      diagramOptions,
+                      testContext.testMethodName());
   }
 
   @Test
-  public void executableForGraph_02(final TestContext testContext,
+  public void executableForDiagram_02(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -206,15 +206,15 @@ public class DiagramRendererOptionsTest
     diagramOptionsBuilder.noForeignKeyNames();
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
-    executableGraph(SchemaTextDetailType.schema.name(),
-                    connection,
-                    SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
-                    diagramOptions,
-                    testContext.testMethodName());
+    executableDiagram(SchemaTextDetailType.schema.name(),
+                      connection,
+                      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
+                      diagramOptions,
+                      testContext.testMethodName());
   }
 
   @Test
-  public void executableForGraph_03(final TestContext testContext,
+  public void executableForDiagram_03(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -225,15 +225,15 @@ public class DiagramRendererOptionsTest
     diagramOptionsBuilder.showJdbcDriverInfo(false);
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
-    executableGraph(SchemaTextDetailType.schema.name(),
-                    connection,
-                    SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
-                    diagramOptions,
-                    testContext.testMethodName());
+    executableDiagram(SchemaTextDetailType.schema.name(),
+                      connection,
+                      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
+                      diagramOptions,
+                      testContext.testMethodName());
   }
 
   @Test
-  public void executableForGraph_04(final TestContext testContext,
+  public void executableForDiagram_04(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -242,15 +242,15 @@ public class DiagramRendererOptionsTest
     diagramOptionsBuilder.showUnqualifiedNames();
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
-    executableGraph(SchemaTextDetailType.schema.name(),
-                    connection,
-                    SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
-                    diagramOptions,
-                    testContext.testMethodName());
+    executableDiagram(SchemaTextDetailType.schema.name(),
+                      connection,
+                      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
+                      diagramOptions,
+                      testContext.testMethodName());
   }
 
   @Test
-  public void executableForGraph_05(final TestContext testContext,
+  public void executableForDiagram_05(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -265,14 +265,14 @@ public class DiagramRendererOptionsTest
       .builder()
       .toOptions();
 
-    executableGraph(SchemaTextDetailType.schema.name(),
-                    connection,
-                    schemaCrawlerOptions, diagramOptions,
-                    testContext.testMethodName());
+    executableDiagram(SchemaTextDetailType.schema.name(),
+                      connection,
+                      schemaCrawlerOptions, diagramOptions,
+                      testContext.testMethodName());
   }
 
   @Test
-  public void executableForGraph_06(final TestContext testContext,
+  public void executableForDiagram_06(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -282,14 +282,14 @@ public class DiagramRendererOptionsTest
       .builder()
       .toOptions();
 
-    executableGraph(SchemaTextDetailType.brief.name(),
-                    connection,
-                    schemaCrawlerOptions, diagramOptions,
-                    testContext.testMethodName());
+    executableDiagram(SchemaTextDetailType.brief.name(),
+                      connection,
+                      schemaCrawlerOptions, diagramOptions,
+                      testContext.testMethodName());
   }
 
   @Test
-  public void executableForGraph_07(final TestContext testContext,
+  public void executableForDiagram_07(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -299,14 +299,14 @@ public class DiagramRendererOptionsTest
       .builder()
       .toOptions();
 
-    executableGraph(SchemaTextDetailType.schema.name(),
-                    connection,
-                    schemaCrawlerOptions, diagramOptions,
-                    testContext.testMethodName());
+    executableDiagram(SchemaTextDetailType.schema.name(),
+                      connection,
+                      schemaCrawlerOptions, diagramOptions,
+                      testContext.testMethodName());
   }
 
   @Test
-  public void executableForGraph_08(final TestContext testContext,
+  public void executableForDiagram_08(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -324,14 +324,14 @@ public class DiagramRendererOptionsTest
       .showUnqualifiedNames();
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
-    executableGraph(SchemaTextDetailType.schema.name(),
-                    connection,
-                    schemaCrawlerOptions, diagramOptions,
-                    testContext.testMethodName());
+    executableDiagram(SchemaTextDetailType.schema.name(),
+                      connection,
+                      schemaCrawlerOptions, diagramOptions,
+                      testContext.testMethodName());
   }
 
   @Test
-  public void executableForGraph_09(final TestContext testContext,
+  public void executableForDiagram_09(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -350,14 +350,14 @@ public class DiagramRendererOptionsTest
       .showUnqualifiedNames();
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
-    executableGraph(SchemaTextDetailType.schema.name(),
-                    connection,
-                    schemaCrawlerOptions, diagramOptions,
-                    testContext.testMethodName());
+    executableDiagram(SchemaTextDetailType.schema.name(),
+                      connection,
+                      schemaCrawlerOptions, diagramOptions,
+                      testContext.testMethodName());
   }
 
   @Test
-  public void executableForGraph_10(final TestContext testContext,
+  public void executableForDiagram_10(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -372,14 +372,14 @@ public class DiagramRendererOptionsTest
       .builder()
       .toOptions();
 
-    executableGraph(SchemaTextDetailType.schema.name(),
-                    connection,
-                    schemaCrawlerOptions, diagramOptions,
-                    testContext.testMethodName());
+    executableDiagram(SchemaTextDetailType.schema.name(),
+                      connection,
+                      schemaCrawlerOptions, diagramOptions,
+                      testContext.testMethodName());
   }
 
   @Test
-  public void executableForGraph_11(final TestContext testContext,
+  public void executableForDiagram_11(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -395,14 +395,14 @@ public class DiagramRendererOptionsTest
       .builder()
       .toOptions();
 
-    executableGraph(SchemaTextDetailType.schema.name(),
-                    connection,
-                    schemaCrawlerOptions, diagramOptions,
-                    testContext.testMethodName());
+    executableDiagram(SchemaTextDetailType.schema.name(),
+                      connection,
+                      schemaCrawlerOptions, diagramOptions,
+                      testContext.testMethodName());
   }
 
   @Test
-  public void executableForGraph_12(final TestContext testContext,
+  public void executableForDiagram_12(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -414,14 +414,14 @@ public class DiagramRendererOptionsTest
     final SchemaCrawlerOptions schemaCrawlerOptions =
       DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
-    executableGraph(SchemaTextDetailType.schema.name(),
-                    connection,
-                    schemaCrawlerOptions, diagramOptions,
-                    testContext.testMethodName());
+    executableDiagram(SchemaTextDetailType.schema.name(),
+                      connection,
+                      schemaCrawlerOptions, diagramOptions,
+                      testContext.testMethodName());
   }
 
   @Test
-  public void executableForGraph_13(final TestContext testContext,
+  public void executableForDiagram_13(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -441,14 +441,14 @@ public class DiagramRendererOptionsTest
     final SchemaCrawlerOptions schemaCrawlerOptions =
       DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
-    executableGraph(SchemaTextDetailType.schema.name(),
-                    connection,
-                    schemaCrawlerOptions, diagramOptions,
-                    testContext.testMethodName());
+    executableDiagram(SchemaTextDetailType.schema.name(),
+                      connection,
+                      schemaCrawlerOptions, diagramOptions,
+                      testContext.testMethodName());
   }
 
   @Test
-  public void executableForGraph_lintschema(final TestContext testContext,
+  public void executableForDiagram_lintschema(final TestContext testContext,
                                             final Connection connection)
     throws Exception
   {
@@ -464,10 +464,10 @@ public class DiagramRendererOptionsTest
       .builder()
       .toOptions();
 
-    executableGraph(SchemaTextDetailType.schema.name(),
-                    connection,
-                    schemaCrawlerOptions, diagramOptions,
-                    testContext.testMethodName());
+    executableDiagram(SchemaTextDetailType.schema.name(),
+                      connection,
+                      schemaCrawlerOptions, diagramOptions,
+                      testContext.testMethodName());
   }
 
 }
