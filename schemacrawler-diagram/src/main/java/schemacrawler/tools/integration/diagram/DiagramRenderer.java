@@ -92,7 +92,7 @@ public final class DiagramRenderer
     throws Exception
   {
     super.initialize();
-    loadGraphOptions();
+    loadDiagramOptions();
   }
 
   /**
@@ -246,7 +246,7 @@ public final class DiagramRenderer
     return formatter;
   }
 
-  private void loadGraphOptions()
+  private void loadDiagramOptions()
   {
     if (diagramOptions == null)
     {
