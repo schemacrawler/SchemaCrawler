@@ -69,7 +69,7 @@ import schemacrawler.tools.text.schema.SchemaTextDetailType;
 public class DiagramRendererOptionsTest
 {
 
-  private static final String GRAPH_OPTIONS_OUTPUT = "graph_options_output/";
+  private static final String DIAGRAM_OPTIONS_OUTPUT = "diagram_options_output/";
 
   private static void executableDiagram(final String command,
                                         final Connection connection,
@@ -119,7 +119,7 @@ public class DiagramRendererOptionsTest
                                             executable,
                                             GraphOutputFormat.scdot)),
                hasSameContentAndTypeAs(classpathResource(
-                 GRAPH_OPTIONS_OUTPUT + referenceFileName + ".dot"),
+                 DIAGRAM_OPTIONS_OUTPUT + referenceFileName + ".dot"),
                                        GraphOutputFormat.scdot));
   }
 
@@ -127,7 +127,7 @@ public class DiagramRendererOptionsTest
   public static void removeOutputDir()
     throws Exception
   {
-    clean(GRAPH_OPTIONS_OUTPUT);
+    clean(DIAGRAM_OPTIONS_OUTPUT);
   }
 
   private static void saveDiagram(final SchemaCrawlerExecutable executable,
