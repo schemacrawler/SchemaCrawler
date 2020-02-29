@@ -25,24 +25,25 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-
 package schemacrawler.integration.test;
 
 
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-import schemacrawler.test.AbstractSchemaCrawlerOutputTest;
+import schemacrawler.test.AbstractSpinThroughExecutableTest;
 import schemacrawler.tools.integration.diagram.GraphOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
 
-public class SchemaCrawlerGraphOutputTest
-  extends AbstractSchemaCrawlerOutputTest
+public class SpinThroughDiagramExecutableTest
+  extends AbstractSpinThroughExecutableTest
 {
 
   public Stream<OutputFormat> outputFormats()
   {
-    return Arrays.stream(new OutputFormat[] { GraphOutputFormat.scdot });
+    return Arrays.stream(new OutputFormat[] {
+      GraphOutputFormat.scdot, GraphOutputFormat.htmlx
+    });
   }
 
 }
