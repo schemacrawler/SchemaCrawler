@@ -56,7 +56,7 @@ public final class DiagramRenderer
 {
 
   private DiagramOptions diagramOptions;
-  private GraphOutputFormat graphOutputFormat;
+  private DiagramOutputFormat diagramOutputFormat;
 
   public DiagramRenderer(final String command)
   {
@@ -67,7 +67,7 @@ public final class DiagramRenderer
   public void checkAvailability()
     throws Exception
   {
-    if (graphOutputFormat == GraphOutputFormat.scdot)
+    if (diagramOutputFormat == DiagramOutputFormat.scdot)
     {
       return;
     }
@@ -76,15 +76,14 @@ public final class DiagramRenderer
       return;
     }
     else if (GraphvizJavaExecutorUtility.isGraphvizJavaAvailable(
-      graphOutputFormat))
+      diagramOutputFormat))
     {
       return;
     }
     else
     {
       throw new SchemaCrawlerException(String.format(
-        "Cannot generate diagram in %s output format",
-        graphOutputFormat));
+        "Cannot generate diagram in %s output format", diagramOutputFormat));
     }
   }
 
@@ -121,14 +120,14 @@ public final class DiagramRenderer
     // Set the format, in case we are using the default
     outputOptions = OutputOptionsBuilder
       .builder(outputOptions)
-      .withOutputFormat(graphOutputFormat)
-      .withOutputFormatValue(graphOutputFormat.getFormat())
+      .withOutputFormat(diagramOutputFormat)
+      .withOutputFormatValue(diagramOutputFormat.getFormat())
       .toOptions();
 
     // Create dot file
     final Path dotFile = createTempFilePath("schemacrawler.", "dot");
     final OutputOptions dotFileOutputOptions;
-    if (graphOutputFormat == GraphOutputFormat.scdot)
+    if (diagramOutputFormat == DiagramOutputFormat.scdot)
     {
       dotFileOutputOptions = outputOptions;
     }
@@ -136,7 +135,7 @@ public final class DiagramRenderer
     {
       dotFileOutputOptions = OutputOptionsBuilder
         .builder(outputOptions)
-        .withOutputFormat(GraphOutputFormat.scdot)
+        .withOutputFormat(DiagramOutputFormat.scdot)
         .withOutputFile(dotFile)
         .toOptions();
     }
@@ -179,21 +178,20 @@ public final class DiagramRenderer
     // Set the format, in case we are using the default
     outputOptions = OutputOptionsBuilder
       .builder(outputOptions)
-      .withOutputFormat(graphOutputFormat)
-      .withOutputFormatValue(graphOutputFormat.getFormat())
+      .withOutputFormat(diagramOutputFormat)
+      .withOutputFormatValue(diagramOutputFormat.getFormat())
       .withOutputFile(outputFile)
       .toOptions();
 
     GraphExecutor graphExecutor;
-    if (graphOutputFormat != GraphOutputFormat.scdot)
+    if (diagramOutputFormat != DiagramOutputFormat.scdot)
     {
       final List<String> graphvizOpts = diagramOptions.getGraphvizOpts();
       boolean graphExecutorAvailable = false;
 
       // Try 1: Use Graphviz
       graphExecutor = new GraphProcessExecutor(dotFile,
-                                               outputFile,
-                                               graphOutputFormat,
+                                               outputFile, diagramOutputFormat,
                                                graphvizOpts);
       graphExecutorAvailable = graphExecutor.canGenerate();
 
@@ -201,7 +199,7 @@ public final class DiagramRenderer
       if (!graphExecutorAvailable)
       {
         graphExecutor =
-          new GraphJavaExecutor(dotFile, outputFile, graphOutputFormat);
+          new GraphJavaExecutor(dotFile, outputFile, diagramOutputFormat);
         graphExecutorAvailable = graphExecutor.canGenerate();
       }
 
@@ -214,7 +212,7 @@ public final class DiagramRenderer
     }
     else
     {
-      graphExecutor = new GraphNoOpExecutor(graphOutputFormat);
+      graphExecutor = new GraphNoOpExecutor(diagramOutputFormat);
     }
 
     return graphExecutor;
@@ -255,8 +253,8 @@ public final class DiagramRenderer
       diagramOptions =
         DiagramOptionsBuilder.newDiagramOptions(additionalConfiguration);
     }
-    graphOutputFormat =
-      GraphOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
+    diagramOutputFormat =
+      DiagramOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
   }
 
 }

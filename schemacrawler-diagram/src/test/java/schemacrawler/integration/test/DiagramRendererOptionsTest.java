@@ -59,7 +59,7 @@ import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.diagram.DiagramOptions;
 import schemacrawler.tools.integration.diagram.DiagramOptionsBuilder;
-import schemacrawler.tools.integration.diagram.GraphOutputFormat;
+import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
@@ -117,10 +117,10 @@ public class DiagramRendererOptionsTest
     final String referenceFileName = testMethodName;
     assertThat(outputOf(executableExecution(connection,
                                             executable,
-                                            GraphOutputFormat.scdot)),
+                                            DiagramOutputFormat.scdot)),
                hasSameContentAndTypeAs(classpathResource(
                  DIAGRAM_OPTIONS_OUTPUT + referenceFileName + ".dot"),
-                                       GraphOutputFormat.scdot));
+                                       DiagramOutputFormat.scdot));
   }
 
   @BeforeAll
@@ -141,7 +141,7 @@ public class DiagramRendererOptionsTest
       .builder()
       .fromOptions(oldOutputOptions)
       .withOutputFile(testDiagramFile)
-      .withOutputFormat(GraphOutputFormat.png)
+      .withOutputFormat(DiagramOutputFormat.png)
       .toOptions();
 
     executable.setOutputOptions(outputOptions);

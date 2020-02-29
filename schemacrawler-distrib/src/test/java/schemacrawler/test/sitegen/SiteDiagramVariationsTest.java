@@ -44,7 +44,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.*;
-import schemacrawler.tools.integration.diagram.GraphOutputFormat;
+import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
@@ -73,7 +73,7 @@ public class SiteDiagramVariationsTest
                                               "schema",
                                               argsMap,
                                               runConfig,
-                                              GraphOutputFormat.png);
+                                              DiagramOutputFormat.png);
     move(pngFile, outputFile);
   }
   private Path directory;

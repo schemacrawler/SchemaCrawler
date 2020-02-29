@@ -33,7 +33,7 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 import schemacrawler.test.AbstractSchemaCrawlerOutputTest;
-import schemacrawler.tools.integration.diagram.GraphOutputFormat;
+import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
 
 public class SchemaCrawlerDiagramOutputTest
@@ -42,7 +42,7 @@ public class SchemaCrawlerDiagramOutputTest
 
   public Stream<OutputFormat> outputFormats()
   {
-    return Arrays.stream(new OutputFormat[] { GraphOutputFormat.scdot });
+    return Arrays.stream(new OutputFormat[] { DiagramOutputFormat.scdot });
   }
 
 }

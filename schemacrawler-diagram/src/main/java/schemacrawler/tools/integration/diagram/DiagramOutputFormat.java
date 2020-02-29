@@ -38,7 +38,7 @@ import schemacrawler.tools.options.OutputFormatState;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
-public enum GraphOutputFormat
+public enum DiagramOutputFormat
   implements OutputFormat
 {
 
@@ -86,7 +86,7 @@ public enum GraphOutputFormat
   ;
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(GraphOutputFormat.class.getName());
+    SchemaCrawlerLogger.getLogger(DiagramOutputFormat.class.getName());
 
   /**
    * Gets the value from the format.
@@ -95,9 +95,9 @@ public enum GraphOutputFormat
    *   Graph output format.
    * @return GraphOutputFormat
    */
-  public static GraphOutputFormat fromFormat(final String format)
+  public static DiagramOutputFormat fromFormat(final String format)
   {
-    final GraphOutputFormat outputFormat = fromFormatOrNull(format);
+    final DiagramOutputFormat outputFormat = fromFormatOrNull(format);
     if (outputFormat == null)
     {
       LOGGER.log(Level.CONFIG,
@@ -111,13 +111,13 @@ public enum GraphOutputFormat
     }
   }
 
-  private static GraphOutputFormat fromFormatOrNull(final String format)
+  private static DiagramOutputFormat fromFormatOrNull(final String format)
   {
     if (isBlank(format))
     {
       return null;
     }
-    for (final GraphOutputFormat outputFormat : GraphOutputFormat.values())
+    for (final DiagramOutputFormat outputFormat : DiagramOutputFormat.values())
     {
       if (outputFormat.outputFormatState.isSupportedFormat(format))
       {
@@ -138,13 +138,13 @@ public enum GraphOutputFormat
   }
   private final OutputFormatState outputFormatState;
 
-  private GraphOutputFormat(final String description)
+  private DiagramOutputFormat(final String description)
   {
     outputFormatState = new OutputFormatState(name(), description);
   }
 
-  private GraphOutputFormat(final String description,
-                            final String... additionalFormatSpecifiers)
+  private DiagramOutputFormat(final String description,
+                              final String... additionalFormatSpecifiers)
   {
     outputFormatState =
       new OutputFormatState(name(), description, additionalFormatSpecifiers);

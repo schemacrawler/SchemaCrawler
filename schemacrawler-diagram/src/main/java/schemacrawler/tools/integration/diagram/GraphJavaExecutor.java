@@ -46,10 +46,10 @@ final class GraphJavaExecutor
 
   GraphJavaExecutor(final Path dotFile,
                     final Path outputFile,
-                    final GraphOutputFormat graphOutputFormat)
+                    final DiagramOutputFormat diagramOutputFormat)
     throws SchemaCrawlerException
   {
-    super(dotFile, outputFile, graphOutputFormat);
+    super(dotFile, outputFile, diagramOutputFormat);
   }
 
   @Override
@@ -57,7 +57,7 @@ final class GraphJavaExecutor
   {
     try
     {
-      generateGraph(dotFile, outputFile, graphOutputFormat);
+      generateGraph(dotFile, outputFile, diagramOutputFormat);
     }
     catch (final SchemaCrawlerException e)
     {
@@ -76,7 +76,8 @@ final class GraphJavaExecutor
   @Override
   public boolean canGenerate()
   {
-    return GraphvizJavaExecutorUtility.isGraphvizJavaAvailable(graphOutputFormat);
+    return GraphvizJavaExecutorUtility.isGraphvizJavaAvailable(
+      diagramOutputFormat);
 
   }
 

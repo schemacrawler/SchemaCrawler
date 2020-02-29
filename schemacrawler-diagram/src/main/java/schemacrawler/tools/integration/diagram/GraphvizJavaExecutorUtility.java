@@ -27,9 +27,9 @@ public final class GraphvizJavaExecutorUtility
   private static final SchemaCrawlerLogger LOGGER =
     SchemaCrawlerLogger.getLogger(GraphvizJavaExecutorUtility.class.getName());
 
-  public static boolean canMap(final GraphOutputFormat graphOutputFormat)
+  public static boolean canMap(final DiagramOutputFormat diagramOutputFormat)
   {
-    return map(graphOutputFormat) != null;
+    return map(diagramOutputFormat) != null;
   }
 
   /**
@@ -39,19 +39,19 @@ public final class GraphvizJavaExecutorUtility
    *   Path to DOT file
    * @param outputFile
    *   Path to output file
-   * @param graphOutputFormat
+   * @param diagramOutputFormat
    *   Output format
    * @throws SchemaCrawlerException
    *   Thrown on an exception
    */
   public static void generateGraph(final Path dotFile,
                                    final Path outputFile,
-                                   final GraphOutputFormat graphOutputFormat)
+                                   final DiagramOutputFormat diagramOutputFormat)
     throws SchemaCrawlerException
   {
     requireNonNull(dotFile, "No DOT file provided");
     requireNonNull(outputFile, "No diagram output file provided");
-    requireNonNull(graphOutputFormat, "No diagram output format provided");
+    requireNonNull(diagramOutputFormat, "No diagram output format provided");
 
     try
     {
@@ -63,7 +63,7 @@ public final class GraphvizJavaExecutorUtility
       final List<GraphvizEngine> engines = loadGraphvizEngines();
       Graphviz.useEngine(engines);
 
-      final Format format = map(graphOutputFormat);
+      final Format format = map(diagramOutputFormat);
       Graphviz
         .fromString(dotSource)
         .render(format)
@@ -76,11 +76,11 @@ public final class GraphvizJavaExecutorUtility
     }
   }
 
-  public static boolean isGraphvizJavaAvailable(final GraphOutputFormat graphOutputFormat)
+  public static boolean isGraphvizJavaAvailable(final DiagramOutputFormat diagramOutputFormat)
   {
     final String className = "guru.nidi.graphviz.engine.Graphviz";
     final boolean hasClass = Utility.isClassAvailable(className);
-    final boolean supportsFormat = canMap(graphOutputFormat);
+    final boolean supportsFormat = canMap(diagramOutputFormat);
 
     LOGGER.log(Level.INFO,
                new StringFormat("Checking if diagram can be generated - "
@@ -88,7 +88,7 @@ public final class GraphvizJavaExecutorUtility
                                 + " can generate format <%s> = <%b>",
                                 className,
                                 hasClass,
-                                graphOutputFormat.getDescription(),
+                                diagramOutputFormat.getDescription(),
                                 supportsFormat));
 
     return hasClass && supportsFormat;
@@ -128,8 +128,8 @@ public final class GraphvizJavaExecutorUtility
       throw new IllegalArgumentException("<format> <DOT file> <output file>");
     }
 
-    final GraphOutputFormat graphOutputFormat =
-      GraphOutputFormat.valueOf(args[0]);
+    final DiagramOutputFormat diagramOutputFormat =
+      DiagramOutputFormat.valueOf(args[0]);
     final Path dotFile = Paths
       .get(args[1])
       .normalize()
@@ -139,17 +139,17 @@ public final class GraphvizJavaExecutorUtility
       .normalize()
       .toAbsolutePath();
 
-    generateGraph(dotFile, outputFile, graphOutputFormat);
+    generateGraph(dotFile, outputFile, diagramOutputFormat);
   }
 
-  private static Format map(final GraphOutputFormat graphOutputFormat)
+  private static Format map(final DiagramOutputFormat diagramOutputFormat)
   {
-    if (graphOutputFormat == null)
+    if (diagramOutputFormat == null)
     {
       return null;
     }
     final Format format;
-    switch (graphOutputFormat)
+    switch (diagramOutputFormat)
     {
       case svg:
         format = Format.SVG;

@@ -36,14 +36,14 @@ final class GraphNoOpExecutor
   implements GraphExecutor
 {
 
-  GraphNoOpExecutor(final GraphOutputFormat graphOutputFormat)
+  GraphNoOpExecutor(final DiagramOutputFormat diagramOutputFormat)
     throws SchemaCrawlerException
   {
-    requireNonNull(graphOutputFormat, "No diagram output format provided");
-    if (graphOutputFormat != GraphOutputFormat.scdot)
+    requireNonNull(diagramOutputFormat, "No diagram output format provided");
+    if (diagramOutputFormat != DiagramOutputFormat.scdot)
     {
       throw new SchemaCrawlerException(
-        "Format should be " + GraphOutputFormat.scdot);
+        "Format should be " + DiagramOutputFormat.scdot);
     }
   }
 

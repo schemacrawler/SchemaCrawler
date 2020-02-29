@@ -54,11 +54,11 @@ final class GraphProcessExecutor
 
   GraphProcessExecutor(final Path dotFile,
                        final Path outputFile,
-                       final GraphOutputFormat graphOutputFormat,
+                       final DiagramOutputFormat diagramOutputFormat,
                        final List<String> graphvizOpts)
     throws SchemaCrawlerException
   {
-    super(dotFile, outputFile, graphOutputFormat);
+    super(dotFile, outputFile, diagramOutputFormat);
 
     this.graphvizOpts =
       requireNonNull(graphvizOpts, "No Graphviz options provided");
@@ -127,7 +127,7 @@ final class GraphProcessExecutor
     command.addAll(graphvizOpts);
 
     command.add("-T");
-    command.add(graphOutputFormat.getFormat());
+    command.add(diagramOutputFormat.getFormat());
     command.add("-o");
     command.add(outputFile.toString());
     command.add(dotFile.toString());

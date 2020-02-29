@@ -42,16 +42,16 @@ abstract class AbstractGraphProcessExecutor
 
   protected final Path dotFile;
   protected final Path outputFile;
-  protected final GraphOutputFormat graphOutputFormat;
+  protected final DiagramOutputFormat diagramOutputFormat;
 
   protected AbstractGraphProcessExecutor(final Path dotFile,
                                          final Path outputFile,
-                                         final GraphOutputFormat graphOutputFormat)
+                                         final DiagramOutputFormat diagramOutputFormat)
     throws SchemaCrawlerException
   {
     requireNonNull(dotFile, "No DOT file provided");
     requireNonNull(outputFile, "No diagram output file provided");
-    requireNonNull(graphOutputFormat, "No diagram output format provided");
+    requireNonNull(diagramOutputFormat, "No diagram output format provided");
 
     this.dotFile = dotFile
       .normalize()
@@ -59,7 +59,7 @@ abstract class AbstractGraphProcessExecutor
     this.outputFile = outputFile
       .normalize()
       .toAbsolutePath();
-    this.graphOutputFormat = graphOutputFormat;
+    this.diagramOutputFormat = diagramOutputFormat;
 
     if (!isFileReadable(this.dotFile))
     {

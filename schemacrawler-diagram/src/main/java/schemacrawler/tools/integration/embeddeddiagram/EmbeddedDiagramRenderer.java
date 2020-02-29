@@ -47,7 +47,7 @@ import java.util.regex.Pattern;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.executable.CommandChain;
-import schemacrawler.tools.integration.diagram.GraphOutputFormat;
+import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
 import schemacrawler.tools.integration.diagram.GraphvizJavaExecutorUtility;
 import schemacrawler.tools.integration.diagram.GraphvizUtility;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -106,7 +106,7 @@ public class EmbeddedDiagramRenderer
       return;
     }
     else if (GraphvizJavaExecutorUtility.isGraphvizJavaAvailable(
-      GraphOutputFormat.svg))
+      DiagramOutputFormat.svg))
     {
       return;
     }
@@ -129,7 +129,7 @@ public class EmbeddedDiagramRenderer
     // Execute chain, after setting all options from the current command
     final CommandChain chain = new CommandChain(this);
     chain.addNext(command, TextOutputFormat.html, baseHtmlFile);
-    chain.addNext(command, GraphOutputFormat.svg, baseSvgFile);
+    chain.addNext(command, DiagramOutputFormat.svg, baseSvgFile);
     chain.execute();
 
     // Interleave HTML and SVG

@@ -35,7 +35,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandProviderUtility;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
-import schemacrawler.tools.integration.diagram.GraphOutputFormat;
+import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 
 public final class EmbeddedDiagramCommandProvider
@@ -68,10 +68,10 @@ public final class EmbeddedDiagramCommandProvider
     {
       return false;
     }
-    final GraphOutputFormat graphOutputFormat =
-      GraphOutputFormat.fromFormat(format);
+    final DiagramOutputFormat diagramOutputFormat =
+      DiagramOutputFormat.fromFormat(format);
     final boolean supportsSchemaCrawlerCommand =
-      supportsCommand(command) && graphOutputFormat == GraphOutputFormat.htmlx;
+      supportsCommand(command) && diagramOutputFormat == DiagramOutputFormat.htmlx;
     return supportsSchemaCrawlerCommand;
   }
 

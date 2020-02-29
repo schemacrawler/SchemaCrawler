@@ -67,7 +67,7 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseBuildCondition;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.integration.diagram.GraphOutputFormat;
+import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
 import schemacrawler.tools.integration.serialize.SerializationFormat;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -119,7 +119,7 @@ public class PostgreSQLEnumColumnTest
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
     for (final OutputFormat outputFormat : new OutputFormat[] {
-      GraphOutputFormat.scdot, TextOutputFormat.text, TextOutputFormat.html
+      DiagramOutputFormat.scdot, TextOutputFormat.text, TextOutputFormat.html
     })
     {
       assertThat(outputOf(executableExecution(getConnection(),

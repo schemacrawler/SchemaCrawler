@@ -67,11 +67,11 @@ public final class DiagramCommandProvider
     {
       return false;
     }
-    final GraphOutputFormat graphOutputFormat =
-      GraphOutputFormat.fromFormat(format);
+    final DiagramOutputFormat diagramOutputFormat =
+      DiagramOutputFormat.fromFormat(format);
     final boolean supportsSchemaCrawlerCommand =
-      supportsCommand(command) && GraphOutputFormat.isSupportedFormat(format)
-      && graphOutputFormat != GraphOutputFormat.htmlx;
+      supportsCommand(command) && DiagramOutputFormat.isSupportedFormat(format)
+      && diagramOutputFormat != DiagramOutputFormat.htmlx;
     return supportsSchemaCrawlerCommand;
   }
 
