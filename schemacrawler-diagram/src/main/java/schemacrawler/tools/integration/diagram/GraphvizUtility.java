@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-import schemacrawler.utility.ProcessExecutor;
+import sf.util.ProcessExecutor;
 import sf.util.FileContents;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;

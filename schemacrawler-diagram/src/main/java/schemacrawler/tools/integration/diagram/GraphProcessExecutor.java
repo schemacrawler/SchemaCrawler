@@ -38,7 +38,7 @@ import java.util.function.Supplier;
 import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.utility.ProcessExecutor;
+import sf.util.ProcessExecutor;
 import sf.util.FileContents;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;

@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.utility;
+package sf.util;
 
 
 import static java.util.Objects.requireNonNull;
@@ -39,9 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
-
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
 
 public class ProcessExecutor
   implements Callable<Integer>
