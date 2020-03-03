@@ -63,8 +63,8 @@ public class ProcessExecutor
 
     try
     {
-      processOutput = createTempFilePath("scdot", "stdout");
-      processError = createTempFilePath("scdot", "stderr");
+      processOutput = createTempFilePath("temp", "stdout");
+      processError = createTempFilePath("temp", "stderr");
 
       if (command.isEmpty())
       {
