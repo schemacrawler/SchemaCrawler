@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.diagram;
 
 
-import static schemacrawler.tools.integration.diagram.GraphvizJavaExecutorUtility.generateGraph;
 import static schemacrawler.tools.integration.diagram.GraphvizUtility.isGraphvizJavaAvailable;
 
 import java.nio.file.Path;
@@ -58,7 +57,9 @@ final class GraphJavaExecutor
   {
     try
     {
-      generateGraph(dotFile, outputFile, diagramOutputFormat);
+      GraphvizJavaExecutorUtility.generateGraph(dotFile,
+                                                outputFile,
+                                                diagramOutputFormat);
     }
     catch (final SchemaCrawlerException e)
     {
