@@ -55,7 +55,7 @@ public class TarjanStronglyConnectedComponentFinder<T extends Comparable<? super
 
   public TarjanStronglyConnectedComponentFinder(final DirectedGraph<T> graph)
   {
-    this.graph = Objects.requireNonNull(graph, "No graph provided");
+    this.graph = Objects.requireNonNull(graph, "No diagram provided");
 
     stronglyConnectedComponents = new HashSet<>();
     stack = new ArrayDeque<>();

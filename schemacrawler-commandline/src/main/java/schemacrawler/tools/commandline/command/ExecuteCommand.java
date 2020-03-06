@@ -47,7 +47,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.commandline.shell.AvailableCommandsCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.integration.graph.GraphOutputFormat;
+import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import sf.util.ObjectToStringFormat;
@@ -133,7 +133,7 @@ public class ExecuteCommand
       // Output file name has to be specified for diagrams
       // (Check after output options have been built)
       if (
-        GraphOutputFormat.isSupportedFormat(outputOptions.getOutputFormatValue())
+        DiagramOutputFormat.isSupportedFormat(outputOptions.getOutputFormatValue())
         && !commandOutputOptions
           .getOutputFile()
           .isPresent())

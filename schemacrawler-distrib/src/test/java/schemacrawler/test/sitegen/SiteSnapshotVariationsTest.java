@@ -42,7 +42,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.test.utility.*;
-import schemacrawler.tools.integration.graph.GraphOutputFormat;
+import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
 import schemacrawler.tools.integration.serialize.SerializationFormat;
 import schemacrawler.tools.lint.executable.LintReportOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
@@ -97,7 +97,7 @@ public class SiteSnapshotVariationsTest
     throws Exception
   {
     for (final OutputFormat outputFormat : new OutputFormat[] {
-      TextOutputFormat.html, TextOutputFormat.text, GraphOutputFormat.htmlx })
+      TextOutputFormat.html, TextOutputFormat.text, DiagramOutputFormat.htmlx })
     {
       final String extension;
       if ("htmlx".equals(outputFormat.getFormat()))

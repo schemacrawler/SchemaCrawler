@@ -29,7 +29,7 @@ package sf.util.graph;
 
 
 /**
- * Directed edge in a graph.
+ * Directed edge in a diagram.
  */
 public final class DirectedEdge<T>
 {

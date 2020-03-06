@@ -6,7 +6,7 @@
   <parent>
     <artifactId>schemacrawler-parent</artifactId>
     <groupId>us.fatehi</groupId>
-    <version>16.4.1</version>
+    <version>16.5.0</version>
     <relativePath>../schemacrawler-parent/pom.xml</relativePath>
   </parent>
   <artifactId>schemacrawler-commandline</artifactId>
@@ -42,7 +42,7 @@
     </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-integrations</artifactId>
+      <artifactId>schemacrawler-diagram</artifactId>
       <version>${project.version}</version>
       <type>test-jar</type>
       <scope>test</scope>

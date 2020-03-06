@@ -50,7 +50,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -68,7 +67,7 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.HeavyDatabaseBuildCondition;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.integration.graph.GraphOutputFormat;
+import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
 import schemacrawler.tools.integration.serialize.SerializationFormat;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -120,7 +119,7 @@ public class PostgreSQLEnumColumnTest
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
     for (final OutputFormat outputFormat : new OutputFormat[] {
-      GraphOutputFormat.scdot, TextOutputFormat.text, TextOutputFormat.html
+      DiagramOutputFormat.scdot, TextOutputFormat.text, TextOutputFormat.html
     })
     {
       assertThat(outputOf(executableExecution(getConnection(),

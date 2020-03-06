@@ -32,7 +32,7 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 import schemacrawler.test.AbstractSpinThroughCommandLineTest;
-import schemacrawler.tools.integration.graph.GraphOutputFormat;
+import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
 
 public class SpinThroughGraphCommandLineTest
@@ -43,7 +43,7 @@ public class SpinThroughGraphCommandLineTest
   public Stream<OutputFormat> outputFormats()
   {
     return Arrays.stream(new OutputFormat[] {
-      GraphOutputFormat.scdot, GraphOutputFormat.htmlx
+      DiagramOutputFormat.scdot, DiagramOutputFormat.htmlx
     });
   }
 
