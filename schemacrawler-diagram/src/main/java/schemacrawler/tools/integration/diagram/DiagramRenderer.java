@@ -75,7 +75,7 @@ public final class DiagramRenderer
     {
       return;
     }
-    else if (GraphvizJavaExecutorUtility.isGraphvizJavaAvailable(
+    else if (GraphvizUtility.isGraphvizJavaAvailable(
       diagramOutputFormat))
     {
       return;

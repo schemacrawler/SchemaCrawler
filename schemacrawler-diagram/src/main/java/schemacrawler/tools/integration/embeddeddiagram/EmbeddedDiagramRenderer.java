@@ -48,7 +48,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.executable.CommandChain;
 import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
-import schemacrawler.tools.integration.diagram.GraphvizJavaExecutorUtility;
 import schemacrawler.tools.integration.diagram.GraphvizUtility;
 import schemacrawler.tools.options.TextOutputFormat;
 
@@ -105,7 +104,7 @@ public class EmbeddedDiagramRenderer
     {
       return;
     }
-    else if (GraphvizJavaExecutorUtility.isGraphvizJavaAvailable(
+    else if (GraphvizUtility.isGraphvizJavaAvailable(
       DiagramOutputFormat.svg))
     {
       return;

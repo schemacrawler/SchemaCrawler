@@ -18,19 +18,12 @@ import guru.nidi.graphviz.engine.GraphvizV8Engine;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.IOUtility;
 import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
-import sf.util.Utility;
 
 public final class GraphvizJavaExecutorUtility
 {
 
   private static final SchemaCrawlerLogger LOGGER =
     SchemaCrawlerLogger.getLogger(GraphvizJavaExecutorUtility.class.getName());
-
-  public static boolean canMap(final DiagramOutputFormat diagramOutputFormat)
-  {
-    return map(diagramOutputFormat) != null;
-  }
 
   /**
    * Need a static method to account for imports of pure Java Graphviz library.
@@ -74,24 +67,6 @@ public final class GraphvizJavaExecutorUtility
       throw new SchemaCrawlerException("Cannot generate diagram from " + dotFile,
                                        e);
     }
-  }
-
-  public static boolean isGraphvizJavaAvailable(final DiagramOutputFormat diagramOutputFormat)
-  {
-    final String className = "guru.nidi.graphviz.engine.Graphviz";
-    final boolean hasClass = Utility.isClassAvailable(className);
-    final boolean supportsFormat = canMap(diagramOutputFormat);
-
-    LOGGER.log(Level.INFO,
-               new StringFormat("Checking if diagram can be generated - "
-                                + " can load <%s> = <%b>, "
-                                + " can generate format <%s> = <%b>",
-                                className,
-                                hasClass,
-                                diagramOutputFormat.getDescription(),
-                                supportsFormat));
-
-    return hasClass && supportsFormat;
   }
 
   private static List<GraphvizEngine> loadGraphvizEngines()

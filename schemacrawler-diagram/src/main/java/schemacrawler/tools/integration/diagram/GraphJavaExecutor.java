@@ -76,7 +76,7 @@ final class GraphJavaExecutor
   @Override
   public boolean canGenerate()
   {
-    return GraphvizJavaExecutorUtility.isGraphvizJavaAvailable(
+    return GraphvizUtility.isGraphvizJavaAvailable(
       diagramOutputFormat);
 
   }
