@@ -37,6 +37,7 @@ import static java.nio.file.StandardOpenOption.WRITE;
 import static schemacrawler.tools.integration.diagram.DiagramOutputFormat.svg;
 import static schemacrawler.tools.integration.diagram.GraphvizUtility.isGraphvizAvailable;
 import static schemacrawler.tools.integration.diagram.GraphvizUtility.isGraphvizJavaAvailable;
+import static schemacrawler.tools.options.TextOutputFormat.html;
 import static sf.util.IOUtility.copy;
 import static sf.util.IOUtility.createTempFilePath;
 
@@ -50,7 +51,6 @@ import java.util.regex.Pattern;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.executable.CommandChain;
-import schemacrawler.tools.options.TextOutputFormat;
 
 public class EmbeddedDiagramRenderer
   extends BaseSchemaCrawlerCommand
@@ -127,7 +127,7 @@ public class EmbeddedDiagramRenderer
 
     // Execute chain, after setting all options from the current command
     final CommandChain chain = new CommandChain(this);
-    chain.addNext(command, TextOutputFormat.html, baseHtmlFile);
+    chain.addNext(command, html, baseHtmlFile);
     chain.addNext(command, svg, baseSvgFile);
     chain.execute();
 
