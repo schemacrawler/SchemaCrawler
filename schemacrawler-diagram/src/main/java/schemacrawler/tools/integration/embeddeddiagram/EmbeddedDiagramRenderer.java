@@ -34,6 +34,9 @@ import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
+import static schemacrawler.tools.integration.diagram.DiagramOutputFormat.svg;
+import static schemacrawler.tools.integration.diagram.GraphvizUtility.isGraphvizAvailable;
+import static schemacrawler.tools.integration.diagram.GraphvizUtility.isGraphvizJavaAvailable;
 import static sf.util.IOUtility.copy;
 import static sf.util.IOUtility.createTempFilePath;
 
@@ -47,8 +50,6 @@ import java.util.regex.Pattern;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.executable.CommandChain;
-import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
-import schemacrawler.tools.integration.diagram.GraphvizUtility;
 import schemacrawler.tools.options.TextOutputFormat;
 
 public class EmbeddedDiagramRenderer
@@ -100,12 +101,11 @@ public class EmbeddedDiagramRenderer
   public void checkAvailability()
     throws Exception
   {
-    if (GraphvizUtility.isGraphvizAvailable())
+    if (isGraphvizAvailable())
     {
       return;
     }
-    else if (GraphvizUtility.isGraphvizJavaAvailable(
-      DiagramOutputFormat.svg))
+    else if (isGraphvizJavaAvailable(svg))
     {
       return;
     }
@@ -128,7 +128,7 @@ public class EmbeddedDiagramRenderer
     // Execute chain, after setting all options from the current command
     final CommandChain chain = new CommandChain(this);
     chain.addNext(command, TextOutputFormat.html, baseHtmlFile);
-    chain.addNext(command, DiagramOutputFormat.svg, baseSvgFile);
+    chain.addNext(command, svg, baseSvgFile);
     chain.execute();
 
     // Interleave HTML and SVG

@@ -29,6 +29,7 @@ package schemacrawler.tools.integration.diagram;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.tools.integration.diagram.GraphvizUtility.isGraphvizAvailable;
 import static sf.util.IOUtility.readResourceFully;
 
 import java.nio.file.Path;
@@ -116,7 +117,7 @@ final class GraphProcessExecutor
   @Override
   public boolean canGenerate()
   {
-    return GraphvizUtility.isGraphvizAvailable();
+    return isGraphvizAvailable();
   }
 
   private List<String> createDiagramCommand()

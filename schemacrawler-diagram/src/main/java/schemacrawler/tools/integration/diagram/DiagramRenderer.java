@@ -30,6 +30,9 @@ package schemacrawler.tools.integration.diagram;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.tools.integration.diagram.DiagramOutputFormat.scdot;
+import static schemacrawler.tools.integration.diagram.GraphvizUtility.isGraphvizAvailable;
+import static schemacrawler.tools.integration.diagram.GraphvizUtility.isGraphvizJavaAvailable;
 import static sf.util.IOUtility.createTempFilePath;
 import static sf.util.IOUtility.readResourceFully;
 
@@ -50,7 +53,6 @@ import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
 import schemacrawler.utility.NamedObjectSort;
 
-
 public final class DiagramRenderer
   extends BaseSchemaCrawlerCommand
 {
@@ -67,23 +69,23 @@ public final class DiagramRenderer
   public void checkAvailability()
     throws Exception
   {
-    if (diagramOutputFormat == DiagramOutputFormat.scdot)
+    if (diagramOutputFormat == scdot)
     {
       return;
     }
-    else if (GraphvizUtility.isGraphvizAvailable())
+    else if (isGraphvizAvailable())
     {
       return;
     }
-    else if (GraphvizUtility.isGraphvizJavaAvailable(
-      diagramOutputFormat))
+    else if (isGraphvizJavaAvailable(diagramOutputFormat))
     {
       return;
     }
     else
     {
       throw new SchemaCrawlerException(String.format(
-        "Cannot generate diagram in %s output format", diagramOutputFormat));
+        "Cannot generate diagram in %s output format",
+        diagramOutputFormat));
     }
   }
 
@@ -127,7 +129,7 @@ public final class DiagramRenderer
     // Create dot file
     final Path dotFile = createTempFilePath("schemacrawler.", "dot");
     final OutputOptions dotFileOutputOptions;
-    if (diagramOutputFormat == DiagramOutputFormat.scdot)
+    if (diagramOutputFormat == scdot)
     {
       dotFileOutputOptions = outputOptions;
     }
@@ -135,7 +137,7 @@ public final class DiagramRenderer
     {
       dotFileOutputOptions = OutputOptionsBuilder
         .builder(outputOptions)
-        .withOutputFormat(DiagramOutputFormat.scdot)
+        .withOutputFormat(scdot)
         .withOutputFile(dotFile)
         .toOptions();
     }
@@ -184,14 +186,15 @@ public final class DiagramRenderer
       .toOptions();
 
     GraphExecutor graphExecutor;
-    if (diagramOutputFormat != DiagramOutputFormat.scdot)
+    if (diagramOutputFormat != scdot)
     {
       final List<String> graphvizOpts = diagramOptions.getGraphvizOpts();
       boolean graphExecutorAvailable = false;
 
       // Try 1: Use Graphviz
       graphExecutor = new GraphProcessExecutor(dotFile,
-                                               outputFile, diagramOutputFormat,
+                                               outputFile,
+                                               diagramOutputFormat,
                                                graphvizOpts);
       graphExecutorAvailable = graphExecutor.canGenerate();
 
@@ -239,7 +242,8 @@ public final class DiagramRenderer
     final SchemaTextDetailType schemaTextDetailType = getSchemaTextDetailType();
 
     final String identifierQuoteString = identifiers.getIdentifierQuoteString();
-    formatter = new SchemaDotFormatter(schemaTextDetailType, diagramOptions,
+    formatter = new SchemaDotFormatter(schemaTextDetailType,
+                                       diagramOptions,
                                        outputOptions,
                                        identifierQuoteString);
 

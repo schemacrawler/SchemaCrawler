@@ -29,6 +29,7 @@ package schemacrawler.tools.integration.diagram;
 
 
 import static schemacrawler.tools.integration.diagram.GraphvizJavaExecutorUtility.generateGraph;
+import static schemacrawler.tools.integration.diagram.GraphvizUtility.isGraphvizJavaAvailable;
 
 import java.nio.file.Path;
 import java.util.logging.Level;
@@ -76,9 +77,7 @@ final class GraphJavaExecutor
   @Override
   public boolean canGenerate()
   {
-    return GraphvizUtility.isGraphvizJavaAvailable(
-      diagramOutputFormat);
-
+    return isGraphvizJavaAvailable(diagramOutputFormat);
   }
 
 }
