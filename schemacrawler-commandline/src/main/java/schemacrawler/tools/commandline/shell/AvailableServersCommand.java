@@ -34,8 +34,8 @@ import static picocli.CommandLine.Help.Column.Overflow.WRAP;
 import static picocli.CommandLine.Help.TextTable.forColumns;
 import static sf.util.Utility.isBlank;
 
+import picocli.CommandLine;
 import picocli.CommandLine.Command;
-import picocli.CommandLine.Help.Ansi;
 import picocli.CommandLine.Help.Column;
 import picocli.CommandLine.Help.TextTable;
 import schemacrawler.schemacrawler.DatabaseServerType;
@@ -49,8 +49,10 @@ public class AvailableServersCommand
 {
   private static String availableServersDescriptive()
   {
+    final CommandLine.Help.ColorScheme.Builder colorSchemaBuilder =  new CommandLine.Help.ColorScheme.Builder();
+    colorSchemaBuilder.ansi(CommandLine.Help.Ansi.OFF);
     final TextTable textTable =
-      forColumns(Ansi.OFF, new Column(15, 1, SPAN), new Column(65, 1, WRAP));
+      forColumns(colorSchemaBuilder.build(), new Column(15, 1, SPAN), new Column(65, 1, WRAP));
 
     final DatabaseConnectorRegistry databaseConnectorRegistry =
       DatabaseConnectorRegistry.getDatabaseConnectorRegistry();

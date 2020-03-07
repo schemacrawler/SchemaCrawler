@@ -36,8 +36,8 @@ import static sf.util.Utility.isBlank;
 
 import java.util.Collection;
 
+import picocli.CommandLine;
 import picocli.CommandLine.Command;
-import picocli.CommandLine.Help.Ansi;
 import picocli.CommandLine.Help.Column;
 import picocli.CommandLine.Help.TextTable;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -54,8 +54,10 @@ public class AvailableCommandsCommand
 
   private static String availableCommandsDescriptive()
   {
+    final CommandLine.Help.ColorScheme.Builder colorSchemaBuilder =  new CommandLine.Help.ColorScheme.Builder();
+    colorSchemaBuilder.ansi(CommandLine.Help.Ansi.OFF);
     final TextTable textTable =
-      forColumns(Ansi.OFF, new Column(15, 1, SPAN), new Column(65, 1, WRAP));
+      forColumns(colorSchemaBuilder.build(), new Column(15, 1, SPAN), new Column(65, 1, WRAP));
     try
     {
       final Collection<CommandDescription> commandDescriptions = CommandRegistry
