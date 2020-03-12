@@ -57,7 +57,7 @@
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>db2</artifactId>
-      <version>1.12.5</version>
+      <version>1.13.0</version>
       <scope>test</scope>
     </dependency>
 
@@ -70,7 +70,7 @@
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>junit-jupiter</artifactId>
-      <version>1.12.5</version>
+      <version>1.13.0</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
