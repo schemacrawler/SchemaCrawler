@@ -1,7 +1,7 @@
 # SchemaCrawler Change History
 
-<a name="a16.5.1"></a>
-## Release 16.5.1 - 2020-02-20
+<a name="a16.5.2"></a>
+## Release 16.5.2 - 2020-02-20
 
 - Throw exception if the SchemaCrawler database plugin is not on the CLASSPATH for major database systems
 - Rename the integrations module to diagram
