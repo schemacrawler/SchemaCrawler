@@ -28,11 +28,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.testdb;
 
 
-import picocli.CommandLine;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.concurrent.Callable;
+
+import picocli.CommandLine;
 
 @CommandLine.Command(description = "Creates a test database schema for testing SchemaCrawler",
   name = "Test Schema Creator", mixinStandardHelpOptions = true, version = "16.5.2")
