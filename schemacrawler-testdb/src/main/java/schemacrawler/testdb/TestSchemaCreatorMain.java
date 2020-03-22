@@ -59,8 +59,13 @@ public class TestSchemaCreatorMain
 
   public static void main(String... args)
   {
+    System.exit(call(args));
+  }
+
+  public static int call(String... args)
+  {
     final int exitCode = new CommandLine(new TestSchemaCreatorMain()).execute(args);
-    System.exit(exitCode);
+    return exitCode;
   }
 
   @Override

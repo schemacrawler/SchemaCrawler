@@ -48,7 +48,7 @@ import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.test.utility.TestWriter;
-import schemacrawler.testdb.TestSchemaCreator;
+import schemacrawler.testdb.TestSchemaCreatorMain;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.options.OutputFormat;
@@ -65,8 +65,7 @@ public class SqliteCommandlineTest
   public void setup()
     throws SchemaCrawlerException
   {
-    final DatabaseConnectorRegistry registry =
-      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     dbConnector = registry.lookupDatabaseConnector("sqlite");
   }
 
@@ -95,9 +94,7 @@ public class SqliteCommandlineTest
         .normalize()
         .toAbsolutePath();
 
-      TestSchemaCreator.main(new String[] {
-        "jdbc:sqlite:" + sqliteDbFile, null, null, "/sqlite.scripts.txt"
-      });
+      TestSchemaCreatorMain.call("--url", "jdbc:sqlite:" + sqliteDbFile);
 
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("-server", "sqlite");
@@ -109,9 +106,7 @@ public class SqliteCommandlineTest
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(
-                 "sqlite.main.list." + outputFormat.getFormat())));
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource("sqlite.main.list." + outputFormat.getFormat())));
   }
 
 }

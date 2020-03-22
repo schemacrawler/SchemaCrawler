@@ -49,7 +49,7 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.testdb.SqlScript;
-import schemacrawler.testdb.TestSchemaCreator;
+import schemacrawler.testdb.TestSchemaCreatorMain;
 import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.IOUtility;
 
@@ -67,9 +67,7 @@ public class TempTablesTest
       .normalize()
       .toAbsolutePath();
 
-    TestSchemaCreator.main(new String[] {
-      "jdbc:sqlite:" + sqliteDbFile, null, null, "/sqlite.scripts.txt"
-    });
+    TestSchemaCreatorMain.call("--url", "jdbc:sqlite:" + sqliteDbFile);
     final Connection connection = executeSqlInTestDatabase(sqliteDbFile,
                                                            "/db/books/05_temp_tables_01_B.sql");
 
