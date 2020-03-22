@@ -35,7 +35,7 @@ import java.util.concurrent.Callable;
 import picocli.CommandLine;
 
 @CommandLine.Command(description = "Creates a test database schema for testing SchemaCrawler",
-  name = "Test Schema Creator", mixinStandardHelpOptions = true, version = "16.5.2")
+  name = "Test Schema Creator", mixinStandardHelpOptions = true)
 public class TestSchemaCreatorMain
   implements Callable<Integer>
 {
