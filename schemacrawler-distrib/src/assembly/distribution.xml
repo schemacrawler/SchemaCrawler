@@ -95,12 +95,10 @@
     <copy
       file="${SchemaCrawler.home}/schemacrawler-testdb/target/schemacrawler-testdb-${SchemaCrawler.version}.jar"
       todir="${main-distribution.staging.dir}/_testdb/lib" />
-    <java classname="schemacrawler.testdb.TestSchemaCreator"
+    <java classname="schemacrawler.testdb.TestSchemaCreatorMain"
       failonerror="true">
+      <arg value="--url" />
       <arg value="jdbc:sqlite:${main-distribution.staging.dir}/_testdb/sc.db" />
-      <arg value="sa" />
-      <arg value="" />
-      <arg value="/sqlite.scripts.txt" />
       <classpath>
         <fileset dir="${main-distribution.staging.dir}/_testdb/lib">
           <include name="**/*.jar" />
@@ -110,7 +108,7 @@
         </fileset>
       </classpath>
     </java>
-    <copy todir="${main-distribution.staging.dir}/_testdb">
+    <copy todir="${main-distribution.staging.dir}/_testdb/lib">
       <fileset dir="${main-distribution.staging.dir}/_schemacrawler/lib">
         <include name="**/*.jar" />
       </fileset>
