@@ -1,2 +1,2 @@
 #!/bin/sh
-java -cp $(echo ./lib/*.jar | tr ' ' ':') schemacrawler.testdb.TestSchemaCreatorMain $*
+java -cp "lib/*" schemacrawler.testdb.TestSchemaCreatorMain $*
