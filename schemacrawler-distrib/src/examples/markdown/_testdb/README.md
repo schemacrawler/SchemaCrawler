@@ -6,7 +6,7 @@ A small footprint, light-weight database server, with some test data for running
 ## How to Run the Database Server
 1. Make sure that java is on your PATH
 2. Start a command shell in the `_testdb` directory
-3. Start the test database server by running the StartDatabaseServer script
+3. Start the test database server by running the startdbserver script
 
 ## How to Stop the Database Server
 1. Press Crtl-C in the database server command shell, or kill the process

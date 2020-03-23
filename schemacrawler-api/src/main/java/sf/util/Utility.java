@@ -72,8 +72,7 @@ public final class Utility
     }
 
     final LogManager logManager = LogManager.getLogManager();
-    final List<String> loggerNames =
-      Collections.list(logManager.getLoggerNames());
+    final List<String> loggerNames = Collections.list(logManager.getLoggerNames());
     for (final String loggerName : loggerNames)
     {
       final Logger logger = logManager.getLogger(loggerName);
@@ -98,7 +97,53 @@ public final class Utility
     final Logger rootLogger = Logger.getLogger("");
     rootLogger.setLevel(logLevel);
 
-    // See https://www.slf4j.org/api/org/slf4j/impl/SimpleLogger.html
+    applySlf4jLogLevel(logLevel);
+    applyPicocliLogLevel(logLevel);
+  }
+
+  /**
+   * @param logLevel
+   *   Log level to be set
+   * @see <a href="https://picocli.info/#_tracing">picocli Tracing</a>
+   */
+  private static void applyPicocliLogLevel(final Level logLevel)
+  {
+    // See
+    // See
+    final String picocliLogLevel;
+    final String logLevelName = logLevel.getName();
+    switch (logLevelName)
+    {
+      case "OFF":
+        picocliLogLevel = "OFF";
+        break;
+      case "SEVERE":
+        picocliLogLevel = "WARN";
+        break;
+      case "WARNING":
+        picocliLogLevel = "WARN";
+        break;
+      case "CONFIG":
+        picocliLogLevel = "INFO";
+        break;
+      case "INFO":
+        picocliLogLevel = "INFO";
+        break;
+      default:
+        picocliLogLevel = "DEBUG";
+        break;
+    }
+
+    System.setProperty("picocli.trace", picocliLogLevel);
+  }
+
+  /**
+   * @param logLevel
+   *   Log level to be set
+   * @see <a href="https://www.slf4j.org/api/org/slf4j/impl/SimpleLogger.html">SLF4J log levels</a>
+   */
+  private static void applySlf4jLogLevel(final Level logLevel)
+  {
     final String slf4jLogLevel;
     switch (logLevel.getName())
     {
@@ -121,9 +166,8 @@ public final class Utility
         slf4jLogLevel = "trace";
         break;
     }
-    // Set properties for other loggers
-    System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", slf4jLogLevel);
 
+    System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", slf4jLogLevel);
   }
 
   public static String commonPrefix(final String string1, final String string2)
@@ -190,8 +234,7 @@ public final class Utility
     return textWithoutQuotes;
   }
 
-  public static <E extends Enum<E>> E enumValue(final String value,
-                                                final E defaultValue)
+  public static <E extends Enum<E>> E enumValue(final String value, final E defaultValue)
   {
     requireNonNull(defaultValue, "No default value provided");
     E enumValue;
@@ -218,8 +261,7 @@ public final class Utility
     return enumValue;
   }
 
-  public static <E extends Enum<E> & IdentifiedEnum> E enumValueFromId(final int value,
-                                                                       final E defaultValue)
+  public static <E extends Enum<E> & IdentifiedEnum> E enumValueFromId(final int value, final E defaultValue)
   {
     requireNonNull(defaultValue, "No default value provided");
     try
@@ -240,8 +282,7 @@ public final class Utility
     return defaultValue;
   }
 
-  private static int indexOfDifference(final String string1,
-                                       final String string2)
+  private static int indexOfDifference(final String string1, final String string2)
   {
     if (string1 == null || string2 == null)
     {
@@ -343,8 +384,7 @@ public final class Utility
     return text != null && text.equals(text.toLowerCase());
   }
 
-  public static String join(final Collection<String> collection,
-                            final String separator)
+  public static String join(final Collection<String> collection, final String separator)
   {
     if (collection == null || collection.isEmpty())
     {

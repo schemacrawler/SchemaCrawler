@@ -43,7 +43,7 @@ import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestLoggingExtension;
-import schemacrawler.testdb.TestSchemaCreator;
+import schemacrawler.testdb.TestSchemaCreatorMain;
 import schemacrawler.tools.sqlite.SchemaCrawlerSQLiteUtility;
 import sf.util.IOUtility;
 
@@ -66,9 +66,7 @@ public class SQLiteDiagramTest
       .normalize()
       .toAbsolutePath();
 
-    TestSchemaCreator.main(new String[] {
-      "jdbc:sqlite:" + sqliteDbFile, null, null, "/sqlite.scripts.txt"
-    });
+    TestSchemaCreatorMain.call("--url", "jdbc:sqlite:" + sqliteDbFile);
 
     final Path schemaCrawlerDiagramFile =
       SchemaCrawlerSQLiteUtility.createSchemaCrawlerDiagram(sqliteDbFile,

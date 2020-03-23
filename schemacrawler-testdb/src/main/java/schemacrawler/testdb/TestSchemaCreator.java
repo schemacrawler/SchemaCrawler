@@ -35,32 +35,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Connection;
-import java.sql.DriverManager;
+
 
 public class TestSchemaCreator
   implements Runnable
 {
 
-  public static void main(final String[] args)
-    throws Exception
-  {
-    final String connectionUrl = args[0];
-    final String user = args[1];
-    final String password = args[2];
-    final String scriptsResource = args[3];
-
-    try (
-      final Connection connection = DriverManager.getConnection(connectionUrl,
-                                                                user,
-                                                                password)
-    )
-    {
-      connection.setAutoCommit(false);
-      final TestSchemaCreator schemaCreator =
-        new TestSchemaCreator(connection, scriptsResource);
-      schemaCreator.run();
-    }
-  }
   private final Connection connection;
   private final String scriptsResource;
 

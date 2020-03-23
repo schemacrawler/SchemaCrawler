@@ -47,7 +47,7 @@ import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestLoggingExtension;
-import schemacrawler.testdb.TestSchemaCreator;
+import schemacrawler.testdb.TestSchemaCreatorMain;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
@@ -90,9 +90,7 @@ public class SQLiteExecutableTest
       .normalize()
       .toAbsolutePath();
 
-    TestSchemaCreator.main(new String[] {
-      "jdbc:sqlite:" + sqliteDbFile, null, null, "/sqlite.scripts.txt"
-    });
+    TestSchemaCreatorMain.call("--url", "jdbc:sqlite:" + sqliteDbFile);
 
     final Config config = new Config();
     config.put("server", "sqlite");
