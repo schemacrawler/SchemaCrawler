@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+
+  postgresql:
+    image: postgres
+    ports:
+      - "5432"
+    environment:
+      POSTGRES_DB: schemacrawler
+      POSTGRES_USER: schemacrawler
+      POSTGRES_PASSWORD: schemacrawler
