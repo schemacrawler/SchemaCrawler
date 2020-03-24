@@ -1,2 +1,2 @@
 @echo off
-java -cp ./lib/*;. schemacrawler.testdb.TestSchemaCreatorMain %*
+java -cp "%~dp0/lib/*";. schemacrawler.testdb.TestSchemaCreatorMain %*

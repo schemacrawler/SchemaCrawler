@@ -1,2 +1,3 @@
 #!/bin/sh
-java -cp "lib/*" schemacrawler.testdb.TestSchemaCreatorMain $*
+SC_DIR=`dirname $0`
+java -cp $(echo $SC_DIR/lib/*.jar | tr ' ' ':'):. schemacrawler.testdb.TestSchemaCreatorMain $*
