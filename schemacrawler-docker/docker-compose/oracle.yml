@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+
+  oracle:
+    # https://github.com/wnameless/docker-oracle-xe-11g
+    image: wnameless/oracle-xe-11g-r2
+    ports:
+      - "49161:1521"
+    environment:
+      ORACLE_ALLOW_REMOTE: "true"
