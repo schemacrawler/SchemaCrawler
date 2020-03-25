@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+
+    mysql:
+        image: mysql
+        ports:
+            - "3306"
+        environment:
+            MYSQL_ROOT_USER: root
+            MYSQL_ROOT_PASSWORD: schemacrawler
+            MYSQL_DATABASE: books
+            MYSQL_USER: schemacrawler
+            MYSQL_PASSWORD: schemacrawler
+            MYSQL_ALLOW_EMPTY_PASSWORD: "yes"

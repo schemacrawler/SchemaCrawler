@@ -67,6 +67,26 @@
 
 
 
+## MySQL
+
+### Setup
+
+- To start SchemaCrawler with MySQL, run
+  `docker-compose -f schemacrawler.yml -f mysql.yml up -d`
+- Start SchemaCrawler bash with
+  `docker exec -it docker-compose_schemacrawler_1 /bin/bash`
+- Create a test MySQL database schema, run
+  `./_testdb/createtestschema.sh --url "jdbc:mysql://mysql:3306/books?disableMariaDbDriver&useInformationSchema=true" --user root --password schemacrawler`
+- Run SchemaCrawler from SchemaCrawler bash
+  `schemacrawler --server mysql --host mysql --database bookd --user schemacrawler --password schemacrawler --info-level minimum -c list`
+
+### Tear Down
+
+- To stop SchemaCrawler with MySQL, run
+  `docker-compose -f schemacrawler.yml -f mysql.yml down -t 2`
+
+
+
 ## IBM DB2
 
 > Not working - cannot connect to create schema?
