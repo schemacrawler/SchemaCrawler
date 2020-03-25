@@ -1,5 +1,13 @@
 # SchemaCrawler Change History
 
+<a name="a16.5.3"></a>
+## Release 16.5.3 - 2020-03-24
+
+- Redistribute Oracle and IBM DB2 JDBC drivers with SchemaCrawler
+- Provide docker-compose scripts for testing with databases
+- Better command-line to create test schemas for various databases
+
+
 <a name="a16.5.2"></a>
 ## Release 16.5.2 - 2020-02-20
 
