@@ -10,3 +10,6 @@ services:
       - type: bind
         source: ./_testdb
         target: /home/schcrwlr/_testdb
+      - type: bind
+        source: ./
+        target: /home/schcrwlr/output

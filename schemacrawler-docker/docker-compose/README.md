@@ -16,7 +16,7 @@
 - Start SchemaCrawler bash with
   `docker exec -it docker-compose_schemacrawler_1 /bin/bash`
 - Create a test PostgreSQL database schema, run
-  `./createtestschema.sh --url "jdbc:postgresql://postgresql:5432/schemacrawler?ApplicationName=SchemaCrawler;loggerLevel=DEBUG" --user schemacrawler --password schemacrawler`
+  `./_testdb/createtestschema.sh --url "jdbc:postgresql://postgresql:5432/schemacrawler?ApplicationName=SchemaCrawler;loggerLevel=DEBUG" --user schemacrawler --password schemacrawler`
 - Run SchemaCrawler from SchemaCrawler bash
   `schemacrawler --server postgresql --host postgresql --database schemacrawler --user schemacrawler --password schemacrawler --info-level minimum -c list`
 
@@ -36,7 +36,7 @@
 - Start SchemaCrawler bash with
   `docker exec -it docker-compose_schemacrawler_1 /bin/bash`
 - Create a test Oracle database schema, run
-  `./createtestschema.sh --url "jdbc:oracle:thin:@//oracle:1521/xe" --user system --password oracle --scripts-resource /oracle.11g.scripts.txt`
+  `./_testdb/createtestschema.sh --url "jdbc:oracle:thin:@//oracle:1521/xe" --user system --password oracle --scripts-resource /oracle.11g.scripts.txt`
 - Run SchemaCrawler from SchemaCrawler bash
   `schemacrawler --server oracle --host oracle --database xe --user system --password oracle --info-level minimum -c list`
 
@@ -58,7 +58,7 @@
 - Start SchemaCrawler bash with
   `docker exec -it docker-compose_schemacrawler_1 /bin/bash`
 - Create a test IBM DB2 database schema, run
-  `./createtestschema.sh --url "jdbc:db2://db2:50000/schcrwlr:retrieveMessagesFromServerOnGetMessage=true;" --user schcrwlr --password schemacrawler`
+  `./_testdb/createtestschema.sh --url "jdbc:db2://db2:50000/schcrwlr:retrieveMessagesFromServerOnGetMessage=true;" --user schcrwlr --password schemacrawler`
 - Run SchemaCrawler from SchemaCrawler bash
   `schemacrawler --server db2 --host db2 --database schcrwlr --user schcrwlr --password schemacrawler --info-level minimum -c list`
 
