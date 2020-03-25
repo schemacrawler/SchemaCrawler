@@ -111,6 +111,7 @@
     <copy todir="${main-distribution.staging.dir}/_testdb/lib">
       <fileset dir="${main-distribution.staging.dir}/_schemacrawler/lib">
         <include name="**/*.jar" />
+        <exclude name="**/schemacrawler-*.jar" />
       </fileset>
     </copy>
 

@@ -34,8 +34,7 @@ import java.util.concurrent.Callable;
 
 import picocli.CommandLine;
 
-@CommandLine.Command(description = "Creates a test database schema for testing SchemaCrawler",
-  name = "Test Schema Creator", mixinStandardHelpOptions = true)
+@CommandLine.Command(description = "Creates a test database schema for testing SchemaCrawler", name = "Test Schema Creator", mixinStandardHelpOptions = true)
 public class TestSchemaCreatorMain
   implements Callable<Integer>
 {
@@ -52,6 +51,14 @@ public class TestSchemaCreatorMain
     "--password"
   }, description = "Database password", paramLabel = "<password>")
   private String passwordProvided;
+  @CommandLine.Option(names = {
+    "--scripts-resource"
+  }, description = "Scripts resource on CLASSPATH", paramLabel = "<scripts-resource>")
+  private String scriptsresource;
+  @CommandLine.Option(names = {
+    "--debug", "-d"
+  }, description = "Debug trace")
+  private boolean debug;
 
   private TestSchemaCreatorMain()
   {
@@ -72,15 +79,16 @@ public class TestSchemaCreatorMain
   public Integer call()
   {
     try (
-      final Connection connection = DriverManager.getConnection(connectionUrl,
-        user,
-        passwordProvided);)
+      final Connection connection = DriverManager.getConnection(connectionUrl, user, passwordProvided);
+    )
     {
       connection.setAutoCommit(false);
-      final String scriptsResource = findScriptsResource();
-      final TestSchemaCreator testSchemaCreator = new TestSchemaCreator(connection, scriptsResource);
+      findScriptsResource();
+      System.setProperty("schemacrawler.testdb.SqlScript.debug", String.valueOf(debug));
+      final TestSchemaCreator testSchemaCreator = new TestSchemaCreator(connection, scriptsresource);
       testSchemaCreator.run();
-    } catch (final Exception e)
+    }
+    catch (final Exception e)
     {
       e.printStackTrace();
       return 1;
@@ -88,8 +96,12 @@ public class TestSchemaCreatorMain
     return 0;
   }
 
-  private String findScriptsResource()
+  private void findScriptsResource()
   {
+    if (scriptsresource != null && !scriptsresource.isEmpty())
+    {
+      return;
+    }
     if (connectionUrl == null)
     {
       throw new IllegalArgumentException("No connection URL provided");
@@ -97,8 +109,9 @@ public class TestSchemaCreatorMain
     final String[] splitUrl = connectionUrl.split(":");
     if (splitUrl.length >= 2)
     {
-      return String.format("/%s.scripts.txt", splitUrl[1]);
-    } else
+      scriptsresource = String.format("/%s.scripts.txt", splitUrl[1]);
+    }
+    else
     {
       throw new IllegalArgumentException("No connection URL provided");
     }
