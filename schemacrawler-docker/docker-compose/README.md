@@ -47,6 +47,26 @@
 
 
 
+## Microsoft SQL Server
+
+### Setup
+
+- To start SchemaCrawler with Microsoft SQL Server, run
+  `docker-compose -f schemacrawler.yml -f sqlserver.yml up -d`
+- Start SchemaCrawler bash with
+  `docker exec -it docker-compose_schemacrawler_1 /bin/bash`
+- Create a test Microsoft SQL Server database schema, run
+  `./_testdb/createtestschema.sh --url "jdbc:sqlserver://sqlserver:1433;databaseName=master" --user SA --password Schem#Crawl3r`
+- Run SchemaCrawler from SchemaCrawler bash
+  `schemacrawler --server sqlserver --host sqlserver --database BOOKS --schemas BOOKS\.dbo --user SA --password Schem#Crawl3r --info-level minimum -c list`
+
+### Tear Down
+
+- To stop SchemaCrawler with Microsoft SQL Server, run
+  `docker-compose -f schemacrawler.yml -f sqlserver.yml down -t 2`
+
+
+
 ## IBM DB2
 
 > Not working - cannot connect to create schema?

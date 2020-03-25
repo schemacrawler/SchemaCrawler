@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2017-CU12
+    ports:
+      - "1433"
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: Schem#Crawl3r
