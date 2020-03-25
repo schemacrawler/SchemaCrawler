@@ -156,7 +156,11 @@ public final class DiagramRenderer
     traverser.traverse();
 
     final GraphExecutor graphExecutor = getGraphExecutor(dotFile);
-    graphExecutor.call();
+    final boolean successful = graphExecutor.call();
+    if (!successful) {
+      final String message = readResourceFully("/dot.error.txt");
+      throw new SchemaCrawlerRuntimeException(message);
+    }
   }
 
   @Override

@@ -33,7 +33,6 @@ import static sf.util.IOUtility.createTempFilePath;
 import static sf.util.Utility.containsWhitespace;
 import static sf.util.Utility.isBlank;
 
-import java.lang.ProcessBuilder.Redirect;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,8 +70,8 @@ public class ProcessExecutor
       LOGGER.log(Level.CONFIG, new StringFormat("Executing:%n%s", command));
 
       final ProcessBuilder processBuilder = new ProcessBuilder(command);
-      processBuilder.redirectOutput(Redirect.appendTo(processOutput.toFile()));
-      processBuilder.redirectOutput(Redirect.appendTo(processError.toFile()));
+      processBuilder.redirectOutput(processOutput.toFile());
+      processBuilder.redirectError(processError.toFile());
 
       final Process process = processBuilder.start();
       exitCode = process.waitFor();

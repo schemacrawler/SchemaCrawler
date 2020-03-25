@@ -28,10 +28,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.diagram;
 
 
+import static java.nio.file.Files.copy;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.integration.diagram.GraphvizUtility.isGraphvizAvailable;
-import static sf.util.IOUtility.readResourceFully;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +40,8 @@ import java.util.function.Supplier;
 import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.ProcessExecutor;
 import sf.util.FileContents;
+import sf.util.ProcessExecutor;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
@@ -48,8 +49,7 @@ final class GraphProcessExecutor
   extends AbstractGraphProcessExecutor
 {
 
-  private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(GraphProcessExecutor.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(GraphProcessExecutor.class.getName());
 
   private final List<String> graphvizOpts;
 
@@ -61,8 +61,7 @@ final class GraphProcessExecutor
   {
     super(dotFile, outputFile, diagramOutputFormat);
 
-    this.graphvizOpts =
-      requireNonNull(graphvizOpts, "No Graphviz options provided");
+    this.graphvizOpts = requireNonNull(graphvizOpts, "No Graphviz options provided");
   }
 
   @Override
@@ -70,9 +69,7 @@ final class GraphProcessExecutor
   {
 
     final List<String> command = createDiagramCommand();
-    LOGGER.log(Level.INFO,
-               new StringFormat("Generating diagram using Graphviz:\n%s",
-                                command.toString()));
+    LOGGER.log(Level.INFO, new StringFormat("Generating diagram using Graphviz:\n%s", command.toString()));
 
     final ProcessExecutor processExecutor = new ProcessExecutor();
     processExecutor.setCommandLine(command);
@@ -84,31 +81,25 @@ final class GraphProcessExecutor
     }
     catch (final Exception e)
     {
-      LOGGER.log(Level.INFO,
-                 String.format("Could not generate diagram using Graphviz:%n%s",
-                               command.toString()),
-                 e);
+      LOGGER.log(Level.INFO, String.format("Could not generate diagram using Graphviz:%n%s", command.toString()), e);
       exitCode = Integer.MIN_VALUE;
     }
     final boolean successful = exitCode != null && exitCode == 0;
 
-    LOGGER.log(Level.INFO,
-               new FileContents(processExecutor.getProcessOutput()));
-    final Supplier<String> processError =
-      new FileContents(processExecutor.getProcessError());
+    LOGGER.log(Level.FINE,
+               new StringFormat("Graphviz stdout:%n%s", new FileContents(processExecutor.getProcessOutput())));
+    final Supplier<String> processError = new FileContents(processExecutor.getProcessError());
     if (!successful)
     {
       LOGGER.log(Level.SEVERE,
-                 new StringFormat("Process returned exit code %d%n%s",
-                                  exitCode,
-                                  processError));
-      showCommandline(outputFile, processExecutor.getCommand());
+                 new StringFormat("Graphviz returned exit code <%d>%nGraphviz stderr:%n%s", exitCode, processError));
+      retainDotFile(processExecutor.getCommand());
     }
     else
     {
-      LOGGER.log(Level.WARNING, processError);
-      LOGGER.log(Level.INFO,
-                 new StringFormat("Generated diagram <%s>", outputFile));
+      LOGGER.log(Level.FINE,
+                 new StringFormat("Graphviz stderr:%n%s", new FileContents(processExecutor.getProcessError())));
+      LOGGER.log(Level.INFO, new StringFormat("Generated diagram <%s>", outputFile));
     }
 
     return successful;
@@ -136,30 +127,32 @@ final class GraphProcessExecutor
     return command;
   }
 
-  private void showCommandline(final Path outputFile,
-                               final List<String> command)
+  private void retainDotFile(final List<String> command)
   {
-    if (!LOGGER.isLoggable(Level.SEVERE))
+    try
     {
-      return;
+      // Find name of DOT file in local directory
+      final Path movedDotFile = outputFile
+        .normalize()
+        .getParent()
+        .resolve(outputFile.getFileName() + ".dot");
+      // Copy DOT file
+      copy(dotFile, movedDotFile);
+
+      // Print command to run
+      command.remove(command.size() - 1);
+      command.remove(command.size() - 1);
+      command.add(outputFile.toString());
+      command.add(movedDotFile.toString());
+
+      LOGGER.log(Level.SEVERE,
+                 String.format("Error generating diagram%nGenerate your diagram manually, using:%n%s",
+                               String.join(" ", command)));
     }
-
-    // Find name of DOT file in local directory
-    final Path movedDotFile = outputFile
-      .normalize()
-      .getParent()
-      .resolve(outputFile.getFileName() + ".dot");
-
-    // Print command to run
-    command.remove(command.size() - 1);
-    command.remove(command.size() - 1);
-    command.add(outputFile.toString());
-    command.add(movedDotFile.toString());
-
-    LOGGER.log(Level.SEVERE,
-               String.format("%s%nGenerate your diagram manually, using:%n%s",
-                             readResourceFully("/dot.error.txt"),
-                             String.join(" ", command)));
+    catch (final IOException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not retain generated DOT file", e);
+    }
   }
 
 }
