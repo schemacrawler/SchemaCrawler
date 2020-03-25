@@ -29,6 +29,7 @@ package schemacrawler.tools.integration.diagram;
 
 
 import static java.nio.file.Files.copy;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.integration.diagram.GraphvizUtility.isGraphvizAvailable;
 
@@ -137,7 +138,7 @@ final class GraphProcessExecutor
         .getParent()
         .resolve(outputFile.getFileName() + ".dot");
       // Copy DOT file
-      copy(dotFile, movedDotFile);
+      copy(dotFile, movedDotFile, REPLACE_EXISTING);
 
       // Print command to run
       command.remove(command.size() - 1);
