@@ -78,7 +78,7 @@
 - Create a test MySQL database schema, run
   `./_testdb/createtestschema.sh --url "jdbc:mysql://mysql:3306/books?disableMariaDbDriver&useInformationSchema=true" --user root --password schemacrawler`
 - Run SchemaCrawler from SchemaCrawler bash
-  `schemacrawler --server mysql --host mysql --database bookd --user schemacrawler --password schemacrawler --info-level minimum -c list`
+  `schemacrawler --server mysql --host mysql --database books --user schemacrawler --password schemacrawler --info-level minimum -c list`
 
 ### Tear Down
 

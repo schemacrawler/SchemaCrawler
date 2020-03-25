@@ -4,6 +4,7 @@ services:
 
     mysql:
         image: mysql
+        command: --lower_case_table_names=1 --log_bin_trust_function_creators=1
         ports:
             - "3306"
         environment:
