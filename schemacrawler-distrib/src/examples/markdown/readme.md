@@ -28,7 +28,6 @@ the provided scripts.
 2. Start a command shell in the `_downloader` directory 
 3. Run `download.cmd` (or `download.sh` on Unix). 
    Provide one of the following arguments:    
-    - `drivers` - for Oracle and IBM DB2 JDBC drivers  
     - `plugins` - for additional SchemaCrawler plug-ins  
     - `jackson` - for support of JSON ouput format 
     - `graphviz-java` - for a pure Java Gaphviz library to generate diagrams

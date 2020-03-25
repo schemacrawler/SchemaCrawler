@@ -4,25 +4,19 @@ SchemaCrawler supports almost any database that has a JDBC driver. You can simpl
 
 SchemaCrawler is bundled with JDBC drivers for some commonly used relational database management systems (RDBMS) for convenience. The bundled distributions of SchemaCrawler are ready to use for a given database system. However, some JDBC drivers are proprietary, even if free. These JDBC drivers need to be downloaded separately.
 
-The JDBC drivers for database systems commonly used with SchemaCrawler are:
+The JDBC drivers for database systems commonly used with SchemaCrawler are included with the SchemaCrawler download:
 
-- The [SQLite](http://www.sqlite.org/) [Xerial SQLite JDBC driver](https://github.com/xerial/sqlite-jdbc) 
-  is included with the SchemaCrawler download.
-- The [Oracle](http://www.oracle.com/) [JDBC driver](http://www.oracle.com/technology/software/tech/java/sqlj_jdbc/index.html)
-  needs to be downloaded separately.
-- The [Microsoft SQL Server](http://www.microsoft.com/sqlserver/) [JDBC driver](https://github.com/Microsoft/mssql-jdbc)
-  is included with the SchemaCrawler download.
-- The [IBM DB2](http://www.ibm.com/software/data/db2/) [JDBC driver](http://www.ibm.com/software/data/db2/linux-unix-windows/download.html)
-  needs to be downloaded separately.
-- The [MySQL](http://www.mysql.com/) [Connector/J JDBC driver](http://dev.mysql.com/downloads/connector/j/)
-  is included with the SchemaCrawler download.
-- The [PostgreSQL](http://www.postgresql.org/) [JDBC driver](http://jdbc.postgresql.org/)
-  is included with the SchemaCrawler download.
-- Offline database support does not need any JDBC driver,
-  and is included with the SchemaCrawler download.
-- For any other database that includes a compliant JDBC driver, place the JDBC in the
-  SchemaCrawler `lib` directory.
-- [Amazon Aurora](https://aws.amazon.com/rds/aurora/) is supported in MySQL and PostgreSQL modes.
+- [SQLite](http://www.sqlite.org/) [Xerial SQLite JDBC driver](https://github.com/xerial/sqlite-jdbc) 
+- [Oracle](http://www.oracle.com/) [JDBC driver](http://www.oracle.com/technology/software/tech/java/sqlj_jdbc/index.html)
+- [Microsoft SQL Server](http://www.microsoft.com/sqlserver/) [JDBC driver](https://github.com/Microsoft/mssql-jdbc)
+- [IBM DB2](http://www.ibm.com/software/data/db2/) [JDBC driver](https://www.ibm.com/support/pages/db2-jdbc-driver-versions-and-downloads)
+- [MySQL](http://www.mysql.com/) [Connector/J JDBC driver](http://dev.mysql.com/downloads/connector/j/)
+- [PostgreSQL](http://www.postgresql.org/) [JDBC driver](http://jdbc.postgresql.org/)
+- Offline database support does not need any JDBC driver
+
+For any other database that includes a compliant JDBC driver, place the JDBC in the
+SchemaCrawler `lib` directory. [Amazon Aurora](https://aws.amazon.com/rds/aurora/) is supported 
+in MySQL and PostgreSQL modes.
 
 
 # Additional SchemaCrawler Database Plugins

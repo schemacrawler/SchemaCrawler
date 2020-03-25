@@ -33,7 +33,7 @@ dependencies {
 ### SchemaCrawler Docker Image
 The official [SchemaCrawler Docker image] is available on Docker Hub.
 The SchemaCrawler command-line and the interactive shell are available in the image,
-with open-source JDBC drivers.
+with open-source or freely distributable JDBC drivers.
 
 
 ## Building From the Source Code
@@ -55,11 +55,6 @@ You can create the  SchemaCrawler distribution by running `mvn -Dcomplete packag
 ## Eclipse and IntelliJ IDEA
 Before importing the various SchemaCrawler projects into [Eclipse] or [IntelliJ IDEA], make sure that you have a successful [Apache Maven] build. [Apache Maven] will download all the dependencies needed to build SchemaCrawler.
 
-## Proprietary JDBC Drivers
-The Apache Maven build depends on some proprietary JDBC drivers for IBM DB2 and Oracle.
-Download the [IBM DB2 JDBC drivers] place them in the `schemacrawler-db2` source directory, and install them into your local Apache Maven repository using the provided install command.
-Similarly, download the [Oracle JDBC drivers] put them into the `schemacrawler-oracle` source directory, and install them locally.
-
 
 [Java]: https://www.java.com/
 [Eclipse]: http://www.eclipse.org/downloads/eclipse-packages/
@@ -76,7 +71,5 @@ Similarly, download the [Oracle JDBC drivers] put them into the `schemacrawler-o
 [Apache Velocity]: https://velocity.apache.org/
 [Apache Maven]: https://maven.apache.org/
 [m2e Maven Integration for Eclipse]: http://eclipse.org/m2e/
-[IBM DB2 JDBC drivers]: http://www-306.ibm.com/software/data/db2/express/download.html
-[Oracle JDBC drivers]: http://www.oracle.com/technetwork/database/enterprise-edition/jdbc-112010-090769.html
 [Clover]: http://www.atlassian.com/software/clover/
 [how-tos]: how-to.html

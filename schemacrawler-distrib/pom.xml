@@ -255,6 +255,22 @@
                   <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
+                  <groupId>com.oracle.database.jdbc.debug</groupId>
+                  <artifactId>ojdbc8_g</artifactId>
+                  <version>19.3.0.0</version>
+                  <type>jar</type>
+                  <overWrite>false</overWrite>
+                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>com.ibm.db2</groupId>
+                  <artifactId>jcc</artifactId>
+                  <version>11.5.0.0</version>
+                  <type>jar</type>
+                  <overWrite>false</overWrite>
+                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
+                </artifactItem>
+                <artifactItem>
                   <groupId>com.h2database</groupId>
                   <artifactId>h2</artifactId>
                   <version>1.4.199</version>

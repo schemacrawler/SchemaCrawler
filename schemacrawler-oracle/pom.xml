@@ -49,7 +49,7 @@
     </dependency>
 
     <dependency>
-      <groupId>com.oracle.ojdbc</groupId>
+      <groupId>com.oracle.database.jdbc.debug</groupId>
       <artifactId>ojdbc8_g</artifactId>
       <version>19.3.0.0</version>
       <scope>test</scope>
