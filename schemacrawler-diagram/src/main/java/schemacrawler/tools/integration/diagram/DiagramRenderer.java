@@ -196,17 +196,17 @@ public final class DiagramRenderer
       boolean graphExecutorAvailable = false;
 
       // Try 1: Use Graphviz
-      graphExecutor = new GraphProcessExecutor(dotFile,
-                                               outputFile,
-                                               diagramOutputFormat,
-                                               graphvizOpts);
+      graphExecutor = new GraphvizProcessExecutor(dotFile,
+                                                  outputFile,
+                                                  diagramOutputFormat,
+                                                  graphvizOpts);
       graphExecutorAvailable = graphExecutor.canGenerate();
 
       // Try 2: Use Java library for Graphviz
       if (!graphExecutorAvailable)
       {
         graphExecutor =
-          new GraphJavaExecutor(dotFile, outputFile, diagramOutputFormat);
+          new GraphvizJavaExecutor(dotFile, outputFile, diagramOutputFormat);
         graphExecutorAvailable = graphExecutor.canGenerate();
       }
 

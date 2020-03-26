@@ -37,16 +37,16 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
-final class GraphJavaExecutor
+final class GraphvizJavaExecutor
   extends AbstractGraphProcessExecutor
 {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(GraphJavaExecutor.class.getName());
+    SchemaCrawlerLogger.getLogger(GraphvizJavaExecutor.class.getName());
 
-  GraphJavaExecutor(final Path dotFile,
-                    final Path outputFile,
-                    final DiagramOutputFormat diagramOutputFormat)
+  GraphvizJavaExecutor(final Path dotFile,
+                       final Path outputFile,
+                       final DiagramOutputFormat diagramOutputFormat)
     throws SchemaCrawlerException
   {
     super(dotFile, outputFile, diagramOutputFormat);

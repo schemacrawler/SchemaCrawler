@@ -46,18 +46,18 @@ import sf.util.ProcessExecutor;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
-final class GraphProcessExecutor
+final class GraphvizProcessExecutor
   extends AbstractGraphProcessExecutor
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(GraphProcessExecutor.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(GraphvizProcessExecutor.class.getName());
 
   private final List<String> graphvizOpts;
 
-  GraphProcessExecutor(final Path dotFile,
-                       final Path outputFile,
-                       final DiagramOutputFormat diagramOutputFormat,
-                       final List<String> graphvizOpts)
+  GraphvizProcessExecutor(final Path dotFile,
+                          final Path outputFile,
+                          final DiagramOutputFormat diagramOutputFormat,
+                          final List<String> graphvizOpts)
     throws SchemaCrawlerException
   {
     super(dotFile, outputFile, diagramOutputFormat);
@@ -89,9 +89,10 @@ final class GraphProcessExecutor
 
     LOGGER.log(Level.FINE,
                new StringFormat("Graphviz stdout:%n%s", new FileContents(processExecutor.getProcessOutput())));
-    final Supplier<String> processError = new FileContents(processExecutor.getProcessError());
     if (!successful)
     {
+      final Supplier<String> processError = new FileContents(processExecutor.getProcessError());
+      System.err.println(processError);
       LOGGER.log(Level.SEVERE,
                  new StringFormat("Graphviz returned exit code <%d>%nGraphviz stderr:%n%s", exitCode, processError));
       retainDotFile(processExecutor.getCommand());
