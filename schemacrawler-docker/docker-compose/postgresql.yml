@@ -5,7 +5,10 @@ services:
   postgresql:
     image: postgres
     ports:
-      - "5432"
+      - target: 5432
+        published: 5432
+        protocol: tcp
+        mode: host
     environment:
       POSTGRES_DB: schemacrawler
       POSTGRES_USER: schemacrawler

@@ -5,7 +5,10 @@ services:
   db2:
     image: ibmcom/db2
     ports:
-      - "50000"
+      - target: 50000
+        published: 50000
+        protocol: tcp
+        mode: host
     environment:
       LICENSE: accept
       ARCHIVE_LOGS: "false"

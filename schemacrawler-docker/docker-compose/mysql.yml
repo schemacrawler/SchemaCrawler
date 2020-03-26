@@ -2,15 +2,18 @@ version: '3.7'
 
 services:
 
-    mysql:
-        image: mysql
-        command: --lower_case_table_names=1 --log_bin_trust_function_creators=1
-        ports:
-            - "3306"
-        environment:
-            MYSQL_ROOT_USER: root
-            MYSQL_ROOT_PASSWORD: schemacrawler
-            MYSQL_DATABASE: books
-            MYSQL_USER: schemacrawler
-            MYSQL_PASSWORD: schemacrawler
-            MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+  mysql:
+    image: mysql
+    command: --lower_case_table_names=1 --log_bin_trust_function_creators=1
+    ports:
+      - target: 3306
+        published: 3306
+        protocol: tcp
+        mode: host
+    environment:
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: schemacrawler
+      MYSQL_DATABASE: books
+      MYSQL_USER: schemacrawler
+      MYSQL_PASSWORD: schemacrawler
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"

@@ -5,7 +5,11 @@ services:
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2017-CU12
     ports:
-      - "1433"
+    ports:
+      - target: 1433
+        published: 1433
+        protocol: tcp
+        mode: host
     environment:
       ACCEPT_EULA: Y
       SA_PASSWORD: Schem#Crawl3r
