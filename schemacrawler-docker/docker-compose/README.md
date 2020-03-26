@@ -51,10 +51,6 @@
 - To stop SchemaCrawler with Oracle, run
   `docker-compose -f schemacrawler.yml -f oracle.yml down -t0`
 
-### Notes
-
-- :warning: Database is not accessible from the Docker host.
-
 
 
 ## Microsoft SQL Server

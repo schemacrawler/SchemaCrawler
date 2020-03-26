@@ -6,9 +6,7 @@ services:
     # https://github.com/wnameless/docker-oracle-xe-11g
     image: wnameless/oracle-xe-11g-r2
     ports:
-      - target: 49161
+      - target: 1521
         published: 1521
         protocol: tcp
         mode: host      
-    environment:
-      ORACLE_ALLOW_REMOTE: "true"
