@@ -6,7 +6,7 @@
   <groupId>us.fatehi</groupId>
   <artifactId>schemacrawler-parent</artifactId>
   <packaging>pom</packaging>
-  <version>16.5.2</version>
+  <version>16.5.3</version>
   <name>SchemaCrawler [Parent]</name>
   <description>Free database schema discovery and comprehension tool</description>
   <url>https://www.schemacrawler.com</url>
@@ -209,10 +209,10 @@
               <includes>
                 <include>pom.xml.versionsBackup</include>
               </includes>
-            </fileset>						
+            </fileset>
           </filesets>
-        </configuration>          
-      </plugin>   
+        </configuration>
+      </plugin>
       <plugin>
         <inherited>true</inherited>
         <groupId>org.apache.maven.plugins</groupId>
