@@ -249,8 +249,16 @@
                 <artifactItem>
                   <groupId>com.microsoft.sqlserver</groupId>
                   <artifactId>mssql-jdbc</artifactId>
-                  <version>8.2.1.jre8</version>
+                  <version>8.2.2.jre8</version>
                   <type>jar</type>
+                  <overWrite>false</overWrite>
+                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>com.microsoft.sqlserver</groupId>
+                  <artifactId>mssql-jdbc_auth</artifactId>
+                  <version>8.2.2.x64</version>
+                  <type>dll</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
                 </artifactItem>
