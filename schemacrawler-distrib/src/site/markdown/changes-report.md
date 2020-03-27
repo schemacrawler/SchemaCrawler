@@ -7,6 +7,7 @@
 - Provide docker-compose scripts for testing with databases
 - Better command-line to create test schemas for various databases
 - Better error messages when diagrams cannot be generated
+- Redistribute Microsoft SQL Server integrated security companion DLL to allow for Windows authentication
 
 
 <a name="a16.5.2"></a>
