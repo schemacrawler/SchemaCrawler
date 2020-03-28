@@ -69,11 +69,15 @@ Typical command-line arguments will look like:
 If your Microsoft SQL Server instance is set up with Windows authentication or named pipes, you
 will need to use a database connection URL. See the
 [documentation for the Microsoft JDBC Driver for SQL Server](https://msdn.microsoft.com/en-us/library/mt720657)
-for details.
+for details. You can also pass connection properties using the `--urlx` command-line switch.
 
 Typical command-line arguments for connecting to SQL Server with Windows authentication will look like:
 ```
 --server=sqlserver --url=<url> --schemas=schemacrawler.dbo --user= --password= --info-level=standard --command=schema
+```
+or
+```
+--server=sqlserver --host=db.example.com --port=1433 --urlx=integratedSecurity=true --database=schemacrawler --schemas=schemacrawler.dbo --user=xxxxx --password=xxxxx --info-level=standard -command=schema
 ```
 
 ### Oracle

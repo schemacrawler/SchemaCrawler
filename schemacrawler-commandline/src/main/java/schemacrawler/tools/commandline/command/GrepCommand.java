@@ -29,13 +29,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.regex.Pattern;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
 /**
@@ -49,10 +48,10 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
   "grep"
 }, optionListHeading = "Options:%n")
 public final class GrepCommand
+  extends BaseStateHolder
   implements Runnable
 {
 
-  private final SchemaCrawlerShellState state;
 
   @Option(names = "--grep-columns", description = {
     "<grepcolumns> is a regular expression to match fully qualified column names, "
@@ -89,7 +88,7 @@ public final class GrepCommand
 
   public GrepCommand(final SchemaCrawlerShellState state)
   {
-    this.state = requireNonNull(state);
+    super(state);
   }
 
   @Override

@@ -34,6 +34,7 @@ import picocli.CommandLine.Option;
 import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
 import schemacrawler.SchemaCrawlerInfo;
+import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.commandline.state.StateUtility;
 
@@ -43,10 +44,10 @@ import schemacrawler.tools.commandline.state.StateUtility;
   "system"
 }, optionListHeading = "Options:%n")
 public class SystemCommand
+  extends BaseStateHolder
   implements Runnable
 {
 
-  private final SchemaCrawlerShellState state;
 
   @Option(names = "--is-connected", description = "Checks whether the shell has a connection to a database")
   private boolean isconnected;
@@ -63,7 +64,7 @@ public class SystemCommand
 
   public SystemCommand(final SchemaCrawlerShellState state)
   {
-    this.state = state;
+    super(state);
   }
 
   public boolean isVersionRequested()

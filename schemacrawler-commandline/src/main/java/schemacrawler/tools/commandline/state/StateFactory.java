@@ -28,19 +28,20 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.state;
 
 
-import static java.util.Objects.requireNonNull;
+import static picocli.CommandLine.defaultFactory;
 
 import picocli.CommandLine.IFactory;
 
 public class StateFactory
+  extends BaseStateHolder
   implements IFactory
 {
 
-  private final SchemaCrawlerShellState state;
+  private static IFactory defaultPicocliFactory = defaultFactory();
 
   public StateFactory(final SchemaCrawlerShellState state)
   {
-    this.state = requireNonNull(state, "No state provided");
+    super(state);
   }
 
   @Override
@@ -51,17 +52,15 @@ public class StateFactory
     {
       return null;
     }
-    try
+    else if (BaseStateHolder.class.isAssignableFrom(cls))
     {
       return cls
         .getConstructor(SchemaCrawlerShellState.class)
         .newInstance(state);
     }
-    catch (final Exception e)
+    else
     {
-      return cls
-        .getConstructor()
-        .newInstance();
+      return defaultPicocliFactory.create(cls);
     }
   }
 

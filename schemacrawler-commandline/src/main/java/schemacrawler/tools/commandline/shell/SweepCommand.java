@@ -29,11 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.shell;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.logging.Level;
 
 import picocli.CommandLine.Command;
+import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import sf.util.SchemaCrawlerLogger;
 
@@ -41,16 +40,15 @@ import sf.util.SchemaCrawlerLogger;
   "sweep"
 }, optionListHeading = "Options:%n")
 public class SweepCommand
+  extends BaseStateHolder
   implements Runnable
 {
   private static final SchemaCrawlerLogger LOGGER =
     SchemaCrawlerLogger.getLogger(SweepCommand.class.getName());
 
-  private final SchemaCrawlerShellState state;
-
   public SweepCommand(final SchemaCrawlerShellState state)
   {
-    this.state = requireNonNull(state, "No state provided");
+    super(state);
   }
 
   @Override

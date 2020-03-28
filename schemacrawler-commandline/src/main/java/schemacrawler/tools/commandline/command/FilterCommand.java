@@ -29,14 +29,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 
-import static java.util.Objects.requireNonNull;
-
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Model;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.ParameterException;
 import picocli.CommandLine.Spec;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
 /**
@@ -50,10 +49,9 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
   "filter"
 }, optionListHeading = "Options:%n")
 public final class FilterCommand
+  extends BaseStateHolder
   implements Runnable
 {
-
-  private final SchemaCrawlerShellState state;
 
   @Option(names = "--children", description = {
     "<children> is the number of generations of descendants for the tables "
@@ -79,7 +77,7 @@ public final class FilterCommand
 
   public FilterCommand(final SchemaCrawlerShellState state)
   {
-    this.state = requireNonNull(state, "No state provided");
+    super(state);
   }
 
   @Override

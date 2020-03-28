@@ -26,37 +26,19 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline.shell;
+package schemacrawler.tools.commandline.state;
 
 
-import java.util.logging.Level;
+import static java.util.Objects.requireNonNull;
 
-import picocli.CommandLine.Command;
-import schemacrawler.tools.commandline.state.BaseStateHolder;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
-import sf.util.SchemaCrawlerLogger;
-
-@Command(name = "disconnect", header = "** Disconnect from a database", headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
-  "disconnect"
-}, optionListHeading = "Options:%n")
-public class DisconnectCommand
-  extends BaseStateHolder
-  implements Runnable
+public abstract class BaseStateHolder
 {
-  private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(DisconnectCommand.class.getName());
 
-  public DisconnectCommand(final SchemaCrawlerShellState state)
+  protected final SchemaCrawlerShellState state;
+
+  protected BaseStateHolder(final SchemaCrawlerShellState state)
   {
-    super(state);
-  }
-
-  @Override
-  public void run()
-  {
-    LOGGER.log(Level.INFO, "disconnect");
-
-    state.disconnect();
+    this.state = requireNonNull(state, "No shell state provided");
   }
 
 }

@@ -29,8 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -45,6 +43,7 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.commandline.shell.AvailableCommandsCommand;
+import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
@@ -60,13 +59,12 @@ import sf.util.StringFormat;
   "execute"
 }, optionListHeading = "Options:%n")
 public class ExecuteCommand
+  extends BaseStateHolder
   implements Runnable
 {
 
   private static final SchemaCrawlerLogger LOGGER =
     SchemaCrawlerLogger.getLogger(AvailableCommandsCommand.class.getName());
-
-  private final SchemaCrawlerShellState state;
 
   @Mixin
   private CommandOptions commandOptions;
@@ -77,7 +75,7 @@ public class ExecuteCommand
 
   public ExecuteCommand(final SchemaCrawlerShellState state)
   {
-    this.state = requireNonNull(state, "No state provided");
+    super(state);
   }
 
   @Override

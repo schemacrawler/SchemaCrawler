@@ -45,6 +45,7 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -62,13 +63,13 @@ import sf.util.StringFormat;
   "connect"
 }, optionListHeading = "Options:%n")
 public class ConnectCommand
+  extends BaseStateHolder
   implements Runnable
 {
 
   private static final SchemaCrawlerLogger LOGGER =
     SchemaCrawlerLogger.getLogger(ConnectCommand.class.getName());
 
-  private final SchemaCrawlerShellState state;
   @ArgGroup(exclusive = true)
   private DatabaseConnectionOptions databaseConnectionOptions;
   @Spec
@@ -78,7 +79,7 @@ public class ConnectCommand
 
   public ConnectCommand(final SchemaCrawlerShellState state)
   {
-    this.state = requireNonNull(state, "No state provided");
+    super(state);
   }
 
   @Override

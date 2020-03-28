@@ -29,8 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -39,6 +37,7 @@ import java.util.logging.Level;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.iosource.ClasspathInputResource;
 import schemacrawler.tools.iosource.FileInputResource;
@@ -68,13 +67,13 @@ import sf.util.StringFormat;
   "config-file"
 }, optionListHeading = "Options:%n")
 public class ConfigFileCommand
+  extends BaseStateHolder
   implements Runnable
 {
 
   private static final SchemaCrawlerLogger LOGGER =
     SchemaCrawlerLogger.getLogger(ConfigFileCommand.class.getName());
 
-  private final SchemaCrawlerShellState state;
 
   @Option(names = {
     "-g", "--config-file"
@@ -86,7 +85,7 @@ public class ConfigFileCommand
 
   public ConfigFileCommand(final SchemaCrawlerShellState state)
   {
-    this.state = requireNonNull(state, "No state provided");
+    super(state);
   }
 
   @Override

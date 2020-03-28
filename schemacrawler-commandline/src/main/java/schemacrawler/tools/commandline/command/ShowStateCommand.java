@@ -29,9 +29,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 
-import static java.util.Objects.requireNonNull;
 import static picocli.CommandLine.Command;
 
+import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.commandline.state.StateUtility;
 
@@ -41,14 +41,13 @@ import schemacrawler.tools.commandline.state.StateUtility;
   "showstate"
 }, optionListHeading = "Options:%n")
 public final class ShowStateCommand
+  extends BaseStateHolder
   implements Runnable
 {
 
-  private final SchemaCrawlerShellState state;
-
   public ShowStateCommand(final SchemaCrawlerShellState state)
   {
-    this.state = requireNonNull(state, "No state provided");
+    super(state);
   }
 
   @Override

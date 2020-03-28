@@ -46,6 +46,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
+import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -56,13 +57,12 @@ import sf.util.StringFormat;
   "load"
 }, optionListHeading = "Options:%n")
 public class LoadCommand
+  extends BaseStateHolder
   implements Runnable
 {
 
   private static final SchemaCrawlerLogger LOGGER =
     SchemaCrawlerLogger.getLogger(LoadCommand.class.getName());
-
-  private final SchemaCrawlerShellState state;
 
   @Option(names = {
     "-i", "--info-level"
@@ -79,7 +79,7 @@ public class LoadCommand
 
   public LoadCommand(final SchemaCrawlerShellState state)
   {
-    this.state = requireNonNull(state, "No state provided");
+    super(state);
   }
 
   public InfoLevel getInfoLevel()

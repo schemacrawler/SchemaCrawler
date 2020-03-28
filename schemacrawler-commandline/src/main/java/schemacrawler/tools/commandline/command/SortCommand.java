@@ -29,11 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 
-import static java.util.Objects.requireNonNull;
-
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
@@ -48,10 +47,9 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
   "sort"
 }, optionListHeading = "Options:%n")
 public final class SortCommand
+  extends BaseStateHolder
   implements Runnable
 {
-
-  private final SchemaCrawlerShellState state;
 
   @Option(names = { "--sort-columns" }, description = {
     "Sort columns in a table alphabetically",
@@ -84,7 +82,7 @@ public final class SortCommand
 
   public SortCommand(final SchemaCrawlerShellState state)
   {
-    this.state = requireNonNull(state, "No state provided");
+    super(state);
   }
 
   @Override
