@@ -44,7 +44,7 @@ import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
-public class TestDatabaseConnectorRegistry
+public class DatabaseConnectorRegistryTest
 {
 
   @Test

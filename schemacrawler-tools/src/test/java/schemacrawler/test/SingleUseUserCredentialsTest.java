@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
 
-public class TestSingleUseUserCredentials
+public class SingleUseUserCredentialsTest
 {
 
   @Test
