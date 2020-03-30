@@ -472,7 +472,7 @@ public final class TestUtility
     final int javaSpecificationVersionInt;
     if (javaSpecificationVersionDouble < 2)
     {
-      javaSpecificationVersionInt = (int) (javaSpecificationVersionDouble - 1) * 10;
+      javaSpecificationVersionInt = (int) ((javaSpecificationVersionDouble - 1) * 10);
     }
     else
     {
