@@ -551,7 +551,7 @@ public abstract class AbstractSchemaCrawlerOutputTest
     assertAll(outputFormats().map(outputFormat -> () -> {
 
       final String referenceFile =
-        "details_maximum." + outputFormat.getFormat();
+        "schema_maximum." + outputFormat.getFormat();
 
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
         SchemaCrawlerOptionsBuilder
@@ -568,7 +568,7 @@ public abstract class AbstractSchemaCrawlerOutputTest
       schemaTextOptionsBuilder.sortTables(true);
 
       final SchemaCrawlerExecutable executable =
-        new SchemaCrawlerExecutable(SchemaTextDetailType.details.name());
+        new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
 
