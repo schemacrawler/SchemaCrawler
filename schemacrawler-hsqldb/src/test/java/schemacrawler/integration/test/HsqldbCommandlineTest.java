@@ -44,6 +44,7 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
+import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -117,9 +118,10 @@ public class HsqldbCommandlineTest
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
+
+    final String expectedResource = String.format("hsqldb.main.%s.%s", javaVersion(), outputFormat.getFormat());
     assertThat(outputOf(testout),
-               hasSameContentAndTypeAs(classpathResource(
-                 "hsqldb.main" + "." + outputFormat.getFormat()),
+               hasSameContentAndTypeAs(classpathResource(expectedResource),
                                        outputFormat.getFormat()));
   }
 
