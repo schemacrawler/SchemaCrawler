@@ -41,6 +41,7 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
+import static schemacrawler.test.utility.TestUtility.javaVersion;
 import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.io.FileOutputStream;
@@ -102,9 +103,11 @@ public class OfflineSnapshotTest
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
+
+    final String expectedResource = String.format("details.%s.txt",javaVersion());
     assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(
-                 OFFLINE_EXECUTABLE_OUTPUT + "details.txt")));
+                 OFFLINE_EXECUTABLE_OUTPUT + expectedResource)));
 
   }
 
@@ -191,7 +194,8 @@ public class OfflineSnapshotTest
     executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
     executable.setConnection(connection);
 
-    executeExecutable(executable, OFFLINE_EXECUTABLE_OUTPUT + "details.txt");
+    final String expectedResource = String.format("details.%s.txt",javaVersion());
+    executeExecutable(executable, OFFLINE_EXECUTABLE_OUTPUT + expectedResource);
   }
 
   @BeforeEach
