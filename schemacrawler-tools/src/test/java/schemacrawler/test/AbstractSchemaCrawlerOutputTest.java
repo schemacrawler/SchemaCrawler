@@ -101,7 +101,7 @@ public abstract class AbstractSchemaCrawlerOutputTest
                       "SELECT ${orderbycolumns} FROM ${table} ORDER BY ${orderbycolumns}");
 
     final String[] commands = new String[] {
-      SchemaTextDetailType.details + "," + Operation.count + ","
+      SchemaTextDetailType.schema + "," + Operation.count + ","
       + Operation.dump,
       SchemaTextDetailType.brief + "," + Operation.count,
       queryCommand1 + "," + queryCommand2 + "," + Operation.count + ","
