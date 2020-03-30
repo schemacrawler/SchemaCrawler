@@ -34,6 +34,7 @@ import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecu
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -76,13 +77,15 @@ public abstract class AbstractSpinThroughCommandLineTest
 
   private static String referenceFile(final SchemaTextDetailType schemaTextDetailType,
                                       final InfoLevel infoLevel,
-                                      final OutputFormat outputFormat)
+                                      final OutputFormat outputFormat,
+                                      final String javaVersion)
   {
-    final String referenceFile = String.format("%d%d.%s_%s.%s",
+    final String referenceFile = String.format("%d%d.%s_%s%s.%s",
                                                schemaTextDetailType.ordinal(),
                                                infoLevel.ordinal(),
                                                schemaTextDetailType,
                                                infoLevel,
+                                               javaVersion,
                                                outputFormat.getFormat());
     return referenceFile;
   }
@@ -99,8 +102,15 @@ public abstract class AbstractSpinThroughCommandLineTest
     assertAll(infoLevels().flatMap(infoLevel -> outputFormats().flatMap(
       outputFormat -> schemaTextDetailTypes().map(schemaTextDetailType -> () -> {
 
+        final String javaVersion;
+        if (schemaTextDetailType == SchemaTextDetailType.details && infoLevel == InfoLevel.maximum)
+        {
+          javaVersion = "." + javaVersion();
+        } else {
+          javaVersion = "";
+        }
         final String referenceFile =
-          referenceFile(schemaTextDetailType, infoLevel, outputFormat);
+          referenceFile(schemaTextDetailType, infoLevel, outputFormat, javaVersion);
 
         final String command = schemaTextDetailType.name();
 
