@@ -469,7 +469,7 @@ public abstract class AbstractSchemaCrawlerOutputTest
 
       final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
         SchemaTextOptionsBuilder.builder(textOptions);
-      schemaTextOptionsBuilder.sortTables(true);
+      schemaTextOptionsBuilder.sortTables(true).noInfo();
 
       final SchemaCrawlerExecutable executable =
         new SchemaCrawlerExecutable(SchemaTextDetailType.details.name());
