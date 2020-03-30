@@ -43,6 +43,7 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
+import static schemacrawler.test.utility.TestUtility.javaVersion;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
@@ -423,11 +424,6 @@ public class SchemaCrawlerTest
       final DatabaseInfo databaseInfo = catalog.getDatabaseInfo();
       final Collection<DatabaseProperty> dbProperties =
         databaseInfo.getProperties();
-      /*
-      assertThat("Database property count does not match",
-                 dbProperties,
-                 hasSize(164));
-       */
       final Collection<Property> serverInfo = databaseInfo.getServerInfo();
       assertThat("Server info property count does not match",
                  serverInfo,
@@ -449,8 +445,9 @@ public class SchemaCrawlerTest
         out.println(dbProperty);
       }
     }
+    final String expectedResultsResource = String.format("%s.%s", testContext.testMethodFullName(), javaVersion());
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+               hasSameContentAs(classpathResource(expectedResultsResource)));
   }
 
   @Test

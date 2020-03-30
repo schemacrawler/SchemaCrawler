@@ -53,7 +53,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -464,6 +463,22 @@ public final class TestUtility
       reader = null;
     }
     return reader;
+  }
+
+  public static String javaVersion()
+  {
+    final String javaSpecificationVersion = System.getProperty("java.specification.version");
+    final double javaSpecificationVersionDouble = Double.parseDouble(javaSpecificationVersion);
+    final int javaSpecificationVersionInt;
+    if (javaSpecificationVersionDouble < 2)
+    {
+      javaSpecificationVersionInt = (int) (javaSpecificationVersionDouble - 1) * 10;
+    }
+    else
+    {
+      javaSpecificationVersionInt = (int) javaSpecificationVersionDouble;
+    }
+    return String.valueOf(javaSpecificationVersionInt);
   }
 
   public static void validateDiagram(final Path diagramFile)
