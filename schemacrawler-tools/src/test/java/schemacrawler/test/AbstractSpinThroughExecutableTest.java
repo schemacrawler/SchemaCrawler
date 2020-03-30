@@ -35,6 +35,7 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import java.sql.Connection;
 import java.util.Arrays;
@@ -82,13 +83,15 @@ public abstract class AbstractSpinThroughExecutableTest
 
   private static String referenceFile(final SchemaTextDetailType schemaTextDetailType,
                                       final InfoLevel infoLevel,
-                                      final OutputFormat outputFormat)
+                                      final OutputFormat outputFormat,
+                                      final String javaVersion)
   {
-    final String referenceFile = String.format("%d%d.%s_%s.%s",
+    final String referenceFile = String.format("%d%d.%s_%s%s.%s",
                                                schemaTextDetailType.ordinal(),
                                                infoLevel.ordinal(),
                                                schemaTextDetailType,
                                                infoLevel,
+                                               javaVersion,
                                                outputFormat.getFormat());
     return referenceFile;
   }
@@ -114,8 +117,15 @@ public abstract class AbstractSpinThroughExecutableTest
     assertAll(infoLevels().flatMap(infoLevel -> outputFormats().flatMap(
       outputFormat -> schemaTextDetailTypes().map(schemaTextDetailType -> () -> {
 
+        final String javaVersion;
+        if (schemaTextDetailType == SchemaTextDetailType.details && infoLevel == InfoLevel.maximum)
+        {
+          javaVersion = "." + javaVersion();
+        } else {
+          javaVersion = "";
+        }
         final String referenceFile =
-          referenceFile(schemaTextDetailType, infoLevel, outputFormat);
+          referenceFile(schemaTextDetailType, infoLevel, outputFormat, javaVersion);
 
         final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
           SchemaCrawlerOptionsBuilder
