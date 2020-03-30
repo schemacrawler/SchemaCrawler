@@ -386,7 +386,7 @@ public abstract class AbstractSchemaCrawlerOutputTest
     assertAll(outputFormats().map(outputFormat -> () -> {
 
       final String referenceFile =
-        "details_maximum." + outputFormat.getFormat();
+        "schema,count,dump." + outputFormat.getFormat();
 
       final Config config = loadHsqldbConfig();
 
@@ -411,7 +411,7 @@ public abstract class AbstractSchemaCrawlerOutputTest
       schemaTextOptionsBuilder.sortTables(true);
 
       final String command = String.format("%s,%s,%s",
-                                           SchemaTextDetailType.details,
+                                           SchemaTextDetailType.schema,
                                            Operation.count,
                                            Operation.dump);
       final SchemaCrawlerExecutable executable =
