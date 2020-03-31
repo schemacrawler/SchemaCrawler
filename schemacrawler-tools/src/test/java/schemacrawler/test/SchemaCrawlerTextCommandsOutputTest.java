@@ -65,20 +65,6 @@ public class SchemaCrawlerTextCommandsOutputTest
   }
 
   @Test
-  public void countOutput(final Connection connection)
-    throws Exception
-  {
-    testOperationOutput(connection, Operation.count);
-  }
-
-  @Test
-  public void dumpOutput(final Connection connection)
-    throws Exception
-  {
-    testOperationOutput(connection, Operation.dump);
-  }
-
-  @Test
   public void queryOutput(final Connection connection)
     throws Exception
   {
@@ -103,17 +89,23 @@ public class SchemaCrawlerTextCommandsOutputTest
   }
 
   @Test
-  public void quickdumpOutput(final Connection connection)
+  public void operationOutput(final Connection connection)
     throws Exception
   {
-    testOperationOutput(connection, Operation.quickdump);
+    for (final Operation operation: Operation.values())
+    {
+      textOutputTest(operation.name(), connection, new Config());
+    }
   }
 
   @Test
-  public void schemaOutput(final Connection connection)
+  public void schemaTextOutput(final Connection connection)
     throws Exception
   {
-    textOutputTest(SchemaTextDetailType.brief.name(), connection, new Config());
+    for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType.values())
+    {
+      textOutputTest(schemaTextDetailType.name(), connection, new Config());
+    }
   }
 
   @Test
@@ -128,13 +120,6 @@ public class SchemaCrawlerTextCommandsOutputTest
                "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}");
 
     textOutputTest(queryCommand, connection, config);
-  }
-
-  private void testOperationOutput(final Connection connection,
-                                   final Operation operation)
-    throws Exception
-  {
-    textOutputTest(operation.name(), connection, new Config());
   }
 
   private void textOutputTest(final String command,
