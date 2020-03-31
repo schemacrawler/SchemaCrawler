@@ -84,6 +84,9 @@ final class NeuteredLinesFilter
     // Oracle
     // -- server-specific values
     Pattern.compile("\\s+value\\s+localhost:\\d+:xe\\s+"),
+    // PostgreSQL
+    // -- unnamed objects
+    Pattern.compile(".*pg_temp_.*"),
     };
 
   /**
