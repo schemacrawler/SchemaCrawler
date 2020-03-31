@@ -3,9 +3,6 @@ language: java
 jdk:
   - oraclejdk8
   - oraclejdk11
-matrix:
-  allow_failures:
-    - jdk: oraclejdk11
 os:
   - linux
 sudo: required
