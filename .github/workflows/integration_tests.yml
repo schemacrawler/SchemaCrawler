@@ -7,8 +7,10 @@ jobs:
     name: Build, test, and publish results
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        java: [ 8, 11 ]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        java: [8, 11]
     steps:
     - id: checkout-code
       name: Checkout code
