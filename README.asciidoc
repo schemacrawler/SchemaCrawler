@@ -1,3 +1,6 @@
+:note-caption: :bulb:
+:tip-caption: :information_source:
+
 image:https://img.shields.io/travis/schemacrawler/schemacrawler.svg[link=https://travis-ci.org/schemacrawler/SchemaCrawler]
 image:https://codecov.io/gh/schemacrawler/SchemaCrawler/branch/master/graph/badge.svg[link=https://codecov.io/gh/schemacrawler/SchemaCrawler]
 
