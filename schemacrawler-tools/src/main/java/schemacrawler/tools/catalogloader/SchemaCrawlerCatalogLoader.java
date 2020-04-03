@@ -20,8 +20,8 @@ public class SchemaCrawlerCatalogLoader
   private final String databaseSystemIdentifier;
   private SchemaRetrievalOptions schemaRetrievalOptions;
   private SchemaCrawlerOptions schemaCrawlerOptions;
-  private Connection connection;
   private Config additionalConfiguration;
+  private Connection connection;
 
   public SchemaCrawlerCatalogLoader()
   {
@@ -124,4 +124,5 @@ public class SchemaCrawlerCatalogLoader
 
     return catalog;
   }
+
 }

@@ -29,11 +29,6 @@ package schemacrawler.tools.executable;
 
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.filter.ReducerFactory.getRoutineReducer;
-import static schemacrawler.filter.ReducerFactory.getSchemaReducer;
-import static schemacrawler.filter.ReducerFactory.getSequenceReducer;
-import static schemacrawler.filter.ReducerFactory.getSynonymReducer;
-import static schemacrawler.filter.ReducerFactory.getTableReducer;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
@@ -41,12 +36,6 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schema.Reducible;
-import schemacrawler.schema.Routine;
-import schemacrawler.schema.Schema;
-import schemacrawler.schema.Sequence;
-import schemacrawler.schema.Synonym;
-import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -164,10 +153,6 @@ public final class SchemaCrawlerExecutable
       loadCatalog();
     }
 
-    // Reduce all once again, since the catalog may have been loaded
-    // from an offline or other source
-    reduceCatalog();
-
     scCommand.setCatalog(catalog);
     scCommand.setConnection(connection);
 
@@ -250,20 +235,6 @@ public final class SchemaCrawlerExecutable
     scCommand.setIdentifiers(schemaRetrievalOptions.getIdentifiers());
 
     return scCommand;
-  }
-
-  private void reduceCatalog()
-  {
-    ((Reducible) catalog).reduce(Schema.class,
-                                 getSchemaReducer(schemaCrawlerOptions));
-    ((Reducible) catalog).reduce(Table.class,
-                                 getTableReducer(schemaCrawlerOptions));
-    ((Reducible) catalog).reduce(Routine.class,
-                                 getRoutineReducer(schemaCrawlerOptions));
-    ((Reducible) catalog).reduce(Synonym.class,
-                                 getSynonymReducer(schemaCrawlerOptions));
-    ((Reducible) catalog).reduce(Sequence.class,
-                                 getSequenceReducer(schemaCrawlerOptions));
   }
 
 }

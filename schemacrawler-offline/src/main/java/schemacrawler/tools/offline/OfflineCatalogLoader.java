@@ -1,12 +1,24 @@
 package schemacrawler.tools.offline;
 
 
+import static schemacrawler.filter.ReducerFactory.getRoutineReducer;
+import static schemacrawler.filter.ReducerFactory.getSchemaReducer;
+import static schemacrawler.filter.ReducerFactory.getSequenceReducer;
+import static schemacrawler.filter.ReducerFactory.getSynonymReducer;
+import static schemacrawler.filter.ReducerFactory.getTableReducer;
+
 import java.io.FileInputStream;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.logging.Level;
 
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Reducible;
+import schemacrawler.schema.Routine;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.Sequence;
+import schemacrawler.schema.Synonym;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -34,6 +46,7 @@ public final class OfflineCatalogLoader
   }
 
   private final String databaseSystemIdentifier;
+  private SchemaCrawlerOptions schemaCrawlerOptions;
   private Config additionalConfiguration;
   private Connection connection;
 
@@ -82,13 +95,20 @@ public final class OfflineCatalogLoader
   @Override
   public SchemaCrawlerOptions getSchemaCrawlerOptions()
   {
-    return SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    if (schemaCrawlerOptions == null)
+    {
+      return SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    }
+    else
+    {
+      return schemaCrawlerOptions;
+    }
   }
 
   @Override
   public void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
   {
-    // No-op
+    this.schemaCrawlerOptions = schemaCrawlerOptions;
   }
 
   @Override
@@ -125,9 +145,26 @@ public final class OfflineCatalogLoader
     final Path offlineDatabasePath = dbConnection.getOfflineDatabasePath();
     final FileInputStream inputFileStream =
       new FileInputStream(offlineDatabasePath.toFile());
+
     final JavaSerializedCatalog catalog =
       new JavaSerializedCatalog(inputFileStream);
+    reduceCatalog(catalog);
+
     return catalog;
+  }
+
+  private void reduceCatalog(final Catalog catalog)
+  {
+    ((Reducible) catalog).reduce(Schema.class,
+                                 getSchemaReducer(schemaCrawlerOptions));
+    ((Reducible) catalog).reduce(Table.class,
+                                 getTableReducer(schemaCrawlerOptions));
+    ((Reducible) catalog).reduce(Routine.class,
+                                 getRoutineReducer(schemaCrawlerOptions));
+    ((Reducible) catalog).reduce(Synonym.class,
+                                 getSynonymReducer(schemaCrawlerOptions));
+    ((Reducible) catalog).reduce(Sequence.class,
+                                 getSequenceReducer(schemaCrawlerOptions));
   }
 
 }
