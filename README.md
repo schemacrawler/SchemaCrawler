@@ -1,40 +1,39 @@
-:note-caption: :bulb:
-:tip-caption: :information_source:
+[![Build Status](https://img.shields.io/travis/schemacrawler/schemacrawler.svg)](https://travis-ci.org/schemacrawler/SchemaCrawler)
+[![codecov](https://codecov.io/gh/schemacrawler/SchemaCrawler/branch/master/graph/badge.svg)](https://codecov.io/gh/schemacrawler/SchemaCrawler)
 
-image:https://img.shields.io/travis/schemacrawler/schemacrawler.svg[link=https://travis-ci.org/schemacrawler/SchemaCrawler]
-image:https://codecov.io/gh/schemacrawler/SchemaCrawler/branch/master/graph/badge.svg[link=https://codecov.io/gh/schemacrawler/SchemaCrawler]
+[![The Central Repository](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler.svg)](https://search.maven.org/search?q=g:us.fatehi%20a:schemacrawler*)
+[![Main distribution](https://img.shields.io/badge/releases-download-blue.svg)](https://github.com/schemacrawler/SchemaCrawler/releases/latest)
+[![Docker Pulls](https://img.shields.io/docker/pulls/schemacrawler/schemacrawler.svg)](https://hub.docker.com/r/schemacrawler/schemacrawler/)
 
-image:https://img.shields.io/maven-central/v/us.fatehi/schemacrawler.svg[link=https://search.maven.org/search?q=g:us.fatehi%20a:schemacrawler*]
-image:https://img.shields.io/badge/releases-download-blue.svg[link=https://github.com/schemacrawler/SchemaCrawler/releases/latest]
-image:https://img.shields.io/docker/pulls/schemacrawler/schemacrawler.svg[link=https://hub.docker.com/r/schemacrawler/schemacrawler/]
+![SchemaCrawler](https://raw.githubusercontent.com/schemacrawler/SchemaCrawler/master/schemacrawler-distrib/src/site/resources/images/schemacrawler_logo.png) 
 
-# image:https://raw.githubusercontent.com/schemacrawler/SchemaCrawler/master/schemacrawler-distrib/src/site/resources/images/schemacrawler_logo.png[SchemaCrawler,80,80] SchemaCrawler
+# SchemaCrawler
 
-NOTE: Please see the https://www.schemacrawler.com/[SchemaCrawler website] for more details.
+> **Please see the [SchemaCrawler website](https://www.schemacrawler.com/) for more details.**
 
 ## About
 
-SchemaCrawler is a free database schema discovery and comprehension tool. SchemaCrawler has a good mix of useful features for data governance. You can https://www.schemacrawler.com/schemacrawler_grep.html[search for database schema objects] using regular expressions, and output the schema and data in a readable text format. The output serves for database documentation, and is designed to be https://en.wikipedia.org/wiki/Diff[diff-ed] against other database schemas. SchemaCrawler also generates https://www.schemacrawler.com/diagramming.html[schema diagrams.] You can https://www.schemacrawler.com/scripting.html[execute scripts] in any standard scripting language against your database. You can find potential schema design issues with https://www.schemacrawler.com/lint.html[lint]. 
+SchemaCrawler is a free database schema discovery and comprehension tool. SchemaCrawler has a good mix of useful features for data governance. You can [search for database schema objects](https://www.schemacrawler.com/schemacrawler_grep.html) using regular expressions, and output the schema and data in a readable text format. The output serves for database documentation, and is designed to be [diff-ed](https://en.wikipedia.org/wiki/Diff) against other database schemas. SchemaCrawler also generates [schema diagrams.](https://www.schemacrawler.com/diagramming.html) You can [execute scripts](https://www.schemacrawler.com/scripting.html) in any standard scripting language against your database. You can find potential schema design issues with [lint](https://www.schemacrawler.com/lint.html). 
 
-SchemaCrawler supports almost any database that has a JDBC driver, but for convenience is https://www.schemacrawler.com/database-support.html[bundled with drivers] for some commonly used RDBMS systems. SchemaCrawler works with any operating system that supports Java SE 8 or better.
+SchemaCrawler supports almost any database that has a JDBC driver, but for convenience is [bundled with drivers](https://www.schemacrawler.com/database-support.html) for some commonly used RDBMS systems. SchemaCrawler works with any operating system that supports Java SE 8 or better.
 
 SchemaCrawler is also a Java API that makes working with database metadata as easy as working with plain old Java objects.
 
-TIP: Explore the SchemaCrawler command-line with a live tutorial on https://www.katacoda.com/schemacrawler[Katacoda].
+> Explore the SchemaCrawler command-line with a live tutorial on [Katacoda](https://www.katacoda.com/schemacrawler).
 
 
 ## Licensing
 
-SchemaCrawler is available under a number of https://www.schemacrawler.com/license.html[licenses].
+SchemaCrawler is available under a number of [licenses](https://www.schemacrawler.com/license.html).
 
 
 ## Distributions and Downloads
 
-https://github.com/sualeh/SchemaCrawler/releases[Download releases with tutorials from GitHub.] All SchemaCrawler jars are in the https://search.maven.org/search?q=g:us.fatehi%20a:schemacrawler*[Central Repository]. They can be used as dependencies in https://gradle.org/[Gradle] or https://maven.apache.org/[Apache Maven] projects, or with any other build system that supports the Central Repository. https://hub.docker.com/r/schemacrawler/schemacrawler/[Pre-packaged Docker images] are on Docker Hub. 
+[Download releases with tutorials from GitHub.](https://github.com/sualeh/SchemaCrawler/releases) All SchemaCrawler jars are in the [Central Repository](https://search.maven.org/search?q=g:us.fatehi%20a:schemacrawler*). They can be used as dependencies in [Gradle](https://gradle.org/) or [Apache Maven](https://maven.apache.org/) projects, or with any other build system that supports the Central Repository. [Pre-packaged Docker images](https://hub.docker.com/r/schemacrawler/schemacrawler/) are on Docker Hub. 
 
-Additional SchemaCrawler database plugins are available from the https://github.com/schemacrawler/SchemaCrawler-Database-Plugins[schemacrawler/SchemaCrawler-Database-Plugins] project.
+Additional SchemaCrawler database plugins are available from the [schemacrawler/SchemaCrawler-Database-Plugins](https://github.com/schemacrawler/SchemaCrawler-Database-Plugins) project.
 
 
 ## Support
 
-Please get support on https://stackoverflow.com/search?tab=newest&q=schemacrawler[Stack Overflow], following the https://www.schemacrawler.com/consulting.html[Guidelines for Support].
+Please get support on [Stack Overflow](https://stackoverflow.com/search?tab=newest&q=schemacrawler), following the [Guidelines for Support](https://www.schemacrawler.com/consulting.html).
