@@ -166,7 +166,7 @@ public final class SchemaCrawlerExecutable
 
     // Reduce all once again, since the catalog may have been loaded
     // from an offline or other source
-    reduceCatalog();
+    // reduceCatalog();
 
     scCommand.setCatalog(catalog);
     scCommand.setConnection(connection);
