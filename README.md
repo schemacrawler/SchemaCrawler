@@ -5,7 +5,7 @@
 [![Main distribution](https://img.shields.io/badge/releases-download-blue.svg)](https://github.com/schemacrawler/SchemaCrawler/releases/latest)
 [![Docker Pulls](https://img.shields.io/docker/pulls/schemacrawler/schemacrawler.svg)](https://hub.docker.com/r/schemacrawler/schemacrawler/)
 
-![SchemaCrawler](https://raw.githubusercontent.com/schemacrawler/SchemaCrawler/master/schemacrawler-distrib/src/site/resources/images/schemacrawler_logo.png) 
+<img src="https://raw.githubusercontent.com/schemacrawler/SchemaCrawler/master/schemacrawler-distrib/src/site/resources/images/schemacrawler_logo.png" height="100px" width="100px" align="right" />
 
 # SchemaCrawler
 
@@ -19,7 +19,7 @@ SchemaCrawler supports almost any database that has a JDBC driver, but for conve
 
 SchemaCrawler is also a Java API that makes working with database metadata as easy as working with plain old Java objects.
 
-> Explore the SchemaCrawler command-line with a live tutorial on [Katacoda](https://www.katacoda.com/schemacrawler).
+> **Explore the SchemaCrawler command-line with a live tutorial on [Katacoda](https://www.katacoda.com/schemacrawler).**
 
 
 ## Licensing
