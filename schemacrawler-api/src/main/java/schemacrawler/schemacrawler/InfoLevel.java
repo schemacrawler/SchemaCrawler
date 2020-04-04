@@ -33,6 +33,7 @@ import static schemacrawler.schemacrawler.SchemaInfoLevelBuilder.maximum;
 import static schemacrawler.schemacrawler.SchemaInfoLevelBuilder.minimum;
 import static schemacrawler.schemacrawler.SchemaInfoLevelBuilder.standard;
 
+import java.util.function.Supplier;
 import java.util.logging.Level;
 
 import sf.util.SchemaCrawlerLogger;
@@ -64,23 +65,16 @@ public enum InfoLevel
     }
   }
 
-  @FunctionalInterface
-  private interface ToSchemaInfoLevelFunction
-  {
-    SchemaInfoLevel toSchemaInfoLevel();
-  }
+  private final Supplier<SchemaInfoLevel> toSchemaInfoLevelFunction;
 
-
-  private final ToSchemaInfoLevelFunction toSchemaInfoLevelFunction;
-
-  InfoLevel(final ToSchemaInfoLevelFunction toSchemaInfoLevelFunction)
+  InfoLevel(final Supplier<SchemaInfoLevel> toSchemaInfoLevelFunction)
   {
     this.toSchemaInfoLevelFunction = toSchemaInfoLevelFunction;
   }
 
   public final SchemaInfoLevel toSchemaInfoLevel()
   {
-    return toSchemaInfoLevelFunction.toSchemaInfoLevel();
+    return toSchemaInfoLevelFunction.get();
   }
 
 }
