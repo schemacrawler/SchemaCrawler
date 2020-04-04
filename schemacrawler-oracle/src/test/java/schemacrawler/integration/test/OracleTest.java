@@ -35,6 +35,7 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.test.utility.TestUtility.javaVersion;
 import static sf.util.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
@@ -172,8 +173,9 @@ public class OracleTest
                                             .builder(textOptions)
                                             .toConfig());
 
+    final String expectedResource = String.format("testOracleWithConnection.%s.txt", javaVersion());
     assertThat(outputOf(executableExecution(getConnection(), executable)),
-               hasSameContentAs(classpathResource("testOracleWithConnection.txt")));
+               hasSameContentAs(classpathResource(expectedResource)));
   }
 
 }
