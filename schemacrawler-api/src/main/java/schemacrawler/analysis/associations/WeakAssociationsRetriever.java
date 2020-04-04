@@ -25,38 +25,32 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.analysis.associations;
+package schemacrawler.analysis.associations;
 
+
+import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.BaseCatalogDecorator;
 
-public final class CatalogWithAssociations
-  extends BaseCatalogDecorator
+public final class WeakAssociationsRetriever
 {
 
-  private static final long serialVersionUID = -3953296149824921463L;
+  private final Catalog catalog;
 
-  private final Collection<WeakAssociationForeignKey> weakAssociations;
-
-  public CatalogWithAssociations(final Catalog catalog)
+  public WeakAssociationsRetriever(final Catalog catalog)
   {
-    super(catalog);
-
-    final List<Table> allTables = new ArrayList<>(catalog.getTables());
-    final WeakAssociationsAnalyzer weakAssociationsAnalyzer =
-      new WeakAssociationsAnalyzer(allTables);
-    weakAssociations = weakAssociationsAnalyzer.analyzeTables();
+    this.catalog = requireNonNull(catalog, "No catalog provided");
   }
 
-  public Collection<WeakAssociationForeignKey> getWeakAssociations()
+  public void retrieveWeakAssociations()
   {
-    return weakAssociations;
+    final List<Table> allTables = new ArrayList<>(catalog.getTables());
+    final WeakAssociationsAnalyzer weakAssociationsAnalyzer = new WeakAssociationsAnalyzer(allTables);
+    weakAssociationsAnalyzer.analyzeTables();
   }
 
 }

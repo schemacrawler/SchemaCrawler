@@ -10,6 +10,7 @@ o--> PUBLIC.BOOKS.BOOKAUTHORS [table]
       ~ COMMIT_ACTION=null
 o--> PUBLIC.BOOKS.BOOKS [table]
       ~ COMMIT_ACTION=null
+      ~ schemacrawler.weak_associations=[[PUBLIC.BOOKS.BOOKS.ID <~~ PUBLIC."PUBLISHER SALES".SALES.BOOKID], [PUBLIC.BOOKS.PUBLISHERS.ID <~~ PUBLIC.BOOKS.BOOKS.PUBLISHERID]]
 o--> PUBLIC.BOOKS.COUPONS [table]
       ~ COMMIT_ACTION=null
 o--> PUBLIC.BOOKS.CUSTOMERDATA [table]
@@ -20,11 +21,13 @@ o--> PUBLIC.BOOKS."Global Counts" [table]
       ~ COMMIT_ACTION=null
 o--> PUBLIC.BOOKS.PUBLISHERS [table]
       ~ COMMIT_ACTION=null
+      ~ schemacrawler.weak_associations=[[PUBLIC.BOOKS.PUBLISHERS.ID <~~ PUBLIC.BOOKS.BOOKS.PUBLISHERID]]
 o--> PUBLIC.BOOKS.ΒΙΒΛΊΑ [table]
       ~ COMMIT_ACTION=null
 o--> PUBLIC."PUBLISHER SALES".REGIONS [table]
       ~ COMMIT_ACTION=null
 o--> PUBLIC."PUBLISHER SALES".SALES [table]
       ~ COMMIT_ACTION=null
+      ~ schemacrawler.weak_associations=[[PUBLIC.BOOKS.BOOKS.ID <~~ PUBLIC."PUBLISHER SALES".SALES.BOOKID]]
 o--> PUBLIC."PUBLISHER SALES".SALESDATA [table]
       ~ COMMIT_ACTION=null

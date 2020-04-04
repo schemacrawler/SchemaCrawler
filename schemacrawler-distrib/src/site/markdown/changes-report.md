@@ -1,5 +1,11 @@
 # SchemaCrawler Change History
 
+<a name="a16.6.1"></a>
+## Release 16.6.1 - 2020-04-10
+
+- Make analysis of weak associations part of the maximum info-level retrieval
+
+
 <a name="a16.5.3"></a>
 ## Release 16.5.3 - 2020-03-24
 

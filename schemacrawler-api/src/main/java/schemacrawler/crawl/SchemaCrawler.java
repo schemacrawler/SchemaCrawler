@@ -41,6 +41,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.logging.Level;
 
+import schemacrawler.analysis.associations.WeakAssociationsRetriever;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineType;
@@ -68,6 +69,44 @@ public final class SchemaCrawler
 
   private static final SchemaCrawlerLogger LOGGER =
     SchemaCrawlerLogger.getLogger(SchemaCrawler.class.getName());
+
+  private static void crawlAnalysis(final MutableCatalog catalog,
+                                    final SchemaCrawlerOptions options)
+    throws SchemaCrawlerException
+  {
+
+    final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
+    final boolean retrieveWeakAssociations = infoLevel.isRetrieveWeakAssociations();
+    if (!retrieveWeakAssociations)
+    {
+      LOGGER.log(Level.INFO,
+                 "Not retrieving weak associations, since this was not requested");
+      return;
+    }
+
+    final StopWatch stopWatch = new StopWatch("crawlAnalysis");
+
+    LOGGER.log(Level.INFO, "Crawling weak associations");
+
+    final WeakAssociationsRetriever weakAssociationsRetriever;
+    try
+    {
+      weakAssociationsRetriever =
+        new WeakAssociationsRetriever(catalog);
+      stopWatch.time("retrieveWeakAssociations", () -> {
+        weakAssociationsRetriever.retrieveWeakAssociations();
+        return null;
+      });
+
+      LOGGER.log(Level.INFO, stopWatch.stringify());
+    }
+    catch (final Exception e)
+    {
+      throw new SchemaCrawlerException(
+        "Exception retrieving weak association information",
+        e);
+    }
+  }
 
   private static void crawlColumnDataTypes(final MutableCatalog catalog,
                                            final RetrieverConnection retrieverConnection,
@@ -765,6 +804,7 @@ public final class SchemaCrawler
       crawlRoutines(catalog, retrieverConnection, schemaCrawlerOptions);
       crawlSynonyms(catalog, retrieverConnection, schemaCrawlerOptions);
       crawlSequences(catalog, retrieverConnection, schemaCrawlerOptions);
+      crawlAnalysis(catalog, schemaCrawlerOptions);
 
       return catalog;
     }

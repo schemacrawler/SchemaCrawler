@@ -55,7 +55,7 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.test.utility.TestWriter;
-import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
+import schemacrawler.analysis.associations.WeakAssociationsRetriever;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.integration.objectdiffer.SchemaCrawlerDifferBuilder;
 import schemacrawler.tools.sqlite.EmbeddedSQLiteWrapper;
@@ -159,9 +159,12 @@ public class DiffTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final Catalog baseCatalog = getCatalog(database);
-      final CatalogWithAssociations catalog =
-        new CatalogWithAssociations(baseCatalog);
+      final Catalog catalog = getCatalog(database);
+
+      final WeakAssociationsRetriever weakAssociationsRetriever =
+        new WeakAssociationsRetriever(catalog);
+      weakAssociationsRetriever.retrieveWeakAssociations();
+
       final Schema[] schemas = catalog
         .getSchemas()
         .toArray(new Schema[0]);

@@ -25,11 +25,11 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.analysis.associations;
+package schemacrawler.analysis.associations;
 
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.tools.analysis.associations.WeakAssociationsUtility.addWeakAssociationToTable;
+import static schemacrawler.analysis.associations.WeakAssociationsUtility.addWeakAssociationToTable;
 
 import java.util.Collection;
 import java.util.Collections;

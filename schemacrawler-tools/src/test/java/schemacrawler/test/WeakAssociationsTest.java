@@ -54,10 +54,10 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
-import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
-import schemacrawler.tools.analysis.associations.WeakAssociation;
-import schemacrawler.tools.analysis.associations.WeakAssociationForeignKey;
-import schemacrawler.tools.analysis.associations.WeakAssociationsUtility;
+import schemacrawler.analysis.associations.WeakAssociationsRetriever;
+import schemacrawler.analysis.associations.WeakAssociation;
+import schemacrawler.analysis.associations.WeakAssociationForeignKey;
+import schemacrawler.analysis.associations.WeakAssociationsUtility;
 import schemacrawler.utility.NamedObjectSort;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -82,9 +82,9 @@ public class WeakAssociationsTest
       final SchemaCrawlerOptions schemaCrawlerOptions =
         schemaCrawlerOptionsBuilder.toOptions();
 
-      final Catalog baseCatalog = getCatalog(connection, schemaCrawlerOptions);
-      final CatalogWithAssociations catalog =
-        new CatalogWithAssociations(baseCatalog);
+      final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
+      final WeakAssociationsRetriever weakAssociationsRetriever =
+        new WeakAssociationsRetriever(catalog);
       final Schema[] schemas = catalog
         .getSchemas()
         .toArray(new Schema[0]);

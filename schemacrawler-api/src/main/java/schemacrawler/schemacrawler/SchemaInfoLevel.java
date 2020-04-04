@@ -270,4 +270,9 @@ public final class SchemaInfoLevel
     return is(SchemaInfoRetrieval.retrieveViewInformation);
   }
 
+  public boolean isRetrieveWeakAssociations()
+  {
+    return is(SchemaInfoRetrieval.retrieveWeakAssociations);
+  }
+
 }
