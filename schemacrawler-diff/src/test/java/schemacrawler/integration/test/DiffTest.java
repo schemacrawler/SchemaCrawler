@@ -159,9 +159,12 @@ public class DiffTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final Catalog baseCatalog = getCatalog(database);
-      final WeakAssociationsRetriever catalog =
-        new WeakAssociationsRetriever(baseCatalog);
+      final Catalog catalog = getCatalog(database);
+
+      final WeakAssociationsRetriever weakAssociationsRetriever =
+        new WeakAssociationsRetriever(catalog);
+      weakAssociationsRetriever.retrieveWeakAssociations();
+
       final Schema[] schemas = catalog
         .getSchemas()
         .toArray(new Schema[0]);
