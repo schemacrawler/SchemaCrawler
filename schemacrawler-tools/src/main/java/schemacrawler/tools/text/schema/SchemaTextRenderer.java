@@ -33,7 +33,6 @@ import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.analysis.associations.CatalogWithAssociations;
 import schemacrawler.tools.analysis.counts.CatalogWithCounts;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -80,10 +79,6 @@ public final class SchemaTextRenderer
 
     // Determine what decorators to apply to the database
     Catalog aCatalog = catalog;
-    if (schemaTextOptions.isShowWeakAssociations())
-    {
-      aCatalog = new CatalogWithAssociations(aCatalog);
-    }
     if (schemaTextOptions.isShowRowCounts()
         || schemaCrawlerOptions.isNoEmptyTables())
     {
