@@ -55,7 +55,7 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.test.utility.TestWriter;
-import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
+import schemacrawler.analysis.associations.CatalogWithAssociations;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.integration.objectdiffer.SchemaCrawlerDifferBuilder;
 import schemacrawler.tools.sqlite.EmbeddedSQLiteWrapper;

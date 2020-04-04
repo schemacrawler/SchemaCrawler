@@ -54,10 +54,10 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.test.utility.TestWriter;
-import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
-import schemacrawler.tools.analysis.associations.WeakAssociation;
-import schemacrawler.tools.analysis.associations.WeakAssociationForeignKey;
-import schemacrawler.tools.analysis.associations.WeakAssociationsUtility;
+import schemacrawler.analysis.associations.CatalogWithAssociations;
+import schemacrawler.analysis.associations.WeakAssociation;
+import schemacrawler.analysis.associations.WeakAssociationForeignKey;
+import schemacrawler.analysis.associations.WeakAssociationsUtility;
 import schemacrawler.utility.NamedObjectSort;
 import schemacrawler.utility.SchemaCrawlerUtility;
 

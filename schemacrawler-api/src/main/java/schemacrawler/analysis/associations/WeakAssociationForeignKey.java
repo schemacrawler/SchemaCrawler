@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.analysis.associations;
+package schemacrawler.analysis.associations;
 
 
 import static java.util.Objects.requireNonNull;
