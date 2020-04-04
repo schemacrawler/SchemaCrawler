@@ -71,7 +71,9 @@ public enum SchemaInfoRetrieval
   retrieveTables(table, minimum),
   retrieveTriggerInformation(table, detailed),
   retrieveUserDefinedColumnDataTypes(other, detailed),
-  retrieveViewInformation(table, detailed);
+  retrieveViewInformation(table, detailed),
+  retrieveWeakAssociations(table, maximum),
+  ;
 
   private static final String SC_SCHEMA_INFO_LEVEL =
     "schemacrawler.schema_info_level.";
