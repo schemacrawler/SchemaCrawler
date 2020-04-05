@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.analysis.counts;
+package schemacrawler.analysis.counts;
 
 
 import static java.util.Objects.requireNonNull;
@@ -34,11 +34,11 @@ import schemacrawler.schema.Table;
 import sf.util.UtilityMarker;
 
 @UtilityMarker
-public final class CountsUtility
+public final class TableRowCountsUtility
 {
 
   private static final int UNKNOWN_TABLE_ROW_COUNT = -1;
-  private static final String TABLE_ROW_COUNT_KEY = "schemacrawler.table.count";
+  private static final String TABLE_ROW_COUNT_KEY = "schemacrawler.table.row_count";
 
   static void addRowCountToTable(final Table table, final long rowCount)
   {
@@ -62,9 +62,7 @@ public final class CountsUtility
       return UNKNOWN_TABLE_ROW_COUNT;
     }
 
-    final long tableCount = table.getAttribute(TABLE_ROW_COUNT_KEY,
-                                               Long.valueOf(
-                                                 UNKNOWN_TABLE_ROW_COUNT));
+    final long tableCount = table.getAttribute(TABLE_ROW_COUNT_KEY, Long.valueOf(UNKNOWN_TABLE_ROW_COUNT));
     return tableCount;
   }
 
@@ -99,7 +97,7 @@ public final class CountsUtility
     return table != null && table.hasAttribute(TABLE_ROW_COUNT_KEY);
   }
 
-  private CountsUtility()
+  private TableRowCountsUtility()
   {
     // Prevent instantiation
   }

@@ -1,4 +1,4 @@
-SchemaCrawler 16.2.4
+SchemaCrawler 16.6.1
 Database schema discovery and comprehension tool
 Copyright (c) 2000-2020, Sualeh Fatehi <sualeh@hotmail.com>.
 
@@ -244,7 +244,7 @@ Options:
                               shown in the results
                             Optional, default is 0
       --[no-]empty-tables   Includes only tables that have rows of data
-                            Will work only if infolevel is maximum
+                            Requires table row counts to be loaded
                             Optional, default is false
       --parents=<parents>   <parents> is the number of generations of ancestors
                               for the tables selected by grep, and shown in the
@@ -258,10 +258,16 @@ load
 
 Options:
   -i, --info-level=<infolevel>
-         <infolevel> is one of unknown, minimum, standard, detailed, maximum
-         The info level determines the amount of database metadata retrieved,
-           and also determines the time taken to crawl the schema
-         Optional, defaults to standard
+                          <infolevel> is one of unknown, minimum, standard,
+                            detailed, maximum
+                          The info level determines the amount of database
+                            metadata retrieved, and also determines the time
+                            taken to crawl the schema
+                          Optional, defaults to standard
+
+      --load-row-counts   Loads row counts for each table
+                          This can be a time consuming operation
+                          Optional, defaults to false
 
 
 

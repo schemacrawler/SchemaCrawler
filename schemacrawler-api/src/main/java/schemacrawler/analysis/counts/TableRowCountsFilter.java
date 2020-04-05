@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.analysis.counts;
+package schemacrawler.analysis.counts;
 
 
 import static java.util.Objects.requireNonNull;
@@ -35,16 +35,15 @@ import java.util.function.Predicate;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
-class TableCountFilter
+public class TableRowCountsFilter
   implements Predicate<Table>
 {
 
   private final boolean noEmptyTables;
 
-  public TableCountFilter(final SchemaCrawlerOptions options)
+  public TableRowCountsFilter(final SchemaCrawlerOptions options)
   {
-    noEmptyTables = requireNonNull(options,
-                                   "No SchemaCrawlerOptions provided").isNoEmptyTables();
+    noEmptyTables = requireNonNull(options, "No SchemaCrawlerOptions provided").isNoEmptyTables();
   }
 
   /**
@@ -60,7 +59,7 @@ class TableCountFilter
     final boolean hideTable;
     if (noEmptyTables)
     {
-      final long count = CountsUtility.getRowCount(table);
+      final long count = TableRowCountsUtility.getRowCount(table);
       hideTable = count == 0;
     }
     else

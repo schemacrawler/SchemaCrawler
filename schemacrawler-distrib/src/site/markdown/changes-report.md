@@ -4,6 +4,7 @@
 ## Release 16.6.1 - 2020-04-10
 
 - Make analysis of weak associations part of the maximum info-level retrieval
+- Add new command-line option, --load-row-counts, to load table row counts 
 
 
 <a name="a16.5.3"></a>

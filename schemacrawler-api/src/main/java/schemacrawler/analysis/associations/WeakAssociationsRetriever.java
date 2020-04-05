@@ -33,10 +33,12 @@ import static java.util.Objects.requireNonNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import schemacrawler.crawl.Retriever;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 
 public final class WeakAssociationsRetriever
+  implements Retriever
 {
 
   private final Catalog catalog;

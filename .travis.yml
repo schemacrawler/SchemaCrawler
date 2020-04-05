@@ -2,7 +2,6 @@ dist: trusty
 language: java
 jdk:
   - oraclejdk8
-  - oraclejdk11
 os:
   - linux
 sudo: required
@@ -62,4 +61,3 @@ deploy:
     local_dir: "./schemacrawler-distrib/target/_website"
     email: "sualeh@hotmail.com"
     name: "Sualeh Fatehi"
-

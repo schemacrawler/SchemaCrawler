@@ -12,7 +12,7 @@ import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.tools.commandline.command.LoadCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
-public class InfoLevelOptionsTest
+public class LoadCommandTest
 {
 
   @Test
@@ -86,6 +86,45 @@ public class InfoLevelOptionsTest
     final InfoLevel schemaInfoLevel = optionsParser.getInfoLevel();
 
     assertThat(schemaInfoLevel, is(InfoLevel.detailed));
+    assertThat(optionsParser.isLoadRowCounts(), is(false));
+
+  }
+
+  @Test
+  public void loadRowCountsWithValue()
+  {
+    final String[] args = {
+      "--info-level", "detailed", "--load-row-counts", "true", "additional", "-extra"
+    };
+
+    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final LoadCommand optionsParser = new LoadCommand(state);
+    final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+    commandLine.parseArgs(args);
+
+    final InfoLevel schemaInfoLevel = optionsParser.getInfoLevel();
+
+    assertThat(schemaInfoLevel, is(InfoLevel.detailed));
+    assertThat(optionsParser.isLoadRowCounts(), is(true));
+
+  }
+
+  @Test
+  public void loadRowCountsWithoutValue()
+  {
+    final String[] args = {
+      "--info-level", "detailed", "--load-row-counts", "additional", "-extra"
+    };
+
+    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final LoadCommand optionsParser = new LoadCommand(state);
+    final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+    commandLine.parseArgs(args);
+
+    final InfoLevel schemaInfoLevel = optionsParser.getInfoLevel();
+
+    assertThat(schemaInfoLevel, is(InfoLevel.detailed));
+    assertThat(optionsParser.isLoadRowCounts(), is(true));
 
   }
 

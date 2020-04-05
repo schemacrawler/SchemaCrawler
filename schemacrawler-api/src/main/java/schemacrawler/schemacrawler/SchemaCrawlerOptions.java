@@ -52,6 +52,7 @@ public final class SchemaCrawlerOptions
   private final boolean grepOnlyMatching;
   private final InclusionRule grepRoutineParameterInclusionRule;
   private final boolean isNoEmptyTables;
+  private final boolean isLoadRowCounts;
   private final int parentTableFilterDepth;
   private final InclusionRule routineInclusionRule;
   private final InclusionRule routineParameterInclusionRule;
@@ -81,6 +82,7 @@ public final class SchemaCrawlerOptions
                        final boolean grepInvertMatch,
                        final boolean grepOnlyMatching,
                        final boolean isNoEmptyTables,
+                       final boolean isLoadRowCounts,
                        final int childTableFilterDepth,
                        final int parentTableFilterDepth)
   {
@@ -101,6 +103,7 @@ public final class SchemaCrawlerOptions
     this.grepInvertMatch = grepInvertMatch;
     this.grepOnlyMatching = grepOnlyMatching;
     this.isNoEmptyTables = isNoEmptyTables;
+    this.isLoadRowCounts = isLoadRowCounts;
     this.childTableFilterDepth = childTableFilterDepth;
     this.parentTableFilterDepth = parentTableFilterDepth;
   }
@@ -310,6 +313,17 @@ public final class SchemaCrawlerOptions
   public boolean isNoEmptyTables()
   {
     return isNoEmptyTables;
+  }
+
+  /**
+   * If infolevel=maximum, this option will remove empty tables (that is, tables
+   * with no rows of data) from the catalog.
+   *
+   * @return Whether to hide empty tables
+   */
+  public boolean isLoadRowCounts()
+  {
+    return isLoadRowCounts;
   }
 
   /**

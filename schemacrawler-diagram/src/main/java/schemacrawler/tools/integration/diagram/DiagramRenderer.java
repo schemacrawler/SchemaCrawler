@@ -39,10 +39,8 @@ import static sf.util.IOUtility.readResourceFully;
 import java.nio.file.Path;
 import java.util.List;
 
-import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
-import schemacrawler.tools.analysis.counts.CatalogWithCounts;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
@@ -105,15 +103,6 @@ public final class DiagramRenderer
   {
     checkCatalog();
 
-    // Determine what decorators to apply to the database
-    Catalog aCatalog = catalog;
-    if (diagramOptions.isShowRowCounts()
-        || schemaCrawlerOptions.isNoEmptyTables())
-    {
-      aCatalog =
-        new CatalogWithCounts(aCatalog, connection, schemaCrawlerOptions);
-    }
-
     // Set the format, in case we are using the default
     outputOptions = OutputOptionsBuilder
       .builder(outputOptions)
@@ -141,7 +130,7 @@ public final class DiagramRenderer
       getSchemaTraversalHandler(dotFileOutputOptions);
 
     final SchemaTraverser traverser = new SchemaTraverser();
-    traverser.setCatalog(aCatalog);
+    traverser.setCatalog(catalog);
     traverser.setHandler(formatter);
     traverser.setTablesComparator(NamedObjectSort.getNamedObjectSort(
       diagramOptions.isAlphabeticalSortForTables()));

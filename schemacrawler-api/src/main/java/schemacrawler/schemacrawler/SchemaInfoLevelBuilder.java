@@ -192,15 +192,6 @@ public final class SchemaInfoLevelBuilder
     return tag;
   }
 
-  /**
-   * @deprecated
-   */
-  @Deprecated
-  public SchemaInfoLevelBuilder setTag(final String tag)
-  {
-    return withTag(tag);
-  }
-
   public SchemaInfoLevelBuilder setRetrieveAdditionalColumnAttributes(final boolean retrieveAdditionalColumnAttributes)
   {
     schemaInfoRetrievals.put(SchemaInfoRetrieval.retrieveAdditionalColumnAttributes,

@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
-interface Retriever
+public interface Retriever
 {
 
 }

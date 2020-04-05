@@ -384,7 +384,11 @@ public class DiagramRendererOptionsTest
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+        .loadRowCounts()
+        .toOptions();
 
     executableDiagram(SchemaTextDetailType.schema.name(),
                       connection,

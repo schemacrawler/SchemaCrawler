@@ -61,7 +61,7 @@ public final class FilterCommand
   private Integer children;
   @Option(names = "--no-empty-tables", description = {
     "Includes only tables that have rows of data",
-    "Will work only if infolevel is maximum",
+    "Requires table row counts to be loaded",
     "Optional, default is false"
   }, negatable = true)
   private Boolean noemptytables;
