@@ -33,7 +33,7 @@ import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.analysis.counts.CatalogWithCounts;
+import schemacrawler.analysis.counts.CatalogWithCounts;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;

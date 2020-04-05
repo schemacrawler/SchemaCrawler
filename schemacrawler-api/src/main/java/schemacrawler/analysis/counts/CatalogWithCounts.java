@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.analysis.counts;
+package schemacrawler.analysis.counts;
 
 
 import schemacrawler.schema.Catalog;
@@ -47,7 +47,7 @@ import java.util.Map;
 import java.util.logging.Level;
 
 import static schemacrawler.filter.ReducerFactory.getTableReducer;
-import static schemacrawler.tools.analysis.counts.CountsUtility.addRowCountToTable;
+import static schemacrawler.analysis.counts.CountsUtility.addRowCountToTable;
 import static schemacrawler.utility.QueryUtility.executeForLong;
 import static sf.util.DatabaseUtility.checkConnection;
 

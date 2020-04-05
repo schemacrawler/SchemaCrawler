@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.analysis.counts;
+package schemacrawler.analysis.counts;
 
 
 import static java.util.Objects.requireNonNull;

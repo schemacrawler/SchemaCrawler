@@ -30,8 +30,8 @@ package schemacrawler.tools.text.schema;
 
 
 import static java.util.Comparator.naturalOrder;
-import static schemacrawler.tools.analysis.counts.CountsUtility.getRowCountMessage;
-import static schemacrawler.tools.analysis.counts.CountsUtility.hasRowCount;
+import static schemacrawler.analysis.counts.CountsUtility.getRowCountMessage;
+import static schemacrawler.analysis.counts.CountsUtility.hasRowCount;
 import static sf.util.Utility.isBlank;
 
 import java.util.ArrayList;
