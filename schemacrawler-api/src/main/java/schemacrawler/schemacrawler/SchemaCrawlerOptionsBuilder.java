@@ -29,19 +29,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
-import static sf.util.Utility.enumValue;
-import static sf.util.Utility.isBlank;
+import schemacrawler.schema.RoutineType;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 import java.util.regex.Pattern;
 
-import schemacrawler.schema.RoutineType;
+import static sf.util.Utility.enumValue;
+import static sf.util.Utility.isBlank;
 
 /**
  * SchemaCrawler options.

@@ -1,12 +1,6 @@
 package schemacrawler.test.commandline.command;
 
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static schemacrawler.test.utility.CommandlineTestUtility.runCommandInTest;
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
-
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -14,6 +8,13 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.commandline.command.FilterCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
+
+import static org.apache.commons.lang3.reflect.FieldUtils.readField;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static schemacrawler.test.utility.CommandlineTestUtility.runCommandInTest;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 public class FilterCommandTest
 {
@@ -108,6 +109,7 @@ public class FilterCommandTest
 
   @Test
   public void allArgs()
+    throws IllegalAccessException
   {
     final String[] args = {
       "--parents",
@@ -126,12 +128,15 @@ public class FilterCommandTest
     final CommandLine commandLine =
       newCommandLine(FilterCommand.class, new StateFactory(state), true);
     commandLine.execute(args);
+
+    assertThat(readField(builder, "parentTableFilterDepth", true), is(2));
+    assertThat(readField(builder, "childTableFilterDepth", true), is(2));
+    assertThat(readField(builder, "isNoEmptyTables", true), is(true));
+
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
 
     assertThat(schemaCrawlerOptions.getParentTableFilterDepth(), is(2));
     assertThat(schemaCrawlerOptions.getChildTableFilterDepth(), is(2));
-
-    assertThat(schemaCrawlerOptions.isLoadRowCounts(), is(false));
     assertThat(schemaCrawlerOptions.isNoEmptyTables(), is(true));
   }
 

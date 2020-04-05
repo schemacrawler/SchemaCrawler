@@ -29,16 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 
-import static java.util.Objects.requireNonNull;
-
-import java.sql.Connection;
-import java.util.logging.Level;
-
-import picocli.CommandLine.Command;
-import picocli.CommandLine.ExecutionException;
-import picocli.CommandLine.Model;
-import picocli.CommandLine.Option;
-import picocli.CommandLine.Spec;
+import picocli.CommandLine.*;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InfoLevel;
@@ -51,6 +42,11 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
+import java.sql.Connection;
+import java.util.logging.Level;
+
+import static java.util.Objects.requireNonNull;
+
 @Command(name = "load", header = "** Load database metadata into memory", description = {
   ""
 }, headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
@@ -61,8 +57,7 @@ public class LoadCommand
   implements Runnable
 {
 
-  private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(LoadCommand.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(LoadCommand.class.getName());
 
   @Option(names = {
     "-i", "--info-level"
@@ -73,6 +68,13 @@ public class LoadCommand
     "Optional, defaults to standard\n"
   })
   private InfoLevel infolevel;
+
+  @Option(names = {
+    "--load-row-counts"
+  }, description = {
+    "Loads row counts for each table", "This can be a time consuming operation", "Optional, defaults to false\n"
+  })
+  private boolean isLoadRowCounts;
 
   @Spec
   private Model.CommandSpec spec;
@@ -87,13 +89,17 @@ public class LoadCommand
     return infolevel;
   }
 
+  public boolean isLoadRowCounts()
+  {
+    return isLoadRowCounts;
+  }
+
   @Override
   public void run()
   {
     if (!state.isConnected())
     {
-      throw new ExecutionException(spec.commandLine(),
-                                   "Not connected to the database");
+      throw new ExecutionException(spec.commandLine(), "Not connected to the database");
     }
 
     if (infolevel != null)
@@ -102,6 +108,10 @@ public class LoadCommand
         .getSchemaCrawlerOptionsBuilder()
         .withSchemaInfoLevel(infolevel.toSchemaInfoLevel());
     }
+
+    state
+      .getSchemaCrawlerOptionsBuilder()
+      .loadRowCounts(isLoadRowCounts);
 
     try (
       final Connection connection = state
@@ -119,14 +129,11 @@ public class LoadCommand
         .getSchemaCrawlerOptionsBuilder()
         .toOptions();
 
-      final CatalogLoaderRegistry catalogLoaderRegistry =
-        new CatalogLoaderRegistry();
-      final CatalogLoader catalogLoader =
-        catalogLoaderRegistry.lookupCatalogLoader(schemaRetrievalOptions
-                                                    .getDatabaseServerType()
-                                                    .getDatabaseSystemIdentifier());
-      LOGGER.log(Level.CONFIG,
-                 new StringFormat("Catalog loader: %s", getClass().getName()));
+      final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
+      final CatalogLoader catalogLoader = catalogLoaderRegistry.lookupCatalogLoader(schemaRetrievalOptions
+                                                                                      .getDatabaseServerType()
+                                                                                      .getDatabaseSystemIdentifier());
+      LOGGER.log(Level.CONFIG, new StringFormat("Catalog loader: %s", getClass().getName()));
 
       catalogLoader.setAdditionalConfiguration(additionalConfiguration);
       catalogLoader.setConnection(connection);
@@ -142,9 +149,7 @@ public class LoadCommand
     }
     catch (final Exception e)
     {
-      throw new ExecutionException(spec.commandLine(),
-                                   "Cannot load catalog",
-                                   e);
+      throw new ExecutionException(spec.commandLine(), "Cannot load catalog", e);
     }
   }
 
