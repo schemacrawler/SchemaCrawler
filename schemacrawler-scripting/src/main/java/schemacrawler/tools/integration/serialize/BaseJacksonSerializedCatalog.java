@@ -50,25 +50,23 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.BaseCatalogDecorator;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
- * Decorates a database to allow for serialization to and from plain Java
- * serialization.
+ * Decorates a database to allow for serialization to and from plain Java serialization.
  */
 public abstract class BaseJacksonSerializedCatalog
-  extends BaseCatalogDecorator
-  implements SerializableCatalog
+  implements CatalogSerializer
 {
 
   private static final long serialVersionUID = 5314326260124511414L;
 
+  private final Catalog catalog;
   private final SortedSet<Column> allTableColumns;
 
   public BaseJacksonSerializedCatalog(final Catalog catalog)
   {
-    super(catalog);
+    this.catalog = requireNonNull(catalog, "No catalog provided");
     allTableColumns = new TreeSet<>();
     loadAllTableColumns();
   }
@@ -76,6 +74,11 @@ public abstract class BaseJacksonSerializedCatalog
   public Set<Column> getAllTableColumns()
   {
     return new TreeSet<>(allTableColumns);
+  }
+
+  public Catalog getCatalog()
+  {
+    return catalog;
   }
 
   /**
@@ -116,13 +119,12 @@ public abstract class BaseJacksonSerializedCatalog
     }
   }
 
+  protected abstract ObjectMapper newObjectMapper();
+
   private ObjectMapper newConfiguredObjectMapper()
   {
     @JsonIgnoreProperties({
-                            "parent",
-                            "referenced-column",
-                            "exported-foreign-keys",
-                            "imported-foreign-keys"
+                            "parent", "referenced-column", "exported-foreign-keys", "imported-foreign-keys"
                           })
     @JsonPropertyOrder(value = {
       "@uuid",
@@ -148,15 +150,10 @@ public abstract class BaseJacksonSerializedCatalog
     }
 
     final ObjectMapper mapper = newObjectMapper();
-    mapper.enable(ORDER_MAP_ENTRIES_BY_KEYS,
-                  INDENT_OUTPUT,
-                  USE_EQUALITY_FOR_OBJECT_ID,
-                  WRITE_ENUMS_USING_TO_STRING);
+    mapper.enable(ORDER_MAP_ENTRIES_BY_KEYS, INDENT_OUTPUT, USE_EQUALITY_FOR_OBJECT_ID, WRITE_ENUMS_USING_TO_STRING);
     mapper.addMixIn(Object.class, JacksonAnnotationMixIn.class);
     return mapper;
   }
-
-  protected abstract ObjectMapper newObjectMapper();
 
   private void loadAllTableColumns()
   {

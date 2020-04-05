@@ -34,13 +34,12 @@ import java.io.Writer;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
-public interface SerializableCatalog
-  extends Catalog
+public interface CatalogSerializer
 {
 
   /**
-   * Serialize catalog to a binary stream. If the serialization format is
-   * text-based, specified character encoding will not be honored.
+   * Serialize catalog to a binary stream. If the serialization format is text-based, specified character encoding will
+   * not be honored.
    *
    * @param out
    *   Output stream
@@ -50,9 +49,8 @@ public interface SerializableCatalog
     throws SchemaCrawlerException;
 
   /**
-   * Serialize catalog to a binary stream. If the serialization format is
-   * text-based, specified character encoding will be honored. If the
-   * serialization format is binary, and exception will be thrown.
+   * Serialize catalog to a binary stream. If the serialization format is text-based, specified character encoding will
+   * be honored. If the serialization format is binary, and exception will be thrown.
    *
    * @param out
    *   Output stream
@@ -60,5 +58,12 @@ public interface SerializableCatalog
    */
   void save(final Writer out)
     throws SchemaCrawlerException;
+
+  /**
+   * Gets the catalog wrapped by ths savable.
+   *
+   * @return Catalog
+   */
+  Catalog getCatalog();
 
 }

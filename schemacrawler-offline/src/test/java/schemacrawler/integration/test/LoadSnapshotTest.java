@@ -69,13 +69,14 @@ public class LoadSnapshotTest
       new FileInputStream(serializedCatalogFile.toFile());
     final JavaSerializedCatalog serializedCatalog =
       new JavaSerializedCatalog(inputFileStream);
+    final Catalog catalog = serializedCatalog.getCatalog();
 
-    final Schema schema = serializedCatalog
+    final Schema schema = catalog
       .lookupSchema("PUBLIC.BOOKS")
       .orElse(null);
     assertThat("Could not obtain schema", schema, notNullValue());
     assertThat("Unexpected number of tables in the schema",
-               serializedCatalog.getTables(schema),
+               catalog.getTables(schema),
                hasSize(10));
   }
 
