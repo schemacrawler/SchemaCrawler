@@ -42,7 +42,7 @@ import java.util.Collection;
 import java.util.logging.Level;
 
 import schemacrawler.analysis.associations.WeakAssociationsRetriever;
-import schemacrawler.analysis.counts.TableCountFilter;
+import schemacrawler.analysis.counts.TableRowCountsFilter;
 import schemacrawler.analysis.counts.TableRowCountsRetriever;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Routine;
@@ -126,7 +126,7 @@ public final class SchemaCrawler
       });
 
       stopWatch.time("filterEmptyTables", () -> {
-        catalog.reduce(Table.class, getTableReducer(new TableCountFilter(options)));
+        catalog.reduce(Table.class, getTableReducer(new TableRowCountsFilter(options)));
         return null;
       });
 

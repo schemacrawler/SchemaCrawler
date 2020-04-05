@@ -29,7 +29,7 @@ package schemacrawler.analysis.counts;
 
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.analysis.counts.CountsUtility.addRowCountToTable;
+import static schemacrawler.analysis.counts.TableRowCountsUtility.addRowCountToTable;
 import static schemacrawler.utility.QueryUtility.executeForLong;
 import static sf.util.DatabaseUtility.checkConnection;
 

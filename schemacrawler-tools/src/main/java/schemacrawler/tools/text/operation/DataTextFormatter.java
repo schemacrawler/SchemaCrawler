@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.operation;
 
 
-import static schemacrawler.analysis.counts.CountsUtility.getRowCountMessage;
+import static schemacrawler.analysis.counts.TableRowCountsUtility.getRowCountMessage;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

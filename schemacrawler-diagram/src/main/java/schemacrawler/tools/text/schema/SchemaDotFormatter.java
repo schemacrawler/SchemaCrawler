@@ -29,8 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.schema;
 
 
-import static schemacrawler.analysis.counts.CountsUtility.getRowCountMessage;
-import static schemacrawler.analysis.counts.CountsUtility.hasRowCount;
+import static schemacrawler.analysis.counts.TableRowCountsUtility.getRowCountMessage;
+import static schemacrawler.analysis.counts.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 
 import java.util.ArrayList;

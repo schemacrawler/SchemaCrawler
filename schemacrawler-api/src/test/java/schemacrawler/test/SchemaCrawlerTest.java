@@ -645,7 +645,7 @@ public class SchemaCrawlerTest
         {
           out.println(String.format("%s [row count %d]",
             table.getFullName(),
-            table.getAttribute("schemacrawler.table.count")));
+            table.getAttribute("schemacrawler.table.row_count")));
         }
       }
     }

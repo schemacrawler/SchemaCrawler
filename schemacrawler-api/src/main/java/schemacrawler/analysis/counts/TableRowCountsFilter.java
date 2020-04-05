@@ -35,13 +35,13 @@ import java.util.function.Predicate;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
-public class TableCountFilter
+public class TableRowCountsFilter
   implements Predicate<Table>
 {
 
   private final boolean noEmptyTables;
 
-  public TableCountFilter(final SchemaCrawlerOptions options)
+  public TableRowCountsFilter(final SchemaCrawlerOptions options)
   {
     noEmptyTables = requireNonNull(options, "No SchemaCrawlerOptions provided").isNoEmptyTables();
   }
@@ -59,7 +59,7 @@ public class TableCountFilter
     final boolean hideTable;
     if (noEmptyTables)
     {
-      final long count = CountsUtility.getRowCount(table);
+      final long count = TableRowCountsUtility.getRowCount(table);
       hideTable = count == 0;
     }
     else
