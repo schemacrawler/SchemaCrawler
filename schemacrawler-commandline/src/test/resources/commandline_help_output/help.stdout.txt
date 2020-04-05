@@ -244,6 +244,7 @@ Options:
                               shown in the results
                             Optional, default is 0
       --[no-]empty-tables   Includes only tables that have rows of data
+                            Requires table row counts to be loaded
                             Optional, default is false
       --parents=<parents>   <parents> is the number of generations of ancestors
                               for the tables selected by grep, and shown in the
