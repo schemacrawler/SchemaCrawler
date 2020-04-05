@@ -47,6 +47,7 @@ jobs:
           org.jacoco:jacoco-maven-plugin:0.8.5:report-aggregate
     - id: publish-results
       name: Upload results and coverage
+      if: contains(github.ref, "master")
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
