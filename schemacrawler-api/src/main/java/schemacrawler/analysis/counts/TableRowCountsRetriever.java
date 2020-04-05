@@ -43,7 +43,6 @@ import schemacrawler.crawl.Retriever;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.Query;
@@ -59,14 +58,12 @@ public final class TableRowCountsRetriever
 
   private final Connection connection;
   private final Catalog catalog;
-  private final SchemaCrawlerOptions options;
 
-  public TableRowCountsRetriever(final Connection connection, final Catalog catalog, final SchemaCrawlerOptions options)
+  public TableRowCountsRetriever(final Connection connection, final Catalog catalog)
     throws SchemaCrawlerSQLException
   {
     this.connection = checkConnection(connection);
     this.catalog = requireNonNull(catalog, "No catalog provided");
-    this.options = requireNonNull(options, "No SchemaCrawler options provided");
   }
 
   public void retrieveTableRowCounts()

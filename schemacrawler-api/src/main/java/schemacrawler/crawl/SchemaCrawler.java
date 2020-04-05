@@ -110,7 +110,7 @@ public final class SchemaCrawler
     try
     {
       final TableRowCountsRetriever rowCountsRetriever =
-        new TableRowCountsRetriever(retrieverConnection.getConnection(), catalog, options);
+        new TableRowCountsRetriever(retrieverConnection.getConnection(), catalog);
       stopWatch.time("retrieveTableRowCounts", () -> {
         final boolean loadRowCounts = options.isLoadRowCounts();
         if (loadRowCounts)
