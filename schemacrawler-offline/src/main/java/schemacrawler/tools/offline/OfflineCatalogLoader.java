@@ -146,8 +146,10 @@ public final class OfflineCatalogLoader
     final FileInputStream inputFileStream =
       new FileInputStream(offlineDatabasePath.toFile());
 
-    final JavaSerializedCatalog catalog =
+    final JavaSerializedCatalog deserializedCatalog =
       new JavaSerializedCatalog(inputFileStream);
+
+    final Catalog catalog = deserializedCatalog.getCatalog();
     reduceCatalog(catalog);
 
     return catalog;
