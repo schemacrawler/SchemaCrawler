@@ -28,53 +28,53 @@ http://www.gnu.org/licenses/
 package schemacrawler.analysis.counts;
 
 
+import static java.util.Objects.requireNonNull;
+import static schemacrawler.analysis.counts.CountsUtility.addRowCountToTable;
+import static schemacrawler.utility.QueryUtility.executeForLong;
+import static sf.util.DatabaseUtility.checkConnection;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+
+import schemacrawler.crawl.Retriever;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.BaseCatalogDecorator;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.Query;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-
-import static schemacrawler.filter.ReducerFactory.getTableReducer;
-import static schemacrawler.analysis.counts.CountsUtility.addRowCountToTable;
-import static schemacrawler.utility.QueryUtility.executeForLong;
-import static sf.util.DatabaseUtility.checkConnection;
-
-public final class CatalogWithCounts
-  extends BaseCatalogDecorator
+public final class TableRowCountsRetriever
+  implements Retriever
 {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(CatalogWithCounts.class.getName());
+    SchemaCrawlerLogger.getLogger(TableRowCountsRetriever.class.getName());
 
-  private static final long serialVersionUID = -3953296149824921463L;
+  private final Connection connection;
+  private final Catalog catalog;
+  private final SchemaCrawlerOptions options;
 
-  private final Map<Table, Long> counts;
-
-  public CatalogWithCounts(final Catalog catalog,
-                           final Connection connection,
-                           final SchemaCrawlerOptions options)
-    throws SchemaCrawlerException
+  public TableRowCountsRetriever(final Connection connection, final Catalog catalog, final SchemaCrawlerOptions options)
+    throws SchemaCrawlerSQLException
   {
-    super(catalog);
+    this.connection = checkConnection(connection);
+    this.catalog = requireNonNull(catalog, "No catalog provided");
+    this.options = requireNonNull(options, "No SchemaCrawler options provided");
+  }
 
-    counts = new HashMap<>();
+  public void retrieveTableRowCounts()
+  {
 
     Identifiers identifiers;
     try
     {
-      checkConnection(connection);
       identifiers = Identifiers
         .identifiers()
         .withConnection(connection)
@@ -100,26 +100,15 @@ public final class CatalogWithCounts
     {
       try
       {
-        final long count =
-          executeForLong(query, connection, table, identifiers);
-        counts.put(table, count);
+        final long count = executeForLong(query, connection, table, identifiers);
         addRowCountToTable(table, count);
       }
       catch (final SchemaCrawlerException e)
       {
-        LOGGER.log(Level.WARNING,
-                   new StringFormat("Could not get count for table <%s>",
-                                    table),
-                   e);
+        LOGGER.log(Level.WARNING, new StringFormat("Could not get count for table <%s>", table), e);
       }
     }
 
-    reduce(Table.class, getTableReducer(new TableCountFilter(options)));
-  }
-
-  public Map<Table, Long> getCounts()
-  {
-    return counts;
   }
 
 }

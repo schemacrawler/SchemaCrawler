@@ -31,9 +31,7 @@ package schemacrawler.tools.text.schema;
 
 import static java.util.Objects.requireNonNull;
 
-import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.analysis.counts.CatalogWithCounts;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
@@ -77,19 +75,10 @@ public final class SchemaTextRenderer
   {
     checkCatalog();
 
-    // Determine what decorators to apply to the database
-    Catalog aCatalog = catalog;
-    if (schemaTextOptions.isShowRowCounts()
-        || schemaCrawlerOptions.isNoEmptyTables())
-    {
-      aCatalog =
-        new CatalogWithCounts(aCatalog, connection, schemaCrawlerOptions);
-    }
-
     final SchemaTraversalHandler formatter = getSchemaTraversalHandler();
 
     final SchemaTraverser traverser = new SchemaTraverser();
-    traverser.setCatalog(aCatalog);
+    traverser.setCatalog(catalog);
     traverser.setHandler(formatter);
     traverser.setTablesComparator(NamedObjectSort.getNamedObjectSort(
       schemaTextOptions.isAlphabeticalSortForTables()));

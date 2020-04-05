@@ -470,7 +470,8 @@ public abstract class AbstractSchemaCrawlerOutputTest
         .builder()
         .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
-        .includeAllRoutines();
+        .includeAllRoutines()
+        .loadRowCounts();
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
       final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder.builder(textOptions);

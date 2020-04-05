@@ -42,6 +42,8 @@ import java.util.Collection;
 import java.util.logging.Level;
 
 import schemacrawler.analysis.associations.WeakAssociationsRetriever;
+import schemacrawler.analysis.counts.TableCountFilter;
+import schemacrawler.analysis.counts.TableRowCountsRetriever;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineType;
@@ -67,34 +69,64 @@ import sf.util.StringFormat;
 public final class SchemaCrawler
 {
 
-  private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(SchemaCrawler.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(SchemaCrawler.class.getName());
 
   private static void crawlAnalysis(final MutableCatalog catalog,
+                                    final RetrieverConnection retrieverConnection,
                                     final SchemaCrawlerOptions options)
     throws SchemaCrawlerException
   {
 
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
-    final boolean retrieveWeakAssociations = infoLevel.isRetrieveWeakAssociations();
-    if (!retrieveWeakAssociations)
-    {
-      LOGGER.log(Level.INFO,
-                 "Not retrieving weak associations, since this was not requested");
-      return;
-    }
 
     final StopWatch stopWatch = new StopWatch("crawlAnalysis");
 
-    LOGGER.log(Level.INFO, "Crawling weak associations");
-
-    final WeakAssociationsRetriever weakAssociationsRetriever;
+    LOGGER.log(Level.INFO, "Crawling schema analysis");
     try
     {
-      weakAssociationsRetriever =
-        new WeakAssociationsRetriever(catalog);
+      final WeakAssociationsRetriever weakAssociationsRetriever = new WeakAssociationsRetriever(catalog);
       stopWatch.time("retrieveWeakAssociations", () -> {
-        weakAssociationsRetriever.retrieveWeakAssociations();
+        final boolean retrieveWeakAssociations = infoLevel.isRetrieveWeakAssociations();
+        if (retrieveWeakAssociations)
+        {
+          weakAssociationsRetriever.retrieveWeakAssociations();
+          return null;
+        }
+        else
+        {
+          LOGGER.log(Level.INFO, "Not retrieving weak associations, since this was not requested");
+          return null;
+        }
+      });
+
+      LOGGER.log(Level.INFO, stopWatch.stringify());
+    }
+    catch (final Exception e)
+    {
+      throw new SchemaCrawlerException("Exception retrieving weak association information", e);
+    }
+
+    LOGGER.log(Level.INFO, "Crawling table row counts");
+    try
+    {
+      final TableRowCountsRetriever rowCountsRetriever =
+        new TableRowCountsRetriever(retrieverConnection.getConnection(), catalog, options);
+      stopWatch.time("retrieveTableRowCounts", () -> {
+        final boolean loadRowCounts = options.isLoadRowCounts();
+        if (loadRowCounts)
+        {
+          rowCountsRetriever.retrieveTableRowCounts();
+          return null;
+        }
+        else
+        {
+          LOGGER.log(Level.INFO, "Not retrieving table row counts, since this was not requested");
+          return null;
+        }
+      });
+
+      stopWatch.time("filterEmptyTables", () -> {
+        catalog.reduce(Table.class, getTableReducer(new TableCountFilter(options)));
         return null;
       });
 
@@ -102,9 +134,7 @@ public final class SchemaCrawler
     }
     catch (final Exception e)
     {
-      throw new SchemaCrawlerException(
-        "Exception retrieving weak association information",
-        e);
+      throw new SchemaCrawlerException("Exception retrieving table row counts", e);
     }
   }
 
@@ -120,8 +150,7 @@ public final class SchemaCrawler
       final StopWatch stopWatch = new StopWatch("crawlColumnDataTypes");
 
       final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
-      final DatabaseInfoRetriever retriever =
-        new DatabaseInfoRetriever(retrieverConnection, catalog, options);
+      final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection, catalog, options);
 
       stopWatch.time("retrieveSystemColumnDataTypes", () -> {
         if (infoLevel.isRetrieveColumnDataTypes())
@@ -131,8 +160,7 @@ public final class SchemaCrawler
         }
         else
         {
-          LOGGER.log(Level.INFO,
-                     "Not retrieving system column data types, since this was not requested");
+          LOGGER.log(Level.INFO, "Not retrieving system column data types, since this was not requested");
         }
         return null;
       });
@@ -148,8 +176,7 @@ public final class SchemaCrawler
         }
         else
         {
-          LOGGER.log(Level.INFO,
-                     "Not retrieving user column data types, since this was not requested");
+          LOGGER.log(Level.INFO, "Not retrieving user column data types, since this was not requested");
         }
         return null;
       });
@@ -166,9 +193,7 @@ public final class SchemaCrawler
     }
     catch (final Exception e)
     {
-      throw new SchemaCrawlerException(
-        "Exception retrieving column data type information",
-        e);
+      throw new SchemaCrawlerException("Exception retrieving column data type information", e);
     }
   }
 
@@ -183,15 +208,13 @@ public final class SchemaCrawler
       final boolean retrieveDatabaseInfo = infoLevel.isRetrieveDatabaseInfo();
       if (!retrieveDatabaseInfo)
       {
-        LOGGER.log(Level.INFO,
-                   "Not retrieving database information, since this was not requested");
+        LOGGER.log(Level.INFO, "Not retrieving database information, since this was not requested");
         return;
       }
 
       final StopWatch stopWatch = new StopWatch("crawlDatabaseInfo");
 
-      final DatabaseInfoRetriever retriever =
-        new DatabaseInfoRetriever(retrieverConnection, catalog, options);
+      final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection, catalog, options);
 
       LOGGER.log(Level.INFO, "Retrieving database information");
 
@@ -207,8 +230,7 @@ public final class SchemaCrawler
         }
         else
         {
-          LOGGER.log(Level.INFO,
-                     "Not retrieving additional database information, since this was not requested");
+          LOGGER.log(Level.INFO, "Not retrieving additional database information, since this was not requested");
         }
         return null;
       });
@@ -220,8 +242,7 @@ public final class SchemaCrawler
         }
         else
         {
-          LOGGER.log(Level.INFO,
-                     "Not retrieving server information, since this was not requested");
+          LOGGER.log(Level.INFO, "Not retrieving server information, since this was not requested");
         }
         return null;
       });
@@ -239,8 +260,7 @@ public final class SchemaCrawler
         }
         else
         {
-          LOGGER.log(Level.INFO,
-                     "Not retrieving additional JDBC driver information, since this was not requested");
+          LOGGER.log(Level.INFO, "Not retrieving additional JDBC driver information, since this was not requested");
         }
         return null;
       });
@@ -263,9 +283,7 @@ public final class SchemaCrawler
     }
     catch (final Exception e)
     {
-      throw new SchemaCrawlerException(
-        "Exception retrieving database information",
-        e);
+      throw new SchemaCrawlerException("Exception retrieving database information", e);
     }
   }
 
@@ -279,8 +297,7 @@ public final class SchemaCrawler
     final boolean retrieveRoutines = infoLevel.isRetrieveRoutines();
     if (!retrieveRoutines)
     {
-      LOGGER.log(Level.INFO,
-                 "Not retrieving routines, since this was not requested");
+      LOGGER.log(Level.INFO, "Not retrieving routines, since this was not requested");
       return;
     }
 
@@ -295,37 +312,29 @@ public final class SchemaCrawler
     try
     {
       retriever = new RoutineRetriever(retrieverConnection, catalog, options);
-      retrieverExtra =
-        new RoutineExtRetriever(retrieverConnection, catalog, options);
-      procedureParameterRetriever =
-        new ProcedureParameterRetriever(retrieverConnection, catalog, options);
-      functionParameterRetriever =
-        new FunctionParameterRetriever(retrieverConnection, catalog, options);
+      retrieverExtra = new RoutineExtRetriever(retrieverConnection, catalog, options);
+      procedureParameterRetriever = new ProcedureParameterRetriever(retrieverConnection, catalog, options);
+      functionParameterRetriever = new FunctionParameterRetriever(retrieverConnection, catalog, options);
 
       final Collection<RoutineType> routineTypes = options.getRoutineTypes();
 
       stopWatch.time("retrieveRoutines", () -> {
-        final NamedObjectList<SchemaReference> schemas =
-          retriever.getAllSchemas();
+        final NamedObjectList<SchemaReference> schemas = retriever.getAllSchemas();
         if (routineTypes.contains(RoutineType.procedure))
         {
           LOGGER.log(Level.INFO, "Retrieving procedure names");
-          retriever.retrieveProcedures(schemas,
-                                       options.getRoutineInclusionRule());
+          retriever.retrieveProcedures(schemas, options.getRoutineInclusionRule());
         }
         if (routineTypes.contains(RoutineType.function))
         {
           LOGGER.log(Level.INFO, "Retrieving function names");
-          retriever.retrieveFunctions(schemas,
-                                      options.getRoutineInclusionRule());
+          retriever.retrieveFunctions(schemas, options.getRoutineInclusionRule());
         }
         return null;
       });
 
-      final NamedObjectList<MutableRoutine> allRoutines =
-        catalog.getAllRoutines();
-      LOGGER.log(Level.INFO,
-                 new StringFormat("Retrieved %d routines", allRoutines.size()));
+      final NamedObjectList<MutableRoutine> allRoutines = catalog.getAllRoutines();
+      LOGGER.log(Level.INFO, new StringFormat("Retrieved %d routines", allRoutines.size()));
       if (allRoutines.isEmpty())
       {
         return;
@@ -376,9 +385,7 @@ public final class SchemaCrawler
     }
     catch (final Exception e)
     {
-      throw new SchemaCrawlerException(
-        "Exception retrieving routine information",
-        e);
+      throw new SchemaCrawlerException("Exception retrieving routine information", e);
     }
   }
 
@@ -393,8 +400,7 @@ public final class SchemaCrawler
 
     try
     {
-      final SchemaRetriever retriever =
-        new SchemaRetriever(retrieverConnection, catalog, options);
+      final SchemaRetriever retriever = new SchemaRetriever(retrieverConnection, catalog, options);
 
       stopWatch.time("retrieveSchemas", () -> {
         retriever.retrieveSchemas(options.getSchemaInclusionRule());
@@ -408,14 +414,12 @@ public final class SchemaCrawler
 
       LOGGER.log(Level.INFO, stopWatch.stringify());
 
-      final NamedObjectList<SchemaReference> schemas =
-        retriever.getAllSchemas();
+      final NamedObjectList<SchemaReference> schemas = retriever.getAllSchemas();
       if (schemas.isEmpty())
       {
         throw new SchemaCrawlerException("No matching schemas found");
       }
-      LOGGER.log(Level.INFO,
-                 new StringFormat("Retrieved %d schemas", schemas.size()));
+      LOGGER.log(Level.INFO, new StringFormat("Retrieved %d schemas", schemas.size()));
     }
     catch (final SchemaCrawlerSQLException e)
     {
@@ -427,8 +431,7 @@ public final class SchemaCrawler
     }
     catch (final Exception e)
     {
-      throw new SchemaCrawlerException("Exception retrieving schema information",
-                                       e);
+      throw new SchemaCrawlerException("Exception retrieving schema information", e);
     }
   }
 
@@ -442,8 +445,7 @@ public final class SchemaCrawler
     final boolean retrieveSequences = infoLevel.isRetrieveSequenceInformation();
     if (!retrieveSequences)
     {
-      LOGGER.log(Level.INFO,
-                 "Not retrieving sequences, since this was not requested");
+      LOGGER.log(Level.INFO, "Not retrieving sequences, since this was not requested");
       return;
     }
 
@@ -454,8 +456,7 @@ public final class SchemaCrawler
     final SequenceRetriever retrieverExtra;
     try
     {
-      retrieverExtra =
-        new SequenceRetriever(retrieverConnection, catalog, options);
+      retrieverExtra = new SequenceRetriever(retrieverConnection, catalog, options);
 
       stopWatch.time("retrieveSequenceInformation", () -> {
         retrieverExtra.retrieveSequenceInformation(options.getSequenceInclusionRule());
@@ -479,9 +480,7 @@ public final class SchemaCrawler
     }
     catch (final Exception e)
     {
-      throw new SchemaCrawlerException(
-        "Exception retrieving sequence information",
-        e);
+      throw new SchemaCrawlerException("Exception retrieving sequence information", e);
     }
   }
 
@@ -495,8 +494,7 @@ public final class SchemaCrawler
     final boolean retrieveSynonyms = infoLevel.isRetrieveSynonymInformation();
     if (!retrieveSynonyms)
     {
-      LOGGER.log(Level.INFO,
-                 "Not retrieving synonyms, since this was not requested");
+      LOGGER.log(Level.INFO, "Not retrieving synonyms, since this was not requested");
       return;
     }
 
@@ -507,8 +505,7 @@ public final class SchemaCrawler
     final SynonymRetriever retrieverExtra;
     try
     {
-      retrieverExtra =
-        new SynonymRetriever(retrieverConnection, catalog, options);
+      retrieverExtra = new SynonymRetriever(retrieverConnection, catalog, options);
       stopWatch.time("retrieveSynonymInformation", () -> {
         retrieverExtra.retrieveSynonymInformation(options.getSynonymInclusionRule());
         return null;
@@ -531,9 +528,7 @@ public final class SchemaCrawler
     }
     catch (final Exception e)
     {
-      throw new SchemaCrawlerException(
-        "Exception retrieving synonym information",
-        e);
+      throw new SchemaCrawlerException("Exception retrieving synonym information", e);
     }
   }
 
@@ -547,8 +542,7 @@ public final class SchemaCrawler
     final boolean retrieveTables = infoLevel.isRetrieveTables();
     if (!retrieveTables)
     {
-      LOGGER.log(Level.INFO,
-                 "Not retrieving tables, since this was not requested");
+      LOGGER.log(Level.INFO, "Not retrieving tables, since this was not requested");
       return;
     }
 
@@ -558,23 +552,17 @@ public final class SchemaCrawler
 
     try
     {
-      final TableRetriever retriever =
-        new TableRetriever(retrieverConnection, catalog, options);
-      final TableColumnRetriever columnRetriever =
-        new TableColumnRetriever(retrieverConnection, catalog, options);
-      final IndexRetriever indexRetriever =
-        new IndexRetriever(retrieverConnection, catalog, options);
-      final ForeignKeyRetriever fkRetriever =
-        new ForeignKeyRetriever(retrieverConnection, catalog, options);
+      final TableRetriever retriever = new TableRetriever(retrieverConnection, catalog, options);
+      final TableColumnRetriever columnRetriever = new TableColumnRetriever(retrieverConnection, catalog, options);
+      final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, options);
+      final ForeignKeyRetriever fkRetriever = new ForeignKeyRetriever(retrieverConnection, catalog, options);
       final TableConstraintRetriever constraintRetriever =
         new TableConstraintRetriever(retrieverConnection, catalog, options);
-      final TableExtRetriever retrieverExtra =
-        new TableExtRetriever(retrieverConnection, catalog, options);
+      final TableExtRetriever retrieverExtra = new TableExtRetriever(retrieverConnection, catalog, options);
 
       stopWatch.time("retrieveTables", () -> {
         LOGGER.log(Level.INFO, "Retrieving table names");
-        final NamedObjectList<SchemaReference> schemas =
-          retriever.getAllSchemas();
+        final NamedObjectList<SchemaReference> schemas = retriever.getAllSchemas();
         retriever.retrieveTables(schemas,
                                  options.getTableNamePattern(),
                                  options.getTableTypes(),
@@ -583,8 +571,7 @@ public final class SchemaCrawler
       });
 
       final NamedObjectList<MutableTable> allTables = catalog.getAllTables();
-      LOGGER.log(Level.INFO,
-                 new StringFormat("Retrieved %d tables", allTables.size()));
+      LOGGER.log(Level.INFO, new StringFormat("Retrieved %d tables", allTables.size()));
       if (allTables.isEmpty())
       {
         return;
@@ -594,8 +581,7 @@ public final class SchemaCrawler
         LOGGER.log(Level.INFO, "Retrieving table columns");
         if (infoLevel.isRetrieveTableColumns())
         {
-          columnRetriever.retrieveTableColumns(allTables,
-                                               options.getColumnInclusionRule());
+          columnRetriever.retrieveTableColumns(allTables, options.getColumnInclusionRule());
         }
         return null;
       });
@@ -749,8 +735,7 @@ public final class SchemaCrawler
     }
     catch (final Exception e)
     {
-      throw new SchemaCrawlerException("Exception retrieving table information",
-                                       e);
+      throw new SchemaCrawlerException("Exception retrieving table information", e);
     }
   }
 
@@ -773,10 +758,9 @@ public final class SchemaCrawler
                        final SchemaCrawlerOptions schemaCrawlerOptions)
   {
     this.connection = requireNonNull(connection, "No connection specified");
-    this.schemaRetrievalOptions = requireNonNull(schemaRetrievalOptions,
-                                                 "No database-specific schema retrieval overrides provided");
-    this.schemaCrawlerOptions =
-      requireNonNull(schemaCrawlerOptions, "No SchemaCrawler options provided");
+    this.schemaRetrievalOptions =
+      requireNonNull(schemaRetrievalOptions, "No database-specific schema retrieval overrides provided");
+    this.schemaCrawlerOptions = requireNonNull(schemaCrawlerOptions, "No SchemaCrawler options provided");
   }
 
   /**
@@ -792,8 +776,7 @@ public final class SchemaCrawler
     final MutableCatalog catalog = new MutableCatalog("catalog");
     try
     {
-      final RetrieverConnection retrieverConnection =
-        new RetrieverConnection(connection, schemaRetrievalOptions);
+      final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
 
       crawlDatabaseInfo(catalog, retrieverConnection, schemaCrawlerOptions);
       LOGGER.log(Level.INFO, String.format("%n%s", catalog.getCrawlInfo()));
@@ -804,7 +787,7 @@ public final class SchemaCrawler
       crawlRoutines(catalog, retrieverConnection, schemaCrawlerOptions);
       crawlSynonyms(catalog, retrieverConnection, schemaCrawlerOptions);
       crawlSequences(catalog, retrieverConnection, schemaCrawlerOptions);
-      crawlAnalysis(catalog, schemaCrawlerOptions);
+      crawlAnalysis(catalog, retrieverConnection, schemaCrawlerOptions);
 
       return catalog;
     }

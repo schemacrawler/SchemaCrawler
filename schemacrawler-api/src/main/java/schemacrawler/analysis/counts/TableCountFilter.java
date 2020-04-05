@@ -35,7 +35,7 @@ import java.util.function.Predicate;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
-class TableCountFilter
+public class TableCountFilter
   implements Predicate<Table>
 {
 
@@ -43,8 +43,7 @@ class TableCountFilter
 
   public TableCountFilter(final SchemaCrawlerOptions options)
   {
-    noEmptyTables = requireNonNull(options,
-                                   "No SchemaCrawlerOptions provided").isNoEmptyTables();
+    noEmptyTables = requireNonNull(options, "No SchemaCrawlerOptions provided").isNoEmptyTables();
   }
 
   /**
