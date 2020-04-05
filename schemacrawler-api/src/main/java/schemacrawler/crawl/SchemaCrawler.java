@@ -71,9 +71,67 @@ public final class SchemaCrawler
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(SchemaCrawler.class.getName());
 
-  private static void crawlAnalysis(final MutableCatalog catalog,
-                                    final RetrieverConnection retrieverConnection,
-                                    final SchemaCrawlerOptions options)
+  private final Connection connection;
+  private final SchemaCrawlerOptions options;
+  private final SchemaRetrievalOptions schemaRetrievalOptions;
+  private MutableCatalog catalog;
+  private RetrieverConnection retrieverConnection;
+
+  /**
+   * Constructs a SchemaCrawler object, from a connection.
+   *
+   * @param connection
+   *   An database connection.
+   * @param schemaRetrievalOptions
+   *   Database-specific schema retrieval overrides
+   * @param options
+   *   SchemaCrawler options
+   */
+  public SchemaCrawler(final Connection connection,
+                       final SchemaRetrievalOptions schemaRetrievalOptions,
+                       final SchemaCrawlerOptions options)
+  {
+    this.connection = requireNonNull(connection, "No connection specified");
+    this.schemaRetrievalOptions =
+      requireNonNull(schemaRetrievalOptions, "No database-specific schema retrieval overrides provided");
+    this.options = requireNonNull(options, "No SchemaCrawler options provided");
+  }
+
+  /**
+   * Crawls the database, to obtain database metadata.
+   *
+   * @return Database metadata
+   * @throws SchemaCrawlerException
+   *   On an exception
+   */
+  public Catalog crawl()
+    throws SchemaCrawlerException
+  {
+    catalog = new MutableCatalog("catalog");
+    try
+    {
+      retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
+
+      crawlDatabaseInfo();
+      LOGGER.log(Level.INFO, String.format("%n%s", catalog.getCrawlInfo()));
+
+      crawlSchemas();
+      crawlColumnDataTypes();
+      crawlTables();
+      crawlRoutines();
+      crawlSynonyms();
+      crawlSequences();
+      crawlAnalysis();
+
+      return catalog;
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerException("Database access exception", e);
+    }
+  }
+
+  private void crawlAnalysis()
     throws SchemaCrawlerException
   {
 
@@ -138,9 +196,7 @@ public final class SchemaCrawler
     }
   }
 
-  private static void crawlColumnDataTypes(final MutableCatalog catalog,
-                                           final RetrieverConnection retrieverConnection,
-                                           final SchemaCrawlerOptions options)
+  private void crawlColumnDataTypes()
     throws SchemaCrawlerException
   {
     try
@@ -197,9 +253,7 @@ public final class SchemaCrawler
     }
   }
 
-  private static void crawlDatabaseInfo(final MutableCatalog catalog,
-                                        final RetrieverConnection retrieverConnection,
-                                        final SchemaCrawlerOptions options)
+  private void crawlDatabaseInfo()
     throws SchemaCrawlerException
   {
     try
@@ -287,9 +341,7 @@ public final class SchemaCrawler
     }
   }
 
-  private static void crawlRoutines(final MutableCatalog catalog,
-                                    final RetrieverConnection retrieverConnection,
-                                    final SchemaCrawlerOptions options)
+  private void crawlRoutines()
     throws SchemaCrawlerException
   {
 
@@ -389,9 +441,7 @@ public final class SchemaCrawler
     }
   }
 
-  private static void crawlSchemas(final MutableCatalog catalog,
-                                   final RetrieverConnection retrieverConnection,
-                                   final SchemaCrawlerOptions options)
+  private void crawlSchemas()
     throws SchemaCrawlerException
   {
     final StopWatch stopWatch = new StopWatch("crawlSchemas");
@@ -435,9 +485,7 @@ public final class SchemaCrawler
     }
   }
 
-  private static void crawlSequences(final MutableCatalog catalog,
-                                     final RetrieverConnection retrieverConnection,
-                                     final SchemaCrawlerOptions options)
+  private void crawlSequences()
     throws SchemaCrawlerException
   {
 
@@ -484,9 +532,7 @@ public final class SchemaCrawler
     }
   }
 
-  private static void crawlSynonyms(final MutableCatalog catalog,
-                                    final RetrieverConnection retrieverConnection,
-                                    final SchemaCrawlerOptions options)
+  private void crawlSynonyms()
     throws SchemaCrawlerException
   {
 
@@ -532,9 +578,7 @@ public final class SchemaCrawler
     }
   }
 
-  private static void crawlTables(final MutableCatalog catalog,
-                                  final RetrieverConnection retrieverConnection,
-                                  final SchemaCrawlerOptions options)
+  private void crawlTables()
     throws SchemaCrawlerException
   {
 
@@ -736,64 +780,6 @@ public final class SchemaCrawler
     catch (final Exception e)
     {
       throw new SchemaCrawlerException("Exception retrieving table information", e);
-    }
-  }
-
-  private final Connection connection;
-  private final SchemaCrawlerOptions schemaCrawlerOptions;
-  private final SchemaRetrievalOptions schemaRetrievalOptions;
-
-  /**
-   * Constructs a SchemaCrawler object, from a connection.
-   *
-   * @param connection
-   *   An database connection.
-   * @param schemaRetrievalOptions
-   *   Database-specific schema retrieval overrides
-   * @param schemaCrawlerOptions
-   *   SchemaCrawler options
-   */
-  public SchemaCrawler(final Connection connection,
-                       final SchemaRetrievalOptions schemaRetrievalOptions,
-                       final SchemaCrawlerOptions schemaCrawlerOptions)
-  {
-    this.connection = requireNonNull(connection, "No connection specified");
-    this.schemaRetrievalOptions =
-      requireNonNull(schemaRetrievalOptions, "No database-specific schema retrieval overrides provided");
-    this.schemaCrawlerOptions = requireNonNull(schemaCrawlerOptions, "No SchemaCrawler options provided");
-  }
-
-  /**
-   * Crawls the database, to obtain database metadata.
-   *
-   * @return Database metadata
-   * @throws SchemaCrawlerException
-   *   On an exception
-   */
-  public Catalog crawl()
-    throws SchemaCrawlerException
-  {
-    final MutableCatalog catalog = new MutableCatalog("catalog");
-    try
-    {
-      final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
-
-      crawlDatabaseInfo(catalog, retrieverConnection, schemaCrawlerOptions);
-      LOGGER.log(Level.INFO, String.format("%n%s", catalog.getCrawlInfo()));
-
-      crawlSchemas(catalog, retrieverConnection, schemaCrawlerOptions);
-      crawlColumnDataTypes(catalog, retrieverConnection, schemaCrawlerOptions);
-      crawlTables(catalog, retrieverConnection, schemaCrawlerOptions);
-      crawlRoutines(catalog, retrieverConnection, schemaCrawlerOptions);
-      crawlSynonyms(catalog, retrieverConnection, schemaCrawlerOptions);
-      crawlSequences(catalog, retrieverConnection, schemaCrawlerOptions);
-      crawlAnalysis(catalog, retrieverConnection, schemaCrawlerOptions);
-
-      return catalog;
-    }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerException("Database access exception", e);
     }
   }
 
