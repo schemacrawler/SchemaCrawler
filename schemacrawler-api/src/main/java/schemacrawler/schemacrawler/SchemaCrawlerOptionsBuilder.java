@@ -121,6 +121,7 @@ public final class SchemaCrawlerOptionsBuilder
   private boolean grepOnlyMatching;
   private Optional<InclusionRule> grepRoutineParameterInclusionRule;
   private boolean isNoEmptyTables;
+  private boolean isLoadRowCounts;
   private int parentTableFilterDepth;
   private InclusionRule routineInclusionRule;
 
@@ -275,6 +276,7 @@ public final class SchemaCrawlerOptionsBuilder
     grepOnlyMatching = options.isGrepOnlyMatching();
 
     isNoEmptyTables = options.isNoEmptyTables();
+    isLoadRowCounts = options.isLoadRowCounts();
 
     childTableFilterDepth = options.getChildTableFilterDepth();
     parentTableFilterDepth = options.getParentTableFilterDepth();
@@ -318,6 +320,7 @@ public final class SchemaCrawlerOptionsBuilder
                                     grepInvertMatch,
                                     grepOnlyMatching,
                                     isNoEmptyTables,
+                                    isLoadRowCounts,
                                     childTableFilterDepth,
                                     parentTableFilterDepth);
   }
@@ -326,18 +329,6 @@ public final class SchemaCrawlerOptionsBuilder
   {
     this.grepOnlyMatching = grepOnlyMatching;
     return this;
-  }
-
-  @Deprecated
-  public final SchemaCrawlerOptionsBuilder hideEmptyTables()
-  {
-    return noEmptyTables(true);
-  }
-
-  @Deprecated
-  public final SchemaCrawlerOptionsBuilder hideEmptyTables(final boolean value)
-  {
-    return noEmptyTables(value);
   }
 
   public SchemaCrawlerOptionsBuilder includeAllRoutines()
@@ -551,7 +542,7 @@ public final class SchemaCrawlerOptionsBuilder
   }
 
   /**
-   * Corresponds to the -noemptytables command-line argument.
+   * Corresponds to the --no-empty-tables command-line argument.
    */
   public final SchemaCrawlerOptionsBuilder noEmptyTables()
   {
@@ -559,11 +550,28 @@ public final class SchemaCrawlerOptionsBuilder
   }
 
   /**
-   * Corresponds to the -noemptytables=&lt;boolean&gt; command-line argument.
+   * Corresponds to the --no-empty-tables=&lt;boolean&gt; command-line argument.
    */
   public final SchemaCrawlerOptionsBuilder noEmptyTables(final boolean value)
   {
     isNoEmptyTables = value;
+    return this;
+  }
+
+  /**
+   * Corresponds to the --load-row-counts command-line argument.
+   */
+  public final SchemaCrawlerOptionsBuilder loadRowCounts()
+  {
+    return loadRowCounts(true);
+  }
+
+  /**
+   * Corresponds to the --load-row-counts=&lt;boolean&gt; command-line argument.
+   */
+  public final SchemaCrawlerOptionsBuilder loadRowCounts(final boolean value)
+  {
+    isLoadRowCounts = value;
     return this;
   }
 

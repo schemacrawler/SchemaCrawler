@@ -130,6 +130,8 @@ public class FilterCommandTest
 
     assertThat(schemaCrawlerOptions.getParentTableFilterDepth(), is(2));
     assertThat(schemaCrawlerOptions.getChildTableFilterDepth(), is(2));
+
+    assertThat(schemaCrawlerOptions.isLoadRowCounts(), is(false));
     assertThat(schemaCrawlerOptions.isNoEmptyTables(), is(true));
   }
 
