@@ -28,10 +28,15 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.analysis.counts;
 
 
-import static schemacrawler.filter.ReducerFactory.getTableReducer;
-import static schemacrawler.tools.analysis.counts.CountsUtility.addRowCountToTable;
-import static schemacrawler.utility.QueryUtility.executeForLong;
-import static sf.util.DatabaseUtility.checkConnection;
+import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.BaseCatalogDecorator;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.utility.Identifiers;
+import schemacrawler.utility.Query;
+import sf.util.SchemaCrawlerLogger;
+import sf.util.StringFormat;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -41,16 +46,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
-import schemacrawler.schema.Catalog;
-import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.BaseCatalogDecorator;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.text.operation.Operation;
-import schemacrawler.utility.Identifiers;
-import schemacrawler.utility.Query;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import static schemacrawler.filter.ReducerFactory.getTableReducer;
+import static schemacrawler.tools.analysis.counts.CountsUtility.addRowCountToTable;
+import static schemacrawler.utility.QueryUtility.executeForLong;
+import static sf.util.DatabaseUtility.checkConnection;
 
 public final class CatalogWithCounts
   extends BaseCatalogDecorator
@@ -95,7 +94,7 @@ public final class CatalogWithCounts
       return;
     }
 
-    final Query query = Operation.count.getQuery();
+    final Query query = new Query("schemacrawler.table.row_counts", "SELECT COUNT(*) FROM ${table}");
     final List<Table> allTables = new ArrayList<>(catalog.getTables());
     for (final Table table : allTables)
     {
