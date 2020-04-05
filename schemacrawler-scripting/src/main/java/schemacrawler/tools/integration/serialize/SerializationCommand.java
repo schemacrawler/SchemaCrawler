@@ -76,8 +76,8 @@ public final class SerializationCommand
       SerializationFormat.fromFormat(outputOptions.getOutputFormatValue());
 
     final String serializerClassName = serializationFormat.getSerializerClassName();
-    final Class<Savable> serializableCatalogClass = (Class<Savable>) Class.forName(serializerClassName);
-    final Savable serializableCatalog = serializableCatalogClass
+    final Class<CatalogSerializer> serializableCatalogClass = (Class<CatalogSerializer>) Class.forName(serializerClassName);
+    final CatalogSerializer serializableCatalog = serializableCatalogClass
       .getDeclaredConstructor(Catalog.class)
       .newInstance(catalog);
 

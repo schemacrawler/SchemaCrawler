@@ -44,7 +44,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
  * Decorates a database to allow for serialization to and from plain Java serialization.
  */
 public final class JavaSerializedCatalog
-  implements Savable
+  implements CatalogSerializer
 {
 
   private static Catalog readCatalog(final InputStream in)

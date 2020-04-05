@@ -34,7 +34,7 @@ import java.io.Writer;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
-public interface Savable
+public interface CatalogSerializer
 {
 
   /**

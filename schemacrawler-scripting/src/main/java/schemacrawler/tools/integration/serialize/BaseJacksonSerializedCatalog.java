@@ -56,7 +56,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
  * Decorates a database to allow for serialization to and from plain Java serialization.
  */
 public abstract class BaseJacksonSerializedCatalog
-  implements Savable
+  implements CatalogSerializer
 {
 
   private static final long serialVersionUID = 5314326260124511414L;
