@@ -29,51 +29,25 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.arrayWithSize;
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.notNullValue;
-import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
-import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
-import static schemacrawler.test.utility.TestUtility.javaVersion;
-import static sf.util.Utility.isBlank;
-
-import java.sql.Connection;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.Random;
-import java.util.SortedMap;
-import java.util.TreeMap;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schema.*;
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.InfoLevel;
-import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
-import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaInfoLevel;
-import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.test.utility.DatabaseTestUtility;
-import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
-import schemacrawler.test.utility.TestWriter;
+import schemacrawler.schemacrawler.*;
+import schemacrawler.test.utility.*;
 import schemacrawler.utility.NamedObjectSort;
+
+import java.sql.Connection;
+import java.util.*;
+import java.util.Map.Entry;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
+import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
+import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
+import static schemacrawler.test.utility.TestUtility.javaVersion;
+import static sf.util.Utility.isBlank;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
@@ -631,6 +605,52 @@ public class SchemaCrawlerTest
     }
     assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+  }
+
+
+  @Test
+  public void rowCounts(final TestContext testContext, final Connection connection)
+    throws Exception
+  {
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout)
+    {
+      final Config config = loadHsqldbConfig();
+
+      final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(config);
+
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+        SchemaCrawlerOptionsBuilder
+          .builder()
+          .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
+          .loadRowCounts()
+          .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+        schemaCrawlerOptionsBuilder.toOptions();
+
+      final Catalog catalog =
+        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
+      final Schema[] schemas = catalog
+        .getSchemas()
+        .toArray(new Schema[0]);
+      assertThat("Schema count does not match", schemas, arrayWithSize(5));
+      for (final Schema schema : schemas)
+      {
+        final Table[] tables = catalog
+          .getTables(schema)
+          .toArray(new Table[0]);
+        Arrays.sort(tables, NamedObjectSort.alphabetical);
+        for (final Table table : tables)
+        {
+          out.println(String.format("%s [row count %d]",
+            table.getFullName(),
+            table.getAttribute("schemacrawler.table.count")));
+        }
+      }
+    }
+    assertThat(outputOf(testout),
+      hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
