@@ -121,6 +121,7 @@ public class OfflineConnection
   public void clearWarnings()
     throws SQLException
   {
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
