@@ -274,6 +274,7 @@ public class SiteDiagramVariationsTest
   {
     final Map<String, String> args = new HashMap<>();
     args.put("-info-level", "maximum");
+    args.put("-load-row-counts", "true");
     args.put("-portable-names", "true");
 
     final Map<String, String> config = new HashMap<>();
