@@ -30,4 +30,7 @@ jobs:
     - id: build-test
       name: Build and run mutation tests
       run: |
-        mvn package org.pitest:pitest-maven:mutationCoverage
+          mvn \
+          --no-transfer-progress \
+          --batch-mode \ 
+          package org.pitest:pitest-maven:mutationCoverage
