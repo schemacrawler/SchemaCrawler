@@ -84,7 +84,6 @@ public class SiteDiagramVariationsTest
                                               argsMap,
                                               runConfig,
                                               DiagramOutputFormat.png);
-    System.out.printf("%s%n%s%n%n", pngFile, outputFile);
     move(pngFile, outputFile, REPLACE_EXISTING);
   }
   private Path directory;
