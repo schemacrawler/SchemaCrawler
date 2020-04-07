@@ -29,7 +29,11 @@ package schemacrawler.test.sitegen;
 
 
 import static java.nio.file.Files.deleteIfExists;
+import static java.nio.file.Files.exists;
 import static java.nio.file.Files.move;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 
@@ -43,7 +47,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.test.utility.*;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
+import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
@@ -60,6 +69,7 @@ public class SiteDiagramVariationsTest
     throws Exception
   {
     deleteIfExists(outputFile);
+    assertThat(exists(outputFile), is(false));
 
     final Config runConfig = new Config();
     final Config informationSchema = loadHsqldbConfig();
@@ -74,7 +84,8 @@ public class SiteDiagramVariationsTest
                                               argsMap,
                                               runConfig,
                                               DiagramOutputFormat.png);
-    move(pngFile, outputFile);
+    System.out.printf("%s%n%s%n%n", pngFile, outputFile);
+    move(pngFile, outputFile, REPLACE_EXISTING);
   }
   private Path directory;
 
@@ -98,9 +109,7 @@ public class SiteDiagramVariationsTest
     final Map<String, String> args = new HashMap<>();
     args.put("-info-level", "maximum");
 
-    final Map<String, String> config = new HashMap<>();
-
-    run(connectionInfo, args, config, diagramPath(testContext));
+    run(connectionInfo, args, null, diagramPath(testContext));
   }
 
   @Test
@@ -127,9 +136,7 @@ public class SiteDiagramVariationsTest
     args.put("-info-level", "standard");
     args.put("-title", "Books and Publishers Schema");
 
-    final Map<String, String> config = new HashMap<>();
-
-    run(connectionInfo, args, config, diagramPath(testContext));
+    run(connectionInfo, args, null, diagramPath(testContext));
   }
 
   @Test
@@ -168,9 +175,7 @@ public class SiteDiagramVariationsTest
     args.put("-info-level", "maximum");
     args.put("-portable-names", "true");
 
-    final Map<String, String> config = new HashMap<>();
-
-    run(connectionInfo, args, config, diagramPath(testContext));
+    run(connectionInfo, args, null, diagramPath(testContext));
   }
 
   @Test
@@ -183,9 +188,7 @@ public class SiteDiagramVariationsTest
     args.put("c", "brief");
     args.put("-portable-names", "true");
 
-    final Map<String, String> config = new HashMap<>();
-
-    run(connectionInfo, args, config, diagramPath(testContext));
+    run(connectionInfo, args, null, diagramPath(testContext));
   }
 
   @Test
@@ -213,9 +216,7 @@ public class SiteDiagramVariationsTest
     args.put("-portable-names", "true");
     args.put("-sort-columns", "true");
 
-    final Map<String, String> config = new HashMap<>();
-
-    run(connectionInfo, args, config, diagramPath(testContext));
+    run(connectionInfo, args, null, diagramPath(testContext));
   }
 
   @Test
@@ -229,9 +230,7 @@ public class SiteDiagramVariationsTest
     args.put("-grep-columns", ".*\\.BOOKS\\..*\\.ID");
     args.put("-table-types", "TABLE");
 
-    final Map<String, String> config = new HashMap<>();
-
-    run(connectionInfo, args, config, diagramPath(testContext));
+    run(connectionInfo, args, null, diagramPath(testContext));
   }
 
   @Test
@@ -246,9 +245,7 @@ public class SiteDiagramVariationsTest
     args.put("-only-matching", "true");
     args.put("-table-types", "TABLE");
 
-    final Map<String, String> config = new HashMap<>();
-
-    run(connectionInfo, args, config, diagramPath(testContext));
+    run(connectionInfo, args, null, diagramPath(testContext));
   }
 
   @Test
@@ -277,10 +274,7 @@ public class SiteDiagramVariationsTest
     args.put("-load-row-counts", "true");
     args.put("-portable-names", "true");
 
-    final Map<String, String> config = new HashMap<>();
-    config.put("schemacrawler.format.show_row_counts", "true");
-
-    run(connectionInfo, args, config, diagramPath(testContext));
+    run(connectionInfo, args, null, diagramPath(testContext));
   }
 
   private Path diagramPath(final TestContext testContext)
