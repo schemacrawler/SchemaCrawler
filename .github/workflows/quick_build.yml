@@ -1,10 +1,10 @@
-name: Mutation Tests
+name: Quick Build
 
 on: [push]
 
 jobs:
   build:
-    name: Build and run mutation tests
+    name: Quick build
     runs-on: ubuntu-latest
     steps:
     - id: checkout-code
@@ -27,7 +27,7 @@ jobs:
         echo github.ref: ${{ github.head_ref || github.ref }}
         echo github.sha: ${{ github.sha }}
         mvn -v
-    - id: build-test
-      name: Build and run mutation tests
+    - id: build
+      name: Build
       run: |
-        mvn package org.pitest:pitest-maven:mutationCoverage
+        mvn package
