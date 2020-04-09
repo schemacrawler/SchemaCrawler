@@ -32,6 +32,7 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 import schemacrawler.BaseProductVersion;
+import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
@@ -122,6 +123,27 @@ public class EqualsTest
       .forClass(AbstractNamedObjectWithAttributes.class)
       .withIgnoredFields("remarks", "attributeMap")
       .suppress(Warning.STRICT_INHERITANCE)
+      .verify();
+  }
+
+  @Test
+  public void databaseObject()
+  {
+    class TestDatabaseObject
+      extends AbstractDatabaseObject
+    {
+
+      TestDatabaseObject(final Schema schema, final String name)
+      {
+        super(schema, name);
+      }
+
+    }
+
+    EqualsVerifier
+      .forClass(TestDatabaseObject.class)
+      .suppress(Warning.STRICT_INHERITANCE)
+      .withIgnoredFields("attributeMap", "remarks")
       .verify();
   }
 

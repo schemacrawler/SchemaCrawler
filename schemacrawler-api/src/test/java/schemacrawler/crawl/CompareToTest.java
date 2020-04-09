@@ -34,7 +34,11 @@ import static org.hamcrest.number.OrderingComparison.comparesEqualTo;
 import static org.hamcrest.number.OrderingComparison.greaterThan;
 import static org.hamcrest.number.OrderingComparison.lessThan;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
+import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.TableType;
 
@@ -42,19 +46,15 @@ public class CompareToTest
 {
 
   /**
-   * See: <a href= "https://github.com/schemacrawler/SchemaCrawler/issues/228">Inconsistent
-   * table comparison</a>
+   * See: <a href= "https://github.com/schemacrawler/SchemaCrawler/issues/228">Inconsistent table comparison</a>
    */
   @Test
   public void compareTables()
   {
-    final MutableTable tbl =
-      new MutableTable(new SchemaReference(null, "public"), "booking_detail");
+    final MutableTable tbl = new MutableTable(new SchemaReference(null, "public"), "booking_detail");
     tbl.setTableType(new TableType("table"));
 
-    final MutableView view =
-      new MutableView(new SchemaReference(null, "public"),
-                      "blog_monthly_stat_fa");
+    final MutableView view = new MutableView(new SchemaReference(null, "public"), "blog_monthly_stat_fa");
     view.setTableType(new TableType("materialized view"));
 
     assertThat(view, lessThan(null));
@@ -65,6 +65,59 @@ public class CompareToTest
 
     assertThat(tbl, lessThan(view));
     assertThat(view, greaterThan(tbl));
+  }
+
+  @Test
+  public void databaseObject()
+  {
+    class TestDatabaseObject
+      extends AbstractDatabaseObject
+    {
+
+      TestDatabaseObject(final Schema schema, final String name)
+      {
+        super(schema, name);
+      }
+
+    }
+
+    final SchemaReference schema = new SchemaReference("catalog", "schema");
+    final TestDatabaseObject tstDbObj1 = new TestDatabaseObject(schema, "tstDbObj1");
+    final TestDatabaseObject tstDbObj2 = new TestDatabaseObject(schema, "tstDbObj2");
+
+    assertThat(tstDbObj1, lessThan(null));
+    assertThat(tstDbObj2, lessThan(null));
+
+    assertThat(tstDbObj1, lessThan(tstDbObj2));
+    assertThat(tstDbObj2, greaterThan(tstDbObj1));
+
+    assertThat(tstDbObj1, greaterThan(new NamedObject()
+    {
+      @Override
+      public String getFullName()
+      {
+        return "";
+      }
+
+      @Override
+      public String getName()
+      {
+        return "";
+      }
+
+      @Override
+      public List<String> toUniqueLookupKey()
+      {
+        return null;
+      }
+
+      @Override
+      public int compareTo(final NamedObject o)
+      {
+        return 0;
+      }
+    }));
+
   }
 
 }
