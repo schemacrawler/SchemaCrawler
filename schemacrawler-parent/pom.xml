@@ -320,6 +320,7 @@
           </targetClasses>
           <failWhenNoMutations>false</failWhenNoMutations>
           <exportLineCoverage>true</exportLineCoverage>
+          <timestampedReports>false</timestampedReports>
           <outputFormats>
             <value>XML</value>
             <value>HTML</value>
