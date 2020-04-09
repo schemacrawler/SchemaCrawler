@@ -309,18 +309,22 @@
             <groupId>org.pitest</groupId>
             <artifactId>pitest-junit5-plugin</artifactId>
             <version>0.12</version>
-          </dependency>       
+          </dependency>
         </dependencies>
-				<configuration>
-					<targetClasses>
-						<param>schemacrawler.crawl</param>
-						<param>schemacrawler.filter</param>
-						<param>schemacrawler.schemacrawler</param>
-						<param>schemacrawler.analysis.*</param>
-					</targetClasses>
-					<failWhenNoMutations>false</failWhenNoMutations>
-					<exportLineCoverage>trure</exportLineCoverage>
-				</configuration>   				
+        <configuration>
+          <targetClasses>
+            <param>schemacrawler.crawl.*</param>
+            <param>schemacrawler.filter.*</param>
+            <param>schemacrawler.schemacrawler.*</param>
+            <param>schemacrawler.analysis.*</param>
+          </targetClasses>
+          <failWhenNoMutations>false</failWhenNoMutations>
+          <exportLineCoverage>true</exportLineCoverage>
+          <outputFormats>
+            <value>XML</value>
+            <value>HTML</value>
+          </outputFormats>
+        </configuration>
       </plugin>
     </plugins>
   </build>

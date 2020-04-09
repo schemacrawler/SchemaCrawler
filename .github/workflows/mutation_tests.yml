@@ -34,3 +34,9 @@ jobs:
           --no-transfer-progress \
           --batch-mode \
           package org.pitest:pitest-maven:mutationCoverage
+    - id: upload-test-results
+      name: Upload mutation test results
+      uses: actions/upload-artifact@v1
+      with:
+        name: mutation-test-results
+        path: homework/math-homework.txt
