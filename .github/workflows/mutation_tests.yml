@@ -39,4 +39,4 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: mutation-test-results
-        path: homework/math-homework.txt
+        path: ./schemacrawler-api/target/pit-reports
