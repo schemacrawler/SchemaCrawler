@@ -161,25 +161,25 @@ public class SchemaCrawlerCoverageTest
 
   }
 
-  private void compareColumnFields(final Column indexColumn, final Column column)
+  private void compareColumnFields(final Column wrappedColumn, final Column column)
   {
-    assertThat(indexColumn.getFullName(), is(column.getFullName()));
-    assertThat(indexColumn.getColumnDataType(), is(column.getColumnDataType()));
-    assertThat(indexColumn.getDecimalDigits(), is(column.getDecimalDigits()));
-    assertThat(indexColumn.getOrdinalPosition(), is(column.getOrdinalPosition()));
-    assertThat(indexColumn.getSize(), is(column.getSize()));
-    assertThat(indexColumn.getWidth(), is(column.getWidth()));
-    assertThat(indexColumn.isNullable(), is(column.isNullable()));
-    assertThat(indexColumn.getDefaultValue(), is(column.getDefaultValue()));
-    assertThat(indexColumn.getPrivileges(), is(column.getPrivileges()));
-    assertThat(indexColumn.isAutoIncremented(), is(column.isAutoIncremented()));
-    assertThat(indexColumn.isGenerated(), is(column.isGenerated()));
-    assertThat(indexColumn.isHidden(), is(column.isHidden()));
-    assertThat(indexColumn.isPartOfForeignKey(), is(column.isPartOfForeignKey()));
-    assertThat(indexColumn.isPartOfIndex(), is(column.isPartOfIndex()));
-    assertThat(indexColumn.isPartOfPrimaryKey(), is(column.isPartOfPrimaryKey()));
-    assertThat(indexColumn.isPartOfUniqueIndex(), is(column.isPartOfUniqueIndex()));
-    assertThat(indexColumn.getType(), is(column.getType()));
+    assertThat(wrappedColumn.getFullName(), is(column.getFullName()));
+    assertThat(wrappedColumn.getColumnDataType(), is(column.getColumnDataType()));
+    assertThat(wrappedColumn.getDecimalDigits(), is(column.getDecimalDigits()));
+    assertThat(wrappedColumn.getOrdinalPosition(), is(column.getOrdinalPosition()));
+    assertThat(wrappedColumn.getSize(), is(column.getSize()));
+    assertThat(wrappedColumn.getWidth(), is(column.getWidth()));
+    assertThat(wrappedColumn.isNullable(), is(column.isNullable()));
+    assertThat(wrappedColumn.getDefaultValue(), is(column.getDefaultValue()));
+    assertThat(wrappedColumn.getPrivileges(), is(column.getPrivileges()));
+    assertThat(wrappedColumn.isAutoIncremented(), is(column.isAutoIncremented()));
+    assertThat(wrappedColumn.isGenerated(), is(column.isGenerated()));
+    assertThat(wrappedColumn.isHidden(), is(column.isHidden()));
+    assertThat(wrappedColumn.isPartOfForeignKey(), is(column.isPartOfForeignKey()));
+    assertThat(wrappedColumn.isPartOfIndex(), is(column.isPartOfIndex()));
+    assertThat(wrappedColumn.isPartOfPrimaryKey(), is(column.isPartOfPrimaryKey()));
+    assertThat(wrappedColumn.isPartOfUniqueIndex(), is(column.isPartOfUniqueIndex()));
+    assertThat(wrappedColumn.getType(), is(column.getType()));
   }
 
 }
