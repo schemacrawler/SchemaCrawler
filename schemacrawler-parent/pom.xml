@@ -318,6 +318,12 @@
             <param>schemacrawler.schemacrawler.*</param>
             <param>schemacrawler.analysis.*</param>
           </targetClasses>
+          <excludedClasses>
+            <param>schemacrawler.analysis.associations.Inflection</param>
+          </excludedClasses>
+          <targetTests>
+            <param>schemacrawler.*</param>
+          </targetTests>
           <failWhenNoMutations>false</failWhenNoMutations>
           <exportLineCoverage>true</exportLineCoverage>
           <timestampedReports>false</timestampedReports>
