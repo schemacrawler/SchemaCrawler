@@ -31,6 +31,7 @@ package schemacrawler.crawl;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static schemacrawler.test.utility.BooleanPropertyTestUtility.checkBooleanProperties;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 
@@ -43,6 +44,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexColumnSortSequence;
@@ -180,6 +182,44 @@ public class SchemaCrawlerCoverageTest
     assertThat(wrappedColumn.isPartOfPrimaryKey(), is(column.isPartOfPrimaryKey()));
     assertThat(wrappedColumn.isPartOfUniqueIndex(), is(column.isPartOfUniqueIndex()));
     assertThat(wrappedColumn.getType(), is(column.getType()));
+  }
+
+  @Test
+  public void columnBooleanProperties()
+    throws Exception
+  {
+    final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
+    final Table table = catalog
+      .lookupTable(schema, "AUTHORS")
+      .get();
+    final Column column = table.lookupColumn("FIRSTNAME").get();
+
+    checkBooleanProperties(column,
+                           "autoIncremented",
+                           "generated",
+                           "hidden");
+
+  }
+
+  @Test
+  public void columnDataTypeBooleanProperties()
+    throws Exception
+  {
+    final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
+    final Table table = catalog
+      .lookupTable(schema, "AUTHORS")
+      .get();
+    final Column column = table.lookupColumn("FIRSTNAME").get();
+    final ColumnDataType columnDataType = column.getColumnDataType();
+
+    checkBooleanProperties(columnDataType,
+                           "autoIncrementable",
+                           "caseSensitive",
+                           "fixedPrecisionScale",
+                           "nullable",
+                           "unsigned",
+                           "userDefined");
+
   }
 
 }
