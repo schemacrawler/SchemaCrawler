@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.lang.reflect.InvocationTargetException;
 
 import org.junit.jupiter.api.Test;
+import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.TableRelationshipType;
 
@@ -128,6 +129,44 @@ public class PartialsTest
 
     assertThat(column.getParent(), is(table));
     assertThat(column.getReferencedColumn(), is(columnReferenced));
+
+  }
+
+  @Test
+  public void functionPartial()
+  {
+    final SchemaReference schema = new SchemaReference("catalog", "schema");
+    final MutableFunction function = new MutableFunction(schema, "function");
+    final FunctionPartial functionPartial = new FunctionPartial(function);
+    final FunctionReference functionReference = new FunctionReference(function);
+
+    assertThat(functionReference.get(), is(function));
+
+    assertThat(functionPartial.getRoutineType(), is(RoutineType.function));
+    assertThat(functionPartial.getRoutineType(), is(functionPartial.getType()));
+
+    for (final String methodName : new String[] {
+      "getDefinition",
+      "getRoutineBodyType",
+      "getSpecificName",
+      "hasDefinition",
+      "getParameters",
+      "getReturnType",
+    })
+    {
+      assertThrows(InvocationTargetException.class,
+                   () -> invokeMethod(functionPartial, methodName),
+                   "Testing partial method, " + methodName);
+    }
+
+    for (final String methodName : new String[] {
+      "lookupParameter",
+    })
+    {
+      assertThrows(InvocationTargetException.class,
+                   () -> invokeMethod(functionPartial, methodName, ""),
+                   "Testing partial method, " + methodName);
+    }
 
   }
 
