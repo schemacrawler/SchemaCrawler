@@ -29,25 +29,51 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.schema.*;
-import schemacrawler.schemacrawler.*;
-import schemacrawler.test.utility.*;
-import schemacrawler.utility.NamedObjectSort;
-
-import java.sql.Connection;
-import java.util.*;
-import java.util.Map.Entry;
-
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.arrayWithSize;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
-import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 import static sf.util.Utility.isBlank;
+
+import java.sql.Connection;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.Random;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import schemacrawler.schema.*;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.InfoLevel;
+import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.test.utility.DatabaseTestUtility;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.TestWriter;
+import schemacrawler.utility.NamedObjectSort;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
@@ -417,6 +443,18 @@ public class SchemaCrawlerTest
       {
         assertThat(dbProperty, notNullValue());
         out.println(dbProperty);
+      }
+
+      final JdbcDriverInfo jdbcDriverInfo = catalog.getJdbcDriverInfo();
+      out.println(String.format("connection url=%s",
+                                jdbcDriverInfo.getConnectionUrl()));
+      out.println(String.format("driver class=%s",
+                                jdbcDriverInfo.getDriverClassName()));
+      final Collection<JdbcDriverProperty> driverProperties = jdbcDriverInfo.getDriverProperties();
+      for (final JdbcDriverProperty driverProperty : driverProperties)
+      {
+        assertThat(driverProperty, notNullValue());
+        out.println(driverProperty);
       }
     }
     final String expectedResultsResource = String.format("%s.%s", testContext.testMethodFullName(), javaVersion());

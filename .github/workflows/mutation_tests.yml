@@ -1,16 +1,11 @@
-name: Integration Tests
+name: Mutation Tests
 
 on: [push]
 
 jobs:
   build:
-    name: Build, test, and publish results
+    name: Build and run mutation tests
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        java: [8, 11]
     steps:
     - id: checkout-code
       name: Checkout code
@@ -19,7 +14,7 @@ jobs:
       name: Set up JDK
       uses: actions/setup-java@v1
       with:
-        java-version: ${{ matrix.java }}
+        java-version: 8
     - uses: actions/cache@v1
       with:
         path: ~/.m2/repository
@@ -39,22 +34,15 @@ jobs:
         echo github.sha: ${{ github.sha }}
         mvn -v
     - id: build-test
-      name: Build and run integration tests
-      env:
-        TZ: GMT
+      name: Build and run mutation tests
       run: |
         mvn \
           --no-transfer-progress \
           --batch-mode \
-          -Dtestcoverage \
-          -Dlightdb \
-          -Dheavydb \
-          clean install \
-          org.jacoco:jacoco-maven-plugin:0.8.5:report-aggregate
-    - id: publish-results
-      name: Upload results and coverage
-      if: contains(github.ref, 'master')
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        bash <(curl -s https://codecov.io/bash) -t 4456b669-238d-485f-a64a-250449710514
+          package org.pitest:pitest-maven:mutationCoverage
+    - id: upload-test-results
+      name: Upload mutation test results
+      uses: actions/upload-artifact@v1
+      with:
+        name: mutation-test-results
+        path: ./schemacrawler-api/target/pit-reports
