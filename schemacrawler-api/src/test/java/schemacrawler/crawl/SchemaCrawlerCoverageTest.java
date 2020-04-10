@@ -41,7 +41,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.Index;
+import schemacrawler.schema.IndexColumn;
+import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
@@ -105,6 +108,48 @@ public class SchemaCrawlerCoverageTest
 
     assertThat(index.isUnique(), is(false));
     assertThat(primaryKey.isUnique(), is(true));
+  }
+
+  @Test
+  public void coverIndexColumn()
+  {
+    final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
+    final Table table = catalog
+      .lookupTable(schema, "AUTHORS")
+      .get();
+    final Index index = table
+      .lookupIndex("IDX_B_AUTHORS")
+      .get();
+    final IndexColumn indexColumn = index
+      .getColumns()
+      .get(0);
+    final Column column = table
+      .lookupColumn(indexColumn.getName())
+      .get();
+
+    assertThat(indexColumn.getFullName(), is(column.getFullName()));
+    assertThat(indexColumn.getColumnDataType(), is(column.getColumnDataType()));
+    assertThat(indexColumn.getDecimalDigits(), is(column.getDecimalDigits()));
+    assertThat(indexColumn.getOrdinalPosition(), is(column.getOrdinalPosition()));
+    assertThat(indexColumn.getSize(), is(column.getSize()));
+    assertThat(indexColumn.getWidth(), is(column.getWidth()));
+    assertThat(indexColumn.isNullable(), is(column.isNullable()));
+    assertThat(indexColumn.getDefaultValue(), is(column.getDefaultValue()));
+    assertThat(indexColumn.getPrivileges(), is(column.getPrivileges()));
+    assertThat(indexColumn.isAutoIncremented(), is(column.isAutoIncremented()));
+    assertThat(indexColumn.isGenerated(), is(column.isGenerated()));
+    assertThat(indexColumn.isHidden(), is(column.isHidden()));
+    assertThat(indexColumn.isPartOfForeignKey(), is(column.isPartOfForeignKey()));
+    assertThat(indexColumn.isPartOfIndex(), is(column.isPartOfIndex()));
+    assertThat(indexColumn.isPartOfPrimaryKey(), is(column.isPartOfPrimaryKey()));
+    assertThat(indexColumn.isPartOfUniqueIndex(), is(column.isPartOfUniqueIndex()));
+    assertThat(indexColumn.getType(), is(column.getType()));
+
+    assertThat(indexColumn.hasDefinition(), is(false));
+    assertThat(indexColumn.getIndex(), is(index));
+    assertThat(indexColumn.getIndexOrdinalPosition(), is(1));
+    assertThat(indexColumn.getSortSequence(), is(IndexColumnSortSequence.ascending));
+
   }
 
 }
