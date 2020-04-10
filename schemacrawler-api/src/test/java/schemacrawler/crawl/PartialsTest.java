@@ -17,7 +17,7 @@ public class PartialsTest
   public void tablePartial()
   {
     final SchemaReference schema = new SchemaReference("catalog", "schema");
-    final TablePartial table = new TablePartial(sschema, "table");
+    final TablePartial table = new TablePartial(schema, "table");
 
     for (final String methodName : new String[] {
       "getColumns",
