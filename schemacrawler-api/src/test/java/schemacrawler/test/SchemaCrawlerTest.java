@@ -55,7 +55,9 @@ import java.util.Random;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schema.*;
 import schemacrawler.schemacrawler.Config;
@@ -77,8 +79,33 @@ import schemacrawler.utility.NamedObjectSort;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class SchemaCrawlerTest
 {
+
+  private Catalog catalog;
+
+  @BeforeAll
+  public void loadCatalog(final Connection connection)
+    throws Exception
+  {
+    final Config config = loadHsqldbConfig();
+
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+      SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(config);
+
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
+        .includeAllRoutines();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
+
+    catalog =
+      getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
+  }
 
   private static String printColumnDataType(final ColumnDataType columnDataType)
   {
@@ -185,21 +212,6 @@ public class SchemaCrawlerTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final Config config = loadHsqldbConfig();
-
-      final SchemaRetrievalOptions schemaRetrievalOptions =
-        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(config);
-
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-        SchemaCrawlerOptionsBuilder
-          .builder()
-          .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-          .includeAllRoutines();
-      final SchemaCrawlerOptions schemaCrawlerOptions =
-        schemaCrawlerOptionsBuilder.toOptions();
-
-      final Catalog catalog =
-        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
       final Collection<ColumnDataType> columnDataTypes =
         catalog.getColumnDataTypes();
       assertThat("ColumnDataType count does not match",
@@ -220,11 +232,6 @@ public class SchemaCrawlerTest
                            final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-
-    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
-    assertThat(catalog, notNullValue());
     final Schema schema = catalog
       .lookupSchema("PUBLIC.BOOKS")
       .get();
@@ -247,21 +254,6 @@ public class SchemaCrawlerTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final Config config = loadHsqldbConfig();
-
-      final SchemaRetrievalOptions schemaRetrievalOptions =
-        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(config);
-
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-        SchemaCrawlerOptionsBuilder
-          .builder()
-          .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-          .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-      final SchemaCrawlerOptions schemaCrawlerOptions =
-        schemaCrawlerOptionsBuilder.toOptions();
-
-      final Catalog catalog =
-        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
       final Schema[] schemas = catalog
         .getSchemas()
         .toArray(new Schema[0]);
@@ -341,21 +333,6 @@ public class SchemaCrawlerTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final Config config = loadHsqldbConfig();
-
-      final SchemaRetrievalOptions schemaRetrievalOptions =
-        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(config);
-
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-        SchemaCrawlerOptionsBuilder
-          .builder()
-          .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-          .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-      final SchemaCrawlerOptions schemaCrawlerOptions =
-        schemaCrawlerOptionsBuilder.toOptions();
-
-      final Catalog catalog =
-        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
       final Schema[] schemas = catalog
         .getSchemas()
         .toArray(new Schema[0]);
@@ -406,21 +383,6 @@ public class SchemaCrawlerTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final Config config = loadHsqldbConfig();
-
-      final SchemaRetrievalOptions schemaRetrievalOptions =
-        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(config);
-
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-        SchemaCrawlerOptionsBuilder
-          .builder()
-          .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-          .includeAllRoutines();
-      final SchemaCrawlerOptions schemaCrawlerOptions =
-        schemaCrawlerOptionsBuilder.toOptions();
-
-      final Catalog catalog =
-        getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
       final DatabaseInfo databaseInfo = catalog.getDatabaseInfo();
       final Collection<DatabaseProperty> dbProperties =
         databaseInfo.getProperties();
@@ -470,14 +432,6 @@ public class SchemaCrawlerTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-        SchemaCrawlerOptionsBuilder
-          .builder()
-          .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-      final SchemaCrawlerOptions schemaCrawlerOptions =
-        schemaCrawlerOptionsBuilder.toOptions();
-
-      final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
       final Table[] tables = catalog
         .getTables()
         .toArray(new Table[0]);
