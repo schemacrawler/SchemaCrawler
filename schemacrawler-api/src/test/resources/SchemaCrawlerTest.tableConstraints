@@ -15,19 +15,6 @@ schema: PUBLIC.BOOKS
     constraint: SYS_CT_10110
       type: check
       on column: LASTNAME
-  table: PUBLIC.BOOKS.BOOKAUTHORS
-    constraint: SYS_FK_10128
-      type: foreign_key
-      on column: BOOKID
-    constraint: Z_FK_AUTHOR
-      type: foreign_key
-      on column: AUTHORID
-    constraint: SYS_CT_10126
-      type: check
-      on column: BOOKID
-    constraint: SYS_CT_10127
-      type: check
-      on column: AUTHORID
   table: PUBLIC.BOOKS.BOOKS
     constraint: PK_BOOKS
       type: primary_key
@@ -79,6 +66,19 @@ schema: PUBLIC.BOOKS
     constraint: SYS_PK_10106
       type: primary_key
       on column: ID
+  table: PUBLIC.BOOKS.BOOKAUTHORS
+    constraint: SYS_FK_10128
+      type: foreign_key
+      on column: BOOKID
+    constraint: Z_FK_AUTHOR
+      type: foreign_key
+      on column: AUTHORID
+    constraint: SYS_CT_10126
+      type: check
+      on column: BOOKID
+    constraint: SYS_CT_10127
+      type: check
+      on column: AUTHORID
   table: PUBLIC.BOOKS.ΒΙΒΛΊΑ
     constraint: PK_ΒΙΒΛΊΑ
       type: primary_key
@@ -96,94 +96,6 @@ schema: PUBLIC.BOOKS
       type: check
       on column: ΕΚΔΌΤΗΣ
   table: PUBLIC.BOOKS.AUTHORSLIST
-schema: PUBLIC.FOR_LINT
-  table: PUBLIC.FOR_LINT.EXTRA_PK
-    constraint: PK_EXTRA_PK
-      type: primary_key
-      on column: ID
-    constraint: FK_PUBLICATION_JOIN
-      type: foreign_key
-      on column: PUBLICATIONID
-    constraint: FK_WRITER_JOIN
-      type: foreign_key
-      on column: WRITERID
-    constraint: SYS_CT_10194
-      type: check
-      on column: WRITERID
-    constraint: SYS_CT_10195
-      type: check
-      on column: PUBLICATIONID
-    constraint: SYS_CT_10196
-      type: check
-      on column: ID
-  table: PUBLIC.FOR_LINT."Global Counts"
-  table: PUBLIC.FOR_LINT.PUBLICATIONS
-    constraint: PK_PUBLICATIONS
-      type: primary_key
-      on column: ID
-    constraint: FK_PUBLICATIONS_WRITER
-      type: foreign_key
-      on column: WRITERID
-    constraint: SYS_CT_10175
-      type: check
-      on column: ID
-    constraint: SYS_CT_10176
-      type: check
-      on column: TITLE
-    constraint: SYS_CT_10177
-      type: check
-      on column: WRITERID
-  table: PUBLIC.FOR_LINT.PUBLICATIONWRITERS
-    constraint: FK_PUBLICATION
-      type: foreign_key
-      on column: PUBLICATIONID
-    constraint: FK_WRITER
-      type: foreign_key
-      on column: WRITERID
-    constraint: SYS_CT_10184
-      type: check
-      on column: PUBLICATIONID
-    constraint: SYS_CT_10185
-      type: check
-      on column: WRITERID
-  table: PUBLIC.FOR_LINT.SELFREFERENCE
-    constraint: PK_SELFREFERENCE
-      type: primary_key
-      on column: ID
-    constraint: FK_SELFREFERENCE
-      type: foreign_key
-      on column: ID
-    constraint: SYS_CT_10205
-      type: check
-      on column: ID
-    constraint: SYS_CT_10206
-      type: check
-      on column: TITLE
-  table: PUBLIC.FOR_LINT.WRITERS
-    constraint: PK_WRITERS
-      type: primary_key
-      on column: ID
-    constraint: FK_WRITERS_PUBLICATION
-      type: foreign_key
-      on column: PUBLICATION_ID
-    constraint: CHECK_UPPERCASE_STATE
-      type: check
-      on column: STATE
-    constraint: SYS_CT_10163
-      type: check
-      on column: ID
-    constraint: SYS_CT_10164
-      type: check
-      on column: FIRSTNAME
-    constraint: SYS_CT_10165
-      type: check
-      on column: LASTNAME
-    constraint: SYS_CT_10166
-      type: check
-      on column: ADDRESS2
-    constraint: SYS_CT_10167
-      type: check
-      on column: PUBLICATION_ID
 schema: PUBLIC.INFORMATION_SCHEMA
 schema: PUBLIC.PUBLIC
 schema: PUBLIC."PUBLISHER SALES"
@@ -204,6 +116,10 @@ schema: PUBLIC."PUBLISHER SALES"
     constraint: SYS_CT_10226
       type: check
       on column: COUNTRY
+  table: PUBLIC."PUBLISHER SALES".SALESDATA
+    constraint: UQ_CUSTOMERS
+      type: unique
+      on column: SALESDATAID
   table: PUBLIC."PUBLISHER SALES".SALES
     constraint: FK_SALES_REGIONS
       type: foreign_key
@@ -218,8 +134,4 @@ schema: PUBLIC."PUBLISHER SALES"
     constraint: SYS_CT_10235
       type: check
       on column: COUNTRY
-  table: PUBLIC."PUBLISHER SALES".SALESDATA
-    constraint: UQ_CUSTOMERS
-      type: unique
-      on column: SALESDATAID
 schema: PUBLIC.SYSTEM_LOBS

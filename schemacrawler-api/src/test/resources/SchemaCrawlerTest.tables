@@ -1,33 +1,46 @@
 o--> PUBLIC.BOOKS.AUTHORS [table]
       ~ COMMIT_ACTION=null
+      ~ schemacrawler.table.row_count=20
 o--> PUBLIC.BOOKS.AUTHORSLIST [view]
       ~ COMMIT_ACTION=null
       ~ INSERTABLE_INTO=YES
       ~ IS_TRIGGER_DELETABLE=NO
       ~ IS_TRIGGER_INSERTABLE_INTO=NO
       ~ IS_TRIGGER_UPDATABLE=NO
+      ~ schemacrawler.table.row_count=20
 o--> PUBLIC.BOOKS.BOOKAUTHORS [table]
       ~ COMMIT_ACTION=null
+      ~ schemacrawler.table.row_count=20
 o--> PUBLIC.BOOKS.BOOKS [table]
       ~ COMMIT_ACTION=null
+      ~ schemacrawler.table.row_count=20
       ~ schemacrawler.weak_associations=[[PUBLIC.BOOKS.BOOKS.ID <~~ PUBLIC."PUBLISHER SALES".SALES.BOOKID], [PUBLIC.BOOKS.PUBLISHERS.ID <~~ PUBLIC.BOOKS.BOOKS.PUBLISHERID]]
 o--> PUBLIC.BOOKS.COUPONS [table]
       ~ COMMIT_ACTION=null
+      ~ schemacrawler.table.row_count=10
 o--> PUBLIC.BOOKS.CUSTOMERDATA [table]
       ~ COMMIT_ACTION=null
+      ~ schemacrawler.table.row_count=0
 o--> PUBLIC.BOOKS.CUSTOMERS [table]
       ~ COMMIT_ACTION=null
+      ~ schemacrawler.table.row_count=0
 o--> PUBLIC.BOOKS."Global Counts" [table]
       ~ COMMIT_ACTION=null
+      ~ schemacrawler.table.row_count=10
 o--> PUBLIC.BOOKS.PUBLISHERS [table]
       ~ COMMIT_ACTION=null
+      ~ schemacrawler.table.row_count=20
       ~ schemacrawler.weak_associations=[[PUBLIC.BOOKS.PUBLISHERS.ID <~~ PUBLIC.BOOKS.BOOKS.PUBLISHERID]]
 o--> PUBLIC.BOOKS.ΒΙΒΛΊΑ [table]
       ~ COMMIT_ACTION=null
+      ~ schemacrawler.table.row_count=0
 o--> PUBLIC."PUBLISHER SALES".REGIONS [table]
       ~ COMMIT_ACTION=null
+      ~ schemacrawler.table.row_count=20
 o--> PUBLIC."PUBLISHER SALES".SALES [table]
       ~ COMMIT_ACTION=null
+      ~ schemacrawler.table.row_count=20
       ~ schemacrawler.weak_associations=[[PUBLIC.BOOKS.BOOKS.ID <~~ PUBLIC."PUBLISHER SALES".SALES.BOOKID]]
 o--> PUBLIC."PUBLISHER SALES".SALESDATA [table]
       ~ COMMIT_ACTION=null
+      ~ schemacrawler.table.row_count=0
