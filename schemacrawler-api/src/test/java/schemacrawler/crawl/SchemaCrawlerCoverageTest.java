@@ -35,6 +35,7 @@ import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -48,6 +49,8 @@ import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableConstraint;
+import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -127,6 +130,39 @@ public class SchemaCrawlerCoverageTest
       .lookupColumn(indexColumn.getName())
       .get();
 
+    compareColumnFields(indexColumn, column);
+
+    assertThat(indexColumn.hasDefinition(), is(false));
+    assertThat(indexColumn.getIndex(), is(index));
+    assertThat(indexColumn.getIndexOrdinalPosition(), is(1));
+    assertThat(indexColumn.getSortSequence(), is(IndexColumnSortSequence.ascending));
+
+  }
+
+  @Test
+  public void coverTableConstraintColumn()
+  {
+    final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
+    final Table table = catalog
+      .lookupTable(schema, "AUTHORS")
+      .get();
+    final TableConstraint tableConstraint = new ArrayList<>(table.getTableConstraints()).get(0);
+    final TableConstraintColumn tableConstraintColumn = tableConstraint
+      .getColumns()
+      .get(0);
+    final Column column = table
+      .lookupColumn(tableConstraintColumn.getName())
+      .get();
+
+    compareColumnFields(tableConstraintColumn, column);
+
+    assertThat(tableConstraintColumn.getTableConstraint(), is(tableConstraint));
+    assertThat(tableConstraintColumn.getTableConstraintOrdinalPosition(), is(0));
+
+  }
+
+  private void compareColumnFields(final Column indexColumn, final Column column)
+  {
     assertThat(indexColumn.getFullName(), is(column.getFullName()));
     assertThat(indexColumn.getColumnDataType(), is(column.getColumnDataType()));
     assertThat(indexColumn.getDecimalDigits(), is(column.getDecimalDigits()));
@@ -144,12 +180,6 @@ public class SchemaCrawlerCoverageTest
     assertThat(indexColumn.isPartOfPrimaryKey(), is(column.isPartOfPrimaryKey()));
     assertThat(indexColumn.isPartOfUniqueIndex(), is(column.isPartOfUniqueIndex()));
     assertThat(indexColumn.getType(), is(column.getType()));
-
-    assertThat(indexColumn.hasDefinition(), is(false));
-    assertThat(indexColumn.getIndex(), is(index));
-    assertThat(indexColumn.getIndexOrdinalPosition(), is(1));
-    assertThat(indexColumn.getSortSequence(), is(IndexColumnSortSequence.ascending));
-
   }
 
 }
