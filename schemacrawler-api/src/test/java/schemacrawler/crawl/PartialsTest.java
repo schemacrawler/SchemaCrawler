@@ -170,4 +170,42 @@ public class PartialsTest
 
   }
 
+  @Test
+  public void procedurePartial()
+  {
+    final SchemaReference schema = new SchemaReference("catalog", "schema");
+    final MutableProcedure procedure = new MutableProcedure(schema, "procedure");
+    final ProcedurePartial procedurePartial = new ProcedurePartial(procedure);
+    final ProcedureReference procedureReference = new ProcedureReference(procedure);
+
+    assertThat(procedureReference.get(), is(procedure));
+
+    assertThat(procedurePartial.getRoutineType(), is(RoutineType.procedure));
+    assertThat(procedurePartial.getRoutineType(), is(procedurePartial.getType()));
+
+    for (final String methodName : new String[] {
+      "getDefinition",
+      "getRoutineBodyType",
+      "getSpecificName",
+      "hasDefinition",
+      "getParameters",
+      "getReturnType",
+      })
+    {
+      assertThrows(InvocationTargetException.class,
+                   () -> invokeMethod(procedurePartial, methodName),
+                   "Testing partial method, " + methodName);
+    }
+
+    for (final String methodName : new String[] {
+      "lookupParameter",
+      })
+    {
+      assertThrows(InvocationTargetException.class,
+                   () -> invokeMethod(procedurePartial, methodName, ""),
+                   "Testing partial method, " + methodName);
+    }
+
+  }
+
 }
