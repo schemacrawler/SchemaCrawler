@@ -146,13 +146,8 @@ public class PartialsTest
     assertThat(functionPartial.getRoutineType(), is(functionPartial.getType()));
 
     for (final String methodName : new String[] {
-      "getDefinition",
-      "getRoutineBodyType",
-      "getSpecificName",
-      "hasDefinition",
-      "getParameters",
-      "getReturnType",
-    })
+      "getDefinition", "getRoutineBodyType", "getSpecificName", "hasDefinition", "getParameters", "getReturnType",
+      })
     {
       assertThrows(InvocationTargetException.class,
                    () -> invokeMethod(functionPartial, methodName),
@@ -161,7 +156,7 @@ public class PartialsTest
 
     for (final String methodName : new String[] {
       "lookupParameter",
-    })
+      })
     {
       assertThrows(InvocationTargetException.class,
                    () -> invokeMethod(functionPartial, methodName, ""),
@@ -184,12 +179,7 @@ public class PartialsTest
     assertThat(procedurePartial.getRoutineType(), is(procedurePartial.getType()));
 
     for (final String methodName : new String[] {
-      "getDefinition",
-      "getRoutineBodyType",
-      "getSpecificName",
-      "hasDefinition",
-      "getParameters",
-      "getReturnType",
+      "getDefinition", "getRoutineBodyType", "getSpecificName", "hasDefinition", "getParameters", "getReturnType",
       })
     {
       assertThrows(InvocationTargetException.class,
