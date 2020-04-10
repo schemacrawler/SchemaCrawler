@@ -82,14 +82,22 @@ public class CompareToTest
     }
 
     final SchemaReference schema = new SchemaReference("catalog", "schema");
+    final SchemaReference schema1 = new SchemaReference("catalog", "schema1");
     final TestDatabaseObject tstDbObj1 = new TestDatabaseObject(schema, "tstDbObj1");
     final TestDatabaseObject tstDbObj2 = new TestDatabaseObject(schema, "tstDbObj2");
+    final TestDatabaseObject tstDbObj3 = new TestDatabaseObject(schema1, "tstDbObj1");
 
     assertThat(tstDbObj1, lessThan(null));
     assertThat(tstDbObj2, lessThan(null));
+    assertThat(tstDbObj3, lessThan(null));
 
     assertThat(tstDbObj1, lessThan(tstDbObj2));
     assertThat(tstDbObj2, greaterThan(tstDbObj1));
+
+    assertThat(tstDbObj1, lessThan(tstDbObj3));
+    assertThat(tstDbObj2, lessThan(tstDbObj3));
+    assertThat(tstDbObj3, greaterThan(tstDbObj1));
+    assertThat(tstDbObj3, greaterThan(tstDbObj2));
 
     assertThat(tstDbObj1, greaterThan(new NamedObject()
     {
