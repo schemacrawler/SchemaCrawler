@@ -7,6 +7,7 @@ PUBLIC.BOOKS.AUTHORS.ID
   - auto-incremented=false
   - nullable=false
   - generated=false
+  - hidden=false
   - part of primary key=true
   - part of foreign key=false
   - ordinal position=1
@@ -33,6 +34,7 @@ PUBLIC.BOOKS.AUTHORS.FIRSTNAME
   - auto-incremented=false
   - nullable=false
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=2
@@ -59,6 +61,7 @@ PUBLIC.BOOKS.AUTHORS.LASTNAME
   - auto-incremented=false
   - nullable=false
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=3
@@ -85,6 +88,7 @@ PUBLIC.BOOKS.AUTHORS.ADDRESS1
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=4
@@ -111,6 +115,7 @@ PUBLIC.BOOKS.AUTHORS.ADDRESS2
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=5
@@ -137,6 +142,7 @@ PUBLIC.BOOKS.AUTHORS.CITY
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=6
@@ -163,6 +169,7 @@ PUBLIC.BOOKS.AUTHORS.STATE
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=7
@@ -189,6 +196,7 @@ PUBLIC.BOOKS.AUTHORS.POSTALCODE
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=8
@@ -215,6 +223,7 @@ PUBLIC.BOOKS.AUTHORS.COUNTRY
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=9
@@ -242,6 +251,7 @@ PUBLIC.BOOKS.AUTHORSLIST.ID
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=1
@@ -268,6 +278,7 @@ PUBLIC.BOOKS.AUTHORSLIST.FIRSTNAME
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=2
@@ -294,6 +305,7 @@ PUBLIC.BOOKS.AUTHORSLIST.LASTNAME
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=3
@@ -321,6 +333,7 @@ PUBLIC.BOOKS.BOOKAUTHORS.BOOKID
   - auto-incremented=false
   - nullable=false
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=true
   - ordinal position=1
@@ -347,6 +360,7 @@ PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID
   - auto-incremented=false
   - nullable=false
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=true
   - ordinal position=2
@@ -373,6 +387,7 @@ PUBLIC.BOOKS.BOOKAUTHORS.SOMEDATA
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=3
@@ -400,6 +415,7 @@ PUBLIC.BOOKS.BOOKS.ID
   - auto-incremented=false
   - nullable=false
   - generated=false
+  - hidden=false
   - part of primary key=true
   - part of foreign key=false
   - ordinal position=1
@@ -426,6 +442,7 @@ PUBLIC.BOOKS.BOOKS.TITLE
   - auto-incremented=false
   - nullable=false
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=2
@@ -452,6 +469,7 @@ PUBLIC.BOOKS.BOOKS.DESCRIPTION
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=3
@@ -479,6 +497,7 @@ PUBLIC.BOOKS.BOOKS.PUBLISHERID
   - auto-incremented=false
   - nullable=false
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=4
@@ -505,6 +524,7 @@ PUBLIC.BOOKS.BOOKS.PUBLICATIONDATE
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=5
@@ -531,6 +551,7 @@ PUBLIC.BOOKS.BOOKS.PRICE
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=6
@@ -557,6 +578,7 @@ PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=true
   - ordinal position=7
@@ -584,6 +606,7 @@ PUBLIC.BOOKS.COUPONS.ID
   - auto-incremented=false
   - nullable=false
   - generated=false
+  - hidden=false
   - part of primary key=true
   - part of foreign key=false
   - ordinal position=1
@@ -610,6 +633,7 @@ PUBLIC.BOOKS.COUPONS.DATA
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=2
@@ -636,6 +660,7 @@ PUBLIC.BOOKS.COUPONS.COUPONS
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=3
@@ -662,6 +687,7 @@ PUBLIC.BOOKS.COUPONS.BOOKS
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=4
@@ -689,6 +715,7 @@ PUBLIC.BOOKS.CUSTOMERDATA.ID
   - auto-incremented=false
   - nullable=false
   - generated=false
+  - hidden=false
   - part of primary key=true
   - part of foreign key=false
   - ordinal position=1
@@ -715,6 +742,7 @@ PUBLIC.BOOKS.CUSTOMERDATA.DATA
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=2
@@ -742,6 +770,7 @@ PUBLIC.BOOKS.CUSTOMERS.ID
   - auto-incremented=false
   - nullable=false
   - generated=false
+  - hidden=false
   - part of primary key=true
   - part of foreign key=false
   - ordinal position=1
@@ -768,6 +797,7 @@ PUBLIC.BOOKS.CUSTOMERS.FIRSTNAME
   - auto-incremented=false
   - nullable=false
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=2
@@ -794,6 +824,7 @@ PUBLIC.BOOKS.CUSTOMERS.LASTNAME
   - auto-incremented=false
   - nullable=false
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=3
@@ -820,6 +851,7 @@ PUBLIC.BOOKS.CUSTOMERS.AGE
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=4
@@ -847,6 +879,7 @@ PUBLIC.BOOKS."Global Counts"."Global Count"
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=1
@@ -873,6 +906,7 @@ PUBLIC.BOOKS."Global Counts"."UPDATE"
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=2
@@ -900,6 +934,7 @@ PUBLIC.BOOKS.PUBLISHERS.ID
   - auto-incremented=true
   - nullable=false
   - generated=false
+  - hidden=false
   - part of primary key=true
   - part of foreign key=false
   - ordinal position=1
@@ -926,6 +961,7 @@ PUBLIC.BOOKS.PUBLISHERS.PUBLISHER
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=2
@@ -953,6 +989,7 @@ PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΜΟΝΑΔΙΚΌΣ
   - auto-incremented=false
   - nullable=false
   - generated=false
+  - hidden=false
   - part of primary key=true
   - part of foreign key=false
   - ordinal position=1
@@ -979,6 +1016,7 @@ PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΤΊΤΛΟΣ
   - auto-incremented=false
   - nullable=false
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=2
@@ -1005,6 +1043,7 @@ PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΠΕΡΙΓΡΑΦΉ
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=3
@@ -1031,6 +1070,7 @@ PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ
   - auto-incremented=false
   - nullable=false
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=true
   - ordinal position=4
@@ -1058,6 +1098,7 @@ PUBLIC."PUBLISHER SALES".REGIONS.CITY
   - auto-incremented=false
   - nullable=false
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=1
@@ -1084,6 +1125,7 @@ PUBLIC."PUBLISHER SALES".REGIONS.STATE
   - auto-incremented=false
   - nullable=false
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=2
@@ -1110,6 +1152,7 @@ PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE
   - auto-incremented=false
   - nullable=false
   - generated=false
+  - hidden=false
   - part of primary key=true
   - part of foreign key=false
   - ordinal position=3
@@ -1136,6 +1179,7 @@ PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY
   - auto-incremented=false
   - nullable=false
   - generated=false
+  - hidden=false
   - part of primary key=true
   - part of foreign key=false
   - ordinal position=4
@@ -1163,6 +1207,7 @@ PUBLIC."PUBLISHER SALES".SALES.POSTALCODE
   - auto-incremented=false
   - nullable=false
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=true
   - ordinal position=1
@@ -1189,6 +1234,7 @@ PUBLIC."PUBLISHER SALES".SALES.COUNTRY
   - auto-incremented=false
   - nullable=false
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=true
   - ordinal position=2
@@ -1215,6 +1261,7 @@ PUBLIC."PUBLISHER SALES".SALES.BOOKID
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=3
@@ -1241,6 +1288,7 @@ PUBLIC."PUBLISHER SALES".SALES.PERIODENDDATE
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=4
@@ -1267,6 +1315,7 @@ PUBLIC."PUBLISHER SALES".SALES.TOTALAMOUNT
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=5
@@ -1293,6 +1342,7 @@ PUBLIC."PUBLISHER SALES".SALES.SALESDATAID
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=true
   - ordinal position=6
@@ -1320,6 +1370,7 @@ PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=1
@@ -1346,6 +1397,7 @@ PUBLIC."PUBLISHER SALES".SALESDATA.YEARLYAMOUNT
   - auto-incremented=false
   - nullable=true
   - generated=false
+  - hidden=false
   - part of primary key=false
   - part of foreign key=false
   - ordinal position=2

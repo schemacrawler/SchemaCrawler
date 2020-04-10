@@ -290,6 +290,9 @@ public class SchemaCrawlerTest
                                       "generated",
                                       column.isGenerated()));
             out.println(String.format("  - %s=%s",
+                                      "hidden",
+                                      column.isHidden()));
+            out.println(String.format("  - %s=%s",
                                       "part of primary key",
                                       column.isPartOfPrimaryKey()));
             out.println(String.format("  - %s=%s",
