@@ -67,6 +67,20 @@ public class PartialsTest
   }
 
   @Test
+  public void columnReference()
+  {
+    final SchemaReference schema = new SchemaReference("catalog", "schema");
+    final TablePartial table = new TablePartial(schema, "table");
+
+    final ColumnPartial column = new ColumnPartial(table, "column");
+    table.addColumn(column);
+
+    final ColumnReference columnReference = new ColumnReference(column);
+
+    assertThat(columnReference.get(), is(column));
+  }
+
+  @Test
   public void columnPartial()
   {
     final SchemaReference schema = new SchemaReference("catalog", "schema");
