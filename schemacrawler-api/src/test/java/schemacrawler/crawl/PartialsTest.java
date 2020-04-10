@@ -56,4 +56,47 @@ public class PartialsTest
 
   }
 
+  @Test
+  public void columnPartial()
+  {
+    final SchemaReference schema = new SchemaReference("catalog", "schema");
+    final TablePartial table = new TablePartial(schema, "table");
+    final ColumnPartial column = new ColumnPartial(table, "table");
+    table.addColumn(column);
+
+    for (final String methodName : new String[] {
+      "getColumnDataType",
+      "getDecimalDigits",
+      "getDefaultValue",
+      "getOrdinalPosition",
+      "getPrivileges",
+      "getSize",
+      "getType",
+      "getWidth",
+      "isAutoIncremented",
+      "isGenerated",
+      "isHidden",
+      "isNullable",
+      "isPartOfForeignKey",
+      "isPartOfIndex",
+      "isPartOfPrimaryKey",
+      "isPartOfUniqueIndex",
+      })
+    {
+      assertThrows(InvocationTargetException.class,
+                   () -> invokeMethod(column, methodName),
+                   "Testing partial method, " + methodName);
+    }
+
+    for (final String methodName : new String[] {
+      "lookupPrivilege",
+    })
+    {
+      assertThrows(InvocationTargetException.class,
+                   () -> invokeMethod(column, methodName, ""),
+                   "Testing partial method, " + methodName);
+    }
+
+  }
+
 }
