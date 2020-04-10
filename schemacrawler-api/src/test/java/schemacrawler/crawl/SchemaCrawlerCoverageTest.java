@@ -222,4 +222,36 @@ public class SchemaCrawlerCoverageTest
 
   }
 
+  @Test
+  public void primaryKeyBooleanProperties()
+    throws Exception
+  {
+    final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
+    final Table table = catalog
+      .lookupTable(schema, "AUTHORS")
+      .get();
+    final PrimaryKey primaryKey = table.getPrimaryKey();
+
+    assertThat(primaryKey.isUnique(), is(true));
+    assertThat(primaryKey.isDeferrable(), is(false));
+    assertThat(primaryKey.isInitiallyDeferred(), is(false));
+
+  }
+
+  @Test
+  public void indexBooleanProperties()
+    throws Exception
+  {
+    final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
+    final Table table = catalog
+      .lookupTable(schema, "AUTHORS")
+      .get();
+    final Index index = table
+      .lookupIndex("IDX_B_AUTHORS")
+      .get();
+
+    checkBooleanProperties(index,"unique");
+
+  }
+
 }
