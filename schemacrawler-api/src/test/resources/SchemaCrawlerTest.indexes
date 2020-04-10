@@ -1,0 +1,199 @@
+PUBLIC.BOOKS.AUTHORS
+  pk: PK_AUTHORS
+    columns: [PUBLIC.BOOKS.AUTHORS.ID]
+    is unique: true
+    cardinality: 0
+    pages: 0
+    index type: unknown
+    constraint type: primary_key
+    is deferrable: false
+    is initially deferred: false
+  index: SYS_IDX_PK_AUTHORS_10111
+    columns: [PUBLIC.BOOKS.AUTHORS.ID]
+    is unique: true
+    cardinality: 0
+    pages: 0
+    index type: other
+  index: IDX_B_AUTHORS
+    columns: [PUBLIC.BOOKS.AUTHORS.LASTNAME, PUBLIC.BOOKS.AUTHORS.FIRSTNAME]
+    is unique: false
+    cardinality: 0
+    pages: 0
+    index type: other
+  index: IDX_A_AUTHORS
+    columns: [PUBLIC.BOOKS.AUTHORS.CITY, PUBLIC.BOOKS.AUTHORS.STATE, PUBLIC.BOOKS.AUTHORS.POSTALCODE, PUBLIC.BOOKS.AUTHORS.COUNTRY]
+    is unique: false
+    cardinality: 0
+    pages: 0
+    index type: other
+PUBLIC.BOOKS.AUTHORSLIST
+PUBLIC.BOOKS.BOOKAUTHORS
+  index: SYS_IDX_Z_FK_AUTHOR_10134
+    columns: [PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID]
+    is unique: false
+    cardinality: 0
+    pages: 0
+    index type: other
+  index: SYS_IDX_SYS_FK_10128_10132
+    columns: [PUBLIC.BOOKS.BOOKAUTHORS.BOOKID]
+    is unique: false
+    cardinality: 0
+    pages: 0
+    index type: other
+  index: UIDX_BOOKAUTHORS
+    columns: [PUBLIC.BOOKS.BOOKAUTHORS.BOOKID, PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID]
+    is unique: true
+    cardinality: 0
+    pages: 0
+    index type: other
+PUBLIC.BOOKS.BOOKS
+  pk: PK_BOOKS
+    columns: [PUBLIC.BOOKS.BOOKS.ID]
+    is unique: true
+    cardinality: 0
+    pages: 0
+    index type: unknown
+    constraint type: primary_key
+    is deferrable: false
+    is initially deferred: false
+  index: SYS_IDX_PK_BOOKS_10119
+    columns: [PUBLIC.BOOKS.BOOKS.ID]
+    is unique: true
+    cardinality: 0
+    pages: 0
+    index type: other
+  index: SYS_IDX_U_PREVIOUSEDITION_10125
+    columns: [PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID]
+    is unique: true
+    cardinality: 0
+    pages: 0
+    index type: other
+  index: SYS_IDX_FK_PREVIOUSEDITION_10123
+    columns: [PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID]
+    is unique: false
+    cardinality: 0
+    pages: 0
+    index type: other
+PUBLIC.BOOKS.COUPONS
+  pk: PK_COUPONS
+    columns: [PUBLIC.BOOKS.COUPONS.ID]
+    is unique: true
+    cardinality: 0
+    pages: 0
+    index type: unknown
+    constraint type: primary_key
+    is deferrable: false
+    is initially deferred: false
+  index: SYS_IDX_PK_COUPONS_10093
+    columns: [PUBLIC.BOOKS.COUPONS.ID]
+    is unique: true
+    cardinality: 0
+    pages: 0
+    index type: other
+PUBLIC.BOOKS.CUSTOMERDATA
+  pk: PK_CUSTOMERDATA
+    columns: [PUBLIC.BOOKS.CUSTOMERDATA.ID]
+    is unique: true
+    cardinality: 0
+    pages: 0
+    index type: unknown
+    constraint type: primary_key
+    is deferrable: false
+    is initially deferred: false
+  index: SYS_IDX_PK_CUSTOMERDATA_10104
+    columns: [PUBLIC.BOOKS.CUSTOMERDATA.ID]
+    is unique: true
+    cardinality: 0
+    pages: 0
+    index type: other
+PUBLIC.BOOKS.CUSTOMERS
+  pk: PK_CUSTOMERS
+    columns: [PUBLIC.BOOKS.CUSTOMERS.ID]
+    is unique: true
+    cardinality: 0
+    pages: 0
+    index type: unknown
+    constraint type: primary_key
+    is deferrable: false
+    is initially deferred: false
+  index: SYS_IDX_PK_CUSTOMERS_10098
+    columns: [PUBLIC.BOOKS.CUSTOMERS.ID]
+    is unique: true
+    cardinality: 0
+    pages: 0
+    index type: other
+PUBLIC.BOOKS."Global Counts"
+PUBLIC.BOOKS.PUBLISHERS
+  pk: SYS_PK_10106
+    columns: [PUBLIC.BOOKS.PUBLISHERS.ID]
+    is unique: true
+    cardinality: 0
+    pages: 0
+    index type: unknown
+    constraint type: primary_key
+    is deferrable: false
+    is initially deferred: false
+  index: SYS_IDX_SYS_PK_10106_10107
+    columns: [PUBLIC.BOOKS.PUBLISHERS.ID]
+    is unique: true
+    cardinality: 0
+    pages: 0
+    index type: other
+PUBLIC.BOOKS.ΒΙΒΛΊΑ
+  pk: PK_ΒΙΒΛΊΑ
+    columns: [PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΜΟΝΑΔΙΚΌΣ]
+    is unique: true
+    cardinality: 0
+    pages: 0
+    index type: unknown
+    constraint type: primary_key
+    is deferrable: false
+    is initially deferred: false
+  index: SYS_IDX_FK_ΒΙΒΛΊΑ_PUBLISHERS_10144
+    columns: [PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ]
+    is unique: false
+    cardinality: 0
+    pages: 0
+    index type: other
+  index: SYS_IDX_PK_ΒΙΒΛΊΑ_10140
+    columns: [PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΜΟΝΑΔΙΚΌΣ]
+    is unique: true
+    cardinality: 0
+    pages: 0
+    index type: other
+PUBLIC."PUBLISHER SALES".REGIONS
+  pk: PK_CUSTOMERS
+    columns: [PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE, PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY]
+    is unique: true
+    cardinality: 0
+    pages: 0
+    index type: unknown
+    constraint type: primary_key
+    is deferrable: false
+    is initially deferred: false
+  index: SYS_IDX_PK_CUSTOMERS_10227
+    columns: [PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE, PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY]
+    is unique: true
+    cardinality: 0
+    pages: 0
+    index type: other
+PUBLIC."PUBLISHER SALES".SALES
+  index: SYS_IDX_FK_SALES_SALESDATA_10241
+    columns: [PUBLIC."PUBLISHER SALES".SALES.SALESDATAID]
+    is unique: false
+    cardinality: 0
+    pages: 0
+    index type: other
+  index: SYS_IDX_FK_SALES_REGIONS_10239
+    columns: [PUBLIC."PUBLISHER SALES".SALES.POSTALCODE, PUBLIC."PUBLISHER SALES".SALES.COUNTRY]
+    is unique: false
+    cardinality: 0
+    pages: 0
+    index type: other
+PUBLIC."PUBLISHER SALES".SALESDATA
+  index: SYS_IDX_UQ_CUSTOMERS_10233
+    columns: [PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID]
+    is unique: true
+    cardinality: 0
+    pages: 0
+    index type: other

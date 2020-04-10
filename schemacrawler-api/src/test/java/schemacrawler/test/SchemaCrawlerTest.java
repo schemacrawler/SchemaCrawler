@@ -729,6 +729,56 @@ public class SchemaCrawlerTest
   }
 
   @Test
+  public void indexes(final TestContext testContext)
+    throws Exception
+  {
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout)
+    {
+      final Schema[] schemas = catalog
+        .getSchemas()
+        .toArray(new Schema[0]);
+      assertThat("Schema count does not match", schemas, arrayWithSize(5));
+      for (final Schema schema : schemas)
+      {
+        final Table[] tables = catalog
+          .getTables(schema)
+          .toArray(new Table[0]);
+        Arrays.sort(tables, NamedObjectSort.alphabetical);
+        for (final Table table : tables)
+        {
+          out.println(table.getFullName());
+          if (table.hasPrimaryKey()) {
+            final PrimaryKey primaryKey = table.getPrimaryKey();
+            out.println(String.format("  pk: %s", primaryKey.getName()));
+            out.println(String.format("    columns: %s", primaryKey.getColumns()));
+            out.println(String.format("    is unique: %b", primaryKey.isUnique()));
+            out.println(String.format("    cardinality: %d", primaryKey.getCardinality()));
+            out.println(String.format("    pages: %d", primaryKey.getPages()));
+            out.println(String.format("    index type: %s", primaryKey.getIndexType()));
+            out.println(String.format("    constraint type: %s", primaryKey.getConstraintType()));
+            out.println(String.format("    is deferrable: %b", primaryKey.isDeferrable()));
+            out.println(String.format("    is initially deferred: %b", primaryKey.isInitiallyDeferred()));
+          }
+
+          final Collection<Index> indexes = table.getIndexes();
+          for (final Index index : indexes)
+          {
+            out.println(String.format("  index: %s", index.getName()));
+            out.println(String.format("    columns: %s", index.getColumns()));
+            out.println(String.format("    is unique: %b", index.isUnique()));
+            out.println(String.format("    cardinality: %d", index.getCardinality()));
+            out.println(String.format("    pages: %d", index.getPages()));
+            out.println(String.format("    index type: %s", index.getIndexType()));
+          }
+        }
+      }
+    }
+    assertThat(outputOf(testout),
+               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+  }
+
+  @Test
   public void tablesSort()
   {
 
