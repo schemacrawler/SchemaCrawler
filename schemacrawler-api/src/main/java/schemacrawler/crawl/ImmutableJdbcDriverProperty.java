@@ -30,6 +30,7 @@ package schemacrawler.crawl;
 
 
 import static java.util.Comparator.naturalOrder;
+import static sf.util.Utility.isBlank;
 
 import java.sql.DriverPropertyInfo;
 import java.util.ArrayList;
@@ -42,8 +43,8 @@ import schemacrawler.schema.JdbcDriverProperty;
 import schemacrawler.schema.Property;
 
 /**
- * Represents a JDBC driver property, and it's value. Created from metadata
- * returned by a JDBC call, and other sources of information.
+ * Represents a JDBC driver property, and it's value. Created from metadata returned by a JDBC call, and other sources
+ * of information.
  *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
@@ -132,6 +133,26 @@ final class ImmutableJdbcDriverProperty
   public String getValue()
   {
     return (String) super.getValue();
+  }
+
+  public boolean hasDescription()
+  {
+    return !isBlank(getDescription());
+  }
+
+  @Override
+  public String toString()
+  {
+    final StringBuilder buffer = new StringBuilder();
+    buffer.append(String.format("%s = %s%n", getName(), getValue()));
+    if (hasDescription())
+    {
+      buffer
+        .append(getDescription())
+        .append(String.format("%n"));
+    }
+    buffer.append(String.format("  is required? %b%n  choices: %s", isRequired(), getChoices()));
+    return buffer.toString();
   }
 
 }
