@@ -1,0 +1,5 @@
+coverage:
+  round: nearest
+  # range: 60..80
+ignore:
+  - " schemacrawler-testdb"  # ignore folders and all its contents
