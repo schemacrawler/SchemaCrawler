@@ -713,14 +713,22 @@ public class SchemaCrawlerTest
         Arrays.sort(tables, NamedObjectSort.alphabetical);
         for (final Table table : tables)
         {
-          out.println(String.format("o--> %s [%s]",
+          out.println(String.format("%s [%s]",
                                     table.getFullName(),
                                     table.getTableType()));
+          if (table instanceof  View) {
+            final View view = (View) table;
+            out.println(String.format("  check option: %s",
+                                      view.getCheckOption()));
+            out.println(String.format("  updatable?: %b",
+                                      view.isUpdatable()));
+          }
+
           final SortedMap<String, Object> tableAttributes =
             new TreeMap<>(table.getAttributes());
           for (final Entry<String, Object> tableAttribute : tableAttributes.entrySet())
           {
-            out.println(String.format("      ~ %s=%s",
+            out.println(String.format("  ~ %s=%s",
                                       tableAttribute.getKey(),
                                       tableAttribute.getValue()));
           }

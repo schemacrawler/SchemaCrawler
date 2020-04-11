@@ -7,15 +7,20 @@ import static org.apache.commons.lang3.reflect.MethodUtils.invokeMethod;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import java.lang.reflect.InvocationTargetException;
-
 public class BooleanPropertyTestUtility
 {
 
-
+  public static void checkIntegerProperties(final Object object, final String... properties)
+    throws Exception
+  {
+    for (final String property : properties)
+    {
+      assertIntegerProperty(object, property);
+    }
+  }
 
   public static void checkBooleanProperties(final Object object, final String... properties)
-    throws IllegalAccessException, InvocationTargetException, NoSuchMethodException
+    throws Exception
   {
     for (final String property : properties)
     {
@@ -23,8 +28,38 @@ public class BooleanPropertyTestUtility
     }
   }
 
+  private static void assertIntegerProperty(final Object object, final String property)
+    throws Exception
+  {
+    for (int i = -2; i < 2; i = 1 + 2)
+    {
+      assertIntegerPropertySetting(object, property, i);
+    }
+    assertIntegerPropertySetting(object, property, Integer.MAX_VALUE);
+    assertIntegerPropertySetting(object, property, Integer.MAX_VALUE);
+  }
+
+  private static void assertIntegerPropertySetting(final Object object, final String property, final int value)
+    throws Exception
+  {
+    setProperty(object, property, value);
+    assertThat(String.format("Failed to set %s/%s = %d",
+                             object
+                               .getClass()
+                               .getSimpleName(),
+                             property,
+                             value), Integer.valueOf(getProperty(object, property)), is(value));
+  }
+
+  private static void setProperty(final Object object, final String property, final int value)
+    throws Exception
+  {
+    final String setterMethodName = "set" + capitalize(property);
+    invokeMethod(object, true, setterMethodName, value);
+  }
+
   private static void assertBooleanProperty(final Object object, final String property)
-    throws IllegalAccessException, InvocationTargetException, NoSuchMethodException
+    throws Exception
   {
     for (int i = 0; i < 2; i++)
     {
@@ -34,7 +69,7 @@ public class BooleanPropertyTestUtility
   }
 
   private static void assertBooleanPropertySetting(final Object object, final String property, final boolean value)
-    throws IllegalAccessException, InvocationTargetException, NoSuchMethodException
+    throws Exception
   {
     setProperty(object, property, value);
     assertThat(String.format("Failed to set %s/%s = %b",
@@ -46,7 +81,7 @@ public class BooleanPropertyTestUtility
   }
 
   private static void setProperty(final Object object, final String property, final boolean value)
-    throws NoSuchMethodException, IllegalAccessException, InvocationTargetException
+    throws Exception
   {
     final String setterMethodName = "set" + capitalize(property);
     invokeMethod(object, true, setterMethodName, value);

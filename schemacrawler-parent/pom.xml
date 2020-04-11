@@ -332,10 +332,20 @@
           </targetClasses>
           <excludedClasses>
             <param>schemacrawler.analysis.associations.Inflection</param>
+						<param>schemacrawler.schemacrawler.SchemaCrawlerSQLException</param>
+						<param>schemacrawler.schemacrawler.SchemaCrawlerRuntimeException</param>
+						<param>schemacrawler.schemacrawler.SchemaCrawlerSQLException</param>
           </excludedClasses>
           <targetTests>
             <param>schemacrawler.*</param>
           </targetTests>
+					<avoidCallsTo>
+					  <avoidCallsTo>sf.util.SchemaCrawlerLogger</avoidCallsTo>
+						<avoidCallsTo>java.util.logging</avoidCallsTo>
+						<avoidCallsTo>org.apache.log4j</avoidCallsTo>
+						<avoidCallsTo>org.slf4j</avoidCallsTo>
+						<avoidCallsTo>org.apache.commons.logging</avoidCallsTo>
+					</avoidCallsTo>					
           <failWhenNoMutations>false</failWhenNoMutations>
           <exportLineCoverage>true</exportLineCoverage>
           <timestampedReports>false</timestampedReports>

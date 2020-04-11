@@ -32,6 +32,7 @@ package schemacrawler.crawl;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.BooleanPropertyTestUtility.checkBooleanProperties;
+import static schemacrawler.test.utility.BooleanPropertyTestUtility.checkIntegerProperties;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 
@@ -188,7 +189,7 @@ public class SchemaCrawlerCoverageTest
   }
 
   @Test
-  public void columnBooleanProperties()
+  public void columnProperties()
     throws Exception
   {
     final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
@@ -205,7 +206,7 @@ public class SchemaCrawlerCoverageTest
   }
 
   @Test
-  public void columnDataTypeBooleanProperties()
+  public void columnDataTypeProperties()
     throws Exception
   {
     final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
@@ -226,7 +227,7 @@ public class SchemaCrawlerCoverageTest
   }
 
   @Test
-  public void primaryKeyBooleanProperties()
+  public void primaryKeyProperties()
     throws Exception
   {
     final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
@@ -242,7 +243,7 @@ public class SchemaCrawlerCoverageTest
   }
 
   @Test
-  public void indexBooleanProperties()
+  public void indexProperties()
     throws Exception
   {
     final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
@@ -253,12 +254,13 @@ public class SchemaCrawlerCoverageTest
       .lookupIndex("IDX_B_AUTHORS")
       .get();
 
+    checkIntegerProperties(index,"cardinality", "pages");
     checkBooleanProperties(index,"unique");
 
   }
 
   @Test
-  public void jdbcDriverInfoBooleanProperties()
+  public void jdbcDriverInfoProperties()
     throws Exception
   {
     final JdbcDriverInfo jdbcDriverInfo = catalog.getJdbcDriverInfo();
@@ -268,7 +270,7 @@ public class SchemaCrawlerCoverageTest
   }
 
   @Test
-  public void sequenceBooleanProperties()
+  public void sequenceProperties()
     throws Exception
   {
     final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
@@ -281,7 +283,7 @@ public class SchemaCrawlerCoverageTest
   }
 
   @Test
-  public void viewBooleanProperties()
+  public void viewProperties()
     throws Exception
   {
     final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
