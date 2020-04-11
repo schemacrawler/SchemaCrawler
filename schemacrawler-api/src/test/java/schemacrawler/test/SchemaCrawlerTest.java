@@ -868,25 +868,31 @@ public class SchemaCrawlerTest
   }
 
   @Test
-  public void triggers()
+  public void triggers(final TestContext testContext)
+    throws Exception
   {
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout)
+    {
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     final Table[] tables = catalog
       .getTables(schema)
       .toArray(new Table[0]);
-    boolean foundTrigger = false;
     for (final Table table : tables)
     {
       for (final Trigger trigger : table.getTriggers())
       {
-        foundTrigger = true;
-        assertThat("Triggers full name does not match", trigger.getFullName(), is("PUBLIC.BOOKS.AUTHORS.TRG_AUTHORS"));
-        assertThat("Trigger EventManipulationType does not match",
-                   trigger.getEventManipulationType(),
-                   is(EventManipulationType.delete));
+        out.println(String.format("  trigger: %s", trigger.getFullName()));
+        out.println(String.format("    action condition: %s", trigger.getActionCondition()));
+        out.println(String.format("    condition timing: %s", trigger.getConditionTiming()));
+        out.println(String.format("    action order: %s", trigger.getActionOrder()));
+        out.println(String.format("    action orientation: %s", trigger.getActionOrientation()));
+        out.println(String.format("    action statement: %s", trigger.getActionStatement()));
+        out.println(String.format("    event manipulation type: %s", trigger.getEventManipulationType()));
       }
     }
-    assertThat("No triggers found", foundTrigger, is(true));
+    }
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
