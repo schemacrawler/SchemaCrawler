@@ -29,6 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
+import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;
+import static com.github.npathai.hamcrestopt.OptionalMatchers.isPresentAndIs;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ObjectPropertyTestUtility.checkBooleanProperties;
@@ -305,12 +307,24 @@ public class SchemaCrawlerCoverageTest
       .get();
 
     assertThat(table.hasAttribute("unknown"), is(false));
+    assertThat(table.lookupAttribute("unknown"), isEmpty());
     assertThat(table.hasAttribute("schemacrawler.table.row_count"), is(true));
+    assertThat(table.lookupAttribute("schemacrawler.table.row_count"), isPresentAndIs(20L));
 
     assertThat(table.getAttribute("unknown", "no value"), is("no value"));
     assertThat(table.getAttribute("unknown", 10.5f), is(10.5f));
     assertThat(table.getAttribute("schemacrawler.table.row_count", 10), is(20L));
     assertThat(table.getAttribute("schemacrawler.table.row_count", "no value"), is(20L));
+
+    assertThat(table.hasAttribute("new_one"), is(false));
+    table.setAttribute("new_one", "some_value");
+    assertThat(table.getAttribute("new_one", ""), is("some_value"));
+    table.setAttribute("new_one", null);
+    assertThat(table.hasAttribute("new_one"), is(false));
+    table.setAttribute("new_one", "some_value");
+    assertThat(table.hasAttribute("new_one"), is(true));
+    table.removeAttribute("new_one");
+    assertThat(table.hasAttribute("new_one"), is(false));
   }
 
 }

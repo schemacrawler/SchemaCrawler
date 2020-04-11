@@ -123,7 +123,7 @@ abstract class AbstractNamedObjectWithAttributes
   @Override
   public final <T> Optional<T> lookupAttribute(final String name)
   {
-    return Optional.of(getAttribute(name));
+    return Optional.ofNullable(getAttribute(name));
   }
 
   /**
