@@ -51,6 +51,7 @@ import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.SchemaReference;
+import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
@@ -262,6 +263,19 @@ public class SchemaCrawlerCoverageTest
     final JdbcDriverInfo jdbcDriverInfo = catalog.getJdbcDriverInfo();
 
     checkBooleanProperties(jdbcDriverInfo,"jdbcCompliant");
+
+  }
+
+  @Test
+  public void sequenceBooleanProperties()
+    throws Exception
+  {
+    final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
+    final Sequence sequence = catalog
+      .lookupSequence(schema, "PUBLISHER_ID_SEQ")
+      .get();
+
+    checkBooleanProperties(sequence,"cycle");
 
   }
 
