@@ -1,4 +1,5 @@
 PUBLIC.BOOKS.AUTHORS.ID
+  - short name=AUTHORS.ID
   - data-type=INTEGER
   - size=32
   - decimal digits=0
@@ -26,6 +27,7 @@ PUBLIC.BOOKS.AUTHORS.ID
     ~ SQL_DATA_TYPE=4
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.AUTHORS.FIRSTNAME
+  - short name=AUTHORS.FIRSTNAME
   - data-type=VARCHAR
   - size=20
   - decimal digits=0
@@ -53,6 +55,7 @@ PUBLIC.BOOKS.AUTHORS.FIRSTNAME
     ~ SQL_DATA_TYPE=12
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.AUTHORS.LASTNAME
+  - short name=AUTHORS.LASTNAME
   - data-type=VARCHAR
   - size=20
   - decimal digits=0
@@ -80,6 +83,7 @@ PUBLIC.BOOKS.AUTHORS.LASTNAME
     ~ SQL_DATA_TYPE=12
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.AUTHORS.ADDRESS1
+  - short name=AUTHORS.ADDRESS1
   - data-type=VARCHAR
   - size=255
   - decimal digits=0
@@ -107,6 +111,7 @@ PUBLIC.BOOKS.AUTHORS.ADDRESS1
     ~ SQL_DATA_TYPE=12
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.AUTHORS.ADDRESS2
+  - short name=AUTHORS.ADDRESS2
   - data-type=VARCHAR
   - size=255
   - decimal digits=0
@@ -134,6 +139,7 @@ PUBLIC.BOOKS.AUTHORS.ADDRESS2
     ~ SQL_DATA_TYPE=12
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.AUTHORS.CITY
+  - short name=AUTHORS.CITY
   - data-type=VARCHAR
   - size=50
   - decimal digits=0
@@ -161,6 +167,7 @@ PUBLIC.BOOKS.AUTHORS.CITY
     ~ SQL_DATA_TYPE=12
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.AUTHORS.STATE
+  - short name=AUTHORS.STATE
   - data-type=VARCHAR
   - size=2
   - decimal digits=0
@@ -188,6 +195,7 @@ PUBLIC.BOOKS.AUTHORS.STATE
     ~ SQL_DATA_TYPE=12
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.AUTHORS.POSTALCODE
+  - short name=AUTHORS.POSTALCODE
   - data-type=VARCHAR
   - size=10
   - decimal digits=0
@@ -215,6 +223,7 @@ PUBLIC.BOOKS.AUTHORS.POSTALCODE
     ~ SQL_DATA_TYPE=12
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.AUTHORS.COUNTRY
+  - short name=AUTHORS.COUNTRY
   - data-type=VARCHAR
   - size=50
   - decimal digits=0
@@ -243,6 +252,7 @@ PUBLIC.BOOKS.AUTHORS.COUNTRY
     ~ SQL_DATETIME_SUB=null
 
 PUBLIC.BOOKS.AUTHORSLIST.ID
+  - short name=AUTHORSLIST.ID
   - data-type=INTEGER
   - size=32
   - decimal digits=0
@@ -270,6 +280,7 @@ PUBLIC.BOOKS.AUTHORSLIST.ID
     ~ SQL_DATA_TYPE=4
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.AUTHORSLIST.FIRSTNAME
+  - short name=AUTHORSLIST.FIRSTNAME
   - data-type=VARCHAR
   - size=20
   - decimal digits=0
@@ -297,6 +308,7 @@ PUBLIC.BOOKS.AUTHORSLIST.FIRSTNAME
     ~ SQL_DATA_TYPE=12
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.AUTHORSLIST.LASTNAME
+  - short name=AUTHORSLIST.LASTNAME
   - data-type=VARCHAR
   - size=20
   - decimal digits=0
@@ -325,6 +337,7 @@ PUBLIC.BOOKS.AUTHORSLIST.LASTNAME
     ~ SQL_DATETIME_SUB=null
 
 PUBLIC.BOOKS.BOOKAUTHORS.BOOKID
+  - short name=BOOKAUTHORS.BOOKID
   - data-type=INTEGER
   - size=32
   - decimal digits=0
@@ -352,6 +365,7 @@ PUBLIC.BOOKS.BOOKAUTHORS.BOOKID
     ~ SQL_DATA_TYPE=4
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID
+  - short name=BOOKAUTHORS.AUTHORID
   - data-type=INTEGER
   - size=32
   - decimal digits=0
@@ -379,6 +393,7 @@ PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID
     ~ SQL_DATA_TYPE=4
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.BOOKAUTHORS.SOMEDATA
+  - short name=BOOKAUTHORS.SOMEDATA
   - data-type=VARCHAR
   - size=30
   - decimal digits=0
@@ -407,6 +422,7 @@ PUBLIC.BOOKS.BOOKAUTHORS.SOMEDATA
     ~ SQL_DATETIME_SUB=null
 
 PUBLIC.BOOKS.BOOKS.ID
+  - short name=BOOKS.ID
   - data-type=INTEGER
   - size=32
   - decimal digits=0
@@ -434,6 +450,7 @@ PUBLIC.BOOKS.BOOKS.ID
     ~ SQL_DATA_TYPE=4
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.BOOKS.TITLE
+  - short name=BOOKS.TITLE
   - data-type=VARCHAR
   - size=255
   - decimal digits=0
@@ -461,6 +478,7 @@ PUBLIC.BOOKS.BOOKS.TITLE
     ~ SQL_DATA_TYPE=12
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.BOOKS.DESCRIPTION
+  - short name=BOOKS.DESCRIPTION
   - data-type=VARCHAR
   - size=255
   - decimal digits=0
@@ -489,6 +507,7 @@ PUBLIC.BOOKS.BOOKS.DESCRIPTION
     ~ SQL_DATA_TYPE=12
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.BOOKS.PUBLISHERID
+  - short name=BOOKS.PUBLISHERID
   - data-type=INTEGER
   - size=32
   - decimal digits=0
@@ -516,6 +535,7 @@ PUBLIC.BOOKS.BOOKS.PUBLISHERID
     ~ SQL_DATA_TYPE=4
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.BOOKS.PUBLICATIONDATE
+  - short name=BOOKS.PUBLICATIONDATE
   - data-type=DATE
   - size=10
   - decimal digits=0
@@ -543,6 +563,7 @@ PUBLIC.BOOKS.BOOKS.PUBLICATIONDATE
     ~ SQL_DATA_TYPE=91
     ~ SQL_DATETIME_SUB=1
 PUBLIC.BOOKS.BOOKS.PRICE
+  - short name=BOOKS.PRICE
   - data-type=DOUBLE
   - size=64
   - decimal digits=0
@@ -570,6 +591,7 @@ PUBLIC.BOOKS.BOOKS.PRICE
     ~ SQL_DATA_TYPE=8
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID
+  - short name=BOOKS.PREVIOUSEDITIONID
   - data-type=INTEGER
   - size=32
   - decimal digits=0
@@ -598,6 +620,7 @@ PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID
     ~ SQL_DATETIME_SUB=null
 
 PUBLIC.BOOKS.COUPONS.ID
+  - short name=COUPONS.ID
   - data-type=INTEGER
   - size=32
   - decimal digits=0
@@ -625,6 +648,7 @@ PUBLIC.BOOKS.COUPONS.ID
     ~ SQL_DATA_TYPE=4
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.COUPONS.DATA
+  - short name=COUPONS.DATA
   - data-type=CLOB
   - size=1073741824
   - decimal digits=0
@@ -652,6 +676,7 @@ PUBLIC.BOOKS.COUPONS.DATA
     ~ SQL_DATA_TYPE=40
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.COUPONS.COUPONS
+  - short name=COUPONS.COUPONS
   - data-type=PUBLIC.BOOKS."INTEGER ARRAY"
   - size=0
   - decimal digits=0
@@ -679,6 +704,7 @@ PUBLIC.BOOKS.COUPONS.COUPONS
     ~ SQL_DATA_TYPE=50
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.COUPONS.BOOKS
+  - short name=COUPONS.BOOKS
   - data-type=PUBLIC.BOOKS."VARCHAR(20) ARRAY[10]"
   - size=0
   - decimal digits=0
@@ -707,6 +733,7 @@ PUBLIC.BOOKS.COUPONS.BOOKS
     ~ SQL_DATETIME_SUB=null
 
 PUBLIC.BOOKS.CUSTOMERDATA.ID
+  - short name=CUSTOMERDATA.ID
   - data-type=INTEGER
   - size=32
   - decimal digits=0
@@ -734,6 +761,7 @@ PUBLIC.BOOKS.CUSTOMERDATA.ID
     ~ SQL_DATA_TYPE=4
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.CUSTOMERDATA.DATA
+  - short name=CUSTOMERDATA.DATA
   - data-type=PUBLIC.BOOKS.VALID_STRING
   - size=20
   - decimal digits=0
@@ -762,6 +790,7 @@ PUBLIC.BOOKS.CUSTOMERDATA.DATA
     ~ SQL_DATETIME_SUB=null
 
 PUBLIC.BOOKS.CUSTOMERS.ID
+  - short name=CUSTOMERS.ID
   - data-type=INTEGER
   - size=32
   - decimal digits=0
@@ -789,6 +818,7 @@ PUBLIC.BOOKS.CUSTOMERS.ID
     ~ SQL_DATA_TYPE=4
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.CUSTOMERS.FIRSTNAME
+  - short name=CUSTOMERS.FIRSTNAME
   - data-type=PUBLIC.BOOKS.NAME_TYPE
   - size=100
   - decimal digits=0
@@ -816,6 +846,7 @@ PUBLIC.BOOKS.CUSTOMERS.FIRSTNAME
     ~ SQL_DATA_TYPE=12
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.CUSTOMERS.LASTNAME
+  - short name=CUSTOMERS.LASTNAME
   - data-type=PUBLIC.BOOKS.NAME_TYPE
   - size=100
   - decimal digits=0
@@ -843,6 +874,7 @@ PUBLIC.BOOKS.CUSTOMERS.LASTNAME
     ~ SQL_DATA_TYPE=12
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.CUSTOMERS.AGE
+  - short name=CUSTOMERS.AGE
   - data-type=PUBLIC.BOOKS.AGE_TYPE
   - size=16
   - decimal digits=0
@@ -871,6 +903,7 @@ PUBLIC.BOOKS.CUSTOMERS.AGE
     ~ SQL_DATETIME_SUB=null
 
 PUBLIC.BOOKS."Global Counts"."Global Count"
+  - short name="Global Counts"."Global Count"
   - data-type=INTEGER
   - size=32
   - decimal digits=0
@@ -898,6 +931,7 @@ PUBLIC.BOOKS."Global Counts"."Global Count"
     ~ SQL_DATA_TYPE=4
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS."Global Counts"."UPDATE"
+  - short name="Global Counts"."UPDATE"
   - data-type=VARCHAR
   - size=20
   - decimal digits=0
@@ -926,6 +960,7 @@ PUBLIC.BOOKS."Global Counts"."UPDATE"
     ~ SQL_DATETIME_SUB=null
 
 PUBLIC.BOOKS.PUBLISHERS.ID
+  - short name=PUBLISHERS.ID
   - data-type=INTEGER
   - size=32
   - decimal digits=0
@@ -953,6 +988,7 @@ PUBLIC.BOOKS.PUBLISHERS.ID
     ~ SQL_DATA_TYPE=4
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.PUBLISHERS.PUBLISHER
+  - short name=PUBLISHERS.PUBLISHER
   - data-type=VARCHAR
   - size=255
   - decimal digits=0
@@ -981,6 +1017,7 @@ PUBLIC.BOOKS.PUBLISHERS.PUBLISHER
     ~ SQL_DATETIME_SUB=null
 
 PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΜΟΝΑΔΙΚΌΣ
+  - short name=ΒΙΒΛΊΑ.ΜΟΝΑΔΙΚΌΣ
   - data-type=SMALLINT
   - size=16
   - decimal digits=0
@@ -1008,6 +1045,7 @@ PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΜΟΝΑΔΙΚΌΣ
     ~ SQL_DATA_TYPE=5
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΤΊΤΛΟΣ
+  - short name=ΒΙΒΛΊΑ.ΤΊΤΛΟΣ
   - data-type=VARCHAR
   - size=255
   - decimal digits=0
@@ -1035,6 +1073,7 @@ PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΤΊΤΛΟΣ
     ~ SQL_DATA_TYPE=12
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΠΕΡΙΓΡΑΦΉ
+  - short name=ΒΙΒΛΊΑ.ΠΕΡΙΓΡΑΦΉ
   - data-type=VARCHAR
   - size=255
   - decimal digits=0
@@ -1062,6 +1101,7 @@ PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΠΕΡΙΓΡΑΦΉ
     ~ SQL_DATA_TYPE=12
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ
+  - short name=ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ
   - data-type=SMALLINT
   - size=16
   - decimal digits=0
@@ -1090,6 +1130,7 @@ PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ
     ~ SQL_DATETIME_SUB=null
 
 PUBLIC."PUBLISHER SALES".REGIONS.CITY
+  - short name=REGIONS.CITY
   - data-type=VARCHAR
   - size=50
   - decimal digits=0
@@ -1117,6 +1158,7 @@ PUBLIC."PUBLISHER SALES".REGIONS.CITY
     ~ SQL_DATA_TYPE=12
     ~ SQL_DATETIME_SUB=null
 PUBLIC."PUBLISHER SALES".REGIONS.STATE
+  - short name=REGIONS.STATE
   - data-type=VARCHAR
   - size=2
   - decimal digits=0
@@ -1144,6 +1186,7 @@ PUBLIC."PUBLISHER SALES".REGIONS.STATE
     ~ SQL_DATA_TYPE=12
     ~ SQL_DATETIME_SUB=null
 PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE
+  - short name=REGIONS.POSTALCODE
   - data-type=VARCHAR
   - size=10
   - decimal digits=0
@@ -1171,6 +1214,7 @@ PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE
     ~ SQL_DATA_TYPE=12
     ~ SQL_DATETIME_SUB=null
 PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY
+  - short name=REGIONS.COUNTRY
   - data-type=VARCHAR
   - size=50
   - decimal digits=0
@@ -1199,6 +1243,7 @@ PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY
     ~ SQL_DATETIME_SUB=null
 
 PUBLIC."PUBLISHER SALES".SALES.POSTALCODE
+  - short name=SALES.POSTALCODE
   - data-type=VARCHAR
   - size=10
   - decimal digits=0
@@ -1226,6 +1271,7 @@ PUBLIC."PUBLISHER SALES".SALES.POSTALCODE
     ~ SQL_DATA_TYPE=12
     ~ SQL_DATETIME_SUB=null
 PUBLIC."PUBLISHER SALES".SALES.COUNTRY
+  - short name=SALES.COUNTRY
   - data-type=VARCHAR
   - size=50
   - decimal digits=0
@@ -1253,6 +1299,7 @@ PUBLIC."PUBLISHER SALES".SALES.COUNTRY
     ~ SQL_DATA_TYPE=12
     ~ SQL_DATETIME_SUB=null
 PUBLIC."PUBLISHER SALES".SALES.BOOKID
+  - short name=SALES.BOOKID
   - data-type=INTEGER
   - size=32
   - decimal digits=0
@@ -1280,6 +1327,7 @@ PUBLIC."PUBLISHER SALES".SALES.BOOKID
     ~ SQL_DATA_TYPE=4
     ~ SQL_DATETIME_SUB=null
 PUBLIC."PUBLISHER SALES".SALES.PERIODENDDATE
+  - short name=SALES.PERIODENDDATE
   - data-type=DATE
   - size=10
   - decimal digits=0
@@ -1307,6 +1355,7 @@ PUBLIC."PUBLISHER SALES".SALES.PERIODENDDATE
     ~ SQL_DATA_TYPE=91
     ~ SQL_DATETIME_SUB=1
 PUBLIC."PUBLISHER SALES".SALES.TOTALAMOUNT
+  - short name=SALES.TOTALAMOUNT
   - data-type=DOUBLE
   - size=64
   - decimal digits=0
@@ -1334,6 +1383,7 @@ PUBLIC."PUBLISHER SALES".SALES.TOTALAMOUNT
     ~ SQL_DATA_TYPE=8
     ~ SQL_DATETIME_SUB=null
 PUBLIC."PUBLISHER SALES".SALES.SALESDATAID
+  - short name=SALES.SALESDATAID
   - data-type=INTEGER
   - size=32
   - decimal digits=0
@@ -1362,6 +1412,7 @@ PUBLIC."PUBLISHER SALES".SALES.SALESDATAID
     ~ SQL_DATETIME_SUB=null
 
 PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID
+  - short name=SALESDATA.SALESDATAID
   - data-type=INTEGER
   - size=32
   - decimal digits=0
@@ -1389,6 +1440,7 @@ PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID
     ~ SQL_DATA_TYPE=4
     ~ SQL_DATETIME_SUB=null
 PUBLIC."PUBLISHER SALES".SALESDATA.YEARLYAMOUNT
+  - short name=SALESDATA.YEARLYAMOUNT
   - data-type=DOUBLE
   - size=64
   - decimal digits=0

@@ -256,6 +256,7 @@ public class SchemaCrawlerTest
           {
             out.println(String.format("%s", column.getFullName()));
 
+            out.println(String.format("  - %s=%s", "short name", column.getShortName()));
             out.println(String.format("  - %s=%s", "data-type", column.getColumnDataType()));
             out.println(String.format("  - %s=%s", "size", column.getSize()));
             out.println(String.format("  - %s=%s", "decimal digits", column.getDecimalDigits()));
@@ -276,6 +277,8 @@ public class SchemaCrawlerTest
             {
               out.println(String.format("    ~ %s=%s", columnAttribute.getKey(), columnAttribute.getValue()));
             }
+
+            assertThat(column.getType(), is(column.getColumnDataType()));
           }
 
           out.println();

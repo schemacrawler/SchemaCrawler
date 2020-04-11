@@ -295,4 +295,22 @@ public class SchemaCrawlerCoverageTest
 
   }
 
+  @Test
+  public void tableAttributes()
+    throws Exception
+  {
+    final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
+    final Table table = catalog
+      .lookupTable(schema, "AUTHORS")
+      .get();
+
+    assertThat(table.hasAttribute("unknown"), is(false));
+    assertThat(table.hasAttribute("schemacrawler.table.row_count"), is(true));
+
+    assertThat(table.getAttribute("unknown", "no value"), is("no value"));
+    assertThat(table.getAttribute("unknown", 10.5f), is(10.5f));
+    assertThat(table.getAttribute("schemacrawler.table.row_count", 10), is(20L));
+    assertThat(table.getAttribute("schemacrawler.table.row_count", "no value"), is(20L));
+  }
+
 }
