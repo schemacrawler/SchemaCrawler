@@ -32,8 +32,6 @@ package schemacrawler.schema;
 import java.util.Collection;
 import java.util.Optional;
 
-import schemacrawler.JvmSystemInfo;
-import schemacrawler.OperatingSystemInfo;
 import schemacrawler.SchemaCrawlerInfo;
 
 /**
@@ -65,10 +63,6 @@ public interface Catalog
 
   JdbcDriverInfo getJdbcDriverInfo();
 
-  JvmSystemInfo getJvmSystemInfo();
-
-  OperatingSystemInfo getOperatingSystemInfo();
-
   /**
    * Gets the routine.
    *
@@ -83,6 +77,7 @@ public interface Catalog
    */
   Collection<Routine> getRoutines(Schema schema);
 
+  @Deprecated
   SchemaCrawlerInfo getSchemaCrawlerInfo();
 
   /**
