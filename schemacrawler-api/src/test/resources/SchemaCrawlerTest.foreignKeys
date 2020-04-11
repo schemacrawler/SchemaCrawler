@@ -1,0 +1,123 @@
+schema: PUBLIC.BOOKS
+  table: PUBLIC.BOOKS.AUTHORS
+    foreign key: Z_FK_AUTHOR
+      specific name: Z_FK_AUTHOR
+      deferrability: not deferrable
+      delete rule: no action
+      update rule: no action
+      column references: 
+        key sequence: 1
+          primary key column: PUBLIC.BOOKS.AUTHORS.ID
+          foreign key column: PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID
+  table: PUBLIC.BOOKS.BOOKS
+    foreign key: SYS_FK_10128
+      specific name: SYS_FK_10128
+      deferrability: not deferrable
+      delete rule: no action
+      update rule: no action
+      column references: 
+        key sequence: 1
+          primary key column: PUBLIC.BOOKS.BOOKS.ID
+          foreign key column: PUBLIC.BOOKS.BOOKAUTHORS.BOOKID
+    foreign key: FK_PREVIOUSEDITION
+      specific name: FK_PREVIOUSEDITION
+      deferrability: not deferrable
+      delete rule: no action
+      update rule: no action
+      column references: 
+        key sequence: 1
+          primary key column: PUBLIC.BOOKS.BOOKS.ID
+          foreign key column: PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID
+  table: PUBLIC.BOOKS.COUPONS
+  table: PUBLIC.BOOKS.CUSTOMERDATA
+  table: PUBLIC.BOOKS.CUSTOMERS
+  table: PUBLIC.BOOKS."Global Counts"
+  table: PUBLIC.BOOKS.PUBLISHERS
+    foreign key: FK_ΒΙΒΛΊΑ_PUBLISHERS
+      specific name: FK_ΒΙΒΛΊΑ_PUBLISHERS
+      deferrability: not deferrable
+      delete rule: no action
+      update rule: no action
+      column references: 
+        key sequence: 1
+          primary key column: PUBLIC.BOOKS.PUBLISHERS.ID
+          foreign key column: PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ
+  table: PUBLIC.BOOKS.BOOKAUTHORS
+    foreign key: Z_FK_AUTHOR
+      specific name: Z_FK_AUTHOR
+      deferrability: not deferrable
+      delete rule: no action
+      update rule: no action
+      column references: 
+        key sequence: 1
+          primary key column: PUBLIC.BOOKS.AUTHORS.ID
+          foreign key column: PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID
+    foreign key: SYS_FK_10128
+      specific name: SYS_FK_10128
+      deferrability: not deferrable
+      delete rule: no action
+      update rule: no action
+      column references: 
+        key sequence: 1
+          primary key column: PUBLIC.BOOKS.BOOKS.ID
+          foreign key column: PUBLIC.BOOKS.BOOKAUTHORS.BOOKID
+  table: PUBLIC.BOOKS.ΒΙΒΛΊΑ
+    foreign key: FK_ΒΙΒΛΊΑ_PUBLISHERS
+      specific name: FK_ΒΙΒΛΊΑ_PUBLISHERS
+      deferrability: not deferrable
+      delete rule: no action
+      update rule: no action
+      column references: 
+        key sequence: 1
+          primary key column: PUBLIC.BOOKS.PUBLISHERS.ID
+          foreign key column: PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ
+  table: PUBLIC.BOOKS.AUTHORSLIST
+schema: PUBLIC.INFORMATION_SCHEMA
+schema: PUBLIC.PUBLIC
+schema: PUBLIC."PUBLISHER SALES"
+  table: PUBLIC."PUBLISHER SALES".REGIONS
+    foreign key: FK_SALES_REGIONS
+      specific name: FK_SALES_REGIONS
+      deferrability: not deferrable
+      delete rule: no action
+      update rule: no action
+      column references: 
+        key sequence: 1
+          primary key column: PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE
+          foreign key column: PUBLIC."PUBLISHER SALES".SALES.POSTALCODE
+        key sequence: 2
+          primary key column: PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY
+          foreign key column: PUBLIC."PUBLISHER SALES".SALES.COUNTRY
+  table: PUBLIC."PUBLISHER SALES".SALESDATA
+    foreign key: FK_SALES_SALESDATA
+      specific name: FK_SALES_SALESDATA
+      deferrability: not deferrable
+      delete rule: no action
+      update rule: no action
+      column references: 
+        key sequence: 1
+          primary key column: PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID
+          foreign key column: PUBLIC."PUBLISHER SALES".SALES.SALESDATAID
+  table: PUBLIC."PUBLISHER SALES".SALES
+    foreign key: FK_SALES_SALESDATA
+      specific name: FK_SALES_SALESDATA
+      deferrability: not deferrable
+      delete rule: no action
+      update rule: no action
+      column references: 
+        key sequence: 1
+          primary key column: PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID
+          foreign key column: PUBLIC."PUBLISHER SALES".SALES.SALESDATAID
+    foreign key: FK_SALES_REGIONS
+      specific name: FK_SALES_REGIONS
+      deferrability: not deferrable
+      delete rule: no action
+      update rule: no action
+      column references: 
+        key sequence: 1
+          primary key column: PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE
+          foreign key column: PUBLIC."PUBLISHER SALES".SALES.POSTALCODE
+        key sequence: 2
+          primary key column: PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY
+          foreign key column: PUBLIC."PUBLISHER SALES".SALES.COUNTRY
+schema: PUBLIC.SYSTEM_LOBS

@@ -611,6 +611,50 @@ public class SchemaCrawlerTest
   }
 
   @Test
+  public void foreignKeys(final TestContext testContext)
+    throws Exception
+  {
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout)
+    {
+      final Schema[] schemas = catalog
+        .getSchemas()
+        .toArray(new Schema[0]);
+      assertThat("Schema count does not match", schemas, arrayWithSize(5));
+      for (final Schema schema : schemas)
+      {
+        out.println("schema: " + schema.getFullName());
+        final Table[] tables = catalog
+          .getTables(schema)
+          .toArray(new Table[0]);
+        for (final Table table : tables)
+        {
+          out.println("  table: " + table.getFullName());
+          final Collection<ForeignKey> foreignKeys = table.getForeignKeys();
+          for (final ForeignKey foreignKey : foreignKeys)
+          {
+            out.println("    foreign key: " + foreignKey.getName());
+            out.println("      specific name: " + foreignKey.getSpecificName());
+            out.println("      deferrability: " + foreignKey.getDeferrability());
+            out.println("      delete rule: " + foreignKey.getDeleteRule());
+            out.println("      update rule: " + foreignKey.getUpdateRule());
+
+            out.println("      column references: ");
+            final List<ForeignKeyColumnReference> columnReferences = foreignKey.getColumnReferences();
+            for (final ForeignKeyColumnReference columnReference : columnReferences)
+            {
+              out.println("        key sequence: " + columnReference.getKeySequence());
+              out.println("          primary key column: " + columnReference.getPrimaryKeyColumn().getFullName());
+              out.println("          foreign key column: " + columnReference.getForeignKeyColumn().getFullName());
+            }
+          }
+        }
+      }
+    }
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+  }
+
+  @Test
   public void tables(final TestContext testContext)
     throws Exception
   {
