@@ -90,20 +90,17 @@ public class SchemaCrawlerTest
     final SchemaRetrievalOptions schemaRetrievalOptions =
       SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(config);
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
-        .includeAllSynonyms()
-        .includeAllSequences()
-        .includeAllRoutines()
-        .loadRowCounts();
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-      schemaCrawlerOptionsBuilder.toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+      .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
+      .includeAllSynonyms()
+      .includeAllSequences()
+      .includeAllRoutines()
+      .loadRowCounts();
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
-    catalog =
-      getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
+    catalog = getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
   }
 
   private static String printColumnDataType(final ColumnDataType columnDataType)
@@ -112,37 +109,26 @@ public class SchemaCrawlerTest
 
     final boolean isUserDefined = columnDataType.isUserDefined();
     final String typeName = columnDataType.getFullName();
-    final String dataType =
-      (isUserDefined? "user defined ": "") + "column data-type";
-    final String nullable =
-      (columnDataType.isNullable()? "": "not ") + "nullable";
-    final String autoIncrementable =
-      (columnDataType.isAutoIncrementable()? "": "not ") + "auto-incrementable";
+    final String dataType = (isUserDefined? "user defined ": "") + "column data-type";
+    final String nullable = (columnDataType.isNullable()? "": "not ") + "nullable";
+    final String autoIncrementable = (columnDataType.isAutoIncrementable()? "": "not ") + "auto-incrementable";
 
     final String createParameters = columnDataType.getCreateParameters();
-    final String definedWith =
-      "defined with " + (isBlank(createParameters)? "no parameters":
-                         createParameters);
+    final String definedWith = "defined with " + (isBlank(createParameters)? "no parameters": createParameters);
 
     final String literalPrefix = columnDataType.getLiteralPrefix();
-    final String literalPrefixText =
-      isBlank(literalPrefix)? "no literal prefix":
-      "literal prefix " + literalPrefix;
+    final String literalPrefixText = isBlank(literalPrefix)? "no literal prefix": "literal prefix " + literalPrefix;
 
     final String literalSuffix = columnDataType.getLiteralSuffix();
-    final String literalSuffixText =
-      isBlank(literalSuffix)? "no literal suffix":
-      "literal suffix " + literalSuffix;
+    final String literalSuffixText = isBlank(literalSuffix)? "no literal suffix": "literal suffix " + literalSuffix;
 
     final String javaSqlType = "java.sql.Types: " + columnDataType
       .getJavaSqlType()
       .getName();
 
     final String precision = "precision " + columnDataType.getPrecision();
-    final String minimumScale =
-      "minimum scale " + columnDataType.getMinimumScale();
-    final String maximumScale =
-      "maximum scale " + columnDataType.getMaximumScale();
+    final String minimumScale = "minimum scale " + columnDataType.getMinimumScale();
+    final String maximumScale = "maximum scale " + columnDataType.getMaximumScale();
 
     buffer
       .append(typeName)
@@ -210,19 +196,15 @@ public class SchemaCrawlerTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final Collection<ColumnDataType> columnDataTypes =
-        catalog.getColumnDataTypes();
-      assertThat("ColumnDataType count does not match",
-                 columnDataTypes,
-                 hasSize(30));
+      final Collection<ColumnDataType> columnDataTypes = catalog.getColumnDataTypes();
+      assertThat("ColumnDataType count does not match", columnDataTypes, hasSize(30));
       for (final ColumnDataType columnDataType : columnDataTypes)
       {
         assertThat(columnDataType, notNullValue());
         out.println(printColumnDataType(columnDataType));
       }
     }
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
@@ -269,50 +251,25 @@ public class SchemaCrawlerTest
           {
             out.println(String.format("%s", column.getFullName()));
 
-            out.println(String.format("  - %s=%s",
-                                      "data-type",
-                                      column.getColumnDataType()));
+            out.println(String.format("  - %s=%s", "data-type", column.getColumnDataType()));
             out.println(String.format("  - %s=%s", "size", column.getSize()));
-            out.println(String.format("  - %s=%s",
-                                      "decimal digits",
-                                      column.getDecimalDigits()));
+            out.println(String.format("  - %s=%s", "decimal digits", column.getDecimalDigits()));
             out.println(String.format("  - %s=%s", "width", column.getWidth()));
-            out.println(String.format("  - %s=%s",
-                                      "default value",
-                                      column.getDefaultValue()));
-            out.println(String.format("  - %s=%s",
-                                      "auto-incremented",
-                                      column.isAutoIncremented()));
-            out.println(String.format("  - %s=%s",
-                                      "nullable",
-                                      column.isNullable()));
-            out.println(String.format("  - %s=%s",
-                                      "generated",
-                                      column.isGenerated()));
-            out.println(String.format("  - %s=%s",
-                                      "hidden",
-                                      column.isHidden()));
-            out.println(String.format("  - %s=%s",
-                                      "part of primary key",
-                                      column.isPartOfPrimaryKey()));
-            out.println(String.format("  - %s=%s",
-                                      "part of foreign key",
-                                      column.isPartOfForeignKey()));
-            out.println(String.format("  - %s=%s",
-                                      "ordinal position",
-                                      column.getOrdinalPosition()));
-            out.println(String.format("  - %s=%s",
-                                      "remarks",
-                                      column.getRemarks()));
+            out.println(String.format("  - %s=%s", "default value", column.getDefaultValue()));
+            out.println(String.format("  - %s=%s", "auto-incremented", column.isAutoIncremented()));
+            out.println(String.format("  - %s=%s", "nullable", column.isNullable()));
+            out.println(String.format("  - %s=%s", "generated", column.isGenerated()));
+            out.println(String.format("  - %s=%s", "hidden", column.isHidden()));
+            out.println(String.format("  - %s=%s", "part of primary key", column.isPartOfPrimaryKey()));
+            out.println(String.format("  - %s=%s", "part of foreign key", column.isPartOfForeignKey()));
+            out.println(String.format("  - %s=%s", "ordinal position", column.getOrdinalPosition()));
+            out.println(String.format("  - %s=%s", "remarks", column.getRemarks()));
 
             out.println(String.format("  - %s=%s", "attibutes", ""));
-            final SortedMap<String, Object> columnAttributes =
-              new TreeMap<>(column.getAttributes());
+            final SortedMap<String, Object> columnAttributes = new TreeMap<>(column.getAttributes());
             for (final Entry<String, Object> columnAttribute : columnAttributes.entrySet())
             {
-              out.println(String.format("    ~ %s=%s",
-                                        columnAttribute.getKey(),
-                                        columnAttribute.getValue()));
+              out.println(String.format("    ~ %s=%s", columnAttribute.getKey(), columnAttribute.getValue()));
             }
           }
 
@@ -320,8 +277,7 @@ public class SchemaCrawlerTest
         }
       }
     }
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
@@ -369,8 +325,7 @@ public class SchemaCrawlerTest
         }
       }
     }
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
@@ -381,17 +336,12 @@ public class SchemaCrawlerTest
     try (final TestWriter out = testout)
     {
       final DatabaseInfo databaseInfo = catalog.getDatabaseInfo();
-      final Collection<DatabaseProperty> dbProperties =
-        databaseInfo.getProperties();
+      final Collection<DatabaseProperty> dbProperties = databaseInfo.getProperties();
       final Collection<Property> serverInfo = databaseInfo.getServerInfo();
-      assertThat("Server info property count does not match",
-                 serverInfo,
-                 is(empty()));
+      assertThat("Server info property count does not match", serverInfo, is(empty()));
       out.println(String.format("username=%s", databaseInfo.getUserName()));
-      out.println(String.format("product name=%s",
-                                databaseInfo.getProductName()));
-      out.println(String.format("product version=%s",
-                                databaseInfo.getProductVersion()));
+      out.println(String.format("product name=%s", databaseInfo.getProductName()));
+      out.println(String.format("product version=%s", databaseInfo.getProductVersion()));
       out.println(String.format("catalog=%s", catalog.getName()));
       for (final Property serverInfoProperty : serverInfo)
       {
@@ -405,10 +355,8 @@ public class SchemaCrawlerTest
       }
 
       final JdbcDriverInfo jdbcDriverInfo = catalog.getJdbcDriverInfo();
-      out.println(String.format("connection url=%s",
-                                jdbcDriverInfo.getConnectionUrl()));
-      out.println(String.format("driver class=%s",
-                                jdbcDriverInfo.getDriverClassName()));
+      out.println(String.format("connection url=%s", jdbcDriverInfo.getConnectionUrl()));
+      out.println(String.format("driver class=%s", jdbcDriverInfo.getDriverClassName()));
       final Collection<JdbcDriverProperty> driverProperties = jdbcDriverInfo.getDriverProperties();
       for (final JdbcDriverProperty driverProperty : driverProperties)
       {
@@ -417,8 +365,7 @@ public class SchemaCrawlerTest
       }
     }
     final String expectedResultsResource = String.format("%s.%s", testContext.testMethodFullName(), javaVersion());
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(expectedResultsResource)));
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(expectedResultsResource)));
   }
 
   @Test
@@ -439,14 +386,11 @@ public class SchemaCrawlerTest
         out.println("    # columns: " + table
           .getColumns()
           .size());
-        out.println("    # child tables: " + table.getRelatedTables(
-          TableRelationshipType.child));
-        out.println("    # parent tables: " + table.getRelatedTables(
-          TableRelationshipType.parent));
+        out.println("    # child tables: " + table.getRelatedTables(TableRelationshipType.child));
+        out.println("    # parent tables: " + table.getRelatedTables(TableRelationshipType.parent));
       }
     }
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
@@ -465,38 +409,24 @@ public class SchemaCrawlerTest
       {
         assertThat(routine, notNullValue());
         out.println("routine: " + routine.getName());
-        final List<RoutineParameter<? extends Routine>> parameters =
-          routine.getParameters();
+        final List<RoutineParameter<? extends Routine>> parameters = routine.getParameters();
         for (final RoutineParameter<? extends Routine> parameter : parameters)
         {
           out.println("  parameter: " + parameter.getName());
-          out.println(String.format("  - %s=%s",
-                                    "data-type",
-                                    parameter.getColumnDataType()));
+          out.println(String.format("  - %s=%s", "data-type", parameter.getColumnDataType()));
           out.println(String.format("  - %s=%s", "size", parameter.getSize()));
-          out.println(String.format("  - %s=%s",
-                                    "decimal digits",
-                                    parameter.getDecimalDigits()));
-          out.println(String.format("  - %s=%s",
-                                    "width",
-                                    parameter.getWidth()));
-          out.println(String.format("  - %s=%s",
-                                    "nullable",
-                                    parameter.isNullable()));
-          out.println(String.format("  - %s=%s",
-                                    "ordinal position",
-                                    parameter.getOrdinalPosition()));
-          out.println(String.format("  - %s=%s",
-                                    "remarks",
-                                    parameter.getRemarks()));
+          out.println(String.format("  - %s=%s", "decimal digits", parameter.getDecimalDigits()));
+          out.println(String.format("  - %s=%s", "width", parameter.getWidth()));
+          out.println(String.format("  - %s=%s", "nullable", parameter.isNullable()));
+          out.println(String.format("  - %s=%s", "ordinal position", parameter.getOrdinalPosition()));
+          out.println(String.format("  - %s=%s", "remarks", parameter.getRemarks()));
 
           out.println(String.format("  - %s=%s", "attibutes", ""));
         }
       }
       out.println();
     }
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
@@ -522,10 +452,8 @@ public class SchemaCrawlerTest
         out.println();
       }
     }
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
-
 
   @Test
   public void rowCounts(final TestContext testContext)
@@ -547,13 +475,12 @@ public class SchemaCrawlerTest
         for (final Table table : tables)
         {
           out.println(String.format("%s [row count %d]",
-            table.getFullName(),
-            table.getAttribute("schemacrawler.table.row_count")));
+                                    table.getFullName(),
+                                    table.getAttribute("schemacrawler.table.row_count")));
         }
       }
     }
-    assertThat(outputOf(testout),
-      hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
@@ -561,22 +488,14 @@ public class SchemaCrawlerTest
   {
 
     final Schema schema1 = new SchemaReference("PUBLIC", "BOOKS");
-    assertThat("Could not find any tables",
-               catalog.getTables(schema1),
-               not(empty()));
-    assertThat("Wrong number of routines",
-               catalog.getRoutines(schema1),
-               hasSize(4));
+    assertThat("Could not find any tables", catalog.getTables(schema1), not(empty()));
+    assertThat("Wrong number of routines", catalog.getRoutines(schema1), hasSize(4));
 
     final Schema schema2 = new SchemaReference("PUBLIC", "BOOKS");
 
     assertThat("Schema not not match", schema1, equalTo(schema2));
-    assertThat("Tables do not match",
-               catalog.getTables(schema1),
-               equalTo(catalog.getTables(schema2)));
-    assertThat("Routines do not match",
-               catalog.getRoutines(schema1),
-               equalTo(catalog.getRoutines(schema2)));
+    assertThat("Tables do not match", catalog.getTables(schema1), equalTo(catalog.getTables(schema2)));
+    assertThat("Routines do not match", catalog.getRoutines(schema1), equalTo(catalog.getRoutines(schema2)));
 
     // Try negative test
     final Table table1 = catalog
@@ -614,8 +533,7 @@ public class SchemaCrawlerTest
         out.println("  cycle?: " + sequence.isCycle());
       }
     }
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
@@ -643,8 +561,7 @@ public class SchemaCrawlerTest
           .getSimpleName());
       }
     }
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
@@ -676,22 +593,18 @@ public class SchemaCrawlerTest
             out.println("      type: " + tableConstraint.getConstraintType());
             if (tableConstraint instanceof TableConstraint)
             {
-              final TableConstraint dependentTableConstraint =
-                (TableConstraint) tableConstraint;
-              final List<TableConstraintColumn> columns =
-                dependentTableConstraint.getColumns();
+              final TableConstraint dependentTableConstraint = (TableConstraint) tableConstraint;
+              final List<TableConstraintColumn> columns = dependentTableConstraint.getColumns();
               for (final TableConstraintColumn tableConstraintColumn : columns)
               {
-                out.println(
-                  "      on column: " + tableConstraintColumn.getName());
+                out.println("      on column: " + tableConstraintColumn.getName());
               }
             }
           }
         }
       }
     }
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
@@ -713,30 +626,23 @@ public class SchemaCrawlerTest
         Arrays.sort(tables, NamedObjectSort.alphabetical);
         for (final Table table : tables)
         {
-          out.println(String.format("%s [%s]",
-                                    table.getFullName(),
-                                    table.getTableType()));
-          if (table instanceof  View) {
+          out.println(String.format("%s [%s]", table.getFullName(), table.getTableType()));
+          if (table instanceof View)
+          {
             final View view = (View) table;
-            out.println(String.format("  check option: %s",
-                                      view.getCheckOption()));
-            out.println(String.format("  updatable?: %b",
-                                      view.isUpdatable()));
+            out.println(String.format("  check option: %s", view.getCheckOption()));
+            out.println(String.format("  updatable?: %b", view.isUpdatable()));
           }
 
-          final SortedMap<String, Object> tableAttributes =
-            new TreeMap<>(table.getAttributes());
+          final SortedMap<String, Object> tableAttributes = new TreeMap<>(table.getAttributes());
           for (final Entry<String, Object> tableAttribute : tableAttributes.entrySet())
           {
-            out.println(String.format("  ~ %s=%s",
-                                      tableAttribute.getKey(),
-                                      tableAttribute.getValue()));
+            out.println(String.format("  ~ %s=%s", tableAttribute.getKey(), tableAttribute.getValue()));
           }
         }
       }
     }
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
@@ -759,7 +665,8 @@ public class SchemaCrawlerTest
         for (final Table table : tables)
         {
           out.println(table.getFullName());
-          if (table.hasPrimaryKey()) {
+          if (table.hasPrimaryKey())
+          {
             final PrimaryKey primaryKey = table.getPrimaryKey();
             out.println(String.format("  pk: %s", primaryKey.getName()));
             out.println(String.format("    columns: %s", primaryKey.getColumns()));
@@ -785,8 +692,40 @@ public class SchemaCrawlerTest
         }
       }
     }
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+  }
+
+  @Test
+  public void privileges(final TestContext testContext)
+    throws Exception
+  {
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout)
+    {
+      final Schema[] schemas = catalog
+        .getSchemas()
+        .toArray(new Schema[0]);
+      assertThat("Schema count does not match", schemas, arrayWithSize(5));
+      final Table table = catalog
+        .lookupTable(schemas[0], "AUTHORS")
+        .get();
+
+      out.println(table.getFullName());
+      final Collection<Privilege<Table>> privileges = table.getPrivileges();
+      for (final Privilege<Table> privilege : privileges)
+      {
+        out.println(String.format("  privilege: %s", privilege.getName()));
+        final Collection<Grant<Table>> grants = privilege.getGrants();
+        for (final Grant<Table> grant : grants)
+        {
+          out.println(String.format("    grantee: %s", grant.getGrantee()));
+          out.println(String.format("    grantor: %s", grant.getGrantor()));
+          out.println(String.format("    grantable?: %s", grant.isGrantable()));
+        }
+      }
+    }
+
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
@@ -821,9 +760,7 @@ public class SchemaCrawlerTest
       for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
       {
         final Table table = tables[tableIdx];
-        assertThat("Table name does not match in iteration " + i,
-                   tableNames[tableIdx],
-                   is(table.getName()));
+        assertThat("Table name does not match in iteration " + i, tableNames[tableIdx], is(table.getName()));
       }
 
       // Shuffle array, and sort it again
@@ -852,9 +789,7 @@ public class SchemaCrawlerTest
       for (final Trigger trigger : table.getTriggers())
       {
         foundTrigger = true;
-        assertThat("Triggers full name does not match",
-                   trigger.getFullName(),
-                   is("PUBLIC.BOOKS.AUTHORS.TRG_AUTHORS"));
+        assertThat("Triggers full name does not match", trigger.getFullName(), is("PUBLIC.BOOKS.AUTHORS.TRG_AUTHORS"));
         assertThat("Trigger EventManipulationType does not match",
                    trigger.getEventManipulationType(),
                    is(EventManipulationType.delete));
@@ -871,12 +806,8 @@ public class SchemaCrawlerTest
       .lookupTable(schema, "AUTHORSLIST")
       .get();
     assertThat("View not found", view, notNullValue());
-    assertThat("View definition not found",
-               view.getDefinition(),
-               notNullValue());
-    assertThat("View definition not found",
-               isBlank(view.getDefinition()),
-               is(false));
+    assertThat("View definition not found", view.getDefinition(), notNullValue());
+    assertThat("View definition not found", isBlank(view.getDefinition()), is(false));
   }
 
 }

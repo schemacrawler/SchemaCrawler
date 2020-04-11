@@ -1,0 +1,25 @@
+PUBLIC.BOOKS.AUTHORS
+  privilege: DELETE
+    grantee: SA
+    grantor: _SYSTEM
+    grantable?: true
+  privilege: INSERT
+    grantee: SA
+    grantor: _SYSTEM
+    grantable?: true
+  privilege: REFERENCES
+    grantee: SA
+    grantor: _SYSTEM
+    grantable?: true
+  privilege: SELECT
+    grantee: SA
+    grantor: _SYSTEM
+    grantable?: true
+  privilege: TRIGGER
+    grantee: SA
+    grantor: _SYSTEM
+    grantable?: true
+  privilege: UPDATE
+    grantee: SA
+    grantor: _SYSTEM
+    grantable?: true
