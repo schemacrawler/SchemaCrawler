@@ -48,6 +48,7 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexColumnSortSequence;
+import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
@@ -251,6 +252,16 @@ public class SchemaCrawlerCoverageTest
       .get();
 
     checkBooleanProperties(index,"unique");
+
+  }
+
+  @Test
+  public void jdbcDriverInfoBooleanProperties()
+    throws Exception
+  {
+    final JdbcDriverInfo jdbcDriverInfo = catalog.getJdbcDriverInfo();
+
+    checkBooleanProperties(jdbcDriverInfo,"jdbcCompliant");
 
   }
 
