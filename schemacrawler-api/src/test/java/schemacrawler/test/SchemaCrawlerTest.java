@@ -648,12 +648,7 @@ public class SchemaCrawlerTest
             for (final ForeignKeyColumnReference columnReference : columnReferences)
             {
               out.println("        key sequence: " + columnReference.getKeySequence());
-              out.println("          primary key column: " + columnReference
-                .getPrimaryKeyColumn()
-                .getFullName());
-              out.println("          foreign key column: " + columnReference
-                .getForeignKeyColumn()
-                .getFullName());
+              out.println("          " + columnReference);
             }
           }
         }
@@ -694,12 +689,7 @@ public class SchemaCrawlerTest
             {
               final WeakAssociation columnReference = columnReferences.get(i);
               out.println("        key sequence: " + (i + 1));
-              out.println("          primary key column: " + columnReference
-                .getPrimaryKeyColumn()
-                .getFullName());
-              out.println("          foreign key column: " + columnReference
-                .getForeignKeyColumn()
-                .getFullName());
+              out.println("          " + columnReference);
             }
           }
         }
