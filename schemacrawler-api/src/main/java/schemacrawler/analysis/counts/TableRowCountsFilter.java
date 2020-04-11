@@ -43,7 +43,8 @@ public class TableRowCountsFilter
 
   public TableRowCountsFilter(final SchemaCrawlerOptions options)
   {
-    noEmptyTables = requireNonNull(options, "No SchemaCrawlerOptions provided").isNoEmptyTables();
+    requireNonNull(options, "No SchemaCrawlerOptions provided");
+    noEmptyTables = options.isNoEmptyTables();
   }
 
   /**
