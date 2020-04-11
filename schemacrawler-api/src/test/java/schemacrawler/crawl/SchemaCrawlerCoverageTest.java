@@ -313,7 +313,7 @@ public class SchemaCrawlerCoverageTest
 
     assertThat(table.getAttribute("unknown", "no value"), is("no value"));
     assertThat(table.getAttribute("unknown", 10.5f), is(10.5f));
-    assertThat(table.getAttribute("schemacrawler.table.row_count", 10), is(20L));
+    assertThat(table.getAttribute("schemacrawler.table.row_count", 10L), is(20L));
     assertThat(table.getAttribute("schemacrawler.table.row_count", "no value"), is(20L));
 
     assertThat(table.hasAttribute("new_one"), is(false));
