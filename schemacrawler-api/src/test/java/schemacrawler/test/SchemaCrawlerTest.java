@@ -37,6 +37,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
+import static schemacrawler.analysis.associations.WeakAssociationsUtility.getWeakAssociations;
 import static schemacrawler.analysis.counts.TableRowCountsUtility.getRowCountMessage;
 import static schemacrawler.analysis.counts.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
@@ -61,6 +62,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import schemacrawler.analysis.associations.WeakAssociation;
+import schemacrawler.analysis.associations.WeakAssociationForeignKey;
 import schemacrawler.schema.*;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
@@ -477,9 +480,7 @@ public class SchemaCrawlerTest
         for (final Table table : tables)
         {
           assertThat(hasRowCount(table), is(true));
-          out.println(String.format("%s [%s]",
-                                    table.getFullName(),
-                                    getRowCountMessage(table)));
+          out.println(String.format("%s [%s]", table.getFullName(), getRowCountMessage(table)));
         }
       }
     }
@@ -644,8 +645,58 @@ public class SchemaCrawlerTest
             for (final ForeignKeyColumnReference columnReference : columnReferences)
             {
               out.println("        key sequence: " + columnReference.getKeySequence());
-              out.println("          primary key column: " + columnReference.getPrimaryKeyColumn().getFullName());
-              out.println("          foreign key column: " + columnReference.getForeignKeyColumn().getFullName());
+              out.println("          primary key column: " + columnReference
+                .getPrimaryKeyColumn()
+                .getFullName());
+              out.println("          foreign key column: " + columnReference
+                .getForeignKeyColumn()
+                .getFullName());
+            }
+          }
+        }
+      }
+    }
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+  }
+
+  @Test
+  public void weakAssociations(final TestContext testContext)
+    throws Exception
+  {
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout)
+    {
+      final Schema[] schemas = catalog
+        .getSchemas()
+        .toArray(new Schema[0]);
+      assertThat("Schema count does not match", schemas, arrayWithSize(5));
+      for (final Schema schema : schemas)
+      {
+        out.println("schema: " + schema.getFullName());
+        final Table[] tables = catalog
+          .getTables(schema)
+          .toArray(new Table[0]);
+        for (final Table table : tables)
+        {
+          out.println("  table: " + table.getFullName());
+          final Collection<WeakAssociationForeignKey> weakAssociations = getWeakAssociations(table);
+          for (final WeakAssociationForeignKey foreignKey : weakAssociations)
+          {
+            out.println("    weak association: " + foreignKey.getName());
+            out.println("    valid?: " + foreignKey.isValid());
+
+            out.println("      column references: ");
+            final List<WeakAssociation> columnReferences = foreignKey.getColumnReferences();
+            for (int i = 0; i < columnReferences.size(); i++)
+            {
+              final WeakAssociation columnReference = columnReferences.get(i);
+              out.println("        key sequence: " + (i + 1));
+              out.println("          primary key column: " + columnReference
+                .getPrimaryKeyColumn()
+                .getFullName());
+              out.println("          foreign key column: " + columnReference
+                .getForeignKeyColumn()
+                .getFullName());
             }
           }
         }
