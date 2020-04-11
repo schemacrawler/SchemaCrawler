@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.lang.reflect.InvocationTargetException;
 
 import org.junit.jupiter.api.Test;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.TableRelationshipType;
@@ -73,12 +74,12 @@ public class PartialsTest
     final SchemaReference schema = new SchemaReference("catalog", "schema");
     final TablePartial table = new TablePartial(schema, "table");
 
-    final ColumnPartial column = new ColumnPartial(table, "column");
-    table.addColumn(column);
+    final ColumnPartial columnPartial = new ColumnPartial(table, "column");
+    table.addColumn(columnPartial);
 
-    final ColumnReference columnReference = new ColumnReference(column);
+    final ColumnReference columnReference = new ColumnReference(columnPartial);
 
-    assertThat(columnReference.get(), is(column));
+    assertThat(columnReference.get(), is(columnPartial));
   }
 
   @Test
@@ -86,12 +87,14 @@ public class PartialsTest
   {
     final SchemaReference schema = new SchemaReference("catalog", "schema");
     final TablePartial table = new TablePartial(schema, "table");
+    final Column column = new MutableColumn(table, "column");
+    column.setAttribute("some_attribute", "some_value");
 
-    final ColumnPartial column = new ColumnPartial(table, "column");
-    table.addColumn(column);
+    final ColumnPartial columnPartial = new ColumnPartial(column);
+    table.addColumn(columnPartial);
 
     final ColumnPartial columnReferenced = new ColumnPartial(table, "other_column");
-    column.setReferencedColumn(columnReferenced);
+    columnPartial.setReferencedColumn(columnReferenced);
     table.addColumn(columnReferenced);
 
     for (final String methodName : new String[] {
@@ -114,7 +117,7 @@ public class PartialsTest
       })
     {
       assertThrows(InvocationTargetException.class,
-                   () -> invokeMethod(column, methodName),
+                   () -> invokeMethod(columnPartial, methodName),
                    "Testing partial method, " + methodName);
     }
 
@@ -123,12 +126,16 @@ public class PartialsTest
       })
     {
       assertThrows(InvocationTargetException.class,
-                   () -> invokeMethod(column, methodName, ""),
+                   () -> invokeMethod(columnPartial, methodName, ""),
                    "Testing partial method, " + methodName);
     }
 
-    assertThat(column.getParent(), is(table));
-    assertThat(column.getReferencedColumn(), is(columnReferenced));
+    assertThat(columnPartial.getFullName(), is(column.getFullName()));
+    assertThat(columnPartial.getSchema(), is(column.getSchema()));
+    assertThat(columnPartial.getAttributes(), is(column.getAttributes()));
+
+    assertThat(columnPartial.getParent(), is(table));
+    assertThat(columnPartial.getReferencedColumn(), is(columnReferenced));
 
   }
 
