@@ -332,7 +332,7 @@
           </targetClasses>
           <excludedClasses>
             <param>schemacrawler.analysis.associations.Inflection</param>
-						<param>schemacrawler.schemacrawler.SchemaCrawlerSQLException</param>
+						<param>schemacrawler.schemacrawler.SchemaCrawlerException</param>
 						<param>schemacrawler.schemacrawler.SchemaCrawlerRuntimeException</param>
 						<param>schemacrawler.schemacrawler.SchemaCrawlerSQLException</param>
           </excludedClasses>
