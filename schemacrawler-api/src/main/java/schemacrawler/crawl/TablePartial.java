@@ -148,7 +148,7 @@ final class TablePartial
   @Override
   public final boolean hasPrimaryKey()
   {
-    return getPrimaryKey() != null;
+    throw new NotLoadedException(this);
   }
 
   @Override

@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.SchemaReference;
+import schemacrawler.schema.Table;
 import schemacrawler.schema.TableRelationshipType;
 
 public class PartialsTest
@@ -46,6 +47,7 @@ public class PartialsTest
       "getTriggers",
       "getType",
       "hasDefinition",
+      "hasPrimaryKey",
       })
     {
       assertThrows(InvocationTargetException.class,
@@ -66,6 +68,20 @@ public class PartialsTest
                  () -> invokeMethod(table, "getRelatedTables", TableRelationshipType.none),
                  "Testing partial method, getRelatedTables");
 
+  }
+
+  @Test
+  public void tablePartialAttributes()
+  {
+    final SchemaReference schema = new SchemaReference("catalog", "schema");
+    final Table table = new MutableTable(schema, "table");
+    table.setAttribute("some_attribute", "some value");
+    final TablePartial tablePartial = new TablePartial(table);
+
+    assertThat(tablePartial.getFullName(), is(table.getFullName()));
+    assertThat(tablePartial.getName(), is(table.getName()));
+    assertThat(tablePartial.getSchema(), is(table.getSchema()));
+    assertThat(tablePartial.getAttributes(), is(table.getAttributes()));
   }
 
   @Test
