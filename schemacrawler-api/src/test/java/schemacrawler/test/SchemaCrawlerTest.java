@@ -37,6 +37,8 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
+import static schemacrawler.analysis.counts.TableRowCountsUtility.getRowCountMessage;
+import static schemacrawler.analysis.counts.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -474,9 +476,10 @@ public class SchemaCrawlerTest
         Arrays.sort(tables, NamedObjectSort.alphabetical);
         for (final Table table : tables)
         {
-          out.println(String.format("%s [row count %d]",
+          assertThat(hasRowCount(table), is(true));
+          out.println(String.format("%s [%s]",
                                     table.getFullName(),
-                                    table.getAttribute("schemacrawler.table.row_count")));
+                                    getRowCountMessage(table)));
         }
       }
     }
