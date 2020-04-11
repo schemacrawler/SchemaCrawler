@@ -96,4 +96,14 @@ public class DatabaseServerTypeTest
     assertThat(databaseServerType1, greaterThan(databaseServerType0));
   }
 
-}
+  @Test
+  public void string()
+  {
+    final DatabaseServerType databaseServerType0 = DatabaseServerType.UNKNOWN;
+    final DatabaseServerType databaseServerType1 = new DatabaseServerType("newdb", "NewDB");
+
+    assertThat(databaseServerType0.toString(), is(""));
+    assertThat(databaseServerType1.toString(), is("newdb - NewDB"));
+  }
+
+  }
