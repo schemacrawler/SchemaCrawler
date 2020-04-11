@@ -36,7 +36,6 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
-import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.ExcludeAll;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
@@ -70,15 +69,6 @@ public class EqualsTest
   {
     EqualsVerifier
       .forClass(BaseColumnReference.class)
-      .verify();
-  }
-
-  @Test
-  public void databaseServerType()
-  {
-    EqualsVerifier
-      .forClass(DatabaseServerType.class)
-      .withIgnoredFields("databaseSystemName")
       .verify();
   }
 
