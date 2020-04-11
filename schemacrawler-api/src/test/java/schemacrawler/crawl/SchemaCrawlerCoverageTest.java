@@ -55,6 +55,7 @@ import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
+import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -276,6 +277,19 @@ public class SchemaCrawlerCoverageTest
       .get();
 
     checkBooleanProperties(sequence,"cycle");
+
+  }
+
+  @Test
+  public void viewBooleanProperties()
+    throws Exception
+  {
+    final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
+    final View view = (View) catalog
+      .lookupTable(schema, "AUTHORSLIST")
+      .get();
+
+    checkBooleanProperties(view,"updatable");
 
   }
 
