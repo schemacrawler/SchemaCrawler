@@ -12,6 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
@@ -31,6 +32,12 @@ public class PartialsTest
 
     assertThat(table.lookupColumn("column"), isPresentAndIs(column));
     assertThat(table.lookupColumn("unknown_column"), isEmpty());
+
+    final ForeignKey foreignKey = new MutableForeignKey("fk");
+    table.addForeignKey(foreignKey);
+
+    assertThat(table.lookupForeignKey("fk"), isPresentAndIs(foreignKey));
+    assertThat(table.lookupForeignKey("unknown_fk"), isEmpty());
 
     for (final String methodName : new String[] {
       "getColumns",
