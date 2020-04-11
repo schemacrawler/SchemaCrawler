@@ -7,7 +7,7 @@ import static org.apache.commons.lang3.reflect.MethodUtils.invokeMethod;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class BooleanPropertyTestUtility
+public class ObjectPropertyTestUtility
 {
 
   public static void checkIntegerProperties(final Object object, final String... properties)
@@ -87,7 +87,7 @@ public class BooleanPropertyTestUtility
     invokeMethod(object, true, setterMethodName, value);
   }
 
-  private BooleanPropertyTestUtility()
+  private ObjectPropertyTestUtility()
   {
     // Prevent instantiation
   }

@@ -31,8 +31,8 @@ package schemacrawler.crawl;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.BooleanPropertyTestUtility.checkBooleanProperties;
-import static schemacrawler.test.utility.BooleanPropertyTestUtility.checkIntegerProperties;
+import static schemacrawler.test.utility.ObjectPropertyTestUtility.checkBooleanProperties;
+import static schemacrawler.test.utility.ObjectPropertyTestUtility.checkIntegerProperties;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 
