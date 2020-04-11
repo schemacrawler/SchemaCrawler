@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
+import static org.apache.commons.beanutils.PropertyUtils.describe;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -38,6 +39,8 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.logging.Level;
 
 import org.junit.jupiter.api.Test;
@@ -56,8 +59,7 @@ import sf.util.SchemaCrawlerLogger;
 public class ResultColumnsTest
 {
 
-  private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(ResultColumnsTest.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(ResultColumnsTest.class.getName());
 
   @Test
   public void columns(final TestContext testContext, final Connection cxn)
@@ -67,8 +69,7 @@ public class ResultColumnsTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final String sql = ""
-                         + "SELECT                                                                    "
+      final String sql = "" + "SELECT                                                                    "
                          + " PUBLIC.BOOKS.BOOKS.TITLE AS BOOK,                                        "
                          + " PUBLIC.BOOKS.AUTHORS.FIRSTNAME + ' ' + PUBLIC.BOOKS.AUTHORS.LASTNAME,    "
                          + " PUBLIC.BOOKS.BOOKS.PRICE                                                 "
@@ -86,12 +87,9 @@ public class ResultColumnsTest
       )
       {
 
-        final ResultsColumns resultColumns =
-          new ResultsCrawler(resultSet).crawl();
+        final ResultsColumns resultColumns = new ResultsCrawler(resultSet).crawl();
 
-        assertThat("Could not obtain result columns",
-                   resultColumns,
-                   notNullValue());
+        assertThat("Could not obtain result columns", resultColumns, notNullValue());
 
         out.println("full-name: " + resultColumns.getFullName());
         out.println("columns: " + resultColumns.getColumnsListAsString());
@@ -104,6 +102,11 @@ public class ResultColumnsTest
         {
           LOGGER.log(Level.FINE, column.toString());
           out.println("column: " + column.getFullName());
+          final Map<String, Object> properties = new TreeMap<>(describe(column));
+          for (final Map.Entry<String, Object> property : properties.entrySet())
+          {
+            out.println(String.format("  %s: %s", property.getKey(), property.getValue()));
+          }
           out.println("  database type: " + column
             .getColumnDataType()
             .getDatabaseSpecificTypeName());
@@ -114,7 +117,7 @@ public class ResultColumnsTest
         }
 
         out.println();
-        out.println();
+        out.println("# Additional Tests");
         out.println("lookup C2: " + resultColumns
           .lookupColumn("C2")
           .orElse(null));
@@ -127,8 +130,7 @@ public class ResultColumnsTest
       }
 
     }
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
 }
