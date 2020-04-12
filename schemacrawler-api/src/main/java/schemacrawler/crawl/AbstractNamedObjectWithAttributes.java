@@ -88,14 +88,7 @@ abstract class AbstractNamedObjectWithAttributes
     }
     else
     {
-      try
-      {
-        return (T) attributeValue;
-      }
-      catch (final ClassCastException e)
-      {
-        return defaultValue;
-      }
+      return (T) attributeValue;
     }
   }
 

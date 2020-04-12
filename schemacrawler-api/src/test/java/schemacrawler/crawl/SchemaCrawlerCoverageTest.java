@@ -33,10 +33,11 @@ import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isPresentAndIs;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.ObjectPropertyTestUtility.checkBooleanProperties;
-import static schemacrawler.test.utility.ObjectPropertyTestUtility.checkIntegerProperties;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
+import static schemacrawler.test.utility.ObjectPropertyTestUtility.checkBooleanProperties;
+import static schemacrawler.test.utility.ObjectPropertyTestUtility.checkIntegerProperties;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -198,12 +199,11 @@ public class SchemaCrawlerCoverageTest
     final Table table = catalog
       .lookupTable(schema, "AUTHORS")
       .get();
-    final Column column = table.lookupColumn("FIRSTNAME").get();
+    final Column column = table
+      .lookupColumn("FIRSTNAME")
+      .get();
 
-    checkBooleanProperties(column,
-                           "autoIncremented",
-                           "generated",
-                           "hidden");
+    checkBooleanProperties(column, "autoIncremented", "generated", "hidden");
 
   }
 
@@ -215,7 +215,9 @@ public class SchemaCrawlerCoverageTest
     final Table table = catalog
       .lookupTable(schema, "AUTHORS")
       .get();
-    final Column column = table.lookupColumn("FIRSTNAME").get();
+    final Column column = table
+      .lookupColumn("FIRSTNAME")
+      .get();
     final ColumnDataType columnDataType = column.getColumnDataType();
 
     checkBooleanProperties(columnDataType,
@@ -256,8 +258,8 @@ public class SchemaCrawlerCoverageTest
       .lookupIndex("IDX_B_AUTHORS")
       .get();
 
-    checkIntegerProperties(index,"cardinality", "pages");
-    checkBooleanProperties(index,"unique");
+    checkIntegerProperties(index, "cardinality", "pages");
+    checkBooleanProperties(index, "unique");
 
   }
 
@@ -267,7 +269,7 @@ public class SchemaCrawlerCoverageTest
   {
     final JdbcDriverInfo jdbcDriverInfo = catalog.getJdbcDriverInfo();
 
-    checkBooleanProperties(jdbcDriverInfo,"jdbcCompliant");
+    checkBooleanProperties(jdbcDriverInfo, "jdbcCompliant");
 
   }
 
@@ -280,7 +282,7 @@ public class SchemaCrawlerCoverageTest
       .lookupSequence(schema, "PUBLISHER_ID_SEQ")
       .get();
 
-    checkBooleanProperties(sequence,"cycle");
+    checkBooleanProperties(sequence, "cycle");
 
   }
 
@@ -293,7 +295,7 @@ public class SchemaCrawlerCoverageTest
       .lookupTable(schema, "AUTHORSLIST")
       .get();
 
-    checkBooleanProperties(view,"updatable");
+    checkBooleanProperties(view, "updatable");
 
   }
 
@@ -314,7 +316,8 @@ public class SchemaCrawlerCoverageTest
     assertThat(table.getAttribute("unknown", "no value"), is("no value"));
     assertThat(table.getAttribute("unknown", 10.5f), is(10.5f));
     assertThat(table.getAttribute("schemacrawler.table.row_count", 10L), is(20L));
-    assertThat(table.getAttribute("schemacrawler.table.row_count", "no value"), is(20L));
+    assertThrows(ClassCastException.class,
+                 () -> { final String string = table.getAttribute("schemacrawler.table.row_count", "no value"); });
 
     assertThat(table.hasAttribute("new_one"), is(false));
     table.setAttribute("new_one", "some_value");
