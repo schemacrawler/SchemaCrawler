@@ -1,6 +1,8 @@
 name: Mutation Tests
 
-on: [push]
+on:
+  schedule:
+    - cron: '10 0 1,15 * *'
 
 jobs:
   build:

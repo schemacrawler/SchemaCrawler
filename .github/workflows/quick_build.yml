@@ -1,6 +1,6 @@
 name: Quick Build
 
-on: [push]
+on: push
 
 jobs:
   build:
