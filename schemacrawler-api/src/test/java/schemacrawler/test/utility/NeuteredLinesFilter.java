@@ -54,6 +54,7 @@ final class NeuteredLinesFilter
     Pattern.compile("\\s+\"?crawl-timestamp\"?\\s?: .*"),
     Pattern.compile("\\s*(- )?\"?lint-id\"?\\s?: .*"),
     Pattern.compile("\\s+\"?linter-instance-id\"?\\s?: .*"),
+    Pattern.compile("\\s+\"?product-version\"?\\s?: .*"),
     // Versions
     Pattern.compile(".*15\\.0[6-7]\\.\\d\\d.*"),
     Pattern.compile(".*16\\.\\d\\.\\d.*"),

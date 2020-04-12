@@ -37,6 +37,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import schemacrawler.SchemaCrawlerInfo;
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
@@ -92,7 +93,7 @@ final class LintReportTextFormatter
     this.begin();
 
     this.handleInfoStart();
-    this.handle(catalog.getSchemaCrawlerInfo());
+    this.handle((SchemaCrawlerInfo) catalog.getCrawlInfo().getSchemaCrawlerVersion());
     this.handle(catalog.getDatabaseInfo());
     this.handle(catalog.getJdbcDriverInfo());
     this.handleInfoEnd();

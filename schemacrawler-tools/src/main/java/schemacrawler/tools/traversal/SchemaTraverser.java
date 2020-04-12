@@ -35,6 +35,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
+import schemacrawler.SchemaCrawlerInfo;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.NamedObject;
@@ -178,7 +179,7 @@ public class SchemaTraverser
     }
 
     handler.handleInfoStart();
-    handler.handle(catalog.getSchemaCrawlerInfo());
+    handler.handle((SchemaCrawlerInfo) catalog.getCrawlInfo().getSchemaCrawlerVersion());
     handler.handle(catalog.getDatabaseInfo());
     handler.handle(catalog.getJdbcDriverInfo());
     handler.handleInfoEnd();
