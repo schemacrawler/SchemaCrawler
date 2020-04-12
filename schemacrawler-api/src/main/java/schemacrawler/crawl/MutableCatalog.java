@@ -37,8 +37,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import schemacrawler.JvmSystemInfo;
-import schemacrawler.OperatingSystemInfo;
 import schemacrawler.SchemaCrawlerInfo;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
@@ -94,11 +92,8 @@ final class MutableCatalog
     new NamedObjectList<>();
   private final MutableDatabaseInfo databaseInfo;
   private final MutableJdbcDriverInfo jdbcDriverInfo;
-  private final JvmSystemInfo jvmInfo;
-  private final OperatingSystemInfo osInfo;
   private final NamedObjectList<MutableRoutine> routines =
     new NamedObjectList<>();
-  private final SchemaCrawlerInfo schemaCrawlerInfo;
   private final NamedObjectList<SchemaReference> schemas =
     new NamedObjectList<>();
   private final NamedObjectList<MutableSequence> sequences =
@@ -106,16 +101,14 @@ final class MutableCatalog
   private final NamedObjectList<MutableSynonym> synonyms =
     new NamedObjectList<>();
   private final NamedObjectList<MutableTable> tables = new NamedObjectList<>();
-  private ImmutableCrawlInfo crawlInfo;
+  private final MutableCrawlInfo crawlInfo;
 
   MutableCatalog(final String name)
   {
     super(name);
     databaseInfo = new MutableDatabaseInfo();
     jdbcDriverInfo = new MutableJdbcDriverInfo();
-    schemaCrawlerInfo = new SchemaCrawlerInfo();
-    osInfo = new OperatingSystemInfo();
-    jvmInfo = new JvmSystemInfo();
+    crawlInfo = new MutableCrawlInfo();
   }
 
   /**
@@ -166,18 +159,6 @@ final class MutableCatalog
     return jdbcDriverInfo;
   }
 
-  @Override
-  public JvmSystemInfo getJvmSystemInfo()
-  {
-    return jvmInfo;
-  }
-
-  @Override
-  public OperatingSystemInfo getOperatingSystemInfo()
-  {
-    return osInfo;
-  }
-
   /**
    * {@inheritDoc}
    */
@@ -208,10 +189,11 @@ final class MutableCatalog
   /**
    * {@inheritDoc}
    */
+  @Deprecated
   @Override
   public SchemaCrawlerInfo getSchemaCrawlerInfo()
   {
-    return schemaCrawlerInfo;
+    return (SchemaCrawlerInfo) crawlInfo.getSchemaCrawlerVersion();
   }
 
   /**
@@ -523,7 +505,7 @@ final class MutableCatalog
 
   void setCrawlInfo()
   {
-    crawlInfo = new ImmutableCrawlInfo(jdbcDriverInfo, databaseInfo);
+    crawlInfo.setDatabaseInfo(jdbcDriverInfo, databaseInfo);
   }
 
 }
