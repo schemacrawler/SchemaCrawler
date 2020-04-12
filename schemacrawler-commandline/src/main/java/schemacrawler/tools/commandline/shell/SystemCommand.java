@@ -33,7 +33,7 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
-import schemacrawler.SchemaCrawlerInfo;
+import schemacrawler.Version;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.commandline.state.StateUtility;
@@ -107,8 +107,7 @@ public class SystemCommand
 
   public void printVersion()
   {
-    final SchemaCrawlerInfo scInfo = new SchemaCrawlerInfo();
-    System.out.println(scInfo.getSchemaCrawlerAbout());
+    System.out.println(Version.about());
 
     System.out.println("System Information:");
     final OperatingSystemInfo osInfo = new OperatingSystemInfo();

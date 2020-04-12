@@ -24,8 +24,7 @@
     "run-id" : "4e66a3f2-2aff-4d2f-bfef-99d9a122d128",
     "schema-crawler-version" : {
       "product-name" : "SchemaCrawler",
-      "product-version" : "16.6.1",
-      "schema-crawler-about" : "SchemaCrawler 16.6.1\r\nDatabase schema discovery and comprehension tool\r\nCopyright (c) 2000-2020, Sualeh Fatehi <sualeh@hotmail.com>.\r\n\r\nYou can search for database schema objects using regular expressions,\r\nand output the schema and data in a readable text format. You can find\r\npotential schema design issues with lint. The output serves for\r\ndatabase documentation is designed to be diff-ed against other database\r\nschemas. SchemaCrawler also generates schema diagrams.\r\n"
+      "product-version" : "16.6.1"
     }
   },
   "lints" : [ {

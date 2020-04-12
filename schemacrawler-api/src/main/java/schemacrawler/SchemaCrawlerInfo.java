@@ -40,17 +40,9 @@ public final class SchemaCrawlerInfo
 
   private static final long serialVersionUID = 4051323422934251828L;
 
-  private final String schemaCrawlerAbout;
-
   public SchemaCrawlerInfo()
   {
     super(Version.getProductName(), Version.getVersion());
-    schemaCrawlerAbout = Version.about();
-  }
-
-  public String getSchemaCrawlerAbout()
-  {
-    return schemaCrawlerAbout;
   }
 
 }
