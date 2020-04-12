@@ -44,12 +44,12 @@ jobs:
     - id: create_release
       name: Create GitHub Release
       uses: actions/create-release@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: DEBUG Release ${{ github.ref }}
-          body: |
-            ${{ github.sha }}
-          draft: true
-          prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: DEBUG Release ${{ github.ref }}
+        body: |
+          ${{ github.sha }}
+        draft: true
+        prerelease: false
