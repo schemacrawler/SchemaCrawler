@@ -133,7 +133,8 @@ final class SchemaListFormatter
       formattingHelper.writeHeader(DocumentHeaderType.title, title);
     }
 
-    if (options.isNoInfo())
+    if (options.isNoInfo() || (options.isNoSchemaCrawlerInfo() && !options.isShowDatabaseInfo()
+                               && !options.isShowJdbcDriverInfo()))
     {
       return;
     }
