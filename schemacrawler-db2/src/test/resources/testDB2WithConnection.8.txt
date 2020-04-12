@@ -936,12 +936,6 @@ System Information
 ========================================================================
 
 
-SchemaCrawler Information
--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
-product name                              SchemaCrawler                 
-product version                           16.3.2                        
-
-
 Database Server Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 HOST_NAME                                 f7504e1b78bf                  

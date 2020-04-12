@@ -469,12 +469,6 @@ System Information
 ========================================================================
 
 
-SchemaCrawler Information
--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
-product name                              SchemaCrawler                 
-product version                           16.3.2                        
-
-
 Database Server Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 database                                  books                         

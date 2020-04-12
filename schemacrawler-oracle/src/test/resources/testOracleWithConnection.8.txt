@@ -594,12 +594,6 @@ System Information
 ========================================================================
 
 
-SchemaCrawler Information
--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
-product name                              SchemaCrawler                 
-product version                           16.2.7                        
-
-
 Database Server Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 GLOBAL_NAME                               XE                            
