@@ -182,13 +182,19 @@ final class TablePartial
   }
 
   @Override
-  public Optional<Index> lookupIndex(final String name)
+  public Optional<TableConstraint> lookupIndex(final String name)
   {
     throw new NotLoadedException(this);
   }
 
   @Override
   public Optional<? extends Privilege<Table>> lookupPrivilege(final String name)
+  {
+    throw new NotLoadedException(this);
+  }
+
+  @Override
+  public Optional<MutableTableConstraint> lookupTableConstraint(final String name)
   {
     throw new NotLoadedException(this);
   }

@@ -305,6 +305,15 @@ class MutableTable
    * {@inheritDoc}
    */
   @Override
+  public Optional<MutableTableConstraint> lookupTableConstraint(final String name)
+  {
+    return constraints.lookup(this, name);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
   public Optional<MutableForeignKey> lookupForeignKey(final String name)
   {
     return foreignKeys.lookup(this, name);
