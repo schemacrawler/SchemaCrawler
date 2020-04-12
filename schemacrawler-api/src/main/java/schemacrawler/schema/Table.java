@@ -149,6 +149,16 @@ public interface Table
    */
   <C extends Column> Optional<C> lookupColumn(String name);
 
+
+  /**
+   * Gets a table constraint by unqualified name.
+   *
+   * @param name
+   *   Name
+   * @return Table constraint.
+   */
+  <C extends TableConstraint> Optional<C> lookupTableConstraint(String name);
+
   /**
    * Gets a foreign key by name.
    *

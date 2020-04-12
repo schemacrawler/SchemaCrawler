@@ -41,6 +41,7 @@ import static schemacrawler.test.utility.ObjectPropertyTestUtility.checkIntegerP
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -243,6 +244,10 @@ public class SchemaCrawlerCoverageTest
     assertThat(primaryKey.isUnique(), is(true));
     assertThat(primaryKey.isDeferrable(), is(false));
     assertThat(primaryKey.isInitiallyDeferred(), is(false));
+
+    final TableConstraint constraint = new MutableTableConstraint(table, primaryKey.getName());
+    final Optional<TableConstraint> optionalTableConstraint = table.lookupTableConstraint(primaryKey.getName());
+    assertThat(optionalTableConstraint, isPresentAndIs(constraint));
 
   }
 
