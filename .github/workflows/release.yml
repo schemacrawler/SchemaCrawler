@@ -4,7 +4,7 @@ on:
   create:
     tags:
       - 'v*'
-      - 'd*'
+      - 'w*'
 
 jobs:
   build:
@@ -39,9 +39,15 @@ jobs:
         mvn -v
     - id: build
       name: Build
+      env:
+        TZ: GMT
       run: |
-        mvn package
-    - id: create_release
+        mvn \
+          --no-transfer-progress \
+          --batch-mode \
+          -Ddistrib \
+          clean install
+    - id: create-release
       name: Create GitHub Release
       uses: actions/create-release@latest
       env:
@@ -53,3 +59,13 @@ jobs:
           ${{ github.sha }}
         draft: true
         prerelease: false
+    - name: Upload Release Asset
+      id: upload-release-asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create-release.outputs.upload_url }}
+        asset_path: ./schemacrawler-distrib/target/schemacrawler-*-distribution.zip
+        # asset_name: my-artifact.zip
+        asset_content_type: application/zip
