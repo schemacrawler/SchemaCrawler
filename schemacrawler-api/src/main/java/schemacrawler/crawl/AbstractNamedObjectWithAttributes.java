@@ -80,6 +80,7 @@ abstract class AbstractNamedObjectWithAttributes
    */
   @Override
   public final <T> T getAttribute(final String name, final T defaultValue)
+    throws ClassCastException
   {
     final Object attributeValue = attributeMap.get(name);
     if (attributeValue == null)
