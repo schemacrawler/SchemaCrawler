@@ -32,8 +32,6 @@ package schemacrawler.schema;
 import java.util.Collection;
 import java.util.Optional;
 
-import schemacrawler.SchemaCrawlerInfo;
-
 /**
  * Database and connection information.
  *
@@ -76,9 +74,6 @@ public interface Catalog
    * @return Routines
    */
   Collection<Routine> getRoutines(Schema schema);
-
-  @Deprecated
-  SchemaCrawlerInfo getSchemaCrawlerInfo();
 
   /**
    * Gets the schemas.

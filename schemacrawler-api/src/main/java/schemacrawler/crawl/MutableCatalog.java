@@ -37,7 +37,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import schemacrawler.SchemaCrawlerInfo;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.CrawlInfo;
@@ -184,16 +183,6 @@ final class MutableCatalog
       }
     }
     return routines;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Deprecated
-  @Override
-  public SchemaCrawlerInfo getSchemaCrawlerInfo()
-  {
-    return (SchemaCrawlerInfo) crawlInfo.getSchemaCrawlerVersion();
   }
 
   /**

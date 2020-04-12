@@ -1843,12 +1843,6 @@ System Information
 ========================================================================
 
 
-SchemaCrawler Information
--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
-product name                              SchemaCrawler                 
-product version                           16.5.3                        
-
-
 Database Server Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 current_database                          test                          

@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.traversal;
 
 
-import schemacrawler.SchemaCrawlerInfo;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
@@ -50,9 +49,6 @@ public interface TraversalHandler
     throws SchemaCrawlerException;
 
   void handle(JdbcDriverInfo jdbcDriverInfo)
-    throws SchemaCrawlerException;
-
-  void handle(SchemaCrawlerInfo schemaCrawlerInfo)
     throws SchemaCrawlerException;
 
   void handleHeaderEnd()
