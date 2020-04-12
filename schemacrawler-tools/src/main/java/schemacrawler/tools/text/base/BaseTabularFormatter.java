@@ -33,7 +33,6 @@ import static sf.util.Utility.isBlank;
 
 import java.util.Collection;
 
-import schemacrawler.SchemaCrawlerInfo;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
@@ -255,28 +254,6 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
         formattingHelper.writeObjectEnd();
       }
     }
-  }
-
-  @Override
-  public void handle(final SchemaCrawlerInfo schemaCrawlerInfo)
-  {
-    if (!printVerboseDatabaseInfo || options.isNoSchemaCrawlerInfo()
-        || schemaCrawlerInfo == null)
-    {
-      return;
-    }
-
-    formattingHelper.writeHeader(DocumentHeaderType.section,
-                                 "SchemaCrawler Information");
-
-    formattingHelper.writeObjectStart();
-    formattingHelper.writeNameValueRow("product name",
-                                       schemaCrawlerInfo.getProductName(),
-                                       Alignment.inherit);
-    formattingHelper.writeNameValueRow("product version",
-                                       schemaCrawlerInfo.getProductVersion(),
-                                       Alignment.inherit);
-    formattingHelper.writeObjectEnd();
   }
 
   @Override

@@ -31,7 +31,6 @@ package schemacrawler.tools.text.schema;
 
 import static sf.util.Utility.isBlank;
 
-import schemacrawler.SchemaCrawlerInfo;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
@@ -203,12 +202,6 @@ final class SchemaListFormatter
 
     formattingHelper.writeNameRow(routineName, routineType);
     printRemarks(routine);
-  }
-
-  @Override
-  public void handle(final SchemaCrawlerInfo schemaCrawlerInfo)
-  {
-    // No output required
   }
 
   /**

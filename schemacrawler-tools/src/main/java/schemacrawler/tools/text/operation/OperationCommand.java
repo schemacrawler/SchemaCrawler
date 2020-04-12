@@ -41,7 +41,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerInfo;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -112,7 +111,6 @@ public final class OperationCommand
       handler.begin();
 
       handler.handleInfoStart();
-      handler.handle((SchemaCrawlerInfo) catalog.getCrawlInfo().getSchemaCrawlerVersion());
       handler.handle(catalog.getDatabaseInfo());
       handler.handle(catalog.getJdbcDriverInfo());
       handler.handleInfoEnd();

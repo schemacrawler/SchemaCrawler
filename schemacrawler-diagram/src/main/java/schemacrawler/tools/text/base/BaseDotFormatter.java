@@ -34,7 +34,6 @@ import static sf.util.IOUtility.readResourceFully;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import schemacrawler.SchemaCrawlerInfo;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
@@ -177,12 +176,6 @@ public abstract class BaseDotFormatter
 
   @Override
   public void handle(final JdbcDriverInfo driverInfo)
-  {
-    // No-op
-  }
-
-  @Override
-  public void handle(final SchemaCrawlerInfo schemaCrawlerInfo)
   {
     // No-op
   }
