@@ -101,5 +101,8 @@ jobs:
 # CREATE AND PUBLISH DOCKER IMAGE
     - id: create-docker-image
       name: Create and Publish Docker Image
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       run: |
         bash -c "cd schemacrawler-docker/; ./docker-build.sh"
