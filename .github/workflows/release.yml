@@ -10,7 +10,7 @@ jobs:
   build:
 
 # BUILD FOR DISTRIBUTION
-    name: Distribution build
+    name: Create Release
     runs-on: ubuntu-latest
     steps:
     - id: checkout-code
@@ -21,12 +21,6 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 8
-    - uses: actions/cache@v1
-      with:
-        path: ~/.m2/repository
-        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-        restore-keys: |
-          ${{ runner.os }}-maven-
     - id: install-packages
       name: Install packages
       run: |
@@ -50,7 +44,7 @@ jobs:
           -Ddistrib \
           clean install
 
-# CREATE GITHUB RELEASE
+# CREATE GITHUB RELEASE AND ADD ASSETS
     - id: create-release
       name: Create GitHub Release
       uses: actions/create-release@latest
@@ -80,6 +74,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create-release.outputs.upload_url }}
-        asset_path: ./schemacrawler-distrib/target/schemacrawler-16.6.1-distribution.SHA-512
-        asset_name: schemacrawler-16.6.1-distribution.SHA-512
+        asset_path: ./schemacrawler-distrib/target/schemacrawler-16.6.1-distribution.zip.SHA-512
+        asset_name: schemacrawler-16.6.1-distribution.zip.SHA-512
         asset_content_type: text/plain
