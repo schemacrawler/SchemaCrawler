@@ -73,7 +73,7 @@ jobs:
         body: |
           'SchemaCrawler ${{ steps.prepare-tag.outputs.tag_name }}'
         draft: false
-        prerelease: true
+        prerelease: false
     - name: Upload SchemaCrawler Distribution Zip
       id: upload-release-zip
       uses: actions/upload-release-asset@v1
@@ -96,7 +96,8 @@ jobs:
         asset_content_type: text/plain
 
 # PUBLISH WEBSITE TO GITHUB PAGES
-    - name: Publish Website to GitHub Pages
+    - id: pubish-website
+      name: Publish Website to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -114,3 +115,12 @@ jobs:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       run: |
         bash -c "cd schemacrawler-docker/; ./docker-build.sh"
+
+# PUBLISH TO CENTRAL REPOSITORY
+    - id: pubish-to-central
+      name: Publish package
+      env:
+        MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+        MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+      run: |
+        mvn -B deploy
