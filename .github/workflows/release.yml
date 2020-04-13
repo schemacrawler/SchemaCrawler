@@ -58,7 +58,6 @@ jobs:
           --no-transfer-progress \
           --batch-mode \
           -Ddistrib \
-          -Dmaven.javadoc.skip=false \
           clean install
 
 # CREATE GITHUB RELEASE AND ADD ASSETS
@@ -117,10 +116,17 @@ jobs:
         bash -c "cd schemacrawler-docker/; ./docker-build.sh"
 
 # PUBLISH TO CENTRAL REPOSITORY
-    - id: pubish-to-central
-      name: Publish package
+    - id: publish-to-central
+      name: Publish to Central Repository
+      if: false
       env:
         MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
         MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
       run: |
-        mvn -B deploy
+        mvn \
+          --no-transfer-progress \
+          --batch-mode \
+          -Ddistrib \
+          -Dmaven.javadoc.skip=false \
+          -Dskip.signing.artifacts=false \
+          clean install
