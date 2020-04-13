@@ -5,6 +5,7 @@ on: push
 jobs:
   build:
     name: Build, test, and publish results
+    if: !contains(github.ref, 'refs/tags')
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
