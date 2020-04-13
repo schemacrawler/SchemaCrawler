@@ -49,7 +49,7 @@ jobs:
           clean install
           
   create-release:
-    name: Distribution build
+    name: Create GitHub Release And Add Assets
     runs-on: ubuntu-latest
     needs: build
     steps:          
@@ -71,7 +71,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ steps.create-release.outputs.upload_url }}
+        upload_url: ${{ steps.create-github-release.outputs.upload_url }}
         asset_path: ./schemacrawler-distrib/target/schemacrawler-16.6.1-distribution.zip
         asset_name: schemacrawler-16.6.1-distribution.zip
         asset_content_type: application/zip
@@ -81,7 +81,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ steps.create-release.outputs.upload_url }}
+        upload_url: ${{ steps.create-github-release.outputs.upload_url }}
         asset_path: ./schemacrawler-distrib/target/schemacrawler-16.6.1-distribution.SHA-512
         asset_name: schemacrawler-16.6.1-distribution.SHA-512
         asset_content_type: text/plain
