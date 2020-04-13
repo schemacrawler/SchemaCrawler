@@ -17,29 +17,36 @@ jobs:
       name: Checkout code
       uses: actions/checkout@v1
     - id: setup-jdk
-      name: Set up JDK
+      name: Setup JDK
       uses: actions/setup-java@v1
       with:
         java-version: 8
+        server-id: ossrh
+        server-username: MAVEN_USERNAME
+        server-password: MAVEN_PASSWORD
     - id: install-packages
-      name: Install packages
+      name: Install Packages
       run: |
         sudo apt-get update
         sudo apt-get install graphviz -qq
     - id: prepare-tag
-      name: Prepare tag
+      name: Prepare Tag
       if: startsWith(github.ref, 'refs/tags/')
       run: |
         TAG_NAME="${GITHUB_REF##refs/tags/}"
         echo "::set-output name=tag_name::${TAG_NAME}"
         echo "::set-output name=deploy_tag_name::deploy-${TAG_NAME}"
     - id: show-environment
-      name: Show environment
+      name: Show Environment
       run: |
         echo github.repository: ${{ github.repository }}
         echo github.ref: ${{ github.head_ref || github.ref }}
         echo github.sha: ${{ github.sha }}
         mvn -v
+    - id: show-maven-settings
+      name: Show Maven Settings
+      run: |
+        cat ~/.m2/settings.xml
 
 # BUILD FOR DISTRIBUTION
     - id: build
@@ -51,6 +58,8 @@ jobs:
           --no-transfer-progress \
           --batch-mode \
           -Ddistrib \
+          -Dmaven.javadoc.skip=false \
+          -Dskip.signing.artifacts=false \
           clean install
 
 # CREATE GITHUB RELEASE AND ADD ASSETS
