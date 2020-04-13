@@ -26,12 +26,19 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install graphviz -qq
+    - id: prepare-tag
+      name: Prepare tag
+      if: startsWith(github.ref, 'refs/tags/')
+      run: |
+        TAG_NAME="${GITHUB_REF##refs/tags/}"
+        echo "::set-output name=tag_name::${TAG_NAME}"
+        echo "::set-output name=deploy_tag_name::deploy-${TAG_NAME}"
     - id: show-environment
       name: Show environment
       run: |
-        echo github.repository: ${{ github.repository }}
-        echo github.ref: ${{ github.head_ref || github.ref }}
-        echo github.sha: ${{ github.sha }}
+        echo ${{ toJson(runner) }}
+        echo ${{ toJson(env) }}
+        echo ${{ toJson(github) }}
         mvn -v
     - id: build
       name: Build
@@ -77,3 +84,14 @@ jobs:
         asset_path: ./schemacrawler-distrib/target/schemacrawler-16.6.1-distribution.zip.SHA-512
         asset_name: schemacrawler-16.6.1-distribution.zip.SHA-512
         asset_content_type: text/plain
+
+# PUBLISH WEBSITE TO GITHUB PAGES
+    - name: Publish Website to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./schemacrawler-distrib/target/_website
+        force_orphan: true
+        user_name: 'Sualeh Fatehi'
+        user_email: 'sualeh@hotmail.com'
+        commit_message: 'SchemaCrawler Website [${{ steps.prepare-tag.outputs.tag_name }}]'
