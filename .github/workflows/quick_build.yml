@@ -34,6 +34,10 @@ jobs:
         echo github.sha: ${{ github.sha }}
         mvn -v
     - id: build
-      name: Build
+      name: Build All Modules
       run: |
-        mvn package
+        mvn \
+          --no-transfer-progress \
+          --batch-mode \
+          -Ddistrib \
+          package

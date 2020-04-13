@@ -1,6 +1,9 @@
 name: Integration Tests
 
-on: push
+on: 
+  push:
+    branches:
+      - '**'
 
 jobs:
   build:
