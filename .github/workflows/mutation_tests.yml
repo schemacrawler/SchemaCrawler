@@ -49,7 +49,7 @@ jobs:
           --no-transfer-progress \
           --batch-mode \
           package \
-      org.pitest:pitest-maven:mutationCoverage
+          org.pitest:pitest-maven:mutationCoverage
 
 # GET TEST RESULTS
     - id: upload-test-results
