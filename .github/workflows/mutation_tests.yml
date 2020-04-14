@@ -1,6 +1,7 @@
 name: Mutation Tests
 
 on:
+  push:
   schedule:
     - cron: '10 0 1,15 * *'
 
