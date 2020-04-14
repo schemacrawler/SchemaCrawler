@@ -4,7 +4,6 @@ on:
   create:
     tags:
       - 'v*'
-      - 'w*'
 
 jobs:
   build:
@@ -37,15 +36,12 @@ jobs:
         echo "::set-output name=tag_name::${TAG_NAME}"
         echo "::set-output name=deploy_tag_name::deploy-${TAG_NAME}"
     - id: show-environment
-      name: Show Environment
+      name: Show environment
       run: |
         echo github.repository: ${{ github.repository }}
         echo github.ref: ${{ github.head_ref || github.ref }}
         echo github.sha: ${{ github.sha }}
         mvn -v
-    - id: show-maven-settings
-      name: Show Maven Settings
-      run: |
         cat ~/.m2/settings.xml
 
 # BUILD FOR DISTRIBUTION
@@ -62,7 +58,7 @@ jobs:
 
 # CREATE GITHUB RELEASE AND ADD ASSETS
     - id: create-release
-      name: Create GitHub Release
+      name: Create GitHub release
       uses: actions/create-release@latest
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -73,8 +69,8 @@ jobs:
           'SchemaCrawler ${{ steps.prepare-tag.outputs.tag_name }}'
         draft: false
         prerelease: false
-    - name: Upload SchemaCrawler Distribution Zip
-      id: upload-release-zip
+    - id: upload-release-zip
+      name: Upload SchemaCrawler distribution zip
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -83,8 +79,8 @@ jobs:
         asset_path: ./schemacrawler-distrib/target/schemacrawler-16.6.1-distribution.zip
         asset_name: schemacrawler-16.6.1-distribution.zip
         asset_content_type: application/zip
-    - name: Upload SchemaCrawler Distribution SHA
-      id: upload-release-sha
+    - id: upload-release-sha
+      name: Upload SchemaCrawler distribution zip SHA
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -96,7 +92,7 @@ jobs:
 
 # PUBLISH WEBSITE TO GITHUB PAGES
     - id: pubish-website
-      name: Publish Website to GitHub Pages
+      name: Publish website to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -108,7 +104,7 @@ jobs:
 
 # CREATE AND PUBLISH DOCKER IMAGE
     - id: create-docker-image
-      name: Create and Publish Docker Image
+      name: Create and publish Docker image
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
@@ -118,7 +114,7 @@ jobs:
 # PUBLISH TO CENTRAL REPOSITORY
     - id: publish-to-central
       name: Publish to Central Repository
-      if: false
+      if: false # TODO: Sign artifacts
       env:
         MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
         MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
