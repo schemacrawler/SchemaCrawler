@@ -1,7 +1,7 @@
 name: Mutation Tests
 
 on:
-  push:
+  push: # DEBUG - Temporarily turn on for each push
   schedule:
     - cron: '10 0 1,15 * *'
 

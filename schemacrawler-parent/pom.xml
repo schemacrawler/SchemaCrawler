@@ -354,6 +354,7 @@
           <exportLineCoverage>true</exportLineCoverage>
           <timestampedReports>false</timestampedReports>
           <outputFormats>
+            <!-- XML reports are required for aggregation -->
             <value>XML</value>
             <value>HTML</value>
           </outputFormats>
