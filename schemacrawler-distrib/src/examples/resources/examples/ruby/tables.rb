@@ -6,11 +6,7 @@ end
 
 java_import schemacrawler.schema.TableRelationshipType
 
-puts catalog.schemaCrawlerInfo
-puts ''
-puts catalog.databaseInfo
-puts ''
-puts catalog.jdbcDriverInfo
+puts catalog.crawlInfo
 
 for table in catalog.tables
   puts ''

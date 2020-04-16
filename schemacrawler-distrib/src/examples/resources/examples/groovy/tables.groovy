@@ -1,8 +1,6 @@
 import schemacrawler.schema.TableRelationshipType
 
-println catalog.schemaCrawlerInfo
-println catalog.databaseInfo
-println catalog.jdbcDriverInfo
+println catalog.crawlInfo
 
 for (table in catalog.tables)
 {

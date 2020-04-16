@@ -13,13 +13,11 @@ with (JavaPackages) {
 
 var printChildren = function()
 {
-  print(catalog.schemaCrawlerInfo);
-  print(catalog.databaseInfo);
-  print(catalog.jdbcDriverInfo);
+  print(catalog.crawlInfo);
 
   for each (var table in catalog.getTables())
   {
-    print('');	  
+    print('');
     print(table.fullName);
     var children = table.getRelatedTables(TableRelationshipType.child);
     for each (var childTable in children)
