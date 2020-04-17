@@ -27,8 +27,8 @@ jobs:
     - id: install-packages
       name: Install packages
       run: |
-        sudo apt-get update
-        sudo apt-get install graphviz -qq
+        sudo apt-get -qq update
+        sudo apt-get install graphviz
     - id: install-secret-key
       name: Install secret key
       env:
