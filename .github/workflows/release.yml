@@ -32,9 +32,9 @@ jobs:
     - id: install-secret-key
       name: Install secret key
       run: |
-        'echo ${{ secrets.OSSRH_GPG_SECRET_KEY }} > OSSRH_GPG_SECRET_KEY.key.asc'
-        gpg --batch --import OSSRH_GPG_SECRET_KEY.key.asc
-        rm -f OSSRH_GPG_SECRET_KEY.key.asc
+        'echo ${{ secrets.OSSRH_GPG_SECRET_KEY }} > private-key.txt'
+        gpg --batch --import private-key.txt
+        rm -f private-key.txt
         gpg --list-secret-keys --keyid-format LONG
     - id: prepare-tag
       name: Prepare Tag
