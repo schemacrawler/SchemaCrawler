@@ -27,7 +27,7 @@ jobs:
     - id: install-secret-key
       name: Install secret key
       run: |
-        'echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}" > private-key.txt'
+        'cat <(echo "${{ secrets.OSSRH_GPG_SECRET_KEY }}") > private-key.txt'
         gpg --batch --import private-key.txt
         rm -f private-key.txt
         gpg --list-secret-keys --keyid-format LONG
