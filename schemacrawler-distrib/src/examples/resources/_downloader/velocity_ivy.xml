@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ivy-module version="2.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:noNamespaceSchemaLocation="https://ant.apache.org/ivy/schemas/ivy.xsd">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="https://ant.apache.org/ivy/schemas/ivy.xsd">
   <info organisation="us.fatehi" module="schemacrawler"/>
   <dependencies>
     <dependency org="org.apache.velocity"
-      name="velocity-engine-scripting" rev="2.1" />
+                name="velocity-engine-scripting" rev="2.2" />
+
+    <exclude org="org.slf4j" module="slf4j-simple" />
+    <exclude org="org.slf4j" module="slf4j-api" />
+    <exclude org="junit" module="junit" />
+    <exclude org="org.hamcrest" module="hamcrest-core" />
 
     <exclude type="source" ext="jar" />
     <exclude type="sources" ext="jar" />

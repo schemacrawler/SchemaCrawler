@@ -1,6 +1,6 @@
 from schemacrawler.schema import TableRelationshipType
 
-print catalog.crawleInfo
+print catalog.crawlInfo
 
 for table in catalog.tables:
   print ''
