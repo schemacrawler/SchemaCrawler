@@ -29,7 +29,7 @@ jobs:
       env:
         OSSRH_GPG_SECRET_KEY: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
       run: |
-        'cat <(echo -e "$OSSRH_GPG_SECRET_KEY") > private-key.txt'
+        cat <(echo -e "$OSSRH_GPG_SECRET_KEY") > private-key.txt
         gpg --batch --import private-key.txt
         rm -f private-key.txt
         gpg --list-secret-keys --keyid-format LONG
