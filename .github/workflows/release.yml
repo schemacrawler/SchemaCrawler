@@ -26,10 +26,8 @@ jobs:
         server-password: MAVEN_PASSWORD
     - id: install-secret-key
       name: Install secret key
-      # Note: OSSRH_GPG_SECRET_KEY is exported using gpg --export-secret-keys -a <keyid>
-      # and has newlines substituted with a literal \n
       run: |
-        echo -e ${{ secrets.OSSRH_GPG_SECRET_KEY }} | gpg --batch --import
+        'cat <(echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}") | gpg --batch --import
         gpg --list-secret-keys --keyid-format LONG
     - id: install-packages
       name: Install packages
