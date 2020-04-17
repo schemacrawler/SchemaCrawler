@@ -1,6 +1,7 @@
 name: Create Release
 
 on:
+  push: # DEBUG - Temporarily turn on for each push
   create:
     tags:
       - 'v*'
@@ -24,10 +25,17 @@ jobs:
         server-username: MAVEN_USERNAME
         server-password: MAVEN_PASSWORD
     - id: install-packages
-      name: Install Packages
+      name: Install packages
       run: |
         sudo apt-get update
         sudo apt-get install graphviz -qq
+    - id: install-secret-key
+      name: Install secret key
+      env:
+        OSSRH_GPG_SECRET_KEY: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
+      run: |
+        echo $OSSRH_GPG_SECRET_KEY | gpg --import
+        gpg --list-secret-keys --keyid-format LONG
     - id: prepare-tag
       name: Prepare Tag
       if: startsWith(github.ref, 'refs/tags/')
