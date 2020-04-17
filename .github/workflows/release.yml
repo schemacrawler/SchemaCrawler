@@ -24,18 +24,18 @@ jobs:
         server-id: sonatype-nexus
         server-username: MAVEN_USERNAME
         server-password: MAVEN_PASSWORD
+    - id: install-secret-key
+      name: Install secret key
+      run: |
+        'echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}" > private-key.txt'
+        gpg --batch --import private-key.txt
+        rm -f private-key.txt
+        gpg --list-secret-keys --keyid-format LONG
     - id: install-packages
       name: Install packages
       run: |
         sudo apt-get -qq update
         sudo apt-get -q install graphviz
-    - id: install-secret-key
-      name: Install secret key
-      run: |
-        'echo -e ${{ secrets.OSSRH_GPG_SECRET_KEY }} > private-key.txt'
-        gpg --batch --import private-key.txt
-        rm -f private-key.txt
-        gpg --list-secret-keys --keyid-format LONG
     - id: prepare-tag
       name: Prepare Tag
       if: startsWith(github.ref, 'refs/tags/')
