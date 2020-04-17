@@ -31,10 +31,8 @@ jobs:
         sudo apt-get install graphviz
     - id: install-secret-key
       name: Install secret key
-      env:
-        OSSRH_GPG_SECRET_KEY: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
       run: |
-        echo $OSSRH_GPG_SECRET_KEY | gpg --import
+        echo ${{ secrets.OSSRH_GPG_SECRET_KEY }} | gpg --batch --import
         gpg --list-secret-keys --keyid-format LONG
     - id: prepare-tag
       name: Prepare Tag
