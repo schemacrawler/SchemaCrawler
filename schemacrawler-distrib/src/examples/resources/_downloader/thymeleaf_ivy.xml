@@ -10,7 +10,7 @@
       rev="1.7.25" />
 
     <exclude org="javax.servlet" module="servlet-api" />
-    <exclude org="org.slf4j" module="slf4j-api" type="test" ext="jar" />
+    <exclude org="org.slf4j" module="slf4j-api" type="tests" ext="jar" />
     <exclude org="com.fasterxml.jackson.core" module="jackson-databind" />
     <exclude org="com.fasterxml.jackson.core" module="jackson-annotations" />
     <exclude org="com.fasterxml.jackson.core" module="jackson-core" />
@@ -19,6 +19,8 @@
     <exclude type="source" ext="jar" />
     <exclude type="sources" ext="jar" />
     <exclude type="test" ext="jar" />
+    <exclude type="tests" ext="jar" />
     <exclude type="javadoc" ext="jar" />
+    <exclude type="javadocs" ext="jar" />
   </dependencies>
 </ivy-module>
