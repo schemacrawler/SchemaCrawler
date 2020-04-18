@@ -112,7 +112,6 @@ jobs:
         gpg --list-secret-keys --keyid-format LONG
     - id: publish-to-central
       name: Publish to Central Repository
-      if: false # TODO: Sign artifacts using GPG password
       env:
         MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
         MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
