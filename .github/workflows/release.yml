@@ -1,7 +1,6 @@
 name: Create Release
 
 on:
-  push: # DEBUG - Temporarily turn on for each push
   create:
     tags:
       - 'v*'
@@ -40,9 +39,7 @@ jobs:
 
 # BUILD FOR DISTRIBUTION
     - id: build
-      name: Build
-      env:
-        TZ: GMT
+      name: Build and test for distribution
       run: |
         mvn \
           --no-transfer-progress \
@@ -58,9 +55,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ github.ref }}
-        release_name: DEBUG Release ${{ github.ref }}
+        release_name: ${{ github.ref }}
         body: |
-          'SchemaCrawler ${{ github.ref }}'
+          SchemaCrawler Release ${{ github.ref }}
         draft: false
         prerelease: false
     - id: upload-release-zip
@@ -126,4 +123,5 @@ jobs:
           -Ddistrib \
           -Dmaven.javadoc.skip=false \
           -Dskip.signing.artifacts=false \
-          clean install
+          -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }} \
+          clean deploy
