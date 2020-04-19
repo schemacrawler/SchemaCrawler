@@ -48,7 +48,7 @@
 
     <!-- 1. STAGE FOR EXAMPLES -->
 
-  	<mkdir dir="${main-distribution.staging.dir}"/>
+    <mkdir dir="${main-distribution.staging.dir}"/>
 
     <!-- Copy licenses -->
     <copy file="lgpl-3.0.txt" tofile="${main-distribution.staging.dir}/LICENSE.txt" />
@@ -177,6 +177,9 @@
       </fileset>
     </copy>
 
+    <copy file="${distribution.assembly}/Website-README.md"
+          tofile="${website.staging.dir}/README.md" />
+
   </target>
 
   <target name="make-base-distribution">
@@ -184,9 +187,9 @@
     <copy todir="${schemacrawler.base-distribution}">
       <fileset dir="${distribution.assembly}">
         <include name="schemacrawler.cmd" />
-      	<include name="schemacrawler-shell.cmd" />
+        <include name="schemacrawler-shell.cmd" />
         <include name="schemacrawler.sh" />
-      	<include name="schemacrawler-shell.sh" />
+        <include name="schemacrawler-shell.sh" />
       </fileset>
     </copy>
 

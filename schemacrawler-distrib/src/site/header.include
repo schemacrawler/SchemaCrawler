@@ -81,7 +81,7 @@
                  </a>
                  <div class="dropdown-menu">
                     <a class="dropdown-item" href="index.html">About SchemaCrawler</a>
-                    <a class="dropdown-item" href="getting-started.html">Getting Started</a>
+                    <a class="dropdown-item" href="getting-started.html">Readme</a>
                     <a class="dropdown-item" href="who-uses.html">Who Uses</a>
                     <a class="dropdown-item" href="ecosystem.html">Ecosystem</a>
                     <a class="dropdown-item" href="database-support.html">Database System Support</a>
