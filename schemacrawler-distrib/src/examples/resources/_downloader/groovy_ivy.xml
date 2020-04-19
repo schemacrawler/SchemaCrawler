@@ -3,9 +3,12 @@
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:noNamespaceSchemaLocation="https://ant.apache.org/ivy/schemas/ivy.xsd">
   <info organisation="us.fatehi" module="schemacrawler"/>
+  <configurations>
+    <conf name="runtime" visibility="public" />
+  </configurations>	
   <dependencies>
     <dependency org="org.codehaus.groovy" name="groovy-all"
-                rev="3.0.3" />
+                rev="3.0.3" conf="runtime" />
 
     <exclude org="org.codehaus.groovy" module="groovy-ant" />
     <exclude org="org.codehaus.groovy" module="groovy-cli-picocli" />
@@ -14,10 +17,5 @@
     <exclude org="org.codehaus.groovy" module="groovy-testng" />
     <exclude org="jline" module="jline" />
     <exclude org="com.beust" module="jcommander" />
-
-    <exclude type="source" ext="jar" />
-    <exclude type="sources" ext="jar" />
-    <exclude type="test" ext="jar" />
-    <exclude type="javadoc" ext="jar" />
   </dependencies>
 </ivy-module>

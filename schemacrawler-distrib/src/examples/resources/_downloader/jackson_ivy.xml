@@ -3,19 +3,17 @@
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:noNamespaceSchemaLocation="https://ant.apache.org/ivy/schemas/ivy.xsd">
   <info organisation="us.fatehi" module="schemacrawler"/>
+  <configurations>
+    <conf name="runtime" visibility="public" />
+  </configurations>		
   <dependencies>
     <dependency org="com.fasterxml.jackson.core"
-                name="jackson-core" rev="2.10.3" />
+                name="jackson-core" rev="2.10.3" conf="runtime" />
     <dependency org="com.fasterxml.jackson.datatype"
-                name="jackson-datatype-jsr310" rev="2.10.3" />
+                name="jackson-datatype-jsr310" rev="2.10.3" conf="runtime" />
     <dependency org="com.fasterxml.jackson.core"
-                name="jackson-databind" rev="2.10.3" />
+                name="jackson-databind" rev="2.10.3" conf="runtime" />
     <dependency org="com.fasterxml.jackson.dataformat"
-                name="jackson-dataformat-yaml" rev="2.10.3" />
-
-    <exclude type="source" ext="jar" />
-    <exclude type="sources" ext="jar" />
-    <exclude type="test" ext="jar" />
-    <exclude type="javadoc" ext="jar" />
+                name="jackson-dataformat-yaml" rev="2.10.3" conf="runtime" />
   </dependencies>
 </ivy-module>

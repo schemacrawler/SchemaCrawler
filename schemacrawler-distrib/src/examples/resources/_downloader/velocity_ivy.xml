@@ -3,18 +3,16 @@
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:noNamespaceSchemaLocation="https://ant.apache.org/ivy/schemas/ivy.xsd">
   <info organisation="us.fatehi" module="schemacrawler"/>
+  <configurations>
+    <conf name="runtime" visibility="public" />
+  </configurations>		
   <dependencies>
     <dependency org="org.apache.velocity"
-                name="velocity-engine-scripting" rev="2.2" />
+                name="velocity-engine-scripting" rev="2.2" conf="runtime" />
 
     <exclude org="org.slf4j" module="slf4j-simple" />
     <exclude org="org.slf4j" module="slf4j-api" />
     <exclude org="junit" module="junit" />
     <exclude org="org.hamcrest" module="hamcrest-core" />
-
-    <exclude type="source" ext="jar" />
-    <exclude type="sources" ext="jar" />
-    <exclude type="test" ext="jar" />
-    <exclude type="javadoc" ext="jar" />
   </dependencies>
 </ivy-module>

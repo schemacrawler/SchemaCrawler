@@ -3,13 +3,11 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:noNamespaceSchemaLocation="https://ant.apache.org/ivy/schemas/ivy.xsd">
   <info organisation="us.fatehi" module="schemacrawler"/>
+  <configurations>
+    <conf name="runtime" visibility="public" />
+  </configurations>		
   <dependencies>
     <dependency org="org.python" name="jython-standalone"
-      rev="2.7.2" />
-
-    <exclude type="source" ext="jar" />
-    <exclude type="sources" ext="jar" />
-    <exclude type="test" ext="jar" />
-    <exclude type="javadoc" ext="jar" />
+      rev="2.7.2" conf="runtime" />
   </dependencies>
 </ivy-module>
