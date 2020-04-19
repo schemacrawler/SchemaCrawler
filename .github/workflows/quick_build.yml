@@ -20,8 +20,8 @@ jobs:
     - id: install-packages
       name: Install packages
       run: |
-        sudo apt-get update
-        sudo apt-get install graphviz -qq
+        sudo apt-get -qq update
+        sudo apt-get -q install graphviz
     - id: show-environment
       name: Show environment
       run: |
