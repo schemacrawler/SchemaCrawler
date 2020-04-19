@@ -8,7 +8,7 @@ database connection is provided. For more information, see [SchemaCrawler Databa
 
 ## Use SchemaCrawler in an Apache Maven Project
 To use SchemaCrawler in your [Apache Maven] projects, add a dependency to SchemaCrawler in your pom.xml,
-as described in the [Getting Started](readme.html).
+as described in the [Getting Started](getting-started.html).
 
 ## Plugin New SchemaCrawler Commands
 You can create a new SchemaCrawler command, and plug it into the SchemaCrawler framework. 
