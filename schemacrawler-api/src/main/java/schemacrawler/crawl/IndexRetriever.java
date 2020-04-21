@@ -45,6 +45,7 @@ import schemacrawler.schema.IndexType;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.utility.Query;

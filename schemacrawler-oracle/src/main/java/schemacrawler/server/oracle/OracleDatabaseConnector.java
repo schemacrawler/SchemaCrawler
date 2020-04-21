@@ -38,7 +38,7 @@ import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
 
-import schemacrawler.crawl.MetadataRetrievalStrategy;
+import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;

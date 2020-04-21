@@ -39,6 +39,7 @@ import java.util.logging.Level;
 
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.utility.JavaSqlTypes;
 import schemacrawler.utility.TableTypes;

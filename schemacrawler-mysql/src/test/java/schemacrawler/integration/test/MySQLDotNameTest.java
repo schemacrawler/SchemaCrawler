@@ -44,7 +44,7 @@ import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import schemacrawler.crawl.MetadataRetrievalStrategy;
+import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;

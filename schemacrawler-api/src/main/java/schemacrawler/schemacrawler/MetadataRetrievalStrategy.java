@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.crawl;
+package schemacrawler.schemacrawler;
 
 
 public enum MetadataRetrievalStrategy
