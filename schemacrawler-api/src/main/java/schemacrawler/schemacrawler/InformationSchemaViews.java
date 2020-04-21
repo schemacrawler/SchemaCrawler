@@ -35,7 +35,6 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
-import schemacrawler.utility.Query;
 import sf.util.ObjectToString;
 
 /**

@@ -29,7 +29,7 @@ package schemacrawler.tools.linter;
 
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.utility.QueryUtility.executeForLong;
+import static schemacrawler.schemacrawler.QueryUtility.executeForLong;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -41,7 +41,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.schemacrawler.Identifiers;
-import schemacrawler.utility.Query;
+import schemacrawler.schemacrawler.Query;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 

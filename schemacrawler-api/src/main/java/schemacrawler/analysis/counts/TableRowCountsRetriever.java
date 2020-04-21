@@ -30,7 +30,7 @@ package schemacrawler.analysis.counts;
 
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.analysis.counts.TableRowCountsUtility.addRowCountToTable;
-import static schemacrawler.utility.QueryUtility.executeForLong;
+import static schemacrawler.schemacrawler.QueryUtility.executeForLong;
 import static sf.util.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
@@ -45,7 +45,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.schemacrawler.Identifiers;
-import schemacrawler.utility.Query;
+import schemacrawler.schemacrawler.Query;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 

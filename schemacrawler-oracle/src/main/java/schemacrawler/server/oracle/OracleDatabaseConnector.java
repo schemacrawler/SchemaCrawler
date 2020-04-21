@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.oracle;
 
 
-import static schemacrawler.utility.QueryUtility.executeForScalar;
+import static schemacrawler.schemacrawler.QueryUtility.executeForScalar;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -46,7 +46,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.iosource.ClasspathInputResource;
-import schemacrawler.utility.Query;
+import schemacrawler.schemacrawler.Query;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 

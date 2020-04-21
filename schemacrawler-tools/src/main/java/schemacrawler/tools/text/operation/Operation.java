@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.operation;
 
 
-import schemacrawler.utility.Query;
+import schemacrawler.schemacrawler.Query;
 
 /**
  * Database operations.
