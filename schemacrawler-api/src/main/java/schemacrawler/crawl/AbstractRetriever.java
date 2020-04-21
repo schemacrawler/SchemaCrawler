@@ -43,6 +43,7 @@ import java.util.logging.Level;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.Schema;
+import schemacrawler.schemacrawler.Retriever;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -55,8 +56,8 @@ import sf.util.SchemaCrawlerLogger;
  *
  * @author Sualeh Fatehi
  */
+@Retriever
 abstract class AbstractRetriever
-  implements Retriever
 {
 
   private static final SchemaCrawlerLogger LOGGER =

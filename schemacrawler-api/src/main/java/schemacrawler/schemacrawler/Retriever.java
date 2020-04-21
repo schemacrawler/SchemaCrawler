@@ -25,10 +25,20 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.crawl;
+package schemacrawler.schemacrawler;
 
 
-public interface Retriever
+import static java.lang.annotation.ElementType.TYPE;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Documented
+@Retention(RetentionPolicy.SOURCE)
+@Target(value = { TYPE })
+public @interface Retriever
 {
 
 }

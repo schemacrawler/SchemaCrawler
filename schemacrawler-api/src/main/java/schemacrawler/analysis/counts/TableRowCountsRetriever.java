@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-import schemacrawler.crawl.Retriever;
+import schemacrawler.schemacrawler.Retriever;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -49,8 +49,8 @@ import schemacrawler.schemacrawler.Query;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
+@Retriever
 public final class TableRowCountsRetriever
-  implements Retriever
 {
 
   private static final SchemaCrawlerLogger LOGGER =
