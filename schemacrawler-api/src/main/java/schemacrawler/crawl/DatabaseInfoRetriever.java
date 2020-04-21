@@ -54,7 +54,7 @@ import java.util.logging.Level;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Property;
 import schemacrawler.schema.Schema;
-import schemacrawler.schema.SchemaReference;
+import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schema.SearchableType;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.InformationSchemaKey;

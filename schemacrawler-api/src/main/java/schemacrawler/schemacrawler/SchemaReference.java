@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.schema;
+package schemacrawler.schemacrawler;
 
 
 import static sf.util.Utility.convertForComparison;
@@ -40,7 +40,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.Schema;
 
 public final class SchemaReference
   implements Schema
