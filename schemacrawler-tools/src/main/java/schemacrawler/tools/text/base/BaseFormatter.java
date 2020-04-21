@@ -50,7 +50,7 @@ import schemacrawler.tools.text.utility.HtmlFormattingHelper;
 import schemacrawler.tools.text.utility.PlainTextFormattingHelper;
 import schemacrawler.tools.text.utility.TextFormattingHelper;
 import schemacrawler.tools.traversal.TraversalHandler;
-import schemacrawler.utility.Identifiers;
+import schemacrawler.schemacrawler.Identifiers;
 
 public abstract class BaseFormatter<O extends BaseTextOptions>
   implements TraversalHandler

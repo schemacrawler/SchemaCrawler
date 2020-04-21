@@ -40,7 +40,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-import schemacrawler.utility.Identifiers;
+import schemacrawler.schemacrawler.Identifiers;
 
 public final class SchemaReference
   implements Schema

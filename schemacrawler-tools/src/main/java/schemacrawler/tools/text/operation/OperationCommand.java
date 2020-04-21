@@ -47,7 +47,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.traversal.DataTraversalHandler;
-import schemacrawler.utility.Identifiers;
+import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.utility.NamedObjectSort;
 import schemacrawler.utility.Query;
 import sf.util.SchemaCrawlerLogger;

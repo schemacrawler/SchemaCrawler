@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.utility;
+package schemacrawler.schemacrawler;
 
 
 import static java.util.Objects.requireNonNull;
@@ -48,7 +48,6 @@ import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DependantObject;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import sf.util.SchemaCrawlerLogger;
 
 /**

@@ -31,7 +31,7 @@ package schemacrawler.tools.text.base;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.OptionsBuilder;
-import schemacrawler.utility.IdentifierQuotingStrategy;
+import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
 
 public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B, O>, O extends BaseTextOptions>
   implements OptionsBuilder<BaseTextOptionsBuilder<B, O>, O>

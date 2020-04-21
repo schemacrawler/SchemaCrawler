@@ -39,7 +39,6 @@ import java.util.Optional;
 import java.util.function.BiConsumer;
 
 import schemacrawler.plugin.EnumDataTypeHelper;
-import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.TypeMap;
 
 public final class SchemaRetrievalOptionsBuilder

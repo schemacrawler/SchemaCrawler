@@ -32,7 +32,7 @@ package schemacrawler.tools.text.base;
 import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schemacrawler.Options;
-import schemacrawler.utility.IdentifierQuotingStrategy;
+import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
 
 public abstract class BaseTextOptions
   implements Options

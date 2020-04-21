@@ -33,7 +33,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import org.junit.jupiter.api.Test;
-import schemacrawler.utility.Identifiers;
+import schemacrawler.schemacrawler.Identifiers;
 
 public class IdentifiersTest
 {

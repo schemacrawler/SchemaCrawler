@@ -37,7 +37,7 @@ import java.util.Objects;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DependantObject;
-import schemacrawler.utility.Identifiers;
+import schemacrawler.schemacrawler.Identifiers;
 
 /**
  * Represents the dependent of a database object, such as a column or an index,

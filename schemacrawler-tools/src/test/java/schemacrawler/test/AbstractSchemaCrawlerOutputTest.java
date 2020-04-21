@@ -63,7 +63,7 @@ import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
-import schemacrawler.utility.IdentifierQuotingStrategy;
+import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public abstract class AbstractSchemaCrawlerOutputTest
