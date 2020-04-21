@@ -41,15 +41,16 @@ import java.util.logging.Level;
 
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.schema.Schema;
-import schemacrawler.schema.SchemaReference;
+import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
-import schemacrawler.utility.Query;
+import schemacrawler.schemacrawler.Query;
 import schemacrawler.utility.TableTypes;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;

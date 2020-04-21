@@ -25,20 +25,13 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.crawl;
+package schemacrawler.schemacrawler;
 
 
-public enum MetadataRetrievalStrategy
+public enum IdentifierQuotingStrategy
 {
-
-  // use JDBC metadata calls to retrieve information one database object at a time;
-  // each JDBC driver decides how to honor these requests
-  metadata,
-  // uses JDBC metadata calls to retrieve information for all database objects together;
-  // each JDBC driver decides how to honor these requests
-  metadata_all,
-  // use the INFORMATION_SCHEMA or database-specific data dictionary queries to
-  // retrieve information for all database objects together
-  data_dictionary_all
-
+  quote_none,
+  quote_all,
+  quote_if_special_characters,
+  quote_if_special_characters_and_reserved_words,
 }

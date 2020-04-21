@@ -32,7 +32,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import org.junit.jupiter.api.Test;
-import schemacrawler.schema.SchemaReference;
+import schemacrawler.schemacrawler.SchemaReference;
 
 public class SchemaReferenceTest
 {

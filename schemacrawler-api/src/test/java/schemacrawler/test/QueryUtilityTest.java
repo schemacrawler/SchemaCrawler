@@ -51,8 +51,8 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
-import schemacrawler.utility.Query;
-import schemacrawler.utility.QueryUtility;
+import schemacrawler.schemacrawler.Query;
+import schemacrawler.schemacrawler.QueryUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)

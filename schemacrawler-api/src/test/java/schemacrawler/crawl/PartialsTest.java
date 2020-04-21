@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.RoutineType;
-import schemacrawler.schema.SchemaReference;
+import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableRelationshipType;
 

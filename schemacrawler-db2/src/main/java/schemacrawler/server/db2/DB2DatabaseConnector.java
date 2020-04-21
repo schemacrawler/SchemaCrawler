@@ -33,7 +33,7 @@ import java.sql.Connection;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
-import schemacrawler.crawl.MetadataRetrievalStrategy;
+import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;

@@ -39,7 +39,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
-import schemacrawler.schema.SchemaReference;
+import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schema.TableType;
 
 public class CompareToTest

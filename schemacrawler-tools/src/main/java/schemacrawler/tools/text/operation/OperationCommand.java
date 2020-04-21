@@ -30,7 +30,7 @@ package schemacrawler.tools.text.operation;
 
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.utility.QueryUtility.executeAgainstTable;
+import static schemacrawler.schemacrawler.QueryUtility.executeAgainstTable;
 import static sf.util.DatabaseUtility.createStatement;
 import static sf.util.DatabaseUtility.executeSql;
 
@@ -47,9 +47,9 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.traversal.DataTraversalHandler;
-import schemacrawler.utility.Identifiers;
+import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.utility.NamedObjectSort;
-import schemacrawler.utility.Query;
+import schemacrawler.schemacrawler.Query;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 

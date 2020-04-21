@@ -39,7 +39,7 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SearchableType;
-import schemacrawler.utility.Identifiers;
+import schemacrawler.schemacrawler.Identifiers;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 

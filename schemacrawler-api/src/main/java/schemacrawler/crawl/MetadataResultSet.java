@@ -30,7 +30,7 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.utility.QueryUtility.executeAgainstSchema;
+import static schemacrawler.schemacrawler.QueryUtility.executeAgainstSchema;
 import static sf.util.DatabaseUtility.logSQLWarnings;
 import static sf.util.Utility.enumValue;
 import static sf.util.Utility.enumValueFromId;
@@ -53,7 +53,7 @@ import java.util.Set;
 import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.InclusionRule;
-import schemacrawler.utility.Query;
+import schemacrawler.schemacrawler.Query;
 import sf.util.IdentifiedEnum;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;

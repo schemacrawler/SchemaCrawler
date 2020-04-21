@@ -30,9 +30,7 @@ package schemacrawler.schemacrawler;
 
 import static sf.util.Utility.isBlank;
 
-import schemacrawler.crawl.MetadataRetrievalStrategy;
 import schemacrawler.plugin.EnumDataTypeHelper;
-import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.TypeMap;
 import sf.util.ObjectToString;
 

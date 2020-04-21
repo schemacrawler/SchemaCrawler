@@ -32,7 +32,7 @@ import java.sql.ResultSet;
 
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.utility.Query;
+import schemacrawler.schemacrawler.Query;
 
 public interface DataTraversalHandler
   extends TraversalHandler
