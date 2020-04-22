@@ -80,7 +80,7 @@ class MutableTable
   private final StringBuilder definition;
   private final NamedObjectList<MutableForeignKey> foreignKeys =
     new NamedObjectList<>();
-  private final NamedObjectList<WeakAssociationForeignKey> weakAssociationForeignKeys =
+  private final NamedObjectList<WeakAssociation> weakAssociations =
     new NamedObjectList<>();
   private final NamedObjectList<MutableColumn> hiddenColumns =
     new NamedObjectList<>();
@@ -155,9 +155,9 @@ class MutableTable
    * {@inheritDoc}
    */
   @Override
-  public Collection<WeakAssociationForeignKey> getWeakAssociations()
+  public Collection<WeakAssociation> getWeakAssociations()
   {
-    return new ArrayList<>(weakAssociationForeignKeys.values());
+    return new ArrayList<>(weakAssociations.values());
   }
 
   /**
@@ -404,9 +404,9 @@ class MutableTable
     foreignKeys.add(foreignKey);
   }
 
-  final void addWeakAssociationForeignKey(final WeakAssociationForeignKey weakAssociationForeignKey)
+  final void addWeakAssociation(final WeakAssociation weakAssociation)
   {
-    weakAssociationForeignKeys.add(weakAssociationForeignKey);
+    weakAssociations.add(weakAssociation);
   }
 
   final void addHiddenColumn(final MutableColumn column)

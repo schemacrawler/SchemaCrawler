@@ -45,7 +45,7 @@ import java.util.Collection;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.crawl.WeakAssociationColumnReference;
-import schemacrawler.crawl.WeakAssociationForeignKey;
+import schemacrawler.crawl.WeakAssociation;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -119,9 +119,9 @@ public class PrimaryKeyWeakAssociationsTestColumnReference
         for (final Table table : tables)
         {
           out.println("  table: " + table.getFullName());
-          final Collection<WeakAssociationForeignKey> weakAssociations =
+          final Collection<WeakAssociation> weakAssociations =
             table.getWeakAssociations();
-          for (final WeakAssociationForeignKey weakFk : weakAssociations)
+          for (final WeakAssociation weakFk : weakAssociations)
           {
             out.println(String.format("    weak association (1 to %s):",
                                       findForeignKeyCardinality(weakFk)));

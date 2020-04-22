@@ -88,17 +88,17 @@ final class WeakAssociationsRetriever
     final String foreignKeyName =
         MetaDataUtility.constructForeignKeyName(pkColumn, fkColumn);
 
-    final WeakAssociationForeignKey weakAssociationForeignKey = new WeakAssociationForeignKey(foreignKeyName);
-    weakAssociationForeignKey.addColumnReference(pkColumn, fkColumn);
+    final WeakAssociation weakAssociation = new WeakAssociation(foreignKeyName);
+    weakAssociation.addColumnReference(pkColumn, fkColumn);
 
     if (fkColumn instanceof MutableColumn)
     {
-      ((MutableTable) fkColumn.getParent()).addWeakAssociationForeignKey(weakAssociationForeignKey);
+      ((MutableTable) fkColumn.getParent()).addWeakAssociation(weakAssociation);
     }
 
     if (pkColumn instanceof MutableColumn)
     {
-      ((MutableTable) pkColumn.getParent()).addWeakAssociationForeignKey(weakAssociationForeignKey);
+      ((MutableTable) pkColumn.getParent()).addWeakAssociation(weakAssociation);
     }
 
   }

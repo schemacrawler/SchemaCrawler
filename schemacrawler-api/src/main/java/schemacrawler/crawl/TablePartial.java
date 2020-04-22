@@ -89,7 +89,7 @@ final class TablePartial
   }
 
   @Override
-  public Collection<WeakAssociationForeignKey> getWeakAssociations()
+  public Collection<WeakAssociation> getWeakAssociations()
   {
     throw new NotLoadedException(this);
   }

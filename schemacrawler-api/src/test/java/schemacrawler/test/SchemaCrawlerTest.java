@@ -62,7 +62,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.crawl.WeakAssociationColumnReference;
-import schemacrawler.crawl.WeakAssociationForeignKey;
+import schemacrawler.crawl.WeakAssociation;
 import schemacrawler.schema.*;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
@@ -677,7 +677,7 @@ public class SchemaCrawlerTest
         for (final Table table : tables)
         {
           out.println("  table: " + table.getFullName());
-          for (final WeakAssociationForeignKey foreignKey : table.getWeakAssociations())
+          for (final WeakAssociation foreignKey : table.getWeakAssociations())
           {
             out.println("    weak association: " + foreignKey.getName());
             out.println("      column references: ");

@@ -50,7 +50,7 @@ import schemacrawler.utility.CompareUtility;
  *
  * @author Sualeh Fatehi
  */
-public final class WeakAssociationForeignKey
+public final class WeakAssociation
   implements BaseForeignKey<WeakAssociationColumnReference>
 {
 
@@ -59,7 +59,7 @@ public final class WeakAssociationForeignKey
   private final String name;
   private final SortedSet<WeakAssociationColumnReference> columnReferences = new TreeSet<>();
 
-  public WeakAssociationForeignKey(final String name)
+  public WeakAssociation(final String name)
   {
     this.name = requireNonNull(name, "No name provided");
   }
@@ -101,11 +101,11 @@ public final class WeakAssociationForeignKey
     {
       return false;
     }
-    if (!(obj instanceof WeakAssociationForeignKey))
+    if (!(obj instanceof WeakAssociation))
     {
       return false;
     }
-    final WeakAssociationForeignKey other = (WeakAssociationForeignKey) obj;
+    final WeakAssociation other = (WeakAssociation) obj;
     return Objects.equals(columnReferences, other.columnReferences);
   }
 
