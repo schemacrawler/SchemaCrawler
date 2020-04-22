@@ -49,8 +49,7 @@ import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.analysis.associations.WeakAssociationForeignKey;
-import schemacrawler.analysis.associations.WeakAssociationsUtility;
+import schemacrawler.crawl.WeakAssociationForeignKey;
 import schemacrawler.tools.integration.diagram.DiagramOptions;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -752,8 +751,7 @@ public final class SchemaDotFormatter
       return;
     }
 
-    final Collection<WeakAssociationForeignKey> weakFks =
-      WeakAssociationsUtility.getWeakAssociations(table);
+    final Collection<WeakAssociationForeignKey> weakFks = table.getWeakAssociations();
     printForeignKeys(table, weakFks);
   }
 

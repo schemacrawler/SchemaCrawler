@@ -35,7 +35,7 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.Table;
 
-final class ProposedWeakAssociation
+public final class ProposedWeakAssociation
   extends AbstractMap.SimpleImmutableEntry<Column, Column>
 {
 

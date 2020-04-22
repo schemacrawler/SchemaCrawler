@@ -36,6 +36,7 @@ import java.util.Set;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Index;
+import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
 
@@ -49,7 +50,8 @@ final class TableCandidateKeys
   TableCandidateKeys(final Table table)
   {
     this.table = requireNonNull(table, "No table provided");
-    tableKeys = listTableKeys(table);
+    tableKeys = new HashSet<>();
+    listTableKeys(table);
   }
 
   @Override
@@ -66,16 +68,12 @@ final class TableCandidateKeys
 
   private Set<Column> listTableKeys(final Table table)
   {
-    final Set<Column> tableKeys = new HashSet<>();
-
     final PrimaryKey primaryKey = table.getPrimaryKey();
     if (primaryKey != null && primaryKey
                                 .getColumns()
                                 .size() == 1)
     {
-      tableKeys.add(primaryKey
-                      .getColumns()
-                      .get(0));
+      addColumnFromIndex(table, primaryKey);
     }
 
     for (final Index index : table.getIndexes())
@@ -84,13 +82,21 @@ final class TableCandidateKeys
                                                  .getColumns()
                                                  .size() == 1)
       {
-        tableKeys.add(index
-                        .getColumns()
-                        .get(0));
+        addColumnFromIndex(table, index);
       }
     }
 
     return tableKeys;
+  }
+
+  private void addColumnFromIndex(final Table table, final Index index)
+  {
+    final IndexColumn indexColumn = index
+      .getColumns()
+      .get(0);
+    table
+      .lookupColumn(indexColumn.getName())
+      .ifPresent(column -> tableKeys.add(column));
   }
 
 }

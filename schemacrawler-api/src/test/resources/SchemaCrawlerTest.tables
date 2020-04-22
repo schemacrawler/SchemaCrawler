@@ -16,7 +16,6 @@ PUBLIC.BOOKS.BOOKAUTHORS [table]
 PUBLIC.BOOKS.BOOKS [table]
   ~ COMMIT_ACTION=null
   ~ schemacrawler.table.row_count=20
-  ~ schemacrawler.weak_associations=[[PUBLIC.BOOKS.BOOKS.ID <~~ PUBLIC."PUBLISHER SALES".SALES.BOOKID], [PUBLIC.BOOKS.PUBLISHERS.ID <~~ PUBLIC.BOOKS.BOOKS.PUBLISHERID]]
 PUBLIC.BOOKS.COUPONS [table]
   ~ COMMIT_ACTION=null
   ~ schemacrawler.table.row_count=10
@@ -32,7 +31,6 @@ PUBLIC.BOOKS."Global Counts" [table]
 PUBLIC.BOOKS.PUBLISHERS [table]
   ~ COMMIT_ACTION=null
   ~ schemacrawler.table.row_count=20
-  ~ schemacrawler.weak_associations=[[PUBLIC.BOOKS.PUBLISHERS.ID <~~ PUBLIC.BOOKS.BOOKS.PUBLISHERID]]
 PUBLIC.BOOKS.ΒΙΒΛΊΑ [table]
   ~ COMMIT_ACTION=null
   ~ schemacrawler.table.row_count=0
@@ -42,7 +40,6 @@ PUBLIC."PUBLISHER SALES".REGIONS [table]
 PUBLIC."PUBLISHER SALES".SALES [table]
   ~ COMMIT_ACTION=null
   ~ schemacrawler.table.row_count=20
-  ~ schemacrawler.weak_associations=[[PUBLIC.BOOKS.BOOKS.ID <~~ PUBLIC."PUBLISHER SALES".SALES.BOOKID]]
 PUBLIC."PUBLISHER SALES".SALESDATA [table]
   ~ COMMIT_ACTION=null
   ~ schemacrawler.table.row_count=0

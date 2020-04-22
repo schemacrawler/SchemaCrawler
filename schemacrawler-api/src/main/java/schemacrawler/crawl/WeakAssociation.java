@@ -25,34 +25,32 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.analysis.associations;
+package schemacrawler.crawl;
 
 
-import static java.util.Objects.requireNonNull;
+import schemacrawler.schema.Column;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import schemacrawler.schemacrawler.Retriever;
-import schemacrawler.schema.Catalog;
-import schemacrawler.schema.Table;
-
-@Retriever
-public final class WeakAssociationsRetriever
+/**
+ * Represents a single column mapping from a primary key column to a foreign key
+ * column.
+ *
+ * @author Sualeh Fatehi
+ */
+public final class WeakAssociation
+  extends BaseColumnReference
 {
 
-  private final Catalog catalog;
+  private static final long serialVersionUID = -4411771492159843382L;
 
-  public WeakAssociationsRetriever(final Catalog catalog)
+  WeakAssociation(final Column primaryKeyColumn, final Column foreignKeyColumn)
   {
-    this.catalog = requireNonNull(catalog, "No catalog provided");
+    super(primaryKeyColumn, foreignKeyColumn);
   }
 
-  public void retrieveWeakAssociations()
+  @Override
+  public String toString()
   {
-    final List<Table> allTables = new ArrayList<>(catalog.getTables());
-    final WeakAssociationsAnalyzer weakAssociationsAnalyzer = new WeakAssociationsAnalyzer(allTables);
-    weakAssociationsAnalyzer.analyzeTables();
+    return getPrimaryKeyColumn() + " <~~ " + getForeignKeyColumn();
   }
 
 }

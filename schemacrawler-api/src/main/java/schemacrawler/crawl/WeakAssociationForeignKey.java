@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.analysis.associations;
+package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
@@ -40,6 +40,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import schemacrawler.schema.BaseForeignKey;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.utility.CompareUtility;
@@ -49,7 +50,7 @@ import schemacrawler.utility.CompareUtility;
  *
  * @author Sualeh Fatehi
  */
-public class WeakAssociationForeignKey
+public final class WeakAssociationForeignKey
   implements BaseForeignKey<WeakAssociation>
 {
 
@@ -150,12 +151,10 @@ public class WeakAssociationForeignKey
     return Arrays.asList(getName());
   }
 
-  void add(final WeakAssociation weakAssociation)
+  void addColumnReference(final Column pkColumn,
+                          final Column fkColumn)
   {
-    if (weakAssociation != null)
-    {
-      columnReferences.add(weakAssociation);
-    }
+    columnReferences.add(new WeakAssociation(pkColumn, fkColumn));
   }
 
 }

@@ -44,6 +44,8 @@ import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import schemacrawler.crawl.WeakAssociation;
+import schemacrawler.crawl.WeakAssociationForeignKey;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -54,10 +56,6 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.test.utility.TestWriter;
-import schemacrawler.analysis.associations.WeakAssociationsRetriever;
-import schemacrawler.analysis.associations.WeakAssociation;
-import schemacrawler.analysis.associations.WeakAssociationForeignKey;
-import schemacrawler.analysis.associations.WeakAssociationsUtility;
 import schemacrawler.utility.NamedObjectSort;
 import schemacrawler.utility.SchemaCrawlerUtility;
 
@@ -107,10 +105,6 @@ public class PrimaryKeyWeakAssociationsTest
         SchemaCrawlerUtility.getCatalog(dataSource.getConnection(),
                                         schemaCrawlerOptions);
 
-      final WeakAssociationsRetriever weakAssociationsRetriever =
-        new WeakAssociationsRetriever(catalog);
-      weakAssociationsRetriever.retrieveWeakAssociations();
-
       final Schema[] schemas = catalog
         .getSchemas()
         .toArray(new Schema[0]);
@@ -126,7 +120,7 @@ public class PrimaryKeyWeakAssociationsTest
         {
           out.println("  table: " + table.getFullName());
           final Collection<WeakAssociationForeignKey> weakAssociations =
-            WeakAssociationsUtility.getWeakAssociations(table);
+            table.getWeakAssociations();
           for (final WeakAssociationForeignKey weakFk : weakAssociations)
           {
             out.println(String.format("    weak association (1 to %s):",

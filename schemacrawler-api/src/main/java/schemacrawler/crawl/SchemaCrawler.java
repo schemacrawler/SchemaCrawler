@@ -41,7 +41,6 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.logging.Level;
 
-import schemacrawler.analysis.associations.WeakAssociationsRetriever;
 import schemacrawler.analysis.counts.TableRowCountsFilter;
 import schemacrawler.analysis.counts.TableRowCountsRetriever;
 import schemacrawler.schema.Catalog;

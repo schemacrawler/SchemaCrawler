@@ -44,8 +44,7 @@ import java.util.Locale;
 import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.schema.*;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.analysis.associations.WeakAssociationForeignKey;
-import schemacrawler.analysis.associations.WeakAssociationsUtility;
+import schemacrawler.crawl.WeakAssociationForeignKey;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseTabularFormatter;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
@@ -1159,7 +1158,7 @@ final class SchemaTextFormatter
     }
 
     final Collection<WeakAssociationForeignKey> weakAssociationsCollection =
-      WeakAssociationsUtility.getWeakAssociations(table);
+      table.getWeakAssociations();
     if (weakAssociationsCollection.isEmpty())
     {
       return;
