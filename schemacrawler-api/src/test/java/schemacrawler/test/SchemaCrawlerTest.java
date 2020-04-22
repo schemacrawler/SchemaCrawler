@@ -61,7 +61,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.crawl.WeakAssociation;
+import schemacrawler.crawl.WeakAssociationColumnReference;
 import schemacrawler.crawl.WeakAssociationForeignKey;
 import schemacrawler.schema.*;
 import schemacrawler.schemacrawler.Config;
@@ -681,10 +681,10 @@ public class SchemaCrawlerTest
           {
             out.println("    weak association: " + foreignKey.getName());
             out.println("      column references: ");
-            final List<WeakAssociation> columnReferences = foreignKey.getColumnReferences();
+            final List<WeakAssociationColumnReference> columnReferences = foreignKey.getColumnReferences();
             for (int i = 0; i < columnReferences.size(); i++)
             {
-              final WeakAssociation columnReference = columnReferences.get(i);
+              final WeakAssociationColumnReference columnReference = columnReferences.get(i);
               out.println("        key sequence: " + (i + 1));
               out.println("          " + columnReference);
             }

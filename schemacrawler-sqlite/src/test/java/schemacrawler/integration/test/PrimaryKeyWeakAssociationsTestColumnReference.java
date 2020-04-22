@@ -44,7 +44,7 @@ import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.crawl.WeakAssociation;
+import schemacrawler.crawl.WeakAssociationColumnReference;
 import schemacrawler.crawl.WeakAssociationForeignKey;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
@@ -61,7 +61,7 @@ import schemacrawler.utility.SchemaCrawlerUtility;
 
 @ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestContextParameterResolver.class)
-public class PrimaryKeyWeakAssociationsTest
+public class PrimaryKeyWeakAssociationsTestColumnReference
   extends BaseSqliteTest
 {
 
@@ -125,10 +125,9 @@ public class PrimaryKeyWeakAssociationsTest
           {
             out.println(String.format("    weak association (1 to %s):",
                                       findForeignKeyCardinality(weakFk)));
-            for (final WeakAssociation weakAssociation : weakFk)
+            for (final WeakAssociationColumnReference weakAssociationColumnReference : weakFk)
             {
-              out.println(String.format("      column reference: %s",
-                                        weakAssociation));
+              out.println(String.format("      column reference: %s", weakAssociationColumnReference));
             }
           }
         }

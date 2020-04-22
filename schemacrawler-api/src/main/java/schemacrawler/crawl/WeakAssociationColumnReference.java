@@ -36,13 +36,13 @@ import schemacrawler.schema.Column;
  *
  * @author Sualeh Fatehi
  */
-public final class WeakAssociation
+public final class WeakAssociationColumnReference
   extends BaseColumnReference
 {
 
   private static final long serialVersionUID = -4411771492159843382L;
 
-  WeakAssociation(final Column primaryKeyColumn, final Column foreignKeyColumn)
+  WeakAssociationColumnReference(final Column primaryKeyColumn, final Column foreignKeyColumn)
   {
     super(primaryKeyColumn, foreignKeyColumn);
   }

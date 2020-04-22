@@ -65,7 +65,7 @@ import schemacrawler.test.utility.TestWriter;
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
 @TestInstance(PER_CLASS)
-public class WeakAssociationsAnalyzerTest
+public class WeakAssociationsAnalyzerTestColumnReference
 {
 
   private Catalog catalog;

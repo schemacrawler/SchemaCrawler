@@ -51,13 +51,13 @@ import schemacrawler.utility.CompareUtility;
  * @author Sualeh Fatehi
  */
 public final class WeakAssociationForeignKey
-  implements BaseForeignKey<WeakAssociation>
+  implements BaseForeignKey<WeakAssociationColumnReference>
 {
 
   private static final long serialVersionUID = -5164664131926303038L;
 
   private final String name;
-  private final SortedSet<WeakAssociation> columnReferences = new TreeSet<>();
+  private final SortedSet<WeakAssociationColumnReference> columnReferences = new TreeSet<>();
 
   public WeakAssociationForeignKey(final String name)
   {
@@ -110,7 +110,7 @@ public final class WeakAssociationForeignKey
   }
 
   @Override
-  public List<WeakAssociation> getColumnReferences()
+  public List<WeakAssociationColumnReference> getColumnReferences()
   {
     return new ArrayList<>(columnReferences);
   }
@@ -134,7 +134,7 @@ public final class WeakAssociationForeignKey
   }
 
   @Override
-  public Iterator<WeakAssociation> iterator()
+  public Iterator<WeakAssociationColumnReference> iterator()
   {
     return columnReferences.iterator();
   }
@@ -154,7 +154,7 @@ public final class WeakAssociationForeignKey
   void addColumnReference(final Column pkColumn,
                           final Column fkColumn)
   {
-    columnReferences.add(new WeakAssociation(pkColumn, fkColumn));
+    columnReferences.add(new WeakAssociationColumnReference(pkColumn, fkColumn));
   }
 
 }
