@@ -2,12 +2,10 @@ schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS.AUTHORS
   table: PUBLIC.BOOKS.BOOKS
     weak association: SC_AFD2BA21_20BE6F95
-    valid?: true
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.ID <~~ PUBLIC."PUBLISHER SALES".SALES.BOOKID
     weak association: SC_B8DA20C0_AFD2BA21
-    valid?: true
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.PUBLISHERS.ID <~~ PUBLIC.BOOKS.BOOKS.PUBLISHERID
@@ -17,7 +15,6 @@ schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS."Global Counts"
   table: PUBLIC.BOOKS.PUBLISHERS
     weak association: SC_B8DA20C0_AFD2BA21
-    valid?: true
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.PUBLISHERS.ID <~~ PUBLIC.BOOKS.BOOKS.PUBLISHERID
@@ -31,7 +28,6 @@ schema: PUBLIC."PUBLISHER SALES"
   table: PUBLIC."PUBLISHER SALES".SALESDATA
   table: PUBLIC."PUBLISHER SALES".SALES
     weak association: SC_AFD2BA21_20BE6F95
-    valid?: true
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.ID <~~ PUBLIC."PUBLISHER SALES".SALES.BOOKID

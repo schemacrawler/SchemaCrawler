@@ -49,7 +49,7 @@ final class ForeignKeys
     foreignKeys = mapForeignKeyColumns(tables);
   }
 
-  public boolean contains(final ColumnReference columnMap)
+  public boolean contains(final ProposedWeakAssociation columnMap)
   {
     if (columnMap == null)
     {
@@ -58,9 +58,11 @@ final class ForeignKeys
 
     // We have to loop through the collection, since we want to use the
     // equals from the WeakAssociation
-    for (final ColumnReference foreignKey : foreignKeys)
+    for (final ColumnReference columnReference : foreignKeys)
     {
-      final boolean equals = columnMap.equals(foreignKey);
+      final ProposedWeakAssociation columnReferenceAsProposal =
+        new ProposedWeakAssociation(columnReference);
+      final boolean equals = columnMap.equals(columnReferenceAsProposal);
       if (equals)
       {
         return true;

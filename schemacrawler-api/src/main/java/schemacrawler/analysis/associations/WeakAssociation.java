@@ -30,8 +30,6 @@ package schemacrawler.analysis.associations;
 
 import schemacrawler.crawl.BaseColumnReference;
 import schemacrawler.schema.Column;
-import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.Table;
 
 /**
  * Represents a single column mapping from a primary key column to a foreign key
@@ -48,31 +46,6 @@ public final class WeakAssociation
   WeakAssociation(final Column primaryKeyColumn, final Column foreignKeyColumn)
   {
     super(primaryKeyColumn, foreignKeyColumn);
-  }
-
-  public boolean isValid()
-  {
-    final Column primaryKeyColumn = getPrimaryKeyColumn();
-    final Column foreignKeyColumn = getForeignKeyColumn();
-
-    final Table pkTable = primaryKeyColumn.getParent();
-    final Table fkTable = foreignKeyColumn.getParent();
-    if ((foreignKeyColumn.isPartOfPrimaryKey()
-         || foreignKeyColumn.isPartOfUniqueIndex())
-        && pkTable.compareTo(fkTable) > 0)
-    {
-      return false;
-    }
-
-    final ColumnDataType fkColumnType = foreignKeyColumn.getColumnDataType();
-    final ColumnDataType pkColumnType = primaryKeyColumn.getColumnDataType();
-    final boolean isValid = fkColumnType
-      .getJavaSqlType()
-      .getName()
-      .equals(pkColumnType
-                .getJavaSqlType()
-                .getName());
-    return isValid;
   }
 
   @Override

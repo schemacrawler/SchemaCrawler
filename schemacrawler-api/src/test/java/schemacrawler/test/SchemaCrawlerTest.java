@@ -682,8 +682,6 @@ public class SchemaCrawlerTest
           for (final WeakAssociationForeignKey foreignKey : weakAssociations)
           {
             out.println("    weak association: " + foreignKey.getName());
-            out.println("    valid?: " + foreignKey.isValid());
-
             out.println("      column references: ");
             final List<WeakAssociation> columnReferences = foreignKey.getColumnReferences();
             for (int i = 0; i < columnReferences.size(); i++)

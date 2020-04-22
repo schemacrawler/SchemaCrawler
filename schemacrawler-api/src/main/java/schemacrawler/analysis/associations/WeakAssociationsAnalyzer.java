@@ -144,14 +144,16 @@ final class WeakAssociationsAnalyzer
             continue;
           }
 
-          final WeakAssociation weakAssociation =
-            new WeakAssociation(pkColumn, fkColumn);
-          if (weakAssociation.isValid()
-              && !foreignKeys.contains(weakAssociation))
+          final ProposedWeakAssociation proposedWeakAssociation =
+            new ProposedWeakAssociation(pkColumn, fkColumn);
+          if (proposedWeakAssociation.isValid()
+              && !foreignKeys.contains(proposedWeakAssociation))
           {
             LOGGER.log(Level.FINE,
                        new StringFormat("Found weak association <%s>",
-                                        weakAssociation));
+                                        proposedWeakAssociation));
+            final WeakAssociation weakAssociation =
+              new WeakAssociation(proposedWeakAssociation.getKey(), proposedWeakAssociation.getValue());
             addWeakAssociation(weakAssociation);
           }
         }

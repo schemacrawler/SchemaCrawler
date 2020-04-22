@@ -132,22 +132,6 @@ public class WeakAssociationForeignKey
     return Objects.hash(columnReferences);
   }
 
-  public boolean isValid()
-  {
-    for (final WeakAssociation weakAssociation : columnReferences)
-    {
-      if (weakAssociation == null)
-      {
-        return false;
-      }
-      if (!weakAssociation.isValid())
-      {
-        return false;
-      }
-    }
-    return true;
-  }
-
   @Override
   public Iterator<WeakAssociation> iterator()
   {
