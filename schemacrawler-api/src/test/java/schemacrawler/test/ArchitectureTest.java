@@ -8,12 +8,15 @@ import static com.tngtech.archunit.core.domain.JavaClass.Predicates.simpleName;
 import static com.tngtech.archunit.core.importer.ImportOption.Predefined.DO_NOT_INCLUDE_ARCHIVES;
 import static com.tngtech.archunit.core.importer.ImportOption.Predefined.DO_NOT_INCLUDE_TESTS;
 import static com.tngtech.archunit.lang.conditions.ArchPredicates.are;
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.methods;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 import static com.tngtech.archunit.library.Architectures.onionArchitecture;
 import static com.tngtech.archunit.library.GeneralCodingRules.ACCESS_STANDARD_STREAMS;
 import static com.tngtech.archunit.library.GeneralCodingRules.THROW_GENERIC_EXCEPTIONS;
 import static com.tngtech.archunit.library.GeneralCodingRules.USE_JAVA_UTIL_LOGGING;
 import static com.tngtech.archunit.library.dependencies.SlicesRuleDefinition.slices;
+
+import java.util.Optional;
 
 import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
@@ -35,7 +38,7 @@ public class ArchitectureTest
       .matching("schemacrawler.(*)..")
       .should()
       .beFreeOfCycles()
-
+      .because("code should be well-structured in packages")
       .check(classes);
   }
 
@@ -45,6 +48,7 @@ public class ArchitectureTest
     noClasses()
       .that(doNot(resideInAPackage("schemacrawler.testdb")).and(are(not(simpleName("Version")))))
       .should(ACCESS_STANDARD_STREAMS)
+      .because("production code should not write to standard streams")
       .check(classes);
   }
 
@@ -54,6 +58,7 @@ public class ArchitectureTest
     noClasses()
       .that(doNot(resideInAPackage("schemacrawler.testdb")))
       .should(THROW_GENERIC_EXCEPTIONS)
+      .because("SchemaCrawler defines it own exceptions, and wraps SQL exceptions with additional information")
       .check(classes);
   }
 
@@ -63,6 +68,21 @@ public class ArchitectureTest
     noClasses()
       .that(doNot(resideInAPackage("schemacrawler.testdb")))
       .should(USE_JAVA_UTIL_LOGGING)
+      .because("SchemaCrawler wraps Java logging in a utility")
+      .check(classes);
+  }
+
+  @Test
+  public void lookupMethods()
+  {
+    methods()
+      .that()
+      .haveNameMatching("lookup.*")
+      .and()
+      .arePublic()
+      .should()
+      .haveRawReturnType(Optional.class)
+      .because("lookups may not return a value")
       .check(classes);
   }
 
