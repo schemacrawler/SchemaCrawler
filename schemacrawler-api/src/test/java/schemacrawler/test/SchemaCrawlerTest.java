@@ -37,7 +37,6 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
-import static schemacrawler.analysis.associations.WeakAssociationsUtility.getWeakAssociations;
 import static schemacrawler.analysis.counts.TableRowCountsUtility.getRowCountMessage;
 import static schemacrawler.analysis.counts.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
@@ -62,8 +61,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.analysis.associations.WeakAssociation;
-import schemacrawler.analysis.associations.WeakAssociationForeignKey;
+import schemacrawler.crawl.WeakAssociationColumnReference;
+import schemacrawler.crawl.WeakAssociation;
 import schemacrawler.schema.*;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
@@ -678,17 +677,14 @@ public class SchemaCrawlerTest
         for (final Table table : tables)
         {
           out.println("  table: " + table.getFullName());
-          final Collection<WeakAssociationForeignKey> weakAssociations = getWeakAssociations(table);
-          for (final WeakAssociationForeignKey foreignKey : weakAssociations)
+          for (final WeakAssociation foreignKey : table.getWeakAssociations())
           {
             out.println("    weak association: " + foreignKey.getName());
-            out.println("    valid?: " + foreignKey.isValid());
-
             out.println("      column references: ");
-            final List<WeakAssociation> columnReferences = foreignKey.getColumnReferences();
+            final List<WeakAssociationColumnReference> columnReferences = foreignKey.getColumnReferences();
             for (int i = 0; i < columnReferences.size(); i++)
             {
-              final WeakAssociation columnReference = columnReferences.get(i);
+              final WeakAssociationColumnReference columnReference = columnReferences.get(i);
               out.println("        key sequence: " + (i + 1));
               out.println("          " + columnReference);
             }

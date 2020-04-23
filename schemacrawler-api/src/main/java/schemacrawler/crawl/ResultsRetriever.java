@@ -38,6 +38,7 @@ import java.sql.SQLException;
 
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.Schema;
+import schemacrawler.schemacrawler.Retriever;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.utility.JavaSqlTypes;
 
@@ -46,8 +47,8 @@ import schemacrawler.utility.JavaSqlTypes;
  *
  * @author Sualeh Fatehi
  */
+@Retriever
 final class ResultsRetriever
-  implements Retriever
 {
 
   private final ResultSetMetaData resultsMetaData;

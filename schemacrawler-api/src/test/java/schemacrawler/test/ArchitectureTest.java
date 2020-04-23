@@ -28,7 +28,6 @@ public class ArchitectureTest
     .withImportOption(DO_NOT_INCLUDE_TESTS)
     .importPackages("schemacrawler..");
 
-  @Disabled
   @Test
   public void architectureCycles()
   {

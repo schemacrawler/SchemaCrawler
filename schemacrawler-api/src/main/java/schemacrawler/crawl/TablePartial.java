@@ -89,6 +89,12 @@ final class TablePartial
   }
 
   @Override
+  public Collection<WeakAssociation> getWeakAssociations()
+  {
+    throw new NotLoadedException(this);
+  }
+
+  @Override
   public Collection<Column> getHiddenColumns()
   {
     throw new NotLoadedException(this);

@@ -25,34 +25,20 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.analysis.associations;
+package schemacrawler.schemacrawler;
 
 
-import static java.util.Objects.requireNonNull;
+import static java.lang.annotation.ElementType.TYPE;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import schemacrawler.crawl.Retriever;
-import schemacrawler.schema.Catalog;
-import schemacrawler.schema.Table;
-
-public final class WeakAssociationsRetriever
-  implements Retriever
+@Documented
+@Retention(RetentionPolicy.SOURCE)
+@Target(value = { TYPE })
+public @interface Retriever
 {
-
-  private final Catalog catalog;
-
-  public WeakAssociationsRetriever(final Catalog catalog)
-  {
-    this.catalog = requireNonNull(catalog, "No catalog provided");
-  }
-
-  public void retrieveWeakAssociations()
-  {
-    final List<Table> allTables = new ArrayList<>(catalog.getTables());
-    final WeakAssociationsAnalyzer weakAssociationsAnalyzer = new WeakAssociationsAnalyzer(allTables);
-    weakAssociationsAnalyzer.analyzeTables();
-  }
 
 }

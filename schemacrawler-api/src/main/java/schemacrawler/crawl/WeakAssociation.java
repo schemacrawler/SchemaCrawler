@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.analysis.associations;
+package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
@@ -40,6 +40,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import schemacrawler.schema.BaseForeignKey;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.utility.CompareUtility;
@@ -49,16 +50,16 @@ import schemacrawler.utility.CompareUtility;
  *
  * @author Sualeh Fatehi
  */
-public class WeakAssociationForeignKey
-  implements BaseForeignKey<WeakAssociation>
+public final class WeakAssociation
+  implements BaseForeignKey<WeakAssociationColumnReference>
 {
 
   private static final long serialVersionUID = -5164664131926303038L;
 
   private final String name;
-  private final SortedSet<WeakAssociation> columnReferences = new TreeSet<>();
+  private final SortedSet<WeakAssociationColumnReference> columnReferences = new TreeSet<>();
 
-  public WeakAssociationForeignKey(final String name)
+  public WeakAssociation(final String name)
   {
     this.name = requireNonNull(name, "No name provided");
   }
@@ -100,16 +101,16 @@ public class WeakAssociationForeignKey
     {
       return false;
     }
-    if (!(obj instanceof WeakAssociationForeignKey))
+    if (!(obj instanceof WeakAssociation))
     {
       return false;
     }
-    final WeakAssociationForeignKey other = (WeakAssociationForeignKey) obj;
+    final WeakAssociation other = (WeakAssociation) obj;
     return Objects.equals(columnReferences, other.columnReferences);
   }
 
   @Override
-  public List<WeakAssociation> getColumnReferences()
+  public List<WeakAssociationColumnReference> getColumnReferences()
   {
     return new ArrayList<>(columnReferences);
   }
@@ -132,24 +133,8 @@ public class WeakAssociationForeignKey
     return Objects.hash(columnReferences);
   }
 
-  public boolean isValid()
-  {
-    for (final WeakAssociation weakAssociation : columnReferences)
-    {
-      if (weakAssociation == null)
-      {
-        return false;
-      }
-      if (!weakAssociation.isValid())
-      {
-        return false;
-      }
-    }
-    return true;
-  }
-
   @Override
-  public Iterator<WeakAssociation> iterator()
+  public Iterator<WeakAssociationColumnReference> iterator()
   {
     return columnReferences.iterator();
   }
@@ -166,12 +151,10 @@ public class WeakAssociationForeignKey
     return Arrays.asList(getName());
   }
 
-  void add(final WeakAssociation weakAssociation)
+  void addColumnReference(final Column pkColumn,
+                          final Column fkColumn)
   {
-    if (weakAssociation != null)
-    {
-      columnReferences.add(weakAssociation);
-    }
+    columnReferences.add(new WeakAssociationColumnReference(pkColumn, fkColumn));
   }
 
 }

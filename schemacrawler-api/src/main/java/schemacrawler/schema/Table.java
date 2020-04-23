@@ -33,6 +33,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import schemacrawler.crawl.WeakAssociation;
+
 /**
  * Represents a table in the database.
  *
@@ -79,6 +81,13 @@ public interface Table
    * @return Imported foreign keys of the table.
    */
   Collection<ForeignKey> getImportedForeignKeys();
+
+  /**
+   * Gets the list of weak associations.
+   *
+   * @return Weak associations of the table.
+   */
+  Collection<WeakAssociation> getWeakAssociations();
 
   /**
    * Gets the list of indexes.
