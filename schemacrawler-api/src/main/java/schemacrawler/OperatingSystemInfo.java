@@ -6,11 +6,11 @@ Copyright (c) 2000-2020, Sualeh Fatehi <sualeh@hotmail.com>.
 All rights reserved.
 ------------------------------------------------------------------------
 
-OperatingSystem is distributed in the hope that it will be useful, but
+SchemaCrawler is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-OperatingSystem and the accompanying materials are made available under
+SchemaCrawler and the accompanying materials are made available under
 the terms of the Eclipse Public License v1.0, GNU General Public License
 v3 or GNU Lesser General Public License v3.
 
