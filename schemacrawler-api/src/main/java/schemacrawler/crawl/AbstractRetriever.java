@@ -45,7 +45,7 @@ import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.Retriever;
 import schemacrawler.schemacrawler.SchemaReference;
-import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.TypeMap;
 import sf.util.SchemaCrawlerLogger;

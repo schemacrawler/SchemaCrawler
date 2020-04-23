@@ -65,7 +65,7 @@ import schemacrawler.crawl.WeakAssociationColumnReference;
 import schemacrawler.crawl.WeakAssociation;
 import schemacrawler.schema.*;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
+import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;

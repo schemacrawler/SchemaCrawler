@@ -32,6 +32,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 
+import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.RoutineType;
 import sf.util.ObjectToString;
 

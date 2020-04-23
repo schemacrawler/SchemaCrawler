@@ -45,6 +45,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
+import schemacrawler.inclusionrule.InclusionRule;
+import schemacrawler.inclusionrule.InclusionRuleWithRegularExpression;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.JavaSqlTypeGroup;
 import schemacrawler.schema.Schema;

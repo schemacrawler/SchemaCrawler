@@ -25,25 +25,42 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+package schemacrawler.inclusionrule;
 
-package schemacrawler.schemacrawler;
-
-
-import java.io.Serializable;
-import java.util.function.Predicate;
 
 /**
- * Specifies inclusion and exclusion patterns that can be applied to the names,
- * definitions, and other attributes of named objects.
- * <p>
- * The text to check, which could be the fully qualified name of the named
- * object, the definition, or some other attribute of the named object.
+ * Include all names, definitions, and other attributes of named objects.
  *
  * @author Sualeh Fatehi
  */
-@FunctionalInterface
-public interface InclusionRule
-  extends Serializable, Predicate<String>
+public final class IncludeAll
+  implements InclusionRuleWithRegularExpression
 {
+
+  private static final long serialVersionUID = -2992724018349021861L;
+
+  @Override
+  public int hashCode()
+  {
+    return 1;
+  }
+
+  @Override
+  public boolean equals(final Object obj)
+  {
+    return obj instanceof IncludeAll;
+  }
+
+  @Override
+  public String toString()
+  {
+    return getClass().getSimpleName();
+  }
+
+  @Override
+  public boolean test(final String text)
+  {
+    return true;
+  }
 
 }

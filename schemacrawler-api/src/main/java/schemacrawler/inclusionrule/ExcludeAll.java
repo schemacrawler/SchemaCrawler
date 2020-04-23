@@ -25,30 +25,44 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.schemacrawler;
+package schemacrawler.inclusionrule;
 
+
+import java.util.regex.Pattern;
 
 /**
  * Include all names, definitions, and other attributes of named objects.
  *
  * @author Sualeh Fatehi
  */
-public final class IncludeAll
+public final class ExcludeAll
   implements InclusionRuleWithRegularExpression
 {
 
   private static final long serialVersionUID = -2992724018349021861L;
 
   @Override
+  public Pattern getExclusionPattern()
+  {
+    return InclusionRuleWithRegularExpression.super.getInclusionPattern();
+  }
+
+  @Override
+  public Pattern getInclusionPattern()
+  {
+    return InclusionRuleWithRegularExpression.super.getExclusionPattern();
+  }
+
+  @Override
   public int hashCode()
   {
-    return 1;
+    return 2;
   }
 
   @Override
   public boolean equals(final Object obj)
   {
-    return obj instanceof IncludeAll;
+    return obj instanceof ExcludeAll;
   }
 
   @Override
@@ -60,7 +74,7 @@ public final class IncludeAll
   @Override
   public boolean test(final String text)
   {
-    return true;
+    return false;
   }
 
 }

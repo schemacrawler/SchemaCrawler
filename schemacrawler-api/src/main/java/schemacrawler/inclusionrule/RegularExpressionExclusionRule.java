@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.schemacrawler;
+package schemacrawler.inclusionrule;
 
 
 import java.util.regex.Pattern;
@@ -37,7 +37,7 @@ import java.util.regex.Pattern;
  *
  * @author Sualeh Fatehi
  */
-public final class RegularExpressionInclusionRule
+public final class RegularExpressionExclusionRule
   implements InclusionRuleWithRegularExpression
 {
 
@@ -46,32 +46,32 @@ public final class RegularExpressionInclusionRule
   private final InclusionRule inclusionRule;
 
   /**
-   * Set include pattern. Exclude nothing.
+   * Set exclude pattern. Include nothing.
    *
-   * @param patternInclude
-   *   Inclusion pattern. If null, includes everything.
+   * @param patternExclude
+   *   Exclusion pattern. If null, excludes nothing.
    */
-  public RegularExpressionInclusionRule(final Pattern patternInclude)
+  public RegularExpressionExclusionRule(final Pattern patternExclude)
   {
-    if (patternInclude == null)
+    if (patternExclude == null)
     {
       inclusionRule = new IncludeAll();
     }
     else
     {
-      inclusionRule = new RegularExpressionRule(patternInclude, null);
+      inclusionRule = new RegularExpressionRule(null, patternExclude);
     }
   }
 
   /**
-   * Set include pattern. Exclude nothing.
+   * Set exclude pattern. Include nothing.
    *
-   * @param patternInclude
-   *   Inclusion pattern. If null, includes everything.
+   * @param patternExclude
+   *   Exclusion pattern. If null, excludes nothing.
    */
-  public RegularExpressionInclusionRule(final String patternInclude)
+  public RegularExpressionExclusionRule(final String patternExclude)
   {
-    this(patternInclude == null? null: Pattern.compile(patternInclude));
+    this(patternExclude == null? null: Pattern.compile(patternExclude));
   }
 
   @Override
@@ -125,8 +125,8 @@ public final class RegularExpressionInclusionRule
     {
       return false;
     }
-    final RegularExpressionInclusionRule other =
-      (RegularExpressionInclusionRule) obj;
+    final RegularExpressionExclusionRule other =
+      (RegularExpressionExclusionRule) obj;
     if (inclusionRule == null)
     {
       return other.inclusionRule == null;

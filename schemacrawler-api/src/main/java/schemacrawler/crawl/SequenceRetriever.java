@@ -41,7 +41,7 @@ import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schema.Sequence;
-import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;

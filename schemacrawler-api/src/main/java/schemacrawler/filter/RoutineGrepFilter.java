@@ -33,7 +33,7 @@ import java.util.logging.Level;
 
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineParameter;
-import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;

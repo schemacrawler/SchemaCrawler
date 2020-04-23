@@ -29,6 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
+import schemacrawler.inclusionrule.ExcludeAll;
+import schemacrawler.inclusionrule.IncludeAll;
+import schemacrawler.inclusionrule.InclusionRule;
+import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.RoutineType;
 
 import java.util.*;

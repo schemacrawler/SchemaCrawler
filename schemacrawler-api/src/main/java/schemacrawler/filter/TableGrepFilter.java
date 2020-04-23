@@ -35,7 +35,7 @@ import java.util.logging.Level;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
-import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;

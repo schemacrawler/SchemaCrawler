@@ -31,8 +31,8 @@ package schemacrawler.filter;
 import java.util.function.Predicate;
 
 import schemacrawler.schema.DatabaseObject;
-import schemacrawler.schemacrawler.IncludeAll;
-import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.inclusionrule.IncludeAll;
+import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
 final class DatabaseObjectFilter<D extends DatabaseObject>

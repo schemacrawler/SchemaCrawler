@@ -52,7 +52,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 
-import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schemacrawler.Query;
 import sf.util.IdentifiedEnum;
 import sf.util.SchemaCrawlerLogger;

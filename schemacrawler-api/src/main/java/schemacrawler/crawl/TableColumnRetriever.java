@@ -45,7 +45,7 @@ import java.util.logging.Level;
 
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.schema.Column;
-import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;

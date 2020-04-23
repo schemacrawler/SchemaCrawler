@@ -47,7 +47,7 @@ import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureReturnType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaReference;
-import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;

@@ -33,8 +33,8 @@ import static sf.util.Utility.isBlank;
 import java.io.Serializable;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.InclusionRule;
-import schemacrawler.schemacrawler.RegularExpressionRule;
+import schemacrawler.inclusionrule.InclusionRule;
+import schemacrawler.inclusionrule.RegularExpressionRule;
 import sf.util.ObjectToString;
 
 public class LinterConfig

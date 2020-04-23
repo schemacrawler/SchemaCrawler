@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
-import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
+import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.commandline.command.GrepCommand;

@@ -38,7 +38,7 @@ import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.logging.Level;
 
-import schemacrawler.schemacrawler.ExcludeAll;
+import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;

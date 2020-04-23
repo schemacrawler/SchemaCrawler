@@ -25,56 +25,38 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.schemacrawler;
+
+package schemacrawler.inclusionrule;
 
 
 import java.util.regex.Pattern;
 
-/**
- * Include all names, definitions, and other attributes of named objects.
- *
- * @author Sualeh Fatehi
- */
-public final class ExcludeAll
-  implements InclusionRuleWithRegularExpression
+public interface InclusionRuleWithRegularExpression
+  extends InclusionRule
 {
 
-  private static final long serialVersionUID = -2992724018349021861L;
-
-  @Override
-  public Pattern getExclusionPattern()
+  /**
+   * Returns the regular expression for the exclusion rule. Not all inclusion
+   * rules are based on regular expressions, so this method indicates that no
+   * strings should be considered for exclusion by default.
+   *
+   * @return Regular expression for the exclusion rule
+   */
+  default Pattern getExclusionPattern()
   {
-    return InclusionRuleWithRegularExpression.super.getInclusionPattern();
+    return Pattern.compile("");
   }
 
-  @Override
-  public Pattern getInclusionPattern()
+  /**
+   * Returns the regular expression for the inclusion rule. Not all inclusion
+   * rules are based on regular expressions, so this method indicates that all
+   * strings should be considered for inclusion by default.
+   *
+   * @return Regular expression for the inclusion rule
+   */
+  default Pattern getInclusionPattern()
   {
-    return InclusionRuleWithRegularExpression.super.getExclusionPattern();
-  }
-
-  @Override
-  public int hashCode()
-  {
-    return 2;
-  }
-
-  @Override
-  public boolean equals(final Object obj)
-  {
-    return obj instanceof ExcludeAll;
-  }
-
-  @Override
-  public String toString()
-  {
-    return getClass().getSimpleName();
-  }
-
-  @Override
-  public boolean test(final String text)
-  {
-    return false;
+    return Pattern.compile(".*");
   }
 
 }

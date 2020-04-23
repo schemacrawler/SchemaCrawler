@@ -56,7 +56,7 @@ import schemacrawler.schema.Property;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schema.SearchableType;
-import schemacrawler.schemacrawler.IncludeAll;
+import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;

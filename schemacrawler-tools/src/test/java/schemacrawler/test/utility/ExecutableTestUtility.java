@@ -33,7 +33,7 @@ import java.nio.file.Path;
 import java.sql.Connection;
 
 import org.hamcrest.Matcher;
-import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
+import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
