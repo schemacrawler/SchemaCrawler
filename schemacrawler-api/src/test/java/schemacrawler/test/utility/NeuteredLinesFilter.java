@@ -84,7 +84,7 @@ final class NeuteredLinesFilter
     Pattern.compile("  value\\s+\\d+\\s+"),
     // SQL Server
     // -- unnamed objects
-    Pattern.compile("PK__Publishe__3214EC07.*\\s+\\[primary key]"),
+    Pattern.compile("PK__Publishe__.*\\s+\\[primary key]"),
     // Oracle
     // -- server-specific values
     Pattern.compile("\\s+value\\s+localhost:\\d+:xe\\s+"),
