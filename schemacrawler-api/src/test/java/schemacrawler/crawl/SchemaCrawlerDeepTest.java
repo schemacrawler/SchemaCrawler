@@ -97,8 +97,8 @@ public class SchemaCrawlerDeepTest
       new MutableTable(table0.getSchema(), "Test Table 2");
     final MutablePrimaryKey primaryKey =
       (MutablePrimaryKey) table0.getPrimaryKey();
-    table1.setPrimaryKeyAndReplaceIndex(primaryKey);
-    table2.setPrimaryKeyAndReplaceIndex(primaryKey);
+    table1.setPrimaryKey(primaryKey);
+    table2.setPrimaryKey(primaryKey);
     for (final Column column : table0.getColumns())
     {
       table1.addColumn((MutableColumn) column);

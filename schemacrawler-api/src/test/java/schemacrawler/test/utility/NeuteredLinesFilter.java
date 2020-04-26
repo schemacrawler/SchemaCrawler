@@ -65,6 +65,9 @@ final class NeuteredLinesFilter
     // -- server-specific values
     Pattern.compile(".*ServerName.*"),
     // DB2
+    // -- unnamed objects
+    Pattern.compile("SQL\\d{15}.*"), // indexes
+    Pattern.compile("[\"0-9A-Z]{28,30}.*"), // constraints
     // -- server-specific values
     Pattern.compile(".*HOST_NAME.*"),
     Pattern.compile(".*TOTAL_MEMORY.*"),

@@ -148,8 +148,7 @@ public class DB2Test
       schemaCrawlerOptionsBuilder.toOptions();
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
-      .builder()
-      .portableNames();
+      .builder();
     textOptionsBuilder
       .showDatabaseInfo()
       .showJdbcDriverInfo();
