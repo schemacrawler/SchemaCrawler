@@ -41,16 +41,16 @@ import java.util.Optional;
 import java.util.logging.Level;
 
 import schemacrawler.filter.InclusionRuleFilter;
+import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.ParameterModeType;
 import schemacrawler.schema.ProcedureParameter;
 import schemacrawler.schema.RoutineType;
-import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
+import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
-import schemacrawler.schemacrawler.Query;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
@@ -225,17 +225,9 @@ final class ProcedureParameterRetriever
   private MutableProcedureParameter lookupOrCreateProcedureParameter(final MutableProcedure procedure,
                                                                      final String columnName)
   {
-    final Optional<MutableProcedureParameter> parameterOptional =
-      procedure.lookupParameter(columnName);
-    final MutableProcedureParameter parameter;
-    if (parameterOptional.isPresent())
-    {
-      parameter = parameterOptional.get();
-    }
-    else
-    {
-      parameter = new MutableProcedureParameter(procedure, columnName);
-    }
+    final Optional<MutableProcedureParameter> parameterOptional = procedure.lookupParameter(columnName);
+    final MutableProcedureParameter parameter =
+      parameterOptional.orElseGet(() -> new MutableProcedureParameter(procedure, columnName));
     return parameter;
   }
 

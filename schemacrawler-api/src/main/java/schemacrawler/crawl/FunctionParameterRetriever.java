@@ -42,16 +42,16 @@ import java.util.Optional;
 import java.util.logging.Level;
 
 import schemacrawler.filter.InclusionRuleFilter;
+import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.FunctionParameter;
 import schemacrawler.schema.ParameterModeType;
 import schemacrawler.schema.RoutineType;
-import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
+import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
-import schemacrawler.schemacrawler.Query;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
@@ -225,17 +225,9 @@ final class FunctionParameterRetriever
   private MutableFunctionParameter lookupOrCreateFunctionParameter(final MutableFunction function,
                                                                    final String columnName)
   {
-    final Optional<MutableFunctionParameter> columnOptional =
-      function.lookupParameter(columnName);
-    final MutableFunctionParameter column;
-    if (columnOptional.isPresent())
-    {
-      column = columnOptional.get();
-    }
-    else
-    {
-      column = new MutableFunctionParameter(function, columnName);
-    }
+    final Optional<MutableFunctionParameter> columnOptional = function.lookupParameter(columnName);
+    final MutableFunctionParameter column =
+      columnOptional.orElseGet(() -> new MutableFunctionParameter(function, columnName));
     return column;
   }
 

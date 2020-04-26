@@ -33,7 +33,6 @@ import static sf.util.IOUtility.readResourceFully;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;

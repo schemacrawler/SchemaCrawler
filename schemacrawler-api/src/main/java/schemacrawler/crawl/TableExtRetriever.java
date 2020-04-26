@@ -493,8 +493,8 @@ final class TableExtRetriever
     {
       if (table.hasPrimaryKey())
       {
-        final PrimaryKey primaryKey = table.getPrimaryKey();
-        allPks.add((MutablePrimaryKey) primaryKey);
+        final MutablePrimaryKey primaryKey = table.getPrimaryKey();
+        allPks.add(primaryKey);
       }
     }
 

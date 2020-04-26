@@ -45,7 +45,7 @@ final class NeuteredLinesFilter
     Pattern.compile("\\s+<schemaCrawler(Version|About|Info)>.*"),
     Pattern.compile("\\s+\"runId\": .*"),
     Pattern.compile("\\s+<product(Name|Version)>.*"),
-    Pattern.compile(".*[A-Za-z]+ \\d+\\, 201[456] \\d+:\\d+ [AP]M.*"),
+    Pattern.compile(".*[A-Za-z]+ \\d+, 201[456] \\d+:\\d+ [AP]M.*"),
     Pattern.compile(".*20[12][890]-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.*"),
     Pattern.compile(".*20[12][890]-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d.*"),
     // JSON and YAML output
@@ -72,8 +72,8 @@ final class NeuteredLinesFilter
     Pattern.compile(".*OS_NAME.*"),
     // Apache Derby
     // -- unnamed objects
-    Pattern.compile("SQL\\d+\\s+\\[primary key\\]"),
-    Pattern.compile("SQL\\d+\\s+\\[foreign key, with no action\\]"),
+    Pattern.compile("SQL\\d+\\s+\\[primary key]"),
+    Pattern.compile("SQL\\d+\\s+\\[foreign key, with no action]"),
     // MySQL
     // -- server-specific values
     Pattern.compile("server_uuid\\s+.*"),
@@ -81,7 +81,7 @@ final class NeuteredLinesFilter
     Pattern.compile("  value\\s+\\d+\\s+"),
     // SQL Server
     // -- unnamed objects
-    Pattern.compile("PK__Publishe__3214EC07.*\\s+\\[primary key\\]"),
+    Pattern.compile("PK__Publishe__3214EC07.*\\s+\\[primary key]"),
     // Oracle
     // -- server-specific values
     Pattern.compile("\\s+value\\s+localhost:\\d+:xe\\s+"),

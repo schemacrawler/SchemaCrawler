@@ -173,13 +173,12 @@ public final class SchemaCrawler
         if (loadRowCounts)
         {
           rowCountsRetriever.retrieveTableRowCounts();
-          return null;
         }
         else
         {
           LOGGER.log(Level.INFO, "Not retrieving table row counts, since this was not requested");
-          return null;
         }
+        return null;
       });
 
       stopWatch.time("filterEmptyTables", () -> {

@@ -29,17 +29,23 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
+import static sf.util.Utility.enumValue;
+import static sf.util.Utility.isBlank;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.regex.Pattern;
+
 import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.RoutineType;
-
-import java.util.*;
-import java.util.regex.Pattern;
-
-import static sf.util.Utility.enumValue;
-import static sf.util.Utility.isBlank;
 
 /**
  * SchemaCrawler options.
@@ -165,14 +171,7 @@ public final class SchemaCrawlerOptionsBuilder
 
   public SchemaCrawlerOptionsBuilder childTableFilterDepth(final int childTableFilterDepth)
   {
-    if (childTableFilterDepth < 0)
-    {
-      this.childTableFilterDepth = 0;
-    }
-    else
-    {
-      this.childTableFilterDepth = childTableFilterDepth;
-    }
+    this.childTableFilterDepth = Math.max(childTableFilterDepth, 0);
     return this;
   }
 
@@ -575,14 +574,7 @@ public final class SchemaCrawlerOptionsBuilder
 
   public SchemaCrawlerOptionsBuilder parentTableFilterDepth(final int parentTableFilterDepth)
   {
-    if (parentTableFilterDepth < 0)
-    {
-      this.parentTableFilterDepth = 0;
-    }
-    else
-    {
-      this.parentTableFilterDepth = parentTableFilterDepth;
-    }
+    this.parentTableFilterDepth = Math.max(parentTableFilterDepth, 0);
     return this;
   }
 

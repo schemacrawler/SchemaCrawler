@@ -188,8 +188,8 @@ final class NamedObjectList<N extends NamedObject>
   /**
    * Looks up a named object by lookup key.
    *
-   * @param fullName
-   *   Fully qualified name
+   * @param lookupKey
+   *   Internal lookup key
    * @return Named object
    */
   Optional<N> lookup(final List<String> lookupKey)

@@ -44,14 +44,14 @@ import java.util.Set;
 import java.util.logging.Level;
 
 import schemacrawler.filter.InclusionRuleFilter;
-import schemacrawler.schema.Column;
 import schemacrawler.inclusionrule.InclusionRule;
+import schemacrawler.schema.Column;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
+import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
-import schemacrawler.schemacrawler.Query;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
@@ -232,20 +232,10 @@ final class TableColumnRetriever
 
   }
 
-  private MutableColumn lookupOrCreateTableColumn(final MutableTable table,
-                                                  final String columnName)
+  private MutableColumn lookupOrCreateTableColumn(final MutableTable table, final String columnName)
   {
-    final Optional<MutableColumn> columnOptional =
-      table.lookupColumn(columnName);
-    final MutableColumn column;
-    if (columnOptional.isPresent())
-    {
-      column = columnOptional.get();
-    }
-    else
-    {
-      column = new MutableColumn(table, columnName);
-    }
+    final Optional<MutableColumn> columnOptional = table.lookupColumn(columnName);
+    final MutableColumn column = columnOptional.orElseGet(() -> new MutableColumn(table, columnName));
     return column;
   }
 

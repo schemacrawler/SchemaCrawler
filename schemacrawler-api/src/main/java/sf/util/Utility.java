@@ -118,14 +118,10 @@ public final class Utility
         picocliLogLevel = "OFF";
         break;
       case "SEVERE":
-        picocliLogLevel = "WARN";
-        break;
       case "WARNING":
         picocliLogLevel = "WARN";
         break;
       case "CONFIG":
-        picocliLogLevel = "INFO";
-        break;
       case "INFO":
         picocliLogLevel = "INFO";
         break;

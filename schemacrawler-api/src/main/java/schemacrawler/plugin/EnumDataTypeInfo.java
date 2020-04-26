@@ -36,7 +36,7 @@ import java.util.StringJoiner;
 public class EnumDataTypeInfo
 {
 
-  public static EnumDataTypeInfo EMPTY_ENUM_DATA_TYPE_INFO =
+  public static final EnumDataTypeInfo EMPTY_ENUM_DATA_TYPE_INFO =
     new EnumDataTypeInfo(false, false, new ArrayList<>());
 
   private final boolean isColumnEnumerated;

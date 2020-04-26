@@ -55,7 +55,7 @@ public final class TableRowCountsUtility
     }
   }
 
-  public static final long getRowCount(final Table table)
+  public static long getRowCount(final Table table)
   {
     if (table == null)
     {
@@ -66,7 +66,7 @@ public final class TableRowCountsUtility
     return tableCount;
   }
 
-  public static final String getRowCountMessage(final Table table)
+  public static String getRowCountMessage(final Table table)
   {
     return getRowCountMessage(getRowCount(table));
   }
@@ -92,7 +92,7 @@ public final class TableRowCountsUtility
     }
   }
 
-  public static final boolean hasRowCount(final Table table)
+  public static boolean hasRowCount(final Table table)
   {
     return table != null && table.hasAttribute(TABLE_ROW_COUNT_KEY);
   }

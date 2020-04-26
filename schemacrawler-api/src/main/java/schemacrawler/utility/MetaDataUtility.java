@@ -59,7 +59,7 @@ public final class MetaDataUtility
     return indexCoumnNames(table, false);
   }
 
-  public static final List<String> columnNames(final Index index)
+  public static List<String> columnNames(final Index index)
   {
     if (index == null)
     {
@@ -94,7 +94,7 @@ public final class MetaDataUtility
     return foreignKeyName;
   }
 
-  public static final boolean containsGeneratedColumns(final Index index)
+  public static boolean containsGeneratedColumns(final Index index)
   {
     if (index == null)
     {
@@ -141,7 +141,7 @@ public final class MetaDataUtility
     return connectivity;
   }
 
-  public static final List<String> foreignKeyColumnNames(final BaseForeignKey<? extends ColumnReference> foreignKey)
+  public static List<String> foreignKeyColumnNames(final BaseForeignKey<? extends ColumnReference> foreignKey)
   {
     if (foreignKey == null)
     {

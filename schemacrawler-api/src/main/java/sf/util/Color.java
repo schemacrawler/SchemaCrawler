@@ -31,8 +31,8 @@ package sf.util;
 import static sf.util.Utility.isBlank;
 
 /**
- * Color breaks the dependency on java.awt.Color. The AWT comes with a lot of
- * baggage, and is not part of Java Compact Profile 2.
+ * Color breaks the dependency on java.awt.Color. The AWT comes with a lot of baggage, and is not part of Java Compact
+ * Profile 2.
  *
  * @author Sualeh Fatehi
  */
@@ -45,9 +45,7 @@ public final class Color
    * <a href= "http://stackoverflow.com/questions/7896280"> Converting
    * from HSV (HSB in Java) to RGB without using java.awt.Color</a>
    */
-  public static Color fromHSV(final float hue,
-                              final float saturation,
-                              final float value)
+  public static Color fromHSV(final float hue, final float saturation, final float value)
   {
     final float normaliedHue = hue - (float) Math.floor(hue);
     final int h = (int) (normaliedHue * 6);
@@ -71,11 +69,10 @@ public final class Color
       case 5:
         return fromRGB(value, p, q);
       default:
-        throw new IllegalArgumentException(String.format(
-          "Could not convert from HSV (%f, %f, %f) to RGB",
-          normaliedHue,
-          saturation,
-          value));
+        throw new IllegalArgumentException(String.format("Could not convert from HSV (%f, %f, %f) to RGB",
+                                                         normaliedHue,
+                                                         saturation,
+                                                         value));
     }
   }
 
@@ -112,9 +109,7 @@ public final class Color
 
   private static Color fromRGB(final float r, final float g, final float b)
   {
-    return new Color((int) (r * 255 + 0.5),
-                     (int) (g * 255 + 0.5),
-                     (int) (b * 255 + 0.5));
+    return new Color((int) (r * 255 + 0.5), (int) (g * 255 + 0.5), (int) (b * 255 + 0.5));
   }
 
   private final int b;
@@ -127,40 +122,22 @@ public final class Color
     {
       this.r = 0;
     }
-    else if (r > 255)
-    {
-      this.r = 255;
-    }
     else
-    {
-      this.r = r;
-    }
+    { this.r = Math.min(r, 255); }
 
     if (g < 0)
     {
       this.g = 0;
     }
-    else if (g > 255)
-    {
-      this.g = 255;
-    }
     else
-    {
-      this.g = g;
-    }
+    { this.g = Math.min(g, 255); }
 
     if (b < 0)
     {
       this.b = 0;
     }
-    else if (b > 255)
-    {
-      this.b = 255;
-    }
     else
-    {
-      this.b = b;
-    }
+    { this.b = Math.min(b, 255); }
   }
 
   @Override
@@ -204,7 +181,7 @@ public final class Color
   @Override
   public String toString()
   {
-    final int rgb = (r & 0xFF) << 16 | (g & 0xFF) << 8 | (b & 0xFF) << 0;
+    final int rgb = (r & 0xFF) << 16 | (g & 0xFF) << 8 | (b & 0xFF);
 
     final String htmlColor = "#" + String
       .format("%06x", rgb)

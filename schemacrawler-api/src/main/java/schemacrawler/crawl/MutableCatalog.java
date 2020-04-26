@@ -65,7 +65,7 @@ final class MutableCatalog
   private static final long serialVersionUID = 4051323422934251828L;
 
 
-  private final class FilterBySchema
+  private final static class FilterBySchema
     implements Predicate<DatabaseObject>
   {
 
