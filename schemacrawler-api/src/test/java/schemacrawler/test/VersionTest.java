@@ -43,7 +43,7 @@ import org.junit.jupiter.api.Test;
 import schemacrawler.Version;
 import schemacrawler.test.utility.TestOutputStream;
 
-public class TestVersion
+public class VersionTest
 {
   private TestOutputStream err;
   private TestOutputStream out;

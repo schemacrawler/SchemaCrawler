@@ -102,4 +102,20 @@ public class ColorTest
                  () -> Color.fromHexTriplet("#12345"));
   }
 
+  @Test
+  public void fromRGB()
+  {
+    final Color color1 = Color.fromRGB(0, 0, 0);
+    assertThat(color1.toString(), is("#000000"));
+
+    final Color color2 = Color.fromRGB(0, 0, 255);
+    assertThat(color2.toString(), is("#0000FF"));
+
+    final Color color3 = Color.fromRGB(0, 9, 255);
+    assertThat(color3.toString(), is("#0009FF"));
+
+    final Color color4 = Color.fromRGB(12, 0, 1);
+    assertThat(color4.toString(), is("#0C0001"));
+  }
+
 }

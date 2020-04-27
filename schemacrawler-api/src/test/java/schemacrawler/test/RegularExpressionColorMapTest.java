@@ -39,7 +39,7 @@ import org.junit.jupiter.api.Test;
 import sf.util.Color;
 import sf.util.RegularExpressionColorMap;
 
-public class TestRegularExpressionColorMap
+public class RegularExpressionColorMapTest
 {
 
   private static final Color test_color = Color.fromRGB(26, 59, 92);
