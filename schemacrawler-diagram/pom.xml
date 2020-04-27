@@ -43,18 +43,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
-      <version>${springframework.version}</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-jdbc</artifactId>
-      <version>${springframework.version}</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
       <groupId>guru.nidi</groupId>
       <artifactId>graphviz-java</artifactId>
       <version>${graphviz.java.version}</version>
