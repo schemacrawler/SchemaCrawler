@@ -53,6 +53,20 @@
       <artifactId>ojdbc8_g</artifactId>
       <version>19.6.0.0</version>
       <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>com.oracle.database.jdbc</groupId>
+          <artifactId>ojdbc8dms</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.oracle.database.jdbc.debug</groupId>
+          <artifactId>ojdbc8dms_g</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.oracle.database.observability</groupId>
+          <artifactId>dms</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>
