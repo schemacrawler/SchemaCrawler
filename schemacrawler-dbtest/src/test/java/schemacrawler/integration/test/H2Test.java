@@ -33,9 +33,9 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import java.sql.SQLException;
-import java.util.logging.Level;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -94,9 +94,9 @@ public class H2Test
                                             .builder(textOptions)
                                             .toConfig());
 
+    final String expectedResource = String.format("testH2WithConnection.%s.txt", javaVersion());
     assertThat(outputOf(executableExecution(getConnection(), executable)),
-               hasSameContentAs(classpathResource("testH2WithConnection.txt")));
-    LOGGER.log(Level.INFO, "Completed H2 test successfully");
+               hasSameContentAs(classpathResource(expectedResource)));
   }
 
 }

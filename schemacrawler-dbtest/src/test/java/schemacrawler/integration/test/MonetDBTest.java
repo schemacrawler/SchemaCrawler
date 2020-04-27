@@ -33,6 +33,7 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -123,10 +124,9 @@ public class MonetDBTest
                                             .builder(textOptions)
                                             .toConfig());
 
+    final String expectedResource = String.format("testMonetDBWithConnection.%s.txt", javaVersion());
     assertThat(outputOf(executableExecution(getConnection(), executable)),
-               hasSameContentAs(classpathResource(
-                 "testMonetDBWithConnection.txt")));
-    LOGGER.log(Level.INFO, "Completed MonetDB test successfully");
+               hasSameContentAs(classpathResource(expectedResource)));
   }
 
 }

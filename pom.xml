@@ -30,6 +30,7 @@
     <module>schemacrawler-scripting</module>
     <module>schemacrawler-lint</module>
 
+    <module>schemacrawler-dbtest</module>
     <module>schemacrawler-db2</module>
     <module>schemacrawler-hsqldb</module>
     <module>schemacrawler-mysql</module>
@@ -51,13 +52,13 @@
         </property>
       </activation>
       <modules>
-        <module>schemacrawler-dbtest</module>
 
         <module>schemacrawler-diff</module>
 
         <module>schemacrawler-docs</module>
         <module>schemacrawler-docker</module>
         <module>schemacrawler-distrib</module>
+
       </modules>
     </profile>
   </profiles>
