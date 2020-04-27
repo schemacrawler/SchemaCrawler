@@ -28,240 +28,25 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
-import java.util.Collection;
-import java.util.Optional;
-
 import schemacrawler.schema.Column;
-import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexColumnSortSequence;
-import schemacrawler.schema.NamedObject;
-import schemacrawler.schema.Privilege;
-import schemacrawler.schema.Table;
 
 final class MutableIndexColumn
-  extends AbstractDependantObject<Table>
+  extends MutableKeyColumn
   implements IndexColumn
 {
 
   private static final long serialVersionUID = -6923211341742623556L;
 
-  private final Column column;
-  private final StringBuilder definition;
   private final Index index;
-  private int indexOrdinalPosition;
   private IndexColumnSortSequence sortSequence;
 
   MutableIndexColumn(final Index index, final Column column)
   {
-    super(new TableReference(column.getParent()), column.getName());
+    super(column);
     this.index = index;
-    this.column = column;
-    definition = new StringBuilder();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public int compareTo(final NamedObject obj)
-  {
-    if (obj == null)
-    {
-      return -1;
-    }
-
-    int comparison = 0;
-
-    if (obj instanceof MutableIndexColumn)
-    {
-      final MutableIndexColumn other = (MutableIndexColumn) obj;
-      comparison = indexOrdinalPosition - other.indexOrdinalPosition;
-    }
-
-    if (comparison == 0)
-    {
-      comparison = super.compareTo(obj);
-    }
-
-    return comparison;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public ColumnDataType getColumnDataType()
-  {
-    return column.getColumnDataType();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public int getDecimalDigits()
-  {
-    return column.getDecimalDigits();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public int getOrdinalPosition()
-  {
-    return column.getOrdinalPosition();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public int getSize()
-  {
-    return column.getSize();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String getWidth()
-  {
-    return column.getWidth();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isNullable()
-  {
-    return column.isNullable();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String getDefaultValue()
-  {
-    return column.getDefaultValue();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Collection<Privilege<Column>> getPrivileges()
-  {
-    return column.getPrivileges();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Column getReferencedColumn()
-  {
-    return column.getReferencedColumn();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isAutoIncremented()
-  {
-    return column.isAutoIncremented();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isGenerated()
-  {
-    return column.isGenerated();
-  }
-
-  void setGenerated(final boolean isGenerated)
-  {
-    if (column instanceof MutableColumn)
-    {
-      ((MutableColumn) column).setGenerated(isGenerated);
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isHidden()
-  {
-    return column.isHidden();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isPartOfForeignKey()
-  {
-    return column.isPartOfForeignKey();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isPartOfIndex()
-  {
-    return column.isPartOfIndex();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isPartOfPrimaryKey()
-  {
-    return column.isPartOfPrimaryKey();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isPartOfUniqueIndex()
-  {
-    return column.isPartOfUniqueIndex();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Optional<? extends Privilege<Column>> lookupPrivilege(final String name)
-  {
-    return column.lookupPrivilege(name);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String getDefinition()
-  {
-    return definition.toString();
-  }
-
-  @Override
-  public boolean hasDefinition()
-  {
-    return definition.length() > 0;
   }
 
   /**
@@ -279,12 +64,7 @@ final class MutableIndexColumn
   @Override
   public int getIndexOrdinalPosition()
   {
-    return indexOrdinalPosition;
-  }
-
-  void setIndexOrdinalPosition(final int indexOrdinalPosition)
-  {
-    this.indexOrdinalPosition = indexOrdinalPosition;
+    return getKeyOrdinalPosition();
   }
 
   /**
@@ -299,23 +79,6 @@ final class MutableIndexColumn
   void setSortSequence(final IndexColumnSortSequence sortSequence)
   {
     this.sortSequence = sortSequence;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public ColumnDataType getType()
-  {
-    return column.getType();
-  }
-
-  void appendDefinition(final String definition)
-  {
-    if (definition != null)
-    {
-      this.definition.append(definition);
-    }
   }
 
 }

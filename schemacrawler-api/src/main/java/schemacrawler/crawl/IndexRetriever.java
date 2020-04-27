@@ -225,7 +225,7 @@ final class IndexRetriever
 
     final MutableIndexColumn indexColumn =
       new MutableIndexColumn(index, column);
-    indexColumn.setIndexOrdinalPosition(ordinalPosition);
+    indexColumn.setKeyOrdinalPosition(ordinalPosition);
     indexColumn.setSortSequence(sortSequence);
     //
     index.addColumn(indexColumn);
@@ -266,7 +266,7 @@ final class IndexRetriever
       column.markAsPartOfPrimaryKey();
       final MutableTableConstraintColumn pkColumn =
         new MutableTableConstraintColumn(primaryKey, column);
-      pkColumn.setTableConstraintOrdinalPosition(keySequence);
+      pkColumn.setKeyOrdinalPosition(keySequence);
       //
       primaryKey.addColumn(pkColumn);
     }
