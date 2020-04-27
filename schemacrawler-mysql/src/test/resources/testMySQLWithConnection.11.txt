@@ -31,7 +31,7 @@ Contact details for book authors
 Primary Key
 
 `PRIMARY`                                                  [primary key]
-  Id                                ascending                   
+  Id                                                            
 
 Foreign Keys
 
@@ -129,7 +129,7 @@ Details for published books
 Primary Key
 
 `PRIMARY`                                                  [primary key]
-  Id                                ascending                   
+  Id                                                            
 
 Foreign Keys
 
@@ -163,7 +163,7 @@ books.coupons                                                    [table]
 Primary Key
 
 `PRIMARY`                                                  [primary key]
-  Id                                ascending                   
+  Id                                                            
 
 Indexes
 
@@ -201,7 +201,7 @@ List of book publishers
 Primary Key
 
 `PRIMARY`                                                  [primary key]
-  Id                                ascending                   
+  Id                                                            
 
 Indexes
 

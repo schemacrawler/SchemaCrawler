@@ -21,7 +21,7 @@ Contact details for book authors
 Primary Key
 
 PK_AUTHORS                                                 [primary key]
-  ID                                ascending                   
+  ID                                                            
 
 Foreign Keys
 

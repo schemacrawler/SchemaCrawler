@@ -39,6 +39,7 @@ import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableConstraintColumn;
 
 final class TableCandidateKeys
   implements Iterable<Column>
@@ -73,7 +74,7 @@ final class TableCandidateKeys
                                 .getColumns()
                                 .size() == 1)
     {
-      addColumnFromIndex(table, primaryKey);
+      addColumnFromPrimaryKey(table, primaryKey);
     }
 
     for (final Index index : table.getIndexes())
@@ -96,6 +97,16 @@ final class TableCandidateKeys
       .get(0);
     table
       .lookupColumn(indexColumn.getName())
+      .ifPresent(column -> tableKeys.add(column));
+  }
+
+  private void addColumnFromPrimaryKey(final Table table, final PrimaryKey primaryKey)
+  {
+    final TableConstraintColumn tableConstraintColumn = primaryKey
+      .getColumns()
+      .get(0);
+    table
+      .lookupColumn(tableConstraintColumn.getName())
       .ifPresent(column -> tableKeys.add(column));
   }
 

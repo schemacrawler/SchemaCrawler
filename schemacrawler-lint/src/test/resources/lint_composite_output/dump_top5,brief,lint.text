@@ -56,7 +56,7 @@ Extra table with just a primary key
 Primary Key
 
 PK_EXTRA_PK                                                [primary key]
-  ID                                ascending                   
+  ID                                                            
 
 Foreign Keys
 
@@ -81,7 +81,7 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 Primary Key
 
 PK_PUBLICATIONS                                            [primary key]
-  ID                                ascending                   
+  ID                                                            
 
 Foreign Keys
 
@@ -121,7 +121,7 @@ PUBLIC.FOR_LINT.SELFREFERENCE                                    [table]
 Primary Key
 
 PK_SELFREFERENCE                                           [primary key]
-  ID                                ascending                   
+  ID                                                            
 
 Foreign Keys
 
@@ -145,7 +145,7 @@ PUBLIC.FOR_LINT.WRITERS                                          [table]
 Primary Key
 
 PK_WRITERS                                                 [primary key]
-  ID                                ascending                   
+  ID                                                            
 
 Foreign Keys
 

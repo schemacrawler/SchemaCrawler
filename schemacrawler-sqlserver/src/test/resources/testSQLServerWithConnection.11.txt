@@ -30,7 +30,7 @@ BOOKS.dbo.Authors                                                [table]
 Primary Key
 
 PK_Authors                                                 [primary key]
-  Id                                ascending                   
+  Id                                                            
 
 Foreign Keys
 
@@ -197,7 +197,7 @@ BOOKS.dbo.Books                                                  [table]
 Primary Key
 
 PK_Books                                                   [primary key]
-  Id                                ascending                   
+  Id                                                            
 
 Foreign Keys
 
@@ -249,7 +249,7 @@ BOOKS.dbo.Customers                                              [table]
 Primary Key
 
 PK_Customers                                               [primary key]
-  Id                                ascending                   
+  Id                                                            
 
 Indexes
 
@@ -308,7 +308,7 @@ BOOKS.dbo.Publishers                                             [table]
 Primary Key
 
 PK__Publishe__3214EC07AC00DA3F                             [primary key]
-  Id                                ascending                   
+  Id                                                            
 
 Foreign Keys
 
@@ -380,7 +380,7 @@ BOOKS.dbo.Βιβλία                                                 [table]
 Primary Key
 
 PK_βιβλία                                                  [primary key]
-  Μοναδικός                         ascending                   
+  Μοναδικός                                                     
 
 Foreign Keys
 

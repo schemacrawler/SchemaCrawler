@@ -54,13 +54,13 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexColumnSortSequence;
-import schemacrawler.schema.IndexType;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
+import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -222,10 +222,7 @@ public class SchemaCrawlerCoverageTest
 
     assertThat(primaryKey.getFullName(), is("PUBLIC.BOOKS.AUTHORS.PK_AUTHORS"));
     assertThat(primaryKey.getColumns().toString(), is("[PUBLIC.BOOKS.AUTHORS.ID]"));
-    assertThat(primaryKey.getPages(), is(0));
-    assertThat(primaryKey.getCardinality(), is(0));
-    assertThat(primaryKey.getType(), is(IndexType.unknown));
-    assertThat(primaryKey.isUnique(), is(true));
+    assertThat(primaryKey.getType(), is(TableConstraintType.primary_key));
     assertThat(primaryKey.isDeferrable(), is(false));
     assertThat(primaryKey.isInitiallyDeferred(), is(false));
 

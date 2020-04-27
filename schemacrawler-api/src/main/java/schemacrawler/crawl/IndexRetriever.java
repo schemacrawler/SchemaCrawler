@@ -264,12 +264,11 @@ final class IndexRetriever
     {
       final MutableColumn column = columnOptional.get();
       column.markAsPartOfPrimaryKey();
-      final MutableIndexColumn indexColumn =
-        new MutableIndexColumn(primaryKey, column);
-      indexColumn.setSortSequence(IndexColumnSortSequence.ascending);
-      indexColumn.setIndexOrdinalPosition(keySequence);
+      final MutableTableConstraintColumn pkColumn =
+        new MutableTableConstraintColumn(primaryKey, column);
+      pkColumn.setTableConstraintOrdinalPosition(keySequence);
       //
-      primaryKey.addColumn(indexColumn);
+      primaryKey.addColumn(pkColumn);
     }
   }
 

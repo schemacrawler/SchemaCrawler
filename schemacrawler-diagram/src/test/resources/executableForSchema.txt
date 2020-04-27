@@ -21,7 +21,7 @@ Contact details for book authors
 Primary Key
 
 PK_AUTHORS                                                 [primary key]
-1   ID                                ascending                   
+1   ID                                                            
 
 Foreign Keys
 
@@ -104,7 +104,7 @@ Details for published books
 Primary Key
 
 PK_BOOKS                                                   [primary key]
-1   ID                                ascending                   
+1   ID                                                            
 
 Foreign Keys
 
@@ -137,7 +137,7 @@ PUBLIC.BOOKS.COUPONS                                             [table]
 Primary Key
 
 PK_COUPONS                                                 [primary key]
-1   ID                                ascending                   
+1   ID                                                            
 
 Indexes
 
@@ -154,7 +154,7 @@ PUBLIC.BOOKS.CUSTOMERDATA                                        [table]
 Primary Key
 
 PK_CUSTOMERDATA                                            [primary key]
-1   ID                                ascending                   
+1   ID                                                            
 
 Indexes
 
@@ -173,7 +173,7 @@ PUBLIC.BOOKS.CUSTOMERS                                           [table]
 Primary Key
 
 PK_CUSTOMERS                                               [primary key]
-1   ID                                ascending                   
+1   ID                                                            
 
 Indexes
 
@@ -201,7 +201,7 @@ List of book publishers
 Primary Key
 
 SYS_PK_10106                                               [primary key]
-1   ID                                ascending                   
+1   ID                                                            
 
 Foreign Keys
 
@@ -225,7 +225,7 @@ PUBLIC.BOOKS.ΒΙΒΛΊΑ                                              [table]
 Primary Key
 
 PK_ΒΙΒΛΊΑ                                                  [primary key]
-1   ΜΟΝΑΔΙΚΌΣ                         ascending                   
+1   ΜΟΝΑΔΙΚΌΣ                                                     
 
 Foreign Keys
 
@@ -252,7 +252,7 @@ Extra table with just a primary key
 Primary Key
 
 PK_EXTRA_PK                                                [primary key]
-3   ID                                ascending                   
+3   ID                                                            
 
 Foreign Keys
 
@@ -296,7 +296,7 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 Primary Key
 
 PK_PUBLICATIONS                                            [primary key]
-1   ID                                ascending                   
+1   ID                                                            
 
 Foreign Keys
 
@@ -353,7 +353,7 @@ PUBLIC.FOR_LINT.SELFREFERENCE                                    [table]
 Primary Key
 
 PK_SELFREFERENCE                                           [primary key]
-1   ID                                ascending                   
+1   ID                                                            
 
 Foreign Keys
 
@@ -394,7 +394,7 @@ PUBLIC.FOR_LINT.WRITERS                                          [table]
 Primary Key
 
 PK_WRITERS                                                 [primary key]
-1   ID                                ascending                   
+1   ID                                                            
 
 Foreign Keys
 
@@ -448,8 +448,8 @@ PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
 Primary Key
 
 PK_CUSTOMERS                                               [primary key]
-3   POSTALCODE                        ascending                   
-4   COUNTRY                           ascending                   
+3   POSTALCODE                                                    
+4   COUNTRY                                                       
 
 Foreign Keys
 

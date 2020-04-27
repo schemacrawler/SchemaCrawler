@@ -268,7 +268,7 @@ Details for published books
 Primary Key
 
 PK_BOOKS                                                   [primary key]
-  ID                                ascending                   
+  ID                                                            
 
 Foreign Keys
 
@@ -389,7 +389,7 @@ DB2INST1.CUSTOMERS                                               [table]
 Primary Key
 
 PK_CUSTOMERS                                               [primary key]
-  ID                                ascending                   
+  ID                                                            
 
 Indexes
 
@@ -478,7 +478,7 @@ List of book publishers
 Primary Key
 
 SQL200426181159450                                         [primary key]
-  ID                                ascending                   
+  ID                                                            
 
 Foreign Keys
 
@@ -618,7 +618,7 @@ DB2INST1.ΒΙΒΛΊΑ                                                  [table]
 Primary Key
 
 PK_ΒΙΒΛΊΑ                                                  [primary key]
-  ΜΟΝΑΔΙΚΌς                         ascending                   
+  ΜΟΝΑΔΙΚΌς                                                     
 
 Foreign Keys
 

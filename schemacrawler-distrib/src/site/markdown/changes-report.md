@@ -1,5 +1,11 @@
 # SchemaCrawler Change History
 
+<a name="a16.7.1"></a>
+## Release 16.7.1 - 2020-05-01
+
+- Model primary keys as table constraints instead of indexes
+
+
 <a name="a16.6.1"></a>
 ## Release 16.6.1 - 2020-04-10
 

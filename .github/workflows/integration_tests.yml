@@ -51,6 +51,7 @@ jobs:
           -Dtestcoverage \
           -Dlightdb \
           -Dheavydb \
+          -Ddistrib \
           clean install \
           org.jacoco:jacoco-maven-plugin:0.8.5:report-aggregate
 

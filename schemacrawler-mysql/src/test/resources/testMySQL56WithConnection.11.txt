@@ -30,7 +30,7 @@ books.authors                                                    [table]
 Primary Key
 
 `PRIMARY`                                                  [primary key]
-  Id                                ascending                   
+  Id                                                            
 
 Foreign Keys
 
@@ -113,7 +113,7 @@ books.books                                                      [table]
 Primary Key
 
 `PRIMARY`                                                  [primary key]
-  Id                                ascending                   
+  Id                                                            
 
 Foreign Keys
 
@@ -147,7 +147,7 @@ books.coupons                                                    [table]
 Primary Key
 
 `PRIMARY`                                                  [primary key]
-  Id                                ascending                   
+  Id                                                            
 
 Indexes
 
@@ -180,7 +180,7 @@ books.publishers                                                 [table]
 Primary Key
 
 `PRIMARY`                                                  [primary key]
-  Id                                ascending                   
+  Id                                                            
 
 Indexes
 

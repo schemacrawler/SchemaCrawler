@@ -1,4 +1,4 @@
-/*
+package schemacrawler.test;/*
 ========================================================================
 SchemaCrawler
 http://www.schemacrawler.com
@@ -41,6 +41,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+import com.example.ApiExample;
+import com.example.ExecutableExample;
+import com.example.ResultSetExample;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;

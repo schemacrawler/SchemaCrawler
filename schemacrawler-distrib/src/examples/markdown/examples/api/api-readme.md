@@ -13,7 +13,7 @@ alternative to using JDBC metadata.
 5. Run `resultset.cmd` (or `resultset.sh` on Unix) to compile and run the third example 
 
 ## How to Experiment
-1. Try uncommenting the code block in `ApiExample.java` that modifies the default options. 
+1. Try uncommenting the code block in `com.example.ApiExample.java` that modifies the default options. 
 2. Read the [SchemaCrawler javadoc](https://www.schemacrawler.com/apidocs/index.html), and 
-   edit `ApiExample.java` to print more details. 
-3. Make changes to `ExecutableExample.java` to produce different types of output.
+   edit `com.example.ApiExample.java` to print more details. 
+3. Make changes to `com.example.ExecutableExample.java` to produce different types of output.

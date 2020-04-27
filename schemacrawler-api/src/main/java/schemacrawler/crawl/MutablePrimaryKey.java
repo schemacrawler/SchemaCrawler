@@ -39,7 +39,7 @@ import schemacrawler.schema.TableConstraintType;
  * @author Sualeh Fatehi
  */
 final class MutablePrimaryKey
-  extends MutableIndex
+  extends MutableTableConstraint
   implements PrimaryKey
 {
 
@@ -66,15 +66,6 @@ final class MutablePrimaryKey
   public boolean isInitiallyDeferred()
   {
     return false;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final boolean isUnique()
-  {
-    return true;
   }
 
 }

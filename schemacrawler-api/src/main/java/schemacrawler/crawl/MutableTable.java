@@ -336,16 +336,7 @@ class MutableTable
   @Override
   public Optional<MutableIndex> lookupIndex(final String name)
   {
-    if (primaryKey != null && primaryKey
-      .getName()
-      .equals(name))
-    {
-      return Optional.of(primaryKey);
-    }
-    else
-    {
-      return indexes.lookup(this, name);
-    }
+    return indexes.lookup(this, name);
   }
 
   /**
