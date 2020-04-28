@@ -719,7 +719,7 @@ final class SchemaTextFormatter
     }
   }
 
-  private void printPrimaryKey(final Index primaryKey)
+  private void printPrimaryKey(final PrimaryKey primaryKey)
   {
     if (primaryKey != null)
     {

@@ -47,6 +47,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
@@ -55,17 +56,17 @@ import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.PrimaryKey;
-import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
+import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestContextParameterResolver;
@@ -99,28 +100,6 @@ public class SchemaCrawlerCoverageTest
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
     catalog = getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
-  }
-
-  @Test
-  public void coverPrimaryKey()
-  {
-    final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
-    final Table table = catalog
-      .lookupTable(schema, "AUTHORS")
-      .get();
-    final Index index = table
-      .lookupIndex("IDX_B_AUTHORS")
-      .get();
-    final PrimaryKey primaryKey = new MutablePrimaryKey((MutableIndex) index);
-
-    assertThat(index.getFullName(), is(primaryKey.getFullName()));
-    assertThat(index.getColumns(), is(primaryKey.getColumns()));
-    assertThat(index.getPages(), is(primaryKey.getPages()));
-    assertThat(index.getCardinality(), is(primaryKey.getCardinality()));
-    assertThat(index.getType(), is(primaryKey.getType()));
-
-    assertThat(index.isUnique(), is(false));
-    assertThat(primaryKey.isUnique(), is(true));
   }
 
   @Test
@@ -232,7 +211,7 @@ public class SchemaCrawlerCoverageTest
   }
 
   @Test
-  public void primaryKeyProperties()
+  public void primaryKey()
     throws Exception
   {
     final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
@@ -241,7 +220,9 @@ public class SchemaCrawlerCoverageTest
       .get();
     final PrimaryKey primaryKey = table.getPrimaryKey();
 
-    assertThat(primaryKey.isUnique(), is(true));
+    assertThat(primaryKey.getFullName(), is("PUBLIC.BOOKS.AUTHORS.PK_AUTHORS"));
+    assertThat(primaryKey.getColumns().toString(), is("[PUBLIC.BOOKS.AUTHORS.ID]"));
+    assertThat(primaryKey.getType(), is(TableConstraintType.primary_key));
     assertThat(primaryKey.isDeferrable(), is(false));
     assertThat(primaryKey.isInitiallyDeferred(), is(false));
 

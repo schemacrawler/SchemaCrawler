@@ -33,9 +33,9 @@ import static java.util.Objects.requireNonNull;
 import java.sql.Connection;
 
 import schemacrawler.filter.TableTypesFilter;
-import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
 
@@ -66,10 +66,10 @@ public class LinterTableWithPrimaryKeyNotFirst
       return;
     }
 
-    for (final IndexColumn indexColumn : primaryKey.getColumns())
+    for (final TableConstraintColumn pkColumn : primaryKey.getColumns())
     {
-      if (indexColumn.getIndexOrdinalPosition()
-          != indexColumn.getOrdinalPosition())
+      if (pkColumn.getTableConstraintOrdinalPosition()
+          != pkColumn.getOrdinalPosition())
       {
         addTableLint(table, getSummary());
         break;

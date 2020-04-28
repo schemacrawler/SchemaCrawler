@@ -26,7 +26,7 @@ Details for published books
 Primary Key
 
 PK_BOOKS                                                   [primary key]
-  ID                                ascending                   
+  ID                                                            
 
 Foreign Keys
 
@@ -81,7 +81,7 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 Primary Key
 
 PK_PUBLICATIONS                                            [primary key]
-  ID                                ascending                   
+  ID                                                            
 
 Foreign Keys
 

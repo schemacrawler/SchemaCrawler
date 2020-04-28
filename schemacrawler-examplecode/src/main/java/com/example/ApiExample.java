@@ -1,3 +1,6 @@
+package com.example;
+
+
 import java.sql.Connection;
 
 import schemacrawler.schema.Catalog;

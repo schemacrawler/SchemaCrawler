@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraintType;
@@ -40,32 +39,11 @@ import schemacrawler.schema.TableConstraintType;
  * @author Sualeh Fatehi
  */
 final class MutablePrimaryKey
-  extends MutableIndex
+  extends MutableTableConstraint
   implements PrimaryKey
 {
 
   private static final long serialVersionUID = -7169206178562782087L;
-
-  /**
-   * Copies information from an index.
-   *
-   * @param index
-   *   Index
-   */
-  MutablePrimaryKey(final MutableIndex index)
-  {
-    super(index.getParent(), index.getName());
-    setCardinality(index.getCardinality());
-    setPages(index.getPages());
-    setRemarks(index.getRemarks());
-    setIndexType(index.getIndexType());
-    setUnique(index.isUnique());
-    // Copy columns
-    for (final IndexColumn column : index)
-    {
-      addColumn((MutableIndexColumn) column);
-    }
-  }
 
   MutablePrimaryKey(final Table parent, final String name)
   {
@@ -88,15 +66,6 @@ final class MutablePrimaryKey
   public boolean isInitiallyDeferred()
   {
     return false;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final boolean isUnique()
-  {
-    return true;
   }
 
 }

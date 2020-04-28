@@ -1,13 +1,4 @@
 PUBLIC.BOOKS.AUTHORS
-  pk: PK_AUTHORS
-    columns: [PUBLIC.BOOKS.AUTHORS.ID]
-    is unique: true
-    cardinality: 0
-    pages: 0
-    index type: unknown
-    constraint type: primary_key
-    is deferrable: false
-    is initially deferred: false
   index: SYS_IDX_PK_AUTHORS_10111
     columns: [PUBLIC.BOOKS.AUTHORS.ID]
     is unique: true
@@ -47,15 +38,6 @@ PUBLIC.BOOKS.BOOKAUTHORS
     pages: 0
     index type: other
 PUBLIC.BOOKS.BOOKS
-  pk: PK_BOOKS
-    columns: [PUBLIC.BOOKS.BOOKS.ID]
-    is unique: true
-    cardinality: 0
-    pages: 0
-    index type: unknown
-    constraint type: primary_key
-    is deferrable: false
-    is initially deferred: false
   index: SYS_IDX_PK_BOOKS_10119
     columns: [PUBLIC.BOOKS.BOOKS.ID]
     is unique: true
@@ -75,15 +57,6 @@ PUBLIC.BOOKS.BOOKS
     pages: 0
     index type: other
 PUBLIC.BOOKS.COUPONS
-  pk: PK_COUPONS
-    columns: [PUBLIC.BOOKS.COUPONS.ID]
-    is unique: true
-    cardinality: 0
-    pages: 0
-    index type: unknown
-    constraint type: primary_key
-    is deferrable: false
-    is initially deferred: false
   index: SYS_IDX_PK_COUPONS_10093
     columns: [PUBLIC.BOOKS.COUPONS.ID]
     is unique: true
@@ -91,15 +64,6 @@ PUBLIC.BOOKS.COUPONS
     pages: 0
     index type: other
 PUBLIC.BOOKS.CUSTOMERDATA
-  pk: PK_CUSTOMERDATA
-    columns: [PUBLIC.BOOKS.CUSTOMERDATA.ID]
-    is unique: true
-    cardinality: 0
-    pages: 0
-    index type: unknown
-    constraint type: primary_key
-    is deferrable: false
-    is initially deferred: false
   index: SYS_IDX_PK_CUSTOMERDATA_10104
     columns: [PUBLIC.BOOKS.CUSTOMERDATA.ID]
     is unique: true
@@ -107,15 +71,6 @@ PUBLIC.BOOKS.CUSTOMERDATA
     pages: 0
     index type: other
 PUBLIC.BOOKS.CUSTOMERS
-  pk: PK_CUSTOMERS
-    columns: [PUBLIC.BOOKS.CUSTOMERS.ID]
-    is unique: true
-    cardinality: 0
-    pages: 0
-    index type: unknown
-    constraint type: primary_key
-    is deferrable: false
-    is initially deferred: false
   index: SYS_IDX_PK_CUSTOMERS_10098
     columns: [PUBLIC.BOOKS.CUSTOMERS.ID]
     is unique: true
@@ -124,15 +79,6 @@ PUBLIC.BOOKS.CUSTOMERS
     index type: other
 PUBLIC.BOOKS."Global Counts"
 PUBLIC.BOOKS.PUBLISHERS
-  pk: SYS_PK_10106
-    columns: [PUBLIC.BOOKS.PUBLISHERS.ID]
-    is unique: true
-    cardinality: 0
-    pages: 0
-    index type: unknown
-    constraint type: primary_key
-    is deferrable: false
-    is initially deferred: false
   index: SYS_IDX_SYS_PK_10106_10107
     columns: [PUBLIC.BOOKS.PUBLISHERS.ID]
     is unique: true
@@ -140,15 +86,6 @@ PUBLIC.BOOKS.PUBLISHERS
     pages: 0
     index type: other
 PUBLIC.BOOKS.ΒΙΒΛΊΑ
-  pk: PK_ΒΙΒΛΊΑ
-    columns: [PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΜΟΝΑΔΙΚΌΣ]
-    is unique: true
-    cardinality: 0
-    pages: 0
-    index type: unknown
-    constraint type: primary_key
-    is deferrable: false
-    is initially deferred: false
   index: SYS_IDX_FK_ΒΙΒΛΊΑ_PUBLISHERS_10144
     columns: [PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ]
     is unique: false
@@ -162,15 +99,6 @@ PUBLIC.BOOKS.ΒΙΒΛΊΑ
     pages: 0
     index type: other
 PUBLIC."PUBLISHER SALES".REGIONS
-  pk: PK_CUSTOMERS
-    columns: [PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE, PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY]
-    is unique: true
-    cardinality: 0
-    pages: 0
-    index type: unknown
-    constraint type: primary_key
-    is deferrable: false
-    is initially deferred: false
   index: SYS_IDX_PK_CUSTOMERS_10227
     columns: [PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE, PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY]
     is unique: true

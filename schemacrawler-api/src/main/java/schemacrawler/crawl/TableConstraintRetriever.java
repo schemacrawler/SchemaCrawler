@@ -323,7 +323,7 @@ final class TableConstraintRetriever
         final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
         final MutableTableConstraintColumn constraintColumn =
           new MutableTableConstraintColumn(tableConstraint, column);
-        constraintColumn.setTableConstraintOrdinalPosition(ordinalPosition);
+        constraintColumn.setKeyOrdinalPosition(ordinalPosition);
 
         tableConstraint.addColumn(constraintColumn);
       }

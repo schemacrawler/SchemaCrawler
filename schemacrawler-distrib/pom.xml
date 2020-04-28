@@ -265,7 +265,7 @@
                 <artifactItem>
                   <groupId>com.oracle.database.jdbc.debug</groupId>
                   <artifactId>ojdbc8_g</artifactId>
-                  <version>19.3.0.0</version>
+                  <version>19.6.0.0</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>

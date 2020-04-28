@@ -41,7 +41,6 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.PartialDatabaseObject;
-import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
 import sf.util.UtilityMarker;
 
@@ -165,10 +164,6 @@ public final class MetaDataUtility
     {
       return allIndexCoumns;
     }
-
-    final PrimaryKey primaryKey = table.getPrimaryKey();
-    final List<String> pkColumns = columnNames(primaryKey);
-    allIndexCoumns.add(pkColumns);
 
     for (final Index index : table.getIndexes())
     {

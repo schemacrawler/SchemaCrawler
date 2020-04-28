@@ -225,7 +225,7 @@ final class IndexRetriever
 
     final MutableIndexColumn indexColumn =
       new MutableIndexColumn(index, column);
-    indexColumn.setIndexOrdinalPosition(ordinalPosition);
+    indexColumn.setKeyOrdinalPosition(ordinalPosition);
     indexColumn.setSortSequence(sortSequence);
     //
     index.addColumn(indexColumn);
@@ -254,7 +254,7 @@ final class IndexRetriever
     if (primaryKey == null)
     {
       primaryKey = new MutablePrimaryKey(table, primaryKeyName);
-      table.setPrimaryKeyAndReplaceIndex(primaryKey);
+      table.setPrimaryKey(primaryKey);
     }
 
     // Register primary key information
@@ -264,12 +264,11 @@ final class IndexRetriever
     {
       final MutableColumn column = columnOptional.get();
       column.markAsPartOfPrimaryKey();
-      final MutableIndexColumn indexColumn =
-        new MutableIndexColumn(primaryKey, column);
-      indexColumn.setSortSequence(IndexColumnSortSequence.ascending);
-      indexColumn.setIndexOrdinalPosition(keySequence);
+      final MutableTableConstraintColumn pkColumn =
+        new MutableTableConstraintColumn(primaryKey, column);
+      pkColumn.setKeyOrdinalPosition(keySequence);
       //
-      primaryKey.addColumn(indexColumn);
+      primaryKey.addColumn(pkColumn);
     }
   }
 

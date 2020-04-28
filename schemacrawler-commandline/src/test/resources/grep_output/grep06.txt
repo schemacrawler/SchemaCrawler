@@ -21,7 +21,7 @@ Contact details for book authors
 Primary Key
 
 PK_AUTHORS                                                 [primary key]
-  ID                                ascending                   
+  ID                                                            
 
 Foreign Keys
 
@@ -89,7 +89,7 @@ Details for published books
 Primary Key
 
 PK_BOOKS                                                   [primary key]
-  ID                                ascending                   
+  ID                                                            
 
 Foreign Keys
 
@@ -144,7 +144,7 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 Primary Key
 
 PK_PUBLICATIONS                                            [primary key]
-  ID                                ascending                   
+  ID                                                            
 
 Foreign Keys
 

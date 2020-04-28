@@ -19,7 +19,7 @@ Contact details for book authors
 Primary Key
 
                                                            [primary key]
-  ID                                ascending                   
+  ID                                                            
 
 Foreign Keys
 
@@ -60,7 +60,7 @@ Details for published books
 Primary Key
 
                                                            [primary key]
-  ID                                ascending                   
+  ID                                                            
 
 Foreign Keys
 
@@ -79,7 +79,7 @@ COUPONS                                                          [table]
 Primary Key
 
                                                            [primary key]
-  ID                                ascending                   
+  ID                                                            
 
 
 
@@ -90,7 +90,7 @@ CUSTOMERDATA                                                     [table]
 Primary Key
 
                                                            [primary key]
-  ID                                ascending                   
+  ID                                                            
 
 
 
@@ -101,7 +101,7 @@ CUSTOMERS                                                        [table]
 Primary Key
 
                                                            [primary key]
-  ID                                ascending                   
+  ID                                                            
 
 
 
@@ -120,7 +120,7 @@ List of book publishers
 Primary Key
 
                                                            [primary key]
-  ID                                ascending                   
+  ID                                                            
 
 Foreign Keys
 
@@ -137,7 +137,7 @@ Foreign Keys
 Primary Key
 
                                                            [primary key]
-  ΜΟΝΑΔΙΚΌΣ                         ascending                   
+  ΜΟΝΑΔΙΚΌΣ                                                     
 
 Foreign Keys
 
@@ -154,8 +154,8 @@ REGIONS                                                          [table]
 Primary Key
 
                                                            [primary key]
-  POSTALCODE                        ascending                   
-  COUNTRY                           ascending                   
+  POSTALCODE                                                    
+  COUNTRY                                                       
 
 Foreign Keys
 

@@ -65,6 +65,9 @@ final class NeuteredLinesFilter
     // -- server-specific values
     Pattern.compile(".*ServerName.*"),
     // DB2
+    // -- unnamed objects
+    Pattern.compile("SQL\\d{15}.*"), // indexes
+    Pattern.compile("[\"0-9A-Z]{28,30}.*"), // constraints
     // -- server-specific values
     Pattern.compile(".*HOST_NAME.*"),
     Pattern.compile(".*TOTAL_MEMORY.*"),
@@ -81,7 +84,7 @@ final class NeuteredLinesFilter
     Pattern.compile("  value\\s+\\d+\\s+"),
     // SQL Server
     // -- unnamed objects
-    Pattern.compile("PK__Publishe__3214EC07.*\\s+\\[primary key]"),
+    Pattern.compile("PK__Publishe__.*"),
     // Oracle
     // -- server-specific values
     Pattern.compile("\\s+value\\s+localhost:\\d+:xe\\s+"),

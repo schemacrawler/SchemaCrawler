@@ -25,7 +25,7 @@ PUBLIC.BOOKS.AUTHORS                                             [table]
 Primary Key
 
 PK_AUTHORS                                                 [primary key]
-  ID                                ascending                   
+  ID                                                            
 
 Foreign Keys
 
@@ -98,7 +98,7 @@ PUBLIC.BOOKS.BOOKS                                               [table]
 Primary Key
 
 PK_BOOKS                                                   [primary key]
-  ID                                ascending                   
+  ID                                                            
 
 Foreign Keys
 
@@ -131,7 +131,7 @@ PUBLIC.BOOKS.COUPONS                                             [table]
 Primary Key
 
 PK_COUPONS                                                 [primary key]
-  ID                                ascending                   
+  ID                                                            
 
 Indexes
 
@@ -148,7 +148,7 @@ PUBLIC.BOOKS.CUSTOMERDATA                                        [table]
 Primary Key
 
 PK_CUSTOMERDATA                                            [primary key]
-  ID                                ascending                   
+  ID                                                            
 
 Indexes
 
@@ -167,7 +167,7 @@ PUBLIC.BOOKS.CUSTOMERS                                           [table]
 Primary Key
 
 PK_CUSTOMERS                                               [primary key]
-  ID                                ascending                   
+  ID                                                            
 
 Indexes
 
@@ -192,7 +192,7 @@ PUBLIC.BOOKS.PUBLISHERS                                          [table]
 Primary Key
 
 SYS_PK_10106                                               [primary key]
-  ID                                ascending                   
+  ID                                                            
 
 Foreign Keys
 
@@ -216,7 +216,7 @@ PUBLIC.BOOKS.ΒΙΒΛΊΑ                                              [table]
 Primary Key
 
 PK_ΒΙΒΛΊΑ                                                  [primary key]
-  ΜΟΝΑΔΙΚΌΣ                         ascending                   
+  ΜΟΝΑΔΙΚΌΣ                                                     
 
 Foreign Keys
 

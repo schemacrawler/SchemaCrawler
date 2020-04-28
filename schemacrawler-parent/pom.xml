@@ -135,7 +135,6 @@
     <java.version>1.8</java.version>
     <skip.signing.artifacts>true</skip.signing.artifacts>
     <maven.javadoc.skip>true</maven.javadoc.skip>
-    <springframework.version>4.3.12.RELEASE</springframework.version>
     <slf4j.version>1.7.25</slf4j.version>
     <graphviz.java.version>0.15.1</graphviz.java.version>
   </properties>
