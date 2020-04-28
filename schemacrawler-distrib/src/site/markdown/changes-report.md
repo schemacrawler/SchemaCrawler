@@ -1,13 +1,14 @@
 # SchemaCrawler Change History
 
 <a name="a16.7.1"></a>
-## Release 16.7.1 - 2020-05-01
+## Release 16.7.1 - 2020-04-30
 
 - Model primary keys as table constraints instead of indexes
+- Introduce architecture contraints, and reorganize classes in packages to avoid cyclic dependencies
 
 
-<a name="a16.7.1"></a>
-## Release 16.7.1 - 2020-04-10
+<a name="a16.6.1"></a>
+## Release 16.6.1 - 2020-04-10
 
 - Make analysis of weak associations part of the maximum info-level retrieval
 - Add new command-line option, --load-row-counts, to load table row counts 
