@@ -1,9 +1,10 @@
 # SchemaCrawler Change History
 
 <a name="a16.7.1"></a>
-## Release 16.7.1 - 2020-05-01
+## Release 16.7.1 - 2020-04-30
 
 - Model primary keys as table constraints instead of indexes
+- Introduce architecture contraints, and reorganize classes in packages to avoid cyclic dependencies
 
 
 <a name="a16.6.1"></a>

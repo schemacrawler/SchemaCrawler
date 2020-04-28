@@ -5,12 +5,12 @@
   <info organisation="us.fatehi" module="schemacrawler"/>
   <configurations>
     <conf name="runtime" visibility="public" />
-  </configurations>		
+  </configurations>
   <dependencies>
     <dependency org="us.fatehi" name="schemacrawler-timesten"
-      rev="16.6.1" conf="runtime" />
+      rev="16.7.1" conf="runtime" />
     <dependency org="us.fatehi" name="schemacrawler-sapiq"
-      rev="16.6.1" conf="runtime" />
+      rev="16.7.1" conf="runtime" />
 
     <exclude org="us.fatehi" module="schemacrawler" />
     <exclude org="org.hsqldb" module="hsqldb" />
