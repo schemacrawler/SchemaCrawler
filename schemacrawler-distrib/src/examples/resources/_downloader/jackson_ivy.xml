@@ -5,15 +5,15 @@
   <info organisation="us.fatehi" module="schemacrawler"/>
   <configurations>
     <conf name="runtime" visibility="public" />
-  </configurations>		
+  </configurations>
   <dependencies>
     <dependency org="com.fasterxml.jackson.core"
-                name="jackson-core" rev="2.10.3" conf="runtime" />
+                name="jackson-core" rev="2.11.0" conf="runtime" />
     <dependency org="com.fasterxml.jackson.datatype"
-                name="jackson-datatype-jsr310" rev="2.10.3" conf="runtime" />
+                name="jackson-datatype-jsr310" rev="2.11.0" conf="runtime" />
     <dependency org="com.fasterxml.jackson.core"
-                name="jackson-databind" rev="2.10.3" conf="runtime" />
+                name="jackson-databind" rev="2.11.0" conf="runtime" />
     <dependency org="com.fasterxml.jackson.dataformat"
-                name="jackson-dataformat-yaml" rev="2.10.3" conf="runtime" />
+                name="jackson-dataformat-yaml" rev="2.11.0" conf="runtime" />
   </dependencies>
 </ivy-module>

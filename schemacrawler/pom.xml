@@ -43,13 +43,13 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
-      <version>4.3.26.RELEASE</version>
+      <version>5.2.6.RELEASE</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
-      <version>4.3.26.RELEASE</version>
+      <version>5.2.6.RELEASE</version>
       <scope>test</scope>
     </dependency>
 
