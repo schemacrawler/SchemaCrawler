@@ -110,7 +110,7 @@ jobs:
       working-directory: schemacrawler-docker
       run: |
         cat <(echo -e "${{ secrets.GITHUB_TOKEN }}") | docker login docker.pkg.github.com -u schemacrawler --password-stdin
-        docker push schemacrawler/schemacrawler:v16.7.1
+        docker push docker.pkg.github.com/schemacrawler/schemacrawler:v16.7.1
         docker logout
 
 # PUBLISH TO CENTRAL REPOSITORY
