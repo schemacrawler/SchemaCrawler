@@ -106,12 +106,14 @@ jobs:
       run: |
         ./docker-build.sh
     - id: publish-docker-image-github-packages
-      name: Publish Docker image to GitHub packages
-      working-directory: schemacrawler-docker
-      run: |
-        cat <(echo -e "${{ secrets.GITHUB_TOKEN }}") | docker login docker.pkg.github.com -u schemacrawler --password-stdin
-        docker push docker.pkg.github.com/schemacrawler/schemacrawler:v16.7.1
-        docker logout
+      name: Push to GitHub Packages
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        registry: docker.pkg.github.com
+        repository: schemacrawler/schemacrawler/schemacrawler
+        tag_with_ref: true
 
 # PUBLISH TO CENTRAL REPOSITORY
     - id: install-secret-key
