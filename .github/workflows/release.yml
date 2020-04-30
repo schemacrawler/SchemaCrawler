@@ -6,7 +6,6 @@ on:
       - '*'
     tags:
       - v[0-9]+.[0-9]+.[0-9]+
-      - debug[0-9]+.[0-9]+.[0-9]+\+[0-9]+
 
 jobs:
   build:
@@ -105,16 +104,6 @@ jobs:
       working-directory: schemacrawler-docker
       run: |
         ./docker-build.sh
-        docker tag schemacrawler/schemacrawler docker.pkg.github.com/schemacrawler/schemacrawler/schemacrawler
-    - id: publish-docker-image-github-packages
-      name: Push to GitHub Packages
-      uses: docker/build-push-action@v1
-      with:
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-        registry: docker.pkg.github.com
-        repository: schemacrawler/schemacrawler/schemacrawler
-        tag_with_ref: true
 
 # PUBLISH TO CENTRAL REPOSITORY
     - id: install-secret-key
