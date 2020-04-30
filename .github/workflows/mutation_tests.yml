@@ -13,10 +13,10 @@ jobs:
 # SETUP BUILD ENVIRONMENT
     - id: checkout-code
       name: Checkout code
-      uses: actions/checkout@v1
+      uses: actions/checkout@latest
     - id: setup-jdk
       name: Set up JDK
-      uses: actions/setup-java@v1
+      uses: actions/setup-java@latest
       with:
         java-version: 8
     - id: install-packages

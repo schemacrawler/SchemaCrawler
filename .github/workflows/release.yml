@@ -16,10 +16,10 @@ jobs:
 # SETUP BUILD ENVIRONMENT
     - id: checkout-code
       name: Checkout code
-      uses: actions/checkout@v1
+      uses: actions/checkout@latest
     - id: setup-jdk
       name: Setup JDK
-      uses: actions/setup-java@v1
+      uses: actions/setup-java@latest
       with:
         java-version: 8
         server-id: sonatype-nexus
@@ -64,7 +64,7 @@ jobs:
         prerelease: false
     - id: upload-release-zip
       name: Upload SchemaCrawler distribution zip
-      uses: actions/upload-release-asset@v1
+      uses: actions/upload-release-asset@latest
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -74,7 +74,7 @@ jobs:
         asset_content_type: application/zip
     - id: upload-release-sha
       name: Upload SchemaCrawler distribution zip SHA
-      uses: actions/upload-release-asset@v1
+      uses: actions/upload-release-asset@latest
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -101,8 +101,16 @@ jobs:
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      working-directory: schemacrawler-docker
       run: |
-        bash -c "cd schemacrawler-docker/; ./docker-build.sh"
+        ./docker-build.sh
+    - id: publish-docker-image-github-packages
+      name: Publish Docker image to GitHub packages
+      working-directory: schemacrawler-docker
+      run: |
+        cat <(echo -e "${{ secrets.GITHUB_TOKEN }}") | docker login docker.pkg.github.com -u schemacrawler --password-stdin
+        docker push docker.pkg.github.com/schemacrawler/schemacrawler:v16.7.1
+        docker logout
 
 # PUBLISH TO CENTRAL REPOSITORY
     - id: install-secret-key
