@@ -105,6 +105,7 @@ jobs:
       working-directory: schemacrawler-docker
       run: |
         ./docker-build.sh
+        docker tag schemacrawler/schemacrawler docker.pkg.github.com/schemacrawler/schemacrawler/schemacrawler
     - id: publish-docker-image-github-packages
       name: Push to GitHub Packages
       uses: docker/build-push-action@v1
