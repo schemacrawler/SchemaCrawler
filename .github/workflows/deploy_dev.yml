@@ -1,4 +1,4 @@
-name: DEVELOPMENT: Create Release
+name: Publish Docker Image
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    name: Create Release
+    name: Publish Docker Image
     runs-on: ubuntu-latest
     steps:
 
@@ -22,9 +22,6 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 8
-        server-id: sonatype-nexus
-        server-username: MAVEN_USERNAME
-        server-password: MAVEN_PASSWORD
     - id: install-packages
       name: Install packages
       run: |
@@ -58,7 +55,6 @@ jobs:
       working-directory: schemacrawler-docker
       run: |
         ./docker-build.sh
-        docker tag schemacrawler/schemacrawler docker.pkg.github.com/schemacrawler/schemacrawler/schemacrawler
     - id: publish-docker-image-github-packages
       name: Push to GitHub Packages
       uses: docker/build-push-action@v1
@@ -66,5 +62,4 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: docker.pkg.github.com
-        repository: schemacrawler/schemacrawler/schemacrawler
-        tag_with_ref: true
+        repository: schemacrawler/schemacrawler
