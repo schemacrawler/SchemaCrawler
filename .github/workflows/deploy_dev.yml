@@ -11,6 +11,7 @@ jobs:
   build:
     name: Publish Docker Image
     runs-on: ubuntu-latest
+    if: false
     steps:
 
 # SETUP BUILD ENVIRONMENT
@@ -63,3 +64,4 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: docker.pkg.github.com
         repository: schemacrawler/schemacrawler
+        add_git_labels: true
