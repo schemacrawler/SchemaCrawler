@@ -200,7 +200,7 @@ final class MutablePrivilege<D extends DatabaseObject>
                 final String grantee,
                 final boolean isGrantable)
   {
-    if (!isBlank(grantor) && !isBlank(grantee))
+    if (!(isBlank(grantor) && isBlank(grantee)))
     {
       grants.add(new PrivilegeGrant(grantor, grantee, isGrantable));
     }
