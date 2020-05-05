@@ -828,9 +828,7 @@ public class SchemaCrawlerTest
         final Collection<Grant<Table>> grants = privilege.getGrants();
         for (final Grant<Table> grant : grants)
         {
-          out.println(String.format("    grantor: %s", grant.getGrantor()));
-          out.println(String.format("    grantee: %s", grant.getGrantee()));
-          out.println(String.format("    grantable?: %s", grant.isGrantable()));
+          out.println("    " + grant);
         }
       }
     }

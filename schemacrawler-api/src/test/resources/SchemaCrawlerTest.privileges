@@ -1,43 +1,19 @@
 PUBLIC.BOOKS.AUTHORS
   privilege: DELETE
-    grantor: SA
-    grantee: OTHERUSER
-    grantable?: false
-    grantor: _SYSTEM
-    grantee: SA
-    grantable?: true
+    SA --> OTHERUSER
+    _SYSTEM --> SA (grantable)
   privilege: INSERT
-    grantor: SA
-    grantee: OTHERUSER
-    grantable?: false
-    grantor: _SYSTEM
-    grantee: SA
-    grantable?: true
+    SA --> OTHERUSER
+    _SYSTEM --> SA (grantable)
   privilege: REFERENCES
-    grantor: SA
-    grantee: OTHERUSER
-    grantable?: false
-    grantor: _SYSTEM
-    grantee: SA
-    grantable?: true
+    SA --> OTHERUSER
+    _SYSTEM --> SA (grantable)
   privilege: SELECT
-    grantor: SA
-    grantee: OTHERUSER
-    grantable?: false
-    grantor: _SYSTEM
-    grantee: SA
-    grantable?: true
+    SA --> OTHERUSER
+    _SYSTEM --> SA (grantable)
   privilege: TRIGGER
-    grantor: SA
-    grantee: OTHERUSER
-    grantable?: false
-    grantor: _SYSTEM
-    grantee: SA
-    grantable?: true
+    SA --> OTHERUSER
+    _SYSTEM --> SA (grantable)
   privilege: UPDATE
-    grantor: SA
-    grantee: OTHERUSER
-    grantable?: false
-    grantor: _SYSTEM
-    grantee: SA
-    grantable?: true
+    SA --> OTHERUSER
+    _SYSTEM --> SA (grantable)
