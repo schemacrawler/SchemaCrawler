@@ -70,6 +70,7 @@ REFERENCES                                                   [privilege]
   dbo --> dbo (grantable)                                       
 
 SELECT                                                       [privilege]
+  dbo --> OTHERUSER                                             
   dbo --> dbo (grantable)                                       
 
 UPDATE                                                       [privilege]
