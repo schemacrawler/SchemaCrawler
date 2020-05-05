@@ -63,6 +63,7 @@
 #,/db/books/12_hidden_columns_01_B.sql
 #,/db/books/13_grants_01_A.sql
 #,/db/books/13_grants_01_B.sql
+#,/db/books/13_grants_02_A.sql
 #,/db/books/90_data_01_A.sql
 #,/db/books/90_data_01_B.sql
 #,/db/books/90_data_01_C.sql

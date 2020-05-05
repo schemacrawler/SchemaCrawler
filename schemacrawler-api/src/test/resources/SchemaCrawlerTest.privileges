@@ -1,19 +1,14 @@
 PUBLIC.BOOKS.AUTHORS
   privilege: DELETE
-    SA --> OTHERUSER
     _SYSTEM --> SA (grantable)
   privilege: INSERT
-    SA --> OTHERUSER
     _SYSTEM --> SA (grantable)
   privilege: REFERENCES
-    SA --> OTHERUSER
     _SYSTEM --> SA (grantable)
   privilege: SELECT
     SA --> OTHERUSER
     _SYSTEM --> SA (grantable)
   privilege: TRIGGER
-    SA --> OTHERUSER
     _SYSTEM --> SA (grantable)
   privilege: UPDATE
-    SA --> OTHERUSER
     _SYSTEM --> SA (grantable)
