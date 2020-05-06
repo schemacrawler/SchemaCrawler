@@ -5,7 +5,6 @@ services:
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2017-CU12
     ports:
-    ports:
       - target: 1433
         published: 1433
         protocol: tcp
