@@ -1,10 +1,16 @@
 # SchemaCrawler Change History
 
+<a name="a16.7.2"></a>
+## Release 16.7.2 - 2020-05-06
+
+- Create privilege grants even if the grantor or grantee is null
+
+
 <a name="a16.7.1"></a>
 ## Release 16.7.1 - 2020-04-30
 
 - Model primary keys as table constraints instead of indexes
-- Introduce architecture contraints, and reorganize classes in packages to avoid cyclic dependencies
+- Introduce architecture constraints, and reorganize classes in packages to avoid cyclic dependencies
 
 
 <a name="a16.6.1"></a>

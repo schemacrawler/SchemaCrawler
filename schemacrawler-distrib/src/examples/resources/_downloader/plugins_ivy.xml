@@ -8,9 +8,9 @@
   </configurations>
   <dependencies>
     <dependency org="us.fatehi" name="schemacrawler-timesten"
-      rev="16.7.1" conf="runtime" />
+      rev="16.7.2" conf="runtime" />
     <dependency org="us.fatehi" name="schemacrawler-sapiq"
-      rev="16.7.1" conf="runtime" />
+      rev="16.7.2" conf="runtime" />
 
     <exclude org="us.fatehi" module="schemacrawler" />
     <exclude org="org.hsqldb" module="hsqldb" />
