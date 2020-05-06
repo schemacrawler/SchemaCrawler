@@ -72,7 +72,7 @@
     <copy todir="${main-distribution.staging.dir}/examples/api">
       <fileset
         dir="${SchemaCrawler.home}/schemacrawler-examplecode/src/main/java">
-        <include name="*.java" />
+        <include name="**/*.java" />
       </fileset>
     </copy>
 
