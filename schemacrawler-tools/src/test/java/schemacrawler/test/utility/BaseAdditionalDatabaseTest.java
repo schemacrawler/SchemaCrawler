@@ -39,6 +39,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.testdb.SqlScript;
 import schemacrawler.testdb.TestSchemaCreator;
 
 @ExtendWith(TestLoggingExtension.class)
@@ -67,6 +68,19 @@ public abstract class BaseAdditionalDatabaseTest
       final TestSchemaCreator schemaCreator =
         new TestSchemaCreator(connection, scriptsResource);
       schemaCreator.run();
+    }
+  }
+
+  protected void runScript(final String databaseSqlResource)
+    throws Exception
+  {
+    try (final Connection connection = getConnection())
+    {
+      connection.setAutoCommit(false);
+
+      final SqlScript sqlScript =
+        new SqlScript(databaseSqlResource, connection);
+      sqlScript.run();
     }
   }
 

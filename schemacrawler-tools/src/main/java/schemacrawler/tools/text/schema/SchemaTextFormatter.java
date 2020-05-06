@@ -763,10 +763,10 @@ final class SchemaTextFormatter
         formattingHelper.writeNameRow(privilege.getName(), "[privilege]");
         for (final Grant<?> grant : privilege.getGrants())
         {
-          final String grantedFrom = String.format("%s %s %s%s",
-                                                   grant.getGrantor(),
-                                                   formattingHelper.createRightArrow(),
-                                                   grant.getGrantee(),
+          final String grantor = isBlank(grant.getGrantor())? "": grant.getGrantor();
+          final String grantee = isBlank(grant.getGrantee())? "": grant.getGrantee();
+          final String grantedFrom = String.format("%s %s %s%s", grantor,
+                                                   formattingHelper.createRightArrow(), grantee,
                                                    grant.isGrantable()?
                                                    " (grantable)": "");
           formattingHelper.writeDetailRow("", grantedFrom, "");

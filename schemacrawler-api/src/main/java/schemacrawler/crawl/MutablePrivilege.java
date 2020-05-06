@@ -79,11 +79,25 @@ final class MutablePrivilege<D extends DatabaseObject>
       int compare = 0;
       if (compare == 0)
       {
-        compare = grantor.compareTo(otherGrant.getGrantor());
+        if (grantor == null)
+        {
+          return -1;
+        }
+        else
+        {
+          compare = grantor.compareTo(otherGrant.getGrantor());
+        }
       }
       if (compare == 0)
       {
-        compare = grantee.compareTo(otherGrant.getGrantee());
+        if (grantee == null)
+        {
+          return -1;
+        }
+        else
+        {
+          compare = grantee.compareTo(otherGrant.getGrantee());
+        }
       }
       return compare;
     }
@@ -178,6 +192,15 @@ final class MutablePrivilege<D extends DatabaseObject>
       return isGrantable == other.isGrantable;
     }
 
+    @Override
+    public String toString()
+    {
+      return String.format("%s --> %s%s",
+                           isBlank(grantor)? "": grantor,
+                           isBlank(grantee)? "": grantee,
+                           isGrantable? " (grantable)": "");
+    }
+
   }
 
 
@@ -200,7 +223,7 @@ final class MutablePrivilege<D extends DatabaseObject>
                 final String grantee,
                 final boolean isGrantable)
   {
-    if (!isBlank(grantor) && !isBlank(grantee))
+    if (!(isBlank(grantor) && isBlank(grantee)))
     {
       grants.add(new PrivilegeGrant(grantor, grantee, isGrantable));
     }
