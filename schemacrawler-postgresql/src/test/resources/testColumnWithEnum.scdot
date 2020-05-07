@@ -29,7 +29,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2020-05-07 15:26:31</td>
+		<td align='left'>2020-05-07 18:33:38</td>
 	</tr>
       </table>
     >
@@ -56,7 +56,7 @@ digraph "SchemaCrawler_Diagram" {
 	<tr>
 		<td align='left'></td>
 		<td align='left'> </td>
-		<td align='left'>'happy', ok', sad'</td>
+		<td align='left'>'sad', ok', happy'</td>
 	</tr>
       </table>
     >

@@ -38,7 +38,6 @@ import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -362,7 +361,6 @@ public final class DatabaseUtility
     {
       results.close();
     }
-    Collections.sort(values);
     return values;
   }
 
