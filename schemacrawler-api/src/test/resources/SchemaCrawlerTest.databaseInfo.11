@@ -161,13 +161,13 @@ supports union all = true
 system functions = [DATABASE, IFNULL, USER]
 table types = [GLOBAL TEMPORARY, SYSTEM TABLE, TABLE, VIEW]
 time date functions = [CURDATE, CURTIME, DATEDIFF, DAYNAME, DAYOFMONTH, DAYOFWEEK, DAYOFYEAR, HOUR, MINUTE, MONTH, MONTHNAME, NOW, QUARTER, SECOND, SECONDS_SINCE_MIDNIGHT, TIMESTAMPADD, TIMESTAMPDIFF, TO_CHAR, WEEK, YEAR]
-type info = [BIT, TINYINT, BIGINT, VARBINARY, BINARY, UUID, CHARACTER, NUMERIC, DECIMAL, INTEGER, SMALLINT, DOUBLE, FLOAT, REAL, NVARCHAR, VARCHAR, BOOLEAN, DATE, TIME, TIMESTAMP, OTHER, BLOB, CLOB]
+type info = [BIGINT, BINARY, BIT, BLOB, BOOLEAN, CHARACTER, CLOB, DATE, DECIMAL, DOUBLE, FLOAT, INTEGER, NUMERIC, NVARCHAR, OTHER, REAL, SMALLINT, TIME, TIMESTAMP, TINYINT, UUID, VARBINARY, VARCHAR]
 updates are detected for TYPE_FORWARD_ONLY result sets = false
 updates are detected for TYPE_SCROLL_INSENSITIVE result sets = false
 updates are detected for TYPE_SCROLL_SENSITIVE result sets = false
 uses local file per table = false
 uses local files = false
-connection url=jdbc:hsqldb:hsql://0.0.0.0:63548/schemacrawler63548
+connection url=jdbc:hsqldb:hsql://0.0.0.0:52572/schemacrawler52572
 driver class=org.hsqldb.jdbc.JDBCDriver
 default_schema = false
   is required? false

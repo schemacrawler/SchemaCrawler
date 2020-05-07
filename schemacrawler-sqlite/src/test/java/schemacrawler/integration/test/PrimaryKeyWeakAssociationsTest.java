@@ -61,7 +61,7 @@ import schemacrawler.utility.SchemaCrawlerUtility;
 
 @ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestContextParameterResolver.class)
-public class PrimaryKeyWeakAssociationsTestColumnReference
+public class PrimaryKeyWeakAssociationsTest
   extends BaseSqliteTest
 {
 

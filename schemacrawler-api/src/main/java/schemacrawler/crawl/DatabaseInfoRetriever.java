@@ -46,6 +46,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
@@ -198,6 +199,7 @@ final class DatabaseInfoRetriever
           final ResultSet results = (ResultSet) methodReturnValue;
           final List<String> resultsList =
             DatabaseUtility.readResultsVector(results);
+          Collections.sort(resultsList);
           dbProperties.add(new ImmutableDatabaseProperty(method.getName(),
                                                          resultsList.toArray(new String[resultsList.size()])));
         }
