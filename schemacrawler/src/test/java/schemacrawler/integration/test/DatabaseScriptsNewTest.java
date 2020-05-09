@@ -43,8 +43,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,12 +61,86 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.ResourcePatternUtils;
 
-public class DatabaseScriptsTest
+public class DatabaseScriptsNewTest
 {
 
   private final static Pattern fileNamePattern = Pattern.compile(".*\\/(.*\\..*)");
 
-  private List<String> booksDatabaseSqlResources;
+
+  private class DatabaseScriptSection
+  {
+
+    private final Pattern scriptNamePattern = Pattern.compile("(\\d\\d)_(.*)_(\\d\\d)_[A-Z].sql");
+
+    private final String name;
+    private final int section;
+    private final int subSection;
+
+    DatabaseScriptSection(final String script)
+    {
+      final Matcher matcher = scriptNamePattern.matcher(script);
+      if (!matcher.matches())
+      {
+        throw new IllegalArgumentException(script);
+      }
+      section = Integer.valueOf(matcher.group(1));
+      name = matcher.group(2);
+      subSection = Integer.valueOf(matcher.group(3));
+    }
+
+    public String getName()
+    {
+      return name;
+    }
+
+    public int getSection()
+    {
+      return section;
+    }
+
+    public int getSubSection()
+    {
+      return subSection;
+    }
+
+    @Override
+    public boolean equals(final Object o)
+    {
+      if (this == o)
+      { return true; }
+      if (o == null || getClass() != o.getClass())
+      { return false; }
+      final DatabaseScriptSection that = (DatabaseScriptSection) o;
+      return section == that.section && subSection == that.subSection && name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode()
+    {
+      return Objects.hash(name, section, subSection);
+    }
+
+    public String toString()
+    {
+      return String.format("%02d_%s_%02d", section, name, subSection);
+    }
+
+    public boolean matches(final String line)
+    {
+      if (line != null)
+      {
+        return line.contains(toString());
+      }
+      else
+      {
+        return false;
+      }
+    }
+
+  }
+
+
+  private Collection<DatabaseScriptSection> booksDatabaseScriptSections;
 
   @Autowired
   private ResourceLoader resourceLoader;
@@ -71,8 +149,8 @@ public class DatabaseScriptsTest
   public void setup()
     throws IOException
   {
-    booksDatabaseSqlResources = loadResources("classpath*:/**/db/books/*.sql");
-    assertThat(booksDatabaseSqlResources, hasSize(74));
+    booksDatabaseScriptSections = makeScriptSections("classpath*:/**/db/books/*.sql");
+    assertThat(booksDatabaseScriptSections.size(), is(26));
   }
 
   @Test
@@ -84,9 +162,10 @@ public class DatabaseScriptsTest
     final Set<String> failedScripts = new HashSet<>();
     for (final String scriptName : scripts)
     {
+      final Map<DatabaseScriptSection, Integer> scriptSectionsCounts = makeScriptSectionsCounts();
       final String scriptsResource = "/" + scriptName;
       try (
-        final BufferedReader reader = new BufferedReader(new InputStreamReader(DatabaseScriptsTest.class.getResourceAsStream(
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(DatabaseScriptsNewTest.class.getResourceAsStream(
           scriptsResource), UTF_8))
       )
       {
@@ -96,28 +175,51 @@ public class DatabaseScriptsTest
           .collect(Collectors.toList());
         assertThat(lines, is(not(empty())));
         int i = 0;
-        for (final String sqlResource : booksDatabaseSqlResources)
+        for (final String line : lines)
         {
-          if (!lines
-            .get(i)
-            .endsWith(sqlResource))
+          for (final DatabaseScriptSection databaseScriptSection : scriptSectionsCounts.keySet())
           {
-            final String message = String.format("%s - line %d - missing %s", scriptName, (i + 1), sqlResource);
-            failedScripts.add(message);
-            break;
+            if (databaseScriptSection.matches(line))
+            {
+              scriptSectionsCounts.merge(databaseScriptSection, 1, Integer::sum);
+            }
           }
-          i++;
         }
       }
       catch (final IOException e)
       {
         throw new RuntimeException(e.getMessage(), e);
       }
+
+      for (Map.Entry<DatabaseScriptSection, Integer> databaseScriptSectionIntegerEntry : scriptSectionsCounts.entrySet())
+      {
+        if (databaseScriptSectionIntegerEntry.getValue() == 0)
+        {
+          final String message = String.format("%s - missing %s",
+                                               scriptName,
+                                               databaseScriptSectionIntegerEntry
+                                                 .getKey()
+                                                 .toString());
+          failedScripts.add(message);
+          failedScripts.add(databaseScriptSectionIntegerEntry.toString());
+        }
+      }
     }
+
     if (!failedScripts.isEmpty())
     {
       fail("\n" + String.join("\n", failedScripts));
     }
+  }
+
+  private Map<DatabaseScriptSection, Integer> makeScriptSectionsCounts()
+  {
+    final Map<DatabaseScriptSection, Integer> scriptSectionsCounts = new HashMap<>();
+    for (DatabaseScriptSection databaseScriptSection : booksDatabaseScriptSections)
+    {
+      scriptSectionsCounts.put(databaseScriptSection, 0);
+    }
+    return scriptSectionsCounts;
   }
 
   private String getScriptName(final String path)
@@ -150,6 +252,17 @@ public class DatabaseScriptsTest
       scripts.add(scriptName);
     }
     scripts.sort(naturalOrder());
+    return scripts;
+  }
+
+  private Collection<DatabaseScriptSection> makeScriptSections(final String pattern)
+    throws IOException
+  {
+    final Set<DatabaseScriptSection> scripts = new HashSet<>();
+    for (final String scriptName : loadResources(pattern))
+    {
+      scripts.add(new DatabaseScriptSection(scriptName));
+    }
     return scripts;
   }
 
