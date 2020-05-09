@@ -62,7 +62,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.ResourcePatternUtils;
 
-public class DatabaseScriptsNewTest
+public class DatabaseScriptsTest
 {
 
   private final static Pattern fileNamePattern = Pattern.compile(".*\\/(.*\\..*)");
@@ -166,7 +166,7 @@ public class DatabaseScriptsNewTest
       final Map<DatabaseScriptSection, Integer> scriptSectionsCounts = makeScriptSectionsCounts();
       final String scriptsResource = "/" + scriptName;
       try (
-        final BufferedReader reader = new BufferedReader(new InputStreamReader(DatabaseScriptsNewTest.class.getResourceAsStream(
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(DatabaseScriptsTest.class.getResourceAsStream(
           scriptsResource), UTF_8))
       )
       {

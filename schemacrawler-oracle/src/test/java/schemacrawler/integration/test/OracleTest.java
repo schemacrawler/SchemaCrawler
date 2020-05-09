@@ -90,7 +90,7 @@ public class OracleTest
                      dbContainer.getPassword(),
                      urlx);
 
-    createDatabase("/oracle.11g.scripts.txt");
+    createDatabase("/oracle-11g.scripts.txt");
   }
 
   @Test
