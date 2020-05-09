@@ -44,6 +44,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -159,7 +160,7 @@ public class DatabaseScriptsNewTest
   {
     final List<String> scripts = loadResources("classpath*:/**/*.scripts.txt");
     assertThat(scripts, hasSize(14));
-    final Set<String> failedScripts = new HashSet<>();
+    final List<String> failedScripts = new ArrayList<>();
     for (final String scriptName : scripts)
     {
       final Map<DatabaseScriptSection, Integer> scriptSectionsCounts = makeScriptSectionsCounts();
@@ -193,21 +194,29 @@ public class DatabaseScriptsNewTest
 
       for (Map.Entry<DatabaseScriptSection, Integer> databaseScriptSectionIntegerEntry : scriptSectionsCounts.entrySet())
       {
-        if (databaseScriptSectionIntegerEntry.getValue() == 0)
+        final int count = databaseScriptSectionIntegerEntry.getValue();
+        if (count != 1)
         {
-          final String message = String.format("%s - missing %s",
+          final String error;
+          if (count < 1) {
+            error = "missing";
+          } else {
+            error = "duplicate";
+          }
+          final String message = String.format("%s: %s %s",
                                                scriptName,
+                                               error,
                                                databaseScriptSectionIntegerEntry
                                                  .getKey()
                                                  .toString());
           failedScripts.add(message);
-          failedScripts.add(databaseScriptSectionIntegerEntry.toString());
         }
       }
     }
 
     if (!failedScripts.isEmpty())
     {
+      Collections.sort(failedScripts);
       fail("\n" + String.join("\n", failedScripts));
     }
   }
