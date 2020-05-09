@@ -77,7 +77,7 @@ public class MySQL56Test
                      dbContainer.getUsername(),
                      dbContainer.getPassword());
 
-    createDatabase("/mysql.scripts.5.6.txt");
+    createDatabase("/mysql-5.6.scripts.txt");
   }
 
   @Test

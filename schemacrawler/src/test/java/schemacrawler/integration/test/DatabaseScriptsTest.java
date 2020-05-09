@@ -31,6 +31,11 @@ package schemacrawler.integration.test;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Comparator.naturalOrder;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.fail;
 import static sf.util.Utility.isBlank;
 
@@ -55,10 +60,9 @@ import org.springframework.core.io.support.ResourcePatternUtils;
 public class DatabaseScriptsTest
 {
 
-  private final static Pattern fileNamePattern =
-    Pattern.compile(".*\\/(.*\\..*)");
+  private final static Pattern fileNamePattern = Pattern.compile(".*\\/(.*\\..*)");
 
-  private List<String> sqlScripts;
+  private List<String> booksDatabaseSqlResources;
 
   @Autowired
   private ResourceLoader resourceLoader;
@@ -67,43 +71,43 @@ public class DatabaseScriptsTest
   public void setup()
     throws IOException
   {
-    sqlScripts = loadResources("classpath*:/**/db/**/*.sql");
+    booksDatabaseSqlResources = loadResources("classpath*:/**/db/books/*.sql");
+    assertThat(booksDatabaseSqlResources, hasSize(74));
   }
 
   @Test
-  public void testScripts()
+  public void booksDatabaseScripts()
     throws Exception
   {
     final List<String> scripts = loadResources("classpath*:/**/*.scripts.txt");
+    assertThat(scripts, hasSize(14));
     final Set<String> failedScripts = new HashSet<>();
     for (final String scriptName : scripts)
     {
+      System.out.println(scriptName);
       final String scriptsResource = "/" + scriptName;
       try (
-        final BufferedReader reader = new BufferedReader(new InputStreamReader(
-          DatabaseScriptsTest.class.getResourceAsStream(scriptsResource),
-          UTF_8));
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(DatabaseScriptsTest.class.getResourceAsStream(
+          scriptsResource), UTF_8))
       )
       {
         final List<String> lines = reader
           .lines()
+          .filter(line -> !isBlank(line))
           .collect(Collectors.toList());
-        for (int i = 0; i < lines.size(); i++)
+        assertThat(lines, is(not(empty())));
+        int i = 0;
+        for (final String sqlResource : booksDatabaseSqlResources)
         {
-          final String line = lines.get(i);
-          if (isBlank(line))
+          if (!lines
+            .get(i)
+            .endsWith(sqlResource))
           {
+            final String message = String.format("%s - line %d - missing %s", scriptName, (i + 1), sqlResource);
+            failedScripts.add(message);
             break;
           }
-          final String sqlResource = sqlScripts.get(i);
-          if (!line.endsWith(sqlResource))
-          {
-            failedScripts.add(scriptName);
-            System.out.println(
-              "#,/db/books/" + sqlResource + " - " + line + " in "
-              + scriptName);
-            continue;
-          }
+          i++;
         }
       }
       catch (final IOException e)
@@ -113,9 +117,7 @@ public class DatabaseScriptsTest
     }
     if (!failedScripts.isEmpty())
     {
-      fail(failedScripts
-             .stream()
-             .collect(Collectors.joining("\n")));
+      fail("\n" + String.join("\n", failedScripts));
     }
   }
 
