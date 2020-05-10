@@ -24,3 +24,5 @@
 ;,/db/books/13_grants_02_A.sql
 ;,/db/books/90_data_01_A.sql
 ;,/db/books/90_data_02_A.sql
+;,/db/books/90_data_03_A.sql
+;,/db/books/90_data_04_A.sql
