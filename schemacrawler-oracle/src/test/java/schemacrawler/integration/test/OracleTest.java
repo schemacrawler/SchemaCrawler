@@ -51,10 +51,9 @@ import org.testcontainers.containers.OracleContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.crawl.SchemaCrawler;
+import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Property;
-import schemacrawler.schemacrawler.InfoLevel;
-import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -133,24 +132,10 @@ public class OracleTest
   public void testOracleWithConnection()
     throws Exception
   {
-    final SchemaInfoLevelBuilder infoLevelBuilder = SchemaInfoLevelBuilder
-      .builder()
-      .withTag("maximum")
-      .withInfoLevel(InfoLevel.maximum)
-      /*
-      .setRetrievePrimaryKeyDefinitions(false)
-      .setRetrieveForeignKeyDefinitions(false)
-      .setRetrieveTableConstraintDefinitions(false)
-      .setRetrieveTableDefinitionsInformation(false)
-      .setRetrieveIndexInformation(false)
-      .setRetrieveIndexColumnInformation(false)
-      .setRetrieveRoutineInformation(false);
-      */;
-
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
       SchemaCrawlerOptionsBuilder.builder();
     schemaCrawlerOptionsBuilder
-      .withSchemaInfoLevel(infoLevelBuilder.toOptions())
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
       .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
       .includeAllSequences()
       .includeAllSynonyms()
