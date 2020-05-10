@@ -151,7 +151,7 @@ public class DatabaseScriptsTest
     throws IOException
   {
     booksDatabaseScriptSections = makeScriptSections("classpath*:/**/db/books/*.sql");
-    assertThat(booksDatabaseScriptSections.size(), is(26));
+    assertThat(booksDatabaseScriptSections.size(), is(28));
   }
 
   @Test
