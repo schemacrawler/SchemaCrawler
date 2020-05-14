@@ -13,6 +13,19 @@
   <packaging>jar</packaging>
   <name>SchemaCrawler</name>
   <dependencies>
+  
+    <!-- Add explicit dependencies (do not rely on transitive) 
+	     so that jacoco can aggregate reports -->
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-tools</artifactId>
+      <version>${project.version}</version>
+    </dependency>	
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-diagram</artifactId>
