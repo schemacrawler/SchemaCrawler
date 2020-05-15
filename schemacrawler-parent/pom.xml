@@ -143,7 +143,7 @@
     <maven.javadoc.skip>true</maven.javadoc.skip>
     <slf4j.version>1.7.25</slf4j.version>
     <graphviz.java.version>0.15.1</graphviz.java.version>
-	
+
     <sonar.projectKey>us.fatehi:schemacrawler-parent</sonar.projectKey>
     <sonar.organization>schemacrawler-github</sonar.organization>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
