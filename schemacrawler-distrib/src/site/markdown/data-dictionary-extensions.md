@@ -216,6 +216,7 @@ For details on the columns in this view, please refer to [getPrimaryKeys](https:
 | INDEX_SCHEMA | The name of the schema containing the index. |
 | INDEX_NAME | The name of the index. |
 | TABLE_NAME | The name of the table which has the index. |
+| REMARKS | Comments or remarks about the index. |
 | INDEX_DEFINITION | The definition of the index. |
 
 
