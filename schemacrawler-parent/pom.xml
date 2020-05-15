@@ -144,7 +144,7 @@
     <slf4j.version>1.7.25</slf4j.version>
     <graphviz.java.version>0.15.1</graphviz.java.version>
 
-    <sonar.projectKey>us.fatehi:schemacrawler-parent</sonar.projectKey>
+    <!-- <sonar.projectKey>us.fatehi:schemacrawler-parent</sonar.projectKey> -->
     <sonar.organization>schemacrawler-github</sonar.organization>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     <sonar.login>967c2060d6d387a8ea54c448284418f2a4ad4cf4</sonar.login>
