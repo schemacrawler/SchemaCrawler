@@ -52,7 +52,8 @@ jobs:
           -Dlightdb \
           -Dheavydb \
           clean install \
-          org.jacoco:jacoco-maven-plugin:0.8.5:report-aggregate
+          org.jacoco:jacoco-maven-plugin:0.8.5:report-aggregate \
+          sonar:sonar
 
 # GET TEST RESULTS
     - id: publish-test-results
