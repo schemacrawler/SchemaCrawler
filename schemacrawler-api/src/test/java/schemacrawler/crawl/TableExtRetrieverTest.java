@@ -39,6 +39,7 @@ import java.sql.Connection;
 import java.util.Collection;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -63,15 +64,51 @@ import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 public class TableExtRetrieverTest
 {
 
+  private MutableCatalog catalog;
+
   @Test
-  @DisplayName("Verify that index column definitions can be obtained from INFORMATION_SCHEMA")
+  @DisplayName("Retrieve index definitions from INFORMATION_SCHEMA")
+  public void indexInfo(final Connection connection)
+    throws Exception
+  {
+
+    final String remarks = "TEST Index remarks";
+    final String definition = "TEST Index definition";
+
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder
+      .withInformationSchemaViewsBuilder()
+      .withSql(InformationSchemaKey.EXT_INDEXES,
+               String.format("SELECT DISTINCT TABLE_CAT AS INDEX_CATALOG, TABLE_SCHEM AS INDEX_SCHEMA, "
+                             + "TABLE_NAME, INDEX_NAME, '%s' AS REMARKS, '%s' AS INDEX_DEFINITION "
+                             + "FROM INFORMATION_SCHEMA.SYSTEM_INDEXINFO", remarks, definition));
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final TableExtRetriever tableExtRetriever = new TableExtRetriever(retrieverConnection, catalog, options);
+    tableExtRetriever.retrieveIndexInformation();
+
+    final Collection<Table> tables = catalog.getTables();
+    assertThat(tables, hasSize(19));
+    for (final Table table : tables)
+    {
+      for (final Index index : table.getIndexes())
+      {
+        assertThat(index.getRemarks(), is(remarks));
+        assertThat(index.getDefinition(), is(definition));
+      }
+    }
+  }
+
+  @Test
+  @DisplayName("Retrieve index column definitions from INFORMATION_SCHEMA")
   public void indexColumnInfo(final Connection connection)
     throws Exception
   {
 
     final String definition = "TEST INDEX COLUMN DEFINITION";
-
-    final MutableCatalog catalog = getBaseCatalog(connection);
 
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
     schemaRetrievalOptionsBuilder
@@ -106,12 +143,13 @@ public class TableExtRetrieverTest
     }
   }
 
-  private MutableCatalog getBaseCatalog(final Connection connection)
+  @BeforeAll
+  public void loadBaseCatalog(final Connection connection)
     throws SchemaCrawlerException
   {
-    final MutableCatalog catalog = (MutableCatalog) getCatalog(connection,
-                                                               SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
-                                                               SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
+    catalog = (MutableCatalog) getCatalog(connection,
+                                          SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
+                                          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
 
     final Collection<Table> tables = catalog.getTables();
     assertThat(tables, hasSize(19));
@@ -129,8 +167,6 @@ public class TableExtRetrieverTest
 
       }
     }
-
-    return catalog;
   }
 
 }
