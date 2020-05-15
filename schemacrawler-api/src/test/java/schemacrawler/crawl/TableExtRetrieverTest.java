@@ -67,6 +67,37 @@ public class TableExtRetrieverTest
   private MutableCatalog catalog;
 
   @Test
+  @DisplayName("Retrieve table definitions from INFORMATION_SCHEMA")
+  public void tableDefinitions(final Connection connection)
+    throws Exception
+  {
+
+    final String definition = "TEST Table definition";
+
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder
+      .withInformationSchemaViewsBuilder()
+      .withSql(InformationSchemaKey.EXT_TABLES,
+               String.format("SELECT DISTINCT TABLE_CAT AS TABLE_CATALOG, TABLE_SCHEM AS TABLE_SCHEMA, "
+                             + "TABLE_NAME, '%s' AS TABLE_DEFINITION "
+                             + "FROM INFORMATION_SCHEMA.SYSTEM_TABLES", definition));
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final TableExtRetriever tableExtRetriever = new TableExtRetriever(retrieverConnection, catalog, options);
+    tableExtRetriever.retrieveTableDefinitions();
+
+    final Collection<Table> tables = catalog.getTables();
+    assertThat(tables, hasSize(19));
+    for (final Table table : tables)
+    {
+      assertThat(table.getDefinition(), is(definition));
+    }
+  }
+
+  @Test
   @DisplayName("Retrieve index definitions from INFORMATION_SCHEMA")
   public void indexInfo(final Connection connection)
     throws Exception
