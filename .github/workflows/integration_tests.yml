@@ -44,6 +44,7 @@ jobs:
       name: Build and run database integration tests
       env:
         TZ: GMT
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         mvn \
           --no-transfer-progress \
