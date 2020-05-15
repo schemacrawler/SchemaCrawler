@@ -68,15 +68,17 @@ public class IndexRetrieverTest
   private MutableCatalog catalog;
 
   @Test
-  @DisplayName("Retrieve indexes from INFORMATION_SCHEMA")
+  @DisplayName("Retrieve indexes and primary keys from INFORMATION_SCHEMA")
   public void indexesFromDataDictionary(final Connection connection)
     throws Exception
   {
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
     schemaRetrievalOptionsBuilder
       .withIndexRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
+      .withPrimaryKeyRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
       .withInformationSchemaViewsBuilder()
-      .withSql(InformationSchemaKey.INDEXES, "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_INDEXINFO");
+      .withSql(InformationSchemaKey.INDEXES, "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_INDEXINFO")
+      .withSql(InformationSchemaKey.PRIMARY_KEYS, "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_PRIMARYKEYS");
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
 
@@ -84,18 +86,24 @@ public class IndexRetrieverTest
 
     final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, options);
     indexRetriever.retrieveIndexes(catalog.getAllTables());
+    indexRetriever.retrievePrimaryKeys(catalog.getAllTables());
 
     final Collection<Table> tables = catalog.getTables();
     assertThat(tables, hasSize(19));
     for (final Table table : tables)
     {
-      if (Arrays
+      if (!Arrays
         .asList("Global Counts", "AUTHORSLIST")
         .contains(table.getName()))
       {
-        continue;
+        assertThat("Did not find indexes for " + table.getFullName(), table.getIndexes(), is(not(empty())));
       }
-      assertThat("Did not find indexes for " + table.getFullName(), table.getIndexes(), is(not(empty())));
+      if (!Arrays
+        .asList("Global Counts", "AUTHORSLIST", "BOOKAUTHORS", "PUBLICATIONWRITERS", "SALES", "SALESDATA")
+        .contains(table.getName()))
+      {
+        assertThat("Did not find primary key for " + table.getFullName(), table.getPrimaryKey(), is(not(nullValue())));
+      }
     }
   }
 
