@@ -36,6 +36,7 @@ import static org.hamcrest.Matchers.not;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 
 import java.sql.Connection;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -79,8 +80,8 @@ public class TableExtRetrieverTest
       .withInformationSchemaViewsBuilder()
       .withSql(InformationSchemaKey.EXT_TABLES,
                String.format("SELECT DISTINCT TABLE_CAT AS TABLE_CATALOG, TABLE_SCHEM AS TABLE_SCHEMA, "
-                             + "TABLE_NAME, '%s' AS TABLE_DEFINITION "
-                             + "FROM INFORMATION_SCHEMA.SYSTEM_TABLES", definition));
+                             + "TABLE_NAME, '%s' AS TABLE_DEFINITION " + "FROM INFORMATION_SCHEMA.SYSTEM_TABLES",
+                             definition));
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
 
@@ -94,6 +95,44 @@ public class TableExtRetrieverTest
     for (final Table table : tables)
     {
       assertThat(table.getDefinition(), is(definition));
+    }
+  }
+
+  @Test
+  @DisplayName("Retrieve primary key definitions from INFORMATION_SCHEMA")
+  public void primaryKeyInfo(final Connection connection)
+    throws Exception
+  {
+    final String definition = "TEST Primary Key definition";
+
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder
+      .withInformationSchemaViewsBuilder()
+      .withSql(InformationSchemaKey.EXT_PRIMARY_KEYS,
+               String.format("SELECT DISTINCT TABLE_CAT AS PRIMARY_KEY_CATALOG, TABLE_SCHEM AS PRIMARY_KEY_SCHEMA, "
+                             + "TABLE_NAME AS PRIMARY_KEY_TABLE_NAME, PK_NAME AS PRIMARY_KEY_NAME, "
+                             + "'%s' AS PRIMARY_KEY_DEFINITION "
+                             + "FROM INFORMATION_SCHEMA.SYSTEM_PRIMARYKEYS", definition));
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final TableExtRetriever tableExtRetriever = new TableExtRetriever(retrieverConnection, catalog, options);
+    tableExtRetriever.retrievePrimaryKeyDefinitions(catalog.getAllTables());
+
+    final Collection<Table> tables = catalog.getTables();
+    assertThat(tables, hasSize(19));
+    for (final Table table : tables)
+    {
+      if (!Arrays
+        .asList("Global Counts", "AUTHORSLIST", "BOOKAUTHORS", "PUBLICATIONWRITERS", "SALES", "SALESDATA")
+        .contains(table.getName()))
+      {
+        assertThat(table
+                     .getPrimaryKey()
+                     .getDefinition(), is(definition));
+      }
     }
   }
 
