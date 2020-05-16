@@ -43,13 +43,13 @@ import java.util.logging.Level;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.traversal.DataTraversalHandler;
-import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.utility.NamedObjectSort;
-import schemacrawler.schemacrawler.Query;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
@@ -61,8 +61,7 @@ import sf.util.StringFormat;
 public final class OperationCommand
   extends BaseSchemaCrawlerCommand
 {
-  private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(OperationCommand.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(OperationCommand.class.getName());
 
   private OperationOptions operationOptions;
 
@@ -95,44 +94,40 @@ public final class OperationCommand
     if (!isOutputFormatSupported())
     {
       LOGGER.log(Level.INFO,
-                 new StringFormat(
-                   "Output format <%s> not supported for command <%s>",
-                   outputOptions.getOutputFormatValue(),
-                   getCommand()));
+                 new StringFormat("Output format <%s> not supported for command <%s>",
+                                  outputOptions.getOutputFormatValue(),
+                                  getCommand()));
       return;
     }
 
     final DataTraversalHandler handler = getDataTraversalHandler();
     final Query query = getQuery();
 
-    try (final Statement statement = createStatement(connection))
+    handler.begin();
+
+    handler.handleInfoStart();
+    handler.handle(catalog.getDatabaseInfo());
+    handler.handle(catalog.getJdbcDriverInfo());
+    handler.handleInfoEnd();
+
+    if (query.isQueryOver())
     {
+      // This is a special instance of identifiers that does not use
+      // the configuration from the SchemaCrawler configuration
+      // properties file, since the database always needs identifiers
+      // to be quoted in SQL queries if they contain spaces in the
+      // name
+      final String identifierQuoteString = identifiers.getIdentifierQuoteString();
+      final Identifiers identifiers = Identifiers
+        .identifiers()
+        .withIdentifierQuoteString(identifierQuoteString)
+        .build();
 
-      handler.begin();
-
-      handler.handleInfoStart();
-      handler.handle(catalog.getDatabaseInfo());
-      handler.handle(catalog.getJdbcDriverInfo());
-      handler.handleInfoEnd();
-
-      if (query.isQueryOver())
+      try (final Statement statement = createStatement(connection))
       {
-        // This is a special instance of identifiers that does not use
-        // the configuration from the SchemaCrawler configuration
-        // properties file, since the database always needs identifiers
-        // to be quoted in SQL queries if they contain spaces in the
-        // name
-        final String identifierQuoteString =
-          identifiers.getIdentifierQuoteString();
-        final Identifiers identifiers = Identifiers
-          .identifiers()
-          .withIdentifierQuoteString(identifierQuoteString)
-          .build();
-
         for (final Table table : getSortedTables(catalog))
         {
-          final boolean isAlphabeticalSortForTableColumns =
-            operationOptions.isAlphabeticalSortForTableColumns();
+          final boolean isAlphabeticalSortForTableColumns = operationOptions.isAlphabeticalSortForTableColumns();
           try (
             final ResultSet results = executeAgainstTable(query,
                                                           statement,
@@ -143,25 +138,28 @@ public final class OperationCommand
           {
             handler.handleData(table, results);
           }
+          catch (final SQLException e)
+          {
+            LOGGER.log(Level.WARNING,
+                       new StringFormat("Bad operation for table <%s>", table), e);
+          }
         }
       }
-      else
-      {
-        final String sql = query.getQuery();
-        try (final ResultSet results = executeSql(statement, sql, true))
-        {
-          handler.handleData(query, results);
-        }
-      }
-
-      handler.end();
-
     }
-    catch (final SQLException e)
+    else
     {
-      throw new SchemaCrawlerException(String.format("Unknown command <%s>",
-                                                     getCommand()), e);
+      final String sql = query.getQuery();
+      try (
+        final Statement statement = createStatement(connection);
+        final ResultSet results = executeSql(statement, sql)
+      )
+      {
+        handler.handleData(query, results);
+      }
     }
+
+    handler.end();
+
   }
 
   @Override
@@ -177,8 +175,7 @@ public final class OperationCommand
 
   public final void setOperationOptions(final OperationOptions operationOptions)
   {
-    this.operationOptions =
-      requireNonNull(operationOptions, "No operation options provided");
+    this.operationOptions = requireNonNull(operationOptions, "No operation options provided");
   }
 
   private DataTraversalHandler getDataTraversalHandler()
@@ -186,14 +183,11 @@ public final class OperationCommand
   {
     final Operation operation = getOperation();
 
-    final TextOutputFormat outputFormat =
-      TextOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
+    final TextOutputFormat outputFormat = TextOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
     final String identifierQuoteString = identifiers.getIdentifierQuoteString();
 
-    final DataTraversalHandler formatter = new DataTextFormatter(operation,
-                                                                 operationOptions,
-                                                                 outputOptions,
-                                                                 identifierQuoteString);
+    final DataTraversalHandler formatter =
+      new DataTextFormatter(operation, operationOptions, outputOptions, identifierQuoteString);
     return formatter;
   }
 
@@ -242,8 +236,7 @@ public final class OperationCommand
   private boolean isOutputFormatSupported()
   {
     final String outputFormatValue = outputOptions.getOutputFormatValue();
-    final boolean isOutputFormatSupported =
-      TextOutputFormat.isSupportedFormat(outputFormatValue);
+    final boolean isOutputFormatSupported = TextOutputFormat.isSupportedFormat(outputFormatValue);
     return isOutputFormatSupported;
   }
 

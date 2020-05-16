@@ -116,7 +116,7 @@ public final class DatabaseUtility
             continue;
           }
 
-          final ResultSet resultSet = executeSql(statement, sql, false);
+          final ResultSet resultSet = executeSql(statement, sql);
           if (resultSet != null)
           {
             LOGGER.log(Level.WARNING,
@@ -135,14 +135,6 @@ public final class DatabaseUtility
 
   public static ResultSet executeSql(final Statement statement,
                                      final String sql)
-    throws SQLException
-  {
-    return executeSql(statement, sql, false);
-  }
-
-  public static ResultSet executeSql(final Statement statement,
-                                     final String sql,
-                                     final boolean throwSQLException)
     throws SQLException
   {
     if (statement == null)
@@ -184,11 +176,7 @@ public final class DatabaseUtility
       LOGGER.log(Level.WARNING,
                  new StringFormat("Error executing SQL <%s>", sql),
                  e);
-      if (throwSQLException)
-      {
-        throw e;
-      }
-      return null;
+      throw e;
     }
   }
 
