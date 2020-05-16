@@ -41,13 +41,13 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -62,23 +62,21 @@ import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 @ExtendWith(TestContextParameterResolver.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
-public class IndexRetrieverTest
+@Disabled("Not supported by HyperSQL")
+public class IndexRetrieverMetadataAllTest
 {
 
   private MutableCatalog catalog;
 
   @Test
-  @DisplayName("Retrieve indexes and primary keys from INFORMATION_SCHEMA")
+  @DisplayName("Retrieve indexes and primary keys from metadata for all tables")
   public void indexesAndPrimaryKeysFromDataDictionary(final Connection connection)
     throws Exception
   {
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
     schemaRetrievalOptionsBuilder
-      .withIndexRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
-      .withPrimaryKeyRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
-      .withInformationSchemaViewsBuilder()
-      .withSql(InformationSchemaKey.INDEXES, "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_INDEXINFO")
-      .withSql(InformationSchemaKey.PRIMARY_KEYS, "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_PRIMARYKEYS");
+      .withIndexRetrievalStrategy(MetadataRetrievalStrategy.metadata_all)
+      .withPrimaryKeyRetrievalStrategy(MetadataRetrievalStrategy.metadata_all);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
 
