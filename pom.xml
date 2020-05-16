@@ -62,8 +62,5 @@
       </modules>
     </profile>
   </profiles>
-  <properties>
-    <sonar.skip>true</sonar.skip>
-  </properties>
 
 </project>

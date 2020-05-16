@@ -44,7 +44,6 @@ jobs:
       name: Build and run database integration tests
       env:
         TZ: GMT
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         mvn \
           --no-transfer-progress \
@@ -53,8 +52,7 @@ jobs:
           -Dlightdb \
           -Dheavydb \
           clean install \
-          org.jacoco:jacoco-maven-plugin:0.8.5:report-aggregate \
-          sonar:sonar
+          org.jacoco:jacoco-maven-plugin:0.8.5:report-aggregate
 
 # GET TEST RESULTS
     - id: publish-test-results
