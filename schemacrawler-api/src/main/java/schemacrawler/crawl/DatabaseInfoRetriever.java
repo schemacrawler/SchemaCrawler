@@ -524,7 +524,7 @@ final class DatabaseInfoRetriever
       final MetadataResultSet results = new MetadataResultSet(getMetaData().getUDTs(
         catalogName,
         schemaName,
-        "%",
+        null,
         null))
     )
     {

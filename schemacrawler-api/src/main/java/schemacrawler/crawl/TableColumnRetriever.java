@@ -364,8 +364,8 @@ final class TableColumnRetriever
       final MetadataResultSet results = new MetadataResultSet(getMetaData().getColumns(
         null,
         null,
-        "%",
-        "%"))
+        null,
+        null))
     )
     {
       while (results.next())

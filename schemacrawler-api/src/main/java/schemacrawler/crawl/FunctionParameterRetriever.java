@@ -311,8 +311,8 @@ final class FunctionParameterRetriever
       final MetadataResultSet results = new MetadataResultSet(getMetaData().getFunctionColumns(
         null,
         null,
-        "%",
-        "%"))
+        null,
+        null))
     )
     {
       while (results.next())

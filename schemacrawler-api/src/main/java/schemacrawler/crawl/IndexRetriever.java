@@ -382,7 +382,7 @@ final class IndexRetriever
       final MetadataResultSet results = new MetadataResultSet(getMetaData().getIndexInfo(
         null,
         null,
-        "%",
+        null,
         unique,
         true/* approximate */))
     )
@@ -493,7 +493,7 @@ final class IndexRetriever
       final MetadataResultSet results = new MetadataResultSet(getMetaData().getPrimaryKeys(
         null,
         null,
-        "%"))
+        null))
     )
     {
       while (results.next())

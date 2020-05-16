@@ -432,7 +432,7 @@ final class ForeignKeyRetriever
       final MetadataResultSet results = new MetadataResultSet(metaData.getImportedKeys(
         null,
         null,
-        "%"))
+        null))
     )
     {
       createForeignKeys(results, foreignKeys);
@@ -445,7 +445,7 @@ final class ForeignKeyRetriever
       final MetadataResultSet results = new MetadataResultSet(metaData.getExportedKeys(
         null,
         null,
-        "%"))
+        null))
     )
     {
       createForeignKeys(results, foreignKeys);

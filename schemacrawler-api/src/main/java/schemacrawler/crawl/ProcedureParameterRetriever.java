@@ -309,8 +309,8 @@ final class ProcedureParameterRetriever
       final MetadataResultSet results = new MetadataResultSet(getMetaData().getProcedureColumns(
         null,
         null,
-        "%",
-        "%"))
+        null,
+        null))
     )
     {
       while (results.next())

@@ -300,7 +300,7 @@ final class RoutineRetriever
         final MetadataResultSet results = new MetadataResultSet(getMetaData().getFunctions(
           catalogName,
           schemaName,
-          "%"))
+          null))
       )
       {
         results.setDescription("retrieveFunctionsFromMetadata");
@@ -334,7 +334,7 @@ final class RoutineRetriever
       final MetadataResultSet results = new MetadataResultSet(getMetaData().getFunctions(
         null,
         null,
-        "%"))
+        null))
     )
     {
       results.setDescription("retrieveFunctionsFromMetadataForAllFunctions");
@@ -408,7 +408,7 @@ final class RoutineRetriever
         final MetadataResultSet results = new MetadataResultSet(getMetaData().getProcedures(
           catalogName,
           schemaName,
-          "%"))
+          null))
       )
       {
         results.setDescription("retrieveProceduresFromMetadata");
@@ -432,7 +432,7 @@ final class RoutineRetriever
       final MetadataResultSet results = new MetadataResultSet(getMetaData().getProcedures(
         null,
         null,
-        "%"))
+        null))
     )
     {
       results.setDescription("retrieveProceduresFromMetadataForAllProcedures");
