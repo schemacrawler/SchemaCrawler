@@ -1,5 +1,11 @@
 # SchemaCrawler Change History
 
+<a name="a16.8.1"></a>
+## Release 16.8.1 - 2020-05-20
+
+- Remove metadata_all as a metadata retrieval strategy
+
+
 <a name="a16.7.2"></a>
 ## Release 16.7.2 - 2020-05-06
 

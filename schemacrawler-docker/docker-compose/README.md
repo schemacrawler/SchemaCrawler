@@ -99,7 +99,7 @@
 
 
 
-## :warning: IBM DB2
+## IBM DB2
 
 
 ### Setup

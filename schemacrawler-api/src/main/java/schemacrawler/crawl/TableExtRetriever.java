@@ -555,8 +555,8 @@ final class TableExtRetriever
       final MetadataResultSet results = new MetadataResultSet(getMetaData().getColumnPrivileges(
         null,
         null,
-        "%",
-        "%"))
+        null,
+        null))
     )
     {
       createPrivileges(results, true);
@@ -651,7 +651,7 @@ final class TableExtRetriever
       final MetadataResultSet results = new MetadataResultSet(getMetaData().getTablePrivileges(
         null,
         null,
-        "%"))
+        null))
     )
     {
       createPrivileges(results, false);

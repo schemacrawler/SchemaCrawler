@@ -41,7 +41,7 @@ public class BundledDistributionTest
 {
 
   @Test
-  public void testContextrmationSchema_sqlite()
+  public void testInformationSchema_sqlite()
     throws Exception
   {
 

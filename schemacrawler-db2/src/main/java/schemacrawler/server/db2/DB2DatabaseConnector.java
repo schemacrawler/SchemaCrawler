@@ -63,7 +63,7 @@ public final class DB2DatabaseConnector
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
       super.getSchemaRetrievalOptionsBuilder(connection);
     schemaRetrievalOptionsBuilder.withTableColumnRetrievalStrategy(
-      MetadataRetrievalStrategy.metadata_all);
+      MetadataRetrievalStrategy.data_dictionary_all);
     return schemaRetrievalOptionsBuilder;
   }
 

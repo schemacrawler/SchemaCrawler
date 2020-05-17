@@ -41,7 +41,7 @@ public class BundledDistributionTest
 {
 
   @Test
-  public void testContextrmationSchema_db2()
+  public void testInformationSchema_db2()
     throws Exception
   {
 
@@ -54,7 +54,7 @@ public class BundledDistributionTest
                  .getSchemaRetrievalOptionsBuilder(connection)
                  .toOptions()
                  .getInformationSchemaViews()
-                 .size(), is(12));
+                 .size(), is(13));
   }
 
   @Test

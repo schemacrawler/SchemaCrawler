@@ -41,7 +41,7 @@ public class BundledDistributionTest
 {
 
   @Test
-  public void testContextrmationSchema_sqlserver()
+  public void testInformationSchema_sqlserver()
     throws Exception
   {
 

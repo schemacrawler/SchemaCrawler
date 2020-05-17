@@ -41,7 +41,7 @@ public class BundledDistributionTest
 {
 
   @Test
-  public void testContextrmationSchema_hsqldb()
+  public void testInformationSchema_hsqldb()
     throws Exception
   {
     final DatabaseConnectorRegistry registry =
