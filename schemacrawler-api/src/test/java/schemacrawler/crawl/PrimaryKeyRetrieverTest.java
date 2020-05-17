@@ -62,38 +62,38 @@ import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 @ExtendWith(TestContextParameterResolver.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
-public class IndexRetrieverTest
+public class PrimaryKeyRetrieverTest
 {
 
   private MutableCatalog catalog;
 
   @Test
-  @DisplayName("Retrieve indexes from data dictionary")
-  public void indexesFromDataDictionary(final Connection connection)
+  @DisplayName("Retrieve primary keys from data dictionary")
+  public void primaryKeysFromDataDictionary(final Connection connection)
     throws Exception
   {
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
     schemaRetrievalOptionsBuilder
-      .withIndexRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
+      .withPrimaryKeyRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
       .withInformationSchemaViewsBuilder()
-      .withSql(InformationSchemaKey.INDEXES, "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_INDEXINFO");
+      .withSql(InformationSchemaKey.PRIMARY_KEYS, "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_PRIMARYKEYS");
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
 
     final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
-    final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, options);
-    indexRetriever.retrieveIndexes(catalog.getAllTables());
+    final PrimaryKeyRetriever primaryKeyRetriever = new PrimaryKeyRetriever(retrieverConnection, catalog, options);
+    primaryKeyRetriever.retrievePrimaryKeys(catalog.getAllTables());
 
     final Collection<Table> tables = catalog.getTables();
     assertThat(tables, hasSize(19));
     for (final Table table : tables)
     {
       if (!Arrays
-        .asList("Global Counts", "AUTHORSLIST")
+        .asList("Global Counts", "AUTHORSLIST", "BOOKAUTHORS", "PUBLICATIONWRITERS", "SALES", "SALESDATA")
         .contains(table.getName()))
       {
-        assertThat("Did not find indexes for " + table.getFullName(), table.getIndexes(), is(not(empty())));
+        assertThat("Did not find primary key for " + table.getFullName(), table.getPrimaryKey(), is(not(nullValue())));
       }
     }
   }

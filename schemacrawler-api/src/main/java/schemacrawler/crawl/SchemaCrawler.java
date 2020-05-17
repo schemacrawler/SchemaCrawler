@@ -596,7 +596,6 @@ public final class SchemaCrawler
     {
       final TableRetriever retriever = new TableRetriever(retrieverConnection, catalog, options);
       final TableColumnRetriever columnRetriever = new TableColumnRetriever(retrieverConnection, catalog, options);
-      final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, options);
       final ForeignKeyRetriever fkRetriever = new ForeignKeyRetriever(retrieverConnection, catalog, options);
       final TableConstraintRetriever constraintRetriever =
         new TableConstraintRetriever(retrieverConnection, catalog, options);
@@ -661,20 +660,28 @@ public final class SchemaCrawler
         return null;
       });
 
+      stopWatch.time("retrievePrimaryKeys", () -> {
+        LOGGER.log(Level.INFO, "Retrieving primary keys");
+        if (infoLevel.isRetrieveTableColumns())
+        {
+          final PrimaryKeyRetriever primaryKeyRetriever = new PrimaryKeyRetriever(retrieverConnection, catalog, options);
+          primaryKeyRetriever.retrievePrimaryKeys(allTables);
+          if (infoLevel.isRetrievePrimaryKeyDefinitions())
+          {
+            retrieverExtra.retrievePrimaryKeyDefinitions(allTables);
+          }
+        }
+        return null;
+      });
+
       stopWatch.time("retrieveIndexes", () -> {
-        LOGGER.log(Level.INFO, "Retrieving primary keys and indexes");
+        LOGGER.log(Level.INFO, "Retrieving indexes");
         if (infoLevel.isRetrieveTableColumns())
         {
           if (infoLevel.isRetrieveIndexes())
           {
+            final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, options);
             indexRetriever.retrieveIndexes(allTables);
-          }
-          // Setting primary keys will use indexes with a similar name,
-          // if available
-          indexRetriever.retrievePrimaryKeys(allTables);
-          if (infoLevel.isRetrievePrimaryKeyDefinitions())
-          {
-            retrieverExtra.retrievePrimaryKeyDefinitions(allTables);
           }
         }
         return null;
