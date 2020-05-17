@@ -37,6 +37,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -62,6 +63,7 @@ import schemacrawler.test.utility.HeavyDatabaseBuildCondition;
 @Testcontainers(disabledWithoutDocker = true)
 @ExtendWith(HeavyDatabaseBuildCondition.class)
 @DisplayName("Test for issue #252 on GitHub")
+@Disabled
 public class MySQLDotNameTest
   extends BaseAdditionalDatabaseTest
 {
