@@ -30,6 +30,7 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
+import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.utility.SchemaCrawlerUtility.matchSchemaRetrievalOptions;
 
 import java.sql.Connection;
@@ -37,7 +38,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -50,7 +50,6 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -63,7 +62,6 @@ import schemacrawler.test.utility.HeavyDatabaseBuildCondition;
 @Testcontainers(disabledWithoutDocker = true)
 @ExtendWith(HeavyDatabaseBuildCondition.class)
 @DisplayName("Test for issue #252 on GitHub")
-@Disabled
 public class MySQLDotNameTest
   extends BaseAdditionalDatabaseTest
 {
@@ -110,7 +108,8 @@ public class MySQLDotNameTest
       SchemaRetrievalOptionsBuilder
         .builder()
         .fromOptions(matchSchemaRetrievalOptions(connection))
-        .withTableColumnRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all);
+        .withTableColumnRetrievalStrategy(data_dictionary_all)
+      ;
     final SchemaRetrievalOptions schemaRetrievalOptions =
       schemaRetrievalOptionsBuilder.toOptions();
 
