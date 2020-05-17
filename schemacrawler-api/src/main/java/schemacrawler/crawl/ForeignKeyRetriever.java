@@ -161,12 +161,6 @@ final class ForeignKeyRetriever
         retrieveForeignKeysFromDataDictionary();
         break;
 
-      case metadata_all:
-        LOGGER.log(Level.INFO,
-                   "Retrieving foreign keys, using fast meta-data retrieval");
-        retrieveForeignKeysFromMetadataForAllTables();
-        break;
-
       case metadata:
         LOGGER.log(Level.INFO, "Retrieving foreign keys");
         retrieveForeignKeysFromMetadata(allTables);
@@ -417,38 +411,6 @@ final class ForeignKeyRetriever
           "Could not retrieve foreign keys for table " + table,
           e);
       }
-    }
-  }
-
-  private void retrieveForeignKeysFromMetadataForAllTables()
-    throws SQLException
-  {
-    final NamedObjectList<MutableForeignKey> foreignKeys =
-      new NamedObjectList<>();
-    final DatabaseMetaData metaData = getMetaData();
-
-    // Get imported foreign keys
-    try (
-      final MetadataResultSet results = new MetadataResultSet(metaData.getImportedKeys(
-        null,
-        null,
-        null))
-    )
-    {
-      createForeignKeys(results, foreignKeys);
-    }
-
-    // We need to get exported keys as well, since if only a single
-    // table is selected, we have not retrieved it's keys that are
-    // imported by other tables.
-    try (
-      final MetadataResultSet results = new MetadataResultSet(metaData.getExportedKeys(
-        null,
-        null,
-        null))
-    )
-    {
-      createForeignKeys(results, foreignKeys);
     }
   }
 

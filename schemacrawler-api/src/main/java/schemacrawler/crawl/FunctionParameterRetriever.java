@@ -101,13 +101,6 @@ final class FunctionParameterRetriever
                                                      parameterFilter);
         break;
 
-      case metadata_all:
-        LOGGER.log(Level.INFO,
-                   "Retrieving function parameters, using fast meta-data retrieval");
-        retrieveFunctionParametersFromMetadataForAllFunctions(allRoutines,
-                                                              parameterFilter);
-        break;
-
       case metadata:
         LOGGER.log(Level.INFO, "Retrieving function parameters");
         retrieveFunctionParametersFromMetadata(allRoutines, parameterFilter);
@@ -301,34 +294,6 @@ final class FunctionParameterRetriever
           "Could not retrieve parameters for function %s",
           function), e);
       }
-    }
-  }
-
-  private void retrieveFunctionParametersFromMetadataForAllFunctions(final NamedObjectList<MutableRoutine> allRoutines,
-                                                                     final InclusionRuleFilter<FunctionParameter> parameterFilter)
-  {
-    try (
-      final MetadataResultSet results = new MetadataResultSet(getMetaData().getFunctionColumns(
-        null,
-        null,
-        null,
-        null))
-    )
-    {
-      while (results.next())
-      {
-        createFunctionParameter(results, allRoutines, parameterFilter);
-      }
-    }
-    catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
-    {
-      logSQLFeatureNotSupported(new StringFormat(
-        "Could not retrieve parameters for functions"), e);
-    }
-    catch (final SQLException e)
-    {
-      logPossiblyUnsupportedSQLFeature(new StringFormat(
-        "Could not retrieve parameters for functions"), e);
     }
   }
 

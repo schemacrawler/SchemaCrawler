@@ -105,14 +105,6 @@ final class TableColumnRetriever
                                                hiddenColumns);
         break;
 
-      case metadata_all:
-        LOGGER.log(Level.INFO,
-                   "Retrieving table columns, using fast meta-data retrieval");
-        retrieveTableColumnsFromMetadataForAllTables(allTables,
-                                                     columnFilter,
-                                                     hiddenColumns);
-        break;
-
       case metadata:
         LOGGER.log(Level.INFO, "Retrieving table columns");
         retrieveTableColumnsFromMetadata(allTables,
@@ -351,26 +343,6 @@ final class TableColumnRetriever
           "Could not retrieve table columns for %s <%s>",
           table.getTableType(),
           table), e);
-      }
-    }
-  }
-
-  private void retrieveTableColumnsFromMetadataForAllTables(final NamedObjectList<MutableTable> allTables,
-                                                            final InclusionRuleFilter<Column> columnFilter,
-                                                            final Set<List<String>> hiddenColumns)
-    throws SQLException
-  {
-    try (
-      final MetadataResultSet results = new MetadataResultSet(getMetaData().getColumns(
-        null,
-        null,
-        null,
-        null))
-    )
-    {
-      while (results.next())
-      {
-        createTableColumn(results, allTables, columnFilter, hiddenColumns);
       }
     }
   }

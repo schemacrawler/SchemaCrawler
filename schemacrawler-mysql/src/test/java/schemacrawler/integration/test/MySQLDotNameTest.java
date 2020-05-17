@@ -44,12 +44,12 @@ import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -108,7 +108,7 @@ public class MySQLDotNameTest
       SchemaRetrievalOptionsBuilder
         .builder()
         .fromOptions(matchSchemaRetrievalOptions(connection))
-        .withTableColumnRetrievalStrategy(MetadataRetrievalStrategy.metadata_all);
+        .withTableColumnRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all);
     final SchemaRetrievalOptions schemaRetrievalOptions =
       schemaRetrievalOptionsBuilder.toOptions();
 

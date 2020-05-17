@@ -106,15 +106,6 @@ final class TableRetriever
                                          tableFilter);
         break;
 
-      case metadata_all:
-        LOGGER.log(Level.INFO,
-                   "Retrieving tables, using fast meta-data retrieval");
-        retrieveTablesFromMetadataForAllTables(schemas,
-                                               tableNamePattern,
-                                               tableTypes,
-                                               tableFilter);
-        break;
-
       case metadata:
         LOGGER.log(Level.INFO, "Retrieving tables");
         retrieveTablesFromMetadata(schemas,
@@ -263,41 +254,6 @@ final class TableRetriever
         LOGGER.log(Level.INFO,
                    new StringFormat("Processed %d tables", numTables));
       }
-    }
-  }
-
-  private void retrieveTablesFromMetadataForAllTables(final NamedObjectList<SchemaReference> schemas,
-                                                      final String tableNamePattern,
-                                                      final Collection<String> tableTypes,
-                                                      final InclusionRuleFilter<Table> tableFilter)
-    throws SQLException
-  {
-    final TableTypes supportedTableTypes =
-      getRetrieverConnection().getTableTypes();
-    final String[] filteredTableTypes =
-      supportedTableTypes.filterUnknown(tableTypes);
-    LOGGER.log(Level.FINER,
-               new StringFormat("Retrieving table types <%s>",
-                                filteredTableTypes == null? "<<all>>":
-                                Arrays.asList(filteredTableTypes)));
-
-    try (
-      final MetadataResultSet results = new MetadataResultSet(getMetaData().getTables(
-        null,
-        null,
-        tableNamePattern,
-        filteredTableTypes))
-    )
-    {
-      results.setDescription("retrieveTablesFromMetadataForAllTables");
-      int numTables = 0;
-      while (results.next())
-      {
-        numTables = numTables + 1;
-        createTable(results, schemas, tableFilter, supportedTableTypes);
-      }
-      LOGGER.log(Level.INFO,
-                 new StringFormat("Processed %d tables", numTables));
     }
   }
 

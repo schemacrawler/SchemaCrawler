@@ -100,13 +100,6 @@ final class ProcedureParameterRetriever
                                                       parameterFilter);
         break;
 
-      case metadata_all:
-        LOGGER.log(Level.INFO,
-                   "Retrieving procedure parameters, using fast meta-data retrieval");
-        retrieveProcedureParametersFromMetadataForAllProcedures(allRoutines,
-                                                                parameterFilter);
-        break;
-
       case metadata:
         LOGGER.log(Level.INFO, "Retrieving procedure parameters");
         retrieveProcedureParametersFromMetadata(allRoutines, parameterFilter);
@@ -297,25 +290,6 @@ final class ProcedureParameterRetriever
         throw new SchemaCrawlerSQLException(String.format(
           "Could not retrieve procedure parameters for procedure <%s>",
           procedure), e);
-      }
-    }
-  }
-
-  private void retrieveProcedureParametersFromMetadataForAllProcedures(final NamedObjectList<MutableRoutine> allRoutines,
-                                                                       final InclusionRuleFilter<ProcedureParameter> parameterFilter)
-    throws SQLException
-  {
-    try (
-      final MetadataResultSet results = new MetadataResultSet(getMetaData().getProcedureColumns(
-        null,
-        null,
-        null,
-        null))
-    )
-    {
-      while (results.next())
-      {
-        createProcedureParameter(results, allRoutines, parameterFilter);
       }
     }
   }

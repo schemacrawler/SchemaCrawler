@@ -103,12 +103,6 @@ final class RoutineRetriever
         retrieveFunctionsFromDataDictionary(schemas, functionFilter);
         break;
 
-      case metadata_all:
-        LOGGER.log(Level.INFO,
-                   "Retrieving functions, using fast meta-data retrieval");
-        retrieveFunctionsFromMetadataForAllFunctions(schemas, functionFilter);
-        break;
-
       case metadata:
         LOGGER.log(Level.INFO, "Retrieving functions");
         retrieveFunctionsFromMetadata(schemas, functionFilter);
@@ -143,13 +137,6 @@ final class RoutineRetriever
         LOGGER.log(Level.INFO,
                    "Retrieving procedures, using fast data dictionary retrieval");
         retrieveProceduresFromDataDictionary(schemas, procedureFilter);
-        break;
-
-      case metadata_all:
-        LOGGER.log(Level.INFO,
-                   "Retrieving procedures, using fast meta-data retrieval");
-        retrieveProceduresFromMetadataForAllProcedures(schemas,
-                                                       procedureFilter);
         break;
 
       case metadata:
@@ -326,39 +313,6 @@ final class RoutineRetriever
     }
   }
 
-  private void retrieveFunctionsFromMetadataForAllFunctions(final NamedObjectList<SchemaReference> schemas,
-                                                            final InclusionRuleFilter<Function> functionFilter)
-    throws SQLException
-  {
-    try (
-      final MetadataResultSet results = new MetadataResultSet(getMetaData().getFunctions(
-        null,
-        null,
-        null))
-    )
-    {
-      results.setDescription("retrieveFunctionsFromMetadataForAllFunctions");
-      int numFunctions = 0;
-      while (results.next())
-      {
-        numFunctions = numFunctions + 1;
-        createFunction(results, schemas, functionFilter);
-      }
-      LOGGER.log(Level.INFO,
-                 new StringFormat("Processed %d functions", numFunctions));
-    }
-    catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
-    {
-      logSQLFeatureNotSupported(new StringFormat("Could not retrieve functions"),
-                                e);
-    }
-    catch (final SQLException e)
-    {
-      logPossiblyUnsupportedSQLFeature(new StringFormat(
-        "Could not retrieve functions"), e);
-    }
-  }
-
   private void retrieveProceduresFromDataDictionary(final NamedObjectList<SchemaReference> schemas,
                                                     final InclusionRuleFilter<Procedure> procedureFilter)
     throws SQLException
@@ -421,29 +375,6 @@ final class RoutineRetriever
         LOGGER.log(Level.INFO,
                    new StringFormat("Processed %d procedures", numProcedures));
       }
-    }
-  }
-
-  private void retrieveProceduresFromMetadataForAllProcedures(final NamedObjectList<SchemaReference> schemas,
-                                                              final InclusionRuleFilter<Procedure> procedureFilter)
-    throws SQLException
-  {
-    try (
-      final MetadataResultSet results = new MetadataResultSet(getMetaData().getProcedures(
-        null,
-        null,
-        null))
-    )
-    {
-      results.setDescription("retrieveProceduresFromMetadataForAllProcedures");
-      int numProcedures = 0;
-      while (results.next())
-      {
-        numProcedures = numProcedures + 1;
-        createProcedure(results, schemas, procedureFilter);
-      }
-      LOGGER.log(Level.INFO,
-                 new StringFormat("Processed %d procedures", numProcedures));
     }
   }
 

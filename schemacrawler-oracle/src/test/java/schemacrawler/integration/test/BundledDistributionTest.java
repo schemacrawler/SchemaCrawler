@@ -41,7 +41,7 @@ public class BundledDistributionTest
 {
 
   @Test
-  public void testContextrmationSchema_oracle()
+  public void testInformationSchema_oracle()
     throws Exception
   {
 
