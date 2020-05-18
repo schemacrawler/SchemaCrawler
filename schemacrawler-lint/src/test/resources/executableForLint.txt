@@ -7,6 +7,7 @@ Database                                                      [database]
 ------------------------------------------------------------------------
 
                                                           [lint, medium]
+	column with same name but different data types	STATE [CHARACTER, VARCHAR]
 	column with same name but different data types	FIRSTNAME [VARCHAR, PUBLIC.BOOKS.NAME_TYPE]
 	column with same name but different data types	LASTNAME [VARCHAR, PUBLIC.BOOKS.NAME_TYPE]
 	column with same name but different data types	UPDATE [CLOB, VARCHAR]

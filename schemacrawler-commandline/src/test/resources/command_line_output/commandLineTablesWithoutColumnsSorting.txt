@@ -12,7 +12,7 @@ Contact details for book authors
   FIRSTNAME                         VARCHAR(20) NOT NULL        
   LASTNAME                          VARCHAR(20) NOT NULL        
   CITY                              VARCHAR(50)                 
-  STATE                             VARCHAR(2)                  
+  STATE                             CHARACTER(2)                
   POSTALCODE                        VARCHAR(10)                 
   COUNTRY                           VARCHAR(50)                 
 

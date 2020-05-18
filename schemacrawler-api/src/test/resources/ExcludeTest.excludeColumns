@@ -16,8 +16,8 @@ schema: PUBLIC.BOOKS
       database type: VARCHAR
       type: VARCHAR
     column: PUBLIC.BOOKS.AUTHORS.STATE
-      database type: VARCHAR
-      type: VARCHAR
+      database type: CHARACTER
+      type: CHAR
     column: PUBLIC.BOOKS.AUTHORS.POSTALCODE
       database type: VARCHAR
       type: VARCHAR

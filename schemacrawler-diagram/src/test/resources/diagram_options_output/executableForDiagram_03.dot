@@ -63,7 +63,7 @@ digraph "SchemaCrawler_Diagram" {
 	<tr>
 		<td port='state_b3d3d1cb.start' align='left'>STATE</td>
 		<td align='left'> </td>
-		<td port='state_b3d3d1cb.end' align='left'>VARCHAR(2)</td>
+		<td port='state_b3d3d1cb.end' align='left'>CHARACTER(2)</td>
 	</tr>
 	<tr>
 		<td port='postalcode_43f33e92.start' align='left'>POSTALCODE</td>

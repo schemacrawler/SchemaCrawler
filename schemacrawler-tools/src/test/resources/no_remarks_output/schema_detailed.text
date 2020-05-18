@@ -13,7 +13,7 @@ PUBLIC.BOOKS.AUTHORS                                             [table]
   ADDRESS1                          VARCHAR(255)                
   ADDRESS2                          VARCHAR(255)                
   CITY                              VARCHAR(50)                 
-  STATE                             VARCHAR(2)                  
+  STATE                             CHARACTER(2)                
   POSTALCODE                        VARCHAR(10)                 
   COUNTRY                           VARCHAR(50)                 
 

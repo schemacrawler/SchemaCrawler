@@ -14,7 +14,7 @@ Contact details for book authors
   ID                                INTEGER NOT NULL            
   LASTNAME                          VARCHAR(20) NOT NULL        
   POSTALCODE                        VARCHAR(10)                 
-  STATE                             VARCHAR(2)                  
+  STATE                             CHARACTER(2)                
 
 Primary Key
 
