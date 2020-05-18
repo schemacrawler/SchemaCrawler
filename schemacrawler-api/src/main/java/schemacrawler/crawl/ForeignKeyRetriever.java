@@ -74,7 +74,6 @@ final class ForeignKeyRetriever
   ForeignKeyRetriever(final RetrieverConnection retrieverConnection,
                       final MutableCatalog catalog,
                       final SchemaCrawlerOptions options)
-    throws SQLException
   {
     super(retrieverConnection, catalog, options);
   }
