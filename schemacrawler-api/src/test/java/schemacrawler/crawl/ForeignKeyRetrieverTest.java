@@ -39,6 +39,7 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Collection;
@@ -50,6 +51,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Schema;
@@ -74,26 +76,9 @@ import schemacrawler.utility.NamedObjectSort;
 public class ForeignKeyRetrieverTest
 {
 
-  private MutableCatalog catalog;
-
-  @Test
-  @DisplayName("Retrieve foreign keys from data dictionary")
-  public void fkFromDataDictionary(final Connection connection)
-    throws Exception
+  public static void verifyRetrieveForeignKeys(final Catalog catalog)
+    throws IOException
   {
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder
-      .withForeignKeyRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
-      .withInformationSchemaViewsBuilder()
-      .withSql(InformationSchemaKey.FOREIGN_KEYS, "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_CROSSREFERENCE");
-    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-    final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
-
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-
-    final ForeignKeyRetriever foreignKeyRetriever = new ForeignKeyRetriever(retrieverConnection, catalog, options);
-    foreignKeyRetriever.retrieveForeignKeys(catalog.getAllTables());
-
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
@@ -131,8 +116,31 @@ public class ForeignKeyRetrieverTest
         }
       }
     }
-    // IMPORTANT: The data dictionary should return the same information as the metadata test
+    // IMPORTANT: The data dictionary test should return the same information as the metadata test
     assertThat(outputOf(testout), hasSameContentAs(classpathResource("SchemaCrawlerTest.foreignKeys")));
+  }
+
+  private MutableCatalog catalog;
+
+  @Test
+  @DisplayName("Retrieve foreign keys from data dictionary")
+  public void fkFromDataDictionary(final Connection connection)
+    throws Exception
+  {
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder
+      .withForeignKeyRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
+      .withInformationSchemaViewsBuilder()
+      .withSql(InformationSchemaKey.FOREIGN_KEYS, "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_CROSSREFERENCE");
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final ForeignKeyRetriever foreignKeyRetriever = new ForeignKeyRetriever(retrieverConnection, catalog, options);
+    foreignKeyRetriever.retrieveForeignKeys(catalog.getAllTables());
+
+    verifyRetrieveForeignKeys(catalog);
   }
 
   @BeforeAll

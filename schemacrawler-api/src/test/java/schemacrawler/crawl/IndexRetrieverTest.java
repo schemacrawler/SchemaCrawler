@@ -39,6 +39,7 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Collection;
@@ -49,6 +50,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -71,26 +73,9 @@ import schemacrawler.utility.NamedObjectSort;
 public class IndexRetrieverTest
 {
 
-  private MutableCatalog catalog;
-
-  @Test
-  @DisplayName("Retrieve indexes from data dictionary")
-  public void indexesFromDataDictionary(final Connection connection)
-    throws Exception
+  public static void verifyRetrieveIndexes(final Catalog catalog)
+    throws IOException
   {
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder
-      .withIndexRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
-      .withInformationSchemaViewsBuilder()
-      .withSql(InformationSchemaKey.INDEXES, "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_INDEXINFO");
-    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-    final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
-
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-
-    final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, options);
-    indexRetriever.retrieveIndexes(catalog.getAllTables());
-
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
@@ -122,6 +107,29 @@ public class IndexRetrieverTest
     }
     // IMPORTANT: The data dictionary should return the same information as the metadata test
     assertThat(outputOf(testout), hasSameContentAs(classpathResource("SchemaCrawlerTest.indexes")));
+  }
+
+  private MutableCatalog catalog;
+
+  @Test
+  @DisplayName("Retrieve indexes from data dictionary")
+  public void indexesFromDataDictionary(final Connection connection)
+    throws Exception
+  {
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder
+      .withIndexRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
+      .withInformationSchemaViewsBuilder()
+      .withSql(InformationSchemaKey.INDEXES, "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_INDEXINFO");
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, options);
+    indexRetriever.retrieveIndexes(catalog.getAllTables());
+
+    verifyRetrieveIndexes(catalog);
   }
 
   @BeforeAll
