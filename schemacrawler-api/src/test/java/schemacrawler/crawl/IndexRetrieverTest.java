@@ -29,12 +29,15 @@ package schemacrawler.crawl;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 
 import java.sql.Connection;
 import java.util.Arrays;
@@ -45,6 +48,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
+import schemacrawler.schema.Index;
+import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
@@ -56,6 +62,8 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.TestWriter;
+import schemacrawler.utility.NamedObjectSort;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
@@ -83,17 +91,37 @@ public class IndexRetrieverTest
     final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, options);
     indexRetriever.retrieveIndexes(catalog.getAllTables());
 
-    final Collection<Table> tables = catalog.getTables();
-    assertThat(tables, hasSize(19));
-    for (final Table table : tables)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout)
     {
-      if (!Arrays
-        .asList("Global Counts", "AUTHORSLIST")
-        .contains(table.getName()))
+      final Schema[] schemas = catalog
+        .getSchemas()
+        .toArray(new Schema[0]);
+      assertThat("Schema count does not match", schemas, arrayWithSize(5));
+      for (final Schema schema : schemas)
       {
-        assertThat("Did not find indexes for " + table.getFullName(), table.getIndexes(), is(not(empty())));
+        final Table[] tables = catalog
+          .getTables(schema)
+          .toArray(new Table[0]);
+        Arrays.sort(tables, NamedObjectSort.alphabetical);
+        for (final Table table : tables)
+        {
+          out.println(table.getFullName());
+          final Collection<Index> indexes = table.getIndexes();
+          for (final Index index : indexes)
+          {
+            out.println(String.format("  index: %s", index.getName()));
+            out.println(String.format("    columns: %s", index.getColumns()));
+            out.println(String.format("    is unique: %b", index.isUnique()));
+            out.println(String.format("    cardinality: %d", index.getCardinality()));
+            out.println(String.format("    pages: %d", index.getPages()));
+            out.println(String.format("    index type: %s", index.getIndexType()));
+          }
+        }
       }
     }
+    // IMPORTANT: The data dictionary should return the same information as the metadata test
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource("SchemaCrawlerTest.indexes")));
   }
 
   @BeforeAll
@@ -103,13 +131,14 @@ public class IndexRetrieverTest
     final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
       .builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.minimum())
+      .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
       .toOptions();
     catalog = (MutableCatalog) getCatalog(connection,
                                           SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
                                           schemaCrawlerOptions);
 
     final Collection<Table> tables = catalog.getTables();
-    assertThat(tables, hasSize(19));
+    assertThat(tables, hasSize(13));
     for (final Table table : tables)
     {
       assertThat(table.getIndexes(), is(empty()));
