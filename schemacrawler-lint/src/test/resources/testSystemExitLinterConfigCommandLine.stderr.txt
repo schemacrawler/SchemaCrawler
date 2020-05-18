@@ -7,7 +7,7 @@ Summary of schema lints:
 [medium]      1- single column
 [medium]      2- column where NULL may be intended
 [medium]      3- unique index with nullable columns
-[medium]      5- column with same name but different data types
+[medium]      6- column with same name but different data types
 [medium]      6- no non-nullable data columns
 [medium]      6- spaces in name, or reserved word
 [medium]     10- incrementing columns
