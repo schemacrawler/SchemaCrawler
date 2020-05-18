@@ -61,11 +61,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.crawl.WeakAssociationColumnReference;
 import schemacrawler.crawl.WeakAssociation;
+import schemacrawler.crawl.WeakAssociationColumnReference;
+import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.*;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
@@ -631,6 +631,7 @@ public class SchemaCrawlerTest
         final Table[] tables = catalog
           .getTables(schema)
           .toArray(new Table[0]);
+        Arrays.sort(tables, NamedObjectSort.alphabetical);
         for (final Table table : tables)
         {
           out.println("  table: " + table.getFullName());
