@@ -7,7 +7,7 @@ CREATE TABLE Authors
   Address1 VARCHAR(255),
   Address2 VARCHAR(255),
   City VARCHAR(50),
-  State VARCHAR(2),
+  State CHAR(2),
   PostalCode VARCHAR(10),
   Country VARCHAR(50) DEFAULT 'USA',
   CONSTRAINT PK_Authors PRIMARY KEY (Id)
@@ -23,7 +23,7 @@ CREATE TABLE Books
   PublisherId INTEGER NOT NULL,
   PublicationDate DATE,
   Price FLOAT,
-  PreviousEditionId INTEGER,  
+  PreviousEditionId INTEGER,
   CONSTRAINT PK_Books PRIMARY KEY (Id),
   CONSTRAINT FK_PreviousEdition FOREIGN KEY (PreviousEditionId) REFERENCES Books (Id),
   CONSTRAINT U_PreviousEdition UNIQUE (PreviousEditionId)

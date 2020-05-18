@@ -168,7 +168,7 @@ PUBLIC.BOOKS.AUTHORS.CITY
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.AUTHORS.STATE
   - short name=AUTHORS.STATE
-  - data-type=VARCHAR
+  - data-type=CHARACTER
   - size=2
   - decimal digits=0
   - width=(2)
@@ -192,7 +192,7 @@ PUBLIC.BOOKS.AUTHORS.STATE
     ~ SCOPE_SCHEMA=null
     ~ SCOPE_TABLE=null
     ~ SOURCE_DATA_TYPE=null
-    ~ SQL_DATA_TYPE=12
+    ~ SQL_DATA_TYPE=1
     ~ SQL_DATETIME_SUB=null
 PUBLIC.BOOKS.AUTHORS.POSTALCODE
   - short name=AUTHORS.POSTALCODE

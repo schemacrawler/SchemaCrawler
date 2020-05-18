@@ -14,7 +14,7 @@ Contact details for book authors
 4   ADDRESS1                          VARCHAR(255)                
 5   ADDRESS2                          VARCHAR(255)                
 6   CITY                              VARCHAR(50)                 
-7   STATE                             VARCHAR(2)                  
+7   STATE                             CHAR(2)                     
 8   POSTALCODE                        VARCHAR(10)                 
 9   COUNTRY                           VARCHAR(50)                 
 
