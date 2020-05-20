@@ -48,9 +48,7 @@ import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.RoutineType;
 
 /**
- * SchemaCrawler options.
- *
- * @author Sualeh Fatehi
+ * SchemaCrawler options builder, to build the immutable options to crawl a schema.
  */
 public final class SchemaCrawlerOptionsBuilder
   implements OptionsBuilder<SchemaCrawlerOptionsBuilder, SchemaCrawlerOptions>
@@ -132,7 +130,7 @@ public final class SchemaCrawlerOptionsBuilder
   private InclusionRule routineParameterInclusionRule;
   private Optional<Collection<RoutineType>> routineTypes;
   private InclusionRule schemaInclusionRule;
-  private SchemaInfoLevelBuilder schemaInfoLevelBuilder;
+  private SchemaInfoLevel schemaInfoLevel;
   private InclusionRule sequenceInclusionRule;
   private InclusionRule synonymInclusionRule;
   private InclusionRule tableInclusionRule;
@@ -144,9 +142,7 @@ public final class SchemaCrawlerOptionsBuilder
    */
   private SchemaCrawlerOptionsBuilder()
   {
-    schemaInfoLevelBuilder = SchemaInfoLevelBuilder
-      .builder()
-      .withInfoLevel(InfoLevel.standard);
+    schemaInfoLevel = SchemaInfoLevelBuilder.standard();
 
     // All schemas are included by default
     schemaInclusionRule = new IncludeAll();
@@ -189,9 +185,9 @@ public final class SchemaCrawlerOptionsBuilder
       return this;
     }
 
-    schemaInfoLevelBuilder = SchemaInfoLevelBuilder
+    schemaInfoLevel = SchemaInfoLevelBuilder
       .builder()
-      .fromConfig(config);
+      .fromConfig(config).toOptions();
 
     schemaInclusionRule = config.getInclusionRuleWithDefault(
       SC_SCHEMA_PATTERN_INCLUDE,
@@ -245,9 +241,7 @@ public final class SchemaCrawlerOptionsBuilder
       return this;
     }
 
-    schemaInfoLevelBuilder = SchemaInfoLevelBuilder
-      .builder()
-      .fromOptions(options.getSchemaInfoLevel());
+    schemaInfoLevel = options.getSchemaInfoLevel();
 
     schemaInclusionRule = options.getSchemaInclusionRule();
     synonymInclusionRule = options.getSynonymInclusionRule();
@@ -290,6 +284,10 @@ public final class SchemaCrawlerOptionsBuilder
   @Override
   public SchemaCrawlerOptions toOptions()
   {
+    final SchemaInfoLevelBuilder schemaInfoLevelBuilder = SchemaInfoLevelBuilder
+      .builder()
+      .fromOptions(schemaInfoLevel);
+
     if (tableInclusionRule instanceof ExcludeAll)
     {
       schemaInfoLevelBuilder.withoutTables();
@@ -693,24 +691,25 @@ public final class SchemaCrawlerOptionsBuilder
   {
     if (schemaInfoLevel != null)
     {
-      schemaInfoLevelBuilder = SchemaInfoLevelBuilder
-        .builder()
-        .fromOptions(schemaInfoLevel);
+      this.schemaInfoLevel = schemaInfoLevel;
     }
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder withSchemaInfoLevel(final SchemaInfoLevelBuilder schemaInfoLevelBuilder)
+  public SchemaCrawlerOptionsBuilder withSchemaInfoLevelBuilder(final SchemaInfoLevelBuilder schemaInfoLevelBuilder)
   {
-    if (schemaInfoLevelBuilder == null)
+    if (schemaInfoLevelBuilder != null)
     {
-      this.schemaInfoLevelBuilder = SchemaInfoLevelBuilder
-        .builder()
-        .withInfoLevel(InfoLevel.standard);
+      this.schemaInfoLevel = schemaInfoLevelBuilder.toOptions();
     }
-    else
+    return this;
+  }
+
+  public SchemaCrawlerOptionsBuilder withInfoLevel(final InfoLevel infoLevel)
+  {
+    if (infoLevel != null)
     {
-      this.schemaInfoLevelBuilder = schemaInfoLevelBuilder;
+      this.schemaInfoLevel = infoLevel.toSchemaInfoLevel();
     }
     return this;
   }

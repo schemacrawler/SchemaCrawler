@@ -30,6 +30,7 @@ package schemacrawler.schemacrawler;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.schemacrawler.SchemaInfoRetrieval.*;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -37,9 +38,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
- * Descriptor for level of schema detail.
- *
- * @author Sualeh Fatehi
+ * Descriptor for level of schema detail to be retrieved when crawling a schema.
  */
 public final class SchemaInfoLevel
   implements Options
@@ -48,23 +47,18 @@ public final class SchemaInfoLevel
   private final boolean[] schemaInfoRetrievals;
   private final String tag;
 
-  SchemaInfoLevel(final String tag,
-                  final Map<SchemaInfoRetrieval, Boolean> schemaInfoRetrievalsMap)
+  SchemaInfoLevel(final String tag, final Map<SchemaInfoRetrieval, Boolean> schemaInfoRetrievalsMap)
   {
     requireNonNull(tag, "No tag provided");
     this.tag = tag;
 
-    requireNonNull(schemaInfoRetrievalsMap,
-                   "No schema info retrievals provided");
-    final SchemaInfoRetrieval[] schemaInfoRetrievalsArray =
-      SchemaInfoRetrieval.values();
+    requireNonNull(schemaInfoRetrievalsMap, "No schema info retrievals provided");
+    final SchemaInfoRetrieval[] schemaInfoRetrievalsArray = values();
     schemaInfoRetrievals = new boolean[schemaInfoRetrievalsArray.length];
     for (final SchemaInfoRetrieval schemaInfoRetrieval : schemaInfoRetrievalsArray)
     {
-      final boolean schemaInfoRetrievalValue =
-        schemaInfoRetrievalsMap.getOrDefault(schemaInfoRetrieval, false);
-      schemaInfoRetrievals[schemaInfoRetrieval.ordinal()] =
-        schemaInfoRetrievalValue;
+      final boolean schemaInfoRetrievalValue = schemaInfoRetrievalsMap.getOrDefault(schemaInfoRetrieval, false);
+      schemaInfoRetrievals[schemaInfoRetrieval.ordinal()] = schemaInfoRetrievalValue;
     }
   }
 
@@ -99,19 +93,16 @@ public final class SchemaInfoLevel
       return false;
     }
     final SchemaInfoLevel other = (SchemaInfoLevel) obj;
-    return Arrays.equals(schemaInfoRetrievals, other.schemaInfoRetrievals)
-           && Objects.equals(tag, other.tag);
+    return Arrays.equals(schemaInfoRetrievals, other.schemaInfoRetrievals) && Objects.equals(tag, other.tag);
   }
 
   @Override
   public String toString()
   {
     final StringJoiner settings = new StringJoiner(System.lineSeparator());
-    for (final SchemaInfoRetrieval schemaInfoRetrieval : SchemaInfoRetrieval.values())
+    for (final SchemaInfoRetrieval schemaInfoRetrieval : values())
     {
-      settings.add(String.format("  %s=%b",
-                                 schemaInfoRetrieval.name(),
-                                 is(schemaInfoRetrieval)));
+      settings.add(String.format("  %s=%b", schemaInfoRetrieval.name(), is(schemaInfoRetrieval)));
     }
     return String.format("SchemaInfoLevel <%s>%n{%n%s%n}%n", tag, settings);
   }
@@ -127,152 +118,152 @@ public final class SchemaInfoLevel
 
   public boolean isRetrieveAdditionalColumnAttributes()
   {
-    return is(SchemaInfoRetrieval.retrieveAdditionalColumnAttributes);
+    return is(retrieveAdditionalColumnAttributes);
   }
 
   public boolean isRetrieveAdditionalColumnMetadata()
   {
-    return is(SchemaInfoRetrieval.retrieveAdditionalColumnMetadata);
+    return is(retrieveAdditionalColumnMetadata);
   }
 
   public boolean isRetrieveAdditionalDatabaseInfo()
   {
-    return is(SchemaInfoRetrieval.retrieveAdditionalDatabaseInfo);
+    return is(retrieveAdditionalDatabaseInfo);
   }
 
   public boolean isRetrieveAdditionalJdbcDriverInfo()
   {
-    return is(SchemaInfoRetrieval.retrieveAdditionalJdbcDriverInfo);
+    return is(retrieveAdditionalJdbcDriverInfo);
   }
 
   public boolean isRetrieveAdditionalTableAttributes()
   {
-    return is(SchemaInfoRetrieval.retrieveAdditionalTableAttributes);
+    return is(retrieveAdditionalTableAttributes);
   }
 
   public boolean isRetrieveColumnDataTypes()
   {
-    return is(SchemaInfoRetrieval.retrieveColumnDataTypes);
+    return is(retrieveColumnDataTypes);
   }
 
   public boolean isRetrieveDatabaseInfo()
   {
-    return is(SchemaInfoRetrieval.retrieveDatabaseInfo);
+    return is(retrieveDatabaseInfo);
   }
 
   public boolean isRetrieveForeignKeyDefinitions()
   {
-    return is(SchemaInfoRetrieval.retrieveForeignKeyDefinitions);
+    return is(retrieveForeignKeyDefinitions);
   }
 
   public boolean isRetrieveForeignKeys()
   {
-    return is(SchemaInfoRetrieval.retrieveForeignKeys);
+    return is(retrieveForeignKeys);
   }
 
   public boolean isRetrieveIndexColumnInformation()
   {
-    return is(SchemaInfoRetrieval.retrieveIndexColumnInformation);
+    return is(retrieveIndexColumnInformation);
   }
 
   public boolean isRetrieveIndexes()
   {
-    return is(SchemaInfoRetrieval.retrieveIndexes);
+    return is(retrieveIndexes);
   }
 
   public boolean isRetrieveIndexInformation()
   {
-    return is(SchemaInfoRetrieval.retrieveIndexInformation);
+    return is(retrieveIndexInformation);
   }
 
   public boolean isRetrievePrimaryKeyDefinitions()
   {
-    return is(SchemaInfoRetrieval.retrievePrimaryKeyDefinitions);
+    return is(retrievePrimaryKeyDefinitions);
   }
 
   public boolean isRetrieveRoutineParameters()
   {
-    return is(SchemaInfoRetrieval.retrieveRoutineParameters);
+    return is(retrieveRoutineParameters);
   }
 
   public boolean isRetrieveRoutineInformation()
   {
-    return is(SchemaInfoRetrieval.retrieveRoutineInformation);
+    return is(retrieveRoutineInformation);
   }
 
   public boolean isRetrieveRoutines()
   {
-    return is(SchemaInfoRetrieval.retrieveRoutines);
+    return is(retrieveRoutines);
   }
 
   public boolean isRetrieveSequenceInformation()
   {
-    return is(SchemaInfoRetrieval.retrieveSequenceInformation);
+    return is(retrieveSequenceInformation);
   }
 
   public boolean isRetrieveServerInfo()
   {
-    return is(SchemaInfoRetrieval.retrieveServerInfo);
+    return is(retrieveServerInfo);
   }
 
   public boolean isRetrieveSynonymInformation()
   {
-    return is(SchemaInfoRetrieval.retrieveSynonymInformation);
+    return is(retrieveSynonymInformation);
   }
 
   public boolean isRetrieveTableColumnPrivileges()
   {
-    return is(SchemaInfoRetrieval.retrieveTableColumnPrivileges);
+    return is(retrieveTableColumnPrivileges);
   }
 
   public boolean isRetrieveTableColumns()
   {
-    return is(SchemaInfoRetrieval.retrieveTableColumns);
+    return is(retrieveTableColumns);
   }
 
   public boolean isRetrieveTableConstraintDefinitions()
   {
-    return is(SchemaInfoRetrieval.retrieveTableConstraintDefinitions);
+    return is(retrieveTableConstraintDefinitions);
   }
 
   public boolean isRetrieveTableConstraintInformation()
   {
-    return is(SchemaInfoRetrieval.retrieveTableConstraintInformation);
+    return is(retrieveTableConstraintInformation);
   }
 
   public boolean isRetrieveTableDefinitionsInformation()
   {
-    return is(SchemaInfoRetrieval.retrieveTableDefinitionsInformation);
+    return is(retrieveTableDefinitionsInformation);
   }
 
   public boolean isRetrieveTablePrivileges()
   {
-    return is(SchemaInfoRetrieval.retrieveTablePrivileges);
+    return is(retrieveTablePrivileges);
   }
 
   public boolean isRetrieveTables()
   {
-    return is(SchemaInfoRetrieval.retrieveTables);
+    return is(retrieveTables);
   }
 
   public boolean isRetrieveTriggerInformation()
   {
-    return is(SchemaInfoRetrieval.retrieveTriggerInformation);
+    return is(retrieveTriggerInformation);
   }
 
   public boolean isRetrieveUserDefinedColumnDataTypes()
   {
-    return is(SchemaInfoRetrieval.retrieveUserDefinedColumnDataTypes);
+    return is(retrieveUserDefinedColumnDataTypes);
   }
 
   public boolean isRetrieveViewInformation()
   {
-    return is(SchemaInfoRetrieval.retrieveViewInformation);
+    return is(retrieveViewInformation);
   }
 
   public boolean isRetrieveWeakAssociations()
   {
-    return is(SchemaInfoRetrieval.retrieveWeakAssociations);
+    return is(retrieveWeakAssociations);
   }
 
 }

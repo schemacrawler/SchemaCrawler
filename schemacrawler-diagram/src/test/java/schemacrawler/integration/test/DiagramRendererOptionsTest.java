@@ -452,7 +452,7 @@ public class DiagramRendererOptionsTest
       .setRetrieveWeakAssociations(true);
     final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
       .builder()
-      .withSchemaInfoLevel(infoLevelBuilder);
+      .withSchemaInfoLevel(infoLevelBuilder.toOptions());
     return builder.toOptions();
   }
 
