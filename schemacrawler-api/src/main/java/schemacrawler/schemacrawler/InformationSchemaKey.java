@@ -67,7 +67,6 @@ public enum InformationSchemaKey
   ;
 
   private final String lookupKey;
-
   private final InformationSchemaKeyType type;
 
   InformationSchemaKey(final InformationSchemaKeyType type)

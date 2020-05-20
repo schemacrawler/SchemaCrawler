@@ -32,7 +32,6 @@ package schemacrawler.schemacrawler;
 import static java.util.Objects.requireNonNull;
 
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.Map;
 
 import sf.util.ObjectToString;
@@ -52,7 +51,7 @@ public final class InformationSchemaViews
   /**
    * Creates empty information schema views.
    */
-  public InformationSchemaViews()
+  InformationSchemaViews()
   {
     this(null);
   }
@@ -106,9 +105,9 @@ public final class InformationSchemaViews
     return ObjectToString.toString(informationSchemaQueries);
   }
 
-  protected Map<InformationSchemaKey, String> getInformationSchemaQueries()
+  protected Map<InformationSchemaKey, String> getAllInformationSchemaViews()
   {
-    return new HashMap<>(informationSchemaQueries);
+    return new EnumMap<>(informationSchemaQueries);
   }
 
 }

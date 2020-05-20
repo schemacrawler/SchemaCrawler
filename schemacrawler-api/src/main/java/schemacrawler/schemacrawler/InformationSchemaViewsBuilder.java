@@ -43,8 +43,6 @@ import sf.util.TemplatingUtility;
 /**
  * The database specific views to get additional database metadata in a standard
  * format.
- *
- * @author Sualeh Fatehi
  */
 public final class InformationSchemaViewsBuilder
   implements
@@ -64,7 +62,7 @@ public final class InformationSchemaViewsBuilder
 
   public static InformationSchemaViews newInformationSchemaViews()
   {
-    return new InformationSchemaViewsBuilder().toOptions();
+    return new InformationSchemaViews();
   }
 
   public static InformationSchemaViews newInformationSchemaViews(final Config config)
@@ -122,7 +120,7 @@ public final class InformationSchemaViewsBuilder
       return this;
     }
 
-    informationSchemaQueries.putAll(informationSchemaViews.getInformationSchemaQueries());
+    informationSchemaQueries.putAll(informationSchemaViews.getAllInformationSchemaViews());
 
     return this;
   }
