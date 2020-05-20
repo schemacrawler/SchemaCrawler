@@ -41,6 +41,7 @@ import static sf.util.Utility.isBlank;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -51,8 +52,8 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.InformationSchemaKey;
-import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
@@ -177,12 +178,11 @@ public class DatabaseInfoRetrieverTest
 
   @Test
   @DisplayName("Override type info from data dictionary")
-  public void indexesFromDataDictionary(final TestContext testContext, final Connection connection)
+  public void overrideTypeInfoFromDataDictionary(final TestContext testContext, final Connection connection)
     throws Exception
   {
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
     schemaRetrievalOptionsBuilder
-      .withIndexRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
       .withInformationSchemaViewsBuilder()
       .withSql(InformationSchemaKey.OVERRIDE_TYPE_INFO, "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TYPEINFO");
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
@@ -190,10 +190,48 @@ public class DatabaseInfoRetrieverTest
 
     final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
-    final DatabaseInfoRetriever databaseInfoRetriever = new DatabaseInfoRetriever(retrieverConnection, catalog, options);
+    final DatabaseInfoRetriever databaseInfoRetriever =
+      new DatabaseInfoRetriever(retrieverConnection, catalog, options);
     databaseInfoRetriever.retrieveSystemColumnDataTypes();
 
     verifyRetrieveColumnDataTypes(catalog, testContext.testMethodFullName());
+  }
+
+  @Test
+  @DisplayName("Retrieve server info from data dictionary")
+  public void serverInfoFromDataDictionary(final TestContext testContext, final Connection connection)
+    throws Exception
+  {
+    assertThat(catalog
+                 .getDatabaseInfo()
+                 .getServerInfo(), is(empty()));
+
+    final String name = "TEST Server Info Property - Name";
+    final String description = "TEST Server Info Property - Description";
+    final String value = "TEST Server Info Property - Value";
+
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder
+      .withInformationSchemaViewsBuilder()
+      .withSql(InformationSchemaKey.SERVER_INFORMATION,
+               String.format("SELECT '%s' AS NAME, '%s' AS DESCRIPTION, '%s' AS VALUE "
+                             + "FROM INFORMATION_SCHEMA.SYSTEM_TYPEINFO", name, description, value));
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final DatabaseInfoRetriever databaseInfoRetriever =
+      new DatabaseInfoRetriever(retrieverConnection, catalog, options);
+    databaseInfoRetriever.retrieveServerInfo();
+
+    final List<Property> serverInfo = new ArrayList<>(catalog
+                                                        .getDatabaseInfo()
+                                                        .getServerInfo());
+    assertThat(serverInfo, hasSize(1));
+    final Property serverInfoProperty = serverInfo.get(0);
+    assertThat(serverInfoProperty, is(new ImmutableServerInfoProperty(name, value, description)));
+    assertThat(serverInfoProperty.getDescription(), is(description));
   }
 
   @BeforeAll
@@ -203,6 +241,9 @@ public class DatabaseInfoRetrieverTest
     catalog = new MutableCatalog("database_info_test");
     assertThat(catalog.getColumnDataTypes(), is(empty()));
     assertThat(catalog.getSchemas(), is(empty()));
+    assertThat(catalog
+                 .getDatabaseInfo()
+                 .getServerInfo(), is(empty()));
   }
 
 }
