@@ -41,8 +41,7 @@ import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.utility.TypeMap;
 
 public final class SchemaRetrievalOptionsBuilder
-  implements
-  OptionsBuilder<SchemaRetrievalOptionsBuilder, SchemaRetrievalOptions>
+  implements OptionsBuilder<SchemaRetrievalOptionsBuilder, SchemaRetrievalOptions>
 {
 
   private static final String prefix =
@@ -94,7 +93,7 @@ public final class SchemaRetrievalOptionsBuilder
   private String identifierQuoteString;
   private Identifiers identifiers;
   private MetadataRetrievalStrategy indexRetrievalStrategy;
-  private InformationSchemaViewsBuilder informationSchemaViewsBuilder;
+  private InformationSchemaViews informationSchemaViews;
   private Optional<Boolean> overridesSupportSchemas;
   private Optional<Boolean> overridesSupportsCatalogs;
   private Optional<TypeMap> overridesTypeMap;
@@ -110,7 +109,7 @@ public final class SchemaRetrievalOptionsBuilder
   private SchemaRetrievalOptionsBuilder()
   {
     dbServerType = DatabaseServerType.UNKNOWN;
-    informationSchemaViewsBuilder = InformationSchemaViewsBuilder.builder();
+    informationSchemaViews = InformationSchemaViewsBuilder.newInformationSchemaViews();
     overridesSupportSchemas = Optional.empty();
     overridesSupportsCatalogs = Optional.empty();
     supportsCatalogs = true;
@@ -143,7 +142,10 @@ public final class SchemaRetrievalOptionsBuilder
       configProperties = new Config(config);
     }
 
-    informationSchemaViewsBuilder.fromConfig(configProperties);
+    informationSchemaViews = InformationSchemaViewsBuilder
+      .builder(informationSchemaViews)
+      .fromConfig(configProperties)
+      .toOptions();
 
     tableRetrievalStrategy = configProperties.getEnumValue(SC_RETRIEVAL_TABLES,
                                                            tableRetrievalStrategy);
@@ -183,8 +185,7 @@ public final class SchemaRetrievalOptionsBuilder
     }
 
     dbServerType = options.getDatabaseServerType();
-    informationSchemaViewsBuilder =
-      InformationSchemaViewsBuilder.builder(options.getInformationSchemaViews());
+    informationSchemaViews = options.getInformationSchemaViews();
     overridesSupportSchemas = Optional.empty();
     overridesSupportsCatalogs = Optional.empty();
     supportsCatalogs = options.isSupportsCatalogs();
@@ -292,7 +293,7 @@ public final class SchemaRetrievalOptionsBuilder
 
   public InformationSchemaViews getInformationSchemaViews()
   {
-    return informationSchemaViewsBuilder.toOptions();
+    return informationSchemaViews;
   }
 
   public MetadataRetrievalStrategy getPrimaryKeyRetrievalStrategy()
@@ -442,14 +443,19 @@ public final class SchemaRetrievalOptionsBuilder
 
   public SchemaRetrievalOptionsBuilder withInformationSchemaViews(final InformationSchemaViews informationSchemaViews)
   {
-    informationSchemaViewsBuilder = InformationSchemaViewsBuilder.builder().fromOptions(informationSchemaViews);
+    this.informationSchemaViews = InformationSchemaViewsBuilder
+      .builder()
+      .fromOptions(informationSchemaViews)
+      .toOptions();
     return this;
   }
 
-  public SchemaRetrievalOptionsBuilder withInformationSchemaViews(final Map<String, String> informationSchemaViews)
+  public SchemaRetrievalOptionsBuilder withInformationSchemaViews(final Map<String, String> informationSchemaViewsMap)
   {
-
-    informationSchemaViewsBuilder.fromConfig(new Config(informationSchemaViews));
+    this.informationSchemaViews = InformationSchemaViewsBuilder
+      .builder(informationSchemaViews)
+      .fromConfig(new Config(informationSchemaViewsMap))
+      .toOptions();
     return this;
   }
 
