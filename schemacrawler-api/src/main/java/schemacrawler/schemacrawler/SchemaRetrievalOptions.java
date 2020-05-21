@@ -68,24 +68,23 @@ public final class SchemaRetrievalOptions
   {
     final SchemaRetrievalOptionsBuilder bldr =
       builder == null? SchemaRetrievalOptionsBuilder.builder(): builder;
-    dbServerType = bldr.getDatabaseServerType();
-    supportsSchemas = bldr.isSupportsSchemas();
-    supportsCatalogs = bldr.isSupportsCatalogs();
-    tableRetrievalStrategy = bldr.getTableRetrievalStrategy();
-    tableColumnRetrievalStrategy = bldr.getTableColumnRetrievalStrategy();
-    pkRetrievalStrategy = bldr.getPrimaryKeyRetrievalStrategy();
-    indexRetrievalStrategy = bldr.getIndexRetrievalStrategy();
-    fkRetrievalStrategy = bldr.getForeignKeyRetrievalStrategy();
-    procedureRetrievalStrategy = bldr.getProcedureRetrievalStrategy();
-    procedureColumnRetrievalStrategy =
-      bldr.getProcedureColumnRetrievalStrategy();
-    functionRetrievalStrategy = bldr.getFunctionRetrievalStrategy();
-    functionColumnRetrievalStrategy = bldr.getFunctionColumnRetrievalStrategy();
-    identifierQuoteString = bldr.getIdentifierQuoteString();
-    informationSchemaViews = bldr.getInformationSchemaViews();
-    identifiers = bldr.getIdentifiers();
-    typeMap = bldr.getTypeMap();
-    enumDataTypeHelper = bldr.getEnumDataTypeHelper();
+    dbServerType = bldr.dbServerType;
+    supportsSchemas = bldr.supportsSchemas;
+    supportsCatalogs = bldr.supportsCatalogs;
+    tableRetrievalStrategy = bldr.tableRetrievalStrategy;
+    tableColumnRetrievalStrategy = bldr.tableColumnRetrievalStrategy;
+    pkRetrievalStrategy = bldr.pkRetrievalStrategy;
+    indexRetrievalStrategy = bldr.indexRetrievalStrategy;
+    fkRetrievalStrategy = bldr.fkRetrievalStrategy;
+    procedureRetrievalStrategy = bldr.procedureRetrievalStrategy;
+    procedureColumnRetrievalStrategy = bldr.procedureColumnRetrievalStrategy;
+    functionRetrievalStrategy = bldr.functionRetrievalStrategy;
+    functionColumnRetrievalStrategy = bldr.functionColumnRetrievalStrategy;
+    identifierQuoteString = bldr.identifierQuoteString;
+    informationSchemaViews = bldr.informationSchemaViews;
+    identifiers = bldr.identifiers;
+    typeMap = bldr.overridesTypeMap.orElse(new TypeMap());
+    enumDataTypeHelper = bldr.enumDataTypeHelper;
   }
 
   public EnumDataTypeHelper getEnumDataTypeHelper()

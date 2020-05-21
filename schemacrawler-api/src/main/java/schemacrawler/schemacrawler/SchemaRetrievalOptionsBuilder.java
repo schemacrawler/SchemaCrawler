@@ -86,25 +86,25 @@ public final class SchemaRetrievalOptionsBuilder
       .toOptions();
   }
 
-  private DatabaseServerType dbServerType;
-  private MetadataRetrievalStrategy fkRetrievalStrategy;
-  private MetadataRetrievalStrategy functionColumnRetrievalStrategy;
-  private MetadataRetrievalStrategy functionRetrievalStrategy;
-  private String identifierQuoteString;
-  private Identifiers identifiers;
-  private MetadataRetrievalStrategy indexRetrievalStrategy;
-  private InformationSchemaViews informationSchemaViews;
-  private Optional<Boolean> overridesSupportSchemas;
-  private Optional<Boolean> overridesSupportsCatalogs;
-  private Optional<TypeMap> overridesTypeMap;
-  private MetadataRetrievalStrategy pkRetrievalStrategy;
-  private MetadataRetrievalStrategy procedureColumnRetrievalStrategy;
-  private MetadataRetrievalStrategy procedureRetrievalStrategy;
-  private boolean supportsCatalogs;
-  private boolean supportsSchemas;
-  private MetadataRetrievalStrategy tableColumnRetrievalStrategy;
-  private MetadataRetrievalStrategy tableRetrievalStrategy;
-  private EnumDataTypeHelper enumDataTypeHelper;
+  DatabaseServerType dbServerType;
+  MetadataRetrievalStrategy fkRetrievalStrategy;
+  MetadataRetrievalStrategy functionColumnRetrievalStrategy;
+  MetadataRetrievalStrategy functionRetrievalStrategy;
+  String identifierQuoteString;
+  Identifiers identifiers;
+  MetadataRetrievalStrategy indexRetrievalStrategy;
+  InformationSchemaViews informationSchemaViews;
+  Optional<Boolean> overridesSupportSchemas;
+  Optional<Boolean> overridesSupportsCatalogs;
+  Optional<TypeMap> overridesTypeMap;
+  MetadataRetrievalStrategy pkRetrievalStrategy;
+  MetadataRetrievalStrategy procedureColumnRetrievalStrategy;
+  MetadataRetrievalStrategy procedureRetrievalStrategy;
+  boolean supportsCatalogs;
+  boolean supportsSchemas;
+  MetadataRetrievalStrategy tableColumnRetrievalStrategy;
+  MetadataRetrievalStrategy tableRetrievalStrategy;
+  EnumDataTypeHelper enumDataTypeHelper;
 
   private SchemaRetrievalOptionsBuilder()
   {
@@ -254,86 +254,6 @@ public final class SchemaRetrievalOptionsBuilder
     }
 
     return this;
-  }
-
-  public DatabaseServerType getDatabaseServerType()
-  {
-    return dbServerType;
-  }
-
-  public MetadataRetrievalStrategy getForeignKeyRetrievalStrategy()
-  {
-    return fkRetrievalStrategy;
-  }
-
-  public MetadataRetrievalStrategy getFunctionColumnRetrievalStrategy()
-  {
-    return functionColumnRetrievalStrategy;
-  }
-
-  public MetadataRetrievalStrategy getFunctionRetrievalStrategy()
-  {
-    return functionRetrievalStrategy;
-  }
-
-  public String getIdentifierQuoteString()
-  {
-    return identifierQuoteString;
-  }
-
-  public Identifiers getIdentifiers()
-  {
-    return identifiers;
-  }
-
-  public MetadataRetrievalStrategy getIndexRetrievalStrategy()
-  {
-    return indexRetrievalStrategy;
-  }
-
-  public InformationSchemaViews getInformationSchemaViews()
-  {
-    return informationSchemaViews;
-  }
-
-  public MetadataRetrievalStrategy getPrimaryKeyRetrievalStrategy()
-  {
-    return pkRetrievalStrategy;
-  }
-
-  public MetadataRetrievalStrategy getProcedureColumnRetrievalStrategy()
-  {
-    return procedureColumnRetrievalStrategy;
-  }
-
-  public MetadataRetrievalStrategy getProcedureRetrievalStrategy()
-  {
-    return procedureRetrievalStrategy;
-  }
-
-  public MetadataRetrievalStrategy getTableColumnRetrievalStrategy()
-  {
-    return tableColumnRetrievalStrategy;
-  }
-
-  public MetadataRetrievalStrategy getTableRetrievalStrategy()
-  {
-    return tableRetrievalStrategy;
-  }
-
-  public TypeMap getTypeMap()
-  {
-    return overridesTypeMap.orElse(new TypeMap());
-  }
-
-  public boolean isSupportsCatalogs()
-  {
-    return supportsCatalogs;
-  }
-
-  public boolean isSupportsSchemas()
-  {
-    return supportsSchemas;
   }
 
   public SchemaRetrievalOptionsBuilder withDatabaseServerType(final DatabaseServerType dbServerType)
@@ -586,11 +506,6 @@ public final class SchemaRetrievalOptionsBuilder
     }
 
     return this;
-  }
-
-  public EnumDataTypeHelper getEnumDataTypeHelper()
-  {
-    return enumDataTypeHelper;
   }
 
   private String lookupIdentifierQuoteString(final DatabaseMetaData metaData)
