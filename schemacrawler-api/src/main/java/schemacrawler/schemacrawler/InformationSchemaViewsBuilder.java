@@ -33,9 +33,11 @@ import static java.util.Objects.requireNonNull;
 import static sf.util.IOUtility.readResourceFully;
 import static sf.util.Utility.isBlank;
 
+import java.sql.Connection;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 import sf.util.ObjectToString;
 import sf.util.TemplatingUtility;
@@ -211,6 +213,19 @@ public final class InformationSchemaViewsBuilder
     else
     {
       informationSchemaQueries.put(key, sql);
+    }
+    return this;
+  }
+
+  public InformationSchemaViewsBuilder withFunction(
+    final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection,
+    final Connection connection)
+  {
+    if (informationSchemaViewsBuilderForConnection != null)
+    {
+      informationSchemaViewsBuilderForConnection.accept(
+        this,
+        connection);
     }
     return this;
   }

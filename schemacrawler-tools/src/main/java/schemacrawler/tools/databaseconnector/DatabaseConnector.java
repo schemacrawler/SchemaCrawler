@@ -35,11 +35,11 @@ import static sf.util.Utility.isBlank;
 import java.sql.Connection;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
-import java.util.regex.Pattern;
 
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseServerType;
+import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -103,14 +103,18 @@ public abstract class DatabaseConnector
    */
   public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(final Connection connection)
   {
+    final InformationSchemaViews informationSchemaViews = InformationSchemaViewsBuilder
+      .builder()
+      .withFunction(
+        informationSchemaViewsBuilderForConnection,
+        connection)
+      .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
       SchemaRetrievalOptionsBuilder
         .builder()
         .withDatabaseServerType(dbServerType)
         .withEnumDataTypeHelper(getEnumDataTypeHelper())
-        .withInformationSchemaViewsForConnection(
-          informationSchemaViewsBuilderForConnection,
-          connection)
+        .withInformationSchemaViews(informationSchemaViews)
         .fromConnnection(connection);
 
     return schemaRetrievalOptionsBuilder;

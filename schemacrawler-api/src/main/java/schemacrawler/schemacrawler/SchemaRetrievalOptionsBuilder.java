@@ -36,7 +36,6 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.BiConsumer;
 
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.utility.TypeMap;
@@ -451,19 +450,6 @@ public final class SchemaRetrievalOptionsBuilder
   {
 
     informationSchemaViewsBuilder.fromConfig(new Config(informationSchemaViews));
-    return this;
-  }
-
-  public SchemaRetrievalOptionsBuilder withInformationSchemaViewsForConnection(
-    final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection,
-    final Connection connection)
-  {
-    if (informationSchemaViewsBuilderForConnection != null)
-    {
-      informationSchemaViewsBuilderForConnection.accept(
-        informationSchemaViewsBuilder,
-        connection);
-    }
     return this;
   }
 
