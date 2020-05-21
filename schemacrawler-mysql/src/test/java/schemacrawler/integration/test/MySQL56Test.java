@@ -39,7 +39,7 @@ import java.sql.SQLException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -50,24 +50,22 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
-import schemacrawler.test.utility.HeavyDatabaseBuildCondition;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 @Testcontainers(disabledWithoutDocker = true)
-@ExtendWith(HeavyDatabaseBuildCondition.class)
+@EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 public class MySQL56Test
   extends BaseAdditionalDatabaseTest
 {
 
   @Container
-  private JdbcDatabaseContainer dbContainer =
-    new HeavyDatabaseBuildCondition().getJdbcDatabaseContainer(() -> new MySQLContainer<>(
+  private JdbcDatabaseContainer dbContainer = new MySQLContainer<>(
       "mysql:5.6.46")
       .withCommand("mysqld", "--lower_case_table_names=1")
       .withUsername("schemacrawler")
-      .withDatabaseName("books"));
+      .withDatabaseName("books");
 
   @BeforeEach
   public void createDatabase()

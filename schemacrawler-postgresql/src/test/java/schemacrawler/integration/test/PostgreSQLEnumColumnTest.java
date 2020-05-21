@@ -52,7 +52,7 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -66,24 +66,21 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.DatabaseTestUtility;
-import schemacrawler.test.utility.HeavyDatabaseBuildCondition;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
 import schemacrawler.tools.integration.serialize.SerializationFormat;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
-import sf.util.DatabaseUtility;
 
 @Testcontainers(disabledWithoutDocker = true)
-@ExtendWith(HeavyDatabaseBuildCondition.class)
+@EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 @DisplayName("Test for issue #284 - support enum values")
 public class PostgreSQLEnumColumnTest
   extends BaseAdditionalDatabaseTest
 {
 
   @Container
-  private JdbcDatabaseContainer dbContainer =
-    new HeavyDatabaseBuildCondition().getJdbcDatabaseContainer(() -> new PostgreSQLContainer<>());
+  private JdbcDatabaseContainer dbContainer = new PostgreSQLContainer<>();
 
   @BeforeEach
   public void createDatabase()

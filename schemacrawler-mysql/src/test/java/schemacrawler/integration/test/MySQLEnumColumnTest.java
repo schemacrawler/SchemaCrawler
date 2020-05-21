@@ -46,7 +46,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -57,26 +57,21 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.server.mysql.MySQLEnumDataTypeHelper;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.DatabaseTestUtility;
-import schemacrawler.test.utility.HeavyDatabaseBuildCondition;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
 @Testcontainers(disabledWithoutDocker = true)
-@ExtendWith(HeavyDatabaseBuildCondition.class)
+@EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 @DisplayName("Test for support of enum values")
 public class MySQLEnumColumnTest
   extends BaseAdditionalDatabaseTest
 {
 
   @Container
-  private JdbcDatabaseContainer dbContainer =
-    new HeavyDatabaseBuildCondition().getJdbcDatabaseContainer(() -> new MySQLContainer<>()
+  private JdbcDatabaseContainer dbContainer = new MySQLContainer<>()
       .withCommand("mysqld", "--lower_case_table_names=1")
-      .withUsername("schemacrawler"));
+      .withUsername("schemacrawler");
 
   @BeforeEach
   public void createDatabase()

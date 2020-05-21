@@ -40,7 +40,7 @@ import java.sql.Statement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -57,20 +57,18 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
-import schemacrawler.test.utility.HeavyDatabaseBuildCondition;
 
 @Testcontainers(disabledWithoutDocker = true)
-@ExtendWith(HeavyDatabaseBuildCondition.class)
+@EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 @DisplayName("Test for issue #252 on GitHub")
 public class MySQLDotNameTest
   extends BaseAdditionalDatabaseTest
 {
 
   @Container
-  private JdbcDatabaseContainer dbContainer =
-    new HeavyDatabaseBuildCondition().getJdbcDatabaseContainer(() -> new MySQLContainer<>()
+  private JdbcDatabaseContainer dbContainer = new MySQLContainer<>()
       .withCommand("mysqld", "--lower_case_table_names=1")
-      .withUsername("schemacrawler"));
+      .withUsername("schemacrawler");
 
   @BeforeEach
   public void createDatabase()

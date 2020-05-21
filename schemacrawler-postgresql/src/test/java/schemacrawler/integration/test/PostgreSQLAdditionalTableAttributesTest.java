@@ -42,7 +42,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -57,19 +57,17 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.server.postgresql.PostgreSQLDatabaseConnector;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
-import schemacrawler.test.utility.HeavyDatabaseBuildCondition;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 
 @Testcontainers(disabledWithoutDocker = true)
-@ExtendWith(HeavyDatabaseBuildCondition.class)
+@EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 @DisplayName("Test for issue #258 on GitHub")
 public class PostgreSQLAdditionalTableAttributesTest
   extends BaseAdditionalDatabaseTest
 {
 
   @Container
-  private JdbcDatabaseContainer dbContainer =
-    new HeavyDatabaseBuildCondition().getJdbcDatabaseContainer(() -> new PostgreSQLContainer<>());
+  private JdbcDatabaseContainer dbContainer = new PostgreSQLContainer<>();
 
   @BeforeEach
   public void createDatabase()
