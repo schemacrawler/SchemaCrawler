@@ -49,6 +49,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.schemacrawler.InformationSchemaKey;
+import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
@@ -75,10 +77,13 @@ public class SchemaRetrieverTest
 
     final MutableCatalog catalog = new MutableCatalog("test_catalog");
 
+    final InformationSchemaViews informationSchemaViews = InformationSchemaViewsBuilder
+      .builder()
+      .withSql(InformationSchemaKey.SCHEMATA, "SELECT * FROM INFORMATION_SCHEMA.SCHEMATA")
+      .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
     schemaRetrievalOptionsBuilder
-      .withInformationSchemaViewsBuilder()
-      .withSql(InformationSchemaKey.SCHEMATA, "SELECT * FROM INFORMATION_SCHEMA.SCHEMATA");
+      .withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection = new RetrieverConnection(spyConnection, schemaRetrievalOptions);
 

@@ -54,6 +54,8 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.InformationSchemaKey;
+import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
@@ -181,10 +183,12 @@ public class DatabaseInfoRetrieverTest
   public void overrideTypeInfoFromDataDictionary(final TestContext testContext, final Connection connection)
     throws Exception
   {
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder
-      .withInformationSchemaViewsBuilder()
-      .withSql(InformationSchemaKey.OVERRIDE_TYPE_INFO, "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TYPEINFO");
+    final InformationSchemaViews informationSchemaViews = InformationSchemaViewsBuilder
+      .builder()
+      .withSql(InformationSchemaKey.OVERRIDE_TYPE_INFO, "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TYPEINFO")
+      .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder()
+      .withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
 
@@ -210,12 +214,17 @@ public class DatabaseInfoRetrieverTest
     final String description = "TEST Server Info Property - Description";
     final String value = "TEST Server Info Property - Value";
 
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder
-      .withInformationSchemaViewsBuilder()
+    final InformationSchemaViews informationSchemaViews = InformationSchemaViewsBuilder
+      .builder()
       .withSql(InformationSchemaKey.SERVER_INFORMATION,
-               String.format("SELECT '%s' AS NAME, '%s' AS DESCRIPTION, '%s' AS VALUE "
-                             + "FROM INFORMATION_SCHEMA.SYSTEM_TYPEINFO", name, description, value));
+               String.format(
+                 "SELECT '%s' AS NAME, '%s' AS DESCRIPTION, '%s' AS VALUE " + "FROM INFORMATION_SCHEMA.SYSTEM_TYPEINFO",
+                 name,
+                 description,
+                 value))
+      .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder()
+      .withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
 

@@ -441,16 +441,17 @@ public final class SchemaRetrievalOptionsBuilder
     return this;
   }
 
+  public SchemaRetrievalOptionsBuilder withInformationSchemaViews(final InformationSchemaViews informationSchemaViews)
+  {
+    informationSchemaViewsBuilder = InformationSchemaViewsBuilder.builder().fromOptions(informationSchemaViews);
+    return this;
+  }
+
   public SchemaRetrievalOptionsBuilder withInformationSchemaViews(final Map<String, String> informationSchemaViews)
   {
 
     informationSchemaViewsBuilder.fromConfig(new Config(informationSchemaViews));
     return this;
-  }
-
-  public InformationSchemaViewsBuilder withInformationSchemaViewsBuilder()
-  {
-    return informationSchemaViewsBuilder;
   }
 
   public SchemaRetrievalOptionsBuilder withInformationSchemaViewsForConnection(

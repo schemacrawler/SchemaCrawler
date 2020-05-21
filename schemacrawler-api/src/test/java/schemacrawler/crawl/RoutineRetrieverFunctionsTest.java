@@ -50,6 +50,8 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Routine;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.InformationSchemaKey;
+import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -76,15 +78,17 @@ public class RoutineRetrieverFunctionsTest
   public void functionsFromDataDictionary(final TestContext testContext, final Connection connection)
     throws Exception
   {
+    final InformationSchemaViews informationSchemaViews = InformationSchemaViewsBuilder
+      .builder()
+      .withSql(InformationSchemaKey.FUNCTIONS,
+               "SELECT " + "PROCEDURE_CAT AS FUNCTION_CAT, PROCEDURE_SCHEM AS FUNCTION_SCHEM, "
+               + "PROCEDURE_NAME AS FUNCTION_NAME, PROCEDURE_TYPE AS FUNCTION_TYPE, " + "REMARKS, SPECIFIC_NAME "
+               + "FROM INFORMATION_SCHEMA.SYSTEM_PROCEDURES")
+      .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
     schemaRetrievalOptionsBuilder
       .withFunctionRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
-      .withInformationSchemaViewsBuilder()
-      .withSql(InformationSchemaKey.FUNCTIONS, "SELECT "
-                                               + "PROCEDURE_CAT AS FUNCTION_CAT, PROCEDURE_SCHEM AS FUNCTION_SCHEM, "
-                                               + "PROCEDURE_NAME AS FUNCTION_NAME, PROCEDURE_TYPE AS FUNCTION_TYPE, "
-                                               + "REMARKS, SPECIFIC_NAME "
-                                               + "FROM INFORMATION_SCHEMA.SYSTEM_PROCEDURES");
+      .withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
 

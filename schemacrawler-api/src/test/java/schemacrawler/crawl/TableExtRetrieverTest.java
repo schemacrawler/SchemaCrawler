@@ -49,6 +49,8 @@ import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InformationSchemaKey;
+import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -73,13 +75,16 @@ public class TableExtRetrieverTest
 
     final String definition = "TEST Table definition";
 
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder
-      .withInformationSchemaViewsBuilder()
+    final InformationSchemaViews informationSchemaViews = InformationSchemaViewsBuilder
+      .builder()
       .withSql(InformationSchemaKey.EXT_TABLES,
                String.format("SELECT DISTINCT TABLE_CAT AS TABLE_CATALOG, TABLE_SCHEM AS TABLE_SCHEMA, "
                              + "TABLE_NAME, '%s' AS TABLE_DEFINITION " + "FROM INFORMATION_SCHEMA.SYSTEM_TABLES",
-                             definition));
+                             definition))
+      .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder
+      .withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
 
@@ -103,14 +108,17 @@ public class TableExtRetrieverTest
   {
     final String definition = "TEST Primary Key definition";
 
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder
-      .withInformationSchemaViewsBuilder()
+    final InformationSchemaViews informationSchemaViews = InformationSchemaViewsBuilder
+      .builder()
       .withSql(InformationSchemaKey.EXT_PRIMARY_KEYS,
                String.format("SELECT DISTINCT TABLE_CAT AS PRIMARY_KEY_CATALOG, TABLE_SCHEM AS PRIMARY_KEY_SCHEMA, "
                              + "TABLE_NAME AS PRIMARY_KEY_TABLE_NAME, PK_NAME AS PRIMARY_KEY_NAME, "
-                             + "'%s' AS PRIMARY_KEY_DEFINITION "
-                             + "FROM INFORMATION_SCHEMA.SYSTEM_PRIMARYKEYS", definition));
+                             + "'%s' AS PRIMARY_KEY_DEFINITION " + "FROM INFORMATION_SCHEMA.SYSTEM_PRIMARYKEYS",
+                             definition))
+      .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder
+      .withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
 
@@ -143,13 +151,16 @@ public class TableExtRetrieverTest
     final String remarks = "TEST Index remarks";
     final String definition = "TEST Index definition";
 
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder
-      .withInformationSchemaViewsBuilder()
+    final InformationSchemaViews informationSchemaViews = InformationSchemaViewsBuilder
+      .builder()
       .withSql(InformationSchemaKey.EXT_INDEXES,
                String.format("SELECT DISTINCT TABLE_CAT AS INDEX_CATALOG, TABLE_SCHEM AS INDEX_SCHEMA, "
                              + "TABLE_NAME, INDEX_NAME, '%s' AS REMARKS, '%s' AS INDEX_DEFINITION "
-                             + "FROM INFORMATION_SCHEMA.SYSTEM_INDEXINFO", remarks, definition));
+                             + "FROM INFORMATION_SCHEMA.SYSTEM_INDEXINFO", remarks, definition))
+      .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder
+      .withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
 
@@ -178,14 +189,17 @@ public class TableExtRetrieverTest
 
     final String definition = "TEST INDEX COLUMN DEFINITION";
 
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder
-      .withInformationSchemaViewsBuilder()
+    final InformationSchemaViews informationSchemaViews = InformationSchemaViewsBuilder
+      .builder()
       .withSql(InformationSchemaKey.EXT_INDEX_COLUMNS,
                String.format("SELECT TABLE_CAT AS INDEX_CATALOG, TABLE_SCHEM AS INDEX_SCHEMA, "
                              + "TABLE_NAME, INDEX_NAME, COLUMN_NAME, "
                              + "1 AS IS_GENERATED, '%s' AS INDEX_COLUMN_DEFINITION "
-                             + "FROM INFORMATION_SCHEMA.SYSTEM_INDEXINFO", definition));
+                             + "FROM INFORMATION_SCHEMA.SYSTEM_INDEXINFO", definition))
+      .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder
+      .withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
 

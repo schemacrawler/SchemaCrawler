@@ -47,6 +47,8 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.InformationSchemaKey;
+import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -72,14 +74,17 @@ public class ForeignKeyRetrieverDefinitionsTest
 
     final String definition = "TEST Foreign Key definition";
 
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder
-      .withInformationSchemaViewsBuilder()
+    final InformationSchemaViews informationSchemaViews = InformationSchemaViewsBuilder
+      .builder()
       .withSql(InformationSchemaKey.EXT_FOREIGN_KEYS,
                String.format("SELECT DISTINCT PKTABLE_CAT AS FOREIGN_KEY_CATALOG, PKTABLE_SCHEM AS FOREIGN_KEY_SCHEMA, "
                              + "PKTABLE_NAME AS FOREIGN_KEY_TABLE_NAME, FK_NAME AS FOREIGN_KEY_NAME, "
-                             + "'%s' AS FOREIGN_KEY_DEFINITION "
-                             + "FROM INFORMATION_SCHEMA.SYSTEM_CROSSREFERENCE", definition));
+                             + "'%s' AS FOREIGN_KEY_DEFINITION " + "FROM INFORMATION_SCHEMA.SYSTEM_CROSSREFERENCE",
+                             definition))
+      .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder
+      .withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
 
