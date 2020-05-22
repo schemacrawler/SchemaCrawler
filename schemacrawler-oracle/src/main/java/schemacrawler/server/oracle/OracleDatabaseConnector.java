@@ -35,6 +35,7 @@ import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.fu
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionsRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.primaryKeysRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.procedureParametersRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.proceduresRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablesRetrievalStrategy;
@@ -161,7 +162,7 @@ public final class OracleDatabaseConnector
       .with(foreignKeysRetrievalStrategy, data_dictionary_all)
       .with(indexesRetrievalStrategy, data_dictionary_all)
       .with(proceduresRetrievalStrategy, data_dictionary_all)
-      .with(proceduresRetrievalStrategy, data_dictionary_all)
+      .with(procedureParametersRetrievalStrategy, data_dictionary_all)
       .with(functionsRetrievalStrategy, data_dictionary_all)
       .with(functionParametersRetrievalStrategy, data_dictionary_all);
     return schemaRetrievalOptionsBuilder;
