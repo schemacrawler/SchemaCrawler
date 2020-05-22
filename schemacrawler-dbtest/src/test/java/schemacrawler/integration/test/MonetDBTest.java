@@ -44,16 +44,15 @@ import nl.cwi.monetdb.embedded.env.MonetDBEmbeddedException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.DatabaseTestUtility;
-import schemacrawler.test.utility.LightDatabaseBuildCondition;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
-@ExtendWith(LightDatabaseBuildCondition.class)
+@EnabledIfSystemProperty(named = "lightdb", matches = "^((?!(false|no)).)*$")
 public class MonetDBTest
   extends BaseAdditionalDatabaseTest
 {
