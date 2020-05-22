@@ -31,7 +31,7 @@ package schemacrawler.schemacrawler;
 
 import static sf.util.Utility.isBlank;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -122,7 +122,7 @@ public final class SchemaInfoLevelBuilder
   {
     tag = "";
     // Retrieve nothing
-    schemaInfoRetrievals = new HashMap<>();
+    schemaInfoRetrievals = new EnumMap<>(SchemaInfoRetrieval.class);
   }
 
   @Override
