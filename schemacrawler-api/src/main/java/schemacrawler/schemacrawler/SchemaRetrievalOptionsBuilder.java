@@ -221,8 +221,7 @@ public final class SchemaRetrievalOptionsBuilder
   }
 
   /**
-   * Overrides the JDBC driver provided information about whether the database
-   * supports catalogs.
+   * Overrides the JDBC driver provided information about whether the database supports catalogs.
    */
   public SchemaRetrievalOptionsBuilder withDoesNotSupportCatalogs()
   {
@@ -231,8 +230,7 @@ public final class SchemaRetrievalOptionsBuilder
   }
 
   /**
-   * Overrides the JDBC driver provided information about whether the database
-   * supports schema.
+   * Overrides the JDBC driver provided information about whether the database supports schema.
    */
   public SchemaRetrievalOptionsBuilder withDoesNotSupportSchemas()
   {
@@ -240,6 +238,17 @@ public final class SchemaRetrievalOptionsBuilder
     return this;
   }
 
+  public SchemaRetrievalOptionsBuilder with(final SchemaInfoMetadataRetrievalStrategy schemaInfoMetadataRetrievalStrategy,
+                                            final MetadataRetrievalStrategy metadataRetrievalStrategy)
+  {
+    if (schemaInfoMetadataRetrievalStrategy != null && metadataRetrievalStrategy != null)
+    {
+      metadataRetrievalStrategyMap.put(schemaInfoMetadataRetrievalStrategy, metadataRetrievalStrategy);
+    }
+    return this;
+  }
+
+  @Deprecated
   public SchemaRetrievalOptionsBuilder withForeignKeyRetrievalStrategy(final MetadataRetrievalStrategy metadataRetrievalStrategy)
   {
     if (metadataRetrievalStrategy != null)
@@ -249,6 +258,7 @@ public final class SchemaRetrievalOptionsBuilder
     return this;
   }
 
+  @Deprecated
   public SchemaRetrievalOptionsBuilder withFunctionColumnRetrievalStrategy(final MetadataRetrievalStrategy metadataRetrievalStrategy)
   {
     if (metadataRetrievalStrategy != null)
@@ -258,6 +268,7 @@ public final class SchemaRetrievalOptionsBuilder
     return this;
   }
 
+  @Deprecated
   public SchemaRetrievalOptionsBuilder withFunctionRetrievalStrategy(final MetadataRetrievalStrategy metadataRetrievalStrategy)
   {
     if (metadataRetrievalStrategy != null)
@@ -268,8 +279,7 @@ public final class SchemaRetrievalOptionsBuilder
   }
 
   /**
-   * Overrides the JDBC driver provided information about the identifier quote
-   * string.
+   * Overrides the JDBC driver provided information about the identifier quote string.
    *
    * @param identifierQuoteString
    *   Value for the override
@@ -287,6 +297,7 @@ public final class SchemaRetrievalOptionsBuilder
     return this;
   }
 
+  @Deprecated
   public SchemaRetrievalOptionsBuilder withIndexRetrievalStrategy(final MetadataRetrievalStrategy metadataRetrievalStrategy)
   {
     if (metadataRetrievalStrategy != null)
@@ -332,6 +343,7 @@ public final class SchemaRetrievalOptionsBuilder
     return this;
   }
 
+  @Deprecated
   public SchemaRetrievalOptionsBuilder withPrimaryKeyRetrievalStrategy(final MetadataRetrievalStrategy metadataRetrievalStrategy)
   {
     if (metadataRetrievalStrategy != null)
@@ -341,8 +353,8 @@ public final class SchemaRetrievalOptionsBuilder
     return this;
   }
 
-  public SchemaRetrievalOptionsBuilder withProcedureColumnRetrievalStrategy(
-    final MetadataRetrievalStrategy metadataRetrievalStrategy)
+  @Deprecated
+  public SchemaRetrievalOptionsBuilder withProcedureColumnRetrievalStrategy(final MetadataRetrievalStrategy metadataRetrievalStrategy)
   {
     if (metadataRetrievalStrategy != null)
     {
@@ -351,6 +363,7 @@ public final class SchemaRetrievalOptionsBuilder
     return this;
   }
 
+  @Deprecated
   public SchemaRetrievalOptionsBuilder withProcedureRetrievalStrategy(final MetadataRetrievalStrategy metadataRetrievalStrategy)
   {
     if (metadataRetrievalStrategy != null)
@@ -361,8 +374,7 @@ public final class SchemaRetrievalOptionsBuilder
   }
 
   /**
-   * Overrides the JDBC driver provided information about whether the database
-   * supports catalogs.
+   * Overrides the JDBC driver provided information about whether the database supports catalogs.
    */
   public SchemaRetrievalOptionsBuilder withSupportsCatalogs()
   {
@@ -371,8 +383,7 @@ public final class SchemaRetrievalOptionsBuilder
   }
 
   /**
-   * Overrides the JDBC driver provided information about whether the database
-   * supports schema.
+   * Overrides the JDBC driver provided information about whether the database supports schema.
    */
   public SchemaRetrievalOptionsBuilder withSupportsSchemas()
   {
@@ -380,6 +391,7 @@ public final class SchemaRetrievalOptionsBuilder
     return this;
   }
 
+  @Deprecated
   public SchemaRetrievalOptionsBuilder withTableColumnRetrievalStrategy(final MetadataRetrievalStrategy metadataRetrievalStrategy)
   {
     if (metadataRetrievalStrategy != null)
@@ -389,6 +401,7 @@ public final class SchemaRetrievalOptionsBuilder
     return this;
   }
 
+  @Deprecated
   public SchemaRetrievalOptionsBuilder withTableRetrievalStrategy(final MetadataRetrievalStrategy metadataRetrievalStrategy)
   {
     if (metadataRetrievalStrategy != null)
@@ -413,9 +426,12 @@ public final class SchemaRetrievalOptionsBuilder
 
   public SchemaRetrievalOptionsBuilder withEnumDataTypeHelper(final EnumDataTypeHelper enumDataTypeHelper)
   {
-    if (enumDataTypeHelper != null) {
+    if (enumDataTypeHelper != null)
+    {
       this.enumDataTypeHelper = enumDataTypeHelper;
-    } else {
+    }
+    else
+    {
       this.enumDataTypeHelper = NO_OP_ENUM_DATA_TYPE_HELPER;
     }
 

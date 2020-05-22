@@ -28,7 +28,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.oracle;
 
 
+import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.QueryUtility.executeForScalar;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionParametersRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionsRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.primaryKeysRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.proceduresRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablesRetrievalStrategy;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -38,15 +47,14 @@ import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
 
-import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
+import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.iosource.ClasspathInputResource;
-import schemacrawler.schemacrawler.Query;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
@@ -147,15 +155,15 @@ public final class OracleDatabaseConnector
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
       super.getSchemaRetrievalOptionsBuilder(connection);
     schemaRetrievalOptionsBuilder
-      .withTableRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
-      .withTableColumnRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
-      .withPrimaryKeyRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
-      .withForeignKeyRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
-      .withIndexRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
-      .withProcedureRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
-      .withProcedureColumnRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
-      .withFunctionRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
-      .withFunctionColumnRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all);
+      .with(tablesRetrievalStrategy, data_dictionary_all)
+      .with(tableColumnsRetrievalStrategy, data_dictionary_all)
+      .with(primaryKeysRetrievalStrategy, data_dictionary_all)
+      .with(foreignKeysRetrievalStrategy, data_dictionary_all)
+      .with(indexesRetrievalStrategy, data_dictionary_all)
+      .with(proceduresRetrievalStrategy, data_dictionary_all)
+      .with(proceduresRetrievalStrategy, data_dictionary_all)
+      .with(functionsRetrievalStrategy, data_dictionary_all)
+      .with(functionParametersRetrievalStrategy, data_dictionary_all);
     return schemaRetrievalOptionsBuilder;
   }
 

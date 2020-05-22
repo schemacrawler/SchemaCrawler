@@ -30,6 +30,7 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablesRetrievalStrategy;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -40,17 +41,16 @@ import java.util.Optional;
 import java.util.logging.Level;
 
 import schemacrawler.filter.InclusionRuleFilter;
+import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
-import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
-import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
+import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
-import schemacrawler.schemacrawler.Query;
+import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.utility.TableTypes;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -93,9 +93,7 @@ final class TableRetriever
       return;
     }
 
-    final MetadataRetrievalStrategy tableRetrievalStrategy =
-      getRetrieverConnection().getTableRetrievalStrategy();
-    switch (tableRetrievalStrategy)
+    switch (getRetrieverConnection().get(tablesRetrievalStrategy))
     {
       case data_dictionary_all:
         LOGGER.log(Level.INFO,

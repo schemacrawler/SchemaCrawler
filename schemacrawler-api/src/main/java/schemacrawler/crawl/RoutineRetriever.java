@@ -30,6 +30,8 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionsRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.proceduresRetrievalStrategy;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
@@ -41,19 +43,18 @@ import java.util.Optional;
 import java.util.logging.Level;
 
 import schemacrawler.filter.InclusionRuleFilter;
+import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Function;
 import schemacrawler.schema.FunctionReturnType;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureReturnType;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.SchemaReference;
-import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
-import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
+import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
-import schemacrawler.schemacrawler.Query;
+import schemacrawler.schemacrawler.SchemaReference;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
@@ -93,9 +94,7 @@ final class RoutineRetriever
       return;
     }
 
-    final MetadataRetrievalStrategy functionRetrievalStrategy =
-      getRetrieverConnection().getFunctionRetrievalStrategy();
-    switch (functionRetrievalStrategy)
+    switch (getRetrieverConnection().get(functionsRetrievalStrategy))
     {
       case data_dictionary_all:
         LOGGER.log(Level.INFO,
@@ -129,9 +128,7 @@ final class RoutineRetriever
       return;
     }
 
-    final MetadataRetrievalStrategy procedureRetrievalStrategy =
-      getRetrieverConnection().getProcedureRetrievalStrategy();
-    switch (procedureRetrievalStrategy)
+    switch (getRetrieverConnection().get(proceduresRetrievalStrategy))
     {
       case data_dictionary_all:
         LOGGER.log(Level.INFO,

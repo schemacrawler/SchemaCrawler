@@ -30,6 +30,7 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
@@ -45,16 +46,15 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
-import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
+import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
+import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.utility.MetaDataUtility;
-import schemacrawler.schemacrawler.Query;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
@@ -150,9 +150,7 @@ final class ForeignKeyRetriever
   {
     requireNonNull(allTables, "No tables provided");
 
-    final MetadataRetrievalStrategy fkRetrievalStrategy =
-      getRetrieverConnection().getForeignKeyRetrievalStrategy();
-    switch (fkRetrievalStrategy)
+    switch (getRetrieverConnection().get(foreignKeysRetrievalStrategy))
     {
       case data_dictionary_all:
         LOGGER.log(Level.INFO,

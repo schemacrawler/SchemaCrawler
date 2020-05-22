@@ -31,6 +31,8 @@ package schemacrawler.crawl;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
+import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.proceduresRetrievalStrategy;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -52,7 +54,6 @@ import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
-import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -84,7 +85,7 @@ public class RoutineRetrieverProceduresTest
       .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
     schemaRetrievalOptionsBuilder
-      .withProcedureRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
+      .with(proceduresRetrievalStrategy, data_dictionary_all)
       .withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);

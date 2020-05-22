@@ -30,6 +30,7 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
@@ -44,7 +45,6 @@ import schemacrawler.schema.IndexType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
-import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
@@ -76,9 +76,7 @@ final class IndexRetriever
   {
     requireNonNull(allTables, "No tables provided");
 
-    final MetadataRetrievalStrategy indexRetrievalStrategy =
-      getRetrieverConnection().getIndexRetrievalStrategy();
-    switch (indexRetrievalStrategy)
+    switch (getRetrieverConnection().get(indexesRetrievalStrategy))
     {
       case data_dictionary_all:
         LOGGER.log(Level.INFO,

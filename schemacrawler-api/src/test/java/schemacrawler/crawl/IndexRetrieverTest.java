@@ -34,6 +34,8 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
+import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -57,7 +59,6 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
-import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -124,7 +125,7 @@ public class IndexRetrieverTest
       .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
     schemaRetrievalOptionsBuilder
-      .withIndexRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
+      .with(indexesRetrievalStrategy, data_dictionary_all)
       .withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);

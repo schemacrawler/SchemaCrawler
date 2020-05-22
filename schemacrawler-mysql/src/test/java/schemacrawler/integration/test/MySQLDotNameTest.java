@@ -31,6 +31,7 @@ package schemacrawler.integration.test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
 import static schemacrawler.utility.SchemaCrawlerUtility.matchSchemaRetrievalOptions;
 
 import java.sql.Connection;
@@ -106,7 +107,7 @@ public class MySQLDotNameTest
       SchemaRetrievalOptionsBuilder
         .builder()
         .fromOptions(matchSchemaRetrievalOptions(connection))
-        .withTableColumnRetrievalStrategy(data_dictionary_all)
+        .with(tableColumnsRetrievalStrategy, data_dictionary_all)
       ;
     final SchemaRetrievalOptions schemaRetrievalOptions =
       schemaRetrievalOptionsBuilder.toOptions();

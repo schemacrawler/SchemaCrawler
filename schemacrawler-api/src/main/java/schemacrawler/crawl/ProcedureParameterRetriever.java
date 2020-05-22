@@ -30,6 +30,7 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.procedureParametersRetrievalStrategy;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
@@ -47,7 +48,6 @@ import schemacrawler.schema.ProcedureParameter;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
-import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
@@ -89,9 +89,7 @@ final class ProcedureParameterRetriever
       return;
     }
 
-    final MetadataRetrievalStrategy procedureParameterRetrievalStrategy =
-      getRetrieverConnection().getProcedureColumnRetrievalStrategy();
-    switch (procedureParameterRetrievalStrategy)
+    switch (getRetrieverConnection().get(procedureParametersRetrievalStrategy))
     {
       case data_dictionary_all:
         LOGGER.log(Level.INFO,

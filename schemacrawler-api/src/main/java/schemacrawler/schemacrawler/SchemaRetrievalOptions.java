@@ -28,14 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionParametersRetrievalStrategy;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionsRetrievalStrategy;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.primaryKeysRetrievalStrategy;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.procedureParametersRetrievalStrategy;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablesRetrievalStrategy;
+import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
 import java.util.EnumMap;
@@ -89,19 +82,10 @@ public final class SchemaRetrievalOptions
     return dbServerType;
   }
 
-  public MetadataRetrievalStrategy getForeignKeyRetrievalStrategy()
+  public MetadataRetrievalStrategy get(final SchemaInfoMetadataRetrievalStrategy schemaInfoMetadataRetrievalStrategy)
   {
-    return metadataRetrievalStrategyMap.get(foreignKeysRetrievalStrategy);
-  }
-
-  public MetadataRetrievalStrategy getFunctionColumnRetrievalStrategy()
-  {
-    return metadataRetrievalStrategyMap.get(functionParametersRetrievalStrategy);
-  }
-
-  public MetadataRetrievalStrategy getFunctionRetrievalStrategy()
-  {
-    return metadataRetrievalStrategyMap.get(functionsRetrievalStrategy);
+    requireNonNull(schemaInfoMetadataRetrievalStrategy, "No schema info metadata retrieval strategy provided");
+    return metadataRetrievalStrategyMap.get(schemaInfoMetadataRetrievalStrategy);
   }
 
   public String getIdentifierQuoteString()
@@ -118,39 +102,9 @@ public final class SchemaRetrievalOptions
     return identifiers;
   }
 
-  public MetadataRetrievalStrategy getIndexRetrievalStrategy()
-  {
-    return metadataRetrievalStrategyMap.get(indexesRetrievalStrategy);
-  }
-
   public InformationSchemaViews getInformationSchemaViews()
   {
     return informationSchemaViews;
-  }
-
-  public MetadataRetrievalStrategy getPrimaryKeyRetrievalStrategy()
-  {
-    return metadataRetrievalStrategyMap.get(primaryKeysRetrievalStrategy);
-  }
-
-  public MetadataRetrievalStrategy getProcedureColumnRetrievalStrategy()
-  {
-    return metadataRetrievalStrategyMap.get(procedureParametersRetrievalStrategy);
-  }
-
-  public MetadataRetrievalStrategy getProcedureRetrievalStrategy()
-  {
-    return metadataRetrievalStrategyMap.get(procedureParametersRetrievalStrategy);
-  }
-
-  public MetadataRetrievalStrategy getTableColumnRetrievalStrategy()
-  {
-    return metadataRetrievalStrategyMap.get(tableColumnsRetrievalStrategy);
-  }
-
-  public MetadataRetrievalStrategy getTableRetrievalStrategy()
-  {
-    return metadataRetrievalStrategyMap.get(tablesRetrievalStrategy);
   }
 
   public TypeMap getTypeMap()

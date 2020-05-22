@@ -30,6 +30,7 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
@@ -48,7 +49,6 @@ import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Column;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
-import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
@@ -93,9 +93,7 @@ final class TableColumnRetriever
 
     final Set<List<String>> hiddenColumns = retrieveHiddenTableColumns();
 
-    final MetadataRetrievalStrategy tableColumnRetrievalStrategy =
-      getRetrieverConnection().getTableColumnRetrievalStrategy();
-    switch (tableColumnRetrievalStrategy)
+    switch (getRetrieverConnection().get(tableColumnsRetrievalStrategy))
     {
       case data_dictionary_all:
         LOGGER.log(Level.INFO,

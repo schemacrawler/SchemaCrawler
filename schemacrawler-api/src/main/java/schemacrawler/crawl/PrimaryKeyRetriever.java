@@ -30,6 +30,7 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.primaryKeysRetrievalStrategy;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -41,7 +42,6 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
-import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
@@ -74,9 +74,7 @@ final class PrimaryKeyRetriever
   {
     requireNonNull(allTables, "No tables provided");
 
-    final MetadataRetrievalStrategy pkRetrievalStrategy =
-      getRetrieverConnection().getPrimaryKeyRetrievalStrategy();
-    switch (pkRetrievalStrategy)
+    switch (getRetrieverConnection().get(primaryKeysRetrievalStrategy))
     {
       case data_dictionary_all:
         LOGGER.log(Level.INFO,

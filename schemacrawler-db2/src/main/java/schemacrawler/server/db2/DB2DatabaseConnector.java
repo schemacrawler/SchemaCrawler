@@ -28,12 +28,14 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.db2;
 
 
+import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
-import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -62,8 +64,8 @@ public final class DB2DatabaseConnector
   {
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
       super.getSchemaRetrievalOptionsBuilder(connection);
-    schemaRetrievalOptionsBuilder.withTableColumnRetrievalStrategy(
-      MetadataRetrievalStrategy.data_dictionary_all);
+    schemaRetrievalOptionsBuilder.with(tableColumnsRetrievalStrategy,
+                                       data_dictionary_all);
     return schemaRetrievalOptionsBuilder;
   }
 

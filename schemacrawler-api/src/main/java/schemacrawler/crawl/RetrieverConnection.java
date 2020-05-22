@@ -40,6 +40,7 @@ import java.util.logging.Level;
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
+import schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.utility.JavaSqlTypes;
 import schemacrawler.utility.TableTypes;
@@ -86,26 +87,6 @@ final class RetrieverConnection
     return connection;
   }
 
-  MetadataRetrievalStrategy getForeignKeyRetrievalStrategy()
-  {
-    return schemaRetrievalOptions.getForeignKeyRetrievalStrategy();
-  }
-
-  MetadataRetrievalStrategy getFunctionColumnRetrievalStrategy()
-  {
-    return schemaRetrievalOptions.getFunctionColumnRetrievalStrategy();
-  }
-
-  MetadataRetrievalStrategy getFunctionRetrievalStrategy()
-  {
-    return schemaRetrievalOptions.getFunctionRetrievalStrategy();
-  }
-
-  MetadataRetrievalStrategy getIndexRetrievalStrategy()
-  {
-    return schemaRetrievalOptions.getIndexRetrievalStrategy();
-  }
-
   /**
    * Gets the INFORMATION_SCHEMA views select SQL statements.
    *
@@ -130,31 +111,6 @@ final class RetrieverConnection
     return metaData;
   }
 
-  MetadataRetrievalStrategy getPrimaryKeyRetrievalStrategy()
-  {
-    return schemaRetrievalOptions.getPrimaryKeyRetrievalStrategy();
-  }
-
-  MetadataRetrievalStrategy getProcedureColumnRetrievalStrategy()
-  {
-    return schemaRetrievalOptions.getProcedureColumnRetrievalStrategy();
-  }
-
-  MetadataRetrievalStrategy getProcedureRetrievalStrategy()
-  {
-    return schemaRetrievalOptions.getProcedureRetrievalStrategy();
-  }
-
-  MetadataRetrievalStrategy getTableColumnRetrievalStrategy()
-  {
-    return schemaRetrievalOptions.getTableColumnRetrievalStrategy();
-  }
-
-  MetadataRetrievalStrategy getTableRetrievalStrategy()
-  {
-    return schemaRetrievalOptions.getTableRetrievalStrategy();
-  }
-
   TableTypes getTableTypes()
   {
     return tableTypes;
@@ -173,6 +129,11 @@ final class RetrieverConnection
   boolean isSupportsSchemas()
   {
     return schemaRetrievalOptions.isSupportsSchemas();
+  }
+
+  public MetadataRetrievalStrategy get(final SchemaInfoMetadataRetrievalStrategy schemaInfoMetadataRetrievalStrategy)
+  {
+    return schemaRetrievalOptions.get(schemaInfoMetadataRetrievalStrategy);
   }
 
 }
