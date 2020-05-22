@@ -29,11 +29,22 @@ package schemacrawler.schemacrawler;
 
 
 import static schemacrawler.plugin.EnumDataTypeHelper.NO_OP_ENUM_DATA_TYPE_HELPER;
+import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.metadata;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionParametersRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionsRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.primaryKeysRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.procedureParametersRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.proceduresRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablesRetrievalStrategy;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -43,26 +54,6 @@ import schemacrawler.utility.TypeMap;
 public final class SchemaRetrievalOptionsBuilder
   implements OptionsBuilder<SchemaRetrievalOptionsBuilder, SchemaRetrievalOptions>
 {
-
-  private static final String prefix =
-    "schemacrawler.schema.retrieval.strategy";
-
-  private static final String SC_RETRIEVAL_TABLES = prefix + ".tables";
-  private static final String SC_RETRIEVAL_TABLE_COLUMNS =
-    prefix + ".tablecolumns";
-
-  private static final String SC_RETRIEVAL_PRIMARY_KEYS =
-    prefix + ".primarykeys";
-  private static final String SC_RETRIEVAL_INDEXES = prefix + ".indexes";
-  private static final String SC_RETRIEVAL_FOREIGN_KEYS =
-    prefix + ".foreignkeys";
-
-  private static final String SC_RETRIEVAL_PROCEDURES = prefix + ".procedures";
-  private static final String SC_RETRIEVAL_PROCEDURE_COLUMNS =
-    prefix + ".procedurecolumns";
-  private static final String SC_RETRIEVAL_FUNCTIONS = prefix + ".functions";
-  private static final String SC_RETRIEVAL_FUNCTION_COLUMNS =
-    prefix + ".functioncolumns";
 
   public static SchemaRetrievalOptionsBuilder builder()
   {
@@ -87,24 +78,16 @@ public final class SchemaRetrievalOptionsBuilder
   }
 
   DatabaseServerType dbServerType;
-  MetadataRetrievalStrategy fkRetrievalStrategy;
-  MetadataRetrievalStrategy functionColumnRetrievalStrategy;
-  MetadataRetrievalStrategy functionRetrievalStrategy;
   String identifierQuoteString;
   Identifiers identifiers;
-  MetadataRetrievalStrategy indexRetrievalStrategy;
   InformationSchemaViews informationSchemaViews;
   Optional<Boolean> overridesSupportSchemas;
   Optional<Boolean> overridesSupportsCatalogs;
   Optional<TypeMap> overridesTypeMap;
-  MetadataRetrievalStrategy pkRetrievalStrategy;
-  MetadataRetrievalStrategy procedureColumnRetrievalStrategy;
-  MetadataRetrievalStrategy procedureRetrievalStrategy;
   boolean supportsCatalogs;
   boolean supportsSchemas;
-  MetadataRetrievalStrategy tableColumnRetrievalStrategy;
-  MetadataRetrievalStrategy tableRetrievalStrategy;
   EnumDataTypeHelper enumDataTypeHelper;
+  Map<SchemaInfoMetadataRetrievalStrategy, MetadataRetrievalStrategy> metadataRetrievalStrategyMap;
 
   private SchemaRetrievalOptionsBuilder()
   {
@@ -116,17 +99,14 @@ public final class SchemaRetrievalOptionsBuilder
     supportsSchemas = true;
     identifierQuoteString = "";
     identifiers = Identifiers.STANDARD;
-    tableRetrievalStrategy = MetadataRetrievalStrategy.metadata;
-    tableColumnRetrievalStrategy = MetadataRetrievalStrategy.metadata;
-    pkRetrievalStrategy = MetadataRetrievalStrategy.metadata;
-    indexRetrievalStrategy = MetadataRetrievalStrategy.metadata;
-    fkRetrievalStrategy = MetadataRetrievalStrategy.metadata;
-    procedureRetrievalStrategy = MetadataRetrievalStrategy.metadata;
-    procedureColumnRetrievalStrategy = MetadataRetrievalStrategy.metadata;
-    functionRetrievalStrategy = MetadataRetrievalStrategy.metadata;
-    functionColumnRetrievalStrategy = MetadataRetrievalStrategy.metadata;
     overridesTypeMap = Optional.empty();
     enumDataTypeHelper = NO_OP_ENUM_DATA_TYPE_HELPER;
+
+    metadataRetrievalStrategyMap = new EnumMap<>(SchemaInfoMetadataRetrievalStrategy.class);
+    for (final SchemaInfoMetadataRetrievalStrategy key : SchemaInfoMetadataRetrievalStrategy.values())
+    {
+      metadataRetrievalStrategyMap.put(key, metadata);
+    }
   }
 
   @Override
@@ -147,31 +127,12 @@ public final class SchemaRetrievalOptionsBuilder
       .fromConfig(configProperties)
       .toOptions();
 
-    tableRetrievalStrategy = configProperties.getEnumValue(SC_RETRIEVAL_TABLES,
-                                                           tableRetrievalStrategy);
-    tableColumnRetrievalStrategy = configProperties.getEnumValue(
-      SC_RETRIEVAL_TABLE_COLUMNS,
-      tableColumnRetrievalStrategy);
-    pkRetrievalStrategy = configProperties.getEnumValue(
-      SC_RETRIEVAL_PRIMARY_KEYS,
-      pkRetrievalStrategy);
-    indexRetrievalStrategy = configProperties.getEnumValue(SC_RETRIEVAL_INDEXES,
-                                                           indexRetrievalStrategy);
-    fkRetrievalStrategy = configProperties.getEnumValue(
-      SC_RETRIEVAL_FOREIGN_KEYS,
-      fkRetrievalStrategy);
-    procedureRetrievalStrategy = configProperties.getEnumValue(
-      SC_RETRIEVAL_PROCEDURES,
-      procedureRetrievalStrategy);
-    procedureColumnRetrievalStrategy = configProperties.getEnumValue(
-      SC_RETRIEVAL_PROCEDURE_COLUMNS,
-      procedureColumnRetrievalStrategy);
-    functionRetrievalStrategy = configProperties.getEnumValue(
-      SC_RETRIEVAL_FUNCTIONS,
-      functionRetrievalStrategy);
-    functionColumnRetrievalStrategy = configProperties.getEnumValue(
-      SC_RETRIEVAL_FUNCTION_COLUMNS,
-      functionColumnRetrievalStrategy);
+    for (final SchemaInfoMetadataRetrievalStrategy key : SchemaInfoMetadataRetrievalStrategy.values())
+    {
+      final MetadataRetrievalStrategy currentValue = metadataRetrievalStrategyMap.get(key);
+      final MetadataRetrievalStrategy configValue = configProperties.getEnumValue(key.getConfigKey(), currentValue);
+      metadataRetrievalStrategyMap.put(key, configValue);
+    }
 
     return this;
   }
@@ -192,18 +153,8 @@ public final class SchemaRetrievalOptionsBuilder
     supportsSchemas = options.isSupportsSchemas();
     identifierQuoteString = options.getIdentifierQuoteString();
     identifiers = options.getIdentifiers();
-    tableRetrievalStrategy = options.getTableRetrievalStrategy();
-    tableColumnRetrievalStrategy = options.getTableColumnRetrievalStrategy();
-    pkRetrievalStrategy = options.getPrimaryKeyRetrievalStrategy();
-    indexRetrievalStrategy = options.getIndexRetrievalStrategy();
-    fkRetrievalStrategy = options.getForeignKeyRetrievalStrategy();
-    procedureRetrievalStrategy = options.getProcedureRetrievalStrategy();
-    procedureColumnRetrievalStrategy =
-      options.getProcedureColumnRetrievalStrategy();
-    functionRetrievalStrategy = options.getFunctionRetrievalStrategy();
-    functionColumnRetrievalStrategy =
-      options.getFunctionColumnRetrievalStrategy();
     overridesTypeMap = Optional.empty();
+    metadataRetrievalStrategyMap = options.getMetadataRetrievalStrategyMap();
 
     return this;
   }
@@ -289,41 +240,29 @@ public final class SchemaRetrievalOptionsBuilder
     return this;
   }
 
-  public SchemaRetrievalOptionsBuilder withForeignKeyRetrievalStrategy(final MetadataRetrievalStrategy fkRetrievalStrategy)
+  public SchemaRetrievalOptionsBuilder withForeignKeyRetrievalStrategy(final MetadataRetrievalStrategy metadataRetrievalStrategy)
   {
-    if (fkRetrievalStrategy == null)
+    if (metadataRetrievalStrategy != null)
     {
-      this.fkRetrievalStrategy = MetadataRetrievalStrategy.metadata;
-    }
-    else
-    {
-      this.fkRetrievalStrategy = fkRetrievalStrategy;
+      metadataRetrievalStrategyMap.put(foreignKeysRetrievalStrategy, metadataRetrievalStrategy);
     }
     return this;
   }
 
-  public SchemaRetrievalOptionsBuilder withFunctionColumnRetrievalStrategy(final MetadataRetrievalStrategy functionColumnRetrievalStrategy)
+  public SchemaRetrievalOptionsBuilder withFunctionColumnRetrievalStrategy(final MetadataRetrievalStrategy metadataRetrievalStrategy)
   {
-    if (functionColumnRetrievalStrategy == null)
+    if (metadataRetrievalStrategy != null)
     {
-      this.functionColumnRetrievalStrategy = MetadataRetrievalStrategy.metadata;
-    }
-    else
-    {
-      this.functionColumnRetrievalStrategy = functionColumnRetrievalStrategy;
+      metadataRetrievalStrategyMap.put(functionParametersRetrievalStrategy, metadataRetrievalStrategy);
     }
     return this;
   }
 
-  public SchemaRetrievalOptionsBuilder withFunctionRetrievalStrategy(final MetadataRetrievalStrategy functionRetrievalStrategy)
+  public SchemaRetrievalOptionsBuilder withFunctionRetrievalStrategy(final MetadataRetrievalStrategy metadataRetrievalStrategy)
   {
-    if (functionRetrievalStrategy == null)
+    if (metadataRetrievalStrategy != null)
     {
-      this.functionRetrievalStrategy = MetadataRetrievalStrategy.metadata;
-    }
-    else
-    {
-      this.functionRetrievalStrategy = functionRetrievalStrategy;
+      metadataRetrievalStrategyMap.put(functionsRetrievalStrategy, metadataRetrievalStrategy);
     }
     return this;
   }
@@ -348,15 +287,11 @@ public final class SchemaRetrievalOptionsBuilder
     return this;
   }
 
-  public SchemaRetrievalOptionsBuilder withIndexRetrievalStrategy(final MetadataRetrievalStrategy indexRetrievalStrategy)
+  public SchemaRetrievalOptionsBuilder withIndexRetrievalStrategy(final MetadataRetrievalStrategy metadataRetrievalStrategy)
   {
-    if (indexRetrievalStrategy == null)
+    if (metadataRetrievalStrategy != null)
     {
-      this.indexRetrievalStrategy = MetadataRetrievalStrategy.metadata;
-    }
-    else
-    {
-      this.indexRetrievalStrategy = indexRetrievalStrategy;
+      metadataRetrievalStrategyMap.put(indexesRetrievalStrategy, metadataRetrievalStrategy);
     }
     return this;
   }
@@ -397,43 +332,30 @@ public final class SchemaRetrievalOptionsBuilder
     return this;
   }
 
-  public SchemaRetrievalOptionsBuilder withPrimaryKeyRetrievalStrategy(final MetadataRetrievalStrategy pkRetrievalStrategy)
+  public SchemaRetrievalOptionsBuilder withPrimaryKeyRetrievalStrategy(final MetadataRetrievalStrategy metadataRetrievalStrategy)
   {
-    if (pkRetrievalStrategy == null)
+    if (metadataRetrievalStrategy != null)
     {
-      this.pkRetrievalStrategy = MetadataRetrievalStrategy.metadata;
-    }
-    else
-    {
-      this.pkRetrievalStrategy = pkRetrievalStrategy;
+      metadataRetrievalStrategyMap.put(primaryKeysRetrievalStrategy, metadataRetrievalStrategy);
     }
     return this;
   }
 
   public SchemaRetrievalOptionsBuilder withProcedureColumnRetrievalStrategy(
-    final MetadataRetrievalStrategy procedureColumnRetrievalStrategy)
+    final MetadataRetrievalStrategy metadataRetrievalStrategy)
   {
-    if (procedureColumnRetrievalStrategy == null)
+    if (metadataRetrievalStrategy != null)
     {
-      this.procedureColumnRetrievalStrategy =
-        MetadataRetrievalStrategy.metadata;
-    }
-    else
-    {
-      this.procedureColumnRetrievalStrategy = procedureColumnRetrievalStrategy;
+      metadataRetrievalStrategyMap.put(procedureParametersRetrievalStrategy, metadataRetrievalStrategy);
     }
     return this;
   }
 
-  public SchemaRetrievalOptionsBuilder withProcedureRetrievalStrategy(final MetadataRetrievalStrategy procedureRetrievalStrategy)
+  public SchemaRetrievalOptionsBuilder withProcedureRetrievalStrategy(final MetadataRetrievalStrategy metadataRetrievalStrategy)
   {
-    if (procedureRetrievalStrategy == null)
+    if (metadataRetrievalStrategy != null)
     {
-      this.procedureRetrievalStrategy = MetadataRetrievalStrategy.metadata;
-    }
-    else
-    {
-      this.procedureRetrievalStrategy = procedureRetrievalStrategy;
+      metadataRetrievalStrategyMap.put(proceduresRetrievalStrategy, metadataRetrievalStrategy);
     }
     return this;
   }
@@ -458,28 +380,20 @@ public final class SchemaRetrievalOptionsBuilder
     return this;
   }
 
-  public SchemaRetrievalOptionsBuilder withTableColumnRetrievalStrategy(final MetadataRetrievalStrategy tableColumnRetrievalStrategy)
+  public SchemaRetrievalOptionsBuilder withTableColumnRetrievalStrategy(final MetadataRetrievalStrategy metadataRetrievalStrategy)
   {
-    if (tableColumnRetrievalStrategy == null)
+    if (metadataRetrievalStrategy != null)
     {
-      this.tableColumnRetrievalStrategy = MetadataRetrievalStrategy.metadata;
-    }
-    else
-    {
-      this.tableColumnRetrievalStrategy = tableColumnRetrievalStrategy;
+      metadataRetrievalStrategyMap.put(tableColumnsRetrievalStrategy, metadataRetrievalStrategy);
     }
     return this;
   }
 
-  public SchemaRetrievalOptionsBuilder withTableRetrievalStrategy(final MetadataRetrievalStrategy tableRetrievalStrategy)
+  public SchemaRetrievalOptionsBuilder withTableRetrievalStrategy(final MetadataRetrievalStrategy metadataRetrievalStrategy)
   {
-    if (tableRetrievalStrategy == null)
+    if (metadataRetrievalStrategy != null)
     {
-      this.tableRetrievalStrategy = MetadataRetrievalStrategy.metadata;
-    }
-    else
-    {
-      this.tableRetrievalStrategy = tableRetrievalStrategy;
+      metadataRetrievalStrategyMap.put(tablesRetrievalStrategy, metadataRetrievalStrategy);
     }
     return this;
   }

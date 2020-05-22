@@ -28,17 +28,26 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionParametersRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionsRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.primaryKeysRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.procedureParametersRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablesRetrievalStrategy;
 import static sf.util.Utility.isBlank;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.utility.TypeMap;
 import sf.util.ObjectToString;
 
 /**
- * Provides for database specific overrides for SchemaCrawler functionality.
- * This can add or inject database plugins, or override defaults. It is
- * recommended to build these options using factory methods in
- * SchemaCrawlerUtility.
+ * Provides for database specific overrides for SchemaCrawler functionality. This can add or inject database plugins, or
+ * override defaults. It is recommended to build these options using factory methods in SchemaCrawlerUtility.
  *
  * @author Sualeh Fatehi <sualeh@hotmail.com>
  */
@@ -47,44 +56,27 @@ public final class SchemaRetrievalOptions
 {
 
   private final DatabaseServerType dbServerType;
-  private final MetadataRetrievalStrategy fkRetrievalStrategy;
-  private final MetadataRetrievalStrategy functionColumnRetrievalStrategy;
-  private final MetadataRetrievalStrategy functionRetrievalStrategy;
   private final String identifierQuoteString;
   private final Identifiers identifiers;
-  private final MetadataRetrievalStrategy indexRetrievalStrategy;
   private final InformationSchemaViews informationSchemaViews;
-  private final MetadataRetrievalStrategy pkRetrievalStrategy;
-  private final MetadataRetrievalStrategy procedureColumnRetrievalStrategy;
-  private final MetadataRetrievalStrategy procedureRetrievalStrategy;
   private final boolean supportsCatalogs;
   private final boolean supportsSchemas;
-  private final MetadataRetrievalStrategy tableColumnRetrievalStrategy;
-  private final MetadataRetrievalStrategy tableRetrievalStrategy;
   private final TypeMap typeMap;
   private final EnumDataTypeHelper enumDataTypeHelper;
+  EnumMap<SchemaInfoMetadataRetrievalStrategy, MetadataRetrievalStrategy> metadataRetrievalStrategyMap;
 
   protected SchemaRetrievalOptions(final SchemaRetrievalOptionsBuilder builder)
   {
-    final SchemaRetrievalOptionsBuilder bldr =
-      builder == null? SchemaRetrievalOptionsBuilder.builder(): builder;
+    final SchemaRetrievalOptionsBuilder bldr = builder == null? SchemaRetrievalOptionsBuilder.builder(): builder;
     dbServerType = bldr.dbServerType;
     supportsSchemas = bldr.supportsSchemas;
     supportsCatalogs = bldr.supportsCatalogs;
-    tableRetrievalStrategy = bldr.tableRetrievalStrategy;
-    tableColumnRetrievalStrategy = bldr.tableColumnRetrievalStrategy;
-    pkRetrievalStrategy = bldr.pkRetrievalStrategy;
-    indexRetrievalStrategy = bldr.indexRetrievalStrategy;
-    fkRetrievalStrategy = bldr.fkRetrievalStrategy;
-    procedureRetrievalStrategy = bldr.procedureRetrievalStrategy;
-    procedureColumnRetrievalStrategy = bldr.procedureColumnRetrievalStrategy;
-    functionRetrievalStrategy = bldr.functionRetrievalStrategy;
-    functionColumnRetrievalStrategy = bldr.functionColumnRetrievalStrategy;
     identifierQuoteString = bldr.identifierQuoteString;
     informationSchemaViews = bldr.informationSchemaViews;
     identifiers = bldr.identifiers;
     typeMap = bldr.overridesTypeMap.orElse(new TypeMap());
     enumDataTypeHelper = bldr.enumDataTypeHelper;
+    metadataRetrievalStrategyMap = new EnumMap<>(bldr.metadataRetrievalStrategyMap);
   }
 
   public EnumDataTypeHelper getEnumDataTypeHelper()
@@ -99,17 +91,17 @@ public final class SchemaRetrievalOptions
 
   public MetadataRetrievalStrategy getForeignKeyRetrievalStrategy()
   {
-    return fkRetrievalStrategy;
+    return metadataRetrievalStrategyMap.get(foreignKeysRetrievalStrategy);
   }
 
   public MetadataRetrievalStrategy getFunctionColumnRetrievalStrategy()
   {
-    return functionColumnRetrievalStrategy;
+    return metadataRetrievalStrategyMap.get(functionParametersRetrievalStrategy);
   }
 
   public MetadataRetrievalStrategy getFunctionRetrievalStrategy()
   {
-    return functionRetrievalStrategy;
+    return metadataRetrievalStrategyMap.get(functionsRetrievalStrategy);
   }
 
   public String getIdentifierQuoteString()
@@ -128,7 +120,7 @@ public final class SchemaRetrievalOptions
 
   public MetadataRetrievalStrategy getIndexRetrievalStrategy()
   {
-    return indexRetrievalStrategy;
+    return metadataRetrievalStrategyMap.get(indexesRetrievalStrategy);
   }
 
   public InformationSchemaViews getInformationSchemaViews()
@@ -138,27 +130,27 @@ public final class SchemaRetrievalOptions
 
   public MetadataRetrievalStrategy getPrimaryKeyRetrievalStrategy()
   {
-    return pkRetrievalStrategy;
+    return metadataRetrievalStrategyMap.get(primaryKeysRetrievalStrategy);
   }
 
   public MetadataRetrievalStrategy getProcedureColumnRetrievalStrategy()
   {
-    return procedureColumnRetrievalStrategy;
+    return metadataRetrievalStrategyMap.get(procedureParametersRetrievalStrategy);
   }
 
   public MetadataRetrievalStrategy getProcedureRetrievalStrategy()
   {
-    return procedureRetrievalStrategy;
+    return metadataRetrievalStrategyMap.get(procedureParametersRetrievalStrategy);
   }
 
   public MetadataRetrievalStrategy getTableColumnRetrievalStrategy()
   {
-    return tableColumnRetrievalStrategy;
+    return metadataRetrievalStrategyMap.get(tableColumnsRetrievalStrategy);
   }
 
   public MetadataRetrievalStrategy getTableRetrievalStrategy()
   {
-    return tableRetrievalStrategy;
+    return metadataRetrievalStrategyMap.get(tablesRetrievalStrategy);
   }
 
   public TypeMap getTypeMap()
@@ -193,6 +185,11 @@ public final class SchemaRetrievalOptions
   public String toString()
   {
     return ObjectToString.toString(this);
+  }
+
+  Map<SchemaInfoMetadataRetrievalStrategy, MetadataRetrievalStrategy> getMetadataRetrievalStrategyMap()
+  {
+    return new EnumMap<>(metadataRetrievalStrategyMap);
   }
 
 }
