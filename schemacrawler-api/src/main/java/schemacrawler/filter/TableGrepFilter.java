@@ -32,11 +32,11 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 
+import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
-import schemacrawler.inclusionrule.InclusionRule;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.GrepOptions;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
@@ -46,11 +46,12 @@ class TableGrepFilter
 
   private static final SchemaCrawlerLogger LOGGER =
     SchemaCrawlerLogger.getLogger(TableGrepFilter.class.getName());
+
   private final InclusionRule grepColumnInclusionRule;
   private final InclusionRule grepDefinitionInclusionRule;
   private final boolean invertMatch;
 
-  public TableGrepFilter(final SchemaCrawlerOptions options)
+  public TableGrepFilter(final GrepOptions options)
   {
     invertMatch = options.isGrepInvertMatch();
 

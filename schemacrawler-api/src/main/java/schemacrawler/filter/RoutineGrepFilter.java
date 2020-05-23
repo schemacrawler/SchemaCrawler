@@ -31,10 +31,10 @@ package schemacrawler.filter;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 
+import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineParameter;
-import schemacrawler.inclusionrule.InclusionRule;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.GrepOptions;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
@@ -44,11 +44,12 @@ class RoutineGrepFilter
 
   private static final SchemaCrawlerLogger LOGGER =
     SchemaCrawlerLogger.getLogger(RoutineGrepFilter.class.getName());
+
   private final InclusionRule grepColumnInclusionRule;
   private final InclusionRule grepDefinitionInclusionRule;
   private final boolean invertMatch;
 
-  public RoutineGrepFilter(final SchemaCrawlerOptions options)
+  public RoutineGrepFilter(final GrepOptions options)
   {
     invertMatch = options.isGrepInvertMatch();
 

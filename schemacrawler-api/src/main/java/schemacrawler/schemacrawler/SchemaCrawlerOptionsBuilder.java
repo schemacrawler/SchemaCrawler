@@ -297,6 +297,13 @@ public final class SchemaCrawlerOptionsBuilder
       schemaInfoLevelBuilder.withoutRoutines();
     }
 
+    final GrepOptions grepOptions = new GrepOptions(grepColumnInclusionRule.orElse(null),
+                                                    grepRoutineParameterInclusionRule.orElse(
+                                                      null),
+                                                    grepDefinitionInclusionRule.orElse(null),
+                                                    grepInvertMatch,
+                                                    grepOnlyMatching);
+
     return new SchemaCrawlerOptions(schemaInfoLevelBuilder.toOptions(),
                                     schemaInclusionRule,
                                     synonymInclusionRule,
@@ -308,16 +315,11 @@ public final class SchemaCrawlerOptionsBuilder
                                     routineTypes.orElse(null),
                                     routineInclusionRule,
                                     routineParameterInclusionRule,
-                                    grepColumnInclusionRule.orElse(null),
-                                    grepRoutineParameterInclusionRule.orElse(
-                                      null),
-                                    grepDefinitionInclusionRule.orElse(null),
-                                    grepInvertMatch,
-                                    grepOnlyMatching,
                                     isNoEmptyTables,
                                     isLoadRowCounts,
                                     childTableFilterDepth,
-                                    parentTableFilterDepth);
+                                    parentTableFilterDepth,
+                                    grepOptions);
   }
 
   public SchemaCrawlerOptionsBuilder grepOnlyMatching(final boolean grepOnlyMatching)

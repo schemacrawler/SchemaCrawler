@@ -144,7 +144,7 @@ final class TablesReducer
   private void markTableFilteredOut(final Table table)
   {
     table.setAttribute("schemacrawler.table.filtered_out", true);
-    if (options.isGrepOnlyMatching())
+    if (options.getGrepOptions().isGrepOnlyMatching())
     {
       table.setAttribute("schemacrawler.table.no_grep_match", true);
     }

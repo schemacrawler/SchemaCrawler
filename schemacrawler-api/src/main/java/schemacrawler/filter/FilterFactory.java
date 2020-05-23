@@ -43,9 +43,9 @@ public final class FilterFactory
   public static Predicate<Routine> routineFilter(final SchemaCrawlerOptions options)
   {
     final Predicate<Routine> routineFilter = new RoutineTypesFilter(options)
-      .and(new DatabaseObjectFilter<Routine>(options,
+      .and(new DatabaseObjectFilter<>(options,
                                              options.getRoutineInclusionRule()))
-      .and(new RoutineGrepFilter(options));
+      .and(new RoutineGrepFilter(options.getGrepOptions()));
 
     return routineFilter;
   }
@@ -70,9 +70,9 @@ public final class FilterFactory
   public static Predicate<Table> tableFilter(final SchemaCrawlerOptions options)
   {
     final Predicate<Table> tableFilter = new TableTypesFilter(options)
-      .and(new DatabaseObjectFilter<Table>(options,
+      .and(new DatabaseObjectFilter<>(options,
                                            options.getTableInclusionRule()))
-      .and(new TableGrepFilter(options));
+      .and(new TableGrepFilter(options.getGrepOptions()));
 
     return tableFilter;
   }
