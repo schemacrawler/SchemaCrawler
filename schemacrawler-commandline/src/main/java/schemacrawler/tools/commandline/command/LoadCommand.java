@@ -29,7 +29,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 
-import picocli.CommandLine.*;
+import static java.util.Objects.requireNonNull;
+
+import java.sql.Connection;
+import java.util.logging.Level;
+
+import picocli.CommandLine.Command;
+import picocli.CommandLine.ExecutionException;
+import picocli.CommandLine.Model;
+import picocli.CommandLine.Option;
+import picocli.CommandLine.Spec;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InfoLevel;
@@ -41,11 +50,6 @@ import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
-
-import java.sql.Connection;
-import java.util.logging.Level;
-
-import static java.util.Objects.requireNonNull;
 
 @Command(name = "load", header = "** Load database metadata into memory", description = {
   ""

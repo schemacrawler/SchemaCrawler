@@ -263,9 +263,9 @@ public final class SchemaCrawlerOptionsBuilder
     }
 
     final GrepOptions grepOptions = grepOptionsBuilder.toOptions();
+    final LoadOptions loadOptions = new LoadOptions(schemaInfoLevelBuilder.toOptions(), isLoadRowCounts);
 
-    return new SchemaCrawlerOptions(schemaInfoLevelBuilder.toOptions(),
-                                    schemaInclusionRule,
+    return new SchemaCrawlerOptions(schemaInclusionRule,
                                     synonymInclusionRule,
                                     sequenceInclusionRule,
                                     tableTypes.orElse(null),
@@ -276,10 +276,10 @@ public final class SchemaCrawlerOptionsBuilder
                                     routineInclusionRule,
                                     routineParameterInclusionRule,
                                     isNoEmptyTables,
-                                    isLoadRowCounts,
                                     childTableFilterDepth,
                                     parentTableFilterDepth,
-                                    grepOptions);
+                                    grepOptions,
+                                    loadOptions);
   }
 
   @Deprecated

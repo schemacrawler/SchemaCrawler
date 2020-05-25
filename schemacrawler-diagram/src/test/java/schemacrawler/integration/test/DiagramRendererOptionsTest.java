@@ -99,6 +99,7 @@ public class DiagramRendererOptionsTest
     diagramOptionsBuilder.sortTables(true);
     diagramOptionsBuilder.noInfo(diagramOptions.isNoInfo());
     if (!"maximum".equals(options
+                            .getLoadOptions()
                             .getSchemaInfoLevel()
                             .getTag()))
     {

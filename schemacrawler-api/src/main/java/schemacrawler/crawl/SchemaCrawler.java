@@ -134,7 +134,7 @@ public final class SchemaCrawler
     throws SchemaCrawlerException
   {
 
-    final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
+    final SchemaInfoLevel infoLevel = options.getLoadOptions().getSchemaInfoLevel();
 
     final StopWatch stopWatch = new StopWatch("crawlAnalysis");
 
@@ -169,7 +169,7 @@ public final class SchemaCrawler
       final TableRowCountsRetriever rowCountsRetriever =
         new TableRowCountsRetriever(retrieverConnection.getConnection(), catalog);
       stopWatch.time("retrieveTableRowCounts", () -> {
-        final boolean loadRowCounts = options.isLoadRowCounts();
+        final boolean loadRowCounts = options.getLoadOptions().isLoadRowCounts();
         if (loadRowCounts)
         {
           rowCountsRetriever.retrieveTableRowCounts();
@@ -203,7 +203,7 @@ public final class SchemaCrawler
 
       final StopWatch stopWatch = new StopWatch("crawlColumnDataTypes");
 
-      final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
+      final SchemaInfoLevel infoLevel = options.getLoadOptions().getSchemaInfoLevel();
       final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection, catalog, options);
 
       stopWatch.time("retrieveSystemColumnDataTypes", () -> {
@@ -256,7 +256,7 @@ public final class SchemaCrawler
   {
     try
     {
-      final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
+      final SchemaInfoLevel infoLevel = options.getLoadOptions().getSchemaInfoLevel();
       final boolean retrieveDatabaseInfo = infoLevel.isRetrieveDatabaseInfo();
       if (!retrieveDatabaseInfo)
       {
@@ -343,7 +343,7 @@ public final class SchemaCrawler
     throws SchemaCrawlerException
   {
 
-    final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
+    final SchemaInfoLevel infoLevel = options.getLoadOptions().getSchemaInfoLevel();
     final boolean retrieveRoutines = infoLevel.isRetrieveRoutines();
     if (!retrieveRoutines)
     {
@@ -487,7 +487,7 @@ public final class SchemaCrawler
     throws SchemaCrawlerException
   {
 
-    final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
+    final SchemaInfoLevel infoLevel = options.getLoadOptions().getSchemaInfoLevel();
     final boolean retrieveSequences = infoLevel.isRetrieveSequenceInformation();
     if (!retrieveSequences)
     {
@@ -534,7 +534,7 @@ public final class SchemaCrawler
     throws SchemaCrawlerException
   {
 
-    final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
+    final SchemaInfoLevel infoLevel = options.getLoadOptions().getSchemaInfoLevel();
     final boolean retrieveSynonyms = infoLevel.isRetrieveSynonymInformation();
     if (!retrieveSynonyms)
     {
@@ -580,7 +580,7 @@ public final class SchemaCrawler
     throws SchemaCrawlerException
   {
 
-    final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
+    final SchemaInfoLevel infoLevel = options.getLoadOptions().getSchemaInfoLevel();
     final boolean retrieveTables = infoLevel.isRetrieveTables();
     if (!retrieveTables)
     {

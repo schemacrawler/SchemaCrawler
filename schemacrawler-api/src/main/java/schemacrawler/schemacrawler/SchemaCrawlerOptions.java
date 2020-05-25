@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -48,22 +50,20 @@ public final class SchemaCrawlerOptions
   private final int childTableFilterDepth;
   private final InclusionRule columnInclusionRule;
   private final boolean isNoEmptyTables;
-  private final boolean isLoadRowCounts;
   private final int parentTableFilterDepth;
   private final InclusionRule routineInclusionRule;
   private final InclusionRule routineParameterInclusionRule;
   private final Collection<RoutineType> routineTypes;
   private final InclusionRule schemaInclusionRule;
-  private final SchemaInfoLevel schemaInfoLevel;
   private final InclusionRule sequenceInclusionRule;
   private final InclusionRule synonymInclusionRule;
   private final InclusionRule tableInclusionRule;
   private final String tableNamePattern;
   private final Collection<String> tableTypes;
   private final GrepOptions grepOptions;
+  private final LoadOptions loadOptions;
 
-  SchemaCrawlerOptions(final SchemaInfoLevel schemaInfoLevel,
-                       final InclusionRule schemaInclusionRule,
+  SchemaCrawlerOptions(final InclusionRule schemaInclusionRule,
                        final InclusionRule synonymInclusionRule,
                        final InclusionRule sequenceInclusionRule,
                        final Collection<String> tableTypes,
@@ -74,12 +74,11 @@ public final class SchemaCrawlerOptions
                        final InclusionRule routineInclusionRule,
                        final InclusionRule routineParameterInclusionRule,
                        final boolean isNoEmptyTables,
-                       final boolean isLoadRowCounts,
                        final int childTableFilterDepth,
                        final int parentTableFilterDepth,
-                       final GrepOptions grepOptions)
+                       final GrepOptions grepOptions,
+                       final LoadOptions loadOptions)
   {
-    this.schemaInfoLevel = schemaInfoLevel;
     this.schemaInclusionRule = schemaInclusionRule;
     this.synonymInclusionRule = synonymInclusionRule;
     this.sequenceInclusionRule = sequenceInclusionRule;
@@ -91,10 +90,10 @@ public final class SchemaCrawlerOptions
     this.routineInclusionRule = routineInclusionRule;
     this.routineParameterInclusionRule = routineParameterInclusionRule;
     this.isNoEmptyTables = isNoEmptyTables;
-    this.isLoadRowCounts = isLoadRowCounts;
     this.childTableFilterDepth = childTableFilterDepth;
     this.parentTableFilterDepth = parentTableFilterDepth;
-    this.grepOptions = grepOptions;
+    this.grepOptions = requireNonNull(grepOptions, "No grep options provided");
+    this.loadOptions = requireNonNull(loadOptions, "No load options provided");
   }
 
   public int getChildTableFilterDepth()
@@ -205,10 +204,12 @@ public final class SchemaCrawlerOptions
    * should be crawled.
    *
    * @return Schema information level.
+   * @deprecated
    */
+  @Deprecated
   public SchemaInfoLevel getSchemaInfoLevel()
   {
-    return schemaInfoLevel;
+    return loadOptions.getSchemaInfoLevel();
   }
 
   /**
@@ -327,10 +328,17 @@ public final class SchemaCrawlerOptions
    * with no rows of data) from the catalog.
    *
    * @return Whether to hide empty tables
+   * @deprecated
    */
+  @Deprecated
   public boolean isLoadRowCounts()
   {
-    return isLoadRowCounts;
+    return loadOptions.isLoadRowCounts();
+  }
+
+  public LoadOptions getLoadOptions()
+  {
+    return loadOptions;
   }
 
   /**
