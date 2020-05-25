@@ -53,6 +53,7 @@ import schemacrawler.schema.RoutineParameter;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.GrepOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.TestContext;
@@ -73,11 +74,13 @@ public class SchemaCrawlerGrepTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
+      final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
+        .includeGreppedColumns(new RegularExpressionInclusionRule(
+          ".*\\..*\\.BOOKID"));
       final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder
           .builder()
-          .includeGreppedColumns(new RegularExpressionInclusionRule(
-            ".*\\..*\\.BOOKID"))
+          .withGrepOptions(grepOptionsBuilder.toOptions())
           .toOptions();
 
       final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
@@ -113,11 +116,12 @@ public class SchemaCrawlerGrepTest
   public void grepColumnsAndIncludeChildTables(final Connection connection)
     throws Exception
   {
-
+    GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
+      .includeGreppedColumns(new RegularExpressionInclusionRule(
+        ".*\\.BOOKAUTHORS\\..*"));
     SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
       .builder()
-      .includeGreppedColumns(new RegularExpressionInclusionRule(
-        ".*\\.BOOKAUTHORS\\..*"))
+      .withGrepOptions(grepOptionsBuilder.toOptions())
       .toOptions();
 
     Catalog catalog;
@@ -171,13 +175,15 @@ public class SchemaCrawlerGrepTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
+      final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
+        .includeGreppedColumns(new RegularExpressionInclusionRule(
+          ".*\\..*\\.BOOKID"))
+        .includeGreppedDefinitions(new RegularExpressionInclusionRule(
+          ".*book author.*"));
       final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder
           .builder()
-          .includeGreppedColumns(new RegularExpressionInclusionRule(
-            ".*\\..*\\.BOOKID"))
-          .includeGreppedDefinitions(new RegularExpressionInclusionRule(
-            ".*book author.*"))
+          .withGrepOptions(grepOptionsBuilder.toOptions())
           .toOptions();
 
       final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
@@ -217,11 +223,13 @@ public class SchemaCrawlerGrepTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
+      final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
+        .includeGreppedDefinitions(new RegularExpressionInclusionRule(
+          ".*book author.*"));
       final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder
           .builder()
-          .includeGreppedDefinitions(new RegularExpressionInclusionRule(
-            ".*book author.*"))
+          .withGrepOptions(grepOptionsBuilder.toOptions())
           .toOptions();
 
       final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
@@ -261,14 +269,15 @@ public class SchemaCrawlerGrepTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
+        .includeGreppedRoutineParameters(new RegularExpressionInclusionRule(
+          ".*\\.B_COUNT"));
+      final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder
           .builder()
           .includeAllRoutines()
-          .includeGreppedRoutineParameters(new RegularExpressionInclusionRule(
-            ".*\\.B_COUNT"));
-      final SchemaCrawlerOptions schemaCrawlerOptions =
-        schemaCrawlerOptionsBuilder.toOptions();
+          .withGrepOptions(grepOptionsBuilder.toOptions())
+          .toOptions();
 
       final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
       final Schema[] schemas = catalog

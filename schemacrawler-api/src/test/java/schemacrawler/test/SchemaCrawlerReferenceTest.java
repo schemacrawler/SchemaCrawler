@@ -48,6 +48,7 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.GrepOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.DatabaseTestUtility;
@@ -92,15 +93,15 @@ public class SchemaCrawlerReferenceTest
   public void fkReferencesForGreppedAndFilteredTables1(final Connection connection)
     throws Exception
   {
-
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+    final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
+      .includeGreppedColumns(new RegularExpressionInclusionRule(
+        ".*\\.BOOKAUTHORS\\..*"));
+    final SchemaCrawlerOptions schemaCrawlerOptions =
       SchemaCrawlerOptionsBuilder
         .builder()
+        .withGrepOptions(grepOptionsBuilder.toOptions())
         .includeTables(new RegularExpressionInclusionRule(".*\\.BOOKAUTHORS"))
-        .includeGreppedColumns(new RegularExpressionInclusionRule(
-          ".*\\.BOOKAUTHORS\\..*"));
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-      schemaCrawlerOptionsBuilder.toOptions();
+        .toOptions();
 
     int fkReferenceCount = 0;
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
@@ -130,15 +131,15 @@ public class SchemaCrawlerReferenceTest
   public void fkReferencesForGreppedAndFilteredTables2(final Connection connection)
     throws Exception
   {
-
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+    final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
+      .includeGreppedColumns(new RegularExpressionInclusionRule(
+        ".*\\.AUTHORS\\..*"));
+    final SchemaCrawlerOptions schemaCrawlerOptions =
       SchemaCrawlerOptionsBuilder
         .builder()
+        .withGrepOptions(grepOptionsBuilder.toOptions())
         .includeTables(new RegularExpressionInclusionRule(".*\\.AUTHORS"))
-        .includeGreppedColumns(new RegularExpressionInclusionRule(
-          ".*\\.AUTHORS\\..*"));
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-      schemaCrawlerOptionsBuilder.toOptions();
+        .toOptions();
 
     int fkReferenceCount = 0;
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
@@ -168,12 +169,13 @@ public class SchemaCrawlerReferenceTest
   public void fkReferencesForGreppedTables1(final Connection connection)
     throws Exception
   {
-
+    final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
+      .includeGreppedColumns(new RegularExpressionInclusionRule(
+        ".*\\.BOOKAUTHORS\\..*"));
     final SchemaCrawlerOptions schemaCrawlerOptions =
       SchemaCrawlerOptionsBuilder
         .builder()
-        .includeGreppedColumns(new RegularExpressionInclusionRule(
-          ".*\\.BOOKAUTHORS\\..*"))
+        .withGrepOptions(grepOptionsBuilder.toOptions())
         .toOptions();
 
     int fkReferenceCount = 0;
@@ -204,12 +206,13 @@ public class SchemaCrawlerReferenceTest
   public void fkReferencesForGreppedTables2(final Connection connection)
     throws Exception
   {
-
+    final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
+      .includeGreppedColumns(new RegularExpressionInclusionRule(
+        ".*\\.AUTHORS\\..*"));
     final SchemaCrawlerOptions schemaCrawlerOptions =
       SchemaCrawlerOptionsBuilder
         .builder()
-        .includeGreppedColumns(new RegularExpressionInclusionRule(
-          ".*\\.AUTHORS\\..*"))
+        .withGrepOptions(grepOptionsBuilder.toOptions())
         .toOptions();
 
     int fkReferenceCount = 0;

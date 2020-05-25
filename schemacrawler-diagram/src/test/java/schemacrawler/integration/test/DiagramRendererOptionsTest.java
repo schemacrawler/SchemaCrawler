@@ -47,9 +47,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.inclusionrule.IncludeAll;
-import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.GrepOptionsBuilder;
+import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
@@ -315,10 +316,11 @@ public class DiagramRendererOptionsTest
   public void executableForDiagram_09(final TestContext testContext, final Connection connection)
     throws Exception
   {
+    final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder().grepOnlyMatching(true);
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
       .builder()
       .includeTables(new RegularExpressionInclusionRule(".*BOOKS"))
-      .grepOnlyMatching(true);
+      .withGrepOptions(grepOptionsBuilder.toOptions());
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
     final DiagramOptionsBuilder diagramOptionsBuilder = DiagramOptionsBuilder.builder();
@@ -338,9 +340,11 @@ public class DiagramRendererOptionsTest
   public void executableForDiagram_10(final TestContext testContext, final Connection connection)
     throws Exception
   {
+    final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
+      .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.REGIONS\\..*"));
     final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
       .builder()
-      .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.REGIONS\\..*"))
+      .withGrepOptions(grepOptionsBuilder.toOptions())
       .toOptions();
 
     final DiagramOptions diagramOptions = DiagramOptionsBuilder
@@ -358,10 +362,12 @@ public class DiagramRendererOptionsTest
   public void executableForDiagram_11(final TestContext testContext, final Connection connection)
     throws Exception
   {
+    final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
+      .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.REGIONS\\..*"))
+      .grepOnlyMatching(true);
     final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
       .builder()
-      .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.REGIONS\\..*"))
-      .grepOnlyMatching(true)
+      .withGrepOptions(grepOptionsBuilder.toOptions())
       .toOptions();
 
     final DiagramOptions diagramOptions = DiagramOptionsBuilder

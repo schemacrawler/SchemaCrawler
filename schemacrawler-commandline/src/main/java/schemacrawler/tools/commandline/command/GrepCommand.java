@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.GrepOptionsBuilder;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
@@ -94,31 +94,32 @@ public final class GrepCommand
   @Override
   public void run()
   {
-    final SchemaCrawlerOptionsBuilder optionsBuilder =
-      state.getSchemaCrawlerOptionsBuilder();
+    final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder();
 
     if (grepcolumns != null)
     {
-      optionsBuilder.includeGreppedColumns(grepcolumns);
+      grepOptionsBuilder.includeGreppedColumns(grepcolumns);
     }
     if (grepparameters != null)
     {
-      optionsBuilder.includeGreppedRoutineParameters(grepparameters);
+      grepOptionsBuilder.includeGreppedRoutineParameters(grepparameters);
     }
     if (grepdef != null)
     {
-      optionsBuilder.includeGreppedDefinitions(grepdef);
+      grepOptionsBuilder.includeGreppedDefinitions(grepdef);
     }
 
     if (invertMatch != null)
     {
-      optionsBuilder.invertGrepMatch(invertMatch);
+      grepOptionsBuilder.invertGrepMatch(invertMatch);
     }
     if (onlyMatching != null)
     {
-      optionsBuilder.grepOnlyMatching(onlyMatching);
+      grepOptionsBuilder.grepOnlyMatching(onlyMatching);
     }
 
+    // Set grep options on the state
+    state.getSchemaCrawlerOptionsBuilder().withGrepOptions(grepOptionsBuilder.toOptions());
   }
 
 }

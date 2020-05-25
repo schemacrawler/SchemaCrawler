@@ -58,18 +58,6 @@ public final class SchemaCrawlerOptionsBuilder
     "schemacrawler.column.pattern.exclude";
   private static final String SC_COLUMN_PATTERN_INCLUDE =
     "schemacrawler.column.pattern.include";
-  private static final String SC_GREP_COLUMN_PATTERN_EXCLUDE =
-    "schemacrawler.grep.column.pattern.exclude";
-  private static final String SC_GREP_COLUMN_PATTERN_INCLUDE =
-    "schemacrawler.grep.column.pattern.include";
-  private static final String SC_GREP_DEFINITION_PATTERN_EXCLUDE =
-    "schemacrawler.grep.definition.pattern.exclude";
-  private static final String SC_GREP_DEFINITION_PATTERN_INCLUDE =
-    "schemacrawler.grep.definition.pattern.include";
-  private static final String SC_GREP_ROUTINE_PARAMETER_PATTERN_EXCLUDE =
-    "schemacrawler.grep.routine.inout.pattern.exclude";
-  private static final String SC_GREP_ROUTINE_PARAMETER_PATTERN_INCLUDE =
-    "schemacrawler.grep.routine.inout.pattern.include";
   private static final String SC_ROUTINE_PARAMETER_PATTERN_EXCLUDE =
     "schemacrawler.routine.inout.pattern.exclude";
   private static final String SC_ROUTINE_PARAMETER_PATTERN_INCLUDE =
@@ -117,16 +105,10 @@ public final class SchemaCrawlerOptionsBuilder
 
   private int childTableFilterDepth;
   private InclusionRule columnInclusionRule;
-  private Optional<InclusionRule> grepColumnInclusionRule;
-  private Optional<InclusionRule> grepDefinitionInclusionRule;
-  private boolean grepInvertMatch;
-  private boolean grepOnlyMatching;
-  private Optional<InclusionRule> grepRoutineParameterInclusionRule;
   private boolean isNoEmptyTables;
   private boolean isLoadRowCounts;
   private int parentTableFilterDepth;
   private InclusionRule routineInclusionRule;
-
   private InclusionRule routineParameterInclusionRule;
   private Optional<Collection<RoutineType>> routineTypes;
   private InclusionRule schemaInclusionRule;
@@ -136,6 +118,7 @@ public final class SchemaCrawlerOptionsBuilder
   private InclusionRule tableInclusionRule;
   private String tableNamePattern;
   private Optional<Collection<String>> tableTypes;
+  private GrepOptionsBuilder grepOptionsBuilder;
 
   /**
    * Default options.
@@ -160,9 +143,7 @@ public final class SchemaCrawlerOptionsBuilder
     routineInclusionRule = new ExcludeAll();
     routineParameterInclusionRule = new ExcludeAll();
 
-    grepColumnInclusionRule = Optional.empty();
-    grepRoutineParameterInclusionRule = Optional.empty();
-    grepDefinitionInclusionRule = Optional.empty();
+    grepOptionsBuilder = GrepOptionsBuilder.builder();
   }
 
   public SchemaCrawlerOptionsBuilder childTableFilterDepth(final int childTableFilterDepth)
@@ -220,15 +201,7 @@ public final class SchemaCrawlerOptionsBuilder
       SC_ROUTINE_PARAMETER_PATTERN_EXCLUDE,
       IncludeAll::new);
 
-    grepColumnInclusionRule = config.getOptionalInclusionRule(
-      SC_GREP_COLUMN_PATTERN_INCLUDE,
-      SC_GREP_COLUMN_PATTERN_EXCLUDE);
-    grepRoutineParameterInclusionRule = config.getOptionalInclusionRule(
-      SC_GREP_ROUTINE_PARAMETER_PATTERN_INCLUDE,
-      SC_GREP_ROUTINE_PARAMETER_PATTERN_EXCLUDE);
-    grepDefinitionInclusionRule = config.getOptionalInclusionRule(
-      SC_GREP_DEFINITION_PATTERN_INCLUDE,
-      SC_GREP_DEFINITION_PATTERN_EXCLUDE);
+    grepOptionsBuilder.fromConfig(config);
 
     return this;
   }
@@ -256,15 +229,7 @@ public final class SchemaCrawlerOptionsBuilder
     routineInclusionRule = options.getRoutineInclusionRule();
     routineParameterInclusionRule = options.getRoutineParameterInclusionRule();
 
-    grepColumnInclusionRule = options.getGrepColumnInclusionRule();
-    grepRoutineParameterInclusionRule = Optional
-      .ofNullable(options.getGrepRoutineParameterInclusionRule())
-      .orElse(null);
-    grepDefinitionInclusionRule = Optional
-      .ofNullable(options.getGrepDefinitionInclusionRule())
-      .orElse(null);
-    grepInvertMatch = options.isGrepInvertMatch();
-    grepOnlyMatching = options.isGrepOnlyMatching();
+    grepOptionsBuilder = GrepOptionsBuilder.builder().fromOptions(options.getGrepOptions());
 
     isNoEmptyTables = options.isNoEmptyTables();
     isLoadRowCounts = options.isLoadRowCounts();
@@ -297,12 +262,7 @@ public final class SchemaCrawlerOptionsBuilder
       schemaInfoLevelBuilder.withoutRoutines();
     }
 
-    final GrepOptions grepOptions = new GrepOptions(grepColumnInclusionRule.orElse(null),
-                                                    grepRoutineParameterInclusionRule.orElse(
-                                                      null),
-                                                    grepDefinitionInclusionRule.orElse(null),
-                                                    grepInvertMatch,
-                                                    grepOnlyMatching);
+    final GrepOptions grepOptions = grepOptionsBuilder.toOptions();
 
     return new SchemaCrawlerOptions(schemaInfoLevelBuilder.toOptions(),
                                     schemaInclusionRule,
@@ -322,9 +282,10 @@ public final class SchemaCrawlerOptionsBuilder
                                     grepOptions);
   }
 
+  @Deprecated
   public SchemaCrawlerOptionsBuilder grepOnlyMatching(final boolean grepOnlyMatching)
   {
-    this.grepOnlyMatching = grepOnlyMatching;
+    grepOptionsBuilder.grepOnlyMatching(grepOnlyMatching);
     return this;
   }
 
@@ -359,9 +320,10 @@ public final class SchemaCrawlerOptionsBuilder
     return this;
   }
 
+  @Deprecated
   public SchemaCrawlerOptionsBuilder includeGreppedColumns(final InclusionRule grepColumnInclusionRule)
   {
-    this.grepColumnInclusionRule = Optional.ofNullable(grepColumnInclusionRule);
+    grepOptionsBuilder.includeGreppedColumns(grepColumnInclusionRule);
     return this;
   }
 
@@ -395,60 +357,38 @@ public final class SchemaCrawlerOptionsBuilder
     return this;
   }
 
+  @Deprecated
   public SchemaCrawlerOptionsBuilder includeGreppedColumns(final Pattern grepColumnPattern)
   {
-    if (grepColumnPattern == null)
-    {
-      grepColumnInclusionRule = Optional.empty();
-    }
-    else
-    {
-      grepColumnInclusionRule =
-        Optional.of(new RegularExpressionInclusionRule(grepColumnPattern));
-    }
+    grepOptionsBuilder.includeGreppedColumns(grepColumnPattern);
     return this;
   }
 
+  @Deprecated
   public SchemaCrawlerOptionsBuilder includeGreppedDefinitions(final InclusionRule grepDefinitionInclusionRule)
   {
-    this.grepDefinitionInclusionRule =
-      Optional.ofNullable(grepDefinitionInclusionRule);
+    grepOptionsBuilder.includeGreppedDefinitions(grepDefinitionInclusionRule);
     return this;
   }
 
+  @Deprecated
   public SchemaCrawlerOptionsBuilder includeGreppedDefinitions(final Pattern grepDefinitionPattern)
   {
-    if (grepDefinitionPattern == null)
-    {
-      grepDefinitionInclusionRule = Optional.empty();
-    }
-    else
-    {
-      grepDefinitionInclusionRule =
-        Optional.of(new RegularExpressionInclusionRule(grepDefinitionPattern));
-    }
+    grepOptionsBuilder.includeGreppedDefinitions(grepDefinitionPattern);
     return this;
   }
 
+  @Deprecated
   public SchemaCrawlerOptionsBuilder includeGreppedRoutineParameters(final InclusionRule grepRoutineParameterInclusionRule)
   {
-    this.grepRoutineParameterInclusionRule =
-      Optional.ofNullable(grepRoutineParameterInclusionRule);
+    grepOptionsBuilder.includeGreppedRoutineParameters(grepRoutineParameterInclusionRule);
     return this;
   }
 
+  @Deprecated
   public SchemaCrawlerOptionsBuilder includeGreppedRoutineParameters(final Pattern grepRoutineParametersPattern)
   {
-    if (grepRoutineParametersPattern == null)
-    {
-      grepRoutineParameterInclusionRule = Optional.empty();
-    }
-    else
-    {
-      grepRoutineParameterInclusionRule =
-        Optional.of(new RegularExpressionInclusionRule(
-          grepRoutineParametersPattern));
-    }
+    grepOptionsBuilder.includeGreppedRoutineParameters(grepRoutineParametersPattern);
     return this;
   }
 
@@ -532,9 +472,10 @@ public final class SchemaCrawlerOptionsBuilder
     return this;
   }
 
+  @Deprecated
   public SchemaCrawlerOptionsBuilder invertGrepMatch(final boolean grepInvertMatch)
   {
-    this.grepInvertMatch = grepInvertMatch;
+    grepOptionsBuilder.invertGrepMatch(grepInvertMatch);
     return this;
   }
 
@@ -712,6 +653,15 @@ public final class SchemaCrawlerOptionsBuilder
     if (infoLevel != null)
     {
       this.schemaInfoLevel = infoLevel.toSchemaInfoLevel();
+    }
+    return this;
+  }
+
+  public SchemaCrawlerOptionsBuilder withGrepOptions(final GrepOptions grepOptions)
+  {
+    if (grepOptions != null)
+    {
+      this.grepOptionsBuilder = GrepOptionsBuilder.builder().fromOptions(grepOptions);
     }
     return this;
   }
