@@ -54,6 +54,7 @@ import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Property;
+import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -93,11 +94,11 @@ public class OracleTest
   public void testOracleCatalogServerInfo()
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder.builder();
-    schemaCrawlerOptionsBuilder
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-      .includeSchemas(new RegularExpressionInclusionRule("BOOKS"));
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder.builder()
+      .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
+      .withLoadOptionsBuilder(loadOptionsBuilder);
     final SchemaCrawlerOptions options =
       schemaCrawlerOptionsBuilder.toOptions();
 
@@ -129,15 +130,15 @@ public class OracleTest
   public void testOracleWithConnection()
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder.builder();
-    schemaCrawlerOptionsBuilder
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder.builder()
       .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
       .includeAllSequences()
       .includeAllSynonyms()
       .includeRoutines(new RegularExpressionInclusionRule("[0-9a-zA-Z_\\.]*"))
-      .tableTypes("TABLE,VIEW");
+      .tableTypes("TABLE,VIEW")
+      .withLoadOptionsBuilder(loadOptionsBuilder);
     final SchemaCrawlerOptions options =
       schemaCrawlerOptionsBuilder.toOptions();
 

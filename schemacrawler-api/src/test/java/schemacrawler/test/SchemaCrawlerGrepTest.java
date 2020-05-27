@@ -54,6 +54,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.GrepOptionsBuilder;
+import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.TestContext;
@@ -316,11 +317,13 @@ public class SchemaCrawlerGrepTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
+      final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+        .loadRowCounts();
       final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder
           .builder()
-          .loadRowCounts()
           .noEmptyTables()
+          .withLoadOptionsBuilder(loadOptionsBuilder)
           .toOptions();
 
       final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);

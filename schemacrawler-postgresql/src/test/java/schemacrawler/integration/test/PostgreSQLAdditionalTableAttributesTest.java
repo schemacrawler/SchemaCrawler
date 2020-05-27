@@ -32,6 +32,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 import static sf.util.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
@@ -52,8 +53,6 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.server.postgresql.PostgreSQLDatabaseConnector;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
@@ -92,11 +91,7 @@ public class PostgreSQLAdditionalTableAttributesTest
       connection.commit();
     }
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder.builder();
-    final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-      .toOptions();
+    final SchemaCrawlerOptions options = schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     final Connection connection = checkConnection(getConnection());
     final DatabaseConnector postgreSQLDatabaseConnector =

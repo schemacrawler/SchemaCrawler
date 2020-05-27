@@ -45,6 +45,7 @@ import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.inclusionrule.IncludeAll;
+import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -80,15 +81,15 @@ public class FirebirdTest
   public void testFirebirdWithConnection()
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder.builder();
-    schemaCrawlerOptionsBuilder
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder.builder()
       .includeSchemas(new IncludeAll())
       .includeAllSequences()
       .includeAllSynonyms()
       .includeAllRoutines()
-      .tableTypes("TABLE,VIEW");
+      .tableTypes("TABLE,VIEW")
+      .withLoadOptionsBuilder(loadOptionsBuilder);
     final SchemaCrawlerOptions options =
       schemaCrawlerOptionsBuilder.toOptions();
 

@@ -51,6 +51,7 @@ import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.GrepOptionsBuilder;
 import schemacrawler.schemacrawler.InfoLevel;
+import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
@@ -390,11 +391,13 @@ public class DiagramRendererOptionsTest
     diagramOptionsBuilder.showRowCounts();
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+      .loadRowCounts();
     final SchemaCrawlerOptions schemaCrawlerOptions =
       SchemaCrawlerOptionsBuilder
         .builder()
-        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-        .loadRowCounts()
+        .withLoadOptionsBuilder(loadOptionsBuilder)
         .toOptions();
 
     executableDiagram(SchemaTextDetailType.schema.name(),
@@ -434,10 +437,12 @@ public class DiagramRendererOptionsTest
   public void executableForDiagram_lintschema(final TestContext testContext, final Connection connection)
     throws Exception
   {
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
       .builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-      .includeSchemas(new RegularExpressionInclusionRule(".*\\.FOR_LINT"));
+      .includeSchemas(new RegularExpressionInclusionRule(".*\\.FOR_LINT"))
+      .withLoadOptionsBuilder(loadOptionsBuilder);
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
     final DiagramOptions diagramOptions = DiagramOptionsBuilder
@@ -457,9 +462,11 @@ public class DiagramRendererOptionsTest
       .builder()
       .withInfoLevel(InfoLevel.standard)
       .setRetrieveWeakAssociations(true);
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+      .withSchemaInfoLevel(infoLevelBuilder.toOptions());
     final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
       .builder()
-      .withSchemaInfoLevel(infoLevelBuilder.toOptions());
+      .withLoadOptionsBuilder(loadOptionsBuilder);
     return builder.toOptions();
   }
 

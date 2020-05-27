@@ -53,6 +53,7 @@ import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Property;
+import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -89,15 +90,15 @@ public class PostgreSQLTest
   public void testPostgreSQLCatalog()
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder.builder();
-    schemaCrawlerOptionsBuilder
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder.builder()
       .includeSchemas(new RegularExpressionInclusionRule("books"))
       .includeAllSequences()
       .includeAllSynonyms()
       .includeAllRoutines()
-      .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
+      .tableTypes("TABLE,VIEW,MATERIALIZED VIEW")
+      .withLoadOptionsBuilder(loadOptionsBuilder);
     final SchemaCrawlerOptions options =
       schemaCrawlerOptionsBuilder.toOptions();
 
@@ -130,15 +131,15 @@ public class PostgreSQLTest
   public void testPostgreSQLWithConnection()
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder.builder();
-    schemaCrawlerOptionsBuilder
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder.builder()
       .includeSchemas(new RegularExpressionInclusionRule("books"))
       .includeAllSequences()
       .includeAllSynonyms()
       .includeAllRoutines()
-      .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
+      .tableTypes("TABLE,VIEW,MATERIALIZED VIEW")
+      .withLoadOptionsBuilder(loadOptionsBuilder);
     final SchemaCrawlerOptions options =
       schemaCrawlerOptionsBuilder.toOptions();
 

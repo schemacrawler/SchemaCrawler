@@ -62,6 +62,7 @@ import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
+import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -153,15 +154,17 @@ public class ForeignKeyRetrieverTest
   public void loadBaseCatalog(final Connection connection)
     throws SchemaCrawlerException
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-      .builder()
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder
                              .builder()
                              .withInfoLevel(InfoLevel.standard)
                              .setRetrieveForeignKeys(false)
                              .setRetrieveForeignKeyDefinitions(false)
-                             .toOptions())
+                             .toOptions());
+    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
+      .builder()
       .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
+      .withLoadOptionsBuilder(loadOptionsBuilder)
       .toOptions();
     catalog = (MutableCatalog) getCatalog(connection,
                                           SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),

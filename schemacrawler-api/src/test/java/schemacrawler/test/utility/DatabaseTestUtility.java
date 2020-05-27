@@ -43,6 +43,7 @@ import java.util.Properties;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -53,11 +54,19 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 public final class DatabaseTestUtility
 {
 
-  public final static SchemaCrawlerOptions
-    schemaCrawlerOptionsWithMaximumSchemaInfoLevel = SchemaCrawlerOptionsBuilder
-    .builder()
-    .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-    .toOptions();
+  public final static SchemaCrawlerOptions schemaCrawlerOptionsWithMaximumSchemaInfoLevel =
+    getMaximumSchemaCrawlerOptions();
+
+  private static SchemaCrawlerOptions getMaximumSchemaCrawlerOptions()
+  {
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
+      .builder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    return SchemaCrawlerOptionsBuilder
+      .builder()
+      .withLoadOptionsBuilder(loadOptionsBuilder)
+      .toOptions();
+  }
 
   public static Catalog getCatalog(final Connection connection,
                                    final SchemaCrawlerOptions schemaCrawlerOptions)

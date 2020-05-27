@@ -46,6 +46,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InfoLevel;
+import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
@@ -127,13 +128,15 @@ public abstract class AbstractSpinThroughExecutableTest
         final String referenceFile =
           referenceFile(schemaTextDetailType, infoLevel, outputFormat, javaVersion);
 
+        final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+          .withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());
         final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
           SchemaCrawlerOptionsBuilder
             .builder()
-            .withSchemaInfoLevel(infoLevel.toSchemaInfoLevel())
             .includeAllSequences()
             .includeAllSynonyms()
-            .includeAllRoutines();
+            .includeAllRoutines()
+            .withLoadOptionsBuilder(loadOptionsBuilder);
         final SchemaCrawlerOptions schemaCrawlerOptions =
           schemaCrawlerOptionsBuilder.toOptions();
 

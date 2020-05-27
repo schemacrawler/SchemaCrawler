@@ -106,27 +106,24 @@ public final class SchemaCrawlerOptionsBuilder
   private int childTableFilterDepth;
   private InclusionRule columnInclusionRule;
   private boolean isNoEmptyTables;
-  private boolean isLoadRowCounts;
   private int parentTableFilterDepth;
   private InclusionRule routineInclusionRule;
   private InclusionRule routineParameterInclusionRule;
   private Optional<Collection<RoutineType>> routineTypes;
   private InclusionRule schemaInclusionRule;
-  private SchemaInfoLevel schemaInfoLevel;
   private InclusionRule sequenceInclusionRule;
   private InclusionRule synonymInclusionRule;
   private InclusionRule tableInclusionRule;
   private String tableNamePattern;
   private Optional<Collection<String>> tableTypes;
   private GrepOptionsBuilder grepOptionsBuilder;
+  private LoadOptionsBuilder loadOptionsBuilder;
 
   /**
    * Default options.
    */
   private SchemaCrawlerOptionsBuilder()
   {
-    schemaInfoLevel = SchemaInfoLevelBuilder.standard();
-
     // All schemas are included by default
     schemaInclusionRule = new IncludeAll();
 
@@ -144,6 +141,7 @@ public final class SchemaCrawlerOptionsBuilder
     routineParameterInclusionRule = new ExcludeAll();
 
     grepOptionsBuilder = GrepOptionsBuilder.builder();
+    loadOptionsBuilder = LoadOptionsBuilder.builder();
   }
 
   public SchemaCrawlerOptionsBuilder childTableFilterDepth(final int childTableFilterDepth)
@@ -165,10 +163,6 @@ public final class SchemaCrawlerOptionsBuilder
     {
       return this;
     }
-
-    schemaInfoLevel = SchemaInfoLevelBuilder
-      .builder()
-      .fromConfig(config).toOptions();
 
     schemaInclusionRule = config.getInclusionRuleWithDefault(
       SC_SCHEMA_PATTERN_INCLUDE,
@@ -202,6 +196,7 @@ public final class SchemaCrawlerOptionsBuilder
       IncludeAll::new);
 
     grepOptionsBuilder.fromConfig(config);
+    loadOptionsBuilder.fromConfig(config);
 
     return this;
   }
@@ -213,8 +208,6 @@ public final class SchemaCrawlerOptionsBuilder
     {
       return this;
     }
-
-    schemaInfoLevel = options.getSchemaInfoLevel();
 
     schemaInclusionRule = options.getSchemaInclusionRule();
     synonymInclusionRule = options.getSynonymInclusionRule();
@@ -229,13 +222,13 @@ public final class SchemaCrawlerOptionsBuilder
     routineInclusionRule = options.getRoutineInclusionRule();
     routineParameterInclusionRule = options.getRoutineParameterInclusionRule();
 
-    grepOptionsBuilder = GrepOptionsBuilder.builder().fromOptions(options.getGrepOptions());
-
     isNoEmptyTables = options.isNoEmptyTables();
-    isLoadRowCounts = options.isLoadRowCounts();
 
     childTableFilterDepth = options.getChildTableFilterDepth();
     parentTableFilterDepth = options.getParentTableFilterDepth();
+
+    grepOptionsBuilder = GrepOptionsBuilder.builder().fromOptions(options.getGrepOptions());
+    loadOptionsBuilder = LoadOptionsBuilder.builder().fromOptions(options.getLoadOptions());
 
     return this;
   }
@@ -249,21 +242,8 @@ public final class SchemaCrawlerOptionsBuilder
   @Override
   public SchemaCrawlerOptions toOptions()
   {
-    final SchemaInfoLevelBuilder schemaInfoLevelBuilder = SchemaInfoLevelBuilder
-      .builder()
-      .fromOptions(schemaInfoLevel);
-
-    if (tableInclusionRule instanceof ExcludeAll)
-    {
-      schemaInfoLevelBuilder.withoutTables();
-    }
-    if (routineInclusionRule instanceof ExcludeAll)
-    {
-      schemaInfoLevelBuilder.withoutRoutines();
-    }
-
     final GrepOptions grepOptions = grepOptionsBuilder.toOptions();
-    final LoadOptions loadOptions = new LoadOptions(schemaInfoLevelBuilder.toOptions(), isLoadRowCounts);
+    final LoadOptions loadOptions = loadOptionsBuilder.toOptions();
 
     return new SchemaCrawlerOptions(schemaInclusionRule,
                                     synonymInclusionRule,
@@ -498,18 +478,23 @@ public final class SchemaCrawlerOptionsBuilder
 
   /**
    * Corresponds to the --load-row-counts command-line argument.
+   * @deprecated
    */
+  @Deprecated
   public final SchemaCrawlerOptionsBuilder loadRowCounts()
   {
-    return loadRowCounts(true);
+    loadOptionsBuilder.loadRowCounts(true);
+    return this;
   }
 
   /**
    * Corresponds to the --load-row-counts=&lt;boolean&gt; command-line argument.
+   * @deprecated
    */
+  @Deprecated
   public final SchemaCrawlerOptionsBuilder loadRowCounts(final boolean value)
   {
-    isLoadRowCounts = value;
+    loadOptionsBuilder.loadRowCounts(value);
     return this;
   }
 
@@ -630,30 +615,24 @@ public final class SchemaCrawlerOptionsBuilder
     return this;
   }
 
+  @Deprecated
   public SchemaCrawlerOptionsBuilder withSchemaInfoLevel(final SchemaInfoLevel schemaInfoLevel)
   {
-    if (schemaInfoLevel != null)
-    {
-      this.schemaInfoLevel = schemaInfoLevel;
-    }
+    loadOptionsBuilder.withSchemaInfoLevel(schemaInfoLevel);
     return this;
   }
 
+  @Deprecated
   public SchemaCrawlerOptionsBuilder withSchemaInfoLevelBuilder(final SchemaInfoLevelBuilder schemaInfoLevelBuilder)
   {
-    if (schemaInfoLevelBuilder != null)
-    {
-      this.schemaInfoLevel = schemaInfoLevelBuilder.toOptions();
-    }
+    loadOptionsBuilder.withSchemaInfoLevelBuilder(schemaInfoLevelBuilder);
     return this;
   }
 
+  @Deprecated
   public SchemaCrawlerOptionsBuilder withInfoLevel(final InfoLevel infoLevel)
   {
-    if (infoLevel != null)
-    {
-      this.schemaInfoLevel = infoLevel.toSchemaInfoLevel();
-    }
+    loadOptionsBuilder.withInfoLevel(infoLevel);
     return this;
   }
 
@@ -662,6 +641,33 @@ public final class SchemaCrawlerOptionsBuilder
     if (grepOptions != null)
     {
       this.grepOptionsBuilder = GrepOptionsBuilder.builder().fromOptions(grepOptions);
+    }
+    return this;
+  }
+
+  public SchemaCrawlerOptionsBuilder withGrepOptionsBuilder(final GrepOptionsBuilder grepOptionsBuilder)
+  {
+    if (grepOptionsBuilder != null)
+    {
+      this.grepOptionsBuilder = grepOptionsBuilder;
+    }
+    return this;
+  }
+
+  public SchemaCrawlerOptionsBuilder withLoadOptions(final LoadOptions loadOptions)
+  {
+    if (loadOptions != null)
+    {
+      this.loadOptionsBuilder = LoadOptionsBuilder.builder().fromOptions(loadOptions);
+    }
+    return this;
+  }
+
+  public SchemaCrawlerOptionsBuilder withLoadOptionsBuilder(final LoadOptionsBuilder loadOptionsBuilder)
+  {
+    if (loadOptionsBuilder != null)
+    {
+      this.loadOptionsBuilder = loadOptionsBuilder;
     }
     return this;
   }

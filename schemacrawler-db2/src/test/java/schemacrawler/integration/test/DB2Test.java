@@ -54,6 +54,7 @@ import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Property;
+import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -98,13 +99,12 @@ public class DB2Test
   public void testDB2CatalogServerInfo()
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder.builder();
-    schemaCrawlerOptionsBuilder
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-      .includeSchemas(new RegularExpressionInclusionRule("DB2INST1"));
-    final SchemaCrawlerOptions options =
-      schemaCrawlerOptionsBuilder.toOptions();
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder.builder()
+      .includeSchemas(new RegularExpressionInclusionRule("DB2INST1"))
+      .withLoadOptionsBuilder(loadOptionsBuilder);
+    final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder.toOptions();
 
     final Connection connection = checkConnection(getConnection());
     final DatabaseConnector db2DatabaseConnector = new DB2DatabaseConnector();
@@ -133,15 +133,15 @@ public class DB2Test
   public void testDB2WithConnection()
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder.builder();
-    schemaCrawlerOptionsBuilder
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder.builder()
       .includeSchemas(new RegularExpressionInclusionRule("DB2INST1"))
       .includeAllSequences()
       .includeAllSynonyms()
       .includeRoutines(new RegularExpressionInclusionRule("[0-9a-zA-Z_\\.]*"))
-      .tableTypes("TABLE,VIEW,MATERIALIZED QUERY TABLE");
+      .tableTypes("TABLE,VIEW,MATERIALIZED QUERY TABLE")
+      .withLoadOptionsBuilder(loadOptionsBuilder);
     final SchemaCrawlerOptions options =
       schemaCrawlerOptionsBuilder.toOptions();
 

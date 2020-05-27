@@ -69,6 +69,7 @@ import schemacrawler.crawl.WeakAssociationColumnReference;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.*;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
@@ -98,14 +99,16 @@ public class SchemaCrawlerTest
     final SchemaRetrievalOptions schemaRetrievalOptions =
       SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(config);
 
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+      .loadRowCounts();
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
       .builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
       .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
       .includeAllSynonyms()
       .includeAllSequences()
       .includeAllRoutines()
-      .loadRowCounts();
+      .withLoadOptionsBuilder(loadOptionsBuilder);
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
     catalog = getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);

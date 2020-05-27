@@ -44,11 +44,13 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.inclusionrule.ExcludeAll;
-import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
+import schemacrawler.schemacrawler.InfoLevel;
+import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
@@ -63,7 +65,6 @@ import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
-import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public abstract class AbstractSchemaCrawlerOutputTest
@@ -118,12 +119,14 @@ public abstract class AbstractSchemaCrawlerOutputTest
           .builder()
           .fromConfig(config);
 
+        final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+          .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
         final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
           .builder()
           .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
-          .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
           .includeAllSequences()
-          .includeAllRoutines();
+          .includeAllRoutines()
+          .withLoadOptionsBuilder(loadOptionsBuilder);
         final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
         queriesConfig.putAll(SchemaTextOptionsBuilder
@@ -170,12 +173,14 @@ public abstract class AbstractSchemaCrawlerOutputTest
         .builder()
         .fromConfig(config);
 
+      final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
         .builder()
-        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
         .includeAllSequences()
-        .includeAllRoutines();
+        .includeAllRoutines()
+        .withLoadOptionsBuilder(loadOptionsBuilder);
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
       final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder.builder(textOptions);
@@ -219,7 +224,6 @@ public abstract class AbstractSchemaCrawlerOutputTest
 
                   final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
                     .builder()
-                    .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
                     .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
                     .includeAllRoutines();
                   final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
@@ -255,11 +259,13 @@ public abstract class AbstractSchemaCrawlerOutputTest
 
       final String referenceFile = "schema_detailed." + outputFormat.getFormat();
 
+      final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.detailed());
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
         .builder()
-        .withSchemaInfoLevel(SchemaInfoLevelBuilder.detailed())
         .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
-        .includeAllRoutines();
+        .includeAllRoutines()
+        .withLoadOptionsBuilder(loadOptionsBuilder);
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
@@ -294,7 +300,6 @@ public abstract class AbstractSchemaCrawlerOutputTest
 
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
         .builder()
-        .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
         .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
         .includeAllRoutines();
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
@@ -334,12 +339,14 @@ public abstract class AbstractSchemaCrawlerOutputTest
         .builder()
         .fromConfig(config);
 
+      final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
         .builder()
-        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
         .includeAllSequences()
-        .includeAllRoutines();
+        .includeAllRoutines()
+        .withLoadOptionsBuilder(loadOptionsBuilder);
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
       final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder.builder(textOptions);
@@ -380,6 +387,8 @@ public abstract class AbstractSchemaCrawlerOutputTest
         .builder()
         .fromConfig(config);
 
+      final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
         .builder()
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
@@ -387,7 +396,7 @@ public abstract class AbstractSchemaCrawlerOutputTest
         .includeAllRoutines()
         .includeSequences(new ExcludeAll())
         .includeSynonyms(new ExcludeAll())
-        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+        .withLoadOptionsBuilder(loadOptionsBuilder);
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
       final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder.builder(textOptions);
@@ -428,11 +437,13 @@ public abstract class AbstractSchemaCrawlerOutputTest
         .withInfoLevel(InfoLevel.standard)
         .setRetrieveWeakAssociations(true);
 
+      final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+        .withSchemaInfoLevel(schemaInfoLevelBuilder.toOptions());
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
         .builder()
-        .withSchemaInfoLevel(schemaInfoLevelBuilder.toOptions())
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
-        .includeAllRoutines();
+        .includeAllRoutines()
+        .withLoadOptionsBuilder(loadOptionsBuilder);
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
       final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder.builder(textOptions);
@@ -466,12 +477,14 @@ public abstract class AbstractSchemaCrawlerOutputTest
 
       final String referenceFile = "schema_maximum." + outputFormat.getFormat();
 
+      final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+        .loadRowCounts();
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
         .builder()
-        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
         .includeAllRoutines()
-        .loadRowCounts();
+        .withLoadOptionsBuilder(loadOptionsBuilder);
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
       final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder.builder(textOptions);
@@ -510,12 +523,14 @@ public abstract class AbstractSchemaCrawlerOutputTest
         .builder()
         .fromConfig(config);
 
+      final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
         .builder()
-        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
         .includeAllSequences()
-        .includeAllRoutines();
+        .includeAllRoutines()
+        .withLoadOptionsBuilder(loadOptionsBuilder);
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
       final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder.builder(textOptions);
@@ -555,7 +570,6 @@ public abstract class AbstractSchemaCrawlerOutputTest
 
                   final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
                     .builder()
-                    .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
                     .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"));
                   final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 

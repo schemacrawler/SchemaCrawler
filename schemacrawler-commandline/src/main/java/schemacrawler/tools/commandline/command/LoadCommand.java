@@ -42,6 +42,7 @@ import picocli.CommandLine.Spec;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InfoLevel;
+import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.catalogloader.CatalogLoader;
@@ -106,17 +107,25 @@ public class LoadCommand
       throw new ExecutionException(spec.commandLine(), "Not connected to the database");
     }
 
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder();
     if (infolevel != null)
     {
-      state
-        .getSchemaCrawlerOptionsBuilder()
+      loadOptionsBuilder
         .withSchemaInfoLevel(infolevel.toSchemaInfoLevel());
     }
 
-    state
-      .getSchemaCrawlerOptionsBuilder()
+    loadOptionsBuilder
       .loadRowCounts(isLoadRowCounts);
 
+    state.getSchemaCrawlerOptionsBuilder().withLoadOptionsBuilder(loadOptionsBuilder);
+
+    final Catalog catalog = loadCatalog();
+    state.setCatalog(catalog);
+    LOGGER.log(Level.INFO, "Loaded catalog");
+  }
+
+  private Catalog loadCatalog()
+  {
     try (
       final Connection connection = state
         .getDataSource()
@@ -129,8 +138,7 @@ public class LoadCommand
       final SchemaRetrievalOptions schemaRetrievalOptions = state
         .getSchemaRetrievalOptionsBuilder()
         .toOptions();
-      final SchemaCrawlerOptions schemaCrawlerOptions = state
-        .getSchemaCrawlerOptionsBuilder()
+      final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptionsBuilder()
         .toOptions();
 
       final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
@@ -147,8 +155,7 @@ public class LoadCommand
       final Catalog catalog = catalogLoader.loadCatalog();
       requireNonNull(catalog, "Catalog could not be retrieved");
 
-      state.setCatalog(catalog);
-      LOGGER.log(Level.INFO, "Loaded catalog");
+      return catalog;
 
     }
     catch (final Exception e)

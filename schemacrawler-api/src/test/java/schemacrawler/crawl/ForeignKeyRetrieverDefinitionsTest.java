@@ -49,6 +49,7 @@ import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
+import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -82,8 +83,8 @@ public class ForeignKeyRetrieverDefinitionsTest
                              + "'%s' AS FOREIGN_KEY_DEFINITION " + "FROM INFORMATION_SCHEMA.SYSTEM_CROSSREFERENCE",
                              definition))
       .toOptions();
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
+      .builder()
       .withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
@@ -106,13 +107,15 @@ public class ForeignKeyRetrieverDefinitionsTest
   public void loadBaseCatalog(final Connection connection)
     throws SchemaCrawlerException
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-      .builder()
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder
                              .builder()
                              .withInfoLevel(InfoLevel.standard)
                              .setRetrieveForeignKeyDefinitions(false)
-                             .toOptions())
+                             .toOptions());
+    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
+      .builder()
+      .withLoadOptionsBuilder(loadOptionsBuilder)
       .toOptions();
     catalog = (MutableCatalog) getCatalog(connection,
                                           SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
