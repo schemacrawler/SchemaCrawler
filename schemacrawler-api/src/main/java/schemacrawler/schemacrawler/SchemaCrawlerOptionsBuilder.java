@@ -103,10 +103,7 @@ public final class SchemaCrawlerOptionsBuilder
     return builder().toOptions();
   }
 
-  private int childTableFilterDepth;
   private InclusionRule columnInclusionRule;
-  private boolean isNoEmptyTables;
-  private int parentTableFilterDepth;
   private InclusionRule routineInclusionRule;
   private InclusionRule routineParameterInclusionRule;
   private Optional<Collection<RoutineType>> routineTypes;
@@ -116,6 +113,7 @@ public final class SchemaCrawlerOptionsBuilder
   private InclusionRule tableInclusionRule;
   private String tableNamePattern;
   private Optional<Collection<String>> tableTypes;
+  private FilterOptionsBuilder filterOptionsBuilder;
   private GrepOptionsBuilder grepOptionsBuilder;
   private LoadOptionsBuilder loadOptionsBuilder;
 
@@ -140,13 +138,15 @@ public final class SchemaCrawlerOptionsBuilder
     routineInclusionRule = new ExcludeAll();
     routineParameterInclusionRule = new ExcludeAll();
 
+    filterOptionsBuilder = FilterOptionsBuilder.builder();
     grepOptionsBuilder = GrepOptionsBuilder.builder();
     loadOptionsBuilder = LoadOptionsBuilder.builder();
   }
 
+  @Deprecated
   public SchemaCrawlerOptionsBuilder childTableFilterDepth(final int childTableFilterDepth)
   {
-    this.childTableFilterDepth = Math.max(childTableFilterDepth, 0);
+    filterOptionsBuilder.childTableFilterDepth(childTableFilterDepth);
     return this;
   }
 
@@ -222,11 +222,7 @@ public final class SchemaCrawlerOptionsBuilder
     routineInclusionRule = options.getRoutineInclusionRule();
     routineParameterInclusionRule = options.getRoutineParameterInclusionRule();
 
-    isNoEmptyTables = options.isNoEmptyTables();
-
-    childTableFilterDepth = options.getChildTableFilterDepth();
-    parentTableFilterDepth = options.getParentTableFilterDepth();
-
+    filterOptionsBuilder = FilterOptionsBuilder.builder().fromOptions(options.getFilterOptions());
     grepOptionsBuilder = GrepOptionsBuilder.builder().fromOptions(options.getGrepOptions());
     loadOptionsBuilder = LoadOptionsBuilder.builder().fromOptions(options.getLoadOptions());
 
@@ -242,9 +238,7 @@ public final class SchemaCrawlerOptionsBuilder
   @Override
   public SchemaCrawlerOptions toOptions()
   {
-    final FilterOptions filterOptions = new FilterOptions(isNoEmptyTables,
-                                                          childTableFilterDepth,
-                                                          parentTableFilterDepth);
+    final FilterOptions filterOptions = filterOptionsBuilder.toOptions();
     final GrepOptions grepOptions = grepOptionsBuilder.toOptions();
     final LoadOptions loadOptions = loadOptionsBuilder.toOptions();
 
@@ -462,7 +456,9 @@ public final class SchemaCrawlerOptionsBuilder
 
   /**
    * Corresponds to the --no-empty-tables command-line argument.
+   * @deprecated
    */
+  @Deprecated
   public final SchemaCrawlerOptionsBuilder noEmptyTables()
   {
     return noEmptyTables(true);
@@ -471,9 +467,10 @@ public final class SchemaCrawlerOptionsBuilder
   /**
    * Corresponds to the --no-empty-tables=&lt;boolean&gt; command-line argument.
    */
+  @Deprecated
   public final SchemaCrawlerOptionsBuilder noEmptyTables(final boolean value)
   {
-    isNoEmptyTables = value;
+    filterOptionsBuilder.noEmptyTables(value);
     return this;
   }
 
@@ -499,9 +496,10 @@ public final class SchemaCrawlerOptionsBuilder
     return this;
   }
 
+  @Deprecated
   public SchemaCrawlerOptionsBuilder parentTableFilterDepth(final int parentTableFilterDepth)
   {
-    this.parentTableFilterDepth = Math.max(parentTableFilterDepth, 0);
+    filterOptionsBuilder.parentTableFilterDepth(parentTableFilterDepth);
     return this;
   }
 
@@ -669,6 +667,24 @@ public final class SchemaCrawlerOptionsBuilder
     if (loadOptionsBuilder != null)
     {
       this.loadOptionsBuilder = loadOptionsBuilder;
+    }
+    return this;
+  }
+
+  public SchemaCrawlerOptionsBuilder withFilterOptions(final FilterOptions filterOptions)
+  {
+    if (filterOptions != null)
+    {
+      this.filterOptionsBuilder = FilterOptionsBuilder.builder().fromOptions(filterOptions);
+    }
+    return this;
+  }
+
+  public SchemaCrawlerOptionsBuilder withFilterOptionsBuilder(final FilterOptionsBuilder filterOptionsBuilder)
+  {
+    if (filterOptionsBuilder != null)
+    {
+      this.filterOptionsBuilder = filterOptionsBuilder;
     }
     return this;
   }

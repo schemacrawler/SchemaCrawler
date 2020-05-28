@@ -11,6 +11,7 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.newComm
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.FilterOptions;
+import schemacrawler.schemacrawler.FilterOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.commandline.command.FilterCommand;
@@ -132,9 +133,11 @@ public class FilterCommandTest
       newCommandLine(FilterCommand.class, new StateFactory(state), true);
     commandLine.execute(args);
 
-    assertThat(readField(builder, "parentTableFilterDepth", true), is(2));
-    assertThat(readField(builder, "childTableFilterDepth", true), is(2));
-    assertThat(readField(builder, "isNoEmptyTables", true), is(true));
+    final FilterOptionsBuilder filterOptionsBuilder =
+      (FilterOptionsBuilder) readField(builder, "filterOptionsBuilder", true);
+    assertThat(readField(filterOptionsBuilder, "parentTableFilterDepth", true), is(2));
+    assertThat(readField(filterOptionsBuilder, "childTableFilterDepth", true), is(2));
+    assertThat(readField(filterOptionsBuilder, "isNoEmptyTables", true), is(true));
 
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
     final FilterOptions filterOptions = schemaCrawlerOptions.getFilterOptions();
