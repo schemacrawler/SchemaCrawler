@@ -15,6 +15,7 @@ import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.FilterOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.commandline.command.LimitCommand;
@@ -80,10 +81,11 @@ public class LimitCommandTest
     state.setSchemaCrawlerOptionsBuilder(builder);
     runCommandInTest(new LimitCommand(state), args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
+    final FilterOptions filterOptions = schemaCrawlerOptions.getFilterOptions();
 
-    assertThat(schemaCrawlerOptions.getParentTableFilterDepth(), is(0));
-    assertThat(schemaCrawlerOptions.getChildTableFilterDepth(), is(0));
-    assertThat(schemaCrawlerOptions.isNoEmptyTables(), is(false));
+    assertThat(filterOptions.getParentTableFilterDepth(), is(0));
+    assertThat(filterOptions.getChildTableFilterDepth(), is(0));
+    assertThat(filterOptions.isNoEmptyTables(), is(false));
   }
 
   @Test

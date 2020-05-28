@@ -242,6 +242,9 @@ public final class SchemaCrawlerOptionsBuilder
   @Override
   public SchemaCrawlerOptions toOptions()
   {
+    final FilterOptions filterOptions = new FilterOptions(isNoEmptyTables,
+                                                          childTableFilterDepth,
+                                                          parentTableFilterDepth);
     final GrepOptions grepOptions = grepOptionsBuilder.toOptions();
     final LoadOptions loadOptions = loadOptionsBuilder.toOptions();
 
@@ -255,9 +258,7 @@ public final class SchemaCrawlerOptionsBuilder
                                     routineTypes.orElse(null),
                                     routineInclusionRule,
                                     routineParameterInclusionRule,
-                                    isNoEmptyTables,
-                                    childTableFilterDepth,
-                                    parentTableFilterDepth,
+                                    filterOptions,
                                     grepOptions,
                                     loadOptions);
   }

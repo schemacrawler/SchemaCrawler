@@ -47,10 +47,7 @@ public final class SchemaCrawlerOptions
   implements Options
 {
 
-  private final int childTableFilterDepth;
   private final InclusionRule columnInclusionRule;
-  private final boolean isNoEmptyTables;
-  private final int parentTableFilterDepth;
   private final InclusionRule routineInclusionRule;
   private final InclusionRule routineParameterInclusionRule;
   private final Collection<RoutineType> routineTypes;
@@ -60,6 +57,7 @@ public final class SchemaCrawlerOptions
   private final InclusionRule tableInclusionRule;
   private final String tableNamePattern;
   private final Collection<String> tableTypes;
+  private final FilterOptions filterOptions;
   private final GrepOptions grepOptions;
   private final LoadOptions loadOptions;
 
@@ -73,9 +71,7 @@ public final class SchemaCrawlerOptions
                        final Collection<RoutineType> routineTypes,
                        final InclusionRule routineInclusionRule,
                        final InclusionRule routineParameterInclusionRule,
-                       final boolean isNoEmptyTables,
-                       final int childTableFilterDepth,
-                       final int parentTableFilterDepth,
+                       final FilterOptions filterOptions,
                        final GrepOptions grepOptions,
                        final LoadOptions loadOptions)
   {
@@ -89,16 +85,15 @@ public final class SchemaCrawlerOptions
     this.routineTypes = routineTypes;
     this.routineInclusionRule = routineInclusionRule;
     this.routineParameterInclusionRule = routineParameterInclusionRule;
-    this.isNoEmptyTables = isNoEmptyTables;
-    this.childTableFilterDepth = childTableFilterDepth;
-    this.parentTableFilterDepth = parentTableFilterDepth;
+    this.filterOptions = requireNonNull(filterOptions, "No filter options provided");
     this.grepOptions = requireNonNull(grepOptions, "No grep options provided");
     this.loadOptions = requireNonNull(loadOptions, "No load options provided");
   }
 
+  @Deprecated
   public int getChildTableFilterDepth()
   {
-    return childTableFilterDepth;
+    return filterOptions.getChildTableFilterDepth();
   }
 
   /**
@@ -152,9 +147,10 @@ public final class SchemaCrawlerOptions
     return grepOptions.getGrepRoutineParameterInclusionRule();
   }
 
+  @Deprecated
   public int getParentTableFilterDepth()
   {
-    return parentTableFilterDepth;
+    return filterOptions.getParentTableFilterDepth();
   }
 
   /**
@@ -317,10 +313,12 @@ public final class SchemaCrawlerOptions
    * with no rows of data) from the catalog.
    *
    * @return Whether to hide empty tables
+   * @deprecated
    */
+  @Deprecated
   public boolean isNoEmptyTables()
   {
-    return isNoEmptyTables;
+    return filterOptions.isNoEmptyTables();
   }
 
   /**
@@ -339,6 +337,11 @@ public final class SchemaCrawlerOptions
   public LoadOptions getLoadOptions()
   {
     return loadOptions;
+  }
+
+  public FilterOptions getFilterOptions()
+  {
+    return filterOptions;
   }
 
   /**

@@ -33,7 +33,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.function.Predicate;
 
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.FilterOptions;
 
 public class TableRowCountsFilter
   implements Predicate<Table>
@@ -41,7 +41,7 @@ public class TableRowCountsFilter
 
   private final boolean noEmptyTables;
 
-  public TableRowCountsFilter(final SchemaCrawlerOptions options)
+  public TableRowCountsFilter(final FilterOptions options)
   {
     requireNonNull(options, "No SchemaCrawlerOptions provided");
     noEmptyTables = options.isNoEmptyTables();

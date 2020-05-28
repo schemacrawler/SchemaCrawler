@@ -182,7 +182,7 @@ public final class SchemaCrawler
       });
 
       stopWatch.time("filterEmptyTables", () -> {
-        catalog.reduce(Table.class, getTableReducer(new TableRowCountsFilter(options)));
+        catalog.reduce(Table.class, getTableReducer(new TableRowCountsFilter(options.getFilterOptions())));
         return null;
       });
 

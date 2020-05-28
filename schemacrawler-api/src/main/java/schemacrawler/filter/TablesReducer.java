@@ -42,6 +42,7 @@ import schemacrawler.schema.Reducer;
 import schemacrawler.schema.ReducibleCollection;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableRelationshipType;
+import schemacrawler.schemacrawler.FilterOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
 final class TablesReducer
@@ -83,12 +84,13 @@ final class TablesReducer
     }
 
     // Add in referenced tables
-    final int childTableFilterDepth = options.getChildTableFilterDepth();
+    final FilterOptions filterOptions = options.getFilterOptions();
+    final int childTableFilterDepth = filterOptions.getChildTableFilterDepth();
     final Collection<Table> childTables = includeRelatedTables(
       TableRelationshipType.child,
       childTableFilterDepth,
       reducedTables);
-    final int parentTableFilterDepth = options.getParentTableFilterDepth();
+    final int parentTableFilterDepth = filterOptions.getParentTableFilterDepth();
     final Collection<Table> parentTables = includeRelatedTables(
       TableRelationshipType.parent,
       parentTableFilterDepth,

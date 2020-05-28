@@ -1,20 +1,21 @@
 package schemacrawler.test.commandline.command;
 
 
-import org.junit.jupiter.api.Test;
-import picocli.CommandLine;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.tools.commandline.command.FilterCommand;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
-import schemacrawler.tools.commandline.state.StateFactory;
-
 import static org.apache.commons.lang3.reflect.FieldUtils.readField;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.CommandlineTestUtility.runCommandInTest;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
+
+import org.junit.jupiter.api.Test;
+import picocli.CommandLine;
+import schemacrawler.schemacrawler.FilterOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.tools.commandline.command.FilterCommand;
+import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.StateFactory;
 
 public class FilterCommandTest
 {
@@ -32,10 +33,11 @@ public class FilterCommandTest
       newCommandLine(FilterCommand.class, new StateFactory(state), true);
     commandLine.parseArgs(args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
+    final FilterOptions filterOptions = schemaCrawlerOptions.getFilterOptions();
 
-    assertThat(schemaCrawlerOptions.getParentTableFilterDepth(), is(0));
-    assertThat(schemaCrawlerOptions.getChildTableFilterDepth(), is(0));
-    assertThat(schemaCrawlerOptions.isNoEmptyTables(), is(false));
+    assertThat(filterOptions.getParentTableFilterDepth(), is(0));
+    assertThat(filterOptions.getChildTableFilterDepth(), is(0));
+    assertThat(filterOptions.isNoEmptyTables(), is(false));
   }
 
   @Test
@@ -49,10 +51,11 @@ public class FilterCommandTest
     state.setSchemaCrawlerOptionsBuilder(builder);
     runCommandInTest(new FilterCommand(state), args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
+    final FilterOptions filterOptions = schemaCrawlerOptions.getFilterOptions();
 
-    assertThat(schemaCrawlerOptions.getParentTableFilterDepth(), is(0));
-    assertThat(schemaCrawlerOptions.getChildTableFilterDepth(), is(0));
-    assertThat(schemaCrawlerOptions.isNoEmptyTables(), is(false));
+    assertThat(filterOptions.getParentTableFilterDepth(), is(0));
+    assertThat(filterOptions.getChildTableFilterDepth(), is(0));
+    assertThat(filterOptions.isNoEmptyTables(), is(false));
   }
 
   @Test
@@ -134,10 +137,11 @@ public class FilterCommandTest
     assertThat(readField(builder, "isNoEmptyTables", true), is(true));
 
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
+    final FilterOptions filterOptions = schemaCrawlerOptions.getFilterOptions();
 
-    assertThat(schemaCrawlerOptions.getParentTableFilterDepth(), is(2));
-    assertThat(schemaCrawlerOptions.getChildTableFilterDepth(), is(2));
-    assertThat(schemaCrawlerOptions.isNoEmptyTables(), is(true));
+    assertThat(filterOptions.getParentTableFilterDepth(), is(2));
+    assertThat(filterOptions.getChildTableFilterDepth(), is(2));
+    assertThat(filterOptions.isNoEmptyTables(), is(true));
   }
 
 }
