@@ -44,7 +44,15 @@ public final class FilterOptions
                 final int parentTableFilterDepth)
   {
     this.isNoEmptyTables = isNoEmptyTables;
+
+    if (childTableFilterDepth < 0) {
+      throw new IllegalArgumentException("Invalid child table filter depth, " + childTableFilterDepth);
+    }
     this.childTableFilterDepth = childTableFilterDepth;
+
+    if (parentTableFilterDepth < 0) {
+      throw new IllegalArgumentException("Invalid parent table filter depth, " + parentTableFilterDepth);
+    }
     this.parentTableFilterDepth = parentTableFilterDepth;
   }
 

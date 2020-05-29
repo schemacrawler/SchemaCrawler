@@ -5,17 +5,25 @@ import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForColumnInclusion;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForRoutineInclusion;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForRoutineParameterInclusion;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSchemaInclusion;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSequenceInclusion;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSynonymInclusion;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForTableInclusion;
 import static schemacrawler.test.utility.CommandlineTestUtility.runCommandInTest;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
-import schemacrawler.schema.RoutineType;
 import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
+import schemacrawler.schema.RoutineType;
 import schemacrawler.schemacrawler.FilterOptions;
+import schemacrawler.schemacrawler.LimitOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.commandline.command.LimitCommand;
@@ -47,26 +55,27 @@ public class LimitCommandTest
     newCommandLine(LimitCommand.class, new StateFactory(state), true).parseArgs(
       args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
+    final LimitOptions limitOptions = schemaCrawlerOptions.getLimitOptions();
 
-    assertThat(schemaCrawlerOptions.getSchemaInclusionRule(),
+    assertThat(limitOptions.get(ruleForSchemaInclusion),
                is(new IncludeAll()));
-    assertThat(schemaCrawlerOptions.getSynonymInclusionRule(),
+    assertThat(limitOptions.get(ruleForSynonymInclusion),
                is(new ExcludeAll()));
-    assertThat(schemaCrawlerOptions.getSequenceInclusionRule(),
+    assertThat(limitOptions.get(ruleForSequenceInclusion),
                is(new ExcludeAll()));
 
-    assertThat(schemaCrawlerOptions.getTableInclusionRule(),
+    assertThat(limitOptions.get(ruleForTableInclusion),
                is(new IncludeAll()));
-    assertThat(schemaCrawlerOptions.getColumnInclusionRule(),
+    assertThat(limitOptions.get(ruleForColumnInclusion),
                is(new IncludeAll()));
-    assertThat(schemaCrawlerOptions.getTableTypes(),
+    assertThat(limitOptions.getTableTypes(),
                hasItems("TABLE", "BASE TABLE", "VIEW"));
 
-    assertThat(schemaCrawlerOptions.getRoutineInclusionRule(),
+    assertThat(limitOptions.get(ruleForRoutineInclusion),
                is(new ExcludeAll()));
-    assertThat(schemaCrawlerOptions.getRoutineParameterInclusionRule(),
+    assertThat(limitOptions.get(ruleForRoutineParameterInclusion),
                is(new ExcludeAll()));
-    assertThat(schemaCrawlerOptions.getRoutineTypes(),
+    assertThat(limitOptions.getRoutineTypes(),
                hasItems(RoutineType.function, RoutineType.procedure));
   }
 
@@ -206,25 +215,26 @@ public class LimitCommandTest
       newCommandLine(LimitCommand.class, new StateFactory(state), true);
     commandLine.execute(args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
+    final LimitOptions limitOptions = schemaCrawlerOptions.getLimitOptions();
 
-    assertThat(schemaCrawlerOptions.getSchemaInclusionRule(),
+    assertThat(limitOptions.get(ruleForSchemaInclusion),
                is(new RegularExpressionInclusionRule(".*regexp.*")));
-    assertThat(schemaCrawlerOptions.getSynonymInclusionRule(),
+    assertThat(limitOptions.get(ruleForSynonymInclusion),
                is(new RegularExpressionInclusionRule(".*regexp.*")));
-    assertThat(schemaCrawlerOptions.getSequenceInclusionRule(),
+    assertThat(limitOptions.get(ruleForSynonymInclusion),
                is(new RegularExpressionInclusionRule(".*regexp.*")));
 
-    assertThat(schemaCrawlerOptions.getTableInclusionRule(),
+    assertThat(limitOptions.get(ruleForTableInclusion),
                is(new RegularExpressionInclusionRule(".*regexp.*")));
-    assertThat(schemaCrawlerOptions.getColumnInclusionRule(),
+    assertThat(limitOptions.get(ruleForColumnInclusion),
                is(new RegularExpressionExclusionRule(".*regexp.*")));
-    assertThat(schemaCrawlerOptions.getTableTypes(), hasItems("CHAIR"));
+    assertThat(limitOptions.getTableTypes(), hasItems("CHAIR"));
 
-    assertThat(schemaCrawlerOptions.getRoutineInclusionRule(),
+    assertThat(limitOptions.get(ruleForRoutineInclusion),
                is(new RegularExpressionInclusionRule(".*regexp.*")));
-    assertThat(schemaCrawlerOptions.getRoutineParameterInclusionRule(),
+    assertThat(limitOptions.get(ruleForRoutineParameterInclusion),
                is(new RegularExpressionExclusionRule(".*regexp.*")));
-    assertThat(schemaCrawlerOptions.getRoutineTypes(),
+    assertThat(limitOptions.getRoutineTypes(),
                hasItems(RoutineType.function));
   }
 

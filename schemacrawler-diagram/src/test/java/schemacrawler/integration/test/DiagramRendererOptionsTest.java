@@ -32,6 +32,7 @@ package schemacrawler.integration.test;
 import static java.nio.file.Files.createDirectories;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSchemaInclusion;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -46,7 +47,6 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.GrepOptionsBuilder;
@@ -82,9 +82,7 @@ public class DiagramRendererOptionsTest
     throws Exception
   {
     SchemaCrawlerOptions schemaCrawlerOptions = options;
-    if (options
-      .getSchemaInclusionRule()
-      .equals(new IncludeAll()))
+    if (options.getLimitOptions().isIncludeAll(ruleForSchemaInclusion))
     {
       schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
         .builder()

@@ -33,7 +33,7 @@ import java.util.function.Predicate;
 
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineType;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.LimitOptions;
 
 class RoutineTypesFilter
   implements Predicate<Routine>
@@ -41,7 +41,7 @@ class RoutineTypesFilter
 
   private final Collection<RoutineType> routineTypes;
 
-  public RoutineTypesFilter(final SchemaCrawlerOptions options)
+  public RoutineTypesFilter(final LimitOptions options)
   {
     if (options != null)
     {

@@ -29,15 +29,24 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForColumnInclusion;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForRoutineInclusion;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForRoutineParameterInclusion;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSchemaInclusion;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSequenceInclusion;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSynonymInclusion;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForTableInclusion;
 import static sf.util.Utility.enumValue;
 import static sf.util.Utility.isBlank;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -209,18 +218,20 @@ public final class SchemaCrawlerOptionsBuilder
       return this;
     }
 
-    schemaInclusionRule = options.getSchemaInclusionRule();
-    synonymInclusionRule = options.getSynonymInclusionRule();
-    sequenceInclusionRule = options.getSequenceInclusionRule();
+    final LimitOptions limitOptions = options.getLimitOptions();
 
-    tableTypes = Optional.ofNullable(options.getTableTypes());
-    tableNamePattern = options.getTableNamePattern();
-    tableInclusionRule = options.getTableInclusionRule();
-    columnInclusionRule = options.getColumnInclusionRule();
+    schemaInclusionRule = limitOptions.get(ruleForSchemaInclusion);
+    synonymInclusionRule = limitOptions.get(ruleForSynonymInclusion);
+    sequenceInclusionRule = limitOptions.get(ruleForSequenceInclusion);
 
-    routineTypes = Optional.ofNullable(options.getRoutineTypes());
-    routineInclusionRule = options.getRoutineInclusionRule();
-    routineParameterInclusionRule = options.getRoutineParameterInclusionRule();
+    tableTypes = Optional.ofNullable(limitOptions.getTableTypes());
+    tableNamePattern = limitOptions.getTableNamePattern();
+    tableInclusionRule = limitOptions.get(ruleForTableInclusion);
+    columnInclusionRule = limitOptions.get(ruleForColumnInclusion);
+
+    routineTypes = Optional.ofNullable(limitOptions.getRoutineTypes());
+    routineInclusionRule = limitOptions.get(ruleForRoutineInclusion);
+    routineParameterInclusionRule = limitOptions.get(ruleForRoutineParameterInclusion);
 
     filterOptionsBuilder = FilterOptionsBuilder.builder().fromOptions(options.getFilterOptions());
     grepOptionsBuilder = GrepOptionsBuilder.builder().fromOptions(options.getGrepOptions());
@@ -242,16 +253,22 @@ public final class SchemaCrawlerOptionsBuilder
     final GrepOptions grepOptions = grepOptionsBuilder.toOptions();
     final LoadOptions loadOptions = loadOptionsBuilder.toOptions();
 
-    return new SchemaCrawlerOptions(schemaInclusionRule,
-                                    synonymInclusionRule,
-                                    sequenceInclusionRule,
-                                    tableTypes.orElse(null),
-                                    tableNamePattern,
-                                    tableInclusionRule,
-                                    columnInclusionRule,
-                                    routineTypes.orElse(null),
-                                    routineInclusionRule,
-                                    routineParameterInclusionRule,
+    final Map<DatabaseObjectRuleForInclusion, InclusionRule> inclusionRules
+      = new EnumMap<>(DatabaseObjectRuleForInclusion.class);
+    inclusionRules.put(ruleForColumnInclusion, columnInclusionRule);
+    inclusionRules.put(ruleForRoutineInclusion, routineInclusionRule);
+    inclusionRules.put(ruleForRoutineParameterInclusion, routineParameterInclusionRule);
+    inclusionRules.put(ruleForSchemaInclusion, schemaInclusionRule);
+    inclusionRules.put(ruleForSequenceInclusion, sequenceInclusionRule);
+    inclusionRules.put(ruleForSynonymInclusion, synonymInclusionRule);
+    inclusionRules.put(ruleForTableInclusion, tableInclusionRule);
+
+    final LimitOptions limitOptions = new LimitOptions(inclusionRules,
+                                                       tableTypes.orElse(null),
+                                                       tableNamePattern,
+                                                       routineTypes.orElse(null));
+
+    return new SchemaCrawlerOptions(limitOptions,
                                     filterOptions,
                                     grepOptions,
                                     loadOptions);

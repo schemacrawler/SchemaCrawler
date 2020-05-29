@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
+import static java.util.Objects.requireNonNull;
+
 import sf.util.ObjectToString;
 
 
@@ -40,7 +42,7 @@ public final class LoadOptions
 
   LoadOptions(final SchemaInfoLevel schemaInfoLevel, final boolean isLoadRowCounts)
   {
-    this.schemaInfoLevel = schemaInfoLevel;
+    this.schemaInfoLevel = requireNonNull(schemaInfoLevel, "No schema info level provided");
     this.isLoadRowCounts = isLoadRowCounts;
   }
 
