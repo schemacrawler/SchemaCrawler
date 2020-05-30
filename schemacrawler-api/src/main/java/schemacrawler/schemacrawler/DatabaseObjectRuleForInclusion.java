@@ -31,20 +31,22 @@ package schemacrawler.schemacrawler;
 public enum DatabaseObjectRuleForInclusion
 {
 
-  ruleForColumnInclusion("column"),
-  ruleForRoutineInclusion("routine"),
-  ruleForRoutineParameterInclusion("routine.inout"),
-  ruleForSchemaInclusion("schema"),
-  ruleForSequenceInclusion("sequence"),
-  ruleForSynonymInclusion("synonym"),
-  ruleForTableInclusion("table"),
+  ruleForColumnInclusion("column", false),
+  ruleForRoutineInclusion("routine", true),
+  ruleForRoutineParameterInclusion("routine.inout", false),
+  ruleForSchemaInclusion("schema", false),
+  ruleForSequenceInclusion("sequence", true),
+  ruleForSynonymInclusion("synonym", true),
+  ruleForTableInclusion("table", false),
   ;
 
   private final String key;
+  private final boolean excludeByDefault;
 
-  DatabaseObjectRuleForInclusion(final String key)
+  DatabaseObjectRuleForInclusion(final String key, final boolean excludeByDefault)
   {
     this.key = key;
+    this.excludeByDefault = excludeByDefault;
   }
 
   public String getInclusionConfigKey() {
@@ -53,6 +55,11 @@ public enum DatabaseObjectRuleForInclusion
 
   public String getExclusionConfigKey() {
     return String.format("schemacrawler.%s.pattern.exclude", key);
+  }
+
+  public boolean isExcludeByDefault()
+  {
+    return excludeByDefault;
   }
 
 }

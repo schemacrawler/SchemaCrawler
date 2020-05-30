@@ -74,7 +74,7 @@ public class LimitCommandTest
     assertThat(limitOptions.get(ruleForRoutineInclusion),
                is(new ExcludeAll()));
     assertThat(limitOptions.get(ruleForRoutineParameterInclusion),
-               is(new ExcludeAll()));
+               is(new IncludeAll()));
     assertThat(limitOptions.getRoutineTypes(),
                hasItems(RoutineType.function, RoutineType.procedure));
   }

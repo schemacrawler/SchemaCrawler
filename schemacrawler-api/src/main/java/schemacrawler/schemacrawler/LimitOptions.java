@@ -120,7 +120,13 @@ public final class LimitOptions
    */
   public InclusionRule get(final DatabaseObjectRuleForInclusion inclusionRuleKey)
   {
-    return inclusionRules.getOrDefault(inclusionRuleKey, new ExcludeAll());
+    final InclusionRule defaultInclusionRule;
+    if (inclusionRuleKey.isExcludeByDefault()) {
+      defaultInclusionRule = new ExcludeAll();
+    } else {
+      defaultInclusionRule = new IncludeAll();
+    }
+    return inclusionRules.getOrDefault(inclusionRuleKey, defaultInclusionRule);
   }
 
   public boolean isIncludeAll(final DatabaseObjectRuleForInclusion inclusionRuleKey)

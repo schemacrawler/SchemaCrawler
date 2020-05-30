@@ -352,7 +352,9 @@ public final class SchemaCrawler
   {
 
     final SchemaInfoLevel infoLevel = options.getLoadOptions().getSchemaInfoLevel();
-    final boolean retrieveRoutines = infoLevel.isRetrieveRoutines();
+    final LimitOptions limitOptions = options.getLimitOptions();
+    final boolean retrieveRoutines = infoLevel.isRetrieveRoutines()
+                                     && !limitOptions.isExcludeAll(ruleForRoutineInclusion);
     if (!retrieveRoutines)
     {
       LOGGER.log(Level.INFO, "Not retrieving routines, since this was not requested");
@@ -374,18 +376,16 @@ public final class SchemaCrawler
       procedureParameterRetriever = new ProcedureParameterRetriever(retrieverConnection, catalog, options);
       functionParameterRetriever = new FunctionParameterRetriever(retrieverConnection, catalog, options);
 
-      final LimitOptions limitOptions = options.getLimitOptions();
-
       final Collection<RoutineType> routineTypes = limitOptions.getRoutineTypes();
 
       stopWatch.time("retrieveRoutines", () -> {
         final NamedObjectList<SchemaReference> schemas = retriever.getAllSchemas();
-        if (routineTypes.contains(RoutineType.procedure) && !limitOptions.isExcludeAll(ruleForRoutineInclusion))
+        if (routineTypes.contains(RoutineType.procedure))
         {
           LOGGER.log(Level.INFO, "Retrieving procedure names");
           retriever.retrieveProcedures(schemas, limitOptions.get(ruleForRoutineInclusion));
         }
-        if (routineTypes.contains(RoutineType.function) && !limitOptions.isExcludeAll(ruleForRoutineInclusion))
+        if (routineTypes.contains(RoutineType.function))
         {
           LOGGER.log(Level.INFO, "Retrieving function names");
           retriever.retrieveFunctions(schemas, limitOptions.get(ruleForRoutineInclusion));
@@ -595,7 +595,9 @@ public final class SchemaCrawler
   {
 
     final SchemaInfoLevel infoLevel = options.getLoadOptions().getSchemaInfoLevel();
-    final boolean retrieveTables = infoLevel.isRetrieveTables();
+    final LimitOptions limitOptions = options.getLimitOptions();
+    final boolean retrieveTables = infoLevel.isRetrieveTables()
+                                   && !limitOptions.isExcludeAll(ruleForTableInclusion);
     if (!retrieveTables)
     {
       LOGGER.log(Level.INFO, "Not retrieving tables, since this was not requested");
@@ -614,8 +616,6 @@ public final class SchemaCrawler
       final TableConstraintRetriever constraintRetriever =
         new TableConstraintRetriever(retrieverConnection, catalog, options);
       final TableExtRetriever retrieverExtra = new TableExtRetriever(retrieverConnection, catalog, options);
-
-      final LimitOptions limitOptions = options.getLimitOptions();
 
       stopWatch.time("retrieveTables", () -> {
         LOGGER.log(Level.INFO, "Retrieving table names");

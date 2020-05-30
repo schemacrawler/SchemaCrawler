@@ -29,36 +29,19 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
-import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForColumnInclusion;
-import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForRoutineInclusion;
-import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForRoutineParameterInclusion;
-import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSchemaInclusion;
-import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSequenceInclusion;
-import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSynonymInclusion;
-import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForTableInclusion;
-import static sf.util.Utility.enumValue;
-import static sf.util.Utility.isBlank;
-
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.EnumMap;
 import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Optional;
 import java.util.regex.Pattern;
 
-import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
-import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.RoutineType;
 
 /**
  * SchemaCrawler options builder, to build the immutable options to crawl a schema.
  */
+@Deprecated
 public final class SchemaCrawlerOptionsBuilder
   implements OptionsBuilder<SchemaCrawlerOptionsBuilder, SchemaCrawlerOptions>
 {
@@ -112,16 +95,7 @@ public final class SchemaCrawlerOptionsBuilder
     return builder().toOptions();
   }
 
-  private InclusionRule columnInclusionRule;
-  private InclusionRule routineInclusionRule;
-  private InclusionRule routineParameterInclusionRule;
-  private Optional<Collection<RoutineType>> routineTypes;
-  private InclusionRule schemaInclusionRule;
-  private InclusionRule sequenceInclusionRule;
-  private InclusionRule synonymInclusionRule;
-  private InclusionRule tableInclusionRule;
-  private String tableNamePattern;
-  private Optional<Collection<String>> tableTypes;
+  private LimitOptionsBuilder limitOptionsBuilder;
   private FilterOptionsBuilder filterOptionsBuilder;
   private GrepOptionsBuilder grepOptionsBuilder;
   private LoadOptionsBuilder loadOptionsBuilder;
@@ -131,28 +105,13 @@ public final class SchemaCrawlerOptionsBuilder
    */
   private SchemaCrawlerOptionsBuilder()
   {
-    // All schemas are included by default
-    schemaInclusionRule = new IncludeAll();
-
-    synonymInclusionRule = new ExcludeAll();
-    sequenceInclusionRule = new ExcludeAll();
-
-    // Note: Of the database objects, only tables are included by
-    // default
-    tableTypes = Optional.of(defaultTableTypes());
-    tableInclusionRule = new IncludeAll();
-    columnInclusionRule = new IncludeAll();
-
-    routineTypes = Optional.of(allRoutineTypes());
-    routineInclusionRule = new ExcludeAll();
-    routineParameterInclusionRule = new ExcludeAll();
-
+    limitOptionsBuilder = LimitOptionsBuilder.builder();
     filterOptionsBuilder = FilterOptionsBuilder.builder();
     grepOptionsBuilder = GrepOptionsBuilder.builder();
     loadOptionsBuilder = LoadOptionsBuilder.builder();
   }
 
-  @Deprecated
+
   public SchemaCrawlerOptionsBuilder childTableFilterDepth(final int childTableFilterDepth)
   {
     filterOptionsBuilder.childTableFilterDepth(childTableFilterDepth);
@@ -173,37 +132,7 @@ public final class SchemaCrawlerOptionsBuilder
       return this;
     }
 
-    schemaInclusionRule = config.getInclusionRuleWithDefault(
-      SC_SCHEMA_PATTERN_INCLUDE,
-      SC_SCHEMA_PATTERN_EXCLUDE,
-      IncludeAll::new);
-    synonymInclusionRule = config.getInclusionRuleWithDefault(
-      SC_SYNONYM_PATTERN_INCLUDE,
-      SC_SYNONYM_PATTERN_EXCLUDE,
-      ExcludeAll::new);
-    sequenceInclusionRule = config.getInclusionRuleWithDefault(
-      SC_SEQUENCE_PATTERN_INCLUDE,
-      SC_SEQUENCE_PATTERN_EXCLUDE,
-      ExcludeAll::new);
-
-    tableInclusionRule = config.getInclusionRuleWithDefault(
-      SC_TABLE_PATTERN_INCLUDE,
-      SC_TABLE_PATTERN_EXCLUDE,
-      IncludeAll::new);
-    columnInclusionRule = config.getInclusionRuleWithDefault(
-      SC_COLUMN_PATTERN_INCLUDE,
-      SC_COLUMN_PATTERN_EXCLUDE,
-      IncludeAll::new);
-
-    routineInclusionRule = config.getInclusionRuleWithDefault(
-      SC_ROUTINE_PATTERN_INCLUDE,
-      SC_ROUTINE_PATTERN_EXCLUDE,
-      ExcludeAll::new);
-    routineParameterInclusionRule = config.getInclusionRuleWithDefault(
-      SC_ROUTINE_PARAMETER_PATTERN_INCLUDE,
-      SC_ROUTINE_PARAMETER_PATTERN_EXCLUDE,
-      IncludeAll::new);
-
+    limitOptionsBuilder.fromConfig(config);
     grepOptionsBuilder.fromConfig(config);
     loadOptionsBuilder.fromConfig(config);
 
@@ -218,21 +147,7 @@ public final class SchemaCrawlerOptionsBuilder
       return this;
     }
 
-    final LimitOptions limitOptions = options.getLimitOptions();
-
-    schemaInclusionRule = limitOptions.get(ruleForSchemaInclusion);
-    synonymInclusionRule = limitOptions.get(ruleForSynonymInclusion);
-    sequenceInclusionRule = limitOptions.get(ruleForSequenceInclusion);
-
-    tableTypes = Optional.ofNullable(limitOptions.getTableTypes());
-    tableNamePattern = limitOptions.getTableNamePattern();
-    tableInclusionRule = limitOptions.get(ruleForTableInclusion);
-    columnInclusionRule = limitOptions.get(ruleForColumnInclusion);
-
-    routineTypes = Optional.ofNullable(limitOptions.getRoutineTypes());
-    routineInclusionRule = limitOptions.get(ruleForRoutineInclusion);
-    routineParameterInclusionRule = limitOptions.get(ruleForRoutineParameterInclusion);
-
+    limitOptionsBuilder = LimitOptionsBuilder.builder().fromOptions(options.getLimitOptions());
     filterOptionsBuilder = FilterOptionsBuilder.builder().fromOptions(options.getFilterOptions());
     grepOptionsBuilder = GrepOptionsBuilder.builder().fromOptions(options.getGrepOptions());
     loadOptionsBuilder = LoadOptionsBuilder.builder().fromOptions(options.getLoadOptions());
@@ -252,21 +167,7 @@ public final class SchemaCrawlerOptionsBuilder
     final FilterOptions filterOptions = filterOptionsBuilder.toOptions();
     final GrepOptions grepOptions = grepOptionsBuilder.toOptions();
     final LoadOptions loadOptions = loadOptionsBuilder.toOptions();
-
-    final Map<DatabaseObjectRuleForInclusion, InclusionRule> inclusionRules
-      = new EnumMap<>(DatabaseObjectRuleForInclusion.class);
-    inclusionRules.put(ruleForColumnInclusion, columnInclusionRule);
-    inclusionRules.put(ruleForRoutineInclusion, routineInclusionRule);
-    inclusionRules.put(ruleForRoutineParameterInclusion, routineParameterInclusionRule);
-    inclusionRules.put(ruleForSchemaInclusion, schemaInclusionRule);
-    inclusionRules.put(ruleForSequenceInclusion, sequenceInclusionRule);
-    inclusionRules.put(ruleForSynonymInclusion, synonymInclusionRule);
-    inclusionRules.put(ruleForTableInclusion, tableInclusionRule);
-
-    final LimitOptions limitOptions = new LimitOptions(inclusionRules,
-                                                       tableTypes.orElse(null),
-                                                       tableNamePattern,
-                                                       routineTypes.orElse(null));
+    final LimitOptions limitOptions = limitOptionsBuilder.toOptions();
 
     return new SchemaCrawlerOptions(limitOptions,
                                     filterOptions,
@@ -274,12 +175,13 @@ public final class SchemaCrawlerOptionsBuilder
                                     loadOptions);
   }
 
-  @Deprecated
+
   public SchemaCrawlerOptionsBuilder grepOnlyMatching(final boolean grepOnlyMatching)
   {
     grepOptionsBuilder.grepOnlyMatching(grepOnlyMatching);
     return this;
   }
+
 
   public SchemaCrawlerOptionsBuilder includeAllRoutines()
   {
@@ -287,11 +189,13 @@ public final class SchemaCrawlerOptionsBuilder
     return this;
   }
 
+
   public SchemaCrawlerOptionsBuilder includeAllSequences()
   {
     includeSequences(new IncludeAll());
     return this;
   }
+
 
   public SchemaCrawlerOptionsBuilder includeAllSynonyms()
   {
@@ -299,20 +203,14 @@ public final class SchemaCrawlerOptionsBuilder
     return this;
   }
 
+
   public SchemaCrawlerOptionsBuilder includeColumns(final InclusionRule columnInclusionRule)
   {
-    if (columnInclusionRule == null)
-    {
-      this.columnInclusionRule = new IncludeAll();
-    }
-    else
-    {
-      this.columnInclusionRule = columnInclusionRule;
-    }
+    limitOptionsBuilder.includeColumns(columnInclusionRule);
     return this;
   }
 
-  @Deprecated
+
   public SchemaCrawlerOptionsBuilder includeGreppedColumns(final InclusionRule grepColumnInclusionRule)
   {
     grepOptionsBuilder.includeGreppedColumns(grepColumnInclusionRule);
@@ -321,63 +219,63 @@ public final class SchemaCrawlerOptionsBuilder
 
   public SchemaCrawlerOptionsBuilder includeSchemas(final Pattern schemaPattern)
   {
-    schemaInclusionRule = new RegularExpressionInclusionRule(schemaPattern);
+    limitOptionsBuilder.includeSchemas(schemaPattern);
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder includeTables(final Pattern tablePattern)
   {
-    tableInclusionRule = new RegularExpressionInclusionRule(tablePattern);
+    limitOptionsBuilder.includeTables(tablePattern);
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder includeRoutines(final Pattern routinePattern)
   {
-    routineInclusionRule = new RegularExpressionInclusionRule(routinePattern);
+    limitOptionsBuilder.includeRoutines(routinePattern);
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder includeSequences(final Pattern sequencePattern)
   {
-    sequenceInclusionRule = new RegularExpressionInclusionRule(sequencePattern);
+    limitOptionsBuilder.includeSequences(sequencePattern);
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder includeSynonyms(final Pattern synonymPattern)
   {
-    synonymInclusionRule = new RegularExpressionInclusionRule(synonymPattern);
+    limitOptionsBuilder.includeSynonyms(synonymPattern);
     return this;
   }
 
-  @Deprecated
+
   public SchemaCrawlerOptionsBuilder includeGreppedColumns(final Pattern grepColumnPattern)
   {
     grepOptionsBuilder.includeGreppedColumns(grepColumnPattern);
     return this;
   }
 
-  @Deprecated
+
   public SchemaCrawlerOptionsBuilder includeGreppedDefinitions(final InclusionRule grepDefinitionInclusionRule)
   {
     grepOptionsBuilder.includeGreppedDefinitions(grepDefinitionInclusionRule);
     return this;
   }
 
-  @Deprecated
+
   public SchemaCrawlerOptionsBuilder includeGreppedDefinitions(final Pattern grepDefinitionPattern)
   {
     grepOptionsBuilder.includeGreppedDefinitions(grepDefinitionPattern);
     return this;
   }
 
-  @Deprecated
+
   public SchemaCrawlerOptionsBuilder includeGreppedRoutineParameters(final InclusionRule grepRoutineParameterInclusionRule)
   {
     grepOptionsBuilder.includeGreppedRoutineParameters(grepRoutineParameterInclusionRule);
     return this;
   }
 
-  @Deprecated
+
   public SchemaCrawlerOptionsBuilder includeGreppedRoutineParameters(final Pattern grepRoutineParametersPattern)
   {
     grepOptionsBuilder.includeGreppedRoutineParameters(grepRoutineParametersPattern);
@@ -386,85 +284,41 @@ public final class SchemaCrawlerOptionsBuilder
 
   public SchemaCrawlerOptionsBuilder includeRoutineParameters(final InclusionRule routineParameterInclusionRule)
   {
-    if (routineParameterInclusionRule == null)
-    {
-      this.routineParameterInclusionRule = new IncludeAll();
-    }
-    else
-    {
-      this.routineParameterInclusionRule = routineParameterInclusionRule;
-    }
+    limitOptionsBuilder.includeRoutineParameters(routineParameterInclusionRule);
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder includeRoutines(final InclusionRule routineInclusionRule)
   {
-    if (routineInclusionRule == null)
-    {
-      this.routineInclusionRule = new ExcludeAll();
-      routineParameterInclusionRule = new ExcludeAll();
-    }
-    else
-    {
-      this.routineInclusionRule = routineInclusionRule;
-      routineParameterInclusionRule = new IncludeAll();
-    }
+    limitOptionsBuilder.includeRoutines(routineInclusionRule);
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder includeSchemas(final InclusionRule schemaInclusionRule)
   {
-    if (schemaInclusionRule == null)
-    {
-      this.schemaInclusionRule = new IncludeAll();
-    }
-    else
-    {
-      this.schemaInclusionRule = schemaInclusionRule;
-    }
+    limitOptionsBuilder.includeSchemas(schemaInclusionRule);
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder includeSequences(final InclusionRule sequenceInclusionRule)
   {
-    if (sequenceInclusionRule == null)
-    {
-      this.sequenceInclusionRule = new ExcludeAll();
-    }
-    else
-    {
-      this.sequenceInclusionRule = sequenceInclusionRule;
-    }
+    limitOptionsBuilder.includeSequences(sequenceInclusionRule);
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder includeSynonyms(final InclusionRule synonymInclusionRule)
   {
-    if (synonymInclusionRule == null)
-    {
-      this.synonymInclusionRule = new ExcludeAll();
-    }
-    else
-    {
-      this.synonymInclusionRule = synonymInclusionRule;
-    }
+    limitOptionsBuilder.includeSynonyms(synonymInclusionRule);
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder includeTables(final InclusionRule tableInclusionRule)
   {
-    if (tableInclusionRule == null)
-    {
-      this.tableInclusionRule = new IncludeAll();
-    }
-    else
-    {
-      this.tableInclusionRule = tableInclusionRule;
-    }
+    limitOptionsBuilder.includeTables(tableInclusionRule);
     return this;
   }
 
-  @Deprecated
+
   public SchemaCrawlerOptionsBuilder invertGrepMatch(final boolean grepInvertMatch)
   {
     grepOptionsBuilder.invertGrepMatch(grepInvertMatch);
@@ -473,9 +327,9 @@ public final class SchemaCrawlerOptionsBuilder
 
   /**
    * Corresponds to the --no-empty-tables command-line argument.
-   * @deprecated
+   *
    */
-  @Deprecated
+
   public final SchemaCrawlerOptionsBuilder noEmptyTables()
   {
     return noEmptyTables(true);
@@ -484,7 +338,7 @@ public final class SchemaCrawlerOptionsBuilder
   /**
    * Corresponds to the --no-empty-tables=&lt;boolean&gt; command-line argument.
    */
-  @Deprecated
+
   public final SchemaCrawlerOptionsBuilder noEmptyTables(final boolean value)
   {
     filterOptionsBuilder.noEmptyTables(value);
@@ -493,9 +347,9 @@ public final class SchemaCrawlerOptionsBuilder
 
   /**
    * Corresponds to the --load-row-counts command-line argument.
-   * @deprecated
+   *
    */
-  @Deprecated
+
   public final SchemaCrawlerOptionsBuilder loadRowCounts()
   {
     loadOptionsBuilder.loadRowCounts(true);
@@ -504,16 +358,16 @@ public final class SchemaCrawlerOptionsBuilder
 
   /**
    * Corresponds to the --load-row-counts=&lt;boolean&gt; command-line argument.
-   * @deprecated
+   *
    */
-  @Deprecated
+
   public final SchemaCrawlerOptionsBuilder loadRowCounts(final boolean value)
   {
     loadOptionsBuilder.loadRowCounts(value);
     return this;
   }
 
-  @Deprecated
+
   public SchemaCrawlerOptionsBuilder parentTableFilterDepth(final int parentTableFilterDepth)
   {
     filterOptionsBuilder.parentTableFilterDepth(parentTableFilterDepth);
@@ -522,19 +376,7 @@ public final class SchemaCrawlerOptionsBuilder
 
   public SchemaCrawlerOptionsBuilder routineTypes(final Collection<RoutineType> routineTypes)
   {
-    if (routineTypes == null)
-    {
-      // null signifies include all routine types
-      this.routineTypes = Optional.empty();
-    }
-    else if (routineTypes.isEmpty())
-    {
-      this.routineTypes = Optional.of(Collections.emptySet());
-    }
-    else
-    {
-      this.routineTypes = Optional.of(new HashSet<>(routineTypes));
-    }
+    limitOptionsBuilder.routineTypes(routineTypes);
     return this;
   }
 
@@ -546,56 +388,19 @@ public final class SchemaCrawlerOptionsBuilder
    */
   public SchemaCrawlerOptionsBuilder routineTypes(final String routineTypesString)
   {
-    if (routineTypesString != null)
-    {
-      final Collection<RoutineType> routineTypes = new HashSet<>();
-      final String[] routineTypeStrings = routineTypesString.split(",");
-      if (routineTypeStrings != null && routineTypeStrings.length > 0)
-      {
-        for (final String routineTypeString : routineTypeStrings)
-        {
-          final RoutineType routineType =
-            enumValue(routineTypeString.toLowerCase(Locale.ENGLISH),
-                      RoutineType.unknown);
-          routineTypes.add(routineType);
-        }
-      }
-      this.routineTypes = Optional.of(routineTypes);
-    }
-    else
-    {
-      routineTypes = Optional.empty();
-    }
+    limitOptionsBuilder.routineTypes(routineTypesString);
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder tableNamePattern(final String tableNamePattern)
   {
-    if (isBlank(tableNamePattern))
-    {
-      this.tableNamePattern = null;
-    }
-    else
-    {
-      this.tableNamePattern = tableNamePattern;
-    }
+    limitOptionsBuilder.tableNamePattern(tableNamePattern);
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder tableTypes(final Collection<String> tableTypes)
   {
-    if (tableTypes == null)
-    {
-      this.tableTypes = Optional.empty();
-    }
-    else if (tableTypes.isEmpty())
-    {
-      this.tableTypes = Optional.of(Collections.emptySet());
-    }
-    else
-    {
-      this.tableTypes = Optional.of(new HashSet<>(tableTypes));
-    }
+    limitOptionsBuilder.tableTypes(tableTypes);
     return this;
   }
 
@@ -609,43 +414,25 @@ public final class SchemaCrawlerOptionsBuilder
    */
   public SchemaCrawlerOptionsBuilder tableTypes(final String tableTypesString)
   {
-    if (tableTypesString != null)
-    {
-      final Collection<String> tableTypes;
-      tableTypes = new HashSet<>();
-      final String[] tableTypeStrings = tableTypesString.split(",");
-      if (tableTypeStrings != null && tableTypeStrings.length > 0)
-      {
-        for (final String tableTypeString : tableTypeStrings)
-        {
-          tableTypes.add(tableTypeString.trim());
-        }
-      }
-      this.tableTypes = Optional.of(tableTypes);
-    }
-    else
-    {
-      tableTypes = Optional.empty();
-    }
-
+    limitOptionsBuilder.tableTypes(tableTypesString);
     return this;
   }
 
-  @Deprecated
+
   public SchemaCrawlerOptionsBuilder withSchemaInfoLevel(final SchemaInfoLevel schemaInfoLevel)
   {
     loadOptionsBuilder.withSchemaInfoLevel(schemaInfoLevel);
     return this;
   }
 
-  @Deprecated
+
   public SchemaCrawlerOptionsBuilder withSchemaInfoLevelBuilder(final SchemaInfoLevelBuilder schemaInfoLevelBuilder)
   {
     loadOptionsBuilder.withSchemaInfoLevelBuilder(schemaInfoLevelBuilder);
     return this;
   }
 
-  @Deprecated
+
   public SchemaCrawlerOptionsBuilder withInfoLevel(final InfoLevel infoLevel)
   {
     loadOptionsBuilder.withInfoLevel(infoLevel);
@@ -702,6 +489,15 @@ public final class SchemaCrawlerOptionsBuilder
     if (filterOptionsBuilder != null)
     {
       this.filterOptionsBuilder = filterOptionsBuilder;
+    }
+    return this;
+  }
+
+  public SchemaCrawlerOptionsBuilder withLimitOptionsBuilder(final LimitOptionsBuilder limitOptionsBuilder)
+  {
+    if (limitOptionsBuilder != null)
+    {
+      this.limitOptionsBuilder = limitOptionsBuilder;
     }
     return this;
   }
