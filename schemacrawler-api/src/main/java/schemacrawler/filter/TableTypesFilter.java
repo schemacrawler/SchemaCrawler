@@ -33,7 +33,7 @@ import java.util.HashSet;
 import java.util.function.Predicate;
 
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.LimitOptions;
 
 public class TableTypesFilter
   implements Predicate<Table>
@@ -46,7 +46,7 @@ public class TableTypesFilter
     tableTypes = null;
   }
 
-  public TableTypesFilter(final SchemaCrawlerOptions options)
+  public TableTypesFilter(final LimitOptions options)
   {
     if (options != null)
     {

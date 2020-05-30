@@ -28,12 +28,15 @@ http://www.gnu.org/licenses/
 package schemacrawler.filter;
 
 
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSchemaInclusion;
+
 import java.util.function.Predicate;
 
-import schemacrawler.schema.DatabaseObject;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion;
+import schemacrawler.schemacrawler.LimitOptions;
 
 final class DatabaseObjectFilter<D extends DatabaseObject>
   implements Predicate<D>
@@ -42,21 +45,21 @@ final class DatabaseObjectFilter<D extends DatabaseObject>
   private final InclusionRule databaseObjectInclusionRule;
   private final InclusionRule schemaInclusionRule;
 
-  DatabaseObjectFilter(final SchemaCrawlerOptions options,
-                       final InclusionRule databaseObjectInclusionRule)
+  DatabaseObjectFilter(final LimitOptions options,
+                       final DatabaseObjectRuleForInclusion databaseObjectRuleForInclusion)
   {
     if (options != null)
     {
-      schemaInclusionRule = options.getSchemaInclusionRule();
+      schemaInclusionRule = options.get(ruleForSchemaInclusion);
     }
     else
     {
       schemaInclusionRule = new IncludeAll();
     }
 
-    if (databaseObjectInclusionRule != null)
+    if (databaseObjectRuleForInclusion != null)
     {
-      this.databaseObjectInclusionRule = databaseObjectInclusionRule;
+      this.databaseObjectInclusionRule = options.get(databaseObjectRuleForInclusion);
     }
     else
     {

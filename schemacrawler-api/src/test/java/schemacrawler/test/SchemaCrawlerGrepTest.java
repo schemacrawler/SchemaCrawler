@@ -53,6 +53,10 @@ import schemacrawler.schema.RoutineParameter;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.FilterOptionsBuilder;
+import schemacrawler.schemacrawler.GrepOptionsBuilder;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
+import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.TestContext;
@@ -73,11 +77,13 @@ public class SchemaCrawlerGrepTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
+      final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
+        .includeGreppedColumns(new RegularExpressionInclusionRule(
+          ".*\\..*\\.BOOKID"));
       final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder
           .builder()
-          .includeGreppedColumns(new RegularExpressionInclusionRule(
-            ".*\\..*\\.BOOKID"))
+          .withGrepOptions(grepOptionsBuilder.toOptions())
           .toOptions();
 
       final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
@@ -110,14 +116,17 @@ public class SchemaCrawlerGrepTest
   }
 
   @Test
-  public void grepColumnsAndIncludeChildTables(final Connection connection)
+  public void grepColumnsAndIncludeParentTables(final Connection connection)
     throws Exception
   {
-
+    final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
+      .includeGreppedColumns(new RegularExpressionInclusionRule(
+        ".*\\.BOOKAUTHORS\\..*"));
+    final FilterOptionsBuilder filterOptionsBuilder = FilterOptionsBuilder.builder()
+      .parentTableFilterDepth(1);
     SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
       .builder()
-      .includeGreppedColumns(new RegularExpressionInclusionRule(
-        ".*\\.BOOKAUTHORS\\..*"))
+      .withGrepOptions(grepOptionsBuilder.toOptions())
       .toOptions();
 
     Catalog catalog;
@@ -138,7 +147,7 @@ public class SchemaCrawlerGrepTest
     schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
       .builder()
       .fromOptions(schemaCrawlerOptions)
-      .parentTableFilterDepth(1)
+      .withFilterOptionsBuilder(filterOptionsBuilder)
       .toOptions();
     catalog = getCatalog(connection, schemaCrawlerOptions);
     schema = catalog
@@ -171,13 +180,15 @@ public class SchemaCrawlerGrepTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
+      final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
+        .includeGreppedColumns(new RegularExpressionInclusionRule(
+          ".*\\..*\\.BOOKID"))
+        .includeGreppedDefinitions(new RegularExpressionInclusionRule(
+          ".*book author.*"));
       final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder
           .builder()
-          .includeGreppedColumns(new RegularExpressionInclusionRule(
-            ".*\\..*\\.BOOKID"))
-          .includeGreppedDefinitions(new RegularExpressionInclusionRule(
-            ".*book author.*"))
+          .withGrepOptions(grepOptionsBuilder.toOptions())
           .toOptions();
 
       final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
@@ -217,11 +228,13 @@ public class SchemaCrawlerGrepTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
+      final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
+        .includeGreppedDefinitions(new RegularExpressionInclusionRule(
+          ".*book author.*"));
       final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder
           .builder()
-          .includeGreppedDefinitions(new RegularExpressionInclusionRule(
-            ".*book author.*"))
+          .withGrepOptions(grepOptionsBuilder.toOptions())
           .toOptions();
 
       final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
@@ -261,14 +274,19 @@ public class SchemaCrawlerGrepTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder
+          .builder()
+          .includeAllRoutines();
+      final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
+        .includeGreppedRoutineParameters(new RegularExpressionInclusionRule(
+          ".*\\.B_COUNT"));
+      final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder
           .builder()
-          .includeAllRoutines()
-          .includeGreppedRoutineParameters(new RegularExpressionInclusionRule(
-            ".*\\.B_COUNT"));
-      final SchemaCrawlerOptions schemaCrawlerOptions =
-        schemaCrawlerOptionsBuilder.toOptions();
+          .withLimitOptionsBuilder(limitOptionsBuilder)
+          .withGrepOptions(grepOptionsBuilder.toOptions())
+          .toOptions();
 
       final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
       final Schema[] schemas = catalog
@@ -307,11 +325,15 @@ public class SchemaCrawlerGrepTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
+      final FilterOptionsBuilder filterOptionsBuilder = FilterOptionsBuilder.builder()
+        .noEmptyTables();
+      final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+        .loadRowCounts();
       final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder
           .builder()
-          .loadRowCounts()
-          .noEmptyTables()
+          .withFilterOptionsBuilder(filterOptionsBuilder)
+          .withLoadOptionsBuilder(loadOptionsBuilder)
           .toOptions();
 
       final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);

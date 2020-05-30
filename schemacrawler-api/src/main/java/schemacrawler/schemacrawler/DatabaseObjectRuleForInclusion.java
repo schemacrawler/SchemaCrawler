@@ -28,14 +28,38 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
-public enum DatabaseObjectInfoRetrieval
+public enum DatabaseObjectRuleForInclusion
 {
 
-  base,
-  table,
-  routine,
-  database,
-  other,
+  ruleForColumnInclusion("column", false),
+  ruleForRoutineInclusion("routine", true),
+  ruleForRoutineParameterInclusion("routine.inout", false),
+  ruleForSchemaInclusion("schema", false),
+  ruleForSequenceInclusion("sequence", true),
+  ruleForSynonymInclusion("synonym", true),
+  ruleForTableInclusion("table", false),
   ;
+
+  private final String key;
+  private final boolean excludeByDefault;
+
+  DatabaseObjectRuleForInclusion(final String key, final boolean excludeByDefault)
+  {
+    this.key = key;
+    this.excludeByDefault = excludeByDefault;
+  }
+
+  public String getIncludePatternProperty() {
+    return String.format("schemacrawler.%s.pattern.include", key);
+  }
+
+  public String getExcludePatternProperty() {
+    return String.format("schemacrawler.%s.pattern.exclude", key);
+  }
+
+  public boolean isExcludeByDefault()
+  {
+    return excludeByDefault;
+  }
 
 }

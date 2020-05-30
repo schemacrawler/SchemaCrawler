@@ -29,11 +29,22 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 
-import picocli.CommandLine.*;
+import static java.util.Objects.requireNonNull;
+
+import java.sql.Connection;
+import java.util.logging.Level;
+
+import picocli.CommandLine.Command;
+import picocli.CommandLine.ExecutionException;
+import picocli.CommandLine.Model;
+import picocli.CommandLine.Option;
+import picocli.CommandLine.Spec;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InfoLevel;
+import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
@@ -41,11 +52,6 @@ import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
-
-import java.sql.Connection;
-import java.util.logging.Level;
-
-import static java.util.Objects.requireNonNull;
 
 @Command(name = "load", header = "** Load database metadata into memory", description = {
   ""
@@ -102,17 +108,30 @@ public class LoadCommand
       throw new ExecutionException(spec.commandLine(), "Not connected to the database");
     }
 
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = state.getSchemaCrawlerOptionsBuilder();
+
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+      .fromOptions(schemaCrawlerOptionsBuilder.getLoadOptions());
+
     if (infolevel != null)
     {
-      state
-        .getSchemaCrawlerOptionsBuilder()
+      loadOptionsBuilder
         .withSchemaInfoLevel(infolevel.toSchemaInfoLevel());
     }
 
-    state
-      .getSchemaCrawlerOptionsBuilder()
+    loadOptionsBuilder
       .loadRowCounts(isLoadRowCounts);
 
+    schemaCrawlerOptionsBuilder
+      .withLoadOptionsBuilder(loadOptionsBuilder);
+
+    final Catalog catalog = loadCatalog();
+    state.setCatalog(catalog);
+    LOGGER.log(Level.INFO, "Loaded catalog");
+  }
+
+  private Catalog loadCatalog()
+  {
     try (
       final Connection connection = state
         .getDataSource()
@@ -125,8 +144,7 @@ public class LoadCommand
       final SchemaRetrievalOptions schemaRetrievalOptions = state
         .getSchemaRetrievalOptionsBuilder()
         .toOptions();
-      final SchemaCrawlerOptions schemaCrawlerOptions = state
-        .getSchemaCrawlerOptionsBuilder()
+      final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptionsBuilder()
         .toOptions();
 
       final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
@@ -143,8 +161,7 @@ public class LoadCommand
       final Catalog catalog = catalogLoader.loadCatalog();
       requireNonNull(catalog, "Catalog could not be retrieved");
 
-      state.setCatalog(catalog);
-      LOGGER.log(Level.INFO, "Loaded catalog");
+      return catalog;
 
     }
     catch (final Exception e)

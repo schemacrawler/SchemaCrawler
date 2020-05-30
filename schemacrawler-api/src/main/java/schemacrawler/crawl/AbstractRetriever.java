@@ -30,6 +30,7 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSchemaInclusion;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
@@ -40,13 +41,13 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 
+import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.Retriever;
-import schemacrawler.schemacrawler.SchemaReference;
-import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.utility.TypeMap;
 import sf.util.SchemaCrawlerLogger;
 
@@ -143,7 +144,7 @@ abstract class AbstractRetriever
 
   final InclusionRule getSchemaInclusionRule()
   {
-    return options.getSchemaInclusionRule();
+    return options.getLimitOptions().get(ruleForSchemaInclusion);
   }
 
   final void logPossiblyUnsupportedSQLFeature(final Supplier<String> message,

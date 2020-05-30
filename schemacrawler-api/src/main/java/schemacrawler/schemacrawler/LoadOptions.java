@@ -28,14 +28,52 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
-public enum DatabaseObjectInfoRetrieval
+import static java.util.Objects.requireNonNull;
+
+import sf.util.ObjectToString;
+
+
+public final class LoadOptions
+  implements Options
 {
 
-  base,
-  table,
-  routine,
-  database,
-  other,
-  ;
+  private final boolean isLoadRowCounts;
+  private final SchemaInfoLevel schemaInfoLevel;
+
+  LoadOptions(final SchemaInfoLevel schemaInfoLevel, final boolean isLoadRowCounts)
+  {
+    this.schemaInfoLevel = requireNonNull(schemaInfoLevel, "No schema info level provided");
+    this.isLoadRowCounts = isLoadRowCounts;
+  }
+
+  /**
+   * Gets the schema information level, identifying to what level the schema
+   * should be crawled.
+   *
+   * @return Schema information level.
+   */
+  public SchemaInfoLevel getSchemaInfoLevel()
+  {
+    return schemaInfoLevel;
+  }
+
+  /**
+   * If infolevel=maximum, this option will load row counts.
+   *
+   * @return Whether to load row counts
+   */
+  public boolean isLoadRowCounts()
+  {
+    return isLoadRowCounts;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String toString()
+  {
+    return ObjectToString.toString(this);
+  }
 
 }

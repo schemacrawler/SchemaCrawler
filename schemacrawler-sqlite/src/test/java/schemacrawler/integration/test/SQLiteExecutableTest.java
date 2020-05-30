@@ -41,6 +41,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InfoLevel;
+import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.BaseSqliteTest;
@@ -96,9 +97,11 @@ public class SQLiteExecutableTest
     config.put("server", "sqlite");
     config.put("database", sqliteDbFile.toString());
 
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+      .withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());
     final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder
       .builder()
-      .withSchemaInfoLevel(infoLevel.toSchemaInfoLevel())
+      .withLoadOptionsBuilder(loadOptionsBuilder)
       .toOptions();
 
     final SchemaTextOptions textOptions =

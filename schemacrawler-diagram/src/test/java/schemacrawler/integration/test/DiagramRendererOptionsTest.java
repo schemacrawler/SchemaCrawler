@@ -32,6 +32,7 @@ package schemacrawler.integration.test;
 import static java.nio.file.Files.createDirectories;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSchemaInclusion;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -46,10 +47,12 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.inclusionrule.IncludeAll;
-import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.GrepOptionsBuilder;
+import schemacrawler.schemacrawler.InfoLevel;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
+import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
@@ -80,14 +83,16 @@ public class DiagramRendererOptionsTest
     throws Exception
   {
     SchemaCrawlerOptions schemaCrawlerOptions = options;
-    if (options
-      .getSchemaInclusionRule()
-      .equals(new IncludeAll()))
+    if (options.getLimitOptions().isIncludeAll(ruleForSchemaInclusion))
     {
+      final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+        .builder()
+        .fromOptions(options.getLimitOptions())
+        .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
       schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
         .builder()
         .fromOptions(options)
-        .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
+        .withLimitOptionsBuilder(limitOptionsBuilder)
         .toOptions();
     }
 
@@ -98,6 +103,7 @@ public class DiagramRendererOptionsTest
     diagramOptionsBuilder.sortTables(true);
     diagramOptionsBuilder.noInfo(diagramOptions.isNoInfo());
     if (!"maximum".equals(options
+                            .getLoadOptions()
                             .getSchemaInfoLevel()
                             .getTag()))
     {
@@ -239,9 +245,12 @@ public class DiagramRendererOptionsTest
   public void executableForDiagram_05(final TestContext testContext, final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
       .builder()
       .includeTables(new RegularExpressionInclusionRule(".*BOOKS"));
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder()
+      .withLimitOptionsBuilder(limitOptionsBuilder);
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
     final DiagramOptions diagramOptions = DiagramOptionsBuilder
@@ -293,9 +302,12 @@ public class DiagramRendererOptionsTest
   public void executableForDiagram_08(final TestContext testContext, final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
       .builder()
       .includeTables(new RegularExpressionInclusionRule(".*BOOKS"));
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder()
+      .withLimitOptionsBuilder(limitOptionsBuilder);
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
     final DiagramOptionsBuilder diagramOptionsBuilder = DiagramOptionsBuilder.builder();
@@ -315,10 +327,14 @@ public class DiagramRendererOptionsTest
   public void executableForDiagram_09(final TestContext testContext, final Connection connection)
     throws Exception
   {
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+      .builder()
+      .includeTables(new RegularExpressionInclusionRule(".*BOOKS"));
+    final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder().grepOnlyMatching(true);
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
       .builder()
-      .includeTables(new RegularExpressionInclusionRule(".*BOOKS"))
-      .grepOnlyMatching(true);
+      .withLimitOptionsBuilder(limitOptionsBuilder)
+      .withGrepOptions(grepOptionsBuilder.toOptions());
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
     final DiagramOptionsBuilder diagramOptionsBuilder = DiagramOptionsBuilder.builder();
@@ -338,9 +354,11 @@ public class DiagramRendererOptionsTest
   public void executableForDiagram_10(final TestContext testContext, final Connection connection)
     throws Exception
   {
+    final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
+      .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.REGIONS\\..*"));
     final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
       .builder()
-      .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.REGIONS\\..*"))
+      .withGrepOptions(grepOptionsBuilder.toOptions())
       .toOptions();
 
     final DiagramOptions diagramOptions = DiagramOptionsBuilder
@@ -358,10 +376,12 @@ public class DiagramRendererOptionsTest
   public void executableForDiagram_11(final TestContext testContext, final Connection connection)
     throws Exception
   {
+    final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
+      .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.REGIONS\\..*"))
+      .grepOnlyMatching(true);
     final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
       .builder()
-      .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.REGIONS\\..*"))
-      .grepOnlyMatching(true)
+      .withGrepOptions(grepOptionsBuilder.toOptions())
       .toOptions();
 
     final DiagramOptions diagramOptions = DiagramOptionsBuilder
@@ -383,11 +403,13 @@ public class DiagramRendererOptionsTest
     diagramOptionsBuilder.showRowCounts();
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+      .loadRowCounts();
     final SchemaCrawlerOptions schemaCrawlerOptions =
       SchemaCrawlerOptionsBuilder
         .builder()
-        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-        .loadRowCounts()
+        .withLoadOptionsBuilder(loadOptionsBuilder)
         .toOptions();
 
     executableDiagram(SchemaTextDetailType.schema.name(),
@@ -427,10 +449,15 @@ public class DiagramRendererOptionsTest
   public void executableForDiagram_lintschema(final TestContext testContext, final Connection connection)
     throws Exception
   {
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+      .builder()
+      .includeSchemas(new RegularExpressionInclusionRule(".*\\.FOR_LINT"));
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
       .builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-      .includeSchemas(new RegularExpressionInclusionRule(".*\\.FOR_LINT"));
+      .withLimitOptionsBuilder(limitOptionsBuilder)
+      .withLoadOptionsBuilder(loadOptionsBuilder);
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
     final DiagramOptions diagramOptions = DiagramOptionsBuilder
@@ -450,9 +477,11 @@ public class DiagramRendererOptionsTest
       .builder()
       .withInfoLevel(InfoLevel.standard)
       .setRetrieveWeakAssociations(true);
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+      .withSchemaInfoLevel(infoLevelBuilder.toOptions());
     final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
       .builder()
-      .withSchemaInfoLevel(infoLevelBuilder.toOptions());
+      .withLoadOptionsBuilder(loadOptionsBuilder);
     return builder.toOptions();
   }
 

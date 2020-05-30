@@ -28,8 +28,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
+import static java.util.Objects.requireNonNull;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForColumnInclusion;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForRoutineInclusion;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForRoutineParameterInclusion;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSchemaInclusion;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSequenceInclusion;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSynonymInclusion;
+import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForTableInclusion;
+
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Optional;
 
 import schemacrawler.inclusionrule.InclusionRule;
@@ -45,160 +53,127 @@ public final class SchemaCrawlerOptions
   implements Options
 {
 
-  private final int childTableFilterDepth;
-  private final InclusionRule columnInclusionRule;
-  private final InclusionRule grepColumnInclusionRule;
-  private final InclusionRule grepDefinitionInclusionRule;
-  private final boolean grepInvertMatch;
-  private final boolean grepOnlyMatching;
-  private final InclusionRule grepRoutineParameterInclusionRule;
-  private final boolean isNoEmptyTables;
-  private final boolean isLoadRowCounts;
-  private final int parentTableFilterDepth;
-  private final InclusionRule routineInclusionRule;
-  private final InclusionRule routineParameterInclusionRule;
-  private final Collection<RoutineType> routineTypes;
-  private final InclusionRule schemaInclusionRule;
-  private final SchemaInfoLevel schemaInfoLevel;
-  private final InclusionRule sequenceInclusionRule;
-  private final InclusionRule synonymInclusionRule;
-  private final InclusionRule tableInclusionRule;
-  private final String tableNamePattern;
-  private final Collection<String> tableTypes;
+  private final LimitOptions limitOptions;
+  private final FilterOptions filterOptions;
+  private final GrepOptions grepOptions;
+  private final LoadOptions loadOptions;
 
-  SchemaCrawlerOptions(final SchemaInfoLevel schemaInfoLevel,
-                       final InclusionRule schemaInclusionRule,
-                       final InclusionRule synonymInclusionRule,
-                       final InclusionRule sequenceInclusionRule,
-                       final Collection<String> tableTypes,
-                       final String tableNamePattern,
-                       final InclusionRule tableInclusionRule,
-                       final InclusionRule columnInclusionRule,
-                       final Collection<RoutineType> routineTypes,
-                       final InclusionRule routineInclusionRule,
-                       final InclusionRule routineParameterInclusionRule,
-                       final InclusionRule grepColumnInclusionRule,
-                       final InclusionRule grepRoutineParameterInclusionRule,
-                       final InclusionRule grepDefinitionInclusionRule,
-                       final boolean grepInvertMatch,
-                       final boolean grepOnlyMatching,
-                       final boolean isNoEmptyTables,
-                       final boolean isLoadRowCounts,
-                       final int childTableFilterDepth,
-                       final int parentTableFilterDepth)
+  SchemaCrawlerOptions(final LimitOptions limitOptions,
+                       final FilterOptions filterOptions,
+                       final GrepOptions grepOptions,
+                       final LoadOptions loadOptions)
   {
-    this.schemaInfoLevel = schemaInfoLevel;
-    this.schemaInclusionRule = schemaInclusionRule;
-    this.synonymInclusionRule = synonymInclusionRule;
-    this.sequenceInclusionRule = sequenceInclusionRule;
-    this.tableTypes = tableTypes;
-    this.tableNamePattern = tableNamePattern;
-    this.tableInclusionRule = tableInclusionRule;
-    this.columnInclusionRule = columnInclusionRule;
-    this.routineTypes = routineTypes;
-    this.routineInclusionRule = routineInclusionRule;
-    this.routineParameterInclusionRule = routineParameterInclusionRule;
-    this.grepColumnInclusionRule = grepColumnInclusionRule;
-    this.grepRoutineParameterInclusionRule = grepRoutineParameterInclusionRule;
-    this.grepDefinitionInclusionRule = grepDefinitionInclusionRule;
-    this.grepInvertMatch = grepInvertMatch;
-    this.grepOnlyMatching = grepOnlyMatching;
-    this.isNoEmptyTables = isNoEmptyTables;
-    this.isLoadRowCounts = isLoadRowCounts;
-    this.childTableFilterDepth = childTableFilterDepth;
-    this.parentTableFilterDepth = parentTableFilterDepth;
+    this.limitOptions = requireNonNull(limitOptions, "No limit options provided");
+    this.filterOptions = requireNonNull(filterOptions, "No filter options provided");
+    this.grepOptions = requireNonNull(grepOptions, "No grep options provided");
+    this.loadOptions = requireNonNull(loadOptions, "No load options provided");
   }
 
+  @Deprecated
   public int getChildTableFilterDepth()
   {
-    return childTableFilterDepth;
+    return filterOptions.getChildTableFilterDepth();
   }
 
   /**
    * Gets the column inclusion rule.
    *
    * @return Column inclusion rule.
+   * @deprecated
    */
+  @Deprecated
   public InclusionRule getColumnInclusionRule()
   {
-    return columnInclusionRule;
+    return limitOptions.get(ruleForColumnInclusion);
+  }
+
+  public GrepOptions getGrepOptions()
+  {
+    return grepOptions;
   }
 
   /**
    * Gets the column inclusion rule for grep.
    *
    * @return Column inclusion rule for grep.
+   * @deprecated
    */
+  @Deprecated
   public Optional<InclusionRule> getGrepColumnInclusionRule()
   {
-    return Optional.ofNullable(grepColumnInclusionRule);
+    return grepOptions.getGrepColumnInclusionRule();
   }
 
   /**
    * Gets the definitions inclusion rule for grep.
    *
    * @return Definitions inclusion rule for grep.
+   * @deprecated
    */
+  @Deprecated
   public Optional<InclusionRule> getGrepDefinitionInclusionRule()
   {
-    return Optional.ofNullable(grepDefinitionInclusionRule);
+    return grepOptions.getGrepDefinitionInclusionRule();
   }
 
   /**
    * Gets the routine column rule for grep.
    *
    * @return Routine column rule for grep.
+   * @deprecated
    */
+  @Deprecated
   public Optional<InclusionRule> getGrepRoutineParameterInclusionRule()
   {
-    return Optional.ofNullable(grepRoutineParameterInclusionRule);
+    return grepOptions.getGrepRoutineParameterInclusionRule();
   }
 
+  @Deprecated
   public int getParentTableFilterDepth()
   {
-    return parentTableFilterDepth;
+    return filterOptions.getParentTableFilterDepth();
   }
 
   /**
    * Gets the routine column rule.
    *
    * @return Routine column rule.
+   * @deprecated
    */
+  @Deprecated
   public InclusionRule getRoutineParameterInclusionRule()
   {
-    return routineParameterInclusionRule;
+    return limitOptions.get(ruleForRoutineParameterInclusion);
   }
 
   /**
    * Gets the routine inclusion rule.
    *
    * @return Routine inclusion rule.
+   * @deprecated
    */
+  @Deprecated
   public InclusionRule getRoutineInclusionRule()
   {
-    return routineInclusionRule;
+    return limitOptions.get(ruleForRoutineInclusion);
   }
 
+  @Deprecated
   public Collection<RoutineType> getRoutineTypes()
   {
-    if (routineTypes == null)
-    {
-      return null;
-    }
-    else
-    {
-      return new HashSet<>(routineTypes);
-    }
+    return limitOptions.getRoutineTypes();
   }
 
   /**
    * Gets the schema inclusion rule.
    *
    * @return Schema inclusion rule.
+   * @deprecated
    */
+  @Deprecated
   public InclusionRule getSchemaInclusionRule()
   {
-    return schemaInclusionRule;
+    return limitOptions.get(ruleForSchemaInclusion);
   }
 
   /**
@@ -206,40 +181,48 @@ public final class SchemaCrawlerOptions
    * should be crawled.
    *
    * @return Schema information level.
+   * @deprecated
    */
+  @Deprecated
   public SchemaInfoLevel getSchemaInfoLevel()
   {
-    return schemaInfoLevel;
+    return loadOptions.getSchemaInfoLevel();
   }
 
   /**
    * Gets the sequence inclusion rule.
    *
    * @return Sequence inclusion rule.
+   * @deprecated
    */
+  @Deprecated
   public InclusionRule getSequenceInclusionRule()
   {
-    return sequenceInclusionRule;
+    return limitOptions.get(ruleForSequenceInclusion);
   }
 
   /**
    * Gets the synonym inclusion rule.
    *
    * @return Synonym inclusion rule.
+   * @deprecated
    */
+  @Deprecated
   public InclusionRule getSynonymInclusionRule()
   {
-    return synonymInclusionRule;
+    return limitOptions.get(ruleForSynonymInclusion);
   }
 
   /**
    * Gets the table inclusion rule.
    *
    * @return Table inclusion rule.
+   * @deprecated
    */
+  @Deprecated
   public InclusionRule getTableInclusionRule()
   {
-    return tableInclusionRule;
+    return limitOptions.get(ruleForTableInclusion);
   }
 
   /**
@@ -247,10 +230,12 @@ public final class SchemaCrawlerOptions
    * pattern into account.
    *
    * @return Table name pattern
+   * @deprecated
    */
+  @Deprecated
   public String getTableNamePattern()
   {
-    return tableNamePattern;
+    return limitOptions.getTableNamePattern();
   }
 
   /**
@@ -258,51 +243,53 @@ public final class SchemaCrawlerOptions
    * supported table types are required in the output.
    *
    * @return All table types requested for output
+   * @deprecated
    */
+  @Deprecated
   public Collection<String> getTableTypes()
   {
-    if (tableTypes == null)
-    {
-      return null;
-    }
-    else
-    {
-      return new HashSet<>(tableTypes);
-    }
+    return limitOptions.getTableTypes();
   }
 
+  @Deprecated
   public boolean isGrepColumns()
   {
-    return grepColumnInclusionRule != null;
+    return grepOptions.isGrepColumns();
   }
 
+  @Deprecated
   public boolean isGrepDefinitions()
   {
-    return grepDefinitionInclusionRule != null;
+    return grepOptions.isGrepDefinitions();
   }
 
   /**
    * Whether to invert matches.
    *
    * @return Whether to invert matches.
+   * @deprecated
    */
+  @Deprecated
   public boolean isGrepInvertMatch()
   {
-    return grepInvertMatch;
+    return grepOptions.isGrepInvertMatch();
   }
 
   /**
    * Whether grep includes show foreign keys that reference other non-matching
    * tables.
+   * @deprecated
    */
+  @Deprecated
   public boolean isGrepOnlyMatching()
   {
-    return grepOnlyMatching;
+    return grepOptions.isGrepOnlyMatching();
   }
 
+  @Deprecated
   public boolean isGrepRoutineParameters()
   {
-    return grepRoutineParameterInclusionRule != null;
+    return grepOptions.isGrepRoutineParameters();
   }
 
   /**
@@ -310,10 +297,12 @@ public final class SchemaCrawlerOptions
    * with no rows of data) from the catalog.
    *
    * @return Whether to hide empty tables
+   * @deprecated
    */
+  @Deprecated
   public boolean isNoEmptyTables()
   {
-    return isNoEmptyTables;
+    return filterOptions.isNoEmptyTables();
   }
 
   /**
@@ -321,10 +310,27 @@ public final class SchemaCrawlerOptions
    * with no rows of data) from the catalog.
    *
    * @return Whether to hide empty tables
+   * @deprecated
    */
+  @Deprecated
   public boolean isLoadRowCounts()
   {
-    return isLoadRowCounts;
+    return loadOptions.isLoadRowCounts();
+  }
+
+  public LoadOptions getLoadOptions()
+  {
+    return loadOptions;
+  }
+
+  public FilterOptions getFilterOptions()
+  {
+    return filterOptions;
+  }
+
+  public LimitOptions getLimitOptions()
+  {
+    return limitOptions;
   }
 
   /**

@@ -39,11 +39,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.Set;
-import java.util.function.Supplier;
 import java.util.logging.Level;
 
-import schemacrawler.inclusionrule.ExcludeAll;
-import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import sf.util.ObjectToString;
@@ -206,46 +203,14 @@ public final class Config
     return enumValue(value, defaultValue);
   }
 
-  /**
-   * Creates an exclusion rule, which includes everything, and then excludes a
-   * pattern. If no pattern is provided, include everything, since there are no
-   * excludes specified.
-   *
-   * @param optionName
-   *   Option to look up.
-   * @return Inclusion rule.
-   */
-  public InclusionRule getExclusionRule(final String optionName)
-  {
-    return getInclusionRuleWithDefault(null,
-                                       optionName,
-                                       () -> new IncludeAll());
-  }
-
-  /**
-   * Creates an inclusion rule, which includes a pattern has no excludes. If no
-   * pattern is provided, exclude everything, since there are no includes
-   * specified.
-   *
-   * @param optionName
-   *   Option to look up.
-   * @return Inclusion rule.
-   */
-  public InclusionRule getInclusionRule(final String optionName)
-  {
-    return getInclusionRuleWithDefault(optionName,
-                                       null,
-                                       () -> new ExcludeAll());
-  }
-
   public InclusionRule getInclusionRuleWithDefault(final String includePatternProperty,
                                                    final String excludePatternProperty,
-                                                   final Supplier<InclusionRule> supplier)
+                                                   final InclusionRule inclusionRule)
   {
-    requireNonNull(supplier);
+    requireNonNull(inclusionRule);
     final Optional<InclusionRule> optionalInclusionRule =
       getOptionalInclusionRule(includePatternProperty, excludePatternProperty);
-    return optionalInclusionRule.orElse(supplier.get());
+    return optionalInclusionRule.orElse(inclusionRule);
   }
 
   /**

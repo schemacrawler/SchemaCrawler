@@ -44,6 +44,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.TestContext;
@@ -71,10 +72,14 @@ public class TableNamePatternTest
 
       final String tableNamePattern = "%Counts";
 
+      final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder
+          .builder()
+          .tableNamePattern(tableNamePattern);
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
         SchemaCrawlerOptionsBuilder
           .builder()
-          .tableNamePattern(tableNamePattern);
+          .withLimitOptionsBuilder(limitOptionsBuilder);
       final SchemaCrawlerOptions schemaCrawlerOptions =
         schemaCrawlerOptionsBuilder.toOptions();
 

@@ -41,13 +41,13 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.utility.NamedObjectSort;
@@ -129,15 +129,17 @@ public class TableTypesTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
+      final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+        .builder()
+        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+      if (!"default".equals(tableTypes))
+      {
+        limitOptionsBuilder.tableTypes(tableTypes);
+      }
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
         SchemaCrawlerOptionsBuilder
           .builder()
-          .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
-          .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-      if (!"default".equals(tableTypes))
-      {
-        schemaCrawlerOptionsBuilder.tableTypes(tableTypes);
-      }
+          .withLimitOptionsBuilder(limitOptionsBuilder);
 
       final Catalog catalog =
         getCatalog(connection, schemaCrawlerOptionsBuilder.toOptions());

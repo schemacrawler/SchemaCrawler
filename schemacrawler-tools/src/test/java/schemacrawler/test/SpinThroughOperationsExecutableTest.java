@@ -43,6 +43,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.InfoLevel;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
+import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
@@ -120,13 +122,19 @@ public class SpinThroughOperationsExecutableTest
         final String referenceFile =
           referenceFile(operation, infoLevel, outputFormat);
 
-        final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-          SchemaCrawlerOptionsBuilder
+        final LimitOptionsBuilder limitOptionsBuilder =
+          LimitOptionsBuilder
             .builder()
-            .withSchemaInfoLevel(infoLevel.toSchemaInfoLevel())
             .includeAllSequences()
             .includeAllSynonyms()
             .includeAllRoutines();
+        final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+          .withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());
+        final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+          SchemaCrawlerOptionsBuilder
+            .builder()
+            .withLimitOptionsBuilder(limitOptionsBuilder)
+            .withLoadOptionsBuilder(loadOptionsBuilder);
         final SchemaCrawlerOptions schemaCrawlerOptions =
           schemaCrawlerOptionsBuilder.toOptions();
 
