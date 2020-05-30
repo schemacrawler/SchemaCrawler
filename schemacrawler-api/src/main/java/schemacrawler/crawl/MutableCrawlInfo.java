@@ -79,34 +79,6 @@ final class MutableCrawlInfo
     return crawlTimestamp;
   }
 
-  @Deprecated
-  @Override
-  public String getDatabaseInfo()
-  {
-    return databaseVersion.toString();
-  }
-
-  @Deprecated
-  @Override
-  public String getJdbcDriverInfo()
-  {
-    return jdbcDriverVersion.toString();
-  }
-
-  @Deprecated
-  @Override
-  public String getJvmSystemInfo()
-  {
-    return jvmVersion.toString();
-  }
-
-  @Deprecated
-  @Override
-  public String getOperatingSystemInfo()
-  {
-    return operatingSystemVersion.toString();
-  }
-
   /**
    * {@inheritDoc}
    */

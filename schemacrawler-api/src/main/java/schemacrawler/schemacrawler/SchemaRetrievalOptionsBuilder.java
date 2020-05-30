@@ -30,15 +30,6 @@ package schemacrawler.schemacrawler;
 
 import static schemacrawler.plugin.EnumDataTypeHelper.NO_OP_ENUM_DATA_TYPE_HELPER;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.metadata;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionParametersRetrievalStrategy;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionsRetrievalStrategy;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.primaryKeysRetrievalStrategy;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.procedureParametersRetrievalStrategy;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.proceduresRetrievalStrategy;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
-import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablesRetrievalStrategy;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
@@ -248,36 +239,6 @@ public final class SchemaRetrievalOptionsBuilder
     return this;
   }
 
-  @Deprecated
-  public SchemaRetrievalOptionsBuilder withForeignKeyRetrievalStrategy(final MetadataRetrievalStrategy metadataRetrievalStrategy)
-  {
-    if (metadataRetrievalStrategy != null)
-    {
-      metadataRetrievalStrategyMap.put(foreignKeysRetrievalStrategy, metadataRetrievalStrategy);
-    }
-    return this;
-  }
-
-  @Deprecated
-  public SchemaRetrievalOptionsBuilder withFunctionColumnRetrievalStrategy(final MetadataRetrievalStrategy metadataRetrievalStrategy)
-  {
-    if (metadataRetrievalStrategy != null)
-    {
-      metadataRetrievalStrategyMap.put(functionParametersRetrievalStrategy, metadataRetrievalStrategy);
-    }
-    return this;
-  }
-
-  @Deprecated
-  public SchemaRetrievalOptionsBuilder withFunctionRetrievalStrategy(final MetadataRetrievalStrategy metadataRetrievalStrategy)
-  {
-    if (metadataRetrievalStrategy != null)
-    {
-      metadataRetrievalStrategyMap.put(functionsRetrievalStrategy, metadataRetrievalStrategy);
-    }
-    return this;
-  }
-
   /**
    * Overrides the JDBC driver provided information about the identifier quote string.
    *
@@ -293,16 +254,6 @@ public final class SchemaRetrievalOptionsBuilder
     else
     {
       this.identifierQuoteString = identifierQuoteString;
-    }
-    return this;
-  }
-
-  @Deprecated
-  public SchemaRetrievalOptionsBuilder withIndexRetrievalStrategy(final MetadataRetrievalStrategy metadataRetrievalStrategy)
-  {
-    if (metadataRetrievalStrategy != null)
-    {
-      metadataRetrievalStrategyMap.put(indexesRetrievalStrategy, metadataRetrievalStrategy);
     }
     return this;
   }
@@ -343,36 +294,6 @@ public final class SchemaRetrievalOptionsBuilder
     return this;
   }
 
-  @Deprecated
-  public SchemaRetrievalOptionsBuilder withPrimaryKeyRetrievalStrategy(final MetadataRetrievalStrategy metadataRetrievalStrategy)
-  {
-    if (metadataRetrievalStrategy != null)
-    {
-      metadataRetrievalStrategyMap.put(primaryKeysRetrievalStrategy, metadataRetrievalStrategy);
-    }
-    return this;
-  }
-
-  @Deprecated
-  public SchemaRetrievalOptionsBuilder withProcedureColumnRetrievalStrategy(final MetadataRetrievalStrategy metadataRetrievalStrategy)
-  {
-    if (metadataRetrievalStrategy != null)
-    {
-      metadataRetrievalStrategyMap.put(procedureParametersRetrievalStrategy, metadataRetrievalStrategy);
-    }
-    return this;
-  }
-
-  @Deprecated
-  public SchemaRetrievalOptionsBuilder withProcedureRetrievalStrategy(final MetadataRetrievalStrategy metadataRetrievalStrategy)
-  {
-    if (metadataRetrievalStrategy != null)
-    {
-      metadataRetrievalStrategyMap.put(proceduresRetrievalStrategy, metadataRetrievalStrategy);
-    }
-    return this;
-  }
-
   /**
    * Overrides the JDBC driver provided information about whether the database supports catalogs.
    */
@@ -388,26 +309,6 @@ public final class SchemaRetrievalOptionsBuilder
   public SchemaRetrievalOptionsBuilder withSupportsSchemas()
   {
     overridesSupportSchemas = Optional.of(true);
-    return this;
-  }
-
-  @Deprecated
-  public SchemaRetrievalOptionsBuilder withTableColumnRetrievalStrategy(final MetadataRetrievalStrategy metadataRetrievalStrategy)
-  {
-    if (metadataRetrievalStrategy != null)
-    {
-      metadataRetrievalStrategyMap.put(tableColumnsRetrievalStrategy, metadataRetrievalStrategy);
-    }
-    return this;
-  }
-
-  @Deprecated
-  public SchemaRetrievalOptionsBuilder withTableRetrievalStrategy(final MetadataRetrievalStrategy metadataRetrievalStrategy)
-  {
-    if (metadataRetrievalStrategy != null)
-    {
-      metadataRetrievalStrategyMap.put(tablesRetrievalStrategy, metadataRetrievalStrategy);
-    }
     return this;
   }
 

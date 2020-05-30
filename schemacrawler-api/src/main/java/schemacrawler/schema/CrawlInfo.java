@@ -45,29 +45,11 @@ public interface CrawlInfo
   LocalDateTime getCrawlTimestamp();
 
   /**
-   * @deprecated
-   * Gets the name of the RDBMS vendor and product.
-   *
-   * @return Name of the RDBMS vendor and product
-   */
-  @Deprecated
-  String getDatabaseInfo();
-
-  /**
    * Gets the version of the RDBMS vendor and product.
    *
    * @return Name and version of the RDBMS vendor and product
    */
   ProductVersion getDatabaseVersion();
-
-  /**
-   * @deprecated
-   * Gets the name of the JDBC driver.
-   *
-   * @return Driver name
-   */
-  @Deprecated
-  String getJdbcDriverInfo();
 
   /**
    * Gets the name and version of the JDBC driver.
@@ -77,29 +59,11 @@ public interface CrawlInfo
   ProductVersion getJdbcDriverVersion();
 
   /**
-   * @deprecated
-   * Get JVM system information.
-   *
-   * @return JVM system information
-   */
-  @Deprecated
-  String getJvmSystemInfo();
-
-  /**
    * Get JVM system information.
    *
    * @return JVM system information
    */
   ProductVersion getJvmVersion();
-
-  /**
-   * @deprecated
-   * Get operating system information.
-   *
-   * @return Operating system information
-   */
-  @Deprecated
-  String getOperatingSystemInfo();
 
   /**
    * Get operating system information.

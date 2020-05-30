@@ -1,7 +1,6 @@
 package schemacrawler.test.commandline.command;
 
 
-import static org.apache.commons.lang3.reflect.FieldUtils.readField;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -11,7 +10,6 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.newComm
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.FilterOptions;
-import schemacrawler.schemacrawler.FilterOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.commandline.command.FilterCommand;
@@ -113,7 +111,6 @@ public class FilterCommandTest
 
   @Test
   public void allArgs()
-    throws IllegalAccessException
   {
     final String[] args = {
       "--parents",
@@ -132,12 +129,6 @@ public class FilterCommandTest
     final CommandLine commandLine =
       newCommandLine(FilterCommand.class, new StateFactory(state), true);
     commandLine.execute(args);
-
-    final FilterOptionsBuilder filterOptionsBuilder =
-      (FilterOptionsBuilder) readField(builder, "filterOptionsBuilder", true);
-    assertThat(readField(filterOptionsBuilder, "parentTableFilterDepth", true), is(2));
-    assertThat(readField(filterOptionsBuilder, "childTableFilterDepth", true), is(2));
-    assertThat(readField(filterOptionsBuilder, "isNoEmptyTables", true), is(true));
 
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
     final FilterOptions filterOptions = schemaCrawlerOptions.getFilterOptions();
