@@ -42,6 +42,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -69,14 +70,17 @@ public class H2Test
   public void testH2WithConnection()
     throws Exception
   {
+    final LimitOptionsBuilder limitOptionsBuilder =
+      LimitOptionsBuilder
+        .builder()
+        .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
+        .includeSequences(new RegularExpressionExclusionRule(".*\\.BOOKS\\.SYSTEM_SEQUENCE.*"));
     final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
       SchemaCrawlerOptionsBuilder
         .builder()
-        .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
-        .includeSequences(new RegularExpressionExclusionRule(
-          ".*\\.BOOKS\\.SYSTEM_SEQUENCE.*"))
+        .withLimitOptionsBuilder(limitOptionsBuilder)
         .withLoadOptionsBuilder(loadOptionsBuilder);
     final SchemaCrawlerOptions schemaCrawlerOptions =
       schemaCrawlerOptionsBuilder.toOptions();

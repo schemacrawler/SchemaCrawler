@@ -42,13 +42,14 @@ import java.util.Collection;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.crawl.NotLoadedException;
+import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
-import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.GrepOptionsBuilder;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.DatabaseTestUtility;
@@ -93,14 +94,18 @@ public class SchemaCrawlerReferenceTest
   public void fkReferencesForGreppedAndFilteredTables1(final Connection connection)
     throws Exception
   {
+    final LimitOptionsBuilder limitOptionsBuilder =
+      LimitOptionsBuilder
+        .builder()
+        .includeTables(new RegularExpressionInclusionRule(".*\\.BOOKAUTHORS"));
     final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
       .includeGreppedColumns(new RegularExpressionInclusionRule(
         ".*\\.BOOKAUTHORS\\..*"));
     final SchemaCrawlerOptions schemaCrawlerOptions =
       SchemaCrawlerOptionsBuilder
         .builder()
+        .withLimitOptionsBuilder(limitOptionsBuilder)
         .withGrepOptions(grepOptionsBuilder.toOptions())
-        .includeTables(new RegularExpressionInclusionRule(".*\\.BOOKAUTHORS"))
         .toOptions();
 
     int fkReferenceCount = 0;
@@ -131,14 +136,18 @@ public class SchemaCrawlerReferenceTest
   public void fkReferencesForGreppedAndFilteredTables2(final Connection connection)
     throws Exception
   {
+    final LimitOptionsBuilder limitOptionsBuilder =
+      LimitOptionsBuilder
+        .builder()
+        .includeTables(new RegularExpressionInclusionRule(".*\\.AUTHORS"));
     final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
       .includeGreppedColumns(new RegularExpressionInclusionRule(
         ".*\\.AUTHORS\\..*"));
     final SchemaCrawlerOptions schemaCrawlerOptions =
       SchemaCrawlerOptionsBuilder
         .builder()
+        .withLimitOptionsBuilder(limitOptionsBuilder)
         .withGrepOptions(grepOptionsBuilder.toOptions())
-        .includeTables(new RegularExpressionInclusionRule(".*\\.AUTHORS"))
         .toOptions();
 
     int fkReferenceCount = 0;

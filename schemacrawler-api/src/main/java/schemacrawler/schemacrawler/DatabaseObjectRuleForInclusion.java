@@ -49,11 +49,11 @@ public enum DatabaseObjectRuleForInclusion
     this.excludeByDefault = excludeByDefault;
   }
 
-  public String getInclusionConfigKey() {
+  public String getIncludePatternProperty() {
     return String.format("schemacrawler.%s.pattern.include", key);
   }
 
-  public String getExclusionConfigKey() {
+  public String getExcludePatternProperty() {
     return String.format("schemacrawler.%s.pattern.exclude", key);
   }
 

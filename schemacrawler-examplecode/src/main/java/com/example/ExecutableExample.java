@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -55,13 +56,16 @@ public final class ExecutableExample
   {
 
     // Create the options
+    final LimitOptionsBuilder limitOptionsBuilder =
+      LimitOptionsBuilder.builder()
+        .includeSchemas(new RegularExpressionInclusionRule("PUBLIC.BOOKS"));
     final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
       // Set what details are required in the schema - this affects the
       // time taken to crawl the schema
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
     final SchemaCrawlerOptionsBuilder optionsBuilder =
       SchemaCrawlerOptionsBuilder.builder()
-        .includeSchemas(new RegularExpressionInclusionRule("PUBLIC.BOOKS"))
+        .withLimitOptionsBuilder(limitOptionsBuilder)
         .withLoadOptionsBuilder(loadOptionsBuilder);
     final SchemaCrawlerOptions options = optionsBuilder.toOptions();
 

@@ -11,15 +11,15 @@ WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 SchemaCrawler and the accompanying materials are made available under
-the terms of the Eclipse Public License v1.0, GNU General Public License
-v3 or GNU Lesser General Public License v3.
+the terms of the Eclipse @Deprecated public License v1.0, GNU General @Deprecated public License
+v3 or GNU Lesser General @Deprecated public License v3.
 
 You may elect to redistribute this code under any of these licenses.
 
-The Eclipse Public License is available at:
+The Eclipse @Deprecated public License is available at:
 http://www.eclipse.org/legal/epl-v10.html
 
-The GNU General Public License v3 and the GNU Lesser General Public
+The GNU General @Deprecated public License v3 and the GNU Lesser General @Deprecated public
 License v3 are available at:
 http://www.gnu.org/licenses/
 
@@ -41,7 +41,6 @@ import schemacrawler.schema.RoutineType;
 /**
  * SchemaCrawler options builder, to build the immutable options to crawl a schema.
  */
-@Deprecated
 public final class SchemaCrawlerOptionsBuilder
   implements OptionsBuilder<SchemaCrawlerOptionsBuilder, SchemaCrawlerOptions>
 {
@@ -112,7 +111,7 @@ public final class SchemaCrawlerOptionsBuilder
   }
 
 
-  public SchemaCrawlerOptionsBuilder childTableFilterDepth(final int childTableFilterDepth)
+  @Deprecated public SchemaCrawlerOptionsBuilder childTableFilterDepth(final int childTableFilterDepth)
   {
     filterOptionsBuilder.childTableFilterDepth(childTableFilterDepth);
     return this;
@@ -156,7 +155,7 @@ public final class SchemaCrawlerOptionsBuilder
   }
 
   @Override
-  public Config toConfig()
+  @Deprecated public Config toConfig()
   {
     throw new UnsupportedOperationException();
   }
@@ -176,150 +175,150 @@ public final class SchemaCrawlerOptionsBuilder
   }
 
 
-  public SchemaCrawlerOptionsBuilder grepOnlyMatching(final boolean grepOnlyMatching)
+  @Deprecated public SchemaCrawlerOptionsBuilder grepOnlyMatching(final boolean grepOnlyMatching)
   {
     grepOptionsBuilder.grepOnlyMatching(grepOnlyMatching);
     return this;
   }
 
 
-  public SchemaCrawlerOptionsBuilder includeAllRoutines()
+  @Deprecated public SchemaCrawlerOptionsBuilder includeAllRoutines()
   {
     includeRoutines(new IncludeAll());
     return this;
   }
 
 
-  public SchemaCrawlerOptionsBuilder includeAllSequences()
+  @Deprecated public SchemaCrawlerOptionsBuilder includeAllSequences()
   {
     includeSequences(new IncludeAll());
     return this;
   }
 
 
-  public SchemaCrawlerOptionsBuilder includeAllSynonyms()
+  @Deprecated public SchemaCrawlerOptionsBuilder includeAllSynonyms()
   {
     includeSynonyms(new IncludeAll());
     return this;
   }
 
 
-  public SchemaCrawlerOptionsBuilder includeColumns(final InclusionRule columnInclusionRule)
+  @Deprecated public SchemaCrawlerOptionsBuilder includeColumns(final InclusionRule columnInclusionRule)
   {
     limitOptionsBuilder.includeColumns(columnInclusionRule);
     return this;
   }
 
 
-  public SchemaCrawlerOptionsBuilder includeGreppedColumns(final InclusionRule grepColumnInclusionRule)
+  @Deprecated public SchemaCrawlerOptionsBuilder includeGreppedColumns(final InclusionRule grepColumnInclusionRule)
   {
     grepOptionsBuilder.includeGreppedColumns(grepColumnInclusionRule);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder includeSchemas(final Pattern schemaPattern)
+  @Deprecated public SchemaCrawlerOptionsBuilder includeSchemas(final Pattern schemaPattern)
   {
     limitOptionsBuilder.includeSchemas(schemaPattern);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder includeTables(final Pattern tablePattern)
+  @Deprecated public SchemaCrawlerOptionsBuilder includeTables(final Pattern tablePattern)
   {
     limitOptionsBuilder.includeTables(tablePattern);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder includeRoutines(final Pattern routinePattern)
+  @Deprecated public SchemaCrawlerOptionsBuilder includeRoutines(final Pattern routinePattern)
   {
     limitOptionsBuilder.includeRoutines(routinePattern);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder includeSequences(final Pattern sequencePattern)
+  @Deprecated public SchemaCrawlerOptionsBuilder includeSequences(final Pattern sequencePattern)
   {
     limitOptionsBuilder.includeSequences(sequencePattern);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder includeSynonyms(final Pattern synonymPattern)
+  @Deprecated public SchemaCrawlerOptionsBuilder includeSynonyms(final Pattern synonymPattern)
   {
     limitOptionsBuilder.includeSynonyms(synonymPattern);
     return this;
   }
 
 
-  public SchemaCrawlerOptionsBuilder includeGreppedColumns(final Pattern grepColumnPattern)
+  @Deprecated public SchemaCrawlerOptionsBuilder includeGreppedColumns(final Pattern grepColumnPattern)
   {
     grepOptionsBuilder.includeGreppedColumns(grepColumnPattern);
     return this;
   }
 
 
-  public SchemaCrawlerOptionsBuilder includeGreppedDefinitions(final InclusionRule grepDefinitionInclusionRule)
+  @Deprecated public SchemaCrawlerOptionsBuilder includeGreppedDefinitions(final InclusionRule grepDefinitionInclusionRule)
   {
     grepOptionsBuilder.includeGreppedDefinitions(grepDefinitionInclusionRule);
     return this;
   }
 
 
-  public SchemaCrawlerOptionsBuilder includeGreppedDefinitions(final Pattern grepDefinitionPattern)
+  @Deprecated public SchemaCrawlerOptionsBuilder includeGreppedDefinitions(final Pattern grepDefinitionPattern)
   {
     grepOptionsBuilder.includeGreppedDefinitions(grepDefinitionPattern);
     return this;
   }
 
 
-  public SchemaCrawlerOptionsBuilder includeGreppedRoutineParameters(final InclusionRule grepRoutineParameterInclusionRule)
+  @Deprecated public SchemaCrawlerOptionsBuilder includeGreppedRoutineParameters(final InclusionRule grepRoutineParameterInclusionRule)
   {
     grepOptionsBuilder.includeGreppedRoutineParameters(grepRoutineParameterInclusionRule);
     return this;
   }
 
 
-  public SchemaCrawlerOptionsBuilder includeGreppedRoutineParameters(final Pattern grepRoutineParametersPattern)
+  @Deprecated public SchemaCrawlerOptionsBuilder includeGreppedRoutineParameters(final Pattern grepRoutineParametersPattern)
   {
     grepOptionsBuilder.includeGreppedRoutineParameters(grepRoutineParametersPattern);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder includeRoutineParameters(final InclusionRule routineParameterInclusionRule)
+  @Deprecated public SchemaCrawlerOptionsBuilder includeRoutineParameters(final InclusionRule routineParameterInclusionRule)
   {
     limitOptionsBuilder.includeRoutineParameters(routineParameterInclusionRule);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder includeRoutines(final InclusionRule routineInclusionRule)
+  @Deprecated public SchemaCrawlerOptionsBuilder includeRoutines(final InclusionRule routineInclusionRule)
   {
     limitOptionsBuilder.includeRoutines(routineInclusionRule);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder includeSchemas(final InclusionRule schemaInclusionRule)
+  @Deprecated public SchemaCrawlerOptionsBuilder includeSchemas(final InclusionRule schemaInclusionRule)
   {
     limitOptionsBuilder.includeSchemas(schemaInclusionRule);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder includeSequences(final InclusionRule sequenceInclusionRule)
+  @Deprecated public SchemaCrawlerOptionsBuilder includeSequences(final InclusionRule sequenceInclusionRule)
   {
     limitOptionsBuilder.includeSequences(sequenceInclusionRule);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder includeSynonyms(final InclusionRule synonymInclusionRule)
+  @Deprecated public SchemaCrawlerOptionsBuilder includeSynonyms(final InclusionRule synonymInclusionRule)
   {
     limitOptionsBuilder.includeSynonyms(synonymInclusionRule);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder includeTables(final InclusionRule tableInclusionRule)
+  @Deprecated public SchemaCrawlerOptionsBuilder includeTables(final InclusionRule tableInclusionRule)
   {
     limitOptionsBuilder.includeTables(tableInclusionRule);
     return this;
   }
 
 
-  public SchemaCrawlerOptionsBuilder invertGrepMatch(final boolean grepInvertMatch)
+  @Deprecated public SchemaCrawlerOptionsBuilder invertGrepMatch(final boolean grepInvertMatch)
   {
     grepOptionsBuilder.invertGrepMatch(grepInvertMatch);
     return this;
@@ -330,7 +329,7 @@ public final class SchemaCrawlerOptionsBuilder
    *
    */
 
-  public final SchemaCrawlerOptionsBuilder noEmptyTables()
+  @Deprecated public final SchemaCrawlerOptionsBuilder noEmptyTables()
   {
     return noEmptyTables(true);
   }
@@ -339,7 +338,7 @@ public final class SchemaCrawlerOptionsBuilder
    * Corresponds to the --no-empty-tables=&lt;boolean&gt; command-line argument.
    */
 
-  public final SchemaCrawlerOptionsBuilder noEmptyTables(final boolean value)
+  @Deprecated public final SchemaCrawlerOptionsBuilder noEmptyTables(final boolean value)
   {
     filterOptionsBuilder.noEmptyTables(value);
     return this;
@@ -350,7 +349,7 @@ public final class SchemaCrawlerOptionsBuilder
    *
    */
 
-  public final SchemaCrawlerOptionsBuilder loadRowCounts()
+  @Deprecated public final SchemaCrawlerOptionsBuilder loadRowCounts()
   {
     loadOptionsBuilder.loadRowCounts(true);
     return this;
@@ -361,20 +360,20 @@ public final class SchemaCrawlerOptionsBuilder
    *
    */
 
-  public final SchemaCrawlerOptionsBuilder loadRowCounts(final boolean value)
+  @Deprecated public final SchemaCrawlerOptionsBuilder loadRowCounts(final boolean value)
   {
     loadOptionsBuilder.loadRowCounts(value);
     return this;
   }
 
 
-  public SchemaCrawlerOptionsBuilder parentTableFilterDepth(final int parentTableFilterDepth)
+  @Deprecated public SchemaCrawlerOptionsBuilder parentTableFilterDepth(final int parentTableFilterDepth)
   {
     filterOptionsBuilder.parentTableFilterDepth(parentTableFilterDepth);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder routineTypes(final Collection<RoutineType> routineTypes)
+  @Deprecated public SchemaCrawlerOptionsBuilder routineTypes(final Collection<RoutineType> routineTypes)
   {
     limitOptionsBuilder.routineTypes(routineTypes);
     return this;
@@ -386,19 +385,19 @@ public final class SchemaCrawlerOptionsBuilder
    * @param routineTypesString
    *   Comma-separated list of routine types.
    */
-  public SchemaCrawlerOptionsBuilder routineTypes(final String routineTypesString)
+  @Deprecated public SchemaCrawlerOptionsBuilder routineTypes(final String routineTypesString)
   {
     limitOptionsBuilder.routineTypes(routineTypesString);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder tableNamePattern(final String tableNamePattern)
+  @Deprecated public SchemaCrawlerOptionsBuilder tableNamePattern(final String tableNamePattern)
   {
     limitOptionsBuilder.tableNamePattern(tableNamePattern);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder tableTypes(final Collection<String> tableTypes)
+  @Deprecated public SchemaCrawlerOptionsBuilder tableTypes(final Collection<String> tableTypes)
   {
     limitOptionsBuilder.tableTypes(tableTypes);
     return this;
@@ -412,28 +411,28 @@ public final class SchemaCrawlerOptionsBuilder
    *   Comma-separated list of table types. Can be null if all supported table
    *   types are requested.
    */
-  public SchemaCrawlerOptionsBuilder tableTypes(final String tableTypesString)
+  @Deprecated public SchemaCrawlerOptionsBuilder tableTypes(final String tableTypesString)
   {
     limitOptionsBuilder.tableTypes(tableTypesString);
     return this;
   }
 
 
-  public SchemaCrawlerOptionsBuilder withSchemaInfoLevel(final SchemaInfoLevel schemaInfoLevel)
+  @Deprecated public SchemaCrawlerOptionsBuilder withSchemaInfoLevel(final SchemaInfoLevel schemaInfoLevel)
   {
     loadOptionsBuilder.withSchemaInfoLevel(schemaInfoLevel);
     return this;
   }
 
 
-  public SchemaCrawlerOptionsBuilder withSchemaInfoLevelBuilder(final SchemaInfoLevelBuilder schemaInfoLevelBuilder)
+  @Deprecated public SchemaCrawlerOptionsBuilder withSchemaInfoLevelBuilder(final SchemaInfoLevelBuilder schemaInfoLevelBuilder)
   {
     loadOptionsBuilder.withSchemaInfoLevelBuilder(schemaInfoLevelBuilder);
     return this;
   }
 
 
-  public SchemaCrawlerOptionsBuilder withInfoLevel(final InfoLevel infoLevel)
+  @Deprecated public SchemaCrawlerOptionsBuilder withInfoLevel(final InfoLevel infoLevel)
   {
     loadOptionsBuilder.withInfoLevel(infoLevel);
     return this;
@@ -493,6 +492,15 @@ public final class SchemaCrawlerOptionsBuilder
     return this;
   }
 
+  public SchemaCrawlerOptionsBuilder withLimitOptions(final LimitOptions limitOptions)
+  {
+    if (limitOptions != null)
+    {
+      this.limitOptionsBuilder = LimitOptionsBuilder.builder().fromOptions(limitOptions);
+    }
+    return this;
+  }
+
   public SchemaCrawlerOptionsBuilder withLimitOptionsBuilder(final LimitOptionsBuilder limitOptionsBuilder)
   {
     if (limitOptionsBuilder != null)
@@ -502,4 +510,23 @@ public final class SchemaCrawlerOptionsBuilder
     return this;
   }
 
+  public LimitOptions getLimitOptions()
+  {
+    return limitOptionsBuilder.toOptions();
+  }
+
+  public FilterOptions getFilterOptions()
+  {
+    return filterOptionsBuilder.toOptions();
+  }
+
+  public GrepOptions getGrepOptions()
+  {
+    return grepOptionsBuilder.toOptions();
+  }
+
+  public LoadOptions getLoadOptions()
+  {
+    return loadOptionsBuilder.toOptions();
+  }
 }

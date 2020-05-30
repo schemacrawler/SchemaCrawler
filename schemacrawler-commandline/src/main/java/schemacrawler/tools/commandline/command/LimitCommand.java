@@ -39,8 +39,9 @@ import java.util.regex.Pattern;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
-import schemacrawler.schema.RoutineType;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
+import schemacrawler.schema.RoutineType;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
@@ -153,8 +154,10 @@ public final class LimitCommand
   @Override
   public void run()
   {
-    final SchemaCrawlerOptionsBuilder optionsBuilder =
-      state.getSchemaCrawlerOptionsBuilder();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = state.getSchemaCrawlerOptionsBuilder();
+
+    final LimitOptionsBuilder optionsBuilder = LimitOptionsBuilder.builder()
+      .fromOptions(schemaCrawlerOptionsBuilder.getLimitOptions());
 
     if (schemas != null)
     {
@@ -196,6 +199,9 @@ public final class LimitCommand
     {
       optionsBuilder.routineTypes(routineTypes());
     }
+
+    schemaCrawlerOptionsBuilder
+      .withLimitOptionsBuilder(optionsBuilder);
 
   }
 

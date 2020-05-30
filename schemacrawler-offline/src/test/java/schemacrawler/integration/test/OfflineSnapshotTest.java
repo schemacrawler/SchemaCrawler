@@ -59,6 +59,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.Main;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -174,13 +175,17 @@ public class OfflineSnapshotTest
   public void offlineSnapshotExecutable()
     throws Exception
   {
+    final LimitOptionsBuilder limitOptionsBuilder =
+      LimitOptionsBuilder
+        .builder()
+        .includeAllRoutines();
     final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
       SchemaCrawlerOptionsBuilder
         .builder()
-        .includeAllRoutines()
-      .withLoadOptionsBuilder(loadOptionsBuilder);
+        .withLimitOptionsBuilder(limitOptionsBuilder)
+        .withLoadOptionsBuilder(loadOptionsBuilder);
     final SchemaCrawlerOptions schemaCrawlerOptions =
       schemaCrawlerOptionsBuilder.toOptions();
 
@@ -204,12 +209,16 @@ public class OfflineSnapshotTest
   public void serializeCatalog(final Connection connection)
     throws SchemaCrawlerException, IOException
   {
+    final LimitOptionsBuilder limitOptionsBuilder =
+      LimitOptionsBuilder
+        .builder()
+        .includeAllRoutines();
     final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
       SchemaCrawlerOptionsBuilder
         .builder()
-        .includeAllRoutines()
+        .withLimitOptionsBuilder(limitOptionsBuilder)
         .withLoadOptionsBuilder(loadOptionsBuilder);
     final SchemaCrawlerOptions schemaCrawlerOptions =
       schemaCrawlerOptionsBuilder.toOptions();

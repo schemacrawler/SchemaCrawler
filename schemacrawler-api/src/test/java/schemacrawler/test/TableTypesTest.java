@@ -46,6 +46,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
@@ -128,14 +129,17 @@ public class TableTypesTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
+      final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+        .builder()
+        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+      if (!"default".equals(tableTypes))
+      {
+        limitOptionsBuilder.tableTypes(tableTypes);
+      }
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
         SchemaCrawlerOptionsBuilder
           .builder()
-          .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-      if (!"default".equals(tableTypes))
-      {
-        schemaCrawlerOptionsBuilder.tableTypes(tableTypes);
-      }
+          .withLimitOptionsBuilder(limitOptionsBuilder);
 
       final Catalog catalog =
         getCatalog(connection, schemaCrawlerOptionsBuilder.toOptions());

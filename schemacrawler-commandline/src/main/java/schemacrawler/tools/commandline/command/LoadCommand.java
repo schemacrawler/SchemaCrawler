@@ -44,6 +44,7 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
@@ -107,7 +108,11 @@ public class LoadCommand
       throw new ExecutionException(spec.commandLine(), "Not connected to the database");
     }
 
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = state.getSchemaCrawlerOptionsBuilder();
+
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+      .fromOptions(schemaCrawlerOptionsBuilder.getLoadOptions());
+
     if (infolevel != null)
     {
       loadOptionsBuilder
@@ -117,7 +122,8 @@ public class LoadCommand
     loadOptionsBuilder
       .loadRowCounts(isLoadRowCounts);
 
-    state.getSchemaCrawlerOptionsBuilder().withLoadOptionsBuilder(loadOptionsBuilder);
+    schemaCrawlerOptionsBuilder
+      .withLoadOptionsBuilder(loadOptionsBuilder);
 
     final Catalog catalog = loadCatalog();
     state.setCatalog(catalog);

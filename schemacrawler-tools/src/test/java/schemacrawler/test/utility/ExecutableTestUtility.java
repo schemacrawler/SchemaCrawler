@@ -34,6 +34,7 @@ import java.sql.Connection;
 
 import org.hamcrest.Matcher;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -85,10 +86,14 @@ public final class ExecutableTestUtility
 
   public static SchemaCrawlerExecutable executableOf(final String command)
   {
+    final LimitOptionsBuilder limitOptionsBuilder =
+      LimitOptionsBuilder
+        .builder()
+        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
       SchemaCrawlerOptionsBuilder
         .builder()
-        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+        .withLimitOptionsBuilder(limitOptionsBuilder);
     final SchemaCrawlerOptions schemaCrawlerOptions =
       schemaCrawlerOptionsBuilder.toOptions();
 

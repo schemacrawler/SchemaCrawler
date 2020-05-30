@@ -122,8 +122,8 @@ public final class LimitOptionsBuilder
 
     for (DatabaseObjectRuleForInclusion ruleForInclusion : DatabaseObjectRuleForInclusion.values())
     {
-      final InclusionRule inclusionRule = config.getInclusionRuleWithDefault(ruleForInclusion.getInclusionConfigKey(),
-                                                                             ruleForInclusion.getExclusionConfigKey(),
+      final InclusionRule inclusionRule = config.getInclusionRuleWithDefault(ruleForInclusion.getIncludePatternProperty(),
+                                                                             ruleForInclusion.getExcludePatternProperty(),
                                                                              getDefaultInclusionRule(ruleForInclusion));
 
       inclusionRules.put(ruleForInclusion, inclusionRule);

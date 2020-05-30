@@ -55,6 +55,7 @@ import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Property;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -92,14 +93,16 @@ public class SqlServerTest
   public void testSQLServerCatalog()
     throws Exception
   {
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder.builder()
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder()
       .includeSchemas(new RegularExpressionInclusionRule("BOOKS\\.dbo"))
       .includeAllSequences()
       .includeAllSynonyms()
       .includeAllRoutines()
-      .tableTypes("TABLE,VIEW,MATERIALIZED VIEW")
+      .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder.builder()
+      .withLimitOptionsBuilder(limitOptionsBuilder)
       .withLoadOptionsBuilder(loadOptionsBuilder);
     final SchemaCrawlerOptions options =
       schemaCrawlerOptionsBuilder.toOptions();
@@ -132,14 +135,16 @@ public class SqlServerTest
   public void testSQLServerWithConnection()
     throws Exception
   {
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder.builder()
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder()
       .includeSchemas(new RegularExpressionInclusionRule("BOOKS\\.dbo"))
       .includeAllSequences()
       .includeAllSynonyms()
       .includeAllRoutines()
-      .tableTypes("TABLE,VIEW,MATERIALIZED VIEW")
+      .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder.builder()
+      .withLimitOptionsBuilder(limitOptionsBuilder)
       .withLoadOptionsBuilder(loadOptionsBuilder);
     final SchemaCrawlerOptions options =
       schemaCrawlerOptionsBuilder.toOptions();

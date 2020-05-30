@@ -48,6 +48,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -68,11 +69,15 @@ public class LintTest
   public void lints(final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder
+    final LimitOptionsBuilder limitOptionsBuilder =
+      LimitOptionsBuilder
         .builder()
         .tableTypes(Arrays.asList("TABLE", "VIEW", "GLOBAL TEMPORARY"))
         .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withLimitOptionsBuilder(limitOptionsBuilder);
     final SchemaCrawlerOptions schemaCrawlerOptions =
       schemaCrawlerOptionsBuilder.toOptions();
 
@@ -127,12 +132,16 @@ public class LintTest
   public void lintsWithExcludedColumns(final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder
+    final LimitOptionsBuilder limitOptionsBuilder =
+      LimitOptionsBuilder
         .builder()
         .tableTypes(Arrays.asList("TABLE", "VIEW", "GLOBAL TEMPORARY"))
         .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"))
         .includeColumns(new RegularExpressionExclusionRule(".*\\..*\\..*[123]"));
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withLimitOptionsBuilder(limitOptionsBuilder);
     final SchemaCrawlerOptions schemaCrawlerOptions =
       schemaCrawlerOptionsBuilder.toOptions();
 
@@ -172,10 +181,14 @@ public class LintTest
   public void runNoLinters(final Connection connection)
     throws Exception
   {
+    final LimitOptionsBuilder limitOptionsBuilder =
+      LimitOptionsBuilder
+        .builder()
+        .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
       SchemaCrawlerOptionsBuilder
         .builder()
-        .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
+        .withLimitOptionsBuilder(limitOptionsBuilder);
     final SchemaCrawlerOptions schemaCrawlerOptions =
       schemaCrawlerOptionsBuilder.toOptions();
 

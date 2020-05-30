@@ -54,6 +54,7 @@ import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Property;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -94,10 +95,12 @@ public class OracleTest
   public void testOracleCatalogServerInfo()
     throws Exception
   {
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder()
+      .includeSchemas(new RegularExpressionInclusionRule("BOOKS"));
     final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder.builder()
-      .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
+      .withLimitOptionsBuilder(limitOptionsBuilder)
       .withLoadOptionsBuilder(loadOptionsBuilder);
     final SchemaCrawlerOptions options =
       schemaCrawlerOptionsBuilder.toOptions();
@@ -130,14 +133,16 @@ public class OracleTest
   public void testOracleWithConnection()
     throws Exception
   {
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder.builder()
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder()
       .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
       .includeAllSequences()
       .includeAllSynonyms()
       .includeRoutines(new RegularExpressionInclusionRule("[0-9a-zA-Z_\\.]*"))
-      .tableTypes("TABLE,VIEW")
+      .tableTypes("TABLE,VIEW");
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder.builder()
+      .withLimitOptionsBuilder(limitOptionsBuilder)
       .withLoadOptionsBuilder(loadOptionsBuilder);
     final SchemaCrawlerOptions options =
       schemaCrawlerOptionsBuilder.toOptions();

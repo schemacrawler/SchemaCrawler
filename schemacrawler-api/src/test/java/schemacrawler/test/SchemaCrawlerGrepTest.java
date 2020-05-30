@@ -55,6 +55,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.FilterOptionsBuilder;
 import schemacrawler.schemacrawler.GrepOptionsBuilder;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -273,13 +274,17 @@ public class SchemaCrawlerGrepTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
+      final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder
+          .builder()
+          .includeAllRoutines();
       final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
         .includeGreppedRoutineParameters(new RegularExpressionInclusionRule(
           ".*\\.B_COUNT"));
       final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder
           .builder()
-          .includeAllRoutines()
+          .withLimitOptionsBuilder(limitOptionsBuilder)
           .withGrepOptions(grepOptionsBuilder.toOptions())
           .toOptions();
 

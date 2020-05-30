@@ -34,6 +34,7 @@ import java.util.regex.Pattern;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import schemacrawler.schemacrawler.GrepOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
@@ -94,7 +95,10 @@ public final class GrepCommand
   @Override
   public void run()
   {
-    final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = state.getSchemaCrawlerOptionsBuilder();
+
+    final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
+      .fromOptions(schemaCrawlerOptionsBuilder.getGrepOptions());
 
     if (grepcolumns != null)
     {

@@ -205,12 +205,12 @@ public final class Config
 
   public InclusionRule getInclusionRuleWithDefault(final String includePatternProperty,
                                                    final String excludePatternProperty,
-                                                   final InclusionRule supplier)
+                                                   final InclusionRule inclusionRule)
   {
-    requireNonNull(supplier);
+    requireNonNull(inclusionRule);
     final Optional<InclusionRule> optionalInclusionRule =
       getOptionalInclusionRule(includePatternProperty, excludePatternProperty);
-    return optionalInclusionRule.orElse(supplier);
+    return optionalInclusionRule.orElse(inclusionRule);
   }
 
   /**

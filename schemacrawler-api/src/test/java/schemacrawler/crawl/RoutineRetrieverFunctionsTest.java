@@ -54,6 +54,7 @@ import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -122,6 +123,9 @@ public class RoutineRetrieverFunctionsTest
   public void loadBaseCatalog(final Connection connection)
     throws SchemaCrawlerException
   {
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+      .builder()
+      .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"));
     final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder
                              .builder()
@@ -130,7 +134,7 @@ public class RoutineRetrieverFunctionsTest
                              .toOptions());
     final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
       .builder()
-      .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
+      .withLimitOptionsBuilder(limitOptionsBuilder)
       .withLoadOptionsBuilder(loadOptionsBuilder)
       .toOptions();
     catalog = (MutableCatalog) getCatalog(connection,

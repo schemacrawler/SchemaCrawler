@@ -38,7 +38,6 @@ import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.logging.Level;
 
-import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -132,12 +131,8 @@ public class EmbeddedSQLiteWrapper
   {
     checkConnection(connection);
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .includeRoutines(new ExcludeAll());
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      schemaCrawlerOptionsBuilder.toOptions();
+      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
     final Path diagramFile = createTempFilePath("schemacrawler", extension);
     final OutputOptions outputOptions =

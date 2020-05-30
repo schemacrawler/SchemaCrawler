@@ -63,6 +63,7 @@ import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -90,15 +91,18 @@ public class SchemaCrawlerCoverageTest
     final SchemaRetrievalOptions schemaRetrievalOptions =
       SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(config);
 
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+      .builder()
+      .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
+      .includeAllSynonyms()
+      .includeAllSequences()
+      .includeAllRoutines();
     final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
       .loadRowCounts();
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
       .builder()
-      .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
-      .includeAllSynonyms()
-      .includeAllSequences()
-      .includeAllRoutines()
+      .withLimitOptionsBuilder(limitOptionsBuilder)
       .withLoadOptionsBuilder(loadOptionsBuilder);
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
