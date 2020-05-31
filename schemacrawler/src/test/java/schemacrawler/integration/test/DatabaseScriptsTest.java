@@ -65,13 +65,15 @@ import org.springframework.core.io.support.ResourcePatternUtils;
 public class DatabaseScriptsTest
 {
 
-  private final static Pattern fileNamePattern = Pattern.compile(".*\\/(.*\\..*)");
+  private final static Pattern fileNamePattern =
+    Pattern.compile(".*\\/(.*\\..*)");
 
 
   private class DatabaseScriptSection
   {
 
-    private final Pattern scriptNamePattern = Pattern.compile("(\\d\\d)_(.*)_(\\d\\d)_[A-Z].sql");
+    private final Pattern scriptNamePattern =
+      Pattern.compile("(\\d\\d)_(.*)_(\\d\\d)_[A-Z].sql");
 
     private final String name;
     private final int section;
@@ -112,7 +114,9 @@ public class DatabaseScriptsTest
       if (o == null || getClass() != o.getClass())
       { return false; }
       final DatabaseScriptSection that = (DatabaseScriptSection) o;
-      return section == that.section && subSection == that.subSection && name.equals(that.name);
+      return section == that.section
+             && subSection == that.subSection
+             && name.equals(that.name);
     }
 
     @Override
@@ -150,7 +154,8 @@ public class DatabaseScriptsTest
   public void setup()
     throws IOException
   {
-    booksDatabaseScriptSections = makeScriptSections("classpath*:/**/db/books/*.sql");
+    booksDatabaseScriptSections =
+      makeScriptSections("classpath*:/**/db/books/*.sql");
     assertThat(booksDatabaseScriptSections.size(), is(28));
   }
 
@@ -163,11 +168,13 @@ public class DatabaseScriptsTest
     final List<String> failedScripts = new ArrayList<>();
     for (final String scriptName : scripts)
     {
-      final Map<DatabaseScriptSection, Integer> scriptSectionsCounts = makeScriptSectionsCounts();
+      final Map<DatabaseScriptSection, Integer> scriptSectionsCounts =
+        makeScriptSectionsCounts();
       final String scriptsResource = "/" + scriptName;
       try (
-        final BufferedReader reader = new BufferedReader(new InputStreamReader(DatabaseScriptsTest.class.getResourceAsStream(
-          scriptsResource), UTF_8))
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(
+          DatabaseScriptsTest.class.getResourceAsStream(scriptsResource),
+          UTF_8))
       )
       {
         final List<String> lines = reader
@@ -182,7 +189,9 @@ public class DatabaseScriptsTest
           {
             if (databaseScriptSection.matches(line))
             {
-              scriptSectionsCounts.merge(databaseScriptSection, 1, Integer::sum);
+              scriptSectionsCounts.merge(databaseScriptSection,
+                                         1,
+                                         Integer::sum);
             }
           }
         }
@@ -198,9 +207,12 @@ public class DatabaseScriptsTest
         if (count != 1)
         {
           final String error;
-          if (count < 1) {
+          if (count < 1)
+          {
             error = "missing";
-          } else {
+          }
+          else
+          {
             error = "duplicate";
           }
           final String message = String.format("%s: %s %s",
@@ -223,7 +235,8 @@ public class DatabaseScriptsTest
 
   private Map<DatabaseScriptSection, Integer> makeScriptSectionsCounts()
   {
-    final Map<DatabaseScriptSection, Integer> scriptSectionsCounts = new HashMap<>();
+    final Map<DatabaseScriptSection, Integer> scriptSectionsCounts =
+      new HashMap<>();
     for (DatabaseScriptSection databaseScriptSection : booksDatabaseScriptSections)
     {
       scriptSectionsCounts.put(databaseScriptSection, 0);

@@ -55,7 +55,8 @@ public class SpringIntegrationTest
     new ClassPathXmlApplicationContext("context.xml");
 
   @Test
-  public void springFrameworkTest(final TestContext testContext, final Connection connection)
+  public void springFrameworkTest(final TestContext testContext,
+                                  final Connection connection)
     throws Exception
   {
     final String beanDefinitionName = "executableForSchema";
@@ -65,8 +66,7 @@ public class SpringIntegrationTest
     assertThat(outputOf(executableExecution(connection,
                                             executable,
                                             TextOutputFormat.text)),
-               hasSameContentAs(classpathResource(
-                 testContext.testMethodFullName())));
+               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
 }

@@ -79,7 +79,7 @@
           </value>
         </entry>
         <entry
-            key="select.INFORMATION_SCHEMA.EXT_TABLE_CONSTRAINTS">
+          key="select.INFORMATION_SCHEMA.EXT_TABLE_CONSTRAINTS">
           <value>
             <![CDATA[
                   SELECT
@@ -113,64 +113,64 @@
 
   <bean id="schemaRetrievalOptionsBuilderBase"
         class="schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder"
-        factory-method="builder"/>
+        factory-method="builder" />
   <bean id="schemaRetrievalOptionsBuilder"
         factory-bean="schemaRetrievalOptionsBuilderBase"
         factory-method="withInformationSchemaViews">
-    <constructor-arg ref="information_schema"/>
+    <constructor-arg ref="information_schema" />
   </bean>
   <bean id="schemaRetrievalOptions"
         factory-bean="schemaRetrievalOptionsBuilder"
-        factory-method="toOptions"/>
+        factory-method="toOptions" />
 
   <bean id="schemaCrawlerOptionsBuilder"
         class="schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder"
-        factory-method="builder"/>
+        factory-method="builder" />
   <bean id="schemaCrawlerOptions"
         factory-bean="schemaCrawlerOptionsBuilder"
-        factory-method="toOptions"/>
+        factory-method="toOptions" />
 
   <bean id="outputOptions"
         class="schemacrawler.tools.options.OutputOptionsBuilder"
         factory-method="newOutputOptions">
     <constructor-arg name="outputFormatValue"
-                     value="text"/>
+                     value="text" />
     <constructor-arg>
       <bean id="outputFile" class="java.nio.file.Paths"
             factory-method="get">
-        <constructor-arg value="."/>
-        <constructor-arg value="scOutput.txt"/>
+        <constructor-arg value="." />
+        <constructor-arg value="scOutput.txt" />
       </bean>
     </constructor-arg>
   </bean>
 
   <bean id="schemaTextOptionsBuilder"
         class="schemacrawler.tools.text.schema.SchemaTextOptionsBuilder"
-        factory-method="builder"/>
+        factory-method="builder" />
   <bean
-      class="org.springframework.beans.factory.config.MethodInvokingBean">
+    class="org.springframework.beans.factory.config.MethodInvokingBean">
     <property name="targetObject"
-              ref="schemaTextOptionsBuilder"/>
-    <property name="targetMethod" value="showOrdinalNumbers"/>
+              ref="schemaTextOptionsBuilder" />
+    <property name="targetMethod" value="showOrdinalNumbers" />
     <property name="arguments">
       <value type="boolean">true</value>
     </property>
   </bean>
   <bean
-      class="org.springframework.beans.factory.config.MethodInvokingBean">
+    class="org.springframework.beans.factory.config.MethodInvokingBean">
     <property name="targetObject"
-              ref="schemaTextOptionsBuilder"/>
+              ref="schemaTextOptionsBuilder" />
     <property name="targetMethod"
-              value="showStandardColumnTypeNames"/>
+              value="showStandardColumnTypeNames" />
     <property name="arguments">
       <value type="boolean">true</value>
     </property>
   </bean>
   <bean
-      class="org.springframework.beans.factory.config.MethodInvokingBean">
+    class="org.springframework.beans.factory.config.MethodInvokingBean">
     <property name="targetObject"
-              ref="schemaTextOptionsBuilder"/>
-    <property name="targetMethod" value="noSchemaCrawlerInfo"/>
+              ref="schemaTextOptionsBuilder" />
+    <property name="targetMethod" value="noSchemaCrawlerInfo" />
     <property name="arguments">
       <value type="boolean">true</value>
     </property>
@@ -178,12 +178,12 @@
 
   <bean id="executableForSchema"
         class="schemacrawler.tools.executable.SchemaCrawlerExecutable">
-    <constructor-arg value="schema"/>
+    <constructor-arg value="schema" />
     <property name="schemaCrawlerOptions"
-              ref="schemaCrawlerOptions"/>
+              ref="schemaCrawlerOptions" />
     <property name="additionalConfiguration"
-              value="#{ schemaTextOptionsBuilder.toConfig() }"/>
-    <property name="outputOptions" ref="outputOptions"/>
+              value="#{ schemaTextOptionsBuilder.toConfig() }" />
+    <property name="outputOptions" ref="outputOptions" />
   </bean>
 
 </beans>
