@@ -46,7 +46,8 @@ public class ArchitectureTest
   public void accessStandardStreams()
   {
     noClasses()
-      .that(doNot(resideInAPackage("schemacrawler.testdb")).and(are(not(simpleName("Version")))))
+      .that(doNot(resideInAPackage("schemacrawler.testdb")).and(are(not(
+        simpleName("Version")))))
       .should(ACCESS_STANDARD_STREAMS)
       .because("production code should not write to standard streams")
       .check(classes);
@@ -58,7 +59,8 @@ public class ArchitectureTest
     noClasses()
       .that(doNot(resideInAPackage("schemacrawler.testdb")))
       .should(THROW_GENERIC_EXCEPTIONS)
-      .because("SchemaCrawler defines it own exceptions, and wraps SQL exceptions with additional information")
+      .because(
+        "SchemaCrawler defines it own exceptions, and wraps SQL exceptions with additional information")
       .check(classes);
   }
 

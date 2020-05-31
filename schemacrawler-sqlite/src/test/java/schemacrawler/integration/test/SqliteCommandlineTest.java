@@ -65,7 +65,8 @@ public class SqliteCommandlineTest
   public void setup()
     throws SchemaCrawlerException
   {
-    final DatabaseConnectorRegistry registry = DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    final DatabaseConnectorRegistry registry =
+      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     dbConnector = registry.lookupDatabaseConnector("sqlite");
   }
 
@@ -106,7 +107,9 @@ public class SqliteCommandlineTest
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
-    assertThat(outputOf(testout), hasSameContentAs(classpathResource("sqlite.main.list." + outputFormat.getFormat())));
+    assertThat(outputOf(testout),
+               hasSameContentAs(classpathResource("sqlite.main.list."
+                                                  + outputFormat.getFormat())));
   }
 
 }

@@ -97,16 +97,20 @@ public class SchemaCrawlerCoverageTest
       .includeAllSynonyms()
       .includeAllSequences()
       .includeAllRoutines();
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
+      .builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
       .loadRowCounts();
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder()
-      .withLimitOptionsBuilder(limitOptionsBuilder)
-      .withLoadOptionsBuilder(loadOptionsBuilder);
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withLimitOptionsBuilder(limitOptionsBuilder)
+        .withLoadOptionsBuilder(loadOptionsBuilder);
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
 
-    catalog = getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
+    catalog =
+      getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
   }
 
   @Test
@@ -131,7 +135,8 @@ public class SchemaCrawlerCoverageTest
     assertThat(indexColumn.hasDefinition(), is(false));
     assertThat(indexColumn.getIndex(), is(index));
     assertThat(indexColumn.getIndexOrdinalPosition(), is(1));
-    assertThat(indexColumn.getSortSequence(), is(IndexColumnSortSequence.ascending));
+    assertThat(indexColumn.getSortSequence(),
+               is(IndexColumnSortSequence.ascending));
 
   }
 
@@ -142,7 +147,8 @@ public class SchemaCrawlerCoverageTest
     final Table table = catalog
       .lookupTable(schema, "AUTHORS")
       .get();
-    final TableConstraint tableConstraint = new ArrayList<>(table.getTableConstraints()).get(0);
+    final TableConstraint tableConstraint =
+      new ArrayList<>(table.getTableConstraints()).get(0);
     final TableConstraintColumn tableConstraintColumn = tableConstraint
       .getColumns()
       .get(0);
@@ -153,29 +159,9 @@ public class SchemaCrawlerCoverageTest
     compareColumnFields(tableConstraintColumn, column);
 
     assertThat(tableConstraintColumn.getTableConstraint(), is(tableConstraint));
-    assertThat(tableConstraintColumn.getTableConstraintOrdinalPosition(), is(0));
+    assertThat(tableConstraintColumn.getTableConstraintOrdinalPosition(),
+               is(0));
 
-  }
-
-  private void compareColumnFields(final Column wrappedColumn, final Column column)
-  {
-    assertThat(wrappedColumn.getFullName(), is(column.getFullName()));
-    assertThat(wrappedColumn.getColumnDataType(), is(column.getColumnDataType()));
-    assertThat(wrappedColumn.getDecimalDigits(), is(column.getDecimalDigits()));
-    assertThat(wrappedColumn.getOrdinalPosition(), is(column.getOrdinalPosition()));
-    assertThat(wrappedColumn.getSize(), is(column.getSize()));
-    assertThat(wrappedColumn.getWidth(), is(column.getWidth()));
-    assertThat(wrappedColumn.isNullable(), is(column.isNullable()));
-    assertThat(wrappedColumn.getDefaultValue(), is(column.getDefaultValue()));
-    assertThat(wrappedColumn.getPrivileges(), is(column.getPrivileges()));
-    assertThat(wrappedColumn.isAutoIncremented(), is(column.isAutoIncremented()));
-    assertThat(wrappedColumn.isGenerated(), is(column.isGenerated()));
-    assertThat(wrappedColumn.isHidden(), is(column.isHidden()));
-    assertThat(wrappedColumn.isPartOfForeignKey(), is(column.isPartOfForeignKey()));
-    assertThat(wrappedColumn.isPartOfIndex(), is(column.isPartOfIndex()));
-    assertThat(wrappedColumn.isPartOfPrimaryKey(), is(column.isPartOfPrimaryKey()));
-    assertThat(wrappedColumn.isPartOfUniqueIndex(), is(column.isPartOfUniqueIndex()));
-    assertThat(wrappedColumn.getType(), is(column.getType()));
   }
 
   @Test
@@ -228,13 +214,17 @@ public class SchemaCrawlerCoverageTest
     final PrimaryKey primaryKey = table.getPrimaryKey();
 
     assertThat(primaryKey.getFullName(), is("PUBLIC.BOOKS.AUTHORS.PK_AUTHORS"));
-    assertThat(primaryKey.getColumns().toString(), is("[PUBLIC.BOOKS.AUTHORS.ID]"));
+    assertThat(primaryKey
+                 .getColumns()
+                 .toString(), is("[PUBLIC.BOOKS.AUTHORS.ID]"));
     assertThat(primaryKey.getType(), is(TableConstraintType.primary_key));
     assertThat(primaryKey.isDeferrable(), is(false));
     assertThat(primaryKey.isInitiallyDeferred(), is(false));
 
-    final TableConstraint constraint = new MutableTableConstraint(table, primaryKey.getName());
-    final Optional<TableConstraint> optionalTableConstraint = table.lookupTableConstraint(primaryKey.getName());
+    final TableConstraint constraint =
+      new MutableTableConstraint(table, primaryKey.getName());
+    final Optional<TableConstraint> optionalTableConstraint =
+      table.lookupTableConstraint(primaryKey.getName());
     assertThat(optionalTableConstraint, isPresentAndIs(constraint));
 
   }
@@ -304,13 +294,19 @@ public class SchemaCrawlerCoverageTest
     assertThat(table.hasAttribute("unknown"), is(false));
     assertThat(table.lookupAttribute("unknown"), isEmpty());
     assertThat(table.hasAttribute("schemacrawler.table.row_count"), is(true));
-    assertThat(table.lookupAttribute("schemacrawler.table.row_count"), isPresentAndIs(20L));
+    assertThat(table.lookupAttribute("schemacrawler.table.row_count"),
+               isPresentAndIs(20L));
 
     assertThat(table.getAttribute("unknown", "no value"), is("no value"));
     assertThat(table.getAttribute("unknown", 10.5f), is(10.5f));
-    assertThat(table.getAttribute("schemacrawler.table.row_count", 10L), is(20L));
+    assertThat(table.getAttribute("schemacrawler.table.row_count", 10L),
+               is(20L));
     assertThrows(ClassCastException.class,
-                 () -> { final String string = table.getAttribute("schemacrawler.table.row_count", "no value"); });
+                 () -> {
+                   final String string = table.getAttribute(
+                     "schemacrawler.table.row_count",
+                     "no value");
+                 });
 
     assertThat(table.hasAttribute("new_one"), is(false));
     table.setAttribute("new_one", "some_value");
@@ -321,6 +317,34 @@ public class SchemaCrawlerCoverageTest
     assertThat(table.hasAttribute("new_one"), is(true));
     table.removeAttribute("new_one");
     assertThat(table.hasAttribute("new_one"), is(false));
+  }
+
+  private void compareColumnFields(final Column wrappedColumn,
+                                   final Column column)
+  {
+    assertThat(wrappedColumn.getFullName(), is(column.getFullName()));
+    assertThat(wrappedColumn.getColumnDataType(),
+               is(column.getColumnDataType()));
+    assertThat(wrappedColumn.getDecimalDigits(), is(column.getDecimalDigits()));
+    assertThat(wrappedColumn.getOrdinalPosition(),
+               is(column.getOrdinalPosition()));
+    assertThat(wrappedColumn.getSize(), is(column.getSize()));
+    assertThat(wrappedColumn.getWidth(), is(column.getWidth()));
+    assertThat(wrappedColumn.isNullable(), is(column.isNullable()));
+    assertThat(wrappedColumn.getDefaultValue(), is(column.getDefaultValue()));
+    assertThat(wrappedColumn.getPrivileges(), is(column.getPrivileges()));
+    assertThat(wrappedColumn.isAutoIncremented(),
+               is(column.isAutoIncremented()));
+    assertThat(wrappedColumn.isGenerated(), is(column.isGenerated()));
+    assertThat(wrappedColumn.isHidden(), is(column.isHidden()));
+    assertThat(wrappedColumn.isPartOfForeignKey(),
+               is(column.isPartOfForeignKey()));
+    assertThat(wrappedColumn.isPartOfIndex(), is(column.isPartOfIndex()));
+    assertThat(wrappedColumn.isPartOfPrimaryKey(),
+               is(column.isPartOfPrimaryKey()));
+    assertThat(wrappedColumn.isPartOfUniqueIndex(),
+               is(column.isPartOfUniqueIndex()));
+    assertThat(wrappedColumn.getType(), is(column.getType()));
   }
 
 }

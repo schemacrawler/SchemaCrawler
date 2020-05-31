@@ -57,6 +57,27 @@ public class PostgreSQLEnumDataTypeHelper
   private static final SchemaCrawlerLogger LOGGER =
     SchemaCrawlerLogger.getLogger(PostgreSQLEnumDataTypeHelper.class.getName());
 
+  private static List<String> getEnumValues(final ColumnDataType columnDataType,
+                                            final Connection connection)
+  {
+    requireNonNull(columnDataType, "No column provided");
+    final String sql = String.format(
+      "SELECT e.enumlabel FROM pg_enum e JOIN pg_type t ON e.enumtypid = t.oid WHERE t.typname = '%s'",
+      columnDataType.getName());
+    try (final Statement statement = connection.createStatement();)
+    {
+      final ResultSet resultSet = executeSql(statement, sql);
+      final List<String> enumValues = readResultsVector(resultSet);
+      return enumValues;
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING,
+                 new StringFormat("Error executing SQL <%s>", sql),
+                 e);
+    }
+    return new ArrayList<>();
+  }
   private final Set<ColumnDataType> visitedDataTypes;
 
   public PostgreSQLEnumDataTypeHelper()
@@ -88,28 +109,6 @@ public class PostgreSQLEnumDataTypeHelper
     final List<String> enumValues = getEnumValues(columnDataType, connection);
     visitedDataTypes.add(columnDataType);
     return new EnumDataTypeInfo(false, !enumValues.isEmpty(), enumValues);
-  }
-
-  private static List<String> getEnumValues(final ColumnDataType columnDataType,
-                                           final Connection connection)
-  {
-    requireNonNull(columnDataType, "No column provided");
-    final String sql = String.format(
-      "SELECT e.enumlabel FROM pg_enum e JOIN pg_type t ON e.enumtypid = t.oid WHERE t.typname = '%s'",
-      columnDataType.getName());
-    try (final Statement statement = connection.createStatement();)
-    {
-      final ResultSet resultSet = executeSql(statement, sql);
-      final List<String> enumValues = readResultsVector(resultSet);
-      return enumValues;
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING,
-                 new StringFormat("Error executing SQL <%s>", sql),
-                 e);
-    }
-    return new ArrayList<>();
   }
 
 }

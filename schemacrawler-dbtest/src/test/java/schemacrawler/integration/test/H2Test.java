@@ -70,12 +70,13 @@ public class H2Test
   public void testH2WithConnection()
     throws Exception
   {
-    final LimitOptionsBuilder limitOptionsBuilder =
-      LimitOptionsBuilder
-        .builder()
-        .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
-        .includeSequences(new RegularExpressionExclusionRule(".*\\.BOOKS\\.SYSTEM_SEQUENCE.*"));
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+      .builder()
+      .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
+      .includeSequences(new RegularExpressionExclusionRule(
+        ".*\\.BOOKS\\.SYSTEM_SEQUENCE.*"));
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
+      .builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
       SchemaCrawlerOptionsBuilder
@@ -100,7 +101,8 @@ public class H2Test
                                             .builder(textOptions)
                                             .toConfig());
 
-    final String expectedResource = String.format("testH2WithConnection.%s.txt", javaVersion());
+    final String expectedResource =
+      String.format("testH2WithConnection.%s.txt", javaVersion());
     assertThat(outputOf(executableExecution(getConnection(), executable)),
                hasSameContentAs(classpathResource(expectedResource)));
   }

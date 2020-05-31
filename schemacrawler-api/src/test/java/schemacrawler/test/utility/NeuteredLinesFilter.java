@@ -47,7 +47,8 @@ final class NeuteredLinesFilter
     Pattern.compile("\\s+<product(Name|Version)>.*"),
     Pattern.compile(".*[A-Za-z]+ \\d+, 201[456] \\d+:\\d+ [AP]M.*"),
     Pattern.compile(".*20[12][890]-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.*"),
-    Pattern.compile(".*20[12][890]-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d.*"),
+    Pattern.compile(
+      ".*20[12][890]-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d.*"),
     // JSON and YAML output
     Pattern.compile("- column @uuid: .*"),
     Pattern.compile("\\s+\"?run-id\"?\\s?: .*"),
@@ -66,8 +67,10 @@ final class NeuteredLinesFilter
     Pattern.compile(".*ServerName.*"),
     // DB2
     // -- unnamed objects
-    Pattern.compile("SQL\\d{15}.*"), // indexes
-    Pattern.compile("[\"0-9A-Z]{28,30}.*"), // constraints
+    Pattern.compile("SQL\\d{15}.*"),
+    // indexes
+    Pattern.compile("[\"0-9A-Z]{28,30}.*"),
+    // constraints
     // -- server-specific values
     Pattern.compile(".*HOST_NAME.*"),
     Pattern.compile(".*TOTAL_MEMORY.*"),

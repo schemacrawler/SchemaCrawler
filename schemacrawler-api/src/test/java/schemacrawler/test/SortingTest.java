@@ -45,9 +45,9 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.utility.NamedObjectSort;
@@ -149,9 +149,11 @@ public class SortingTest
       for (int i = 0; i < columns.length; i++)
       {
         final Column column = columns[i];
-        assertThat(
-          "Columns not " + (sortAlphabetically? "alphabetically": "naturally")
-          + " sorted", expectedValues[i], equalTo(column.getName()));
+        assertThat("Columns not " + (sortAlphabetically?
+                                     "alphabetically":
+                                     "naturally") + " sorted",
+                   expectedValues[i],
+                   equalTo(column.getName()));
       }
     }
   }
@@ -190,11 +192,11 @@ public class SortingTest
         for (int i = 0; i < foreignKeys.length; i++)
         {
           final ForeignKey foreignKey = foreignKeys[i];
-          assertThat(
-            "Foreign keys not " + (sortAlphabetically? "alphabetically":
-                                   "naturally") + " sorted",
-            expectedValues[i],
-            equalTo(foreignKey.getName()));
+          assertThat("Foreign keys not " + (sortAlphabetically?
+                                            "alphabetically":
+                                            "naturally") + " sorted",
+                     expectedValues[i],
+                     equalTo(foreignKey.getName()));
         }
       }
     }
@@ -231,11 +233,12 @@ public class SortingTest
         for (int i = 0; i < indexes.length; i++)
         {
           final Index index = indexes[i];
-          assertThat(
-            "Indexes not " + (sortAlphabetically? "alphabetically": "naturally")
-            + " sorted  for table " + table,
-            expectedValues[i],
-            equalTo(index.getName()));
+          assertThat("Indexes not "
+                     + (sortAlphabetically?
+                        "alphabetically":
+                        "naturally")
+                     + " sorted  for table "
+                     + table, expectedValues[i], equalTo(index.getName()));
         }
       }
     }

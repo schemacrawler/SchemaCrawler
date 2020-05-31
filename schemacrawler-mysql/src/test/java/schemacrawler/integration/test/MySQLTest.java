@@ -63,8 +63,8 @@ public class MySQLTest
 {
 
   @Container
-  private JdbcDatabaseContainer dbContainer = new MySQLContainer<>(
-      "mysql:8.0.19")
+  private JdbcDatabaseContainer dbContainer =
+    new MySQLContainer<>("mysql:8.0.19")
       .withCommand("mysqld",
                    "--lower_case_table_names=1",
                    "--log_bin_trust_function_creators=1")
@@ -86,16 +86,20 @@ public class MySQLTest
   public void testMySQLWithConnection()
     throws Exception
   {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder()
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+      .builder()
       .includeSchemas(new RegularExpressionInclusionRule("books"))
       .includeAllSequences()
       .includeAllSynonyms()
       .includeAllRoutines();
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
+      .builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder.builder()
-      .withLimitOptionsBuilder(limitOptionsBuilder)
-      .withLoadOptionsBuilder(loadOptionsBuilder);
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withLimitOptionsBuilder(limitOptionsBuilder)
+        .withLoadOptionsBuilder(loadOptionsBuilder);
     final SchemaCrawlerOptions options =
       schemaCrawlerOptionsBuilder.toOptions();
 
@@ -113,7 +117,8 @@ public class MySQLTest
                                             .builder(textOptions)
                                             .toConfig());
 
-    final String expectedResource = String.format("testMySQLWithConnection.%s.txt", javaVersion());
+    final String expectedResource =
+      String.format("testMySQLWithConnection.%s.txt", javaVersion());
     assertThat(outputOf(executableExecution(getConnection(), executable)),
                hasSameContentAs(classpathResource(expectedResource)));
   }

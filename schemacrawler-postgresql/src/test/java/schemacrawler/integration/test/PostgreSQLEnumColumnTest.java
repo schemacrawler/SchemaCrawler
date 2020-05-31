@@ -105,7 +105,8 @@ public class PostgreSQLEnumColumnTest
   {
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      schemaCrawlerOptionsWithMaximumSchemaInfoLevel;;
+      schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    ;
 
     final SchemaCrawlerExecutable executable;
     executable = new SchemaCrawlerExecutable("details");
@@ -118,8 +119,8 @@ public class PostgreSQLEnumColumnTest
       assertThat(outputOf(executableExecution(getConnection(),
                                               executable,
                                               outputFormat)),
-                 hasSameContentAs(classpathResource(
-                   "testColumnWithEnum." + outputFormat.getFormat())));
+                 hasSameContentAs(classpathResource("testColumnWithEnum."
+                                                    + outputFormat.getFormat())));
     }
   }
 
@@ -128,7 +129,8 @@ public class PostgreSQLEnumColumnTest
     throws Exception
   {
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     SchemaCrawlerExecutable executable;
     executable = new SchemaCrawlerExecutable("serialize");
@@ -153,7 +155,8 @@ public class PostgreSQLEnumColumnTest
     throws Exception
   {
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     final Catalog catalog = getCatalog(getConnection(), schemaCrawlerOptions);
     final Schema schema = catalog

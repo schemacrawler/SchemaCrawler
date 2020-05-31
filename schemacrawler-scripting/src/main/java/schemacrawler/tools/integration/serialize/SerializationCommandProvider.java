@@ -42,11 +42,13 @@ public class SerializationCommandProvider
   extends BaseCommandProvider
 {
 
-  private static final String DESCRIPTION_HEADER = "Create an offline catalog snapshot";
+  private static final String DESCRIPTION_HEADER =
+    "Create an offline catalog snapshot";
 
   public SerializationCommandProvider()
   {
-    super(new CommandDescription(SerializationCommand.COMMAND, DESCRIPTION_HEADER));
+    super(new CommandDescription(SerializationCommand.COMMAND,
+                                 DESCRIPTION_HEADER));
   }
 
   @Override
@@ -78,9 +80,10 @@ public class SerializationCommandProvider
   @Override
   public PluginCommand getCommandLineCommand()
   {
-    final PluginCommand pluginCommand = new PluginCommand(SerializationCommand.COMMAND,
-                                                          "** " + DESCRIPTION_HEADER,
-                                                          "For more information, see https://www.schemacrawler.com/serialize.html %n");
+    final PluginCommand pluginCommand =
+      new PluginCommand(SerializationCommand.COMMAND,
+                        "** " + DESCRIPTION_HEADER,
+                        "For more information, see https://www.schemacrawler.com/serialize.html %n");
 
     return pluginCommand;
   }

@@ -173,8 +173,8 @@ public class TableTypesTest
       }
     }
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(
-                 TABLE_TYPES_OUTPUT + referenceFile)));
+               hasSameContentAs(classpathResource(TABLE_TYPES_OUTPUT
+                                                  + referenceFile)));
   }
 
 }

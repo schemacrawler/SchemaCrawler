@@ -67,8 +67,8 @@ public class MySQLDotNameTest
 
   @Container
   private JdbcDatabaseContainer dbContainer = new MySQLContainer<>()
-      .withCommand("mysqld", "--lower_case_table_names=1")
-      .withUsername("schemacrawler");
+    .withCommand("mysqld", "--lower_case_table_names=1")
+    .withUsername("schemacrawler");
 
   @BeforeEach
   public void createDatabase()
@@ -95,14 +95,14 @@ public class MySQLDotNameTest
 
     final Connection connection = getConnection();
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
       SchemaRetrievalOptionsBuilder
         .builder()
         .fromOptions(matchSchemaRetrievalOptions(connection))
-        .with(tableColumnsRetrievalStrategy, data_dictionary_all)
-      ;
+        .with(tableColumnsRetrievalStrategy, data_dictionary_all);
     final SchemaRetrievalOptions schemaRetrievalOptions =
       schemaRetrievalOptionsBuilder.toOptions();
 

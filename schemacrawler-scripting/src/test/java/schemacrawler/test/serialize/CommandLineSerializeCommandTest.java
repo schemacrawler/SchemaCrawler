@@ -165,8 +165,8 @@ public class CommandLineSerializeCommandTest
     {
       if (serializationFormat != null)
       {
-        final Path copied = directory.resolve(
-          "serialize." + serializationFormat.getFileExtension());
+        final Path copied = directory.resolve("serialize."
+                                              + serializationFormat.getFileExtension());
         Files.copy(testOutputFile, copied, StandardCopyOption.REPLACE_EXISTING);
         // System.out.println(copied.toAbsolutePath());
       }

@@ -78,27 +78,37 @@ public class RoutineRetrieverFunctionsTest
 
   @Test
   @DisplayName("Retrieve functions from data dictionary")
-  public void functionsFromDataDictionary(final TestContext testContext, final Connection connection)
+  public void functionsFromDataDictionary(final TestContext testContext,
+                                          final Connection connection)
     throws Exception
   {
-    final InformationSchemaViews informationSchemaViews = InformationSchemaViewsBuilder
-      .builder()
-      .withSql(InformationSchemaKey.FUNCTIONS,
-               "SELECT " + "PROCEDURE_CAT AS FUNCTION_CAT, PROCEDURE_SCHEM AS FUNCTION_SCHEM, "
-               + "PROCEDURE_NAME AS FUNCTION_NAME, PROCEDURE_TYPE AS FUNCTION_TYPE, " + "REMARKS, SPECIFIC_NAME "
-               + "FROM INFORMATION_SCHEMA.SYSTEM_PROCEDURES")
-      .toOptions();
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
+    final InformationSchemaViews informationSchemaViews =
+      InformationSchemaViewsBuilder
+        .builder()
+        .withSql(InformationSchemaKey.FUNCTIONS,
+                 "SELECT "
+                 + "PROCEDURE_CAT AS FUNCTION_CAT, PROCEDURE_SCHEM AS FUNCTION_SCHEM, "
+                 + "PROCEDURE_NAME AS FUNCTION_NAME, PROCEDURE_TYPE AS FUNCTION_TYPE, "
+                 + "REMARKS, SPECIFIC_NAME "
+                 + "FROM INFORMATION_SCHEMA.SYSTEM_PROCEDURES")
+        .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+      SchemaRetrievalOptionsBuilder.builder();
     schemaRetrievalOptionsBuilder
       .with(functionsRetrievalStrategy, data_dictionary_all)
       .withInformationSchemaViews(informationSchemaViews);
-    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-    final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+      schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection =
+      new RetrieverConnection(connection, schemaRetrievalOptions);
 
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    final SchemaCrawlerOptions options =
+      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
-    final RoutineRetriever functionRetriever = new RoutineRetriever(retrieverConnection, catalog, options);
-    functionRetriever.retrieveFunctions(catalog.getAllSchemas(), new IncludeAll());
+    final RoutineRetriever functionRetriever =
+      new RoutineRetriever(retrieverConnection, catalog, options);
+    functionRetriever.retrieveFunctions(catalog.getAllSchemas(),
+                                        new IncludeAll());
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
@@ -115,7 +125,8 @@ public class RoutineRetrieverFunctionsTest
                                   function.getRoutineType()));
       }
     }
-    assertThat(outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+    assertThat(outputOf(testout),
+               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
 
   }
 
@@ -126,17 +137,19 @@ public class RoutineRetrieverFunctionsTest
     final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
       .builder()
       .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"));
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
+      .builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder
                              .builder()
                              .withInfoLevel(InfoLevel.minimum)
                              .setRetrieveRoutines(false)
                              .toOptions());
-    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-      .builder()
-      .withLimitOptionsBuilder(limitOptionsBuilder)
-      .withLoadOptionsBuilder(loadOptionsBuilder)
-      .toOptions();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withLimitOptionsBuilder(limitOptionsBuilder)
+        .withLoadOptionsBuilder(loadOptionsBuilder)
+        .toOptions();
     catalog = (MutableCatalog) getCatalog(connection,
                                           SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
                                           schemaCrawlerOptions);

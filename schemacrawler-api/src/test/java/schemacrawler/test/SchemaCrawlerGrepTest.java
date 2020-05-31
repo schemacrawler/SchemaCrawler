@@ -46,13 +46,13 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineParameter;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.FilterOptionsBuilder;
 import schemacrawler.schemacrawler.GrepOptionsBuilder;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
@@ -77,7 +77,8 @@ public class SchemaCrawlerGrepTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
+      final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder
+        .builder()
         .includeGreppedColumns(new RegularExpressionInclusionRule(
           ".*\\..*\\.BOOKID"));
       final SchemaCrawlerOptions schemaCrawlerOptions =
@@ -119,10 +120,12 @@ public class SchemaCrawlerGrepTest
   public void grepColumnsAndIncludeParentTables(final Connection connection)
     throws Exception
   {
-    final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
+    final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder
+      .builder()
       .includeGreppedColumns(new RegularExpressionInclusionRule(
         ".*\\.BOOKAUTHORS\\..*"));
-    final FilterOptionsBuilder filterOptionsBuilder = FilterOptionsBuilder.builder()
+    final FilterOptionsBuilder filterOptionsBuilder = FilterOptionsBuilder
+      .builder()
       .parentTableFilterDepth(1);
     SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
       .builder()
@@ -180,7 +183,8 @@ public class SchemaCrawlerGrepTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
+      final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder
+        .builder()
         .includeGreppedColumns(new RegularExpressionInclusionRule(
           ".*\\..*\\.BOOKID"))
         .includeGreppedDefinitions(new RegularExpressionInclusionRule(
@@ -228,7 +232,8 @@ public class SchemaCrawlerGrepTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
+      final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder
+        .builder()
         .includeGreppedDefinitions(new RegularExpressionInclusionRule(
           ".*book author.*"));
       final SchemaCrawlerOptions schemaCrawlerOptions =
@@ -274,11 +279,11 @@ public class SchemaCrawlerGrepTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder
-          .builder()
-          .includeAllRoutines();
-      final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
+      final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+        .builder()
+        .includeAllRoutines();
+      final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder
+        .builder()
         .includeGreppedRoutineParameters(new RegularExpressionInclusionRule(
           ".*\\.B_COUNT"));
       final SchemaCrawlerOptions schemaCrawlerOptions =
@@ -325,9 +330,11 @@ public class SchemaCrawlerGrepTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final FilterOptionsBuilder filterOptionsBuilder = FilterOptionsBuilder.builder()
+      final FilterOptionsBuilder filterOptionsBuilder = FilterOptionsBuilder
+        .builder()
         .noEmptyTables();
-      final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+      final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
+        .builder()
         .loadRowCounts();
       final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder

@@ -72,10 +72,9 @@ public class TableNamePatternTest
 
       final String tableNamePattern = "%Counts";
 
-      final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder
-          .builder()
-          .tableNamePattern(tableNamePattern);
+      final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+        .builder()
+        .tableNamePattern(tableNamePattern);
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
         SchemaCrawlerOptionsBuilder
           .builder()

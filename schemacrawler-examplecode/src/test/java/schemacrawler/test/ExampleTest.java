@@ -26,6 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -67,6 +68,7 @@ public class ExampleTest
   {
     testDatabase.stop();
   }
+
   private static TestDatabase testDatabase;
   private TestOutputStream out;
   private TestOutputStream err;

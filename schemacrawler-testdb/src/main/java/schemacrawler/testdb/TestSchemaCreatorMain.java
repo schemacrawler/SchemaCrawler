@@ -34,14 +34,30 @@ import java.util.concurrent.Callable;
 
 import picocli.CommandLine;
 
-@CommandLine.Command(description = "Creates a test database schema for testing SchemaCrawler", name = "Test Schema Creator", mixinStandardHelpOptions = true)
+@CommandLine.Command(description = "Creates a test database schema for testing SchemaCrawler",
+                     name = "Test Schema Creator",
+                     mixinStandardHelpOptions = true)
 public class TestSchemaCreatorMain
   implements Callable<Integer>
 {
 
+  public static int call(String... args)
+  {
+    final int exitCode =
+      new CommandLine(new TestSchemaCreatorMain()).execute(args);
+    return exitCode;
+  }
+
+  public static void main(String... args)
+  {
+    System.exit(call(args));
+  }
   @CommandLine.Option(names = {
     "--url"
-  }, required = true, description = "JDBC connection URL to the database", paramLabel = "<url>")
+  },
+                      required = true,
+                      description = "JDBC connection URL to the database",
+                      paramLabel = "<url>")
   private String connectionUrl;
   @CommandLine.Option(names = {
     "--user"
@@ -53,7 +69,9 @@ public class TestSchemaCreatorMain
   private String passwordProvided;
   @CommandLine.Option(names = {
     "--scripts-resource"
-  }, description = "Scripts resource on CLASSPATH", paramLabel = "<scripts-resource>")
+  },
+                      description = "Scripts resource on CLASSPATH",
+                      paramLabel = "<scripts-resource>")
   private String scriptsresource;
   @CommandLine.Option(names = {
     "--debug", "-d"
@@ -64,28 +82,21 @@ public class TestSchemaCreatorMain
   {
   }
 
-  public static void main(String... args)
-  {
-    System.exit(call(args));
-  }
-
-  public static int call(String... args)
-  {
-    final int exitCode = new CommandLine(new TestSchemaCreatorMain()).execute(args);
-    return exitCode;
-  }
-
   @Override
   public Integer call()
   {
     try (
-      final Connection connection = DriverManager.getConnection(connectionUrl, user, passwordProvided);
+      final Connection connection = DriverManager.getConnection(connectionUrl,
+                                                                user,
+                                                                passwordProvided);
     )
     {
       connection.setAutoCommit(false);
       findScriptsResource();
-      System.setProperty("schemacrawler.testdb.SqlScript.debug", String.valueOf(debug));
-      final TestSchemaCreator testSchemaCreator = new TestSchemaCreator(connection, scriptsresource);
+      System.setProperty("schemacrawler.testdb.SqlScript.debug",
+                         String.valueOf(debug));
+      final TestSchemaCreator testSchemaCreator =
+        new TestSchemaCreator(connection, scriptsresource);
       testSchemaCreator.run();
     }
     catch (final Exception e)

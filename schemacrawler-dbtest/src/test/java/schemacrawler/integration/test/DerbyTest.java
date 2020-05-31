@@ -70,11 +70,11 @@ public class DerbyTest
   public void testDerbyWithConnection()
     throws Exception
   {
-    final LimitOptionsBuilder limitOptionsBuilder =
-      LimitOptionsBuilder
-        .builder()
-        .includeSchemas(new RegularExpressionInclusionRule("BOOKS"));
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+      .builder()
+      .includeSchemas(new RegularExpressionInclusionRule("BOOKS"));
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
+      .builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
       SchemaCrawlerOptionsBuilder
@@ -99,7 +99,8 @@ public class DerbyTest
                                             .builder(textOptions)
                                             .toConfig());
 
-    final String expectedResource = String.format("testDerbyWithConnection.%s.txt", javaVersion());
+    final String expectedResource =
+      String.format("testDerbyWithConnection.%s.txt", javaVersion());
     assertThat(outputOf(executableExecution(getConnection(), executable)),
                hasSameContentAs(classpathResource(expectedResource)));
   }

@@ -78,26 +78,37 @@ public class DatabaseInfoRetrieverTest
 
     final boolean isUserDefined = columnDataType.isUserDefined();
     final String typeName = columnDataType.getFullName();
-    final String dataType = (isUserDefined? "user defined ": "") + "column data-type";
-    final String nullable = (columnDataType.isNullable()? "": "not ") + "nullable";
-    final String autoIncrementable = (columnDataType.isAutoIncrementable()? "": "not ") + "auto-incrementable";
+    final String dataType =
+      (isUserDefined? "user defined ": "") + "column data-type";
+    final String nullable =
+      (columnDataType.isNullable()? "": "not ") + "nullable";
+    final String autoIncrementable =
+      (columnDataType.isAutoIncrementable()? "": "not ") + "auto-incrementable";
 
     final String createParameters = columnDataType.getCreateParameters();
-    final String definedWith = "defined with " + (isBlank(createParameters)? "no parameters": createParameters);
+    final String definedWith = "defined with " + (isBlank(createParameters)?
+                                                  "no parameters":
+                                                  createParameters);
 
     final String literalPrefix = columnDataType.getLiteralPrefix();
-    final String literalPrefixText = isBlank(literalPrefix)? "no literal prefix": "literal prefix " + literalPrefix;
+    final String literalPrefixText = isBlank(literalPrefix)?
+                                     "no literal prefix":
+                                     "literal prefix " + literalPrefix;
 
     final String literalSuffix = columnDataType.getLiteralSuffix();
-    final String literalSuffixText = isBlank(literalSuffix)? "no literal suffix": "literal suffix " + literalSuffix;
+    final String literalSuffixText = isBlank(literalSuffix)?
+                                     "no literal suffix":
+                                     "literal suffix " + literalSuffix;
 
     final String javaSqlType = "java.sql.Types: " + columnDataType
       .getJavaSqlType()
       .getName();
 
     final String precision = "precision " + columnDataType.getPrecision();
-    final String minimumScale = "minimum scale " + columnDataType.getMinimumScale();
-    final String maximumScale = "maximum scale " + columnDataType.getMaximumScale();
+    final String minimumScale =
+      "minimum scale " + columnDataType.getMinimumScale();
+    final String maximumScale =
+      "maximum scale " + columnDataType.getMaximumScale();
 
     buffer
       .append(typeName)
@@ -158,14 +169,18 @@ public class DatabaseInfoRetrieverTest
     return buffer.toString();
   }
 
-  public static void verifyRetrieveColumnDataTypes(final Catalog catalog, final String expectedResultsResource)
+  public static void verifyRetrieveColumnDataTypes(final Catalog catalog,
+                                                   final String expectedResultsResource)
     throws IOException
   {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final List<ColumnDataType> columnDataTypes = (List<ColumnDataType>) catalog.getColumnDataTypes();
-      assertThat("ColumnDataType count does not match", columnDataTypes, hasSize(23));
+      final List<ColumnDataType> columnDataTypes =
+        (List<ColumnDataType>) catalog.getColumnDataTypes();
+      assertThat("ColumnDataType count does not match",
+                 columnDataTypes,
+                 hasSize(23));
       Collections.sort(columnDataTypes, NamedObjectSort.alphabetical);
       for (final ColumnDataType columnDataType : columnDataTypes)
       {
@@ -173,26 +188,35 @@ public class DatabaseInfoRetrieverTest
         out.println(printColumnDataType(columnDataType));
       }
     }
-    assertThat(outputOf(testout), hasSameContentAs(classpathResource(expectedResultsResource)));
+    assertThat(outputOf(testout),
+               hasSameContentAs(classpathResource(expectedResultsResource)));
   }
 
   private MutableCatalog catalog;
 
   @Test
   @DisplayName("Override type info from data dictionary")
-  public void overrideTypeInfoFromDataDictionary(final TestContext testContext, final Connection connection)
+  public void overrideTypeInfoFromDataDictionary(final TestContext testContext,
+                                                 final Connection connection)
     throws Exception
   {
-    final InformationSchemaViews informationSchemaViews = InformationSchemaViewsBuilder
-      .builder()
-      .withSql(InformationSchemaKey.OVERRIDE_TYPE_INFO, "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TYPEINFO")
-      .toOptions();
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder()
-      .withInformationSchemaViews(informationSchemaViews);
-    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-    final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
+    final InformationSchemaViews informationSchemaViews =
+      InformationSchemaViewsBuilder
+        .builder()
+        .withSql(InformationSchemaKey.OVERRIDE_TYPE_INFO,
+                 "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TYPEINFO")
+        .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+      SchemaRetrievalOptionsBuilder
+        .builder()
+        .withInformationSchemaViews(informationSchemaViews);
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+      schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection =
+      new RetrieverConnection(connection, schemaRetrievalOptions);
 
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    final SchemaCrawlerOptions options =
+      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
     final DatabaseInfoRetriever databaseInfoRetriever =
       new DatabaseInfoRetriever(retrieverConnection, catalog, options);
@@ -203,7 +227,8 @@ public class DatabaseInfoRetrieverTest
 
   @Test
   @DisplayName("Retrieve server info from data dictionary")
-  public void serverInfoFromDataDictionary(final TestContext testContext, final Connection connection)
+  public void serverInfoFromDataDictionary(final TestContext testContext,
+                                           final Connection connection)
     throws Exception
   {
     assertThat(catalog
@@ -214,21 +239,28 @@ public class DatabaseInfoRetrieverTest
     final String description = "TEST Server Info Property - Description";
     final String value = "TEST Server Info Property - Value";
 
-    final InformationSchemaViews informationSchemaViews = InformationSchemaViewsBuilder
-      .builder()
-      .withSql(InformationSchemaKey.SERVER_INFORMATION,
-               String.format(
-                 "SELECT '%s' AS NAME, '%s' AS DESCRIPTION, '%s' AS VALUE " + "FROM INFORMATION_SCHEMA.SYSTEM_TYPEINFO",
-                 name,
-                 description,
-                 value))
-      .toOptions();
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder()
-      .withInformationSchemaViews(informationSchemaViews);
-    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-    final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
+    final InformationSchemaViews informationSchemaViews =
+      InformationSchemaViewsBuilder
+        .builder()
+        .withSql(InformationSchemaKey.SERVER_INFORMATION,
+                 String.format(
+                   "SELECT '%s' AS NAME, '%s' AS DESCRIPTION, '%s' AS VALUE "
+                   + "FROM INFORMATION_SCHEMA.SYSTEM_TYPEINFO",
+                   name,
+                   description,
+                   value))
+        .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+      SchemaRetrievalOptionsBuilder
+        .builder()
+        .withInformationSchemaViews(informationSchemaViews);
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+      schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection =
+      new RetrieverConnection(connection, schemaRetrievalOptions);
 
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    final SchemaCrawlerOptions options =
+      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
     final DatabaseInfoRetriever databaseInfoRetriever =
       new DatabaseInfoRetriever(retrieverConnection, catalog, options);
@@ -239,7 +271,8 @@ public class DatabaseInfoRetrieverTest
                                                         .getServerInfo());
     assertThat(serverInfo, hasSize(1));
     final Property serverInfoProperty = serverInfo.get(0);
-    assertThat(serverInfoProperty, is(new ImmutableServerInfoProperty(name, value, description)));
+    assertThat(serverInfoProperty,
+               is(new ImmutableServerInfoProperty(name, value, description)));
     assertThat(serverInfoProperty.getDescription(), is(description));
   }
 

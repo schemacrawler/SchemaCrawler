@@ -78,8 +78,8 @@ public class CommandLineTemplateHelpTest
 
     assertThat(outputOf(err), hasNoContent());
     assertThat(outputOf(out),
-               hasSameContentAs(classpathResource(
-                 COMMANDLINE_HELP_OUTPUT + "help.template.stdout.txt")));
+               hasSameContentAs(classpathResource(COMMANDLINE_HELP_OUTPUT
+                                                  + "help.template.stdout.txt")));
   }
 
   @BeforeEach

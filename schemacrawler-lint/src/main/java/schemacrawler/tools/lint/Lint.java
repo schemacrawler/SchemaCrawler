@@ -111,10 +111,12 @@ public final class Lint<V extends Serializable>
     if (!(o instanceof Lint))
     { return false; }
     final Lint<?> lint = (Lint<?>) o;
-    return Objects.equals(linterId, lint.linterId) && Objects.equals(message,
-                                                                     lint.message)
+    return Objects.equals(linterId, lint.linterId)
+           && Objects.equals(message,
+                             lint.message)
            && Objects.equals(objectName, lint.objectName)
-           && objectType == lint.objectType && severity == lint.severity
+           && objectType == lint.objectType
+           && severity == lint.severity
            && Objects.equals(value, lint.value);
   }
 

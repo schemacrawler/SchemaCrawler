@@ -43,11 +43,11 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
+import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
-import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -69,11 +69,10 @@ public class LintTest
   public void lints(final Connection connection)
     throws Exception
   {
-    final LimitOptionsBuilder limitOptionsBuilder =
-      LimitOptionsBuilder
-        .builder()
-        .tableTypes(Arrays.asList("TABLE", "VIEW", "GLOBAL TEMPORARY"))
-        .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+      .builder()
+      .tableTypes(Arrays.asList("TABLE", "VIEW", "GLOBAL TEMPORARY"))
+      .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
       SchemaCrawlerOptionsBuilder
         .builder()
@@ -115,8 +114,8 @@ public class LintTest
       }
     }
     assertThat(outputOf(testout1),
-               hasSameContentAs(classpathResource(
-                 LINTS_OUTPUT + "schemacrawler.lints.txt")));
+               hasSameContentAs(classpathResource(LINTS_OUTPUT
+                                                  + "schemacrawler.lints.txt")));
 
     final TestWriter testout2 = new TestWriter();
     try (final TestWriter out = testout2)
@@ -124,20 +123,19 @@ public class LintTest
       out.println(linters.getLintSummary());
     }
     assertThat(outputOf(testout2),
-               hasSameContentAs(classpathResource(
-                 LINTS_OUTPUT + "schemacrawler.lints.summary.txt")));
+               hasSameContentAs(classpathResource(LINTS_OUTPUT
+                                                  + "schemacrawler.lints.summary.txt")));
   }
 
   @Test
   public void lintsWithExcludedColumns(final Connection connection)
     throws Exception
   {
-    final LimitOptionsBuilder limitOptionsBuilder =
-      LimitOptionsBuilder
-        .builder()
-        .tableTypes(Arrays.asList("TABLE", "VIEW", "GLOBAL TEMPORARY"))
-        .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"))
-        .includeColumns(new RegularExpressionExclusionRule(".*\\..*\\..*[123]"));
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+      .builder()
+      .tableTypes(Arrays.asList("TABLE", "VIEW", "GLOBAL TEMPORARY"))
+      .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"))
+      .includeColumns(new RegularExpressionExclusionRule(".*\\..*\\..*[123]"));
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
       SchemaCrawlerOptionsBuilder
         .builder()
@@ -173,18 +171,17 @@ public class LintTest
       }
     }
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(
-                 LINTS_OUTPUT + "schemacrawler.lints.excluded_columns.txt")));
+               hasSameContentAs(classpathResource(LINTS_OUTPUT
+                                                  + "schemacrawler.lints.excluded_columns.txt")));
   }
 
   @Test
   public void runNoLinters(final Connection connection)
     throws Exception
   {
-    final LimitOptionsBuilder limitOptionsBuilder =
-      LimitOptionsBuilder
-        .builder()
-        .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+      .builder()
+      .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
       SchemaCrawlerOptionsBuilder
         .builder()

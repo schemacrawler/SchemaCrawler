@@ -38,25 +38,35 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ObjectPropertyTestUtility
 {
 
-  public static void checkIntegerProperties(final Object object, final String... properties)
+  private static void assertBooleanProperty(final Object object,
+                                            final String property)
     throws Exception
   {
-    for (final String property : properties)
+    for (int i = 0; i < 2; i++)
     {
-      assertIntegerProperty(object, property);
+      assertBooleanPropertySetting(object, property, true);
+      assertBooleanPropertySetting(object, property, false);
     }
   }
 
-  public static void checkBooleanProperties(final Object object, final String... properties)
+  private static void assertBooleanPropertySetting(final Object object,
+                                                   final String property,
+                                                   final boolean value)
     throws Exception
   {
-    for (final String property : properties)
-    {
-      assertBooleanProperty(object, property);
-    }
+    setProperty(object, property, value);
+    assertThat(String.format("Failed to set %s/%s = %b",
+                             object
+                               .getClass()
+                               .getSimpleName(),
+                             property,
+                             value),
+               Boolean.valueOf(getProperty(object, property)),
+               is(value));
   }
 
-  private static void assertIntegerProperty(final Object object, final String property)
+  private static void assertIntegerProperty(final Object object,
+                                            final String property)
     throws Exception
   {
     for (int i = -2; i < 2; i = 1 + 2)
@@ -67,7 +77,9 @@ public class ObjectPropertyTestUtility
     assertIntegerPropertySetting(object, property, Integer.MAX_VALUE);
   }
 
-  private static void assertIntegerPropertySetting(final Object object, final String property, final int value)
+  private static void assertIntegerPropertySetting(final Object object,
+                                                   final String property,
+                                                   final int value)
     throws Exception
   {
     setProperty(object, property, value);
@@ -76,39 +88,43 @@ public class ObjectPropertyTestUtility
                                .getClass()
                                .getSimpleName(),
                              property,
-                             value), Integer.valueOf(getProperty(object, property)), is(value));
+                             value),
+               Integer.valueOf(getProperty(object, property)),
+               is(value));
   }
 
-  private static void setProperty(final Object object, final String property, final int value)
+  public static void checkBooleanProperties(final Object object,
+                                            final String... properties)
+    throws Exception
+  {
+    for (final String property : properties)
+    {
+      assertBooleanProperty(object, property);
+    }
+  }
+
+  public static void checkIntegerProperties(final Object object,
+                                            final String... properties)
+    throws Exception
+  {
+    for (final String property : properties)
+    {
+      assertIntegerProperty(object, property);
+    }
+  }
+
+  private static void setProperty(final Object object,
+                                  final String property,
+                                  final int value)
     throws Exception
   {
     final String setterMethodName = "set" + capitalize(property);
     invokeMethod(object, true, setterMethodName, value);
   }
 
-  private static void assertBooleanProperty(final Object object, final String property)
-    throws Exception
-  {
-    for (int i = 0; i < 2; i++)
-    {
-      assertBooleanPropertySetting(object, property, true);
-      assertBooleanPropertySetting(object, property, false);
-    }
-  }
-
-  private static void assertBooleanPropertySetting(final Object object, final String property, final boolean value)
-    throws Exception
-  {
-    setProperty(object, property, value);
-    assertThat(String.format("Failed to set %s/%s = %b",
-                             object
-                               .getClass()
-                               .getSimpleName(),
-                             property,
-                             value), Boolean.valueOf(getProperty(object, property)), is(value));
-  }
-
-  private static void setProperty(final Object object, final String property, final boolean value)
+  private static void setProperty(final Object object,
+                                  final String property,
+                                  final boolean value)
     throws Exception
   {
     final String setterMethodName = "set" + capitalize(property);

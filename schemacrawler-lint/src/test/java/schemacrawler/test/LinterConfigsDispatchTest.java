@@ -177,8 +177,8 @@ public class LinterConfigsDispatchTest
   {
     assertThat(outputOf(out), hasNoContent());
     assertThat(outputOf(err),
-               hasSameContentAs(classpathResource(
-                 testContext.testMethodName() + ".stderr.txt")));
+               hasSameContentAs(classpathResource(testContext.testMethodName()
+                                                  + ".stderr.txt")));
   }
 
 }

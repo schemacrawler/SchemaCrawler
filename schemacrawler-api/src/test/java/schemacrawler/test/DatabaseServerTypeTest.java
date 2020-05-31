@@ -46,18 +46,24 @@ public class DatabaseServerTypeTest
   @Test
   public void badConstructorArguments()
   {
-    assertThrows(IllegalArgumentException.class, () -> new DatabaseServerType(null, "NewDB"));
-    assertThrows(IllegalArgumentException.class, () -> new DatabaseServerType(" ", "NewDB"));
-    assertThrows(IllegalArgumentException.class, () -> new DatabaseServerType("newdb", null));
-    assertThrows(IllegalArgumentException.class, () -> new DatabaseServerType("newdb", ""));
+    assertThrows(IllegalArgumentException.class,
+                 () -> new DatabaseServerType(null, "NewDB"));
+    assertThrows(IllegalArgumentException.class,
+                 () -> new DatabaseServerType(" ", "NewDB"));
+    assertThrows(IllegalArgumentException.class,
+                 () -> new DatabaseServerType("newdb", null));
+    assertThrows(IllegalArgumentException.class,
+                 () -> new DatabaseServerType("newdb", ""));
   }
 
   @Test
   public void properties0()
   {
-    final DatabaseServerType databaseServerType =  DatabaseServerType.UNKNOWN;
-    assertThat(databaseServerType.getDatabaseSystemIdentifier(), is(nullValue()));
-    assertThat(databaseServerType.getDatabaseSystemIdentifier(), is(nullValue()));
+    final DatabaseServerType databaseServerType = DatabaseServerType.UNKNOWN;
+    assertThat(databaseServerType.getDatabaseSystemIdentifier(),
+               is(nullValue()));
+    assertThat(databaseServerType.getDatabaseSystemIdentifier(),
+               is(nullValue()));
     assertThat(databaseServerType.isUnknownDatabaseSystem(), is(true));
     assertThat(databaseServerType.hashCode(), is(31));
   }
@@ -65,7 +71,8 @@ public class DatabaseServerTypeTest
   @Test
   public void properties1()
   {
-    final DatabaseServerType databaseServerType = new DatabaseServerType("newdb", "NewDB");
+    final DatabaseServerType databaseServerType =
+      new DatabaseServerType("newdb", "NewDB");
     assertThat(databaseServerType.getDatabaseSystemIdentifier(), is("newdb"));
     assertThat(databaseServerType.getDatabaseSystemIdentifier(), is("newdb"));
     assertThat(databaseServerType.isUnknownDatabaseSystem(), is(false));
@@ -84,8 +91,9 @@ public class DatabaseServerTypeTest
   @Test
   public void compareTo()
   {
-    final DatabaseServerType databaseServerType0 =  DatabaseServerType.UNKNOWN;
-    final DatabaseServerType databaseServerType1 = new DatabaseServerType("newdb", "NewDB");
+    final DatabaseServerType databaseServerType0 = DatabaseServerType.UNKNOWN;
+    final DatabaseServerType databaseServerType1 =
+      new DatabaseServerType("newdb", "NewDB");
 
     assertThat(databaseServerType0, lessThan(null));
     assertThat(databaseServerType1, lessThan(null));
@@ -101,10 +109,11 @@ public class DatabaseServerTypeTest
   public void string()
   {
     final DatabaseServerType databaseServerType0 = DatabaseServerType.UNKNOWN;
-    final DatabaseServerType databaseServerType1 = new DatabaseServerType("newdb", "NewDB");
+    final DatabaseServerType databaseServerType1 =
+      new DatabaseServerType("newdb", "NewDB");
 
     assertThat(databaseServerType0.toString(), is(""));
     assertThat(databaseServerType1.toString(), is("newdb - NewDB"));
   }
 
-  }
+}

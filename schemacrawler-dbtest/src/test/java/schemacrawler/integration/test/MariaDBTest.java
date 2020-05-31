@@ -64,11 +64,11 @@ public class MariaDBTest
 
   @Container
   private JdbcDatabaseContainer dbContainer = new MariaDBContainer<>()
-      .withCommand("mysqld",
-                   "--lower_case_table_names=1",
-                   "--log_bin_trust_function_creators=1")
-      .withUsername("schemacrawler")
-      .withDatabaseName("books");
+    .withCommand("mysqld",
+                 "--lower_case_table_names=1",
+                 "--log_bin_trust_function_creators=1")
+    .withUsername("schemacrawler")
+    .withDatabaseName("books");
 
   @BeforeEach
   public void createDatabase()
@@ -85,16 +85,20 @@ public class MariaDBTest
   public void testMariaDBWithConnection()
     throws Exception
   {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder()
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+      .builder()
       .includeSchemas(new RegularExpressionInclusionRule("books"))
       .includeAllSequences()
       .includeAllSynonyms()
       .includeAllRoutines();
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
+      .builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder.builder()
-      .withLimitOptionsBuilder(limitOptionsBuilder)
-      .withLoadOptionsBuilder(loadOptionsBuilder);
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withLimitOptionsBuilder(limitOptionsBuilder)
+        .withLoadOptionsBuilder(loadOptionsBuilder);
     final SchemaCrawlerOptions options =
       schemaCrawlerOptionsBuilder.toOptions();
 
@@ -112,7 +116,8 @@ public class MariaDBTest
                                             .builder(textOptions)
                                             .toConfig());
 
-    final String expectedResource = String.format("testMariaDBWithConnection.%s.txt", javaVersion());
+    final String expectedResource =
+      String.format("testMariaDBWithConnection.%s.txt", javaVersion());
     assertThat(outputOf(executableExecution(getConnection(), executable)),
                hasSameContentAs(classpathResource(expectedResource)));
   }

@@ -46,7 +46,8 @@ public class ServerInfoPropertyTest
   public void nullArgumentsConstructor()
   {
 
-    assertThrows(IllegalArgumentException.class, () -> new ImmutableServerInfoProperty(null, "", ""));
+    assertThrows(IllegalArgumentException.class,
+                 () -> new ImmutableServerInfoProperty(null, "", ""));
 
   }
 
@@ -54,7 +55,8 @@ public class ServerInfoPropertyTest
   public void properties()
   {
 
-    final ImmutableServerInfoProperty serverInfoProperty = new ImmutableServerInfoProperty("name", null, null);
+    final ImmutableServerInfoProperty serverInfoProperty =
+      new ImmutableServerInfoProperty("name", null, null);
 
     assertThat(serverInfoProperty.getName(), is("name"));
     assertThat(serverInfoProperty.getValue(), nullValue());
@@ -66,7 +68,8 @@ public class ServerInfoPropertyTest
   public void properties2()
   {
 
-    final ImmutableServerInfoProperty serverInfoProperty = new ImmutableServerInfoProperty("name1", "value1", "desc");
+    final ImmutableServerInfoProperty serverInfoProperty =
+      new ImmutableServerInfoProperty("name1", "value1", "desc");
 
     assertThat(serverInfoProperty.getName(), is("name1"));
     assertThat(serverInfoProperty.getValue(), is("value1"));
@@ -77,15 +80,18 @@ public class ServerInfoPropertyTest
   @Test
   public void compare()
   {
-    final ImmutableServerInfoProperty serverInfoProperty = new ImmutableServerInfoProperty("name", null, null);
-    final ImmutableServerInfoProperty serverInfoProperty1 = new ImmutableServerInfoProperty("name1", "value1", "desc");
-
+    final ImmutableServerInfoProperty serverInfoProperty =
+      new ImmutableServerInfoProperty("name", null, null);
+    final ImmutableServerInfoProperty serverInfoProperty1 =
+      new ImmutableServerInfoProperty("name1", "value1", "desc");
 
     assertThat(serverInfoProperty, lessThan(null));
     assertThat(serverInfoProperty1, lessThan(null));
 
-    assertThat(serverInfoProperty, comparesEqualTo(new ImmutableDatabaseProperty("name", null)));
-    assertThat(serverInfoProperty, comparesEqualTo(new ImmutableDatabaseProperty("NAME", null)));
+    assertThat(serverInfoProperty,
+               comparesEqualTo(new ImmutableDatabaseProperty("name", null)));
+    assertThat(serverInfoProperty,
+               comparesEqualTo(new ImmutableDatabaseProperty("NAME", null)));
 
     assertThat(serverInfoProperty, lessThan(serverInfoProperty1));
     assertThat(serverInfoProperty1, greaterThan(serverInfoProperty));

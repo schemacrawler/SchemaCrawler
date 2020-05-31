@@ -39,22 +39,26 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schema.TableType;
+import schemacrawler.schemacrawler.SchemaReference;
 
 public class CompareToTest
 {
 
   /**
-   * See: <a href= "https://github.com/schemacrawler/SchemaCrawler/issues/228">Inconsistent table comparison</a>
+   * See: <a href= "https://github.com/schemacrawler/SchemaCrawler/issues/228">Inconsistent
+   * table comparison</a>
    */
   @Test
   public void compareTables()
   {
-    final MutableTable tbl = new MutableTable(new SchemaReference(null, "public"), "booking_detail");
+    final MutableTable tbl =
+      new MutableTable(new SchemaReference(null, "public"), "booking_detail");
     tbl.setTableType(new TableType("table"));
 
-    final MutableView view = new MutableView(new SchemaReference(null, "public"), "blog_monthly_stat_fa");
+    final MutableView view =
+      new MutableView(new SchemaReference(null, "public"),
+                      "blog_monthly_stat_fa");
     view.setTableType(new TableType("materialized view"));
 
     assertThat(view, lessThan(null));
@@ -83,9 +87,12 @@ public class CompareToTest
 
     final SchemaReference schema = new SchemaReference("catalog", "schema");
     final SchemaReference schema1 = new SchemaReference("catalog", "schema1");
-    final TestDatabaseObject tstDbObj1 = new TestDatabaseObject(schema, "tstDbObj1");
-    final TestDatabaseObject tstDbObj2 = new TestDatabaseObject(schema, "tstDbObj2");
-    final TestDatabaseObject tstDbObj3 = new TestDatabaseObject(schema1, "tstDbObj1");
+    final TestDatabaseObject tstDbObj1 =
+      new TestDatabaseObject(schema, "tstDbObj1");
+    final TestDatabaseObject tstDbObj2 =
+      new TestDatabaseObject(schema, "tstDbObj2");
+    final TestDatabaseObject tstDbObj3 =
+      new TestDatabaseObject(schema1, "tstDbObj1");
 
     assertThat(tstDbObj1, lessThan(null));
     assertThat(tstDbObj2, lessThan(null));

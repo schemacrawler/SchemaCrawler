@@ -75,23 +75,31 @@ public class ForeignKeyRetrieverDefinitionsTest
 
     final String definition = "TEST Foreign Key definition";
 
-    final InformationSchemaViews informationSchemaViews = InformationSchemaViewsBuilder
-      .builder()
-      .withSql(InformationSchemaKey.EXT_FOREIGN_KEYS,
-               String.format("SELECT DISTINCT PKTABLE_CAT AS FOREIGN_KEY_CATALOG, PKTABLE_SCHEM AS FOREIGN_KEY_SCHEMA, "
-                             + "PKTABLE_NAME AS FOREIGN_KEY_TABLE_NAME, FK_NAME AS FOREIGN_KEY_NAME, "
-                             + "'%s' AS FOREIGN_KEY_DEFINITION " + "FROM INFORMATION_SCHEMA.SYSTEM_CROSSREFERENCE",
-                             definition))
-      .toOptions();
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
-      .builder()
-      .withInformationSchemaViews(informationSchemaViews);
-    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-    final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
+    final InformationSchemaViews informationSchemaViews =
+      InformationSchemaViewsBuilder
+        .builder()
+        .withSql(InformationSchemaKey.EXT_FOREIGN_KEYS,
+                 String.format(
+                   "SELECT DISTINCT PKTABLE_CAT AS FOREIGN_KEY_CATALOG, PKTABLE_SCHEM AS FOREIGN_KEY_SCHEMA, "
+                   + "PKTABLE_NAME AS FOREIGN_KEY_TABLE_NAME, FK_NAME AS FOREIGN_KEY_NAME, "
+                   + "'%s' AS FOREIGN_KEY_DEFINITION "
+                   + "FROM INFORMATION_SCHEMA.SYSTEM_CROSSREFERENCE",
+                   definition))
+        .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+      SchemaRetrievalOptionsBuilder
+        .builder()
+        .withInformationSchemaViews(informationSchemaViews);
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+      schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection =
+      new RetrieverConnection(connection, schemaRetrievalOptions);
 
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    final SchemaCrawlerOptions options =
+      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
-    final ForeignKeyRetriever foreignKeyRetriever = new ForeignKeyRetriever(retrieverConnection, catalog, options);
+    final ForeignKeyRetriever foreignKeyRetriever =
+      new ForeignKeyRetriever(retrieverConnection, catalog, options);
     foreignKeyRetriever.retrieveForeignKeyDefinitions(catalog.getAllTables());
 
     for (final Table table : catalog.getTables())
@@ -107,16 +115,18 @@ public class ForeignKeyRetrieverDefinitionsTest
   public void loadBaseCatalog(final Connection connection)
     throws SchemaCrawlerException
   {
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
+      .builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder
                              .builder()
                              .withInfoLevel(InfoLevel.standard)
                              .setRetrieveForeignKeyDefinitions(false)
                              .toOptions());
-    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-      .builder()
-      .withLoadOptionsBuilder(loadOptionsBuilder)
-      .toOptions();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withLoadOptionsBuilder(loadOptionsBuilder)
+        .toOptions();
     catalog = (MutableCatalog) getCatalog(connection,
                                           SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
                                           schemaCrawlerOptions);

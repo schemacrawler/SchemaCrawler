@@ -123,7 +123,8 @@ public class MonetDBTest
                                             .builder(textOptions)
                                             .toConfig());
 
-    final String expectedResource = String.format("testMonetDBWithConnection.%s.txt", javaVersion());
+    final String expectedResource =
+      String.format("testMonetDBWithConnection.%s.txt", javaVersion());
     assertThat(outputOf(executableExecution(getConnection(), executable)),
                hasSameContentAs(classpathResource(expectedResource)));
   }

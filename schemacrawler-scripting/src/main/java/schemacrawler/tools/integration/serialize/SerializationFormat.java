@@ -41,7 +41,10 @@ import sf.util.StringFormat;
 public enum SerializationFormat
   implements OutputFormat
 {
-  java("Java serialization", "schemacrawler.tools.integration.serialize.JavaSerializedCatalog", true, "ser"),
+  java("Java serialization",
+       "schemacrawler.tools.integration.serialize.JavaSerializedCatalog",
+       true,
+       "ser"),
   json("JavaScript Object Notation (JSON) serialization format",
        "schemacrawler.tools.integration.serialize.JsonSerializedCatalog",
        false,
@@ -51,7 +54,8 @@ public enum SerializationFormat
        false,
        "yaml");
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(SerializationFormat.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(SerializationFormat.class.getName());
 
   /**
    * Gets the value from the format.
@@ -65,7 +69,9 @@ public enum SerializationFormat
     final SerializationFormat outputFormat = fromFormatOrNull(format);
     if (outputFormat == null)
     {
-      LOGGER.log(Level.CONFIG, new StringFormat("Unknown format <%s>, using default", format));
+      LOGGER.log(Level.CONFIG,
+                 new StringFormat("Unknown format <%s>, using default",
+                                  format));
       return java;
     }
     else
@@ -109,7 +115,8 @@ public enum SerializationFormat
                       final boolean isBinaryFormat,
                       final String... additionalFormatSpecifiers)
   {
-    outputFormatState = new OutputFormatState(name(), description, additionalFormatSpecifiers);
+    outputFormatState =
+      new OutputFormatState(name(), description, additionalFormatSpecifiers);
     this.serializerClassName = serializerClassName;
     this.isBinaryFormat = isBinaryFormat;
   }

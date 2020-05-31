@@ -102,6 +102,7 @@ public enum LintReportOutputFormat
   {
     return fromFormatOrNull(format) != null;
   }
+
   private final OutputFormatState outputFormatState;
 
   private LintReportOutputFormat(final String description)

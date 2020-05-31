@@ -39,12 +39,12 @@ import java.util.List;
 import java.util.logging.Level;
 
 import schemacrawler.filter.TableTypesFilter;
+import schemacrawler.inclusionrule.IncludeAll;
+import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.Table;
-import schemacrawler.inclusionrule.IncludeAll;
-import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;

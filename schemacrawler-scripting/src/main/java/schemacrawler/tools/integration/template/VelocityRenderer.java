@@ -58,9 +58,11 @@ public final class VelocityRenderer
                                                         final String resourceLoaderPropertyName,
                                                         final String resourceLoaderPropertyValue)
   {
-    p.setProperty(
-      resourceLoaderName + "." + RuntimeConstants.RESOURCE_LOADER + "."
-      + resourceLoaderPropertyName, resourceLoaderPropertyValue);
+    p.setProperty(resourceLoaderName
+                  + "."
+                  + RuntimeConstants.RESOURCE_LOADER
+                  + "."
+                  + resourceLoaderPropertyName, resourceLoaderPropertyValue);
   }
 
   @Override

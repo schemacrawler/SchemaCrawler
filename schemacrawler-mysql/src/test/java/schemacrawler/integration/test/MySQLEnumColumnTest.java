@@ -70,8 +70,8 @@ public class MySQLEnumColumnTest
 
   @Container
   private JdbcDatabaseContainer dbContainer = new MySQLContainer<>()
-      .withCommand("mysqld", "--lower_case_table_names=1")
-      .withUsername("schemacrawler");
+    .withCommand("mysqld", "--lower_case_table_names=1")
+    .withUsername("schemacrawler");
 
   @BeforeEach
   public void createDatabase()
@@ -104,9 +104,7 @@ public class MySQLEnumColumnTest
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
     assertThat(outputOf(executableExecution(getConnection(), executable)),
-               hasSameContentAs(classpathResource(
-                 "testColumnWithEnum.txt")));
-
+               hasSameContentAs(classpathResource("testColumnWithEnum.txt")));
 
     // Additional programmatic test
     final Catalog catalog = executable.getCatalog();
@@ -123,14 +121,18 @@ public class MySQLEnumColumnTest
       .lookupColumn("name")
       .orElse(null);
     assertThat(nameColumn, notNullValue());
-    final List<String> nameEnumValues = nameColumn.getColumnDataType().getEnumValues();
+    final List<String> nameEnumValues = nameColumn
+      .getColumnDataType()
+      .getEnumValues();
     assertThat(nameEnumValues, is(empty()));
 
     final Column sizeColumn = table
       .lookupColumn("size")
       .orElse(null);
     assertThat(sizeColumn, notNullValue());
-    final List<String> enumValues = sizeColumn.getColumnDataType().getEnumValues();
+    final List<String> enumValues = sizeColumn
+      .getColumnDataType()
+      .getEnumValues();
     assertThat(enumValues, containsInAnyOrder("small", "medium", "large"));
   }
 

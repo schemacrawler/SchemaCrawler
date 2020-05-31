@@ -156,8 +156,8 @@ public final class TestUtility
 
     if (!isFileReadable(testOutputTempFile))
     {
-      return Collections.singletonList(
-        "Output file not created - " + testOutputTempFile);
+      return Collections.singletonList("Output file not created - "
+                                       + testOutputTempFile);
     }
 
     final List<String> failures = new ArrayList<>();
@@ -239,9 +239,10 @@ public final class TestUtility
         actualInputReader).lines()
     )
     {
-      final Function<String, String> stripAnsiCodes = line -> line.replaceAll("\u001B\\[[;\\d]*m", "");
-      final Function<String, String> stripColorCodes = line -> line.replaceAll("\u2592", "");
-
+      final Function<String, String> stripAnsiCodes =
+        line -> line.replaceAll("\u001B\\[[;\\d]*m", "");
+      final Function<String, String> stripColorCodes =
+        line -> line.replaceAll("\u2592", "");
 
       final Iterator<String> expectedLinesIterator = expectedLinesStream
         .filter(keepLines)
@@ -351,6 +352,20 @@ public final class TestUtility
     }
   }
 
+  public static String fileHeaderOf(final Path tempFile)
+    throws IOException
+  {
+    try (
+      final FileChannel fc = new FileInputStream(tempFile.toFile()).getChannel()
+    )
+    {
+      final ByteBuffer bb = ByteBuffer.allocate(2);
+      fc.read(bb);
+      final String hexValue = new BigInteger(1, bb.array()).toString(16);
+      return hexValue.toUpperCase();
+    }
+  }
+
   public static String[] flattenCommandlineArgs(final Map<String, String> argsMap)
   {
     final List<String> argsList = new ArrayList<>();
@@ -371,6 +386,25 @@ public final class TestUtility
     return args;
   }
 
+  public static String javaVersion()
+  {
+    final String javaSpecificationVersion =
+      System.getProperty("java.specification.version");
+    final double javaSpecificationVersionDouble =
+      Double.parseDouble(javaSpecificationVersion);
+    final int javaSpecificationVersionInt;
+    if (javaSpecificationVersionDouble < 2)
+    {
+      javaSpecificationVersionInt =
+        (int) ((javaSpecificationVersionDouble - 1) * 10);
+    }
+    else
+    {
+      javaSpecificationVersionInt = (int) javaSpecificationVersionDouble;
+    }
+    return String.valueOf(javaSpecificationVersionInt);
+  }
+
   private static Reader openNewCompressedInputReader(final InputStream inputStream,
                                                      final Charset charset)
     throws IOException
@@ -378,20 +412,6 @@ public final class TestUtility
     final ZipInputStream zipInputStream = new ZipInputStream(inputStream);
     zipInputStream.getNextEntry();
     return new InputStreamReader(zipInputStream, charset);
-  }
-
-  public static String fileHeaderOf(final Path tempFile)
-    throws IOException
-  {
-    try (
-      final FileChannel fc = new FileInputStream(tempFile.toFile()).getChannel()
-    )
-    {
-      final ByteBuffer bb = ByteBuffer.allocate(2);
-      fc.read(bb);
-      final String hexValue = new BigInteger(1, bb.array()).toString(16);
-      return hexValue.toUpperCase();
-    }
   }
 
   private static Reader readerForFile(final Path testOutputTempFile)
@@ -463,22 +483,6 @@ public final class TestUtility
       reader = null;
     }
     return reader;
-  }
-
-  public static String javaVersion()
-  {
-    final String javaSpecificationVersion = System.getProperty("java.specification.version");
-    final double javaSpecificationVersionDouble = Double.parseDouble(javaSpecificationVersion);
-    final int javaSpecificationVersionInt;
-    if (javaSpecificationVersionDouble < 2)
-    {
-      javaSpecificationVersionInt = (int) ((javaSpecificationVersionDouble - 1) * 10);
-    }
-    else
-    {
-      javaSpecificationVersionInt = (int) javaSpecificationVersionDouble;
-    }
-    return String.valueOf(javaSpecificationVersionInt);
   }
 
   public static void validateDiagram(final Path diagramFile)

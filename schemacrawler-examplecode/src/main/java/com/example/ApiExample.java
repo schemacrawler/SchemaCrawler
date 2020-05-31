@@ -3,12 +3,12 @@ package com.example;
 
 import java.sql.Connection;
 
+import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
-import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -36,16 +36,17 @@ public final class ApiExample
   {
 
     // Create the options
-    final LimitOptionsBuilder limitOptionsBuilder =
-      LimitOptionsBuilder.builder()
-        .includeSchemas(new RegularExpressionInclusionRule("PUBLIC.BOOKS"))
-        .includeTables(tableFullName -> !tableFullName.contains("ΒΙΒΛΊΑ"));
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+      .builder()
+      .includeSchemas(new RegularExpressionInclusionRule("PUBLIC.BOOKS"))
+      .includeTables(tableFullName -> !tableFullName.contains("ΒΙΒΛΊΑ"));
     final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
       // Set what details are required in the schema - this affects the
       // time taken to crawl the schema
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
     final SchemaCrawlerOptionsBuilder optionsBuilder =
-      SchemaCrawlerOptionsBuilder.builder()
+      SchemaCrawlerOptionsBuilder
+        .builder()
         .withLimitOptionsBuilder(limitOptionsBuilder)
         .withLoadOptionsBuilder(loadOptionsBuilder);
     final SchemaCrawlerOptions options = optionsBuilder.toOptions();
@@ -71,8 +72,11 @@ public final class ApiExample
 
         for (final Column column : table.getColumns())
         {
-          System.out.println(
-            "     o--> " + column + " (" + column.getColumnDataType() + ")");
+          System.out.println("     o--> "
+                             + column
+                             + " ("
+                             + column.getColumnDataType()
+                             + ")");
         }
       }
     }

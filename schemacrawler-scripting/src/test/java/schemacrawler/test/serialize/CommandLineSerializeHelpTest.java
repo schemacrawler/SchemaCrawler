@@ -78,8 +78,8 @@ public class CommandLineSerializeHelpTest
 
     assertThat(outputOf(err), hasNoContent());
     assertThat(outputOf(out),
-               hasSameContentAs(classpathResource(
-                 COMMANDLINE_HELP_OUTPUT + "help.serialize.stdout.txt")));
+               hasSameContentAs(classpathResource(COMMANDLINE_HELP_OUTPUT
+                                                  + "help.serialize.stdout.txt")));
   }
 
   @BeforeEach
