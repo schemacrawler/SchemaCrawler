@@ -1,5 +1,12 @@
 # SchemaCrawler Change History
 
+<a name="a16.9.1"></a>
+## Release 16.9.1 - 2020-06-10
+
+- Remove deprecated methods
+- Allow for a JDBC driver class name to be specified for SchemaCrawler database plugins
+
+
 <a name="a16.8.1"></a>
 ## Release 16.8.1 - 2020-05-30
 
