@@ -83,8 +83,9 @@ public abstract class AbstractTitleTest
                                                command,
                                                argsMap,
                                                outputFormat)),
-                 hasSameContentAndTypeAs(classpathResource(
-                   TITLE_OUTPUT + referenceFile), outputFormat));
+                 hasSameContentAndTypeAs(classpathResource(TITLE_OUTPUT
+                                                           + referenceFile),
+                                         outputFormat));
 
     })));
   }

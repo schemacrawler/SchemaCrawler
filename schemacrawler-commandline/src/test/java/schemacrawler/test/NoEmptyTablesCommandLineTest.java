@@ -28,6 +28,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.test.utility.TestUtility.clean;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.InfoLevel;
@@ -37,14 +47,6 @@ import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
-import static schemacrawler.test.utility.FileHasContent.*;
-import static schemacrawler.test.utility.TestUtility.clean;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
@@ -73,8 +75,8 @@ public class NoEmptyTablesCommandLineTest
                                              SchemaTextDetailType.schema.name(),
                                              argsMap,
                                              TextOutputFormat.text)),
-               hasSameContentAs(classpathResource(
-                 HIDE_EMPTY_TABLES_OUTPUT + referenceFile)));
+               hasSameContentAs(classpathResource(HIDE_EMPTY_TABLES_OUTPUT
+                                                  + referenceFile)));
   }
 
 }

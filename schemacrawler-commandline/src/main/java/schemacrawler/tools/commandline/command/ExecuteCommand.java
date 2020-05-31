@@ -53,11 +53,17 @@ import sf.util.ObjectToStringFormat;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
-@Command(name = "execute", header = "** Execute a SchemaCrawler command", description = {
-  ""
-}, headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
-  "execute"
-}, optionListHeading = "Options:%n")
+@Command(name = "execute",
+         header = "** Execute a SchemaCrawler command",
+         description = {
+           ""
+         },
+         headerHeading = "",
+         synopsisHeading = "Shell Command:%n",
+         customSynopsis = {
+           "execute"
+         },
+         optionListHeading = "Options:%n")
 public class ExecuteCommand
   extends BaseStateHolder
   implements Runnable
@@ -130,11 +136,10 @@ public class ExecuteCommand
 
       // Output file name has to be specified for diagrams
       // (Check after output options have been built)
-      if (
-        DiagramOutputFormat.isSupportedFormat(outputOptions.getOutputFormatValue())
-        && !commandOutputOptions
-          .getOutputFile()
-          .isPresent())
+      if (DiagramOutputFormat.isSupportedFormat(outputOptions.getOutputFormatValue())
+          && !commandOutputOptions
+        .getOutputFile()
+        .isPresent())
       {
         throw new RuntimeException(
           "Output file has to be specified for schema diagrams");

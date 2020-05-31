@@ -78,8 +78,9 @@ public class CommandLineTest
                                              argsMap,
                                              runConfig,
                                              TextOutputFormat.text)),
-               hasSameContentAs(classpathResource(
-                 COMMAND_LINE_OUTPUT + testContext.testMethodName() + ".txt")));
+               hasSameContentAs(classpathResource(COMMAND_LINE_OUTPUT
+                                                  + testContext.testMethodName()
+                                                  + ".txt")));
   }
 
   @Test

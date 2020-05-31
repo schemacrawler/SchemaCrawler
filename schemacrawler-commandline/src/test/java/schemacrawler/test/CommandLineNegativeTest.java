@@ -154,9 +154,9 @@ public class CommandLineNegativeTest
     assertThat(outputOf(outputFile), hasNoContent());
     assertThat(outputOf(out), hasNoContent());
     assertThat(outputOf(err),
-               hasSameContentAs(classpathResource(
-                 COMMAND_LINE_NEGATIVE_OUTPUT + testContext.testMethodName()
-                 + ".stderr.txt")));
+               hasSameContentAs(classpathResource(COMMAND_LINE_NEGATIVE_OUTPUT
+                                                  + testContext.testMethodName()
+                                                  + ".stderr.txt")));
   }
 
 }

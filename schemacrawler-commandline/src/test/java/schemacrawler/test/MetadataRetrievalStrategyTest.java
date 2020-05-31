@@ -46,9 +46,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InfoLevel;
+import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
@@ -106,7 +106,8 @@ public class MetadataRetrievalStrategyTest
     assertThat(outputOf(err),
                hasSameContentAs(classpathResource(
                  METADATA_RETRIEVAL_STRATEGY_OUTPUT
-                 + testContext.testMethodName() + ".stderr.txt")));
+                 + testContext.testMethodName()
+                 + ".stderr.txt")));
   }
 
   @BeforeEach

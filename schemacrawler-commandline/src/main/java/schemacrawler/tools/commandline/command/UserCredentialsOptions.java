@@ -59,11 +59,17 @@ public final class UserCredentialsOptions
 
   public static class PasswordOptions
   {
-    @Option(names = "--password:env", description = "Database password, from an environmental variable value", paramLabel = "<environment variable name>")
+    @Option(names = "--password:env",
+            description = "Database password, from an environmental variable value",
+            paramLabel = "<environment variable name>")
     private String passwordEnvironmentVariable;
-    @Option(names = "--password:file", description = "Database password, read from a file", paramLabel = "<path to password file>")
+    @Option(names = "--password:file",
+            description = "Database password, read from a file",
+            paramLabel = "<path to password file>")
     private Path passwordFile;
-    @Option(names = "--password:prompt", interactive = true, description = "Database password, prompted from the console")
+    @Option(names = "--password:prompt",
+            interactive = true,
+            description = "Database password, prompted from the console")
     private String passwordPrompted;
     @Option(names = {
       "--password"

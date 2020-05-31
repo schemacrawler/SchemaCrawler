@@ -46,7 +46,10 @@ public final class CommandOptions
 
   @Option(names = {
     "-c", "--command"
-  }, required = true, description = "SchemaCrawler command", completionCandidates = AvailableCommands.class)
+  },
+          required = true,
+          description = "SchemaCrawler command",
+          completionCandidates = AvailableCommands.class)
   private String command;
 
   @Spec

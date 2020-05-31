@@ -50,22 +50,28 @@ import sf.util.StringFormat;
  *
  * @author Sualeh Fatehi
  */
-@Command(name = "config-file", header = "** Load SchemaCrawler configuration from the classpath and file", description = {
-  "",
-  "SchemaCrawler configuration reads a resource called schemacrawler.config.properties "
-  + "from the CLASSPATH, which includes the lib/ folder. "
-  + "You can modify the default settings in this file.",
-  "",
-  "The order of loading configuration settings is:",
-  "1. From a CLASSPATH resource called schemacrawler.config.properties",
-  "2. Which can be overridden by settings in a configuration file (see below)",
-  "3. Which can be overridden by other command-line options",
-  "",
-  "Command-line options will override configuration file options.",
-  ""
-}, headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
-  "config-file"
-}, optionListHeading = "Options:%n")
+@Command(name = "config-file",
+         header = "** Load SchemaCrawler configuration from the classpath and file",
+         description = {
+           "",
+           "SchemaCrawler configuration reads a resource called schemacrawler.config.properties "
+           + "from the CLASSPATH, which includes the lib/ folder. "
+           + "You can modify the default settings in this file.",
+           "",
+           "The order of loading configuration settings is:",
+           "1. From a CLASSPATH resource called schemacrawler.config.properties",
+           "2. Which can be overridden by settings in a configuration file (see below)",
+           "3. Which can be overridden by other command-line options",
+           "",
+           "Command-line options will override configuration file options.",
+           ""
+         },
+         headerHeading = "",
+         synopsisHeading = "Shell Command:%n",
+         customSynopsis = {
+           "config-file"
+         },
+         optionListHeading = "Options:%n")
 public class ConfigFileCommand
   extends BaseStateHolder
   implements Runnable
@@ -74,10 +80,10 @@ public class ConfigFileCommand
   private static final SchemaCrawlerLogger LOGGER =
     SchemaCrawlerLogger.getLogger(ConfigFileCommand.class.getName());
 
-
   @Option(names = {
     "-g", "--config-file"
-  }, description =
+  },
+          description =
             "Read SchemaCrawler configuration properties from <configfile>%n"
             + "<configfile> is the full path to the configuration file%n"
             + "Optional, uses the default schemacrawler.config.properties file in the current directory, or in-built default options")

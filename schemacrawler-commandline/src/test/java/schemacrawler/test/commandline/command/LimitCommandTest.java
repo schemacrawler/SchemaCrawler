@@ -57,22 +57,17 @@ public class LimitCommandTest
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
     final LimitOptions limitOptions = schemaCrawlerOptions.getLimitOptions();
 
-    assertThat(limitOptions.get(ruleForSchemaInclusion),
-               is(new IncludeAll()));
-    assertThat(limitOptions.get(ruleForSynonymInclusion),
-               is(new ExcludeAll()));
+    assertThat(limitOptions.get(ruleForSchemaInclusion), is(new IncludeAll()));
+    assertThat(limitOptions.get(ruleForSynonymInclusion), is(new ExcludeAll()));
     assertThat(limitOptions.get(ruleForSequenceInclusion),
                is(new ExcludeAll()));
 
-    assertThat(limitOptions.get(ruleForTableInclusion),
-               is(new IncludeAll()));
-    assertThat(limitOptions.get(ruleForColumnInclusion),
-               is(new IncludeAll()));
+    assertThat(limitOptions.get(ruleForTableInclusion), is(new IncludeAll()));
+    assertThat(limitOptions.get(ruleForColumnInclusion), is(new IncludeAll()));
     assertThat(limitOptions.getTableTypes(),
                hasItems("TABLE", "BASE TABLE", "VIEW"));
 
-    assertThat(limitOptions.get(ruleForRoutineInclusion),
-               is(new ExcludeAll()));
+    assertThat(limitOptions.get(ruleForRoutineInclusion), is(new ExcludeAll()));
     assertThat(limitOptions.get(ruleForRoutineParameterInclusion),
                is(new IncludeAll()));
     assertThat(limitOptions.getRoutineTypes(),
@@ -234,8 +229,7 @@ public class LimitCommandTest
                is(new RegularExpressionInclusionRule(".*regexp.*")));
     assertThat(limitOptions.get(ruleForRoutineParameterInclusion),
                is(new RegularExpressionExclusionRule(".*regexp.*")));
-    assertThat(limitOptions.getRoutineTypes(),
-               hasItems(RoutineType.function));
+    assertThat(limitOptions.getRoutineTypes(), hasItems(RoutineType.function));
   }
 
 }

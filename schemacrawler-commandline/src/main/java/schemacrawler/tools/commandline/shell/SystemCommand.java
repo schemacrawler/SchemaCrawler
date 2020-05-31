@@ -38,22 +38,30 @@ import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.commandline.state.StateUtility;
 
-@Command(name = "system", aliases = {
-  "sys", "sys-info"
-}, header = "** Display SchemaCrawler version and system information", headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
-  "system"
-}, optionListHeading = "Options:%n")
+@Command(name = "system",
+         aliases = {
+           "sys", "sys-info"
+         },
+         header = "** Display SchemaCrawler version and system information",
+         headerHeading = "",
+         synopsisHeading = "Shell Command:%n",
+         customSynopsis = {
+           "system"
+         },
+         optionListHeading = "Options:%n")
 public class SystemCommand
   extends BaseStateHolder
   implements Runnable
 {
 
-
-  @Option(names = "--is-connected", description = "Checks whether the shell has a connection to a database")
+  @Option(names = "--is-connected",
+          description = "Checks whether the shell has a connection to a database")
   private boolean isconnected;
-  @Option(names = "--is-loaded", description = "Checks whether the shell has loaded database metadata")
+  @Option(names = "--is-loaded",
+          description = "Checks whether the shell has loaded database metadata")
   private boolean isloaded;
-  @Option(names = "--show-stacktrace", description = "Shows stack trace from previous command")
+  @Option(names = "--show-stacktrace",
+          description = "Shows stack trace from previous command")
   private boolean showstacktrace;
   @Option(names = "--show-state", description = "Shows internal state")
   private boolean showstate;

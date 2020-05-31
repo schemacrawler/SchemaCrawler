@@ -60,9 +60,15 @@ import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 
-@Command(name = "help", header = "Display SchemaCrawler command-line help", helpCommand = true, headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
-  "help"
-}, optionListHeading = "Options:%n")
+@Command(name = "help",
+         header = "Display SchemaCrawler command-line help",
+         helpCommand = true,
+         headerHeading = "",
+         synopsisHeading = "Shell Command:%n",
+         customSynopsis = {
+           "help"
+         },
+         optionListHeading = "Options:%n")
 public final class CommandLineHelpCommand
   implements Runnable
 {
@@ -72,8 +78,7 @@ public final class CommandLineHelpCommand
   private String[] commands;
   private PrintStream err;
   @Option(names = {
-    "-h",
-    "--help"
+    "-h", "--help"
   }, usageHelp = true, description = "Displays SchemaCrawler command-line help")
   private boolean helpRequested;
   private PrintStream out;
@@ -138,8 +143,7 @@ public final class CommandLineHelpCommand
 
     @Command
     class EmptyCommand
-    {
-    }
+    {}
 
     final CommandLine commandLine = new CommandLine(new EmptyCommand());
 

@@ -111,16 +111,21 @@ public class GrepCommandLineTest
 
       final OutputFormat outputFormat = TextOutputFormat.text;
 
-      final List<String> args = new ArrayList<>(Arrays.asList(
-        "--url=" + connectionInfo.getConnectionUrl(),
-        "--user=sa",
-        "--password=",
-        "-g=" + additionalProperties.toString(),
-        "--info-level=" + infoLevel,
-        "--command=" + schemaTextDetailType,
-        "--output-format=" + outputFormat.getFormat(),
-        "--output-file=" + testOutputFile.toString(),
-        "--no-info"));
+      final List<String> args = new ArrayList<>(Arrays.asList("--url="
+                                                              + connectionInfo.getConnectionUrl(),
+                                                              "--user=sa",
+                                                              "--password=",
+                                                              "-g="
+                                                              + additionalProperties.toString(),
+                                                              "--info-level="
+                                                              + infoLevel,
+                                                              "--command="
+                                                              + schemaTextDetailType,
+                                                              "--output-format="
+                                                              + outputFormat.getFormat(),
+                                                              "--output-file="
+                                                              + testOutputFile.toString(),
+                                                              "--no-info"));
       args.addAll(Arrays.asList(grepArgsForRun));
 
       Main.main(args.toArray(new String[args.size()]));

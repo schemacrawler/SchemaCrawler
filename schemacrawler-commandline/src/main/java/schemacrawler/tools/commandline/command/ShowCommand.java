@@ -41,11 +41,17 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
  *
  * @author Sualeh Fatehi
  */
-@Command(name = "show", header = "** Show information in output", description = {
-  "",
-}, headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
-  "show"
-}, optionListHeading = "Options:%n")
+@Command(name = "show",
+         header = "** Show information in output",
+         description = {
+           "",
+         },
+         headerHeading = "",
+         synopsisHeading = "Shell Command:%n",
+         customSynopsis = {
+           "show"
+         },
+         optionListHeading = "Options:%n")
 public final class ShowCommand
   extends BaseStateHolder
   implements Runnable
@@ -69,7 +75,8 @@ public final class ShowCommand
     "Allow for easy comparison between databases, "
     + "by hiding or showing foreign key names, constraint names, "
     + "trigger names, specific names for routines, "
-    + "or index and primary key names, " + "and fully-qualified table names",
+    + "or index and primary key names, "
+    + "and fully-qualified table names",
     "--portable-names=<boolean>",
     "<boolean> can be true or false",
     "Optional, defaults to false"
