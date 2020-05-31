@@ -32,22 +32,30 @@ import static sf.util.Utility.isBlank;
 
 import java.io.Serializable;
 
+/**
+ * Class that represents an id for SchemaCrawler plugin that allows for crawl customizations for a particular database.
+ * The "server" id is used on the SchemaCrawler command-line. It also allows for customizations for the behavior of a
+ * particular database driver.
+ */
 public final class DatabaseServerType
   implements Serializable, Comparable<DatabaseServerType>
 {
 
   public static final DatabaseServerType UNKNOWN = new DatabaseServerType();
+
   private static final long serialVersionUID = 2160456864554076419L;
+
   private final String databaseSystemIdentifier;
   private final String databaseSystemName;
+  private final String jdbcDriverClassName;
 
   public DatabaseServerType(final String databaseSystemIdentifier,
-                            final String databaseSystemName)
+                            final String databaseSystemName,
+                            final String jdbcDriverClassName)
   {
     if (isBlank(databaseSystemIdentifier))
     {
-      throw new IllegalArgumentException(
-        "No database system identifier provided");
+      throw new IllegalArgumentException("No database system identifier provided");
     }
     this.databaseSystemIdentifier = databaseSystemIdentifier;
 
@@ -57,12 +65,26 @@ public final class DatabaseServerType
     }
     this.databaseSystemName = databaseSystemName;
 
+    if (isBlank(jdbcDriverClassName))
+    {
+      this.jdbcDriverClassName = null;
+    }
+    else
+    {
+      this.jdbcDriverClassName = jdbcDriverClassName;
+    }
+  }
+
+  public DatabaseServerType(final String databaseSystemIdentifier, final String databaseSystemName)
+  {
+    this(databaseSystemIdentifier, databaseSystemName, null);
   }
 
   private DatabaseServerType()
   {
     databaseSystemIdentifier = null;
     databaseSystemName = null;
+    jdbcDriverClassName = null;
   }
 
   @Override
@@ -90,23 +112,12 @@ public final class DatabaseServerType
     }
   }
 
-  public String getDatabaseSystemIdentifier()
-  {
-    return databaseSystemIdentifier;
-  }
-
-  public String getDatabaseSystemName()
-  {
-    return databaseSystemName;
-  }
-
   @Override
   public int hashCode()
   {
     final int prime = 31;
     int result = 1;
-    result = prime * result + (databaseSystemIdentifier == null? 0:
-                               databaseSystemIdentifier.hashCode());
+    result = prime * result + (databaseSystemIdentifier == null? 0: databaseSystemIdentifier.hashCode());
     return result;
   }
 
@@ -134,6 +145,21 @@ public final class DatabaseServerType
     { return databaseSystemIdentifier.equals(other.databaseSystemIdentifier); }
   }
 
+  public String getDatabaseSystemIdentifier()
+  {
+    return databaseSystemIdentifier;
+  }
+
+  public String getDatabaseSystemName()
+  {
+    return databaseSystemName;
+  }
+
+  public String getJdbcDriverClassName()
+  {
+    return jdbcDriverClassName;
+  }
+
   @Override
   public String toString()
   {
@@ -143,9 +169,7 @@ public final class DatabaseServerType
     }
     else
     {
-      return String.format("%s - %s",
-                           databaseSystemIdentifier,
-                           databaseSystemName);
+      return String.format("%s - %s", databaseSystemIdentifier, databaseSystemName);
     }
   }
 

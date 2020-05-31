@@ -37,7 +37,6 @@ import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.Driver;
-import java.sql.DriverManager;
 import java.sql.DriverPropertyInfo;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -52,16 +51,16 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.logging.Level;
 
+import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Property;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schema.SearchableType;
-import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.Query;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaReference;
 import sf.util.DatabaseUtility;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -253,7 +252,7 @@ final class DatabaseInfoRetriever
       final DatabaseMetaData dbMetaData = getMetaData();
       final String url = dbMetaData.getURL();
 
-      final Driver jdbcDriver = DriverManager.getDriver(url);
+      final Driver jdbcDriver = getRetrieverConnection().getDriver();
       final DriverPropertyInfo[] propertyInfo =
         jdbcDriver.getPropertyInfo(url, new Properties());
       for (final DriverPropertyInfo driverPropertyInfo : propertyInfo)
@@ -327,7 +326,7 @@ final class DatabaseInfoRetriever
       driverInfo.setDriverName(dbMetaData.getDriverName());
       driverInfo.setDriverVersion(dbMetaData.getDriverVersion());
       driverInfo.setConnectionUrl(url);
-      final Driver jdbcDriver = DriverManager.getDriver(url);
+      final Driver jdbcDriver = getRetrieverConnection().getDriver();
       driverInfo.setJdbcDriverClassName(jdbcDriver
                                           .getClass()
                                           .getName());

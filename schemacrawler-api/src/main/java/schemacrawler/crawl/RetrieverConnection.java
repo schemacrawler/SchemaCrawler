@@ -31,9 +31,12 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 import static sf.util.DatabaseUtility.checkConnection;
+import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.Driver;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
@@ -134,6 +137,45 @@ final class RetrieverConnection
   public MetadataRetrievalStrategy get(final SchemaInfoMetadataRetrievalStrategy schemaInfoMetadataRetrievalStrategy)
   {
     return schemaRetrievalOptions.get(schemaInfoMetadataRetrievalStrategy);
+  }
+
+  public Driver getDriver()
+    throws SQLException
+  {
+    Driver jdbcDriver = null;
+
+    final String jdbcDriverClassName = schemaRetrievalOptions
+      .getDatabaseServerType()
+      .getJdbcDriverClassName();
+    if (!isBlank(jdbcDriverClassName))
+    {
+      try
+      {
+        final Class<? extends Driver> jdbcDriverClass =
+          (Class<? extends Driver>) Class.forName(jdbcDriverClassName);
+        jdbcDriver = jdbcDriverClass
+          .getDeclaredConstructor()
+          .newInstance();
+      }
+      catch (final Exception e)
+      {
+        LOGGER.log(Level.WARNING, "No JDBC driver found for " + jdbcDriverClassName, e);
+      }
+    }
+
+    if (jdbcDriver == null)
+    {
+      jdbcDriver = DriverManager.getDriver(connection
+                                             .getMetaData()
+                                             .getURL());
+    }
+
+    if (jdbcDriver == null)
+    {
+      throw new SQLException("No JDBC driver found");
+    }
+
+    return jdbcDriver;
   }
 
 }
