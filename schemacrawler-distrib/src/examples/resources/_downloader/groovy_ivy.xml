@@ -5,10 +5,10 @@
   <info organisation="us.fatehi" module="schemacrawler"/>
   <configurations>
     <conf name="runtime" visibility="public" />
-  </configurations>	
+  </configurations>
   <dependencies>
     <dependency org="org.codehaus.groovy" name="groovy-all"
-                rev="3.0.3" conf="runtime" />
+                rev="3.0.4" conf="runtime" />
 
     <exclude org="org.codehaus.groovy" module="groovy-ant" />
     <exclude org="org.codehaus.groovy" module="groovy-cli-picocli" />

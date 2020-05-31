@@ -374,7 +374,7 @@ System Information
 Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 database product name                     SQLite                        
-database product version                  3.30.1                        
+database product version                  3.31.1                        
 database user name                        NULL                          
 
 
@@ -388,14 +388,14 @@ catalogs
 data definition causes transaction commit  false                         
 data definition ignored in transactions   false                         
 database major version                    3                             
-database minor version                    30                            
+database minor version                    31                            
 default transaction isolation             8                             
 deletes are detected for TYPE_FORWARD_ONLY result sets  false                         
 deletes are detected for TYPE_SCROLL_INSENSITIVE result sets  false                         
 deletes are detected for TYPE_SCROLL_SENSITIVE result sets  false                         
 does max row size include blobs           false                         
 driver major version                      3                             
-driver minor version                      30                            
+driver minor version                      31                            
 extra name characters                                                   
 identifier quote string                   "                             
 inserts are detected for TYPE_FORWARD_ONLY result sets  false                         
@@ -545,7 +545,7 @@ uses local files                          true
 JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 driver name                               SQLite JDBC                   
-driver version                            3.30.1                        
+driver version                            3.31.1                        
 driver class name                         org.sqlite.JDBC               
 url                                       jdbc:sqlite:C:\Users\SUALEH~1\AppData\Local\Temp\schemacrawler.sc.5960609169055320206..db
 is JDBC compliant                         false                         
