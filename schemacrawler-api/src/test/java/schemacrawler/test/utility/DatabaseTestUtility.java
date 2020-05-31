@@ -54,19 +54,9 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 public final class DatabaseTestUtility
 {
 
-  public final static SchemaCrawlerOptions schemaCrawlerOptionsWithMaximumSchemaInfoLevel =
+  public final static SchemaCrawlerOptions
+    schemaCrawlerOptionsWithMaximumSchemaInfoLevel =
     getMaximumSchemaCrawlerOptions();
-
-  private static SchemaCrawlerOptions getMaximumSchemaCrawlerOptions()
-  {
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
-      .builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    return SchemaCrawlerOptionsBuilder
-      .builder()
-      .withLoadOptionsBuilder(loadOptionsBuilder)
-      .toOptions();
-  }
 
   public static Catalog getCatalog(final Connection connection,
                                    final SchemaCrawlerOptions schemaCrawlerOptions)
@@ -88,6 +78,17 @@ public final class DatabaseTestUtility
     final Catalog catalog = schemaCrawler.crawl();
 
     return catalog;
+  }
+
+  private static SchemaCrawlerOptions getMaximumSchemaCrawlerOptions()
+  {
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
+      .builder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    return SchemaCrawlerOptionsBuilder
+      .builder()
+      .withLoadOptionsBuilder(loadOptionsBuilder)
+      .toOptions();
   }
 
   /**

@@ -32,7 +32,6 @@ import static java.util.Objects.requireNonNull;
 
 import sf.util.ObjectToString;
 
-
 public final class LoadOptions
   implements Options
 {
@@ -40,9 +39,11 @@ public final class LoadOptions
   private final boolean isLoadRowCounts;
   private final SchemaInfoLevel schemaInfoLevel;
 
-  LoadOptions(final SchemaInfoLevel schemaInfoLevel, final boolean isLoadRowCounts)
+  LoadOptions(final SchemaInfoLevel schemaInfoLevel,
+              final boolean isLoadRowCounts)
   {
-    this.schemaInfoLevel = requireNonNull(schemaInfoLevel, "No schema info level provided");
+    this.schemaInfoLevel =
+      requireNonNull(schemaInfoLevel, "No schema info level provided");
     this.isLoadRowCounts = isLoadRowCounts;
   }
 

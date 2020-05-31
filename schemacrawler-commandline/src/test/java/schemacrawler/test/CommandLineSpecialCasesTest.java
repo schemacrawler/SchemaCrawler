@@ -149,7 +149,8 @@ public class CommandLineSpecialCasesTest
     assertThat(outputOf(err),
                hasSameContentAs(classpathResource(
                  COMMAND_LINE_SPECIAL_CASES_OUTPUT
-                 + testContext.testMethodName() + ".stderr.txt")));
+                 + testContext.testMethodName()
+                 + ".stderr.txt")));
   }
 
 }

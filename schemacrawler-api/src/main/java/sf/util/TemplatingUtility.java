@@ -168,8 +168,8 @@ public final class TemplatingUtility
         keys.add(propertyKey);
         // Destroy key, so we can find the next one
         shrunkTemplate =
-          shrunkTemplate.substring(0, left) + shrunkTemplate.substring(
-            right + 1);
+          shrunkTemplate.substring(0, left) + shrunkTemplate.substring(right
+                                                                       + 1);
       }
       else
       {

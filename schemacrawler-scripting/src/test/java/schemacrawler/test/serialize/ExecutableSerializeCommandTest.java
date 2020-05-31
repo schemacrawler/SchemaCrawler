@@ -61,10 +61,9 @@ public class ExecutableSerializeCommandTest
                                        final SerializationFormat serializationFormat)
     throws Exception
   {
-    final LimitOptionsBuilder limitOptionsBuilder =
-      LimitOptionsBuilder
-        .builder()
-        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+      .builder()
+      .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
       SchemaCrawlerOptionsBuilder
         .builder()
@@ -83,7 +82,8 @@ public class ExecutableSerializeCommandTest
   public void executableSerializeJson(final Connection connection)
     throws Exception
   {
-    assertThat(fileHeaderOf(executeSerialize(connection, SerializationFormat.json)),
+    assertThat(fileHeaderOf(executeSerialize(connection,
+                                             SerializationFormat.json)),
                is(oneOf("7B0D", "7B0A")));
   }
 
@@ -91,7 +91,8 @@ public class ExecutableSerializeCommandTest
   public void executableSerializeYaml(final Connection connection)
     throws Exception
   {
-    assertThat(fileHeaderOf(executeSerialize(connection, SerializationFormat.yaml)),
+    assertThat(fileHeaderOf(executeSerialize(connection,
+                                             SerializationFormat.yaml)),
                is("2D2D"));
   }
 
@@ -100,7 +101,8 @@ public class ExecutableSerializeCommandTest
   public void executableSerializeJava(final Connection connection)
     throws Exception
   {
-    assertThat(fileHeaderOf(executeSerialize(connection, SerializationFormat.java)),
+    assertThat(fileHeaderOf(executeSerialize(connection,
+                                             SerializationFormat.java)),
                is("ACED"));
   }
 

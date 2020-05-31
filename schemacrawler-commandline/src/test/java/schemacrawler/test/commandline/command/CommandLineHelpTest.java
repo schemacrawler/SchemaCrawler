@@ -72,9 +72,9 @@ public class CommandLineHelpTest
 
     assertThat(outputOf(err), hasNoContent());
     assertThat(outputOf(out),
-               hasSameContentAs(classpathResource(
-                 COMMANDLINE_HELP_OUTPUT + testContext.testMethodName()
-                 + ".stdout.txt")));
+               hasSameContentAs(classpathResource(COMMANDLINE_HELP_OUTPUT
+                                                  + testContext.testMethodName()
+                                                  + ".stdout.txt")));
   }
 
   @Test
@@ -140,9 +140,9 @@ public class CommandLineHelpTest
     if (hasHelpMessage)
     {
       assertThat(outputOf(out),
-                 hasSameContentAs(classpathResource(
-                   COMMANDLINE_HELP_OUTPUT + testContext.testMethodName()
-                   + ".stdout.txt")));
+                 hasSameContentAs(classpathResource(COMMANDLINE_HELP_OUTPUT
+                                                    + testContext.testMethodName()
+                                                    + ".stdout.txt")));
     }
     else
     {

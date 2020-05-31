@@ -119,7 +119,9 @@ public class HsqldbCommandlineTest
       Main.main(flattenCommandlineArgs(argsMap));
     }
 
-    final String expectedResource = String.format("hsqldb.main.%s.%s", javaVersion(), outputFormat.getFormat());
+    final String expectedResource = String.format("hsqldb.main.%s.%s",
+                                                  javaVersion(),
+                                                  outputFormat.getFormat());
     assertThat(outputOf(testout),
                hasSameContentAndTypeAs(classpathResource(expectedResource),
                                        outputFormat.getFormat()));

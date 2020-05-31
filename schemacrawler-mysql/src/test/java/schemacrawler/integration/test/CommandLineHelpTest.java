@@ -73,8 +73,9 @@ public class CommandLineHelpTest
 
     assertThat(outputOf(err), hasNoContent());
     assertThat(outputOf(out),
-               hasSameContentAs(classpathResource(
-                 COMMAND_LINE_HELP_OUTPUT + server + ".help.txt")));
+               hasSameContentAs(classpathResource(COMMAND_LINE_HELP_OUTPUT
+                                                  + server
+                                                  + ".help.txt")));
   }
 
   @BeforeEach

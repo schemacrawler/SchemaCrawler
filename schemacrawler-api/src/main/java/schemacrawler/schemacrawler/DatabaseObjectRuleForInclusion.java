@@ -43,17 +43,20 @@ public enum DatabaseObjectRuleForInclusion
   private final String key;
   private final boolean excludeByDefault;
 
-  DatabaseObjectRuleForInclusion(final String key, final boolean excludeByDefault)
+  DatabaseObjectRuleForInclusion(final String key,
+                                 final boolean excludeByDefault)
   {
     this.key = key;
     this.excludeByDefault = excludeByDefault;
   }
 
-  public String getIncludePatternProperty() {
+  public String getIncludePatternProperty()
+  {
     return String.format("schemacrawler.%s.pattern.include", key);
   }
 
-  public String getExcludePatternProperty() {
+  public String getExcludePatternProperty()
+  {
     return String.format("schemacrawler.%s.pattern.exclude", key);
   }
 

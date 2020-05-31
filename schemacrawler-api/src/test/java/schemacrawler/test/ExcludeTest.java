@@ -42,11 +42,11 @@ import java.util.logging.Level;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -73,11 +73,10 @@ public class ExcludeTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder
-          .builder()
-          .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
-          .includeColumns(new RegularExpressionExclusionRule(".*\\..*\\.ID"));
+      final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+        .builder()
+        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
+        .includeColumns(new RegularExpressionExclusionRule(".*\\..*\\.ID"));
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
         SchemaCrawlerOptionsBuilder
           .builder()

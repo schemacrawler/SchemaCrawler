@@ -108,11 +108,15 @@ public class DatabaseConfigConnectionOptions
   private String database;
   @Option(names = {
     "--server"
-  }, required = true, description = {
-    "Where <database system identifier> is a database for "
-    + "which a SchemaCrawler plug-in is available",
-    "Use one of ${COMPLETION-CANDIDATES}"
-  }, completionCandidates = AvailableServers.class, paramLabel = "<database system identifier>")
+  },
+          required = true,
+          description = {
+            "Where <database system identifier> is a database for "
+            + "which a SchemaCrawler plug-in is available",
+            "Use one of ${COMPLETION-CANDIDATES}"
+          },
+          completionCandidates = AvailableServers.class,
+          paramLabel = "<database system identifier>")
   private String databaseSystemIdentifier;
   @Option(names = {
     "--host"

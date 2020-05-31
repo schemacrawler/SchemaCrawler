@@ -257,6 +257,15 @@ class MutableKeyColumn
     return definition.length() > 0;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public ColumnDataType getType()
+  {
+    return column.getType();
+  }
+
   int getKeyOrdinalPosition()
   {
     return keyOrdinalPosition;
@@ -265,15 +274,6 @@ class MutableKeyColumn
   void setKeyOrdinalPosition(final int keyOrdinalPosition)
   {
     this.keyOrdinalPosition = keyOrdinalPosition;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public ColumnDataType getType()
-  {
-    return column.getType();
   }
 
   void appendDefinition(final String definition)

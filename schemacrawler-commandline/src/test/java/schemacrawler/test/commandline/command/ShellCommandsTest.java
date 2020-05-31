@@ -76,9 +76,9 @@ public class ShellCommandsTest
 
     assertThat(outputOf(err), hasNoContent());
     assertThat(outputOf(out),
-               hasSameContentAs(classpathResource(
-                 SHELL_COMMANDS_OUTPUT + testContext.testMethodName()
-                 + ".stdout.txt")));
+               hasSameContentAs(classpathResource(SHELL_COMMANDS_OUTPUT
+                                                  + testContext.testMethodName()
+                                                  + ".stdout.txt")));
   }
 
   @Test
@@ -88,9 +88,9 @@ public class ShellCommandsTest
 
     assertThat(outputOf(err), hasNoContent());
     assertThat(outputOf(out),
-               hasSameContentAs(classpathResource(
-                 SHELL_COMMANDS_OUTPUT + testContext.testMethodName()
-                 + ".stdout.txt")));
+               hasSameContentAs(classpathResource(SHELL_COMMANDS_OUTPUT
+                                                  + testContext.testMethodName()
+                                                  + ".stdout.txt")));
   }
 
   @Test
@@ -114,9 +114,9 @@ public class ShellCommandsTest
 
     assertThat(outputOf(err), hasNoContent());
     assertThat(outputOf(out),
-               hasSameContentAs(classpathResource(
-                 SHELL_COMMANDS_OUTPUT + testContext.testMethodName()
-                 + ".stdout.txt")));
+               hasSameContentAs(classpathResource(SHELL_COMMANDS_OUTPUT
+                                                  + testContext.testMethodName()
+                                                  + ".stdout.txt")));
   }
 
   @Test
@@ -136,9 +136,9 @@ public class ShellCommandsTest
 
     assertThat(outputOf(err), hasNoContent());
     assertThat(outputOf(out),
-               hasSameContentAs(classpathResource(
-                 SHELL_COMMANDS_OUTPUT + testContext.testMethodName()
-                 + ".stdout.txt")));
+               hasSameContentAs(classpathResource(SHELL_COMMANDS_OUTPUT
+                                                  + testContext.testMethodName()
+                                                  + ".stdout.txt")));
   }
 
   @Test

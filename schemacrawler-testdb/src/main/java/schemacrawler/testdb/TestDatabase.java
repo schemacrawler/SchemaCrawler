@@ -204,6 +204,7 @@ public class TestDatabase
       return null;
     }
   }
+
   private static TestDatabase testDatabase;
   private final boolean trace;
   private final String host;

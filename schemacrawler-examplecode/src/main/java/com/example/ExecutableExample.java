@@ -56,15 +56,16 @@ public final class ExecutableExample
   {
 
     // Create the options
-    final LimitOptionsBuilder limitOptionsBuilder =
-      LimitOptionsBuilder.builder()
-        .includeSchemas(new RegularExpressionInclusionRule("PUBLIC.BOOKS"));
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+      .builder()
+      .includeSchemas(new RegularExpressionInclusionRule("PUBLIC.BOOKS"));
     final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
       // Set what details are required in the schema - this affects the
       // time taken to crawl the schema
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
     final SchemaCrawlerOptionsBuilder optionsBuilder =
-      SchemaCrawlerOptionsBuilder.builder()
+      SchemaCrawlerOptionsBuilder
+        .builder()
         .withLimitOptionsBuilder(limitOptionsBuilder)
         .withLoadOptionsBuilder(loadOptionsBuilder);
     final SchemaCrawlerOptions options = optionsBuilder.toOptions();

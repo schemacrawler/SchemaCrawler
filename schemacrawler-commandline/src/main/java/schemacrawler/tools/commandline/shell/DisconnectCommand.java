@@ -36,9 +36,14 @@ import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import sf.util.SchemaCrawlerLogger;
 
-@Command(name = "disconnect", header = "** Disconnect from a database", headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
-  "disconnect"
-}, optionListHeading = "Options:%n")
+@Command(name = "disconnect",
+         header = "** Disconnect from a database",
+         headerHeading = "",
+         synopsisHeading = "Shell Command:%n",
+         customSynopsis = {
+           "disconnect"
+         },
+         optionListHeading = "Options:%n")
 public class DisconnectCommand
   extends BaseStateHolder
   implements Runnable

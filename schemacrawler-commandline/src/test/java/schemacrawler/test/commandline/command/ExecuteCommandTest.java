@@ -84,8 +84,8 @@ public class ExecuteCommandTest
     commandLine.execute(args);
 
     assertThat(outputOf(testOutputFile),
-               hasSameContentAs(classpathResource(
-                 testContext.testMethodFullName() + ".txt")));
+               hasSameContentAs(classpathResource(testContext.testMethodFullName()
+                                                  + ".txt")));
   }
 
   @Test

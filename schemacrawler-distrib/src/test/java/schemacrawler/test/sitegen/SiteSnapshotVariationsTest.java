@@ -41,7 +41,12 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.test.utility.*;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
+import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
 import schemacrawler.tools.integration.serialize.SerializationFormat;
 import schemacrawler.tools.lint.executable.LintReportOutputFormat;
@@ -59,18 +64,18 @@ public class SiteSnapshotVariationsTest
   public static void _saveConfigProperties()
     throws IOException
   {
-    propertiesFile = copyResourceToTempFile(
-      "/hsqldb.INFORMATION_SCHEMA.config.properties");
+    propertiesFile =
+      copyResourceToTempFile("/hsqldb.INFORMATION_SCHEMA.config.properties");
   }
 
   @BeforeAll
   public static void _setupDirectory(final TestContext testContext)
     throws IOException, URISyntaxException
   {
-    snapshotsDirectory = testContext
-      .resolveTargetFromRootPath("_website/snapshot-examples");
-    lintReportsDirectory = testContext
-      .resolveTargetFromRootPath("_website/lint-report-examples");
+    snapshotsDirectory =
+      testContext.resolveTargetFromRootPath("_website/snapshot-examples");
+    lintReportsDirectory =
+      testContext.resolveTargetFromRootPath("_website/lint-report-examples");
   }
 
   private static Path lintReportsDirectory;
@@ -97,7 +102,8 @@ public class SiteSnapshotVariationsTest
     throws Exception
   {
     for (final OutputFormat outputFormat : new OutputFormat[] {
-      TextOutputFormat.html, TextOutputFormat.text, DiagramOutputFormat.htmlx })
+      TextOutputFormat.html, TextOutputFormat.text, DiagramOutputFormat.htmlx
+    })
     {
       final String extension;
       if ("htmlx".equals(outputFormat.getFormat()))
@@ -122,7 +128,8 @@ public class SiteSnapshotVariationsTest
     throws Exception
   {
     for (final OutputFormat outputFormat : new OutputFormat[] {
-      SerializationFormat.json, SerializationFormat.yaml })
+      SerializationFormat.json, SerializationFormat.yaml
+    })
     {
       final String extension = outputFormat.getFormat();
       run(connectionInfo,

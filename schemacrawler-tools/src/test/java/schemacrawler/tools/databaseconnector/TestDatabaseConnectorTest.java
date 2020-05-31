@@ -37,7 +37,6 @@ import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.IsEmptyMap.emptyMap;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junitpioneer.jupiter.SetSystemProperty;
 import schemacrawler.plugin.EnumDataTypeHelper;
@@ -81,8 +80,7 @@ public class TestDatabaseConnectorTest
                is(true));
     assertThat(databaseConnector.supportsUrl("jdbc:newdb:somevalue"),
                is(false));
-    assertThat(databaseConnector.supportsUrl(null),
-               is(false));
+    assertThat(databaseConnector.supportsUrl(null), is(false));
 
     assertThat(databaseConnector.toString(),
                is("Database connector for test-db - Test Database"));
@@ -113,8 +111,7 @@ public class TestDatabaseConnectorTest
 
     assertThat(databaseConnector.supportsUrl("jdbc:newdb:somevalue"),
                is(false));
-    assertThat(databaseConnector.supportsUrl(null),
-               is(false));
+    assertThat(databaseConnector.supportsUrl(null), is(false));
 
     assertThat(databaseConnector.toString(),
                is("Database connector for unknown database system type"));

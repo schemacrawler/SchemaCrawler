@@ -53,17 +53,24 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
-@Command(name = "load", header = "** Load database metadata into memory", description = {
-  ""
-}, headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
-  "load"
-}, optionListHeading = "Options:%n")
+@Command(name = "load",
+         header = "** Load database metadata into memory",
+         description = {
+           ""
+         },
+         headerHeading = "",
+         synopsisHeading = "Shell Command:%n",
+         customSynopsis = {
+           "load"
+         },
+         optionListHeading = "Options:%n")
 public class LoadCommand
   extends BaseStateHolder
   implements Runnable
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(LoadCommand.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(LoadCommand.class.getName());
 
   @Option(names = {
     "-i", "--info-level"
@@ -78,7 +85,9 @@ public class LoadCommand
   @Option(names = {
     "--load-row-counts"
   }, description = {
-    "Loads row counts for each table", "This can be a time consuming operation", "Optional, defaults to false\n"
+    "Loads row counts for each table",
+    "This can be a time consuming operation",
+    "Optional, defaults to false\n"
   })
   private boolean isLoadRowCounts;
 
@@ -105,25 +114,25 @@ public class LoadCommand
   {
     if (!state.isConnected())
     {
-      throw new ExecutionException(spec.commandLine(), "Not connected to the database");
+      throw new ExecutionException(spec.commandLine(),
+                                   "Not connected to the database");
     }
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = state.getSchemaCrawlerOptionsBuilder();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      state.getSchemaCrawlerOptionsBuilder();
 
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
+      .builder()
       .fromOptions(schemaCrawlerOptionsBuilder.getLoadOptions());
 
     if (infolevel != null)
     {
-      loadOptionsBuilder
-        .withSchemaInfoLevel(infolevel.toSchemaInfoLevel());
+      loadOptionsBuilder.withSchemaInfoLevel(infolevel.toSchemaInfoLevel());
     }
 
-    loadOptionsBuilder
-      .loadRowCounts(isLoadRowCounts);
+    loadOptionsBuilder.loadRowCounts(isLoadRowCounts);
 
-    schemaCrawlerOptionsBuilder
-      .withLoadOptionsBuilder(loadOptionsBuilder);
+    schemaCrawlerOptionsBuilder.withLoadOptionsBuilder(loadOptionsBuilder);
 
     final Catalog catalog = loadCatalog();
     state.setCatalog(catalog);
@@ -144,14 +153,18 @@ public class LoadCommand
       final SchemaRetrievalOptions schemaRetrievalOptions = state
         .getSchemaRetrievalOptionsBuilder()
         .toOptions();
-      final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptionsBuilder()
+      final SchemaCrawlerOptions schemaCrawlerOptions = state
+        .getSchemaCrawlerOptionsBuilder()
         .toOptions();
 
-      final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
-      final CatalogLoader catalogLoader = catalogLoaderRegistry.lookupCatalogLoader(schemaRetrievalOptions
-                                                                                      .getDatabaseServerType()
-                                                                                      .getDatabaseSystemIdentifier());
-      LOGGER.log(Level.CONFIG, new StringFormat("Catalog loader: %s", getClass().getName()));
+      final CatalogLoaderRegistry catalogLoaderRegistry =
+        new CatalogLoaderRegistry();
+      final CatalogLoader catalogLoader =
+        catalogLoaderRegistry.lookupCatalogLoader(schemaRetrievalOptions
+                                                    .getDatabaseServerType()
+                                                    .getDatabaseSystemIdentifier());
+      LOGGER.log(Level.CONFIG,
+                 new StringFormat("Catalog loader: %s", getClass().getName()));
 
       catalogLoader.setAdditionalConfiguration(additionalConfiguration);
       catalogLoader.setConnection(connection);
@@ -166,7 +179,9 @@ public class LoadCommand
     }
     catch (final Exception e)
     {
-      throw new ExecutionException(spec.commandLine(), "Cannot load catalog", e);
+      throw new ExecutionException(spec.commandLine(),
+                                   "Cannot load catalog",
+                                   e);
     }
   }
 

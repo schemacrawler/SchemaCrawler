@@ -55,8 +55,9 @@ public interface AttributedObject
    * @param name
    *   Attribute name.
    * @return Attribute value.
-   * @throws ClassCastException If the attribute class is not assignable from
-   * the the default value class.
+   * @throws ClassCastException
+   *   If the attribute class is not assignable from the the default value
+   *   class.
    */
   <T> T getAttribute(String name, T defaultValue)
     throws ClassCastException;

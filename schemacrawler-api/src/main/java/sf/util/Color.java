@@ -31,8 +31,8 @@ package sf.util;
 import static sf.util.Utility.isBlank;
 
 /**
- * Color breaks the dependency on java.awt.Color. The AWT comes with a lot of baggage, and is not part of Java Compact
- * Profile 2.
+ * Color breaks the dependency on java.awt.Color. The AWT comes with a lot of
+ * baggage, and is not part of Java Compact Profile 2.
  *
  * @author Sualeh Fatehi
  */
@@ -45,7 +45,9 @@ public final class Color
    * <a href= "http://stackoverflow.com/questions/7896280"> Converting
    * from HSV (HSB in Java) to RGB without using java.awt.Color</a>
    */
-  public static Color fromHSV(final float hue, final float saturation, final float value)
+  public static Color fromHSV(final float hue,
+                              final float saturation,
+                              final float value)
   {
     final float normaliedHue = hue - (float) Math.floor(hue);
     final int h = (int) (normaliedHue * 6);
@@ -69,10 +71,11 @@ public final class Color
       case 5:
         return fromRGB(value, p, q);
       default:
-        throw new IllegalArgumentException(String.format("Could not convert from HSV (%f, %f, %f) to RGB",
-                                                         normaliedHue,
-                                                         saturation,
-                                                         value));
+        throw new IllegalArgumentException(String.format(
+          "Could not convert from HSV (%f, %f, %f) to RGB",
+          normaliedHue,
+          saturation,
+          value));
     }
   }
 
@@ -109,7 +112,9 @@ public final class Color
 
   private static Color fromRGB(final float r, final float g, final float b)
   {
-    return new Color((int) (r * 255 + 0.5), (int) (g * 255 + 0.5), (int) (b * 255 + 0.5));
+    return new Color((int) (r * 255 + 0.5),
+                     (int) (g * 255 + 0.5),
+                     (int) (b * 255 + 0.5));
   }
 
   private final int b;

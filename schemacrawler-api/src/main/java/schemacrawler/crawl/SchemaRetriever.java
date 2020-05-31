@@ -39,13 +39,13 @@ import java.util.Set;
 import java.util.logging.Level;
 
 import schemacrawler.filter.InclusionRuleFilter;
-import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.inclusionrule.InclusionRule;
+import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.Query;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaReference;
 import sf.util.DatabaseUtility;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;

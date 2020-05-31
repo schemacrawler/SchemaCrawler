@@ -101,10 +101,7 @@ public class ShellCommandSerializeCommandTest
       IOUtility.createTempFilePath("test", "." + serializationFormat.name());
 
     final String[] args = new String[] {
-      "-c",
-      "serialize",
-      "-o",
-      testOutputFile.toString()
+      "-c", "serialize", "-o", testOutputFile.toString()
     };
 
     final ExecuteCommand serializeCommand = new ExecuteCommand(state);

@@ -75,7 +75,8 @@ public class OracleTest
 {
 
   @Container
-  private JdbcDatabaseContainer dbContainer = new OracleContainer("wnameless/oracle-xe-11g-r2");
+  private JdbcDatabaseContainer dbContainer =
+    new OracleContainer("wnameless/oracle-xe-11g-r2");
 
   @BeforeEach
   public void createDatabase()
@@ -95,13 +96,17 @@ public class OracleTest
   public void testOracleCatalogServerInfo()
     throws Exception
   {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder()
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+      .builder()
       .includeSchemas(new RegularExpressionInclusionRule("BOOKS"));
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
+      .builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder.builder()
-      .withLimitOptionsBuilder(limitOptionsBuilder)
-      .withLoadOptionsBuilder(loadOptionsBuilder);
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withLimitOptionsBuilder(limitOptionsBuilder)
+        .withLoadOptionsBuilder(loadOptionsBuilder);
     final SchemaCrawlerOptions options =
       schemaCrawlerOptionsBuilder.toOptions();
 
@@ -133,17 +138,21 @@ public class OracleTest
   public void testOracleWithConnection()
     throws Exception
   {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder()
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+      .builder()
       .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
       .includeAllSequences()
       .includeAllSynonyms()
       .includeRoutines(new RegularExpressionInclusionRule("[0-9a-zA-Z_\\.]*"))
       .tableTypes("TABLE,VIEW");
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
+      .builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder.builder()
-      .withLimitOptionsBuilder(limitOptionsBuilder)
-      .withLoadOptionsBuilder(loadOptionsBuilder);
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withLimitOptionsBuilder(limitOptionsBuilder)
+        .withLoadOptionsBuilder(loadOptionsBuilder);
     final SchemaCrawlerOptions options =
       schemaCrawlerOptionsBuilder.toOptions();
 
@@ -161,7 +170,8 @@ public class OracleTest
                                             .builder(textOptions)
                                             .toConfig());
 
-    final String expectedResource = String.format("testOracleWithConnection.%s.txt", javaVersion());
+    final String expectedResource =
+      String.format("testOracleWithConnection.%s.txt", javaVersion());
     assertThat(outputOf(executableExecution(getConnection(), executable)),
                hasSameContentAs(classpathResource(expectedResource)));
   }

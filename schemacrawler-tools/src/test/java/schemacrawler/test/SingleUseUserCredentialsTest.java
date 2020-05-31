@@ -49,20 +49,22 @@ public class SingleUseUserCredentialsTest
     assertThat(userCredentials.getUser(), is(nullValue()));
     assertThat(userCredentials.hasPassword(), is(false));
     assertThat(userCredentials.getPassword(), is(nullValue()));
-    assertThat(userCredentials.toString(), is("UserCredentials [user=\"null\", password=\"*****\"]"));
+    assertThat(userCredentials.toString(),
+               is("UserCredentials [user=\"null\", password=\"*****\"]"));
   }
 
   @Test
   public void blankCredentials()
   {
     final SingleUseUserCredentials userCredentials =
-      new SingleUseUserCredentials("","");
+      new SingleUseUserCredentials("", "");
 
     assertThat(userCredentials.hasUser(), is(false));
     assertThat(userCredentials.getUser(), is(""));
     assertThat(userCredentials.hasPassword(), is(true));
     assertThat(userCredentials.getPassword(), is(""));
-    assertThat(userCredentials.toString(), is("UserCredentials [user=\"\", password=\"*****\"]"));
+    assertThat(userCredentials.toString(),
+               is("UserCredentials [user=\"\", password=\"*****\"]"));
   }
 
   @Test
@@ -75,15 +77,15 @@ public class SingleUseUserCredentialsTest
     assertThat(userCredentials.getUser(), is("sa"));
     assertThat(userCredentials.hasPassword(), is(true));
     assertThat(userCredentials.getPassword(), is("sa"));
-    assertThat(userCredentials.toString(), is("UserCredentials [user=\"sa\", password=\"*****\"]"));
+    assertThat(userCredentials.toString(),
+               is("UserCredentials [user=\"sa\", password=\"*****\"]"));
 
     // Get password also clears the password, so assert everything again
 
     assertThat(userCredentials.hasUser(), is(true));
     assertThat(userCredentials.getUser(), is("sa"));
     assertThat(userCredentials.hasPassword(), is(false));
-    assertThrows(IllegalAccessError.class,
-                 () -> userCredentials.getPassword());
+    assertThrows(IllegalAccessError.class, () -> userCredentials.getPassword());
   }
 
   @Test
@@ -102,8 +104,7 @@ public class SingleUseUserCredentialsTest
     assertThat(userCredentials.hasUser(), is(true));
     assertThat(userCredentials.getUser(), is("sa"));
     assertThat(userCredentials.hasPassword(), is(false));
-    assertThrows(IllegalAccessError.class,
-                 () -> userCredentials.getPassword());
+    assertThrows(IllegalAccessError.class, () -> userCredentials.getPassword());
   }
 
 }

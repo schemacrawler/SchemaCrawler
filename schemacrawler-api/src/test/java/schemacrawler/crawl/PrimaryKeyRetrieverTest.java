@@ -99,17 +99,24 @@ public class PrimaryKeyRetrieverTest
           if (table.hasPrimaryKey())
           {
             final PrimaryKey primaryKey = table.getPrimaryKey();
-            out.println(String.format("  primary key: %s", primaryKey.getName()));
-            out.println(String.format("    columns: %s", primaryKey.getColumns()));
-            out.println(String.format("    constraint type: %s", primaryKey.getConstraintType()));
-            out.println(String.format("    is deferrable: %b", primaryKey.isDeferrable()));
-            out.println(String.format("    is initially deferred: %b", primaryKey.isInitiallyDeferred()));
+            out.println(String.format("  primary key: %s",
+                                      primaryKey.getName()));
+            out.println(String.format("    columns: %s",
+                                      primaryKey.getColumns()));
+            out.println(String.format("    constraint type: %s",
+                                      primaryKey.getConstraintType()));
+            out.println(String.format("    is deferrable: %b",
+                                      primaryKey.isDeferrable()));
+            out.println(String.format("    is initially deferred: %b",
+                                      primaryKey.isInitiallyDeferred()));
           }
         }
       }
     }
     // IMPORTANT: The data dictionary should return the same information as the metadata test
-    assertThat(outputOf(testout), hasSameContentAs(classpathResource("SchemaCrawlerTest.primaryKeys")));
+    assertThat(outputOf(testout),
+               hasSameContentAs(classpathResource(
+                 "SchemaCrawlerTest.primaryKeys")));
   }
 
   private MutableCatalog catalog;
@@ -119,20 +126,27 @@ public class PrimaryKeyRetrieverTest
   public void primaryKeysFromDataDictionary(final Connection connection)
     throws Exception
   {
-    final InformationSchemaViews informationSchemaViews = InformationSchemaViewsBuilder
-      .builder()
-      .withSql(InformationSchemaKey.PRIMARY_KEYS, "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_PRIMARYKEYS")
-      .toOptions();
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
+    final InformationSchemaViews informationSchemaViews =
+      InformationSchemaViewsBuilder
+        .builder()
+        .withSql(InformationSchemaKey.PRIMARY_KEYS,
+                 "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_PRIMARYKEYS")
+        .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+      SchemaRetrievalOptionsBuilder.builder();
     schemaRetrievalOptionsBuilder
       .with(primaryKeysRetrievalStrategy, data_dictionary_all)
       .withInformationSchemaViews(informationSchemaViews);
-    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-    final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+      schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection =
+      new RetrieverConnection(connection, schemaRetrievalOptions);
 
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    final SchemaCrawlerOptions options =
+      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
-    final PrimaryKeyRetriever primaryKeyRetriever = new PrimaryKeyRetriever(retrieverConnection, catalog, options);
+    final PrimaryKeyRetriever primaryKeyRetriever =
+      new PrimaryKeyRetriever(retrieverConnection, catalog, options);
     primaryKeyRetriever.retrievePrimaryKeys(catalog.getAllTables());
 
     final Collection<Table> tables = catalog.getTables();
@@ -140,10 +154,17 @@ public class PrimaryKeyRetrieverTest
     for (final Table table : tables)
     {
       if (!Arrays
-        .asList("Global Counts", "AUTHORSLIST", "BOOKAUTHORS", "PUBLICATIONWRITERS", "SALES", "SALESDATA")
+        .asList("Global Counts",
+                "AUTHORSLIST",
+                "BOOKAUTHORS",
+                "PUBLICATIONWRITERS",
+                "SALES",
+                "SALESDATA")
         .contains(table.getName()))
       {
-        assertThat("Did not find primary key for " + table.getFullName(), table.getPrimaryKey(), is(not(nullValue())));
+        assertThat("Did not find primary key for " + table.getFullName(),
+                   table.getPrimaryKey(),
+                   is(not(nullValue())));
       }
     }
   }
@@ -152,12 +173,14 @@ public class PrimaryKeyRetrieverTest
   public void loadBaseCatalog(final Connection connection)
     throws SchemaCrawlerException
   {
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.minimum());
-    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
       .builder()
-      .withLoadOptionsBuilder(loadOptionsBuilder)
-      .toOptions();
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.minimum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withLoadOptionsBuilder(loadOptionsBuilder)
+        .toOptions();
     catalog = (MutableCatalog) getCatalog(connection,
                                           SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
                                           schemaCrawlerOptions);

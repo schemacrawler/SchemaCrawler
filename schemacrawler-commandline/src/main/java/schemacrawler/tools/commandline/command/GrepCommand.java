@@ -43,16 +43,21 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
  *
  * @author Sualeh Fatehi
  */
-@Command(name = "grep", header = "** Grep for database object metadata", description = {
-  "",
-}, headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
-  "grep"
-}, optionListHeading = "Options:%n")
+@Command(name = "grep",
+         header = "** Grep for database object metadata",
+         description = {
+           "",
+         },
+         headerHeading = "",
+         synopsisHeading = "Shell Command:%n",
+         customSynopsis = {
+           "grep"
+         },
+         optionListHeading = "Options:%n")
 public final class GrepCommand
   extends BaseStateHolder
   implements Runnable
 {
-
 
   @Option(names = "--grep-columns", description = {
     "<grepcolumns> is a regular expression to match fully qualified column names, "
@@ -95,9 +100,11 @@ public final class GrepCommand
   @Override
   public void run()
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = state.getSchemaCrawlerOptionsBuilder();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      state.getSchemaCrawlerOptionsBuilder();
 
-    final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder.builder()
+    final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder
+      .builder()
       .fromOptions(schemaCrawlerOptionsBuilder.getGrepOptions());
 
     if (grepcolumns != null)
@@ -123,7 +130,9 @@ public final class GrepCommand
     }
 
     // Set grep options on the state
-    state.getSchemaCrawlerOptionsBuilder().withGrepOptions(grepOptionsBuilder.toOptions());
+    state
+      .getSchemaCrawlerOptionsBuilder()
+      .withGrepOptions(grepOptionsBuilder.toOptions());
   }
 
 }

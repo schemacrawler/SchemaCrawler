@@ -87,20 +87,21 @@ public abstract class BaseSchemaTextOptions
       return false;
     }
     final BaseSchemaTextOptions that = (BaseSchemaTextOptions) o;
-    return
-      isAlphabeticalSortForForeignKeys == that.isAlphabeticalSortForForeignKeys
-      && isAlphabeticalSortForIndexes == that.isAlphabeticalSortForIndexes
-      && isHideForeignKeyNames == that.isHideForeignKeyNames
-      && isHideIndexNames == that.isHideIndexNames
-      && isHidePrimaryKeyNames == that.isHidePrimaryKeyNames
-      && isHideRemarks == that.isHideRemarks
-      && isHideRoutineSpecificNames == that.isHideRoutineSpecificNames
-      && isHideTableConstraintNames == that.isHideTableConstraintNames
-      && isHideTriggerNames == that.isHideTriggerNames
-      && isShowWeakAssociations == that.isShowWeakAssociations
-      && isShowOrdinalNumbers == that.isShowOrdinalNumbers
-      && isShowStandardColumnTypeNames == that.isShowStandardColumnTypeNames
-      && isShowRowCounts == that.isShowRowCounts;
+    return isAlphabeticalSortForForeignKeys
+           == that.isAlphabeticalSortForForeignKeys
+           && isAlphabeticalSortForIndexes == that.isAlphabeticalSortForIndexes
+           && isHideForeignKeyNames == that.isHideForeignKeyNames
+           && isHideIndexNames == that.isHideIndexNames
+           && isHidePrimaryKeyNames == that.isHidePrimaryKeyNames
+           && isHideRemarks == that.isHideRemarks
+           && isHideRoutineSpecificNames == that.isHideRoutineSpecificNames
+           && isHideTableConstraintNames == that.isHideTableConstraintNames
+           && isHideTriggerNames == that.isHideTriggerNames
+           && isShowWeakAssociations == that.isShowWeakAssociations
+           && isShowOrdinalNumbers == that.isShowOrdinalNumbers
+           && isShowStandardColumnTypeNames
+              == that.isShowStandardColumnTypeNames
+           && isShowRowCounts == that.isShowRowCounts;
   }
 
   @Override

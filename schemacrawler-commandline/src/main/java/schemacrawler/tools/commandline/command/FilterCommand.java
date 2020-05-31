@@ -44,11 +44,17 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
  *
  * @author Sualeh Fatehi
  */
-@Command(name = "filter", header = "** Filter database object metadata", description = {
-  "",
-}, headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
-  "filter"
-}, optionListHeading = "Options:%n")
+@Command(name = "filter",
+         header = "** Filter database object metadata",
+         description = {
+           "",
+         },
+         headerHeading = "",
+         synopsisHeading = "Shell Command:%n",
+         customSynopsis = {
+           "filter"
+         },
+         optionListHeading = "Options:%n")
 public final class FilterCommand
   extends BaseStateHolder
   implements Runnable
@@ -56,8 +62,7 @@ public final class FilterCommand
 
   @Option(names = "--children", description = {
     "<children> is the number of generations of descendants for the tables "
-    + "selected by grep, and shown in the results",
-    "Optional, default is 0"
+    + "selected by grep, and shown in the results", "Optional, default is 0"
   })
   private Integer children;
   @Option(names = "--no-empty-tables", description = {
@@ -68,8 +73,7 @@ public final class FilterCommand
   private Boolean noemptytables;
   @Option(names = "--parents", description = {
     "<parents> is the number of generations of ancestors for the tables "
-    + "selected by grep, and shown in the results",
-    "Optional, default is 0"
+    + "selected by grep, and shown in the results", "Optional, default is 0"
   })
   private Integer parents;
 
@@ -85,9 +89,11 @@ public final class FilterCommand
   public void run()
   {
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = state.getSchemaCrawlerOptionsBuilder();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      state.getSchemaCrawlerOptionsBuilder();
 
-    final FilterOptionsBuilder optionsBuilder = FilterOptionsBuilder.builder()
+    final FilterOptionsBuilder optionsBuilder = FilterOptionsBuilder
+      .builder()
       .fromOptions(schemaCrawlerOptionsBuilder.getFilterOptions());
 
     if (parents != null)
@@ -121,7 +127,9 @@ public final class FilterCommand
       optionsBuilder.noEmptyTables(noemptytables);
     }
 
-    state.getSchemaCrawlerOptionsBuilder().withFilterOptionsBuilder(optionsBuilder);
+    state
+      .getSchemaCrawlerOptionsBuilder()
+      .withFilterOptionsBuilder(optionsBuilder);
 
   }
 

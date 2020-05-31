@@ -37,9 +37,9 @@ import java.util.List;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
-import schemacrawler.schemacrawler.Identifiers;
 
 public class LinterTableWithQuotedNames
   extends BaseLinter

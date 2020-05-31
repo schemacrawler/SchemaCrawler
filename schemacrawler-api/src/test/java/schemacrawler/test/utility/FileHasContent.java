@@ -107,6 +107,7 @@ public class FileHasContent
       return new TestResource(filePath);
     }
   }
+
   private final TestResource referenceFileResource;
   private final String outputFormatValue;
   private List<String> failures;

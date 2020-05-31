@@ -158,9 +158,9 @@ public final class OutputOptionsBuilder
         fileExtension = null;
       }
 
-      outputFormatValue =
-        isBlank(fileExtension)? TextOutputFormat.text.getFormat():
-        fileExtension;
+      outputFormatValue = isBlank(fileExtension)?
+                          TextOutputFormat.text.getFormat():
+                          fileExtension;
     }
 
     if (isBlank(title))

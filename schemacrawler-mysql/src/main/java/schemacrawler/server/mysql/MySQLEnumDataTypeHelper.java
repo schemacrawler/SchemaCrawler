@@ -47,16 +47,6 @@ public class MySQLEnumDataTypeHelper
   implements EnumDataTypeHelper
 {
 
-  @Override
-  public EnumDataTypeInfo getEnumDataTypeInfo(final Column column,
-                                              final ColumnDataType columnDataType,
-                                              final Connection connection)
-  {
-    requireNonNull(column, "No column provided");
-    final List<String> enumValues = getEnumValues(column);
-    return new EnumDataTypeInfo(!enumValues.isEmpty(), false, enumValues);
-  }
-
   private static List<String> getEnumValues(final Column column)
   {
     requireNonNull(column, "No column provided");
@@ -78,8 +68,10 @@ public class MySQLEnumDataTypeHelper
       final String[] enumValuesQuoted = group.split(",");
       for (final String enumValueQuoted : enumValuesQuoted)
       {
-        if (!isBlank(enumValueQuoted) && enumValueQuoted.length() >= 2
-            && enumValueQuoted.startsWith("'") && enumValueQuoted.endsWith("'"))
+        if (!isBlank(enumValueQuoted)
+            && enumValueQuoted.length() >= 2
+            && enumValueQuoted.startsWith("'")
+            && enumValueQuoted.endsWith("'"))
         {
           final String enumValue =
             enumValueQuoted.substring(1, enumValueQuoted.length() - 1);
@@ -89,8 +81,17 @@ public class MySQLEnumDataTypeHelper
     }
     return enumValues;
   }
-
   private static Pattern enumPattern =
     Pattern.compile("enum.*\\((.*)\\)", CASE_INSENSITIVE);
+
+  @Override
+  public EnumDataTypeInfo getEnumDataTypeInfo(final Column column,
+                                              final ColumnDataType columnDataType,
+                                              final Connection connection)
+  {
+    requireNonNull(column, "No column provided");
+    final List<String> enumValues = getEnumValues(column);
+    return new EnumDataTypeInfo(!enumValues.isEmpty(), false, enumValues);
+  }
 
 }

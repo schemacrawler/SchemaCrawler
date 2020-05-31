@@ -57,7 +57,8 @@ public final class WeakAssociation
   private static final long serialVersionUID = -5164664131926303038L;
 
   private final String name;
-  private final SortedSet<WeakAssociationColumnReference> columnReferences = new TreeSet<>();
+  private final SortedSet<WeakAssociationColumnReference> columnReferences =
+    new TreeSet<>();
 
   public WeakAssociation(final String name)
   {
@@ -151,10 +152,10 @@ public final class WeakAssociation
     return Arrays.asList(getName());
   }
 
-  void addColumnReference(final Column pkColumn,
-                          final Column fkColumn)
+  void addColumnReference(final Column pkColumn, final Column fkColumn)
   {
-    columnReferences.add(new WeakAssociationColumnReference(pkColumn, fkColumn));
+    columnReferences.add(new WeakAssociationColumnReference(pkColumn,
+                                                            fkColumn));
   }
 
 }

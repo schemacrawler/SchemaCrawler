@@ -53,15 +53,21 @@ import schemacrawler.tools.databaseconnector.UserCredentials;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
-@Command(name = "connect", header = "** Connect to the database", description = {
-  "",
-  "For database connections, please read",
-  "https://www.schemacrawler.com/database-support.html",
-  "first, before running SchemaCrawler",
-  ""
-}, headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
-  "connect"
-}, optionListHeading = "Options:%n")
+@Command(name = "connect",
+         header = "** Connect to the database",
+         description = {
+           "",
+           "For database connections, please read",
+           "https://www.schemacrawler.com/database-support.html",
+           "first, before running SchemaCrawler",
+           ""
+         },
+         headerHeading = "",
+         synopsisHeading = "Shell Command:%n",
+         customSynopsis = {
+           "connect"
+         },
+         optionListHeading = "Options:%n")
 public class ConnectCommand
   extends BaseStateHolder
   implements Runnable

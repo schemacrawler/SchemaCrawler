@@ -41,11 +41,17 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
  *
  * @author Sualeh Fatehi
  */
-@Command(name = "sort", header = "** Sort database objects in output", description = {
-  ""
-}, headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
-  "sort"
-}, optionListHeading = "Options:%n")
+@Command(name = "sort",
+         header = "** Sort database objects in output",
+         description = {
+           ""
+         },
+         headerHeading = "",
+         synopsisHeading = "Shell Command:%n",
+         customSynopsis = {
+           "sort"
+         },
+         optionListHeading = "Options:%n")
 public final class SortCommand
   extends BaseStateHolder
   implements Runnable

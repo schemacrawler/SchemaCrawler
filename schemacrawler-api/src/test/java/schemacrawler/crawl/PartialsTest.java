@@ -14,9 +14,9 @@ import org.junit.jupiter.api.Test;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.RoutineType;
-import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableRelationshipType;
+import schemacrawler.schemacrawler.SchemaReference;
 
 public class PartialsTest
 {
@@ -72,7 +72,9 @@ public class PartialsTest
     }
 
     assertThrows(InvocationTargetException.class,
-                 () -> invokeMethod(table, "getRelatedTables", TableRelationshipType.none),
+                 () -> invokeMethod(table,
+                                    "getRelatedTables",
+                                    TableRelationshipType.none),
                  "Testing partial method, getRelatedTables");
 
   }
@@ -116,7 +118,8 @@ public class PartialsTest
     final ColumnPartial columnPartial = new ColumnPartial(column);
     table.addColumn(columnPartial);
 
-    final ColumnPartial columnReferenced = new ColumnPartial(table, "other_column");
+    final ColumnPartial columnReferenced =
+      new ColumnPartial(table, "other_column");
     columnPartial.setReferencedColumn(columnReferenced);
     table.addColumn(columnReferenced);
 
@@ -176,7 +179,12 @@ public class PartialsTest
     assertThat(functionPartial.getRoutineType(), is(functionPartial.getType()));
 
     for (final String methodName : new String[] {
-      "getDefinition", "getRoutineBodyType", "getSpecificName", "hasDefinition", "getParameters", "getReturnType",
+      "getDefinition",
+      "getRoutineBodyType",
+      "getSpecificName",
+      "hasDefinition",
+      "getParameters",
+      "getReturnType",
       })
     {
       assertThrows(InvocationTargetException.class,
@@ -199,17 +207,25 @@ public class PartialsTest
   public void procedurePartial()
   {
     final SchemaReference schema = new SchemaReference("catalog", "schema");
-    final MutableProcedure procedure = new MutableProcedure(schema, "procedure");
+    final MutableProcedure procedure =
+      new MutableProcedure(schema, "procedure");
     final ProcedurePartial procedurePartial = new ProcedurePartial(procedure);
-    final ProcedureReference procedureReference = new ProcedureReference(procedure);
+    final ProcedureReference procedureReference =
+      new ProcedureReference(procedure);
 
     assertThat(procedureReference.get(), is(procedure));
 
     assertThat(procedurePartial.getRoutineType(), is(RoutineType.procedure));
-    assertThat(procedurePartial.getRoutineType(), is(procedurePartial.getType()));
+    assertThat(procedurePartial.getRoutineType(),
+               is(procedurePartial.getType()));
 
     for (final String methodName : new String[] {
-      "getDefinition", "getRoutineBodyType", "getSpecificName", "hasDefinition", "getParameters", "getReturnType",
+      "getDefinition",
+      "getRoutineBodyType",
+      "getSpecificName",
+      "hasDefinition",
+      "getParameters",
+      "getReturnType",
       })
     {
       assertThrows(InvocationTargetException.class,

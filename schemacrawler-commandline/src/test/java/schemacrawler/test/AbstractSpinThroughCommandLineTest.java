@@ -103,14 +103,19 @@ public abstract class AbstractSpinThroughCommandLineTest
       outputFormat -> schemaTextDetailTypes().map(schemaTextDetailType -> () -> {
 
         final String javaVersion;
-        if (schemaTextDetailType == SchemaTextDetailType.details && infoLevel == InfoLevel.maximum)
+        if (schemaTextDetailType == SchemaTextDetailType.details
+            && infoLevel == InfoLevel.maximum)
         {
           javaVersion = "." + javaVersion();
-        } else {
+        }
+        else
+        {
           javaVersion = "";
         }
-        final String referenceFile =
-          referenceFile(schemaTextDetailType, infoLevel, outputFormat, javaVersion);
+        final String referenceFile = referenceFile(schemaTextDetailType,
+                                                   infoLevel,
+                                                   outputFormat,
+                                                   javaVersion);
 
         final String command = schemaTextDetailType.name();
 
@@ -126,8 +131,9 @@ public abstract class AbstractSpinThroughCommandLineTest
                                                  argsMap,
                                                  "/hsqldb.INFORMATION_SCHEMA.config.properties",
                                                  outputFormat)),
-                   hasSameContentAndTypeAs(classpathResource(
-                     SPIN_THROUGH_OUTPUT + referenceFile), outputFormat));
+                   hasSameContentAndTypeAs(classpathResource(SPIN_THROUGH_OUTPUT
+                                                             + referenceFile),
+                                           outputFormat));
 
       }))));
   }

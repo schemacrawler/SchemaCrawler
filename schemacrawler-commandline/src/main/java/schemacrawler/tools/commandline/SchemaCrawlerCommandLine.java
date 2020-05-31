@@ -105,11 +105,12 @@ public final class SchemaCrawlerCommandLine
       {
         System.err.printf("Error: Unknown error%n%n");
       }
-      System.err.printf("Re-run SchemaCrawler with just the%n" + "-h%n"
+      System.err.printf("Re-run SchemaCrawler with just the%n"
+                        + "-h%n"
                         + "option for help%n%n");
-      System.err.printf(
-        "Or, re-run SchemaCrawler with an additional%n" + "--log-level=CONFIG%n"
-        + "option for details on the error%n");
+      System.err.printf("Or, re-run SchemaCrawler with an additional%n"
+                        + "--log-level=CONFIG%n"
+                        + "option for details on the error%n");
     }
 
   }

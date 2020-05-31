@@ -51,8 +51,10 @@ public final class SchemaCrawlerOptions
                        final GrepOptions grepOptions,
                        final LoadOptions loadOptions)
   {
-    this.limitOptions = requireNonNull(limitOptions, "No limit options provided");
-    this.filterOptions = requireNonNull(filterOptions, "No filter options provided");
+    this.limitOptions =
+      requireNonNull(limitOptions, "No limit options provided");
+    this.filterOptions =
+      requireNonNull(filterOptions, "No filter options provided");
     this.grepOptions = requireNonNull(grepOptions, "No grep options provided");
     this.loadOptions = requireNonNull(loadOptions, "No load options provided");
   }

@@ -78,8 +78,8 @@ public class CommandLineLintHelpTest
 
     assertThat(outputOf(err), hasNoContent());
     assertThat(outputOf(out),
-               hasSameContentAs(classpathResource(
-                 COMMANDLINE_HELP_OUTPUT + "help.lint.stdout.txt")));
+               hasSameContentAs(classpathResource(COMMANDLINE_HELP_OUTPUT
+                                                  + "help.lint.stdout.txt")));
   }
 
   @BeforeEach

@@ -51,14 +51,20 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
  *
  * @author Sualeh Fatehi
  */
-@Command(name = "limit", header = "** Limit database object metadata", description = {
-  "",
-  "When you limit database object metadata, it reduces SchemaCrawler's visibility into other database objects.",
-  "From SchemaCrawler's perspective, the other database objects do not exist.",
-  ""
-}, headerHeading = "", synopsisHeading = "Shell Command:%n", customSynopsis = {
-  "limit"
-}, optionListHeading = "Options:%n")
+@Command(name = "limit",
+         header = "** Limit database object metadata",
+         description = {
+           "",
+           "When you limit database object metadata, it reduces SchemaCrawler's visibility into other database objects.",
+           "From SchemaCrawler's perspective, the other database objects do not exist.",
+           ""
+         },
+         headerHeading = "",
+         synopsisHeading = "Shell Command:%n",
+         customSynopsis = {
+           "limit"
+         },
+         optionListHeading = "Options:%n")
 public final class LimitCommand
   extends BaseStateHolder
   implements Runnable
@@ -154,9 +160,11 @@ public final class LimitCommand
   @Override
   public void run()
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = state.getSchemaCrawlerOptionsBuilder();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      state.getSchemaCrawlerOptionsBuilder();
 
-    final LimitOptionsBuilder optionsBuilder = LimitOptionsBuilder.builder()
+    final LimitOptionsBuilder optionsBuilder = LimitOptionsBuilder
+      .builder()
       .fromOptions(schemaCrawlerOptionsBuilder.getLimitOptions());
 
     if (schemas != null)
@@ -200,8 +208,7 @@ public final class LimitCommand
       optionsBuilder.routineTypes(routineTypes());
     }
 
-    schemaCrawlerOptionsBuilder
-      .withLimitOptionsBuilder(optionsBuilder);
+    schemaCrawlerOptionsBuilder.withLimitOptionsBuilder(optionsBuilder);
 
   }
 

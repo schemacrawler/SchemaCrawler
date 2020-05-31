@@ -49,30 +49,6 @@ public final class Version
   private static final String PRODUCTNAME = "SchemaCrawler";
   private static final String VERSION;
 
-  static
-  {
-    ABOUT = readResourceFully("/help/SchemaCrawler.txt");
-
-    String[] productLine;
-    try (final BufferedReader reader = new BufferedReader(new StringReader(ABOUT)))
-    {
-      final String readLine = reader.readLine();
-      if (readLine != null)
-      {
-        productLine = readLine.split(" ");
-      }
-      else
-      {
-        productLine = new String[] { PRODUCTNAME, "" };
-      }
-    }
-    catch (final IOException e)
-    {
-      productLine = new String[] { PRODUCTNAME, "" };
-    }
-    VERSION = productLine[1];
-  }
-
   /**
    * Information about this product.
    *
@@ -112,6 +88,30 @@ public final class Version
   public static void main(final String[] args)
   {
     System.out.println(about());
+  }
+
+  static
+  {
+    ABOUT = readResourceFully("/help/SchemaCrawler.txt");
+
+    String[] productLine;
+    try (final BufferedReader reader = new BufferedReader(new StringReader(ABOUT)))
+    {
+      final String readLine = reader.readLine();
+      if (readLine != null)
+      {
+        productLine = readLine.split(" ");
+      }
+      else
+      {
+        productLine = new String[] { PRODUCTNAME, "" };
+      }
+    }
+    catch (final IOException e)
+    {
+      productLine = new String[] { PRODUCTNAME, "" };
+    }
+    VERSION = productLine[1];
   }
 
   private Version()

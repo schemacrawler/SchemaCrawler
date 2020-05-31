@@ -97,7 +97,8 @@ public class SQLiteExecutableTest
     config.put("server", "sqlite");
     config.put("database", sqliteDbFile.toString());
 
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
+      .builder()
       .withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());
     final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder
       .builder()

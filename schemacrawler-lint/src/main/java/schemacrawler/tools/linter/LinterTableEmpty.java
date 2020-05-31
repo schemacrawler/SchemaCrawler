@@ -37,11 +37,11 @@ import java.util.logging.Level;
 
 import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.Identifiers;
+import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
-import schemacrawler.schemacrawler.Identifiers;
-import schemacrawler.schemacrawler.Query;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 

@@ -46,7 +46,8 @@ public final class ProposedWeakAssociation
 
   ProposedWeakAssociation(final ColumnReference columnReference)
   {
-    super(columnReference.getPrimaryKeyColumn(), columnReference.getForeignKeyColumn());
+    super(columnReference.getPrimaryKeyColumn(),
+          columnReference.getForeignKeyColumn());
   }
 
   public boolean isValid()

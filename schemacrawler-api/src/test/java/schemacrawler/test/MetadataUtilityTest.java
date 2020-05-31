@@ -65,7 +65,8 @@ public class MetadataUtilityTest
                           final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
 
@@ -105,7 +106,8 @@ public class MetadataUtilityTest
                              final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
 

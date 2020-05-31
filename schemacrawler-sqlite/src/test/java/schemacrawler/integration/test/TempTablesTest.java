@@ -73,11 +73,11 @@ public class TempTablesTest
     final Connection connection = executeSqlInTestDatabase(sqliteDbFile,
                                                            "/db/books/05_temp_tables_01_B.sql");
 
-    final LimitOptionsBuilder limitOptionsBuilder =
-      LimitOptionsBuilder
-        .builder()
-        .tableTypes(Arrays.asList("GLOBAL TEMPORARY"));
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+      .builder()
+      .tableTypes(Arrays.asList("GLOBAL TEMPORARY"));
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
+      .builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.minimum());
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
       SchemaCrawlerOptionsBuilder

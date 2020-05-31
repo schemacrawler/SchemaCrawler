@@ -30,7 +30,8 @@ package schemacrawler.schemacrawler;
 
 
 /**
- * SchemaCrawler filter options builder, to build the immutable options to crawl a schema.
+ * SchemaCrawler filter options builder, to build the immutable options to crawl
+ * a schema.
  */
 public final class FilterOptionsBuilder
   implements OptionsBuilder<FilterOptionsBuilder, FilterOptions>
@@ -105,7 +106,9 @@ public final class FilterOptionsBuilder
   @Override
   public FilterOptions toOptions()
   {
-    return new FilterOptions(isNoEmptyTables, childTableFilterDepth, parentTableFilterDepth);
+    return new FilterOptions(isNoEmptyTables,
+                             childTableFilterDepth,
+                             parentTableFilterDepth);
   }
 
   /**
@@ -117,7 +120,8 @@ public final class FilterOptionsBuilder
   }
 
   /**
-   * Corresponds to the --no-empty-tables=&lt;boolean&gt; command-line argument.
+   * Corresponds to the --no-empty-tables=&lt;boolean&gt; command-line
+   * argument.
    */
   public final FilterOptionsBuilder noEmptyTables(final boolean value)
   {

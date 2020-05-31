@@ -106,8 +106,8 @@ public class TestDatabaseConnectionParameterResolver
       }
       else
       {
-        throw new ParameterResolutionException(
-          "Could not resolve " + parameter);
+        throw new ParameterResolutionException("Could not resolve "
+                                               + parameter);
       }
     }
     catch (final SQLException e)

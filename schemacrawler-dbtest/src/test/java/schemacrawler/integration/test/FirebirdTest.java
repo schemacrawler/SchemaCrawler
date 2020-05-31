@@ -64,8 +64,8 @@ public class FirebirdTest
 
   @Container
   private JdbcDatabaseContainer dbContainer = new FirebirdContainer()
-      .withUsername("schemacrawler")
-      .withDatabaseName("BOOKS");
+    .withUsername("schemacrawler")
+    .withDatabaseName("BOOKS");
 
   @BeforeEach
   public void createDatabase()
@@ -82,17 +82,21 @@ public class FirebirdTest
   public void testFirebirdWithConnection()
     throws Exception
   {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder()
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+      .builder()
       .includeSchemas(new IncludeAll())
       .includeAllSequences()
       .includeAllSynonyms()
       .includeAllRoutines()
       .tableTypes("TABLE,VIEW");
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
+      .builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder.builder()
-      .withLimitOptionsBuilder(limitOptionsBuilder)
-      .withLoadOptionsBuilder(loadOptionsBuilder);
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withLimitOptionsBuilder(limitOptionsBuilder)
+        .withLoadOptionsBuilder(loadOptionsBuilder);
     final SchemaCrawlerOptions options =
       schemaCrawlerOptionsBuilder.toOptions();
 
@@ -110,7 +114,8 @@ public class FirebirdTest
                                             .builder(textOptions)
                                             .toConfig());
 
-    final String expectedResultsResource = String.format("testFirebirdWithConnection.%s.txt", javaVersion());
+    final String expectedResultsResource =
+      String.format("testFirebirdWithConnection.%s.txt", javaVersion());
     assertThat(outputOf(executableExecution(getConnection(), executable)),
                hasSameContentAs(classpathResource(expectedResultsResource)));
   }

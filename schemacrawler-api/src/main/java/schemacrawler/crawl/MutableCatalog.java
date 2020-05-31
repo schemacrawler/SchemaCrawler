@@ -46,10 +46,10 @@ import schemacrawler.schema.Reducer;
 import schemacrawler.schema.Reducible;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.SchemaReference;
 
 /**
  * Database and connection information. Created from metadata returned by a JDBC

@@ -43,7 +43,9 @@ public final class OfflineDatabaseConnector
 
   public static final DatabaseServerType DB_SERVER_TYPE =
     new DatabaseServerType("offline",
-                           "SchemaCrawler " + "Offline " + "Catalog "
+                           "SchemaCrawler "
+                           + "Offline "
+                           + "Catalog "
                            + "Snapshot");
 
   public OfflineDatabaseConnector()

@@ -38,8 +38,8 @@ public interface CatalogSerializer
 {
 
   /**
-   * Serialize catalog to a binary stream. If the serialization format is text-based, specified character encoding will
-   * not be honored.
+   * Serialize catalog to a binary stream. If the serialization format is
+   * text-based, specified character encoding will not be honored.
    *
    * @param out
    *   Output stream
@@ -49,8 +49,9 @@ public interface CatalogSerializer
     throws SchemaCrawlerException;
 
   /**
-   * Serialize catalog to a binary stream. If the serialization format is text-based, specified character encoding will
-   * be honored. If the serialization format is binary, and exception will be thrown.
+   * Serialize catalog to a binary stream. If the serialization format is
+   * text-based, specified character encoding will be honored. If the
+   * serialization format is binary, and exception will be thrown.
    *
    * @param out
    *   Output stream

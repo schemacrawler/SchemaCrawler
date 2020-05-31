@@ -193,6 +193,18 @@ class MutableTable
     return primaryKey;
   }
 
+  final void setPrimaryKey(final MutablePrimaryKey primaryKey)
+  {
+    if (primaryKey == null)
+    {
+      return;
+    }
+    else
+    {
+      this.primaryKey = primaryKey;
+    }
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -433,21 +445,14 @@ class MutableTable
     }
   }
 
-  final void setPrimaryKey(final MutablePrimaryKey primaryKey)
-  {
-    if (primaryKey == null)
-    {
-      return;
-    }
-    else
-    {
-      this.primaryKey = primaryKey;
-    }
-  }
-
   final void setSortIndex(final int sortIndex)
   {
     this.sortIndex = sortIndex;
+  }
+
+  NamedObjectList<MutableColumn> getAllColumns()
+  {
+    return columns;
   }
 
   private Collection<ForeignKey> getForeignKeys(final TableAssociationType tableAssociationType)
@@ -500,11 +505,6 @@ class MutableTable
       }
     }
     return foreignKeysList;
-  }
-
-  NamedObjectList<MutableColumn> getAllColumns()
-  {
-    return columns;
   }
 
 }

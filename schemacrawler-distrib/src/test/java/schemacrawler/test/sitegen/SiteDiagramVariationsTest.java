@@ -86,6 +86,7 @@ public class SiteDiagramVariationsTest
                                               DiagramOutputFormat.png);
     move(pngFile, outputFile, REPLACE_EXISTING);
   }
+
   private Path directory;
 
   @BeforeEach
@@ -96,8 +97,8 @@ public class SiteDiagramVariationsTest
     {
       return;
     }
-    directory = testContext.resolveTargetFromRootPath(
-      "_website/diagram-examples");
+    directory =
+      testContext.resolveTargetFromRootPath("_website/diagram-examples");
   }
 
   @Test

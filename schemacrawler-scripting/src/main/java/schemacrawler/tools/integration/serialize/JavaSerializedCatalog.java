@@ -41,7 +41,8 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
- * Decorates a database to allow for serialization to and from plain Java serialization.
+ * Decorates a database to allow for serialization to and from plain Java
+ * serialization.
  */
 public final class JavaSerializedCatalog
   implements CatalogSerializer
@@ -104,7 +105,8 @@ public final class JavaSerializedCatalog
   @Override
   public void save(final Writer out)
   {
-    throw new UnsupportedOperationException("Cannot serialize binary format using character data");
+    throw new UnsupportedOperationException(
+      "Cannot serialize binary format using character data");
   }
 
 }

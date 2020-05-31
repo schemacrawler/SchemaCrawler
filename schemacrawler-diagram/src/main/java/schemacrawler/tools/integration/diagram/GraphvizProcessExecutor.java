@@ -50,7 +50,8 @@ final class GraphvizProcessExecutor
   extends AbstractGraphProcessExecutor
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(GraphvizProcessExecutor.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(GraphvizProcessExecutor.class.getName());
 
   private final List<String> graphvizOpts;
 
@@ -62,7 +63,8 @@ final class GraphvizProcessExecutor
   {
     super(dotFile, outputFile, diagramOutputFormat);
 
-    this.graphvizOpts = requireNonNull(graphvizOpts, "No Graphviz options provided");
+    this.graphvizOpts =
+      requireNonNull(graphvizOpts, "No Graphviz options provided");
   }
 
   @Override
@@ -70,7 +72,9 @@ final class GraphvizProcessExecutor
   {
 
     final List<String> command = createDiagramCommand();
-    LOGGER.log(Level.INFO, new StringFormat("Generating diagram using Graphviz:\n%s", command.toString()));
+    LOGGER.log(Level.INFO,
+               new StringFormat("Generating diagram using Graphviz:\n%s",
+                                command.toString()));
 
     final ProcessExecutor processExecutor = new ProcessExecutor();
     processExecutor.setCommandLine(command);
@@ -82,26 +86,36 @@ final class GraphvizProcessExecutor
     }
     catch (final Exception e)
     {
-      LOGGER.log(Level.INFO, String.format("Could not generate diagram using Graphviz:%n%s", command.toString()), e);
+      LOGGER.log(Level.INFO,
+                 String.format("Could not generate diagram using Graphviz:%n%s",
+                               command.toString()),
+                 e);
       exitCode = Integer.MIN_VALUE;
     }
     final boolean successful = exitCode != null && exitCode == 0;
 
     LOGGER.log(Level.FINE,
-               new StringFormat("Graphviz stdout:%n%s", new FileContents(processExecutor.getProcessOutput())));
+               new StringFormat("Graphviz stdout:%n%s",
+                                new FileContents(processExecutor.getProcessOutput())));
     if (!successful)
     {
-      final Supplier<String> processError = new FileContents(processExecutor.getProcessError());
+      final Supplier<String> processError =
+        new FileContents(processExecutor.getProcessError());
       System.err.println(processError);
       LOGGER.log(Level.SEVERE,
-                 new StringFormat("Graphviz returned exit code <%d>%nGraphviz stderr:%n%s", exitCode, processError));
+                 new StringFormat(
+                   "Graphviz returned exit code <%d>%nGraphviz stderr:%n%s",
+                   exitCode,
+                   processError));
       retainDotFile(processExecutor.getCommand());
     }
     else
     {
       LOGGER.log(Level.FINE,
-                 new StringFormat("Graphviz stderr:%n%s", new FileContents(processExecutor.getProcessError())));
-      LOGGER.log(Level.INFO, new StringFormat("Generated diagram <%s>", outputFile));
+                 new StringFormat("Graphviz stderr:%n%s",
+                                  new FileContents(processExecutor.getProcessError())));
+      LOGGER.log(Level.INFO,
+                 new StringFormat("Generated diagram <%s>", outputFile));
     }
 
     return successful;
@@ -148,8 +162,9 @@ final class GraphvizProcessExecutor
       command.add(movedDotFile.toString());
 
       LOGGER.log(Level.SEVERE,
-                 String.format("Error generating diagram%nGenerate your diagram manually, using:%n%s",
-                               String.join(" ", command)));
+                 String.format(
+                   "Error generating diagram%nGenerate your diagram manually, using:%n%s",
+                   String.join(" ", command)));
     }
     catch (final IOException e)
     {

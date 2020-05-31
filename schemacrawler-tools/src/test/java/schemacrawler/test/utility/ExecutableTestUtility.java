@@ -86,10 +86,9 @@ public final class ExecutableTestUtility
 
   public static SchemaCrawlerExecutable executableOf(final String command)
   {
-    final LimitOptionsBuilder limitOptionsBuilder =
-      LimitOptionsBuilder
-        .builder()
-        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+      .builder()
+      .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
       SchemaCrawlerOptionsBuilder
         .builder()

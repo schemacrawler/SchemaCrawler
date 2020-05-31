@@ -120,22 +120,27 @@ public abstract class AbstractSpinThroughExecutableTest
       outputFormat -> schemaTextDetailTypes().map(schemaTextDetailType -> () -> {
 
         final String javaVersion;
-        if (schemaTextDetailType == SchemaTextDetailType.details && infoLevel == InfoLevel.maximum)
+        if (schemaTextDetailType == SchemaTextDetailType.details
+            && infoLevel == InfoLevel.maximum)
         {
           javaVersion = "." + javaVersion();
-        } else {
+        }
+        else
+        {
           javaVersion = "";
         }
-        final String referenceFile =
-          referenceFile(schemaTextDetailType, infoLevel, outputFormat, javaVersion);
+        final String referenceFile = referenceFile(schemaTextDetailType,
+                                                   infoLevel,
+                                                   outputFormat,
+                                                   javaVersion);
 
-        final LimitOptionsBuilder limitOptionsBuilder =
-          LimitOptionsBuilder
-            .builder()
-            .includeAllSequences()
-            .includeAllSynonyms()
-            .includeAllRoutines();
-        final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+        final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+          .builder()
+          .includeAllSequences()
+          .includeAllSynonyms()
+          .includeAllRoutines();
+        final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
+          .builder()
           .withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());
         final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
           SchemaCrawlerOptionsBuilder
@@ -159,8 +164,9 @@ public abstract class AbstractSpinThroughExecutableTest
         assertThat(outputOf(executableExecution(connection,
                                                 executable,
                                                 outputFormat)),
-                   hasSameContentAndTypeAs(classpathResource(
-                     SPIN_THROUGH_OUTPUT + referenceFile), outputFormat));
+                   hasSameContentAndTypeAs(classpathResource(SPIN_THROUGH_OUTPUT
+                                                             + referenceFile),
+                                           outputFormat));
 
       }))));
   }

@@ -78,8 +78,10 @@ public class JdbcDriverInfoRetrieverTest
   public void jdbcDriverInfoOverriddenBad(final Connection connection)
     throws Exception
   {
-    final DatabaseServerType databaseServerType =
-      new DatabaseServerType("hsqldb-3", "HyperSQL", "com.example.BadDriverClass");
+    final DatabaseServerType databaseServerType = new DatabaseServerType(
+      "hsqldb-3",
+      "HyperSQL",
+      "com.example.BadDriverClass");
     verifyJdbcDriverInfoRetrieval(connection, databaseServerType);
 
     assertThat(catalog
@@ -89,11 +91,14 @@ public class JdbcDriverInfoRetrieverTest
 
   @Test
   @DisplayName("Retrieve JDBC driver info with overridden driver class")
-  public void jdbcDriverInfoOverridden(final TestContext testContext, final Connection connection)
+  public void jdbcDriverInfoOverridden(final TestContext testContext,
+                                       final Connection connection)
     throws Exception
   {
-    final DatabaseServerType databaseServerType =
-      new DatabaseServerType("hsqldb-2", "HyperSQL with extended driver", "org.hsqldb.jdbcDriver");
+    final DatabaseServerType databaseServerType = new DatabaseServerType(
+      "hsqldb-2",
+      "HyperSQL with extended driver",
+      "org.hsqldb.jdbcDriver");
     verifyJdbcDriverInfoRetrieval(connection, databaseServerType);
 
     assertThat(catalog
@@ -113,30 +118,37 @@ public class JdbcDriverInfoRetrieverTest
                  .getDriverClassName(), is(""));
   }
 
-  private void verifyJdbcDriverInfoRetrieval(final Connection connection, final DatabaseServerType databaseServerType)
+  private void verifyJdbcDriverInfoRetrieval(final Connection connection,
+                                             final DatabaseServerType databaseServerType)
     throws SQLException
   {
     assertThat(catalog
                  .getJdbcDriverInfo()
                  .getDriverClassName(), is(""));
 
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
-      .builder()
-      .withDatabaseServerType(databaseServerType);
-    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-    final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+      SchemaRetrievalOptionsBuilder
+        .builder()
+        .withDatabaseServerType(databaseServerType);
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+      schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection =
+      new RetrieverConnection(connection, schemaRetrievalOptions);
 
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    final SchemaCrawlerOptions options =
+      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
     final DatabaseInfoRetriever databaseInfoRetriever =
       new DatabaseInfoRetriever(retrieverConnection, catalog, options);
     databaseInfoRetriever.retrieveJdbcDriverInfo();
 
     final MutableJdbcDriverInfo jdbcDriverInfo = catalog.getJdbcDriverInfo();
-    assertThat(jdbcDriverInfo.getProductName(), is("HSQL Database Engine Driver"));
+    assertThat(jdbcDriverInfo.getProductName(),
+               is("HSQL Database Engine Driver"));
     assertThat(jdbcDriverInfo.getProductVersion(), is("2.5.0"));
 
-    final List<Property> driverProperties = new ArrayList<>(jdbcDriverInfo.getDriverProperties());
+    final List<Property> driverProperties =
+      new ArrayList<>(jdbcDriverInfo.getDriverProperties());
     assertThat(driverProperties, hasSize(0));
   }
 

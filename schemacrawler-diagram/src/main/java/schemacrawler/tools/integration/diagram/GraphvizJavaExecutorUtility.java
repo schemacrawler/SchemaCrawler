@@ -64,8 +64,8 @@ public final class GraphvizJavaExecutorUtility
     }
     catch (final Throwable e)
     {
-      throw new SchemaCrawlerException("Cannot generate diagram from " + dotFile,
-                                       e);
+      throw new SchemaCrawlerException("Cannot generate diagram from "
+                                       + dotFile, e);
     }
   }
 

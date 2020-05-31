@@ -106,10 +106,11 @@ public class OfflineSnapshotTest
       Main.main(flattenCommandlineArgs(argsMap));
     }
 
-    final String expectedResource = String.format("details.%s.txt",javaVersion());
+    final String expectedResource =
+      String.format("details.%s.txt", javaVersion());
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(
-                 OFFLINE_EXECUTABLE_OUTPUT + expectedResource)));
+               hasSameContentAs(classpathResource(OFFLINE_EXECUTABLE_OUTPUT
+                                                  + expectedResource)));
 
   }
 
@@ -135,8 +136,8 @@ public class OfflineSnapshotTest
       Main.main(flattenCommandlineArgs(argsMap));
     }
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(
-                 OFFLINE_EXECUTABLE_OUTPUT + "offlineWithFilters.txt")));
+               hasSameContentAs(classpathResource(OFFLINE_EXECUTABLE_OUTPUT
+                                                  + "offlineWithFilters.txt")));
   }
 
   @Test
@@ -167,19 +168,19 @@ public class OfflineSnapshotTest
       Main.main(flattenCommandlineArgs(argsMap));
     }
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(
-                 OFFLINE_EXECUTABLE_OUTPUT + "offlineWithSchemaFilters.txt")));
+               hasSameContentAs(classpathResource(OFFLINE_EXECUTABLE_OUTPUT
+                                                  + "offlineWithSchemaFilters.txt")));
   }
 
   @Test
   public void offlineSnapshotExecutable()
     throws Exception
   {
-    final LimitOptionsBuilder limitOptionsBuilder =
-      LimitOptionsBuilder
-        .builder()
-        .includeAllRoutines();
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+      .builder()
+      .includeAllRoutines();
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
+      .builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
       SchemaCrawlerOptionsBuilder
@@ -201,7 +202,8 @@ public class OfflineSnapshotTest
     executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
     executable.setConnection(connection);
 
-    final String expectedResource = String.format("details.%s.txt",javaVersion());
+    final String expectedResource =
+      String.format("details.%s.txt", javaVersion());
     executeExecutable(executable, OFFLINE_EXECUTABLE_OUTPUT + expectedResource);
   }
 
@@ -209,11 +211,11 @@ public class OfflineSnapshotTest
   public void serializeCatalog(final Connection connection)
     throws SchemaCrawlerException, IOException
   {
-    final LimitOptionsBuilder limitOptionsBuilder =
-      LimitOptionsBuilder
-        .builder()
-        .includeAllRoutines();
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+      .builder()
+      .includeAllRoutines();
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
+      .builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
       SchemaCrawlerOptionsBuilder

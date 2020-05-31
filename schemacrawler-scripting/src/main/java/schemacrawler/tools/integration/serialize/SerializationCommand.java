@@ -75,8 +75,10 @@ public final class SerializationCommand
     final SerializationFormat serializationFormat =
       SerializationFormat.fromFormat(outputOptions.getOutputFormatValue());
 
-    final String serializerClassName = serializationFormat.getSerializerClassName();
-    final Class<CatalogSerializer> serializableCatalogClass = (Class<CatalogSerializer>) Class.forName(serializerClassName);
+    final String serializerClassName =
+      serializationFormat.getSerializerClassName();
+    final Class<CatalogSerializer> serializableCatalogClass =
+      (Class<CatalogSerializer>) Class.forName(serializerClassName);
     final CatalogSerializer serializableCatalog = serializableCatalogClass
       .getDeclaredConstructor(Catalog.class)
       .newInstance(catalog);
@@ -84,7 +86,8 @@ public final class SerializationCommand
     if (serializationFormat.isBinaryFormat())
     {
       // Force a file to be created for binary formats such as Java serialization
-      final Path outputFile = outputOptions.getOutputFile(serializationFormat.getFileExtension());
+      final Path outputFile =
+        outputOptions.getOutputFile(serializationFormat.getFileExtension());
 
       outputOptions = OutputOptionsBuilder
         .builder(outputOptions)

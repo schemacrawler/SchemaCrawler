@@ -30,7 +30,8 @@ package schemacrawler.schemacrawler;
 
 
 /**
- * SchemaCrawler options builder, to build the immutable options to crawl a schema.
+ * SchemaCrawler options builder, to build the immutable options to crawl a
+ * schema.
  */
 public final class SchemaCrawlerOptionsBuilder
   implements OptionsBuilder<SchemaCrawlerOptionsBuilder, SchemaCrawlerOptions>
@@ -125,7 +126,10 @@ public final class SchemaCrawlerOptionsBuilder
   @Override
   public SchemaCrawlerOptions toOptions()
   {
-    return new SchemaCrawlerOptions(limitOptions, filterOptions, grepOptions, loadOptions);
+    return new SchemaCrawlerOptions(limitOptions,
+                                    filterOptions,
+                                    grepOptions,
+                                    loadOptions);
   }
 
   public SchemaCrawlerOptionsBuilder withGrepOptions(final GrepOptions grepOptions)

@@ -108,7 +108,9 @@ public class SqliteDistributionTest
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
-    final String expectedResource = String.format("sqlite.main.%s.%s", javaVersion(), outputFormat.getFormat());
+    final String expectedResource = String.format("sqlite.main.%s.%s",
+                                                  javaVersion(),
+                                                  outputFormat.getFormat());
     assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(expectedResource)));
   }

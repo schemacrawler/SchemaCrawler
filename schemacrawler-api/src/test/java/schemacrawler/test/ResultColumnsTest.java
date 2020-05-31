@@ -59,7 +59,8 @@ import sf.util.SchemaCrawlerLogger;
 public class ResultColumnsTest
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(ResultColumnsTest.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(ResultColumnsTest.class.getName());
 
   @Test
   public void columns(final TestContext testContext, final Connection cxn)
@@ -69,7 +70,8 @@ public class ResultColumnsTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final String sql = "" + "SELECT                                                                    "
+      final String sql = ""
+                         + "SELECT                                                                    "
                          + " PUBLIC.BOOKS.BOOKS.TITLE AS BOOK,                                        "
                          + " PUBLIC.BOOKS.AUTHORS.FIRSTNAME + ' ' + PUBLIC.BOOKS.AUTHORS.LASTNAME,    "
                          + " PUBLIC.BOOKS.BOOKS.PRICE                                                 "
@@ -87,9 +89,12 @@ public class ResultColumnsTest
       )
       {
 
-        final ResultsColumns resultColumns = new ResultsCrawler(resultSet).crawl();
+        final ResultsColumns resultColumns =
+          new ResultsCrawler(resultSet).crawl();
 
-        assertThat("Could not obtain result columns", resultColumns, notNullValue());
+        assertThat("Could not obtain result columns",
+                   resultColumns,
+                   notNullValue());
 
         out.println("full-name: " + resultColumns.getFullName());
         out.println("columns: " + resultColumns.getColumnsListAsString());
@@ -102,10 +107,13 @@ public class ResultColumnsTest
         {
           LOGGER.log(Level.FINE, column.toString());
           out.println("column: " + column.getFullName());
-          final Map<String, Object> properties = new TreeMap<>(describe(column));
+          final Map<String, Object> properties =
+            new TreeMap<>(describe(column));
           for (final Map.Entry<String, Object> property : properties.entrySet())
           {
-            out.println(String.format("  %s: %s", property.getKey(), property.getValue()));
+            out.println(String.format("  %s: %s",
+                                      property.getKey(),
+                                      property.getValue()));
           }
           out.println("  database type: " + column
             .getColumnDataType()
@@ -130,7 +138,8 @@ public class ResultColumnsTest
       }
 
     }
-    assertThat(outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+    assertThat(outputOf(testout),
+               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
 }

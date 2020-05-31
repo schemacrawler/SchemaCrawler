@@ -70,8 +70,8 @@ public class EmbeddedSQLiteWrapper
     }
     catch (final IOException e)
     {
-      throw new SchemaCrawlerException(
-        "Cannot read SQLite database file, " + databaseFile, e);
+      throw new SchemaCrawlerException("Cannot read SQLite database file, "
+                                       + databaseFile, e);
     }
   }
 

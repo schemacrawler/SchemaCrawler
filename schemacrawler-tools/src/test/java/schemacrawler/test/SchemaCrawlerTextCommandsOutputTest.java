@@ -41,8 +41,8 @@ import java.sql.Connection;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -93,7 +93,7 @@ public class SchemaCrawlerTextCommandsOutputTest
   public void operationOutput(final Connection connection)
     throws Exception
   {
-    for (final Operation operation: Operation.values())
+    for (final Operation operation : Operation.values())
     {
       textOutputTest(operation.name(), connection, new Config());
     }
@@ -103,7 +103,7 @@ public class SchemaCrawlerTextCommandsOutputTest
   public void schemaTextOutput(final Connection connection)
     throws Exception
   {
-    for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType.values())
+    for (final SchemaTextDetailType schemaTextDetailType : SchemaTextDetailType.values())
     {
       textOutputTest(schemaTextDetailType.name(), connection, new Config());
     }
@@ -128,11 +128,10 @@ public class SchemaCrawlerTextCommandsOutputTest
                               final Config config)
     throws Exception
   {
-    final LimitOptionsBuilder limitOptionsBuilder =
-      LimitOptionsBuilder
-        .builder()
-        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
-        .includeAllRoutines();
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+      .builder()
+      .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
+      .includeAllRoutines();
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
       SchemaCrawlerOptionsBuilder
         .builder()
@@ -155,8 +154,9 @@ public class SchemaCrawlerTextCommandsOutputTest
     executable.setAdditionalConfiguration(config);
 
     assertThat(outputOf(executableExecution(connection, executable)),
-               hasSameContentAs(classpathResource(
-                 COMMAND_OUTPUT + command + ".txt")));
+               hasSameContentAs(classpathResource(COMMAND_OUTPUT
+                                                  + command
+                                                  + ".txt")));
   }
 
 }

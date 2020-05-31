@@ -91,7 +91,8 @@ public class PostgreSQLAdditionalTableAttributesTest
       connection.commit();
     }
 
-    final SchemaCrawlerOptions options = schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    final SchemaCrawlerOptions options =
+      schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     final Connection connection = checkConnection(getConnection());
     final DatabaseConnector postgreSQLDatabaseConnector =

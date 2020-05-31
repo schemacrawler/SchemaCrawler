@@ -158,7 +158,6 @@ public interface Table
    */
   <C extends Column> Optional<C> lookupColumn(String name);
 
-
   /**
    * Gets a table constraint by unqualified name.
    *

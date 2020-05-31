@@ -31,8 +31,8 @@ package schemacrawler.tools.text.base;
 
 import static java.util.Objects.requireNonNull;
 
-import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
+import schemacrawler.schemacrawler.Options;
 
 public abstract class BaseTextOptions
   implements Options
@@ -115,7 +115,8 @@ public abstract class BaseTextOptions
 
   public boolean isNoInfo()
   {
-    return isNoSchemaCrawlerInfo && !isShowDatabaseInfo
+    return isNoSchemaCrawlerInfo
+           && !isShowDatabaseInfo
            && !isShowJdbcDriverInfo;
   }
 

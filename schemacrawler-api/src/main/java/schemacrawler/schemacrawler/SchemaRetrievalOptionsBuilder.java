@@ -43,7 +43,8 @@ import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.utility.TypeMap;
 
 public final class SchemaRetrievalOptionsBuilder
-  implements OptionsBuilder<SchemaRetrievalOptionsBuilder, SchemaRetrievalOptions>
+  implements
+  OptionsBuilder<SchemaRetrievalOptionsBuilder, SchemaRetrievalOptions>
 {
 
   public static SchemaRetrievalOptionsBuilder builder()
@@ -78,12 +79,14 @@ public final class SchemaRetrievalOptionsBuilder
   boolean supportsCatalogs;
   boolean supportsSchemas;
   EnumDataTypeHelper enumDataTypeHelper;
-  Map<SchemaInfoMetadataRetrievalStrategy, MetadataRetrievalStrategy> metadataRetrievalStrategyMap;
+  Map<SchemaInfoMetadataRetrievalStrategy, MetadataRetrievalStrategy>
+    metadataRetrievalStrategyMap;
 
   private SchemaRetrievalOptionsBuilder()
   {
     dbServerType = DatabaseServerType.UNKNOWN;
-    informationSchemaViews = InformationSchemaViewsBuilder.newInformationSchemaViews();
+    informationSchemaViews =
+      InformationSchemaViewsBuilder.newInformationSchemaViews();
     overridesSupportSchemas = Optional.empty();
     overridesSupportsCatalogs = Optional.empty();
     supportsCatalogs = true;
@@ -93,7 +96,8 @@ public final class SchemaRetrievalOptionsBuilder
     overridesTypeMap = Optional.empty();
     enumDataTypeHelper = NO_OP_ENUM_DATA_TYPE_HELPER;
 
-    metadataRetrievalStrategyMap = new EnumMap<>(SchemaInfoMetadataRetrievalStrategy.class);
+    metadataRetrievalStrategyMap =
+      new EnumMap<>(SchemaInfoMetadataRetrievalStrategy.class);
     for (final SchemaInfoMetadataRetrievalStrategy key : SchemaInfoMetadataRetrievalStrategy.values())
     {
       metadataRetrievalStrategyMap.put(key, metadata);
@@ -120,8 +124,10 @@ public final class SchemaRetrievalOptionsBuilder
 
     for (final SchemaInfoMetadataRetrievalStrategy key : SchemaInfoMetadataRetrievalStrategy.values())
     {
-      final MetadataRetrievalStrategy currentValue = metadataRetrievalStrategyMap.get(key);
-      final MetadataRetrievalStrategy configValue = configProperties.getEnumValue(key.getConfigKey(), currentValue);
+      final MetadataRetrievalStrategy currentValue =
+        metadataRetrievalStrategyMap.get(key);
+      final MetadataRetrievalStrategy configValue =
+        configProperties.getEnumValue(key.getConfigKey(), currentValue);
       metadataRetrievalStrategyMap.put(key, configValue);
     }
 
@@ -212,7 +218,8 @@ public final class SchemaRetrievalOptionsBuilder
   }
 
   /**
-   * Overrides the JDBC driver provided information about whether the database supports catalogs.
+   * Overrides the JDBC driver provided information about whether the database
+   * supports catalogs.
    */
   public SchemaRetrievalOptionsBuilder withDoesNotSupportCatalogs()
   {
@@ -221,7 +228,8 @@ public final class SchemaRetrievalOptionsBuilder
   }
 
   /**
-   * Overrides the JDBC driver provided information about whether the database supports schema.
+   * Overrides the JDBC driver provided information about whether the database
+   * supports schema.
    */
   public SchemaRetrievalOptionsBuilder withDoesNotSupportSchemas()
   {
@@ -232,15 +240,18 @@ public final class SchemaRetrievalOptionsBuilder
   public SchemaRetrievalOptionsBuilder with(final SchemaInfoMetadataRetrievalStrategy schemaInfoMetadataRetrievalStrategy,
                                             final MetadataRetrievalStrategy metadataRetrievalStrategy)
   {
-    if (schemaInfoMetadataRetrievalStrategy != null && metadataRetrievalStrategy != null)
+    if (schemaInfoMetadataRetrievalStrategy != null
+        && metadataRetrievalStrategy != null)
     {
-      metadataRetrievalStrategyMap.put(schemaInfoMetadataRetrievalStrategy, metadataRetrievalStrategy);
+      metadataRetrievalStrategyMap.put(schemaInfoMetadataRetrievalStrategy,
+                                       metadataRetrievalStrategy);
     }
     return this;
   }
 
   /**
-   * Overrides the JDBC driver provided information about the identifier quote string.
+   * Overrides the JDBC driver provided information about the identifier quote
+   * string.
    *
    * @param identifierQuoteString
    *   Value for the override
@@ -295,7 +306,8 @@ public final class SchemaRetrievalOptionsBuilder
   }
 
   /**
-   * Overrides the JDBC driver provided information about whether the database supports catalogs.
+   * Overrides the JDBC driver provided information about whether the database
+   * supports catalogs.
    */
   public SchemaRetrievalOptionsBuilder withSupportsCatalogs()
   {
@@ -304,7 +316,8 @@ public final class SchemaRetrievalOptionsBuilder
   }
 
   /**
-   * Overrides the JDBC driver provided information about whether the database supports schema.
+   * Overrides the JDBC driver provided information about whether the database
+   * supports schema.
    */
   public SchemaRetrievalOptionsBuilder withSupportsSchemas()
   {

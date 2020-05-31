@@ -31,8 +31,8 @@ package schemacrawler.tools.traversal;
 import java.sql.ResultSet;
 
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.Query;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 public interface DataTraversalHandler
   extends TraversalHandler

@@ -82,28 +82,38 @@ public class WeakAssociationsAnalyzerTest
     final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
       .builder()
       .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder()
-      .withLimitOptionsBuilder(limitOptionsBuilder);
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withLimitOptionsBuilder(limitOptionsBuilder);
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      schemaCrawlerOptionsBuilder.toOptions();
 
-    catalog = DatabaseTestUtility.getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
+    catalog = DatabaseTestUtility.getCatalog(connection,
+                                             schemaRetrievalOptions,
+                                             schemaCrawlerOptions);
   }
 
   @Test
-  public void weakAssociations(final TestContext testContext, final Connection connection)
+  public void weakAssociations(final TestContext testContext,
+                               final Connection connection)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
 
-      final WeakAssociationsAnalyzer weakAssociationsAnalyzer = new WeakAssociationsAnalyzer(catalog.getTables());
-      final Collection<ProposedWeakAssociation> proposedWeakAssociations = weakAssociationsAnalyzer.analyzeTables();
-      assertThat("Proposed weak association count does not match", proposedWeakAssociations, hasSize(2));
+      final WeakAssociationsAnalyzer weakAssociationsAnalyzer =
+        new WeakAssociationsAnalyzer(catalog.getTables());
+      final Collection<ProposedWeakAssociation> proposedWeakAssociations =
+        weakAssociationsAnalyzer.analyzeTables();
+      assertThat("Proposed weak association count does not match",
+                 proposedWeakAssociations,
+                 hasSize(2));
       for (final ProposedWeakAssociation proposedWeakAssociation : proposedWeakAssociations)
       {
-        out.println(String.format("weak association: %s", proposedWeakAssociation));
+        out.println(String.format("weak association: %s",
+                                  proposedWeakAssociation));
         assertThat(proposedWeakAssociation
                      .getKey()
                      .getParent()
@@ -115,7 +125,8 @@ public class WeakAssociationsAnalyzerTest
       }
     }
 
-    assertThat(outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+    assertThat(outputOf(testout),
+               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
 }

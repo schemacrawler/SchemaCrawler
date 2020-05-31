@@ -36,7 +36,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 
-
 public class TestSchemaCreator
   implements Runnable
 {

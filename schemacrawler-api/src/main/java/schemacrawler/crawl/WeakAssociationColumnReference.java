@@ -42,7 +42,8 @@ public final class WeakAssociationColumnReference
 
   private static final long serialVersionUID = -4411771492159843382L;
 
-  WeakAssociationColumnReference(final Column primaryKeyColumn, final Column foreignKeyColumn)
+  WeakAssociationColumnReference(final Column primaryKeyColumn,
+                                 final Column foreignKeyColumn)
   {
     super(primaryKeyColumn, foreignKeyColumn);
   }

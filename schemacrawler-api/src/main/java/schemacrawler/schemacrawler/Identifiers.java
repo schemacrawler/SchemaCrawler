@@ -348,7 +348,8 @@ public final class Identifiers
    */
   public boolean isQuotedName(final String name)
   {
-    if (isBlank(name) || identifierQuoteString.isEmpty()
+    if (isBlank(name)
+        || identifierQuoteString.isEmpty()
         || identifierQuotingStrategy == IdentifierQuotingStrategy.quote_none)
     {
       return false;

@@ -170,7 +170,8 @@ final class MutableCrawlInfo
     return info.toString();
   }
 
-  void setDatabaseInfo(final JdbcDriverInfo jdbcDriverInfo, final DatabaseInfo databaseInfo)
+  void setDatabaseInfo(final JdbcDriverInfo jdbcDriverInfo,
+                       final DatabaseInfo databaseInfo)
   {
     requireNonNull(jdbcDriverInfo, "No JDBC driver information provided");
     this.jdbcDriverVersion = new BaseProductVersion(jdbcDriverInfo);

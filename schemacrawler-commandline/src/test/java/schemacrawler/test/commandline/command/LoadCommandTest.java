@@ -94,7 +94,12 @@ public class LoadCommandTest
   public void loadRowCountsWithValue()
   {
     final String[] args = {
-      "--info-level", "detailed", "--load-row-counts", "true", "additional", "-extra"
+      "--info-level",
+      "detailed",
+      "--load-row-counts",
+      "true",
+      "additional",
+      "-extra"
     };
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();

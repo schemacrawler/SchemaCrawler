@@ -103,15 +103,18 @@ public class IndexRetrieverTest
             out.println(String.format("  index: %s", index.getName()));
             out.println(String.format("    columns: %s", index.getColumns()));
             out.println(String.format("    is unique: %b", index.isUnique()));
-            out.println(String.format("    cardinality: %d", index.getCardinality()));
+            out.println(String.format("    cardinality: %d",
+                                      index.getCardinality()));
             out.println(String.format("    pages: %d", index.getPages()));
-            out.println(String.format("    index type: %s", index.getIndexType()));
+            out.println(String.format("    index type: %s",
+                                      index.getIndexType()));
           }
         }
       }
     }
     // IMPORTANT: The data dictionary should return the same information as the metadata test
-    assertThat(outputOf(testout), hasSameContentAs(classpathResource("SchemaCrawlerTest.indexes")));
+    assertThat(outputOf(testout),
+               hasSameContentAs(classpathResource("SchemaCrawlerTest.indexes")));
   }
 
   private MutableCatalog catalog;
@@ -121,20 +124,27 @@ public class IndexRetrieverTest
   public void indexesFromDataDictionary(final Connection connection)
     throws Exception
   {
-    final InformationSchemaViews informationSchemaViews = InformationSchemaViewsBuilder
-      .builder()
-      .withSql(InformationSchemaKey.INDEXES, "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_INDEXINFO")
-      .toOptions();
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
+    final InformationSchemaViews informationSchemaViews =
+      InformationSchemaViewsBuilder
+        .builder()
+        .withSql(InformationSchemaKey.INDEXES,
+                 "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_INDEXINFO")
+        .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+      SchemaRetrievalOptionsBuilder.builder();
     schemaRetrievalOptionsBuilder
       .with(indexesRetrievalStrategy, data_dictionary_all)
       .withInformationSchemaViews(informationSchemaViews);
-    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-    final RetrieverConnection retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+      schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection =
+      new RetrieverConnection(connection, schemaRetrievalOptions);
 
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    final SchemaCrawlerOptions options =
+      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
-    final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, options);
+    final IndexRetriever indexRetriever =
+      new IndexRetriever(retrieverConnection, catalog, options);
     indexRetriever.retrieveIndexes(catalog.getAllTables());
 
     verifyRetrieveIndexes(catalog);
@@ -147,13 +157,15 @@ public class IndexRetrieverTest
     final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
       .builder()
       .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.minimum());
-    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
       .builder()
-      .withLimitOptionsBuilder(limitOptionsBuilder)
-      .withLoadOptionsBuilder(loadOptionsBuilder)
-      .toOptions();
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.minimum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withLimitOptionsBuilder(limitOptionsBuilder)
+        .withLoadOptionsBuilder(loadOptionsBuilder)
+        .toOptions();
     catalog = (MutableCatalog) getCatalog(connection,
                                           SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
                                           schemaCrawlerOptions);

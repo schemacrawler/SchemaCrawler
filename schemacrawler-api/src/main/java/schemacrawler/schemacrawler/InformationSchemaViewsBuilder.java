@@ -217,15 +217,12 @@ public final class InformationSchemaViewsBuilder
     return this;
   }
 
-  public InformationSchemaViewsBuilder withFunction(
-    final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection,
-    final Connection connection)
+  public InformationSchemaViewsBuilder withFunction(final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection,
+                                                    final Connection connection)
   {
     if (informationSchemaViewsBuilderForConnection != null)
     {
-      informationSchemaViewsBuilderForConnection.accept(
-        this,
-        connection);
+      informationSchemaViewsBuilderForConnection.accept(this, connection);
     }
     return this;
   }

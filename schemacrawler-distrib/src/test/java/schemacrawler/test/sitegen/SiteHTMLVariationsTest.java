@@ -43,7 +43,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.test.utility.*;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
+import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.options.TextOutputFormat;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
@@ -78,6 +83,7 @@ public class SiteHTMLVariationsTest
                                                TextOutputFormat.html);
     move(htmlFile, outputFile);
   }
+
   private Path directory;
 
   @BeforeEach

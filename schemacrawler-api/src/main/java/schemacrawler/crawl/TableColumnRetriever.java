@@ -222,10 +222,13 @@ final class TableColumnRetriever
 
   }
 
-  private MutableColumn lookupOrCreateTableColumn(final MutableTable table, final String columnName)
+  private MutableColumn lookupOrCreateTableColumn(final MutableTable table,
+                                                  final String columnName)
   {
-    final Optional<MutableColumn> columnOptional = table.lookupColumn(columnName);
-    final MutableColumn column = columnOptional.orElseGet(() -> new MutableColumn(table, columnName));
+    final Optional<MutableColumn> columnOptional =
+      table.lookupColumn(columnName);
+    final MutableColumn column =
+      columnOptional.orElseGet(() -> new MutableColumn(table, columnName));
     return column;
   }
 

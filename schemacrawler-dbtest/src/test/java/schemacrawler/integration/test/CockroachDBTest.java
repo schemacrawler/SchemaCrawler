@@ -80,16 +80,20 @@ public class CockroachDBTest
   public void testCockroachDBWithConnection()
     throws Exception
   {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder()
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+      .builder()
       .includeSchemas(new RegularExpressionInclusionRule("public"))
       .includeAllSequences()
       .includeAllSynonyms()
       .tableTypes("TABLE,VIEW");
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
+      .builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder.builder()
-      .withLimitOptionsBuilder(limitOptionsBuilder)
-      .withLoadOptionsBuilder(loadOptionsBuilder);
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withLimitOptionsBuilder(limitOptionsBuilder)
+        .withLoadOptionsBuilder(loadOptionsBuilder);
     final SchemaCrawlerOptions options =
       schemaCrawlerOptionsBuilder.toOptions();
 
@@ -107,7 +111,8 @@ public class CockroachDBTest
                                             .builder(textOptions)
                                             .toConfig());
 
-    final String expectedResultsResource = String.format("testCockroachDBWithConnection.%s.txt", javaVersion());
+    final String expectedResultsResource =
+      String.format("testCockroachDBWithConnection.%s.txt", javaVersion());
     assertThat(outputOf(executableExecution(getConnection(), executable)),
                hasSameContentAs(classpathResource(expectedResultsResource)));
   }

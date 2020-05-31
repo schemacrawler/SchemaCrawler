@@ -63,12 +63,6 @@ final class UnknownDatabaseConnector
   }
 
   @Override
-  protected Predicate<String> supportsUrlPredicate()
-  {
-    return url -> false;
-  }
-
-  @Override
   public DatabaseConnectionSource newDatabaseConnectionSource(final DatabaseConnectorOptions databaseConnectorOptions)
     throws SchemaCrawlerException
   {
@@ -96,6 +90,12 @@ final class UnknownDatabaseConnector
     }
 
     return databaseConnectionSource;
+  }
+
+  @Override
+  protected Predicate<String> supportsUrlPredicate()
+  {
+    return url -> false;
   }
 
 }

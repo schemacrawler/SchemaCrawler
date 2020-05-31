@@ -85,6 +85,52 @@ final class RetrieverConnection
     javaSqlTypes = new JavaSqlTypes();
   }
 
+  public MetadataRetrievalStrategy get(final SchemaInfoMetadataRetrievalStrategy schemaInfoMetadataRetrievalStrategy)
+  {
+    return schemaRetrievalOptions.get(schemaInfoMetadataRetrievalStrategy);
+  }
+
+  public Driver getDriver()
+    throws SQLException
+  {
+    Driver jdbcDriver = null;
+
+    final String jdbcDriverClassName = schemaRetrievalOptions
+      .getDatabaseServerType()
+      .getJdbcDriverClassName();
+    if (!isBlank(jdbcDriverClassName))
+    {
+      try
+      {
+        final Class<? extends Driver> jdbcDriverClass =
+          (Class<? extends Driver>) Class.forName(jdbcDriverClassName);
+        jdbcDriver = jdbcDriverClass
+          .getDeclaredConstructor()
+          .newInstance();
+      }
+      catch (final Exception e)
+      {
+        LOGGER.log(Level.WARNING,
+                   "No JDBC driver found for " + jdbcDriverClassName,
+                   e);
+      }
+    }
+
+    if (jdbcDriver == null)
+    {
+      jdbcDriver = DriverManager.getDriver(connection
+                                             .getMetaData()
+                                             .getURL());
+    }
+
+    if (jdbcDriver == null)
+    {
+      throw new SQLException("No JDBC driver found");
+    }
+
+    return jdbcDriver;
+  }
+
   Connection getConnection()
   {
     return connection;
@@ -100,7 +146,8 @@ final class RetrieverConnection
     return schemaRetrievalOptions.getInformationSchemaViews();
   }
 
-  EnumDataTypeHelper getEnumDataTypeHelper() {
+  EnumDataTypeHelper getEnumDataTypeHelper()
+  {
     return schemaRetrievalOptions.getEnumDataTypeHelper();
   }
 
@@ -132,50 +179,6 @@ final class RetrieverConnection
   boolean isSupportsSchemas()
   {
     return schemaRetrievalOptions.isSupportsSchemas();
-  }
-
-  public MetadataRetrievalStrategy get(final SchemaInfoMetadataRetrievalStrategy schemaInfoMetadataRetrievalStrategy)
-  {
-    return schemaRetrievalOptions.get(schemaInfoMetadataRetrievalStrategy);
-  }
-
-  public Driver getDriver()
-    throws SQLException
-  {
-    Driver jdbcDriver = null;
-
-    final String jdbcDriverClassName = schemaRetrievalOptions
-      .getDatabaseServerType()
-      .getJdbcDriverClassName();
-    if (!isBlank(jdbcDriverClassName))
-    {
-      try
-      {
-        final Class<? extends Driver> jdbcDriverClass =
-          (Class<? extends Driver>) Class.forName(jdbcDriverClassName);
-        jdbcDriver = jdbcDriverClass
-          .getDeclaredConstructor()
-          .newInstance();
-      }
-      catch (final Exception e)
-      {
-        LOGGER.log(Level.WARNING, "No JDBC driver found for " + jdbcDriverClassName, e);
-      }
-    }
-
-    if (jdbcDriver == null)
-    {
-      jdbcDriver = DriverManager.getDriver(connection
-                                             .getMetaData()
-                                             .getURL());
-    }
-
-    if (jdbcDriver == null)
-    {
-      throw new SQLException("No JDBC driver found");
-    }
-
-    return jdbcDriver;
   }
 
 }

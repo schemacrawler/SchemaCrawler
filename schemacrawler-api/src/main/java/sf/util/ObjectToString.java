@@ -77,8 +77,10 @@ public final class ObjectToString
           .append("  ")
           .append(fieldName)
           .append(": ");
-        if (fieldType.isPrimitive() || fieldType.isEnum()
-            || fieldValue instanceof String || fieldValue == null
+        if (fieldType.isPrimitive()
+            || fieldType.isEnum()
+            || fieldValue instanceof String
+            || fieldValue == null
             || definesToString(fieldValue))
         {
           buffer.append(fieldValue);
@@ -258,7 +260,9 @@ public final class ObjectToString
     {
       for (final Class<?> clazz : classes)
       {
-        if (clazz.isArray() || clazz.isPrimitive() || clazz.isEnum()
+        if (clazz.isArray()
+            || clazz.isPrimitive()
+            || clazz.isEnum()
             || String.class.isAssignableFrom(clazz))
         {
           break;
@@ -274,7 +278,8 @@ public final class ObjectToString
     {
       final Field field = iterator.next();
       final int modifiers = field.getModifiers();
-      if (Modifier.isTransient(modifiers) || Modifier.isStatic(modifiers)
+      if (Modifier.isTransient(modifiers)
+          || Modifier.isStatic(modifiers)
           || Modifier.isVolatile(modifiers))
       {
         iterator.remove();

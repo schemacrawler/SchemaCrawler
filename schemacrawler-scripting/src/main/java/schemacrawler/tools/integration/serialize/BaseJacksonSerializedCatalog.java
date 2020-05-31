@@ -53,7 +53,8 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
- * Decorates a database to allow for serialization to and from plain Java serialization.
+ * Decorates a database to allow for serialization to and from plain Java
+ * serialization.
  */
 public abstract class BaseJacksonSerializedCatalog
   implements CatalogSerializer
@@ -124,7 +125,10 @@ public abstract class BaseJacksonSerializedCatalog
   private ObjectMapper newConfiguredObjectMapper()
   {
     @JsonIgnoreProperties({
-                            "parent", "referenced-column", "exported-foreign-keys", "imported-foreign-keys"
+                            "parent",
+                            "referenced-column",
+                            "exported-foreign-keys",
+                            "imported-foreign-keys"
                           })
     @JsonPropertyOrder(value = {
       "@uuid",
@@ -142,7 +146,8 @@ public abstract class BaseJacksonSerializedCatalog
       "column-data-types",
       "all-table-columns"
     }, alphabetic = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@uuid")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class,
+                      property = "@uuid")
     @JsonNaming(PropertyNamingStrategy.KebabCaseStrategy.class)
     class JacksonAnnotationMixIn
     {
@@ -150,7 +155,10 @@ public abstract class BaseJacksonSerializedCatalog
     }
 
     final ObjectMapper mapper = newObjectMapper();
-    mapper.enable(ORDER_MAP_ENTRIES_BY_KEYS, INDENT_OUTPUT, USE_EQUALITY_FOR_OBJECT_ID, WRITE_ENUMS_USING_TO_STRING);
+    mapper.enable(ORDER_MAP_ENTRIES_BY_KEYS,
+                  INDENT_OUTPUT,
+                  USE_EQUALITY_FOR_OBJECT_ID,
+                  WRITE_ENUMS_USING_TO_STRING);
     mapper.addMixIn(Object.class, JacksonAnnotationMixIn.class);
     return mapper;
   }

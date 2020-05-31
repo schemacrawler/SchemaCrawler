@@ -43,22 +43,30 @@ public class DatabaseObjectColorMapTest
   @Test
   public void generateColors()
   {
-    final DatabaseObjectColorMap colorMap = DatabaseObjectColorMap.initialize(false);
+    final DatabaseObjectColorMap colorMap =
+      DatabaseObjectColorMap.initialize(false);
 
     Color color;
 
     assertThrows(NullPointerException.class, () -> colorMap.getColor(null));
 
-    color = colorMap.getColor(new MutableTable(new SchemaReference(null, null), "table"));
+    color = colorMap.getColor(new MutableTable(new SchemaReference(null, null),
+                                               "table"));
     assertThat(color, is(Color.fromRGB(0xF2, 0xE9, 0xCE)));
 
-    color = colorMap.getColor(new MutableTable(new SchemaReference(null, "schema"), "table"));
+    color =
+      colorMap.getColor(new MutableTable(new SchemaReference(null, "schema"),
+                                         "table"));
     assertThat(color, is(Color.fromRGB(0xF2, 0xE2, 0xCE)));
 
-    color = colorMap.getColor(new MutableTable(new SchemaReference("catalog", "schema"), "table"));
+    color = colorMap.getColor(new MutableTable(new SchemaReference("catalog",
+                                                                   "schema"),
+                                               "table"));
     assertThat(color, is(Color.fromRGB(0xF2, 0xDF, 0xCE)));
 
-    color = colorMap.getColor(new MutableTable(new SchemaReference("catalog", null), "table"));
+    color =
+      colorMap.getColor(new MutableTable(new SchemaReference("catalog", null),
+                                         "table"));
     assertThat(color, is(Color.fromRGB(0xCE, 0xF2, 0xED)));
   }
 

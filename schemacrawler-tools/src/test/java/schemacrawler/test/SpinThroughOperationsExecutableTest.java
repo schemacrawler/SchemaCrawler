@@ -122,13 +122,13 @@ public class SpinThroughOperationsExecutableTest
         final String referenceFile =
           referenceFile(operation, infoLevel, outputFormat);
 
-        final LimitOptionsBuilder limitOptionsBuilder =
-          LimitOptionsBuilder
-            .builder()
-            .includeAllSequences()
-            .includeAllSynonyms()
-            .includeAllRoutines();
-        final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+        final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+          .builder()
+          .includeAllSequences()
+          .includeAllSynonyms()
+          .includeAllRoutines();
+        final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
+          .builder()
           .withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());
         final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
           SchemaCrawlerOptionsBuilder

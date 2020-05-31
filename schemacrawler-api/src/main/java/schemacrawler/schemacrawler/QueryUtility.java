@@ -141,9 +141,10 @@ public final class QueryUtility
         .getColumnDataType()
         .getJavaSqlType()
         .getJavaSqlTypeGroup();
-      if (!(omitLargeObjectColumns && (
-        javaSqlTypeGroup == JavaSqlTypeGroup.large_object
-        || javaSqlTypeGroup == JavaSqlTypeGroup.object)))
+      if (!(omitLargeObjectColumns && (javaSqlTypeGroup
+                                       == JavaSqlTypeGroup.large_object
+                                       || javaSqlTypeGroup
+                                          == JavaSqlTypeGroup.object)))
       {
         columnsList.add(identifiers.quoteName(column.getName()));
       }

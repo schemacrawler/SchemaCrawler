@@ -75,7 +75,8 @@ public class DB2Test
 {
 
   @Container
-  private JdbcDatabaseContainer dbContainer = new Db2Container().acceptLicense();
+  private JdbcDatabaseContainer dbContainer =
+    new Db2Container().acceptLicense();
 
   @BeforeEach
   public void createDatabase()
@@ -100,14 +101,19 @@ public class DB2Test
   public void testDB2CatalogServerInfo()
     throws Exception
   {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder()
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+      .builder()
       .includeSchemas(new RegularExpressionInclusionRule("DB2INST1"));
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
+      .builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder.builder()
-      .withLimitOptionsBuilder(limitOptionsBuilder)
-      .withLoadOptionsBuilder(loadOptionsBuilder);
-    final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder.toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withLimitOptionsBuilder(limitOptionsBuilder)
+        .withLoadOptionsBuilder(loadOptionsBuilder);
+    final SchemaCrawlerOptions options =
+      schemaCrawlerOptionsBuilder.toOptions();
 
     final Connection connection = checkConnection(getConnection());
     final DatabaseConnector db2DatabaseConnector = new DB2DatabaseConnector();
@@ -136,22 +142,26 @@ public class DB2Test
   public void testDB2WithConnection()
     throws Exception
   {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder()
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
+      .builder()
       .includeSchemas(new RegularExpressionInclusionRule("DB2INST1"))
       .includeAllSequences()
       .includeAllSynonyms()
       .includeRoutines(new RegularExpressionInclusionRule("[0-9a-zA-Z_\\.]*"))
       .tableTypes("TABLE,VIEW,MATERIALIZED QUERY TABLE");
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
+      .builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder.builder()
-      .withLimitOptionsBuilder(limitOptionsBuilder)
-      .withLoadOptionsBuilder(loadOptionsBuilder);
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+      SchemaCrawlerOptionsBuilder
+        .builder()
+        .withLimitOptionsBuilder(limitOptionsBuilder)
+        .withLoadOptionsBuilder(loadOptionsBuilder);
     final SchemaCrawlerOptions options =
       schemaCrawlerOptionsBuilder.toOptions();
 
-    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
-      .builder();
+    final SchemaTextOptionsBuilder textOptionsBuilder =
+      SchemaTextOptionsBuilder.builder();
     textOptionsBuilder
       .showDatabaseInfo()
       .showJdbcDriverInfo();
@@ -164,7 +174,8 @@ public class DB2Test
                                             .builder(textOptions)
                                             .toConfig());
 
-    final String expectedResource = String.format("testDB2WithConnection.%s.txt", javaVersion());
+    final String expectedResource =
+      String.format("testDB2WithConnection.%s.txt", javaVersion());
     assertThat(outputOf(executableExecution(getConnection(), executable)),
                hasSameContentAs(classpathResource(expectedResource)));
   }

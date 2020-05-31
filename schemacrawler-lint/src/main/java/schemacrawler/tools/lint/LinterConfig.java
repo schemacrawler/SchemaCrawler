@@ -32,9 +32,9 @@ import static sf.util.Utility.isBlank;
 
 import java.io.Serializable;
 
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionRule;
+import schemacrawler.schemacrawler.Config;
 import sf.util.ObjectToString;
 
 public class LinterConfig
@@ -77,8 +77,11 @@ public class LinterConfig
 
     if (comparison == 0)
     {
-      comparison = (severity == null? LintSeverity.low: severity).compareTo(
-        other.severity == null? LintSeverity.low: other.severity);
+      comparison =
+        (severity == null? LintSeverity.low: severity).compareTo(other.severity
+                                                                 == null?
+                                                                 LintSeverity.low:
+                                                                 other.severity);
     }
 
     if (comparison == 0)

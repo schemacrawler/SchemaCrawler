@@ -77,19 +77,26 @@ public class SchemaRetrieverTest
 
     final MutableCatalog catalog = new MutableCatalog("test_catalog");
 
-    final InformationSchemaViews informationSchemaViews = InformationSchemaViewsBuilder
-      .builder()
-      .withSql(InformationSchemaKey.SCHEMATA, "SELECT * FROM INFORMATION_SCHEMA.SCHEMATA")
-      .toOptions();
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder
-      .withInformationSchemaViews(informationSchemaViews);
-    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-    final RetrieverConnection retrieverConnection = new RetrieverConnection(spyConnection, schemaRetrievalOptions);
+    final InformationSchemaViews informationSchemaViews =
+      InformationSchemaViewsBuilder
+        .builder()
+        .withSql(InformationSchemaKey.SCHEMATA,
+                 "SELECT * FROM INFORMATION_SCHEMA.SCHEMATA")
+        .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+      SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder.withInformationSchemaViews(
+      informationSchemaViews);
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+      schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection =
+      new RetrieverConnection(spyConnection, schemaRetrievalOptions);
 
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    final SchemaCrawlerOptions options =
+      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
-    final SchemaRetriever schemaRetriever = new SchemaRetriever(retrieverConnection, catalog, options);
+    final SchemaRetriever schemaRetriever =
+      new SchemaRetriever(retrieverConnection, catalog, options);
     schemaRetriever.retrieveSchemas(new IncludeAll());
 
     verify(databaseMetaData, times(0)).getSchemas();
