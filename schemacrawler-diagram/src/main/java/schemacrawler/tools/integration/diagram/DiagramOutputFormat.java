@@ -136,6 +136,7 @@ public enum DiagramOutputFormat
   {
     return fromFormatOrNull(format) != null;
   }
+
   private final OutputFormatState outputFormatState;
 
   private DiagramOutputFormat(final String description)

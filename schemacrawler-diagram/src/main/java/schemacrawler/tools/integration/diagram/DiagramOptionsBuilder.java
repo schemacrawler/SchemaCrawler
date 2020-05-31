@@ -105,6 +105,7 @@ public final class DiagramOptionsBuilder
   {
     return new DiagramOptionsBuilder().toOptions();
   }
+
   protected List<String> graphvizOpts;
   protected Map<String, String> graphvizAttributes;
   protected boolean isShowForeignKeyCardinality;

@@ -61,7 +61,8 @@ import sf.util.StringFormat;
 public final class OperationCommand
   extends BaseSchemaCrawlerCommand
 {
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(OperationCommand.class.getName());
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(OperationCommand.class.getName());
 
   private OperationOptions operationOptions;
 
@@ -94,9 +95,10 @@ public final class OperationCommand
     if (!isOutputFormatSupported())
     {
       LOGGER.log(Level.INFO,
-                 new StringFormat("Output format <%s> not supported for command <%s>",
-                                  outputOptions.getOutputFormatValue(),
-                                  getCommand()));
+                 new StringFormat(
+                   "Output format <%s> not supported for command <%s>",
+                   outputOptions.getOutputFormatValue(),
+                   getCommand()));
       return;
     }
 
@@ -117,7 +119,8 @@ public final class OperationCommand
       // properties file, since the database always needs identifiers
       // to be quoted in SQL queries if they contain spaces in the
       // name
-      final String identifierQuoteString = identifiers.getIdentifierQuoteString();
+      final String identifierQuoteString =
+        identifiers.getIdentifierQuoteString();
       final Identifiers identifiers = Identifiers
         .identifiers()
         .withIdentifierQuoteString(identifierQuoteString)
@@ -127,7 +130,8 @@ public final class OperationCommand
       {
         for (final Table table : getSortedTables(catalog))
         {
-          final boolean isAlphabeticalSortForTableColumns = operationOptions.isAlphabeticalSortForTableColumns();
+          final boolean isAlphabeticalSortForTableColumns =
+            operationOptions.isAlphabeticalSortForTableColumns();
           try (
             final ResultSet results = executeAgainstTable(query,
                                                           statement,
@@ -141,7 +145,8 @@ public final class OperationCommand
           catch (final SQLException e)
           {
             LOGGER.log(Level.WARNING,
-                       new StringFormat("Bad operation for table <%s>", table), e);
+                       new StringFormat("Bad operation for table <%s>", table),
+                       e);
           }
         }
       }
@@ -175,7 +180,8 @@ public final class OperationCommand
 
   public final void setOperationOptions(final OperationOptions operationOptions)
   {
-    this.operationOptions = requireNonNull(operationOptions, "No operation options provided");
+    this.operationOptions =
+      requireNonNull(operationOptions, "No operation options provided");
   }
 
   private DataTraversalHandler getDataTraversalHandler()
@@ -183,11 +189,14 @@ public final class OperationCommand
   {
     final Operation operation = getOperation();
 
-    final TextOutputFormat outputFormat = TextOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
+    final TextOutputFormat outputFormat =
+      TextOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
     final String identifierQuoteString = identifiers.getIdentifierQuoteString();
 
-    final DataTraversalHandler formatter =
-      new DataTextFormatter(operation, operationOptions, outputOptions, identifierQuoteString);
+    final DataTraversalHandler formatter = new DataTextFormatter(operation,
+                                                                 operationOptions,
+                                                                 outputOptions,
+                                                                 identifierQuoteString);
     return formatter;
   }
 
@@ -236,7 +245,8 @@ public final class OperationCommand
   private boolean isOutputFormatSupported()
   {
     final String outputFormatValue = outputOptions.getOutputFormatValue();
-    final boolean isOutputFormatSupported = TextOutputFormat.isSupportedFormat(outputFormatValue);
+    final boolean isOutputFormatSupported =
+      TextOutputFormat.isSupportedFormat(outputFormatValue);
     return isOutputFormatSupported;
   }
 

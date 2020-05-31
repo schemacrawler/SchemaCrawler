@@ -99,6 +99,7 @@ public enum TextOutputFormat
   {
     return fromFormatOrNull(format) != null;
   }
+
   private final OutputFormatState outputFormatState;
 
   private TextOutputFormat(final String description)

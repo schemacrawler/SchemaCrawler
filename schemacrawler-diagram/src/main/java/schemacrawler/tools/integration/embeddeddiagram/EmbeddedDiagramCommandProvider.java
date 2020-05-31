@@ -70,8 +70,9 @@ public final class EmbeddedDiagramCommandProvider
     }
     final DiagramOutputFormat diagramOutputFormat =
       DiagramOutputFormat.fromFormat(format);
-    final boolean supportsSchemaCrawlerCommand =
-      supportsCommand(command) && diagramOutputFormat == DiagramOutputFormat.htmlx;
+    final boolean supportsSchemaCrawlerCommand = supportsCommand(command)
+                                                 && diagramOutputFormat
+                                                    == DiagramOutputFormat.htmlx;
     return supportsSchemaCrawlerCommand;
   }
 

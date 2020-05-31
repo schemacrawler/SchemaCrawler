@@ -68,8 +68,8 @@ abstract class AbstractGraphProcessExecutor
 
     if (!isFileWritable(this.outputFile))
     {
-      throw new SchemaCrawlerException(
-        "Cannot write output file, " + this.outputFile);
+      throw new SchemaCrawlerException("Cannot write output file, "
+                                       + this.outputFile);
     }
   }
 

@@ -121,7 +121,9 @@ public abstract class BaseDotFormatter
                            false,
                            Color.white,
                            1));
-      row.add(newTableCell(crawlInfo.getSchemaCrawlerVersion().toString(),
+      row.add(newTableCell(crawlInfo
+                             .getSchemaCrawlerVersion()
+                             .toString(),
                            Alignment.left,
                            false,
                            Color.white,
@@ -156,7 +158,9 @@ public abstract class BaseDotFormatter
                            false,
                            Color.white,
                            1));
-      row.add(newTableCell(crawlInfo.getDatabaseVersion().toString(),
+      row.add(newTableCell(crawlInfo
+                             .getDatabaseVersion()
+                             .toString(),
                            Alignment.left,
                            false,
                            Color.white,

@@ -69,9 +69,11 @@ public final class DiagramCommandProvider
     }
     final DiagramOutputFormat diagramOutputFormat =
       DiagramOutputFormat.fromFormat(format);
-    final boolean supportsSchemaCrawlerCommand =
-      supportsCommand(command) && DiagramOutputFormat.isSupportedFormat(format)
-      && diagramOutputFormat != DiagramOutputFormat.htmlx;
+    final boolean supportsSchemaCrawlerCommand = supportsCommand(command)
+                                                 && DiagramOutputFormat.isSupportedFormat(
+      format)
+                                                 && diagramOutputFormat
+                                                    != DiagramOutputFormat.htmlx;
     return supportsSchemaCrawlerCommand;
   }
 

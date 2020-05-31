@@ -39,6 +39,7 @@ import java.util.Collections;
 import java.util.List;
 
 import schemacrawler.crawl.NotLoadedException;
+import schemacrawler.crawl.WeakAssociation;
 import schemacrawler.schema.BaseForeignKey;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
@@ -49,7 +50,6 @@ import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.crawl.WeakAssociation;
 import schemacrawler.tools.integration.diagram.DiagramOptions;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -564,11 +564,7 @@ public final class SchemaDotFormatter
     row
       .add(newTableCell("", Alignment.left, false, Color.white, 1))
       .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
-      .add(newTableCell(enumValues,
-                        Alignment.left,
-                        false,
-                        Color.white,
-                        1));
+      .add(newTableCell(enumValues, Alignment.left, false, Color.white, 1));
     formattingHelper
       .append(row.toString())
       .println();

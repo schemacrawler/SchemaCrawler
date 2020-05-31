@@ -76,8 +76,9 @@ public class DatabaseObjectColorMap
 
     try
     {
-      final FileInputResource fileColorMap = new FileInputResource(Paths.get(
-        "./" + SCHEMACRAWLER_COLORMAP_PROPERTIES));
+      final FileInputResource fileColorMap =
+        new FileInputResource(Paths.get("./"
+                                        + SCHEMACRAWLER_COLORMAP_PROPERTIES));
 
       properties.putAll(loadProperties(fileColorMap));
     }

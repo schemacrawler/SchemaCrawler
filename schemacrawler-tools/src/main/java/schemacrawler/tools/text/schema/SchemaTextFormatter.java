@@ -42,9 +42,9 @@ import java.util.List;
 import java.util.Locale;
 
 import schemacrawler.crawl.NotLoadedException;
+import schemacrawler.crawl.WeakAssociation;
 import schemacrawler.schema.*;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.crawl.WeakAssociation;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseTabularFormatter;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
@@ -449,9 +449,9 @@ final class SchemaTextFormatter
       negate(columnDataType.isAutoIncrementable(), "auto-incrementable");
 
     final String createParameters = columnDataType.getCreateParameters();
-    final String definedWith =
-      "defined with " + (isBlank(createParameters)? "no parameters":
-                         createParameters);
+    final String definedWith = "defined with " + (isBlank(createParameters)?
+                                                  "no parameters":
+                                                  createParameters);
 
     formattingHelper.writeNameRow(typeName, dataType);
     formattingHelper.writeDescriptionRow(definedWith);
@@ -549,7 +549,8 @@ final class SchemaTextFormatter
         final String fkHyperlink = formattingHelper.createAnchor(fkColumnName,
                                                                  "#" + nodeId(
                                                                    fkColumn.getParent()));
-        final String arrow = isForeignKey? formattingHelper.createLeftArrow():
+        final String arrow = isForeignKey?
+                             formattingHelper.createLeftArrow():
                              formattingHelper.createWeakLeftArrow();
         relationship = String.format("%s %s%s %s",
                                      pkColumnName,
@@ -562,7 +563,8 @@ final class SchemaTextFormatter
         final String pkHyperlink = formattingHelper.createAnchor(pkColumnName,
                                                                  "#" + nodeId(
                                                                    pkColumn.getParent()));
-        final String arrow = isForeignKey? formattingHelper.createRightArrow():
+        final String arrow = isForeignKey?
+                             formattingHelper.createRightArrow():
                              formattingHelper.createWeakRightArrow();
         relationship = String.format("%s %s%s %s",
                                      fkColumnName,
@@ -647,7 +649,8 @@ final class SchemaTextFormatter
         }
 
         final String ruleString;
-        if (deleteRule != null && updateRule == deleteRule
+        if (deleteRule != null
+            && updateRule == deleteRule
             && updateRule != ForeignKeyUpdateRule.unknown)
         {
           ruleString = ", with " + deleteRule.toString();
@@ -703,9 +706,11 @@ final class SchemaTextFormatter
         {
           indexTypeString = indexType.toString() + SPACE;
         }
-        final String indexDetails =
-          "[" + (index.isUnique()? "": "non-") + "unique " + indexTypeString
-          + "index]";
+        final String indexDetails = "["
+                                    + (index.isUnique()? "": "non-")
+                                    + "unique "
+                                    + indexTypeString
+                                    + "index]";
         formattingHelper.writeNameRow(indexName, indexDetails);
 
         printRemarks(index);
@@ -763,12 +768,17 @@ final class SchemaTextFormatter
         formattingHelper.writeNameRow(privilege.getName(), "[privilege]");
         for (final Grant<?> grant : privilege.getGrants())
         {
-          final String grantor = isBlank(grant.getGrantor())? "": grant.getGrantor();
-          final String grantee = isBlank(grant.getGrantee())? "": grant.getGrantee();
-          final String grantedFrom = String.format("%s %s %s%s", grantor,
-                                                   formattingHelper.createRightArrow(), grantee,
+          final String grantor =
+            isBlank(grant.getGrantor())? "": grant.getGrantor();
+          final String grantee =
+            isBlank(grant.getGrantee())? "": grant.getGrantee();
+          final String grantedFrom = String.format("%s %s %s%s",
+                                                   grantor,
+                                                   formattingHelper.createRightArrow(),
+                                                   grantee,
                                                    grant.isGrantable()?
-                                                   " (grantable)": "");
+                                                   " (grantable)":
+                                                   "");
           formattingHelper.writeDetailRow("", grantedFrom, "");
         }
       }

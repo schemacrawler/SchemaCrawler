@@ -103,12 +103,11 @@ public abstract class DatabaseConnector
    */
   public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(final Connection connection)
   {
-    final InformationSchemaViews informationSchemaViews = InformationSchemaViewsBuilder
-      .builder()
-      .withFunction(
-        informationSchemaViewsBuilderForConnection,
-        connection)
-      .toOptions();
+    final InformationSchemaViews informationSchemaViews =
+      InformationSchemaViewsBuilder
+        .builder()
+        .withFunction(informationSchemaViewsBuilderForConnection, connection)
+        .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
       SchemaRetrievalOptionsBuilder
         .builder()

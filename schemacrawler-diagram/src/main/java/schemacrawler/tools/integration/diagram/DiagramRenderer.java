@@ -141,7 +141,8 @@ public final class DiagramRenderer
 
     final GraphExecutor graphExecutor = getGraphExecutor(dotFile);
     final boolean successful = graphExecutor.call();
-    if (!successful) {
+    if (!successful)
+    {
       final String message = readResourceFully("/dot.error.txt");
       throw new SchemaCrawlerRuntimeException(message);
     }

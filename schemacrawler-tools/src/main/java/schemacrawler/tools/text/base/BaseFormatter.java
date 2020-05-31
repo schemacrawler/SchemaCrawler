@@ -42,6 +42,7 @@ import java.util.List;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.IndexColumn;
+import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -50,7 +51,6 @@ import schemacrawler.tools.text.utility.HtmlFormattingHelper;
 import schemacrawler.tools.text.utility.PlainTextFormattingHelper;
 import schemacrawler.tools.text.utility.TextFormattingHelper;
 import schemacrawler.tools.traversal.TraversalHandler;
-import schemacrawler.schemacrawler.Identifiers;
 
 public abstract class BaseFormatter<O extends BaseTextOptions>
   implements TraversalHandler
@@ -163,7 +163,8 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
     else
     {
       final List<String> dbObjectLookupKey = dbObject.toUniqueLookupKey();
-      return convertForComparison(dbObject.getName()) + "_"
+      return convertForComparison(dbObject.getName())
+             + "_"
              + Integer.toHexString(Arrays.hashCode(dbObjectLookupKey.toArray()));
     }
   }
