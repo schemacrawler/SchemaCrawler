@@ -43,8 +43,8 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.Query;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 

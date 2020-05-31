@@ -134,7 +134,8 @@ public final class TableTypes
     final List<String> filteredTableTypes = new ArrayList<>();
     for (final String tableTypeString : tableTypeStrings)
     {
-      final Optional<TableType> tableTypeOptional = lookupTableType(tableTypeString);
+      final Optional<TableType> tableTypeOptional =
+        lookupTableType(tableTypeString);
       // Add value in the same case as known to the database system
       tableTypeOptional.ifPresent(tableType -> filteredTableTypes.add(tableType.getTableType()));
     }

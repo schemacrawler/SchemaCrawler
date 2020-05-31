@@ -143,7 +143,8 @@ public final class IOUtility
     final String ext;
     if (fileName != null)
     {
-      ext = fileName.lastIndexOf('.') == -1? "":
+      ext = fileName.lastIndexOf('.') == -1?
+            "":
             fileName.substring(fileName.lastIndexOf('.') + 1);
     }
     else
@@ -202,7 +203,9 @@ public final class IOUtility
       return false;
     }
     final Path parentPath = file.getParent();
-    return parentPath != null && exists(parentPath) && isDirectory(parentPath)
+    return parentPath != null
+           && exists(parentPath)
+           && isDirectory(parentPath)
            && isWritable(parentPath);
   }
 

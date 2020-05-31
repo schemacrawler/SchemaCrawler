@@ -77,18 +77,25 @@ public final class WeakAssociationsAnalyzer
   {
     LOGGER.log(Level.INFO, "Finding weak associations");
     final ForeignKeys foreignKeys = new ForeignKeys(tables);
-    final ColumnMatchKeysMap columnMatchKeysMap = new ColumnMatchKeysMap(tables);
+    final ColumnMatchKeysMap columnMatchKeysMap =
+      new ColumnMatchKeysMap(tables);
     final TableMatchKeys tableMatchKeys = new TableMatchKeys(tables);
 
     if (LOGGER.isLoggable(Level.FINER))
     {
-      LOGGER.log(Level.FINER, new StringFormat("Column match keys <%s>", columnMatchKeysMap));
-      LOGGER.log(Level.FINER, new StringFormat("Column match keys <%s>", tableMatchKeys));
+      LOGGER.log(Level.FINER,
+                 new StringFormat("Column match keys <%s>",
+                                  columnMatchKeysMap));
+      LOGGER.log(Level.FINER,
+                 new StringFormat("Column match keys <%s>", tableMatchKeys));
     }
     for (final Table table : tables)
     {
-      final TableCandidateKeys tableCandidateKeys = new TableCandidateKeys(table);
-      LOGGER.log(Level.FINER, new StringFormat("Table candidate keys <%s>", tableCandidateKeys));
+      final TableCandidateKeys tableCandidateKeys =
+        new TableCandidateKeys(table);
+      LOGGER.log(Level.FINER,
+                 new StringFormat("Table candidate keys <%s>",
+                                  tableCandidateKeys));
       for (final Column pkColumn : tableCandidateKeys)
       {
         final Set<String> fkColumnMatchKeys = new HashSet<>();
@@ -119,10 +126,14 @@ public final class WeakAssociationsAnalyzer
             continue;
           }
 
-          final ProposedWeakAssociation proposedWeakAssociation = new ProposedWeakAssociation(pkColumn, fkColumn);
-          if (proposedWeakAssociation.isValid() && !foreignKeys.contains(proposedWeakAssociation))
+          final ProposedWeakAssociation proposedWeakAssociation =
+            new ProposedWeakAssociation(pkColumn, fkColumn);
+          if (proposedWeakAssociation.isValid() && !foreignKeys.contains(
+            proposedWeakAssociation))
           {
-            LOGGER.log(Level.FINE, new StringFormat("Found weak association <%s>", proposedWeakAssociation));
+            LOGGER.log(Level.FINE,
+                       new StringFormat("Found weak association <%s>",
+                                        proposedWeakAssociation));
             weakAssociations.add(proposedWeakAssociation);
           }
         }

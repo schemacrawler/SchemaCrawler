@@ -138,12 +138,12 @@ public final class GrepOptionsBuilder
   @Override
   public GrepOptions toOptions()
   {
-    final GrepOptions grepOptions = new GrepOptions(grepColumnInclusionRule.orElse(null),
-                                                    grepRoutineParameterInclusionRule.orElse(
-                                                      null),
-                                                    grepDefinitionInclusionRule.orElse(null),
-                                                    grepInvertMatch,
-                                                    grepOnlyMatching);
+    final GrepOptions grepOptions =
+      new GrepOptions(grepColumnInclusionRule.orElse(null),
+                      grepRoutineParameterInclusionRule.orElse(null),
+                      grepDefinitionInclusionRule.orElse(null),
+                      grepInvertMatch,
+                      grepOnlyMatching);
 
     return grepOptions;
   }

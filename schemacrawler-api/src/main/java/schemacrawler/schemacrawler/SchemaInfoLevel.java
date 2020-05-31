@@ -38,7 +38,8 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
- * Descriptor for level of schema detail to be retrieved when crawling a schema.
+ * Descriptor for level of schema detail to be retrieved when crawling a
+ * schema.
  */
 public final class SchemaInfoLevel
   implements Options
@@ -47,18 +48,22 @@ public final class SchemaInfoLevel
   private final boolean[] schemaInfoRetrievals;
   private final String tag;
 
-  SchemaInfoLevel(final String tag, final Map<SchemaInfoRetrieval, Boolean> schemaInfoRetrievalsMap)
+  SchemaInfoLevel(final String tag,
+                  final Map<SchemaInfoRetrieval, Boolean> schemaInfoRetrievalsMap)
   {
     requireNonNull(tag, "No tag provided");
     this.tag = tag;
 
-    requireNonNull(schemaInfoRetrievalsMap, "No schema info retrievals provided");
+    requireNonNull(schemaInfoRetrievalsMap,
+                   "No schema info retrievals provided");
     final SchemaInfoRetrieval[] schemaInfoRetrievalsArray = values();
     schemaInfoRetrievals = new boolean[schemaInfoRetrievalsArray.length];
     for (final SchemaInfoRetrieval schemaInfoRetrieval : schemaInfoRetrievalsArray)
     {
-      final boolean schemaInfoRetrievalValue = schemaInfoRetrievalsMap.getOrDefault(schemaInfoRetrieval, false);
-      schemaInfoRetrievals[schemaInfoRetrieval.ordinal()] = schemaInfoRetrievalValue;
+      final boolean schemaInfoRetrievalValue =
+        schemaInfoRetrievalsMap.getOrDefault(schemaInfoRetrieval, false);
+      schemaInfoRetrievals[schemaInfoRetrieval.ordinal()] =
+        schemaInfoRetrievalValue;
     }
   }
 
@@ -93,7 +98,8 @@ public final class SchemaInfoLevel
       return false;
     }
     final SchemaInfoLevel other = (SchemaInfoLevel) obj;
-    return Arrays.equals(schemaInfoRetrievals, other.schemaInfoRetrievals) && Objects.equals(tag, other.tag);
+    return Arrays.equals(schemaInfoRetrievals, other.schemaInfoRetrievals)
+           && Objects.equals(tag, other.tag);
   }
 
   @Override
@@ -102,7 +108,9 @@ public final class SchemaInfoLevel
     final StringJoiner settings = new StringJoiner(System.lineSeparator());
     for (final SchemaInfoRetrieval schemaInfoRetrieval : values())
     {
-      settings.add(String.format("  %s=%b", schemaInfoRetrieval.name(), is(schemaInfoRetrieval)));
+      settings.add(String.format("  %s=%b",
+                                 schemaInfoRetrieval.name(),
+                                 is(schemaInfoRetrieval)));
     }
     return String.format("SchemaInfoLevel <%s>%n{%n%s%n}%n", tag, settings);
   }

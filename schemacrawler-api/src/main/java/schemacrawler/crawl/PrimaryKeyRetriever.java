@@ -161,7 +161,8 @@ final class PrimaryKeyRetriever
           normalizeSchemaName(results.getString("TABLE_SCHEM"));
         final String tableName = results.getString("TABLE_NAME");
 
-        final Optional<MutableTable> optionalTable = lookupTable(catalogName, schemaName, tableName);
+        final Optional<MutableTable> optionalTable =
+          lookupTable(catalogName, schemaName, tableName);
         if (!optionalTable.isPresent())
         {
           continue;

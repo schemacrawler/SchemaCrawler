@@ -58,7 +58,8 @@ import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.RoutineType;
 
 /**
- * SchemaCrawler options builder, to build the immutable options to crawl a schema.
+ * SchemaCrawler options builder, to build the immutable options to crawl a
+ * schema.
  */
 public final class LimitOptionsBuilder
   implements OptionsBuilder<LimitOptionsBuilder, LimitOptions>
@@ -84,7 +85,8 @@ public final class LimitOptionsBuilder
     return builder().toOptions();
   }
 
-  private final Map<DatabaseObjectRuleForInclusion, InclusionRule> inclusionRules;
+  private final Map<DatabaseObjectRuleForInclusion, InclusionRule>
+    inclusionRules;
   private String tableNamePattern;
   private Optional<Collection<String>> tableTypes;
   private Optional<Collection<RoutineType>> routineTypes;
@@ -122,9 +124,10 @@ public final class LimitOptionsBuilder
 
     for (DatabaseObjectRuleForInclusion ruleForInclusion : DatabaseObjectRuleForInclusion.values())
     {
-      final InclusionRule inclusionRule = config.getInclusionRuleWithDefault(ruleForInclusion.getIncludePatternProperty(),
-                                                                             ruleForInclusion.getExcludePatternProperty(),
-                                                                             getDefaultInclusionRule(ruleForInclusion));
+      final InclusionRule inclusionRule = config.getInclusionRuleWithDefault(
+        ruleForInclusion.getIncludePatternProperty(),
+        ruleForInclusion.getExcludePatternProperty(),
+        getDefaultInclusionRule(ruleForInclusion));
 
       inclusionRules.put(ruleForInclusion, inclusionRule);
     }
@@ -226,7 +229,8 @@ public final class LimitOptionsBuilder
 
   public LimitOptionsBuilder includeRoutineParameters(final InclusionRule routineParameterInclusionRule)
   {
-    return include(ruleForRoutineParameterInclusion, routineParameterInclusionRule);
+    return include(ruleForRoutineParameterInclusion,
+                   routineParameterInclusionRule);
   }
 
   public LimitOptionsBuilder includeRoutines(final InclusionRule routineInclusionRule)
@@ -288,7 +292,9 @@ public final class LimitOptionsBuilder
       {
         for (final String routineTypeString : routineTypeStrings)
         {
-          final RoutineType routineType = enumValue(routineTypeString.toLowerCase(Locale.ENGLISH), RoutineType.unknown);
+          final RoutineType routineType =
+            enumValue(routineTypeString.toLowerCase(Locale.ENGLISH),
+                      RoutineType.unknown);
           routineTypes.add(routineType);
         }
       }
@@ -332,11 +338,12 @@ public final class LimitOptionsBuilder
   }
 
   /**
-   * Sets table types requested for output from a comma-separated list of table types. For example:
-   * TABLE,VIEW,SYSTEM_TABLE,GLOBAL TEMPORARY,ALIAS,SYNONYM
+   * Sets table types requested for output from a comma-separated list of table
+   * types. For example: TABLE,VIEW,SYSTEM_TABLE,GLOBAL TEMPORARY,ALIAS,SYNONYM
    *
    * @param tableTypesString
-   *   Comma-separated list of table types. Can be null if all supported table types are requested.
+   *   Comma-separated list of table types. Can be null if all supported table
+   *   types are requested.
    */
   public LimitOptionsBuilder tableTypes(final String tableTypesString)
   {
@@ -378,12 +385,15 @@ public final class LimitOptionsBuilder
 
   private void resetToDefault(final DatabaseObjectRuleForInclusion ruleForInclusion)
   {
-    inclusionRules.put(ruleForInclusion, getDefaultInclusionRule(ruleForInclusion));
+    inclusionRules.put(ruleForInclusion,
+                       getDefaultInclusionRule(ruleForInclusion));
   }
 
-  private LimitOptionsBuilder include(final DatabaseObjectRuleForInclusion ruleForInclusion, final Pattern pattern)
+  private LimitOptionsBuilder include(final DatabaseObjectRuleForInclusion ruleForInclusion,
+                                      final Pattern pattern)
   {
-    return include(ruleForInclusion, new RegularExpressionInclusionRule(pattern));
+    return include(ruleForInclusion,
+                   new RegularExpressionInclusionRule(pattern));
   }
 
   private LimitOptionsBuilder include(final DatabaseObjectRuleForInclusion ruleForInclusion,

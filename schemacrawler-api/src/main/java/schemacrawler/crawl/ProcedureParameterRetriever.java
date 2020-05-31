@@ -216,9 +216,11 @@ final class ProcedureParameterRetriever
   private MutableProcedureParameter lookupOrCreateProcedureParameter(final MutableProcedure procedure,
                                                                      final String columnName)
   {
-    final Optional<MutableProcedureParameter> parameterOptional = procedure.lookupParameter(columnName);
+    final Optional<MutableProcedureParameter> parameterOptional =
+      procedure.lookupParameter(columnName);
     final MutableProcedureParameter parameter =
-      parameterOptional.orElseGet(() -> new MutableProcedureParameter(procedure, columnName));
+      parameterOptional.orElseGet(() -> new MutableProcedureParameter(procedure,
+                                                                      columnName));
     return parameter;
   }
 

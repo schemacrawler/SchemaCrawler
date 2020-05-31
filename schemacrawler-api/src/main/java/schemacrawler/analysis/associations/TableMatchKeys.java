@@ -193,9 +193,10 @@ final class TableMatchKeys
     final List<String> prefixes = new ArrayList<>();
     for (int i = 0; i < prefixesList.size(); i++)
     {
-      final boolean add = i < 5 || prefixesList
-                                     .get(i)
-                                     .getValue() > prefixesMap.size() * 0.5;
+      final boolean add = i < 5
+                          || prefixesList
+                               .get(i)
+                               .getValue() > prefixesMap.size() * 0.5;
       if (add)
       {
         prefixes.add(prefixesList

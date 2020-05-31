@@ -59,7 +59,8 @@ final class DatabaseObjectFilter<D extends DatabaseObject>
 
     if (databaseObjectRuleForInclusion != null)
     {
-      this.databaseObjectInclusionRule = options.get(databaseObjectRuleForInclusion);
+      this.databaseObjectInclusionRule =
+        options.get(databaseObjectRuleForInclusion);
     }
     else
     {

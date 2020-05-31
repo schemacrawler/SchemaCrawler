@@ -40,11 +40,11 @@ import schemacrawler.schema.ColumnDataType;
 public interface EnumDataTypeHelper
 {
 
+  EnumDataTypeHelper NO_OP_ENUM_DATA_TYPE_HELPER =
+    (column, columnDataType, connection) -> EMPTY_ENUM_DATA_TYPE_INFO;
+
   EnumDataTypeInfo getEnumDataTypeInfo(Column column,
                                        ColumnDataType columnDataType,
                                        Connection connection);
-
-  EnumDataTypeHelper NO_OP_ENUM_DATA_TYPE_HELPER =
-    (column, columnDataType, connection) -> EMPTY_ENUM_DATA_TYPE_INFO;
 
 }

@@ -225,7 +225,8 @@ final class IndexRetriever
           normalizeSchemaName(results.getString("TABLE_SCHEM"));
         final String tableName = results.getString("TABLE_NAME");
 
-        final Optional<MutableTable> optionalTable = lookupTable(catalogName, schemaName, tableName);
+        final Optional<MutableTable> optionalTable =
+          lookupTable(catalogName, schemaName, tableName);
         if (!optionalTable.isPresent())
         {
           continue;
@@ -242,7 +243,8 @@ final class IndexRetriever
     }
   }
 
-  private void retrieveTableIndexesFromMetadata(final MutableTable table, final boolean unique)
+  private void retrieveTableIndexesFromMetadata(final MutableTable table,
+                                                final boolean unique)
     throws SQLException
   {
 

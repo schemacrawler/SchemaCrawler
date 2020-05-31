@@ -39,8 +39,10 @@ import schemacrawler.utility.TypeMap;
 import sf.util.ObjectToString;
 
 /**
- * Provides for database specific overrides for SchemaCrawler functionality. This can add or inject database plugins, or
- * override defaults. It is recommended to build these options using factory methods in SchemaCrawlerUtility.
+ * Provides for database specific overrides for SchemaCrawler functionality.
+ * This can add or inject database plugins, or override defaults. It is
+ * recommended to build these options using factory methods in
+ * SchemaCrawlerUtility.
  *
  * @author Sualeh Fatehi <sualeh@hotmail.com>
  */
@@ -56,11 +58,13 @@ public final class SchemaRetrievalOptions
   private final boolean supportsSchemas;
   private final TypeMap typeMap;
   private final EnumDataTypeHelper enumDataTypeHelper;
-  EnumMap<SchemaInfoMetadataRetrievalStrategy, MetadataRetrievalStrategy> metadataRetrievalStrategyMap;
+  EnumMap<SchemaInfoMetadataRetrievalStrategy, MetadataRetrievalStrategy>
+    metadataRetrievalStrategyMap;
 
   protected SchemaRetrievalOptions(final SchemaRetrievalOptionsBuilder builder)
   {
-    final SchemaRetrievalOptionsBuilder bldr = builder == null? SchemaRetrievalOptionsBuilder.builder(): builder;
+    final SchemaRetrievalOptionsBuilder bldr =
+      builder == null? SchemaRetrievalOptionsBuilder.builder(): builder;
     dbServerType = bldr.dbServerType;
     supportsSchemas = bldr.supportsSchemas;
     supportsCatalogs = bldr.supportsCatalogs;
@@ -69,7 +73,8 @@ public final class SchemaRetrievalOptions
     identifiers = bldr.identifiers;
     typeMap = bldr.overridesTypeMap.orElse(new TypeMap());
     enumDataTypeHelper = bldr.enumDataTypeHelper;
-    metadataRetrievalStrategyMap = new EnumMap<>(bldr.metadataRetrievalStrategyMap);
+    metadataRetrievalStrategyMap =
+      new EnumMap<>(bldr.metadataRetrievalStrategyMap);
   }
 
   public EnumDataTypeHelper getEnumDataTypeHelper()
@@ -84,7 +89,8 @@ public final class SchemaRetrievalOptions
 
   public MetadataRetrievalStrategy get(final SchemaInfoMetadataRetrievalStrategy schemaInfoMetadataRetrievalStrategy)
   {
-    requireNonNull(schemaInfoMetadataRetrievalStrategy, "No schema info metadata retrieval strategy provided");
+    requireNonNull(schemaInfoMetadataRetrievalStrategy,
+                   "No schema info metadata retrieval strategy provided");
     return metadataRetrievalStrategyMap.get(schemaInfoMetadataRetrievalStrategy);
   }
 

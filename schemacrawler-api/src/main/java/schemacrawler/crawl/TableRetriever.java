@@ -228,7 +228,8 @@ final class TableRetriever
         supportedTableTypes.filterUnknown(tableTypes);
       LOGGER.log(Level.FINER,
                  new StringFormat("Retrieving table types <%s>",
-                                  filteredTableTypes == null? "<<all>>":
+                                  filteredTableTypes == null?
+                                  "<<all>>":
                                   Arrays.asList(filteredTableTypes)));
 
       final String catalogName = schema.getCatalogName();

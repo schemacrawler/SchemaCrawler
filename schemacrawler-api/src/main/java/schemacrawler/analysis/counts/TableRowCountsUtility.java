@@ -38,7 +38,8 @@ public final class TableRowCountsUtility
 {
 
   private static final int UNKNOWN_TABLE_ROW_COUNT = -1;
-  private static final String TABLE_ROW_COUNT_KEY = "schemacrawler.table.row_count";
+  private static final String TABLE_ROW_COUNT_KEY =
+    "schemacrawler.table.row_count";
 
   static void addRowCountToTable(final Table table, final long rowCount)
   {
@@ -62,7 +63,9 @@ public final class TableRowCountsUtility
       return UNKNOWN_TABLE_ROW_COUNT;
     }
 
-    final long tableCount = table.getAttribute(TABLE_ROW_COUNT_KEY, Long.valueOf(UNKNOWN_TABLE_ROW_COUNT));
+    final long tableCount = table.getAttribute(TABLE_ROW_COUNT_KEY,
+                                               Long.valueOf(
+                                                 UNKNOWN_TABLE_ROW_COUNT));
     return tableCount;
   }
 

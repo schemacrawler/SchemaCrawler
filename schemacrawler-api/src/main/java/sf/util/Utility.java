@@ -72,7 +72,8 @@ public final class Utility
     }
 
     final LogManager logManager = LogManager.getLogManager();
-    final List<String> loggerNames = Collections.list(logManager.getLoggerNames());
+    final List<String> loggerNames =
+      Collections.list(logManager.getLoggerNames());
     for (final String loggerName : loggerNames)
     {
       final Logger logger = logManager.getLogger(loggerName);
@@ -136,7 +137,8 @@ public final class Utility
   /**
    * @param logLevel
    *   Log level to be set
-   * @see <a href="https://www.slf4j.org/api/org/slf4j/impl/SimpleLogger.html">SLF4J log levels</a>
+   * @see <a href="https://www.slf4j.org/api/org/slf4j/impl/SimpleLogger.html">SLF4J
+   *   log levels</a>
    */
   private static void applySlf4jLogLevel(final Level logLevel)
   {
@@ -230,7 +232,8 @@ public final class Utility
     return textWithoutQuotes;
   }
 
-  public static <E extends Enum<E>> E enumValue(final String value, final E defaultValue)
+  public static <E extends Enum<E>> E enumValue(final String value,
+                                                final E defaultValue)
   {
     requireNonNull(defaultValue, "No default value provided");
     E enumValue;
@@ -257,7 +260,8 @@ public final class Utility
     return enumValue;
   }
 
-  public static <E extends Enum<E> & IdentifiedEnum> E enumValueFromId(final int value, final E defaultValue)
+  public static <E extends Enum<E> & IdentifiedEnum> E enumValueFromId(final int value,
+                                                                       final E defaultValue)
   {
     requireNonNull(defaultValue, "No default value provided");
     try
@@ -278,7 +282,8 @@ public final class Utility
     return defaultValue;
   }
 
-  private static int indexOfDifference(final String string1, final String string2)
+  private static int indexOfDifference(final String string1,
+                                       final String string2)
   {
     if (string1 == null || string2 == null)
     {
@@ -380,7 +385,8 @@ public final class Utility
     return text != null && text.equals(text.toLowerCase());
   }
 
-  public static String join(final Collection<String> collection, final String separator)
+  public static String join(final Collection<String> collection,
+                            final String separator)
   {
     if (collection == null || collection.isEmpty())
     {

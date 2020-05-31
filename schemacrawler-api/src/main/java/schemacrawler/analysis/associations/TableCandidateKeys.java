@@ -70,18 +70,21 @@ final class TableCandidateKeys
   private Set<Column> listTableKeys(final Table table)
   {
     final PrimaryKey primaryKey = table.getPrimaryKey();
-    if (primaryKey != null && primaryKey
-                                .getColumns()
-                                .size() == 1)
+    if (primaryKey != null
+        && primaryKey
+             .getColumns()
+             .size() == 1)
     {
       addColumnFromPrimaryKey(table, primaryKey);
     }
 
     for (final Index index : table.getIndexes())
     {
-      if (index != null && index.isUnique() && index
-                                                 .getColumns()
-                                                 .size() == 1)
+      if (index != null
+          && index.isUnique()
+          && index
+               .getColumns()
+               .size() == 1)
       {
         addColumnFromIndex(table, index);
       }
@@ -100,7 +103,8 @@ final class TableCandidateKeys
       .ifPresent(column -> tableKeys.add(column));
   }
 
-  private void addColumnFromPrimaryKey(final Table table, final PrimaryKey primaryKey)
+  private void addColumnFromPrimaryKey(final Table table,
+                                       final PrimaryKey primaryKey)
   {
     final TableConstraintColumn tableConstraintColumn = primaryKey
       .getColumns()

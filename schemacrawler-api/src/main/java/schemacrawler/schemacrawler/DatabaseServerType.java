@@ -33,9 +33,10 @@ import static sf.util.Utility.isBlank;
 import java.io.Serializable;
 
 /**
- * Class that represents an id for SchemaCrawler plugin that allows for crawl customizations for a particular database.
- * The "server" id is used on the SchemaCrawler command-line. It also allows for customizations for the behavior of a
- * particular database driver.
+ * Class that represents an id for SchemaCrawler plugin that allows for crawl
+ * customizations for a particular database. The "server" id is used on the
+ * SchemaCrawler command-line. It also allows for customizations for the
+ * behavior of a particular database driver.
  */
 public final class DatabaseServerType
   implements Serializable, Comparable<DatabaseServerType>
@@ -55,7 +56,8 @@ public final class DatabaseServerType
   {
     if (isBlank(databaseSystemIdentifier))
     {
-      throw new IllegalArgumentException("No database system identifier provided");
+      throw new IllegalArgumentException(
+        "No database system identifier provided");
     }
     this.databaseSystemIdentifier = databaseSystemIdentifier;
 
@@ -75,7 +77,8 @@ public final class DatabaseServerType
     }
   }
 
-  public DatabaseServerType(final String databaseSystemIdentifier, final String databaseSystemName)
+  public DatabaseServerType(final String databaseSystemIdentifier,
+                            final String databaseSystemName)
   {
     this(databaseSystemIdentifier, databaseSystemName, null);
   }
@@ -117,7 +120,9 @@ public final class DatabaseServerType
   {
     final int prime = 31;
     int result = 1;
-    result = prime * result + (databaseSystemIdentifier == null? 0: databaseSystemIdentifier.hashCode());
+    result = prime * result + (databaseSystemIdentifier == null?
+                               0:
+                               databaseSystemIdentifier.hashCode());
     return result;
   }
 
@@ -169,7 +174,9 @@ public final class DatabaseServerType
     }
     else
     {
-      return String.format("%s - %s", databaseSystemIdentifier, databaseSystemName);
+      return String.format("%s - %s",
+                           databaseSystemIdentifier,
+                           databaseSystemName);
     }
   }
 

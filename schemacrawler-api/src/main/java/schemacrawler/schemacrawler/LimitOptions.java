@@ -49,7 +49,8 @@ public final class LimitOptions
   implements Options
 {
 
-  private final Map<DatabaseObjectRuleForInclusion, InclusionRule> inclusionRules;
+  private final Map<DatabaseObjectRuleForInclusion, InclusionRule>
+    inclusionRules;
   private final Collection<RoutineType> routineTypes;
   private final String tableNamePattern;
   private final Collection<String> tableTypes;
@@ -64,7 +65,8 @@ public final class LimitOptions
     // Table types and routines types may be null, indicating that all table types or
     // routine types should be considered
 
-    this.inclusionRules = requireNonNull(inclusionRules, "No inclusion rules provided");
+    this.inclusionRules =
+      requireNonNull(inclusionRules, "No inclusion rules provided");
 
     this.tableTypes = tableTypes;
     this.tableNamePattern = tableNamePattern;
@@ -121,9 +123,12 @@ public final class LimitOptions
   public InclusionRule get(final DatabaseObjectRuleForInclusion inclusionRuleKey)
   {
     final InclusionRule defaultInclusionRule;
-    if (inclusionRuleKey.isExcludeByDefault()) {
+    if (inclusionRuleKey.isExcludeByDefault())
+    {
       defaultInclusionRule = new ExcludeAll();
-    } else {
+    }
+    else
+    {
       defaultInclusionRule = new IncludeAll();
     }
     return inclusionRules.getOrDefault(inclusionRuleKey, defaultInclusionRule);

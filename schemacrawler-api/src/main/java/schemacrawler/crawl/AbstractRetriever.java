@@ -144,7 +144,9 @@ abstract class AbstractRetriever
 
   final InclusionRule getSchemaInclusionRule()
   {
-    return options.getLimitOptions().get(ruleForSchemaInclusion);
+    return options
+      .getLimitOptions()
+      .get(ruleForSchemaInclusion);
   }
 
   final void logPossiblyUnsupportedSQLFeature(final Supplier<String> message,

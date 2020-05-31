@@ -213,7 +213,8 @@ final class ForeignKeyRetriever
       final boolean isPkColumnPartial = pkColumn instanceof ColumnPartial;
       final boolean isFkColumnPartial = fkColumn instanceof ColumnPartial;
 
-      if (pkColumn == null || fkColumn == null
+      if (pkColumn == null
+          || fkColumn == null
           || isFkColumnPartial && isPkColumnPartial)
       {
         continue;

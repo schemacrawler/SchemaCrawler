@@ -46,12 +46,11 @@ import schemacrawler.schema.CheckOptionType;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ConditionTimingType;
 import schemacrawler.schema.EventManipulationType;
-import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.Query;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 

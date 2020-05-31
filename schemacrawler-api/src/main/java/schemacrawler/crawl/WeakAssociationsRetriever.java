@@ -61,8 +61,10 @@ final class WeakAssociationsRetriever
   public void retrieveWeakAssociations()
   {
     final List<Table> allTables = new ArrayList<>(catalog.getTables());
-    final WeakAssociationsAnalyzer weakAssociationsAnalyzer = new WeakAssociationsAnalyzer(allTables);
-    final Collection<ProposedWeakAssociation> proposedWeakAssociations = weakAssociationsAnalyzer.analyzeTables();
+    final WeakAssociationsAnalyzer weakAssociationsAnalyzer =
+      new WeakAssociationsAnalyzer(allTables);
+    final Collection<ProposedWeakAssociation> proposedWeakAssociations =
+      weakAssociationsAnalyzer.analyzeTables();
 
     for (final ProposedWeakAssociation proposedWeakAssociation : proposedWeakAssociations)
     {
@@ -72,21 +74,24 @@ final class WeakAssociationsRetriever
 
   private void createWeakAssociation(final ProposedWeakAssociation proposedWeakAssociation)
   {
-    LOGGER.log(Level.INFO, new StringFormat("Adding weak association <%s> ", proposedWeakAssociation));
+    LOGGER.log(Level.INFO,
+               new StringFormat("Adding weak association <%s> ",
+                                proposedWeakAssociation));
 
     final Column pkColumn = proposedWeakAssociation.getKey();
     final Column fkColumn = proposedWeakAssociation.getValue();
     final boolean isPkColumnPartial = pkColumn instanceof ColumnPartial;
     final boolean isFkColumnPartial = fkColumn instanceof ColumnPartial;
 
-    if (pkColumn == null || fkColumn == null
+    if (pkColumn == null
+        || fkColumn == null
         || isFkColumnPartial && isPkColumnPartial)
     {
       return;
     }
 
     final String foreignKeyName =
-        MetaDataUtility.constructForeignKeyName(pkColumn, fkColumn);
+      MetaDataUtility.constructForeignKeyName(pkColumn, fkColumn);
 
     final WeakAssociation weakAssociation = new WeakAssociation(foreignKeyName);
     weakAssociation.addColumnReference(pkColumn, fkColumn);

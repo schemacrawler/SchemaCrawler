@@ -39,13 +39,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-import schemacrawler.schemacrawler.Retriever;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.Query;
+import schemacrawler.schemacrawler.Retriever;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
@@ -59,7 +59,8 @@ public final class TableRowCountsRetriever
   private final Connection connection;
   private final Catalog catalog;
 
-  public TableRowCountsRetriever(final Connection connection, final Catalog catalog)
+  public TableRowCountsRetriever(final Connection connection,
+                                 final Catalog catalog)
     throws SchemaCrawlerSQLException
   {
     this.connection = checkConnection(connection);
@@ -91,18 +92,23 @@ public final class TableRowCountsRetriever
       return;
     }
 
-    final Query query = new Query("schemacrawler.table.row_counts", "SELECT COUNT(*) FROM ${table}");
+    final Query query = new Query("schemacrawler.table.row_counts",
+                                  "SELECT COUNT(*) FROM ${table}");
     final List<Table> allTables = new ArrayList<>(catalog.getTables());
     for (final Table table : allTables)
     {
       try
       {
-        final long count = executeForLong(query, connection, table, identifiers);
+        final long count =
+          executeForLong(query, connection, table, identifiers);
         addRowCountToTable(table, count);
       }
       catch (final SchemaCrawlerException e)
       {
-        LOGGER.log(Level.WARNING, new StringFormat("Could not get count for table <%s>", table), e);
+        LOGGER.log(Level.WARNING,
+                   new StringFormat("Could not get count for table <%s>",
+                                    table),
+                   e);
       }
     }
 

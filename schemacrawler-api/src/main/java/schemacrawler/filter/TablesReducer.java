@@ -90,7 +90,8 @@ final class TablesReducer
       TableRelationshipType.child,
       childTableFilterDepth,
       reducedTables);
-    final int parentTableFilterDepth = filterOptions.getParentTableFilterDepth();
+    final int parentTableFilterDepth =
+      filterOptions.getParentTableFilterDepth();
     final Collection<Table> parentTables = includeRelatedTables(
       TableRelationshipType.parent,
       parentTableFilterDepth,
@@ -146,7 +147,9 @@ final class TablesReducer
   private void markTableFilteredOut(final Table table)
   {
     table.setAttribute("schemacrawler.table.filtered_out", true);
-    if (options.getGrepOptions().isGrepOnlyMatching())
+    if (options
+      .getGrepOptions()
+      .isGrepOnlyMatching())
     {
       table.setAttribute("schemacrawler.table.no_grep_match", true);
     }

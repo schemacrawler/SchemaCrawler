@@ -42,7 +42,8 @@ public enum SchemaInfoMetadataRetrievalStrategy
   tablesRetrievalStrategy("tables"),
   ;
 
-  private static final String prefix = "schemacrawler.schema.retrieval.strategy.";
+  private static final String prefix =
+    "schemacrawler.schema.retrieval.strategy.";
 
   private final String key;
 

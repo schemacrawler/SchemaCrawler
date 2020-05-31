@@ -110,7 +110,8 @@ public final class GrepOptions
   }
 
   /**
-   * Whether grep includes show foreign keys that reference other non-matching tables.
+   * Whether grep includes show foreign keys that reference other non-matching
+   * tables.
    */
   public boolean isGrepOnlyMatching()
   {

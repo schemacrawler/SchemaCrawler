@@ -43,6 +43,9 @@ class ImmutableDatabaseProperty
   implements DatabaseProperty
 {
 
+  private static final Set<Entry<String, String>> acronyms;
+  private static final long serialVersionUID = -7150431683440256142L;
+
   static
   {
     final Map<String, String> acronymsMap = new HashMap<>();
@@ -55,9 +58,6 @@ class ImmutableDatabaseProperty
     acronymsMap.put("TYPE_SCROLL_SENSITIVE", "Type_scroll_sensitive");
     acronyms = Collections.unmodifiableSet(acronymsMap.entrySet());
   }
-
-  private static final Set<Entry<String, String>> acronyms;
-  private static final long serialVersionUID = -7150431683440256142L;
 
   ImmutableDatabaseProperty(final String name, final Object value)
   {

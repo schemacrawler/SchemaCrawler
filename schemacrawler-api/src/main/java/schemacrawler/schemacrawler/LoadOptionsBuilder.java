@@ -70,7 +70,8 @@ public final class LoadOptionsBuilder
 
     schemaInfoLevel = SchemaInfoLevelBuilder
       .builder()
-      .fromConfig(config).toOptions();
+      .fromConfig(config)
+      .toOptions();
 
     return this;
   }
@@ -110,7 +111,8 @@ public final class LoadOptionsBuilder
   }
 
   /**
-   * Corresponds to the --load-row-counts=&lt;boolean&gt; command-line argument.
+   * Corresponds to the --load-row-counts=&lt;boolean&gt; command-line
+   * argument.
    */
   public final LoadOptionsBuilder loadRowCounts(final boolean value)
   {

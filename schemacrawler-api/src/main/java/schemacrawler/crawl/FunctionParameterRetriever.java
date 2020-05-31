@@ -216,9 +216,11 @@ final class FunctionParameterRetriever
   private MutableFunctionParameter lookupOrCreateFunctionParameter(final MutableFunction function,
                                                                    final String columnName)
   {
-    final Optional<MutableFunctionParameter> columnOptional = function.lookupParameter(columnName);
+    final Optional<MutableFunctionParameter> columnOptional =
+      function.lookupParameter(columnName);
     final MutableFunctionParameter column =
-      columnOptional.orElseGet(() -> new MutableFunctionParameter(function, columnName));
+      columnOptional.orElseGet(() -> new MutableFunctionParameter(function,
+                                                                  columnName));
     return column;
   }
 

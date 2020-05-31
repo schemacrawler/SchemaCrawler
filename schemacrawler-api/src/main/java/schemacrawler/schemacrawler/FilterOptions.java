@@ -30,7 +30,6 @@ package schemacrawler.schemacrawler;
 
 import sf.util.ObjectToString;
 
-
 public final class FilterOptions
   implements Options
 {
@@ -45,13 +44,17 @@ public final class FilterOptions
   {
     this.isNoEmptyTables = isNoEmptyTables;
 
-    if (childTableFilterDepth < 0) {
-      throw new IllegalArgumentException("Invalid child table filter depth, " + childTableFilterDepth);
+    if (childTableFilterDepth < 0)
+    {
+      throw new IllegalArgumentException("Invalid child table filter depth, "
+                                         + childTableFilterDepth);
     }
     this.childTableFilterDepth = childTableFilterDepth;
 
-    if (parentTableFilterDepth < 0) {
-      throw new IllegalArgumentException("Invalid parent table filter depth, " + parentTableFilterDepth);
+    if (parentTableFilterDepth < 0)
+    {
+      throw new IllegalArgumentException("Invalid parent table filter depth, "
+                                         + parentTableFilterDepth);
     }
     this.parentTableFilterDepth = parentTableFilterDepth;
   }
@@ -65,7 +68,6 @@ public final class FilterOptions
   {
     return parentTableFilterDepth;
   }
-
 
   /**
    * If infolevel=maximum, this option will remove empty tables (that is, tables
