@@ -25,32 +25,27 @@ public final class ReducerFactory
 
   public static Reducer<Routine> getRoutineReducer(final SchemaCrawlerOptions options)
   {
-    return new BaseReducer<Routine>(routineFilter(options))
-    {};
+    return new FilteringReducer<>(routineFilter(options));
   }
 
   public static Reducer<Schema> getSchemaReducer(final SchemaCrawlerOptions options)
   {
-    return new BaseReducer<Schema>(schemaFilter(options))
-    {};
+    return new FilteringReducer<>(schemaFilter(options));
   }
 
   public static Reducer<Sequence> getSequenceReducer(final SchemaCrawlerOptions options)
   {
-    return new BaseReducer<Sequence>(sequenceFilter(options))
-    {};
+    return new FilteringReducer<>(sequenceFilter(options));
   }
 
   public static Reducer<Synonym> getSynonymReducer(final SchemaCrawlerOptions options)
   {
-    return new BaseReducer<Synonym>(synonymFilter(options))
-    {};
+    return new FilteringReducer<>(synonymFilter(options));
   }
 
   public static Reducer<Table> getTableReducer(final Predicate<Table> tableFilter)
   {
-    return new BaseReducer<Table>(tableFilter)
-    {};
+    return new FilteringReducer<>(tableFilter);
   }
 
   public static Reducer<Table> getTableReducer(final SchemaCrawlerOptions options)
@@ -58,13 +53,13 @@ public final class ReducerFactory
     return new TablesReducer(options, tableFilter(options));
   }
 
-  private abstract static class BaseReducer<N extends NamedObject>
+  private static class FilteringReducer<N extends NamedObject>
     implements Reducer<N>
   {
 
     private final Predicate<N> filter;
 
-    protected BaseReducer(final Predicate<N> filter)
+    protected FilteringReducer(final Predicate<N> filter)
     {
       this.filter = requireNonNull(filter, "No filter provided");
     }
