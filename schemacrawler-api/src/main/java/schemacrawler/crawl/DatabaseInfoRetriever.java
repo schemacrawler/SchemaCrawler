@@ -30,7 +30,7 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.schemacrawler.InformationSchemaKey.USERS;
+import static schemacrawler.schemacrawler.InformationSchemaKey.DATABASE_USERS;
 import static sf.util.Utility.isBlank;
 
 import java.lang.reflect.InvocationTargetException;
@@ -406,14 +406,15 @@ final class DatabaseInfoRetriever
 
     final InformationSchemaViews informationSchemaViews =
       getRetrieverConnection().getInformationSchemaViews();
-    if (!informationSchemaViews.hasQuery(USERS))
+    if (!informationSchemaViews.hasQuery(DATABASE_USERS))
     {
       LOGGER.log(Level.INFO,
                  "Not retrieving database users information, since this was not requested");
       LOGGER.log(Level.FINE, "Database users SQL statement was not provided");
       return;
     }
-    final Query databaseUsersSql = informationSchemaViews.getQuery(USERS);
+    final Query databaseUsersSql = informationSchemaViews.getQuery(
+      DATABASE_USERS);
 
     final Connection connection = getDatabaseConnection();
     try (

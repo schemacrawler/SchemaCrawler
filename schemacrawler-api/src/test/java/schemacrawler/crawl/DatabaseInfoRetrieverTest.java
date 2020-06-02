@@ -288,7 +288,7 @@ public class DatabaseInfoRetrieverTest
     final InformationSchemaViews informationSchemaViews =
       InformationSchemaViewsBuilder
         .builder()
-        .withSql(InformationSchemaKey.USERS,
+        .withSql(InformationSchemaKey.DATABASE_USERS,
                  "SELECT USER_NAME AS USERNAME, "
                  + "ADMIN, INITIAL_SCHEMA, AUTHENTICATION, PASSWORD_DIGEST "
                  + "FROM INFORMATION_SCHEMA.SYSTEM_USERS")
