@@ -29,6 +29,8 @@ package schemacrawler.integration.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -40,7 +42,9 @@ import static sf.util.DatabaseUtility.checkConnection;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,6 +56,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.DatabaseUser;
 import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -132,6 +137,31 @@ public class PostgreSQLTest
     assertThat(serverInfo
                  .get(0)
                  .getValue(), equalTo("test"));
+
+    final List<DatabaseUser> databaseUsers =
+      (List<DatabaseUser>) catalog.getDatabaseUsers();
+    assertThat(databaseUsers, hasSize(2));
+    assertThat(databaseUsers
+                 .stream()
+                 .map(DatabaseUser::getName)
+                 .collect(Collectors.toList()), hasItems("otheruser", "test"));
+    assertThat(databaseUsers
+                 .stream()
+                 .map(databaseUser -> databaseUser
+                   .getAttributes()
+                   .size())
+                 .collect(Collectors.toList()), hasItems(4));
+    assertThat(databaseUsers
+                 .stream()
+                 .map(databaseUser -> databaseUser
+                   .getAttributes()
+                   .keySet())
+                 .flatMap(Collection::stream)
+                 .collect(Collectors.toSet()),
+               hasItems("USESYSID",
+                        "USESUPER",
+                        "PASSWD",
+                        "VALUNTIL"));
   }
 
   @Test
