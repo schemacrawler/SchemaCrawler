@@ -301,12 +301,10 @@ public class SchemaCrawlerCoverageTest
     assertThat(table.getAttribute("unknown", 10.5f), is(10.5f));
     assertThat(table.getAttribute("schemacrawler.table.row_count", 10L),
                is(20L));
-    assertThrows(ClassCastException.class,
-                 () -> {
-                   final String string = table.getAttribute(
-                     "schemacrawler.table.row_count",
-                     "no value");
-                 });
+    assertThrows(ClassCastException.class, () -> {
+      final String string =
+        table.getAttribute("schemacrawler.table.row_count", "no value");
+    });
 
     assertThat(table.hasAttribute("new_one"), is(false));
     table.setAttribute("new_one", "some_value");

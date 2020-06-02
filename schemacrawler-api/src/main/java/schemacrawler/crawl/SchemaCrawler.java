@@ -42,6 +42,7 @@ import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleFor
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSequenceInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSynonymInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForTableInclusion;
+import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveDatabaseUsers;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -331,6 +332,19 @@ public final class SchemaCrawler
         {
           LOGGER.log(Level.INFO,
                      "Not retrieving server information, since this was not requested");
+        }
+        return null;
+      });
+
+      stopWatch.time("retrieveDatabaseUsers", () -> {
+        if (infoLevel.is(retrieveDatabaseUsers))
+        {
+          retriever.retrieveDatabaseUsers();
+        }
+        else
+        {
+          LOGGER.log(Level.INFO,
+                     "Not retrieving database users, since this was not requested");
         }
         return null;
       });

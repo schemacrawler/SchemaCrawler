@@ -241,6 +241,13 @@ public final class SchemaInfoLevelBuilder
     return this;
   }
 
+  public SchemaInfoLevelBuilder setRetrieveDatabaseUsers(final boolean retrieveDatabaseUsers)
+  {
+    schemaInfoRetrievals.put(SchemaInfoRetrieval.retrieveDatabaseUsers,
+                             retrieveDatabaseUsers);
+    return this;
+  }
+
   public SchemaInfoLevelBuilder setRetrieveForeignKeyDefinitions(final boolean retrieveForeignKeyDefinitions)
   {
     schemaInfoRetrievals.put(SchemaInfoRetrieval.retrieveForeignKeyDefinitions,
