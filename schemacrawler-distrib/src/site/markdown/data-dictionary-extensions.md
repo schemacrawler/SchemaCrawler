@@ -250,6 +250,16 @@ If you create a query definition in the configuration properties, called `select
 | DESCRIPTION | The description of the server information property. |
 
 
+### ADDITIONAL_INFO.DATABASE_USERS
+
+If you create a query definition in the configuration properties, called `select.ADDITIONAL_INFO.DATABASE_USERS`, database users and their attributes will be added to the catalog metadata. The query should return the following columns:
+
+| Column name | Description |
+| --- | --- |
+| USERNAME | The datbase user's username. |
+| ... | Any additional columns for database user attributes. |
+
+
 ### ADDITIONAL_INFO.ADDITIONAL_TABLE_ATTRIBUTES
 
 If you create a query definition in the configuration properties, called `select.ADDITIONAL_INFO.ADDITIONAL_TABLE_ATTRIBUTES`, the columns will be automatically added to table metadata as attributes. The query should return the following columns:
