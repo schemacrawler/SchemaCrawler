@@ -30,6 +30,8 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNull.nullValue;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
@@ -42,7 +44,9 @@ import static sf.util.DatabaseUtility.checkConnection;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,6 +58,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.DatabaseUser;
 import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -133,6 +138,31 @@ public class SqlServerTest
     assertThat(serverInfo
                  .get(0)
                  .getValue(), is(nullValue()));
+
+    final List<DatabaseUser> databaseUsers =
+      (List<DatabaseUser>) catalog.getDatabaseUsers();
+    assertThat(databaseUsers, hasSize(13));
+    assertThat(databaseUsers
+                 .stream()
+                 .map(DatabaseUser::getName)
+                 .collect(Collectors.toList()), hasItems("dbo", "public", "db_datareader"));
+    assertThat(databaseUsers
+                 .stream()
+                 .map(databaseUser -> databaseUser
+                   .getAttributes()
+                   .size())
+                 .collect(Collectors.toList()), hasItems(4));
+    assertThat(databaseUsers
+                 .stream()
+                 .map(databaseUser -> databaseUser
+                   .getAttributes()
+                   .keySet())
+                 .flatMap(Collection::stream)
+                 .collect(Collectors.toSet()),
+               hasItems("CREATE_DATE",
+                        "TYPE",
+                        "MODIFY_DATE",
+                        "AUTHENTICATION_TYPE"));
   }
 
   @Test

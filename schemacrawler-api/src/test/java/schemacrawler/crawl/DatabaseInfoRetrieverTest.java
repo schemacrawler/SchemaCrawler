@@ -30,6 +30,7 @@ package schemacrawler.crawl;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -42,8 +43,10 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -312,6 +315,27 @@ public class DatabaseInfoRetrieverTest
     final List<DatabaseUser> databaseUsers =
       new ArrayList<>(catalog.getDatabaseUsers());
     assertThat(databaseUsers, hasSize(2));
+    assertThat(databaseUsers
+                 .stream()
+                 .map(DatabaseUser::getName)
+                 .collect(Collectors.toList()), hasItems("OTHERUSER", "SA"));
+    assertThat(databaseUsers
+                 .stream()
+                 .map(databaseUser -> databaseUser
+                   .getAttributes()
+                   .size())
+                 .collect(Collectors.toList()), hasItems(4, 4));
+    assertThat(databaseUsers
+                 .stream()
+                 .map(databaseUser -> databaseUser
+                   .getAttributes()
+                   .keySet())
+                 .flatMap(Collection::stream)
+                 .collect(Collectors.toSet()),
+               hasItems("INITIAL_SCHEMA",
+                        "AUTHENTICATION",
+                        "PASSWORD_DIGEST",
+                        "ADMIN"));
   }
 
   @BeforeAll
