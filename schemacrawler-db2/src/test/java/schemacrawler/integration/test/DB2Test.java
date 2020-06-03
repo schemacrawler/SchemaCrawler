@@ -38,9 +38,7 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
-import static sf.util.DatabaseUtility.checkConnection;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -54,7 +52,6 @@ import org.testcontainers.containers.Db2Container;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.DatabaseUser;
@@ -65,10 +62,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.server.db2.DB2DatabaseConnector;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
-import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
@@ -103,12 +97,16 @@ public class DB2Test
   }
 
   @Test
-  public void testDB2CatalogServerInfo()
+  public void testDB2WithConnection()
     throws Exception
   {
     final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
       .builder()
-      .includeSchemas(new RegularExpressionInclusionRule("DB2INST1"));
+      .includeSchemas(new RegularExpressionInclusionRule("DB2INST1"))
+      .includeAllSequences()
+      .includeAllSynonyms()
+      .includeRoutines(new RegularExpressionInclusionRule("[0-9a-zA-Z_\\.]*"))
+      .tableTypes("TABLE,VIEW,MATERIALIZED QUERY TABLE");
     final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
       .builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
@@ -120,16 +118,28 @@ public class DB2Test
     final SchemaCrawlerOptions options =
       schemaCrawlerOptionsBuilder.toOptions();
 
-    final Connection connection = checkConnection(getConnection());
-    final DatabaseConnector db2DatabaseConnector = new DB2DatabaseConnector();
+    final SchemaTextOptionsBuilder textOptionsBuilder =
+      SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder
+      .showDatabaseInfo()
+      .showJdbcDriverInfo();
+    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    final SchemaRetrievalOptions schemaRetrievalOptions = db2DatabaseConnector
-      .getSchemaRetrievalOptionsBuilder(connection)
-      .toOptions();
+    final SchemaCrawlerExecutable executable =
+      new SchemaCrawlerExecutable("details");
+    executable.setSchemaCrawlerOptions(options);
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
+                                            .builder(textOptions)
+                                            .toConfig());
 
-    final SchemaCrawler schemaCrawler =
-      new SchemaCrawler(getConnection(), schemaRetrievalOptions, options);
-    final Catalog catalog = schemaCrawler.crawl();
+    // -- Schema output tests
+    final String expectedResource =
+      String.format("testDB2WithConnection.%s.txt", javaVersion());
+    assertThat(outputOf(executableExecution(getConnection(), executable)),
+               hasSameContentAs(classpathResource(expectedResource)));
+
+    // -- Additional catalog tests
+    final Catalog catalog = executable.getCatalog();
     final List<Property> serverInfo = new ArrayList<>(catalog
                                                         .getDatabaseInfo()
                                                         .getServerInfo());
@@ -178,48 +188,6 @@ public class DB2Test
                         "DATAACCESSAUTH",
                         "ACCESSCTRLAUTH",
                         "CREATESECUREAUTH"));
-  }
-
-  @Test
-  public void testDB2WithConnection()
-    throws Exception
-  {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-      .builder()
-      .includeSchemas(new RegularExpressionInclusionRule("DB2INST1"))
-      .includeAllSequences()
-      .includeAllSynonyms()
-      .includeRoutines(new RegularExpressionInclusionRule("[0-9a-zA-Z_\\.]*"))
-      .tableTypes("TABLE,VIEW,MATERIALIZED QUERY TABLE");
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
-      .builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withLimitOptionsBuilder(limitOptionsBuilder)
-        .withLoadOptionsBuilder(loadOptionsBuilder);
-    final SchemaCrawlerOptions options =
-      schemaCrawlerOptionsBuilder.toOptions();
-
-    final SchemaTextOptionsBuilder textOptionsBuilder =
-      SchemaTextOptionsBuilder.builder();
-    textOptionsBuilder
-      .showDatabaseInfo()
-      .showJdbcDriverInfo();
-    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
-
-    final SchemaCrawlerExecutable executable =
-      new SchemaCrawlerExecutable("details");
-    executable.setSchemaCrawlerOptions(options);
-    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
-                                            .builder(textOptions)
-                                            .toConfig());
-
-    final String expectedResource =
-      String.format("testDB2WithConnection.%s.txt", javaVersion());
-    assertThat(outputOf(executableExecution(getConnection(), executable)),
-               hasSameContentAs(classpathResource(expectedResource)));
   }
 
 }
