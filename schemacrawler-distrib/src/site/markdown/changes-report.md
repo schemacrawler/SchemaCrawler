@@ -5,6 +5,7 @@
 
 - Remove deprecated methods
 - Allow for a JDBC driver class name to be specified for SchemaCrawler database plugins
+- Add ability to retrieve database users using an additional data view
 
 
 <a name="a16.8.1"></a>
