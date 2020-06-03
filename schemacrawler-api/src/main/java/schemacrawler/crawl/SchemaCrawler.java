@@ -42,6 +42,7 @@ import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleFor
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSequenceInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSynonymInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForTableInclusion;
+import static schemacrawler.schemacrawler.SchemaInfoRetrieval.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -156,9 +157,7 @@ public final class SchemaCrawler
       final WeakAssociationsRetriever weakAssociationsRetriever =
         new WeakAssociationsRetriever(catalog);
       stopWatch.time("retrieveWeakAssociations", () -> {
-        final boolean retrieveWeakAssociations =
-          infoLevel.isRetrieveWeakAssociations();
-        if (retrieveWeakAssociations)
+        if (infoLevel.is(retrieveWeakAssociations))
         {
           weakAssociationsRetriever.retrieveWeakAssociations();
           return null;
@@ -233,7 +232,7 @@ public final class SchemaCrawler
         new DatabaseInfoRetriever(retrieverConnection, catalog, options);
 
       stopWatch.time("retrieveSystemColumnDataTypes", () -> {
-        if (infoLevel.isRetrieveColumnDataTypes())
+        if (infoLevel.is(retrieveColumnDataTypes))
         {
           LOGGER.log(Level.INFO, "Retrieving system column data types");
           retriever.retrieveSystemColumnDataTypes();
@@ -247,7 +246,7 @@ public final class SchemaCrawler
       });
 
       stopWatch.time("retrieveUserDefinedColumnDataTypes", () -> {
-        if (infoLevel.isRetrieveUserDefinedColumnDataTypes())
+        if (infoLevel.is(retrieveUserDefinedColumnDataTypes))
         {
           LOGGER.log(Level.INFO, "Retrieving user column data types");
           for (final Schema schema : retriever.getAllSchemas())
@@ -289,8 +288,7 @@ public final class SchemaCrawler
       final SchemaInfoLevel infoLevel = options
         .getLoadOptions()
         .getSchemaInfoLevel();
-      final boolean retrieveDatabaseInfo = infoLevel.isRetrieveDatabaseInfo();
-      if (!retrieveDatabaseInfo)
+      if (!infoLevel.is(retrieveDatabaseInfo))
       {
         LOGGER.log(Level.INFO,
                    "Not retrieving database information, since this was not requested");
@@ -310,7 +308,7 @@ public final class SchemaCrawler
       });
 
       stopWatch.time("retrieveAdditionalDatabaseInfo", () -> {
-        if (infoLevel.isRetrieveAdditionalDatabaseInfo())
+        if (infoLevel.is(retrieveAdditionalDatabaseInfo))
         {
           retriever.retrieveAdditionalDatabaseInfo();
         }
@@ -323,7 +321,7 @@ public final class SchemaCrawler
       });
 
       stopWatch.time("retrieveServerInfo", () -> {
-        if (infoLevel.isRetrieveServerInfo())
+        if (infoLevel.is(retrieveServerInfo))
         {
           retriever.retrieveServerInfo();
         }
@@ -335,6 +333,19 @@ public final class SchemaCrawler
         return null;
       });
 
+      stopWatch.time("retrieveDatabaseUsers", () -> {
+        if (infoLevel.is(retrieveDatabaseUsers))
+        {
+          retriever.retrieveDatabaseUsers();
+        }
+        else
+        {
+          LOGGER.log(Level.INFO,
+                     "Not retrieving database users, since this was not requested");
+        }
+        return null;
+      });
+
       LOGGER.log(Level.INFO, "Retrieving JDBC driver information");
       stopWatch.time("retrieveJdbcDriverInfo", () -> {
         retriever.retrieveJdbcDriverInfo();
@@ -342,7 +353,7 @@ public final class SchemaCrawler
       });
 
       stopWatch.time("retrieveAdditionalJdbcDriverInfo", () -> {
-        if (infoLevel.isRetrieveAdditionalJdbcDriverInfo())
+        if (infoLevel.is(retrieveAdditionalJdbcDriverInfo))
         {
           retriever.retrieveAdditionalJdbcDriverInfo();
         }
@@ -386,10 +397,8 @@ public final class SchemaCrawler
       .getLoadOptions()
       .getSchemaInfoLevel();
     final LimitOptions limitOptions = options.getLimitOptions();
-    final boolean retrieveRoutines =
-      infoLevel.isRetrieveRoutines() && !limitOptions.isExcludeAll(
-        ruleForRoutineInclusion);
-    if (!retrieveRoutines)
+    if (!(infoLevel.is(retrieveRoutines) && !limitOptions.isExcludeAll(
+      ruleForRoutineInclusion)))
     {
       LOGGER.log(Level.INFO,
                  "Not retrieving routines, since this was not requested");
@@ -446,7 +455,7 @@ public final class SchemaCrawler
 
       stopWatch.time("retrieveRoutineParameters", () -> {
         LOGGER.log(Level.INFO, "Retrieving routine columns");
-        if (infoLevel.isRetrieveRoutineParameters()
+        if (infoLevel.is(retrieveRoutineParameters)
             && !limitOptions.isExcludeAll(ruleForRoutineParameterInclusion))
         {
           if (routineTypes.contains(RoutineType.procedure))
@@ -473,7 +482,7 @@ public final class SchemaCrawler
       });
 
       stopWatch.time("retrieveRoutineInformation", () -> {
-        if (infoLevel.isRetrieveRoutineInformation())
+        if (infoLevel.is(retrieveRoutineInformation))
         {
           retrieverExtra.retrieveRoutineInformation();
         }
@@ -556,10 +565,8 @@ public final class SchemaCrawler
       .getLoadOptions()
       .getSchemaInfoLevel();
     final LimitOptions limitOptions = options.getLimitOptions();
-    final boolean retrieveSequences =
-      infoLevel.isRetrieveSequenceInformation() && !limitOptions.isExcludeAll(
-        ruleForSequenceInclusion);
-    if (!retrieveSequences)
+    if (!(infoLevel.is(retrieveSequenceInformation)
+          && !limitOptions.isExcludeAll(ruleForSequenceInclusion)))
     {
       LOGGER.log(Level.INFO,
                  "Not retrieving sequences, since this was not requested");
@@ -613,10 +620,8 @@ public final class SchemaCrawler
       .getLoadOptions()
       .getSchemaInfoLevel();
     final LimitOptions limitOptions = options.getLimitOptions();
-    final boolean retrieveSynonyms =
-      infoLevel.isRetrieveSynonymInformation() && !limitOptions.isExcludeAll(
-        ruleForSynonymInclusion);
-    if (!retrieveSynonyms)
+    if (!(infoLevel.is(retrieveSynonymInformation)
+          && !limitOptions.isExcludeAll(ruleForSynonymInclusion)))
     {
       LOGGER.log(Level.INFO,
                  "Not retrieving synonyms, since this was not requested");
@@ -669,10 +674,8 @@ public final class SchemaCrawler
       .getLoadOptions()
       .getSchemaInfoLevel();
     final LimitOptions limitOptions = options.getLimitOptions();
-    final boolean retrieveTables =
-      infoLevel.isRetrieveTables() && !limitOptions.isExcludeAll(
-        ruleForTableInclusion);
-    if (!retrieveTables)
+    if (!(infoLevel.is(retrieveTables) && !limitOptions.isExcludeAll(
+      ruleForTableInclusion)))
     {
       LOGGER.log(Level.INFO,
                  "Not retrieving tables, since this was not requested");
@@ -717,7 +720,7 @@ public final class SchemaCrawler
 
       stopWatch.time("retrieveColumns", () -> {
         LOGGER.log(Level.INFO, "Retrieving table columns");
-        if (infoLevel.isRetrieveTableColumns() && !limitOptions.isExcludeAll(
+        if (infoLevel.is(retrieveTableColumns) && !limitOptions.isExcludeAll(
           ruleForColumnInclusion))
         {
           columnRetriever.retrieveTableColumns(allTables,
@@ -729,12 +732,12 @@ public final class SchemaCrawler
 
       stopWatch.time("retrieveForeignKeys", () -> {
         LOGGER.log(Level.INFO, "Retrieving foreign keys");
-        if (infoLevel.isRetrieveForeignKeys())
+        if (infoLevel.is(retrieveForeignKeys))
         {
-          if (infoLevel.isRetrieveTableColumns())
+          if (infoLevel.is(retrieveTableColumns))
           {
             fkRetriever.retrieveForeignKeys(allTables);
-            if (infoLevel.isRetrieveForeignKeyDefinitions())
+            if (infoLevel.is(retrieveForeignKeyDefinitions))
             {
               fkRetriever.retrieveForeignKeyDefinitions(allTables);
             }
@@ -762,12 +765,12 @@ public final class SchemaCrawler
 
       stopWatch.time("retrievePrimaryKeys", () -> {
         LOGGER.log(Level.INFO, "Retrieving primary keys");
-        if (infoLevel.isRetrieveTableColumns())
+        if (infoLevel.is(retrieveTableColumns))
         {
           final PrimaryKeyRetriever primaryKeyRetriever =
             new PrimaryKeyRetriever(retrieverConnection, catalog, options);
           primaryKeyRetriever.retrievePrimaryKeys(allTables);
-          if (infoLevel.isRetrievePrimaryKeyDefinitions())
+          if (infoLevel.is(retrievePrimaryKeyDefinitions))
           {
             retrieverExtra.retrievePrimaryKeyDefinitions(allTables);
           }
@@ -777,9 +780,9 @@ public final class SchemaCrawler
 
       stopWatch.time("retrieveIndexes", () -> {
         LOGGER.log(Level.INFO, "Retrieving indexes");
-        if (infoLevel.isRetrieveTableColumns())
+        if (infoLevel.is(retrieveTableColumns))
         {
-          if (infoLevel.isRetrieveIndexes())
+          if (infoLevel.is(retrieveIndexes))
           {
             final IndexRetriever indexRetriever =
               new IndexRetriever(retrieverConnection, catalog, options);
@@ -791,45 +794,45 @@ public final class SchemaCrawler
 
       LOGGER.log(Level.INFO, "Retrieving additional table information");
       stopWatch.time("retrieveTableConstraintInformation", () -> {
-        if (infoLevel.isRetrieveTableConstraintInformation())
+        if (infoLevel.is(retrieveTableConstraintInformation))
         {
           constraintRetriever.retrieveTableConstraintInformation();
         }
         return null;
       });
       stopWatch.time("isRetrieveTableConstraintDefinitions", () -> {
-        if (infoLevel.isRetrieveTableConstraintDefinitions())
+        if (infoLevel.is(retrieveTableConstraintDefinitions))
         {
           constraintRetriever.retrieveTableConstraintDefinitions();
         }
         return null;
       });
       stopWatch.time("retrieveTriggerInformation", () -> {
-        if (infoLevel.isRetrieveTriggerInformation())
+        if (infoLevel.is(retrieveTriggerInformation))
         {
           retrieverExtra.retrieveTriggerInformation();
         }
         return null;
       });
       stopWatch.time("retrieveViewInformation", () -> {
-        if (infoLevel.isRetrieveViewInformation())
+        if (infoLevel.is(retrieveViewInformation))
         {
           retrieverExtra.retrieveViewInformation();
         }
         return null;
       });
       stopWatch.time("retrieveTableDefinitions", () -> {
-        if (infoLevel.isRetrieveTableDefinitionsInformation())
+        if (infoLevel.is(retrieveTableDefinitionsInformation))
         {
           retrieverExtra.retrieveTableDefinitions();
         }
         return null;
       });
       stopWatch.time("retrieveIndexInformation", () -> {
-        if (infoLevel.isRetrieveIndexInformation())
+        if (infoLevel.is(retrieveIndexInformation))
         {
           retrieverExtra.retrieveIndexInformation();
-          if (infoLevel.isRetrieveIndexColumnInformation())
+          if (infoLevel.is(retrieveIndexColumnInformation))
           {
             retrieverExtra.retrieveIndexColumnInformation();
           }
@@ -838,14 +841,14 @@ public final class SchemaCrawler
       });
 
       stopWatch.time("retrieveAdditionalTableAttributes", () -> {
-        if (infoLevel.isRetrieveAdditionalTableAttributes())
+        if (infoLevel.is(retrieveAdditionalTableAttributes))
         {
           retrieverExtra.retrieveAdditionalTableAttributes();
         }
         return null;
       });
       stopWatch.time("retrieveTablePrivileges", () -> {
-        if (infoLevel.isRetrieveTablePrivileges())
+        if (infoLevel.is(retrieveTablePrivileges))
         {
           retrieverExtra.retrieveTablePrivileges();
         }
@@ -853,21 +856,21 @@ public final class SchemaCrawler
       });
 
       stopWatch.time("retrieveAdditionalColumnAttributes", () -> {
-        if (infoLevel.isRetrieveAdditionalColumnAttributes())
+        if (infoLevel.is(retrieveAdditionalColumnAttributes))
         {
           retrieverExtra.retrieveAdditionalColumnAttributes();
         }
         return null;
       });
       stopWatch.time("retrieveAdditionalColumnMetadata", () -> {
-        if (infoLevel.isRetrieveAdditionalColumnMetadata())
+        if (infoLevel.is(retrieveAdditionalColumnMetadata))
         {
           retrieverExtra.retrieveAdditionalColumnMetadata();
         }
         return null;
       });
       stopWatch.time("retrieveTableColumnPrivileges", () -> {
-        if (infoLevel.isRetrieveTableColumnPrivileges())
+        if (infoLevel.is(retrieveTableColumnPrivileges))
         {
           retrieverExtra.retrieveTableColumnPrivileges();
         }

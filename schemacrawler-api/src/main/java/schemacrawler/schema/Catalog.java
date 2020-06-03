@@ -195,4 +195,11 @@ public interface Catalog
    */
   <T extends Table> Optional<T> lookupTable(Schema schema, String name);
 
+  /**
+   * Gets the database users
+   *
+   * @return Database users
+   */
+  Collection<DatabaseUser> getDatabaseUsers();
+
 }

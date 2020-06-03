@@ -1,0 +1,5 @@
+SELECT
+  USERNAME,
+  ACCOUNT_STATUS
+FROM
+  ${catalogscope}_USERS

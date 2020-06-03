@@ -185,6 +185,7 @@ public class SchemaCrawlerTest
 
     return buffer.toString();
   }
+
   private Catalog catalog;
 
   @BeforeAll

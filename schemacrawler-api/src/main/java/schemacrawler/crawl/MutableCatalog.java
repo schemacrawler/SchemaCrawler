@@ -41,6 +41,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schema.DatabaseUser;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Reducer;
 import schemacrawler.schema.Reducible;
@@ -100,6 +101,8 @@ final class MutableCatalog
   private final NamedObjectList<MutableSynonym> synonyms =
     new NamedObjectList<>();
   private final NamedObjectList<MutableTable> tables = new NamedObjectList<>();
+  private final NamedObjectList<ImmutableDatabaseUser> databaseUsers =
+    new NamedObjectList<>();
   private final MutableCrawlInfo crawlInfo;
 
   MutableCatalog(final String name)
@@ -264,6 +267,15 @@ final class MutableCatalog
   public Collection<Table> getTables()
   {
     return new ArrayList<>(tables.values());
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Collection<DatabaseUser> getDatabaseUsers()
+  {
+    return new ArrayList<>(databaseUsers.values());
   }
 
   /**
@@ -440,6 +452,11 @@ final class MutableCatalog
   void addTable(final MutableTable table)
   {
     tables.add(table);
+  }
+
+  void addDatabaseUser(final ImmutableDatabaseUser databaseUser)
+  {
+    databaseUsers.add(databaseUser);
   }
 
   NamedObjectList<MutableRoutine> getAllRoutines()

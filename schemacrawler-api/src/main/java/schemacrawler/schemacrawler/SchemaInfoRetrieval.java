@@ -50,6 +50,7 @@ public enum SchemaInfoRetrieval
   retrieveAdditionalTableAttributes(table, maximum),
   retrieveColumnDataTypes(base, standard),
   retrieveDatabaseInfo(database, minimum),
+  retrieveDatabaseUsers(database, maximum),
   retrieveForeignKeyDefinitions(table, maximum),
   retrieveForeignKeys(table, standard),
   retrieveIndexColumnInformation(table, maximum),

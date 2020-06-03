@@ -29,6 +29,7 @@ package schemacrawler.integration.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -36,6 +37,7 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,6 +47,8 @@ import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
+import schemacrawler.schema.Catalog;
+import schemacrawler.schema.DatabaseUser;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -121,6 +125,14 @@ public class MySQLTest
       String.format("testMySQLWithConnection.%s.txt", javaVersion());
     assertThat(outputOf(executableExecution(getConnection(), executable)),
                hasSameContentAs(classpathResource(expectedResource)));
+
+    // Additional catalog tests
+    final Catalog catalog = executable.getCatalog();
+
+    // INFO: Current user has no access to MYSQL.USER
+    final List<DatabaseUser> databaseUsers =
+      (List<DatabaseUser>) catalog.getDatabaseUsers();
+    assertThat(databaseUsers, hasSize(0));
   }
 
 }

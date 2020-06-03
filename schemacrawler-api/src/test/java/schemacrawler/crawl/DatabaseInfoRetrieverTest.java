@@ -30,6 +30,7 @@ package schemacrawler.crawl;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -42,8 +43,10 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -52,6 +55,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.DatabaseUser;
 import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -226,9 +230,9 @@ public class DatabaseInfoRetrieverTest
   }
 
   @Test
-  @DisplayName("Retrieve server info from data dictionary")
-  public void serverInfoFromDataDictionary(final TestContext testContext,
-                                           final Connection connection)
+  @DisplayName("Retrieve server info")
+  public void serverInfo(final TestContext testContext,
+                         final Connection connection)
     throws Exception
   {
     assertThat(catalog
@@ -274,6 +278,64 @@ public class DatabaseInfoRetrieverTest
     assertThat(serverInfoProperty,
                is(new ImmutableServerInfoProperty(name, value, description)));
     assertThat(serverInfoProperty.getDescription(), is(description));
+  }
+
+  @Test
+  @DisplayName("Retrieve database users")
+  public void databaseUsers(final TestContext testContext,
+                            final Connection connection)
+    throws Exception
+  {
+    assertThat(catalog.getDatabaseUsers(), is(empty()));
+
+    final InformationSchemaViews informationSchemaViews =
+      InformationSchemaViewsBuilder
+        .builder()
+        .withSql(InformationSchemaKey.DATABASE_USERS,
+                 "SELECT USER_NAME AS USERNAME, "
+                 + "ADMIN, INITIAL_SCHEMA, AUTHENTICATION, PASSWORD_DIGEST "
+                 + "FROM INFORMATION_SCHEMA.SYSTEM_USERS")
+        .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+      SchemaRetrievalOptionsBuilder
+        .builder()
+        .withInformationSchemaViews(informationSchemaViews);
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+      schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection =
+      new RetrieverConnection(connection, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options =
+      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final DatabaseInfoRetriever databaseInfoRetriever =
+      new DatabaseInfoRetriever(retrieverConnection, catalog, options);
+    databaseInfoRetriever.retrieveDatabaseUsers();
+
+    final List<DatabaseUser> databaseUsers =
+      new ArrayList<>(catalog.getDatabaseUsers());
+    assertThat(databaseUsers, hasSize(2));
+    assertThat(databaseUsers
+                 .stream()
+                 .map(DatabaseUser::getName)
+                 .collect(Collectors.toList()), hasItems("OTHERUSER", "SA"));
+    assertThat(databaseUsers
+                 .stream()
+                 .map(databaseUser -> databaseUser
+                   .getAttributes()
+                   .size())
+                 .collect(Collectors.toList()), hasItems(4, 4));
+    assertThat(databaseUsers
+                 .stream()
+                 .map(databaseUser -> databaseUser
+                   .getAttributes()
+                   .keySet())
+                 .flatMap(Collection::stream)
+                 .collect(Collectors.toSet()),
+               hasItems("INITIAL_SCHEMA",
+                        "AUTHENTICATION",
+                        "PASSWORD_DIGEST",
+                        "ADMIN"));
   }
 
   @BeforeAll

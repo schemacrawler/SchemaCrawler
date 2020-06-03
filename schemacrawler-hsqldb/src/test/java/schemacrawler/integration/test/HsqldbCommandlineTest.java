@@ -35,6 +35,7 @@ import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
 import static java.util.Objects.requireNonNull;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -50,15 +51,19 @@ import java.io.PrintWriter;
 import java.io.Writer;
 import java.nio.file.Path;
 import java.sql.Connection;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.Main;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.DatabaseUser;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -167,6 +172,30 @@ public class HsqldbCommandlineTest
     assertThat(table.getTriggers(), hasSize(1));
     assertThat(table.lookupTrigger("TRG_AUTHORS"), is(not(emptyOptional())));
 
+    final List<DatabaseUser> databaseUsers =
+      (List<DatabaseUser>) catalog.getDatabaseUsers();
+    assertThat(databaseUsers, hasSize(2));
+    assertThat(databaseUsers
+                 .stream()
+                 .map(DatabaseUser::getName)
+                 .collect(Collectors.toList()), hasItems("OTHERUSER", "SA"));
+    assertThat(databaseUsers
+                 .stream()
+                 .map(databaseUser -> databaseUser
+                   .getAttributes()
+                   .size())
+                 .collect(Collectors.toList()), hasItems(4, 4));
+    assertThat(databaseUsers
+                 .stream()
+                 .map(databaseUser -> databaseUser
+                   .getAttributes()
+                   .keySet())
+                 .flatMap(Collection::stream)
+                 .collect(Collectors.toSet()),
+               hasItems("INITIAL_SCHEMA",
+                        "AUTHENTICATION",
+                        "PASSWORD_DIGEST",
+                        "ADMIN"));
   }
 
 }

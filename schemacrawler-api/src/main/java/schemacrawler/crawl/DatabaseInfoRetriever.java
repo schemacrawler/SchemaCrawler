@@ -30,6 +30,7 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.schemacrawler.InformationSchemaKey.DATABASE_USERS;
 import static sf.util.Utility.isBlank;
 
 import java.lang.reflect.InvocationTargetException;
@@ -395,9 +396,54 @@ final class DatabaseInfoRetriever
     }
     catch (final Exception e)
     {
-      LOGGER.log(Level.WARNING,
-                 "Could not retrieve additional column attributes",
-                 e);
+      LOGGER.log(Level.WARNING, "Could not retrieve server information", e);
+    }
+
+  }
+
+  void retrieveDatabaseUsers()
+  {
+
+    final InformationSchemaViews informationSchemaViews =
+      getRetrieverConnection().getInformationSchemaViews();
+    if (!informationSchemaViews.hasQuery(DATABASE_USERS))
+    {
+      LOGGER.log(Level.INFO,
+                 "Not retrieving database users information, since this was not requested");
+      LOGGER.log(Level.FINE, "Database users SQL statement was not provided");
+      return;
+    }
+    final Query databaseUsersSql = informationSchemaViews.getQuery(
+      DATABASE_USERS);
+
+    final Connection connection = getDatabaseConnection();
+    try (
+      final Statement statement = connection.createStatement();
+      final MetadataResultSet results = new MetadataResultSet(databaseUsersSql,
+                                                              statement,
+                                                              new IncludeAll())
+    )
+    {
+      results.setDescription("retrieveDatabaseUsers");
+      while (results.next())
+      {
+        final String username = results.getString("USERNAME");
+        if (isBlank(username))
+        {
+          continue;
+        }
+        LOGGER.log(Level.FINER,
+                   new StringFormat("Retrieving database user: %s", username));
+
+        final ImmutableDatabaseUser databaseUser =
+          new ImmutableDatabaseUser(username);
+        databaseUser.addAttributes(results.getAttributes());
+        catalog.addDatabaseUser(databaseUser);
+      }
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Could not retrieve database users", e);
     }
 
   }
