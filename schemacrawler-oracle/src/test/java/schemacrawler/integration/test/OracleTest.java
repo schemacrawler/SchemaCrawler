@@ -38,9 +38,7 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
-import static sf.util.DatabaseUtility.checkConnection;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -54,7 +52,6 @@ import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.OracleContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.DatabaseUser;
@@ -65,10 +62,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.server.oracle.OracleDatabaseConnector;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
-import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
@@ -95,70 +89,6 @@ public class OracleTest
                      urlx);
 
     createDatabase("/oracle-11g.scripts.txt");
-  }
-
-  @Test
-  public void testOracleCatalogServerInfo()
-    throws Exception
-  {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-      .builder()
-      .includeSchemas(new RegularExpressionInclusionRule("BOOKS"));
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
-      .builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withLimitOptionsBuilder(limitOptionsBuilder)
-        .withLoadOptionsBuilder(loadOptionsBuilder);
-    final SchemaCrawlerOptions options =
-      schemaCrawlerOptionsBuilder.toOptions();
-
-    final Connection connection = checkConnection(getConnection());
-    final DatabaseConnector databaseConnector = new OracleDatabaseConnector();
-
-    final SchemaRetrievalOptions schemaRetrievalOptions = databaseConnector
-      .getSchemaRetrievalOptionsBuilder(connection)
-      .toOptions();
-
-    final SchemaCrawler schemaCrawler =
-      new SchemaCrawler(getConnection(), schemaRetrievalOptions, options);
-    final Catalog catalog = schemaCrawler.crawl();
-    final List<Property> serverInfo = new ArrayList<>(catalog
-                                                        .getDatabaseInfo()
-                                                        .getServerInfo());
-
-    assertThat(serverInfo.size(), equalTo(1));
-    assertThat(serverInfo
-                 .get(0)
-                 .getName(), equalTo("GLOBAL_NAME"));
-    assertThat(String.valueOf(serverInfo
-                                .get(0)
-                                .getValue()),
-               matchesPattern("[0-9a-zA-Z]{1,12}"));
-
-    final List<DatabaseUser> databaseUsers =
-      (List<DatabaseUser>) catalog.getDatabaseUsers();
-    assertThat(databaseUsers, hasSize(13));
-    assertThat(databaseUsers
-                 .stream()
-                 .map(DatabaseUser::getName)
-                 .collect(Collectors.toList()), hasItems("SYS", "SYSTEM", "BOOKS"));
-    assertThat(databaseUsers
-                 .stream()
-                 .map(databaseUser -> databaseUser
-                   .getAttributes()
-                   .size())
-                 .collect(Collectors.toList()), hasItems(1));
-    assertThat(databaseUsers
-                 .stream()
-                 .map(databaseUser -> databaseUser
-                   .getAttributes()
-                   .keySet())
-                 .flatMap(Collection::stream)
-                 .collect(Collectors.toSet()),
-               hasItems("ACCOUNT_STATUS"));
   }
 
   @Test
@@ -197,10 +127,49 @@ public class OracleTest
                                             .builder(textOptions)
                                             .toConfig());
 
+    // -- Schema output tests
     final String expectedResource =
       String.format("testOracleWithConnection.%s.txt", javaVersion());
     assertThat(outputOf(executableExecution(getConnection(), executable)),
                hasSameContentAs(classpathResource(expectedResource)));
+
+    // -- Additional catalog tests
+    final Catalog catalog = executable.getCatalog();
+
+    final List<Property> serverInfo = new ArrayList<>(catalog
+                                                        .getDatabaseInfo()
+                                                        .getServerInfo());
+
+    assertThat(serverInfo.size(), equalTo(1));
+    assertThat(serverInfo
+                 .get(0)
+                 .getName(), equalTo("GLOBAL_NAME"));
+    assertThat(String.valueOf(serverInfo
+                                .get(0)
+                                .getValue()),
+               matchesPattern("[0-9a-zA-Z]{1,12}"));
+
+    final List<DatabaseUser> databaseUsers =
+      (List<DatabaseUser>) catalog.getDatabaseUsers();
+    assertThat(databaseUsers, hasSize(13));
+    assertThat(databaseUsers
+                 .stream()
+                 .map(DatabaseUser::getName)
+                 .collect(Collectors.toList()), hasItems("SYS", "SYSTEM", "BOOKS"));
+    assertThat(databaseUsers
+                 .stream()
+                 .map(databaseUser -> databaseUser
+                   .getAttributes()
+                   .size())
+                 .collect(Collectors.toList()), hasItems(1));
+    assertThat(databaseUsers
+                 .stream()
+                 .map(databaseUser -> databaseUser
+                   .getAttributes()
+                   .keySet())
+                 .flatMap(Collection::stream)
+                 .collect(Collectors.toSet()),
+               hasItems("ACCOUNT_STATUS"));
   }
 
 }
