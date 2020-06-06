@@ -787,13 +787,6 @@ public class SchemaCrawlerTest
           out.println(String.format("%s [%s]",
                                     table.getFullName(),
                                     table.getTableType()));
-          if (table instanceof View)
-          {
-            final View view = (View) table;
-            out.println(String.format("  check option: %s",
-                                      view.getCheckOption()));
-            out.println(String.format("  updatable?: %b", view.isUpdatable()));
-          }
 
           final SortedMap<String, Object> tableAttributes =
             new TreeMap<>(table.getAttributes());
@@ -802,6 +795,49 @@ public class SchemaCrawlerTest
             out.println(String.format("  ~ %s=%s",
                                       tableAttribute.getKey(),
                                       tableAttribute.getValue()));
+          }
+        }
+      }
+    }
+    assertThat(outputOf(testout),
+               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+  }
+
+  @Test
+  public void views(final TestContext testContext)
+    throws Exception
+  {
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout)
+    {
+      final Schema[] schemas = catalog
+        .getSchemas()
+        .toArray(new Schema[0]);
+      assertThat("Schema count does not match", schemas, arrayWithSize(5));
+      for (final Schema schema : schemas)
+      {
+        final Table[] tables = catalog
+          .getTables(schema)
+          .toArray(new Table[0]);
+        Arrays.sort(tables, NamedObjectSort.alphabetical);
+        for (final Table table : tables)
+        {
+          if (!(table instanceof View))
+          {
+            continue;
+          }
+          final View view = (View) table;
+          out.println(String.format("%s [%s]",
+                                    view.getFullName(),
+                                    view.getTableType()));
+          out.println(String.format("  - check option: %s",
+                                    view.getCheckOption()));
+          out.println(String.format("  - updatable?: %b", view.isUpdatable()));
+          out.println(String.format("  - definition: %s", view.getDefinition()));
+          out.println("  - table usage");
+          for (Table usedTable : view.getTableUsage())
+          {
+            out.println(String.format("    - table: %s", usedTable));
           }
         }
       }
@@ -939,22 +975,6 @@ public class SchemaCrawlerTest
     }
     assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(testContext.testMethodFullName())));
-  }
-
-  @Test
-  public void viewDefinitions()
-  {
-    final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
-    final View view = (View) catalog
-      .lookupTable(schema, "AUTHORSLIST")
-      .get();
-    assertThat("View not found", view, notNullValue());
-    assertThat("View definition not found",
-               view.getDefinition(),
-               notNullValue());
-    assertThat("View definition not found",
-               isBlank(view.getDefinition()),
-               is(false));
   }
 
 }
