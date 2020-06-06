@@ -312,6 +312,7 @@ final class SchemaTextFormatter
       {
         printPrivileges(table.getPrivileges());
         printDefinition(table);
+        printViewTableUsage(table);
       }
 
       printTableRowCount(table);
@@ -748,6 +749,40 @@ final class SchemaTextFormatter
       printTableColumns(primaryKey.getColumns(), false);
       printDependantObjectDefinition(primaryKey);
     }
+  }
+
+  private void printViewTableUsage(final Table table)
+  {
+    if (table == null || !(table instanceof View))
+    {
+      return;
+    }
+    final View view = (View) table;
+    final Collection<Table> tableUsage = view.getTableUsage();
+    if (tableUsage.isEmpty())
+    {
+      return;
+    }
+
+    formattingHelper.writeEmptyRow();
+    formattingHelper.writeWideRow("Table Usage", "section");
+
+    formattingHelper.writeEmptyRow();
+    for (final Table usedTable : tableUsage)
+    {
+      final String tableName;
+      if (options.isShowUnqualifiedNames())
+      {
+        tableName = identifiers.quoteName(usedTable);
+      }
+      else
+      {
+        tableName = identifiers.quoteFullName(usedTable);
+      }
+      final String tableType = "[" + usedTable.getTableType() + "]";
+      formattingHelper.writeNameRow(tableName, tableType);
+    }
+
   }
 
   private void printPrivileges(final Collection<Privilege<Table>> privileges)
