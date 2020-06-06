@@ -33,6 +33,11 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEXES;
+import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEX_COLUMNS;
+import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_PRIMARY_KEYS;
+import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLES;
+import static schemacrawler.schemacrawler.InformationSchemaKey.VIEW_TABLE_USAGE;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 
 import java.sql.Connection;
@@ -48,7 +53,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.InformationSchemaKey;
+import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -78,7 +83,7 @@ public class TableExtRetrieverTest
     final InformationSchemaViews informationSchemaViews =
       InformationSchemaViewsBuilder
         .builder()
-        .withSql(InformationSchemaKey.EXT_TABLES,
+        .withSql(EXT_TABLES,
                  String.format(
                    "SELECT DISTINCT TABLE_CAT AS TABLE_CATALOG, TABLE_SCHEM AS TABLE_SCHEMA, "
                    + "TABLE_NAME, '%s' AS TABLE_DEFINITION "
@@ -119,7 +124,7 @@ public class TableExtRetrieverTest
     final InformationSchemaViews informationSchemaViews =
       InformationSchemaViewsBuilder
         .builder()
-        .withSql(InformationSchemaKey.EXT_PRIMARY_KEYS,
+        .withSql(EXT_PRIMARY_KEYS,
                  String.format(
                    "SELECT DISTINCT TABLE_CAT AS PRIMARY_KEY_CATALOG, TABLE_SCHEM AS PRIMARY_KEY_SCHEMA, "
                    + "TABLE_NAME AS PRIMARY_KEY_TABLE_NAME, PK_NAME AS PRIMARY_KEY_NAME, "
@@ -175,7 +180,7 @@ public class TableExtRetrieverTest
     final InformationSchemaViews informationSchemaViews =
       InformationSchemaViewsBuilder
         .builder()
-        .withSql(InformationSchemaKey.EXT_INDEXES,
+        .withSql(EXT_INDEXES,
                  String.format(
                    "SELECT DISTINCT TABLE_CAT AS INDEX_CATALOG, TABLE_SCHEM AS INDEX_SCHEMA, "
                    + "TABLE_NAME, INDEX_NAME, '%s' AS REMARKS, '%s' AS INDEX_DEFINITION "
@@ -222,7 +227,7 @@ public class TableExtRetrieverTest
     final InformationSchemaViews informationSchemaViews =
       InformationSchemaViewsBuilder
         .builder()
-        .withSql(InformationSchemaKey.EXT_INDEX_COLUMNS,
+        .withSql(EXT_INDEX_COLUMNS,
                  String.format(
                    "SELECT TABLE_CAT AS INDEX_CATALOG, TABLE_SCHEM AS INDEX_SCHEMA, "
                    + "TABLE_NAME, INDEX_NAME, COLUMN_NAME, "
@@ -263,6 +268,65 @@ public class TableExtRetrieverTest
     }
   }
 
+  @Test
+  @DisplayName("Retrieve view table usage from INFORMATION_SCHEMA")
+  public void viewTableUsage(final Connection connection)
+    throws Exception
+  {
+
+    int viewCount;
+    final Collection<Table> tables = catalog.getTables();
+    viewCount = 0;
+    assertThat(tables, hasSize(19));
+    for (final Table table : tables)
+    {
+      if (!(table instanceof View)) {
+        continue;
+      }
+      viewCount = viewCount + 1;
+      final View view = (View) table;
+      assertThat(view.getTableUsage(), is(empty()));
+    }
+    assertThat(viewCount, is(1));
+
+    final InformationSchemaViews informationSchemaViews =
+      InformationSchemaViewsBuilder
+        .builder()
+        .withSql(VIEW_TABLE_USAGE,
+                 "SELECT "
+                 + "VIEW_CATALOG, VIEW_SCHEMA, VIEW_NAME, "
+                 + "TABLE_CATALOG, TABLE_SCHEMA, TABLE_NAME "
+                 + "FROM INFORMATION_SCHEMA.VIEW_TABLE_USAGE")
+        .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+      SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder.withInformationSchemaViews(
+      informationSchemaViews);
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+      schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection =
+      new RetrieverConnection(connection, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options =
+      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final TableExtRetriever tableExtRetriever =
+      new TableExtRetriever(retrieverConnection, catalog, options);
+    tableExtRetriever.retrieveViewTableUsage();
+
+    viewCount = 0;
+    assertThat(tables, hasSize(19));
+    for (final Table table : tables)
+    {
+      if (!(table instanceof View)) {
+        continue;
+      }
+      viewCount = viewCount + 1;
+      final View view = (View) table;
+      assertThat(view.getTableUsage(), is(not(empty())));
+    }
+    assertThat(viewCount, is(1));
+  }
   @BeforeAll
   public void loadBaseCatalog(final Connection connection)
     throws SchemaCrawlerException

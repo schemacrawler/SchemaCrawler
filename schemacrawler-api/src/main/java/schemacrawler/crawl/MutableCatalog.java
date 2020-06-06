@@ -261,13 +261,13 @@ final class MutableCatalog
   }
 
   /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Collection<Table> getTables()
-  {
-    return new ArrayList<>(tables.values());
-  }
+ * {@inheritDoc}
+ */
+@Override
+public Collection<Table> getTables()
+{
+  return new ArrayList<>(tables.values());
+}
 
   /**
    * {@inheritDoc}

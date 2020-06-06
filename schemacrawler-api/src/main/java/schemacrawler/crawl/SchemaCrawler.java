@@ -821,6 +821,13 @@ public final class SchemaCrawler
         }
         return null;
       });
+      stopWatch.time("retrieveViewTableUsage", () -> {
+        if (infoLevel.is(retrieveViewTableUsage))
+        {
+          retrieverExtra.retrieveViewTableUsage();
+        }
+        return null;
+      });
       stopWatch.time("retrieveTableDefinitions", () -> {
         if (infoLevel.is(retrieveTableDefinitionsInformation))
         {

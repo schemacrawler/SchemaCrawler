@@ -29,6 +29,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.schema;
 
 
+import java.util.Collection;
+import java.util.Optional;
+
 /**
  * Represents a view in the database.
  *
@@ -52,5 +55,21 @@ public interface View
    * @return Whether the view is updatable.
    */
   boolean isUpdatable();
+
+  /**
+   * Gets tables used by the view.
+   *
+   * @return Tables used by the view
+   */
+  Collection<Table> getTableUsage();
+
+  /**
+   * Gets a referenced table by unqualified name.
+   *
+   * @param name
+   *   Name
+   * @return Referenced table.
+   */
+  <T extends Table> Optional<T> lookupTable(Schema schema, String name);
 
 }

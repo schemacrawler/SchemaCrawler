@@ -73,6 +73,7 @@ public enum SchemaInfoRetrieval
   retrieveTriggerInformation(table, detailed),
   retrieveUserDefinedColumnDataTypes(other, detailed),
   retrieveViewInformation(table, detailed),
+  retrieveViewTableUsage(table, detailed),
   retrieveWeakAssociations(table, maximum),
   ;
 

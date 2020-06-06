@@ -38,6 +38,7 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_PRIMARY_KEYS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TRIGGERS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEWS;
+import static schemacrawler.schemacrawler.InformationSchemaKey.VIEW_TABLE_USAGE;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -841,6 +842,98 @@ final class TableExtRetriever
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve views", e);
+    }
+
+  }
+
+  /**
+   * Retrieves view table usage from the database, in the INFORMATION_SCHEMA
+   * format.
+   *
+   * @throws SQLException
+   *   On a SQL exception
+   */
+  void retrieveViewTableUsage()
+    throws SQLException
+  {
+    final InformationSchemaViews informationSchemaViews =
+      getRetrieverConnection().getInformationSchemaViews();
+
+    if (!informationSchemaViews.hasQuery(VIEW_TABLE_USAGE))
+    {
+      LOGGER.log(Level.INFO,
+                 "Not retrieving additional view table usage, since this was not requested");
+      LOGGER.log(Level.FINE, "View table usage SQL statement was not provided");
+      return;
+    }
+
+    LOGGER.log(Level.INFO, "Retrieving view table usage");
+
+    final Query viewTableUsageSql =
+      informationSchemaViews.getQuery(VIEW_TABLE_USAGE);
+    final Connection connection = getDatabaseConnection();
+    try (
+      final Statement statement = connection.createStatement();
+      final MetadataResultSet results = new MetadataResultSet(viewTableUsageSql,
+                                                              statement,
+                                                              getSchemaInclusionRule())
+    )
+    {
+
+      while (results.next())
+      {
+        final String catalogName =
+          normalizeCatalogName(results.getString("VIEW_CATALOG"));
+        final String schemaName =
+          normalizeSchemaName(results.getString("VIEW_SCHEMA"));
+        final String viewName = results.getString("VIEW_NAME");
+
+        final Optional<MutableTable> viewOptional =
+          lookupTable(catalogName, schemaName, viewName);
+        if (!viewOptional.isPresent())
+        {
+          LOGGER.log(Level.FINE,
+                     new StringFormat("Cannot find view <%s.%s.%s>",
+                                      catalogName,
+                                      schemaName,
+                                      viewName));
+          continue;
+        }
+
+        final MutableView view = (MutableView) viewOptional.get();
+        LOGGER.log(Level.FINER,
+                   new StringFormat("Retrieving view information <%s>",
+                                    viewName));
+
+        final String tableCatalogName =
+          normalizeCatalogName(results.getString("TABLE_CATALOG"));
+        final String tableSchemaName =
+          normalizeSchemaName(results.getString("TABLE_SCHEMA"));
+        final String tableName = results.getString("TABLE_NAME");
+
+        final Optional<MutableTable> tableOptional =
+          lookupTable(tableCatalogName, tableSchemaName, tableName);
+        if (!tableOptional.isPresent())
+        {
+          LOGGER.log(Level.FINE,
+                     new StringFormat("Cannot find table <%s.%s.%s>",
+                                      tableCatalogName,
+                                      tableSchemaName,
+                                      tableName));
+          continue;
+        }
+
+        final MutableTable table = tableOptional.get();
+        LOGGER.log(Level.FINER,
+                   new StringFormat("Retrieving table information <%s>",
+                                    tableName));
+
+        view.addTableUsage(table);
+      }
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Could not retrieve table usage for views", e);
     }
 
   }
