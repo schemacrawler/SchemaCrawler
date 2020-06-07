@@ -31,6 +31,7 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TYPE_INFO;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.typeInfoRetrievalStrategy;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -45,6 +46,7 @@ import schemacrawler.schema.SearchableType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.schemacrawler.SchemaReference;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -75,86 +77,21 @@ final class DataTypeRetriever
   {
     final Schema systemSchema = new SchemaReference();
 
-    final Statement statement;
-    final MetadataResultSet results;
-
-    final InformationSchemaViews informationSchemaViews =
-      getRetrieverConnection().getInformationSchemaViews();
-    if (informationSchemaViews.hasQuery(TYPE_INFO))
+    switch (getRetrieverConnection().get(typeInfoRetrievalStrategy))
     {
-      final Query typeInfoSql =
-        informationSchemaViews.getQuery(TYPE_INFO);
-      final Connection connection = getDatabaseConnection();
-      statement = connection.createStatement();
-      results =
-        new MetadataResultSet(typeInfoSql, statement, getSchemaInclusionRule());
-    }
-    else
-    {
-      statement = null;
-      results = new MetadataResultSet(getMetaData().getTypeInfo());
-    }
+      case data_dictionary_all:
+        LOGGER.log(Level.INFO,
+                   "Retrieving system column data types, using fast data dictionary retrieval");
+        retrieveSystemColumnDataTypesFromDataDictionary(systemSchema);
+        break;
 
-    try
-    {
-      while (results.next())
-      {
-        final String typeName = results.getString("TYPE_NAME");
-        final int dataType = results.getInt("DATA_TYPE", 0);
-        LOGGER.log(Level.FINER,
-                   new StringFormat("Retrieving data type <%s> with type id %d",
-                                    typeName,
-                                    dataType));
-        final long precision = results.getLong("PRECISION", 0L);
-        final String literalPrefix = results.getString("LITERAL_PREFIX");
-        final String literalSuffix = results.getString("LITERAL_SUFFIX");
-        final String createParameters = results.getString("CREATE_PARAMS");
-        final boolean isNullable =
-          results.getInt("NULLABLE", DatabaseMetaData.typeNullableUnknown)
-          == DatabaseMetaData.typeNullable;
-        final boolean isCaseSensitive = results.getBoolean("CASE_SENSITIVE");
-        final SearchableType searchable =
-          results.getEnumFromId("SEARCHABLE", SearchableType.unknown);
-        final boolean isUnsigned = results.getBoolean("UNSIGNED_ATTRIBUTE");
-        final boolean isFixedPrecisionScale =
-          results.getBoolean("FIXED_PREC_SCALE");
-        final boolean isAutoIncremented = results.getBoolean("AUTO_INCREMENT");
-        final String localTypeName = results.getString("LOCAL_TYPE_NAME");
-        final int minimumScale = results.getInt("MINIMUM_SCALE", 0);
-        final int maximumScale = results.getInt("MAXIMUM_SCALE", 0);
-        final int numPrecisionRadix = results.getInt("NUM_PREC_RADIX", 0);
+      case metadata:
+        LOGGER.log(Level.INFO, "Retrieving system column data types");
+        retrieveSystemColumnDataTypesFromMetadata(systemSchema);
+        break;
 
-        final MutableColumnDataType columnDataType =
-          lookupOrCreateColumnDataType(systemSchema, dataType, typeName);
-        // Set the Java SQL type code, but no mapped Java class is
-        // available, so use the defaults
-        columnDataType.setPrecision(precision);
-        columnDataType.setLiteralPrefix(literalPrefix);
-        columnDataType.setLiteralSuffix(literalSuffix);
-        columnDataType.setCreateParameters(createParameters);
-        columnDataType.setNullable(isNullable);
-        columnDataType.setCaseSensitive(isCaseSensitive);
-        columnDataType.setSearchable(searchable);
-        columnDataType.setUnsigned(isUnsigned);
-        columnDataType.setFixedPrecisionScale(isFixedPrecisionScale);
-        columnDataType.setAutoIncrementable(isAutoIncremented);
-        columnDataType.setLocalTypeName(localTypeName);
-        columnDataType.setMinimumScale(minimumScale);
-        columnDataType.setMaximumScale(maximumScale);
-        columnDataType.setNumPrecisionRadix(numPrecisionRadix);
-
-        columnDataType.addAttributes(results.getAttributes());
-
-        catalog.addColumnDataType(columnDataType);
-      }
-    }
-    finally
-    {
-      results.close();
-      if (statement != null)
-      {
-        statement.close();
-      }
+      default:
+        break;
     }
   }
 
@@ -223,6 +160,111 @@ final class DataTypeRetriever
       }
     }
 
+  }
+
+  private void retrieveSystemColumnDataTypesFromDataDictionary(final Schema systemSchema)
+    throws SQLException
+  {
+    final InformationSchemaViews informationSchemaViews =
+      getRetrieverConnection().getInformationSchemaViews();
+    if (!informationSchemaViews.hasQuery(TYPE_INFO))
+    {
+      throw new SchemaCrawlerSQLException(
+        "No system column data types SQL provided",
+        null);
+    }
+    final Query typeInfoSql = informationSchemaViews.getQuery(TYPE_INFO);
+    final Connection connection = getDatabaseConnection();
+
+    try (
+      final Statement statement = connection.createStatement();
+      final MetadataResultSet results = new MetadataResultSet(typeInfoSql,
+                                                              statement,
+                                                              getSchemaInclusionRule())
+    )
+    {
+      results.setDescription("retrieveSystemColumnDataTypesFromDataDictionary");
+      int numSystemColumnDataTypes = 0;
+      while (results.next())
+      {
+        numSystemColumnDataTypes = numSystemColumnDataTypes + 1;
+        createSystemColumnDataType(results, systemSchema);
+      }
+      LOGGER.log(Level.INFO,
+                 new StringFormat("Processed %d system column data types",
+                                  numSystemColumnDataTypes));
+    }
+  }
+
+  private void retrieveSystemColumnDataTypesFromMetadata(final Schema systemSchema)
+    throws SQLException
+  {
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData().getTypeInfo()))
+    {
+      results.setDescription("retrieveSystemColumnDataTypesFromDataDictionary");
+      int numSystemColumnDataTypes = 0;
+      while (results.next())
+      {
+        numSystemColumnDataTypes = numSystemColumnDataTypes + 1;
+        createSystemColumnDataType(results, systemSchema);
+      }
+      LOGGER.log(Level.INFO,
+                 new StringFormat("Processed %d system column data types",
+                                  numSystemColumnDataTypes));
+    }
+  }
+
+  private void createSystemColumnDataType(final MetadataResultSet results,
+                                          final Schema systemSchema)
+  {
+    final String typeName = results.getString("TYPE_NAME");
+    final int dataType = results.getInt("DATA_TYPE", 0);
+    LOGGER.log(Level.FINER,
+               new StringFormat("Retrieving data type <%s> with type id %d",
+                                typeName,
+                                dataType));
+
+    final long precision = results.getLong("PRECISION", 0L);
+    final String literalPrefix = results.getString("LITERAL_PREFIX");
+    final String literalSuffix = results.getString("LITERAL_SUFFIX");
+    final String createParameters = results.getString("CREATE_PARAMS");
+    final boolean isNullable =
+      results.getInt("NULLABLE", DatabaseMetaData.typeNullableUnknown)
+      == DatabaseMetaData.typeNullable;
+    final boolean isCaseSensitive = results.getBoolean("CASE_SENSITIVE");
+    final SearchableType searchable =
+      results.getEnumFromId("SEARCHABLE", SearchableType.unknown);
+    final boolean isUnsigned = results.getBoolean("UNSIGNED_ATTRIBUTE");
+    final boolean isFixedPrecisionScale =
+      results.getBoolean("FIXED_PREC_SCALE");
+    final boolean isAutoIncremented = results.getBoolean("AUTO_INCREMENT");
+    final String localTypeName = results.getString("LOCAL_TYPE_NAME");
+    final int minimumScale = results.getInt("MINIMUM_SCALE", 0);
+    final int maximumScale = results.getInt("MAXIMUM_SCALE", 0);
+    final int numPrecisionRadix = results.getInt("NUM_PREC_RADIX", 0);
+
+    final MutableColumnDataType columnDataType =
+      lookupOrCreateColumnDataType(systemSchema, dataType, typeName);
+    // Set the Java SQL type code, but no mapped Java class is
+    // available, so use the defaults
+    columnDataType.setPrecision(precision);
+    columnDataType.setLiteralPrefix(literalPrefix);
+    columnDataType.setLiteralSuffix(literalSuffix);
+    columnDataType.setCreateParameters(createParameters);
+    columnDataType.setNullable(isNullable);
+    columnDataType.setCaseSensitive(isCaseSensitive);
+    columnDataType.setSearchable(searchable);
+    columnDataType.setUnsigned(isUnsigned);
+    columnDataType.setFixedPrecisionScale(isFixedPrecisionScale);
+    columnDataType.setAutoIncrementable(isAutoIncremented);
+    columnDataType.setLocalTypeName(localTypeName);
+    columnDataType.setMinimumScale(minimumScale);
+    columnDataType.setMaximumScale(maximumScale);
+    columnDataType.setNumPrecisionRadix(numPrecisionRadix);
+
+    columnDataType.addAttributes(results.getAttributes());
+
+    catalog.addColumnDataType(columnDataType);
   }
 
 }

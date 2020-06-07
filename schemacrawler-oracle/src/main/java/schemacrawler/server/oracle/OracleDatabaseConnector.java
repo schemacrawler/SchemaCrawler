@@ -39,6 +39,7 @@ import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.pr
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.proceduresRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablesRetrievalStrategy;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.typeInfoRetrievalStrategy;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -156,6 +157,7 @@ public final class OracleDatabaseConnector
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
       super.getSchemaRetrievalOptionsBuilder(connection);
     schemaRetrievalOptionsBuilder
+      .with(typeInfoRetrievalStrategy, data_dictionary_all)
       .with(tablesRetrievalStrategy, data_dictionary_all)
       .with(tableColumnsRetrievalStrategy, data_dictionary_all)
       .with(primaryKeysRetrievalStrategy, data_dictionary_all)

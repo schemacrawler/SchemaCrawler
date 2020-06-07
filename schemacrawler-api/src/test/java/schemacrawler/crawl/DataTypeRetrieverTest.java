@@ -6,6 +6,8 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
+import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.typeInfoRetrievalStrategy;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
@@ -16,6 +18,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -117,7 +120,9 @@ public class DataTypeRetrieverTest
       .append(maximumScale)
       .append("\n")
       .append("  ")
-      .append(javaSqlType);
+      .append(javaSqlType)
+      .append("\n");
+
     if (isUserDefined)
     {
       final String baseTypeName;
@@ -137,11 +142,23 @@ public class DataTypeRetrieverTest
         .append(baseTypeName);
     }
 
+    buffer.append("  attributes:\n");
+    final Map<String, Object> attributes = columnDataType.getAttributes();
+    for (final Map.Entry<String, Object> attribute : attributes.entrySet())
+    {
+      buffer
+        .append("    ")
+        .append(attribute.getKey())
+        .append("=")
+        .append(attribute.getValue())
+        .append("\n");
+    }
+
     return buffer.toString();
   }
 
-  public static void verifyRetrieveColumnDataTypes(final Catalog catalog,
-                                                   final String expectedResultsResource)
+  private static void verifyRetrieveColumnDataTypes(final Catalog catalog,
+                                                    final String expectedResultsResource)
     throws IOException
   {
     final TestWriter testout = new TestWriter();
@@ -162,6 +179,7 @@ public class DataTypeRetrieverTest
     assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(expectedResultsResource)));
   }
+
   private MutableCatalog catalog;
 
   @Test
@@ -170,15 +188,20 @@ public class DataTypeRetrieverTest
                                                  final Connection connection)
     throws Exception
   {
+    final int magicNumber = 99;
+
     final InformationSchemaViews informationSchemaViews =
       InformationSchemaViewsBuilder
         .builder()
         .withSql(InformationSchemaKey.TYPE_INFO,
-                 "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TYPEINFO")
+                 String.format("SELECT %d AS INJECTED_TEST_ATTRIBUTE, TYPE_INFO.* "
+                               + "FROM INFORMATION_SCHEMA.SYSTEM_TYPEINFO TYPE_INFO",
+                               magicNumber))
         .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
       SchemaRetrievalOptionsBuilder
         .builder()
+        .with(typeInfoRetrievalStrategy, data_dictionary_all)
         .withInformationSchemaViews(informationSchemaViews);
     final SchemaRetrievalOptions schemaRetrievalOptions =
       schemaRetrievalOptionsBuilder.toOptions();
