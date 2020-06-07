@@ -143,7 +143,7 @@ For details on the columns in this view, please refer to [getImportedKeys](https
 For details on the columns in this view, please refer to [getIndexInfo](https://docs.oracle.com/javase/8/docs/api/java/sql/DatabaseMetaData.html#getIndexInfo-java.lang.String-java.lang.String-java.lang.String-boolean-boolean-)
 
 
-### DATABASE_METADATA.OVERRIDE_TYPE_INFO
+### DATABASE_METADATA.TYPE_INFO
 
 For details on the columns in this view, please refer to [getTypeInfo](https://docs.oracle.com/javase/8/docs/api/java/sql/DatabaseMetaData.html#getTypeInfo--)
 

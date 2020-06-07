@@ -40,6 +40,7 @@ public enum SchemaInfoMetadataRetrievalStrategy
   procedureParametersRetrievalStrategy("procedureparameters"),
   tableColumnsRetrievalStrategy("tablecolumns"),
   tablesRetrievalStrategy("tables"),
+  typeInfoRetrievalStrategy("typeinfo"),
   ;
 
   private static final String prefix =

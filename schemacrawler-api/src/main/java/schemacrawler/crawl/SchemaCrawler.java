@@ -230,12 +230,14 @@ public final class SchemaCrawler
         .getSchemaInfoLevel();
       final DatabaseInfoRetriever retriever =
         new DatabaseInfoRetriever(retrieverConnection, catalog, options);
+      final DataTypeRetriever dataTypeRetriever =
+        new DataTypeRetriever(retrieverConnection, catalog, options);
 
       stopWatch.time("retrieveSystemColumnDataTypes", () -> {
         if (infoLevel.is(retrieveColumnDataTypes))
         {
           LOGGER.log(Level.INFO, "Retrieving system column data types");
-          retriever.retrieveSystemColumnDataTypes();
+          dataTypeRetriever.retrieveSystemColumnDataTypes();
         }
         else
         {
@@ -251,7 +253,7 @@ public final class SchemaCrawler
           LOGGER.log(Level.INFO, "Retrieving user column data types");
           for (final Schema schema : retriever.getAllSchemas())
           {
-            retriever.retrieveUserDefinedColumnDataTypes(schema);
+            dataTypeRetriever.retrieveUserDefinedColumnDataTypes(schema);
           }
         }
         else
