@@ -7,6 +7,8 @@
 - Allow for a JDBC driver class name to be specified for SchemaCrawler database plugins
 - Add ability to retrieve database users using an additional data view
 - Add ability to retrieve which tables are used by views, and show on output
+- Rename OVERRIDE_TYPE_INFO to TYPE_INFO in data dictionary extensions
+- Rename EXT_TABLE_CONSTRAINTS to CHECK_CONSTRAINTS in data dictionary extensions
 
 
 <a name="a16.8.1"></a>
