@@ -29,6 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
+import static schemacrawler.schemacrawler.InformationSchemaKey.SCHEMATA;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -41,7 +43,6 @@ import java.util.logging.Level;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -237,13 +238,13 @@ final class SchemaRetriever
 
     final InformationSchemaViews informationSchemaViews =
       getRetrieverConnection().getInformationSchemaViews();
-    if (!informationSchemaViews.hasQuery(InformationSchemaKey.SCHEMATA))
+    if (!informationSchemaViews.hasQuery(SCHEMATA))
     {
       LOGGER.log(Level.FINE, "Schemata SQL statement was not provided");
       return schemaRefs;
     }
     final Query schemataSql =
-      informationSchemaViews.getQuery(InformationSchemaKey.SCHEMATA);
+      informationSchemaViews.getQuery(SCHEMATA);
 
     final Connection connection = getDatabaseConnection();
 

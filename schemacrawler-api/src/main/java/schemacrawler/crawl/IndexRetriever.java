@@ -30,6 +30,7 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.schemacrawler.InformationSchemaKey.INDEXES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
 import static sf.util.Utility.isBlank;
 
@@ -43,7 +44,6 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.IndexType;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -200,14 +200,14 @@ final class IndexRetriever
     final InformationSchemaViews informationSchemaViews =
       getRetrieverConnection().getInformationSchemaViews();
 
-    if (!informationSchemaViews.hasQuery(InformationSchemaKey.INDEXES))
+    if (!informationSchemaViews.hasQuery(INDEXES))
     {
       LOGGER.log(Level.FINE, "Extended indexes SQL statement was not provided");
       return;
     }
 
     final Query indexesSql =
-      informationSchemaViews.getQuery(InformationSchemaKey.INDEXES);
+      informationSchemaViews.getQuery(INDEXES);
     final Connection connection = getDatabaseConnection();
     try (
       final Statement statement = connection.createStatement();

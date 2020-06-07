@@ -30,6 +30,7 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.schemacrawler.InformationSchemaKey.PRIMARY_KEYS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.primaryKeysRetrievalStrategy;
 
 import java.sql.Connection;
@@ -40,7 +41,6 @@ import java.util.logging.Level;
 
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.View;
-import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -135,7 +135,7 @@ final class PrimaryKeyRetriever
     final InformationSchemaViews informationSchemaViews =
       getRetrieverConnection().getInformationSchemaViews();
 
-    if (!informationSchemaViews.hasQuery(InformationSchemaKey.PRIMARY_KEYS))
+    if (!informationSchemaViews.hasQuery(PRIMARY_KEYS))
     {
       LOGGER.log(Level.FINE,
                  "Extended primary keys SQL statement was not provided");
@@ -143,7 +143,7 @@ final class PrimaryKeyRetriever
     }
 
     final Query pkSql =
-      informationSchemaViews.getQuery(InformationSchemaKey.PRIMARY_KEYS);
+      informationSchemaViews.getQuery(PRIMARY_KEYS);
     final Connection connection = getDatabaseConnection();
     try (
       final Statement statement = connection.createStatement();

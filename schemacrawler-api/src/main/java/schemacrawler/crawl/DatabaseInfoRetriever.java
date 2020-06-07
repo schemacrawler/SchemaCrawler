@@ -31,6 +31,8 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.DATABASE_USERS;
+import static schemacrawler.schemacrawler.InformationSchemaKey.OVERRIDE_TYPE_INFO;
+import static schemacrawler.schemacrawler.InformationSchemaKey.SERVER_INFORMATION;
 import static sf.util.Utility.isBlank;
 
 import java.lang.reflect.InvocationTargetException;
@@ -57,7 +59,6 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Property;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SearchableType;
-import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -350,7 +351,7 @@ final class DatabaseInfoRetriever
 
     final InformationSchemaViews informationSchemaViews =
       getRetrieverConnection().getInformationSchemaViews();
-    if (!informationSchemaViews.hasQuery(InformationSchemaKey.SERVER_INFORMATION))
+    if (!informationSchemaViews.hasQuery(SERVER_INFORMATION))
     {
       LOGGER.log(Level.INFO,
                  "Not retrieving server information, since this was not requested");
@@ -359,7 +360,7 @@ final class DatabaseInfoRetriever
       return;
     }
     final Query serverInfoSql =
-      informationSchemaViews.getQuery(InformationSchemaKey.SERVER_INFORMATION);
+      informationSchemaViews.getQuery(SERVER_INFORMATION);
 
     final Connection connection = getDatabaseConnection();
     try (
@@ -464,10 +465,10 @@ final class DatabaseInfoRetriever
 
     final InformationSchemaViews informationSchemaViews =
       getRetrieverConnection().getInformationSchemaViews();
-    if (informationSchemaViews.hasQuery(InformationSchemaKey.OVERRIDE_TYPE_INFO))
+    if (informationSchemaViews.hasQuery(OVERRIDE_TYPE_INFO))
     {
       final Query typeInfoSql =
-        informationSchemaViews.getQuery(InformationSchemaKey.OVERRIDE_TYPE_INFO);
+        informationSchemaViews.getQuery(OVERRIDE_TYPE_INFO);
       final Connection connection = getDatabaseConnection();
       statement = connection.createStatement();
       results =

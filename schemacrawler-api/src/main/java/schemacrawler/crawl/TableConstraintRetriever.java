@@ -29,6 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
+import static schemacrawler.schemacrawler.InformationSchemaKey.CONSTRAINT_COLUMN_USAGE;
+import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLE_CONSTRAINTS;
+import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_CONSTRAINTS;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -41,7 +45,6 @@ import java.util.logging.Level;
 
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.TableConstraintType;
-import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -85,14 +88,14 @@ final class TableConstraintRetriever
 
     final Connection connection = getDatabaseConnection();
 
-    if (!informationSchemaViews.hasQuery(InformationSchemaKey.EXT_TABLE_CONSTRAINTS))
+    if (!informationSchemaViews.hasQuery(EXT_TABLE_CONSTRAINTS))
     {
       LOGGER.log(Level.FINE,
                  "Extended table constraints SQL statement was not provided");
       return;
     }
     final Query extTableConstraintInformationSql =
-      informationSchemaViews.getQuery(InformationSchemaKey.EXT_TABLE_CONSTRAINTS);
+      informationSchemaViews.getQuery(EXT_TABLE_CONSTRAINTS);
 
     // Get check constraint definitions
     try (
@@ -169,7 +172,7 @@ final class TableConstraintRetriever
                                       final Map<List<String>, MutableTableConstraint> tableConstraintsMap,
                                       final InformationSchemaViews informationSchemaViews)
   {
-    if (!informationSchemaViews.hasQuery(InformationSchemaKey.TABLE_CONSTRAINTS))
+    if (!informationSchemaViews.hasQuery(TABLE_CONSTRAINTS))
     {
       LOGGER.log(Level.FINE,
                  "Table constraints SQL statement was not provided");
@@ -177,7 +180,7 @@ final class TableConstraintRetriever
     }
 
     final Query tableConstraintsInformationSql =
-      informationSchemaViews.getQuery(InformationSchemaKey.TABLE_CONSTRAINTS);
+      informationSchemaViews.getQuery(TABLE_CONSTRAINTS);
     try (
       final Statement statement = connection.createStatement();
       final MetadataResultSet results = new MetadataResultSet(
@@ -250,14 +253,14 @@ final class TableConstraintRetriever
                                                final Map<List<String>, MutableTableConstraint> tableConstraintsMap,
                                                final InformationSchemaViews informationSchemaViews)
   {
-    if (!informationSchemaViews.hasQuery(InformationSchemaKey.CONSTRAINT_COLUMN_USAGE))
+    if (!informationSchemaViews.hasQuery(CONSTRAINT_COLUMN_USAGE))
     {
       LOGGER.log(Level.FINE,
                  "Table constraints columns usage SQL statement was not provided");
       return;
     }
     final Query tableConstraintsColumnsInformationSql =
-      informationSchemaViews.getQuery(InformationSchemaKey.CONSTRAINT_COLUMN_USAGE);
+      informationSchemaViews.getQuery(CONSTRAINT_COLUMN_USAGE);
 
     try (
       final Statement statement = connection.createStatement();

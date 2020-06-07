@@ -30,6 +30,7 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.schemacrawler.InformationSchemaKey.TABLES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablesRetrievalStrategy;
 
 import java.sql.Connection;
@@ -45,7 +46,6 @@ import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
-import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -184,12 +184,12 @@ final class TableRetriever
   {
     final InformationSchemaViews informationSchemaViews =
       getRetrieverConnection().getInformationSchemaViews();
-    if (!informationSchemaViews.hasQuery(InformationSchemaKey.TABLES))
+    if (!informationSchemaViews.hasQuery(TABLES))
     {
       throw new SchemaCrawlerSQLException("No tables SQL provided", null);
     }
     final Query tablesSql =
-      informationSchemaViews.getQuery(InformationSchemaKey.TABLES);
+      informationSchemaViews.getQuery(TABLES);
     final Connection connection = getDatabaseConnection();
     final TableTypes supportedTableTypes = new TableTypes(tableTypes);
     try (

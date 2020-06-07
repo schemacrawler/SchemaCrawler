@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
+import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_SYNONYMS;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
@@ -42,7 +43,6 @@ import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Synonym;
-import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -95,7 +95,7 @@ final class SynonymRetriever
 
     final InformationSchemaViews informationSchemaViews =
       getRetrieverConnection().getInformationSchemaViews();
-    if (!informationSchemaViews.hasQuery(InformationSchemaKey.EXT_SYNONYMS))
+    if (!informationSchemaViews.hasQuery(EXT_SYNONYMS))
     {
       LOGGER.log(Level.FINE,
                  "Synonym definition SQL statement was not provided");
@@ -105,7 +105,7 @@ final class SynonymRetriever
     final NamedObjectList<SchemaReference> schemas = getAllSchemas();
 
     final Query synonymsDefinitionSql =
-      informationSchemaViews.getQuery(InformationSchemaKey.EXT_SYNONYMS);
+      informationSchemaViews.getQuery(EXT_SYNONYMS);
     final Connection connection = getDatabaseConnection();
     try (
       final Statement statement = connection.createStatement();

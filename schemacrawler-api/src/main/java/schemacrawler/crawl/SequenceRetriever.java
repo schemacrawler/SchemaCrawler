@@ -29,6 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
+import static schemacrawler.schemacrawler.InformationSchemaKey.SEQUENCES;
+
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -41,7 +43,6 @@ import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Sequence;
-import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -93,7 +94,7 @@ final class SequenceRetriever
 
     final InformationSchemaViews informationSchemaViews =
       getRetrieverConnection().getInformationSchemaViews();
-    if (!informationSchemaViews.hasQuery(InformationSchemaKey.SEQUENCES))
+    if (!informationSchemaViews.hasQuery(SEQUENCES))
     {
       LOGGER.log(Level.FINE,
                  "Sequence definition SQL statement was not provided");
@@ -103,7 +104,7 @@ final class SequenceRetriever
     final NamedObjectList<SchemaReference> schemas = getAllSchemas();
 
     final Query sequencesDefinitionSql =
-      informationSchemaViews.getQuery(InformationSchemaKey.SEQUENCES);
+      informationSchemaViews.getQuery(SEQUENCES);
     final Connection connection = getDatabaseConnection();
 
     try (

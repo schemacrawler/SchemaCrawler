@@ -30,6 +30,8 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.schemacrawler.InformationSchemaKey.FUNCTIONS;
+import static schemacrawler.schemacrawler.InformationSchemaKey.PROCEDURES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionsRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.proceduresRetrievalStrategy;
 import static sf.util.Utility.isBlank;
@@ -49,7 +51,6 @@ import schemacrawler.schema.FunctionReturnType;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureReturnType;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -242,12 +243,12 @@ final class RoutineRetriever
   {
     final InformationSchemaViews informationSchemaViews =
       getRetrieverConnection().getInformationSchemaViews();
-    if (!informationSchemaViews.hasQuery(InformationSchemaKey.FUNCTIONS))
+    if (!informationSchemaViews.hasQuery(FUNCTIONS))
     {
       throw new SchemaCrawlerSQLException("No functions SQL provided", null);
     }
     final Query functionsSql =
-      informationSchemaViews.getQuery(InformationSchemaKey.FUNCTIONS);
+      informationSchemaViews.getQuery(FUNCTIONS);
     final Connection connection = getDatabaseConnection();
     try (
       final Statement statement = connection.createStatement();
@@ -316,12 +317,12 @@ final class RoutineRetriever
   {
     final InformationSchemaViews informationSchemaViews =
       getRetrieverConnection().getInformationSchemaViews();
-    if (!informationSchemaViews.hasQuery(InformationSchemaKey.PROCEDURES))
+    if (!informationSchemaViews.hasQuery(PROCEDURES))
     {
       throw new SchemaCrawlerSQLException("No procedures SQL provided", null);
     }
     final Query proceduresSql =
-      informationSchemaViews.getQuery(InformationSchemaKey.PROCEDURES);
+      informationSchemaViews.getQuery(PROCEDURES);
     final Connection connection = getDatabaseConnection();
     try (
       final Statement statement = connection.createStatement();

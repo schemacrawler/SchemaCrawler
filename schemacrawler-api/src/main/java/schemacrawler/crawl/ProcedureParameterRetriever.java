@@ -30,6 +30,7 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.schemacrawler.InformationSchemaKey.PROCEDURE_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.procedureParametersRetrievalStrategy;
 import static sf.util.Utility.isBlank;
 
@@ -46,7 +47,6 @@ import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.ParameterModeType;
 import schemacrawler.schema.ProcedureParameter;
 import schemacrawler.schema.RoutineType;
-import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -230,13 +230,13 @@ final class ProcedureParameterRetriever
   {
     final InformationSchemaViews informationSchemaViews =
       getRetrieverConnection().getInformationSchemaViews();
-    if (!informationSchemaViews.hasQuery(InformationSchemaKey.PROCEDURE_COLUMNS))
+    if (!informationSchemaViews.hasQuery(PROCEDURE_COLUMNS))
     {
       throw new SchemaCrawlerSQLException("No procedure parameters SQL provided",
                                           null);
     }
     final Query procedureColumnsSql =
-      informationSchemaViews.getQuery(InformationSchemaKey.PROCEDURE_COLUMNS);
+      informationSchemaViews.getQuery(PROCEDURE_COLUMNS);
     final Connection connection = getDatabaseConnection();
     try (
       final Statement statement = connection.createStatement();

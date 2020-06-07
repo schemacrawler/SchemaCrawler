@@ -30,6 +30,7 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.schemacrawler.InformationSchemaKey.FUNCTION_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionParametersRetrievalStrategy;
 import static sf.util.Utility.isBlank;
 
@@ -47,7 +48,6 @@ import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.FunctionParameter;
 import schemacrawler.schema.ParameterModeType;
 import schemacrawler.schema.RoutineType;
-import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -230,13 +230,13 @@ final class FunctionParameterRetriever
   {
     final InformationSchemaViews informationSchemaViews =
       getRetrieverConnection().getInformationSchemaViews();
-    if (!informationSchemaViews.hasQuery(InformationSchemaKey.FUNCTION_COLUMNS))
+    if (!informationSchemaViews.hasQuery(FUNCTION_COLUMNS))
     {
       throw new SchemaCrawlerSQLException("No function columns SQL provided",
                                           null);
     }
     final Query functionColumnsSql =
-      informationSchemaViews.getQuery(InformationSchemaKey.FUNCTION_COLUMNS);
+      informationSchemaViews.getQuery(FUNCTION_COLUMNS);
     final Connection connection = getDatabaseConnection();
     try (
       final Statement statement = connection.createStatement();

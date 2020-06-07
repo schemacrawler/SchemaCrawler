@@ -30,6 +30,8 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_FOREIGN_KEYS;
+import static schemacrawler.schemacrawler.InformationSchemaKey.FOREIGN_KEYS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy;
 import static sf.util.Utility.isBlank;
 
@@ -48,7 +50,6 @@ import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
-import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -87,7 +88,7 @@ final class ForeignKeyRetriever
 
     final Connection connection = getDatabaseConnection();
 
-    if (!informationSchemaViews.hasQuery(InformationSchemaKey.EXT_FOREIGN_KEYS))
+    if (!informationSchemaViews.hasQuery(EXT_FOREIGN_KEYS))
     {
       LOGGER.log(Level.FINE,
                  "Extended foreign keys SQL statement was not provided");
@@ -104,7 +105,7 @@ final class ForeignKeyRetriever
     }
 
     final Query extForeignKeysSql =
-      informationSchemaViews.getQuery(InformationSchemaKey.EXT_FOREIGN_KEYS);
+      informationSchemaViews.getQuery(EXT_FOREIGN_KEYS);
 
     try (
       final Statement statement = connection.createStatement();
@@ -322,7 +323,7 @@ final class ForeignKeyRetriever
     final InformationSchemaViews informationSchemaViews =
       getRetrieverConnection().getInformationSchemaViews();
 
-    if (!informationSchemaViews.hasQuery(InformationSchemaKey.FOREIGN_KEYS))
+    if (!informationSchemaViews.hasQuery(FOREIGN_KEYS))
     {
       LOGGER.log(Level.FINE,
                  "Extended foreign keys SQL statement was not provided");
@@ -332,7 +333,7 @@ final class ForeignKeyRetriever
     final NamedObjectList<MutableForeignKey> foreignKeys =
       new NamedObjectList<>();
     final Query fkSql =
-      informationSchemaViews.getQuery(InformationSchemaKey.FOREIGN_KEYS);
+      informationSchemaViews.getQuery(FOREIGN_KEYS);
     final Connection connection = getDatabaseConnection();
     try (
       final Statement statement = connection.createStatement();

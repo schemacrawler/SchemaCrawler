@@ -30,6 +30,8 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_HIDDEN_TABLE_COLUMNS;
+import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
 import static sf.util.Utility.isBlank;
 
@@ -47,7 +49,6 @@ import java.util.logging.Level;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Column;
-import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -240,13 +241,13 @@ final class TableColumnRetriever
 
     final InformationSchemaViews informationSchemaViews =
       getRetrieverConnection().getInformationSchemaViews();
-    if (!informationSchemaViews.hasQuery(InformationSchemaKey.EXT_HIDDEN_TABLE_COLUMNS))
+    if (!informationSchemaViews.hasQuery(EXT_HIDDEN_TABLE_COLUMNS))
     {
       LOGGER.log(Level.INFO, "No hidden table columns SQL provided");
       return hiddenColumns;
     }
     final Query hiddenColumnsSql =
-      informationSchemaViews.getQuery(InformationSchemaKey.EXT_HIDDEN_TABLE_COLUMNS);
+      informationSchemaViews.getQuery(EXT_HIDDEN_TABLE_COLUMNS);
     final Connection connection = getDatabaseConnection();
     try (
       final Statement statement = connection.createStatement();
@@ -290,13 +291,13 @@ final class TableColumnRetriever
   {
     final InformationSchemaViews informationSchemaViews =
       getRetrieverConnection().getInformationSchemaViews();
-    if (!informationSchemaViews.hasQuery(InformationSchemaKey.TABLE_COLUMNS))
+    if (!informationSchemaViews.hasQuery(TABLE_COLUMNS))
     {
       throw new SchemaCrawlerSQLException("No table columns SQL provided",
                                           null);
     }
     final Query tableColumnsSql =
-      informationSchemaViews.getQuery(InformationSchemaKey.TABLE_COLUMNS);
+      informationSchemaViews.getQuery(TABLE_COLUMNS);
     final Connection connection = getDatabaseConnection();
     try (
       final Statement statement = connection.createStatement();
