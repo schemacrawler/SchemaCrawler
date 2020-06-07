@@ -2,8 +2,6 @@ PUBLIC.BOOKS.AUTHORS [table]
   ~ COMMIT_ACTION=null
   ~ schemacrawler.table.row_count=20
 PUBLIC.BOOKS.AUTHORSLIST [view]
-  check option: none
-  updatable?: true
   ~ COMMIT_ACTION=null
   ~ INSERTABLE_INTO=YES
   ~ IS_TRIGGER_DELETABLE=NO

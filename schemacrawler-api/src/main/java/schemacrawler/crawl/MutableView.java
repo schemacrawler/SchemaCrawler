@@ -29,8 +29,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Optional;
+
 import schemacrawler.schema.CheckOptionType;
 import schemacrawler.schema.Schema;
+import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 
 /**
@@ -47,6 +52,7 @@ class MutableView
 
   private CheckOptionType checkOption;
   private boolean updatable;
+  private final NamedObjectList<MutableTable> tableUsage = new NamedObjectList<>();
 
   MutableView(final Schema schema, final String name)
   {
@@ -76,9 +82,35 @@ class MutableView
     return updatable;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Collection<Table> getTableUsage()
+  {
+    return new ArrayList<>(tableUsage.values());
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Optional<MutableTable> lookupTable(final Schema schemaRef,
+                                            final String name)
+  {
+    return tableUsage.lookup(schemaRef, name);
+  }
+
   void setUpdatable(final boolean updatable)
   {
     this.updatable = updatable;
+  }
+
+  void addTableUsage(final MutableTable table)
+  {
+    if (table != null) {
+      tableUsage.add(table);
+    }
   }
 
 }

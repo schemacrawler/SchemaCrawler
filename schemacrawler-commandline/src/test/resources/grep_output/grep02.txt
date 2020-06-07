@@ -78,6 +78,10 @@ Definition
                                                             [definition]
 SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS
 
+Table Usage
+
+PUBLIC.BOOKS.AUTHORS                                             [table]
+
 
 
 PUBLIC.BOOKS.CUSTOMERS                                           [table]

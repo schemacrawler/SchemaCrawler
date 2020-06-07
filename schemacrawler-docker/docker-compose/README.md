@@ -37,7 +37,7 @@
 - To start SchemaCrawler with Oracle, run
   `docker-compose -f schemacrawler.yml -f oracle.yml up -d`
 - Create a test Oracle database schema, run
-  `docker exec -it docker-compose_schemacrawler_1 ./_testdb/createtestschema.sh --url "jdbc:oracle:thin:@//oracle:1521/xe" --user system --password oracle --scripts-resource /oracle.11g.scripts.txt --debug`
+  `docker exec -it docker-compose_schemacrawler_1 ./_testdb/createtestschema.sh --url "jdbc:oracle:thin:@//oracle:1521/xe" --user system --password oracle --scripts-resource /oracle-11g.scripts.txt --debug`
 
 ### Testing
 

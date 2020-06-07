@@ -53,7 +53,7 @@ public class BundledDistributionTest
                  .getSchemaRetrievalOptionsBuilder(connection)
                  .toOptions()
                  .getInformationSchemaViews()
-                 .size(), is(12));
+                 .size(), is(13));
   }
 
   @Test
