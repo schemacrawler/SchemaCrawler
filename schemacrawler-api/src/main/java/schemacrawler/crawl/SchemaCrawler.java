@@ -739,10 +739,6 @@ public final class SchemaCrawler
           if (infoLevel.is(retrieveTableColumns))
           {
             fkRetriever.retrieveForeignKeys(allTables);
-            if (infoLevel.is(retrieveForeignKeyDefinitions))
-            {
-              fkRetriever.retrieveForeignKeyDefinitions(allTables);
-            }
           }
         }
         else
@@ -772,10 +768,6 @@ public final class SchemaCrawler
           final PrimaryKeyRetriever primaryKeyRetriever =
             new PrimaryKeyRetriever(retrieverConnection, catalog, options);
           primaryKeyRetriever.retrievePrimaryKeys(allTables);
-          if (infoLevel.is(retrievePrimaryKeyDefinitions))
-          {
-            retrieverExtra.retrievePrimaryKeyDefinitions(allTables);
-          }
         }
         return null;
       });

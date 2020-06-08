@@ -29,12 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.ADDITIONAL_TABLE_ATTRIBUTES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEXES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEX_COLUMNS;
-import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_PRIMARY_KEYS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TRIGGERS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEWS;
@@ -43,8 +41,6 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.VIEW_TABLE_USAGE;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 
@@ -479,81 +475,6 @@ final class TableExtRetriever
 
   }
 
-  void retrievePrimaryKeyDefinitions(final NamedObjectList<MutableTable> allTables)
-  {
-    requireNonNull(allTables, "No tables provided");
-
-    final InformationSchemaViews informationSchemaViews =
-      getRetrieverConnection().getInformationSchemaViews();
-
-    final Connection connection = getDatabaseConnection();
-
-    if (!informationSchemaViews.hasQuery(EXT_PRIMARY_KEYS))
-    {
-      LOGGER.log(Level.FINE,
-                 "Extended primary keys SQL statement was not provided");
-      return;
-    }
-
-    final NamedObjectList<MutablePrimaryKey> allPks = new NamedObjectList<>();
-    for (final MutableTable table : allTables)
-    {
-      if (table.hasPrimaryKey())
-      {
-        final MutablePrimaryKey primaryKey = table.getPrimaryKey();
-        allPks.add(primaryKey);
-      }
-    }
-
-    final Query extPrimaryKeysSql =
-      informationSchemaViews.getQuery(EXT_PRIMARY_KEYS);
-
-    try (
-      final Statement statement = connection.createStatement();
-      final MetadataResultSet results = new MetadataResultSet(extPrimaryKeysSql,
-                                                              statement,
-                                                              getSchemaInclusionRule())
-    )
-    {
-      while (results.next())
-      {
-        final String catalogName =
-          normalizeCatalogName(results.getString("PRIMARY_KEY_CATALOG"));
-        final String schemaName =
-          normalizeSchemaName(results.getString("PRIMARY_KEY_SCHEMA"));
-        final String tableName = results.getString("PRIMARY_KEY_TABLE_NAME");
-        final String pkName = results.getString("PRIMARY_KEY_NAME");
-
-        final List<String> constraintLookupKey =
-          Arrays.asList(catalogName, schemaName, tableName, pkName);
-        LOGGER.log(Level.FINER,
-                   new StringFormat("Retrieving definition of primary key <%s>",
-                                    constraintLookupKey));
-        final String definition = results.getString("PRIMARY_KEY_DEFINITION");
-
-        final Optional<MutablePrimaryKey> optionalPk =
-          allPks.lookup(constraintLookupKey);
-        if (optionalPk.isPresent())
-        {
-          final MutablePrimaryKey pkConstraint = optionalPk.get();
-          pkConstraint.appendDefinition(definition);
-          pkConstraint.addAttributes(results.getAttributes());
-        }
-        else
-        {
-          LOGGER.log(Level.FINER,
-                     new StringFormat("Could not find primary key <%s>",
-                                      constraintLookupKey));
-        }
-
-      }
-    }
-    catch (final Exception e)
-    {
-      LOGGER.log(Level.WARNING, "Could not retrieve check constraints", e);
-    }
-
-  }
 
   void retrieveTableColumnPrivileges()
     throws SQLException

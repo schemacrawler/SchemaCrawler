@@ -30,7 +30,6 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_FOREIGN_KEYS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.FOREIGN_KEYS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy;
 import static sf.util.Utility.isBlank;
@@ -44,7 +43,6 @@ import java.util.Optional;
 import java.util.logging.Level;
 
 import schemacrawler.schema.Column;
-import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.Schema;
@@ -77,73 +75,6 @@ final class ForeignKeyRetriever
                       final SchemaCrawlerOptions options)
   {
     super(retrieverConnection, catalog, options);
-  }
-
-  void retrieveForeignKeyDefinitions(final NamedObjectList<MutableTable> allTables)
-  {
-    requireNonNull(allTables, "No tables provided");
-
-    final InformationSchemaViews informationSchemaViews =
-      getRetrieverConnection().getInformationSchemaViews();
-
-    final Connection connection = getDatabaseConnection();
-
-    if (!informationSchemaViews.hasQuery(EXT_FOREIGN_KEYS))
-    {
-      LOGGER.log(Level.FINE,
-                 "Extended foreign keys SQL statement was not provided");
-      return;
-    }
-
-    final NamedObjectList<MutableForeignKey> allFks = new NamedObjectList<>();
-    for (final MutableTable table : allTables)
-    {
-      for (final ForeignKey foreignKey : table.getForeignKeys())
-      {
-        allFks.add((MutableForeignKey) foreignKey);
-      }
-    }
-
-    final Query extForeignKeysSql =
-      informationSchemaViews.getQuery(EXT_FOREIGN_KEYS);
-
-    try (
-      final Statement statement = connection.createStatement();
-      final MetadataResultSet results = new MetadataResultSet(extForeignKeysSql,
-                                                              statement,
-                                                              getSchemaInclusionRule())
-    )
-    {
-      while (results.next())
-      {
-        // FOREIGN_KEY_CATALOG, FOREIGN_KEY_SCHEMA, FOREIGN_KEY_TABLE
-        final String fkName = results.getString("FOREIGN_KEY_NAME");
-        LOGGER.log(Level.FINER,
-                   new StringFormat("Retrieving foreign key definition <%s>",
-                                    fkName));
-        final String definition = results.getString("FOREIGN_KEY_DEFINITION");
-
-        final Optional<MutableForeignKey> optionalFk =
-          allFks.lookup(Arrays.asList(fkName, fkName));
-        if (optionalFk.isPresent())
-        {
-          final MutableForeignKey fkConstraint = optionalFk.get();
-          fkConstraint.appendDefinition(definition);
-          fkConstraint.addAttributes(results.getAttributes());
-        }
-        else
-        {
-          LOGGER.log(Level.FINER,
-                     new StringFormat("Could not find foreign key <%s>",
-                                      fkName));
-        }
-      }
-    }
-    catch (final Exception e)
-    {
-      LOGGER.log(Level.WARNING, "Could not retrieve check constraints", e);
-    }
-
   }
 
   void retrieveForeignKeys(final NamedObjectList<MutableTable> allTables)

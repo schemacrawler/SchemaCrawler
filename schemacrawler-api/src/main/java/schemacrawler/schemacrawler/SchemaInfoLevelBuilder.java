@@ -248,13 +248,6 @@ public final class SchemaInfoLevelBuilder
     return this;
   }
 
-  public SchemaInfoLevelBuilder setRetrieveForeignKeyDefinitions(final boolean retrieveForeignKeyDefinitions)
-  {
-    schemaInfoRetrievals.put(SchemaInfoRetrieval.retrieveForeignKeyDefinitions,
-                             retrieveForeignKeyDefinitions);
-    return this;
-  }
-
   public SchemaInfoLevelBuilder setRetrieveForeignKeys(final boolean retrieveForeignKeys)
   {
     schemaInfoRetrievals.put(SchemaInfoRetrieval.retrieveForeignKeys,
@@ -280,13 +273,6 @@ public final class SchemaInfoLevelBuilder
   {
     schemaInfoRetrievals.put(SchemaInfoRetrieval.retrieveIndexInformation,
                              retrieveIndexInformation);
-    return this;
-  }
-
-  public SchemaInfoLevelBuilder setRetrievePrimaryKeyDefinitions(final boolean retrievePrimaryKeyDefinitions)
-  {
-    schemaInfoRetrievals.put(SchemaInfoRetrieval.retrievePrimaryKeyDefinitions,
-                             retrievePrimaryKeyDefinitions);
     return this;
   }
 
