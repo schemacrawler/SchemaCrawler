@@ -9,6 +9,7 @@
 - Add ability to retrieve which tables are used by views, and show on output
 - Rename OVERRIDE_TYPE_INFO to TYPE_INFO in data dictionary extensions
 - Rename EXT_TABLE_CONSTRAINTS to CHECK_CONSTRAINTS in data dictionary extensions
+- Add start value for sequences
 
 
 <a name="a16.8.1"></a>
