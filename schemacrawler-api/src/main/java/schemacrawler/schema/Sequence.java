@@ -62,6 +62,13 @@ public interface Sequence
   BigInteger getMinimumValue();
 
   /**
+   * Gets the start value of the sequence.
+   *
+   * @return Start value of the sequence.
+   */
+  BigInteger getStartValue();
+
+  /**
    * Indicates whether or not the sequence can continue to generate values after
    * reaching its maximum or minimum value. return True if the sequence
    * continues to generate values.

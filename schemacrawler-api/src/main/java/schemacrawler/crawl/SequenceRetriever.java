@@ -122,6 +122,7 @@ final class SequenceRetriever
         final String schemaName =
           normalizeSchemaName(results.getString("SEQUENCE_SCHEMA"));
         final String sequenceName = results.getString("SEQUENCE_NAME");
+        final BigInteger startValue = results.getBigInteger("START_VALUE");
         final BigInteger minimumValue = results.getBigInteger("MINIMUM_VALUE");
         final BigInteger maximumValue = results.getBigInteger("MAXIMUM_VALUE");
         final BigInteger increment = results.getBigInteger("INCREMENT");
@@ -138,6 +139,7 @@ final class SequenceRetriever
 
         final MutableSequence sequence =
           new MutableSequence(schema, sequenceName);
+        sequence.setStartValue(startValue);
         sequence.setMaximumValue(maximumValue);
         sequence.setMinimumValue(minimumValue);
         sequence.setIncrement(longIncrement);

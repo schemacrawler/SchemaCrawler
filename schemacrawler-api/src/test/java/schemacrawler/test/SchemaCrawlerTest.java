@@ -632,6 +632,7 @@ public class SchemaCrawlerTest
         assertThat(sequence, notNullValue());
         out.println("sequence: " + sequence.getName());
         out.println("  increment: " + sequence.getIncrement());
+        out.println("  start value: " + sequence.getStartValue());
         out.println("  minimum value: " + sequence.getMinimumValue());
         out.println("  maximum value: " + sequence.getMaximumValue());
         out.println("  cycle?: " + sequence.isCycle());

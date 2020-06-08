@@ -46,8 +46,10 @@ final class MutableSequence
 {
 
   private static final long serialVersionUID = -4774695374454532899L;
+
   private boolean cycle;
   private long increment;
+  private BigInteger startValue;
   private BigInteger maximumValue;
   private BigInteger minimumValue;
 
@@ -96,6 +98,17 @@ final class MutableSequence
   void setMinimumValue(final BigInteger minimumValue)
   {
     this.minimumValue = minimumValue;
+  }
+
+  @Override
+  public BigInteger getStartValue()
+  {
+    return startValue;
+  }
+
+  void setStartValue(final BigInteger startValue)
+  {
+    this.startValue = startValue;
   }
 
   /**

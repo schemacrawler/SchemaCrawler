@@ -40,6 +40,7 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.crawl.WeakAssociation;
@@ -206,11 +207,14 @@ final class SchemaTextFormatter
                                       "increment",
                                       String.valueOf(sequence.getIncrement()));
       formattingHelper.writeDetailRow("",
+                                      "start value",
+                                      Objects.toString(sequence.getStartValue(), ""));
+      formattingHelper.writeDetailRow("",
                                       "minimum value",
-                                      String.valueOf(sequence.getMinimumValue()));
+                                      Objects.toString(sequence.getMinimumValue(), ""));
       formattingHelper.writeDetailRow("",
                                       "maximum value",
-                                      String.valueOf(sequence.getMaximumValue()));
+                                      Objects.toString(sequence.getMaximumValue(), ""));
       formattingHelper.writeDetailRow("",
                                       "cycle",
                                       String.valueOf(sequence.isCycle()));
