@@ -164,29 +164,6 @@ For details on the columns in this view, please refer to [getPrimaryKeys](https:
 | TABLE_NAME | The name of the view. |
 | TABLE_DEFINITION | The definition of the table as it would appear in a CREATE TABLE statement. If it does not fit, the value is NULL. |
 
-
-### METADATA_EXTENSION.EXT_PRIMARY_KEYS
-
-| Column name | Description |
-| --- | --- |
-| PRIMARY_KEY_CATALOG | The name of the catalog containing the primary key. |
-| PRIMARY_KEY_SCHEMA | The name of the schema containing the primary key. |
-| PRIMARY_KEY_TABLE_NAME | The name of the table containing the primary key. |
-| PRIMARY_KEY_NAME | The name of the primary key. |
-| PRIMARY_KEY_DEFINITION | The definition of the primary key. |
-
-
-### METADATA_EXTENSION.EXT_FOREIGN_KEYS
-
-| Column name | Description |
-| --- | --- |
-| FOREIGN_KEY_CATALOG | The name of the catalog containing the foreign key. |
-| FOREIGN_KEY_SCHEMA | The name of the schema containing the foreign key. |
-| FOREIGN_KEY_TABLE_NAME | The name of the table containing the foreign key. |
-| FOREIGN_KEY_NAME | The name of the foreign key. |
-| FOREIGN_KEY_DEFINITION | The definition of the foreign key. |
-
-
 ### METADATA_EXTENSION.EXT_HIDDEN_TABLE_COLUMNS
 
 | Column name | Description |
