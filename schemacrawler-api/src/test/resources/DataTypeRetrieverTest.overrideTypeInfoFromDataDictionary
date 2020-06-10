@@ -10,6 +10,12 @@ BIGINT
   minimum scale 0
   maximum scale 0
   java.sql.Types: BIGINT
+  attributes:
+    INJECTED_TEST_ATTRIBUTE=99
+    INTERVAL_PRECISION=null
+    SQL_DATA_TYPE=null
+    SQL_DATETIME_SUB=null
+
 BINARY
   column data-type
   defined with LENGTH
@@ -22,6 +28,12 @@ BINARY
   minimum scale 0
   maximum scale 0
   java.sql.Types: BINARY
+  attributes:
+    INJECTED_TEST_ATTRIBUTE=99
+    INTERVAL_PRECISION=null
+    SQL_DATA_TYPE=null
+    SQL_DATETIME_SUB=null
+
 BIT
   column data-type
   defined with LENGTH
@@ -34,6 +46,12 @@ BIT
   minimum scale 0
   maximum scale 0
   java.sql.Types: BIT
+  attributes:
+    INJECTED_TEST_ATTRIBUTE=99
+    INTERVAL_PRECISION=null
+    SQL_DATA_TYPE=null
+    SQL_DATETIME_SUB=null
+
 BLOB
   column data-type
   defined with LENGTH
@@ -46,6 +64,12 @@ BLOB
   minimum scale 0
   maximum scale 0
   java.sql.Types: BLOB
+  attributes:
+    INJECTED_TEST_ATTRIBUTE=99
+    INTERVAL_PRECISION=null
+    SQL_DATA_TYPE=null
+    SQL_DATETIME_SUB=null
+
 BOOLEAN
   column data-type
   defined with no parameters
@@ -58,6 +82,12 @@ BOOLEAN
   minimum scale 0
   maximum scale 0
   java.sql.Types: BOOLEAN
+  attributes:
+    INJECTED_TEST_ATTRIBUTE=99
+    INTERVAL_PRECISION=null
+    SQL_DATA_TYPE=null
+    SQL_DATETIME_SUB=null
+
 CHARACTER
   column data-type
   defined with LENGTH
@@ -70,6 +100,12 @@ CHARACTER
   minimum scale 0
   maximum scale 0
   java.sql.Types: CHAR
+  attributes:
+    INJECTED_TEST_ATTRIBUTE=99
+    INTERVAL_PRECISION=null
+    SQL_DATA_TYPE=null
+    SQL_DATETIME_SUB=null
+
 CLOB
   column data-type
   defined with LENGTH
@@ -82,6 +118,12 @@ CLOB
   minimum scale 0
   maximum scale 0
   java.sql.Types: CLOB
+  attributes:
+    INJECTED_TEST_ATTRIBUTE=99
+    INTERVAL_PRECISION=null
+    SQL_DATA_TYPE=null
+    SQL_DATETIME_SUB=null
+
 DATE
   column data-type
   defined with no parameters
@@ -94,6 +136,12 @@ DATE
   minimum scale 0
   maximum scale 0
   java.sql.Types: DATE
+  attributes:
+    INJECTED_TEST_ATTRIBUTE=99
+    INTERVAL_PRECISION=null
+    SQL_DATA_TYPE=null
+    SQL_DATETIME_SUB=null
+
 DECIMAL
   column data-type
   defined with PRECISION,SCALE
@@ -106,6 +154,12 @@ DECIMAL
   minimum scale 0
   maximum scale 32767
   java.sql.Types: DECIMAL
+  attributes:
+    INJECTED_TEST_ATTRIBUTE=99
+    INTERVAL_PRECISION=null
+    SQL_DATA_TYPE=null
+    SQL_DATETIME_SUB=null
+
 DOUBLE
   column data-type
   defined with no parameters
@@ -118,6 +172,12 @@ DOUBLE
   minimum scale 0
   maximum scale 0
   java.sql.Types: DOUBLE
+  attributes:
+    INJECTED_TEST_ATTRIBUTE=99
+    INTERVAL_PRECISION=null
+    SQL_DATA_TYPE=null
+    SQL_DATETIME_SUB=null
+
 FLOAT
   column data-type
   defined with no parameters
@@ -130,6 +190,12 @@ FLOAT
   minimum scale 0
   maximum scale 0
   java.sql.Types: DOUBLE
+  attributes:
+    INJECTED_TEST_ATTRIBUTE=99
+    INTERVAL_PRECISION=null
+    SQL_DATA_TYPE=null
+    SQL_DATETIME_SUB=null
+
 INTEGER
   column data-type
   defined with no parameters
@@ -142,6 +208,12 @@ INTEGER
   minimum scale 0
   maximum scale 0
   java.sql.Types: INTEGER
+  attributes:
+    INJECTED_TEST_ATTRIBUTE=99
+    INTERVAL_PRECISION=null
+    SQL_DATA_TYPE=null
+    SQL_DATETIME_SUB=null
+
 NUMERIC
   column data-type
   defined with PRECISION,SCALE
@@ -154,6 +226,12 @@ NUMERIC
   minimum scale 0
   maximum scale 32767
   java.sql.Types: NUMERIC
+  attributes:
+    INJECTED_TEST_ATTRIBUTE=99
+    INTERVAL_PRECISION=null
+    SQL_DATA_TYPE=null
+    SQL_DATETIME_SUB=null
+
 NVARCHAR
   column data-type
   defined with LENGTH
@@ -166,6 +244,12 @@ NVARCHAR
   minimum scale 0
   maximum scale 0
   java.sql.Types: VARCHAR
+  attributes:
+    INJECTED_TEST_ATTRIBUTE=99
+    INTERVAL_PRECISION=null
+    SQL_DATA_TYPE=null
+    SQL_DATETIME_SUB=null
+
 OTHER
   column data-type
   defined with no parameters
@@ -178,6 +262,12 @@ OTHER
   minimum scale 0
   maximum scale 0
   java.sql.Types: OTHER
+  attributes:
+    INJECTED_TEST_ATTRIBUTE=99
+    INTERVAL_PRECISION=null
+    SQL_DATA_TYPE=null
+    SQL_DATETIME_SUB=null
+
 REAL
   column data-type
   defined with no parameters
@@ -190,6 +280,12 @@ REAL
   minimum scale 0
   maximum scale 0
   java.sql.Types: DOUBLE
+  attributes:
+    INJECTED_TEST_ATTRIBUTE=99
+    INTERVAL_PRECISION=null
+    SQL_DATA_TYPE=null
+    SQL_DATETIME_SUB=null
+
 SMALLINT
   column data-type
   defined with no parameters
@@ -202,6 +298,12 @@ SMALLINT
   minimum scale 0
   maximum scale 0
   java.sql.Types: SMALLINT
+  attributes:
+    INJECTED_TEST_ATTRIBUTE=99
+    INTERVAL_PRECISION=null
+    SQL_DATA_TYPE=null
+    SQL_DATETIME_SUB=null
+
 TIME
   column data-type
   defined with no parameters
@@ -214,6 +316,12 @@ TIME
   minimum scale 0
   maximum scale 0
   java.sql.Types: TIME
+  attributes:
+    INJECTED_TEST_ATTRIBUTE=99
+    INTERVAL_PRECISION=null
+    SQL_DATA_TYPE=null
+    SQL_DATETIME_SUB=null
+
 TIMESTAMP
   column data-type
   defined with no parameters
@@ -226,6 +334,12 @@ TIMESTAMP
   minimum scale 0
   maximum scale 0
   java.sql.Types: TIMESTAMP
+  attributes:
+    INJECTED_TEST_ATTRIBUTE=99
+    INTERVAL_PRECISION=null
+    SQL_DATA_TYPE=null
+    SQL_DATETIME_SUB=null
+
 TINYINT
   column data-type
   defined with no parameters
@@ -238,6 +352,12 @@ TINYINT
   minimum scale 0
   maximum scale 0
   java.sql.Types: TINYINT
+  attributes:
+    INJECTED_TEST_ATTRIBUTE=99
+    INTERVAL_PRECISION=null
+    SQL_DATA_TYPE=null
+    SQL_DATETIME_SUB=null
+
 UUID
   column data-type
   defined with no parameters
@@ -250,6 +370,12 @@ UUID
   minimum scale 0
   maximum scale 0
   java.sql.Types: BINARY
+  attributes:
+    INJECTED_TEST_ATTRIBUTE=99
+    INTERVAL_PRECISION=null
+    SQL_DATA_TYPE=null
+    SQL_DATETIME_SUB=null
+
 VARBINARY
   column data-type
   defined with LENGTH
@@ -262,6 +388,12 @@ VARBINARY
   minimum scale 0
   maximum scale 0
   java.sql.Types: VARBINARY
+  attributes:
+    INJECTED_TEST_ATTRIBUTE=99
+    INTERVAL_PRECISION=null
+    SQL_DATA_TYPE=null
+    SQL_DATETIME_SUB=null
+
 VARCHAR
   column data-type
   defined with LENGTH
@@ -274,3 +406,9 @@ VARCHAR
   minimum scale 0
   maximum scale 0
   java.sql.Types: VARCHAR
+  attributes:
+    INJECTED_TEST_ATTRIBUTE=99
+    INTERVAL_PRECISION=null
+    SQL_DATA_TYPE=null
+    SQL_DATETIME_SUB=null
+

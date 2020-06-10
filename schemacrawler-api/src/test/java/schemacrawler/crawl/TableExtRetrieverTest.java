@@ -34,14 +34,11 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEXES;
-import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEX_COLUMNS;
-import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_PRIMARY_KEYS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEW_TABLE_USAGE;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 
 import java.sql.Connection;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -115,60 +112,6 @@ public class TableExtRetrieverTest
   }
 
   @Test
-  @DisplayName("Retrieve primary key definitions from INFORMATION_SCHEMA")
-  public void primaryKeyInfo(final Connection connection)
-    throws Exception
-  {
-    final String definition = "TEST Primary Key definition";
-
-    final InformationSchemaViews informationSchemaViews =
-      InformationSchemaViewsBuilder
-        .builder()
-        .withSql(EXT_PRIMARY_KEYS,
-                 String.format(
-                   "SELECT DISTINCT TABLE_CAT AS PRIMARY_KEY_CATALOG, TABLE_SCHEM AS PRIMARY_KEY_SCHEMA, "
-                   + "TABLE_NAME AS PRIMARY_KEY_TABLE_NAME, PK_NAME AS PRIMARY_KEY_NAME, "
-                   + "'%s' AS PRIMARY_KEY_DEFINITION "
-                   + "FROM INFORMATION_SCHEMA.SYSTEM_PRIMARYKEYS",
-                   definition))
-        .toOptions();
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-      SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder.withInformationSchemaViews(
-      informationSchemaViews);
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-      schemaRetrievalOptionsBuilder.toOptions();
-    final RetrieverConnection retrieverConnection =
-      new RetrieverConnection(connection, schemaRetrievalOptions);
-
-    final SchemaCrawlerOptions options =
-      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-
-    final TableExtRetriever tableExtRetriever =
-      new TableExtRetriever(retrieverConnection, catalog, options);
-    tableExtRetriever.retrievePrimaryKeyDefinitions(catalog.getAllTables());
-
-    final Collection<Table> tables = catalog.getTables();
-    assertThat(tables, hasSize(19));
-    for (final Table table : tables)
-    {
-      if (!Arrays
-        .asList("Global Counts",
-                "AUTHORSLIST",
-                "BOOKAUTHORS",
-                "PUBLICATIONWRITERS",
-                "SALES",
-                "SALESDATA")
-        .contains(table.getName()))
-      {
-        assertThat(table
-                     .getPrimaryKey()
-                     .getDefinition(), is(definition));
-      }
-    }
-  }
-
-  @Test
   @DisplayName("Retrieve index definitions from INFORMATION_SCHEMA")
   public void indexInfo(final Connection connection)
     throws Exception
@@ -212,58 +155,6 @@ public class TableExtRetrieverTest
       {
         assertThat(index.getRemarks(), is(remarks));
         assertThat(index.getDefinition(), is(definition));
-      }
-    }
-  }
-
-  @Test
-  @DisplayName("Retrieve index column definitions from INFORMATION_SCHEMA")
-  public void indexColumnInfo(final Connection connection)
-    throws Exception
-  {
-
-    final String definition = "TEST INDEX COLUMN DEFINITION";
-
-    final InformationSchemaViews informationSchemaViews =
-      InformationSchemaViewsBuilder
-        .builder()
-        .withSql(EXT_INDEX_COLUMNS,
-                 String.format(
-                   "SELECT TABLE_CAT AS INDEX_CATALOG, TABLE_SCHEM AS INDEX_SCHEMA, "
-                   + "TABLE_NAME, INDEX_NAME, COLUMN_NAME, "
-                   + "1 AS IS_GENERATED, '%s' AS INDEX_COLUMN_DEFINITION "
-                   + "FROM INFORMATION_SCHEMA.SYSTEM_INDEXINFO",
-                   definition))
-        .toOptions();
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-      SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder.withInformationSchemaViews(
-      informationSchemaViews);
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-      schemaRetrievalOptionsBuilder.toOptions();
-    final RetrieverConnection retrieverConnection =
-      new RetrieverConnection(connection, schemaRetrievalOptions);
-
-    final SchemaCrawlerOptions options =
-      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-
-    final TableExtRetriever tableExtRetriever =
-      new TableExtRetriever(retrieverConnection, catalog, options);
-    tableExtRetriever.retrieveIndexColumnInformation();
-
-    final Collection<Table> tables = catalog.getTables();
-    assertThat(tables, hasSize(19));
-    for (final Table table : tables)
-    {
-      for (final Index index : table.getIndexes())
-      {
-        final List<IndexColumn> columns = index.getColumns();
-        assertThat(columns, is(not(empty())));
-        for (final IndexColumn column : columns)
-        {
-          assertThat(column.getDefinition(), is(definition));
-        }
-
       }
     }
   }

@@ -79,7 +79,7 @@
           </value>
         </entry>
         <entry
-          key="select.INFORMATION_SCHEMA.EXT_TABLE_CONSTRAINTS">
+          key="select.INFORMATION_SCHEMA.CHECK_CONSTRAINTS">
           <value>
             <![CDATA[
                   SELECT

@@ -230,12 +230,14 @@ public final class SchemaCrawler
         .getSchemaInfoLevel();
       final DatabaseInfoRetriever retriever =
         new DatabaseInfoRetriever(retrieverConnection, catalog, options);
+      final DataTypeRetriever dataTypeRetriever =
+        new DataTypeRetriever(retrieverConnection, catalog, options);
 
       stopWatch.time("retrieveSystemColumnDataTypes", () -> {
         if (infoLevel.is(retrieveColumnDataTypes))
         {
           LOGGER.log(Level.INFO, "Retrieving system column data types");
-          retriever.retrieveSystemColumnDataTypes();
+          dataTypeRetriever.retrieveSystemColumnDataTypes();
         }
         else
         {
@@ -251,7 +253,7 @@ public final class SchemaCrawler
           LOGGER.log(Level.INFO, "Retrieving user column data types");
           for (final Schema schema : retriever.getAllSchemas())
           {
-            retriever.retrieveUserDefinedColumnDataTypes(schema);
+            dataTypeRetriever.retrieveUserDefinedColumnDataTypes(schema);
           }
         }
         else
@@ -737,10 +739,6 @@ public final class SchemaCrawler
           if (infoLevel.is(retrieveTableColumns))
           {
             fkRetriever.retrieveForeignKeys(allTables);
-            if (infoLevel.is(retrieveForeignKeyDefinitions))
-            {
-              fkRetriever.retrieveForeignKeyDefinitions(allTables);
-            }
           }
         }
         else
@@ -770,10 +768,6 @@ public final class SchemaCrawler
           final PrimaryKeyRetriever primaryKeyRetriever =
             new PrimaryKeyRetriever(retrieverConnection, catalog, options);
           primaryKeyRetriever.retrievePrimaryKeys(allTables);
-          if (infoLevel.is(retrievePrimaryKeyDefinitions))
-          {
-            retrieverExtra.retrievePrimaryKeyDefinitions(allTables);
-          }
         }
         return null;
       });
@@ -839,10 +833,6 @@ public final class SchemaCrawler
         if (infoLevel.is(retrieveIndexInformation))
         {
           retrieverExtra.retrieveIndexInformation();
-          if (infoLevel.is(retrieveIndexColumnInformation))
-          {
-            retrieverExtra.retrieveIndexColumnInformation();
-          }
         }
         return null;
       });

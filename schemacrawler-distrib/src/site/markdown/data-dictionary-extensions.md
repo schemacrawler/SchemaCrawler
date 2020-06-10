@@ -52,6 +52,16 @@ select.INFORMATION_SCHEMA.VIEWS=\
 |INITIALLY_DEFERRED|One of: YES = the constraint is deferred; NO = the constraint is immediate|
 
 
+### INFORMATION_SCHEMA.CHECK_CONSTRAINTS
+
+| Column name | Description |
+| --- | --- |
+| CONSTRAINT_CATALOG | The name of the catalog containing the constraint. |
+| CONSTRAINT_SCHEMA | The name of the schema containing the constraint. |
+| CONSTRAINT_NAME | The name of the constraint. |
+| CHECK_CLAUSE | The search condition used in the check clause. If it does not fit, the value is NULL. |
+
+
 ### INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE
 
 |Column name|Description|
@@ -133,7 +143,7 @@ For details on the columns in this view, please refer to [getImportedKeys](https
 For details on the columns in this view, please refer to [getIndexInfo](https://docs.oracle.com/javase/8/docs/api/java/sql/DatabaseMetaData.html#getIndexInfo-java.lang.String-java.lang.String-java.lang.String-boolean-boolean-)
 
 
-### DATABASE_METADATA.OVERRIDE_TYPE_INFO
+### DATABASE_METADATA.TYPE_INFO
 
 For details on the columns in this view, please refer to [getTypeInfo](https://docs.oracle.com/javase/8/docs/api/java/sql/DatabaseMetaData.html#getTypeInfo--)
 
@@ -153,39 +163,6 @@ For details on the columns in this view, please refer to [getPrimaryKeys](https:
 | TABLE_SCHEMA | The name of the schema containing the view. |
 | TABLE_NAME | The name of the view. |
 | TABLE_DEFINITION | The definition of the table as it would appear in a CREATE TABLE statement. If it does not fit, the value is NULL. |
-
-
-### METADATA_EXTENSION.EXT_TABLE_CONSTRAINTS
-
-| Column name | Description |
-| --- | --- |
-| CONSTRAINT_CATALOG | The name of the catalog containing the constraint. |
-| CONSTRAINT_SCHEMA | The name of the schema containing the constraint. |
-| CONSTRAINT_NAME | The name of the constraint. |
-| CHECK_CLAUSE | The search condition used in the check clause. If it does not fit, the value is NULL. |
-
-
-### METADATA_EXTENSION.EXT_PRIMARY_KEYS
-
-| Column name | Description |
-| --- | --- |
-| PRIMARY_KEY_CATALOG | The name of the catalog containing the primary key. |
-| PRIMARY_KEY_SCHEMA | The name of the schema containing the primary key. |
-| PRIMARY_KEY_TABLE_NAME | The name of the table containing the primary key. |
-| PRIMARY_KEY_NAME | The name of the primary key. |
-| PRIMARY_KEY_DEFINITION | The definition of the primary key. |
-
-
-### METADATA_EXTENSION.EXT_FOREIGN_KEYS
-
-| Column name | Description |
-| --- | --- |
-| FOREIGN_KEY_CATALOG | The name of the catalog containing the foreign key. |
-| FOREIGN_KEY_SCHEMA | The name of the schema containing the foreign key. |
-| FOREIGN_KEY_TABLE_NAME | The name of the table containing the foreign key. |
-| FOREIGN_KEY_NAME | The name of the foreign key. |
-| FOREIGN_KEY_DEFINITION | The definition of the foreign key. |
-
 
 ### METADATA_EXTENSION.EXT_HIDDEN_TABLE_COLUMNS
 
@@ -218,19 +195,6 @@ For details on the columns in this view, please refer to [getPrimaryKeys](https:
 | TABLE_NAME | The name of the table which has the index. |
 | REMARKS | Comments or remarks about the index. |
 | INDEX_DEFINITION | The definition of the index. |
-
-
-### METADATA_EXTENSION.EXT_INDEX_COLUMNS
-
-| Column name | Description |
-| --- | --- |
-| INDEX_CATALOG | The name of the catalog containing the index. |
-| INDEX_SCHEMA | The name of the schema containing the index. |
-| INDEX_NAME | The name of the index. |
-| TABLE_NAME | The name of the table which has the index. |
-| COLUMN_NAME | The name of the table column which has the index. |
-| IS_GENERATEDCOLUMN | Whether the columns is generated - that is, a functional index column, or a virtual column |
-| INDEX_COLUMN_DEFINITION | The definition of the index column . |
 
 
 ## Additional Metadata

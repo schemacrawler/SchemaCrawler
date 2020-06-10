@@ -176,7 +176,6 @@ public class ForeignKeyRetrieverTest
                              .builder()
                              .withInfoLevel(InfoLevel.standard)
                              .setRetrieveForeignKeys(false)
-                             .setRetrieveForeignKeyDefinitions(false)
                              .toOptions());
     final SchemaCrawlerOptions schemaCrawlerOptions =
       SchemaCrawlerOptionsBuilder

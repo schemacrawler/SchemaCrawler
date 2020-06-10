@@ -30,7 +30,7 @@ package schemacrawler.crawl;
 
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.CONSTRAINT_COLUMN_USAGE;
-import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLE_CONSTRAINTS;
+import static schemacrawler.schemacrawler.InformationSchemaKey.CHECK_CONSTRAINTS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_CONSTRAINTS;
 
 import java.sql.Connection;
@@ -88,14 +88,14 @@ final class TableConstraintRetriever
 
     final Connection connection = getDatabaseConnection();
 
-    if (!informationSchemaViews.hasQuery(EXT_TABLE_CONSTRAINTS))
+    if (!informationSchemaViews.hasQuery(CHECK_CONSTRAINTS))
     {
       LOGGER.log(Level.FINE,
                  "Extended table constraints SQL statement was not provided");
       return;
     }
     final Query extTableConstraintInformationSql =
-      informationSchemaViews.getQuery(EXT_TABLE_CONSTRAINTS);
+      informationSchemaViews.getQuery(CHECK_CONSTRAINTS);
 
     // Get check constraint definitions
     try (

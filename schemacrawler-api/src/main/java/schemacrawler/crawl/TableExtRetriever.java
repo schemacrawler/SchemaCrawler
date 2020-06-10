@@ -29,12 +29,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.ADDITIONAL_TABLE_ATTRIBUTES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEXES;
-import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEX_COLUMNS;
-import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_PRIMARY_KEYS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TRIGGERS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEWS;
@@ -43,8 +40,6 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.VIEW_TABLE_USAGE;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 
@@ -276,118 +271,6 @@ final class TableExtRetriever
   }
 
   /**
-   * Retrieves index column information from the database, in the
-   * INFORMATION_SCHEMA format.
-   *
-   * @throws SQLException
-   *   On a SQL exception
-   */
-  void retrieveIndexColumnInformation()
-    throws SQLException
-  {
-    final InformationSchemaViews informationSchemaViews =
-      getRetrieverConnection().getInformationSchemaViews();
-
-    if (!informationSchemaViews.hasQuery(EXT_INDEX_COLUMNS))
-    {
-      LOGGER.log(Level.INFO,
-                 "Not retrieving additional index column information, since this was not requested");
-      LOGGER.log(Level.FINE,
-                 "Index column information SQL statement was not provided");
-      return;
-    }
-
-    LOGGER.log(Level.INFO, "Retrieving additional index column information");
-
-    final Query extIndexColumnsInformationSql =
-      informationSchemaViews.getQuery(EXT_INDEX_COLUMNS);
-    final Connection connection = getDatabaseConnection();
-    try (
-      final Statement statement = connection.createStatement();
-      final MetadataResultSet results = new MetadataResultSet(
-        extIndexColumnsInformationSql,
-        statement,
-        getSchemaInclusionRule())
-    )
-    {
-
-      while (results.next())
-      {
-        final String catalogName =
-          normalizeCatalogName(results.getString("INDEX_CATALOG"));
-        final String schemaName =
-          normalizeSchemaName(results.getString("INDEX_SCHEMA"));
-        final String tableName = results.getString("TABLE_NAME");
-        final String indexName = results.getString("INDEX_NAME");
-
-        final Optional<MutableTable> tableOptional =
-          lookupTable(catalogName, schemaName, tableName);
-        if (!tableOptional.isPresent())
-        {
-          LOGGER.log(Level.FINE,
-                     new StringFormat("Cannot find table <%s.%s.%s>",
-                                      catalogName,
-                                      schemaName,
-                                      indexName));
-          continue;
-        }
-
-        LOGGER.log(Level.FINER,
-                   new StringFormat("Retrieving index information <%s>",
-                                    indexName));
-        final MutableTable table = tableOptional.get();
-        final Optional<MutableIndex> indexOptional =
-          table.lookupIndex(indexName);
-        if (!indexOptional.isPresent())
-        {
-          LOGGER.log(Level.FINE,
-                     new StringFormat("Cannot find index <%s.%s.%s.%s>",
-                                      catalogName,
-                                      schemaName,
-                                      tableName,
-                                      indexName));
-          continue;
-        }
-
-        final MutableIndex index = indexOptional.get();
-        final String indexColumnName = results.getString("COLUMN_NAME");
-
-        final Optional<MutableIndexColumn> indexColumnOptional =
-          index.lookupColumn(indexColumnName);
-        if (!indexColumnOptional.isPresent())
-        {
-          LOGGER.log(Level.FINE,
-                     new StringFormat(
-                       "Cannot find index column <%s.%s.%s.%s.%s>",
-                       catalogName,
-                       schemaName,
-                       tableName,
-                       indexName,
-                       indexColumnName));
-          continue;
-        }
-
-        final MutableIndexColumn indexColumn = indexColumnOptional.get();
-
-        final boolean isGenerated = results.getBoolean("IS_GENERATEDCOLUMN");
-        final String definition = results.getString("INDEX_COLUMN_DEFINITION");
-
-        if (!indexColumn.isGenerated())
-        {
-          indexColumn.setGenerated(isGenerated);
-        }
-        indexColumn.appendDefinition(definition);
-        indexColumn.addAttributes(results.getAttributes());
-      }
-    }
-    catch (final Exception e)
-    {
-      LOGGER.log(Level.WARNING, "Could not retrieve index information", e);
-    }
-
-  }
-
-  /**
    * Retrieves index information from the database, in the INFORMATION_SCHEMA
    * format.
    *
@@ -479,81 +362,6 @@ final class TableExtRetriever
 
   }
 
-  void retrievePrimaryKeyDefinitions(final NamedObjectList<MutableTable> allTables)
-  {
-    requireNonNull(allTables, "No tables provided");
-
-    final InformationSchemaViews informationSchemaViews =
-      getRetrieverConnection().getInformationSchemaViews();
-
-    final Connection connection = getDatabaseConnection();
-
-    if (!informationSchemaViews.hasQuery(EXT_PRIMARY_KEYS))
-    {
-      LOGGER.log(Level.FINE,
-                 "Extended primary keys SQL statement was not provided");
-      return;
-    }
-
-    final NamedObjectList<MutablePrimaryKey> allPks = new NamedObjectList<>();
-    for (final MutableTable table : allTables)
-    {
-      if (table.hasPrimaryKey())
-      {
-        final MutablePrimaryKey primaryKey = table.getPrimaryKey();
-        allPks.add(primaryKey);
-      }
-    }
-
-    final Query extPrimaryKeysSql =
-      informationSchemaViews.getQuery(EXT_PRIMARY_KEYS);
-
-    try (
-      final Statement statement = connection.createStatement();
-      final MetadataResultSet results = new MetadataResultSet(extPrimaryKeysSql,
-                                                              statement,
-                                                              getSchemaInclusionRule())
-    )
-    {
-      while (results.next())
-      {
-        final String catalogName =
-          normalizeCatalogName(results.getString("PRIMARY_KEY_CATALOG"));
-        final String schemaName =
-          normalizeSchemaName(results.getString("PRIMARY_KEY_SCHEMA"));
-        final String tableName = results.getString("PRIMARY_KEY_TABLE_NAME");
-        final String pkName = results.getString("PRIMARY_KEY_NAME");
-
-        final List<String> constraintLookupKey =
-          Arrays.asList(catalogName, schemaName, tableName, pkName);
-        LOGGER.log(Level.FINER,
-                   new StringFormat("Retrieving definition of primary key <%s>",
-                                    constraintLookupKey));
-        final String definition = results.getString("PRIMARY_KEY_DEFINITION");
-
-        final Optional<MutablePrimaryKey> optionalPk =
-          allPks.lookup(constraintLookupKey);
-        if (optionalPk.isPresent())
-        {
-          final MutablePrimaryKey pkConstraint = optionalPk.get();
-          pkConstraint.appendDefinition(definition);
-          pkConstraint.addAttributes(results.getAttributes());
-        }
-        else
-        {
-          LOGGER.log(Level.FINER,
-                     new StringFormat("Could not find primary key <%s>",
-                                      constraintLookupKey));
-        }
-
-      }
-    }
-    catch (final Exception e)
-    {
-      LOGGER.log(Level.WARNING, "Could not retrieve check constraints", e);
-    }
-
-  }
 
   void retrieveTableColumnPrivileges()
     throws SQLException
