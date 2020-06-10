@@ -10,6 +10,7 @@
 - Rename OVERRIDE_TYPE_INFO to TYPE_INFO in data dictionary extensions
 - Rename EXT_TABLE_CONSTRAINTS to CHECK_CONSTRAINTS in data dictionary extensions
 - Add start value for sequences
+- Remove support for EXT_PRIMARY_KEYS, EXT_FOREIGN_KEYS, and EXT_INDEX_COLUMNS data dictionary views
 
 
 <a name="a16.8.1"></a>

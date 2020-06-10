@@ -255,13 +255,6 @@ public final class SchemaInfoLevelBuilder
     return this;
   }
 
-  public SchemaInfoLevelBuilder setRetrieveIndexColumnInformation(final boolean retrieveIndexColumnInformation)
-  {
-    schemaInfoRetrievals.put(SchemaInfoRetrieval.retrieveIndexColumnInformation,
-                             retrieveIndexColumnInformation);
-    return this;
-  }
-
   public SchemaInfoLevelBuilder setRetrieveIndexes(final boolean retrieveIndexes)
   {
     schemaInfoRetrievals.put(SchemaInfoRetrieval.retrieveIndexes,

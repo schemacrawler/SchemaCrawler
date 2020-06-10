@@ -52,7 +52,6 @@ public enum SchemaInfoRetrieval
   retrieveDatabaseInfo(database, minimum),
   retrieveDatabaseUsers(database, maximum),
   retrieveForeignKeys(table, standard),
-  retrieveIndexColumnInformation(table, maximum),
   retrieveIndexes(table, standard),
   retrieveIndexInformation(table, maximum),
   retrieveRoutineParameters(routine, standard),

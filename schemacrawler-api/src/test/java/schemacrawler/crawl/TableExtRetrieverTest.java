@@ -34,7 +34,6 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEXES;
-import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEX_COLUMNS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEW_TABLE_USAGE;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
@@ -156,58 +155,6 @@ public class TableExtRetrieverTest
       {
         assertThat(index.getRemarks(), is(remarks));
         assertThat(index.getDefinition(), is(definition));
-      }
-    }
-  }
-
-  @Test
-  @DisplayName("Retrieve index column definitions from INFORMATION_SCHEMA")
-  public void indexColumnInfo(final Connection connection)
-    throws Exception
-  {
-
-    final String definition = "TEST INDEX COLUMN DEFINITION";
-
-    final InformationSchemaViews informationSchemaViews =
-      InformationSchemaViewsBuilder
-        .builder()
-        .withSql(EXT_INDEX_COLUMNS,
-                 String.format(
-                   "SELECT TABLE_CAT AS INDEX_CATALOG, TABLE_SCHEM AS INDEX_SCHEMA, "
-                   + "TABLE_NAME, INDEX_NAME, COLUMN_NAME, "
-                   + "1 AS IS_GENERATED, '%s' AS INDEX_COLUMN_DEFINITION "
-                   + "FROM INFORMATION_SCHEMA.SYSTEM_INDEXINFO",
-                   definition))
-        .toOptions();
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-      SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder.withInformationSchemaViews(
-      informationSchemaViews);
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-      schemaRetrievalOptionsBuilder.toOptions();
-    final RetrieverConnection retrieverConnection =
-      new RetrieverConnection(connection, schemaRetrievalOptions);
-
-    final SchemaCrawlerOptions options =
-      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-
-    final TableExtRetriever tableExtRetriever =
-      new TableExtRetriever(retrieverConnection, catalog, options);
-    tableExtRetriever.retrieveIndexColumnInformation();
-
-    final Collection<Table> tables = catalog.getTables();
-    assertThat(tables, hasSize(19));
-    for (final Table table : tables)
-    {
-      for (final Index index : table.getIndexes())
-      {
-        final List<IndexColumn> columns = index.getColumns();
-        assertThat(columns, is(not(empty())));
-        for (final IndexColumn column : columns)
-        {
-          assertThat(column.getDefinition(), is(definition));
-        }
-
       }
     }
   }
