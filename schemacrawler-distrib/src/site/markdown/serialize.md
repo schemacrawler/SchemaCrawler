@@ -10,6 +10,8 @@ session, in which case you do not need an active connection to the database.
 SchemaCrawler does not offer deserialization using formats other than Java
 serialization.
 
+## How to Serialize a Catalog
+
 SchemaCrawler serialization can be run using the 
 `--command=serialize` command-line option. The serialized schema metadata model
 will be saved to a file.
@@ -25,3 +27,9 @@ SchemaCrawler serialization can produce output in Java,
 A serialized schema metadata model will be produced in the format specified using the 
 `--output-format` command-line option. For example,
 `--output-format=json` will generate a output in JSON format.
+
+## How to Load a Serialized Catalog
+
+You can load a serialized version of a catalog using the [`offline`](offline.html)
+server type. Please make sure that you use the same version of SchemaCrawler to 
+serialize snapshots as you use when you load those offline snapshots.
