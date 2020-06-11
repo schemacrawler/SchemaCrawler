@@ -130,7 +130,7 @@ public class SqlServerTest
     final List<Property> serverInfo = new ArrayList<>(catalog
                                                         .getDatabaseInfo()
                                                         .getServerInfo());
-    System.out.println(serverInfo);
+
     assertThat(serverInfo.size(), equalTo(3));
     assertThat(serverInfo
                  .get(0)
