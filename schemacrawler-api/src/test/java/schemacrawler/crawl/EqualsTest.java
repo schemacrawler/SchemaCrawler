@@ -52,7 +52,6 @@ public class EqualsTest
   {
     EqualsVerifier
       .forClass(BaseProductVersion.class)
-      .suppress(Warning.STRICT_INHERITANCE)
       .verify();
   }
 
