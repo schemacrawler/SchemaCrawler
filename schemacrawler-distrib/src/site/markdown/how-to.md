@@ -164,6 +164,7 @@ procedures, and index and primary key names, and not showing the fully-qualified
 
 Show table row counts in output, and diagrams. Change the configuration for the SchemaCrawler
 `schemacrawler.format.show_row_counts=true` in the `schemacrawler.config.properties` file.
+Then run SchemaCrawler with the `--load-row-counts` command-line option.
 
 ----------
 
