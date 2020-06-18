@@ -250,7 +250,7 @@ lints:
   object-type: "table"
   severity: "low"
   value: ""
-- lint-id: "1416a941-9d91-4e51-91c6-e414b593a38e"
+- lint-id: "1416.9.2-9d91-4e51-91c6-e414b593a38e"
   linter-id: "schemacrawler.tools.linter.LinterTableWithNoRemarks"
   linter-instance-id: "schemacrawler.tools.linter.LinterTableWithNoRemarks@9a00385"
   message: "should have remarks"
