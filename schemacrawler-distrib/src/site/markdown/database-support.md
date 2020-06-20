@@ -19,7 +19,7 @@ SchemaCrawler `lib` directory. [Amazon Aurora](https://aws.amazon.com/rds/aurora
 in MySQL and PostgreSQL modes.
 
 
-# Additional SchemaCrawler Database Plugins
+## Additional SchemaCrawler Database Plugins
 
 Some databases such as Oracle TimesTen and SAP IQ need an additional SchemaCrawler database
 plugins, which are available from the
