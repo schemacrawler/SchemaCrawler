@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD024 -->
 # SchemaCrawler Tests with Docker Compose
 
 ## Pre-requisites

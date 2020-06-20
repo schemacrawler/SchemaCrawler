@@ -1,4 +1,6 @@
-# SchemaCrawler Whitepapers and Documentation
+# SchemaCrawler Resources
+
+## SchemaCrawler Whitepapers and Documentation
 
 To read more about SchemaCrawler, you can read:
 
@@ -13,7 +15,7 @@ To read more about SchemaCrawler, you can read:
  to the SchemaCrawler API. (This article may refer to an older
  release of the SchemaCrawler API, but the concepts are the same.)
 
-# SchemaCrawler Slides
+## SchemaCrawler Slides
 
   <div class="row">
     <div class="col-sm-6 p-3">

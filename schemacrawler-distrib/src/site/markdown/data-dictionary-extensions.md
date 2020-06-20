@@ -118,9 +118,9 @@ select.INFORMATION_SCHEMA.VIEWS=\
 
 ## Database Metadata Views
 
-### Database Metadata Views
-
-SchemaCrawler obtains database metadata from the JDBC driver. However, it is possible to override the metadata obtained from the JDBC driver using custom views. SchemaCrawler can override the following sources of database metadata.
+SchemaCrawler obtains database metadata from the JDBC driver. However, it is 
+possible to override the metadata obtained from the JDBC driver using custom 
+views. SchemaCrawler can override the following sources of database metadata.
 
 
 ### DATABASE_METADATA.TABLES

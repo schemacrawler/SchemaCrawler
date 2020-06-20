@@ -44,14 +44,14 @@
 
 ## General
 
-----------
+---------
 
 ### <a name="whats-schemacrawler">What is SchemaCrawler?</a>
 
 SchemaCrawler is an open-source Java API that makes working with database metadata as easy as working with plain old Java objects.
 SchemaCrawler is also a command-line tool to output your database schema and data in a readable form. The output is designed to be [diff-ed](http://en.wikipedia.org/wiki/Diff) with previous versions of your database schema.
 
-----------
+---------
 
 ### <a name="output">What does SchemaCrawler output look like?</a>
 
@@ -61,7 +61,7 @@ SchemaCrawler can produce [plain text,](snapshot-examples/snapshot.text)
 [JavaScript object notation (JSON)](snapshot-examples/snapshot.json) or
 [YAML](snapshot-examples/snapshot.yaml) output. The HTML5 output is a combination of valid XML (that can be manipulated by XML tools or XSLT), and HTML that can be viewed in a browser. SchemaCrawler can produce output in the [DOT format,](http://www.graphviz.org/doc/info/lang.html ) which [Graphviz](http://www.graphviz.org/) can convert into [schema diagrams.](diagramming.html)
 
-----------
+---------
 
 ### <a name="commands">What are the SchemaCrawler commands?</a>
 
@@ -75,42 +75,42 @@ SchemaCrawler provides commands for producing schema diagrams and running templa
 
 SchemaCrawler can also manipulate your data. You can get counts of the rows in tables and views. SchemaCrawler can output all the data in your tables and views, or run specific SQL statements against table and views. SchemaCrawler can be fine-tuned using configuration files.
 
-----------
+---------
 
 ### <a name="config">What does a SchemaCrawler configuration file look like?</a>
 
 An example of a [SchemaCrawler configuration file.](config/schemacrawler.config.properties)
 
-----------
+---------
 
 
 ## Supported Platforms
 
-----------
+---------
 
 ### <a name="supported-databases">What databases does SchemaCrawler work with?</a>
 
 SchemaCrawler supports any database for which there is a JDBC database driver available. SchemaCrawler has been tested with various databases, and JDBC drivers. For more information, see [Database System Support.](database-support.html)
 
-----------
+---------
 
 ### <a name="supported-java">What Java version does SchemaCrawler work with?</a>
 
 SchemaCrawler works with Java SE 8, Compact Profile 2 or better.
 
-----------
+---------
 
 ### <a name="supported-os">What operating systems does SchemaCrawler work with?</a>
 
 SchemaCrawler works with any operating system that supports Java SE 8, Compact Profile 2 or better.
 
-----------
+---------
 
 ### <a name="ant">Can SchemaCrawler be used with ant?</a>
 
 Yes, the SchemaCrawler command-line can be called from ant, using the exec task.
 
-----------
+---------
 
 ### <a name="maven">Can SchemaCrawler be used with Apache Maven?</a>
 
@@ -120,73 +120,73 @@ _For more details, see the [plugins](plugins.html) page._
 Using the [SchemaCrawler Report Maven Plugin](https://github.com/schemacrawler/SchemaCrawler-Report-Maven-Plugin), 
 you can generate a SchemaCrawler report along with other reports for your Apache Maven generated site.
 
-----------
+---------
 
 
 ## SchemaCrawler Database Diagrams
 
-----------
+---------
 
 ### <a name="diagrams">What is a SchemaCrawler database diagram?</a>
 
 SchemaCrawler can generate entity-relationship database diagrams using [Graphviz](http://www.graphviz.org/) . You can filter out tables, columns, stored procedure and functions based on regular expressions, using the [grep](#whats-schemacrawler-grep) functionality.
 _For more details, see the [diagramming](diagramming.html) page._
 
-----------
+---------
 
 ### <a name="diagram-output">What does a SchemaCrawler database diagram look like?</a>
 
 An example of a SchemaCrawler database diagram:
 [![](diagram-examples/diagram.png)](diagram-examples/diagram.png "SchemaCrawler database diagram")
 
-----------
+---------
 
 ## SchemaCrawler Grep
 
-----------
+---------
 
 ### <a name="whats-schemacrawler-grep">What is SchemaCrawler Grep?</a>
 
 SchemaCrawler Grep is a set of SchemaCrawler command-line options that allow you to search your database schema for tables and columns that match a regular expression, much like the standard [grep](http://en.wikipedia.org/wiki/Grep) tool.
 
-----------
+---------
 
 ### <a name="grep-output">What does SchemaCrawler Grep output look like?</a>
 
 SchemaCrawler Grep output is the same as the SchemaCrawler text output.
 
-----------
+---------
 
 ### <a name="grepcommands">What are the SchemaCrawler Grep commands?</a>
 
 See the [filtering and grep command-line options](#commands) above.
 
-----------
+---------
 
 ### <a name="config">What does a SchemaCrawler configuration file look like?</a>
 
 The SchemaCrawler Grep configuration file is the same as the [SchemaCrawler configuration file.](config/schemacrawler.config.properties)
 
-----------
+---------
 
 
 ## SchemaCrawler Features
 
-----------
+---------
 
 ### <a name="schema-lint">What is SchemaCrawler Lint?</a>
 
 SchemaCrawler can analyze and [lint](http://en.wikipedia.org/wiki/Lint_(software)) your database schema design to find potential issues. SchemaCrawler Lint can be run using the `--command=lint` command-line option.
 _For more details, look at the [SchemaCrawler Lint](lint.html) page._
 
-----------
+---------
 
 ### <a name="weak-associations">What are weak associations?</a>
 
 Weak associations are inferred associations between tables, similar to foreign keys, even if there is no foreign key defined in the database schema between the tables.
 _For more details, look at the [Weak Associations](weak-associations.html) page._
 
-----------
+---------
 
 ### <a name="scripting">Can SchemaCrawler be used with scripting languages?</a>
 
@@ -196,7 +196,7 @@ Also, look at the [scripting](scripting.html) page.
 
 _For more details, see scripting examples in the [SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) download, in the `examples\javascript`, `examples\groovy`, `examples\ruby` and `examples\python` directories._
 
-----------
+---------
 
 ### <a name="api">Can SchemaCrawler be used programmatically?</a>
 
@@ -206,7 +206,7 @@ Read [Java API Makes Database Metadata as Easily Accessible as POJOs](http://www
 
 _For more details, see scripting example in the [SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) download, in the `examples\api` directory._
 
-----------
+---------
 
 ### <a name="integrations">Can SchemaCrawler be used integrated with other programs?</a>
 
@@ -224,13 +224,13 @@ SchemaCrawler comes pre-built with integration with [Apache Velocity.](https://v
 
 SchemaCrawler is available as a download from [GitHub](https://github.com/schemacrawler/SchemaCrawler/releases) .
 
-----------
+---------
 
 ### <a name="tech-support">Is technical support available?</a>
 
 Yes. Please see [Support and Consulting](consulting.html) for details.
 
-----------
+---------
 
 ### <a name="cost">Is SchemaCrawler free?</a>
 

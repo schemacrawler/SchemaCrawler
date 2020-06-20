@@ -845,7 +845,7 @@
 <a name="a10.08.05"></a>
 
 * Fixed lint "foreign key with no index" to look at primary keys as well.
-* Fixed bug #31, <https://sourceforge.net/p/schemacrawler/bugs/31/,> for loading XML databases.
+* Fixed bug #31, <https://sourceforge.net/p/schemacrawler/bugs/31/>, for loading XML databases.
 * Fixed MySQL connection issue, by removing URL parameter "useInformationSchema=true" so that MySQL's buggy metadata provider is not used. This provider does not honor mixed-case tables names.
 
 ## Release 10.08.04 - 2014-04-03
@@ -884,7 +884,8 @@
 <a name="a10.7"></a>
 
 * Providing richer information about table constraints. Renaming check constraints to table constraints.
-* Worked abound ArrayIndexOutOfBoundsException in MySQL connector with connector 5.1.26 and server version 5.0.95\. See https://sourceforge.net/p/schemacrawler/patches/5/
+* Worked abound ArrayIndexOutOfBoundsException in MySQL connector with connector 5.1.26 and server version 5.0.95\. 
+  See <https://sourceforge.net/p/schemacrawler/patches/5/>
 
 ## Release 10.6 - 2013-10-30
 <a name="a10.6"></a>

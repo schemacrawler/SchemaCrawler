@@ -22,7 +22,7 @@ jobs:
           VALIDATE_YAML: true
           VALIDATE_JSON: true
           VALIDATE_XML: true
-          VALIDATE_MD: false
+          VALIDATE_MD: true
           VALIDATE_BASH: true
           VALIDATE_PYTHON: true
           VALIDATE_RUBY: false
