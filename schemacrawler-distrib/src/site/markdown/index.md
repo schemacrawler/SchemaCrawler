@@ -112,12 +112,12 @@ SchemaCrawler provides metadata for the following database objects:
 
 * Column data types
 * Tables and views
-    * Columns
-    * Primary keys
-    * Indexes
-    * Table constraints
-    * Triggers
-    * Foreign keys
+   * Columns
+   * Primary keys
+   * Indexes
+   * Table constraints
+   * Triggers
+   * Foreign keys
 * Routines, including functions and stored procedures
 * Sequences
 * Synonyms

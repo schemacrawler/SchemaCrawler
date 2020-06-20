@@ -42,7 +42,7 @@ SchemaCrawler offers several options to change what you see on the database diag
 <a href="diagram-examples/diagram_2_portablenames.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
 <img class="img-fluid img-thumbnail" src="diagram-examples/diagram_2_portablenames.png" style="width: 200px;" />
 </a>
-- Show only significant columns, such as primary and foreign key columns, and columns that are part of unique indexes. Use the `--info-level=standard --command=brief `command-line option.
+- Show only significant columns, such as primary and foreign key columns, and columns that are part of unique indexes. Use the `--info-level=standard --command=brief`command-line option.
 <br />
 <a href="diagram-examples/diagram_3_important_columns.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
 <img class="img-fluid img-thumbnail" src="diagram-examples/diagram_3_important_columns.png" style="width: 200px;" />

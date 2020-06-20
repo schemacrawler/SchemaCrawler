@@ -21,9 +21,9 @@ Some guidelines for a quick response on [Stack Overflow] and the [SchemaCrawler 
 - Please explain the issue briefly, and specify the versions of SchemaCrawler, Java, 
     operating system, database, and JDBC driver that you are using
 - Provide the steps that you took to reproduce the issue, and any steps that you took to 
-	solve the issue
+  solve the issue
 - Zip and attach the SchemaCrawler debug logs, which can be obtained by running 
-	SchemaCrawler with an additional `--log-level=ALL` command-line argument
+  SchemaCrawler with an additional `--log-level=ALL` command-line argument
 
 
 [Stack Overflow]: http://stackoverflow.com/search?q=schemacrawler+is%3Aquestion

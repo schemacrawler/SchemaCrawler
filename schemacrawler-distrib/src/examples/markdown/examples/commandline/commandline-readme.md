@@ -24,6 +24,6 @@ The command example demonstrates the use of SchemaCrawler from the shell command
 6. Try modifying `config/schemacrawler.config.properties` with different options. 
 7. Try running an arbitrary query, with a query command `"--command=SELECT * FROM PUBLIC.BOOKS.AUTHORS"`. 
    (The quotes are required.) 
-8. Redirect the output of SchemaCrawler into a file, by adding ` > file.txt` to the command-line. 
+8. Redirect the output of SchemaCrawler into a file, by adding `> file.txt` to the command-line. 
 9. Try defining a new database connection, using your favorite database and driver. 
    Use the `-url` command-line option.

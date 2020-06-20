@@ -2,56 +2,56 @@
 
 ## SchemaCrawler Command-line
 
-1.  [How to run the SchemaCrawler command-line](#command-line)
+1. [How to run the SchemaCrawler command-line](#command-line)
 
 
 ## Include and Exclude Stuff from the Output
 
-1.  [How to see why certain tables or columns for excluded](#excluded-tables)
-2.  [How to include only significant columns - that is, columns that are part of a primary key or unique index, or columns that are foreign keys](#include-significant-columns)
-3.  [How to include or exclude certain tables or columns](#excluded-tables-or-columns)
-4.  [How to exclude database views from the output](#excluded-views)
-5.  [How to exclude routines, that is, stored procedures and functions from the output](#excluded-routines)
-6.  [How to exclude database functions from the output](#excluded-functions)
-7.  [How to exclude database table and column remarks or comments from the output](#excluded-remarks)
-8.  [How to do case-insenstive filtering](#case-insensitive)
+1. [How to see why certain tables or columns for excluded](#excluded-tables)
+2. [How to include only significant columns - that is, columns that are part of a primary key or unique index, or columns that are foreign keys](#include-significant-columns)
+3. [How to include or exclude certain tables or columns](#excluded-tables-or-columns)
+4. [How to exclude database views from the output](#excluded-views)
+5. [How to exclude routines, that is, stored procedures and functions from the output](#excluded-routines)
+6. [How to exclude database functions from the output](#excluded-functions)
+7. [How to exclude database table and column remarks or comments from the output](#excluded-remarks)
+8. [How to do case-insenstive filtering](#case-insensitive)
 
 ## Create diff-able Output
 
-1.  [How to sort columns, foreign-keys and indexes alphabetically](#sorting)
-2.  [How to diff column data types across databases](#diff-data-types)
-3.  [How to allow diffs of tables that have columns added in between](#ordinal-numbers)
-4.  [How to hide display of object names that can change from server to server](#portable-names)
-5.  [How to show table row counts in output and diagrams](#table-row-counts)
-6.  [How to hide foreign key names, constraint names, trigger names, specific names for procedures, or index and primary key names](#index-names)
-7.  [How to hide catalog and schema names in text output](#hide-schema-names)
-8.  [How to hide catalog and schema colors in HTML output and schema diagrams](#hide-schema-colors)
+1. [How to sort columns, foreign-keys and indexes alphabetically](#sorting)
+2. [How to diff column data types across databases](#diff-data-types)
+3. [How to allow diffs of tables that have columns added in between](#ordinal-numbers)
+4. [How to hide display of object names that can change from server to server](#portable-names)
+5. [How to show table row counts in output and diagrams](#table-row-counts)
+6. [How to hide foreign key names, constraint names, trigger names, specific names for procedures, or index and primary key names](#index-names)
+7. [How to hide catalog and schema names in text output](#hide-schema-names)
+8. [How to hide catalog and schema colors in HTML output and schema diagrams](#hide-schema-colors)
 
 ## Integrations
 
-1.  [How to script with your database](#javascript)
-2.  [How to create your own output format](#velocity)
-3.  [How to create a database diagram of your schema](#diagrams)
-4.  [How to provide additional Graphviz command-line options](#graphviz_opts)
-5.  [How to use pure-Java Graphviz](#graphviz-java)
+1. [How to script with your database](#javascript)
+2. [How to create your own output format](#velocity)
+3. [How to create a database diagram of your schema](#diagrams)
+4. [How to provide additional Graphviz command-line options](#graphviz_opts)
+5. [How to use pure-Java Graphviz](#graphviz-java)
 
 ## How to Use SchemaCrawler in Projects
 
-1.  [How to use SchemaCrawler programmatically](#api)
-2.  [How to use SchemaCrawler in an Apache Maven Project](#maven-project)
-3.  [How to use SchemaCrawler as an ant Task](#ant)
-4.  [How to use SchemaCrawler To Produce an Apache Maven Report](#maven-report)
+1. [How to use SchemaCrawler programmatically](#api)
+2. [How to use SchemaCrawler in an Apache Maven Project](#maven-project)
+3. [How to use SchemaCrawler as an ant Task](#ant)
+4. [How to use SchemaCrawler To Produce an Apache Maven Report](#maven-report)
 
 ## Advanced SchemaCrawler Usage
 
-1.  [How to get trigger, view, stored procedure and function definitions](#definitions)
-2.  [How to obtain check constraints](#check_constraints)
-3.  [How to get tables in "create" or "drop" order](#create_order)
-4.  [How to extend SchemaCrawler by adding a new command, new linter, or new database system support](#plugins)
-5.  [How to configure SchemaCrawler linters](#configure_linter)
-6.  [How to extend SchemaCrawler by adding a new linter](#add_new_linter)
-7.  [How to fail a build with too many SchemaCrawler lints](#fail_build_linter)
-8.  [How to obtain PostgreSQL materialized views](#pgsql_materialized_views)
+1. [How to get trigger, view, stored procedure and function definitions](#definitions)
+2. [How to obtain check constraints](#check_constraints)
+3. [How to get tables in "create" or "drop" order](#create_order)
+4. [How to extend SchemaCrawler by adding a new command, new linter, or new database system support](#plugins)
+5. [How to configure SchemaCrawler linters](#configure_linter)
+6. [How to extend SchemaCrawler by adding a new linter](#add_new_linter)
+7. [How to fail a build with too many SchemaCrawler lints](#fail_build_linter)
+8. [How to obtain PostgreSQL materialized views](#pgsql_materialized_views)
 
 ---------
 

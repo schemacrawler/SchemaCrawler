@@ -127,7 +127,7 @@
   the ability to generate JSON as a serialization format (using the `serialize` command,
   with a lot more schema information
 - Workaround MySQL JDBC driver issue with retrieving table comments
-  (https://bugs.mysql.com/bug.php?id=80473) by allowing table comments to be obtained
+  (<https://bugs.mysql.com/bug.php?id=80473>) by allowing table comments to be obtained
   from `table.getAttribute("TABLE_COMMENT")`
 
 <a name="a16.2.1"></a>
@@ -394,7 +394,7 @@
 
 * Better protection of user credentials in memory.
 * Support for index remarks.
-* Organize metadata views for extensibility. Please refer to https://www.schemacrawler.com/data-dictionary-extensions.html
+* Organize metadata views for extensibility. Please refer to <https://www.schemacrawler.com/data-dictionary-extensions.html>
 * Remove reliance on Java 8 features where they add an overhaead.
 
 ## Release 14.15.04 - 2017-04-02
@@ -838,14 +838,14 @@
 ## Release 10.09.01 - 2014-05-14
 <a name="a10.09.01"></a>
 
-* Fixed table type to be based on a string, not an enum. See http://sourceforge.net/p/schemacrawler/discussion/495990/thread/09186044 for details.
+* Fixed table type to be based on a string, not an enum. See <http://sourceforge.net/p/schemacrawler/discussion/495990/thread/09186044> for details.
 * Changed the object inheritance of a privilege, so that it is not a database object.
 
 ## Release 10.08.05 - 2014-04-25
 <a name="a10.08.05"></a>
 
 * Fixed lint "foreign key with no index" to look at primary keys as well.
-* Fixed bug #31, https://sourceforge.net/p/schemacrawler/bugs/31/, for loading XML databases.
+* Fixed bug #31, <https://sourceforge.net/p/schemacrawler/bugs/31/,> for loading XML databases.
 * Fixed MySQL connection issue, by removing URL parameter "useInformationSchema=true" so that MySQL's buggy metadata provider is not used. This provider does not honor mixed-case tables names.
 
 ## Release 10.08.04 - 2014-04-03
@@ -1320,7 +1320,7 @@
 
 * Added Maven 2.0 plugin for generation of schema reports
 * Added command-line option to provide database connection information
-* Worked around a bug in the Oracle driver as described in https://issues.apache.org/jira/browse/DDLUTILS-29?page=all
+* Worked around a bug in the Oracle driver as described in <https://issues.apache.org/jira/browse/DDLUTILS-29?page=all>
 
 ## Release 3.7 - 2006-06-12
 <a name="a3.7"></a>

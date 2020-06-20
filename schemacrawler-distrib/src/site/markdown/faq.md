@@ -2,44 +2,44 @@
 
 ## General
 
-1.  [What is SchemaCrawler?](#whats-schemacrawler)
-2.  [What does SchemaCrawler output look like?](#output)
-3.  [What are the SchemaCrawler commands?](#commands)
-4.  [What does a SchemaCrawler configuration file look like?](#config)
+1. [What is SchemaCrawler?](#whats-schemacrawler)
+2. [What does SchemaCrawler output look like?](#output)
+3. [What are the SchemaCrawler commands?](#commands)
+4. [What does a SchemaCrawler configuration file look like?](#config)
 
 ## Supported Platforms
 
-1.  [What databases does SchemaCrawler work with?](#supported-databases)
-2.  [What Java version does SchemaCrawler work with?](#supported-java)
-3.  [What operating systems does SchemaCrawler work with?](#supported-os)
-4.  [Can SchemaCrawler be used with ant?](#ant)
-5.  [Can SchemaCrawler be used with Apache Maven?](#maven)
+1. [What databases does SchemaCrawler work with?](#supported-databases)
+2. [What Java version does SchemaCrawler work with?](#supported-java)
+3. [What operating systems does SchemaCrawler work with?](#supported-os)
+4. [Can SchemaCrawler be used with ant?](#ant)
+5. [Can SchemaCrawler be used with Apache Maven?](#maven)
 
 ## SchemaCrawler Database Diagrams
 
-1.  [What is a SchemaCrawler database diagram?](#diagrams)
-2.  [What does a SchemaCrawler database diagram look like?](#diagram-output)
+1. [What is a SchemaCrawler database diagram?](#diagrams)
+2. [What does a SchemaCrawler database diagram look like?](#diagram-output)
 
 ## SchemaCrawler Grep
 
-1.  [What is SchemaCrawler Grep?](#whats-schemacrawler-grep)
-2.  [What does SchemaCrawler Grep output look like?](#grep-output)
-3.  [What are the SchemaCrawler Grep commands?](#grepcommands)
-4.  [What does a SchemaCrawler configuration file look like?](#config)
+1. [What is SchemaCrawler Grep?](#whats-schemacrawler-grep)
+2. [What does SchemaCrawler Grep output look like?](#grep-output)
+3. [What are the SchemaCrawler Grep commands?](#grepcommands)
+4. [What does a SchemaCrawler configuration file look like?](#config)
 
 ## SchemaCrawler Features
 
-1.  [What is SchemaCrawler Lint?](#schema-lint)
-2.  [What are weak associations?](#weak-associations)
-3.  [Can SchemaCrawler be used with scripting languages?](#scripting)
-4.  [Can SchemaCrawler be used programmatically?](#api)
-5.  [Can SchemaCrawler be used integrated with other programs?](#integrations)
+1. [What is SchemaCrawler Lint?](#schema-lint)
+2. [What are weak associations?](#weak-associations)
+3. [Can SchemaCrawler be used with scripting languages?](#scripting)
+4. [Can SchemaCrawler be used programmatically?](#api)
+5. [Can SchemaCrawler be used integrated with other programs?](#integrations)
 
 ## Distribution
 
-1.  [Where is SchemaCrawler available?](#availability )
-2.  [Is technical support available?](#tech-support)
-3.  [Is SchemaCrawler free?](#cost)
+1. [Where is SchemaCrawler available?](#availability )
+2. [Is technical support available?](#tech-support)
+3. [Is SchemaCrawler free?](#cost)
 
 
 ## General

@@ -8,10 +8,10 @@ See details on the [SchemaCrawler Ecosystem](ecosystem.html).
 
 SchemaCrawler questions from users.
 
--  How [programmers](http://stackoverflow.com/search?q=schemacrawler) use SchemaCrawler. 
--  How [database administrators](http://dba.stackexchange.com/search?q=schemacrawler) use SchemaCrawler. 
--  How [system administrators](http://serverfault.com/search?q=schemacrawler) use SchemaCrawler. 
--  How [software testers](http://sqa.stackexchange.com/search?q=schemacrawler) use SchemaCrawler. 
+- How [programmers](http://stackoverflow.com/search?q=schemacrawler) use SchemaCrawler. 
+- How [database administrators](http://dba.stackexchange.com/search?q=schemacrawler) use SchemaCrawler. 
+- How [system administrators](http://serverfault.com/search?q=schemacrawler) use SchemaCrawler. 
+- How [software testers](http://sqa.stackexchange.com/search?q=schemacrawler) use SchemaCrawler. 
 
 ## Companies and Projects
 
@@ -60,7 +60,7 @@ SchemaCrawler in the press, and in online articles and blogs.
 
 - João Rocha da Silva's article [How to make nice diagrams from your SQLite database](https://silvae86.github.io/databases/sqlite/diagrams/macos/reverse/engineering/2019/04/14/how_to_reverse_engineer_database_diagrams/)
 - Dan Nguyen's article, [Generating cool SQLite database diagrams with schemacrawler on Mac OS](https://gist.github.com/dannguyen/f056d05bb7fec408bb7c14ea1552c349)
-- Buffer of My Mind on [ SchemaCrawler ](http://mindbuffer.wordpress.com/2010/10/14/schema-crawler/)
+- Buffer of My Mind on [SchemaCrawler](http://mindbuffer.wordpress.com/2010/10/14/schema-crawler/)
 - Maxime Werlen's blog post on [Analyse BDD avec SchemaCrawler](http://maxime.werlen.fr/blog/archives/2011/04/22/schemacrawler-pour-extraire-la-structure-d-une-base-de-donn-e.html) 
 - Kelvin Meeks' post on [Data Governance Tools.](http://intltechventures.blogspot.com/2012/08/2012-08-22-wednesday-data-governance.html)
 - Gilesey's post on [A lightweight schema diff or dump from Oracle](https://gilesey.wordpress.com/2012/11/15/a-lightweight-schema-diff-or-dump-from-oracle/)

@@ -27,25 +27,25 @@ HTML output)](html-examples/html.html), and in addition offers several
 options to change what you see on the database diagram. Here are a few
 variations, with examples in SchemaCrawler's HTML output format:
 
--   Suppress schema names and foreign key names, using the
-    `--portable-names` command-line option [(see
-    HTML output)](html-examples/html_2_portablenames.html).
--   Show significant columns, such as primary and foreign key columns,
-    and columns that are part of unique indexes. Use the
-    `--info-level=standard --command=brief` command-line option [(see
-    HTML output)](html-examples/html_3_important_columns.html).
--   Show column ordinals, by setting configuration option
-    `schemacrawler.format.show_ordinal_numbers=true` in the
-    configuration file [(see
-    HTML output)](html-examples/html_4_ordinals.html).
--   Display columns in alphabetical order, using the `-sortcolumns`
-    command-line option [(see
-    HTML output)](html-examples/html_5_alphabetical.html).
--   Grep for columns, and also display outgoing relationships, using
-    `--grep-columns=.*\\.BOOKS\\..*\\.ID` as a command-line option, with
-    an appropriate regular expression [(see
-    HTML output)](html-examples/html_6_grep.html).
--   Grep for columns, but only show matching tables, using
-    `--grep-columns=.*\\.BOOKS\\..*\\.ID` and `-only-matching` as
-    command-line options [(see
-    HTML output)](html-examples/html_7_grep_onlymatching.html).
+- Suppress schema names and foreign key names, using the
+  `--portable-names` command-line option [(see
+  HTML output)](html-examples/html_2_portablenames.html).
+- Show significant columns, such as primary and foreign key columns,
+  and columns that are part of unique indexes. Use the
+  `--info-level=standard --command=brief` command-line option [(see
+  HTML output)](html-examples/html_3_important_columns.html).
+- Show column ordinals, by setting configuration option
+  `schemacrawler.format.show_ordinal_numbers=true` in the
+  configuration file [(see
+  HTML output)](html-examples/html_4_ordinals.html).
+- Display columns in alphabetical order, using the `-sortcolumns`
+  command-line option [(see
+  HTML output)](html-examples/html_5_alphabetical.html).
+- Grep for columns, and also display outgoing relationships, using
+  `--grep-columns=.*\\.BOOKS\\..*\\.ID` as a command-line option, with
+  an appropriate regular expression [(see
+  HTML output)](html-examples/html_6_grep.html).
+- Grep for columns, but only show matching tables, using
+  `--grep-columns=.*\\.BOOKS\\..*\\.ID` and `-only-matching` as
+  command-line options [(see
+   HTML output)](html-examples/html_7_grep_onlymatching.html).
