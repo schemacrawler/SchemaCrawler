@@ -1,27 +1,24 @@
 body, p, li, td, th, caption, select, input, strong {
   font-family: "Century Gothic", CenturyGothic, Geneva, sans-serif;
-  font-size: 1.0rem;
+  font-size: 1rem;
   line-height: 1.4rem;
   color: rgb(16, 16, 16);
 }
 
 body {
-  margin-top: 1rem;
-  margin-right: 3rem;
-  margin-bottom: 1rem;
-  margin-left: 3rem;
+  margin: 1rem 3rem;
 }
 
 code, pre, tt {
   font-family: 'Lucida Console', Monaco, 'Courier New', monospace;
-  font-size: 1.0rem;
+  font-size: 1rem;
   line-height: 1.4rem;
   color: rgb(16, 16, 16);
 }
 
 hr {
   height: 1px;
-  border-width: 1px 0px 0px 0px;
+  border-width: 1px 0 0 0;
   color: Silver;
 }
 
@@ -37,7 +34,7 @@ caption {
 
 h1, h2, h3 {
   font-family: "Palatino Linotype", Georgia, "Times New Roman", serif;
-  margin-top: 1.0rem;
+  margin-top: 1rem;
   margin-bottom: 1.5rem;
   font-weight: bold;
 }
@@ -58,11 +55,10 @@ h3 {
 }
 
 dl, ul, ol {
-  padding: 0px 0px 0px 0px;
-  border: 0px;
-  background-color: #ffffff;
+  border: 0;
+  background-color: #fff;
   margin-left: 1rem;
-  padding-left: 1rem;
+  padding: 0 0 0 1rem;
 }
 
 li {
@@ -94,7 +90,7 @@ blockquote {
   padding: 0.5rem 10px;
 }
 
-blockquote: before {
+blockquote:before {
   color: #ccc;
   font-size: 4rem;
   line-height: 0.1rem;

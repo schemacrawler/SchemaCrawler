@@ -70,7 +70,7 @@ a:hover, a:active {
   white-space: pre\9;
 
   font-family: 'Lucida Console', Monaco, 'Courier New', monospace;
-  font-size: 1.0rem;
+  font-size: 1rem;
   font-weight: 100;
 
   line-height: 1.2rem;
@@ -93,7 +93,7 @@ td:nth-of-type(1) {
 td.section {
   font-family: "Palatino Linotype", Georgia, "Times New Roman", serif;
   padding-top: 1.5rem;
-  padding-bottom: 1.0rem;
+  padding-bottom: 1rem;
   font-weight: bold;
   font-size: 1.2rem;
   line-height: 1.2rem;
