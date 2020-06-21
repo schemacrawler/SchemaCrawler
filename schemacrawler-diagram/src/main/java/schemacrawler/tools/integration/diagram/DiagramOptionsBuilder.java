@@ -250,6 +250,11 @@ public final class DiagramOptionsBuilder
 
   private List<String> listGraphvizOpts(final String graphVizOptions)
   {
+    if (isBlank(graphVizOptions))
+    {
+      return new ArrayList<>();
+    }
+
     final List<String> graphVizOptionsList =
       Arrays.asList(graphVizOptions.split("\\s+"));
     return graphVizOptionsList;

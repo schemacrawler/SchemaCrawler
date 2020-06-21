@@ -30,8 +30,6 @@ package sf.util;
 
 import static java.util.Objects.requireNonNull;
 import static sf.util.IOUtility.createTempFilePath;
-import static sf.util.Utility.containsWhitespace;
-import static sf.util.Utility.isBlank;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -110,42 +108,7 @@ public class ProcessExecutor
 
   public void setCommandLine(final List<String> args)
   {
-    command = quoteCommandLine(args);
-  }
-
-  /**
-   * Quotes command-line arguments that have spaces, and removes blank items.
-   *
-   * @param args
-   *   Command-line arguments
-   * @return Quoted command-line arguments
-   */
-  protected List<String> quoteCommandLine(final List<String> args)
-  {
-    requireNonNull(args, "No command provided");
-    if (args.isEmpty())
-    {
-      throw new IllegalArgumentException("No command provided");
-    }
-
-    final List<String> command = new ArrayList<>();
-    for (final String arg : args)
-    {
-      if (isBlank(arg))
-      {
-        continue;
-      }
-      else if (containsWhitespace(arg))
-      {
-        command.add(String.format("\"%s\"", arg));
-      }
-      else
-      {
-        command.add(arg);
-      }
-    }
-
-    return command;
+    command = new ArrayList<>(args);
   }
 
 }
