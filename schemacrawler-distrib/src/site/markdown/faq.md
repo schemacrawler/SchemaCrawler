@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD024 -->
 # SchemaCrawler - Frequently Asked Questions
 
 ## General
@@ -137,7 +138,7 @@ _For more details, see the [diagramming](diagramming.html) page._
 ### <a name="diagram-output">What does a SchemaCrawler database diagram look like?</a>
 
 An example of a SchemaCrawler database diagram:
-[![](diagram-examples/diagram.png)](diagram-examples/diagram.png "SchemaCrawler database diagram")
+[![An example of a SchemaCrawler database diagram](diagram-examples/diagram.png)](diagram-examples/diagram.png "SchemaCrawler database diagram")
 
 ---------
 

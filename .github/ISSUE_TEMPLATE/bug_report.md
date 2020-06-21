@@ -2,17 +2,17 @@
 name: Bug report
 about: Create a report to help us improve
 labels: 
-
+<!-- markdownlint-disable MD041 MD025 -->
 ---
 
-# Issue
+**Issue**
 
 > Please explain the issue briefly
 > * Provide the steps that you took to reproduce the issue
 > * Provide any steps that you took to solve the issue
 > * Zip and attach the SchemaCrawler debug logs, which can be obtained by running SchemaCrawler with an additional `-loglevel=ALL` on the command-line argument
 
-# Environment
+**Environment**
 
 > Specify the
 > * version of SchemaCrawler that you are using

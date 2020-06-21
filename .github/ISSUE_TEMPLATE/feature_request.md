@@ -2,7 +2,7 @@
 name: Feature request
 about: Suggest an idea for this project
 labels: 
-
+<!-- markdownlint-disable MD041 MD025 -->
 ---
 
 **Describe the solution you'd like**

@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD024 -->
 # SchemaCrawler - How-to
 
 ## SchemaCrawler Command-line
