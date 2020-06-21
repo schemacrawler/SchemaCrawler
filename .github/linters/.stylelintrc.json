@@ -1,6 +1,8 @@
 {
   "extends": "stylelint-config-standard",
   "rules": {
-    "selector-list-comma-newline-after": false
-  }	
+    "selector-list-comma-newline-after": null,
+    "declaration-empty-line-before": null,
+    "selector-pseudo-element-colon-notation": "single"
+  }
 }

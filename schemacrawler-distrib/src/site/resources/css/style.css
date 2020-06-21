@@ -1,19 +1,19 @@
 body {
-  padding-left: 3.0rem;
-  padding-right: 3.0rem;
-  padding-bottom: 3.0rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  padding-bottom: 3rem;
 }
 
 @media (max-width: 767px) {
-body {
-  padding-left: 0rem;
-  padding-right: 0rem;
-}
+  body {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 #page-content h1 {
-  font-size: 2.0rem;
-  margin-top: 2.0rem;
+  font-size: 2rem;
+  margin-top: 2rem;
   color: rgb(92, 92, 92);
 }
 
@@ -35,6 +35,6 @@ body {
 }
 
 #banner h1 {
-  font-size: 3.0rem;
+  font-size: 3rem;
   font-family: "Palatino Linotype", Georgia, "Times New Roman", serif;
 }
