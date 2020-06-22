@@ -30,11 +30,14 @@ package schemacrawler.crawl;
 
 
 import static java.time.ZoneOffset.UTC;
-import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
+import static java.time.format.DateTimeFormatter.ISO_LOCAL_TIME;
 import static java.util.Objects.requireNonNull;
 
 import java.time.Instant;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.UUID;
 
 import schemacrawler.BaseProductVersion;
@@ -56,6 +59,16 @@ final class MutableCrawlInfo
 {
 
   private static final long serialVersionUID = 5982990326485881993L;
+
+  public static final DateTimeFormatter DATE_TIME_FORMATTER;
+  static
+  {
+    DATE_TIME_FORMATTER = new DateTimeFormatterBuilder()
+      .append(ISO_LOCAL_DATE)
+      .appendLiteral(' ')
+      .append(ISO_LOCAL_TIME)
+      .toFormatter();
+  }
 
   private final Instant crawlTimestamp;
   private final ProductVersion jvmVersion;
@@ -79,7 +92,7 @@ final class MutableCrawlInfo
   public String getCrawlTimestamp()
   {
     final ZonedDateTime dateTime = ZonedDateTime.ofInstant(crawlTimestamp, UTC);
-    return ISO_LOCAL_DATE_TIME.format(dateTime);
+    return DATE_TIME_FORMATTER.format(dateTime);
   }
 
   @Override
@@ -92,9 +105,18 @@ final class MutableCrawlInfo
    * {@inheritDoc}
    */
   @Override
-  public String getRunId()
+  public ProductVersion getDatabaseVersion()
   {
-    return runId.toString();
+    return databaseVersion;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public ProductVersion getJdbcDriverVersion()
+  {
+    return jdbcDriverVersion;
   }
 
   /**
@@ -119,18 +141,9 @@ final class MutableCrawlInfo
    * {@inheritDoc}
    */
   @Override
-  public ProductVersion getDatabaseVersion()
+  public String getRunId()
   {
-    return databaseVersion;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public ProductVersion getJdbcDriverVersion()
-  {
-    return jdbcDriverVersion;
+    return runId.toString();
   }
 
   /**
