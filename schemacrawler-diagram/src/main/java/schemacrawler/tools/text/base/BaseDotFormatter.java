@@ -139,7 +139,7 @@ public abstract class BaseDotFormatter
                            false,
                            Color.white,
                            1));
-      row.add(newTableCell(formatTimestamp(crawlInfo.getCrawlTimestamp()),
+      row.add(newTableCell(crawlInfo.getCrawlTimestamp(),
                            Alignment.left,
                            false,
                            Color.white,

@@ -34,8 +34,6 @@ import static sf.util.Utility.isLowerCase;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 import java.util.Arrays;
 import java.util.List;
 
@@ -137,13 +135,6 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
     }
 
     return columnNullable;
-  }
-
-  protected String formatTimestamp(final TemporalAccessor timestamp)
-  {
-    return DateTimeFormatter
-      .ofPattern("yyyy-MM-dd HH:mm:ss")
-      .format(timestamp);
   }
 
   protected boolean isColumnSignificant(final Column column)

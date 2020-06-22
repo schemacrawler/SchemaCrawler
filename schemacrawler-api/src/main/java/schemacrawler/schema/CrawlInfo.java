@@ -29,7 +29,7 @@ package schemacrawler.schema;
 
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import schemacrawler.ProductVersion;
 
@@ -38,11 +38,19 @@ public interface CrawlInfo
 {
 
   /**
+   * Gets the timestamp of when the database was crawled, in UTC,
+   * in ISO 8501 format, with precision to the second.
+   *
+   * @return Timestamp
+   */
+  String getCrawlTimestamp();
+
+  /**
    * Gets the timestamp of when the database was crawled.
    *
    * @return Timestamp
    */
-  LocalDateTime getCrawlTimestamp();
+  Instant getCrawlTimestampInstant();
 
   /**
    * Gets the version of the RDBMS vendor and product.
