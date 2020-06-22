@@ -170,7 +170,9 @@ public final class LimitOptionsBuilder
                               .orElse(null),
                             tableNamePattern,
                             routineTypes
-                              .map(types -> EnumSet.copyOf(types))
+                              .map(types -> types.isEmpty()?
+                                            EnumSet.noneOf(RoutineType.class):
+                                            EnumSet.copyOf(types))
                               .orElse(null));
   }
 
