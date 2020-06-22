@@ -74,9 +74,8 @@ public class TableTypesFilter
   {
     if (tableTypesFiltered != null)
     {
-      final String[] tableTypesOptions = tableTypesFiltered;
       tableTypes = new HashSet<>();
-      for (final String tableType : tableTypesOptions)
+      for (final String tableType : tableTypesFiltered)
       {
         tableTypes.add(tableType.toLowerCase());
       }

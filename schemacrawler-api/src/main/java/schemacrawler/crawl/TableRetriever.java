@@ -120,7 +120,7 @@ final class TableRetriever
   private void createTable(final MetadataResultSet results,
                            final NamedObjectList<SchemaReference> schemas,
                            final InclusionRuleFilter<Table> tableFilter,
-                           final TableTypes supportedTableTypes)
+                           final TableTypes filteredTableTypes)
   {
     final String catalogName =
       normalizeCatalogName(results.getString("TABLE_CAT"));
@@ -143,7 +143,7 @@ final class TableRetriever
     }
     final Schema schema = optionalSchema.get();
 
-    final TableType tableType = supportedTableTypes
+    final TableType tableType = filteredTableTypes
       .lookupTableType(tableTypeString)
       .orElse(TableType.UNKNOWN);
     if (tableType.equals(TableType.UNKNOWN))
@@ -191,7 +191,17 @@ final class TableRetriever
     final Query tablesSql =
       informationSchemaViews.getQuery(TABLES);
     final Connection connection = getDatabaseConnection();
-    final TableTypes supportedTableTypes = new TableTypes(tableTypes);
+    final TableTypes supportedTableTypes =
+      getRetrieverConnection().getTableTypes();
+    final TableTypes filteredTableTypes;
+    if (tableTypes == null) 
+	{
+      filteredTableTypes = supportedTableTypes;
+    } 
+	else
+    {
+      filteredTableTypes = new TableTypes(tableTypes);
+    }
     try (
       final Statement statement = connection.createStatement();
       final MetadataResultSet results = new MetadataResultSet(tablesSql,
@@ -204,7 +214,7 @@ final class TableRetriever
       while (results.next())
       {
         numTables = numTables + 1;
-        createTable(results, schemas, tableFilter, supportedTableTypes);
+        createTable(results, schemas, tableFilter, filteredTableTypes);
       }
       LOGGER.log(Level.INFO,
                  new StringFormat("Processed %d tables", numTables));
