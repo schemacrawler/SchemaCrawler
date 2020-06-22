@@ -152,7 +152,7 @@ final class SchemaListFormatter
                                            .toString(),
                                          Alignment.inherit);
       formattingHelper.writeNameValueRow("generated on",
-                                         formatTimestamp(crawlInfo.getCrawlTimestamp()),
+                                         crawlInfo.getCrawlTimestamp(),
                                          Alignment.inherit);
     }
 

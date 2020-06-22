@@ -29,10 +29,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
+import static java.time.ZoneOffset.UTC;
+import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 import static java.util.Objects.requireNonNull;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 import schemacrawler.BaseProductVersion;
@@ -55,7 +57,7 @@ final class MutableCrawlInfo
 
   private static final long serialVersionUID = 5982990326485881993L;
 
-  private final LocalDateTime crawlTimestamp;
+  private final Instant crawlTimestamp;
   private final ProductVersion jvmVersion;
   private final ProductVersion operatingSystemVersion;
   private final UUID runId;
@@ -69,12 +71,19 @@ final class MutableCrawlInfo
     operatingSystemVersion = new OperatingSystemInfo();
     jvmVersion = new JvmSystemInfo();
 
-    crawlTimestamp = LocalDateTime.now();
+    crawlTimestamp = Instant.now();
     runId = UUID.randomUUID();
   }
 
   @Override
-  public LocalDateTime getCrawlTimestamp()
+  public String getCrawlTimestamp()
+  {
+    final ZonedDateTime dateTime = ZonedDateTime.ofInstant(crawlTimestamp, UTC);
+    return ISO_LOCAL_DATE_TIME.format(dateTime);
+  }
+
+  @Override
+  public Instant getCrawlTimestampInstant()
   {
     return crawlTimestamp;
   }
@@ -146,9 +155,7 @@ final class MutableCrawlInfo
       .append(System.lineSeparator());
     info
       .append("-- generated on: ")
-      .append(DateTimeFormatter
-                .ofPattern("yyyy-MM-dd HH:mm:ss")
-                .format(getCrawlTimestamp()))
+      .append(getCrawlTimestamp())
       .append(System.lineSeparator());
     info
       .append("-- database: ")

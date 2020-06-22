@@ -53,6 +53,7 @@ final class NeuteredLinesFilter
     Pattern.compile("- column @uuid: .*"),
     Pattern.compile("\\s+\"?run-id\"?\\s?: .*"),
     Pattern.compile("\\s+\"?crawl-timestamp\"?\\s?: .*"),
+    Pattern.compile("\\s+\"?crawl-timestamp-instant\"?\\s?: .*"),
     Pattern.compile("\\s*(- )?\"?lint-id\"?\\s?: .*"),
     Pattern.compile("\\s+\"?linter-instance-id\"?\\s?: .*"),
     Pattern.compile("\\s+\"?product-version\"?\\s?: .*"),

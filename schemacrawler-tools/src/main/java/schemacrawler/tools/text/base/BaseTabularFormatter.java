@@ -127,7 +127,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
                                            .toString(),
                                          Alignment.inherit);
       formattingHelper.writeNameValueRow("generated on",
-                                         formatTimestamp(crawlInfo.getCrawlTimestamp()),
+                                         crawlInfo.getCrawlTimestamp(),
                                          Alignment.inherit);
     }
 
