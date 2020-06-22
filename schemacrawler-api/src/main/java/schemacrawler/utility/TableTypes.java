@@ -40,7 +40,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.logging.Level;
 
 import schemacrawler.schema.TableType;
@@ -141,16 +140,6 @@ public final class TableTypes
     }
     filteredTableTypes.sort(naturalOrder());
     return filteredTableTypes.toArray(new String[filteredTableTypes.size()]);
-  }
-
-  public Collection<String> getAllTableTypes()
-  {
-    final Set<String> tableTypesNames = new HashSet<>();
-    for (final TableType tableType : tableTypes)
-    {
-      tableTypesNames.add(tableType.getTableType());
-    }
-    return tableTypesNames;
   }
 
   /**
