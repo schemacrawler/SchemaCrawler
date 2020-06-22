@@ -2,7 +2,7 @@ package schemacrawler.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
 import static schemacrawler.schema.RoutineType.function;
@@ -22,14 +22,14 @@ public class LimitOptionsBuilderTest
 
     final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder();
 
-    assertThat(limitOptionsBuilder.toOptions().getRoutineTypes(), contains(
+    assertThat(limitOptionsBuilder.toOptions().getRoutineTypes(), containsInAnyOrder(
       function, procedure));
 
     limitOptionsBuilder.routineTypes(new ArrayList<>());
     assertThat(limitOptionsBuilder.toOptions().getRoutineTypes(), is(empty()));
 
     limitOptionsBuilder.routineTypes(Arrays.asList(function));
-    assertThat(limitOptionsBuilder.toOptions().getRoutineTypes(), contains(
+    assertThat(limitOptionsBuilder.toOptions().getRoutineTypes(), containsInAnyOrder(
       function));
   }
 
