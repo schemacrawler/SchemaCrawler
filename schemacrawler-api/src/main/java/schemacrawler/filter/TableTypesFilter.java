@@ -28,61 +28,40 @@ http://www.gnu.org/licenses/
 package schemacrawler.filter;
 
 
-import java.util.Collection;
-import java.util.HashSet;
+import static java.util.Objects.requireNonNull;
+
 import java.util.function.Predicate;
 
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.LimitOptions;
+import schemacrawler.utility.TableTypes;
 
 public class TableTypesFilter
   implements Predicate<Table>
 {
 
-  private final Collection<String> tableTypes;
+  private final TableTypes tableTypes;
 
   public TableTypesFilter()
   {
-    tableTypes = null;
+    tableTypes = TableTypes.fromNone();
   }
 
   public TableTypesFilter(final LimitOptions options)
   {
-    if (options != null)
-    {
-      final Collection<String> tableTypesOptions = options.getTableTypes();
-      if (tableTypesOptions == null)
-      {
-        tableTypes = null;
-      }
-      else
-      {
-        tableTypes = new HashSet<>();
-        for (final String tableType : tableTypesOptions)
-        {
-          tableTypes.add(tableType.toLowerCase());
-        }
-      }
-    }
-    else
-    {
-      tableTypes = null;
-    }
+    requireNonNull(options, "No limit options provided");
+    tableTypes = options.getTableTypes();
   }
 
   public TableTypesFilter(final String... tableTypesFiltered)
   {
     if (tableTypesFiltered != null)
     {
-      tableTypes = new HashSet<>();
-      for (final String tableType : tableTypesFiltered)
-      {
-        tableTypes.add(tableType.toLowerCase());
-      }
+      tableTypes = TableTypes.from(tableTypesFiltered);
     }
     else
     {
-      tableTypes = null;
+      tableTypes = TableTypes.fromNone();
     }
   }
 
@@ -96,21 +75,9 @@ public class TableTypesFilter
   @Override
   public boolean test(final Table table)
   {
-    final boolean include;
-
-    if (tableTypes != null)
-    {
-      include = tableTypes.contains(table
-                                      .getTableType()
-                                      .getTableType()
-                                      .toLowerCase());
-    }
-    else
-    {
-      include = true;
-    }
-
-    return include;
+    return tableTypes.lookupTableType(table
+                                        .getTableType()
+                                        .getTableType()).isPresent();
   }
 
 }

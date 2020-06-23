@@ -39,8 +39,6 @@ import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleFor
 import static sf.util.Utility.enumValue;
 import static sf.util.Utility.isBlank;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumMap;
@@ -56,6 +54,7 @@ import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.RoutineType;
+import schemacrawler.utility.TableTypes;
 
 /**
  * SchemaCrawler options builder, to build the immutable options to crawl a
@@ -75,9 +74,9 @@ public final class LimitOptionsBuilder
     return new LimitOptionsBuilder();
   }
 
-  private static Collection<String> defaultTableTypes()
+  private static TableTypes defaultTableTypes()
   {
-    return Arrays.asList("BASE TABLE", "TABLE", "VIEW");
+    return TableTypes.from("BASE TABLE", "TABLE", "VIEW");
   }
 
   public static LimitOptions newLimitOptions()
@@ -88,7 +87,7 @@ public final class LimitOptionsBuilder
   private final Map<DatabaseObjectRuleForInclusion, InclusionRule>
     inclusionRules;
   private String tableNamePattern;
-  private Optional<Collection<String>> tableTypes;
+  private TableTypes tableTypes;
   private Optional<Collection<RoutineType>> routineTypes;
 
   /**
@@ -103,7 +102,7 @@ public final class LimitOptionsBuilder
       resetToDefault(ruleForInclusion);
     }
 
-    tableTypes = Optional.of(defaultTableTypes());
+    tableTypes = defaultTableTypes();
     routineTypes = Optional.of(allRoutineTypes());
 
   }
@@ -148,7 +147,7 @@ public final class LimitOptionsBuilder
       inclusionRules.put(ruleForInclusion, options.get(ruleForInclusion));
     }
 
-    tableTypes = Optional.ofNullable(options.getTableTypes());
+    tableTypes = options.getTableTypes();
     tableNamePattern = options.getTableNamePattern();
     routineTypes = Optional.ofNullable(options.getRoutineTypes());
 
@@ -165,9 +164,7 @@ public final class LimitOptionsBuilder
   public LimitOptions toOptions()
   {
     return new LimitOptions(new EnumMap<>(inclusionRules),
-                            tableTypes
-                              .map(types -> new ArrayList<>(types))
-                              .orElse(null),
+                            tableTypes,
                             tableNamePattern,
                             routineTypes
                               .map(types -> types.isEmpty()?
@@ -324,18 +321,7 @@ public final class LimitOptionsBuilder
 
   public LimitOptionsBuilder tableTypes(final Collection<String> tableTypes)
   {
-    if (tableTypes == null)
-    {
-      this.tableTypes = Optional.empty();
-    }
-    else if (tableTypes.isEmpty())
-    {
-      this.tableTypes = Optional.of(Collections.emptySet());
-    }
-    else
-    {
-      this.tableTypes = Optional.of(new HashSet<>(tableTypes));
-    }
+    this.tableTypes = TableTypes.from(tableTypes);
     return this;
   }
 
@@ -361,11 +347,11 @@ public final class LimitOptionsBuilder
           tableTypes.add(tableTypeString.trim());
         }
       }
-      this.tableTypes = Optional.of(tableTypes);
+      this.tableTypes = TableTypes.from(tableTypes);
     }
     else
     {
-      tableTypes = Optional.empty();
+      tableTypes = TableTypes.fromNone();
     }
 
     return this;

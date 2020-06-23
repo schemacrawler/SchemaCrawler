@@ -38,6 +38,7 @@ import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.RoutineType;
+import schemacrawler.utility.TableTypes;
 import sf.util.ObjectToString;
 
 /**
@@ -53,10 +54,10 @@ public final class LimitOptions
     inclusionRules;
   private final Collection<RoutineType> routineTypes;
   private final String tableNamePattern;
-  private final Collection<String> tableTypes;
+  private final TableTypes tableTypes;
 
   LimitOptions(final Map<DatabaseObjectRuleForInclusion, InclusionRule> inclusionRules,
-               final Collection<String> tableTypes,
+               final TableTypes tableTypes,
                final String tableNamePattern,
                final Collection<RoutineType> routineTypes)
   {
@@ -68,7 +69,7 @@ public final class LimitOptions
     this.inclusionRules =
       requireNonNull(inclusionRules, "No inclusion rules provided");
 
-    this.tableTypes = tableTypes;
+    this.tableTypes = requireNonNull(tableTypes, "No table types provided");
     this.tableNamePattern = tableNamePattern;
 
     this.routineTypes = routineTypes;
@@ -103,16 +104,9 @@ public final class LimitOptions
    *
    * @return All table types requested for output
    */
-  public Collection<String> getTableTypes()
+  public TableTypes getTableTypes()
   {
-    if (tableTypes == null)
-    {
-      return null;
-    }
-    else
-    {
-      return new HashSet<>(tableTypes);
-    }
+    return tableTypes;
   }
 
   /**
