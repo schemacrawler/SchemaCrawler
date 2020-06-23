@@ -38,7 +38,7 @@ import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.RoutineType;
-import schemacrawler.utility.TableTypes;
+import schemacrawler.schema.TableTypes;
 import sf.util.ObjectToString;
 
 /**

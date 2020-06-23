@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.utility;
+package schemacrawler.schema;
 
 
 import static java.util.Comparator.naturalOrder;
@@ -45,7 +45,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 
-import schemacrawler.schema.TableType;
 import sf.util.SchemaCrawlerLogger;
 
 /**

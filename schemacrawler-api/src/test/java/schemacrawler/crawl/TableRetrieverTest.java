@@ -70,7 +70,7 @@ import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.utility.NamedObjectSort;
-import schemacrawler.utility.TableTypes;
+import schemacrawler.schema.TableTypes;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)

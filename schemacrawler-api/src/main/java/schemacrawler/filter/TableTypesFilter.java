@@ -34,7 +34,7 @@ import java.util.function.Predicate;
 
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.LimitOptions;
-import schemacrawler.utility.TableTypes;
+import schemacrawler.schema.TableTypes;
 
 public class TableTypesFilter
   implements Predicate<Table>

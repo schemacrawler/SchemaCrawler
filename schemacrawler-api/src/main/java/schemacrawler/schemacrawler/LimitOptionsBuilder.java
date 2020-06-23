@@ -54,7 +54,7 @@ import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.RoutineType;
-import schemacrawler.utility.TableTypes;
+import schemacrawler.schema.TableTypes;
 
 /**
  * SchemaCrawler options builder, to build the immutable options to crawl a

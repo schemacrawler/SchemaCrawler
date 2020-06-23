@@ -50,7 +50,7 @@ import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.schemacrawler.SchemaReference;
-import schemacrawler.utility.TableTypes;
+import schemacrawler.schema.TableTypes;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
