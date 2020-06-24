@@ -319,9 +319,15 @@ public final class LimitOptionsBuilder
     return this;
   }
 
-  public LimitOptionsBuilder tableTypes(final Collection<String> tableTypes)
+  public LimitOptionsBuilder tableTypes(final Collection<String> tableTypeStrings)
   {
-    this.tableTypes = TableTypes.from(tableTypes);
+    this.tableTypes = TableTypes.from(tableTypeStrings);
+    return this;
+  }
+
+  public LimitOptionsBuilder tableTypes(final String... tableTypeStrings)
+  {
+    this.tableTypes = TableTypes.from(tableTypeStrings);
     return this;
   }
 
@@ -335,25 +341,7 @@ public final class LimitOptionsBuilder
    */
   public LimitOptionsBuilder tableTypes(final String tableTypesString)
   {
-    if (tableTypesString != null)
-    {
-      final Collection<String> tableTypes;
-      tableTypes = new HashSet<>();
-      final String[] tableTypeStrings = tableTypesString.split(",");
-      if (tableTypeStrings != null && tableTypeStrings.length > 0)
-      {
-        for (final String tableTypeString : tableTypeStrings)
-        {
-          tableTypes.add(tableTypeString.trim());
-        }
-      }
-      this.tableTypes = TableTypes.from(tableTypes);
-    }
-    else
-    {
-      tableTypes = TableTypes.fromNone();
-    }
-
+    this.tableTypes = TableTypes.from(tableTypesString);
     return this;
   }
 

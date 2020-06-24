@@ -39,7 +39,6 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.sql.Connection;
-import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -71,7 +70,7 @@ public class LintTest
   {
     final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
       .builder()
-      .tableTypes(Arrays.asList("TABLE", "VIEW", "GLOBAL TEMPORARY"))
+      .tableTypes("TABLE", "VIEW", "GLOBAL TEMPORARY")
       .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
       SchemaCrawlerOptionsBuilder
@@ -133,7 +132,7 @@ public class LintTest
   {
     final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
       .builder()
-      .tableTypes(Arrays.asList("TABLE", "VIEW", "GLOBAL TEMPORARY"))
+      .tableTypes("TABLE", "VIEW", "GLOBAL TEMPORARY")
       .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"))
       .includeColumns(new RegularExpressionExclusionRule(".*\\..*\\..*[123]"));
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =

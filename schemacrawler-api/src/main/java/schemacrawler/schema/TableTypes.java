@@ -116,11 +116,23 @@ public final class TableTypes
     return new TableTypes(tableTypes);
   }
 
-  public static TableTypes from(final String... tableTypes)
+  public static TableTypes from(final String... tableTypeStrings)
   {
-    requireNonNull(tableTypes, "No table types provided");
+    if (tableTypeStrings == null)
+    {
+      return new TableTypes(null);
+    }
+    return TableTypes.from(Arrays.asList(tableTypeStrings));
+  }
 
-    return TableTypes.from(Arrays.asList(tableTypes));
+  public static TableTypes from(final String tableTypesString)
+  {
+    if (tableTypesString == null)
+    {
+      return new TableTypes(null);
+    }
+    final String[] tableTypeStrings = tableTypesString.split(",");
+    return TableTypes.from(tableTypeStrings);
   }
 
   public static TableTypes fromNone()
