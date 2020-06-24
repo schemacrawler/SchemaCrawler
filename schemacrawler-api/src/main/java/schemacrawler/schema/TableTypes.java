@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.utility;
+package schemacrawler.schema;
 
 
 import static java.util.Comparator.naturalOrder;
@@ -36,14 +36,15 @@ import static sf.util.Utility.isBlank;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.logging.Level;
 
-import schemacrawler.schema.TableType;
 import sf.util.SchemaCrawlerLogger;
 
 /**
@@ -53,19 +54,22 @@ import sf.util.SchemaCrawlerLogger;
  * look-ups are case-insensitive.
  */
 public final class TableTypes
+  implements Iterable<TableType>
 {
 
   private static final SchemaCrawlerLogger LOGGER =
     SchemaCrawlerLogger.getLogger(TableTypes.class.getName());
 
-  private final Collection<TableType> tableTypes;
-
   /**
    * Obtain a collection of tables types from provided list.
    */
-  public TableTypes(final Collection<String> tableTypeStrings)
+  public static TableTypes from(final Collection<String> tableTypeStrings)
   {
-    requireNonNull(tableTypeStrings, "No table types provided");
+    final Collection<TableType> tableTypes;
+    if (tableTypeStrings == null)
+    {
+      return new TableTypes(null);
+    }
 
     tableTypes = new HashSet<>();
     for (final String tableTypeString : tableTypeStrings)
@@ -75,17 +79,18 @@ public final class TableTypes
         tableTypes.add(new TableType(tableTypeString));
       }
     }
+    return new TableTypes(tableTypes);
   }
 
   /**
    * Obtain a collection of tables types for a database system, as returned by
    * the database server itself.
    */
-  public TableTypes(final Connection connection)
+  public static TableTypes from(final Connection connection)
   {
     requireNonNull(connection, "No connection provided");
 
-    tableTypes = new HashSet<>();
+    final Collection<TableType> tableTypes = new HashSet<>();
     try (
       final ResultSet tableTypesResults = connection
         .getMetaData()
@@ -108,6 +113,51 @@ public final class TableTypes
                  "Could not obtain table types from connection",
                  e);
     }
+    return new TableTypes(tableTypes);
+  }
+
+  public static TableTypes from(final String... tableTypeStrings)
+  {
+    if (tableTypeStrings == null)
+    {
+      return new TableTypes(null);
+    }
+    return TableTypes.from(Arrays.asList(tableTypeStrings));
+  }
+
+  public static TableTypes from(final String tableTypesString)
+  {
+    if (tableTypesString == null)
+    {
+      return new TableTypes(null);
+    }
+    final String[] tableTypeStrings = tableTypesString.split(",");
+    return TableTypes.from(tableTypeStrings);
+  }
+
+  public static TableTypes includeNone()
+  {
+    return from("");
+  }
+
+  public static TableTypes includeAll()
+  {
+    return from((Collection<String>) null);
+  }
+
+  private final List<TableType> tableTypes;
+
+  private TableTypes(final Collection<TableType> tableTypesCollection)
+  {
+    if (tableTypesCollection == null)
+    {
+      tableTypes = null;
+    }
+    else
+    {
+      tableTypes = new ArrayList<>(tableTypesCollection);
+      Collections.sort(tableTypes);
+    }
   }
 
   /**
@@ -115,42 +165,45 @@ public final class TableTypes
    * same case as known to the database system, even though the search (that is,
    * values in the input collection) is case-insensitive.
    *
-   * @param tableTypeStrings
-   *   Can be null, which indicates return all table types, or an empty array,
-   *   which indicates return no table types.
+   * @param tableTypesKeepList
+   *   Table types to compare to, and use as a keep list.
    * @return Returns values in the same case as known to the database system.
    */
-  public String[] filterUnknown(final Collection<String> tableTypeStrings)
+  public TableTypes subsetFrom(final TableTypes tableTypesKeepList)
   {
-    if (tableTypeStrings == null)
+    requireNonNull(tableTypesKeepList, "No keep list of table types provided");
+    if (tableTypesKeepList.isIncludeAll())
     {
-      return null;
+      return this;
     }
-    if (tableTypeStrings.isEmpty())
+    if (tableTypesKeepList.isIncludeNone())
     {
-      return new String[0];
+      return new TableTypes(null);
     }
 
-    final List<String> filteredTableTypes = new ArrayList<>();
-    for (final String tableTypeString : tableTypeStrings)
+    final List<TableType> filteredTableTypes = new ArrayList<>();
+    for (final TableType tableType : tableTypesKeepList)
     {
-      final Optional<TableType> tableTypeOptional =
-        lookupTableType(tableTypeString);
-      // Add value in the same case as known to the database system
-      tableTypeOptional.ifPresent(tableType -> filteredTableTypes.add(tableType.getTableType()));
+      if (this.tableTypes.contains(tableType))
+      {
+        // Add value in the same case as known to the database system
+        final int index = this.tableTypes.indexOf(tableType);
+        filteredTableTypes.add(this.tableTypes.get(index));
+      }
     }
     filteredTableTypes.sort(naturalOrder());
-    return filteredTableTypes.toArray(new String[filteredTableTypes.size()]);
+    return new TableTypes(filteredTableTypes);
   }
 
-  public Collection<String> getAllTableTypes()
+  @Override
+  public Iterator<TableType> iterator()
   {
-    final Set<String> tableTypesNames = new HashSet<>();
-    for (final TableType tableType : tableTypes)
+    if (isIncludeAll())
     {
-      tableTypesNames.add(tableType.getTableType());
+      throw new IllegalArgumentException(
+        "Include all table types, but none are known");
     }
-    return tableTypesNames;
+    return tableTypes.iterator();
   }
 
   /**
@@ -161,6 +214,11 @@ public final class TableTypes
    */
   public Optional<TableType> lookupTableType(final String tableTypeString)
   {
+    if (isIncludeAll())
+    {
+      return Optional.of(new TableType(tableTypeString));
+    }
+
     for (final TableType tableType : tableTypes)
     {
       if (tableType.isEqualTo(tableTypeString))
@@ -177,7 +235,33 @@ public final class TableTypes
   @Override
   public String toString()
   {
+    if (isIncludeAll())
+    {
+      return "<all table types>";
+    }
     return tableTypes.toString();
+  }
+
+  public String[] toArray()
+  {
+    if (isIncludeAll())
+    {
+      return null;
+    }
+    return tableTypes
+      .stream()
+      .map(tableType -> tableType.getTableType())
+      .toArray(String[]::new);
+  }
+
+  public boolean isIncludeNone()
+  {
+    return tableTypes.isEmpty();
+  }
+
+  public boolean isIncludeAll()
+  {
+    return tableTypes == null;
   }
 
 }

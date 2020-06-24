@@ -36,7 +36,6 @@ import static org.hamcrest.Matchers.is;
 import javax.sql.DataSource;
 import java.nio.file.Path;
 import java.sql.Connection;
-import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -75,7 +74,7 @@ public class TempTablesTest
 
     final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
       .builder()
-      .tableTypes(Arrays.asList("GLOBAL TEMPORARY"));
+      .tableTypes("GLOBAL TEMPORARY");
     final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
       .builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.minimum());

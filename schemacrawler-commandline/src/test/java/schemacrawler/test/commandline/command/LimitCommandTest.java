@@ -1,6 +1,7 @@
 package schemacrawler.test.commandline.command;
 
 
+import static com.github.npathai.hamcrestopt.OptionalMatchers.isPresent;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -64,8 +65,12 @@ public class LimitCommandTest
 
     assertThat(limitOptions.get(ruleForTableInclusion), is(new IncludeAll()));
     assertThat(limitOptions.get(ruleForColumnInclusion), is(new IncludeAll()));
-    assertThat(limitOptions.getTableTypes(),
-               hasItems("TABLE", "BASE TABLE", "VIEW"));
+    assertThat(limitOptions.getTableTypes().lookupTableType("TABLE"),
+               isPresent());
+    assertThat(limitOptions.getTableTypes().lookupTableType("BASE TABLE"),
+               isPresent());
+    assertThat(limitOptions.getTableTypes().lookupTableType("VIEW"),
+               isPresent());
 
     assertThat(limitOptions.get(ruleForRoutineInclusion), is(new ExcludeAll()));
     assertThat(limitOptions.get(ruleForRoutineParameterInclusion),
@@ -223,7 +228,8 @@ public class LimitCommandTest
                is(new RegularExpressionInclusionRule(".*regexp.*")));
     assertThat(limitOptions.get(ruleForColumnInclusion),
                is(new RegularExpressionExclusionRule(".*regexp.*")));
-    assertThat(limitOptions.getTableTypes(), hasItems("CHAIR"));
+    assertThat(limitOptions.getTableTypes().lookupTableType("CHAIR"),
+               isPresent());
 
     assertThat(limitOptions.get(ruleForRoutineInclusion),
                is(new RegularExpressionInclusionRule(".*regexp.*")));

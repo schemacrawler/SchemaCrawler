@@ -31,7 +31,6 @@ package schemacrawler.tools.commandline.command;
 
 import static sf.util.Utility.enumValue;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Locale;
@@ -201,7 +200,7 @@ public final class LimitCommand
 
     if (tabletypes != null)
     {
-      optionsBuilder.tableTypes(Arrays.asList(tabletypes));
+      optionsBuilder.tableTypes(tabletypes);
     }
     if (routinetypes != null)
     {

@@ -46,7 +46,7 @@ import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.utility.JavaSqlTypes;
-import schemacrawler.utility.TableTypes;
+import schemacrawler.schema.TableTypes;
 import schemacrawler.utility.TypeMap;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -78,7 +78,7 @@ final class RetrieverConnection
     this.schemaRetrievalOptions = requireNonNull(schemaRetrievalOptions,
                                                  "No database specific overrides provided");
 
-    tableTypes = new TableTypes(connection);
+    tableTypes = TableTypes.from(connection);
     LOGGER.log(Level.CONFIG,
                new StringFormat("Supported table types are <%s>", tableTypes));
 

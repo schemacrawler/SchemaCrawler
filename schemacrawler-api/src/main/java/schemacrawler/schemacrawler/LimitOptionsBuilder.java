@@ -29,6 +29,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
+import static schemacrawler.schema.RoutineType.function;
+import static schemacrawler.schema.RoutineType.procedure;
+import static schemacrawler.schema.RoutineType.unknown;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForColumnInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForRoutineInclusion;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForRoutineParameterInclusion;
@@ -39,16 +42,12 @@ import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleFor
 import static sf.util.Utility.enumValue;
 import static sf.util.Utility.isBlank;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 import java.util.regex.Pattern;
 
 import schemacrawler.inclusionrule.ExcludeAll;
@@ -56,6 +55,7 @@ import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.RoutineType;
+import schemacrawler.schema.TableTypes;
 
 /**
  * SchemaCrawler options builder, to build the immutable options to crawl a
@@ -65,19 +65,9 @@ public final class LimitOptionsBuilder
   implements OptionsBuilder<LimitOptionsBuilder, LimitOptions>
 {
 
-  private static Collection<RoutineType> allRoutineTypes()
-  {
-    return EnumSet.of(RoutineType.procedure, RoutineType.function);
-  }
-
   public static LimitOptionsBuilder builder()
   {
     return new LimitOptionsBuilder();
-  }
-
-  private static Collection<String> defaultTableTypes()
-  {
-    return Arrays.asList("BASE TABLE", "TABLE", "VIEW");
   }
 
   public static LimitOptions newLimitOptions()
@@ -85,11 +75,21 @@ public final class LimitOptionsBuilder
     return builder().toOptions();
   }
 
+  private static EnumSet<RoutineType> defaultRoutineTypes()
+  {
+    return EnumSet.of(function, procedure);
+  }
+
+  private static TableTypes defaultTableTypes()
+  {
+    return TableTypes.from("BASE TABLE", "TABLE", "VIEW");
+  }
+
   private final Map<DatabaseObjectRuleForInclusion, InclusionRule>
     inclusionRules;
   private String tableNamePattern;
-  private Optional<Collection<String>> tableTypes;
-  private Optional<Collection<RoutineType>> routineTypes;
+  private TableTypes tableTypes;
+  private EnumSet<RoutineType> routineTypes;
 
   /**
    * Default options.
@@ -103,9 +103,8 @@ public final class LimitOptionsBuilder
       resetToDefault(ruleForInclusion);
     }
 
-    tableTypes = Optional.of(defaultTableTypes());
-    routineTypes = Optional.of(allRoutineTypes());
-
+    tableTypes = defaultTableTypes();
+    routineTypes = defaultRoutineTypes();
   }
 
   /**
@@ -148,9 +147,9 @@ public final class LimitOptionsBuilder
       inclusionRules.put(ruleForInclusion, options.get(ruleForInclusion));
     }
 
-    tableTypes = Optional.ofNullable(options.getTableTypes());
+    tableTypes = options.getTableTypes();
     tableNamePattern = options.getTableNamePattern();
-    routineTypes = Optional.ofNullable(options.getRoutineTypes());
+    routineTypes = EnumSet.copyOf(options.getRoutineTypes());
 
     return this;
   }
@@ -165,13 +164,9 @@ public final class LimitOptionsBuilder
   public LimitOptions toOptions()
   {
     return new LimitOptions(new EnumMap<>(inclusionRules),
-                            tableTypes
-                              .map(types -> new ArrayList<>(types))
-                              .orElse(null),
+                            tableTypes,
                             tableNamePattern,
-                            routineTypes
-                              .map(types -> EnumSet.copyOf(types))
-                              .orElse(null));
+                            routineTypes);
   }
 
   public LimitOptionsBuilder includeAllRoutines()
@@ -258,53 +253,66 @@ public final class LimitOptionsBuilder
     return include(ruleForTableInclusion, tableInclusionRule);
   }
 
+  /**
+   * Sets routine types from a collection of routine types.
+   *
+   * @param routineTypes
+   *   Collection of routine types. Can be null if all supported routine types
+   *   are requested.
+   */
   public LimitOptionsBuilder routineTypes(final Collection<RoutineType> routineTypes)
   {
     if (routineTypes == null)
     {
-      // null signifies include all routine types
-      this.routineTypes = Optional.empty();
+      // null signifies include all routine types (except unknown)
+      this.routineTypes = defaultRoutineTypes();
     }
     else if (routineTypes.isEmpty())
     {
-      this.routineTypes = Optional.of(Collections.emptySet());
+      this.routineTypes = EnumSet.noneOf(RoutineType.class);
     }
     else
     {
-      this.routineTypes = Optional.of(new HashSet<>(routineTypes));
+      this.routineTypes = EnumSet.copyOf(routineTypes);
     }
     return this;
   }
 
   /**
-   * Sets routine types from a comma-separated list of routine types.
+   * Sets routine types from a comma-separated list of routine types. A null
+   * string resets to the defaults, which includes all procedures and
+   * functions.
    *
    * @param routineTypesString
-   *   Comma-separated list of routine types.
+   *   Comma-separated list of routine types. Can be null if all supported
+   *   routine types are requested.
    */
   public LimitOptionsBuilder routineTypes(final String routineTypesString)
   {
+    final Collection<RoutineType> routineTypesCollection;
     if (routineTypesString != null)
     {
-      final Collection<RoutineType> routineTypes = new HashSet<>();
+      routineTypesCollection = new HashSet<>();
       final String[] routineTypeStrings = routineTypesString.split(",");
       if (routineTypeStrings != null && routineTypeStrings.length > 0)
       {
         for (final String routineTypeString : routineTypeStrings)
         {
           final RoutineType routineType =
-            enumValue(routineTypeString.toLowerCase(Locale.ENGLISH),
-                      RoutineType.unknown);
-          routineTypes.add(routineType);
+            enumValue(routineTypeString.toLowerCase(Locale.ENGLISH), unknown);
+          if (routineType != unknown)
+          {
+            routineTypesCollection.add(routineType);
+          }
         }
       }
-      this.routineTypes = Optional.of(routineTypes);
     }
     else
     {
-      routineTypes = Optional.empty();
+      routineTypesCollection = null;
     }
-    return this;
+
+    return routineTypes(routineTypesCollection);
   }
 
   public LimitOptionsBuilder tableNamePattern(final String tableNamePattern)
@@ -320,20 +328,29 @@ public final class LimitOptionsBuilder
     return this;
   }
 
-  public LimitOptionsBuilder tableTypes(final Collection<String> tableTypes)
+  /**
+   * Sets table types from a collection of table types.
+   *
+   * @param tableTypeStrings
+   *   Collection of table types. Can be null if all supported table types are
+   *   requested.
+   */
+  public LimitOptionsBuilder tableTypes(final Collection<String> tableTypeStrings)
   {
-    if (tableTypes == null)
-    {
-      this.tableTypes = Optional.empty();
-    }
-    else if (tableTypes.isEmpty())
-    {
-      this.tableTypes = Optional.of(Collections.emptySet());
-    }
-    else
-    {
-      this.tableTypes = Optional.of(new HashSet<>(tableTypes));
-    }
+    this.tableTypes = TableTypes.from(tableTypeStrings);
+    return this;
+  }
+
+  /**
+   * Sets table types from an array of table types.
+   *
+   * @param tableTypeStrings
+   *   Collection of table types. Can be null if all supported table types are
+   *   requested.
+   */
+  public LimitOptionsBuilder tableTypes(final String... tableTypeStrings)
+  {
+    this.tableTypes = TableTypes.from(tableTypeStrings);
     return this;
   }
 
@@ -347,25 +364,7 @@ public final class LimitOptionsBuilder
    */
   public LimitOptionsBuilder tableTypes(final String tableTypesString)
   {
-    if (tableTypesString != null)
-    {
-      final Collection<String> tableTypes;
-      tableTypes = new HashSet<>();
-      final String[] tableTypeStrings = tableTypesString.split(",");
-      if (tableTypeStrings != null && tableTypeStrings.length > 0)
-      {
-        for (final String tableTypeString : tableTypeStrings)
-        {
-          tableTypes.add(tableTypeString.trim());
-        }
-      }
-      this.tableTypes = Optional.of(tableTypes);
-    }
-    else
-    {
-      tableTypes = Optional.empty();
-    }
-
+    this.tableTypes = TableTypes.from(tableTypesString);
     return this;
   }
 

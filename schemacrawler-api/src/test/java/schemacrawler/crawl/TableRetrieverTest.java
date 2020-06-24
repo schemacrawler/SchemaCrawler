@@ -70,6 +70,7 @@ import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.utility.NamedObjectSort;
+import schemacrawler.schema.TableTypes;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
@@ -108,7 +109,7 @@ public class TableRetrieverTest
       new TableRetriever(retrieverConnection, catalog, options);
     tableRetriever.retrieveTables(catalog.getAllSchemas(),
                                   "",
-                                  Arrays.asList("TABLE", "VIEW"),
+                                  TableTypes.from("TABLE", "VIEW"),
                                   new IncludeAll());
 
     final TestWriter testout = new TestWriter();

@@ -50,7 +50,7 @@ public class GettersSettersTest
 {
 
   // Configured for expectation, so we know when a class gets added or removed.
-  private static final int EXPECTED_CLASS_COUNT = 54;
+  private static final int EXPECTED_CLASS_COUNT = 55;
 
   private static final String PACKAGE_SCHEMACRAWLER_SCHEMA =
     "schemacrawler.schema";
@@ -98,7 +98,7 @@ public class GettersSettersTest
       .build();
 
     validator.validate(PACKAGE_SCHEMACRAWLER_SCHEMA,
-                       new FilterPackageClasses("JavaSqlType"));
+                       new FilterPackageClasses("JavaSqlType", "TableTypes"));
   }
 
 }

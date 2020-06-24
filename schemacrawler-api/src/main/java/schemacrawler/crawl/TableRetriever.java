@@ -37,7 +37,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Optional;
 import java.util.logging.Level;
 
@@ -51,7 +50,7 @@ import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.schemacrawler.SchemaReference;
-import schemacrawler.utility.TableTypes;
+import schemacrawler.schema.TableTypes;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
@@ -78,11 +77,12 @@ final class TableRetriever
 
   void retrieveTables(final NamedObjectList<SchemaReference> schemas,
                       final String tableNamePattern,
-                      final Collection<String> tableTypes,
+                      final TableTypes tableTypes,
                       final InclusionRule tableInclusionRule)
     throws SQLException
   {
     requireNonNull(schemas, "No schemas provided");
+    requireNonNull(tableTypes, "No table types provided");
 
     final InclusionRuleFilter<Table> tableFilter =
       new InclusionRuleFilter<>(tableInclusionRule, false);
@@ -120,7 +120,7 @@ final class TableRetriever
   private void createTable(final MetadataResultSet results,
                            final NamedObjectList<SchemaReference> schemas,
                            final InclusionRuleFilter<Table> tableFilter,
-                           final TableTypes supportedTableTypes)
+                           final TableTypes filteredTableTypes)
   {
     final String catalogName =
       normalizeCatalogName(results.getString("TABLE_CAT"));
@@ -143,7 +143,7 @@ final class TableRetriever
     }
     final Schema schema = optionalSchema.get();
 
-    final TableType tableType = supportedTableTypes
+    final TableType tableType = filteredTableTypes
       .lookupTableType(tableTypeString)
       .orElse(TableType.UNKNOWN);
     if (tableType.equals(TableType.UNKNOWN))
@@ -178,7 +178,7 @@ final class TableRetriever
 
   private void retrieveTablesFromDataDictionary(final NamedObjectList<SchemaReference> schemas,
                                                 final String tableNamePattern,
-                                                final Collection<String> tableTypes,
+                                                final TableTypes tableTypes,
                                                 final InclusionRuleFilter<Table> tableFilter)
     throws SQLException
   {
@@ -191,7 +191,17 @@ final class TableRetriever
     final Query tablesSql =
       informationSchemaViews.getQuery(TABLES);
     final Connection connection = getDatabaseConnection();
-    final TableTypes supportedTableTypes = new TableTypes(tableTypes);
+    final TableTypes supportedTableTypes =
+      getRetrieverConnection().getTableTypes();
+    final TableTypes filteredTableTypes;
+    if (tableTypes.isIncludeAll())
+    {
+      filteredTableTypes = supportedTableTypes;
+    }
+    else
+    {
+      filteredTableTypes = tableTypes;
+    }
     try (
       final Statement statement = connection.createStatement();
       final MetadataResultSet results = new MetadataResultSet(tablesSql,
@@ -204,7 +214,7 @@ final class TableRetriever
       while (results.next())
       {
         numTables = numTables + 1;
-        createTable(results, schemas, tableFilter, supportedTableTypes);
+        createTable(results, schemas, tableFilter, filteredTableTypes);
       }
       LOGGER.log(Level.INFO,
                  new StringFormat("Processed %d tables", numTables));
@@ -213,7 +223,7 @@ final class TableRetriever
 
   private void retrieveTablesFromMetadata(final NamedObjectList<SchemaReference> schemas,
                                           final String tableNamePattern,
-                                          final Collection<String> tableTypes,
+                                          final TableTypes tableTypes,
                                           final InclusionRuleFilter<Table> tableFilter)
     throws SQLException
   {
@@ -224,13 +234,11 @@ final class TableRetriever
 
       final TableTypes supportedTableTypes =
         getRetrieverConnection().getTableTypes();
-      final String[] filteredTableTypes =
-        supportedTableTypes.filterUnknown(tableTypes);
+      final TableTypes filteredTableTypes =
+        supportedTableTypes.subsetFrom(tableTypes);
       LOGGER.log(Level.FINER,
                  new StringFormat("Retrieving table types <%s>",
-                                  filteredTableTypes == null?
-                                  "<<all>>":
-                                  Arrays.asList(filteredTableTypes)));
+                                  filteredTableTypes));
 
       final String catalogName = schema.getCatalogName();
       final String schemaName = schema.getName();
@@ -240,7 +248,7 @@ final class TableRetriever
           catalogName,
           schemaName,
           tableNamePattern,
-          filteredTableTypes))
+          filteredTableTypes.toArray()))
       )
       {
         results.setDescription("retrieveTablesFromMetadata");

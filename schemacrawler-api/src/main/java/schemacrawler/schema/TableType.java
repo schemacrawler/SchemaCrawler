@@ -42,8 +42,8 @@ public final class TableType
   implements Serializable, Comparable<TableType>
 {
 
-  public static final TableType UNKNOWN = new TableType("unknown");
   private static final long serialVersionUID = -8172248482959041873L;
+  public static final TableType UNKNOWN = new TableType("unknown");
   private final String tableType;
 
   /**
@@ -122,7 +122,11 @@ public final class TableType
   {
     final int prime = 31;
     int result = 1;
-    result = prime * result + (tableType == null? 0: tableType.hashCode());
+    result = prime * result + (tableType == null?
+                               0:
+                               tableType
+                                 .toLowerCase()
+                                 .hashCode());
     return result;
   }
 
@@ -159,7 +163,7 @@ public final class TableType
   @Override
   public String toString()
   {
-    return tableType == null? "": tableType.toLowerCase();
+    return tableType.toLowerCase();
   }
 
   /**
