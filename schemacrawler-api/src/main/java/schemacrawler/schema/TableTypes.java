@@ -135,9 +135,14 @@ public final class TableTypes
     return TableTypes.from(tableTypeStrings);
   }
 
-  public static TableTypes fromNone()
+  public static TableTypes includeNone()
   {
-    return new TableTypes(null);
+    return from("");
+  }
+
+  public static TableTypes includeAll()
+  {
+    return from((Collection<String>) null);
   }
 
   private final List<TableType> tableTypes;
@@ -230,7 +235,7 @@ public final class TableTypes
   @Override
   public String toString()
   {
-    if (tableTypes == null)
+    if (isIncludeAll())
     {
       return "<all table types>";
     }
@@ -239,7 +244,7 @@ public final class TableTypes
 
   public String[] toArray()
   {
-    if (tableTypes == null)
+    if (isIncludeAll())
     {
       return null;
     }

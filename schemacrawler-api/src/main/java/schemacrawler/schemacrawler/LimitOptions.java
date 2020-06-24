@@ -31,7 +31,7 @@ package schemacrawler.schemacrawler;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.EnumSet;
 import java.util.Map;
 
 import schemacrawler.inclusionrule.ExcludeAll;
@@ -52,39 +52,28 @@ public final class LimitOptions
 
   private final Map<DatabaseObjectRuleForInclusion, InclusionRule>
     inclusionRules;
-  private final Collection<RoutineType> routineTypes;
+  private final EnumSet<RoutineType> routineTypes;
   private final String tableNamePattern;
   private final TableTypes tableTypes;
 
   LimitOptions(final Map<DatabaseObjectRuleForInclusion, InclusionRule> inclusionRules,
                final TableTypes tableTypes,
                final String tableNamePattern,
-               final Collection<RoutineType> routineTypes)
+               final EnumSet<RoutineType> routineTypes)
   {
-    // NOTE: No defensive copies of collections are made since this is a protected method
-    // only called from the builder
-    // Table types and routines types may be null, indicating that all table types or
-    // routine types should be considered
-
     this.inclusionRules =
       requireNonNull(inclusionRules, "No inclusion rules provided");
 
     this.tableTypes = requireNonNull(tableTypes, "No table types provided");
     this.tableNamePattern = tableNamePattern;
 
-    this.routineTypes = routineTypes;
+    requireNonNull(routineTypes, "No routine types provided");
+    this.routineTypes = EnumSet.copyOf(routineTypes);
   }
 
   public Collection<RoutineType> getRoutineTypes()
   {
-    if (routineTypes == null)
-    {
-      return null;
-    }
-    else
-    {
-      return new HashSet<>(routineTypes);
-    }
+    return EnumSet.copyOf(routineTypes);
   }
 
   /**

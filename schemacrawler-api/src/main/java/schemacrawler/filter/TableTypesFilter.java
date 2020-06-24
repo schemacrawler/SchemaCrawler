@@ -44,7 +44,7 @@ public class TableTypesFilter
 
   public TableTypesFilter()
   {
-    tableTypes = TableTypes.fromNone();
+    tableTypes = TableTypes.includeAll();
   }
 
   public TableTypesFilter(final LimitOptions options)
@@ -55,14 +55,7 @@ public class TableTypesFilter
 
   public TableTypesFilter(final String... tableTypesFiltered)
   {
-    if (tableTypesFiltered != null)
-    {
-      tableTypes = TableTypes.from(tableTypesFiltered);
-    }
-    else
-    {
-      tableTypes = TableTypes.fromNone();
-    }
+    tableTypes = TableTypes.from(tableTypesFiltered);
   }
 
   /**
