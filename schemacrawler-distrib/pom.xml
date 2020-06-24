@@ -139,7 +139,7 @@
         <version>3.1.1</version>
         <executions>
           <execution>
-            <id>copy</id>
+            <id>create-lib</id>
             <phase>package</phase>
             <goals>
               <goal>copy</goal>
@@ -301,6 +301,31 @@
               <overWriteSnapshots>true</overWriteSnapshots>
             </configuration>
           </execution>
+
+          <execution>
+            <id>create-extralib</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+
+                <!-- Scripting -->
+
+                <artifactItem>
+									<groupId>com.github.spullara.mustache.java</groupId>
+									<artifactId>compiler</artifactId>
+									<version>0.9.6</version>
+                </artifactItem>
+
+              </artifactItems>
+
+              <outputDirectory>${project.build.directory}/_base-distribution/extralib</outputDirectory>
+              <overWriteReleases>false</overWriteReleases>
+              <overWriteSnapshots>true</overWriteSnapshots>
+            </configuration>
+          </execution>					
         </executions>
       </plugin>
       <plugin>
