@@ -70,25 +70,25 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
-      <version>2.11.0</version>
+      <version>2.11.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>2.11.0</version>
+      <version>2.11.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.dataformat</groupId>
       <artifactId>jackson-dataformat-yaml</artifactId>
-      <version>2.11.0</version>
+      <version>2.11.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
       <artifactId>jackson-datatype-jsr310</artifactId>
-      <version>2.11.0</version>
+      <version>2.11.1</version>
       <scope>provided</scope>
     </dependency>
 
@@ -215,7 +215,7 @@
                 <artifactItem>
                   <groupId>org.postgresql</groupId>
                   <artifactId>postgresql</artifactId>
-                  <version>42.2.12</version>
+                  <version>42.2.14</version>
                   <type>jar</type>
                 </artifactItem>
                 <artifactItem>
@@ -239,7 +239,7 @@
                 <artifactItem>
                   <groupId>com.oracle.database.jdbc.debug</groupId>
                   <artifactId>ojdbc8_g</artifactId>
-                  <version>19.6.0.0</version>
+                  <version>19.7.0.0</version>
                   <type>jar</type>
                 </artifactItem>
                 <artifactItem>
@@ -269,7 +269,7 @@
                 <artifactItem>
                   <groupId>org.xerial</groupId>
                   <artifactId>sqlite-jdbc</artifactId>
-                  <version>3.31.1</version>
+                  <version>3.32.3</version>
                   <type>jar</type>
                 </artifactItem>
                 <artifactItem>
@@ -300,7 +300,7 @@
               <overWriteReleases>false</overWriteReleases>
               <overWriteSnapshots>true</overWriteSnapshots>
             </configuration>
-          </execution>	
+          </execution>
         </executions>
       </plugin>
       <plugin>
