@@ -5,7 +5,7 @@ contact_links:
     about: Please ask and answer questions on StackOverflow
   - name: SchemaCrawler on Katacoda
     url: https://www.katacoda.com/schemacrawler
-    about: Tutorials for the SchemaCrawler command-line    
+    about: Learn how to use the SchemaCrawler command-line with live tutorials
   - name: SchemaCrawler
     url: https://www.schemacrawler.com/
-    about: SchemaCrawler documentation
+    about: Review SchemaCrawler documentation
