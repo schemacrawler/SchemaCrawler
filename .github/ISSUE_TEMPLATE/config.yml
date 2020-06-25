@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: StackOverflow
+    url: https://stackoverflow.com/search?tab=newest&q=schemacrawler
+    about: Please ask and answer questions on StackOverflow
+  - name: SchemaCrawler on Katacoda
+    url: https://www.katacoda.com/schemacrawler
+    about: Tutorials for the SchemaCrawler command-line    
+  - name: SchemaCrawler
+    url: https://www.schemacrawler.com/
+    about: SchemaCrawler documentation
