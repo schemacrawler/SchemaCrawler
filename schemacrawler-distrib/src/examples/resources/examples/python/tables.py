@@ -1,4 +1,4 @@
-from schemacrawler.schema import TableRelationshipType
+from schemacrawler.schema import TableRelationshipType # pylint: disable=import-error
 
 print(catalog.crawlInfo)
 
