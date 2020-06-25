@@ -2,7 +2,7 @@
 name: Bug report
 about: Create a report to help us improve
 labels: 
-<!-- markdownlint-disable MD041 MD025 -->
+<!-- markdownlint-disable MD025 MD041 -->
 ---
 
 **Issue**
