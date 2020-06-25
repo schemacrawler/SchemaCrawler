@@ -126,8 +126,7 @@ disable=print-statement,
         next-method-defined,
         dict-items-not-iterating,
         dict-keys-not-iterating,
-        dict-values-not-iterating,
-        E0602 # undefined-variable
+        dict-values-not-iterating
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
@@ -322,7 +321,9 @@ function-naming-style=snake_case
 #function-rgx=
 
 # Good variable names which should always be accepted, separated by a comma
-good-names=i,
+good-names=catalog,
+           connection,
+           i,
            j,
            k,
            ex,
