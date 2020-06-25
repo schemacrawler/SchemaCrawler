@@ -30,6 +30,7 @@ pom.xml.next
 release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
+__init__.py
 
 /schemacrawler-db2/*.jar
 /schemacrawler-distrib/*.bnd
