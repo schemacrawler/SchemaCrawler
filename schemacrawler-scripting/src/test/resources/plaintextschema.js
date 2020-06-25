@@ -1,11 +1,13 @@
+var forEach = Array.prototype.forEach;
+
 print(catalog.crawlInfo)
 
-for each (var table in catalog.getTables())
+forEach.call(catalog.getTables(), function(table)
 {
   print('');
   print(table.fullName);
-  for each (var column in table.columns)
+  forEach.call(table.columns, function(column)
   {
     print("  " + column.name);
-  }      
-}
+  });
+});

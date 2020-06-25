@@ -11,22 +11,24 @@ var TableRelationshipType = Java.type('schemacrawler.schema.TableRelationshipTyp
 
 with (JavaPackages) {
 
-var printChildren = function()
-{
-  print(catalog.crawlInfo);
-
-  for each (var table in catalog.getTables())
+  var printChildren = function()
   {
-    print('');
-    print(table.fullName);
-    var children = table.getRelatedTables(TableRelationshipType.child);
-    for each (var childTable in children)
-    {
-      print("  [child] " + childTable.fullName);
-    }
-  }
-};
+    var forEach = Array.prototype.forEach;
 
-printChildren();
+    print(catalog.crawlInfo);
+
+    forEach.call(catalog.getTables(), function(table)
+    {
+      print('');
+      print(table.fullName);
+      var children = table.getRelatedTables(TableRelationshipType.child);
+      forEach.call(children, function(childTable)
+      {
+        print("  [child] " + childTable.fullName);
+      });
+    });
+  };
+
+  printChildren();
 
 }
