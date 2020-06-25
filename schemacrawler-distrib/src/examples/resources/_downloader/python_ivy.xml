@@ -7,7 +7,9 @@
     <conf name="binaries" visibility="public" />
   </configurations>
   <dependencies>
-    <dependency org="org.python" name="jython-standalone"
-      rev="2.7.2" conf="binaries->default" />
+    <dependency org="org.python" name="jython-slim"
+                rev="2.7.2" conf="binaries->default" />
+
+    <exclude org="jline" module="jline" />
   </dependencies>
 </ivy-module>
