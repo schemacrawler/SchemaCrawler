@@ -2,12 +2,12 @@
 <ivy-module xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             version="2.0"
             xsi:noNamespaceSchemaLocation="https://ant.apache.org/ivy/schemas/ivy.xsd">
-  <info organisation="us.fatehi" module="schemacrawler"/>
+  <info organisation="us.fatehi" module="schemacrawler" />
   <configurations>
-    <conf name="runtime" visibility="public" />
+    <conf name="binaries" visibility="public" />
   </configurations>
   <dependencies>
     <dependency org="guru.nidi" name="graphviz-java"
-                rev="0.15.1" conf="runtime" />
+                rev="0.15.1" conf="binaries->default" />
   </dependencies>
 </ivy-module>

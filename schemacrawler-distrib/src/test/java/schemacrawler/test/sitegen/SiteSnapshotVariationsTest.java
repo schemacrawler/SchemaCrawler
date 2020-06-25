@@ -40,6 +40,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
@@ -57,6 +58,7 @@ import schemacrawler.tools.options.TextOutputFormat;
 @ExtendWith(TestAssertNoSystemOutOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
+@EnabledIfSystemProperty(named = "distrib", matches = "^((?!(false|no)).)*$")
 public class SiteSnapshotVariationsTest
 {
 

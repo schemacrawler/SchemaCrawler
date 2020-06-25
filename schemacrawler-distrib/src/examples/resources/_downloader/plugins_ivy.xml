@@ -4,13 +4,13 @@
   xsi:noNamespaceSchemaLocation="https://ant.apache.org/ivy/schemas/ivy.xsd">
   <info organisation="us.fatehi" module="schemacrawler"/>
   <configurations>
-    <conf name="runtime" visibility="public" />
+    <conf name="binaries" visibility="public" />
   </configurations>
   <dependencies>
     <dependency org="us.fatehi" name="schemacrawler-timesten"
-      rev="16.9.2" conf="runtime" />
+      rev="16.9.2" conf="binaries->default" />
     <dependency org="us.fatehi" name="schemacrawler-sapiq"
-      rev="16.9.2" conf="runtime" />
+      rev="16.9.2" conf="binaries->default" />
 
     <exclude org="us.fatehi" module="schemacrawler" />
     <exclude org="org.hsqldb" module="hsqldb" />

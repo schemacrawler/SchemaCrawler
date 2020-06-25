@@ -139,207 +139,168 @@
         <version>3.1.1</version>
         <executions>
           <execution>
-            <id>copy</id>
+            <id>create-lib</id>
             <phase>package</phase>
             <goals>
               <goal>copy</goal>
             </goals>
             <configuration>
               <artifactItems>
+
+                <!-- SchemaCrawler jars -->
+
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-commandline</artifactId>
                   <version>${project.version}</version>
-                  <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-scripting</artifactId>
                   <version>${project.version}</version>
-                  <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-lint</artifactId>
                   <version>${project.version}</version>
-                  <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-offline</artifactId>
                   <version>${project.version}</version>
-                  <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-db2</artifactId>
                   <version>${project.version}</version>
-                  <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-hsqldb</artifactId>
                   <version>${project.version}</version>
-                  <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-oracle</artifactId>
                   <version>${project.version}</version>
-                  <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-mysql</artifactId>
                   <version>${project.version}</version>
-                  <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-db2</artifactId>
                   <version>${project.version}</version>
-                  <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-postgresql</artifactId>
                   <version>${project.version}</version>
-                  <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-sqlite</artifactId>
                   <version>${project.version}</version>
-                  <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-sqlserver</artifactId>
                   <version>${project.version}</version>
-                  <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
                 </artifactItem>
+
+                <!-- JDBC drivers -->
+
                 <artifactItem>
                   <groupId>org.postgresql</groupId>
                   <artifactId>postgresql</artifactId>
                   <version>42.2.12</version>
                   <type>jar</type>
-                  <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>mysql</groupId>
                   <artifactId>mysql-connector-java</artifactId>
                   <version>8.0.20</version>
                   <type>jar</type>
-                  <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>com.microsoft.sqlserver</groupId>
                   <artifactId>mssql-jdbc</artifactId>
                   <version>8.2.2.jre8</version>
                   <type>jar</type>
-                  <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>com.microsoft.sqlserver</groupId>
                   <artifactId>mssql-jdbc_auth</artifactId>
                   <version>8.2.2.x64</version>
                   <type>dll</type>
-                  <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>com.oracle.database.jdbc.debug</groupId>
                   <artifactId>ojdbc8_g</artifactId>
                   <version>19.6.0.0</version>
                   <type>jar</type>
-                  <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>com.ibm.db2</groupId>
                   <artifactId>jcc</artifactId>
                   <version>11.5.0.0</version>
                   <type>jar</type>
-                  <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>com.h2database</groupId>
                   <artifactId>h2</artifactId>
                   <version>1.4.200</version>
                   <type>jar</type>
-                  <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>org.hsqldb</groupId>
                   <artifactId>hsqldb</artifactId>
                   <version>2.5.0</version>
                   <type>jar</type>
-                  <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>org.apache.derby</groupId>
                   <artifactId>derby</artifactId>
                   <version>10.14.2.0</version>
                   <type>jar</type>
-                  <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>org.xerial</groupId>
                   <artifactId>sqlite-jdbc</artifactId>
                   <version>3.31.1</version>
                   <type>jar</type>
-                  <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>info.picocli</groupId>
                   <artifactId>picocli</artifactId>
                   <version>4.3.2</version>
                   <type>jar</type>
-                  <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
                 </artifactItem>
+
+                <!-- Command-line processing -->
+
                 <artifactItem>
                   <groupId>info.picocli</groupId>
                   <artifactId>picocli-shell-jline3</artifactId>
                   <version>4.3.2</version>
                   <type>jar</type>
-                  <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>org.jline</groupId>
                   <artifactId>jline</artifactId>
                   <version>3.11.0</version>
                   <type>jar</type>
-                  <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
                 </artifactItem>
+
               </artifactItems>
+
               <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
               <overWriteReleases>false</overWriteReleases>
               <overWriteSnapshots>true</overWriteSnapshots>
             </configuration>
-          </execution>
+          </execution>	
         </executions>
       </plugin>
       <plugin>
@@ -366,7 +327,7 @@
           <dependency>
             <groupId>org.apache.ant</groupId>
             <artifactId>ant</artifactId>
-            <version>1.10.5</version>
+            <version>1.10.8</version>
           </dependency>
         </dependencies>
       </plugin>

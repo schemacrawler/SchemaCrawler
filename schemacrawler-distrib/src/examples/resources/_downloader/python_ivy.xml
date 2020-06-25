@@ -4,10 +4,10 @@
   xsi:noNamespaceSchemaLocation="https://ant.apache.org/ivy/schemas/ivy.xsd">
   <info organisation="us.fatehi" module="schemacrawler"/>
   <configurations>
-    <conf name="runtime" visibility="public" />
-  </configurations>		
+    <conf name="binaries" visibility="public" />
+  </configurations>
   <dependencies>
     <dependency org="org.python" name="jython-standalone"
-      rev="2.7.2" conf="runtime" />
+      rev="2.7.2" conf="binaries->default" />
   </dependencies>
 </ivy-module>
