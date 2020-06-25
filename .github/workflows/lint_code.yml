@@ -16,7 +16,7 @@ jobs:
 
       - id: lint-code-base
         name: Lint Code Base
-        uses: docker://github/super-linter:v2.2.0
+        uses: docker://github/super-linter:v2.2.2
         env:
           VALIDATE_ALL_CODEBASE: true
           VALIDATE_YAML: true
@@ -27,7 +27,6 @@ jobs:
           VALIDATE_PYTHON: true
           VALIDATE_RUBY: false
           VALIDATE_JAVASCRIPT_ES: true
-          VALIDATE_JAVASCRIPT_STANDARD: true
           VALIDATE_DOCKER: true
           VALIDATE_CSS: true
           VALIDATE_ENV: true
