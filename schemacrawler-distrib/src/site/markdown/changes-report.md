@@ -1,5 +1,12 @@
 # SchemaCrawler Change History
 
+<a name="a16.9.2"></a>
+## Release 16.9.2 - 2020-06-25
+
+- Fix distribution image to download the correct dependencies, and remove duplicated jars
+- Fix issue with the limit options builder
+
+
 <a name="a16.9.1"></a>
 ## Release 16.9.1 - 2020-06-10
 
