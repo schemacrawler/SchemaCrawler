@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 SC_DIR=$(dirname "$0")
-java -cp "$(echo "$SC_DIR"/lib/*.jar | tr ' ' ':'):"$SC_DIR"/config" schemacrawler.Main "$@"
+java -cp "$SC_DIR"/lib/*:"$SC_DIR"/config schemacrawler.Main "$@"
