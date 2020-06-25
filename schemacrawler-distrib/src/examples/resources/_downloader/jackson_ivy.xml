@@ -4,16 +4,20 @@
             xsi:noNamespaceSchemaLocation="https://ant.apache.org/ivy/schemas/ivy.xsd">
   <info organisation="us.fatehi" module="schemacrawler"/>
   <configurations>
-    <conf name="runtime" visibility="public" />
+    <conf name="binaries" visibility="public" />
   </configurations>
   <dependencies>
     <dependency org="com.fasterxml.jackson.core"
-                name="jackson-core" rev="2.11.0" conf="runtime" />
+                name="jackson-core" rev="2.11.0" conf="binaries->default" />
     <dependency org="com.fasterxml.jackson.datatype"
-                name="jackson-datatype-jsr310" rev="2.11.0" conf="runtime" />
+                name="jackson-datatype-jsr310" rev="2.11.0" conf="binaries->default" />
     <dependency org="com.fasterxml.jackson.core"
-                name="jackson-databind" rev="2.11.0" conf="runtime" />
+                name="jackson-databind" rev="2.11.0" conf="binaries->default" />
     <dependency org="com.fasterxml.jackson.dataformat"
-                name="jackson-dataformat-yaml" rev="2.11.0" conf="runtime" />
+                name="jackson-dataformat-yaml" rev="2.11.0" conf="binaries->default" />
+    <dependency org="com.fasterxml.jackson.core"
+                name="jackson-annotations" rev="2.11.0" conf="binaries->default" />
+    <dependency org="org.yaml" name="snakeyaml" rev="1.26" conf="binaries->default" />
+
   </dependencies>
 </ivy-module>

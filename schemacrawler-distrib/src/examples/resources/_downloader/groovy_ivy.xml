@@ -4,11 +4,11 @@
             xsi:noNamespaceSchemaLocation="https://ant.apache.org/ivy/schemas/ivy.xsd">
   <info organisation="us.fatehi" module="schemacrawler"/>
   <configurations>
-    <conf name="runtime" visibility="public" />
+    <conf name="binaries" visibility="public" />
   </configurations>
   <dependencies>
     <dependency org="org.codehaus.groovy" name="groovy-all"
-                rev="3.0.4" conf="runtime" />
+                rev="3.0.4" conf="binaries->default" />
 
     <exclude org="org.codehaus.groovy" module="groovy-ant" />
     <exclude org="org.codehaus.groovy" module="groovy-cli-picocli" />

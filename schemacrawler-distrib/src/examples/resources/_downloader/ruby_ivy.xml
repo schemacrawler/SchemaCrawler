@@ -4,9 +4,9 @@
   xsi:noNamespaceSchemaLocation="https://ant.apache.org/ivy/schemas/ivy.xsd">
   <info organisation="us.fatehi" module="schemacrawler"/>
   <configurations>
-    <conf name="runtime" visibility="public" />
-  </configurations>		
+    <conf name="binaries" visibility="public" />
+  </configurations>
   <dependencies>
-    <dependency org="org.jruby" name="jruby" rev="9.2.11.1" conf="runtime" />
+    <dependency org="org.jruby" name="jruby" rev="9.2.11.1" conf="binaries->default" />
   </dependencies>
 </ivy-module>

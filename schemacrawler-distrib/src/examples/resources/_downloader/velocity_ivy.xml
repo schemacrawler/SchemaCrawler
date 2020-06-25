@@ -4,11 +4,13 @@
             xsi:noNamespaceSchemaLocation="https://ant.apache.org/ivy/schemas/ivy.xsd">
   <info organisation="us.fatehi" module="schemacrawler"/>
   <configurations>
-    <conf name="runtime" visibility="public" />
-  </configurations>		
+    <conf name="binaries" visibility="public" />
+  </configurations>
   <dependencies>
     <dependency org="org.apache.velocity"
-                name="velocity-engine-scripting" rev="2.2" conf="runtime" />
+                name="velocity-engine-scripting" rev="2.2" conf="binaries->default" />
+    <dependency org="org.apache.velocity"
+                name="velocity-engine-core" rev="2.2" conf="binaries->default" />
 
     <exclude org="org.slf4j" module="slf4j-simple" />
     <exclude org="org.slf4j" module="slf4j-api" />

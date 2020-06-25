@@ -4,10 +4,10 @@
   xsi:noNamespaceSchemaLocation="https://ant.apache.org/ivy/schemas/ivy.xsd">
   <info organisation="us.fatehi" module="schemacrawler"/>
   <configurations>
-    <conf name="runtime" visibility="public" />
-  </configurations>		
+    <conf name="binaries" visibility="public" />
+  </configurations>
   <dependencies>
     <dependency org="com.github.spullara.mustache.java"
-      name="compiler" rev="0.9.6" conf="runtime" />
+      name="compiler" rev="0.9.6" conf="binaries->default" />
   </dependencies>
 </ivy-module>
