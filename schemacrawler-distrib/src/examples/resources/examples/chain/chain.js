@@ -1,9 +1,9 @@
 var scCommands = function () {
     // Add command to run against the schema metadata
     // Arguments are:
-    // 1. command
-    // 2. outputformat
-    // 3. outputfile
+    // 1. --command
+    // 2. --output-format
+    // 3. --output-file
     chain.addNext("brief", "text", "schema.txt");
     chain.addNext("schema", "png", "schema.png");
 

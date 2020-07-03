@@ -22,7 +22,7 @@ Currently, the the pure Java Graphviz library is only able to generate PNG and S
 
 Then you can run SchemaCrawler with the correct command-line options - for 
 example, 
-`-command=schema -outputformat=png -outputfile=graph.png` 
+`--command=schema --output-format=png --output-file=graph.png` 
 
 See the diagram example in the 
 [SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) 
@@ -138,7 +138,7 @@ schemacrawler.graph.graphviz_opts=-Gdpi=300
 ### Embedded Diagrams
 
 SchemaCrawler can generate [SVG diagrams embedded in HTML output](snapshot-examples/snapshot.svg.html). To generate this
-format, run SchemaCrawler with an `-outputformat=htmlx` command-line argument. Please edit the SchemaCrawler 
+format, run SchemaCrawler with an `--output-format=htmlx` command-line argument. Please edit the SchemaCrawler 
 configuration file, `schemacrawler.config.properties`, and comment out or delete the line 
 `schemacrawler.graph.graphviz_opts=-Gdpi=300`.
 
