@@ -40,18 +40,16 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.configu
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static sf.util.Utility.isBlank;
 
-import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Help;
-import picocli.CommandLine.Model;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
-import picocli.CommandLine.Spec;
 import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
@@ -59,6 +57,7 @@ import schemacrawler.tools.commandline.state.StateFactory;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import schemacrawler.tools.executable.commandline.PluginCommandType;
 
 @Command(name = "help",
          header = "Display SchemaCrawler command-line help",
@@ -73,17 +72,12 @@ public final class CommandLineHelpCommand
   implements Runnable
 {
 
-  private Help.Ansi ansi;
-  @Parameters
-  private String[] commands;
-  private PrintStream err;
+  @Parameters(index = "0", arity = "0..1")
+  private String command;
   @Option(names = {
     "-h", "--help"
   }, usageHelp = true, description = "Displays SchemaCrawler command-line help")
   private boolean helpRequested;
-  private PrintStream out;
-  @Spec
-  private Model.CommandSpec spec;
 
   public boolean isHelpRequested()
   {
@@ -93,79 +87,90 @@ public final class CommandLineHelpCommand
   @Override
   public void run()
   {
-    ansi = Help.Ansi.AUTO;
-    out = System.out;
-    err = System.err;
-
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     final CommandLine parent = newCommandLine(new SchemaCrawlerShellCommands(),
                                               new StateFactory(state),
                                               false);
 
-    if (commands != null && commands.length > 0)
+    if (!isBlank(command))
     {
       configureHelpForSubcommand(parent);
-      showHelpForSubcommand(parent, commands[0]);
+      showHelpForSubcommand(parent, command);
     }
     else
     {
-      new SystemCommand(state).printVersion();
-
-      out.println();
-      out.println();
-
-      final List<String> commandNames = new ArrayList<>(Arrays.asList("log",
-                                                                      "config-file",
-                                                                      "connect",
-                                                                      "limit",
-                                                                      "grep",
-                                                                      "filter",
-                                                                      "load"));
-      new AvailableCommands()
-        .iterator()
-        .forEachRemaining(commandNames::add);
-      commandNames.addAll(Arrays.asList("show", "sort", "execute"));
-
-      for (final String commandName : commandNames)
-      {
-        showHelpForSubcommand(parent, commandName);
-      }
-
+      showCompleteHelp(parent);
     }
+
   }
 
-  private CommandLine databaseConnectorCommand(final String databaseSystemIdentifier)
+  private void showCompleteHelp(final CommandLine parent)
   {
+    new SystemCommand(new SchemaCrawlerShellState()).printVersion();
+
+    System.out.printf("%n%n");
+
+    Stream
+      .of(Stream.of("log",
+                    "config-file",
+                    "connect",
+                    "limit",
+                    "grep",
+                    "filter",
+                    "load"),
+          StreamSupport
+            .stream(new AvailableCommands().spliterator(), false)
+            .map(PluginCommandType.command::toPluginCommandName),
+          Stream.of("show", "sort", "execute"))
+      .flatMap(i -> i)
+      .forEach(command -> showHelpForSubcommand(parent, command));
+  }
+
+  private Optional<CommandLine> lookupServerCommand(final String command)
+  {
+    final String databaseSystemIdentifier;
+    if (command.contains(":"))
+    {
+      databaseSystemIdentifier = command.split(":")[1];
+    }
+    else
+    {
+      databaseSystemIdentifier = command;
+    }
+
     final DatabaseConnectorRegistry databaseConnectorRegistry =
       DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    if (!databaseConnectorRegistry.hasDatabaseSystemIdentifier(
+      databaseSystemIdentifier))
+    {
+      return Optional.empty();
+    }
+
     final DatabaseConnector databaseConnector =
       databaseConnectorRegistry.lookupDatabaseConnector(databaseSystemIdentifier);
+    final PluginCommand helpCommand = databaseConnector.getHelpCommand();
 
     @Command
     class EmptyCommand
     {}
 
     final CommandLine commandLine = new CommandLine(new EmptyCommand());
-
-    final PluginCommand helpCommand = databaseConnector.getHelpCommand();
     addPluginCommand(commandLine, helpCommand, false);
 
-    final CommandLine subcommandLine = commandLine
-      .getSubcommands()
-      .get(databaseSystemIdentifier);
+    final CommandLine subcommandLine =
+      lookupCommand(commandLine, helpCommand.getName()).orElse(null);
     if (subcommandLine == null)
     {
-      return commandLine;
+      return Optional.empty();
     }
     configureCommandLine(subcommandLine);
     configureHelpForSubcommand(subcommandLine);
 
-    return subcommandLine;
+    return Optional.of(subcommandLine);
   }
 
   private void configureHelpForSubcommand(final CommandLine commandLine)
   {
-
     if (commandLine == null)
     {
       return;
@@ -188,32 +193,34 @@ public final class CommandLineHelpCommand
   }
 
   private void showHelpForSubcommand(final CommandLine parent,
-                                     final String commandName)
+                                     final String command)
   {
-    if (isBlank(commandName))
+    if (parent == null)
     {
       return;
     }
-    final DatabaseConnectorRegistry databaseConnectorRegistry =
-      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    final CommandLine subCommand;
-    if (databaseConnectorRegistry.hasDatabaseSystemIdentifier(commandName))
+    if (isBlank(command))
     {
-      subCommand = databaseConnectorCommand(commandName);
-    }
-    else
-    {
-      subCommand = parent
-        .getSubcommands()
-        .get(commandName);
-    }
-    if (subCommand != null)
-    {
-      subCommand.usage(out, ansi);
-      System.out.println();
-      System.out.println();
+      return;
     }
 
+    final CommandLine subCommand =
+      lookupServerCommand(command).orElse(lookupCommand(parent, command).orElse(
+        null));
+    if (subCommand != null)
+    {
+      subCommand.usage(System.out, Help.Ansi.AUTO);
+      System.out.printf("%n%n");
+    }
+
+  }
+
+  private Optional<CommandLine> lookupCommand(final CommandLine parent,
+                                              final String command)
+  {
+    return Optional.ofNullable(parent
+                                 .getSubcommands()
+                                 .get(command));
   }
 
 }

@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint.executable;
 
 
+import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
 import static sf.util.Utility.isBlank;
 
 import java.nio.file.Path;
@@ -84,7 +85,7 @@ public class LintCommandProvider
   @Override
   public PluginCommand getCommandLineCommand()
   {
-    final PluginCommand pluginCommand = new PluginCommand("lint",
+    final PluginCommand pluginCommand = newPluginCommand("lint",
                                                           "** "
                                                           + DESCRIPTION_HEADER,
                                                           "For more information, see https://www.schemacrawler.com/lint.html %n");

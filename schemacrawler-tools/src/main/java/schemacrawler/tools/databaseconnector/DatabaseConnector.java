@@ -30,6 +30,7 @@ package schemacrawler.tools.databaseconnector;
 
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.plugin.EnumDataTypeHelper.NO_OP_ENUM_DATA_TYPE_HELPER;
+import static schemacrawler.tools.executable.commandline.PluginCommand.newDatabasePluginCommand;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
@@ -164,9 +165,9 @@ public abstract class DatabaseConnector
   {
 
     final PluginCommand pluginCommand =
-      new PluginCommand(dbServerType.getDatabaseSystemIdentifier(),
-                        "** Connect to "
-                        + dbServerType.getDatabaseSystemName());
+      newDatabasePluginCommand(dbServerType.getDatabaseSystemIdentifier(),
+                               "** Connect to "
+                               + dbServerType.getDatabaseSystemName());
     return pluginCommand;
   }
 

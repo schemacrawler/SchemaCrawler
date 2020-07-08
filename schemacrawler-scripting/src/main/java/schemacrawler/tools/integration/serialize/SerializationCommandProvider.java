@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.serialize;
 
 
+import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
 import static sf.util.Utility.isBlank;
 
 import schemacrawler.schemacrawler.Config;
@@ -81,7 +82,7 @@ public class SerializationCommandProvider
   public PluginCommand getCommandLineCommand()
   {
     final PluginCommand pluginCommand =
-      new PluginCommand(SerializationCommand.COMMAND,
+      newPluginCommand(SerializationCommand.COMMAND,
                         "** " + DESCRIPTION_HEADER,
                         "For more information, see https://www.schemacrawler.com/serialize.html %n");
 

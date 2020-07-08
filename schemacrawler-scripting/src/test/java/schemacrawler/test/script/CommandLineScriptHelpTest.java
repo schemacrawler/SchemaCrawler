@@ -69,7 +69,7 @@ public class CommandLineScriptHelpTest
   public void helpScript(final TestContext testContext)
   {
     final String[] args = {
-      "--help", "script"
+      "--help", "command:script"
     };
 
     final CommandLineHelpCommand optionsParser = new CommandLineHelpCommand();

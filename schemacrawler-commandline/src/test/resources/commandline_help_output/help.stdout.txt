@@ -273,7 +273,7 @@ Options:
 
 ** Test command which is not deployed with the release
 Command:
-test-command
+command:test-command
 
 Options:
       --test-command-parameter=<test-command-parameter>
