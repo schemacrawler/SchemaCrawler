@@ -28,7 +28,23 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable.commandline;
 
 
+import static sf.util.Utility.isBlank;
+
 public enum PluginCommandType
 {
-  command, server;
+  command,
+  server;
+
+  public String toPluginCommandName(final String command)
+  {
+    if (isBlank(command))
+    {
+      return null;
+    }
+    else
+    {
+      return toString() + ":" + command;
+    }
+  }
+
 }

@@ -183,11 +183,7 @@ public class PluginCommand
 
   public String getName()
   {
-    if (name == null)
-    {
-      return null;
-    }
-    return type + ":" + name;
+    return type.toPluginCommandName(name);
   }
 
 }
