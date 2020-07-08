@@ -69,7 +69,7 @@ public class CommandLineTemplateHelpTest
   public void helpTemplate(final TestContext testContext)
   {
     final String[] args = {
-      "--help", "template"
+      "--help", "command:template"
     };
 
     final CommandLineHelpCommand optionsParser = new CommandLineHelpCommand();

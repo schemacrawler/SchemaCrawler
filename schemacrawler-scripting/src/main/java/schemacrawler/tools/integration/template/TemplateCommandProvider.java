@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.template;
 
 
+import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
+
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.BaseCommandProvider;
@@ -68,7 +70,7 @@ public class TemplateCommandProvider
   public PluginCommand getCommandLineCommand()
   {
     final PluginCommand pluginCommand =
-      new PluginCommand(TemplateCommand.COMMAND, "** " + DESCRIPTION_HEADER);
+      newPluginCommand(TemplateCommand.COMMAND, "** " + DESCRIPTION_HEADER);
     pluginCommand
       .addOption("template",
                  "Path to the template file or to the CLASSPATH resource",

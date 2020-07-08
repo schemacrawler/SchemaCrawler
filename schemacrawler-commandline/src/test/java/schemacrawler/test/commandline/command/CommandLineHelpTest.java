@@ -91,7 +91,7 @@ public class CommandLineHelpTest
   public void helpCommand(final TestContext testContext)
   {
     final String[] args = {
-      "--help", "test-command"
+      "--help", "command:test-command"
     };
 
     assertHelpMessage(testContext, args, true);
@@ -111,7 +111,7 @@ public class CommandLineHelpTest
   public void helpDatabaseServer(final TestContext testContext)
   {
     final String[] args = {
-      "--help", "test-db"
+      "--help", "server:test-db"
     };
 
     assertHelpMessage(testContext, args, true);

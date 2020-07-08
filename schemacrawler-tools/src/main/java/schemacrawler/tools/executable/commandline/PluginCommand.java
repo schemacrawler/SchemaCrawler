@@ -28,6 +28,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable.commandline;
 
 
+import static java.util.Objects.requireNonNull;
+import static schemacrawler.tools.executable.commandline.PluginCommandType.command;
+import static schemacrawler.tools.executable.commandline.PluginCommandType.server;
 import static sf.util.Utility.isBlank;
 
 import java.util.ArrayList;
@@ -43,19 +46,41 @@ public class PluginCommand
 
   public static PluginCommand empty()
   {
-    return new PluginCommand(null, null);
+    return new PluginCommand(command, null, null, null, null);
   }
 
+  public static PluginCommand newPluginCommand(final String name,
+                                               final String helpHeader)
+  {
+    return new PluginCommand(command, name, helpHeader, null, null);
+  }
+
+  public static PluginCommand newDatabasePluginCommand(final String name,
+                                                       final String helpHeader)
+  {
+    return new PluginCommand(server, name, helpHeader, null, null);
+  }
+
+  public static PluginCommand newPluginCommand(final String name,
+                                               final String helpHeader,
+                                               final String helpDescription)
+  {
+    return new PluginCommand(command, name, helpHeader, helpDescription, null);
+  }
+
+  private final PluginCommandType type;
   private final String helpDescription;
   private final String helpHeader;
   private final String name;
   private final Collection<PluginCommandOption> options;
 
-  private PluginCommand(final String name,
+  private PluginCommand(final PluginCommandType type,
+                        final String name,
                         final String helpHeader,
                         final String helpDescription,
                         final Collection<PluginCommandOption> options)
   {
+    this.type = requireNonNull(type, "No plugin command type provided");
     if (options == null)
     {
       this.options = new ArrayList<>();
@@ -90,18 +115,6 @@ public class PluginCommand
     }
   }
 
-  public PluginCommand(final String name, final String helpHeader)
-  {
-    this(name, helpHeader, null, null);
-  }
-
-  public PluginCommand(final String name,
-                       final String helpHeader,
-                       final String helpDescription)
-  {
-    this(name, helpHeader, helpDescription, null);
-  }
-
   public String getHelpDescription()
   {
     return helpDescription;
@@ -134,6 +147,17 @@ public class PluginCommand
   }
 
   @Override
+  public String toString()
+  {
+    return new StringJoiner(", ",
+                            PluginCommand.class.getSimpleName() + "[",
+                            "]")
+      .add("name='" + name + "'")
+      .add("options=" + options)
+      .toString();
+  }
+
+  @Override
   public Iterator<PluginCommandOption> iterator()
   {
     return options.iterator();
@@ -159,18 +183,11 @@ public class PluginCommand
 
   public String getName()
   {
-    return name;
-  }
-
-  @Override
-  public String toString()
-  {
-    return new StringJoiner(", ",
-                            PluginCommand.class.getSimpleName() + "[",
-                            "]")
-      .add("name='" + name + "'")
-      .add("options=" + options)
-      .toString();
+    if (name == null)
+    {
+      return null;
+    }
+    return type + ":" + name;
   }
 
 }

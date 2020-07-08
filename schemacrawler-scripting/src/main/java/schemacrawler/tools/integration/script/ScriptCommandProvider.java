@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.script;
 
 
+import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
+
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.BaseCommandProvider;
@@ -68,7 +70,7 @@ public class ScriptCommandProvider
   public PluginCommand getCommandLineCommand()
   {
     final PluginCommand pluginCommand =
-      new PluginCommand(ScriptCommand.COMMAND, "** " + DESCRIPTION_HEADER);
+      newPluginCommand(ScriptCommand.COMMAND, "** " + DESCRIPTION_HEADER);
     pluginCommand
       .addOption("script",
                  "Path to the script file or to the CLASSPATH resource",

@@ -44,6 +44,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
@@ -121,9 +122,9 @@ public final class CommandLineHelpCommand
                                                                       "grep",
                                                                       "filter",
                                                                       "load"));
-      new AvailableCommands()
-        .iterator()
-        .forEachRemaining(commandNames::add);
+      StreamSupport.stream(new AvailableCommands().spliterator(), false)
+        .map(command -> "command:" + command)
+        .forEach(commandNames::add);
       commandNames.addAll(Arrays.asList("show", "sort", "execute"));
 
       for (final String commandName : commandNames)
@@ -134,25 +135,19 @@ public final class CommandLineHelpCommand
     }
   }
 
-  private CommandLine databaseConnectorCommand(final String databaseSystemIdentifier)
+  private CommandLine databaseConnectorCommand(final PluginCommand helpCommand)
   {
-    final DatabaseConnectorRegistry databaseConnectorRegistry =
-      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    final DatabaseConnector databaseConnector =
-      databaseConnectorRegistry.lookupDatabaseConnector(databaseSystemIdentifier);
-
     @Command
     class EmptyCommand
     {}
 
     final CommandLine commandLine = new CommandLine(new EmptyCommand());
 
-    final PluginCommand helpCommand = databaseConnector.getHelpCommand();
     addPluginCommand(commandLine, helpCommand, false);
 
     final CommandLine subcommandLine = commandLine
       .getSubcommands()
-      .get(databaseSystemIdentifier);
+      .get(helpCommand.getName());
     if (subcommandLine == null)
     {
       return commandLine;
@@ -188,24 +183,37 @@ public final class CommandLineHelpCommand
   }
 
   private void showHelpForSubcommand(final CommandLine parent,
-                                     final String commandName)
+                                     final String command)
   {
-    if (isBlank(commandName))
+    if (isBlank(command))
     {
       return;
     }
+    final String commandName;
+    if (command.contains(":"))
+    {
+      commandName = command.split(":")[1];
+    }
+    else
+    {
+      commandName = command;
+    }
+
     final DatabaseConnectorRegistry databaseConnectorRegistry =
       DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     final CommandLine subCommand;
     if (databaseConnectorRegistry.hasDatabaseSystemIdentifier(commandName))
     {
-      subCommand = databaseConnectorCommand(commandName);
+      final DatabaseConnector databaseConnector =
+        databaseConnectorRegistry.lookupDatabaseConnector(commandName);
+      final PluginCommand helpCommand = databaseConnector.getHelpCommand();
+      subCommand = databaseConnectorCommand(helpCommand);
     }
     else
     {
       subCommand = parent
         .getSubcommands()
-        .get(commandName);
+        .get(command);
     }
     if (subCommand != null)
     {

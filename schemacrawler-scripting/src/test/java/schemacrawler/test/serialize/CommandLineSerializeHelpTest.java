@@ -69,7 +69,7 @@ public class CommandLineSerializeHelpTest
   public void helpSerialize(final TestContext testContext)
   {
     final String[] args = {
-      "--help", "serialize"
+      "--help", "command:serialize"
     };
 
     final CommandLineHelpCommand optionsParser = new CommandLineHelpCommand();

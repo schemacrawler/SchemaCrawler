@@ -69,7 +69,7 @@ public class CommandLineLintHelpTest
   public void helpLint(final TestContext testContext)
   {
     final String[] args = {
-      "--help", "lint"
+      "--help", "command:lint"
     };
 
     final CommandLineHelpCommand optionsParser = new CommandLineHelpCommand();

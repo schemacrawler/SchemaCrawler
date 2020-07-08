@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
+import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
+
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.BaseCommandProvider;
@@ -68,7 +70,7 @@ public class TestCommandProvider
   public PluginCommand getCommandLineCommand()
   {
     final PluginCommand pluginCommand =
-      new PluginCommand(COMMAND, "** " + DESCRIPTION_HEADER);
+      newPluginCommand(COMMAND, "** " + DESCRIPTION_HEADER);
     pluginCommand.addOption("test-command-parameter",
                             "Parameter for test command",
                             String.class);

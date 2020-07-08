@@ -64,7 +64,7 @@ public class TestDatabaseConnectorTest
 
     final PluginCommand helpCommand = databaseConnector.getHelpCommand();
     assertThat(helpCommand, is(notNullValue()));
-    assertThat(helpCommand.getName(), is("test-db"));
+    assertThat(helpCommand.getName(), is("server:test-db"));
 
     assertThat(databaseConnector
                  .getDatabaseServerType()
