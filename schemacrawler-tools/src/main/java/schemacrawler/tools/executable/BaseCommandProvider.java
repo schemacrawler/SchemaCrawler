@@ -34,8 +34,12 @@ import static sf.util.Utility.isBlank;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.function.Predicate;
 
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import schemacrawler.tools.options.OutputOptions;
 
 public abstract class BaseCommandProvider
   implements CommandProvider
@@ -58,6 +62,33 @@ public abstract class BaseCommandProvider
   public final Collection<CommandDescription> getSupportedCommands()
   {
     return new ArrayList<>(supportedCommands);
+  }
+
+  @Override
+  public boolean supportsSchemaCrawlerCommand(final String command,
+                                              final SchemaCrawlerOptions schemaCrawlerOptions,
+                                              final Config additionalConfiguration,
+                                              final OutputOptions outputOptions)
+  {
+    return supportsCommand(command);
+  }
+
+  protected boolean supportsOutputFormat(final String command,
+                                         final OutputOptions outputOptions,
+                                         final Predicate<String> outputFormatValuePredicate)
+  {
+    requireNonNull(outputFormatValuePredicate,
+                   "No output format value predicate provided");
+    if (outputOptions == null)
+    {
+      return false;
+    }
+    final String format = outputOptions.getOutputFormatValue();
+    if (isBlank(format))
+    {
+      return false;
+    }
+    return outputFormatValuePredicate.test(format);
   }
 
   @Override

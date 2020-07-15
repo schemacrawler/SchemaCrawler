@@ -29,10 +29,7 @@ package schemacrawler.tools.integration.serialize;
 
 
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
-import static sf.util.Utility.isBlank;
 
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
@@ -59,30 +56,12 @@ public class SerializationCommandProvider
   }
 
   @Override
-  public boolean supportsSchemaCrawlerCommand(final String command,
-                                              final SchemaCrawlerOptions schemaCrawlerOptions,
-                                              final Config additionalConfiguration,
-                                              final OutputOptions outputOptions)
-  {
-    return supportsCommand(command);
-  }
-
-  @Override
   public boolean supportsOutputFormat(final String command,
                                       final OutputOptions outputOptions)
   {
-    if (outputOptions == null)
-    {
-      return false;
-    }
-    final String format = outputOptions.getOutputFormatValue();
-    if (isBlank(format))
-    {
-      return false;
-    }
-    final boolean supportsOutputFormat =
-      SerializationFormat.isSupportedFormat(format);
-    return supportsOutputFormat;
+    return supportsOutputFormat(command,
+                                outputOptions,
+                                SerializationFormat::isSupportedFormat);
   }
 
   @Override

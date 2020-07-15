@@ -28,10 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
-import static sf.util.Utility.isBlank;
-
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextRenderer;
@@ -52,41 +48,12 @@ public final class SchemaTextCommandProvider
   }
 
   @Override
-  public boolean supportsSchemaCrawlerCommand(final String command,
-                                              final SchemaCrawlerOptions schemaCrawlerOptions,
-                                              final Config additionalConfiguration,
-                                              final OutputOptions outputOptions)
-  {
-    if (outputOptions == null)
-    {
-      return false;
-    }
-    final String format = outputOptions.getOutputFormatValue();
-    if (isBlank(format))
-    {
-      return false;
-    }
-    final boolean supportsSchemaCrawlerCommand =
-      supportsCommand(command) && TextOutputFormat.isSupportedFormat(format);
-    return supportsSchemaCrawlerCommand;
-  }
-
-  @Override
   public boolean supportsOutputFormat(final String command,
                                       final OutputOptions outputOptions)
   {
-    if (outputOptions == null)
-    {
-      return false;
-    }
-    final String format = outputOptions.getOutputFormatValue();
-    if (isBlank(format))
-    {
-      return false;
-    }
-    final boolean supportsOutputFormat =
-      TextOutputFormat.isSupportedFormat(format);
-    return supportsOutputFormat;
+    return supportsOutputFormat(command,
+                                outputOptions,
+                                TextOutputFormat::isSupportedFormat);
   }
 
 }
