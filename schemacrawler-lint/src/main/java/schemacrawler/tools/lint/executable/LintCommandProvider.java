@@ -29,12 +29,9 @@ package schemacrawler.tools.lint.executable;
 
 
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
-import static sf.util.Utility.isBlank;
 
 import java.nio.file.Path;
 
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
@@ -62,24 +59,12 @@ public class LintCommandProvider
   }
 
   @Override
-  public boolean supportsSchemaCrawlerCommand(final String command,
-                                              final SchemaCrawlerOptions schemaCrawlerOptions,
-                                              final Config additionalConfiguration,
-                                              final OutputOptions outputOptions)
+  public boolean supportsOutputFormat(final String command,
+                                      final OutputOptions outputOptions)
   {
-    if (outputOptions == null)
-    {
-      return false;
-    }
-    final String format = outputOptions.getOutputFormatValue();
-    if (isBlank(format))
-    {
-      return false;
-    }
-    final boolean supportsSchemaCrawlerCommand =
-      supportsCommand(command) && LintReportOutputFormat.isSupportedFormat(
-        format);
-    return supportsSchemaCrawlerCommand;
+    return supportsOutputFormat(command,
+                                outputOptions,
+                                LintReportOutputFormat::isSupportedFormat);
   }
 
   @Override

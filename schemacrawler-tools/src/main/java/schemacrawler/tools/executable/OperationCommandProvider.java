@@ -33,6 +33,7 @@ import static sf.util.Utility.isBlank;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.operation.OperationCommand;
 
 final class OperationCommandProvider
@@ -56,16 +57,6 @@ final class OperationCommandProvider
                                               final Config additionalConfiguration,
                                               final OutputOptions outputOptions)
   {
-    if (outputOptions == null)
-    {
-      return false;
-    }
-    final String format = outputOptions.getOutputFormatValue();
-    if (isBlank(format))
-    {
-      return false;
-    }
-
     // Check if the command is an operation
     final boolean isOperation = supportsCommand(command);
 
@@ -86,6 +77,13 @@ final class OperationCommandProvider
     // So no check is done for output format.
     final boolean supportsSchemaCrawlerCommand = isOperation || isNamedQuery;
     return supportsSchemaCrawlerCommand;
+  }
+
+  @Override
+  public boolean supportsOutputFormat(final String command,
+                                      final OutputOptions outputOptions)
+  {
+    return true;
   }
 
 }

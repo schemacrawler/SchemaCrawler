@@ -34,6 +34,7 @@ import static java.util.Comparator.naturalOrder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
@@ -57,6 +58,7 @@ public final class CommandRegistry
 
   private static final SchemaCrawlerLogger LOGGER =
     SchemaCrawlerLogger.getLogger(CommandRegistry.class.getName());
+  private static CommandRegistry commandRegistrySingleton;
 
   public static CommandRegistry getCommandRegistry()
     throws SchemaCrawlerException
@@ -101,9 +103,6 @@ public final class CommandRegistry
 
     return commandProviders;
   }
-
-  private static CommandRegistry commandRegistrySingleton;
-
   private final List<CommandProvider> commandRegistry;
 
   private CommandRegistry()
@@ -143,24 +142,18 @@ public final class CommandRegistry
                                            final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
-    CommandProvider executableCommandProvider = null;
-    for (final CommandProvider commandProvider : commandRegistry)
-    {
-      if (commandProvider.supportsSchemaCrawlerCommand(command,
-                                                       schemaCrawlerOptions,
-                                                       additionalConfiguration,
-                                                       outputOptions))
-      {
+    final List<CommandProvider> executableCommandProviders = new ArrayList<>();
+    findSupportedCommands(command,
+                          schemaCrawlerOptions,
+                          additionalConfiguration,
+                          outputOptions,
+                          executableCommandProviders);
+    findSupportedOutputFormats(command,
+                               outputOptions,
+                               executableCommandProviders);
 
-        executableCommandProvider = commandProvider;
-        break;
-      }
-    }
-    if (executableCommandProvider == null)
-    {
-      throw new SchemaCrawlerException(String.format("Unknown command <%s>",
-                                                     command));
-    }
+    final CommandProvider executableCommandProvider =
+      executableCommandProviders.get(0);
 
     final SchemaCrawlerCommand scCommand;
     try
@@ -180,6 +173,55 @@ public final class CommandRegistry
     }
 
     return scCommand;
+  }
+
+  private void findSupportedOutputFormats(final String command,
+                                          final OutputOptions outputOptions,
+                                          final List<CommandProvider> executableCommandProviders)
+    throws SchemaCrawlerException
+  {
+    final Iterator<CommandProvider> iterator =
+      executableCommandProviders.iterator();
+    while (iterator.hasNext())
+    {
+      final CommandProvider executableCommandProvider = iterator.next();
+      if (!executableCommandProvider.supportsOutputFormat(command,
+                                                          outputOptions))
+      {
+        iterator.remove();
+      }
+    }
+    if (executableCommandProviders.isEmpty())
+    {
+      throw new SchemaCrawlerException(String.format(
+        "Output format <%s> not supported for command <%s>",
+        outputOptions.getOutputFormatValue(),
+        command));
+    }
+  }
+
+  private void findSupportedCommands(final String command,
+                                     final SchemaCrawlerOptions schemaCrawlerOptions,
+                                     final Config additionalConfiguration,
+                                     final OutputOptions outputOptions,
+                                     final List<CommandProvider> executableCommandProviders)
+    throws SchemaCrawlerException
+  {
+    for (final CommandProvider commandProvider : commandRegistry)
+    {
+      if (commandProvider.supportsSchemaCrawlerCommand(command,
+                                                       schemaCrawlerOptions,
+                                                       additionalConfiguration,
+                                                       outputOptions))
+      {
+        executableCommandProviders.add(commandProvider);
+      }
+    }
+    if (executableCommandProviders.isEmpty())
+    {
+      throw new SchemaCrawlerException(String.format("Unknown command <%s>",
+                                                     command));
+    }
   }
 
 }

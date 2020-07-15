@@ -49,6 +49,9 @@ public interface CommandProvider
                                        Config additionalConfiguration,
                                        OutputOptions outputOptions);
 
+  boolean supportsOutputFormat(String command,
+                               OutputOptions outputOptions);
+
   PluginCommand getCommandLineCommand();
 
 }

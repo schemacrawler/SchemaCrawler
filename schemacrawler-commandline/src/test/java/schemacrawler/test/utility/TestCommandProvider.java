@@ -58,10 +58,8 @@ public class TestCommandProvider
   }
 
   @Override
-  public boolean supportsSchemaCrawlerCommand(final String command,
-                                              final SchemaCrawlerOptions schemaCrawlerOptions,
-                                              final Config additionalConfiguration,
-                                              final OutputOptions outputOptions)
+  public boolean supportsOutputFormat(final String command,
+                                      final OutputOptions outputOptions)
   {
     return false;
   }

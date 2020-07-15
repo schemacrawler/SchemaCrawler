@@ -58,12 +58,10 @@ public class TemplateCommandProvider
   }
 
   @Override
-  public boolean supportsSchemaCrawlerCommand(final String command,
-                                              final SchemaCrawlerOptions schemaCrawlerOptions,
-                                              final Config additionalConfiguration,
-                                              final OutputOptions outputOptions)
+  public boolean supportsOutputFormat(final String command,
+                                      final OutputOptions outputOptions)
   {
-    return supportsCommand(command);
+    return true;
   }
 
   @Override

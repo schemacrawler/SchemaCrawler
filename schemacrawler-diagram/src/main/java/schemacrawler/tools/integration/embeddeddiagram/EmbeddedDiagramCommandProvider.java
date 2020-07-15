@@ -28,10 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.embeddeddiagram;
 
 
-import static sf.util.Utility.isBlank;
-
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandProviderUtility;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
@@ -54,26 +50,16 @@ public final class EmbeddedDiagramCommandProvider
   }
 
   @Override
-  public boolean supportsSchemaCrawlerCommand(final String command,
-                                              final SchemaCrawlerOptions schemaCrawlerOptions,
-                                              final Config additionalConfiguration,
-                                              final OutputOptions outputOptions)
+  public boolean supportsOutputFormat(final String command,
+                                      final OutputOptions outputOptions)
   {
-    if (outputOptions == null)
-    {
-      return false;
-    }
-    final String format = outputOptions.getOutputFormatValue();
-    if (isBlank(format))
-    {
-      return false;
-    }
-    final DiagramOutputFormat diagramOutputFormat =
-      DiagramOutputFormat.fromFormat(format);
-    final boolean supportsSchemaCrawlerCommand = supportsCommand(command)
-                                                 && diagramOutputFormat
-                                                    == DiagramOutputFormat.htmlx;
-    return supportsSchemaCrawlerCommand;
+    return supportsOutputFormat(command, outputOptions, format -> {
+      final DiagramOutputFormat diagramOutputFormat =
+        DiagramOutputFormat.fromFormat(format);
+      final boolean supportsOutputFormat =
+        diagramOutputFormat == DiagramOutputFormat.htmlx;
+      return supportsOutputFormat;
+    });
   }
 
 }
