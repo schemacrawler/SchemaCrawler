@@ -67,6 +67,13 @@ public class TemplateCommandProvider
   }
 
   @Override
+  public boolean supportsOutputFormat(final String command,
+                                      final OutputOptions outputOptions)
+  {
+    return true;
+  }
+
+  @Override
   public PluginCommand getCommandLineCommand()
   {
     final PluginCommand pluginCommand =

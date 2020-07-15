@@ -71,4 +71,22 @@ public final class SchemaTextCommandProvider
     return supportsSchemaCrawlerCommand;
   }
 
+  @Override
+  public boolean supportsOutputFormat(final String command,
+                                      final OutputOptions outputOptions)
+  {
+    if (outputOptions == null)
+    {
+      return false;
+    }
+    final String format = outputOptions.getOutputFormatValue();
+    if (isBlank(format))
+    {
+      return false;
+    }
+    final boolean supportsOutputFormat =
+      TextOutputFormat.isSupportedFormat(format);
+    return supportsOutputFormat;
+  }
+
 }

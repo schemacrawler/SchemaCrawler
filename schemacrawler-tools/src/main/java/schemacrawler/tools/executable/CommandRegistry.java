@@ -161,6 +161,12 @@ public final class CommandRegistry
       throw new SchemaCrawlerException(String.format("Unknown command <%s>",
                                                      command));
     }
+    if (!executableCommandProvider.supportsOutputFormat(command, outputOptions))
+    {
+      throw new SchemaCrawlerException(String.format("Output format <%s> not supported for command <%s>",
+                                                     outputOptions.getOutputFormatValue(),
+                                                     command));
+    }
 
     final SchemaCrawlerCommand scCommand;
     try

@@ -64,6 +64,13 @@ public class SerializationCommandProvider
                                               final Config additionalConfiguration,
                                               final OutputOptions outputOptions)
   {
+    return supportsCommand(command);
+  }
+
+  @Override
+  public boolean supportsOutputFormat(final String command,
+                                      final OutputOptions outputOptions)
+  {
     if (outputOptions == null)
     {
       return false;
@@ -73,9 +80,9 @@ public class SerializationCommandProvider
     {
       return false;
     }
-    final boolean supportsSchemaCrawlerCommand =
-      supportsCommand(command) && SerializationFormat.isSupportedFormat(format);
-    return supportsSchemaCrawlerCommand;
+    final boolean supportsOutputFormat =
+      SerializationFormat.isSupportedFormat(format);
+    return supportsOutputFormat;
   }
 
   @Override

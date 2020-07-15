@@ -58,6 +58,13 @@ public final class DiagramCommandProvider
                                               final Config additionalConfiguration,
                                               final OutputOptions outputOptions)
   {
+    return supportsCommand(command);
+  }
+
+  @Override
+  public boolean supportsOutputFormat(final String command,
+                                      final OutputOptions outputOptions)
+  {
     if (outputOptions == null)
     {
       return false;
@@ -69,12 +76,10 @@ public final class DiagramCommandProvider
     }
     final DiagramOutputFormat diagramOutputFormat =
       DiagramOutputFormat.fromFormat(format);
-    final boolean supportsSchemaCrawlerCommand = supportsCommand(command)
-                                                 && DiagramOutputFormat.isSupportedFormat(
-      format)
-                                                 && diagramOutputFormat
-                                                    != DiagramOutputFormat.htmlx;
-    return supportsSchemaCrawlerCommand;
+    final boolean supportsOutputFormat =
+      DiagramOutputFormat.isSupportedFormat(format)
+      && diagramOutputFormat != DiagramOutputFormat.htmlx;
+    return supportsOutputFormat;
   }
 
 }

@@ -67,6 +67,13 @@ public class LintCommandProvider
                                               final Config additionalConfiguration,
                                               final OutputOptions outputOptions)
   {
+    return supportsCommand(command);
+  }
+
+  @Override
+  public boolean supportsOutputFormat(final String command,
+                                      final OutputOptions outputOptions)
+  {
     if (outputOptions == null)
     {
       return false;
@@ -76,10 +83,9 @@ public class LintCommandProvider
     {
       return false;
     }
-    final boolean supportsSchemaCrawlerCommand =
-      supportsCommand(command) && LintReportOutputFormat.isSupportedFormat(
-        format);
-    return supportsSchemaCrawlerCommand;
+    final boolean supportsOutputFormat =
+      LintReportOutputFormat.isSupportedFormat(format);
+    return supportsOutputFormat;
   }
 
   @Override

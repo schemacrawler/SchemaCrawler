@@ -67,6 +67,13 @@ public class TestCommandProvider
   }
 
   @Override
+  public boolean supportsOutputFormat(final String command,
+                                      final OutputOptions outputOptions)
+  {
+    return false;
+  }
+
+  @Override
   public PluginCommand getCommandLineCommand()
   {
     final PluginCommand pluginCommand =

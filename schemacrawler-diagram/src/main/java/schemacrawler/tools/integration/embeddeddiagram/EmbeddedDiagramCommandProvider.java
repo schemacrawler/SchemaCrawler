@@ -59,6 +59,13 @@ public final class EmbeddedDiagramCommandProvider
                                               final Config additionalConfiguration,
                                               final OutputOptions outputOptions)
   {
+    return supportsCommand(command);
+  }
+
+  @Override
+  public boolean supportsOutputFormat(final String command,
+                                      final OutputOptions outputOptions)
+  {
     if (outputOptions == null)
     {
       return false;
@@ -70,10 +77,9 @@ public final class EmbeddedDiagramCommandProvider
     }
     final DiagramOutputFormat diagramOutputFormat =
       DiagramOutputFormat.fromFormat(format);
-    final boolean supportsSchemaCrawlerCommand = supportsCommand(command)
-                                                 && diagramOutputFormat
-                                                    == DiagramOutputFormat.htmlx;
-    return supportsSchemaCrawlerCommand;
+    final boolean supportsOutputFormat =
+      diagramOutputFormat == DiagramOutputFormat.htmlx;
+    return supportsOutputFormat;
   }
 
 }
