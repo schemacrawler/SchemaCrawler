@@ -61,7 +61,7 @@ public final class GrepCommand
 
   @Option(names = "--grep-columns", description = {
     "<grepcolumns> is a regular expression to match fully qualified column names, "
-    + "in the form \"SCHEMANAME.TABLENAME.COLUMNNAME\" "
+    + "in the form \"CATALOGNAME.SCHEMANAME.TABLENAME.COLUMNNAME\" "
     + "- for example, --grep-columns=.*\\.STREET|.*\\.PRICE "
     + "matches columns named STREET or PRICE in any table",
     "Optional, default is no grep"
@@ -75,7 +75,7 @@ public final class GrepCommand
   private Pattern grepdef;
   @Option(names = "--grep-parameters", description = {
     "<grepparameters> is a regular expression to match fully qualified routine parameter names, "
-    + "in the form \"SCHEMANAME.ROUTINENAME.INOUTNAME\" "
+    + "in the form \"CATALOGNAME.SCHEMANAME.ROUTINENAME.INOUTNAME\" "
     + "- for example, --grep-parameters=.*\\.STREET|.*\\.PRICE "
     + "matches routine parameters named STREET or PRICE in any routine",
     "Optional, default is no grep"
