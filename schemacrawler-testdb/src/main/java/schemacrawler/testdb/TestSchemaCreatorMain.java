@@ -52,6 +52,7 @@ public class TestSchemaCreatorMain
   {
     System.exit(call(args));
   }
+
   @CommandLine.Option(names = {
     "--url"
   },
@@ -88,7 +89,7 @@ public class TestSchemaCreatorMain
     try (
       final Connection connection = DriverManager.getConnection(connectionUrl,
                                                                 user,
-                                                                passwordProvided);
+                                                                passwordProvided)
     )
     {
       connection.setAutoCommit(false);
