@@ -5,6 +5,9 @@
 
 - Change option to get help on SchemaCrawler commands, by using `--help command:lint` or
   `--help server:db2` for example
+- Add ability to disable a database plugin by setting environment variable or 
+  system property `SC_WITHOUT_DATABASE_PLUGIN` to the name of the server -
+  `SC_WITHOUT_DATABASE_PLUGIN=oracle` for example
 
 
 <a name="a16.9.2"></a>
