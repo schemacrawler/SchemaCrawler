@@ -29,6 +29,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.utility;
 
 
+import static schemacrawler.schemacrawler.Config.getSystemConfigurationProperty;
+import static sf.util.Utility.isBlank;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.logging.Level;
@@ -37,6 +40,7 @@ import schemacrawler.crawl.ResultsCrawler;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ResultsColumns;
+import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
@@ -77,12 +81,27 @@ public final class SchemaCrawlerUtility
       DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     final DatabaseConnector dbConnector =
       registry.lookupDatabaseConnector(connection);
-    LOGGER.log(Level.INFO,
-               "Using database plugin for "
-               + dbConnector.getDatabaseServerType());
+    final DatabaseServerType databaseServerType =
+      dbConnector.getDatabaseServerType();
+    LOGGER.log(Level.INFO, "Using database plugin for " + databaseServerType);
 
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-      dbConnector.getSchemaRetrievalOptionsBuilder(connection);
+    final String withoutDatabasePlugin =
+      getSystemConfigurationProperty("SC_WITHOUT_DATABASE_PLUGIN", "");
+
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder;
+    if (!databaseServerType.isUnknownDatabaseSystem()
+        && !databaseServerType
+      .getDatabaseSystemIdentifier()
+      .equalsIgnoreCase(withoutDatabasePlugin))
+    {
+      schemaRetrievalOptionsBuilder =
+        dbConnector.getSchemaRetrievalOptionsBuilder(connection);
+    }
+    else
+    {
+      schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
+    }
+
     return schemaRetrievalOptionsBuilder;
   }
 

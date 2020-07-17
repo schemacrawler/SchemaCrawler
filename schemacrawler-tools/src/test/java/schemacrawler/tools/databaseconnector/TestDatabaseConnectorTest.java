@@ -153,7 +153,7 @@ public class TestDatabaseConnectorTest
   }
 
   @Test
-  @SetSystemProperty(key = "SC_WITHOUT_DATABASE_PLUGIN", value = "true")
+  @SetSystemProperty(key = "SC_IGNORE_MISSING_DATABASE_PLUGIN", value = "true")
   public void newMajorDatabaseConnectionWithUnknownConnectorWithOverride()
     throws SchemaCrawlerException
   {

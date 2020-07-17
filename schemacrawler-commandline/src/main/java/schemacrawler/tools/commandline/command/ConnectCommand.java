@@ -122,7 +122,11 @@ public class ConnectCommand
       loadSchemaRetrievalOptionsBuilder(databaseConnector);
 
     }
-    catch (final SchemaCrawlerException | SQLException e)
+    catch (final SchemaCrawlerException e)
+    {
+      throw new RuntimeException(e.getMessage(), e);
+    }
+    catch (final SQLException e)
     {
       throw new RuntimeException("Cannot connect to database", e);
     }
