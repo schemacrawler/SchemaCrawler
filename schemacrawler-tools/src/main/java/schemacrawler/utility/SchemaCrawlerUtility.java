@@ -30,7 +30,6 @@ package schemacrawler.utility;
 
 
 import static schemacrawler.schemacrawler.Config.getSystemConfigurationProperty;
-import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -88,8 +87,7 @@ public final class SchemaCrawlerUtility
     final String withoutDatabasePlugin =
       getSystemConfigurationProperty("SC_WITHOUT_DATABASE_PLUGIN", "");
 
-    if (!databaseServerType.isUnknownDatabaseSystem()
-        && !databaseServerType
+    if (!databaseServerType.isUnknownDatabaseSystem() && databaseServerType
       .getDatabaseSystemIdentifier()
       .equalsIgnoreCase(withoutDatabasePlugin))
     {
