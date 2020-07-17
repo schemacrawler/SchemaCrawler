@@ -69,7 +69,7 @@ final class UnknownDatabaseConnector
       super.newDatabaseConnectionSource(databaseConnectorOptions);
 
     final String withoutDatabasePlugin = getSystemConfigurationProperty(
-      "SC_WITHOUT_DATABASE_PLUGIN",
+      "SC_IGNORE_MISSING_DATABASE_PLUGIN",
       Boolean.FALSE.toString());
     if (!Boolean.valueOf(withoutDatabasePlugin))
     {
