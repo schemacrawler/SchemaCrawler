@@ -29,12 +29,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 
-import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.applyApplicationLogLevel;
-
 import java.util.logging.Level;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
+import sf.util.LoggingConfig;
 
 @Command(name = "log", header = "** Turn logging on or off", description = {
   ""
@@ -57,7 +56,7 @@ public final class LogCommand
   public void run()
   {
     final Level level = getLogLevel().getLevel();
-    applyApplicationLogLevel(level);
+    new LoggingConfig(level);
   }
 
   public LogLevel getLogLevel()

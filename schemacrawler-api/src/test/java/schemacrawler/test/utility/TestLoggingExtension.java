@@ -28,12 +28,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
-import static sf.util.Utility.applyApplicationLogLevel;
-
-import java.util.logging.Level;
-
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import sf.util.LoggingConfig;
 
 public class TestLoggingExtension
   implements BeforeAllCallback
@@ -43,7 +40,8 @@ public class TestLoggingExtension
   public void beforeAll(final ExtensionContext context)
     throws Exception
   {
-    applyApplicationLogLevel(Level.OFF);
+    // Turn off logging
+    new LoggingConfig();
   }
 
 }

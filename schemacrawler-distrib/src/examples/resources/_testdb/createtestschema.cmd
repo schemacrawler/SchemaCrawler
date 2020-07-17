@@ -1,2 +1,2 @@
 @echo off
-java -cp "%~dp0/lib/*";. schemacrawler.testdb.TestSchemaCreatorMain %*
+java -Djava.util.logging.config.class=sf.util.LoggingConfig -cp "%~dp0/lib/*";. schemacrawler.testdb.TestSchemaCreatorMain %*
