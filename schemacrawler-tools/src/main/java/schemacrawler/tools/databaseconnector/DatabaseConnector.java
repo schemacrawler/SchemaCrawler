@@ -53,7 +53,7 @@ public abstract class DatabaseConnector
   implements Options
 {
 
-  protected static final DatabaseConnector UNKNOWN =
+  public static final DatabaseConnector UNKNOWN =
     new UnknownDatabaseConnector();
 
   private final InputResource configResource;

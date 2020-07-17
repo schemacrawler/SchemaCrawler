@@ -79,7 +79,7 @@ public final class SchemaCrawlerUtility
     checkConnection(connection);
     final DatabaseConnectorRegistry registry =
       DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    final DatabaseConnector dbConnector =
+    DatabaseConnector dbConnector =
       registry.lookupDatabaseConnector(connection);
     final DatabaseServerType databaseServerType =
       dbConnector.getDatabaseServerType();
@@ -88,20 +88,16 @@ public final class SchemaCrawlerUtility
     final String withoutDatabasePlugin =
       getSystemConfigurationProperty("SC_WITHOUT_DATABASE_PLUGIN", "");
 
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder;
     if (!databaseServerType.isUnknownDatabaseSystem()
         && !databaseServerType
       .getDatabaseSystemIdentifier()
       .equalsIgnoreCase(withoutDatabasePlugin))
     {
-      schemaRetrievalOptionsBuilder =
-        dbConnector.getSchemaRetrievalOptionsBuilder(connection);
-    }
-    else
-    {
-      schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder.builder();
+      dbConnector = DatabaseConnector.UNKNOWN;
     }
 
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+      dbConnector.getSchemaRetrievalOptionsBuilder(connection);
     return schemaRetrievalOptionsBuilder;
   }
 
