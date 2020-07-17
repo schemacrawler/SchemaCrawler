@@ -1,7 +1,7 @@
 # SchemaCrawler Change History
 
 <a name="a16.9.3"></a>
-## Release 16.9.3 - 2020-07-25
+## Release 16.9.3 - 2020-07-19
 
 - Change option to get help on SchemaCrawler commands, by using `--help command:lint` or
   `--help server:db2` for example
