@@ -58,8 +58,7 @@ final class UnknownDatabaseConnector
   {
     super(DatabaseServerType.UNKNOWN,
           new EmptyInputResource(),
-          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
-            "/db2.information_schema"));
+          (informationSchemaViewsBuilder, connection) -> {} );
   }
 
   @Override
