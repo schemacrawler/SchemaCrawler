@@ -28,6 +28,11 @@ http://www.gnu.org/licenses/
 package sf.util;
 
 
+import static java.lang.management.ManagementFactory.getPlatformMBeanServer;
+
+import javax.management.Attribute;
+import javax.management.MBeanServer;
+import javax.management.ObjectName;
 import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import java.util.List;
@@ -163,6 +168,45 @@ public final class LoggingConfig
 
     applySlf4jLogLevel(logLevel);
     applyPicocliLogLevel(logLevel);
+    applyOracleLogLevel(logLevel);
+  }
+
+  private void applyOracleLogLevel(final Level logLevel)
+  {
+    try
+    {
+      // https://docs.oracle.com/cd/B28359_01/java.111/b31224/diagnose.htm
+      final String loader = Thread
+        .currentThread()
+        .getContextClassLoader()
+        .toString()
+        .replaceAll("[,=:\"]+", "");
+      final ObjectName name =
+        new ObjectName("com.oracle.jdbc:type=diagnosability,name=" + loader);
+
+      final MBeanServer mbs = getPlatformMBeanServer();
+
+      final boolean oracleLogging;
+      final String logLevelName = logLevel.getName();
+      switch (logLevelName)
+      {
+        case "OFF":
+        case "SEVERE":
+        case "WARNING":
+        case "CONFIG":
+        case "INFO":
+          oracleLogging = false;
+          break;
+        default:
+          oracleLogging = true;
+      }
+
+      mbs.setAttribute(name, new Attribute("LoggingEnabled", oracleLogging));
+    }
+    catch (final Exception e)
+    {
+      // Ignore
+    }
   }
 
 }
