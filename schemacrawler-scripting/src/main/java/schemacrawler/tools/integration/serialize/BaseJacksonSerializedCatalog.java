@@ -36,6 +36,8 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.OutputStream;
 import java.io.Writer;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -58,6 +60,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
@@ -75,6 +78,15 @@ public abstract class BaseJacksonSerializedCatalog
   private static class IgnoreExceptionBeanPropertyFilter
     extends SimpleBeanPropertyFilter
   {
+
+    private static final List<String> PARTIAL_PROPERTIES = Arrays.asList("name",
+                                                                        "short-name",
+                                                                        "full-name",
+                                                                        "attributes",
+                                                                        "parent-partial",
+                                                                        "remarks",
+                                                                        "schema");
+
     @Override
     protected boolean include(BeanPropertyWriter writer)
     {
@@ -98,7 +110,15 @@ public abstract class BaseJacksonSerializedCatalog
       {
         try
         {
-          final Object value = ((BeanPropertyWriter) writer).get(pojo);
+          if (pojo instanceof PartialDatabaseObject
+              && !PARTIAL_PROPERTIES.contains(writer.getName()))
+          {
+            return;
+          }
+          if (writer instanceof BeanPropertyWriter)
+          {
+            final Object value = ((BeanPropertyWriter) writer).get(pojo);
+          }
           writer.serializeAsField(pojo, jgen, provider);
         }
         catch (final Exception e)
