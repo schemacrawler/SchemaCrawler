@@ -33,6 +33,7 @@ import static schemacrawler.schemacrawler.Config.getSystemConfigurationProperty;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.logging.Level;
 
 import schemacrawler.crawl.ResultsCrawler;
@@ -168,12 +169,19 @@ public final class SchemaCrawlerUtility
   public static ResultsColumns getResultsColumns(final ResultSet resultSet)
     throws SchemaCrawlerException
   {
-    // NOTE: Some JDBC drivers like SQLite may not work with closed
-    // result-sets
-    checkResultSet(resultSet);
-    final ResultsCrawler resultSetCrawler = new ResultsCrawler(resultSet);
-    final ResultsColumns resultsColumns = resultSetCrawler.crawl();
-    return resultsColumns;
+    try
+    {
+      // NOTE: Some JDBC drivers like SQLite may not work with closed
+      // result-sets
+      checkResultSet(resultSet);
+      final ResultsCrawler resultSetCrawler = new ResultsCrawler(resultSet);
+      final ResultsColumns resultsColumns = resultSetCrawler.crawl();
+      return resultsColumns;
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerException("Could not retrieve result-set metadata", e);
+    }
   }
 
   /**

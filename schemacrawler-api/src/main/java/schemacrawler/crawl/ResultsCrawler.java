@@ -32,6 +32,7 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.logging.Level;
 
 import schemacrawler.schema.ResultsColumns;
@@ -76,7 +77,7 @@ public final class ResultsCrawler
    *   On an exception
    */
   public ResultsColumns crawl()
-    throws SchemaCrawlerException
+    throws SQLException
   {
 
     final StopWatch stopWatch = new StopWatch("crawlResultSet");
@@ -93,19 +94,18 @@ public final class ResultsCrawler
 
       return resultsColumns;
     }
-    catch (final SchemaCrawlerSQLException e)
-    {
-      throw new SchemaCrawlerException(e.getMessage(), e.getCause());
-    }
-    catch (final SchemaCrawlerException e)
-    {
-      throw e;
-    }
     catch (final Exception e)
     {
-      throw new SchemaCrawlerException(
-        "Exception retrieving result-set information",
-        e);
+      if (e instanceof SQLException)
+      {
+        throw (SQLException) e;
+      }
+      else
+      {
+        throw new SchemaCrawlerSQLException(
+          "Could not retrieve result-set metadata",
+          e);
+      }
     }
   }
 

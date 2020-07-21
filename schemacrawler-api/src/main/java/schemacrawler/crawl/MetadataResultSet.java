@@ -42,20 +42,19 @@ import java.math.BigInteger;
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 
 import schemacrawler.inclusionrule.InclusionRule;
+import schemacrawler.schema.ResultsColumn;
+import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schemacrawler.Query;
 import sf.util.IdentifiedEnum;
 import sf.util.SchemaCrawlerLogger;
@@ -72,14 +71,15 @@ final class MetadataResultSet
   implements AutoCloseable
 {
 
-  private static final int FETCHSIZE = 20;
   private static final SchemaCrawlerLogger LOGGER =
     SchemaCrawlerLogger.getLogger(MetadataResultSet.class.getName());
-  private final List<String> resultSetColumns;
+
+  private static final int FETCHSIZE = 20;
+
+  private final ResultsColumns resultsColumns;
   private final ResultSet results;
   private String description;
   private Set<String> readColumns;
-
   private int rowCount;
 
   MetadataResultSet(final Query query,
@@ -104,26 +104,7 @@ final class MetadataResultSet
       LOGGER.log(Level.WARNING, "Could not set fetch size", e);
     }
 
-    final List<String> resultSetColumns = new ArrayList<>();
-    try
-    {
-      final ResultSetMetaData rsMetaData = resultSet.getMetaData();
-      for (int i = 0; i < rsMetaData.getColumnCount(); i++)
-      {
-        String columnName;
-        columnName = rsMetaData.getColumnLabel(i + 1);
-        if (isBlank(columnName))
-        {
-          columnName = rsMetaData.getColumnName(i + 1);
-        }
-        resultSetColumns.add(columnName.toUpperCase());
-      }
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING, "Could not get columns list");
-    }
-    this.resultSetColumns = Collections.unmodifiableList(resultSetColumns);
+    this.resultsColumns = new ResultsCrawler(results).crawl();
 
     readColumns = new HashSet<>();
   }
@@ -160,8 +141,9 @@ final class MetadataResultSet
   Map<String, Object> getAttributes()
   {
     final Map<String, Object> attributes = new HashMap<>();
-    for (final String columnName : resultSetColumns)
+    for (final ResultsColumn resultsColumn : resultsColumns)
     {
+      final String columnName = resultsColumn.getName();
       if (!readColumns.contains(columnName))
       {
         try
@@ -508,13 +490,11 @@ final class MetadataResultSet
 
   private boolean useColumn(final String columnName)
   {
-    final boolean useColumn =
-      columnName != null && resultSetColumns.contains(columnName);
-    if (useColumn)
-    {
-      readColumns.add(columnName);
-    }
-    return useColumn;
+    final Optional<ResultsColumn> optionalResultsColumn =
+      resultsColumns.lookupColumn(columnName);
+    optionalResultsColumn.ifPresent(resultsColumn -> readColumns.add(
+      resultsColumn.getName()));
+    return optionalResultsColumn.isPresent();
   }
 
 }

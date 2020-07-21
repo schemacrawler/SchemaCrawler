@@ -49,6 +49,7 @@ import java.util.List;
 
 import schemacrawler.crawl.ResultsCrawler;
 import schemacrawler.schema.ResultsColumn;
+import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.text.utility.BinaryData;
 import sf.util.DatabaseUtility;
@@ -65,72 +66,59 @@ final class DataResultSet
   private static final SchemaCrawlerLogger LOGGER =
     SchemaCrawlerLogger.getLogger(DataResultSet.class.getName());
 
-  private final ResultSet rows;
-  private final List<ResultsColumn> resultsColumns;
+  private final ResultSet results;
+  private final ResultsColumns resultsColumns;
   private final boolean showLobs;
 
-  public DataResultSet(final ResultSet rows, final boolean showLobs)
-    throws SchemaCrawlerException
+  public DataResultSet(final ResultSet results, final boolean showLobs)
+    throws SQLException
   {
-    this.rows = requireNonNull(rows, "Cannot use null results");
+    this.results = requireNonNull(results, "Cannot use null results");
     this.showLobs = showLobs;
-    resultsColumns = new ResultsCrawler(rows)
-      .crawl()
-      .getColumns();
+    resultsColumns = new ResultsCrawler(results).crawl();
   }
 
   public String[] getColumnNames()
   {
-    final int columnCount = resultsColumns.size();
-    final String[] columnNames = new String[columnCount];
-    for (int i = 0; i < columnCount; i++)
-    {
-      columnNames[i] = resultsColumns
-        .get(i)
-        .getName();
-    }
-    return columnNames;
+    final List<String> columnNames = new ArrayList<>();
+    resultsColumns.forEach(resultsColumn -> columnNames.add(resultsColumn.getName()));
+    return columnNames.toArray(new String[columnNames.size()]);
   }
 
   public boolean next()
     throws SQLException
   {
-    return rows.next();
+    return results.next();
   }
 
   public List<Object> row()
     throws SQLException
   {
-    final int columnCount = resultsColumns.size();
-    final List<Object> currentRow = new ArrayList<>(columnCount);
-    for (int i = 0; i < columnCount; i++)
+    final List<Object> currentRow = new ArrayList<>();
+    for (final ResultsColumn resultsColumn : resultsColumns)
     {
-      currentRow.add(getColumnData(i));
+      currentRow.add(getColumnData(resultsColumn));
     }
 
     return currentRow;
   }
 
-  public int width()
-  {
-    return resultsColumns.size();
-  }
-
-  private Object getColumnData(final int i)
+  private Object getColumnData(final ResultsColumn resultsColumn)
     throws SQLException
   {
-    final int javaSqlType = resultsColumns
-      .get(i)
+    final int javaSqlType = resultsColumn
       .getColumnDataType()
       .getJavaSqlType()
       .getVendorTypeNumber();
+    final int ordinalPosition = resultsColumn.getOrdinalPosition();
+
     Object columnData;
 
     if (javaSqlType == BLOB || javaSqlType == LONGVARBINARY)
     {
       // Do not read binary data - just determine if it is NULL
-      final Object object = rows.getObject(i + 1);
-      if (rows.wasNull() || object == null)
+      final Object object = results.getObject(ordinalPosition);
+      if (results.wasNull() || object == null)
       {
         columnData = null;
       }
@@ -141,8 +129,8 @@ final class DataResultSet
     }
     else if (javaSqlType == CLOB)
     {
-      final Clob clob = rows.getClob(i + 1);
-      if (rows.wasNull() || clob == null)
+      final Clob clob = results.getClob(ordinalPosition);
+      if (results.wasNull() || clob == null)
       {
         columnData = null;
       }
@@ -153,8 +141,8 @@ final class DataResultSet
     }
     else if (javaSqlType == NCLOB)
     {
-      final NClob nClob = rows.getNClob(i + 1);
-      if (rows.wasNull() || nClob == null)
+      final NClob nClob = results.getNClob(ordinalPosition);
+      if (results.wasNull() || nClob == null)
       {
         columnData = null;
       }
@@ -165,8 +153,8 @@ final class DataResultSet
     }
     else if (javaSqlType == LONGNVARCHAR || javaSqlType == LONGVARCHAR)
     {
-      final InputStream stream = rows.getAsciiStream(i + 1);
-      if (rows.wasNull() || stream == null)
+      final InputStream stream = results.getAsciiStream(ordinalPosition);
+      if (results.wasNull() || stream == null)
       {
         columnData = null;
       }
@@ -177,8 +165,8 @@ final class DataResultSet
     }
     else
     {
-      columnData = rows.getObject(i + 1);
-      if (rows.wasNull())
+      columnData = results.getObject(ordinalPosition);
+      if (results.wasNull())
       {
         columnData = null;
       }
