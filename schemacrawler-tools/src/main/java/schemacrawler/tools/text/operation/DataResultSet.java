@@ -29,21 +29,23 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.operation;
 
 
+import static java.sql.Types.BLOB;
+import static java.sql.Types.CLOB;
+import static java.sql.Types.LONGNVARCHAR;
+import static java.sql.Types.LONGVARBINARY;
+import static java.sql.Types.LONGVARCHAR;
+import static java.sql.Types.NCLOB;
 import static java.util.Objects.requireNonNull;
 import static sf.util.IOUtility.readFully;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
-import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.NClob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLFeatureNotSupportedException;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
 import schemacrawler.crawl.ResultsCrawler;
 import schemacrawler.schema.ResultsColumn;
@@ -123,7 +125,21 @@ final class DataResultSet
       .getJavaSqlType()
       .getVendorTypeNumber();
     Object columnData;
-    if (javaSqlType == Types.CLOB)
+
+    if (javaSqlType == BLOB || javaSqlType == LONGVARBINARY)
+    {
+      // Do not read binary data - just determine if it is NULL
+      final Object object = rows.getObject(i + 1);
+      if (rows.wasNull() || object == null)
+      {
+        columnData = null;
+      }
+      else
+      {
+        columnData = new BinaryData();
+      }
+    }
+    else if (javaSqlType == CLOB)
     {
       final Clob clob = rows.getClob(i + 1);
       if (rows.wasNull() || clob == null)
@@ -135,7 +151,7 @@ final class DataResultSet
         columnData = readClob(clob);
       }
     }
-    else if (javaSqlType == Types.NCLOB)
+    else if (javaSqlType == NCLOB)
     {
       final NClob nClob = rows.getNClob(i + 1);
       if (rows.wasNull() || nClob == null)
@@ -147,32 +163,7 @@ final class DataResultSet
         columnData = readClob(nClob);
       }
     }
-    else if (javaSqlType == Types.BLOB)
-    {
-      final Blob blob = rows.getBlob(i + 1);
-      if (rows.wasNull() || blob == null)
-      {
-        columnData = null;
-      }
-      else
-      {
-        columnData = readBlob(blob);
-      }
-    }
-    else if (javaSqlType == Types.LONGVARBINARY)
-    {
-      final InputStream stream = rows.getBinaryStream(i + 1);
-      if (rows.wasNull() || stream == null)
-      {
-        columnData = null;
-      }
-      else
-      {
-        columnData = readStream(stream);
-      }
-    }
-    else if (javaSqlType == Types.LONGNVARCHAR
-             || javaSqlType == Types.LONGVARCHAR)
+    else if (javaSqlType == LONGNVARCHAR || javaSqlType == LONGVARCHAR)
     {
       final InputStream stream = rows.getAsciiStream(i + 1);
       if (rows.wasNull() || stream == null)
@@ -193,18 +184,6 @@ final class DataResultSet
       }
     }
     return columnData;
-  }
-
-  private BinaryData readBlob(final Blob blob)
-  {
-    if (showLobs)
-    {
-      return new BinaryData(DatabaseUtility.readBlob(blob));
-    }
-    else
-    {
-      return new BinaryData();
-    }
   }
 
   private BinaryData readClob(final Clob clob)

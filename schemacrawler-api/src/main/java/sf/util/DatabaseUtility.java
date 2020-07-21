@@ -398,43 +398,6 @@ public final class DatabaseUtility
     return lobData;
   }
 
-  public static String readBlob(final Blob blob)
-  {
-    if (blob == null)
-    {
-      return null;
-    }
-    InputStream in = null;
-    String lobData;
-    try
-    {
-      try
-      {
-        in = blob.getBinaryStream();
-      }
-      catch (final SQLFeatureNotSupportedException e)
-      {
-        LOGGER.log(Level.FINEST, "Could not read BLOB data", e);
-        in = null;
-      }
-
-      if (in != null)
-      {
-        lobData = readFully(in);
-      }
-      else
-      {
-        lobData = null;
-      }
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING, "Could not read BLOB data", e);
-      lobData = null;
-    }
-    return lobData;
-  }
-
   private static void logSQLWarnings(final SQLWarning sqlWarning)
   {
     final Level level = Level.FINER;
