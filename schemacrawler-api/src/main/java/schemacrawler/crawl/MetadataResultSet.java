@@ -32,12 +32,15 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.QueryUtility.executeAgainstSchema;
 import static sf.util.DatabaseUtility.logSQLWarnings;
+import static sf.util.DatabaseUtility.readClob;
 import static sf.util.Utility.enumValue;
 import static sf.util.Utility.enumValueFromId;
 import static sf.util.Utility.isBlank;
 import static sf.util.Utility.isIntegral;
 
 import java.math.BigInteger;
+import java.sql.Blob;
+import java.sql.Clob;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -163,7 +166,15 @@ final class MetadataResultSet
       {
         try
         {
-          final Object value = results.getObject(columnName);
+          Object value = results.getObject(columnName);
+          if (value instanceof Blob)
+          {
+            continue;
+          }
+          if (value instanceof Clob)
+          {
+            value = readClob((Clob) value);
+          }
           attributes.put(columnName, value);
         }
         catch (final SQLException | ArrayIndexOutOfBoundsException e)
