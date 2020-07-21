@@ -29,12 +29,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
-import static sf.util.Utility.applyApplicationLogLevel;
-
 import java.lang.reflect.Parameter;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.logging.Level;
 
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -42,6 +39,7 @@ import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
 import schemacrawler.testdb.TestDatabase;
+import sf.util.LoggingConfig;
 
 public class TestDatabaseConnectionParameterResolver
   implements ParameterResolver, BeforeAllCallback
@@ -67,7 +65,8 @@ public class TestDatabaseConnectionParameterResolver
   public void beforeAll(final ExtensionContext context)
     throws Exception
   {
-    applyApplicationLogLevel(Level.OFF);
+    // Turn off logging
+    new LoggingConfig();
   }
 
   @Override

@@ -54,13 +54,6 @@ public final class CommandLineLoggingUtility
   private static final SchemaCrawlerLogger LOGGER =
     SchemaCrawlerLogger.getLogger(CommandLineLoggingUtility.class.getName());
 
-  /**
-   * Sets the application-wide log level.
-   */
-  public static void applyApplicationLogLevel(final Level applicationLogLevel)
-  {
-    Utility.applyApplicationLogLevel(applicationLogLevel);
-  }
 
   public static void logFullStackTrace(final Level level, final Throwable t)
   {

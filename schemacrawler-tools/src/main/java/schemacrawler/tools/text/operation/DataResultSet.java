@@ -34,8 +34,6 @@ import static sf.util.IOUtility.readFully;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.NClob;
@@ -51,6 +49,7 @@ import schemacrawler.crawl.ResultsCrawler;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.text.utility.BinaryData;
+import sf.util.DatabaseUtility;
 import sf.util.SchemaCrawlerLogger;
 
 /**
@@ -198,41 +197,9 @@ final class DataResultSet
 
   private BinaryData readBlob(final Blob blob)
   {
-    if (blob == null)
+    if (showLobs)
     {
-      return null;
-    }
-    else if (showLobs)
-    {
-      InputStream in = null;
-      BinaryData lobData;
-      try
-      {
-        try
-        {
-          in = blob.getBinaryStream();
-        }
-        catch (final SQLFeatureNotSupportedException e)
-        {
-          LOGGER.log(Level.FINEST, "Could not read BLOB data", e);
-          in = null;
-        }
-
-        if (in != null)
-        {
-          lobData = new BinaryData(readFully(in));
-        }
-        else
-        {
-          lobData = new BinaryData();
-        }
-      }
-      catch (final SQLException e)
-      {
-        LOGGER.log(Level.WARNING, "Could not read BLOB data", e);
-        lobData = new BinaryData();
-      }
-      return lobData;
+      return new BinaryData(DatabaseUtility.readBlob(blob));
     }
     else
     {
@@ -242,64 +209,9 @@ final class DataResultSet
 
   private BinaryData readClob(final Clob clob)
   {
-    if (clob == null)
+    if (showLobs)
     {
-      return null;
-    }
-    else if (showLobs)
-    {
-      Reader rdr = null;
-      BinaryData lobData;
-      try
-      {
-        try
-        {
-          rdr = clob.getCharacterStream();
-        }
-        catch (final SQLFeatureNotSupportedException e)
-        {
-          LOGGER.log(Level.FINEST,
-                     "Could not read CLOB data, as character stream",
-                     e);
-          rdr = null;
-        }
-        if (rdr == null)
-        {
-          try
-          {
-            rdr = new InputStreamReader(clob.getAsciiStream());
-          }
-          catch (final SQLFeatureNotSupportedException e)
-          {
-            LOGGER.log(Level.FINEST,
-                       "Could not read CLOB data, as ASCII stream",
-                       e);
-            rdr = null;
-          }
-        }
-
-        if (rdr != null)
-        {
-          String lobDataString = readFully(rdr);
-          if (lobDataString.isEmpty())
-          {
-            // Attempt yet another read
-            final long clobLength = clob.length();
-            lobDataString = clob.getSubString(1, (int) clobLength);
-          }
-          lobData = new BinaryData(lobDataString);
-        }
-        else
-        {
-          lobData = new BinaryData();
-        }
-      }
-      catch (final SQLException e)
-      {
-        LOGGER.log(Level.WARNING, "Could not read CLOB data", e);
-        lobData = new BinaryData();
-      }
-      return lobData;
+      return new BinaryData(DatabaseUtility.readClob(clob));
     }
     else
     {
@@ -311,8 +223,8 @@ final class DataResultSet
    * Reads data from an input stream into a string. Default system encoding is
    * assumed.
    *
-   * @param columnData
-   *   Column data object returned by JDBC
+   * @param stream
+   *   Input stream
    * @return A string with the contents of the LOB
    */
   private BinaryData readStream(final InputStream stream)

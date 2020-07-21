@@ -36,19 +36,31 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.OutputStream;
 import java.io.Writer;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.fasterxml.jackson.databind.ser.BeanPropertyWriter;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.PropertyFilter;
+import com.fasterxml.jackson.databind.ser.PropertyWriter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
@@ -61,6 +73,66 @@ public abstract class BaseJacksonSerializedCatalog
 {
 
   private static final long serialVersionUID = 5314326260124511414L;
+
+
+  private static class IgnoreExceptionBeanPropertyFilter
+    extends SimpleBeanPropertyFilter
+  {
+
+    private static final List<String> PARTIAL_PROPERTIES = Arrays.asList("name",
+                                                                        "short-name",
+                                                                        "full-name",
+                                                                        "attributes",
+                                                                        "parent-partial",
+                                                                        "remarks",
+                                                                        "schema");
+
+    @Override
+    protected boolean include(BeanPropertyWriter writer)
+    {
+      return true;
+    }
+
+    @Override
+    protected boolean include(PropertyWriter writer)
+    {
+      return true;
+    }
+
+    @Override
+    public void serializeAsField(final Object pojo,
+                                 final JsonGenerator jgen,
+                                 final SerializerProvider provider,
+                                 final PropertyWriter writer)
+      throws Exception
+    {
+      if (include(writer))
+      {
+        try
+        {
+          if (pojo instanceof PartialDatabaseObject
+              && !PARTIAL_PROPERTIES.contains(writer.getName()))
+          {
+            return;
+          }
+          if (writer instanceof BeanPropertyWriter)
+          {
+            final Object value = ((BeanPropertyWriter) writer).get(pojo);
+          }
+          writer.serializeAsField(pojo, jgen, provider);
+        }
+        catch (final Exception e)
+        {
+          return;
+        }
+      }
+      else if (!jgen.canOmitFields())
+      {
+        writer.serializeAsOmittedField(pojo, jgen, provider);
+      }
+    }
+  }
+
 
   private final Catalog catalog;
   private final SortedSet<Column> allTableColumns;
@@ -149,10 +221,15 @@ public abstract class BaseJacksonSerializedCatalog
     @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class,
                       property = "@uuid")
     @JsonNaming(PropertyNamingStrategy.KebabCaseStrategy.class)
+    @JsonFilter("ignore-getter-errors-filter")
     class JacksonAnnotationMixIn
     {
 
     }
+
+    final FilterProvider
+      filters = new SimpleFilterProvider().addFilter("ignore-getter-errors-filter",
+                                                     (PropertyFilter) new IgnoreExceptionBeanPropertyFilter());
 
     final ObjectMapper mapper = newObjectMapper();
     mapper.enable(ORDER_MAP_ENTRIES_BY_KEYS,
@@ -160,6 +237,7 @@ public abstract class BaseJacksonSerializedCatalog
                   USE_EQUALITY_FOR_OBJECT_ID,
                   WRITE_ENUMS_USING_TO_STRING);
     mapper.addMixIn(Object.class, JacksonAnnotationMixIn.class);
+    mapper.setFilterProvider(filters);
     return mapper;
   }
 

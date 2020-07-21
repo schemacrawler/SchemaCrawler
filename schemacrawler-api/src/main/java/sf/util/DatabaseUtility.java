@@ -29,12 +29,19 @@ package sf.util;
 
 
 import static java.util.Objects.requireNonNull;
+import static sf.util.IOUtility.readFully;
 import static sf.util.IOUtility.readResourceFully;
 import static sf.util.Utility.isBlank;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.sql.Blob;
+import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -296,26 +303,6 @@ public final class DatabaseUtility
 
   }
 
-  private static void logSQLWarnings(final SQLWarning sqlWarning)
-  {
-    final Level level = Level.FINER;
-    if (!LOGGER.isLoggable(level))
-    {
-      return;
-    }
-
-    SQLWarning currentSqlWarning = sqlWarning;
-    while (currentSqlWarning != null)
-    {
-      final String message = String.format("%s%nError code: %d, SQL state: %s",
-                                           currentSqlWarning.getMessage(),
-                                           currentSqlWarning.getErrorCode(),
-                                           currentSqlWarning.getSQLState());
-      LOGGER.log(level, message, currentSqlWarning);
-      currentSqlWarning = currentSqlWarning.getNextWarning();
-    }
-  }
-
   /**
    * Reads a single column result set as a list.
    *
@@ -350,6 +337,122 @@ public final class DatabaseUtility
       results.close();
     }
     return values;
+  }
+
+  public static String readClob(final Clob clob)
+  {
+    if (clob == null)
+    {
+      return null;
+    }
+    Reader rdr = null;
+    String lobData;
+    try
+    {
+      try
+      {
+        rdr = clob.getCharacterStream();
+      }
+      catch (final SQLFeatureNotSupportedException e)
+      {
+        LOGGER.log(Level.FINEST,
+                   "Could not read CLOB data, as character stream",
+                   e);
+        rdr = null;
+      }
+      if (rdr == null)
+      {
+        try
+        {
+          rdr = new InputStreamReader(clob.getAsciiStream());
+        }
+        catch (final SQLFeatureNotSupportedException e)
+        {
+          LOGGER.log(Level.FINEST,
+                     "Could not read CLOB data, as ASCII stream",
+                     e);
+          rdr = null;
+        }
+      }
+
+      if (rdr != null)
+      {
+        lobData = readFully(rdr);
+        if (lobData.isEmpty())
+        {
+          // Attempt yet another read
+          final long clobLength = clob.length();
+          lobData = clob.getSubString(1, (int) clobLength);
+        }
+      }
+      else
+      {
+        lobData = null;
+      }
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not read CLOB data", e);
+      lobData = null;
+    }
+    return lobData;
+  }
+
+  public static String readBlob(final Blob blob)
+  {
+    if (blob == null)
+    {
+      return null;
+    }
+    InputStream in = null;
+    String lobData;
+    try
+    {
+      try
+      {
+        in = blob.getBinaryStream();
+      }
+      catch (final SQLFeatureNotSupportedException e)
+      {
+        LOGGER.log(Level.FINEST, "Could not read BLOB data", e);
+        in = null;
+      }
+
+      if (in != null)
+      {
+        lobData = readFully(in);
+      }
+      else
+      {
+        lobData = null;
+      }
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not read BLOB data", e);
+      lobData = null;
+    }
+    return lobData;
+  }
+
+  private static void logSQLWarnings(final SQLWarning sqlWarning)
+  {
+    final Level level = Level.FINER;
+    if (!LOGGER.isLoggable(level))
+    {
+      return;
+    }
+
+    SQLWarning currentSqlWarning = sqlWarning;
+    while (currentSqlWarning != null)
+    {
+      final String message = String.format("%s%nError code: %d, SQL state: %s",
+                                           currentSqlWarning.getMessage(),
+                                           currentSqlWarning.getErrorCode(),
+                                           currentSqlWarning.getSQLState());
+      LOGGER.log(level, message, currentSqlWarning);
+      currentSqlWarning = currentSqlWarning.getNextWarning();
+    }
   }
 
   private DatabaseUtility()
