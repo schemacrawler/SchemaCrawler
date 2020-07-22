@@ -566,21 +566,19 @@ public final class MetadataResultSet
 
   private Object readCharacterData(final Reader reader)
   {
-    if (reader != null && showLobs)
+    try
     {
-      try
+      if (reader != null && showLobs)
       {
-        if (reader != null)
-        {
-          return readFully(reader);
-        }
-      }
-      catch (final Exception e)
-      {
-        LOGGER.log(Level.WARNING, "Could not read character data", e);
-        return new BinaryData();
+        return readFully(reader);
       }
     }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Could not read character data", e);
+      return new BinaryData();
+    }
+
     return new BinaryData();
   }
 
