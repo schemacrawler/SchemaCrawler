@@ -46,12 +46,15 @@ import static sf.util.Utility.isIntegral;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.math.BigInteger;
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.NClob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -92,7 +95,7 @@ public final class MetadataResultSet
   private final ResultsColumns resultsColumns;
   private final ResultSet results;
   private String description;
-  private Set<String> readColumns;
+  private Set<ResultsColumn> readColumns;
   private int rowCount;
   private boolean showLobs;
 
@@ -186,21 +189,12 @@ public final class MetadataResultSet
     final Map<String, Object> attributes = new HashMap<>();
     for (final ResultsColumn resultsColumn : resultsColumns)
     {
-      final String columnName = resultsColumn.getName();
-      if (!readColumns.contains(columnName))
+      if (!readColumns.contains(resultsColumn))
       {
         try
         {
-          Object value = results.getObject(columnName);
-          if (value instanceof Blob)
-          {
-            continue;
-          }
-          if (value instanceof Clob)
-          {
-            value = readClob((Clob) value);
-          }
-          attributes.put(columnName, value);
+          final Object value = getColumnData(resultsColumn);
+          attributes.put(resultsColumn.getName(), value);
         }
         catch (final SQLException | ArrayIndexOutOfBoundsException e)
         {
@@ -213,7 +207,7 @@ public final class MetadataResultSet
            */
           LOGGER.log(Level.WARNING,
                      new StringFormat("Could not read value for column <%s>",
-                                      columnName),
+                                      resultsColumn),
                      e);
         }
       }
@@ -565,7 +559,7 @@ public final class MetadataResultSet
       }
       else
       {
-        columnData = readClob(clob);
+        columnData = readClobData(clob);
       }
     }
     else if (javaSqlType == NCLOB)
@@ -577,7 +571,7 @@ public final class MetadataResultSet
       }
       else
       {
-        columnData = readClob(nClob);
+        columnData = readClobData(nClob);
       }
     }
     else if (javaSqlType == LONGNVARCHAR || javaSqlType == LONGVARCHAR)
@@ -603,11 +597,68 @@ public final class MetadataResultSet
     return columnData;
   }
 
-  private BinaryData readClob(final Clob clob)
+  private BinaryData readClobData(final Clob clob)
   {
     if (showLobs)
     {
-      return new BinaryData(DatabaseUtility.readClob(clob));
+      String result = null;
+      if (clob != null)
+      {
+        Reader rdr = null;
+        String lobData;
+        try
+        {
+          try
+          {
+            rdr = clob.getCharacterStream();
+          }
+          catch (final SQLFeatureNotSupportedException e)
+          {
+            LOGGER.log(Level.FINEST,
+                                       "Could not read CLOB data, as character stream",
+                                       e);
+            rdr = null;
+          }
+          if (rdr == null)
+          {
+            try
+            {
+              rdr = new InputStreamReader(clob.getAsciiStream());
+            }
+            catch (final SQLFeatureNotSupportedException e)
+            {
+              LOGGER.log(Level.FINEST,
+                                         "Could not read CLOB data, as ASCII stream",
+                                         e);
+              rdr = null;
+            }
+          }
+
+          if (rdr != null)
+          {
+            lobData = readFully(rdr);
+            if (lobData.isEmpty())
+            {
+              // Attempt yet another read
+              final long clobLength = clob.length();
+              lobData = clob.getSubString(1, (int) clobLength);
+            }
+          }
+          else
+          {
+            lobData = null;
+          }
+        }
+        catch (final SQLException e)
+        {
+          LOGGER.log(Level.WARNING,
+                                     "Could not read CLOB data",
+                                     e);
+          lobData = null;
+        }
+        result = lobData;
+      }
+      return new BinaryData(result);
     }
     else
     {
@@ -645,8 +696,7 @@ public final class MetadataResultSet
   {
     final Optional<ResultsColumn> optionalResultsColumn =
       resultsColumns.lookupColumn(columnName);
-    optionalResultsColumn.ifPresent(resultsColumn -> readColumns.add(
-      resultsColumn.getName()));
+    optionalResultsColumn.ifPresent(readColumns::add);
     return optionalResultsColumn.isPresent();
   }
 

@@ -339,65 +339,6 @@ public final class DatabaseUtility
     return values;
   }
 
-  public static String readClob(final Clob clob)
-  {
-    if (clob == null)
-    {
-      return null;
-    }
-    Reader rdr = null;
-    String lobData;
-    try
-    {
-      try
-      {
-        rdr = clob.getCharacterStream();
-      }
-      catch (final SQLFeatureNotSupportedException e)
-      {
-        LOGGER.log(Level.FINEST,
-                   "Could not read CLOB data, as character stream",
-                   e);
-        rdr = null;
-      }
-      if (rdr == null)
-      {
-        try
-        {
-          rdr = new InputStreamReader(clob.getAsciiStream());
-        }
-        catch (final SQLFeatureNotSupportedException e)
-        {
-          LOGGER.log(Level.FINEST,
-                     "Could not read CLOB data, as ASCII stream",
-                     e);
-          rdr = null;
-        }
-      }
-
-      if (rdr != null)
-      {
-        lobData = readFully(rdr);
-        if (lobData.isEmpty())
-        {
-          // Attempt yet another read
-          final long clobLength = clob.length();
-          lobData = clob.getSubString(1, (int) clobLength);
-        }
-      }
-      else
-      {
-        lobData = null;
-      }
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING, "Could not read CLOB data", e);
-      lobData = null;
-    }
-    return lobData;
-  }
-
   private static void logSQLWarnings(final SQLWarning sqlWarning)
   {
     final Level level = Level.FINER;
