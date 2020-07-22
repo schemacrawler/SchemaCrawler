@@ -35,7 +35,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import schemacrawler.schemacrawler.MetadataResultSet;
+import schemacrawler.crawl.MetadataResultSet;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerException;

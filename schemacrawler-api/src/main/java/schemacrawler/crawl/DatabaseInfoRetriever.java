@@ -54,7 +54,6 @@ import java.util.logging.Level;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.InformationSchemaViews;
-import schemacrawler.schemacrawler.MetadataResultSet;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import sf.util.DatabaseUtility;

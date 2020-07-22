@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.schemacrawler;
+package schemacrawler.crawl;
 
 
 import static java.sql.Types.BLOB;
@@ -63,10 +63,10 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 
-import schemacrawler.crawl.ResultsCrawler;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
+import schemacrawler.schemacrawler.Query;
 import schemacrawler.utility.BinaryData;
 import sf.util.DatabaseUtility;
 import sf.util.IdentifiedEnum;

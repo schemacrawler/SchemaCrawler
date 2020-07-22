@@ -48,7 +48,6 @@ import schemacrawler.schema.ParameterModeType;
 import schemacrawler.schema.ProcedureParameter;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
-import schemacrawler.schemacrawler.MetadataResultSet;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
