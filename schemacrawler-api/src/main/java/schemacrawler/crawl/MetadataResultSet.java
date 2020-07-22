@@ -44,17 +44,10 @@ import static sf.util.Utility.enumValueFromId;
 import static sf.util.Utility.isBlank;
 import static sf.util.Utility.isIntegral;
 
-import java.io.BufferedInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.math.BigInteger;
-import java.sql.Blob;
-import java.sql.Clob;
-import java.sql.NClob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLFeatureNotSupportedException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,7 +64,6 @@ import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.utility.BinaryData;
-import sf.util.DatabaseUtility;
 import sf.util.IdentifiedEnum;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -121,14 +113,9 @@ public final class MetadataResultSet
       LOGGER.log(Level.WARNING, "Could not set fetch size", e);
     }
 
-    this.resultsColumns = new ResultsCrawler(results).crawl();
-
+    resultsColumns = new ResultsCrawler(results).crawl();
     readColumns = new HashSet<>();
-  }
-
-  public boolean isShowLobs()
-  {
-    return showLobs;
+    showLobs = true;
   }
 
   public void setShowLobs(final boolean showLobs)
@@ -537,159 +524,64 @@ public final class MetadataResultSet
 
     Object columnData;
 
-    if (javaSqlType == BLOB || javaSqlType == LONGVARBINARY)
+    switch (javaSqlType)
     {
-      // Do not read binary data - just determine if it is NULL
-      final Object object = results.getObject(ordinalPosition);
-      if (results.wasNull() || object == null)
-      {
-        columnData = null;
-      }
-      else
-      {
-        columnData = new BinaryData();
-      }
-    }
-    else if (javaSqlType == CLOB)
-    {
-      final Clob clob = results.getClob(ordinalPosition);
-      if (results.wasNull() || clob == null)
-      {
-        columnData = null;
-      }
-      else
-      {
-        columnData = readClobData(clob);
-      }
-    }
-    else if (javaSqlType == NCLOB)
-    {
-      final NClob nClob = results.getNClob(ordinalPosition);
-      if (results.wasNull() || nClob == null)
-      {
-        columnData = null;
-      }
-      else
-      {
-        columnData = readClobData(nClob);
-      }
-    }
-    else if (javaSqlType == LONGNVARCHAR || javaSqlType == LONGVARCHAR)
-    {
-      final InputStream stream = results.getAsciiStream(ordinalPosition);
-      if (results.wasNull() || stream == null)
-      {
-        columnData = null;
-      }
-      else
-      {
-        columnData = readStream(stream);
-      }
-    }
-    else
-    {
-      columnData = results.getObject(ordinalPosition);
-      if (results.wasNull())
-      {
-        columnData = null;
-      }
+      case BLOB:
+      case LONGVARBINARY:
+        // Do not read binary data - just determine if it is NULL
+        final Object object = results.getObject(ordinalPosition);
+        if (results.wasNull() || object == null)
+        {
+          columnData = null;
+        }
+        else
+        {
+          columnData = new BinaryData();
+        }
+        break;
+      case CLOB:
+      case NCLOB:
+      case LONGNVARCHAR:
+      case LONGVARCHAR:
+        final Reader reader = results.getCharacterStream(ordinalPosition);
+        if (results.wasNull() || reader == null)
+        {
+          columnData = null;
+        }
+        else
+        {
+          columnData = readCharacterData(reader);
+        }
+        break;
+      default:
+        columnData = results.getObject(ordinalPosition);
+        if (results.wasNull())
+        {
+          columnData = null;
+        }
+        break;
     }
     return columnData;
   }
 
-  private BinaryData readClobData(final Clob clob)
+  private Object readCharacterData(final Reader reader)
   {
-    if (showLobs)
+    if (reader != null && showLobs)
     {
-      String result = null;
-      if (clob != null)
+      try
       {
-        Reader rdr = null;
-        String lobData;
-        try
+        if (reader != null)
         {
-          try
-          {
-            rdr = clob.getCharacterStream();
-          }
-          catch (final SQLFeatureNotSupportedException e)
-          {
-            LOGGER.log(Level.FINEST,
-                                       "Could not read CLOB data, as character stream",
-                                       e);
-            rdr = null;
-          }
-          if (rdr == null)
-          {
-            try
-            {
-              rdr = new InputStreamReader(clob.getAsciiStream());
-            }
-            catch (final SQLFeatureNotSupportedException e)
-            {
-              LOGGER.log(Level.FINEST,
-                                         "Could not read CLOB data, as ASCII stream",
-                                         e);
-              rdr = null;
-            }
-          }
-
-          if (rdr != null)
-          {
-            lobData = readFully(rdr);
-            if (lobData.isEmpty())
-            {
-              // Attempt yet another read
-              final long clobLength = clob.length();
-              lobData = clob.getSubString(1, (int) clobLength);
-            }
-          }
-          else
-          {
-            lobData = null;
-          }
+          return readFully(reader);
         }
-        catch (final SQLException e)
-        {
-          LOGGER.log(Level.WARNING,
-                                     "Could not read CLOB data",
-                                     e);
-          lobData = null;
-        }
-        result = lobData;
       }
-      return new BinaryData(result);
+      catch (final Exception e)
+      {
+        LOGGER.log(Level.WARNING, "Could not read character data", e);
+        return new BinaryData();
+      }
     }
-    else
-    {
-      return new BinaryData();
-    }
-  }
-
-  /**
-   * Reads data from an input stream into a string. Default system encoding is
-   * assumed.
-   *
-   * @param stream
-   *   Input stream
-   * @return A string with the contents of the LOB
-   */
-  private BinaryData readStream(final InputStream stream)
-  {
-    if (stream == null)
-    {
-      return null;
-    }
-    else if (showLobs)
-    {
-      final BufferedInputStream in = new BufferedInputStream(stream);
-      final BinaryData lobData = new BinaryData(readFully(in));
-      return lobData;
-    }
-    else
-    {
-      return new BinaryData();
-    }
+    return new BinaryData();
   }
 
   private boolean useColumn(final String columnName)
