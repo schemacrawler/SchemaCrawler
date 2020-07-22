@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.text.utility;
+package schemacrawler.utility;
 
 
 public class BinaryData

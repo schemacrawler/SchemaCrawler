@@ -26,36 +26,49 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.crawl;
+package schemacrawler.schemacrawler;
 
 
+import static java.sql.Types.BLOB;
+import static java.sql.Types.CLOB;
+import static java.sql.Types.LONGNVARCHAR;
+import static java.sql.Types.LONGVARBINARY;
+import static java.sql.Types.LONGVARCHAR;
+import static java.sql.Types.NCLOB;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.QueryUtility.executeAgainstSchema;
 import static sf.util.DatabaseUtility.logSQLWarnings;
-import static sf.util.DatabaseUtility.readClob;
+import static sf.util.IOUtility.readFully;
 import static sf.util.Utility.enumValue;
 import static sf.util.Utility.enumValueFromId;
 import static sf.util.Utility.isBlank;
 import static sf.util.Utility.isIntegral;
 
+import java.io.BufferedInputStream;
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.sql.Blob;
 import java.sql.Clob;
+import java.sql.NClob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 
+import schemacrawler.crawl.ResultsCrawler;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
-import schemacrawler.schemacrawler.Query;
+import schemacrawler.utility.BinaryData;
+import sf.util.DatabaseUtility;
 import sf.util.IdentifiedEnum;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -67,7 +80,7 @@ import sf.util.StringFormat;
  *
  * @author Sualeh Fatehi
  */
-final class MetadataResultSet
+public final class MetadataResultSet
   implements AutoCloseable
 {
 
@@ -81,17 +94,18 @@ final class MetadataResultSet
   private String description;
   private Set<String> readColumns;
   private int rowCount;
+  private boolean showLobs;
 
-  MetadataResultSet(final Query query,
-                    final Statement statement,
-                    final InclusionRule schemaInclusionRule)
+  public MetadataResultSet(final Query query,
+                           final Statement statement,
+                           final InclusionRule schemaInclusionRule)
     throws SQLException
   {
     this(executeAgainstSchema(query, statement, schemaInclusionRule));
     description = query.getName();
   }
 
-  MetadataResultSet(final ResultSet resultSet)
+  public MetadataResultSet(final ResultSet resultSet)
     throws SQLException
   {
     results = requireNonNull(resultSet, "Cannot use null results");
@@ -107,6 +121,35 @@ final class MetadataResultSet
     this.resultsColumns = new ResultsCrawler(results).crawl();
 
     readColumns = new HashSet<>();
+  }
+
+  public boolean isShowLobs()
+  {
+    return showLobs;
+  }
+
+  public void setShowLobs(final boolean showLobs)
+  {
+    this.showLobs = showLobs;
+  }
+
+  public String[] getColumnNames()
+  {
+    final List<String> columnNames = new ArrayList<>();
+    resultsColumns.forEach(resultsColumn -> columnNames.add(resultsColumn.getName()));
+    return columnNames.toArray(new String[columnNames.size()]);
+  }
+
+  public List<Object> row()
+    throws SQLException
+  {
+    final List<Object> currentRow = new ArrayList<>();
+    for (final ResultsColumn resultsColumn : resultsColumns)
+    {
+      currentRow.add(getColumnData(resultsColumn));
+    }
+
+    return currentRow;
   }
 
   /**
@@ -138,7 +181,7 @@ final class MetadataResultSet
    *
    * @return Map of additional attributes to the database object
    */
-  Map<String, Object> getAttributes()
+  public Map<String, Object> getAttributes()
   {
     final Map<String, Object> attributes = new HashMap<>();
     for (final ResultsColumn resultsColumn : resultsColumns)
@@ -178,7 +221,7 @@ final class MetadataResultSet
     return attributes;
   }
 
-  BigInteger getBigInteger(final String columnName)
+  public BigInteger getBigInteger(final String columnName)
   {
     String stringBigInteger = getString(columnName);
     if (isBlank(stringBigInteger))
@@ -206,7 +249,7 @@ final class MetadataResultSet
    *   Column name to check
    * @return Whether the string evaluates to true
    */
-  boolean getBoolean(final String columnName)
+  public boolean getBoolean(final String columnName)
   {
     if (useColumn(columnName))
     {
@@ -260,7 +303,8 @@ final class MetadataResultSet
    *   Default enum value to return
    * @return Enum value of the column, or the default if not available
    */
-  <E extends Enum<E>> E getEnum(final String columnName, final E defaultValue)
+  public <E extends Enum<E>> E getEnum(final String columnName,
+                                       final E defaultValue)
   {
     final String value = getString(columnName);
     if (isBlank(value))
@@ -279,8 +323,8 @@ final class MetadataResultSet
    *   Default enum value to return
    * @return Enum value of the column, or the default if not available
    */
-  <E extends Enum<E> & IdentifiedEnum> E getEnumFromId(final String columnName,
-                                                       final E defaultValue)
+  public <E extends Enum<E> & IdentifiedEnum> E getEnumFromId(final String columnName,
+                                                              final E defaultValue)
   {
     final int value = getInt(columnName, 0);
     return enumValueFromId(value, defaultValue);
@@ -295,8 +339,8 @@ final class MetadataResultSet
    *   Default enum value to return
    * @return Enum value of the column, or the default if not available
    */
-  <E extends Enum<E> & IdentifiedEnum> E getEnumFromShortId(final String columnName,
-                                                            final E defaultValue)
+  public <E extends Enum<E> & IdentifiedEnum> E getEnumFromShortId(final String columnName,
+                                                                   final E defaultValue)
   {
     final int value = getShort(columnName, (short) 0);
     return enumValueFromId(value, defaultValue);
@@ -312,7 +356,7 @@ final class MetadataResultSet
    *   Default value
    * @return Integer value of the column, or the default if not available
    */
-  int getInt(final String columnName, final int defaultValue)
+  public int getInt(final String columnName, final int defaultValue)
   {
     int value = defaultValue;
     if (useColumn(columnName))
@@ -352,7 +396,7 @@ final class MetadataResultSet
    *   Default value
    * @return Long value of the column, or the default if not available
    */
-  long getLong(final String columnName, final long defaultValue)
+  public long getLong(final String columnName, final long defaultValue)
   {
     long value = defaultValue;
     if (useColumn(columnName))
@@ -391,7 +435,7 @@ final class MetadataResultSet
    *   Default value
    * @return Short value of the column, or the default if not available
    */
-  short getShort(final String columnName, final short defaultValue)
+  public short getShort(final String columnName, final short defaultValue)
   {
     short value = defaultValue;
     if (useColumn(columnName))
@@ -427,7 +471,7 @@ final class MetadataResultSet
    *   Column name
    * @return String value of the column, or null if not available
    */
-  String getString(final String columnName)
+  public String getString(final String columnName)
   {
     String value = null;
     if (useColumn(columnName))
@@ -469,7 +513,7 @@ final class MetadataResultSet
    * @throws SQLException
    *   On a database access error
    */
-  boolean next()
+  public boolean next()
     throws SQLException
   {
     readColumns = new HashSet<>();
@@ -483,9 +527,118 @@ final class MetadataResultSet
     return next;
   }
 
-  void setDescription(final String description)
+  public void setDescription(final String description)
   {
     this.description = description;
+  }
+
+  private Object getColumnData(final ResultsColumn resultsColumn)
+    throws SQLException
+  {
+    final int javaSqlType = resultsColumn
+      .getColumnDataType()
+      .getJavaSqlType()
+      .getVendorTypeNumber();
+    final int ordinalPosition = resultsColumn.getOrdinalPosition();
+
+    Object columnData;
+
+    if (javaSqlType == BLOB || javaSqlType == LONGVARBINARY)
+    {
+      // Do not read binary data - just determine if it is NULL
+      final Object object = results.getObject(ordinalPosition);
+      if (results.wasNull() || object == null)
+      {
+        columnData = null;
+      }
+      else
+      {
+        columnData = new BinaryData();
+      }
+    }
+    else if (javaSqlType == CLOB)
+    {
+      final Clob clob = results.getClob(ordinalPosition);
+      if (results.wasNull() || clob == null)
+      {
+        columnData = null;
+      }
+      else
+      {
+        columnData = readClob(clob);
+      }
+    }
+    else if (javaSqlType == NCLOB)
+    {
+      final NClob nClob = results.getNClob(ordinalPosition);
+      if (results.wasNull() || nClob == null)
+      {
+        columnData = null;
+      }
+      else
+      {
+        columnData = readClob(nClob);
+      }
+    }
+    else if (javaSqlType == LONGNVARCHAR || javaSqlType == LONGVARCHAR)
+    {
+      final InputStream stream = results.getAsciiStream(ordinalPosition);
+      if (results.wasNull() || stream == null)
+      {
+        columnData = null;
+      }
+      else
+      {
+        columnData = readStream(stream);
+      }
+    }
+    else
+    {
+      columnData = results.getObject(ordinalPosition);
+      if (results.wasNull())
+      {
+        columnData = null;
+      }
+    }
+    return columnData;
+  }
+
+  private BinaryData readClob(final Clob clob)
+  {
+    if (showLobs)
+    {
+      return new BinaryData(DatabaseUtility.readClob(clob));
+    }
+    else
+    {
+      return new BinaryData();
+    }
+  }
+
+  /**
+   * Reads data from an input stream into a string. Default system encoding is
+   * assumed.
+   *
+   * @param stream
+   *   Input stream
+   * @return A string with the contents of the LOB
+   */
+  private BinaryData readStream(final InputStream stream)
+  {
+    if (stream == null)
+    {
+      return null;
+    }
+    else if (showLobs)
+    {
+      final BufferedInputStream in = new BufferedInputStream(stream);
+      final BinaryData lobData = new BinaryData(readFully(in));
+      return lobData;
+    }
+    else
+    {
+      return new BinaryData();
+    }
   }
 
   private boolean useColumn(final String columnName)

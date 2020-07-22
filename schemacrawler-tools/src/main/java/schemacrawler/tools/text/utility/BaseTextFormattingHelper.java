@@ -39,6 +39,7 @@ import schemacrawler.tools.text.utility.html.Anchor;
 import schemacrawler.tools.text.utility.html.TableCell;
 import schemacrawler.tools.text.utility.html.TableHeaderCell;
 import schemacrawler.tools.text.utility.html.TableRow;
+import schemacrawler.utility.BinaryData;
 import sf.util.Color;
 
 /**
