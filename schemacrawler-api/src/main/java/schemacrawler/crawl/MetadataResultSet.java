@@ -180,8 +180,11 @@ public final class MetadataResultSet
       {
         try
         {
+          final String key = resultsColumn
+            .getLabel()
+            .toUpperCase();
           final Object value = getColumnData(resultsColumn);
-          attributes.put(resultsColumn.getName(), value);
+          attributes.put(key, value);
         }
         catch (final SQLException | ArrayIndexOutOfBoundsException e)
         {
