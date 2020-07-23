@@ -25,43 +25,22 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.text.utility;
+package schemacrawler.utility;
 
 
-public class BinaryData
+import java.io.Serializable;
+
+/**
+ * Placeholder for binary column data that was not retrieved from the database.
+ */
+public final class BinaryData
+  implements Serializable
 {
-
-  private final boolean hasData;
-  private final String data;
-
-  public BinaryData()
-  {
-    data = null;
-    hasData = false;
-  }
-
-  public BinaryData(final String data)
-  {
-    this.data = data;
-    hasData = true;
-  }
-
-  public boolean hasData()
-  {
-    return hasData;
-  }
 
   @Override
   public String toString()
   {
-    if (hasData)
-    {
-      return data;
-    }
-    else
-    {
-      return "<binary>";
-    }
+    return "<binary>";
   }
 
 }

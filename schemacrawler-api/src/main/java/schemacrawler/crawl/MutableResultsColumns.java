@@ -104,15 +104,9 @@ final class MutableResultsColumns
     }
     for (final MutableResultsColumn column : columns)
     {
-      if (name.equals(column.getLabel()))
-      {
-        return Optional.of(column);
-      }
-      if (name.equals(column.getFullName()))
-      {
-        return Optional.of(column);
-      }
-      if (name.equals(column.getName()))
+      if (name.equalsIgnoreCase(column.getLabel()) ||
+          name.equalsIgnoreCase(column.getFullName()) ||
+          name.equalsIgnoreCase(column.getName()))
       {
         return Optional.of(column);
       }

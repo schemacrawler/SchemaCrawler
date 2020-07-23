@@ -35,6 +35,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import schemacrawler.crawl.MetadataResultSet;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -213,8 +214,8 @@ final class DataTextFormatter
       formattingHelper.writeObjectNameRow("", title, "", Color.white);
       try
       {
-        final DataResultSet dataRows =
-          new DataResultSet(rows, options.isShowLobs());
+        final MetadataResultSet dataRows = new MetadataResultSet(rows);
+        dataRows.setShowLobs(options.isShowLobs());
 
         formattingHelper.writeRowHeader(dataRows.getColumnNames());
 
@@ -230,7 +231,7 @@ final class DataTextFormatter
     dataBlockCount++;
   }
 
-  private void iterateRows(final DataResultSet dataRows)
+  private void iterateRows(final MetadataResultSet dataRows)
     throws SQLException
   {
     while (dataRows.next())

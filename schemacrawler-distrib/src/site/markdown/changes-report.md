@@ -8,6 +8,8 @@
 - Add ability to disable a database plugin by setting environment variable or 
   system property `SC_WITHOUT_DATABASE_PLUGIN` to the name of the server -
   `SC_WITHOUT_DATABASE_PLUGIN=oracle` for example
+- Do not read binary (BLOB and LONGVARBINARY) data
+- Address issues with failure of JSON serialization
 
 
 <a name="a16.9.2"></a>

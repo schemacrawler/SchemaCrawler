@@ -35,12 +35,15 @@ import static sf.util.Utility.isBlank;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.logging.Level;
 
+import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.Retriever;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.utility.JavaSqlTypes;
+import sf.util.SchemaCrawlerLogger;
 
 /**
  * A retriever uses database metadata to get the details about a result set.
@@ -50,6 +53,9 @@ import schemacrawler.utility.JavaSqlTypes;
 @Retriever
 final class ResultsRetriever
 {
+
+  private static final SchemaCrawlerLogger LOGGER =
+    SchemaCrawlerLogger.getLogger(ResultsRetriever.class.getName());
 
   private final ResultSetMetaData resultsMetaData;
 
@@ -78,11 +84,11 @@ final class ResultsRetriever
     final MutableResultsColumns resultColumns = new MutableResultsColumns("");
     final MutableCatalog catalog = new MutableCatalog("results");
     final int columnCount = resultsMetaData.getColumnCount();
-    for (int i = 1; i <= columnCount; i++)
+    for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++)
     {
-      final String catalogName = resultsMetaData.getCatalogName(i);
-      final String schemaName = resultsMetaData.getSchemaName(i);
-      String tableName = resultsMetaData.getTableName(i);
+      final String catalogName = resultsMetaData.getCatalogName(columnIndex);
+      final String schemaName = resultsMetaData.getSchemaName(columnIndex);
+      String tableName = resultsMetaData.getTableName(columnIndex);
       if (isBlank(tableName))
       {
         tableName = "";
@@ -92,43 +98,75 @@ final class ResultsRetriever
       final MutableTable table = new MutableTable(schema, tableName);
       catalog.addTable(table);
 
-      final String databaseSpecificTypeName =
-        resultsMetaData.getColumnTypeName(i);
-      final int javaSqlType = resultsMetaData.getColumnType(i);
-      final String columnClassName = resultsMetaData.getColumnClassName(i);
-      final MutableColumnDataType columnDataType =
-        new MutableColumnDataType(schema, databaseSpecificTypeName);
-      columnDataType.setJavaSqlType(javaSqlTypes.valueOf(javaSqlType));
-      columnDataType.setTypeMappedClass(columnClassName);
-      columnDataType.setPrecision(resultsMetaData.getPrecision(i));
-      final int scale = resultsMetaData.getScale(i);
-      columnDataType.setMaximumScale(scale);
-      columnDataType.setMinimumScale(scale);
-
-      final String columnName = resultsMetaData.getColumnName(i);
+      final String columnName = resultsMetaData.getColumnName(columnIndex);
       final MutableResultsColumn column =
         new MutableResultsColumn(table, columnName);
-      column.setOrdinalPosition(i);
-      column.setColumnDataType(columnDataType);
+      column.setLabel(resultsMetaData.getColumnLabel(columnIndex));
 
-      column.setLabel(resultsMetaData.getColumnLabel(i));
-      column.setDisplaySize(resultsMetaData.getColumnDisplaySize(i));
+      try
+      {
+        final String databaseSpecificTypeName =
+          resultsMetaData.getColumnTypeName(columnIndex);
+        final int javaSqlType = resultsMetaData.getColumnType(columnIndex);
+        final String columnClassName = resultsMetaData.getColumnClassName(columnIndex);
+        final MutableColumnDataType columnDataType =
+          new MutableColumnDataType(schema, databaseSpecificTypeName);
+        columnDataType.setJavaSqlType(javaSqlTypes.valueOf(javaSqlType));
+        columnDataType.setTypeMappedClass(columnClassName);
+        columnDataType.setPrecision(resultsMetaData.getPrecision(columnIndex));
+        final int scale = resultsMetaData.getScale(columnIndex);
+        columnDataType.setMaximumScale(scale);
+        columnDataType.setMinimumScale(scale);
+        //
+        column.setColumnDataType(columnDataType);
+      }
+      catch (final Exception e)
+      {
+        LOGGER.log(Level.WARNING,
+                   String.format(
+                     "Could not retrieve column data type for %s (%s)",
+                     column,
+                     column.getLabel()),
+                   e);
 
-      final boolean isNullable =
-        resultsMetaData.isNullable(i) == ResultSetMetaData.columnNullable;
-      column.setAutoIncrement(resultsMetaData.isAutoIncrement(i));
-      column.setCaseSensitive(resultsMetaData.isCaseSensitive(i));
-      column.setCurrency(resultsMetaData.isCurrency(i));
-      column.setDefinitelyWritable(resultsMetaData.isDefinitelyWritable(i));
-      column.setNullable(isNullable);
-      column.setReadOnly(resultsMetaData.isReadOnly(i));
-      column.setSearchable(resultsMetaData.isSearchable(i));
-      column.setSigned(resultsMetaData.isSigned(i));
-      column.setWritable(resultsMetaData.isWritable(i));
+        final MutableColumnDataType unknownColumnDataType =
+          new MutableColumnDataType(schema, "<unknown>");
+        unknownColumnDataType.setJavaSqlType(JavaSqlType.UNKNOWN);
+        //
+        column.setColumnDataType(unknownColumnDataType);
+      }
+
+      try
+      {
+        final boolean isNullable =
+          resultsMetaData.isNullable(columnIndex) == ResultSetMetaData.columnNullable;
+
+        column.setOrdinalPosition(columnIndex);
+        column.setDisplaySize(resultsMetaData.getColumnDisplaySize(columnIndex));
+        column.setAutoIncrement(resultsMetaData.isAutoIncrement(columnIndex));
+        column.setCaseSensitive(resultsMetaData.isCaseSensitive(columnIndex));
+        column.setCurrency(resultsMetaData.isCurrency(columnIndex));
+        column.setDefinitelyWritable(resultsMetaData.isDefinitelyWritable(columnIndex));
+        column.setNullable(isNullable);
+        column.setReadOnly(resultsMetaData.isReadOnly(columnIndex));
+        column.setSearchable(resultsMetaData.isSearchable(columnIndex));
+        column.setSigned(resultsMetaData.isSigned(columnIndex));
+        column.setWritable(resultsMetaData.isWritable(columnIndex));
+      }
+      catch (final Exception e)
+      {
+        LOGGER.log(Level.WARNING,
+                   String.format(
+                     "Could not retrieve additional column data for %s (%s)",
+                     column,
+                     column.getLabel()),
+                   e);
+      }
 
       resultColumns.addColumn(column);
     }
 
     return resultColumns;
   }
+
 }
