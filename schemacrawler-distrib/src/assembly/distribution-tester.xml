@@ -2,7 +2,7 @@
   basedir="../..">
 
   <property name="SchemaCrawler.home" location=".." />
-  <property name="SchemaCrawler.version" value="16.9.2" />
+  <property name="SchemaCrawler.version" value="16.9.3" />
 
   <import file="distribution.xml" />
 
