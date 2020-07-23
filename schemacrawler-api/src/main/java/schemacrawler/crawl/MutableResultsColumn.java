@@ -29,6 +29,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.Table;
 
@@ -197,6 +200,15 @@ final class MutableResultsColumn
   void setWritable(final boolean isWritable)
   {
     writable = isWritable;
+  }
+
+  @Override
+  public final List<String> toUniqueLookupKey()
+  {
+    // Make a defensive copy
+    final List<String> lookupKey = new ArrayList<>(super.toUniqueLookupKey());
+    lookupKey.add(label);
+    return lookupKey;
   }
 
 }

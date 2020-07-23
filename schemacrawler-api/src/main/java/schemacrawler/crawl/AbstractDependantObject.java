@@ -82,7 +82,7 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
   }
 
   @Override
-  public final List<String> toUniqueLookupKey()
+  public List<String> toUniqueLookupKey()
   {
     // Make a defensive copy
     final List<String> lookupKey = new ArrayList<>(parent
