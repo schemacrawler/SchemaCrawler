@@ -3,10 +3,10 @@ crawl-info:
   crawl-timestamp: "2020-05-30 12:56:00"
   database-version:
     product-name: "HSQL Database Engine"
-    product-version: "2.5.0"
+    product-version: "2.5.1"
   jdbc-driver-version:
     product-name: "HSQL Database Engine Driver"
-    product-version: "2.5.0"
+    product-version: "2.5.1"
   jvm-version:
     product-name: "Oracle Corporation Java HotSpot(TM) 64-Bit Server VM"
     product-version: "1.8.0_191-b12"
