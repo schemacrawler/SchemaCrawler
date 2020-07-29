@@ -39,6 +39,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.StringJoiner;
+import java.util.function.Supplier;
 
 public class PluginCommand
   implements Iterable<PluginCommandOption>
@@ -46,38 +47,48 @@ public class PluginCommand
 
   public static PluginCommand empty()
   {
-    return new PluginCommand(command, null, null, null, null);
+    return new PluginCommand(command, null, null, null, null, null);
   }
 
   public static PluginCommand newPluginCommand(final String name,
                                                final String helpHeader)
   {
-    return new PluginCommand(command, name, helpHeader, null, null);
+    return new PluginCommand(command, name, helpHeader, null, null, null);
   }
 
   public static PluginCommand newDatabasePluginCommand(final String name,
                                                        final String helpHeader)
   {
-    return new PluginCommand(server, name, helpHeader, null, null);
+    return new PluginCommand(server, name, helpHeader, null, null, null);
   }
 
   public static PluginCommand newPluginCommand(final String name,
                                                final String helpHeader,
                                                final String helpDescription)
   {
-    return new PluginCommand(command, name, helpHeader, helpDescription, null);
+    return new PluginCommand(command, name, helpHeader, helpDescription, null, null);
+  }
+
+  public static PluginCommand newPluginCommand(final String name,
+                                               final String helpHeader,
+                                               final String helpDescription,
+                                               final Supplier<String> helpFooter)
+  {
+    return new PluginCommand(command, name, helpHeader, helpDescription, helpFooter, null);
   }
 
   private final PluginCommandType type;
   private final String helpDescription;
   private final String helpHeader;
   private final String name;
+  private final Supplier<String> helpFooter;
   private final Collection<PluginCommandOption> options;
 
   private PluginCommand(final PluginCommandType type,
                         final String name,
                         final String helpHeader,
                         final String helpDescription,
+                        final Supplier<String> helpFooter,
                         final Collection<PluginCommandOption> options)
   {
     this.type = requireNonNull(type, "No plugin command type provided");
@@ -113,6 +124,18 @@ public class PluginCommand
     {
       this.helpDescription = helpDescription;
     }
+
+    this.helpFooter = helpFooter;
+  }
+
+  public Supplier<String> getHelpFooter()
+  {
+    return helpFooter;
+  }
+
+  public boolean hasHelpFooter()
+  {
+    return helpFooter != null;
   }
 
   public String getHelpDescription()

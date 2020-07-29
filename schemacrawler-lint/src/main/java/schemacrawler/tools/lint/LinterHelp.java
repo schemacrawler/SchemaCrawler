@@ -28,45 +28,51 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint;
 
 
-public final class LinterHelp
+import java.util.function.Supplier;
+
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+
+public final class LinterHelp implements Supplier<String>
 {
 
-  public static String getLinterHelpText()
-    throws Exception
+  public String get()
   {
-    final StringBuilder buffer = new StringBuilder(1024);
-
-    buffer
-      .append("--- Available Linters ---")
-      .append(System.lineSeparator())
-      .append(System.lineSeparator());
-
-    final LinterRegistry registry = new LinterRegistry();
-    for (final String linterId : registry)
+    try
     {
-      final Linter linter = registry.newLinter(linterId);
+      final StringBuilder buffer = new StringBuilder(1024);
 
       buffer
-        .append("Linter: ")
-        .append(linter.getLinterId())
+        .append(System.lineSeparator())
+        .append("--- Available Linters ---")
+        .append(System.lineSeparator())
         .append(System.lineSeparator());
-      buffer
-        .append(linter.getDescription())
-        .append(System.lineSeparator());
+
+      final LinterRegistry registry = new LinterRegistry();
+      for (final String linterId : registry)
+      {
+        final Linter linter = registry.newLinter(linterId);
+
+        buffer
+          .append("Linter: ")
+          .append(linter.getLinterId())
+          .append(System.lineSeparator());
+        buffer
+          .append(linter.getDescription())
+          .append(System.lineSeparator())
+          .append(System.lineSeparator());
+      }
+
+      return buffer.toString();
     }
-
-    return buffer.toString();
+    catch (final SchemaCrawlerException e)
+    {
+      return "";
+    }
   }
 
   public static void main(final String[] args)
-    throws Exception
   {
-    System.out.println(getLinterHelpText());
-  }
-
-  private LinterHelp()
-  {
-    // Prevent instantiation
+    System.out.println(new LinterHelp().get());
   }
 
 }

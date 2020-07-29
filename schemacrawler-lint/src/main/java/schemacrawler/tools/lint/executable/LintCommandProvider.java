@@ -37,6 +37,7 @@ import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.lint.LintDispatch;
+import schemacrawler.tools.lint.LinterHelp;
 import schemacrawler.tools.options.OutputOptions;
 
 public class LintCommandProvider
@@ -71,9 +72,10 @@ public class LintCommandProvider
   public PluginCommand getCommandLineCommand()
   {
     final PluginCommand pluginCommand = newPluginCommand("lint",
-                                                          "** "
-                                                          + DESCRIPTION_HEADER,
-                                                          "For more information, see https://www.schemacrawler.com/lint.html %n");
+                                                         "** "
+                                                         + DESCRIPTION_HEADER,
+                                                         "For more information, see https://www.schemacrawler.com/lint.html %n",
+                                                         new LinterHelp());
     pluginCommand
       .addOption("linter-configs",
                  "Path to the SchemaCrawler lint XML configuration file",

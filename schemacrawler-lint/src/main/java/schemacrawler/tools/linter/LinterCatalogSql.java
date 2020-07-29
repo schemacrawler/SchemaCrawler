@@ -50,7 +50,14 @@ public class LinterCatalogSql
   @Override
   public String getSummary()
   {
-    return message;
+    if (isBlank(message))
+    {
+      // Linter is not configured
+      return "SQL statement based catalog linter";
+    } else
+    {
+      return message;
+    }
   }
 
   @Override
