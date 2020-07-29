@@ -1,0 +1,1 @@
+Checks for tables that have more than one column as a primary key, and recommends that a surrogate key column be used as a primary key instead.
