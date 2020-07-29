@@ -1,8 +1,10 @@
 Checks for columns that should not be named according to certain patterns. For example, you may have a policy that no column can be named ID, because you want columns with complete names, such as ORDER_ID. If you want to detect columns named ID, you could use configuration as shown in the example below.
 Example configuration:
 
+```xml
 <linter id="schemacrawler.tools.linter.LinterTableWithBadlyNamedColumns">
   <config>
     <property name="bad-column-names"><![CDATA[.*\.ID]]></property>
   </config>
 </linter>
+```
