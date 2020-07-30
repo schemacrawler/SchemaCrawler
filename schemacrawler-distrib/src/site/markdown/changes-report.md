@@ -1,5 +1,11 @@
 # SchemaCrawler Change History
 
+<a name="a16.9.4"></a>
+## Release 16.9.4 - 2020-08-19
+
+- Print complete help on registered linters from the command-line
+
+
 <a name="a16.9.3"></a>
 ## Release 16.9.3 - 2020-07-19
 
