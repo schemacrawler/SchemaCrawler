@@ -43,7 +43,6 @@
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-commandline</artifactId>
       <version>${project.version}</version>
-      <!-- <scope>test</scope> -->
     </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>

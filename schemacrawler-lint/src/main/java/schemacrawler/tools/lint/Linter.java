@@ -73,18 +73,15 @@ public abstract class Linter
 
   /**
    * Gets a lengthy description of the linter. By default, reads a resource file
-   * called /help/<class-name>.txt and if that is not present, returns the
+   * called /help/<linter-id>.txt and if that is not present, returns the
    * summary. Can be overridden.
    *
    * @return Lengthy description of the linter
    */
   public String getDescription()
   {
-    final String descriptionResource = String.format("/help/%s.txt",
-                                                     this
-                                                       .getClass()
-                                                       .getName()
-                                                       .replace(".", "/"));
+    final String descriptionResource =
+      String.format("/help/%s.txt", getLinterId());
 
     final String descriptionText;
     if (Linter.class.getResource(descriptionResource) == null)

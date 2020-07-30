@@ -1,0 +1,1 @@
+Checks for tables where foreign keys have no indexes. This may cause inefficient lookups.

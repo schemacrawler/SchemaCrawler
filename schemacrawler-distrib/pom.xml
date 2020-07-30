@@ -94,11 +94,77 @@
 
   </dependencies>
   <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>3.0.0</version>
+          <dependencies>
+            <dependency>
+              <groupId>org.apache.ant</groupId>
+              <artifactId>ant</artifactId>
+              <version>1.10.8</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+        <plugin>
+          <groupId>com.ruleoftech</groupId>
+          <artifactId>markdown-page-generator-plugin</artifactId>
+          <version>2.3.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>3.1.1</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>stage-site-markdown</id>
+            <phase>process-resources</phase>
+            <configuration>
+              <target name="stage-site-markdown"
+                      description="Stage site Markdown, and generate Markdown content">
+                <copy todir="${project.basedir}/target/site-markdown">
+                  <fileset dir="${project.basedir}/src/site/markdown"/>
+                </copy>
+                <java classname="schemacrawler.tools.lint.LinterHelp">
+                  <classpath refid="maven.test.classpath" />
+                  <arg file="${project.basedir}/target/site-markdown/lint.md"/>
+                </java>
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>make-distribution</id>
+            <phase>package</phase>
+            <configuration>
+              <target name="make-distribution"
+                      description="Package all sub-project jars into the distributable zip">
+                <property name="SchemaCrawler.home" location=".."/>
+                <property name="SchemaCrawler.version"
+                          value="${project.version}"/>
+                <ant antfile="src\assembly\distribution.xml" target="make"/>
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>com.ruleoftech</groupId>
         <artifactId>markdown-page-generator-plugin</artifactId>
-        <version>2.1.0</version>
         <executions>
           <execution>
             <id>examples</id>
@@ -127,7 +193,7 @@
               <footerHtmlFile>${project.basedir}/src/site/footer.include</footerHtmlFile>
               <pegdownExtensions>SMARTYPANTS,FENCED_CODE_BLOCKS,AUTOLINKS,TABLES</pegdownExtensions>
               <recursiveInput>true</recursiveInput>
-              <inputDirectory>${project.basedir}/src/site/markdown</inputDirectory>
+              <inputDirectory>${project.basedir}/target/site-markdown</inputDirectory>
               <outputDirectory>${project.basedir}/target/_website</outputDirectory>
             </configuration>
           </execution>
@@ -136,11 +202,10 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
-        <version>3.1.1</version>
         <executions>
           <execution>
             <id>create-lib</id>
-            <phase>package</phase>
+            <phase>prepare-package</phase>
             <goals>
               <goal>copy</goal>
             </goals>
@@ -302,34 +367,6 @@
             </configuration>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <version>1.8</version>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <configuration>
-              <target>
-                <property name="SchemaCrawler.home" location=".."/>
-                <property name="SchemaCrawler.version"
-                          value="${project.version}"/>
-                <ant antfile="src\assembly\distribution.xml" target="make"/>
-              </target>
-            </configuration>
-            <goals>
-              <goal>run</goal>
-            </goals>
-          </execution>
-        </executions>
-        <dependencies>
-          <dependency>
-            <groupId>org.apache.ant</groupId>
-            <artifactId>ant</artifactId>
-            <version>1.10.8</version>
-          </dependency>
-        </dependencies>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

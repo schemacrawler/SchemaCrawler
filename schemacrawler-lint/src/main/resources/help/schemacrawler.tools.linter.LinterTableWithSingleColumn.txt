@@ -1,0 +1,1 @@
+Checks for tables with no columns at all, or just a single column, since that could indicate a schema design smell.

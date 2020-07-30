@@ -223,6 +223,10 @@ public class CommandLineUtility
     usageMessageSpec.synopsisHeading("Command:%n");
     usageMessageSpec.customSynopsis(pluginCommandName);
     usageMessageSpec.optionListHeading("Options:%n");
+    if (pluginCommand.hasHelpFooter())
+    {
+      usageMessageSpec.footer(pluginCommand.getHelpFooter().get());
+    }
 
     final CommandSpec pluginCommandSpec = CommandSpec
       .create()

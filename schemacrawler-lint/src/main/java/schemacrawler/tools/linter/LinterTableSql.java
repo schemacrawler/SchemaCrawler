@@ -58,7 +58,14 @@ public class LinterTableSql
   @Override
   public String getSummary()
   {
-    return message;
+    if (isBlank(message))
+    {
+      // Linter is not configured
+      return "SQL statement based table linter";
+    } else
+    {
+      return message;
+    }
   }
 
   @Override
