@@ -95,6 +95,12 @@
     <copy
       file="${SchemaCrawler.home}/schemacrawler-testdb/target/schemacrawler-testdb-${SchemaCrawler.version}.jar"
       todir="${main-distribution.staging.dir}/_testdb/lib" />
+    <copy todir="${main-distribution.staging.dir}/_testdb/lib">
+      <fileset dir="${main-distribution.staging.dir}/_schemacrawler/lib">
+        <include name="**/*.jar" />
+        <exclude name="**/schemacrawler-*.jar" />
+      </fileset>
+    </copy>
     <java classname="schemacrawler.testdb.TestSchemaCreatorMain"
       failonerror="true">
       <arg value="--url" />
@@ -108,12 +114,6 @@
         </fileset>
       </classpath>
     </java>
-    <copy todir="${main-distribution.staging.dir}/_testdb/lib">
-      <fileset dir="${main-distribution.staging.dir}/_schemacrawler/lib">
-        <include name="**/*.jar" />
-        <exclude name="**/schemacrawler-*.jar" />
-      </fileset>
-    </copy>
 
     <!-- 2. CREATE BINARY DISTRIBUTION FROM THE STAGED EXAMPLES -->
 
