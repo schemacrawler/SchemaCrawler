@@ -1,7 +1,3 @@
-SchemaCrawler 16.9.3
-
-Error: Output file has to be specified for schema diagrams
-
 Run SchemaCrawler again with just the
 -h
 option for help
@@ -14,4 +10,3 @@ Additional resources are on the SchemaCrawler website,
 https://www.schemacrawler.com
 and a live, interactive tutorial is on
 https://katacoda.com/schemacrawler
-

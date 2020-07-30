@@ -33,6 +33,7 @@ import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSafeArguments;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.retrievePluginOptions;
+import static sf.util.IOUtility.readResourceFully;
 import static sf.util.Utility.isBlank;
 
 import java.util.Map;
@@ -94,25 +95,26 @@ public final class SchemaCrawlerCommandLine
         errorMessage = throwable.getMessage();
       }
 
-      System.err.printf("%s %s%n%n",
-                        Version.getProductName(),
-                        Version.getVersion());
-      if (!isBlank(errorMessage))
-      {
-        System.err.printf("Error: %s%n%n", errorMessage);
-      }
-      else
-      {
-        System.err.printf("Error: Unknown error%n%n");
-      }
-      System.err.printf("Re-run SchemaCrawler with just the%n"
-                        + "-h%n"
-                        + "option for help%n%n");
-      System.err.printf("Or, re-run SchemaCrawler with an additional%n"
-                        + "--log-level=CONFIG%n"
-                        + "option for details on the error%n");
+      printCommandLineErrorMessage(errorMessage);
     }
 
+  }
+
+  private static void printCommandLineErrorMessage(final String errorMessage)
+  {
+    System.err.printf("%s %s%n%n",
+                      Version.getProductName(),
+                      Version.getVersion());
+    if (!isBlank(errorMessage))
+    {
+      System.err.printf("Error: %s%n%n", errorMessage);
+    }
+    else
+    {
+      System.err.printf("Error: Unknown error%n%n");
+    }
+
+    System.err.println(readResourceFully("/command-line-error.footer.txt"));
   }
 
   private static void executeCommandLine(final CommandLine commandLine)

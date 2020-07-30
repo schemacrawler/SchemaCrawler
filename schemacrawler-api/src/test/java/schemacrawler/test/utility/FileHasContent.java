@@ -151,7 +151,7 @@ public class FileHasContent
     }
     else if (failures != null)
     {
-      description.appendValueList("mismatched on:\n", "\n", "", failures);
+      description.appendText("mismatched on:\n" + String.join("\n", failures));
     }
   }
 

@@ -52,11 +52,14 @@ import static sf.util.Utility.isBlank;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.BufferedReader;
+import java.io.FileDescriptor;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.io.Reader;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
@@ -205,12 +208,11 @@ public final class TestUtility
       deleteIfExists(testOutputTargetFilePath);
       move(testOutputTempFile, testOutputTargetFilePath, REPLACE_EXISTING);
 
-      if (!contentEquals)
-      {
-        failures.add("Output does not match");
-      }
+      // Reset System streams
+      System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+      System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
 
-      failures.add("Actual output in " + testOutputTargetFilePath);
+      System.err.println("Output does not match - actual output in ");
       System.err.println(testOutputTargetFilePath);
     }
     else
@@ -272,7 +274,6 @@ public final class TestUtility
 
           final String lineMiscompare = buffer.toString();
           failures.add(lineMiscompare);
-          System.out.println(lineMiscompare);
 
           return false;
         }

@@ -1,11 +1,17 @@
-SchemaCrawler 16.1.2
+SchemaCrawler 16.9.3
 
 Error: No tables SQL provided
 
-Re-run SchemaCrawler with just the
+Run SchemaCrawler again with just the
 -h
 option for help
 
-Or, re-run SchemaCrawler with an additional
+Or, run SchemaCrawler again with an additional
 --log-level=CONFIG
 option for details on the error
+
+Additional resources are on the SchemaCrawler website,
+https://www.schemacrawler.com
+and a live, interactive tutorial is on
+https://katacoda.com/schemacrawler
+

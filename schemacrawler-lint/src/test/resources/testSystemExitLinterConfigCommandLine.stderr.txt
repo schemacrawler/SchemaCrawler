@@ -18,14 +18,20 @@ Summary of schema lints:
 [critical]      1- foreign key self-references primary key
 [critical]*     2- no indexes
 
-SchemaCrawler 15.06.01
+SchemaCrawler 16.9.3
 
 Error: Cannot execute SchemaCrawler command
 
-Re-run SchemaCrawler with just the
+Run SchemaCrawler again with just the
 -h
 option for help
 
-Or, re-run SchemaCrawler with an additional
+Or, run SchemaCrawler again with an additional
 --log-level=CONFIG
 option for details on the error
+
+Additional resources are on the SchemaCrawler website,
+https://www.schemacrawler.com
+and a live, interactive tutorial is on
+https://katacoda.com/schemacrawler
+
