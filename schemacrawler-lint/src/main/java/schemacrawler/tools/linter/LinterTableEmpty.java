@@ -39,7 +39,6 @@ import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.Query;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
 import sf.util.SchemaCrawlerLogger;
@@ -83,7 +82,7 @@ public class LinterTableEmpty
         addTableLint(table, getSummary());
       }
     }
-    catch (final SQLException | SchemaCrawlerException e)
+    catch (final SQLException e)
     {
       LOGGER.log(Level.WARNING,
                  new StringFormat("Could not get count for table, ", table),

@@ -44,8 +44,6 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.Retriever;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
@@ -61,7 +59,7 @@ public final class TableRowCountsRetriever
 
   public TableRowCountsRetriever(final Connection connection,
                                  final Catalog catalog)
-    throws SchemaCrawlerSQLException
+    throws SQLException
   {
     this.connection = checkConnection(connection);
     this.catalog = requireNonNull(catalog, "No catalog provided");
@@ -103,7 +101,7 @@ public final class TableRowCountsRetriever
           executeForLong(query, connection, table, identifiers);
         addRowCountToTable(table, count);
       }
-      catch (final SchemaCrawlerException e)
+      catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING,
                    new StringFormat("Could not get count for table <%s>",

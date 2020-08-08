@@ -44,6 +44,7 @@ import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.ty
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 import java.util.logging.Level;
@@ -52,7 +53,6 @@ import java.util.regex.Pattern;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.Query;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -87,9 +87,9 @@ public final class OracleDatabaseConnector
           catalogScope = "DBA";
         }
       }
-      catch (final SchemaCrawlerException e)
+      catch (final SQLException e)
       {
-        LOGGER.log(Level.FINE, e.getMessage(), e);
+        LOGGER.log(Level.FINE, "Could not check access to DBA tables", e);
         catalogScope = "ALL";
       }
 

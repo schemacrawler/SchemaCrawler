@@ -41,12 +41,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public final class ObjectToString
 {
 
-  private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(ObjectToString.class.getName());
+  private static final Logger LOGGER =
+    Logger.getLogger(ObjectToString.class.getName());
 
   private static void appendFields(final Object object,
                                    final int indent,
@@ -94,8 +95,8 @@ public final class ObjectToString
       catch (final Exception e)
       {
         LOGGER.log(Level.FINER,
-                   new StringFormat("Could not access field <%s>", field),
-                   e);
+                   e,
+                   new StringFormat("Could not access field <%s>", field));
       }
     }
   }

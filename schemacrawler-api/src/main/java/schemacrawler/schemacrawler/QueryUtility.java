@@ -96,7 +96,7 @@ public final class QueryUtility
                                     final Connection connection,
                                     final Table table,
                                     final Identifiers identifiers)
-    throws SchemaCrawlerException
+    throws SQLException
   {
     requireNonNull(query, "No query provided");
     final String sql = getQuery(query, table, true, identifiers);
@@ -107,7 +107,7 @@ public final class QueryUtility
 
   public static Object executeForScalar(final Query query,
                                         final Connection connection)
-    throws SchemaCrawlerException
+    throws SQLException
   {
     requireNonNull(query, "No query provided");
     final String sql = getQuery(query);
@@ -120,7 +120,7 @@ public final class QueryUtility
                                         final Connection connection,
                                         final Table table,
                                         final Identifiers identifiers)
-    throws SchemaCrawlerException
+    throws SQLException
   {
     requireNonNull(query, "No query provided");
     final String sql = getQuery(query, table, true, identifiers);

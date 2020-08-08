@@ -29,27 +29,18 @@ package sf.util;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.IOUtility.readFully;
 import static sf.util.IOUtility.readResourceFully;
 import static sf.util.Utility.isBlank;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.sql.Blob;
-import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLFeatureNotSupportedException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
+import java.util.logging.Logger;
 
 /**
  * Utility methods.
@@ -60,30 +51,30 @@ import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 public final class DatabaseUtility
 {
 
-  private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(DatabaseUtility.class.getName());
+  private static final Logger LOGGER =
+    Logger.getLogger(DatabaseUtility.class.getName());
 
   public static Connection checkConnection(final Connection connection)
-    throws SchemaCrawlerSQLException
+    throws SQLException
   {
     try
     {
-      requireNonNull(connection, "No connection provided");
+      requireNonNull(connection, "No database connection provided");
       if (connection.isClosed())
       {
         throw new SQLException("Connection is closed");
       }
     }
-    catch (final NullPointerException | SQLException e)
+    catch (final NullPointerException e)
     {
-      throw new SchemaCrawlerSQLException("Bad database connection", e);
+      throw new SQLException(e.getMessage(), e);
     }
 
     return connection;
   }
 
   public static ResultSet checkResultSet(final ResultSet resultSet)
-    throws SchemaCrawlerSQLException
+    throws SQLException
   {
     try
     {
@@ -93,9 +84,9 @@ public final class DatabaseUtility
         throw new SQLException("Result-set is closed");
       }
     }
-    catch (final NullPointerException | SQLException e)
+    catch (final NullPointerException e)
     {
-      throw new SchemaCrawlerSQLException("Bad result-set", e);
+      throw new SQLException(e.getMessage(), e);
     }
 
     return resultSet;
@@ -181,22 +172,22 @@ public final class DatabaseUtility
     catch (final SQLException e)
     {
       LOGGER.log(Level.WARNING,
-                 new StringFormat("Error executing SQL <%s>", sql),
-                 e);
+                 e,
+                 new StringFormat("Error executing SQL <%s>", sql));
       throw e;
     }
   }
 
   public static long executeSqlForLong(final Connection connection,
                                        final String sql)
-    throws SchemaCrawlerException
+    throws SQLException
   {
     final Object longValue = executeSqlForScalar(connection, sql);
     // Error checking
     if (longValue == null || !(longValue instanceof Number))
     {
-      throw new SchemaCrawlerException(
-        "Cannot get an integer value result from SQL");
+      throw new SQLException(
+        "Cannot get a long value result from SQL query");
     }
 
     return ((Number) longValue).longValue();
@@ -204,7 +195,7 @@ public final class DatabaseUtility
 
   public static Object executeSqlForScalar(final Connection connection,
                                            final String sql)
-    throws SchemaCrawlerException
+    throws SQLException
   {
     try (
       final Statement statement = createStatement(connection);
@@ -221,7 +212,7 @@ public final class DatabaseUtility
             .getMetaData()
             .getColumnCount() != 1)
       {
-        throw new SchemaCrawlerException("Too many columns of data returned");
+        throw new SQLException("Too many columns of data returned");
       }
 
       Object scalar;
@@ -244,14 +235,14 @@ public final class DatabaseUtility
       // Error checking
       if (resultSet.next())
       {
-        throw new SchemaCrawlerException("Too many rows of data returned");
+        throw new SQLException("Too many rows of data returned");
       }
 
       return scalar;
     }
     catch (final SQLException e)
     {
-      throw new SchemaCrawlerException(sql, e);
+      throw new SQLException(String.format("%s%n%s", e.getMessage(), sql), e);
     }
   }
 

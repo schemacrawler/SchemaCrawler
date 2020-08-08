@@ -107,7 +107,7 @@ public final class SchemaCrawlerUtility
     {
       DatabaseUtility.checkConnection(connection);
     }
-    catch (final SchemaCrawlerSQLException e)
+    catch (final SQLException e)
     {
       throw new SchemaCrawlerException("Bad database connection", e);
     }
@@ -120,7 +120,7 @@ public final class SchemaCrawlerUtility
     {
       DatabaseUtility.checkResultSet(resultSet);
     }
-    catch (final SchemaCrawlerSQLException e)
+    catch (final SQLException e)
     {
       throw new SchemaCrawlerException("Bad result-set", e);
     }

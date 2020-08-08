@@ -36,13 +36,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ProcessExecutor
   implements Callable<Integer>
 {
 
-  private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(ProcessExecutor.class.getName());
+  private static final Logger LOGGER =
+    Logger.getLogger(ProcessExecutor.class.getName());
 
   private List<String> command;
   private Path processOutput;

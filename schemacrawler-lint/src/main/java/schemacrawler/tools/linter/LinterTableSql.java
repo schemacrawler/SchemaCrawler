@@ -40,7 +40,6 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.Query;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -111,10 +110,12 @@ public class LinterTableSql
         addTableLint(table, getSummary() + " " + queryResult);
       }
     }
-    catch (final SQLException | SchemaCrawlerException e)
+    catch (final SQLException e)
     {
       LOGGER.log(Level.WARNING,
-                 new StringFormat("Could not get count for table, ", table),
+                 new StringFormat(
+                   "Could not execute SQL for table lints, for table",
+                   table),
                  e);
     }
   }

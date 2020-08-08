@@ -102,7 +102,7 @@ public class PostgreSQLEnumDataTypeHelper
     {
       checkConnection(connection);
     }
-    catch (SchemaCrawlerSQLException e)
+    catch (final SQLException e)
     {
       LOGGER.log(Level.WARNING, "Could not obtain enumerated column values", e);
     }

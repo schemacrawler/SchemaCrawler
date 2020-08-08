@@ -33,6 +33,7 @@ import static schemacrawler.schemacrawler.QueryUtility.executeForScalar;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Config;
@@ -98,11 +99,18 @@ public class LinterCatalogSql
 
     requireNonNull(connection, "No connection provided");
 
-    final Query query = new Query(message, sql);
-    final Object queryResult = executeForScalar(query, connection);
-    if (queryResult != null)
+    try
     {
-      addCatalogLint(getSummary() + " " + queryResult, true);
+      final Query query = new Query(message, sql);
+      final Object queryResult = executeForScalar(query, connection);
+      if (queryResult != null)
+      {
+        addCatalogLint(getSummary() + " " + queryResult, true);
+      }
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerException("Could not execute SQL for catalog lints", e);
     }
   }
 

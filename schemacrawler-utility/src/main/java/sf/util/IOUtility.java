@@ -48,6 +48,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.file.Path;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Utility methods.
@@ -58,8 +59,8 @@ import java.util.logging.Level;
 public final class IOUtility
 {
 
-  private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(IOUtility.class.getName());
+  private static final Logger LOGGER =
+    Logger.getLogger(IOUtility.class.getName());
 
   /**
    * Reads the stream fully, and writes to the writer.

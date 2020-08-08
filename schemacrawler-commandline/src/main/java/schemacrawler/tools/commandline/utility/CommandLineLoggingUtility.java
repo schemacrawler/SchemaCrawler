@@ -44,7 +44,6 @@ import schemacrawler.OperatingSystemInfo;
 import schemacrawler.Version;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
-import sf.util.Utility;
 import sf.util.UtilityMarker;
 
 @UtilityMarker
