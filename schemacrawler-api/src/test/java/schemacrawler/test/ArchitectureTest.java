@@ -57,7 +57,8 @@ public class ArchitectureTest
   public void notThrowGenericExceptions()
   {
     noClasses()
-      .that(doNot(resideInAPackage("schemacrawler.testdb")))
+      .that(doNot(resideInAPackage("schemacrawler.testdb").or(resideInAPackage(
+        "sf.util"))))
       .should(THROW_GENERIC_EXCEPTIONS)
       .because(
         "SchemaCrawler defines it own exceptions, and wraps SQL exceptions with additional information")
@@ -68,7 +69,8 @@ public class ArchitectureTest
   public void notUseJavaLogging()
   {
     noClasses()
-      .that(doNot(resideInAPackage("schemacrawler.testdb")))
+      .that(doNot(resideInAPackage("schemacrawler.testdb").or(resideInAPackage(
+        "sf.util"))))
       .should(USE_JAVA_UTIL_LOGGING)
       .because("SchemaCrawler wraps Java logging in a utility")
       .check(classes);
