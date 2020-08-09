@@ -57,19 +57,15 @@ final class ImmutableServerInfoProperty
   }
 
   @Override
-  public int compareTo(final Property otherDbProperty)
+  public int compareTo(final Property otherProperty)
   {
-    if (otherDbProperty == null)
+    if (otherProperty == null)
     {
       return -1;
     }
     else
     {
-      return getName()
-        .toLowerCase()
-        .compareTo(otherDbProperty
-                     .getName()
-                     .toLowerCase());
+      return getName().compareToIgnoreCase(otherProperty.getName());
     }
   }
 

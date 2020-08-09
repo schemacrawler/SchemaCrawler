@@ -65,19 +65,15 @@ class ImmutableDatabaseProperty
   }
 
   @Override
-  public int compareTo(final Property otherDbProperty)
+  public int compareTo(final Property otherProperty)
   {
-    if (otherDbProperty == null)
+    if (otherProperty == null || otherProperty.getDescription() == null)
     {
       return -1;
     }
     else
     {
-      return getDescription()
-        .toLowerCase()
-        .compareTo(otherDbProperty
-                     .getDescription()
-                     .toLowerCase());
+      return getDescription().compareToIgnoreCase(otherProperty.getDescription());
     }
   }
 

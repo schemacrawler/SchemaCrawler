@@ -84,11 +84,7 @@ final class ImmutableJdbcDriverProperty
     }
     else
     {
-      return getName()
-        .toLowerCase()
-        .compareTo(otherProperty
-                     .getName()
-                     .toLowerCase());
+      return getName().compareToIgnoreCase(otherProperty.getName());
     }
   }
 

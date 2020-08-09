@@ -69,11 +69,7 @@ public final class CommandDescription
     }
     else
     {
-      return getName()
-        .toLowerCase()
-        .compareTo(otherProperty
-                     .getName()
-                     .toLowerCase());
+      return getName().compareToIgnoreCase(otherProperty.getName());
     }
   }
 
