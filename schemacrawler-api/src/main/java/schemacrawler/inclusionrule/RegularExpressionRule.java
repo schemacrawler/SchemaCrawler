@@ -36,7 +36,7 @@ import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import sf.util.string.StringFormat;
 
 /**
  * Specifies inclusion and exclusion patterns that can be applied to the names,

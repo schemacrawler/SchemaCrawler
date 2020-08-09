@@ -46,7 +46,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import sf.util.string.StringFormat;
 
 /**
  * Command registry for mapping command to executable.

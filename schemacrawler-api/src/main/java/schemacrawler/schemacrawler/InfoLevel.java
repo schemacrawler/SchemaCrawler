@@ -37,7 +37,7 @@ import java.util.function.Supplier;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import sf.util.string.StringFormat;
 
 public enum InfoLevel
 {

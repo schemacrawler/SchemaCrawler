@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.test.graph;
+package sf.util.test.graph;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -35,46 +35,87 @@ import org.junit.jupiter.api.Test;
 import sf.util.graph.DirectedGraph;
 
 /**
- * Tests from https://github.com/danielrbradley/CycleDetection/blob/master/
- * StronglyConnectedComponentsTests/StronglyConnectedComponentTests.cs
+ * Exercises from https://algocoding.wordpress.com/2015/04/02/detecting-cycles-in-a-
+ * directed-graph-with-dfs-python/
  */
-public class DirectedGraphBoundaryTest
+public class DirectedGraphTest4
   extends GraphTestBase
 {
 
   @Test
-  public void emptyGraph()
+  public void test1()
     throws Exception
   {
-    final DirectedGraph<String> graph = new DirectedGraph<>("");
+    final DirectedGraph<Integer> graph = new DirectedGraph<Integer>("")
+    {
+      {
+        addEdge(0, 1);
+        addEdge(0, 2);
+        addEdge(2, 3);
+        addEdge(3, 4);
+        addEdge(4, 2);
+      }
+    };
 
-    assertThat(containsCycleSimple(graph), is(false));
-    assertThat(containsCycleTarjan(graph), is(false));
-
+    assertThat(containsCycleSimple(graph), is(true));
+    assertThat(containsCycleTarjan(graph), is(true));
   }
 
   @Test
-  public void selfLoop()
+  public void test2()
     throws Exception
   {
-    final DirectedGraph<String> graph = new DirectedGraph<>("");
-    graph.addEdge("A", "A");
+    final DirectedGraph<Integer> graph = new DirectedGraph<Integer>("")
+    {
+      {
+        addVertex(0);
+        addVertex(1);
+        addVertex(2);
+        addVertex(3);
+      }
+    };
 
     assertThat(containsCycleSimple(graph), is(false));
     assertThat(containsCycleTarjan(graph), is(false));
-
   }
 
   @Test
-  public void singleVertex()
+  public void test3()
     throws Exception
   {
-    final DirectedGraph<String> graph = new DirectedGraph<>("");
-    graph.addVertex("A");
+    final DirectedGraph<Integer> graph = new DirectedGraph<Integer>("")
+    {
+      {
+        addVertex(0);
+        addEdge(1, 2);
+        addEdge(3, 4);
+        addEdge(4, 5);
+        addEdge(5, 3);
+      }
+    };
+
+    assertThat(containsCycleSimple(graph), is(true));
+    assertThat(containsCycleTarjan(graph), is(true));
+  }
+
+  @Test
+  public void test4()
+    throws Exception
+  {
+    final DirectedGraph<Integer> graph = new DirectedGraph<Integer>("")
+    {
+      {
+        addEdge(0, 1);
+        addEdge(0, 2);
+        addEdge(1, 3);
+        addEdge(1, 4);
+        addEdge(5, 6);
+        addEdge(5, 7);
+      }
+    };
 
     assertThat(containsCycleSimple(graph), is(false));
     assertThat(containsCycleTarjan(graph), is(false));
-
   }
 
 }

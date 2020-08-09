@@ -41,7 +41,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.SearchableType;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import sf.util.string.StringFormat;
 
 /**
  * Represents a column type. Provides the java.sql.Types type, the

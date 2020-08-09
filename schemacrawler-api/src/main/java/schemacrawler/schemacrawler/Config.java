@@ -45,7 +45,7 @@ import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import sf.util.ObjectToString;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import sf.util.string.StringFormat;
 
 /**
  * Configuration properties.

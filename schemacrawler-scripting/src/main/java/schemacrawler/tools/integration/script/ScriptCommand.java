@@ -45,7 +45,7 @@ import schemacrawler.tools.executable.CommandChain;
 import schemacrawler.tools.iosource.InputResource;
 import sf.util.ObjectToString;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import sf.util.string.StringFormat;
 
 /**
  * Main executor for the script engine integration.

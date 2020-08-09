@@ -53,7 +53,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.utility.NamedObjectSort;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import sf.util.string.StringFormat;
 import sf.util.UtilityMarker;
 
 @UtilityMarker

@@ -35,7 +35,7 @@ import java.io.Writer;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import sf.util.string.StringFormat;
 
 public final class OutputWriter
   extends Writer

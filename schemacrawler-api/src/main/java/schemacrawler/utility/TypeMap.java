@@ -42,7 +42,7 @@ import java.util.Set;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import sf.util.string.StringFormat;
 
 public final class TypeMap
   implements Map<String, Class<?>>

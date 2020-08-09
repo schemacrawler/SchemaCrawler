@@ -40,7 +40,7 @@ import schemacrawler.schema.NamedObject;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import sf.util.string.StringFormat;
 
 /**
  * Evaluates a catalog and creates lints. This base class has core functionality

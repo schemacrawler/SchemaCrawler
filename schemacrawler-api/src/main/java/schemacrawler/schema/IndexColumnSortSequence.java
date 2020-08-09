@@ -32,7 +32,7 @@ package schemacrawler.schema;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import sf.util.string.StringFormat;
 
 /**
  * An enumeration wrapper around index sort sequences.

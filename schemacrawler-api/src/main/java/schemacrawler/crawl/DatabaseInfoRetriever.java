@@ -58,7 +58,7 @@ import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import sf.util.DatabaseUtility;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import sf.util.string.StringFormat;
 
 final class DatabaseInfoRetriever
   extends AbstractRetriever

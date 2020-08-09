@@ -44,7 +44,7 @@ import schemacrawler.schema.Table;
 import sf.util.Multimap;
 import sf.util.ObjectToString;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import sf.util.string.StringFormat;
 import sf.util.Utility;
 
 final class TableMatchKeys

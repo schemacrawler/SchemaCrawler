@@ -39,7 +39,7 @@ import java.util.logging.Level;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.iosource.InputResource;
-import sf.util.StringFormat;
+import sf.util.string.StringFormat;
 
 public class PropertiesUtility
 {

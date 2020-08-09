@@ -25,56 +25,41 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package sf.util;
+package sf.util.string;
 
 
-import static java.nio.file.Files.readAllBytes;
-import static java.util.Objects.requireNonNull;
-import static sf.util.IOUtility.isFileReadable;
+import static sf.util.Utility.isBlank;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Path;
+import java.util.Formatter;
 import java.util.function.Supplier;
 
-public final class FileContents
+public final class StringFormat
   implements Supplier<String>
 {
 
-  private final Charset charset;
-  private final Path file;
+  private final Object[] args;
+  private final String format;
 
-  public FileContents(final Path file)
+  public StringFormat(final String format, final Object... args)
   {
-    this(file, Charset.defaultCharset());
-  }
-
-  public FileContents(final Path file, final Charset charset)
-  {
-    this.file = requireNonNull(file, "No file path provided");
-    this.charset = requireNonNull(charset, "No charset provided");
+    this.format = format;
+    this.args = args;
   }
 
   @Override
   public String get()
   {
-    final String output;
-    try
+    if (isBlank(format) || args == null || args.length == 0)
     {
-      if (!isFileReadable(file))
-      {
-        output = "";
-      }
-      else
-      {
-        output = new String(readAllBytes(file), charset);
-      }
+      return format;
     }
-    catch (final IOException e)
+
+    try (final Formatter formatter = new Formatter())
     {
-      return "";
+      return formatter
+        .format(format, args)
+        .toString();
     }
-    return output;
   }
 
   @Override

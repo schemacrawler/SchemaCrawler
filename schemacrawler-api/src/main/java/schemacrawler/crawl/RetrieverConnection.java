@@ -49,7 +49,7 @@ import schemacrawler.utility.JavaSqlTypes;
 import schemacrawler.schema.TableTypes;
 import schemacrawler.utility.TypeMap;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import sf.util.string.StringFormat;
 
 /**
  * A connection for the retriever. Wraps a live database connection.

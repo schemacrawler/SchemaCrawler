@@ -66,7 +66,7 @@ import schemacrawler.schemacrawler.Query;
 import schemacrawler.utility.BinaryData;
 import sf.util.IdentifiedEnum;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import sf.util.string.StringFormat;
 
 /**
  * A wrapper around a JDBC resultset obtained from a database metadata call.

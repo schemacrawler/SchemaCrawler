@@ -67,7 +67,7 @@ import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.SchemaCrawlerLogger;
 import sf.util.StopWatch;
-import sf.util.StringFormat;
+import sf.util.string.StringFormat;
 
 /**
  * SchemaCrawler uses database meta-data to get the details about the schema.

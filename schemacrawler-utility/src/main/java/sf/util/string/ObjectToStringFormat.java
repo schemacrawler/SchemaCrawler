@@ -25,10 +25,12 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package sf.util;
+package sf.util.string;
 
 
 import java.util.function.Supplier;
+
+import sf.util.ObjectToString;
 
 public final class ObjectToStringFormat
   implements Supplier<String>

@@ -13,10 +13,10 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.logging.Level;
 
-import sf.util.FileContents;
+import sf.util.string.FileContents;
 import sf.util.ProcessExecutor;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import sf.util.string.StringFormat;
 
 public final class GraphvizUtility
 {

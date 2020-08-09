@@ -40,6 +40,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
+import sf.util.string.StringFormat;
+
 public class RegularExpressionColorMap
 {
 

@@ -48,7 +48,7 @@ import schemacrawler.plugin.EnumDataTypeInfo;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import sf.util.string.StringFormat;
 
 public class PostgreSQLEnumDataTypeHelper
   implements EnumDataTypeHelper

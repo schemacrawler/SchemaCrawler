@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.test.graph;
+package sf.util.test.graph;
 
 
 import java.util.Collection;
