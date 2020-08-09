@@ -40,7 +40,7 @@ import schemacrawler.schema.RoutineBodyType;
 import schemacrawler.schema.RoutineParameter;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
-import schemacrawler.utility.CompareUtility;
+import sf.util.CompareUtility;
 
 /**
  * Represents a database routine. Created from metadata returned by a JDBC

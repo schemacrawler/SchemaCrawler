@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.utility;
+package sf.util;
 
 
 import java.util.Iterator;
