@@ -34,7 +34,7 @@ import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 
 /**
  * Allows chaining multiple scCommands with the same configuration. The catalog

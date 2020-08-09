@@ -15,7 +15,7 @@ import java.util.logging.Level;
 
 import sf.util.FileContents;
 import sf.util.ProcessExecutor;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 public final class GraphvizUtility

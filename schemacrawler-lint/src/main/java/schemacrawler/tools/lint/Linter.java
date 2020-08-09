@@ -39,7 +39,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**

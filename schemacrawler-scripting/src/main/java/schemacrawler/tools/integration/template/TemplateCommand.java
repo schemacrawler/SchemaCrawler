@@ -34,7 +34,7 @@ import java.util.Map;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 
 public final class TemplateCommand
   extends BaseSchemaCrawlerCommand

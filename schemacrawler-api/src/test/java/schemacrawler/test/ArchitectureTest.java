@@ -1,9 +1,8 @@
 package schemacrawler.test;
 
 
-import static com.tngtech.archunit.base.DescribedPredicate.doNot;
 import static com.tngtech.archunit.base.DescribedPredicate.not;
-import static com.tngtech.archunit.core.domain.JavaClass.Predicates.resideInAPackage;
+import static com.tngtech.archunit.core.domain.JavaClass.Predicates.resideOutsideOfPackages;
 import static com.tngtech.archunit.core.domain.JavaClass.Predicates.simpleName;
 import static com.tngtech.archunit.core.importer.ImportOption.Predefined.DO_NOT_INCLUDE_ARCHIVES;
 import static com.tngtech.archunit.core.importer.ImportOption.Predefined.DO_NOT_INCLUDE_TESTS;
@@ -46,7 +45,7 @@ public class ArchitectureTest
   public void accessStandardStreams()
   {
     noClasses()
-      .that(doNot(resideInAPackage("schemacrawler.testdb")).and(are(not(
+      .that(resideOutsideOfPackages("schemacrawler.testdb").and(are(not(
         simpleName("Version")))))
       .should(ACCESS_STANDARD_STREAMS)
       .because("production code should not write to standard streams")
@@ -57,8 +56,7 @@ public class ArchitectureTest
   public void notThrowGenericExceptions()
   {
     noClasses()
-      .that(doNot(resideInAPackage("schemacrawler.testdb").or(resideInAPackage(
-        "sf.util"))))
+      .that(resideOutsideOfPackages("schemacrawler.testdb", "sf.util"))
       .should(THROW_GENERIC_EXCEPTIONS)
       .because(
         "SchemaCrawler defines it own exceptions, and wraps SQL exceptions with additional information")
@@ -69,8 +67,8 @@ public class ArchitectureTest
   public void notUseJavaLogging()
   {
     noClasses()
-      .that(doNot(resideInAPackage("schemacrawler.testdb").or(resideInAPackage(
-        "sf.util"))))
+      .that(resideOutsideOfPackages("schemacrawler.testdb", "sf.util").and(are(
+        not(simpleName("SchemaCrawlerLogger")))))
       .should(USE_JAVA_UTIL_LOGGING)
       .because("SchemaCrawler wraps Java logging in a utility")
       .check(classes);

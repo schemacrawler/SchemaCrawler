@@ -42,7 +42,7 @@ import java.util.logging.Level;
 import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
 import schemacrawler.Version;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 import sf.util.UtilityMarker;
 

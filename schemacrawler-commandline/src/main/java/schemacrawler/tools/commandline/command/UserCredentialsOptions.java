@@ -43,7 +43,7 @@ import picocli.CommandLine.ParameterException;
 import picocli.CommandLine.Spec;
 import schemacrawler.tools.commandline.state.MultiUseUserCredentials;
 import schemacrawler.tools.databaseconnector.UserCredentials;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 
 /**
  * Options for the command-line.

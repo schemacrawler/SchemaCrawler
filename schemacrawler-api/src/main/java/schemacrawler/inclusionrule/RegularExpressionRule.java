@@ -35,7 +35,7 @@ import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
 
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**

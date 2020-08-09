@@ -43,7 +43,7 @@ import schemacrawler.tools.iosource.ClasspathInputResource;
 import schemacrawler.tools.iosource.FileInputResource;
 import sf.util.Color;
 import sf.util.RegularExpressionColorMap;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 
 public class DatabaseObjectColorMap
 {

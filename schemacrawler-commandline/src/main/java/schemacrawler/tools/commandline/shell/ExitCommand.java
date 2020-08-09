@@ -32,7 +32,7 @@ package schemacrawler.tools.commandline.shell;
 import java.util.logging.Level;
 
 import picocli.CommandLine.Command;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 
 @Command(name = "exit",
          aliases = {

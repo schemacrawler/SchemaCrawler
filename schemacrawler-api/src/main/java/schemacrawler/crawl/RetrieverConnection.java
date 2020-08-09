@@ -48,7 +48,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.utility.JavaSqlTypes;
 import schemacrawler.schema.TableTypes;
 import schemacrawler.utility.TypeMap;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**

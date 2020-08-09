@@ -41,7 +41,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 public final class TypeMap

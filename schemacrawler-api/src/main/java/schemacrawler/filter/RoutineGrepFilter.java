@@ -35,7 +35,7 @@ import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineParameter;
 import schemacrawler.schemacrawler.GrepOptions;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 class RoutineGrepFilter

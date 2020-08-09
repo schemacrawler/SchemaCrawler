@@ -40,7 +40,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.logging.Level;
 
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 public class FileInputResource

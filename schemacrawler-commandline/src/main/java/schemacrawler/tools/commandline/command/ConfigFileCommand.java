@@ -42,7 +42,7 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.iosource.ClasspathInputResource;
 import schemacrawler.tools.iosource.FileInputResource;
 import schemacrawler.utility.PropertiesUtility;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**

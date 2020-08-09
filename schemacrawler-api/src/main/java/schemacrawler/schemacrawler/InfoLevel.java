@@ -36,7 +36,7 @@ import static schemacrawler.schemacrawler.SchemaInfoLevelBuilder.standard;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 public enum InfoLevel

@@ -52,7 +52,7 @@ import schemacrawler.schema.JavaSqlTypeGroup;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.utility.NamedObjectSort;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 import sf.util.UtilityMarker;
 

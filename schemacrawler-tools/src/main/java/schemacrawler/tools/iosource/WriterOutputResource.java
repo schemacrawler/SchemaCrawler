@@ -36,7 +36,7 @@ import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.logging.Level;
 
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 
 public final class WriterOutputResource
   implements OutputResource

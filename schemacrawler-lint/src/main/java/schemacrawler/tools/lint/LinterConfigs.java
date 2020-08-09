@@ -50,7 +50,7 @@ import org.xml.sax.SAXException;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.ObjectToString;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 
 public class LinterConfigs
   implements Iterable<LinterConfig>

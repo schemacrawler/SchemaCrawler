@@ -36,7 +36,7 @@ import java.util.logging.Level;
 
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputFormatState;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**

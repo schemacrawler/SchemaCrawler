@@ -38,19 +38,18 @@ import java.util.logging.Level;
 
 import schemacrawler.crawl.ResultsCrawler;
 import schemacrawler.crawl.SchemaCrawler;
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import sf.util.DatabaseUtility;
 import sf.util.ObjectToString;
-import sf.util.SchemaCrawlerLogger;
 import sf.util.UtilityMarker;
 
 /**

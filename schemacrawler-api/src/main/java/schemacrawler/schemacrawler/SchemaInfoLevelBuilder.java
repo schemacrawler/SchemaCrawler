@@ -35,7 +35,7 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.logging.Level;
 
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 
 public final class SchemaInfoLevelBuilder
   implements OptionsBuilder<SchemaInfoLevelBuilder, SchemaInfoLevel>

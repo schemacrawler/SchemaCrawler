@@ -43,7 +43,7 @@ import java.util.logging.Level;
 import schemacrawler.schema.Table;
 import sf.util.Multimap;
 import sf.util.ObjectToString;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 import sf.util.Utility;
 

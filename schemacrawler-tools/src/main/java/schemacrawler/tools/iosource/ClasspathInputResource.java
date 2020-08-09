@@ -38,7 +38,7 @@ import java.io.Reader;
 import java.nio.charset.Charset;
 import java.util.logging.Level;
 
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 
 public class ClasspathInputResource
   implements InputResource

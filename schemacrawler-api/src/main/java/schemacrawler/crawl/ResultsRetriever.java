@@ -43,7 +43,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.Retriever;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.utility.JavaSqlTypes;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 
 /**
  * A retriever uses database metadata to get the details about a result set.

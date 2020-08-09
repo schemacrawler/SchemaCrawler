@@ -34,7 +34,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.logging.Level;
 
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 public final class OutputWriter

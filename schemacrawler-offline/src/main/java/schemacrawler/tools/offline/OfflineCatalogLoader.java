@@ -27,7 +27,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.integration.serialize.JavaSerializedCatalog;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 
 public final class OfflineCatalogLoader
   implements CatalogLoader

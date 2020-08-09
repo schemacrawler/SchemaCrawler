@@ -17,7 +17,7 @@ import guru.nidi.graphviz.engine.GraphvizJdkEngine;
 import guru.nidi.graphviz.engine.GraphvizV8Engine;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.IOUtility;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 
 public final class GraphvizJavaExecutorUtility
 {

@@ -45,7 +45,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 
 /**
  * Represents a collection of tables types for a database system, as returned by

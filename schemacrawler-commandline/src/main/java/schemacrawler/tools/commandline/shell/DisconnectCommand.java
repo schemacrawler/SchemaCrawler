@@ -34,7 +34,7 @@ import java.util.logging.Level;
 import picocli.CommandLine.Command;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 
 @Command(name = "disconnect",
          header = "** Disconnect from a database",

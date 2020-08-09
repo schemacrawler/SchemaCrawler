@@ -36,7 +36,7 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 import sf.util.graph.DirectedGraph;
 import sf.util.graph.GraphException;
 import sf.util.graph.SimpleTopologicalSort;

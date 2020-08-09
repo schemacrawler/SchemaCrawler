@@ -43,7 +43,7 @@ import java.util.logging.Level;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.FileContents;
 import sf.util.ProcessExecutor;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 final class GraphvizProcessExecutor

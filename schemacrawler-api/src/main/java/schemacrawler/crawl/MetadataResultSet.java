@@ -65,7 +65,7 @@ import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.utility.BinaryData;
 import sf.util.IdentifiedEnum;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**

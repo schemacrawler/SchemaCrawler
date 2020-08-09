@@ -50,7 +50,7 @@ import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import sf.util.ObjectToStringFormat;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 @Command(name = "execute",

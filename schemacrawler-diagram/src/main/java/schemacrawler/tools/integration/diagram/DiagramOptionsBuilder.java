@@ -42,7 +42,7 @@ import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.text.schema.BaseSchemaTextOptionsBuilder;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 public final class DiagramOptionsBuilder

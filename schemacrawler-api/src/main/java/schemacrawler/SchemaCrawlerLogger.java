@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package sf.util;
+package schemacrawler;
 
 
 import static java.util.Objects.requireNonNull;

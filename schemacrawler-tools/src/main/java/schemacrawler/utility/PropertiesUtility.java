@@ -36,9 +36,9 @@ import java.io.Reader;
 import java.util.Properties;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.iosource.InputResource;
-import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 public class PropertiesUtility

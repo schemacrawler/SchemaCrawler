@@ -41,7 +41,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Retriever;
 import schemacrawler.utility.MetaDataUtility;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 @Retriever

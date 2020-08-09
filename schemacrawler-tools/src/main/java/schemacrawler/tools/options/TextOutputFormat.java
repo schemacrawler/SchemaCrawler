@@ -34,7 +34,7 @@ import static sf.util.Utility.isBlank;
 import java.util.List;
 import java.util.logging.Level;
 
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
