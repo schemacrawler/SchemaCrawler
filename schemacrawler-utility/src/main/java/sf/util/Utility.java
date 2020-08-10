@@ -65,30 +65,6 @@ public final class Utility
     }
   }
 
-  /**
-   * Checks if the text contains whitespace.
-   *
-   * @param text
-   *   Text to check.
-   * @return Whether the string contains whitespace.
-   */
-  public static boolean containsWhitespace(final CharSequence text)
-  {
-    if (text == null || text.length() == 0)
-    {
-      return false;
-    }
-
-    for (int i = 0; i < text.length(); i++)
-    {
-      if (Character.isWhitespace(text.charAt(i)))
-      {
-        return true;
-      }
-    }
-    return false;
-  }
-
   public static String convertForComparison(final String text)
   {
     if (text == null || text.length() == 0)

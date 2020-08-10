@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.test;
+package sf.util.test;
 
 
 import static java.util.Comparator.naturalOrder;
