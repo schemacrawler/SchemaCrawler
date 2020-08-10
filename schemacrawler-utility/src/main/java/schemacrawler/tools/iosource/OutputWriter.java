@@ -33,16 +33,16 @@ import static java.util.Objects.requireNonNull;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import schemacrawler.SchemaCrawlerLogger;
 import sf.util.string.StringFormat;
 
 public final class OutputWriter
   extends Writer
 {
 
-  private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(ConsoleOutputResource.class.getName());
+  private static final Logger LOGGER =
+    Logger.getLogger(ConsoleOutputResource.class.getName());
 
   private final String description;
   private final Writer writer;

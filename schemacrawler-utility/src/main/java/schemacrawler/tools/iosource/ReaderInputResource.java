@@ -35,15 +35,14 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.util.logging.Level;
-
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 
 public class ReaderInputResource
   implements InputResource
 {
 
-  private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(ReaderInputResource.class.getName());
+  private static final Logger LOGGER =
+    Logger.getLogger(ReaderInputResource.class.getName());
 
   private final Reader reader;
 

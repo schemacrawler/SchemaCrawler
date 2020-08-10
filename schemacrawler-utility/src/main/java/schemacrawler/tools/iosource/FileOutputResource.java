@@ -41,16 +41,16 @@ import java.nio.charset.Charset;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import schemacrawler.SchemaCrawlerLogger;
 import sf.util.string.StringFormat;
 
 public final class FileOutputResource
   implements OutputResource
 {
 
-  private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(FileOutputResource.class.getName());
+  private static final Logger LOGGER =
+    Logger.getLogger(FileOutputResource.class.getName());
 
   private final Path outputFile;
 

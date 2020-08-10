@@ -28,53 +28,53 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.iosource;
 
 
+import static java.nio.file.Files.exists;
+import static java.nio.file.Files.newBufferedReader;
 import static java.util.Objects.requireNonNull;
+import static sf.util.IOUtility.isFileReadable;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.StringReader;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import schemacrawler.SchemaCrawlerLogger;
+import sf.util.string.StringFormat;
 
-public class ClasspathInputResource
+public class FileInputResource
   implements InputResource
 {
 
-  private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(ClasspathInputResource.class.getName());
+  private static final Logger LOGGER =
+    Logger.getLogger(FileInputResource.class.getName());
 
-  private final String classpathResource;
+  private final Path inputFile;
 
-  public ClasspathInputResource(final String classpathResource)
+  public FileInputResource(final Path filePath)
     throws IOException
   {
-    this.classpathResource =
-      requireNonNull(classpathResource, "No classpath resource provided");
-    if (ClasspathInputResource.class.getResource(this.classpathResource)
-        == null)
+    this(filePath, false);
+  }
+
+  private FileInputResource(final Path filePath, final boolean allowEmptyFile)
+    throws IOException
+  {
+    inputFile = requireNonNull(filePath, "No file path provided")
+      .normalize()
+      .toAbsolutePath();
+    if (!isFileReadable(inputFile))
     {
-      final IOException e = new IOException("Cannot read classpath resource, "
-                                            + this.classpathResource);
+      final IOException e = new IOException("Cannot read file, " + inputFile);
       LOGGER.log(Level.FINE, e.getMessage(), e);
       throw e;
     }
   }
 
-  public String getClasspathResource()
+  public Path getInputFile()
   {
-    return classpathResource;
-  }
-
-  @Override
-  public String getDescription()
-  {
-    return InputReader.class
-      .getResource(classpathResource)
-      .toExternalForm();
+    return inputFile;
   }
 
   @Override
@@ -82,13 +82,15 @@ public class ClasspathInputResource
     throws IOException
   {
     requireNonNull(charset, "No input charset provided");
-    final InputStream inputStream =
-      ClasspathInputResource.class.getResourceAsStream(classpathResource);
-    final Reader reader =
-      new BufferedReader(new InputStreamReader(inputStream, charset));
+
+    if (!exists(inputFile))
+    {
+      return new StringReader("");
+    }
+
+    final Reader reader = newBufferedReader(inputFile, charset);
     LOGGER.log(Level.INFO,
-               "Opened input reader to classpath resource, "
-               + classpathResource);
+               new StringFormat("Opened input reader to file <%s>", inputFile));
 
     return new InputReader(getDescription(), reader, true);
   }
@@ -96,7 +98,7 @@ public class ClasspathInputResource
   @Override
   public String toString()
   {
-    return classpathResource;
+    return inputFile.toString();
   }
 
 }

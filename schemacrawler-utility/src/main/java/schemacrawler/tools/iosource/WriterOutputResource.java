@@ -28,37 +28,42 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.iosource;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import schemacrawler.SchemaCrawlerLogger;
-
-public final class ConsoleOutputResource
+public final class WriterOutputResource
   implements OutputResource
 {
 
-  private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(ConsoleOutputResource.class.getName());
+  private static final Logger LOGGER =
+    Logger.getLogger(WriterOutputResource.class.getName());
+
+  private final Writer writer;
+
+  public WriterOutputResource(final Writer writer)
+  {
+    this.writer = requireNonNull(writer, "No writer provided");
+  }
 
   @Override
   public Writer openNewOutputWriter(final Charset charset,
                                     final boolean appendOutput)
-    throws IOException
   {
-    final Writer writer =
-      new BufferedWriter(new OutputStreamWriter(System.out, charset));
-    LOGGER.log(Level.INFO, "Opened output writer to console");
-    return new OutputWriter(getDescription(), writer, false);
+    LOGGER.log(Level.INFO, "Output to provided writer");
+    return new OutputWriter(getDescription(),
+                            new BufferedWriter(writer),
+                            false);
   }
 
   @Override
   public String toString()
   {
-    return "<console>";
+    return "<writer>";
   }
 
 }
