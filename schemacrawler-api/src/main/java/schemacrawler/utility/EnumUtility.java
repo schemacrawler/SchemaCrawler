@@ -77,7 +77,7 @@ public class EnumUtility
       final Class<E> enumClass = (Class<E>) defaultValue.getClass();
       for (final E enumValue : EnumSet.allOf(enumClass))
       {
-        if (enumValue.getId() == value)
+        if (enumValue.id() == value)
         {
           return enumValue;
         }

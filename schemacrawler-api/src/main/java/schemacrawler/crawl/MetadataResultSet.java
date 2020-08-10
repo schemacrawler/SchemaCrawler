@@ -311,7 +311,7 @@ public final class MetadataResultSet
                                                               final E defaultValue)
   {
     requireNonNull(defaultValue, "No default value provided");
-    final int value = getInt(columnName, defaultValue.getId());
+    final int value = getInt(columnName, defaultValue.id());
     return enumValueFromId(value, defaultValue);
   }
 
@@ -328,7 +328,7 @@ public final class MetadataResultSet
                                                                    final E defaultValue)
   {
     requireNonNull(defaultValue, "No default value provided");
-    final int value = getShort(columnName, (short) defaultValue.getId());
+    final int value = getShort(columnName, (short) defaultValue.id());
     return enumValueFromId(value, defaultValue);
   }
 

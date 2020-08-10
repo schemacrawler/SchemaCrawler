@@ -31,6 +31,11 @@ package schemacrawler.schema;
 public interface IdentifiedEnum
 {
 
-  int getId();
+  /**
+   * Gets the id.
+   *
+   * @return id
+   */
+  int id();
 
 }

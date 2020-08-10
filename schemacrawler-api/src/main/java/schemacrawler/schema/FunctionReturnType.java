@@ -29,27 +29,20 @@ http://www.gnu.org/licenses/
 package schemacrawler.schema;
 
 
-import java.sql.DatabaseMetaData;
+import static java.sql.DatabaseMetaData.functionNoTable;
+import static java.sql.DatabaseMetaData.functionResultUnknown;
+import static java.sql.DatabaseMetaData.functionReturnsTable;
 
 /**
- * An enumeration wrapper around JDBC function types.
+ * An enumeration wrapper around JDBC function return types.
  */
 public enum FunctionReturnType
   implements RoutineReturnType
 {
 
-  /**
-   * Result unknown.
-   */
-  unknown(DatabaseMetaData.functionResultUnknown, "result unknown"),
-  /**
-   * Does not return a table.
-   */
-  noTable(DatabaseMetaData.functionNoTable, "does not return a table"),
-  /**
-   * Returns a table.
-   */
-  returnsTable(DatabaseMetaData.functionReturnsTable, "returns table");
+  unknown(functionResultUnknown, "result unknown"),
+  noTable(functionNoTable, "does not return a table"),
+  returnsTable(functionReturnsTable, "returns table");
 
   private final int id;
   private final String text;
@@ -61,12 +54,10 @@ public enum FunctionReturnType
   }
 
   /**
-   * Gets the id.
-   *
-   * @return id
+   * {@inheritDoc}
    */
   @Override
-  public int getId()
+  public int id()
   {
     return id;
   }
