@@ -30,18 +30,11 @@ package sf.util;
 
 import static java.util.Objects.requireNonNull;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EnumSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.StringJoiner;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 /**
@@ -115,56 +108,6 @@ public final class Utility
 
     final String textWithoutQuotes = builder.toString();
     return textWithoutQuotes;
-  }
-
-  public static <E extends Enum<E>> E enumValue(final String value,
-                                                final E defaultValue)
-  {
-    requireNonNull(defaultValue, "No default value provided");
-    E enumValue;
-    if (value == null)
-    {
-      enumValue = defaultValue;
-    }
-    else
-    {
-      try
-      {
-        Class<?> enumClass = defaultValue.getClass();
-        if (enumClass.getEnclosingClass() != null)
-        {
-          enumClass = enumClass.getEnclosingClass();
-        }
-        enumValue = Enum.valueOf((Class<E>) enumClass, value);
-      }
-      catch (final Exception e)
-      {
-        enumValue = defaultValue;
-      }
-    }
-    return enumValue;
-  }
-
-  public static <E extends Enum<E> & IdentifiedEnum> E enumValueFromId(final int value,
-                                                                       final E defaultValue)
-  {
-    requireNonNull(defaultValue, "No default value provided");
-    try
-    {
-      final Class<E> enumClass = (Class<E>) defaultValue.getClass();
-      for (final E enumValue : EnumSet.allOf(enumClass))
-      {
-        if (enumValue.getId() == value)
-        {
-          return enumValue;
-        }
-      }
-    }
-    catch (final Exception e)
-    {
-      // Ignore
-    }
-    return defaultValue;
   }
 
   private static int indexOfDifference(final String string1,

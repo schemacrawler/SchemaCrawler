@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 
-import static sf.util.Utility.enumValue;
+import static schemacrawler.utility.EnumUtility.enumValue;
 
 import java.util.Collection;
 import java.util.HashSet;

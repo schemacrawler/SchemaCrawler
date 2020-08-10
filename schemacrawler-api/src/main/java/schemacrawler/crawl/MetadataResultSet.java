@@ -39,8 +39,8 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.QueryUtility.executeAgainstSchema;
 import static sf.util.DatabaseUtility.logSQLWarnings;
 import static sf.util.IOUtility.readFully;
-import static sf.util.Utility.enumValue;
-import static sf.util.Utility.enumValueFromId;
+import static schemacrawler.utility.EnumUtility.enumValue;
+import static schemacrawler.utility.EnumUtility.enumValueFromId;
 import static sf.util.Utility.isBlank;
 import static sf.util.Utility.isIntegral;
 
@@ -64,7 +64,7 @@ import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.utility.BinaryData;
-import sf.util.IdentifiedEnum;
+import schemacrawler.schema.IdentifiedEnum;
 import schemacrawler.SchemaCrawlerLogger;
 import sf.util.string.StringFormat;
 
@@ -310,7 +310,8 @@ public final class MetadataResultSet
   public <E extends Enum<E> & IdentifiedEnum> E getEnumFromId(final String columnName,
                                                               final E defaultValue)
   {
-    final int value = getInt(columnName, 0);
+    requireNonNull(defaultValue, "No default value provided");
+    final int value = getInt(columnName, defaultValue.getId());
     return enumValueFromId(value, defaultValue);
   }
 
@@ -326,7 +327,8 @@ public final class MetadataResultSet
   public <E extends Enum<E> & IdentifiedEnum> E getEnumFromShortId(final String columnName,
                                                                    final E defaultValue)
   {
-    final int value = getShort(columnName, (short) 0);
+    requireNonNull(defaultValue, "No default value provided");
+    final int value = getShort(columnName, (short) defaultValue.getId());
     return enumValueFromId(value, defaultValue);
   }
 

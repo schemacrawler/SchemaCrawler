@@ -30,7 +30,7 @@ package schemacrawler.schemacrawler;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.enumValue;
+import static schemacrawler.utility.EnumUtility.enumValue;
 import static sf.util.Utility.isBlank;
 
 import java.util.Collection;

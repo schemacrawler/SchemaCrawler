@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package sf.util;
+package schemacrawler.schema;
 
 
 public interface IdentifiedEnum

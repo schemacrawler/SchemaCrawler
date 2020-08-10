@@ -31,8 +31,6 @@ package schemacrawler.schema;
 
 import java.sql.DatabaseMetaData;
 
-import sf.util.IdentifiedEnum;
-
 /**
  * An enumeration wrapper around index types.
  */

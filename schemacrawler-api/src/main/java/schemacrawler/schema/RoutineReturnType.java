@@ -28,8 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.schema;
 
 
-import sf.util.IdentifiedEnum;
-
 public interface RoutineReturnType
   extends IdentifiedEnum
 {
