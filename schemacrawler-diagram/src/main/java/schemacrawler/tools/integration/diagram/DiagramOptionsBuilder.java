@@ -29,8 +29,8 @@ package schemacrawler.tools.integration.diagram;
 
 
 import static schemacrawler.schemacrawler.Config.getSystemConfigurationProperty;
-import static sf.util.Utility.isBlank;
-import static sf.util.Utility.join;
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.join;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,7 +43,7 @@ import java.util.logging.Level;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.text.schema.BaseSchemaTextOptionsBuilder;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.string.StringFormat;
+import us.fatehi.utility.string.StringFormat;
 
 public final class DiagramOptionsBuilder
   extends BaseSchemaTextOptionsBuilder<DiagramOptionsBuilder, DiagramOptions>

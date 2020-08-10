@@ -30,8 +30,8 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.DatabaseUtility.checkConnection;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.DatabaseUtility.checkConnection;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -49,7 +49,7 @@ import schemacrawler.utility.JavaSqlTypes;
 import schemacrawler.schema.TableTypes;
 import schemacrawler.utility.TypeMap;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.string.StringFormat;
+import us.fatehi.utility.string.StringFormat;
 
 /**
  * A connection for the retriever. Wraps a live database connection.

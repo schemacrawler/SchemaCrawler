@@ -48,9 +48,9 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
-import sf.util.DatabaseUtility;
-import sf.util.ObjectToString;
-import sf.util.UtilityMarker;
+import us.fatehi.utility.DatabaseUtility;
+import us.fatehi.utility.ObjectToString;
+import us.fatehi.utility.UtilityMarker;
 
 /**
  * SchemaCrawler utility methods.

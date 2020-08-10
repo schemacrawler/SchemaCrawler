@@ -31,7 +31,7 @@ package schemacrawler.schemacrawler;
 import java.util.Optional;
 
 import schemacrawler.inclusionrule.InclusionRule;
-import sf.util.ObjectToString;
+import us.fatehi.utility.ObjectToString;
 
 /**
  * SchemaCrawler options.

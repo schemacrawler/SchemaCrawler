@@ -39,7 +39,7 @@ import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
 import schemacrawler.testdb.TestDatabase;
-import sf.util.LoggingConfig;
+import us.fatehi.utility.LoggingConfig;
 
 public class TestDatabaseConnectionParameterResolver
   implements ParameterResolver, BeforeAllCallback

@@ -37,9 +37,9 @@ import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.graph.DirectedGraph;
-import sf.util.graph.GraphException;
-import sf.util.graph.SimpleTopologicalSort;
+import us.fatehi.utility.graph.DirectedGraph;
+import us.fatehi.utility.graph.GraphException;
+import us.fatehi.utility.graph.SimpleTopologicalSort;
 
 final class TablesGraph
   extends DirectedGraph<Table>

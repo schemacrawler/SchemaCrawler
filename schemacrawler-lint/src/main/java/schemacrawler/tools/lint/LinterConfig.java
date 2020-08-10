@@ -28,14 +28,14 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint;
 
 
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.Serializable;
 
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.schemacrawler.Config;
-import sf.util.ObjectToString;
+import us.fatehi.utility.ObjectToString;
 
 public class LinterConfig
   implements Serializable, Comparable<LinterConfig>

@@ -38,8 +38,8 @@ import static schemacrawler.tools.integration.diagram.DiagramOutputFormat.svg;
 import static schemacrawler.tools.integration.diagram.GraphvizUtility.isGraphvizAvailable;
 import static schemacrawler.tools.integration.diagram.GraphvizUtility.isGraphvizJavaAvailable;
 import static schemacrawler.tools.options.TextOutputFormat.html;
-import static sf.util.IOUtility.copy;
-import static sf.util.IOUtility.createTempFilePath;
+import static us.fatehi.utility.IOUtility.copy;
+import static us.fatehi.utility.IOUtility.createTempFilePath;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

@@ -41,7 +41,7 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
-import sf.util.Multimap;
+import us.fatehi.utility.Multimap;
 
 public class LinterColumnTypes
   extends BaseLinter

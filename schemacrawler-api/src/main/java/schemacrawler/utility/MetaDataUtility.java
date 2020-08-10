@@ -42,7 +42,7 @@ import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
-import sf.util.UtilityMarker;
+import us.fatehi.utility.UtilityMarker;
 
 /**
  * SchemaCrawler utility methods.

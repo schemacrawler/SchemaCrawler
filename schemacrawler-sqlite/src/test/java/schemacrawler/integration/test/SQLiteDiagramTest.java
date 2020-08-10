@@ -45,7 +45,7 @@ import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.testdb.TestSchemaCreatorMain;
 import schemacrawler.tools.sqlite.SchemaCrawlerSQLiteUtility;
-import sf.util.IOUtility;
+import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestContextParameterResolver.class)

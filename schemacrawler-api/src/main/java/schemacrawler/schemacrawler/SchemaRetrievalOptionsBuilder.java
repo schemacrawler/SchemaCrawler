@@ -30,7 +30,7 @@ package schemacrawler.schemacrawler;
 
 import static schemacrawler.plugin.EnumDataTypeHelper.NO_OP_ENUM_DATA_TYPE_HELPER;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.metadata;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;

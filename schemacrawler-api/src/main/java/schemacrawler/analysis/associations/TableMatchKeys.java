@@ -29,7 +29,7 @@ package schemacrawler.analysis.associations;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -41,11 +41,11 @@ import java.util.TreeMap;
 import java.util.logging.Level;
 
 import schemacrawler.schema.Table;
-import sf.util.Multimap;
-import sf.util.ObjectToString;
+import us.fatehi.utility.Multimap;
+import us.fatehi.utility.ObjectToString;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.string.StringFormat;
-import sf.util.Utility;
+import us.fatehi.utility.string.StringFormat;
+import us.fatehi.utility.Utility;
 
 final class TableMatchKeys
 {

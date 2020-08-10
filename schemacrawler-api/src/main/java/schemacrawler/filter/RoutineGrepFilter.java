@@ -36,7 +36,7 @@ import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineParameter;
 import schemacrawler.schemacrawler.GrepOptions;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.string.StringFormat;
+import us.fatehi.utility.string.StringFormat;
 
 class RoutineGrepFilter
   implements Predicate<Routine>

@@ -55,7 +55,7 @@ import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.commandline.command.ExecuteCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
-import sf.util.IOUtility;
+import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)

@@ -33,8 +33,8 @@ import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSafeArguments;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.retrievePluginOptions;
-import static sf.util.IOUtility.readResourceFully;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.IOUtility.readResourceFully;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.Map;
 import java.util.logging.Level;

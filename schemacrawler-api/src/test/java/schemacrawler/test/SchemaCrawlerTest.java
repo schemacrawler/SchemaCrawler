@@ -49,7 +49,7 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.util.Arrays;

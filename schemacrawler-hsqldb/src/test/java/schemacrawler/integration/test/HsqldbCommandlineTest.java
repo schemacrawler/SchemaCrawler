@@ -76,7 +76,7 @@ import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
-import sf.util.IOUtility;
+import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class HsqldbCommandlineTest

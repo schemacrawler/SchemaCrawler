@@ -29,9 +29,9 @@ package schemacrawler.server.postgresql;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.DatabaseUtility.checkConnection;
-import static sf.util.DatabaseUtility.executeSql;
-import static sf.util.DatabaseUtility.readResultsVector;
+import static us.fatehi.utility.DatabaseUtility.checkConnection;
+import static us.fatehi.utility.DatabaseUtility.executeSql;
+import static us.fatehi.utility.DatabaseUtility.readResultsVector;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -48,7 +48,7 @@ import schemacrawler.plugin.EnumDataTypeInfo;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.string.StringFormat;
+import us.fatehi.utility.string.StringFormat;
 
 public class PostgreSQLEnumDataTypeHelper
   implements EnumDataTypeHelper

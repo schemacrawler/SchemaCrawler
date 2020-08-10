@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.EnumMap;
 import java.util.Map;

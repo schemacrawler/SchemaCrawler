@@ -36,8 +36,8 @@ import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
 import java.util.Properties;
 
 import org.junit.jupiter.api.Test;
-import sf.util.Color;
-import sf.util.RegularExpressionColorMap;
+import us.fatehi.utility.Color;
+import us.fatehi.utility.RegularExpressionColorMap;
 
 public class RegularExpressionColorMapTest
 {

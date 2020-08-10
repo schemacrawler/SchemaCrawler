@@ -31,7 +31,7 @@ package schemacrawler.tools.databaseconnector;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.plugin.EnumDataTypeHelper.NO_OP_ENUM_DATA_TYPE_HELPER;
 import static schemacrawler.tools.executable.commandline.PluginCommand.newDatabasePluginCommand;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.util.function.BiConsumer;
@@ -46,7 +46,7 @@ import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import schemacrawler.tools.iosource.InputResource;
+import us.fatehi.utility.ioresource.InputResource;
 import schemacrawler.utility.PropertiesUtility;
 
 public abstract class DatabaseConnector

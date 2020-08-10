@@ -40,8 +40,8 @@ import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
-import sf.util.graph.DirectedGraph;
-import sf.util.graph.TarjanStronglyConnectedComponentFinder;
+import us.fatehi.utility.graph.DirectedGraph;
+import us.fatehi.utility.graph.TarjanStronglyConnectedComponentFinder;
 
 public class LinterTableCycles
   extends BaseLinter

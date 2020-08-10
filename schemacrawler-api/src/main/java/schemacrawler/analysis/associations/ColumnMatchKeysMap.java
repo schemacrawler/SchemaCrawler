@@ -34,7 +34,7 @@ import java.util.List;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
-import sf.util.Multimap;
+import us.fatehi.utility.Multimap;
 
 final class ColumnMatchKeysMap
 {

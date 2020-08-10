@@ -33,7 +33,7 @@ import static java.nio.file.Files.exists;
 import static java.nio.file.Files.size;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.IOException;
 import java.nio.file.Files;

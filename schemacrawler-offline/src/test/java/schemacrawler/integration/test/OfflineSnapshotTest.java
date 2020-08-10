@@ -74,7 +74,7 @@ import schemacrawler.tools.offline.OfflineDatabaseConnector;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
-import sf.util.IOUtility;
+import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class OfflineSnapshotTest

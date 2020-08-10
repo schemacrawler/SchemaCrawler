@@ -28,12 +28,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
-import static sf.util.Utility.isBlank;
-
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.operation.OperationCommand;
 
 final class OperationCommandProvider

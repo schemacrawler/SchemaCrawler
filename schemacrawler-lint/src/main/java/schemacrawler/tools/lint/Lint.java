@@ -29,7 +29,7 @@ package schemacrawler.tools.lint;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ import java.util.UUID;
 
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.NamedObject;
-import sf.util.ObjectToString;
+import us.fatehi.utility.ObjectToString;
 
 public final class Lint<V extends Serializable>
   implements Serializable, Comparable<Lint<? extends Serializable>>

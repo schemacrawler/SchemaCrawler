@@ -29,7 +29,7 @@ package schemacrawler.tools.lint;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -49,7 +49,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.ObjectToString;
+import us.fatehi.utility.ObjectToString;
 import schemacrawler.SchemaCrawlerLogger;
 
 public class LinterConfigs

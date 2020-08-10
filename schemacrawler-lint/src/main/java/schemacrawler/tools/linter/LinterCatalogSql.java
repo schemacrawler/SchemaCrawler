@@ -30,7 +30,7 @@ package schemacrawler.tools.linter;
 
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.QueryUtility.executeForScalar;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.SQLException;

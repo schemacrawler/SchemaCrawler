@@ -34,7 +34,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.EnumSet;
 
 import schemacrawler.schema.IdentifiedEnum;
-import sf.util.UtilityMarker;
+import us.fatehi.utility.UtilityMarker;
 
 @UtilityMarker
 public class EnumUtility

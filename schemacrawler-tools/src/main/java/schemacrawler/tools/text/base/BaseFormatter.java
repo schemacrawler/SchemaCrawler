@@ -29,8 +29,8 @@ package schemacrawler.tools.text.base;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.convertForComparison;
-import static sf.util.Utility.isLowerCase;
+import static us.fatehi.utility.Utility.convertForComparison;
+import static us.fatehi.utility.Utility.isLowerCase;
 
 import java.io.IOException;
 import java.io.PrintWriter;

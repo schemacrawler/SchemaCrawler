@@ -32,7 +32,7 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.FOREIGN_KEYS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -55,7 +55,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.utility.MetaDataUtility;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.string.StringFormat;
+import us.fatehi.utility.string.StringFormat;
 
 /**
  * A retriever uses database metadata to get the details about the database

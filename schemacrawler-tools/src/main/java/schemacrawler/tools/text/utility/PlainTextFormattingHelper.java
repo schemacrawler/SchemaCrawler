@@ -29,12 +29,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.utility;
 
 
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.PrintWriter;
 
 import schemacrawler.tools.options.TextOutputFormat;
-import sf.util.Color;
+import us.fatehi.utility.Color;
 
 /**
  * Methods to format entire rows of output as text.

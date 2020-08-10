@@ -29,8 +29,8 @@ package schemacrawler.tools.integration.diagram;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.IOUtility.isFileReadable;
-import static sf.util.IOUtility.isFileWritable;
+import static us.fatehi.utility.IOUtility.isFileReadable;
+import static us.fatehi.utility.IOUtility.isFileWritable;
 
 import java.nio.file.Path;
 

@@ -3,8 +3,8 @@ package schemacrawler.tools.options;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
-import static sf.util.IOUtility.getFileExtension;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.IOUtility.getFileExtension;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.Writer;
 import java.nio.charset.Charset;
@@ -14,10 +14,10 @@ import java.util.UUID;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.OptionsBuilder;
-import schemacrawler.tools.iosource.ConsoleOutputResource;
-import schemacrawler.tools.iosource.FileOutputResource;
-import schemacrawler.tools.iosource.OutputResource;
-import schemacrawler.tools.iosource.WriterOutputResource;
+import us.fatehi.utility.ioresource.ConsoleOutputResource;
+import us.fatehi.utility.ioresource.FileOutputResource;
+import us.fatehi.utility.ioresource.OutputResource;
+import us.fatehi.utility.ioresource.WriterOutputResource;
 
 public final class OutputOptionsBuilder
   implements OptionsBuilder<OutputOptionsBuilder, OutputOptions>

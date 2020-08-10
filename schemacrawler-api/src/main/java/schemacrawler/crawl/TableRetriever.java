@@ -52,7 +52,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schema.TableTypes;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.string.StringFormat;
+import us.fatehi.utility.string.StringFormat;
 
 /**
  * A retriever uses database metadata to get the details about the database

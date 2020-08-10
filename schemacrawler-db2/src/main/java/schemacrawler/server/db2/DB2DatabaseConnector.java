@@ -40,7 +40,7 @@ import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import schemacrawler.tools.iosource.ClasspathInputResource;
+import us.fatehi.utility.ioresource.ClasspathInputResource;
 import schemacrawler.SchemaCrawlerLogger;
 
 public final class DB2DatabaseConnector

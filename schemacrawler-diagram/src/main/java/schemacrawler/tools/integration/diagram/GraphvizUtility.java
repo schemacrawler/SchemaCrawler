@@ -6,17 +6,17 @@ import static schemacrawler.tools.integration.diagram.DiagramOutputFormat.png;
 import static schemacrawler.tools.integration.diagram.DiagramOutputFormat.ps;
 import static schemacrawler.tools.integration.diagram.DiagramOutputFormat.svg;
 import static schemacrawler.tools.integration.diagram.DiagramOutputFormat.xdot;
-import static sf.util.Utility.isClassAvailable;
+import static us.fatehi.utility.Utility.isClassAvailable;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.logging.Level;
 
-import sf.util.string.FileContents;
-import sf.util.ProcessExecutor;
+import us.fatehi.utility.string.FileContents;
+import us.fatehi.utility.ProcessExecutor;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.string.StringFormat;
+import us.fatehi.utility.string.StringFormat;
 
 public final class GraphvizUtility
 {

@@ -45,7 +45,7 @@ import java.util.function.Predicate;
 
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.ReducibleCollection;
-import sf.util.ObjectToString;
+import us.fatehi.utility.ObjectToString;
 
 /**
  * Ordered list of named objects, that can be searched associatively.

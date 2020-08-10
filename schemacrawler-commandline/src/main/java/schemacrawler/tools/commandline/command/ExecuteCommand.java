@@ -49,9 +49,9 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
-import sf.util.string.ObjectToStringFormat;
+import us.fatehi.utility.string.ObjectToStringFormat;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.string.StringFormat;
+import us.fatehi.utility.string.StringFormat;
 
 @Command(name = "execute",
          header = "** Execute a SchemaCrawler command",

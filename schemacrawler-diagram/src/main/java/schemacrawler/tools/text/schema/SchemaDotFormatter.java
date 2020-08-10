@@ -59,7 +59,7 @@ import schemacrawler.tools.text.utility.html.TableRow;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.utility.MetaDataUtility.ForeignKeyCardinality;
 import schemacrawler.utility.NamedObjectSort;
-import sf.util.Color;
+import us.fatehi.utility.Color;
 
 /**
  * Graphviz DOT formatting of schema.

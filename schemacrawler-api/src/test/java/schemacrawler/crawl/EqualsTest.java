@@ -41,8 +41,9 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaReference;
-import sf.util.graph.DirectedEdge;
-import sf.util.graph.Vertex;
+import us.fatehi.utility.Color;
+import us.fatehi.utility.graph.DirectedEdge;
+import us.fatehi.utility.graph.Vertex;
 
 public class EqualsTest
 {
@@ -59,7 +60,7 @@ public class EqualsTest
   public void color()
   {
     EqualsVerifier
-      .forClass(sf.util.Color.class)
+      .forClass(Color.class)
       .verify();
   }
 

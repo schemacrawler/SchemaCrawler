@@ -31,7 +31,7 @@ package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.DATABASE_USERS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.SERVER_INFORMATION;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -56,9 +56,9 @@ import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import sf.util.DatabaseUtility;
+import us.fatehi.utility.DatabaseUtility;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.string.StringFormat;
+import us.fatehi.utility.string.StringFormat;
 
 final class DatabaseInfoRetriever
   extends AbstractRetriever

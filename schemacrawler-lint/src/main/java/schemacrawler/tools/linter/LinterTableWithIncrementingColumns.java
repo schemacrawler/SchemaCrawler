@@ -45,8 +45,8 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
-import sf.util.Multimap;
-import sf.util.Utility;
+import us.fatehi.utility.Multimap;
+import us.fatehi.utility.Utility;
 
 public class LinterTableWithIncrementingColumns
   extends BaseLinter

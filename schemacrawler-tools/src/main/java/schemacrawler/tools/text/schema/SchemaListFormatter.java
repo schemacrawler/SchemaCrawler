@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.schema;
 
 
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.CrawlInfo;

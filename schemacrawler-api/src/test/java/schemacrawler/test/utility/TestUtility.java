@@ -46,8 +46,8 @@ import static java.util.Objects.requireNonNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
-import static sf.util.IOUtility.isFileReadable;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.IOUtility.isFileReadable;
+import static us.fatehi.utility.Utility.isBlank;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -87,7 +87,7 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-import sf.util.IOUtility;
+import us.fatehi.utility.IOUtility;
 
 public final class TestUtility
 {

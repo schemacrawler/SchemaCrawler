@@ -30,7 +30,7 @@ package schemacrawler.crawl;
 
 
 import static java.util.Comparator.naturalOrder;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.DriverPropertyInfo;
 import java.util.ArrayList;

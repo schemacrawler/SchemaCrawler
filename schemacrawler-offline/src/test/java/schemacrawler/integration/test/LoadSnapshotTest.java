@@ -53,7 +53,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.integration.serialize.JavaSerializedCatalog;
-import sf.util.IOUtility;
+import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class LoadSnapshotTest

@@ -29,7 +29,7 @@ package schemacrawler.tools.lint;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.Serializable;
 import java.util.ArrayList;

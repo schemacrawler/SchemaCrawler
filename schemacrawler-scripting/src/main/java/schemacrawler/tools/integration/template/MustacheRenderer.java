@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.template;
 
 
-import static schemacrawler.tools.iosource.InputResourceUtility.createInputResource;
+import static us.fatehi.utility.ioresource.InputResourceUtility.createInputResource;
 
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
@@ -38,7 +38,7 @@ import java.util.Map;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
-import schemacrawler.tools.iosource.InputResource;
+import us.fatehi.utility.ioresource.InputResource;
 import schemacrawler.tools.options.OutputOptions;
 
 /**

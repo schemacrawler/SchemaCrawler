@@ -30,7 +30,7 @@ package schemacrawler.tools.text.utility;
 
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.utility.PropertiesUtility.loadProperties;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -39,10 +39,10 @@ import java.util.Properties;
 import java.util.logging.Level;
 
 import schemacrawler.schema.DatabaseObject;
-import schemacrawler.tools.iosource.ClasspathInputResource;
-import schemacrawler.tools.iosource.FileInputResource;
-import sf.util.Color;
-import sf.util.RegularExpressionColorMap;
+import us.fatehi.utility.ioresource.ClasspathInputResource;
+import us.fatehi.utility.ioresource.FileInputResource;
+import us.fatehi.utility.Color;
+import us.fatehi.utility.RegularExpressionColorMap;
 import schemacrawler.SchemaCrawlerLogger;
 
 public class DatabaseObjectColorMap

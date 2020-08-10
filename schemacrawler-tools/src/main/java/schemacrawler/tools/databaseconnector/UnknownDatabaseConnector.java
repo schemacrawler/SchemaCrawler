@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.iosource.EmptyInputResource;
+import us.fatehi.utility.ioresource.EmptyInputResource;
 
 final class UnknownDatabaseConnector
   extends DatabaseConnector

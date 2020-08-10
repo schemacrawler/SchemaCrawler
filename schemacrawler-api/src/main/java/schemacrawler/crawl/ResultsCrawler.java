@@ -39,7 +39,7 @@ import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.StopWatch;
+import us.fatehi.utility.StopWatch;
 
 /**
  * SchemaCrawler uses database meta-data to get the details about the schema.

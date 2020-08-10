@@ -30,8 +30,8 @@ package schemacrawler.tools.lint;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.newBufferedReader;
-import static sf.util.IOUtility.isFileReadable;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.IOUtility.isFileReadable;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

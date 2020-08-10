@@ -31,7 +31,7 @@ package schemacrawler.schemacrawler;
 
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.utility.EnumUtility.enumValue;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -43,9 +43,9 @@ import java.util.logging.Level;
 
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionRule;
-import sf.util.ObjectToString;
+import us.fatehi.utility.ObjectToString;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.string.StringFormat;
+import us.fatehi.utility.string.StringFormat;
 
 /**
  * Configuration properties.

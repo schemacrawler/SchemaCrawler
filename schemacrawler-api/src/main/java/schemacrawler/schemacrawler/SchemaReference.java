@@ -28,8 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
-import static sf.util.Utility.convertForComparison;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.convertForComparison;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.ArrayList;
 import java.util.Arrays;

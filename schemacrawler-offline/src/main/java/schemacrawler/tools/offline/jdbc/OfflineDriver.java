@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.offline.jdbc;
 
 
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.nio.file.Paths;
 import java.sql.Connection;

@@ -29,11 +29,11 @@ package schemacrawler.schemacrawler;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.DatabaseUtility.executeSql;
-import static sf.util.DatabaseUtility.executeSqlForLong;
-import static sf.util.DatabaseUtility.executeSqlForScalar;
-import static sf.util.TemplatingUtility.expandTemplate;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.DatabaseUtility.executeSql;
+import static us.fatehi.utility.DatabaseUtility.executeSqlForLong;
+import static us.fatehi.utility.DatabaseUtility.executeSqlForScalar;
+import static us.fatehi.utility.TemplatingUtility.expandTemplate;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -53,8 +53,8 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.utility.NamedObjectSort;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.string.StringFormat;
-import sf.util.UtilityMarker;
+import us.fatehi.utility.string.StringFormat;
+import us.fatehi.utility.UtilityMarker;
 
 @UtilityMarker
 public final class QueryUtility

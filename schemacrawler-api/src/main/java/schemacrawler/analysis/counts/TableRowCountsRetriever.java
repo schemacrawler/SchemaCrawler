@@ -31,7 +31,7 @@ package schemacrawler.analysis.counts;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.analysis.counts.TableRowCountsUtility.addRowCountToTable;
 import static schemacrawler.schemacrawler.QueryUtility.executeForLong;
-import static sf.util.DatabaseUtility.checkConnection;
+import static us.fatehi.utility.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -45,7 +45,7 @@ import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.Retriever;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.string.StringFormat;
+import us.fatehi.utility.string.StringFormat;
 
 @Retriever
 public final class TableRowCountsRetriever

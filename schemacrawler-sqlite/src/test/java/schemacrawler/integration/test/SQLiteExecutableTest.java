@@ -52,7 +52,7 @@ import schemacrawler.testdb.TestSchemaCreatorMain;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
-import sf.util.IOUtility;
+import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestContextParameterResolver.class)

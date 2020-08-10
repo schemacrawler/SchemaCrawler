@@ -37,12 +37,12 @@ import static java.sql.Types.LONGVARCHAR;
 import static java.sql.Types.NCLOB;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.QueryUtility.executeAgainstSchema;
-import static sf.util.DatabaseUtility.logSQLWarnings;
-import static sf.util.IOUtility.readFully;
+import static us.fatehi.utility.DatabaseUtility.logSQLWarnings;
+import static us.fatehi.utility.IOUtility.readFully;
 import static schemacrawler.utility.EnumUtility.enumValue;
 import static schemacrawler.utility.EnumUtility.enumValueFromId;
-import static sf.util.Utility.isBlank;
-import static sf.util.Utility.isIntegral;
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.isIntegral;
 
 import java.io.Reader;
 import java.math.BigInteger;
@@ -66,7 +66,7 @@ import schemacrawler.schemacrawler.Query;
 import schemacrawler.utility.BinaryData;
 import schemacrawler.schema.IdentifiedEnum;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.string.StringFormat;
+import us.fatehi.utility.string.StringFormat;
 
 /**
  * A wrapper around a JDBC resultset obtained from a database metadata call.

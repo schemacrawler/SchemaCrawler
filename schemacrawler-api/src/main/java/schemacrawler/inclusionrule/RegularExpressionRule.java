@@ -29,14 +29,14 @@ http://www.gnu.org/licenses/
 package schemacrawler.inclusionrule;
 
 
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.string.StringFormat;
+import us.fatehi.utility.string.StringFormat;
 
 /**
  * Specifies inclusion and exclusion patterns that can be applied to the names,

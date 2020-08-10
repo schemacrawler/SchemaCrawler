@@ -34,7 +34,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
-import sf.util.Color;
+import us.fatehi.utility.Color;
 
 public class ColorTest
 {

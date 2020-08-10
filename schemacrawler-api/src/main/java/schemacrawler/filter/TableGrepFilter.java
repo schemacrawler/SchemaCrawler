@@ -38,7 +38,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schemacrawler.GrepOptions;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.string.StringFormat;
+import us.fatehi.utility.string.StringFormat;
 
 class TableGrepFilter
   implements Predicate<Table>

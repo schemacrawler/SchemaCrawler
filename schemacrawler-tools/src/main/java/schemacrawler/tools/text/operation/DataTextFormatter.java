@@ -44,7 +44,7 @@ import schemacrawler.tools.text.base.BaseTabularFormatter;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
 import schemacrawler.tools.text.utility.html.Alignment;
 import schemacrawler.tools.traversal.DataTraversalHandler;
-import sf.util.Color;
+import us.fatehi.utility.Color;
 
 /**
  * Text formatting of data.

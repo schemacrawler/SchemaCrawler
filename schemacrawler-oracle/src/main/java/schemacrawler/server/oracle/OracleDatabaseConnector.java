@@ -56,9 +56,9 @@ import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import schemacrawler.tools.iosource.ClasspathInputResource;
+import us.fatehi.utility.ioresource.ClasspathInputResource;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.string.StringFormat;
+import us.fatehi.utility.string.StringFormat;
 
 public final class OracleDatabaseConnector
   extends DatabaseConnector

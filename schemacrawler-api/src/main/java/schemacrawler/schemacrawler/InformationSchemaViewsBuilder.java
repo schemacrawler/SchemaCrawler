@@ -30,8 +30,8 @@ package schemacrawler.schemacrawler;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.IOUtility.readResourceFully;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.IOUtility.readResourceFully;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.util.EnumMap;
@@ -39,8 +39,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
-import sf.util.ObjectToString;
-import sf.util.TemplatingUtility;
+import us.fatehi.utility.ObjectToString;
+import us.fatehi.utility.TemplatingUtility;
 
 /**
  * The database specific views to get additional database metadata in a standard

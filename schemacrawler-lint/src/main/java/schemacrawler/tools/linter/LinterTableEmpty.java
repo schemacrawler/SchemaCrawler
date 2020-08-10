@@ -42,7 +42,7 @@ import schemacrawler.schemacrawler.Query;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.string.StringFormat;
+import us.fatehi.utility.string.StringFormat;
 
 public class LinterTableEmpty
   extends BaseLinter

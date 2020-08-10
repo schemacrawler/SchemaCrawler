@@ -30,7 +30,7 @@ package schemacrawler.crawl;
 
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_SYNONYMS;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -48,7 +48,7 @@ import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.SchemaCrawlerLogger;
-import sf.util.string.StringFormat;
+import us.fatehi.utility.string.StringFormat;
 
 /**
  * A retriever that uses database metadata to get the extended details about the

@@ -31,7 +31,7 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSchemaInclusion;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;

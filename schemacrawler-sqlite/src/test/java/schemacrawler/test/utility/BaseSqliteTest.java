@@ -36,7 +36,7 @@ import java.sql.SQLException;
 import org.apache.commons.dbcp2.BasicDataSource;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.testdb.SqlScript;
-import sf.util.IOUtility;
+import us.fatehi.utility.IOUtility;
 
 public abstract class BaseSqliteTest
 {
