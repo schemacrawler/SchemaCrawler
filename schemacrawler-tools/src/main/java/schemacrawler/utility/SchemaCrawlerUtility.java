@@ -36,9 +36,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.crawl.ResultsCrawler;
 import schemacrawler.crawl.SchemaCrawler;
-import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schemacrawler.DatabaseServerType;
@@ -49,8 +49,8 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import us.fatehi.utility.DatabaseUtility;
-import us.fatehi.utility.ObjectToString;
 import us.fatehi.utility.UtilityMarker;
+import us.fatehi.utility.string.ObjectToStringFormat;
 
 /**
  * SchemaCrawler utility methods.
@@ -141,10 +141,7 @@ public final class SchemaCrawlerUtility
     throws SchemaCrawlerException
   {
     checkConnection(connection);
-    if (LOGGER.isLoggable(Level.CONFIG))
-    {
-      LOGGER.log(Level.CONFIG, ObjectToString.toString(schemaCrawlerOptions));
-    }
+    LOGGER.log(Level.CONFIG, new ObjectToStringFormat(schemaCrawlerOptions));
 
     final SchemaRetrievalOptions schemaRetrievalOptions =
       matchSchemaRetrievalOptions(connection);
