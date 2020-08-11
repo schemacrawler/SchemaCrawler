@@ -39,6 +39,10 @@ public class CompareUtility
                                                                    final List<? extends T> list2)
   {
 
+    if (list1 == null && list2 == null)
+    {
+      return 0;
+    }
     if (list1 == null)
     {
       return -1;
@@ -48,7 +52,7 @@ public class CompareUtility
       return 1;
     }
 
-    int comparison = list1.size() - list2.size();
+    int comparison = Integer.compare(list1.size(), list2.size());
 
     if (comparison == 0)
     {
