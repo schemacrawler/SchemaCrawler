@@ -29,14 +29,14 @@ package us.fatehi.utility;
 
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Files.createTempFile;
-import static java.nio.file.Files.delete;
+import static java.nio.file.Files.createTempDirectory;
 import static java.nio.file.Files.exists;
 import static java.nio.file.Files.isDirectory;
 import static java.nio.file.Files.isReadable;
 import static java.nio.file.Files.isRegularFile;
 import static java.nio.file.Files.isWritable;
 import static java.nio.file.Files.size;
+import static java.util.UUID.randomUUID;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -115,11 +115,10 @@ public final class IOUtility
                                         final String extension)
     throws IOException
   {
-    final Path tempFilePath =
-      createTempFile("schemacrawler." + stem + ".", "." + extension)
-        .normalize()
-        .toAbsolutePath();
-    delete(tempFilePath);
+    final Path tempFilePath = createTempDirectory(null)
+      .resolve(randomUUID() + "." + extension)
+      .normalize()
+      .toAbsolutePath();
     tempFilePath
       .toFile()
       .deleteOnExit();
