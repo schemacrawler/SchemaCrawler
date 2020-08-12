@@ -29,12 +29,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
+import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
-import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
 
 import java.sql.Connection;
 import java.util.Collection;
@@ -258,7 +258,7 @@ public class SchemaCrawlerReferenceTest
     assertThat("Primary key table table should not be in the database - "
                + table.getName(),
                catalog.lookupTable(table.getSchema(), table.getName()),
-               emptyOptional());
+               isEmpty());
     assertThat("Column references do not match",
                column == table
                  .lookupColumn(column.getName())
