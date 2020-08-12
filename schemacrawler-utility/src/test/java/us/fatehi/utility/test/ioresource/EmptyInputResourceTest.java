@@ -35,8 +35,6 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 import static us.fatehi.utility.IOUtility.readFully;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 import us.fatehi.utility.ioresource.EmptyInputResource;
 
@@ -46,16 +44,12 @@ public class EmptyInputResourceTest
   @Test
   public void happyPath()
   {
-    final EmptyInputResource resource =
-      new EmptyInputResource();
+    final EmptyInputResource resource = new EmptyInputResource();
     assertThat("Description does not match",
                resource.getDescription(),
                is("<empty>"));
-    assertThat("toString() does not match",
-               resource.toString(),
-               is("<empty>"));
-    assertThat(readFully(resource.openNewInputReader(UTF_8)),
-               startsWith(""));
+    assertThat("toString() does not match", resource.toString(), is("<empty>"));
+    assertThat(readFully(resource.openNewInputReader(UTF_8)), startsWith(""));
   }
 
 }

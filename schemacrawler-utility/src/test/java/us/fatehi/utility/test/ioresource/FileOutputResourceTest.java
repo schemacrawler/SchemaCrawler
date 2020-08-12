@@ -30,38 +30,46 @@ package us.fatehi.utility.test.ioresource;
 
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.file.Files.createTempFile;
+import static java.nio.file.Files.newBufferedReader;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.startsWith;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static us.fatehi.utility.IOUtility.readFully;
 
 import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
-import us.fatehi.utility.ioresource.StringInputResource;
+import us.fatehi.utility.ioresource.FileOutputResource;
 
-public class StringInputResourceTest
+public class FileOutputResourceTest
 {
 
   @Test
   public void nullArgs()
   {
-    assertThat(readFully(new StringInputResource(null).openNewInputReader(UTF_8)),
-               is(""));
+    assertThrows(NullPointerException.class,
+                 () -> new FileOutputResource(null));
   }
 
   @Test
   public void happyPath()
     throws IOException
   {
-    final StringInputResource resource =
-      new StringInputResource("hello, world");
-    assertThat("Description does not match",
-               resource.getDescription(),
-               is("<data>"));
-    assertThat("toString() does not match", resource.toString(), is("<data>"));
-    assertThat(readFully(resource.openNewInputReader(UTF_8)),
-               startsWith("hello, world"));
+    final Path tempFile = createTempFile("sc", ".txt");
+
+    final FileOutputResource outputResource = new FileOutputResource(tempFile);
+    assertThat(outputResource.getOutputFile(), is(tempFile));
+    assertThat(outputResource.toString(), is(tempFile.toString()));
+    assertThat(outputResource.getDescription(), is(tempFile.toString()));
+
+    final Writer writer = outputResource.openNewOutputWriter(UTF_8, true);
+    writer.write("hello, world");
+    writer.close();
+
+    assertThat(readFully(newBufferedReader(tempFile)), is("hello, world"));
   }
 
 }

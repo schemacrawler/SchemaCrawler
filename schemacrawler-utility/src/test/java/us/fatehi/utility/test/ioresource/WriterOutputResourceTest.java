@@ -60,7 +60,6 @@ public class WriterOutputResourceTest
     throws IOException
   {
     final Path tempFile = createTempFile("sc", ".txt");
-    System.out.println(tempFile);
 
     final WriterOutputResource outputResource =
       new WriterOutputResource(newBufferedWriter(tempFile));

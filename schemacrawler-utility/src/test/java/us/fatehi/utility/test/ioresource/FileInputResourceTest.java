@@ -31,7 +31,6 @@ package us.fatehi.utility.test.ioresource;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -51,8 +50,7 @@ public class FileInputResourceTest
   @Test
   public void nullArgs()
   {
-    assertThrows(NullPointerException.class,
-                 () -> new FileInputResource(null));
+    assertThrows(NullPointerException.class, () -> new FileInputResource(null));
   }
 
   @Test
@@ -69,8 +67,7 @@ public class FileInputResourceTest
     final Path fileResource = Files.createTempFile("sc", ".txt");
     Files.write(fileResource, "hello, world".getBytes(UTF_8));
 
-    final FileInputResource resource =
-      new FileInputResource(fileResource);
+    final FileInputResource resource = new FileInputResource(fileResource);
     assertThat("File resource does not match",
                resource.getInputFile(),
                is(fileResource));
