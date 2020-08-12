@@ -25,16 +25,17 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.test;
+package us.fatehi.utility.test;
 
 
+import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
-import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
 
 import java.util.Properties;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import us.fatehi.utility.Color;
 import us.fatehi.utility.RegularExpressionColorMap;
@@ -50,19 +51,19 @@ public class RegularExpressionColorMapTest
     final RegularExpressionColorMap colorMap = new RegularExpressionColorMap();
 
     colorMap.put("SC.*", "1A3B5");
-    assertThat(colorMap.match("SCH"), emptyOptional());
+    MatcherAssert.assertThat(colorMap.match("SCH"), isEmpty());
 
     colorMap.put("SC.*",
                  test_color
                    .toString()
                    .substring(1) + "A");
-    assertThat(colorMap.match("SCH"), emptyOptional());
+    MatcherAssert.assertThat(colorMap.match("SCH"), isEmpty());
 
     colorMap.put("SC.*",
                  test_color
                    .toString()
                    .substring(1));
-    assertThat(colorMap.match("SCH"), emptyOptional());
+    MatcherAssert.assertThat(colorMap.match("SCH"), isEmpty());
   }
 
   @Test
@@ -71,7 +72,7 @@ public class RegularExpressionColorMapTest
     final RegularExpressionColorMap colorMap = new RegularExpressionColorMap();
 
     colorMap.put("SC(H", test_color.toString());
-    assertThat(colorMap.match("SCH"), emptyOptional());
+    MatcherAssert.assertThat(colorMap.match("SCH"), isEmpty());
 
   }
 
@@ -90,13 +91,13 @@ public class RegularExpressionColorMapTest
       new RegularExpressionColorMap(properties);
 
     assertThat(colorMap.size(), is(2));
-    assertThat(colorMap.match("SCH"), is(not(emptyOptional())));
+    MatcherAssert.assertThat(colorMap.match("SCH"), is(not(isEmpty())));
     assertThat(colorMap
                  .match("SCH")
                  .get()
                  .equals(test_color), is(true));
-    assertThat(colorMap.match("SHC"), emptyOptional());
-    assertThat(colorMap.match("QW"), is(not(emptyOptional())));
+    MatcherAssert.assertThat(colorMap.match("SHC"), isEmpty());
+    MatcherAssert.assertThat(colorMap.match("QW"), is(not(isEmpty())));
   }
 
   @Test
@@ -105,13 +106,13 @@ public class RegularExpressionColorMapTest
     final RegularExpressionColorMap colorMap = new RegularExpressionColorMap();
 
     colorMap.put("SC.*", test_color.toString());
-    assertThat(colorMap.match("SCH"), is(not(emptyOptional())));
+    MatcherAssert.assertThat(colorMap.match("SCH"), is(not(isEmpty())));
     assertThat(colorMap
                  .match("SCH")
                  .get()
                  .equals(test_color), is(true));
-    assertThat(colorMap.match("SC.*"), is(not(emptyOptional())));
-    assertThat(colorMap.match("SHC"), emptyOptional());
+    MatcherAssert.assertThat(colorMap.match("SC.*"), is(not(isEmpty())));
+    MatcherAssert.assertThat(colorMap.match("SHC"), isEmpty());
   }
 
   @Test
@@ -120,8 +121,8 @@ public class RegularExpressionColorMapTest
     final RegularExpressionColorMap colorMap = new RegularExpressionColorMap();
 
     colorMap.putLiteral("SC.*", test_color);
-    assertThat(colorMap.match("SCH"), emptyOptional());
-    assertThat(colorMap.match("SC.*"), is(not(emptyOptional())));
+    MatcherAssert.assertThat(colorMap.match("SCH"), isEmpty());
+    MatcherAssert.assertThat(colorMap.match("SC.*"), is(not(isEmpty())));
 
   }
 
