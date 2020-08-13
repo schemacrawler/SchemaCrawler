@@ -30,7 +30,6 @@ package schemacrawler.tools.text.utility.html;
 
 import static us.fatehi.utility.Utility.isBlank;
 
-import schemacrawler.tools.options.TextOutputFormat;
 import us.fatehi.utility.Color;
 
 /**
@@ -49,8 +48,7 @@ public class Anchor
                 final boolean emphasizeText,
                 final String styleClass,
                 final Color bgColor,
-                final String link,
-                final TextOutputFormat outputFormat)
+                final String link)
   {
     super(text,
           escapeText,
@@ -58,8 +56,7 @@ public class Anchor
           align,
           emphasizeText,
           styleClass,
-          bgColor,
-          outputFormat);
+          bgColor);
     if (!isBlank(link))
     {
       addAttribute("href", link);
@@ -67,7 +64,7 @@ public class Anchor
   }
 
   @Override
-  protected String getTag()
+  public String getTag()
   {
     return "a";
   }

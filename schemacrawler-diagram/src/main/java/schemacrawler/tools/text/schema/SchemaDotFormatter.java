@@ -31,6 +31,7 @@ package schemacrawler.tools.text.schema;
 
 import static schemacrawler.analysis.counts.TableRowCountsUtility.getRowCountMessage;
 import static schemacrawler.analysis.counts.TableRowCountsUtility.hasRowCount;
+import static schemacrawler.tools.text.utility.html.TagOutputFormat.html;
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 
 import java.util.ArrayList;
@@ -52,10 +53,10 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.integration.diagram.DiagramOptions;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.base.BaseDotFormatter;
 import schemacrawler.tools.text.utility.html.Alignment;
 import schemacrawler.tools.text.utility.html.TableRow;
+import schemacrawler.tools.text.utility.html.TagOutputFormat;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.utility.MetaDataUtility.ForeignKeyCardinality;
 import schemacrawler.utility.NamedObjectSort;
@@ -182,7 +183,7 @@ public final class SchemaDotFormatter
       .println();
 
     formattingHelper
-      .append(new TableRow(TextOutputFormat.html)
+      .append(new TableRow()
                 .add(newTableCell(tableName,
                                   Alignment.left,
                                   true,
@@ -193,7 +194,7 @@ public final class SchemaDotFormatter
                                   false,
                                   tableNameBgColor,
                                   1))
-                .toString())
+                .render(html))
       .println();
 
     printTableRemarks(table);
@@ -478,7 +479,7 @@ public final class SchemaDotFormatter
       return;
     }
 
-    final TableRow row = new TableRow(TextOutputFormat.html);
+    final TableRow row = new TableRow();
     if (options.isShowOrdinalNumbers())
     {
       row.add(newTableCell("", Alignment.right, false, Color.white, 1));
@@ -492,7 +493,7 @@ public final class SchemaDotFormatter
                         Color.white,
                         1));
     formattingHelper
-      .append(row.toString())
+      .append(row.render(html))
       .println();
   }
 
@@ -515,7 +516,7 @@ public final class SchemaDotFormatter
       return;
     }
 
-    final TableRow row = new TableRow(TextOutputFormat.html);
+    final TableRow row = new TableRow();
     if (options.isShowOrdinalNumbers())
     {
       row.add(newTableCell("", Alignment.right, false, Color.white, 1));
@@ -525,7 +526,7 @@ public final class SchemaDotFormatter
       .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
       .add(newTableCell("generated", Alignment.left, false, Color.white, 1));
     formattingHelper
-      .append(row.toString())
+      .append(row.render(html))
       .println();
   }
 
@@ -556,7 +557,7 @@ public final class SchemaDotFormatter
                                                           .getColumnDataType()
                                                           .getEnumValues()));
 
-    final TableRow row = new TableRow(TextOutputFormat.html);
+    final TableRow row = new TableRow();
     if (options.isShowOrdinalNumbers())
     {
       row.add(newTableCell("", Alignment.right, false, Color.white, 1));
@@ -566,7 +567,7 @@ public final class SchemaDotFormatter
       .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
       .add(newTableCell(enumValues, Alignment.left, false, Color.white, 1));
     formattingHelper
-      .append(row.toString())
+      .append(row.render(html))
       .println();
   }
 
@@ -589,7 +590,7 @@ public final class SchemaDotFormatter
       return;
     }
 
-    final TableRow row = new TableRow(TextOutputFormat.html);
+    final TableRow row = new TableRow();
     if (options.isShowOrdinalNumbers())
     {
       row.add(newTableCell("", Alignment.right, false, Color.white, 1));
@@ -599,7 +600,7 @@ public final class SchemaDotFormatter
       .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
       .add(newTableCell("hidden", Alignment.left, false, Color.white, 1));
     formattingHelper
-      .append(row.toString())
+      .append(row.render(html))
       .println();
   }
 
@@ -609,7 +610,7 @@ public final class SchemaDotFormatter
     {
       return;
     }
-    final TableRow remarksRow = new TableRow(TextOutputFormat.html);
+    final TableRow remarksRow = new TableRow();
     if (options.isShowOrdinalNumbers())
     {
       remarksRow.add(newTableCell("", Alignment.right, false, Color.white, 1));
@@ -623,7 +624,7 @@ public final class SchemaDotFormatter
                         Color.white,
                         1));
     formattingHelper
-      .append(remarksRow.toString())
+      .append(remarksRow.render(html))
       .println();
   }
 
@@ -664,7 +665,7 @@ public final class SchemaDotFormatter
       final String columnDetails = columnType + nullable;
       final boolean emphasize = column.isPartOfPrimaryKey();
 
-      final TableRow row = new TableRow(TextOutputFormat.html);
+      final TableRow row = new TableRow();
       if (options.isShowOrdinalNumbers())
       {
         final String ordinalNumberString =
@@ -695,7 +696,7 @@ public final class SchemaDotFormatter
         .lastCell()
         .addAttribute("port", nodeId(column) + ".end");
       formattingHelper
-        .append(row.toString())
+        .append(row.render(html))
         .println();
 
       printTableColumnEnumValues(column);
@@ -713,13 +714,13 @@ public final class SchemaDotFormatter
       return;
     }
     formattingHelper
-      .append(new TableRow(TextOutputFormat.html)
+      .append(new TableRow()
                 .add(newTableCell(table.getRemarks(),
                                   Alignment.left,
                                   false,
                                   Color.white,
                                   3))
-                .toString())
+                .render(html))
       .println();
   }
 
@@ -730,13 +731,13 @@ public final class SchemaDotFormatter
       return;
     }
     formattingHelper
-      .append(new TableRow(TextOutputFormat.html)
+      .append(new TableRow()
                 .add(newTableCell(getRowCountMessage(table),
                                   Alignment.right,
                                   false,
                                   Color.white,
                                   3))
-                .toString())
+                .render(html))
       .println();
   }
 

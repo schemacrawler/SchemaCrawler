@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.utility.html;
 
 
-import schemacrawler.tools.options.TextOutputFormat;
 import us.fatehi.utility.Color;
 
 /**
@@ -47,8 +46,7 @@ public class TableCell
                    final boolean emphasizeText,
                    final String styleClass,
                    final Color bgColor,
-                   final int colSpan,
-                   final TextOutputFormat outputFormat)
+                   final int colSpan)
   {
     super(text,
           escapeText,
@@ -56,8 +54,7 @@ public class TableCell
           align,
           emphasizeText,
           styleClass,
-          bgColor,
-          outputFormat);
+          bgColor);
     if (colSpan > 1)
     {
       addAttribute("colspan", String.valueOf(colSpan));
@@ -65,7 +62,7 @@ public class TableCell
   }
 
   @Override
-  protected String getTag()
+  public String getTag()
   {
     return "td";
   }

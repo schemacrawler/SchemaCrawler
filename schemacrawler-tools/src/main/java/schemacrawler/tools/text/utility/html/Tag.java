@@ -28,34 +28,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.utility.html;
 
 
-import us.fatehi.utility.Color;
-
-public final class TableHeaderCell
-  extends TableCell
+public interface Tag
 {
 
-  public TableHeaderCell(final String text,
-                         final int characterWidth,
-                         final Alignment align,
-                         final boolean emphasizeText,
-                         final String styleClass,
-                         final Color bgColor,
-                         final int colSpan)
-  {
-    super(text,
-          true,
-          characterWidth,
-          align,
-          emphasizeText,
-          styleClass,
-          bgColor,
-          colSpan);
-  }
+  String getTag();
 
-  @Override
-  public String getTag()
-  {
-    return "th";
-  }
+  String render(TagOutputFormat tagOutputFormat);
 
 }

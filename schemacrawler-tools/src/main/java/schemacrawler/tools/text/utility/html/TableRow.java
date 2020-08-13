@@ -29,10 +29,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.utility.html;
 
 
+import static schemacrawler.tools.text.utility.html.TagOutputFormat.html;
+import static schemacrawler.tools.text.utility.html.TagOutputFormat.text;
+import static schemacrawler.tools.text.utility.html.TagOutputFormat.tsv;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import schemacrawler.tools.options.TextOutputFormat;
 
 /**
  * Represents an HTML table row.
@@ -40,14 +42,13 @@ import schemacrawler.tools.options.TextOutputFormat;
  * @author Sualeh Fatehi
  */
 public final class TableRow
+  implements Tag
 {
 
-  private final TextOutputFormat outputFormat;
   private final List<TableCell> cells;
 
-  public TableRow(final TextOutputFormat outputFormat)
+  public TableRow()
   {
-    this.outputFormat = outputFormat;
     cells = new ArrayList<>();
   }
 
@@ -75,36 +76,35 @@ public final class TableRow
     return cells.get(cells.size() - 1);
   }
 
-  /**
-   * Converts the table row to HTML.
-   *
-   * @return HTML
-   */
   @Override
   public String toString()
   {
-    if (outputFormat == TextOutputFormat.html)
-    {
-      return toHtmlString();
-    }
-    else
-    {
-      return toPlainTextString();
-    }
+    return getTag();
   }
 
-  private String getFieldSeparator()
+  @Override
+  public String getTag()
   {
-    String fieldSeparator;
-    switch (outputFormat)
+    return "tr";
+  }
+
+  /**
+   * Converts the table cell to HTML.
+   *
+   * @return HTML
+   */
+  public String render(final TagOutputFormat tagOutputFormat)
+  {
+    switch (tagOutputFormat)
     {
+      case text:
+        return toPlainTextString();
       case tsv:
-        fieldSeparator = "\t";
-        break;
+        return toTsvString();
+      case html:
       default:
-        fieldSeparator = "  ";
+        return toHtmlString();
     }
-    return fieldSeparator;
   }
 
   /**
@@ -116,18 +116,33 @@ public final class TableRow
   {
     final StringBuilder buffer = new StringBuilder(1024);
     buffer
-      .append("\t<tr>")
+      .append("\t<")
+      .append(getTag())
+      .append(">")
       .append(System.lineSeparator());
     for (final TableCell cell : cells)
     {
       buffer
         .append("\t\t")
-        .append(cell)
+        .append(cell.render(html))
         .append(System.lineSeparator());
     }
-    buffer.append("\t</tr>");
+    buffer
+      .append("\t</")
+      .append(getTag())
+      .append(">");
 
     return buffer.toString();
+  }
+
+  private String toPlainTextString()
+  {
+    return toPlainTextString(text, "  ");
+  }
+
+  private String toTsvString()
+  {
+    return toPlainTextString(tsv, "\t");
   }
 
   /**
@@ -135,7 +150,8 @@ public final class TableRow
    *
    * @return Text
    */
-  private String toPlainTextString()
+  private String toPlainTextString(final TagOutputFormat tagOutputFormat,
+                                   final String fieldSeparator)
   {
     final StringBuilder buffer = new StringBuilder(1024);
 
@@ -144,9 +160,9 @@ public final class TableRow
       final TableCell cell = cells.get(i);
       if (i > 0)
       {
-        buffer.append(getFieldSeparator());
+        buffer.append(fieldSeparator);
       }
-      buffer.append(cell.toString());
+      buffer.append(cell.render(tagOutputFormat));
     }
 
     return buffer.toString();

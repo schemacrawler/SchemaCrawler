@@ -35,7 +35,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import schemacrawler.tools.options.TextOutputFormat;
 import us.fatehi.utility.Color;
 
 /**
@@ -44,9 +43,9 @@ import us.fatehi.utility.Color;
  * @author Sualeh Fatehi
  */
 abstract class BaseTag
+  implements Tag
 {
 
-  private final TextOutputFormat outputFormat;
   private final String styleClass;
   private final int characterWidth;
   private final Alignment align;
@@ -63,10 +62,8 @@ abstract class BaseTag
                     final Alignment align,
                     final boolean emphasizeText,
                     final String styleClass,
-                    final Color bgColor,
-                    final TextOutputFormat outputFormat)
+                    final Color bgColor)
   {
-    this.outputFormat = outputFormat;
     this.styleClass = styleClass;
     this.text = text == null? "NULL": text;
     this.escapeText = escapeText;
@@ -82,25 +79,30 @@ abstract class BaseTag
     return attributes.put(key, value);
   }
 
+  @Override
+  public String toString()
+  {
+    return getTag();
+  }
+
   /**
    * Converts the table cell to HTML.
    *
    * @return HTML
    */
-  @Override
-  public String toString()
+  public String render(final TagOutputFormat tagOutputFormat)
   {
-    if (outputFormat == TextOutputFormat.html)
+    switch (tagOutputFormat)
     {
-      return toHtmlString();
-    }
-    else
-    {
-      return toPlainTextString();
+      case text:
+        return toPlainTextString();
+      case tsv:
+        return toTsvString();
+      case html:
+      default:
+        return toHtmlString();
     }
   }
-
-  protected abstract String getTag();
 
   /**
    * Converts the tag to HTML.
@@ -162,29 +164,32 @@ abstract class BaseTag
   }
 
   /**
+   * Converts the tag to TSV.
+   *
+   * @return Text
+   */
+  private String toTsvString()
+  {
+    return text;
+  }
+
+  /**
    * Converts the tag to text.
    *
    * @return Text
    */
   private String toPlainTextString()
   {
-    if (outputFormat == TextOutputFormat.tsv)
+    if (characterWidth > 0)
     {
-      return text;
+      final String format = String.format("%%%s%ds",
+                                          align == Alignment.right? "": "-",
+                                          characterWidth);
+      return String.format(format, text);
     }
     else
     {
-      if (characterWidth > 0)
-      {
-        final String format = String.format("%%%s%ds",
-                                            align == Alignment.right? "": "-",
-                                            characterWidth);
-        return String.format(format, text);
-      }
-      else
-      {
-        return text;
-      }
+      return text;
     }
   }
 

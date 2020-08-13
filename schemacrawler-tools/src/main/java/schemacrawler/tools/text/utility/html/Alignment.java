@@ -32,5 +32,5 @@ public enum Alignment
 {
   inherit,
   left,
-  right;
+  right
 }
