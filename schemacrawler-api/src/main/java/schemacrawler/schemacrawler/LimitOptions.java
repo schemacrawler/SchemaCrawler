@@ -39,7 +39,7 @@ import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.TableTypes;
-import sf.util.ObjectToString;
+import us.fatehi.utility.ObjectToString;
 
 /**
  * SchemaCrawler options.

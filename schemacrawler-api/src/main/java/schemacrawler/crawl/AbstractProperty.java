@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.Serializable;
 import java.util.Arrays;

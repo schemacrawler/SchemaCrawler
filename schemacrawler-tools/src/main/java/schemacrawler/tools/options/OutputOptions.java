@@ -30,7 +30,7 @@ package schemacrawler.tools.options;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -41,9 +41,9 @@ import java.util.UUID;
 
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.iosource.FileOutputResource;
-import schemacrawler.tools.iosource.OutputResource;
-import sf.util.ObjectToString;
+import us.fatehi.utility.ioresource.FileOutputResource;
+import us.fatehi.utility.ioresource.OutputResource;
+import us.fatehi.utility.ObjectToString;
 
 /**
  * Contains output options.

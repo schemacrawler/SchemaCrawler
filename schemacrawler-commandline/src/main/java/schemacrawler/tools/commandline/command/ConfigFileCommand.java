@@ -39,11 +39,11 @@ import picocli.CommandLine.Option;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
-import schemacrawler.tools.iosource.ClasspathInputResource;
-import schemacrawler.tools.iosource.FileInputResource;
+import us.fatehi.utility.ioresource.ClasspathInputResource;
+import us.fatehi.utility.ioresource.FileInputResource;
 import schemacrawler.utility.PropertiesUtility;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import schemacrawler.SchemaCrawlerLogger;
+import us.fatehi.utility.string.StringFormat;
 
 /**
  * Parses the command-line.

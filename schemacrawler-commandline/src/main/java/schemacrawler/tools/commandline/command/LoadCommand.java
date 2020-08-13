@@ -50,8 +50,8 @@ import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import schemacrawler.SchemaCrawlerLogger;
+import us.fatehi.utility.string.StringFormat;
 
 @Command(name = "load",
          header = "** Load database metadata into memory",

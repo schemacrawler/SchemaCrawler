@@ -52,7 +52,7 @@ import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.testdb.SqlScript;
 import schemacrawler.testdb.TestSchemaCreatorMain;
 import schemacrawler.utility.SchemaCrawlerUtility;
-import sf.util.IOUtility;
+import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestLoggingExtension.class)
 public class TempTablesTest

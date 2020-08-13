@@ -40,8 +40,8 @@ import java.util.logging.Level;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import schemacrawler.SchemaCrawlerLogger;
+import us.fatehi.utility.string.StringFormat;
 
 public final class WeakAssociationsAnalyzer
 {

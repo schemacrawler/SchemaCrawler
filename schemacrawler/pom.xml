@@ -18,6 +18,11 @@
 	     so that jacoco can aggregate reports -->
     <dependency>
       <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-utility</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-api</artifactId>
       <version>${project.version}</version>
     </dependency>
@@ -110,6 +115,7 @@
             <configuration>
               <artifactSet>
                 <includes>
+                  <include>us.fatehi:schemacrawler-utility</include>
                   <include>us.fatehi:schemacrawler-api</include>
                   <include>us.fatehi:schemacrawler-tools</include>
                   <include>us.fatehi:schemacrawler-diagram</include>

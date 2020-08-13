@@ -29,7 +29,7 @@ package schemacrawler.tools.executable;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -46,8 +46,8 @@ import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.utility.SchemaCrawlerUtility;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import schemacrawler.SchemaCrawlerLogger;
+import us.fatehi.utility.string.StringFormat;
 
 /**
  * Wrapper executable for any SchemaCrawler command. Looks up the command

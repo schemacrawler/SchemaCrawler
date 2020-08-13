@@ -11,7 +11,7 @@ import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.ty
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.IOException;
 import java.sql.Connection;

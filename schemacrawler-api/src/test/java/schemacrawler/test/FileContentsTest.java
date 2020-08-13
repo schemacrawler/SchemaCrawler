@@ -40,8 +40,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
-import sf.util.FileContents;
-import sf.util.IOUtility;
+import us.fatehi.utility.string.FileContents;
+import us.fatehi.utility.IOUtility;
 
 public class FileContentsTest
 {

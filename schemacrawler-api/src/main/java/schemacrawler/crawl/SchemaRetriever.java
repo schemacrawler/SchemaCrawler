@@ -47,9 +47,9 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaReference;
-import sf.util.DatabaseUtility;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import us.fatehi.utility.DatabaseUtility;
+import schemacrawler.SchemaCrawlerLogger;
+import us.fatehi.utility.string.StringFormat;
 
 final class SchemaRetriever
   extends AbstractRetriever

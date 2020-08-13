@@ -20,6 +20,7 @@
 
     <module>schemacrawler-testdb</module>
 
+    <module>schemacrawler-utility</module>
     <module>schemacrawler-api</module>
     <module>schemacrawler-tools</module>
     <module>schemacrawler-diagram</module>

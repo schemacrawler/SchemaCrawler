@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
-import sf.util.ObjectToString;
+import us.fatehi.utility.ObjectToString;
 
 public final class FilterOptions
   implements Options

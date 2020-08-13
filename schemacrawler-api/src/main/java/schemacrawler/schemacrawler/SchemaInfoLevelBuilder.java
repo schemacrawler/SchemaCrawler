@@ -29,13 +29,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.logging.Level;
 
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 
 public final class SchemaInfoLevelBuilder
   implements OptionsBuilder<SchemaInfoLevelBuilder, SchemaInfoLevel>

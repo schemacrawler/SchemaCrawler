@@ -30,7 +30,7 @@ package schemacrawler.tools.text.utility;
 
 
 import schemacrawler.tools.text.utility.html.Alignment;
-import sf.util.Color;
+import us.fatehi.utility.Color;
 
 /**
  * Methods to format entire rows of output.

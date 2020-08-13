@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.databaseconnector;
 
 
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 public final class SingleUseUserCredentials
   implements UserCredentials

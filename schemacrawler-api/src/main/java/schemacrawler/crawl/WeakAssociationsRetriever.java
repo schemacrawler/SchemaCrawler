@@ -41,8 +41,8 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Retriever;
 import schemacrawler.utility.MetaDataUtility;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import schemacrawler.SchemaCrawlerLogger;
+import us.fatehi.utility.string.StringFormat;
 
 @Retriever
 final class WeakAssociationsRetriever

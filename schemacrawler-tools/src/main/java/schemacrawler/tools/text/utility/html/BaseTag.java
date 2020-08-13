@@ -29,14 +29,14 @@ package schemacrawler.tools.text.utility.html;
 
 
 import static schemacrawler.tools.text.utility.html.Entities.escapeForXMLElement;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import schemacrawler.tools.options.TextOutputFormat;
-import sf.util.Color;
+import us.fatehi.utility.Color;
 
 /**
  * Represents an HTML anchor.

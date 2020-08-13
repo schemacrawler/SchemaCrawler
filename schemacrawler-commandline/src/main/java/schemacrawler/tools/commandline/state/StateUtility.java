@@ -34,8 +34,8 @@ import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import sf.util.ObjectToStringFormat;
-import sf.util.SchemaCrawlerLogger;
+import us.fatehi.utility.string.ObjectToStringFormat;
+import schemacrawler.SchemaCrawlerLogger;
 
 public final class StateUtility
 {

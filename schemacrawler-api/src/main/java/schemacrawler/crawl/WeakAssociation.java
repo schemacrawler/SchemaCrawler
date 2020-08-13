@@ -43,7 +43,7 @@ import schemacrawler.schema.BaseForeignKey;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.NamedObject;
-import schemacrawler.utility.CompareUtility;
+import us.fatehi.utility.CompareUtility;
 
 /**
  * Represents a foreign-key mapping to a primary key in another table.

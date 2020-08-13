@@ -31,11 +31,11 @@ package schemacrawler.tools.databaseconnector;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.Matchers.aMapWithSize;
+import static org.hamcrest.Matchers.anEmptyMap;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static schemacrawler.test.utility.IsEmptyMap.emptyMap;
 
 import org.junit.jupiter.api.Test;
 import org.junitpioneer.jupiter.SetSystemProperty;
@@ -93,7 +93,7 @@ public class TestDatabaseConnectorTest
 
     final Config config = databaseConnector.getConfig();
     assertThat(config, is(notNullValue()));
-    assertThat(config, is(emptyMap()));
+    assertThat(config, is(anEmptyMap()));
 
     final PluginCommand helpCommand = databaseConnector.getHelpCommand();
     assertThat(helpCommand, is(notNullValue()));

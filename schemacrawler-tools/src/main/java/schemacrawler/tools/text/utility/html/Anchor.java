@@ -28,10 +28,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.utility.html;
 
 
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import schemacrawler.tools.options.TextOutputFormat;
-import sf.util.Color;
+import us.fatehi.utility.Color;
 
 /**
  * Represents an HTML link.

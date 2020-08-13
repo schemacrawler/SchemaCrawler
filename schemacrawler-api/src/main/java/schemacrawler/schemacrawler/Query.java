@@ -28,8 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
-import static sf.util.TemplatingUtility.extractTemplateVariables;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.TemplatingUtility.extractTemplateVariables;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.Serializable;
 import java.util.Set;

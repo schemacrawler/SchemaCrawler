@@ -39,7 +39,7 @@ import static schemacrawler.schemacrawler.InfoLevel.detailed;
 import static schemacrawler.schemacrawler.InfoLevel.maximum;
 import static schemacrawler.schemacrawler.InfoLevel.minimum;
 import static schemacrawler.schemacrawler.InfoLevel.standard;
-import static sf.util.Utility.toSnakeCase;
+import static us.fatehi.utility.Utility.toSnakeCase;
 
 public enum SchemaInfoRetrieval
 {

@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -43,7 +43,7 @@ import picocli.CommandLine.ParameterException;
 import picocli.CommandLine.Spec;
 import schemacrawler.tools.commandline.state.MultiUseUserCredentials;
 import schemacrawler.tools.databaseconnector.UserCredentials;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 
 /**
  * Options for the command-line.

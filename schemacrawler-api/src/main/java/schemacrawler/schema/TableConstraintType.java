@@ -31,8 +31,8 @@ package schemacrawler.schema;
 
 import java.util.logging.Level;
 
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import schemacrawler.SchemaCrawlerLogger;
+import us.fatehi.utility.string.StringFormat;
 
 /**
  * Table constraint type.

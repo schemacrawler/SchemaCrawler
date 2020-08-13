@@ -29,7 +29,7 @@ package schemacrawler.schemacrawler;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -48,7 +48,7 @@ import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DependantObject;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 
 /**
  * Allows working with database object identifiers. All SQL 2003 keywords are

@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint;
 
 
-import static sf.util.IOUtility.readResourceFully;
+import static us.fatehi.utility.IOUtility.readResourceFully;
 
 import java.io.Serializable;
 import java.sql.Connection;
@@ -39,8 +39,8 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import schemacrawler.SchemaCrawlerLogger;
+import us.fatehi.utility.string.StringFormat;
 
 /**
  * Evaluates a catalog and creates lints. This base class has core functionality

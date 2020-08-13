@@ -33,7 +33,7 @@ import java.util.logging.Level;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
-import sf.util.LoggingConfig;
+import us.fatehi.utility.LoggingConfig;
 
 @Command(name = "log", header = "** Turn logging on or off", description = {
   ""

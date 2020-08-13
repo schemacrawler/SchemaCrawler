@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
+import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.CREATE;
@@ -43,7 +44,6 @@ import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 
@@ -76,7 +76,7 @@ import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
-import sf.util.IOUtility;
+import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class HsqldbCommandlineTest
@@ -170,7 +170,7 @@ public class HsqldbCommandlineTest
     assertThat(table, notNullValue());
 
     assertThat(table.getTriggers(), hasSize(1));
-    assertThat(table.lookupTrigger("TRG_AUTHORS"), is(not(emptyOptional())));
+    assertThat(table.lookupTrigger("TRG_AUTHORS"), not(isEmpty()));
 
     final List<DatabaseUser> databaseUsers =
       (List<DatabaseUser>) catalog.getDatabaseUsers();

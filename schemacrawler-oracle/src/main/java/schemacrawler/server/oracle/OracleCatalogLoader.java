@@ -2,7 +2,7 @@ package schemacrawler.server.oracle;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.DatabaseUtility.executeScriptFromResource;
+import static us.fatehi.utility.DatabaseUtility.executeScriptFromResource;
 
 import java.sql.Connection;
 

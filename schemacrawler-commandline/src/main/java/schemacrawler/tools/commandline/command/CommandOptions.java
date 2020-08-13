@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import picocli.CommandLine.Model;
 import picocli.CommandLine.Option;

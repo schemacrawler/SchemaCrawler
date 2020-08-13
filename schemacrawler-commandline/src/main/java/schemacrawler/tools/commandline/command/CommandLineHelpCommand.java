@@ -38,7 +38,7 @@ import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_PARAMETER_L
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommand;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.configureCommandLine;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.Arrays;
 import java.util.Optional;

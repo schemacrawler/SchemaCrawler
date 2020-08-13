@@ -65,9 +65,9 @@ import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StopWatch;
-import sf.util.StringFormat;
+import schemacrawler.SchemaCrawlerLogger;
+import us.fatehi.utility.StopWatch;
+import us.fatehi.utility.string.StringFormat;
 
 /**
  * SchemaCrawler uses database meta-data to get the details about the schema.

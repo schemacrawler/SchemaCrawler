@@ -31,7 +31,7 @@ package schemacrawler.analysis.counts;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.analysis.counts.TableRowCountsUtility.addRowCountToTable;
 import static schemacrawler.schemacrawler.QueryUtility.executeForLong;
-import static sf.util.DatabaseUtility.checkConnection;
+import static us.fatehi.utility.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -44,10 +44,8 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.Retriever;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import schemacrawler.SchemaCrawlerLogger;
+import us.fatehi.utility.string.StringFormat;
 
 @Retriever
 public final class TableRowCountsRetriever
@@ -61,7 +59,7 @@ public final class TableRowCountsRetriever
 
   public TableRowCountsRetriever(final Connection connection,
                                  final Catalog catalog)
-    throws SchemaCrawlerSQLException
+    throws SQLException
   {
     this.connection = checkConnection(connection);
     this.catalog = requireNonNull(catalog, "No catalog provided");
@@ -103,7 +101,7 @@ public final class TableRowCountsRetriever
           executeForLong(query, connection, table, identifiers);
         addRowCountToTable(table, count);
       }
-      catch (final SchemaCrawlerException e)
+      catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING,
                    new StringFormat("Could not get count for table <%s>",

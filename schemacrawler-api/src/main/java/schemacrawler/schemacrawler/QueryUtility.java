@@ -29,11 +29,11 @@ package schemacrawler.schemacrawler;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.DatabaseUtility.executeSql;
-import static sf.util.DatabaseUtility.executeSqlForLong;
-import static sf.util.DatabaseUtility.executeSqlForScalar;
-import static sf.util.TemplatingUtility.expandTemplate;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.DatabaseUtility.executeSql;
+import static us.fatehi.utility.DatabaseUtility.executeSqlForLong;
+import static us.fatehi.utility.DatabaseUtility.executeSqlForScalar;
+import static us.fatehi.utility.TemplatingUtility.expandTemplate;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -52,9 +52,9 @@ import schemacrawler.schema.JavaSqlTypeGroup;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.utility.NamedObjectSort;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
-import sf.util.UtilityMarker;
+import schemacrawler.SchemaCrawlerLogger;
+import us.fatehi.utility.string.StringFormat;
+import us.fatehi.utility.UtilityMarker;
 
 @UtilityMarker
 public final class QueryUtility
@@ -96,7 +96,7 @@ public final class QueryUtility
                                     final Connection connection,
                                     final Table table,
                                     final Identifiers identifiers)
-    throws SchemaCrawlerException
+    throws SQLException
   {
     requireNonNull(query, "No query provided");
     final String sql = getQuery(query, table, true, identifiers);
@@ -107,7 +107,7 @@ public final class QueryUtility
 
   public static Object executeForScalar(final Query query,
                                         final Connection connection)
-    throws SchemaCrawlerException
+    throws SQLException
   {
     requireNonNull(query, "No query provided");
     final String sql = getQuery(query);
@@ -120,7 +120,7 @@ public final class QueryUtility
                                         final Connection connection,
                                         final Table table,
                                         final Identifiers identifiers)
-    throws SchemaCrawlerException
+    throws SQLException
   {
     requireNonNull(query, "No query provided");
     final String sql = getQuery(query, table, true, identifiers);

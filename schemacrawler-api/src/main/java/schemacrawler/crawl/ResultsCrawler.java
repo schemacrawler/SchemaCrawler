@@ -38,8 +38,8 @@ import java.util.logging.Level;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StopWatch;
+import schemacrawler.SchemaCrawlerLogger;
+import us.fatehi.utility.StopWatch;
 
 /**
  * SchemaCrawler uses database meta-data to get the details about the schema.

@@ -42,10 +42,10 @@ import java.util.logging.Level;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.executable.CommandChain;
-import schemacrawler.tools.iosource.InputResource;
-import sf.util.ObjectToString;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import us.fatehi.utility.ioresource.InputResource;
+import us.fatehi.utility.ObjectToString;
+import schemacrawler.SchemaCrawlerLogger;
+import us.fatehi.utility.string.StringFormat;
 
 /**
  * Main executor for the script engine integration.

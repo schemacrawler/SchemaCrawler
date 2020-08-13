@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,8 +40,8 @@ import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SearchableType;
 import schemacrawler.schemacrawler.Identifiers;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import schemacrawler.SchemaCrawlerLogger;
+import us.fatehi.utility.string.StringFormat;
 
 /**
  * Represents a column type. Provides the java.sql.Types type, the

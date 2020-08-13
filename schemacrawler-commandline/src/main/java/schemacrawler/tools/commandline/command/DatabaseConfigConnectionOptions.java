@@ -30,7 +30,7 @@ package schemacrawler.tools.commandline.command;
 
 
 import static java.util.stream.Collectors.joining;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +41,7 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
-import sf.util.TemplatingUtility;
+import us.fatehi.utility.TemplatingUtility;
 
 public class DatabaseConfigConnectionOptions
   implements DatabaseConnectable

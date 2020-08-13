@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import schemacrawler.schema.Property;
 
@@ -69,11 +69,7 @@ public final class CommandDescription
     }
     else
     {
-      return getName()
-        .toLowerCase()
-        .compareTo(otherProperty
-                     .getName()
-                     .toLowerCase());
+      return getName().compareToIgnoreCase(otherProperty.getName());
     }
   }
 

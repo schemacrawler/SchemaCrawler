@@ -31,7 +31,7 @@ package schemacrawler.analysis.counts;
 import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Table;
-import sf.util.UtilityMarker;
+import us.fatehi.utility.UtilityMarker;
 
 @UtilityMarker
 public final class TableRowCountsUtility

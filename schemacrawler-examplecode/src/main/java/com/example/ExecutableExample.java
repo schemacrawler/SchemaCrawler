@@ -1,7 +1,7 @@
 package com.example;
 
 
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

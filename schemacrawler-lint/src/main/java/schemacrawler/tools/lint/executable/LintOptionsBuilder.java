@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint.executable;
 
 
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.lint.LintDispatch;

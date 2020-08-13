@@ -55,7 +55,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.options.OutputFormat;
-import sf.util.IOUtility;
+import us.fatehi.utility.IOUtility;
 
 public final class CommandlineTestUtility
 {

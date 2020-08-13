@@ -30,8 +30,8 @@ package schemacrawler.tools.databaseconnector;
 
 
 import static java.util.Comparator.naturalOrder;
-import static sf.util.DatabaseUtility.checkConnection;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.DatabaseUtility.checkConnection;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.Driver;
@@ -48,8 +48,8 @@ import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import schemacrawler.SchemaCrawlerLogger;
+import us.fatehi.utility.string.StringFormat;
 
 /**
  * Registry for mapping database connectors from DatabaseConnector-line switch.

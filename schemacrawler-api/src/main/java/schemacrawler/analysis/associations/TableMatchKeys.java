@@ -29,7 +29,7 @@ package schemacrawler.analysis.associations;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,12 +40,12 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.Table;
-import sf.util.Multimap;
-import sf.util.ObjectToString;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
-import sf.util.Utility;
+import us.fatehi.utility.Multimap;
+import us.fatehi.utility.Utility;
+import us.fatehi.utility.string.ObjectToStringFormat;
+import us.fatehi.utility.string.StringFormat;
 
 final class TableMatchKeys
 {
@@ -85,13 +85,11 @@ final class TableMatchKeys
 
     final Collection<String> prefixes = findTableNamePrefixes(tables);
     mapTableNameMatches(tables, prefixes);
-    if (LOGGER.isLoggable(Level.FINE))
-    {
-      LOGGER.log(Level.FINE, new StringFormat("Table prefixes=%s", prefixes));
-      LOGGER.log(Level.FINE,
-                 new StringFormat("Table matches map: %s",
-                                  ObjectToString.toString(tableKeys)));
-    }
+
+    LOGGER.log(Level.FINE, new StringFormat("Table prefixes=%s", prefixes));
+    LOGGER.log(Level.FINE,
+               new StringFormat("Table matches map: %s",
+                                new ObjectToStringFormat(tableKeys)));
 
   }
 

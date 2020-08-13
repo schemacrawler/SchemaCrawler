@@ -29,14 +29,14 @@ package schemacrawler.schemacrawler;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.EnumMap;
 import java.util.Map;
 
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.utility.TypeMap;
-import sf.util.ObjectToString;
+import us.fatehi.utility.ObjectToString;
 
 /**
  * Provides for database specific overrides for SchemaCrawler functionality.

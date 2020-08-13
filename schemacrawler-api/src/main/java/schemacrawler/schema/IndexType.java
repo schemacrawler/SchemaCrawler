@@ -29,9 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.schema;
 
 
-import java.sql.DatabaseMetaData;
-
-import sf.util.IdentifiedEnum;
+import static java.sql.DatabaseMetaData.tableIndexClustered;
+import static java.sql.DatabaseMetaData.tableIndexHashed;
+import static java.sql.DatabaseMetaData.tableIndexOther;
+import static java.sql.DatabaseMetaData.tableIndexStatistic;
 
 /**
  * An enumeration wrapper around index types.
@@ -40,26 +41,11 @@ public enum IndexType
   implements IdentifiedEnum
 {
 
-  /**
-   * Unknown
-   */
   unknown(-1),
-  /**
-   * Statistic.
-   */
-  statistic(DatabaseMetaData.tableIndexStatistic),
-  /**
-   * Clustered.
-   */
-  clustered(DatabaseMetaData.tableIndexClustered),
-  /**
-   * Hashed.
-   */
-  hashed(DatabaseMetaData.tableIndexHashed),
-  /**
-   * Other.
-   */
-  other(DatabaseMetaData.tableIndexOther);
+  statistic(tableIndexStatistic),
+  clustered(tableIndexClustered),
+  hashed(tableIndexHashed),
+  other(tableIndexOther);
 
   private final int id;
 
@@ -69,12 +55,10 @@ public enum IndexType
   }
 
   /**
-   * Gets the id.
-   *
-   * @return id
+   * {@inheritDoc}
    */
   @Override
-  public int getId()
+  public int id()
   {
     return id;
   }

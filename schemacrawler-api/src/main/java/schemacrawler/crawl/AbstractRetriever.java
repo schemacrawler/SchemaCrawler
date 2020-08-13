@@ -31,7 +31,7 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSchemaInclusion;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -49,7 +49,7 @@ import schemacrawler.schemacrawler.Retriever;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.utility.TypeMap;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 
 /**
  * Base class for retriever that uses database metadata to get the details about

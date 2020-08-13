@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +40,7 @@ import schemacrawler.schema.RoutineBodyType;
 import schemacrawler.schema.RoutineParameter;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
-import schemacrawler.utility.CompareUtility;
+import us.fatehi.utility.CompareUtility;
 
 /**
  * Represents a database routine. Created from metadata returned by a JDBC

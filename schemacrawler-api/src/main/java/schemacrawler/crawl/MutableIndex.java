@@ -41,7 +41,7 @@ import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexType;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Table;
-import schemacrawler.utility.CompareUtility;
+import us.fatehi.utility.CompareUtility;
 
 /**
  * Represents an index on a database table.

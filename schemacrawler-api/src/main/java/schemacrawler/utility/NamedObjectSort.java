@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.utility;
 
 
-import static sf.util.Utility.convertForComparison;
+import static us.fatehi.utility.Utility.convertForComparison;
 
 import java.util.Comparator;
 

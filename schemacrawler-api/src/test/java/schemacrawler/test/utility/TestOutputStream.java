@@ -39,7 +39,7 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 
-import sf.util.IOUtility;
+import us.fatehi.utility.IOUtility;
 
 public final class TestOutputStream
   extends OutputStream

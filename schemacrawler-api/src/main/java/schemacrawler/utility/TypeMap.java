@@ -29,7 +29,7 @@ package schemacrawler.utility;
 
 
 import static java.util.stream.Collectors.toMap;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.JDBCType;
@@ -41,8 +41,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import schemacrawler.SchemaCrawlerLogger;
+import us.fatehi.utility.string.StringFormat;
 
 public final class TypeMap
   implements Map<String, Class<?>>

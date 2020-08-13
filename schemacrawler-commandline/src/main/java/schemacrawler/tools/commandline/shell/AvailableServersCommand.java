@@ -32,7 +32,7 @@ package schemacrawler.tools.commandline.shell;
 import static picocli.CommandLine.Help.Column.Overflow.SPAN;
 import static picocli.CommandLine.Help.Column.Overflow.WRAP;
 import static picocli.CommandLine.Help.TextTable.forColumns;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;

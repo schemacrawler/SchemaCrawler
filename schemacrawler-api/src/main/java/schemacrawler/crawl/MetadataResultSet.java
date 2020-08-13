@@ -37,12 +37,12 @@ import static java.sql.Types.LONGVARCHAR;
 import static java.sql.Types.NCLOB;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.QueryUtility.executeAgainstSchema;
-import static sf.util.DatabaseUtility.logSQLWarnings;
-import static sf.util.IOUtility.readFully;
-import static sf.util.Utility.enumValue;
-import static sf.util.Utility.enumValueFromId;
-import static sf.util.Utility.isBlank;
-import static sf.util.Utility.isIntegral;
+import static us.fatehi.utility.DatabaseUtility.logSQLWarnings;
+import static us.fatehi.utility.IOUtility.readFully;
+import static schemacrawler.utility.EnumUtility.enumValue;
+import static schemacrawler.utility.EnumUtility.enumValueFromId;
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.isIntegral;
 
 import java.io.Reader;
 import java.math.BigInteger;
@@ -64,9 +64,9 @@ import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.utility.BinaryData;
-import sf.util.IdentifiedEnum;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import schemacrawler.schema.IdentifiedEnum;
+import schemacrawler.SchemaCrawlerLogger;
+import us.fatehi.utility.string.StringFormat;
 
 /**
  * A wrapper around a JDBC resultset obtained from a database metadata call.
@@ -310,7 +310,8 @@ public final class MetadataResultSet
   public <E extends Enum<E> & IdentifiedEnum> E getEnumFromId(final String columnName,
                                                               final E defaultValue)
   {
-    final int value = getInt(columnName, 0);
+    requireNonNull(defaultValue, "No default value provided");
+    final int value = getInt(columnName, defaultValue.id());
     return enumValueFromId(value, defaultValue);
   }
 
@@ -326,7 +327,8 @@ public final class MetadataResultSet
   public <E extends Enum<E> & IdentifiedEnum> E getEnumFromShortId(final String columnName,
                                                                    final E defaultValue)
   {
-    final int value = getShort(columnName, (short) 0);
+    requireNonNull(defaultValue, "No default value provided");
+    final int value = getShort(columnName, (short) defaultValue.id());
     return enumValueFromId(value, defaultValue);
   }
 

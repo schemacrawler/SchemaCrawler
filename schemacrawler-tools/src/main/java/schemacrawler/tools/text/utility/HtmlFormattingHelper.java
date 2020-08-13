@@ -30,13 +30,13 @@ package schemacrawler.tools.text.utility;
 
 
 import static schemacrawler.tools.text.utility.html.Entities.escapeForXMLElement;
-import static sf.util.IOUtility.readResourceFully;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.IOUtility.readResourceFully;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.PrintWriter;
 
 import schemacrawler.tools.options.TextOutputFormat;
-import sf.util.Color;
+import us.fatehi.utility.Color;
 
 /**
  * Methods to format entire rows of output as HTML.

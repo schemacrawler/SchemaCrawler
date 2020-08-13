@@ -48,8 +48,8 @@ import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseTabularFormatter;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
 import schemacrawler.utility.NamedObjectSort;
-import sf.util.Color;
-import sf.util.Multimap;
+import us.fatehi.utility.Color;
+import us.fatehi.utility.Multimap;
 
 final class LintReportTextFormatter
   extends BaseTabularFormatter<LintOptions>

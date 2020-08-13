@@ -30,8 +30,8 @@ package schemacrawler.schema;
 
 import static java.util.Comparator.naturalOrder;
 import static java.util.Objects.requireNonNull;
-import static sf.util.DatabaseUtility.readResultsVector;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.DatabaseUtility.readResultsVector;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -45,7 +45,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 
 /**
  * Represents a collection of tables types for a database system, as returned by

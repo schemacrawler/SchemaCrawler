@@ -31,7 +31,7 @@ package schemacrawler.tools.executable.commandline;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.executable.commandline.PluginCommandType.command;
 import static schemacrawler.tools.executable.commandline.PluginCommandType.server;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.ArrayList;
 import java.util.Collection;

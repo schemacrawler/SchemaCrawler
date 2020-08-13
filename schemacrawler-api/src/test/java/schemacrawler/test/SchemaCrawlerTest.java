@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
+import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.empty;
@@ -47,9 +48,8 @@ import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.util.Arrays;
@@ -252,10 +252,10 @@ public class SchemaCrawlerTest
       .lookupTable(schema, "AUTHORS")
       .get();
     assertThat(table, notNullValue());
-    assertThat(table.lookupColumn(null), is(emptyOptional()));
-    assertThat(table.lookupColumn(""), is(emptyOptional()));
-    assertThat(table.lookupColumn("NO_COLUMN"), is(emptyOptional()));
-    assertThat(table.lookupColumn("ID"), is(not(emptyOptional())));
+    assertThat(table.lookupColumn(null), isEmpty());
+    assertThat(table.lookupColumn(""), isEmpty());
+    assertThat(table.lookupColumn("NO_COLUMN"), isEmpty());
+    assertThat(table.lookupColumn("ID"), not(isEmpty()));
   }
 
   @Test

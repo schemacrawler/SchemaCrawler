@@ -30,7 +30,7 @@ package schemacrawler.tools.linter;
 
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.QueryUtility.executeForScalar;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -40,10 +40,9 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.Query;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import schemacrawler.SchemaCrawlerLogger;
+import us.fatehi.utility.string.StringFormat;
 
 public class LinterTableSql
   extends BaseLinter
@@ -111,10 +110,12 @@ public class LinterTableSql
         addTableLint(table, getSummary() + " " + queryResult);
       }
     }
-    catch (final SQLException | SchemaCrawlerException e)
+    catch (final SQLException e)
     {
       LOGGER.log(Level.WARNING,
-                 new StringFormat("Could not get count for table, ", table),
+                 new StringFormat(
+                   "Could not execute SQL for table lints, for table",
+                   table),
                  e);
     }
   }

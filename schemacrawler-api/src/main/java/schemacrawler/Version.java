@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler;
 
 
-import static sf.util.IOUtility.readResourceFully;
+import static us.fatehi.utility.IOUtility.readResourceFully;
 
 import java.io.BufferedReader;
 import java.io.IOException;

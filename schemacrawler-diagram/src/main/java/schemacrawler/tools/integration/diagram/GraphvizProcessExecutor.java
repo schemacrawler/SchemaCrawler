@@ -41,10 +41,10 @@ import java.util.function.Supplier;
 import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.FileContents;
-import sf.util.ProcessExecutor;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import us.fatehi.utility.string.FileContents;
+import us.fatehi.utility.ProcessExecutor;
+import schemacrawler.SchemaCrawlerLogger;
+import us.fatehi.utility.string.StringFormat;
 
 final class GraphvizProcessExecutor
   extends AbstractGraphProcessExecutor

@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.offline.jdbc;
 
 
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -41,7 +41,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 
 public class OfflineDriver
   implements Driver

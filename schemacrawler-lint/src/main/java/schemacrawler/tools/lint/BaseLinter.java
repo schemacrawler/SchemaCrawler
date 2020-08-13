@@ -46,8 +46,8 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import schemacrawler.SchemaCrawlerLogger;
+import us.fatehi.utility.string.StringFormat;
 
 /**
  * Evaluates a catalog and creates lints. This base class has core for visiting

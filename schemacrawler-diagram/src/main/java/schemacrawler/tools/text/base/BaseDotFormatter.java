@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.base;
 
 
-import static sf.util.IOUtility.readResourceFully;
+import static us.fatehi.utility.IOUtility.readResourceFully;
 
 import java.util.Map;
 import java.util.Map.Entry;
@@ -44,7 +44,7 @@ import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.utility.html.Alignment;
 import schemacrawler.tools.text.utility.html.TableCell;
 import schemacrawler.tools.text.utility.html.TableRow;
-import sf.util.Color;
+import us.fatehi.utility.Color;
 
 /**
  * Text formatting of schema.

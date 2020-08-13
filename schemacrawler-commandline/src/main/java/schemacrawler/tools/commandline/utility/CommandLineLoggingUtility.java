@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.utility;
 
 
-import static sf.util.Utility.join;
+import static us.fatehi.utility.Utility.join;
 
 import java.io.File;
 import java.util.Arrays;
@@ -42,10 +42,9 @@ import java.util.logging.Level;
 import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
 import schemacrawler.Version;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
-import sf.util.Utility;
-import sf.util.UtilityMarker;
+import schemacrawler.SchemaCrawlerLogger;
+import us.fatehi.utility.string.StringFormat;
+import us.fatehi.utility.UtilityMarker;
 
 @UtilityMarker
 public final class CommandLineLoggingUtility

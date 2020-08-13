@@ -44,7 +44,7 @@ import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.TableConstraintType;
-import schemacrawler.utility.CompareUtility;
+import us.fatehi.utility.CompareUtility;
 
 /**
  * Represents a foreign-key mapping to a primary key in another table.

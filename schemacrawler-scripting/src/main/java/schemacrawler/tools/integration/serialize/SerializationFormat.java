@@ -28,15 +28,15 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.serialize;
 
 
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.List;
 import java.util.logging.Level;
 
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputFormatState;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import schemacrawler.SchemaCrawlerLogger;
+import us.fatehi.utility.string.StringFormat;
 
 public enum SerializationFormat
   implements OutputFormat

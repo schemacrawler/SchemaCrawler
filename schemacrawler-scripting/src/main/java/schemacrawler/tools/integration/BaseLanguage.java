@@ -30,12 +30,12 @@ package schemacrawler.tools.integration;
 
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.tools.iosource.InputResourceUtility.createInputResource;
-import static sf.util.IOUtility.getFileExtension;
-import static sf.util.Utility.isBlank;
+import static us.fatehi.utility.ioresource.InputResourceUtility.createInputResource;
+import static us.fatehi.utility.IOUtility.getFileExtension;
+import static us.fatehi.utility.Utility.isBlank;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.iosource.InputResource;
+import us.fatehi.utility.ioresource.InputResource;
 
 public abstract class BaseLanguage
 {

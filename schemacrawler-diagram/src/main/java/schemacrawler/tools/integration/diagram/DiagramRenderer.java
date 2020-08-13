@@ -33,8 +33,8 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.integration.diagram.DiagramOutputFormat.scdot;
 import static schemacrawler.tools.integration.diagram.GraphvizUtility.isGraphvizAvailable;
 import static schemacrawler.tools.integration.diagram.GraphvizUtility.isGraphvizJavaAvailable;
-import static sf.util.IOUtility.createTempFilePath;
-import static sf.util.IOUtility.readResourceFully;
+import static us.fatehi.utility.IOUtility.createTempFilePath;
+import static us.fatehi.utility.IOUtility.readResourceFully;
 
 import java.nio.file.Path;
 import java.util.List;

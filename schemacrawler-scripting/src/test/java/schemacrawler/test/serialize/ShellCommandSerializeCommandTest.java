@@ -60,7 +60,7 @@ import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.commandline.command.ExecuteCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.integration.serialize.SerializationFormat;
-import sf.util.IOUtility;
+import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class ShellCommandSerializeCommandTest

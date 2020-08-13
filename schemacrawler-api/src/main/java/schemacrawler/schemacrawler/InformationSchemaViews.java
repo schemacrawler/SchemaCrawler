@@ -34,7 +34,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.EnumMap;
 import java.util.Map;
 
-import sf.util.ObjectToString;
+import us.fatehi.utility.ObjectToString;
 
 /**
  * The database specific views to get additional database metadata in a standard

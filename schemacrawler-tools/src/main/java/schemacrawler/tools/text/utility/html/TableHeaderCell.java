@@ -29,7 +29,7 @@ package schemacrawler.tools.text.utility.html;
 
 
 import schemacrawler.tools.options.TextOutputFormat;
-import sf.util.Color;
+import us.fatehi.utility.Color;
 
 public final class TableHeaderCell
   extends TableCell

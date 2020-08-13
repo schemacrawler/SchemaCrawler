@@ -29,9 +29,9 @@ package schemacrawler.tools.sqlite;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.DatabaseUtility.checkConnection;
-import static sf.util.IOUtility.createTempFilePath;
-import static sf.util.IOUtility.isFileReadable;
+import static us.fatehi.utility.DatabaseUtility.checkConnection;
+import static us.fatehi.utility.IOUtility.createTempFilePath;
+import static us.fatehi.utility.IOUtility.isFileReadable;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -45,7 +45,7 @@ import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.SchemaCrawlerLogger;
 
 public class EmbeddedSQLiteWrapper
 {
