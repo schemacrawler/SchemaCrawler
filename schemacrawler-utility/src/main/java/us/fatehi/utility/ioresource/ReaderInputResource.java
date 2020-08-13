@@ -29,6 +29,7 @@ package us.fatehi.utility.ioresource;
 
 
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.ioresource.InputResourceUtility.wrapReader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -56,7 +57,7 @@ public class ReaderInputResource
     throws IOException
   {
     LOGGER.log(Level.INFO, "Input to provided reader");
-    return new InputReader(getDescription(), new BufferedReader(reader), false);
+    return wrapReader(getDescription(), new BufferedReader(reader), false);
   }
 
   @Override

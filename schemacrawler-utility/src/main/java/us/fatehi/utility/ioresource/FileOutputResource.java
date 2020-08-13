@@ -34,6 +34,7 @@ import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.ioresource.InputResourceUtility.wrapWriter;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -85,7 +86,7 @@ public final class FileOutputResource
     LOGGER.log(Level.INFO,
                new StringFormat("Opened output writer to file <%s>",
                                 outputFile));
-    return new OutputWriter(getDescription(), writer, true);
+    return wrapWriter(getDescription(), writer, true);
   }
 
   @Override

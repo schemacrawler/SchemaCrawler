@@ -32,6 +32,7 @@ import static java.nio.file.Files.exists;
 import static java.nio.file.Files.newBufferedReader;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.IOUtility.isFileReadable;
+import static us.fatehi.utility.ioresource.InputResourceUtility.wrapReader;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -92,7 +93,7 @@ public class FileInputResource
     LOGGER.log(Level.INFO,
                new StringFormat("Opened input reader to file <%s>", inputFile));
 
-    return new InputReader(getDescription(), reader, true);
+    return wrapReader(getDescription(), reader, true);
   }
 
   @Override

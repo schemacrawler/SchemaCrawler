@@ -28,11 +28,70 @@ http://www.gnu.org/licenses/
 package us.fatehi.utility.ioresource;
 
 
+import static java.util.Objects.requireNonNull;
+
+import java.io.FilterReader;
+import java.io.FilterWriter;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class InputResourceUtility
 {
+
+  public static Writer wrapWriter(final String description,
+                                  final Writer writer,
+                                  final boolean shouldClose)
+  {
+    requireNonNull(writer, "No writer provided");
+    return new FilterWriter(writer)
+    {
+      @Override
+      public void close()
+        throws IOException
+      {
+        if (shouldClose)
+        {
+          super.close();
+        } else {
+          super.flush();
+        }
+      }
+
+      @Override
+      public String toString()
+      {
+        return description;
+      }
+    };
+  }
+
+  public static Reader wrapReader(final String description,
+                                  final Reader reader,
+                                  final boolean shouldClose)
+  {
+    requireNonNull(reader, "No reader provided");
+    return new FilterReader(reader)
+    {
+      @Override
+      public void close()
+        throws IOException
+      {
+        if (shouldClose)
+        {
+          super.close();
+        }
+      }
+
+      @Override
+      public String toString()
+      {
+        return description;
+      }
+    };
+  }
 
   /**
    * Creates an input resource from the classpath, or from the file system. If

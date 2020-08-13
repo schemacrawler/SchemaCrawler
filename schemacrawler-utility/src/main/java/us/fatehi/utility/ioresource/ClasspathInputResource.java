@@ -29,6 +29,7 @@ package us.fatehi.utility.ioresource;
 
 
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.ioresource.InputResourceUtility.wrapReader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -71,7 +72,7 @@ public class ClasspathInputResource
   @Override
   public String getDescription()
   {
-    return InputReader.class
+    return ClasspathInputResource.class
       .getResource(classpathResource)
       .toExternalForm();
   }
@@ -89,7 +90,7 @@ public class ClasspathInputResource
                "Opened input reader to classpath resource, "
                + classpathResource);
 
-    return new InputReader(getDescription(), reader, true);
+    return wrapReader(getDescription(), reader, true);
   }
 
   @Override

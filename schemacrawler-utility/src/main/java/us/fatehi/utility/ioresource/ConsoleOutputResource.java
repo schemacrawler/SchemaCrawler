@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package us.fatehi.utility.ioresource;
 
 
+import static us.fatehi.utility.ioresource.InputResourceUtility.wrapWriter;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -51,7 +53,7 @@ public final class ConsoleOutputResource
     final Writer writer =
       new BufferedWriter(new OutputStreamWriter(System.out, charset));
     LOGGER.log(Level.INFO, "Opened output writer to console");
-    return new OutputWriter(getDescription(), writer, false);
+    return wrapWriter(getDescription(), writer, false);
   }
 
   @Override
