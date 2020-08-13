@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.base;
 
 
-import static schemacrawler.tools.text.utility.html.TagOutputFormat.html;
+import static us.fatehi.utility.html.TagOutputFormat.html;
 import static us.fatehi.utility.IOUtility.readResourceFully;
 
 import java.util.Map;
@@ -41,10 +41,9 @@ import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.integration.diagram.DiagramOptions;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.text.utility.html.Alignment;
-import schemacrawler.tools.text.utility.html.TableCell;
-import schemacrawler.tools.text.utility.html.TableRow;
-import schemacrawler.tools.text.utility.html.TagOutputFormat;
+import us.fatehi.utility.html.Alignment;
+import us.fatehi.utility.html.TableCell;
+import us.fatehi.utility.html.TableRow;
 import us.fatehi.utility.Color;
 
 /**

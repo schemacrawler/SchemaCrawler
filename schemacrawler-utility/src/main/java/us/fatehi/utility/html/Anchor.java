@@ -25,37 +25,48 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.text.utility.html;
+package us.fatehi.utility.html;
 
+
+import static us.fatehi.utility.Utility.isBlank;
 
 import us.fatehi.utility.Color;
 
-public final class TableHeaderCell
-  extends TableCell
+/**
+ * Represents an HTML link.
+ *
+ * @author Sualeh Fatehi
+ */
+public class Anchor
+  extends BaseTag
 {
 
-  public TableHeaderCell(final String text,
-                         final int characterWidth,
-                         final Alignment align,
-                         final boolean emphasizeText,
-                         final String styleClass,
-                         final Color bgColor,
-                         final int colSpan)
+  public Anchor(final String text,
+                final boolean escapeText,
+                final int characterWidth,
+                final Alignment align,
+                final boolean emphasizeText,
+                final String styleClass,
+                final Color bgColor,
+                final String link)
   {
     super(text,
-          true,
+          escapeText,
           characterWidth,
           align,
           emphasizeText,
           styleClass,
-          bgColor,
-          colSpan);
+          bgColor);
+    if (!isBlank(link))
+    {
+      addAttribute("href", link);
+    }
   }
 
   @Override
   public String getTag()
   {
-    return "th";
+    return "a";
   }
 
 }

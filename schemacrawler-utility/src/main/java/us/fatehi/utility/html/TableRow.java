@@ -26,12 +26,12 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.text.utility.html;
+package us.fatehi.utility.html;
 
 
-import static schemacrawler.tools.text.utility.html.TagOutputFormat.html;
-import static schemacrawler.tools.text.utility.html.TagOutputFormat.text;
-import static schemacrawler.tools.text.utility.html.TagOutputFormat.tsv;
+import static us.fatehi.utility.html.TagOutputFormat.html;
+import static us.fatehi.utility.html.TagOutputFormat.text;
+import static us.fatehi.utility.html.TagOutputFormat.tsv;
 
 import java.util.ArrayList;
 import java.util.List;

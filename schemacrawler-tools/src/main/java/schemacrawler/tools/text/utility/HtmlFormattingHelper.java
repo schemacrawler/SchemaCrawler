@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.utility;
 
 
-import static schemacrawler.tools.text.utility.html.Entities.escapeForXMLElement;
+import static us.fatehi.utility.html.Entities.escapeForXMLElement;
 import static us.fatehi.utility.IOUtility.readResourceFully;
 import static us.fatehi.utility.Utility.isBlank;
 

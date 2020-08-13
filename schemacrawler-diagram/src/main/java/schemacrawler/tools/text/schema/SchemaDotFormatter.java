@@ -31,7 +31,7 @@ package schemacrawler.tools.text.schema;
 
 import static schemacrawler.analysis.counts.TableRowCountsUtility.getRowCountMessage;
 import static schemacrawler.analysis.counts.TableRowCountsUtility.hasRowCount;
-import static schemacrawler.tools.text.utility.html.TagOutputFormat.html;
+import static us.fatehi.utility.html.TagOutputFormat.html;
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 
 import java.util.ArrayList;
@@ -54,9 +54,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.integration.diagram.DiagramOptions;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseDotFormatter;
-import schemacrawler.tools.text.utility.html.Alignment;
-import schemacrawler.tools.text.utility.html.TableRow;
-import schemacrawler.tools.text.utility.html.TagOutputFormat;
+import us.fatehi.utility.html.Alignment;
+import us.fatehi.utility.html.TableRow;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.utility.MetaDataUtility.ForeignKeyCardinality;
 import schemacrawler.utility.NamedObjectSort;

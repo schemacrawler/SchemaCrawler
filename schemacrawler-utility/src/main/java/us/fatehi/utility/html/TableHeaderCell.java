@@ -25,12 +25,37 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.text.utility.html;
+package us.fatehi.utility.html;
 
 
-public enum Alignment
+import us.fatehi.utility.Color;
+
+public final class TableHeaderCell
+  extends TableCell
 {
-  inherit,
-  left,
-  right
+
+  public TableHeaderCell(final String text,
+                         final int characterWidth,
+                         final Alignment align,
+                         final boolean emphasizeText,
+                         final String styleClass,
+                         final Color bgColor,
+                         final int colSpan)
+  {
+    super(text,
+          true,
+          characterWidth,
+          align,
+          emphasizeText,
+          styleClass,
+          bgColor,
+          colSpan);
+  }
+
+  @Override
+  public String getTag()
+  {
+    return "th";
+  }
+
 }

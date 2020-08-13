@@ -25,10 +25,9 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.text.utility.html;
+package us.fatehi.utility.html;
 
 
-import static schemacrawler.tools.text.utility.html.Entities.escapeForXMLElement;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.HashMap;
@@ -150,7 +149,7 @@ abstract class BaseTag
     {
       buffer.append("<b><i>");
     }
-    buffer.append(escapeText? escapeForXMLElement(text): text);
+    buffer.append(escapeText? Entities.escapeForXMLElement(text): text);
     if (emphasizeText)
     {
       buffer.append("</i></b>");

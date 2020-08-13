@@ -25,18 +25,14 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+package us.fatehi.utility.html;
 
-package schemacrawler.tools.text.utility.html;
 
-
-/**
- * Enumeration for text format type.
- */
-public enum TagOutputFormat
+public interface Tag
 {
 
-  text, // Plain text format
-  html, // HyperText Markup Language (HTML) format,
-  tsv, // Tab-separated values (TSV) format
+  String getTag();
+
+  String render(TagOutputFormat tagOutputFormat);
 
 }

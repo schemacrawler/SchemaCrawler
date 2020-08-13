@@ -34,12 +34,12 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.io.PrintWriter;
 
 import schemacrawler.tools.options.TextOutputFormat;
-import schemacrawler.tools.text.utility.html.Alignment;
-import schemacrawler.tools.text.utility.html.Anchor;
-import schemacrawler.tools.text.utility.html.TableCell;
-import schemacrawler.tools.text.utility.html.TableHeaderCell;
-import schemacrawler.tools.text.utility.html.TableRow;
-import schemacrawler.tools.text.utility.html.TagOutputFormat;
+import us.fatehi.utility.html.Alignment;
+import us.fatehi.utility.html.Anchor;
+import us.fatehi.utility.html.TableCell;
+import us.fatehi.utility.html.TableHeaderCell;
+import us.fatehi.utility.html.TableRow;
+import us.fatehi.utility.html.TagOutputFormat;
 import schemacrawler.utility.BinaryData;
 import us.fatehi.utility.Color;
 

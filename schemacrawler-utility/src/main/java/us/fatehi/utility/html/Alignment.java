@@ -25,48 +25,12 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.text.utility.html;
+package us.fatehi.utility.html;
 
 
-import static us.fatehi.utility.Utility.isBlank;
-
-import us.fatehi.utility.Color;
-
-/**
- * Represents an HTML link.
- *
- * @author Sualeh Fatehi
- */
-public class Anchor
-  extends BaseTag
+public enum Alignment
 {
-
-  public Anchor(final String text,
-                final boolean escapeText,
-                final int characterWidth,
-                final Alignment align,
-                final boolean emphasizeText,
-                final String styleClass,
-                final Color bgColor,
-                final String link)
-  {
-    super(text,
-          escapeText,
-          characterWidth,
-          align,
-          emphasizeText,
-          styleClass,
-          bgColor);
-    if (!isBlank(link))
-    {
-      addAttribute("href", link);
-    }
-  }
-
-  @Override
-  public String getTag()
-  {
-    return "a";
-  }
-
+  inherit,
+  left,
+  right
 }

@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.text.utility.html;
+package us.fatehi.utility.html;
 
 
 import us.fatehi.utility.Color;
