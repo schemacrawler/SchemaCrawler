@@ -35,56 +35,53 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import us.fatehi.utility.Color;
 import us.fatehi.utility.html.Alignment;
-import us.fatehi.utility.html.Anchor;
+import us.fatehi.utility.html.TableHeaderCell;
 import us.fatehi.utility.html.TagOutputFormat;
 
-public class AnchorTest
+public class TableHeaderCellTest
 {
 
-  @DisplayName("anchor: basic output")
+  @DisplayName("th: basic output")
   @Test
-  public void anchor1()
+  public void th1()
   {
-    final Anchor anchor = new Anchor("display text",
-                                     false,
+    final TableHeaderCell th = new TableHeaderCell("display text",
                                      2,
                                      Alignment.right,
                                      false,
                                      "class",
-                                     Color.fromRGB(255, 0, 100),
-                                     "http://www.schemacrawler.com");
-    anchor.addAttribute("sometag", "customvalue");
+                                     Color.fromRGB(255, 0, 100), 1);
+    th.addAttribute("sometag", "customvalue");
 
-    assertThat(anchor.getTag(), is("a"));
-    assertThat(anchor.toString(), is("a"));
+    assertThat(th.getTag(), is("th"));
+    assertThat(th.toString(), is("th"));
 
-    assertThat(anchor.render(TagOutputFormat.html),
+    assertThat(th.render(TagOutputFormat.html),
                is(
-                 "<a sometag='customvalue' href='http://www.schemacrawler.com' bgcolor='#FF0064' class='class'>display text</a>"));
-    assertThat(anchor.render(TagOutputFormat.text), is("display text"));
-    assertThat(anchor.render(TagOutputFormat.tsv), is("display text"));
+                 "<th sometag='customvalue' bgcolor='#FF0064' class='class'>display text</th>"));
+    assertThat(th.render(TagOutputFormat.text), is("display text"));
+    assertThat(th.render(TagOutputFormat.tsv), is("display text"));
 
   }
 
-  @DisplayName("anchor: escape text, emphasize, and allow free width")
+  @DisplayName("th: escape text, emphasize, and allow free width")
   @Test
-  public void anchor2()
+  public void th2()
   {
-    final Anchor anchor = new Anchor("display & text",
-                                     true,
+    final TableHeaderCell th = new TableHeaderCell("display & text",
                                      -1,
                                      null,
                                      true,
                                      "class",
                                      null,
-                                     "http://www.schemacrawler.com");
-    anchor.addAttribute("sometag", "custom&value");
+                                     2);
+    th.addAttribute("sometag", "custom&value");
 
-    assertThat(anchor.render(TagOutputFormat.html),
+    assertThat(th.render(TagOutputFormat.html),
                is(
-                 "<a sometag='custom&value' href='http://www.schemacrawler.com' class='class'><b><i>display &amp; text</i></b></a>"));
-    assertThat(anchor.render(TagOutputFormat.text), is("display & text"));
-    assertThat(anchor.render(TagOutputFormat.tsv), is("display & text"));
+                 "<th colspan='2' sometag='custom&value' class='class'><b><i>display &amp; text</i></b></th>"));
+    assertThat(th.render(TagOutputFormat.text), is("display & text"));
+    assertThat(th.render(TagOutputFormat.tsv), is("display & text"));
 
   }
 
