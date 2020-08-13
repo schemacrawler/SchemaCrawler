@@ -42,6 +42,7 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
+import static schemacrawler.tools.offline.jdbc.OfflineConnectionUtility.newOfflineConnection;
 import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.io.FileOutputStream;
@@ -194,7 +195,7 @@ public class OfflineSnapshotTest
       SchemaTextOptionsBuilder.builder();
     schemaTextOptionsBuilder.noInfo(false);
 
-    final Connection connection = new OfflineConnection(serializedCatalogFile);
+    final Connection connection = newOfflineConnection(serializedCatalogFile);
 
     final SchemaCrawlerExecutable executable =
       new SchemaCrawlerExecutable("details");
@@ -255,7 +256,7 @@ public class OfflineSnapshotTest
     throws Exception
   {
     final OfflineConnection connection =
-      new OfflineConnection(serializedCatalogFile);
+      newOfflineConnection(serializedCatalogFile);
 
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
       SchemaRetrievalOptionsBuilder.builder();

@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.offline.jdbc;
 
 
+import static schemacrawler.tools.offline.jdbc.OfflineConnectionUtility.newOfflineConnection;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.nio.file.Paths;
@@ -66,7 +67,6 @@ public class OfflineDriver
 
   @Override
   public boolean acceptsURL(final String url)
-    throws SQLException
   {
     return !isBlank(url) && url.startsWith(JDBC_URL_PREFIX);
   }
@@ -78,7 +78,7 @@ public class OfflineDriver
     if (acceptsURL(url))
     {
       final String path = url.substring(JDBC_URL_PREFIX.length());
-      return new OfflineConnection(Paths.get(path));
+      return newOfflineConnection(Paths.get(path));
     }
     else
     {
