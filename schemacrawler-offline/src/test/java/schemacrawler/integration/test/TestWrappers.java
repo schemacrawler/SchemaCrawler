@@ -3,6 +3,7 @@ package schemacrawler.integration.test;
 
 import static org.apache.commons.lang3.reflect.MethodUtils.invokeMethod;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static schemacrawler.tools.offline.jdbc.OfflineConnectionUtility.newOfflineConnection;
 
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Paths;
@@ -16,7 +17,7 @@ public class TestWrappers
   @Test
   public void testConnectionMethodsNoArguments()
   {
-    final OfflineConnection connection = new OfflineConnection(Paths.get("."));
+    final OfflineConnection connection = newOfflineConnection(Paths.get("."));
 
     for (final String methodName : new String[] {
       "clearWarnings",
@@ -39,7 +40,7 @@ public class TestWrappers
   @Test
   public void prepareCall()
   {
-    final OfflineConnection connection = new OfflineConnection(Paths.get("."));
+    final OfflineConnection connection = newOfflineConnection(Paths.get("."));
 
     assertThrows(InvocationTargetException.class,
                  () -> invokeMethod(connection, "prepareCall", ""),
@@ -55,7 +56,7 @@ public class TestWrappers
   @Test
   public void prepareStatement()
   {
-    final OfflineConnection connection = new OfflineConnection(Paths.get("."));
+    final OfflineConnection connection = newOfflineConnection(Paths.get("."));
 
     assertThrows(InvocationTargetException.class,
                  () -> invokeMethod(connection, "prepareStatement", ""),
@@ -74,7 +75,7 @@ public class TestWrappers
   @Test
   public void createStatement()
   {
-    final OfflineConnection connection = new OfflineConnection(Paths.get("."));
+    final OfflineConnection connection = newOfflineConnection(Paths.get("."));
 
     assertThrows(InvocationTargetException.class,
                  () -> invokeMethod(connection, "createStatement"),
