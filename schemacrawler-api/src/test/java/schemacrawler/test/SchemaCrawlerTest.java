@@ -91,7 +91,7 @@ public class SchemaCrawlerTest
 
   private static String printColumnDataType(final ColumnDataType columnDataType)
   {
-    final StringBuffer buffer = new StringBuffer();
+    final StringBuilder buffer = new StringBuilder();
 
     final boolean isUserDefined = columnDataType.isUserDefined();
     final String typeName = columnDataType.getFullName();
