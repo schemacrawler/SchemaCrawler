@@ -74,9 +74,9 @@ public class TableRowTest
                is(
                  "\t<tr>~\t\t<td>display text</td>~\t\t<td>display text</td>~\t</tr>"));
     assertThat(row.render(TagOutputFormat.text),
-               is("display text  display text  display text"));
+               is("display text  display text"));
     assertThat(row.render(TagOutputFormat.tsv),
-               is("display text\tdisplay text\tdisplay text"));
+               is("display text\tdisplay text"));
   }
 
   @Test
