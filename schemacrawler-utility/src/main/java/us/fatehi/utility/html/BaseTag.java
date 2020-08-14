@@ -104,6 +104,38 @@ abstract class BaseTag
   }
 
   /**
+   * Escapes the characters in text for use in HTML.
+   *
+   * @param text
+   *   Text to escape.
+   * @return HTML-escaped text
+   */
+  private String escapeHtml(final String text)
+  {
+    final StringBuilder buffer = new StringBuilder(text.length() * 2);
+    for (int i = 0; i < text.length(); i++)
+    {
+      final char ch = text.charAt(i);
+      switch (ch)
+      {
+        case 62:
+          buffer.append("&gt;");
+          break;
+        case 38:
+          buffer.append("&amp;");
+          break;
+        case 60:
+          buffer.append("&lt;");
+          break;
+        default:
+          buffer.append(ch);
+          break;
+      }
+    }
+    return buffer.toString();
+  }
+
+  /**
    * Converts the tag to HTML.
    *
    * @return HTML
@@ -149,7 +181,7 @@ abstract class BaseTag
     {
       buffer.append("<b><i>");
     }
-    buffer.append(escapeText? Entities.escapeForXMLElement(text): text);
+    buffer.append(escapeText? escapeHtml(text): text);
     if (emphasizeText)
     {
       buffer.append("</i></b>");

@@ -73,16 +73,16 @@ public class AnchorTest
     final Anchor anchor = new Anchor("display & text",
                                      true,
                                      -1,
-                                     null,
+                                     Alignment.right,
                                      true,
-                                     "class",
+                                     null,
                                      null,
                                      "http://www.schemacrawler.com");
     anchor.addAttribute("sometag", "custom&value");
 
     assertThat(anchor.render(TagOutputFormat.html),
                is(
-                 "<a sometag='custom&value' href='http://www.schemacrawler.com' class='class'><b><i>display &amp; text</i></b></a>"));
+                 "<a sometag='custom&value' href='http://www.schemacrawler.com' align='right'><b><i>display &amp; text</i></b></a>"));
     assertThat(anchor.render(TagOutputFormat.text), is("display & text"));
     assertThat(anchor.render(TagOutputFormat.tsv), is("display & text"));
 

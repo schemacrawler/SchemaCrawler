@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.utility;
 
 
-import static us.fatehi.utility.html.Entities.escapeForXMLElement;
+import static us.fatehi.utility.html.Entities.escapeHtml;
 import static us.fatehi.utility.IOUtility.readResourceFully;
 import static us.fatehi.utility.Utility.isBlank;
 
@@ -166,14 +166,14 @@ public final class HtmlFormattingHelper
       }
       buffer
         .append(" class='caption_name'>")
-        .append(escapeForXMLElement(name))
+        .append(escapeHtml(name))
         .append("</span>");
     }
     if (!isBlank(description))
     {
       buffer
         .append(" <span class='caption_description'>")
-        .append(escapeForXMLElement(description))
+        .append(escapeHtml(description))
         .append("</span>");
     }
     buffer

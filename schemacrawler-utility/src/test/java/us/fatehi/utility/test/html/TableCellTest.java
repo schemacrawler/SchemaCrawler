@@ -36,22 +36,48 @@ import org.junit.jupiter.api.Test;
 import us.fatehi.utility.Color;
 import us.fatehi.utility.html.Alignment;
 import us.fatehi.utility.html.TableCell;
+import us.fatehi.utility.html.TableHeaderCell;
 import us.fatehi.utility.html.TagOutputFormat;
 
 public class TableCellTest
 {
 
-  @DisplayName("tablecell: basic output")
+  @DisplayName("th: basic output")
   @Test
-  public void tablecell1()
+  public void th1()
+  {
+    final TableHeaderCell th = new TableHeaderCell("<escaped & text>",
+                                                   2,
+                                                   Alignment.right,
+                                                   false,
+                                                   "class",
+                                                   Color.fromRGB(255, 0, 100),
+                                                   1);
+    th.addAttribute("sometag", "customvalue");
+
+    assertThat(th.getTag(), is("th"));
+    assertThat(th.toString(), is("th"));
+
+    assertThat(th.render(TagOutputFormat.html),
+               is(
+                 "<th sometag='customvalue' bgcolor='#FF0064' class='class'>&lt;escaped &amp; text&gt;</th>"));
+    assertThat(th.render(TagOutputFormat.text), is("<escaped & text>"));
+    assertThat(th.render(TagOutputFormat.tsv), is("<escaped & text>"));
+
+  }
+
+  @DisplayName("td: basic output")
+  @Test
+  public void td1()
   {
     final TableCell tablecell = new TableCell("display text",
-                                     false,
-                                     2,
-                                     Alignment.right,
-                                     false,
-                                     "class",
-                                     Color.fromRGB(255, 0, 100), 1);
+                                              false,
+                                              2,
+                                              Alignment.right,
+                                              false,
+                                              "class",
+                                              Color.fromRGB(255, 0, 100),
+                                              1);
     tablecell.addAttribute("sometag", "customvalue");
 
     assertThat(tablecell.getTag(), is("td"));
@@ -65,23 +91,23 @@ public class TableCellTest
 
   }
 
-  @DisplayName("tablecell: escape text, emphasize, and allow free width")
+  @DisplayName("td: escape text, emphasize, and allow free width")
   @Test
-  public void tablecell2()
+  public void td2()
   {
     final TableCell tablecell = new TableCell("display & text",
-                                     true,
-                                     -1,
-                                     null,
-                                     true,
-                                     "class",
-                                     null,
-                                     2);
+                                              true,
+                                              -1,
+                                              Alignment.right,
+                                              true,
+                                              null,
+                                              null,
+                                              2);
     tablecell.addAttribute("sometag", "custom&value");
 
     assertThat(tablecell.render(TagOutputFormat.html),
                is(
-                 "<td colspan='2' sometag='custom&value' class='class'><b><i>display &amp; text</i></b></td>"));
+                 "<td colspan='2' sometag='custom&value' align='right'><b><i>display &amp; text</i></b></td>"));
     assertThat(tablecell.render(TagOutputFormat.text), is("display & text"));
     assertThat(tablecell.render(TagOutputFormat.tsv), is("display & text"));
 
