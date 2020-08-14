@@ -64,7 +64,7 @@ abstract class BaseTag
                     final Color bgColor)
   {
     this.styleClass = styleClass;
-    this.text = text == null? "NULL": text;
+    this.text = text == null? "": text;
     this.escapeText = escapeText;
     this.characterWidth = characterWidth;
     this.align = align;

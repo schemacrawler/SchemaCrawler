@@ -320,7 +320,7 @@ abstract class BaseTextFormattingHelper
     {
       if (element == null)
       {
-        row.add(newTableCell(null, "data_null"));
+        row.add(newTableCell("NULL", "data_null"));
       }
       else if (element instanceof BinaryData)
       {
