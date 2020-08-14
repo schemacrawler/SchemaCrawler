@@ -31,13 +31,13 @@ package schemacrawler.tools.text.utility;
 
 import static us.fatehi.utility.IOUtility.readResourceFully;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.html.TagBuilder.span;
 
 import java.io.PrintWriter;
 
 import schemacrawler.tools.options.TextOutputFormat;
 import us.fatehi.utility.Color;
-import us.fatehi.utility.html.Alignment;
-import us.fatehi.utility.html.Span;
+import us.fatehi.utility.html.TagBuilder;
 import us.fatehi.utility.html.TagOutputFormat;
 
 /**
@@ -158,30 +158,26 @@ public final class HtmlFormattingHelper
       .append(";'>");
     if (!isBlank(name))
     {
-      final Span span = new Span(name,
-                                 true,
-                                 0,
-                                 Alignment.inherit,
-                                 false,
-                                 "caption_name",
-                                 Color.white);
+      final TagBuilder spanBuilder = span()
+        .withEscapedText(name)
+        .withStyle("caption_name");
       if (!isBlank(id))
       {
-        span.addAttribute("id", id);
+        spanBuilder.withAttribute("id", id);
       }
-      buffer.append(span.render(TagOutputFormat.html));
+      buffer.append(spanBuilder
+                      .make()
+                      .render(TagOutputFormat.html));
     }
     if (!isBlank(description))
     {
       buffer.append(" ");
-      final Span span = new Span(description,
-                                 true,
-                                 0,
-                                 Alignment.inherit,
-                                 false,
-                                 "caption_description",
-                                 Color.white);
-      buffer.append(span.render(TagOutputFormat.html));
+      final TagBuilder spanBuilder = span()
+        .withEscapedText(description)
+        .withStyle("caption_description");
+      buffer.append(spanBuilder
+                      .make()
+                      .render(TagOutputFormat.html));
     }
     buffer
       .append("</caption>")

@@ -46,6 +46,11 @@ public final class TagBuilder
     return new TagBuilder("a");
   }
 
+  public static TagBuilder span()
+  {
+    return new TagBuilder("span");
+  }
+
   private final String tag;
   private final Map<String, String> attributes;
   private String styleClass;

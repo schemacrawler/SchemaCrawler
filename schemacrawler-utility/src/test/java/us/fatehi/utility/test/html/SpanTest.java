@@ -30,12 +30,12 @@ package us.fatehi.utility.test.html;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static us.fatehi.utility.html.TagBuilder.span;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import us.fatehi.utility.Color;
-import us.fatehi.utility.html.Alignment;
-import us.fatehi.utility.html.Span;
+import us.fatehi.utility.html.Tag;
 import us.fatehi.utility.html.TagOutputFormat;
 
 public class SpanTest
@@ -45,14 +45,12 @@ public class SpanTest
   @Test
   public void span1()
   {
-    final Span span = new Span("display text",
-                                     false,
-                                     2,
-                                     Alignment.right,
-                                     false,
-                                     "class",
-                                     Color.fromRGB(255, 0, 100));
-    span.addAttribute("sometag", "customvalue");
+    final Tag span = span()
+      .withText("display text")
+      .withStyle("class")
+      .withBackground(Color.fromRGB(255, 0, 100))
+      .withAttribute("sometag", "customvalue")
+      .make();
 
     assertThat(span.getTag(), is("span"));
     assertThat(span.toString(), is("span"));
@@ -62,27 +60,6 @@ public class SpanTest
                  "<span sometag='customvalue' bgcolor='#FF0064' class='class'>display text</span>"));
     assertThat(span.render(TagOutputFormat.text), is("display text"));
     assertThat(span.render(TagOutputFormat.tsv), is("display text"));
-
-  }
-
-  @DisplayName("span: escape text, emphasize, and allow free width")
-  @Test
-  public void span2()
-  {
-    final Span span = new Span("display & text",
-                                     true,
-                                     -1,
-                                     Alignment.right,
-                                     true,
-                                     null,
-                                     null);
-    span.addAttribute("sometag", "custom&value");
-
-    assertThat(span.render(TagOutputFormat.html),
-               is(
-                 "<span sometag='custom&value' align='right'><b><i>display &amp; text</i></b></span>"));
-    assertThat(span.render(TagOutputFormat.text), is("display & text"));
-    assertThat(span.render(TagOutputFormat.tsv), is("display & text"));
 
   }
 
