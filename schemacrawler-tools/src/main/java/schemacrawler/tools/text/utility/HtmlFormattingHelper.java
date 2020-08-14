@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.utility;
 
 
-import static us.fatehi.utility.html.Entities.escapeHtml;
 import static us.fatehi.utility.IOUtility.readResourceFully;
 import static us.fatehi.utility.Utility.isBlank;
 
@@ -37,6 +36,9 @@ import java.io.PrintWriter;
 
 import schemacrawler.tools.options.TextOutputFormat;
 import us.fatehi.utility.Color;
+import us.fatehi.utility.html.Alignment;
+import us.fatehi.utility.html.Span;
+import us.fatehi.utility.html.TagOutputFormat;
 
 /**
  * Methods to format entire rows of output as HTML.
@@ -156,25 +158,30 @@ public final class HtmlFormattingHelper
       .append(";'>");
     if (!isBlank(name))
     {
-      buffer.append("<span");
+      final Span span = new Span(name,
+                                 true,
+                                 0,
+                                 Alignment.inherit,
+                                 false,
+                                 "caption_name",
+                                 Color.white);
       if (!isBlank(id))
       {
-        buffer
-          .append(" id='")
-          .append(id)
-          .append("'");
+        span.addAttribute("id", id);
       }
-      buffer
-        .append(" class='caption_name'>")
-        .append(escapeHtml(name))
-        .append("</span>");
+      buffer.append(span.render(TagOutputFormat.html));
     }
     if (!isBlank(description))
     {
-      buffer
-        .append(" <span class='caption_description'>")
-        .append(escapeHtml(description))
-        .append("</span>");
+      buffer.append(" ");
+      final Span span = new Span(description,
+                                 true,
+                                 0,
+                                 Alignment.inherit,
+                                 false,
+                                 "caption_description",
+                                 Color.white);
+      buffer.append(span.render(TagOutputFormat.html));
     }
     buffer
       .append("</caption>")
