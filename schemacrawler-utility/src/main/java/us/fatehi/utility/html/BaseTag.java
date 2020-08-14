@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package us.fatehi.utility.html;
 
 
+import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.HashMap;
@@ -41,10 +42,10 @@ import us.fatehi.utility.Color;
  *
  * @author Sualeh Fatehi
  */
-abstract class BaseTag
+class BaseTag
   implements Tag
 {
-
+  private final String tag;
   private final String styleClass;
   private final int characterWidth;
   private final Alignment align;
@@ -52,10 +53,10 @@ abstract class BaseTag
   private final boolean escapeText;
   private final Color bgColor;
   private final boolean emphasizeText;
-
   private final Map<String, String> attributes;
 
-  protected BaseTag(final String text,
+  protected BaseTag(final String tag,
+                    final String text,
                     final boolean escapeText,
                     final int characterWidth,
                     final Alignment align,
@@ -63,6 +64,7 @@ abstract class BaseTag
                     final String styleClass,
                     final Color bgColor)
   {
+    this.tag = requireNonNull(tag);
     this.styleClass = styleClass;
     this.text = text == null? "": text;
     this.escapeText = escapeText;
@@ -73,15 +75,31 @@ abstract class BaseTag
     attributes = new HashMap<>();
   }
 
-  public String addAttribute(final String key, final String value)
+  protected BaseTag(final String tag,
+                    final String text,
+                    final boolean escapeText,
+                    final int characterWidth,
+                    final Alignment align,
+                    final boolean emphasizeText,
+                    final String styleClass,
+                    final Color bgColor,
+                    final Map<String, String> attributes)
   {
-    return attributes.put(key, value);
+    this.tag = requireNonNull(tag);
+    this.styleClass = styleClass;
+    this.text = text == null? "": text;
+    this.escapeText = escapeText;
+    this.characterWidth = characterWidth;
+    this.align = align;
+    this.bgColor = bgColor;
+    this.emphasizeText = emphasizeText;
+    this.attributes = attributes;
   }
 
   @Override
-  public String toString()
+  public String getTag()
   {
-    return getTag();
+    return tag;
   }
 
   /**
@@ -101,6 +119,17 @@ abstract class BaseTag
       default:
         return toHtmlString();
     }
+  }
+
+  public String addAttribute(final String key, final String value)
+  {
+    return attributes.put(key, value);
+  }
+
+  @Override
+  public String toString()
+  {
+    return getTag();
   }
 
   /**

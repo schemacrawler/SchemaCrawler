@@ -30,12 +30,13 @@ package us.fatehi.utility.test.html;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static us.fatehi.utility.html.TagBuilder.anchor;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import us.fatehi.utility.Color;
 import us.fatehi.utility.html.Alignment;
-import us.fatehi.utility.html.Anchor;
+import us.fatehi.utility.html.Tag;
 import us.fatehi.utility.html.TagOutputFormat;
 
 public class AnchorTest
@@ -45,15 +46,15 @@ public class AnchorTest
   @Test
   public void anchor1()
   {
-    final Anchor anchor = new Anchor("display text",
-                                     false,
-                                     2,
-                                     Alignment.right,
-                                     false,
-                                     "class",
-                                     Color.fromRGB(255, 0, 100),
-                                     "http://www.schemacrawler.com");
-    anchor.addAttribute("sometag", "customvalue");
+    final Tag anchor = anchor()
+      .withText("display text")
+      .withWidth(2)
+      .withAlignment(Alignment.right)
+      .withStyle("class")
+      .withBackground(Color.fromRGB(255, 0, 100))
+      .withAttribute("href", "http://www.schemacrawler.com")
+      .withAttribute("sometag", "customvalue")
+      .make();
 
     assertThat(anchor.getTag(), is("a"));
     assertThat(anchor.toString(), is("a"));
@@ -70,15 +71,13 @@ public class AnchorTest
   @Test
   public void anchor2()
   {
-    final Anchor anchor = new Anchor("display & text",
-                                     true,
-                                     -1,
-                                     Alignment.right,
-                                     true,
-                                     null,
-                                     null,
-                                     "http://www.schemacrawler.com");
-    anchor.addAttribute("sometag", "custom&value");
+    final Tag anchor = anchor()
+      .withEscapedText("display & text")
+      .withAlignment(Alignment.right)
+      .withEmphasis()
+      .withAttribute("href", "http://www.schemacrawler.com")
+      .withAttribute("sometag", "custom&value")
+      .make();
 
     assertThat(anchor.render(TagOutputFormat.html),
                is(

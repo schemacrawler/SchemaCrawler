@@ -30,18 +30,18 @@ package schemacrawler.tools.text.utility;
 
 
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.html.TagBuilder.anchor;
 
 import java.io.PrintWriter;
 
 import schemacrawler.tools.options.TextOutputFormat;
+import schemacrawler.utility.BinaryData;
+import us.fatehi.utility.Color;
 import us.fatehi.utility.html.Alignment;
-import us.fatehi.utility.html.Anchor;
 import us.fatehi.utility.html.TableCell;
 import us.fatehi.utility.html.TableHeaderCell;
 import us.fatehi.utility.html.TableRow;
 import us.fatehi.utility.html.TagOutputFormat;
-import schemacrawler.utility.BinaryData;
-import us.fatehi.utility.Color;
 
 /**
  * Methods to format entire rows of output as HTML.
@@ -90,14 +90,10 @@ abstract class BaseTextFormattingHelper
   @Override
   public String createAnchor(final String text, final String link)
   {
-    return new Anchor(text,
-                      false,
-                      0,
-                      Alignment.inherit,
-                      false,
-                      "",
-                      Color.white,
-                      link)
+    return anchor()
+      .withEscapedText(text)
+      .withAttribute("href", link)
+      .make()
       .render(TagOutputFormat.valueOf(outputFormat.name()));
   }
 

@@ -28,8 +28,6 @@ http://www.gnu.org/licenses/
 package us.fatehi.utility.html;
 
 
-import static us.fatehi.utility.Utility.isBlank;
-
 import us.fatehi.utility.Color;
 
 /**
@@ -49,19 +47,14 @@ public class Span
               final String styleClass,
               final Color bgColor)
   {
-    super(text,
+    super("span",
+          text,
           escapeText,
           characterWidth,
           align,
           emphasizeText,
           styleClass,
           bgColor);
-  }
-
-  @Override
-  public String getTag()
-  {
-    return "span";
   }
 
 }

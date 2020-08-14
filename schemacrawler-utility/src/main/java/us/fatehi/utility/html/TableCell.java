@@ -48,23 +48,17 @@ public class TableCell
                    final Color bgColor,
                    final int colSpan)
   {
-    super(text,
-          escapeText,
-          characterWidth,
-          align,
-          emphasizeText,
-          styleClass,
-          bgColor);
+    super("td", text,
+            escapeText,
+            characterWidth,
+            align,
+            emphasizeText,
+            styleClass,
+            bgColor);
     if (colSpan > 1)
     {
       addAttribute("colspan", String.valueOf(colSpan));
     }
-  }
-
-  @Override
-  public String getTag()
-  {
-    return "td";
   }
 
 }
