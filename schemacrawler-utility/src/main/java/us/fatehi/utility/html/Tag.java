@@ -35,4 +35,6 @@ public interface Tag
 
   String render(TagOutputFormat tagOutputFormat);
 
+  String addAttribute(String key, String value);
+
 }

@@ -45,20 +45,20 @@ public final class TableRow
   implements Tag
 {
 
-  private final List<TableCell> cells;
+  private final List<Tag> cells;
 
   public TableRow()
   {
     cells = new ArrayList<>();
   }
 
-  public TableRow add(final TableCell cell)
+  public TableRow add(final Tag cell)
   {
     cells.add(cell);
     return this;
   }
 
-  public TableCell firstCell()
+  public Tag firstCell()
   {
     if (cells.isEmpty())
     {
@@ -67,7 +67,7 @@ public final class TableRow
     return cells.get(0);
   }
 
-  public TableCell lastCell()
+  public Tag lastCell()
   {
     if (cells.isEmpty())
     {
@@ -107,6 +107,13 @@ public final class TableRow
     }
   }
 
+  @Override
+  public String addAttribute(final String key, final String value)
+  {
+    // No-op
+    return null;
+  }
+
   /**
    * Converts the table row to HTML.
    *
@@ -120,7 +127,7 @@ public final class TableRow
       .append(getTag())
       .append(">")
       .append(System.lineSeparator());
-    for (final TableCell cell : cells)
+    for (final Tag cell : cells)
     {
       buffer
         .append("\t\t")
@@ -157,7 +164,7 @@ public final class TableRow
 
     for (int i = 0; i < cells.size(); i++)
     {
-      final TableCell cell = cells.get(i);
+      final Tag cell = cells.get(i);
       if (i > 0)
       {
         buffer.append(fieldSeparator);
