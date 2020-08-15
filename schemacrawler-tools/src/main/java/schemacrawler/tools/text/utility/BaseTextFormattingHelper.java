@@ -39,9 +39,7 @@ import java.io.PrintWriter;
 
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.utility.BinaryData;
-import us.fatehi.utility.Color;
 import us.fatehi.utility.html.Alignment;
-import us.fatehi.utility.html.BaseTag;
 import us.fatehi.utility.html.Tag;
 import us.fatehi.utility.html.TagOutputFormat;
 
@@ -170,23 +168,20 @@ abstract class BaseTextFormattingHelper
                 .make());
     }
 
-    row.addInnerTag(new BaseTag("td",
-                                text2,
-                                escapeText,
-                                text2Width,
-                                Alignment.inherit,
-                                emphasize,
-                                "minwidth",
-                                Color.white, false));
+    row.addInnerTag(tableCell()
+                      .withEscapedText(text2, escapeText)
+                      .withWidth(text2Width)
+                      .withEmphasis(emphasize)
+                      .withStyle("minwidth")
+                      .make());
 
-    row.addInnerTag(new BaseTag("td",
-                                text3,
-                                true,
-                                text3Width,
-                                Alignment.inherit,
-                                false,
-                        "minwidth" + text3Sytle,
-                                Color.white, false));
+    row.addInnerTag(tableCell()
+                      .withEscapedText(text3)
+                      .withWidth(text3Width)
+                      .withAlignment(Alignment.inherit)
+                      .withStyle("minwidth" + text3Sytle)
+                      .make());
+
     out.println(row.render(TagOutputFormat.valueOf(outputFormat.name())));
   }
 

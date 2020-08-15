@@ -140,6 +140,13 @@ public final class TagBuilder
     return this;
   }
 
+  public TagBuilder withEscapedText(final String text, final boolean escapeText)
+  {
+    this.text = text;
+    this.escapeText = escapeText;
+    return this;
+  }
+
   public TagBuilder withBackground(final Color bgColor)
   {
     this.bgColor = bgColor;

@@ -57,29 +57,6 @@ public class BaseTag
   private final Map<String, String> attributes;
   private final boolean indent;
 
-  public BaseTag(final String tag,
-                 final String text,
-                 final boolean escapeText,
-                 final int characterWidth,
-                 final Alignment align,
-                 final boolean emphasizeText,
-                 final String styleClass,
-                 final Color bgColor,
-                 final boolean indent)
-  {
-    this.tag = requireNonNull(tag);
-    this.styleClass = styleClass;
-    this.text = text == null? "": text;
-    this.escapeText = escapeText;
-    this.characterWidth = characterWidth;
-    this.align = align;
-    this.bgColor = bgColor;
-    this.emphasizeText = emphasizeText;
-    this.indent = indent;
-    innerTags = new ArrayList<>();
-    attributes = new HashMap<>();
-  }
-
   protected BaseTag(final String tag,
                     final String text,
                     final boolean escapeText,
