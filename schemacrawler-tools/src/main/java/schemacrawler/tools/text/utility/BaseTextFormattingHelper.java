@@ -41,7 +41,6 @@ import schemacrawler.utility.BinaryData;
 import us.fatehi.utility.Color;
 import us.fatehi.utility.html.Alignment;
 import us.fatehi.utility.html.BaseTag;
-import us.fatehi.utility.html.TableCell;
 import us.fatehi.utility.html.TableRow;
 import us.fatehi.utility.html.Tag;
 import us.fatehi.utility.html.TagOutputFormat;
@@ -346,14 +345,11 @@ abstract class BaseTextFormattingHelper
   public void writeWideRow(final String definition, final String style)
   {
     final TableRow row = new TableRow();
-    row.add(new TableCell(definition,
-                          true,
-                          0,
-                          Alignment.inherit,
-                          false,
-                          style,
-                          Color.white,
-                          3));
+    row.add(tableCell()
+              .withEscapedText(definition)
+              .withStyle(style)
+              .withAttribute("colspan", "3")
+              .make());
     out.println(row.render(TagOutputFormat.valueOf(outputFormat.name())));
   }
 
