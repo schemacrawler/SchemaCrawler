@@ -114,14 +114,10 @@ abstract class BaseTextFormattingHelper
   {
     final TableRow row = new TableRow();
     row.add(tableCell().withStyle("spacer").make());
-    row.add(new TableCell(description,
-                          true,
-                          0,
-                          Alignment.inherit,
-                          false,
-                          "",
-                          Color.white,
-                          2));
+    row.add(tableCell()
+              .withEscapedText(description)
+              .withAttribute("colspan", "2")
+              .make());
     out.println(row.render(TagOutputFormat.valueOf(outputFormat.name())));
   }
 
@@ -273,22 +269,17 @@ abstract class BaseTextFormattingHelper
       "property_value" + (alignmentForValue == Alignment.inherit? "": " right");
 
     final TableRow row = new TableRow();
-    row.add(new TableCell(name,
-                          true,
-                          nameWidth,
-                          Alignment.inherit,
-                          false,
-                          "property_name",
-                          Color.white,
-                          1));
-    row.add(new TableCell(value,
-                          true,
-                          valueWidth,
-                          alignmentForValue,
-                          false,
-                          valueStyle,
-                          Color.white,
-                          1));
+    row.add(tableCell()
+              .withEscapedText(name)
+              .withWidth(nameWidth)
+              .withStyle("property_name")
+              .make());
+    row.add(tableCell()
+              .withEscapedText(value)
+              .withWidth(valueWidth)
+              .withAlignment(alignmentForValue)
+              .withStyle(valueStyle)
+              .make());
 
     out.println(row.render(TagOutputFormat.valueOf(outputFormat.name())));
   }
