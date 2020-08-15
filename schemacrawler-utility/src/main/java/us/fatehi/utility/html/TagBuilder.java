@@ -61,6 +61,11 @@ public final class TagBuilder
     return new TagBuilder("td");
   }
 
+  public static TagBuilder tableRow()
+  {
+    return new TagBuilder("tr").withIndent(true);
+  }
+
   private final String tag;
   private final Map<String, String> attributes;
   private String styleClass;
@@ -70,11 +75,18 @@ public final class TagBuilder
   private boolean escapeText;
   private Color bgColor;
   private boolean emphasizeText;
+  private boolean indent;
 
   private TagBuilder(final String tag)
   {
     this.tag = tag;
     this.attributes = new HashMap<>();
+  }
+
+  public TagBuilder withIndent(final boolean indent)
+  {
+    this.indent = indent;
+    return this;
   }
 
   public Tag make()
@@ -87,6 +99,7 @@ public final class TagBuilder
                        emphasizeText,
                        styleClass,
                        bgColor,
+                       indent,
                        attributes);
   }
 

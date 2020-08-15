@@ -33,9 +33,9 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static us.fatehi.utility.html.TagBuilder.tableCell;
+import static us.fatehi.utility.html.TagBuilder.tableRow;
 
 import org.junit.jupiter.api.Test;
-import us.fatehi.utility.html.TableRow;
 import us.fatehi.utility.html.Tag;
 import us.fatehi.utility.html.TagOutputFormat;
 
@@ -45,7 +45,7 @@ public class TableRowTest
   @Test
   public void emptyRow()
   {
-    final TableRow row = new TableRow();
+    final Tag row = tableRow().make();
 
     assertThat(row
                  .render(TagOutputFormat.html)
@@ -53,18 +53,18 @@ public class TableRowTest
     assertThat(row.render(TagOutputFormat.text), is(""));
     assertThat(row.render(TagOutputFormat.tsv), is(""));
 
-    assertThat(row.firstCell(), is(nullValue()));
-    assertThat(row.lastCell(), is(nullValue()));
+    assertThat(row.firstInnerTag(), is(nullValue()));
+    assertThat(row.lastInnerTag(), is(nullValue()));
   }
 
   @Test
   public void tr()
   {
-    final TableRow row = new TableRow();
+    final Tag row = tableRow().make();
     final Tag cell1 = newTableCell();
 
-    row.add(cell1);
-    row.add(cell1);
+    row.addInnerTag(cell1);
+    row.addInnerTag(cell1);
 
     assertThat(row.getTag(), is("tr"));
     assertThat(row.toString(), is("tr"));
@@ -83,20 +83,20 @@ public class TableRowTest
   @Test
   public void endCells()
   {
-    final TableRow row = new TableRow();
+    final Tag row = tableRow().make();
     final Tag cell1 = newTableCell();
     final Tag cell2 = newTableCell();
     final Tag cell3 = newTableCell();
 
-    row.add(cell1);
-    row.add(cell2);
-    row.add(cell3);
+    row.addInnerTag(cell1);
+    row.addInnerTag(cell2);
+    row.addInnerTag(cell3);
 
-    assertThat(row.firstCell(), is(cell1));
-    assertThat(row.firstCell(), is(not(cell2)));
+    assertThat(row.firstInnerTag(), is(cell1));
+    assertThat(row.firstInnerTag(), is(not(cell2)));
 
-    assertThat(row.lastCell(), is(cell3));
-    assertThat(row.lastCell(), is(not(cell2)));
+    assertThat(row.lastInnerTag(), is(cell3));
+    assertThat(row.lastInnerTag(), is(not(cell2)));
   }
 
   private Tag newTableCell()

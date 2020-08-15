@@ -37,4 +37,9 @@ public interface Tag
 
   String addAttribute(String key, String value);
 
+  Tag addInnerTag(Tag tag);
+
+  Tag firstInnerTag();
+
+  Tag lastInnerTag();
 }

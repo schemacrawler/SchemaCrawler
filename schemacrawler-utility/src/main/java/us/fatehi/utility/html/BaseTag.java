@@ -30,13 +30,16 @@ package us.fatehi.utility.html;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.html.TagOutputFormat.html;
+import static us.fatehi.utility.html.TagOutputFormat.tsv;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import us.fatehi.utility.Color;
-
 
 public class BaseTag
   implements Tag
@@ -50,16 +53,19 @@ public class BaseTag
   private final boolean escapeText;
   private final Color bgColor;
   private final boolean emphasizeText;
+  private final List<Tag> innerTags;
   private final Map<String, String> attributes;
+  private final boolean indent;
 
   public BaseTag(final String tag,
-                    final String text,
-                    final boolean escapeText,
-                    final int characterWidth,
-                    final Alignment align,
-                    final boolean emphasizeText,
-                    final String styleClass,
-                    final Color bgColor)
+                 final String text,
+                 final boolean escapeText,
+                 final int characterWidth,
+                 final Alignment align,
+                 final boolean emphasizeText,
+                 final String styleClass,
+                 final Color bgColor,
+                 final boolean indent)
   {
     this.tag = requireNonNull(tag);
     this.styleClass = styleClass;
@@ -69,6 +75,8 @@ public class BaseTag
     this.align = align;
     this.bgColor = bgColor;
     this.emphasizeText = emphasizeText;
+    this.indent = indent;
+    innerTags = new ArrayList<>();
     attributes = new HashMap<>();
   }
 
@@ -80,6 +88,7 @@ public class BaseTag
                     final boolean emphasizeText,
                     final String styleClass,
                     final Color bgColor,
+                    final boolean indent,
                     final Map<String, String> attributes)
   {
     this.tag = requireNonNull(tag);
@@ -90,6 +99,8 @@ public class BaseTag
     this.align = align;
     this.bgColor = bgColor;
     this.emphasizeText = emphasizeText;
+    this.indent = indent;
+    innerTags = new ArrayList<>();
     this.attributes = attributes;
   }
 
@@ -120,7 +131,24 @@ public class BaseTag
 
   public String addAttribute(final String key, final String value)
   {
-    return attributes.put(key, value);
+    if (key != null || value != null)
+    {
+      return attributes.put(key, value);
+    }
+    else
+    {
+      return value;
+    }
+  }
+
+  @Override
+  public Tag addInnerTag(final Tag tag)
+  {
+    if (tag != null)
+    {
+      innerTags.add(tag);
+    }
+    return this;
   }
 
   @Override
@@ -169,6 +197,10 @@ public class BaseTag
   private String toHtmlString()
   {
     final StringBuilder buffer = new StringBuilder(1024);
+    if (indent)
+    {
+      buffer.append("\t");
+    }
     buffer
       .append("<")
       .append(getTag());
@@ -207,10 +239,40 @@ public class BaseTag
     {
       buffer.append("<b><i>");
     }
-    buffer.append(escapeText? escapeHtml(text): text);
+
+    if (innerTags.isEmpty())
+    {
+      if (indent)
+      {
+        buffer
+          .append(System.lineSeparator());
+      }
+      buffer.append(escapeText? escapeHtml(text): text);
+    }
+    else
+    {
+      buffer
+        .append(System.lineSeparator());
+      for (final Tag innerTag : innerTags)
+      {
+        if (indent)
+        {
+          buffer.append("\t");
+        }
+        buffer
+          .append("\t")
+          .append(innerTag.render(html))
+          .append(System.lineSeparator());
+      }
+    }
+
     if (emphasizeText)
     {
       buffer.append("</i></b>");
+    }
+    if (indent)
+    {
+      buffer.append("\t");
     }
     buffer
       .append("</")
@@ -227,7 +289,14 @@ public class BaseTag
    */
   private String toTsvString()
   {
-    return text;
+    if (innerTags.isEmpty())
+    {
+      return text;
+    }
+    else
+    {
+      return toInnerTagsTsvString();
+    }
   }
 
   /**
@@ -237,17 +306,77 @@ public class BaseTag
    */
   private String toPlainTextString()
   {
-    if (characterWidth > 0)
+    if (innerTags.isEmpty())
     {
-      final String format = String.format("%%%s%ds",
-                                          align == Alignment.right? "": "-",
-                                          characterWidth);
-      return String.format(format, text);
+      if (characterWidth > 0)
+      {
+        final String format = String.format("%%%s%ds",
+                                            align == Alignment.right? "": "-",
+                                            characterWidth);
+        return String.format(format, text);
+      }
+      else
+      {
+        return text;
+      }
     }
     else
     {
-      return text;
+      return toInnerTagsPlainTextString();
     }
+  }
+
+  @Override
+  public Tag firstInnerTag()
+  {
+    if (innerTags.isEmpty())
+    {
+      return null;
+    }
+    return innerTags.get(0);
+  }
+
+  @Override
+  public Tag lastInnerTag()
+  {
+    if (innerTags.isEmpty())
+    {
+      return null;
+    }
+    return innerTags.get(innerTags.size() - 1);
+  }
+
+  private String toInnerTagsPlainTextString()
+  {
+    return toInnerTagsPlainTextString(TagOutputFormat.text, "  ");
+  }
+
+  private String toInnerTagsTsvString()
+  {
+    return toInnerTagsPlainTextString(tsv, "\t");
+  }
+
+  /**
+   * Converts the table row to text.
+   *
+   * @return Text
+   */
+  private String toInnerTagsPlainTextString(final TagOutputFormat tagOutputFormat,
+                                            final String fieldSeparator)
+  {
+    final StringBuilder buffer = new StringBuilder(1024);
+
+    for (int i = 0; i < innerTags.size(); i++)
+    {
+      final Tag cell = innerTags.get(i);
+      if (i > 0)
+      {
+        buffer.append(fieldSeparator);
+      }
+      buffer.append(cell.render(tagOutputFormat));
+    }
+
+    return buffer.toString();
   }
 
 }
