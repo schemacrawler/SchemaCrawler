@@ -42,7 +42,7 @@ import us.fatehi.utility.Color;
  *
  * @author Sualeh Fatehi
  */
-class BaseTag
+public class BaseTag
   implements Tag
 {
   private final String tag;
@@ -55,7 +55,7 @@ class BaseTag
   private final boolean emphasizeText;
   private final Map<String, String> attributes;
 
-  protected BaseTag(final String tag,
+  public BaseTag(final String tag,
                     final String text,
                     final boolean escapeText,
                     final int characterWidth,

@@ -40,6 +40,7 @@ import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.utility.BinaryData;
 import us.fatehi.utility.Color;
 import us.fatehi.utility.html.Alignment;
+import us.fatehi.utility.html.BaseTag;
 import us.fatehi.utility.html.TableCell;
 import us.fatehi.utility.html.TableRow;
 import us.fatehi.utility.html.Tag;
@@ -161,35 +162,35 @@ abstract class BaseTextFormattingHelper
     final TableRow row = new TableRow();
     if (isBlank(text1))
     {
-      row.add(tableCell().withStyle("spacer").make());
+      row.add(tableCell()
+                .withStyle("spacer")
+                .make());
     }
     else
     {
-      row.add(new TableCell(text1,
-                            true,
-                            2,
-                            Alignment.inherit,
-                            false,
-                            "spacer",
-                            Color.white,
-                            1));
+      row.add(tableCell()
+                .withEscapedText(text1)
+                .withWidth(2)
+                .withStyle("spacer")
+                .make());
     }
-    row.add(new TableCell(text2,
-                          escapeText,
-                          text2Width,
-                          Alignment.inherit,
-                          emphasize,
-                          "minwidth",
-                          Color.white,
-                          1));
-    row.add(new TableCell(text3,
-                          true,
-                          text3Width,
-                          Alignment.inherit,
-                          false,
-                          "minwidth" + text3Sytle,
-                          Color.white,
-                          1));
+
+    row.add(new BaseTag("td",
+                        text2,
+                        escapeText,
+                        text2Width,
+                        Alignment.inherit,
+                        emphasize,
+                        "minwidth",
+                        Color.white));
+    row.add(new BaseTag("td",
+                        text3,
+                        true,
+                        text3Width,
+                        Alignment.inherit,
+                        false,
+                        "minwidth" + text3Sytle,
+                        Color.white));
     out.println(row.render(TagOutputFormat.valueOf(outputFormat.name())));
   }
 
