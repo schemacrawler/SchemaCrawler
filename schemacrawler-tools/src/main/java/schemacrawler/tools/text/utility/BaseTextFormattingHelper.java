@@ -229,22 +229,18 @@ abstract class BaseTextFormattingHelper
     }
 
     final TableRow row = new TableRow();
-    row.add(new TableCell(name,
-                          true,
-                          nameWidth,
-                          Alignment.inherit,
-                          false,
-                          "name",
-                          Color.white,
-                          2));
-    row.add(new TableCell(description,
-                          true,
-                          descriptionWidth,
-                          Alignment.right,
-                          false,
-                          "description right",
-                          Color.white,
-                          1));
+    row.add(tableCell()
+              .withEscapedText(name)
+              .withWidth(nameWidth)
+              .withStyle("name")
+              .withAttribute("colspan", "2")
+              .make());
+    row.add(tableCell()
+              .withEscapedText(description)
+              .withWidth(descriptionWidth)
+              .withAlignment(Alignment.right)
+              .withStyle("description right")
+              .make());
 
     out.println(row.render(TagOutputFormat.valueOf(outputFormat.name())));
   }
