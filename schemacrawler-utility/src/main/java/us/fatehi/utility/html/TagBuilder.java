@@ -103,12 +103,6 @@ public final class TagBuilder
                        attributes);
   }
 
-  public TagBuilder withAttribute(final String key, final String value)
-  {
-    attributes.put(key, value);
-    return this;
-  }
-
   public TagBuilder withStyle(final String styleClass)
   {
     this.styleClass = styleClass;
@@ -167,7 +161,8 @@ public final class TagBuilder
 
   public TagBuilder withColumnSpan(final int columnSpan)
   {
-    return withAttribute("colspan", String.valueOf(columnSpan));
+    attributes.put("colspan", String.valueOf(columnSpan));
+    return this;
   }
 
   public TagBuilder withHyperlink(final String href)
@@ -176,7 +171,8 @@ public final class TagBuilder
     {
       return this;
     }
-    return withAttribute("href", href);
+    attributes.put("href", href);
+    return this;
   }
 
 }

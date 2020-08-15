@@ -53,8 +53,8 @@ public class TableCellTest
       .withAlignment(Alignment.right)
       .withStyle("class")
       .withBackground(Color.fromRGB(255, 0, 100))
-      .withAttribute("sometag", "customvalue")
       .make();
+    th.addAttribute("sometag", "customvalue");
 
     assertThat(th.getTag(), is("th"));
     assertThat(th.toString(), is("th"));
@@ -99,7 +99,7 @@ public class TableCellTest
       .withEscapedText("display & text")
       .withAlignment(Alignment.right)
       .withEmphasis()
-      .withAttribute("colpsan", "2")
+      .withColumnSpan(2)
       .make();
     tablecell.addAttribute("sometag", "custom&value");
 

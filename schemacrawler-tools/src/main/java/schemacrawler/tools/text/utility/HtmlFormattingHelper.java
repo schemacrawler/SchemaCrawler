@@ -37,7 +37,7 @@ import java.io.PrintWriter;
 
 import schemacrawler.tools.options.TextOutputFormat;
 import us.fatehi.utility.Color;
-import us.fatehi.utility.html.TagBuilder;
+import us.fatehi.utility.html.Tag;
 import us.fatehi.utility.html.TagOutputFormat;
 
 /**
@@ -158,26 +158,24 @@ public final class HtmlFormattingHelper
       .append(";'>");
     if (!isBlank(name))
     {
-      final TagBuilder spanBuilder = span()
+      final Tag span = span()
         .withEscapedText(name)
-        .withStyle("caption_name");
+        .withStyle("caption_name")
+        .make();
       if (!isBlank(id))
       {
-        spanBuilder.withAttribute("id", id);
+        span.addAttribute("id", id);
       }
-      buffer.append(spanBuilder
-                      .make()
-                      .render(TagOutputFormat.html));
+      buffer.append(span.render(TagOutputFormat.html));
     }
     if (!isBlank(description))
     {
       buffer.append(" ");
-      final TagBuilder spanBuilder = span()
+      final Tag span = span()
         .withEscapedText(description)
-        .withStyle("caption_description");
-      buffer.append(spanBuilder
-                      .make()
-                      .render(TagOutputFormat.html));
+        .withStyle("caption_description")
+        .make();
+      buffer.append(span.render(TagOutputFormat.html));
     }
     buffer
       .append("</caption>")

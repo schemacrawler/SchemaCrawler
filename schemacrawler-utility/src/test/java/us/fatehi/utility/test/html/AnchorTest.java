@@ -53,8 +53,8 @@ public class AnchorTest
       .withStyle("class")
       .withBackground(Color.fromRGB(255, 0, 100))
       .withHyperlink("http://www.schemacrawler.com")
-      .withAttribute("sometag", "customvalue")
       .make();
+    anchor.addAttribute("sometag", "customvalue");
 
     assertThat(anchor.getTag(), is("a"));
     assertThat(anchor.toString(), is("a"));
@@ -76,8 +76,8 @@ public class AnchorTest
       .withAlignment(Alignment.right)
       .withEmphasis()
       .withHyperlink("http://www.schemacrawler.com")
-      .withAttribute("sometag", "custom&value")
       .make();
+    anchor.addAttribute("sometag", "custom&value");
 
     assertThat(anchor.render(TagOutputFormat.html),
                is(

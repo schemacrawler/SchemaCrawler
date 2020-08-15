@@ -49,8 +49,8 @@ public class SpanTest
       .withText("display text")
       .withStyle("class")
       .withBackground(Color.fromRGB(255, 0, 100))
-      .withAttribute("sometag", "customvalue")
       .make();
+    span.addAttribute("sometag", "customvalue");
 
     assertThat(span.getTag(), is("span"));
     assertThat(span.toString(), is("span"));
