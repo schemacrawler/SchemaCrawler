@@ -112,7 +112,7 @@ abstract class BaseTextFormattingHelper
   public void writeDescriptionRow(final String description)
   {
     final TableRow row = new TableRow();
-    row.add(newTableCell("", "spacer"));
+    row.add(tableCell().withStyle("spacer").make());
     row.add(new TableCell(description,
                           true,
                           0,
@@ -161,7 +161,7 @@ abstract class BaseTextFormattingHelper
     final TableRow row = new TableRow();
     if (isBlank(text1))
     {
-      row.add(newTableCell("", "spacer"));
+      row.add(tableCell().withStyle("spacer").make());
     }
     else
     {
@@ -311,19 +311,19 @@ abstract class BaseTextFormattingHelper
     {
       if (element == null)
       {
-        row.add(newTableCell("NULL", "data_null"));
+        row.add(tableCell().withText("NULL").withStyle("data_null").make());
       }
       else if (element instanceof BinaryData)
       {
-        row.add(newTableCell(element.toString(), "data_binary"));
+        row.add(tableCell().withEscapedText(element.toString()).withStyle("data_binary").make());
       }
       else if (element instanceof Number)
       {
-        row.add(newTableCell(element.toString(), "data_number"));
+        row.add(tableCell().withEscapedText(element.toString()).withStyle("data_number").make());
       }
       else
       {
-        row.add(newTableCell(element.toString(), ""));
+        row.add(tableCell().withEscapedText(element.toString()).make());
       }
     }
 
@@ -367,18 +367,6 @@ abstract class BaseTextFormattingHelper
                           Color.white,
                           3));
     out.println(row.render(TagOutputFormat.valueOf(outputFormat.name())));
-  }
-
-  private TableCell newTableCell(final String text, final String styleClass)
-  {
-    return new TableCell(text,
-                         true,
-                         0,
-                         Alignment.inherit,
-                         false,
-                         styleClass,
-                         Color.white,
-                         1);
   }
 
 }
