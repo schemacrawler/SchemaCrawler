@@ -51,6 +51,11 @@ public final class TagBuilder
     return new TagBuilder("span");
   }
 
+  public static TagBuilder tableHeaderCell()
+  {
+    return new TagBuilder("th");
+  }
+
   private final String tag;
   private final Map<String, String> attributes;
   private String styleClass;
