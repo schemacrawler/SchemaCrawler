@@ -37,14 +37,11 @@ import java.util.Map.Entry;
 
 import us.fatehi.utility.Color;
 
-/**
- * Represents an HTML anchor.
- *
- * @author Sualeh Fatehi
- */
+
 public class BaseTag
   implements Tag
 {
+
   private final String tag;
   private final String styleClass;
   private final int characterWidth;

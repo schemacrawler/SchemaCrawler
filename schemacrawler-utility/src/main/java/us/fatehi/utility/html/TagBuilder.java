@@ -139,4 +139,10 @@ public final class TagBuilder
     return this;
   }
 
+  public TagBuilder withEmphasis(final boolean emphasizeText)
+  {
+    this.emphasizeText = emphasizeText;
+    return this;
+  }
+
 }

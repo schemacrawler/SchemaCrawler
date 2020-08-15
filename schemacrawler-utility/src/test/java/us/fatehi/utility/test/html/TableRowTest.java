@@ -32,10 +32,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
+import static us.fatehi.utility.html.TagBuilder.tableCell;
 
 import org.junit.jupiter.api.Test;
-import us.fatehi.utility.html.TableCell;
 import us.fatehi.utility.html.TableRow;
+import us.fatehi.utility.html.Tag;
 import us.fatehi.utility.html.TagOutputFormat;
 
 public class TableRowTest
@@ -60,7 +61,7 @@ public class TableRowTest
   public void tr()
   {
     final TableRow row = new TableRow();
-    final TableCell cell1 = newTableCell();
+    final Tag cell1 = newTableCell();
 
     row.add(cell1);
     row.add(cell1);
@@ -83,9 +84,9 @@ public class TableRowTest
   public void endCells()
   {
     final TableRow row = new TableRow();
-    final TableCell cell1 = newTableCell();
-    final TableCell cell2 = newTableCell();
-    final TableCell cell3 = newTableCell();
+    final Tag cell1 = newTableCell();
+    final Tag cell2 = newTableCell();
+    final Tag cell3 = newTableCell();
 
     row.add(cell1);
     row.add(cell2);
@@ -98,11 +99,11 @@ public class TableRowTest
     assertThat(row.lastCell(), is(not(cell2)));
   }
 
-  private TableCell newTableCell()
+  private Tag newTableCell()
   {
-    final TableCell tablecell =
-      new TableCell("display text", false, 2, null, false, null, null, 1);
-    return tablecell;
+    return tableCell()
+      .withText("display text")
+      .make();
   }
 
 }

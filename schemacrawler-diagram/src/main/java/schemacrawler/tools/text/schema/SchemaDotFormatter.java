@@ -31,6 +31,7 @@ package schemacrawler.tools.text.schema;
 
 import static schemacrawler.analysis.counts.TableRowCountsUtility.getRowCountMessage;
 import static schemacrawler.analysis.counts.TableRowCountsUtility.hasRowCount;
+import static us.fatehi.utility.html.TagBuilder.tableCell;
 import static us.fatehi.utility.html.TagOutputFormat.html;
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 
@@ -183,16 +184,18 @@ public final class SchemaDotFormatter
 
     formattingHelper
       .append(new TableRow()
-                .add(newTableCell(tableName,
-                                  Alignment.left,
-                                  true,
-                                  tableNameBgColor,
-                                  colspan))
-                .add(newTableCell(tableType,
-                                  Alignment.right,
-                                  false,
-                                  tableNameBgColor,
-                                  1))
+                .add(tableCell()
+                       .withEscapedText(tableName)
+                       .withAlignment(Alignment.left)
+                       .withEmphasis(true)
+                       .withBackground(tableNameBgColor)
+                       .withAttribute("colspan", String.valueOf(colspan))
+                       .make())
+                .add(tableCell()
+                       .withEscapedText(tableType)
+                       .withAlignment(Alignment.right)
+                       .withBackground(tableNameBgColor)
+                       .make())
                 .render(html))
       .println();
 
@@ -481,16 +484,22 @@ public final class SchemaDotFormatter
     final TableRow row = new TableRow();
     if (options.isShowOrdinalNumbers())
     {
-      row.add(newTableCell("", Alignment.right, false, Color.white, 1));
+      row.add(tableCell()
+                .withAlignment(Alignment.right)
+                .make());
     }
     row
-      .add(newTableCell("", Alignment.left, false, Color.white, 1))
-      .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
-      .add(newTableCell("auto-incremented",
-                        Alignment.left,
-                        false,
-                        Color.white,
-                        1));
+      .add(tableCell()
+             .withAlignment(Alignment.left)
+             .make())
+      .add(tableCell()
+             .withText(" ")
+             .withAlignment(Alignment.left)
+             .make())
+      .add(tableCell()
+             .withEscapedText("auto-incremented")
+             .withAlignment(Alignment.left)
+             .make());
     formattingHelper
       .append(row.render(html))
       .println();
@@ -518,12 +527,21 @@ public final class SchemaDotFormatter
     final TableRow row = new TableRow();
     if (options.isShowOrdinalNumbers())
     {
-      row.add(newTableCell("", Alignment.right, false, Color.white, 1));
+      row.add(tableCell()
+                .withAlignment(Alignment.right)
+                .make());
     }
     row
-      .add(newTableCell("", Alignment.left, false, Color.white, 1))
-      .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
-      .add(newTableCell("generated", Alignment.left, false, Color.white, 1));
+      .add(tableCell()
+             .withAlignment(Alignment.left)
+             .make())
+      .add(tableCell()
+             .withAlignment(Alignment.left)
+             .make())
+      .add(tableCell()
+             .withEscapedText("generated")
+             .withAlignment(Alignment.left)
+             .make());
     formattingHelper
       .append(row.render(html))
       .println();
@@ -559,12 +577,22 @@ public final class SchemaDotFormatter
     final TableRow row = new TableRow();
     if (options.isShowOrdinalNumbers())
     {
-      row.add(newTableCell("", Alignment.right, false, Color.white, 1));
+      row.add(tableCell()
+                .withAlignment(Alignment.right)
+                .make());
     }
     row
-      .add(newTableCell("", Alignment.left, false, Color.white, 1))
-      .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
-      .add(newTableCell(enumValues, Alignment.left, false, Color.white, 1));
+      .add(tableCell()
+             .withAlignment(Alignment.left)
+             .make())
+      .add(tableCell()
+             .withEscapedText(" ")
+             .withAlignment(Alignment.left)
+             .make())
+      .add(tableCell()
+             .withEscapedText(enumValues)
+             .withAlignment(Alignment.left)
+             .make());
     formattingHelper
       .append(row.render(html))
       .println();
@@ -592,12 +620,22 @@ public final class SchemaDotFormatter
     final TableRow row = new TableRow();
     if (options.isShowOrdinalNumbers())
     {
-      row.add(newTableCell("", Alignment.right, false, Color.white, 1));
+      row.add(tableCell()
+                .withAlignment(Alignment.right)
+                .make());
     }
     row
-      .add(newTableCell("", Alignment.left, false, Color.white, 1))
-      .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
-      .add(newTableCell("hidden", Alignment.left, false, Color.white, 1));
+      .add(tableCell()
+             .withAlignment(Alignment.left)
+             .make())
+      .add(tableCell()
+             .withEscapedText(" ")
+             .withAlignment(Alignment.left)
+             .make())
+      .add(tableCell()
+             .withEscapedText("hidden")
+             .withAlignment(Alignment.left)
+             .make());
     formattingHelper
       .append(row.render(html))
       .println();
@@ -612,16 +650,22 @@ public final class SchemaDotFormatter
     final TableRow remarksRow = new TableRow();
     if (options.isShowOrdinalNumbers())
     {
-      remarksRow.add(newTableCell("", Alignment.right, false, Color.white, 1));
+      remarksRow.add(tableCell()
+                       .withAlignment(Alignment.right)
+                       .make());
     }
     remarksRow
-      .add(newTableCell("", Alignment.left, false, Color.white, 1))
-      .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
-      .add(newTableCell(column.getRemarks(),
-                        Alignment.left,
-                        false,
-                        Color.white,
-                        1));
+      .add(tableCell()
+             .withAlignment(Alignment.left)
+             .make())
+      .add(tableCell()
+             .withEscapedText(" ")
+             .withAlignment(Alignment.left)
+             .make())
+      .add(tableCell()
+             .withEscapedText(column.getRemarks())
+             .withAlignment(Alignment.left)
+             .make());
     formattingHelper
       .append(remarksRow.render(html))
       .println();
@@ -669,24 +713,25 @@ public final class SchemaDotFormatter
       {
         final String ordinalNumberString =
           String.valueOf(column.getOrdinalPosition());
-        row.add(newTableCell(ordinalNumberString,
-                             Alignment.right,
-                             false,
-                             Color.white,
-                             1));
+        row.add(tableCell()
+                  .withEscapedText(ordinalNumberString)
+                  .withAlignment(Alignment.right)
+                  .make());
       }
       row
-        .add(newTableCell(identifiers.quoteName(column.getName()),
-                          Alignment.left,
-                          emphasize,
-                          Color.white,
-                          1))
-        .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
-        .add(newTableCell(columnDetails,
-                          Alignment.left,
-                          false,
-                          Color.white,
-                          1));
+        .add(tableCell()
+               .withEscapedText(identifiers.quoteName(column.getName()))
+               .withAlignment(Alignment.left)
+               .withEmphasis(emphasize)
+               .make())
+        .add(tableCell()
+               .withEscapedText(" ")
+               .withAlignment(Alignment.left)
+               .make())
+        .add(tableCell()
+               .withEscapedText(columnDetails)
+               .withAlignment(Alignment.left)
+               .make());
 
       row
         .firstCell()
@@ -714,11 +759,11 @@ public final class SchemaDotFormatter
     }
     formattingHelper
       .append(new TableRow()
-                .add(newTableCell(table.getRemarks(),
-                                  Alignment.left,
-                                  false,
-                                  Color.white,
-                                  3))
+                .add(tableCell()
+                       .withEscapedText(table.getRemarks())
+                       .withAlignment(Alignment.left)
+                       .withAttribute("colspan", String.valueOf(3))
+                       .make())
                 .render(html))
       .println();
   }
@@ -731,11 +776,11 @@ public final class SchemaDotFormatter
     }
     formattingHelper
       .append(new TableRow()
-                .add(newTableCell(getRowCountMessage(table),
-                                  Alignment.right,
-                                  false,
-                                  Color.white,
-                                  3))
+                .add(tableCell()
+                       .withEscapedText(getRowCountMessage(table))
+                       .withAlignment(Alignment.right)
+                       .withAttribute("colspan", String.valueOf(3))
+                       .make())
                 .render(html))
       .println();
   }

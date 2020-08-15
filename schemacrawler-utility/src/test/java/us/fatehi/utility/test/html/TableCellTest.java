@@ -30,13 +30,13 @@ package us.fatehi.utility.test.html;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static us.fatehi.utility.html.TagBuilder.tableCell;
 import static us.fatehi.utility.html.TagBuilder.tableHeaderCell;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import us.fatehi.utility.Color;
 import us.fatehi.utility.html.Alignment;
-import us.fatehi.utility.html.TableCell;
 import us.fatehi.utility.html.Tag;
 import us.fatehi.utility.html.TagOutputFormat;
 
@@ -71,14 +71,13 @@ public class TableCellTest
   @Test
   public void td1()
   {
-    final TableCell tablecell = new TableCell("display text",
-                                              false,
-                                              2,
-                                              Alignment.right,
-                                              false,
-                                              "class",
-                                              Color.fromRGB(255, 0, 100),
-                                              1);
+    final Tag tablecell = tableCell()
+      .withText("display text")
+      .withWidth(2)
+      .withAlignment(Alignment.right)
+      .withStyle("class")
+      .withBackground(Color.fromRGB(255, 0, 100))
+      .make();
     tablecell.addAttribute("sometag", "customvalue");
 
     assertThat(tablecell.getTag(), is("td"));
@@ -96,19 +95,17 @@ public class TableCellTest
   @Test
   public void td2()
   {
-    final TableCell tablecell = new TableCell("display & text",
-                                              true,
-                                              -1,
-                                              Alignment.right,
-                                              true,
-                                              null,
-                                              null,
-                                              2);
+    final Tag tablecell = tableCell()
+      .withEscapedText("display & text")
+      .withAlignment(Alignment.right)
+      .withEmphasis()
+      .withAttribute("colpsan", "2")
+      .make();
     tablecell.addAttribute("sometag", "custom&value");
 
     assertThat(tablecell.render(TagOutputFormat.html),
                is(
-                 "<td colspan='2' sometag='custom&value' align='right'><b><i>display &amp; text</i></b></td>"));
+                 "<td sometag='custom&value' colpsan='2' align='right'><b><i>display &amp; text</i></b></td>"));
     assertThat(tablecell.render(TagOutputFormat.text), is("display & text"));
     assertThat(tablecell.render(TagOutputFormat.tsv), is("display & text"));
 
