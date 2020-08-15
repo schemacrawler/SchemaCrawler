@@ -31,6 +31,7 @@ package schemacrawler.tools.text.utility;
 
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.html.TagBuilder.anchor;
+import static us.fatehi.utility.html.TagBuilder.tableCell;
 import static us.fatehi.utility.html.TagBuilder.tableHeaderCell;
 
 import java.io.PrintWriter;
@@ -40,7 +41,6 @@ import schemacrawler.utility.BinaryData;
 import us.fatehi.utility.Color;
 import us.fatehi.utility.html.Alignment;
 import us.fatehi.utility.html.TableCell;
-import us.fatehi.utility.html.TableHeaderCell;
 import us.fatehi.utility.html.TableRow;
 import us.fatehi.utility.html.Tag;
 import us.fatehi.utility.html.TagOutputFormat;
@@ -202,14 +202,7 @@ abstract class BaseTextFormattingHelper
   public void writeEmptyRow()
   {
     final TableRow tableRow = new TableRow();
-    tableRow.add(new TableCell("",
-                               true,
-                               0,
-                               Alignment.inherit,
-                               false,
-                               "",
-                               Color.white,
-                               3));
+    tableRow.add(tableCell().withAttribute("colspan", "3").make());
     out.println(tableRow.render(TagOutputFormat.valueOf(outputFormat.name())));
   }
 

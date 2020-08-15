@@ -30,13 +30,14 @@ package us.fatehi.utility.test.html;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static us.fatehi.utility.html.TagBuilder.tableHeaderCell;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import us.fatehi.utility.Color;
 import us.fatehi.utility.html.Alignment;
 import us.fatehi.utility.html.TableCell;
-import us.fatehi.utility.html.TableHeaderCell;
+import us.fatehi.utility.html.Tag;
 import us.fatehi.utility.html.TagOutputFormat;
 
 public class TableCellTest
@@ -46,14 +47,14 @@ public class TableCellTest
   @Test
   public void th1()
   {
-    final TableHeaderCell th = new TableHeaderCell("<escaped & text>",
-                                                   2,
-                                                   Alignment.right,
-                                                   false,
-                                                   "class",
-                                                   Color.fromRGB(255, 0, 100),
-                                                   1);
-    th.addAttribute("sometag", "customvalue");
+    final Tag th = tableHeaderCell()
+      .withEscapedText("<escaped & text>")
+      .withWidth(2)
+      .withAlignment(Alignment.right)
+      .withStyle("class")
+      .withBackground(Color.fromRGB(255, 0, 100))
+      .withAttribute("sometag", "customvalue")
+      .make();
 
     assertThat(th.getTag(), is("th"));
     assertThat(th.toString(), is("th"));

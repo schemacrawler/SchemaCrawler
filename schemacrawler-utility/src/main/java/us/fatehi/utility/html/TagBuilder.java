@@ -56,6 +56,11 @@ public final class TagBuilder
     return new TagBuilder("th");
   }
 
+  public static TagBuilder tableCell()
+  {
+    return new TagBuilder("td");
+  }
+
   private final String tag;
   private final Map<String, String> attributes;
   private String styleClass;
