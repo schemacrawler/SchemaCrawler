@@ -52,7 +52,7 @@ public class AnchorTest
       .withAlignment(Alignment.right)
       .withStyle("class")
       .withBackground(Color.fromRGB(255, 0, 100))
-      .withAttribute("href", "http://www.schemacrawler.com")
+      .withHyperlink("http://www.schemacrawler.com")
       .withAttribute("sometag", "customvalue")
       .make();
 
@@ -75,7 +75,7 @@ public class AnchorTest
       .withEscapedText("display & text")
       .withAlignment(Alignment.right)
       .withEmphasis()
-      .withAttribute("href", "http://www.schemacrawler.com")
+      .withHyperlink("http://www.schemacrawler.com")
       .withAttribute("sometag", "custom&value")
       .make();
 

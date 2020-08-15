@@ -165,4 +165,18 @@ public final class TagBuilder
     return this;
   }
 
+  public TagBuilder withColumnSpan(final int columnSpan)
+  {
+    return withAttribute("colspan", String.valueOf(columnSpan));
+  }
+
+  public TagBuilder withHyperlink(final String href)
+  {
+    if (href == null)
+    {
+      return this;
+    }
+    return withAttribute("href", href);
+  }
+
 }

@@ -190,7 +190,7 @@ public final class SchemaDotFormatter
                        .withAlignment(Alignment.left)
                        .withEmphasis(true)
                        .withBackground(tableNameBgColor)
-                       .withAttribute("colspan", String.valueOf(colspan))
+                       .withColumnSpan(colspan)
                        .make())
                 .addInnerTag(tableCell()
                        .withEscapedText(tableType)
@@ -763,7 +763,7 @@ public final class SchemaDotFormatter
                 .addInnerTag(tableCell()
                        .withEscapedText(table.getRemarks())
                        .withAlignment(Alignment.left)
-                       .withAttribute("colspan", String.valueOf(3))
+                       .withColumnSpan(3)
                        .make())
                 .render(html))
       .println();
@@ -780,7 +780,7 @@ public final class SchemaDotFormatter
                 .addInnerTag(tableCell()
                        .withEscapedText(getRowCountMessage(table))
                        .withAlignment(Alignment.right)
-                       .withAttribute("colspan", String.valueOf(3))
+                       .withColumnSpan(3)
                        .make())
                 .render(html))
       .println();

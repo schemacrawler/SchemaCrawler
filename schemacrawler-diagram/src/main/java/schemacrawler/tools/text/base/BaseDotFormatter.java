@@ -94,7 +94,7 @@ public abstract class BaseDotFormatter
                 .withEscapedText(title)
                 .withAlignment(Alignment.left)
                 .withEmphasis(true)
-                .withAttribute("colspan", String.valueOf(2))
+                .withColumnSpan(2)
                 .make());
 
       formattingHelper

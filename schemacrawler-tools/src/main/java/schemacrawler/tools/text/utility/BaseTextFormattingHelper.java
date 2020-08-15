@@ -92,7 +92,7 @@ abstract class BaseTextFormattingHelper
   {
     return anchor()
       .withEscapedText(text)
-      .withAttribute("href", link)
+      .withHyperlink(link)
       .make()
       .render(TagOutputFormat.valueOf(outputFormat.name()));
   }
@@ -113,7 +113,7 @@ abstract class BaseTextFormattingHelper
     row.addInnerTag(tableCell().withStyle("spacer").make());
     row.addInnerTag(tableCell()
               .withEscapedText(description)
-              .withAttribute("colspan", "2")
+              .withColumnSpan(2)
               .make());
     out.println(row.render(TagOutputFormat.valueOf(outputFormat.name())));
   }
@@ -194,7 +194,7 @@ abstract class BaseTextFormattingHelper
   public void writeEmptyRow()
   {
     final Tag tableRow = tableRow().make();
-    tableRow.addInnerTag(tableCell().withAttribute("colspan", "3").make());
+    tableRow.addInnerTag(tableCell().withColumnSpan(3).make());
     out.println(tableRow.render(TagOutputFormat.valueOf(outputFormat.name())));
   }
 
@@ -228,7 +228,7 @@ abstract class BaseTextFormattingHelper
               .withEscapedText(name)
               .withWidth(nameWidth)
               .withStyle("name")
-              .withAttribute("colspan", "2")
+              .withColumnSpan(2)
               .make());
     row.addInnerTag(tableCell()
               .withEscapedText(description)
@@ -344,7 +344,7 @@ abstract class BaseTextFormattingHelper
     row.addInnerTag(tableCell()
               .withEscapedText(definition)
               .withStyle(style)
-              .withAttribute("colspan", "3")
+              .withColumnSpan(3)
               .make());
     out.println(row.render(TagOutputFormat.valueOf(outputFormat.name())));
   }
