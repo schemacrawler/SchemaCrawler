@@ -50,7 +50,7 @@ public class AnchorTest
       .withText("display text")
       .withWidth(2)
       .withAlignment(Alignment.right)
-      .withStyle("class")
+      .withStyleClass("class")
       .withBackground(Color.fromRGB(255, 0, 100))
       .withHyperlink("http://www.schemacrawler.com")
       .make();

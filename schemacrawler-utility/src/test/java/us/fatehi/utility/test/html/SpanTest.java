@@ -47,7 +47,7 @@ public class SpanTest
   {
     final Tag span = span()
       .withText("display text")
-      .withStyle("class")
+      .withStyleClass("class")
       .withBackground(Color.fromRGB(255, 0, 100))
       .make();
     span.addAttribute("sometag", "customvalue");

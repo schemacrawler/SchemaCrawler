@@ -66,6 +66,11 @@ public final class TagBuilder
     return new TagBuilder("tr").withIndent(true);
   }
 
+  public static TagBuilder caption()
+  {
+    return new TagBuilder("caption").withIndent(true);
+  }
+
   private final String tag;
   private final Map<String, String> attributes;
   private String styleClass;
@@ -103,9 +108,18 @@ public final class TagBuilder
                        attributes);
   }
 
-  public TagBuilder withStyle(final String styleClass)
+  public TagBuilder withStyleClass(final String styleClass)
   {
     this.styleClass = styleClass;
+    return this;
+  }
+
+  public TagBuilder withStyle(final String style)
+  {
+    if (style != null)
+    {
+      attributes.put("style", style);
+    }
     return this;
   }
 

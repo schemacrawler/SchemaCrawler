@@ -38,6 +38,7 @@ import java.io.PrintWriter;
 import schemacrawler.tools.options.TextOutputFormat;
 import us.fatehi.utility.Color;
 import us.fatehi.utility.html.Tag;
+import us.fatehi.utility.html.TagBuilder;
 import us.fatehi.utility.html.TagOutputFormat;
 
 /**
@@ -151,34 +152,36 @@ public final class HtmlFormattingHelper
                                  final String description,
                                  final Color backgroundColor)
   {
-    final StringBuilder buffer = new StringBuilder(1024);
-    buffer
-      .append("  <caption style='background-color: ")
-      .append(backgroundColor)
-      .append(";'>");
+
+    final Tag caption = TagBuilder
+      .caption()
+      .withStyle(String.format("background-color: %s;", backgroundColor))
+      .make();
+
     if (!isBlank(name))
     {
       final Tag span = span()
         .withEscapedText(name)
-        .withStyle("caption_name")
+        .withStyleClass("caption_name")
         .make();
       if (!isBlank(id))
       {
         span.addAttribute("id", id);
       }
-      buffer.append(span.render(TagOutputFormat.html));
+      caption.addInnerTag(span);
     }
     if (!isBlank(description))
     {
-      buffer.append(" ");
       final Tag span = span()
         .withEscapedText(description)
-        .withStyle("caption_description")
+        .withStyleClass("caption_description")
         .make();
-      buffer.append(span.render(TagOutputFormat.html));
+      caption.addInnerTag(span);
     }
+
+    final StringBuilder buffer = new StringBuilder(1024);
     buffer
-      .append("</caption>")
+      .append(caption.render(TagOutputFormat.html))
       .append(System.lineSeparator());
 
     out.println(buffer.toString());
