@@ -25,40 +25,18 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.text.utility.html;
+
+package us.fatehi.utility.html;
 
 
-import schemacrawler.tools.options.TextOutputFormat;
-import us.fatehi.utility.Color;
-
-public final class TableHeaderCell
-  extends TableCell
+/**
+ * Enumeration for text format type.
+ */
+public enum TagOutputFormat
 {
 
-  public TableHeaderCell(final String text,
-                         final int characterWidth,
-                         final Alignment align,
-                         final boolean emphasizeText,
-                         final String styleClass,
-                         final Color bgColor,
-                         final int colSpan,
-                         final TextOutputFormat outputFormat)
-  {
-    super(text,
-          true,
-          characterWidth,
-          align,
-          emphasizeText,
-          styleClass,
-          bgColor,
-          colSpan,
-          outputFormat);
-  }
-
-  @Override
-  protected String getTag()
-  {
-    return "th";
-  }
+  text, // Plain text format
+  html, // HyperText Markup Language (HTML) format,
+  tsv, // Tab-separated values (TSV) format
 
 }

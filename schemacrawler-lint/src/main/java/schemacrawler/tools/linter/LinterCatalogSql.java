@@ -31,6 +31,7 @@ package schemacrawler.tools.linter;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.QueryUtility.executeForScalar;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -67,16 +68,10 @@ public class LinterCatalogSql
     requireNonNull(config, "No configuration provided");
 
     message = config.getStringValue("message", null);
-    if (isBlank(message))
-    {
-      throw new IllegalArgumentException("No message provided");
-    }
+    requireNotBlank(message, "No message provided");
 
     sql = config.getStringValue("sql", null);
-    if (isBlank(sql))
-    {
-      throw new IllegalArgumentException("No SQL provided");
-    }
+    requireNotBlank(sql,"No SQL provided");
   }
 
   @Override

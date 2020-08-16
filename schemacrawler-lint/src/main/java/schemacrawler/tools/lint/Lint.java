@@ -30,6 +30,7 @@ package schemacrawler.tools.lint;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -68,20 +69,12 @@ public final class Lint<V extends Serializable>
       .randomUUID()
       .toString();
 
-    if (isBlank(linterId))
-    {
-      throw new IllegalArgumentException("Linter id not provided");
-    }
-    this.linterId = linterId;
+    this.linterId = requireNotBlank(linterId, "Linter id not provided");
+    this.linterInstanceId =
+      requireNotBlank(linterInstanceId, "Linter instance id not provided");
 
-    if (isBlank(linterInstanceId))
-    {
-      throw new IllegalArgumentException("Linter instance id not provided");
-    }
-    this.linterInstanceId = linterInstanceId;
-
-    requireNonNull(objectType, "Named object type not provided");
-    this.objectType = objectType;
+    this.objectType =
+      requireNonNull(objectType, "Named object type not provided");
     requireNonNull(namedObject, "Named object not provided");
     this.objectName = namedObject.getFullName();
 

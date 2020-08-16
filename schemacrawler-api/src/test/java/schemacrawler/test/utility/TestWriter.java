@@ -33,6 +33,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Path;
+import java.util.Objects;
 
 public final class TestWriter
   extends Writer
@@ -83,14 +84,7 @@ public final class TestWriter
 
   public void println(final Object x)
   {
-    if (x == null)
-    {
-      println("null");
-    }
-    else
-    {
-      println(x.toString());
-    }
+    println(Objects.toString(x));
   }
 
   public void println(final String x)
@@ -116,14 +110,7 @@ public final class TestWriter
   {
     try
     {
-      if (x == null)
-      {
-        out.write("null".getBytes(UTF_8));
-      }
-      else
-      {
-        out.write(x.getBytes(UTF_8));
-      }
+      out.write(Objects.toString(x).getBytes(UTF_8));
     }
     catch (final IOException e)
     {

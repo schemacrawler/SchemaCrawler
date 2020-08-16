@@ -29,6 +29,7 @@ package schemacrawler.crawl;
 
 
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -47,10 +48,7 @@ abstract class AbstractProperty
 
   AbstractProperty(final String name, final Serializable value)
   {
-    if (isBlank(name))
-    {
-      throw new IllegalArgumentException("No property name provided");
-    }
+    requireNotBlank(name, "No property name provided");
     this.name = name.trim();
     if (value != null && value
       .getClass()

@@ -30,17 +30,18 @@ package schemacrawler.tools.text.utility;
 
 
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.html.TagBuilder.anchor;
+import static us.fatehi.utility.html.TagBuilder.tableCell;
+import static us.fatehi.utility.html.TagBuilder.tableHeaderCell;
+import static us.fatehi.utility.html.TagBuilder.tableRow;
 
 import java.io.PrintWriter;
 
 import schemacrawler.tools.options.TextOutputFormat;
-import schemacrawler.tools.text.utility.html.Alignment;
-import schemacrawler.tools.text.utility.html.Anchor;
-import schemacrawler.tools.text.utility.html.TableCell;
-import schemacrawler.tools.text.utility.html.TableHeaderCell;
-import schemacrawler.tools.text.utility.html.TableRow;
 import schemacrawler.utility.BinaryData;
-import us.fatehi.utility.Color;
+import us.fatehi.utility.html.Alignment;
+import us.fatehi.utility.html.Tag;
+import us.fatehi.utility.html.TagOutputFormat;
 
 /**
  * Methods to format entire rows of output as HTML.
@@ -89,15 +90,11 @@ abstract class BaseTextFormattingHelper
   @Override
   public String createAnchor(final String text, final String link)
   {
-    return new Anchor(text,
-                      false,
-                      0,
-                      Alignment.inherit,
-                      false,
-                      "",
-                      Color.white,
-                      link,
-                      outputFormat).toString();
+    return anchor()
+      .withEscapedText(text)
+      .withHyperlink(link)
+      .make()
+      .render(TagOutputFormat.valueOf(outputFormat.name()));
   }
 
   @Override
@@ -112,18 +109,13 @@ abstract class BaseTextFormattingHelper
   @Override
   public void writeDescriptionRow(final String description)
   {
-    final TableRow row = new TableRow(outputFormat);
-    row.add(newTableCell("", "spacer", outputFormat));
-    row.add(new TableCell(description,
-                          true,
-                          0,
-                          Alignment.inherit,
-                          false,
-                          "",
-                          Color.white,
-                          2,
-                          outputFormat));
-    out.println(row.toString());
+    final Tag row = tableRow().make();
+    row.addInnerTag(tableCell().withStyleClass("spacer").make());
+    row.addInnerTag(tableCell()
+              .withEscapedText(description)
+              .withColumnSpan(2)
+              .make());
+    out.println(row.render(TagOutputFormat.valueOf(outputFormat.name())));
   }
 
   /**
@@ -160,42 +152,37 @@ abstract class BaseTextFormattingHelper
       text3Sytle = "";
     }
 
-    final TableRow row = new TableRow(outputFormat);
+    final Tag row = tableRow().make();
     if (isBlank(text1))
     {
-      row.add(newTableCell("", "spacer", outputFormat));
+      row.addInnerTag(tableCell()
+                .withStyleClass("spacer")
+                .make());
     }
     else
     {
-      row.add(new TableCell(text1,
-                            true,
-                            2,
-                            Alignment.inherit,
-                            false,
-                            "spacer",
-                            Color.white,
-                            1,
-                            outputFormat));
+      row.addInnerTag(tableCell()
+                .withEscapedText(text1)
+                .withWidth(2)
+                .withStyleClass("spacer")
+                .make());
     }
-    row.add(new TableCell(text2,
-                          escapeText,
-                          text2Width,
-                          Alignment.inherit,
-                          emphasize,
-                          "minwidth",
-                          Color.white,
-                          1,
-                          outputFormat));
-    row.add(new TableCell(text3,
-                          true,
-                          text3Width,
-                          Alignment.inherit,
-                          false,
-                          "minwidth" + text3Sytle,
-                          Color.white,
-                          1,
-                          outputFormat));
-    out.println(row.toString());
+
+    row.addInnerTag(tableCell()
+                      .withEscapedText(text2, escapeText)
+                      .withWidth(text2Width)
+                      .withEmphasis(emphasize)
+                      .withStyleClass("minwidth")
+                      .make());
+
+    row.addInnerTag(tableCell()
+                      .withEscapedText(text3)
+                      .withWidth(text3Width)
+                      .withAlignment(Alignment.inherit)
+                      .withStyleClass("minwidth" + text3Sytle)
+                      .make());
+
+    out.println(row.render(TagOutputFormat.valueOf(outputFormat.name())));
   }
 
   /**
@@ -206,17 +193,9 @@ abstract class BaseTextFormattingHelper
   @Override
   public void writeEmptyRow()
   {
-    final TableRow tableRow = new TableRow(outputFormat);
-    tableRow.add(new TableCell("",
-                               true,
-                               0,
-                               Alignment.inherit,
-                               false,
-                               "",
-                               Color.white,
-                               3,
-                               outputFormat));
-    out.println(tableRow.toString());
+    final Tag tableRow = tableRow().make();
+    tableRow.addInnerTag(tableCell().withColumnSpan(3).make());
+    out.println(tableRow.render(TagOutputFormat.valueOf(outputFormat.name())));
   }
 
   /**
@@ -244,27 +223,21 @@ abstract class BaseTextFormattingHelper
                                         - descriptionWidth));
     }
 
-    final TableRow row = new TableRow(outputFormat);
-    row.add(new TableCell(name,
-                          true,
-                          nameWidth,
-                          Alignment.inherit,
-                          false,
-                          "name",
-                          Color.white,
-                          2,
-                          outputFormat));
-    row.add(new TableCell(description,
-                          true,
-                          descriptionWidth,
-                          Alignment.right,
-                          false,
-                          "description right",
-                          Color.white,
-                          1,
-                          outputFormat));
+    final Tag row = tableRow().make();
+    row.addInnerTag(tableCell()
+              .withEscapedText(name)
+              .withWidth(nameWidth)
+              .withStyleClass("name")
+              .withColumnSpan(2)
+              .make());
+    row.addInnerTag(tableCell()
+              .withEscapedText(description)
+              .withWidth(descriptionWidth)
+              .withAlignment(Alignment.right)
+              .withStyleClass("description right")
+              .make());
 
-    out.println(row.toString());
+    out.println(row.render(TagOutputFormat.valueOf(outputFormat.name())));
   }
 
   /**
@@ -286,27 +259,20 @@ abstract class BaseTextFormattingHelper
     final String valueStyle =
       "property_value" + (alignmentForValue == Alignment.inherit? "": " right");
 
-    final TableRow row = new TableRow(outputFormat);
-    row.add(new TableCell(name,
-                          true,
-                          nameWidth,
-                          Alignment.inherit,
-                          false,
-                          "property_name",
-                          Color.white,
-                          1,
-                          outputFormat));
-    row.add(new TableCell(value,
-                          true,
-                          valueWidth,
-                          alignmentForValue,
-                          false,
-                          valueStyle,
-                          Color.white,
-                          1,
-                          outputFormat));
+    final Tag row = tableRow().make();
+    row.addInnerTag(tableCell()
+              .withEscapedText(name)
+              .withWidth(nameWidth)
+              .withStyleClass("property_name")
+              .make());
+    row.addInnerTag(tableCell()
+              .withEscapedText(value)
+              .withWidth(valueWidth)
+              .withAlignment(alignmentForValue)
+              .withStyleClass(valueStyle)
+              .make());
 
-    out.println(row.toString());
+    out.println(row.render(TagOutputFormat.valueOf(outputFormat.name())));
   }
 
   /**
@@ -323,28 +289,28 @@ abstract class BaseTextFormattingHelper
     {
       outputFormat = TextOutputFormat.tsv;
     }
-    final TableRow row = new TableRow(outputFormat);
+    final Tag row = tableRow().make();
     for (final Object element : columnData)
     {
       if (element == null)
       {
-        row.add(newTableCell(null, "data_null", outputFormat));
+        row.addInnerTag(tableCell().withText("NULL").withStyleClass("data_null").make());
       }
       else if (element instanceof BinaryData)
       {
-        row.add(newTableCell(element.toString(), "data_binary", outputFormat));
+        row.addInnerTag(tableCell().withEscapedText(element.toString()).withStyleClass("data_binary").make());
       }
       else if (element instanceof Number)
       {
-        row.add(newTableCell(element.toString(), "data_number", outputFormat));
+        row.addInnerTag(tableCell().withEscapedText(element.toString()).withStyleClass("data_number").make());
       }
       else
       {
-        row.add(newTableCell(element.toString(), "", outputFormat));
+        row.addInnerTag(tableCell().withEscapedText(element.toString()).make());
       }
     }
 
-    out.println(row.toString());
+    out.println(row.render(TagOutputFormat.valueOf(outputFormat.name())));
   }
 
   /**
@@ -361,52 +327,26 @@ abstract class BaseTextFormattingHelper
     {
       outputFormat = TextOutputFormat.tsv;
     }
-    final TableRow row = new TableRow(outputFormat);
+    final Tag row = tableRow().make();
     for (final String columnName : columnNames)
     {
-      final TableHeaderCell headerCell = new TableHeaderCell(columnName,
-                                                             0,
-                                                             Alignment.inherit,
-                                                             false,
-                                                             "",
-                                                             Color.white,
-                                                             1,
-                                                             outputFormat);
-      row.add(headerCell);
+      final Tag headerCell = tableHeaderCell().withText(columnName).make();
+      row.addInnerTag(headerCell);
     }
 
-    out.println(row.toString());
+    out.println(row.render(TagOutputFormat.valueOf(outputFormat.name())));
   }
 
   @Override
   public void writeWideRow(final String definition, final String style)
   {
-    final TableRow row = new TableRow(outputFormat);
-    row.add(new TableCell(definition,
-                          true,
-                          0,
-                          Alignment.inherit,
-                          false,
-                          style,
-                          Color.white,
-                          3,
-                          outputFormat));
-    out.println(row.toString());
-  }
-
-  private TableCell newTableCell(final String text,
-                                 final String styleClass,
-                                 final TextOutputFormat outputFormat)
-  {
-    return new TableCell(text,
-                         true,
-                         0,
-                         Alignment.inherit,
-                         false,
-                         styleClass,
-                         Color.white,
-                         1,
-                         outputFormat);
+    final Tag row = tableRow().make();
+    row.addInnerTag(tableCell()
+              .withEscapedText(definition)
+              .withStyleClass(style)
+              .withColumnSpan(3)
+              .make());
+    out.println(row.render(TagOutputFormat.valueOf(outputFormat.name())));
   }
 
 }

@@ -80,7 +80,7 @@ public final class DOCTYPEChanger
   protected boolean generating = false;
   protected boolean cycle = true;
   protected boolean internalSubset = false;
-  protected StringBuffer myBuffer = new StringBuffer();
+  protected StringBuilder myBuffer = new StringBuilder();
 
   /**
    * This method is a placeholder - all 'real' activity appears in the int

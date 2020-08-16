@@ -28,8 +28,6 @@ http://www.gnu.org/licenses/
 package us.fatehi.utility;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -105,6 +103,24 @@ public final class Utility
       return i;
     }
     return -1;
+  }
+
+  /**
+   * Checks if the text is null or empty, and throws an exception if it is.
+   *
+   * @param text
+   *   Text to check.
+   * @return Provided string, if not blank.
+   * @throws IllegalArgumentException
+   *   If the provided string is blank
+   */
+  public static String requireNotBlank(final String text, final String message)
+  {
+    if (isBlank(text))
+    {
+      throw new IllegalArgumentException(message);
+    }
+    return text;
   }
 
   /**

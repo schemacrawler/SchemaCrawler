@@ -29,6 +29,7 @@ package us.fatehi.utility;
 
 
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
 /**
  * Color breaks the dependency on java.awt.Color. The AWT comes with a lot of
@@ -81,10 +82,7 @@ public final class Color
 
   public static Color fromHexTriplet(final String htmlColor)
   {
-    if (isBlank(htmlColor))
-    {
-      throw new IllegalArgumentException("No color provided, " + htmlColor);
-    }
+    requireNotBlank(htmlColor, "No color provided");
     if (htmlColor.length() != 7 || !htmlColor.startsWith("#"))
     {
       throw new IllegalArgumentException("Bad color provided, " + htmlColor);

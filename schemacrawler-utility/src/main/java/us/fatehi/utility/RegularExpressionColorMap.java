@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package us.fatehi.utility;
 
 
+import static us.fatehi.utility.Utility.requireNotBlank;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -108,11 +110,7 @@ public class RegularExpressionColorMap
   {
     try
     {
-      if (Utility.isBlank(regExpPattern))
-      {
-        throw new IllegalArgumentException(
-          "No regular expression pattern provided");
-      }
+      requireNotBlank(regExpPattern, "No regular expression pattern provided");
 
       final Pattern pattern = Pattern.compile(regExpPattern, 0);
       final Color color = Color.fromHexTriplet(htmlColor);
@@ -132,10 +130,7 @@ public class RegularExpressionColorMap
   {
     try
     {
-      if (Utility.isBlank(literal))
-      {
-        throw new IllegalArgumentException("No literal key provided");
-      }
+      requireNotBlank(literal, "No literal key provided");
 
       final Pattern pattern = Pattern.compile(literal, Pattern.LITERAL);
       colorMap.put(pattern, color);

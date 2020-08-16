@@ -29,6 +29,7 @@ package schemacrawler.schemacrawler;
 
 
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.io.Serializable;
 
@@ -54,18 +55,10 @@ public final class DatabaseServerType
                             final String databaseSystemName,
                             final String jdbcDriverClassName)
   {
-    if (isBlank(databaseSystemIdentifier))
-    {
-      throw new IllegalArgumentException(
-        "No database system identifier provided");
-    }
-    this.databaseSystemIdentifier = databaseSystemIdentifier;
-
-    if (isBlank(databaseSystemName))
-    {
-      throw new IllegalArgumentException("No database system name provided");
-    }
-    this.databaseSystemName = databaseSystemName;
+    this.databaseSystemIdentifier = requireNotBlank(databaseSystemIdentifier,
+                                                    "No database system identifier provided");
+    this.databaseSystemName =
+      requireNotBlank(databaseSystemName, "No database system name provided");
 
     if (isBlank(jdbcDriverClassName))
     {

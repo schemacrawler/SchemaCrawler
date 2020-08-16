@@ -30,6 +30,7 @@ package schemacrawler.tools.lint;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -62,11 +63,8 @@ public class LinterConfigs
   private static Element getSubElement(final Element element,
                                        final String tagName)
   {
-    if (isBlank(tagName))
-    {
-      throw new IllegalArgumentException(
+    requireNotBlank(tagName,
         "Cannot get sub-element, since no name is provided");
-    }
     requireNonNull(element, "Cannot get sub-element for tag " + tagName);
 
     final Element subElement;

@@ -29,14 +29,17 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.utility;
 
 
-import static schemacrawler.tools.text.utility.html.Entities.escapeForXMLElement;
 import static us.fatehi.utility.IOUtility.readResourceFully;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.html.TagBuilder.span;
 
 import java.io.PrintWriter;
 
 import schemacrawler.tools.options.TextOutputFormat;
 import us.fatehi.utility.Color;
+import us.fatehi.utility.html.Tag;
+import us.fatehi.utility.html.TagBuilder;
+import us.fatehi.utility.html.TagOutputFormat;
 
 /**
  * Methods to format entire rows of output as HTML.
@@ -149,35 +152,36 @@ public final class HtmlFormattingHelper
                                  final String description,
                                  final Color backgroundColor)
   {
-    final StringBuilder buffer = new StringBuilder(1024);
-    buffer
-      .append("  <caption style='background-color: ")
-      .append(backgroundColor)
-      .append(";'>");
+
+    final Tag caption = TagBuilder
+      .caption()
+      .withStyle(String.format("background-color: %s;", backgroundColor))
+      .make();
+
     if (!isBlank(name))
     {
-      buffer.append("<span");
+      final Tag span = span()
+        .withEscapedText(name)
+        .withStyleClass("caption_name")
+        .make();
       if (!isBlank(id))
       {
-        buffer
-          .append(" id='")
-          .append(id)
-          .append("'");
+        span.addAttribute("id", id);
       }
-      buffer
-        .append(" class='caption_name'>")
-        .append(escapeForXMLElement(name))
-        .append("</span>");
+      caption.addInnerTag(span);
     }
     if (!isBlank(description))
     {
-      buffer
-        .append(" <span class='caption_description'>")
-        .append(escapeForXMLElement(description))
-        .append("</span>");
+      final Tag span = span()
+        .withEscapedText(description)
+        .withStyleClass("caption_description")
+        .make();
+      caption.addInnerTag(span);
     }
+
+    final StringBuilder buffer = new StringBuilder(1024);
     buffer
-      .append("</caption>")
+      .append(caption.render(TagOutputFormat.html))
       .append(System.lineSeparator());
 
     out.println(buffer.toString());
