@@ -57,9 +57,9 @@ public class CaptionTest
     assertThat(caption.getTagName(), is("caption"));
     assertThat(caption.toString(), is("caption"));
 
-    assertThat(caption.render(TagOutputFormat.html),
+    assertThat(caption.render(TagOutputFormat.html).replace(System.lineSeparator(), "~"),
                is(
-                 "\t<caption sometag='customvalue' bgcolor='#FF0064' class='class'>\r\n\t\t<span>display text</span>\r\n\t</caption>"));
+                 "\t<caption sometag='customvalue' bgcolor='#FF0064' class='class'>~\t\t<span>display text</span>~\t</caption>"));
     assertThat(caption.render(TagOutputFormat.text), is("display text"));
     assertThat(caption.render(TagOutputFormat.tsv), is("display text"));
 
