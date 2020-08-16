@@ -29,6 +29,7 @@ package us.fatehi.utility;
 
 
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -105,11 +106,11 @@ public final class DatabaseUtility
     try (final Statement statement = createStatement(connection))
     {
       final String sqlScript = IOUtility.readResourceFully(scriptResource);
-      if (!Utility.isBlank(sqlScript))
+      if (!isBlank(sqlScript))
       {
         for (final String sql : sqlScript.split(";"))
         {
-          if (Utility.isBlank(sql))
+          if (isBlank(sql))
           {
             continue;
           }
@@ -139,7 +140,7 @@ public final class DatabaseUtility
     {
       return null;
     }
-    if (Utility.isBlank(sql))
+    if (isBlank(sql))
     {
       LOGGER.log(Level.FINE,
                  "No SQL provided",
@@ -317,7 +318,7 @@ public final class DatabaseUtility
       while (results.next())
       {
         final String value = results.getString(1);
-        if (!results.wasNull() && !Utility.isBlank(value))
+        if (!results.wasNull() && !isBlank(value))
         {
           values.add(value.trim());
         }

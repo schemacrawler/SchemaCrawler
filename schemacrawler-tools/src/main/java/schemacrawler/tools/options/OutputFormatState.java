@@ -29,6 +29,7 @@ package schemacrawler.tools.options;
 
 
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,16 +45,9 @@ public final class OutputFormatState
                            final String description,
                            final String... additionalFormatSpecifiers)
   {
-    if (isBlank(formatSpecifier))
-    {
-      throw new IllegalArgumentException("No formation provided");
-    }
-    if (isBlank(description))
-    {
-      throw new IllegalArgumentException("No description provided");
-    }
+    requireNotBlank(formatSpecifier, "No formation provided");
 
-    this.description = description;
+    this.description = requireNotBlank(description, "No description provided");
     formatSpecifiers = new ArrayList<>();
     formatSpecifiers.add(formatSpecifier);
     if (additionalFormatSpecifiers != null)

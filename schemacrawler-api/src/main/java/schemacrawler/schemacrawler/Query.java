@@ -30,6 +30,7 @@ package schemacrawler.schemacrawler;
 
 import static us.fatehi.utility.TemplatingUtility.extractTemplateVariables;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -58,16 +59,8 @@ public final class Query
    */
   public Query(final String name, final String query)
   {
-    if (isBlank(name))
-    {
-      throw new IllegalArgumentException("No query name provided");
-    }
-    if (isBlank(query))
-    {
-      throw new IllegalArgumentException("No query SQL provided");
-    }
-    this.name = name;
-    this.query = query;
+    this.name = requireNotBlank(name, "No query name provided");
+    this.query = requireNotBlank(query, "No query SQL provided");
   }
 
   /**

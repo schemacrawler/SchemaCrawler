@@ -29,6 +29,7 @@ package schemacrawler.schema;
 
 
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.io.Serializable;
 
@@ -51,10 +52,7 @@ public final class TableType
    */
   public TableType(final String tableTypeString)
   {
-    if (isBlank(tableTypeString))
-    {
-      throw new IllegalArgumentException("No table type provided");
-    }
+    requireNotBlank(tableTypeString, "No table type provided");
     tableType = tableTypeString.trim();
   }
 

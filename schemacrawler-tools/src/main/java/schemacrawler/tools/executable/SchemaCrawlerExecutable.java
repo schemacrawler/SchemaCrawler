@@ -30,6 +30,7 @@ package schemacrawler.tools.executable;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -74,11 +75,7 @@ public final class SchemaCrawlerExecutable
 
   public SchemaCrawlerExecutable(final String command)
   {
-    if (isBlank(command))
-    {
-      throw new IllegalArgumentException("No command specified");
-    }
-    this.command = command;
+    this.command = requireNotBlank(command, "No command specified");
 
     schemaCrawlerOptions =
       SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();

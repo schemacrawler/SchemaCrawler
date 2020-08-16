@@ -29,6 +29,7 @@ package schemacrawler.test.utility;
 
 
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.io.Serializable;
 
@@ -48,27 +49,14 @@ public class DatabaseConnectionInfo
                                 final String database,
                                 final String url)
   {
-    if (isBlank(host))
+    this.host = requireNotBlank(host, "No host provided");
+    if (port <= 0 || port > 65535)
     {
-      throw new IllegalArgumentException("No host provided");
+      throw new IllegalArgumentException("Bad port number provided, " + port);
     }
-    if (port <= 0)
-    {
-      throw new IllegalArgumentException("No port provided");
-    }
-    if (isBlank(database))
-    {
-      throw new IllegalArgumentException("No database provided");
-    }
-    if (isBlank(url))
-    {
-      throw new IllegalArgumentException("No url provided");
-    }
-
-    this.host = host;
     this.port = port;
-    this.database = database;
-    this.url = url;
+    this.database = requireNotBlank(database, "No database provided");
+    this.url = requireNotBlank(url, "No url provided");
   }
 
   public String getConnectionUrl()

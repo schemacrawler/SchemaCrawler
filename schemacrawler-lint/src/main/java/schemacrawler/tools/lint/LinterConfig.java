@@ -29,6 +29,7 @@ package schemacrawler.tools.lint;
 
 
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.io.Serializable;
 
@@ -55,11 +56,7 @@ public class LinterConfig
 
   public LinterConfig(final String linterId)
   {
-    if (isBlank(linterId))
-    {
-      throw new IllegalArgumentException("No linter id provided");
-    }
-    this.linterId = linterId;
+    this.linterId = requireNotBlank(linterId,"No linter id provided");
     runLinter = true; // default value
     threshold = Integer.MAX_VALUE; // default value
     config = new Config();

@@ -30,6 +30,7 @@ package schemacrawler.tools.executable;
 
 
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
 import schemacrawler.schema.Property;
 
@@ -44,11 +45,7 @@ public final class CommandDescription
 
   public CommandDescription(final String name, final String description)
   {
-    if (isBlank(name))
-    {
-      throw new IllegalArgumentException("Command name not provided");
-    }
-    this.name = name;
+    this.name = requireNotBlank(name, "Command name not provided");
 
     if (isBlank(description))
     {

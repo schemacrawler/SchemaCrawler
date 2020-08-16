@@ -31,6 +31,7 @@ package schemacrawler.tools.databaseconnector;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -103,12 +104,7 @@ public final class DatabaseConnectionSource
   public DatabaseConnectionSource(final String connectionUrl,
                                   final Map<String, String> connectionProperties)
   {
-    if (isBlank(connectionUrl))
-    {
-      throw new IllegalArgumentException("No database connection URL provided");
-    }
-    this.connectionUrl = connectionUrl;
-
+    this.connectionUrl = requireNotBlank(connectionUrl, "No database connection URL provided");
     this.connectionProperties = connectionProperties;
 
     // Ensure that user credentials are not null
