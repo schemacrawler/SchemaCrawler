@@ -171,11 +171,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
       for (final Property property : serverInfo)
       {
         final String name = property.getName();
-        Object value = property.getValue();
-        if (value == null)
-        {
-          value = "";
-        }
+        final Object value = property.getValue();
         formattingHelper.writeNameValueRow(name,
                                            ObjectToString.toString(value),
                                            Alignment.inherit);
@@ -207,11 +203,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
       for (final DatabaseProperty property : dbProperties)
       {
         final String name = property.getDescription();
-        Object value = property.getValue();
-        if (value == null)
-        {
-          value = "";
-        }
+        final Object value = property.getValue();
         formattingHelper.writeNameValueRow(name,
                                            ObjectToString.toString(value),
                                            Alignment.inherit);
@@ -319,6 +311,6 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
                                   "[driver property]");
     formattingHelper.writeDescriptionRow(driverProperty.getDescription());
     formattingHelper.writeDescriptionRow(details);
-    formattingHelper.writeDetailRow("", "value", value);
+    formattingHelper.writeDetailRow("", "value", ObjectToString.toString(value));
   }
 }
