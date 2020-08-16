@@ -66,7 +66,7 @@ public class TableRowTest
     row.addInnerTag(cell1);
     row.addInnerTag(cell1);
 
-    assertThat(row.getTag(), is("tr"));
+    assertThat(row.getTagName(), is("tr"));
     assertThat(row.toString(), is("tr"));
 
     assertThat(row

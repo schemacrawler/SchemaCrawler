@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package us.fatehi.utility.html;
 
 
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -96,16 +98,16 @@ public final class TagBuilder
 
   public Tag make()
   {
-    return new BaseTag(this.tag,
-                       text,
-                       escapeText,
-                       characterWidth,
-                       align,
-                       emphasizeText,
-                       styleClass,
-                       bgColor,
-                       indent,
-                       attributes);
+    return new Tag(this.tag,
+                   text,
+                   escapeText,
+                   characterWidth,
+                   align,
+                   emphasizeText,
+                   styleClass,
+                   bgColor,
+                   indent,
+                   attributes);
   }
 
   public TagBuilder withStyleClass(final String styleClass)
@@ -181,7 +183,7 @@ public final class TagBuilder
 
   public TagBuilder withHyperlink(final String href)
   {
-    if (href == null)
+    if (isBlank(href))
     {
       return this;
     }

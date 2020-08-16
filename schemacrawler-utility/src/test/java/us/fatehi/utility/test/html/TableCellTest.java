@@ -56,7 +56,7 @@ public class TableCellTest
       .make();
     th.addAttribute("sometag", "customvalue");
 
-    assertThat(th.getTag(), is("th"));
+    assertThat(th.getTagName(), is("th"));
     assertThat(th.toString(), is("th"));
 
     assertThat(th.render(TagOutputFormat.html),
@@ -80,7 +80,7 @@ public class TableCellTest
       .make();
     tablecell.addAttribute("sometag", "customvalue");
 
-    assertThat(tablecell.getTag(), is("td"));
+    assertThat(tablecell.getTagName(), is("td"));
     assertThat(tablecell.toString(), is("td"));
 
     assertThat(tablecell.render(TagOutputFormat.html),

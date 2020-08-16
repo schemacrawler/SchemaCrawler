@@ -30,6 +30,7 @@ package us.fatehi.utility.test.html;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static us.fatehi.utility.html.TagBuilder.caption;
 import static us.fatehi.utility.html.TagBuilder.span;
 
 import org.junit.jupiter.api.DisplayName;
@@ -38,28 +39,29 @@ import us.fatehi.utility.Color;
 import us.fatehi.utility.html.Tag;
 import us.fatehi.utility.html.TagOutputFormat;
 
-public class SpanTest
+public class CaptionTest
 {
 
-  @DisplayName("span: basic output")
+  @DisplayName("caption: basic output")
   @Test
-  public void span1()
+  public void caption1()
   {
-    final Tag span = span()
+    final Tag caption = caption()
       .withText("display text")
       .withStyleClass("class")
       .withBackground(Color.fromRGB(255, 0, 100))
       .make();
-    span.addAttribute("sometag", "customvalue");
+    caption.addAttribute("sometag", "customvalue");
+    caption.addInnerTag(span().withText("display text").make());
 
-    assertThat(span.getTagName(), is("span"));
-    assertThat(span.toString(), is("span"));
+    assertThat(caption.getTagName(), is("caption"));
+    assertThat(caption.toString(), is("caption"));
 
-    assertThat(span.render(TagOutputFormat.html),
+    assertThat(caption.render(TagOutputFormat.html),
                is(
-                 "<span sometag='customvalue' bgcolor='#FF0064' class='class'>display text</span>"));
-    assertThat(span.render(TagOutputFormat.text), is("display text"));
-    assertThat(span.render(TagOutputFormat.tsv), is("display text"));
+                 "\t<caption sometag='customvalue' bgcolor='#FF0064' class='class'>\r\n\t\t<span>display text</span>\r\n\t</caption>"));
+    assertThat(caption.render(TagOutputFormat.text), is("display text"));
+    assertThat(caption.render(TagOutputFormat.tsv), is("display text"));
 
   }
 

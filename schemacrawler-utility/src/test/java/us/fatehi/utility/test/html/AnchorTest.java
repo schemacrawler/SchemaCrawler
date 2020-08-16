@@ -51,17 +51,18 @@ public class AnchorTest
       .withWidth(2)
       .withAlignment(Alignment.right)
       .withStyleClass("class")
+      .withStyle("somestyle")
       .withBackground(Color.fromRGB(255, 0, 100))
       .withHyperlink("http://www.schemacrawler.com")
       .make();
     anchor.addAttribute("sometag", "customvalue");
 
-    assertThat(anchor.getTag(), is("a"));
+    assertThat(anchor.getTagName(), is("a"));
     assertThat(anchor.toString(), is("a"));
 
     assertThat(anchor.render(TagOutputFormat.html),
                is(
-                 "<a sometag='customvalue' href='http://www.schemacrawler.com' bgcolor='#FF0064' class='class'>display text</a>"));
+                 "<a sometag='customvalue' style='somestyle' href='http://www.schemacrawler.com' bgcolor='#FF0064' class='class'>display text</a>"));
     assertThat(anchor.render(TagOutputFormat.text), is("display text"));
     assertThat(anchor.render(TagOutputFormat.tsv), is("display text"));
 
@@ -82,6 +83,25 @@ public class AnchorTest
     assertThat(anchor.render(TagOutputFormat.html),
                is(
                  "<a sometag='custom&value' href='http://www.schemacrawler.com' align='right'><b><i>display &amp; text</i></b></a>"));
+    assertThat(anchor.render(TagOutputFormat.text), is("display & text"));
+    assertThat(anchor.render(TagOutputFormat.tsv), is("display & text"));
+
+  }
+
+  @DisplayName("anchor: empty href")
+  @Test
+  public void anchor3()
+  {
+    final Tag anchor = anchor()
+      .withEscapedText("display & text", true)
+      .withEmphasis(false)
+      .withHyperlink(" ")
+      .make();
+    anchor.addAttribute(null, "value");
+
+    assertThat(anchor.render(TagOutputFormat.html),
+               is(
+                 "<a>display &amp; text</a>"));
     assertThat(anchor.render(TagOutputFormat.text), is("display & text"));
     assertThat(anchor.render(TagOutputFormat.tsv), is("display & text"));
 
