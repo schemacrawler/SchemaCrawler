@@ -6,7 +6,7 @@
 - Print complete help on registered linters from the command-line
 
 
-<a name="a16.9.4"></a>
+<a name="a16.9.3"></a>
 ## Release 16.9.4 - 2020-07-19
 
 - Change option to get help on SchemaCrawler commands, by using `--help command:lint` or
