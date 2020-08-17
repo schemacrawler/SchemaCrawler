@@ -43,10 +43,8 @@ public final class DatabaseServerType
   implements Serializable, Comparable<DatabaseServerType>
 {
 
-  public static final DatabaseServerType UNKNOWN = new DatabaseServerType();
-
   private static final long serialVersionUID = 2160456864554076419L;
-
+  public static final DatabaseServerType UNKNOWN = new DatabaseServerType();
   private final String databaseSystemIdentifier;
   private final String databaseSystemName;
   private final String jdbcDriverClassName;
@@ -143,21 +141,6 @@ public final class DatabaseServerType
     { return databaseSystemIdentifier.equals(other.databaseSystemIdentifier); }
   }
 
-  public String getDatabaseSystemIdentifier()
-  {
-    return databaseSystemIdentifier;
-  }
-
-  public String getDatabaseSystemName()
-  {
-    return databaseSystemName;
-  }
-
-  public String getJdbcDriverClassName()
-  {
-    return jdbcDriverClassName;
-  }
-
   @Override
   public String toString()
   {
@@ -171,6 +154,21 @@ public final class DatabaseServerType
                            databaseSystemIdentifier,
                            databaseSystemName);
     }
+  }
+
+  public String getDatabaseSystemIdentifier()
+  {
+    return databaseSystemIdentifier;
+  }
+
+  public String getDatabaseSystemName()
+  {
+    return databaseSystemName;
+  }
+
+  public String getJdbcDriverClassName()
+  {
+    return jdbcDriverClassName;
   }
 
   public boolean isUnknownDatabaseSystem()

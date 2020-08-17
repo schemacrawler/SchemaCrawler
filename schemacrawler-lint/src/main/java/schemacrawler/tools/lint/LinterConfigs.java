@@ -48,10 +48,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import us.fatehi.utility.ObjectToString;
-import schemacrawler.SchemaCrawlerLogger;
 
 public class LinterConfigs
   implements Iterable<LinterConfig>
@@ -64,7 +64,7 @@ public class LinterConfigs
                                        final String tagName)
   {
     requireNotBlank(tagName,
-        "Cannot get sub-element, since no name is provided");
+                    "Cannot get sub-element, since no name is provided");
     requireNonNull(element, "Cannot get sub-element for tag " + tagName);
 
     final Element subElement;

@@ -41,9 +41,9 @@ import java.util.UUID;
 
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import us.fatehi.utility.ObjectToString;
 import us.fatehi.utility.ioresource.FileOutputResource;
 import us.fatehi.utility.ioresource.OutputResource;
-import us.fatehi.utility.ObjectToString;
 
 /**
  * Contains output options.

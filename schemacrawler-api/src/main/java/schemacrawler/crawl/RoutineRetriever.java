@@ -44,6 +44,7 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Function;
@@ -56,7 +57,6 @@ import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.schemacrawler.SchemaReference;
-import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.string.StringFormat;
 
 /**
@@ -247,8 +247,7 @@ final class RoutineRetriever
     {
       throw new SchemaCrawlerSQLException("No functions SQL provided", null);
     }
-    final Query functionsSql =
-      informationSchemaViews.getQuery(FUNCTIONS);
+    final Query functionsSql = informationSchemaViews.getQuery(FUNCTIONS);
     final Connection connection = getDatabaseConnection();
     try (
       final Statement statement = connection.createStatement();
@@ -321,8 +320,7 @@ final class RoutineRetriever
     {
       throw new SchemaCrawlerSQLException("No procedures SQL provided", null);
     }
-    final Query proceduresSql =
-      informationSchemaViews.getQuery(PROCEDURES);
+    final Query proceduresSql = informationSchemaViews.getQuery(PROCEDURES);
     final Connection connection = getDatabaseConnection();
     try (
       final Statement statement = connection.createStatement();

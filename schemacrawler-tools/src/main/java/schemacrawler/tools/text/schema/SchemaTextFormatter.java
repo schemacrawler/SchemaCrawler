@@ -208,13 +208,16 @@ final class SchemaTextFormatter
                                       String.valueOf(sequence.getIncrement()));
       formattingHelper.writeDetailRow("",
                                       "start value",
-                                      Objects.toString(sequence.getStartValue(), ""));
+                                      Objects.toString(sequence.getStartValue(),
+                                                       ""));
       formattingHelper.writeDetailRow("",
                                       "minimum value",
-                                      Objects.toString(sequence.getMinimumValue(), ""));
+                                      Objects.toString(sequence.getMinimumValue(),
+                                                       ""));
       formattingHelper.writeDetailRow("",
                                       "maximum value",
-                                      Objects.toString(sequence.getMaximumValue(), ""));
+                                      Objects.toString(sequence.getMaximumValue(),
+                                                       ""));
       formattingHelper.writeDetailRow("",
                                       "cycle",
                                       String.valueOf(sequence.isCycle()));

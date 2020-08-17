@@ -49,6 +49,13 @@ final class OperationCommandProvider
   }
 
   @Override
+  public boolean supportsOutputFormat(final String command,
+                                      final OutputOptions outputOptions)
+  {
+    return true;
+  }
+
+  @Override
   public boolean supportsSchemaCrawlerCommand(final String command,
                                               final SchemaCrawlerOptions schemaCrawlerOptions,
                                               final Config additionalConfiguration,
@@ -74,13 +81,6 @@ final class OperationCommandProvider
     // So no check is done for output format.
     final boolean supportsSchemaCrawlerCommand = isOperation || isNamedQuery;
     return supportsSchemaCrawlerCommand;
-  }
-
-  @Override
-  public boolean supportsOutputFormat(final String command,
-                                      final OutputOptions outputOptions)
-  {
-    return true;
   }
 
 }

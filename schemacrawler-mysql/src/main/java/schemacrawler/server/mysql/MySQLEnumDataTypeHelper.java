@@ -47,6 +47,9 @@ public class MySQLEnumDataTypeHelper
   implements EnumDataTypeHelper
 {
 
+  private static Pattern enumPattern =
+    Pattern.compile("enum.*\\((.*)\\)", CASE_INSENSITIVE);
+
   private static List<String> getEnumValues(final Column column)
   {
     requireNonNull(column, "No column provided");
@@ -81,8 +84,6 @@ public class MySQLEnumDataTypeHelper
     }
     return enumValues;
   }
-  private static Pattern enumPattern =
-    Pattern.compile("enum.*\\((.*)\\)", CASE_INSENSITIVE);
 
   @Override
   public EnumDataTypeInfo getEnumDataTypeInfo(final Column column,

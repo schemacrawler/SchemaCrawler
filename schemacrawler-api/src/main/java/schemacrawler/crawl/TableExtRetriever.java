@@ -43,6 +43,7 @@ import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.plugin.EnumDataTypeInfo;
 import schemacrawler.schema.ActionOrientationType;
@@ -54,7 +55,6 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.string.StringFormat;
 
 /**
@@ -362,7 +362,6 @@ final class TableExtRetriever
 
   }
 
-
   void retrieveTableColumnPrivileges()
     throws SQLException
   {
@@ -600,8 +599,7 @@ final class TableExtRetriever
 
     LOGGER.log(Level.INFO, "Retrieving additional view information");
 
-    final Query viewInformationSql =
-      informationSchemaViews.getQuery(VIEWS);
+    final Query viewInformationSql = informationSchemaViews.getQuery(VIEWS);
     final Connection connection = getDatabaseConnection();
     try (
       final Statement statement = connection.createStatement();

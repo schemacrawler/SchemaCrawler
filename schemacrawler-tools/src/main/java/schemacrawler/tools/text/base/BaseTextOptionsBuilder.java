@@ -170,6 +170,38 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
     return (B) this;
   }
 
+  @Override
+  public Config toConfig()
+  {
+    final Config config = new Config();
+
+    config.setBooleanValue(NO_FOOTER, isNoFooter);
+    config.setBooleanValue(NO_HEADER, isNoHeader);
+    config.setBooleanValue(NO_SCHEMACRAWLER_INFO, isNoSchemaCrawlerInfo);
+    config.setBooleanValue(SHOW_DATABASE_INFO, isShowDatabaseInfo);
+    config.setBooleanValue(SHOW_JDBC_DRIVER_INFO, isShowJdbcDriverInfo);
+    config.setBooleanValue(APPEND_OUTPUT, isAppendOutput);
+
+    config.setBooleanValue(SHOW_UNQUALIFIED_NAMES, isShowUnqualifiedNames);
+
+    config.setBooleanValue(SORT_ALPHABETICALLY_TABLES,
+                           isAlphabeticalSortForTables);
+    config.setBooleanValue(SORT_ALPHABETICALLY_TABLE_COLUMNS,
+                           isAlphabeticalSortForTableColumns);
+
+    config.setBooleanValue(SORT_ALPHABETICALLY_ROUTINES,
+                           isAlphabeticalSortForRoutines);
+
+    config.setBooleanValue(SORT_ALPHABETICALLY_ROUTINE_PARAMETERS,
+                           isAlphabeticalSortForRoutineParameters);
+
+    config.setBooleanValue(NO_SCHEMA_COLORS, isNoSchemaColors);
+
+    config.setEnumValue(IDENTIFIER_QUOTING_STRATEGY, identifierQuotingStrategy);
+
+    return config;
+  }
+
   public final B noFooter()
   {
     return noFooter(true);
@@ -333,38 +365,6 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
   {
     isAlphabeticalSortForTables = value;
     return (B) this;
-  }
-
-  @Override
-  public Config toConfig()
-  {
-    final Config config = new Config();
-
-    config.setBooleanValue(NO_FOOTER, isNoFooter);
-    config.setBooleanValue(NO_HEADER, isNoHeader);
-    config.setBooleanValue(NO_SCHEMACRAWLER_INFO, isNoSchemaCrawlerInfo);
-    config.setBooleanValue(SHOW_DATABASE_INFO, isShowDatabaseInfo);
-    config.setBooleanValue(SHOW_JDBC_DRIVER_INFO, isShowJdbcDriverInfo);
-    config.setBooleanValue(APPEND_OUTPUT, isAppendOutput);
-
-    config.setBooleanValue(SHOW_UNQUALIFIED_NAMES, isShowUnqualifiedNames);
-
-    config.setBooleanValue(SORT_ALPHABETICALLY_TABLES,
-                           isAlphabeticalSortForTables);
-    config.setBooleanValue(SORT_ALPHABETICALLY_TABLE_COLUMNS,
-                           isAlphabeticalSortForTableColumns);
-
-    config.setBooleanValue(SORT_ALPHABETICALLY_ROUTINES,
-                           isAlphabeticalSortForRoutines);
-
-    config.setBooleanValue(SORT_ALPHABETICALLY_ROUTINE_PARAMETERS,
-                           isAlphabeticalSortForRoutineParameters);
-
-    config.setBooleanValue(NO_SCHEMA_COLORS, isNoSchemaColors);
-
-    config.setEnumValue(IDENTIFIER_QUOTING_STRATEGY, identifierQuotingStrategy);
-
-    return config;
   }
 
   public final B withIdentifierQuotingStrategy(final IdentifierQuotingStrategy identifierQuotingStrategy)

@@ -68,21 +68,6 @@ public class FileHasContent
                                    true);
   }
 
-  private static Matcher<TestResource> hasSameContentAndTypeAs(final TestResource classpathTestResource,
-                                                               final String outputFormatValue,
-                                                               final boolean validateOutputFormat)
-  {
-    if (classpathTestResource == null)
-    {
-      throw new RuntimeException("No classpath resource to match with");
-    }
-    if (validateOutputFormat && isBlank(outputFormatValue))
-    {
-      throw new RuntimeException("No output format provided");
-    }
-    return new FileHasContent(classpathTestResource, outputFormatValue);
-  }
-
   public static Matcher<TestResource> hasSameContentAs(final TestResource classpathTestResource)
   {
     return hasSameContentAndTypeAs(classpathTestResource, null, false);
@@ -108,6 +93,20 @@ public class FileHasContent
     }
   }
 
+  private static Matcher<TestResource> hasSameContentAndTypeAs(final TestResource classpathTestResource,
+                                                               final String outputFormatValue,
+                                                               final boolean validateOutputFormat)
+  {
+    if (classpathTestResource == null)
+    {
+      throw new RuntimeException("No classpath resource to match with");
+    }
+    if (validateOutputFormat && isBlank(outputFormatValue))
+    {
+      throw new RuntimeException("No output format provided");
+    }
+    return new FileHasContent(classpathTestResource, outputFormatValue);
+  }
   private final TestResource referenceFileResource;
   private final String outputFormatValue;
   private List<String> failures;

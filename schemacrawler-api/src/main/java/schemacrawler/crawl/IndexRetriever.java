@@ -40,6 +40,7 @@ import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.IndexType;
@@ -48,7 +49,6 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
-import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.string.StringFormat;
 
 /**
@@ -206,8 +206,7 @@ final class IndexRetriever
       return;
     }
 
-    final Query indexesSql =
-      informationSchemaViews.getQuery(INDEXES);
+    final Query indexesSql = informationSchemaViews.getQuery(INDEXES);
     final Connection connection = getDatabaseConnection();
     try (
       final Statement statement = connection.createStatement();

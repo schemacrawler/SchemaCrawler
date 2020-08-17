@@ -29,7 +29,6 @@ package schemacrawler.schemacrawler;
 
 
 import static us.fatehi.utility.TemplatingUtility.extractTemplateVariables;
-import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.io.Serializable;

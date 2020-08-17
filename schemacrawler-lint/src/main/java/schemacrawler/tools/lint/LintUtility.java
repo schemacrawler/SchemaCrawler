@@ -38,10 +38,10 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.executable.LintOptions;
-import schemacrawler.SchemaCrawlerLogger;
 
 public final class LintUtility
 {

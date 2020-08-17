@@ -261,21 +261,12 @@ final class MutableCatalog
   }
 
   /**
- * {@inheritDoc}
- */
-@Override
-public Collection<Table> getTables()
-{
-  return new ArrayList<>(tables.values());
-}
-
-  /**
    * {@inheritDoc}
    */
   @Override
-  public Collection<DatabaseUser> getDatabaseUsers()
+  public Collection<Table> getTables()
   {
-    return new ArrayList<>(databaseUsers.values());
+    return new ArrayList<>(tables.values());
   }
 
   /**
@@ -375,6 +366,15 @@ public Collection<Table> getTables()
                                             final String name)
   {
     return tables.lookup(schemaRef, name);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Collection<DatabaseUser> getDatabaseUsers()
+  {
+    return new ArrayList<>(databaseUsers.values());
   }
 
   public Optional<MutableTable> lookupTable(final List<String> tableLookupKey)

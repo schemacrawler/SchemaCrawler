@@ -41,6 +41,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.JavaSqlType;
@@ -49,7 +50,6 @@ import schemacrawler.schemacrawler.Retriever;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.utility.TypeMap;
-import schemacrawler.SchemaCrawlerLogger;
 
 /**
  * Base class for retriever that uses database metadata to get the details about

@@ -37,8 +37,8 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.logging.Level;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.SchemaCrawlerLogger;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import us.fatehi.utility.string.StringFormat;
 
 /**

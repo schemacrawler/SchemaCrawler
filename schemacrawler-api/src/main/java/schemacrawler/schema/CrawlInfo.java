@@ -38,8 +38,8 @@ public interface CrawlInfo
 {
 
   /**
-   * Gets the timestamp of when the database was crawled, in UTC,
-   * in ISO 8501 format, with precision to the second.
+   * Gets the timestamp of when the database was crawled, in UTC, in ISO 8501
+   * format, with precision to the second.
    *
    * @return Timestamp
    */

@@ -92,6 +92,36 @@ public final class WeakAssociation
   }
 
   @Override
+  public List<WeakAssociationColumnReference> getColumnReferences()
+  {
+    return new ArrayList<>(columnReferences);
+  }
+
+  @Override
+  public String getFullName()
+  {
+    return getName();
+  }
+
+  @Override
+  public String getName()
+  {
+    return name;
+  }
+
+  @Override
+  public List<String> toUniqueLookupKey()
+  {
+    return Arrays.asList(getName());
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return Objects.hash(columnReferences);
+  }
+
+  @Override
   public boolean equals(final Object obj)
   {
     if (this == obj)
@@ -111,45 +141,15 @@ public final class WeakAssociation
   }
 
   @Override
-  public List<WeakAssociationColumnReference> getColumnReferences()
-  {
-    return new ArrayList<>(columnReferences);
-  }
-
-  @Override
-  public String getFullName()
-  {
-    return getName();
-  }
-
-  @Override
-  public String getName()
-  {
-    return name;
-  }
-
-  @Override
-  public int hashCode()
-  {
-    return Objects.hash(columnReferences);
-  }
-
-  @Override
-  public Iterator<WeakAssociationColumnReference> iterator()
-  {
-    return columnReferences.iterator();
-  }
-
-  @Override
   public String toString()
   {
     return columnReferences.toString();
   }
 
   @Override
-  public List<String> toUniqueLookupKey()
+  public Iterator<WeakAssociationColumnReference> iterator()
   {
-    return Arrays.asList(getName());
+    return columnReferences.iterator();
   }
 
   void addColumnReference(final Column pkColumn, final Column fkColumn)

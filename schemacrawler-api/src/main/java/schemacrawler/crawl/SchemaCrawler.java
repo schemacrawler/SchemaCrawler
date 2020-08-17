@@ -49,6 +49,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.analysis.counts.TableRowCountsFilter;
 import schemacrawler.analysis.counts.TableRowCountsRetriever;
 import schemacrawler.schema.Catalog;
@@ -65,7 +66,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.StopWatch;
 import us.fatehi.utility.string.StringFormat;
 

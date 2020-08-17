@@ -13,9 +13,9 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.logging.Level;
 
-import us.fatehi.utility.string.FileContents;
-import us.fatehi.utility.ProcessExecutor;
 import schemacrawler.SchemaCrawlerLogger;
+import us.fatehi.utility.ProcessExecutor;
+import us.fatehi.utility.string.FileContents;
 import us.fatehi.utility.string.StringFormat;
 
 public final class GraphvizUtility

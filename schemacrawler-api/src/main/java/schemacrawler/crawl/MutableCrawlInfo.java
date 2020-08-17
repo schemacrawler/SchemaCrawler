@@ -61,6 +61,7 @@ final class MutableCrawlInfo
   private static final long serialVersionUID = 5982990326485881993L;
 
   public static final DateTimeFormatter DATE_TIME_FORMATTER;
+
   static
   {
     DATE_TIME_FORMATTER = new DateTimeFormatterBuilder()

@@ -32,9 +32,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.SchemaCrawlerLogger;
 
 /**
  * Allows chaining multiple scCommands with the same configuration. The catalog

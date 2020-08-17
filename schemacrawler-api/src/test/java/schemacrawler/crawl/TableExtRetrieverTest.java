@@ -171,7 +171,8 @@ public class TableExtRetrieverTest
     assertThat(tables, hasSize(19));
     for (final Table table : tables)
     {
-      if (!(table instanceof View)) {
+      if (!(table instanceof View))
+      {
         continue;
       }
       viewCount = viewCount + 1;
@@ -209,7 +210,8 @@ public class TableExtRetrieverTest
     assertThat(tables, hasSize(19));
     for (final Table table : tables)
     {
-      if (!(table instanceof View)) {
+      if (!(table instanceof View))
+      {
         continue;
       }
       viewCount = viewCount + 1;
@@ -218,6 +220,7 @@ public class TableExtRetrieverTest
     }
     assertThat(viewCount, is(1));
   }
+
   @BeforeAll
   public void loadBaseCatalog(final Connection connection)
     throws SchemaCrawlerException

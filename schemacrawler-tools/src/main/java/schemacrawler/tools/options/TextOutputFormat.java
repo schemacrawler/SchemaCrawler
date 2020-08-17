@@ -74,6 +74,16 @@ public enum TextOutputFormat
     }
   }
 
+  /**
+   * Checks if the value of the format is supported.
+   *
+   * @return True if the format is a text output format
+   */
+  public static boolean isSupportedFormat(final String format)
+  {
+    return fromFormatOrNull(format) != null;
+  }
+
   private static TextOutputFormat fromFormatOrNull(final String format)
   {
     if (isBlank(format))
@@ -89,17 +99,6 @@ public enum TextOutputFormat
     }
     return null;
   }
-
-  /**
-   * Checks if the value of the format is supported.
-   *
-   * @return True if the format is a text output format
-   */
-  public static boolean isSupportedFormat(final String format)
-  {
-    return fromFormatOrNull(format) != null;
-  }
-
   private final OutputFormatState outputFormatState;
 
   private TextOutputFormat(final String description)

@@ -47,9 +47,9 @@ import java.util.Properties;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
-import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.string.StringFormat;
 
 public final class DatabaseConnectionSource
@@ -104,7 +104,8 @@ public final class DatabaseConnectionSource
   public DatabaseConnectionSource(final String connectionUrl,
                                   final Map<String, String> connectionProperties)
   {
-    this.connectionUrl = requireNotBlank(connectionUrl, "No database connection URL provided");
+    this.connectionUrl =
+      requireNotBlank(connectionUrl, "No database connection URL provided");
     this.connectionProperties = connectionProperties;
 
     // Ensure that user credentials are not null

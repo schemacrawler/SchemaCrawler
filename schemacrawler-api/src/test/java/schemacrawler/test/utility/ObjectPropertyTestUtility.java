@@ -38,6 +38,26 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ObjectPropertyTestUtility
 {
 
+  public static void checkBooleanProperties(final Object object,
+                                            final String... properties)
+    throws Exception
+  {
+    for (final String property : properties)
+    {
+      assertBooleanProperty(object, property);
+    }
+  }
+
+  public static void checkIntegerProperties(final Object object,
+                                            final String... properties)
+    throws Exception
+  {
+    for (final String property : properties)
+    {
+      assertIntegerProperty(object, property);
+    }
+  }
+
   private static void assertBooleanProperty(final Object object,
                                             final String property)
     throws Exception
@@ -91,26 +111,6 @@ public class ObjectPropertyTestUtility
                              value),
                Integer.valueOf(getProperty(object, property)),
                is(value));
-  }
-
-  public static void checkBooleanProperties(final Object object,
-                                            final String... properties)
-    throws Exception
-  {
-    for (final String property : properties)
-    {
-      assertBooleanProperty(object, property);
-    }
-  }
-
-  public static void checkIntegerProperties(final Object object,
-                                            final String... properties)
-    throws Exception
-  {
-    for (final String property : properties)
-    {
-      assertIntegerProperty(object, property);
-    }
   }
 
   private static void setProperty(final Object object,

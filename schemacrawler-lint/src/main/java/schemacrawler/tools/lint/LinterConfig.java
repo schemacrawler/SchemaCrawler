@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint;
 
 
-import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.io.Serializable;
@@ -56,7 +55,7 @@ public class LinterConfig
 
   public LinterConfig(final String linterId)
   {
-    this.linterId = requireNotBlank(linterId,"No linter id provided");
+    this.linterId = requireNotBlank(linterId, "No linter id provided");
     runLinter = true; // default value
     threshold = Integer.MAX_VALUE; // default value
     config = new Config();
@@ -87,40 +86,6 @@ public class LinterConfig
     }
 
     return comparison;
-  }
-
-  @Override
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
-      return true;
-    }
-    if (obj == null)
-    {
-      return false;
-    }
-    if (!(obj instanceof LinterConfig))
-    {
-      return false;
-    }
-    final LinterConfig other = (LinterConfig) obj;
-    if (linterId == null)
-    {
-      if (other.linterId != null)
-      {
-        return false;
-      }
-    }
-    else if (!linterId.equals(other.linterId))
-    {
-      return false;
-    }
-    if (severity != other.severity)
-    {
-      return false;
-    }
-    return true;
   }
 
   public InclusionRule getColumnInclusionRule()
@@ -175,6 +140,46 @@ public class LinterConfig
     return result;
   }
 
+  @Override
+  public boolean equals(final Object obj)
+  {
+    if (this == obj)
+    {
+      return true;
+    }
+    if (obj == null)
+    {
+      return false;
+    }
+    if (!(obj instanceof LinterConfig))
+    {
+      return false;
+    }
+    final LinterConfig other = (LinterConfig) obj;
+    if (linterId == null)
+    {
+      if (other.linterId != null)
+      {
+        return false;
+      }
+    }
+    else if (!linterId.equals(other.linterId))
+    {
+      return false;
+    }
+    if (severity != other.severity)
+    {
+      return false;
+    }
+    return true;
+  }
+
+  @Override
+  public String toString()
+  {
+    return ObjectToString.toString(this);
+  }
+
   public boolean isRunLinter()
   {
     return runLinter;
@@ -213,12 +218,6 @@ public class LinterConfig
   public void setTableInclusionPattern(final String tableInclusionPattern)
   {
     this.tableInclusionPattern = tableInclusionPattern;
-  }
-
-  @Override
-  public String toString()
-  {
-    return ObjectToString.toString(this);
   }
 
 }

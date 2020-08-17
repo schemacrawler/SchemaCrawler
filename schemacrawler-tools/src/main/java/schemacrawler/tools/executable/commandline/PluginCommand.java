@@ -66,7 +66,12 @@ public class PluginCommand
                                                final String helpHeader,
                                                final String helpDescription)
   {
-    return new PluginCommand(command, name, helpHeader, helpDescription, null, null);
+    return new PluginCommand(command,
+                             name,
+                             helpHeader,
+                             helpDescription,
+                             null,
+                             null);
   }
 
   public static PluginCommand newPluginCommand(final String name,
@@ -74,7 +79,12 @@ public class PluginCommand
                                                final String helpDescription,
                                                final Supplier<String> helpFooter)
   {
-    return new PluginCommand(command, name, helpHeader, helpDescription, helpFooter, null);
+    return new PluginCommand(command,
+                             name,
+                             helpHeader,
+                             helpDescription,
+                             helpFooter,
+                             null);
   }
 
   private final PluginCommandType type;

@@ -80,15 +80,11 @@ public final class DatabaseTestUtility
     return catalog;
   }
 
-  private static SchemaCrawlerOptions getMaximumSchemaCrawlerOptions()
+  public static Config loadHsqldbConfig()
+    throws IOException
   {
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
-      .builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    return SchemaCrawlerOptionsBuilder
-      .builder()
-      .withLoadOptionsBuilder(loadOptionsBuilder)
-      .toOptions();
+    return loadConfigFromClasspathResource(
+      "/hsqldb.INFORMATION_SCHEMA.config.properties");
   }
 
   /**
@@ -115,11 +111,15 @@ public final class DatabaseTestUtility
     return new Config(properties);
   }
 
-  public static Config loadHsqldbConfig()
-    throws IOException
+  private static SchemaCrawlerOptions getMaximumSchemaCrawlerOptions()
   {
-    return loadConfigFromClasspathResource(
-      "/hsqldb.INFORMATION_SCHEMA.config.properties");
+    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
+      .builder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    return SchemaCrawlerOptionsBuilder
+      .builder()
+      .withLoadOptionsBuilder(loadOptionsBuilder)
+      .toOptions();
   }
 
   private DatabaseTestUtility()

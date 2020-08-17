@@ -65,6 +65,62 @@ public class TestDatabase
   private static final String CONNECTION_STRING =
     "jdbc:hsqldb:hsql://${host}:${port}/${database}";
   private static final String serverFileStem = "hsqldb.schemacrawler";
+  private static TestDatabase testDatabase;
+
+  public static TestDatabase initialize()
+  {
+    if (testDatabase == null)
+    {
+      try
+      {
+        final int port = getFreePort();
+        testDatabase = new TestDatabase(false,
+                                        getLocalHost(),
+                                        port,
+                                        String.format("schemacrawler%d", port));
+
+        testDatabase.start();
+      }
+      catch (final Exception e)
+      {
+        e.printStackTrace();
+        System.exit(1);
+      }
+    }
+    return testDatabase;
+  }
+
+  /**
+   * Starts up a test database in server mode.
+   *
+   * @param args
+   *   Command-line arguments
+   * @throws Exception
+   */
+  public static void main(final String[] args)
+    throws Exception
+  {
+    startDefaultTestDatabase(true);
+  }
+
+  public static TestDatabase startDefaultTestDatabase(final boolean trace)
+  {
+    try
+    {
+      final TestDatabase testDatabase =
+        new TestDatabase(trace, "localhost", 9001, "schemacrawler");
+
+      testDatabase.start();
+
+      return testDatabase;
+    }
+    catch (final Exception e)
+    {
+      e.printStackTrace();
+      System.exit(1);
+      return null;
+    }
+  }
 
   /**
    * Delete files from the previous run of the database server.
@@ -149,63 +205,6 @@ public class TestDatabase
       return defaultPort;
     }
   }
-
-  public static TestDatabase initialize()
-  {
-    if (testDatabase == null)
-    {
-      try
-      {
-        final int port = getFreePort();
-        testDatabase = new TestDatabase(false,
-                                        getLocalHost(),
-                                        port,
-                                        String.format("schemacrawler%d", port));
-
-        testDatabase.start();
-      }
-      catch (final Exception e)
-      {
-        e.printStackTrace();
-        System.exit(1);
-      }
-    }
-    return testDatabase;
-  }
-
-  /**
-   * Starts up a test database in server mode.
-   *
-   * @param args
-   *   Command-line arguments
-   * @throws Exception
-   */
-  public static void main(final String[] args)
-    throws Exception
-  {
-    startDefaultTestDatabase(true);
-  }
-
-  public static TestDatabase startDefaultTestDatabase(final boolean trace)
-  {
-    try
-    {
-      final TestDatabase testDatabase =
-        new TestDatabase(trace, "localhost", 9001, "schemacrawler");
-
-      testDatabase.start();
-
-      return testDatabase;
-    }
-    catch (final Exception e)
-    {
-      e.printStackTrace();
-      System.exit(1);
-      return null;
-    }
-  }
-
-  private static TestDatabase testDatabase;
   private final boolean trace;
   private final String host;
   private final int port;

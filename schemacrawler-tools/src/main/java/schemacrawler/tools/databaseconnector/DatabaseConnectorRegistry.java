@@ -46,9 +46,9 @@ import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
-import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.string.StringFormat;
 
 /**
@@ -62,6 +62,7 @@ public final class DatabaseConnectorRegistry
 
   private static final SchemaCrawlerLogger LOGGER =
     SchemaCrawlerLogger.getLogger(DatabaseConnectorRegistry.class.getName());
+  private static DatabaseConnectorRegistry databaseConnectorRegistrySingleton;
 
   public static DatabaseConnectorRegistry getDatabaseConnectorRegistry()
   {
@@ -148,8 +149,6 @@ public final class DatabaseConnectorRegistry
       LOGGER.log(Level.FINE, "Could not log registered JDBC drivers", e);
     }
   }
-
-  private static DatabaseConnectorRegistry databaseConnectorRegistrySingleton;
   private final Map<String, DatabaseConnector> databaseConnectorRegistry;
 
   private DatabaseConnectorRegistry()

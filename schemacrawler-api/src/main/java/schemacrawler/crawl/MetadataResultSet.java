@@ -37,10 +37,10 @@ import static java.sql.Types.LONGVARCHAR;
 import static java.sql.Types.NCLOB;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.QueryUtility.executeAgainstSchema;
-import static us.fatehi.utility.DatabaseUtility.logSQLWarnings;
-import static us.fatehi.utility.IOUtility.readFully;
 import static schemacrawler.utility.EnumUtility.enumValue;
 import static schemacrawler.utility.EnumUtility.enumValueFromId;
+import static us.fatehi.utility.DatabaseUtility.logSQLWarnings;
+import static us.fatehi.utility.IOUtility.readFully;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.isIntegral;
 
@@ -59,13 +59,13 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.inclusionrule.InclusionRule;
+import schemacrawler.schema.IdentifiedEnum;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.utility.BinaryData;
-import schemacrawler.schema.IdentifiedEnum;
-import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.string.StringFormat;
 
 /**

@@ -76,6 +76,24 @@ public abstract class BaseSchemaTextOptions
   }
 
   @Override
+  public int hashCode()
+  {
+    return Objects.hash(isAlphabeticalSortForForeignKeys,
+                        isAlphabeticalSortForIndexes,
+                        isHideForeignKeyNames,
+                        isHideIndexNames,
+                        isHidePrimaryKeyNames,
+                        isHideRemarks,
+                        isHideRoutineSpecificNames,
+                        isHideTableConstraintNames,
+                        isHideTriggerNames,
+                        isShowWeakAssociations,
+                        isShowOrdinalNumbers,
+                        isShowStandardColumnTypeNames,
+                        isShowRowCounts);
+  }
+
+  @Override
   public boolean equals(final Object o)
   {
     if (this == o)
@@ -102,24 +120,6 @@ public abstract class BaseSchemaTextOptions
            && isShowStandardColumnTypeNames
               == that.isShowStandardColumnTypeNames
            && isShowRowCounts == that.isShowRowCounts;
-  }
-
-  @Override
-  public int hashCode()
-  {
-    return Objects.hash(isAlphabeticalSortForForeignKeys,
-                        isAlphabeticalSortForIndexes,
-                        isHideForeignKeyNames,
-                        isHideIndexNames,
-                        isHidePrimaryKeyNames,
-                        isHideRemarks,
-                        isHideRoutineSpecificNames,
-                        isHideTableConstraintNames,
-                        isHideTriggerNames,
-                        isShowWeakAssociations,
-                        isShowOrdinalNumbers,
-                        isShowStandardColumnTypeNames,
-                        isShowRowCounts);
   }
 
   public boolean isAlphabeticalSortForIndexes()

@@ -156,28 +156,6 @@ public final class MetaDataUtility
     return columnNames;
   }
 
-  private static Collection<List<String>> indexCoumnNames(final Table table,
-                                                          final boolean includeUniqueOnly)
-  {
-    final List<List<String>> allIndexCoumns = new ArrayList<>();
-    if (table instanceof PartialDatabaseObject)
-    {
-      return allIndexCoumns;
-    }
-
-    for (final Index index : table.getIndexes())
-    {
-      if (includeUniqueOnly && !index.isUnique())
-      {
-        continue;
-      }
-
-      final List<String> indexColumns = columnNames(index);
-      allIndexCoumns.add(indexColumns);
-    }
-    return allIndexCoumns;
-  }
-
   public static boolean isForeignKeyUnique(final BaseForeignKey<?> foreignKey)
   {
     if (foreignKey == null)
@@ -200,6 +178,28 @@ public final class MetaDataUtility
   public static Collection<List<String>> uniqueIndexCoumnNames(final Table table)
   {
     return indexCoumnNames(table, true);
+  }
+
+  private static Collection<List<String>> indexCoumnNames(final Table table,
+                                                          final boolean includeUniqueOnly)
+  {
+    final List<List<String>> allIndexCoumns = new ArrayList<>();
+    if (table instanceof PartialDatabaseObject)
+    {
+      return allIndexCoumns;
+    }
+
+    for (final Index index : table.getIndexes())
+    {
+      if (includeUniqueOnly && !index.isUnique())
+      {
+        continue;
+      }
+
+      final List<String> indexColumns = columnNames(index);
+      allIndexCoumns.add(indexColumns);
+    }
+    return allIndexCoumns;
   }
 
   public enum ForeignKeyCardinality

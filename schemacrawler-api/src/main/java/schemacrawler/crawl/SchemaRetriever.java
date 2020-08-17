@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Schema;
@@ -48,7 +49,6 @@ import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaReference;
 import us.fatehi.utility.DatabaseUtility;
-import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.string.StringFormat;
 
 final class SchemaRetriever
@@ -243,8 +243,7 @@ final class SchemaRetriever
       LOGGER.log(Level.FINE, "Schemata SQL statement was not provided");
       return schemaRefs;
     }
-    final Query schemataSql =
-      informationSchemaViews.getQuery(SCHEMATA);
+    final Query schemataSql = informationSchemaViews.getQuery(SCHEMATA);
 
     final Connection connection = getDatabaseConnection();
 

@@ -155,7 +155,8 @@ public class OracleTest
     assertThat(databaseUsers
                  .stream()
                  .map(DatabaseUser::getName)
-                 .collect(Collectors.toList()), hasItems("SYS", "SYSTEM", "BOOKS"));
+                 .collect(Collectors.toList()),
+               hasItems("SYS", "SYSTEM", "BOOKS"));
     assertThat(databaseUsers
                  .stream()
                  .map(databaseUser -> databaseUser
@@ -168,8 +169,7 @@ public class OracleTest
                    .getAttributes()
                    .keySet())
                  .flatMap(Collection::stream)
-                 .collect(Collectors.toSet()),
-               hasItems("ACCOUNT_STATUS"));
+                 .collect(Collectors.toSet()), hasItems("ACCOUNT_STATUS"));
   }
 
 }

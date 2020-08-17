@@ -73,6 +73,12 @@ public abstract class BaseCommandProvider
     return supportsCommand(command);
   }
 
+  @Override
+  public PluginCommand getCommandLineCommand()
+  {
+    return PluginCommand.empty();
+  }
+
   protected boolean supportsOutputFormat(final String command,
                                          final OutputOptions outputOptions,
                                          final Predicate<String> outputFormatValuePredicate)
@@ -89,12 +95,6 @@ public abstract class BaseCommandProvider
       return false;
     }
     return outputFormatValuePredicate.test(format);
-  }
-
-  @Override
-  public PluginCommand getCommandLineCommand()
-  {
-    return PluginCommand.empty();
   }
 
   protected final boolean supportsCommand(final String command)

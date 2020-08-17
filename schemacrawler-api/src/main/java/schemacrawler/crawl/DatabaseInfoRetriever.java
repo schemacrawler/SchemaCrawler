@@ -51,13 +51,13 @@ import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import us.fatehi.utility.DatabaseUtility;
-import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.string.StringFormat;
 
 final class DatabaseInfoRetriever
@@ -407,8 +407,8 @@ final class DatabaseInfoRetriever
       LOGGER.log(Level.FINE, "Database users SQL statement was not provided");
       return;
     }
-    final Query databaseUsersSql = informationSchemaViews.getQuery(
-      DATABASE_USERS);
+    final Query databaseUsersSql =
+      informationSchemaViews.getQuery(DATABASE_USERS);
 
     final Connection connection = getDatabaseConnection();
     try (
@@ -441,7 +441,6 @@ final class DatabaseInfoRetriever
     }
 
   }
-
 
   private Collection<ImmutableDatabaseProperty> retrieveResultSetTypesProperties(
     final DatabaseMetaData dbMetaData)

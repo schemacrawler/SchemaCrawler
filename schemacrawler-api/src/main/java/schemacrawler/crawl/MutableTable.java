@@ -155,15 +155,6 @@ class MutableTable
    * {@inheritDoc}
    */
   @Override
-  public Collection<WeakAssociation> getWeakAssociations()
-  {
-    return new ArrayList<>(weakAssociations.values());
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public Collection<Column> getHiddenColumns()
   {
     return new HashSet<>(hiddenColumns.values());
@@ -173,6 +164,15 @@ class MutableTable
   public Collection<ForeignKey> getImportedForeignKeys()
   {
     return getForeignKeys(TableAssociationType.imported);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Collection<WeakAssociation> getWeakAssociations()
+  {
+    return new ArrayList<>(weakAssociations.values());
   }
 
   /**

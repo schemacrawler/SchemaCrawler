@@ -34,9 +34,9 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.util.List;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputFormatState;
-import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.string.StringFormat;
 
 /**
@@ -77,6 +77,16 @@ public enum LintReportOutputFormat
     }
   }
 
+  /**
+   * Checks if the value of the format is supported.
+   *
+   * @return True if the format is a text output format
+   */
+  public static boolean isSupportedFormat(final String format)
+  {
+    return fromFormatOrNull(format) != null;
+  }
+
   private static LintReportOutputFormat fromFormatOrNull(final String format)
   {
     if (isBlank(format))
@@ -92,17 +102,6 @@ public enum LintReportOutputFormat
     }
     return null;
   }
-
-  /**
-   * Checks if the value of the format is supported.
-   *
-   * @return True if the format is a text output format
-   */
-  public static boolean isSupportedFormat(final String format)
-  {
-    return fromFormatOrNull(format) != null;
-  }
-
   private final OutputFormatState outputFormatState;
 
   private LintReportOutputFormat(final String description)

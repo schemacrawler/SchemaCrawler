@@ -46,8 +46,8 @@ import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import us.fatehi.utility.ioresource.InputResource;
 import schemacrawler.utility.PropertiesUtility;
+import us.fatehi.utility.ioresource.InputResource;
 
 public abstract class DatabaseConnector
   implements Options

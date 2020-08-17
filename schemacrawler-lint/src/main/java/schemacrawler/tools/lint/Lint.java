@@ -97,6 +97,17 @@ public final class Lint<V extends Serializable>
   }
 
   @Override
+  public int hashCode()
+  {
+    return Objects.hash(linterId,
+                        message,
+                        objectName,
+                        objectType,
+                        severity,
+                        value);
+  }
+
+  @Override
   public boolean equals(final Object o)
   {
     if (this == o)
@@ -111,17 +122,6 @@ public final class Lint<V extends Serializable>
            && objectType == lint.objectType
            && severity == lint.severity
            && Objects.equals(value, lint.value);
-  }
-
-  @Override
-  public int hashCode()
-  {
-    return Objects.hash(linterId,
-                        message,
-                        objectName,
-                        objectType,
-                        severity,
-                        value);
   }
 
   @Override

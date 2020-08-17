@@ -37,12 +37,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.tools.lint.BaseLinter;
-import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.string.StringFormat;
 
 public class LinterTableSql
@@ -62,7 +62,8 @@ public class LinterTableSql
     {
       // Linter is not configured
       return "SQL statement based table linter";
-    } else
+    }
+    else
     {
       return message;
     }

@@ -101,6 +101,14 @@ public final class OperationOptionsBuilder
     return this;
   }
 
+  @Override
+  public Config toConfig()
+  {
+    final Config config = super.toConfig();
+    config.setBooleanValue(SHOW_LOBS, isShowLobs);
+    return config;
+  }
+
   public OperationOptionsBuilder showLobs()
   {
     return showLobs(true);
@@ -117,14 +125,6 @@ public final class OperationOptionsBuilder
   {
     isShowLobs = value;
     return this;
-  }
-
-  @Override
-  public Config toConfig()
-  {
-    final Config config = super.toConfig();
-    config.setBooleanValue(SHOW_LOBS, isShowLobs);
-    return config;
   }
 
   @Override

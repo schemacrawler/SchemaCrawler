@@ -42,9 +42,9 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseTabularFormatter;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
-import us.fatehi.utility.html.Alignment;
 import schemacrawler.tools.traversal.DataTraversalHandler;
 import us.fatehi.utility.Color;
+import us.fatehi.utility.html.Alignment;
 
 /**
  * Text formatting of data.

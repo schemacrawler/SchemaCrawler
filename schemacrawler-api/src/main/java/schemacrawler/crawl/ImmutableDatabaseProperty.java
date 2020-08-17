@@ -43,8 +43,8 @@ class ImmutableDatabaseProperty
   implements DatabaseProperty
 {
 
-  private static final Set<Entry<String, String>> acronyms;
   private static final long serialVersionUID = -7150431683440256142L;
+  private static final Set<Entry<String, String>> acronyms;
 
   static
   {

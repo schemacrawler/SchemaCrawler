@@ -42,12 +42,12 @@ public final class JavaSqlType
   implements SQLType, Serializable, Comparable<JavaSqlType>
 {
 
+  private static final long serialVersionUID = 2614819974745473431L;
   /**
    * Unknown SQL data type.
    */
   public static final JavaSqlType UNKNOWN =
     new JavaSqlType(unknownSQLType(), Object.class, JavaSqlTypeGroup.unknown);
-  private static final long serialVersionUID = 2614819974745473431L;
 
   private static SQLType unknownSQLType()
   {

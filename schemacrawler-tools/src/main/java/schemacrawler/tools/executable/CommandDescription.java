@@ -71,6 +71,33 @@ public final class CommandDescription
   }
 
   @Override
+  public String getDescription()
+  {
+    return description == null? "": description;
+  }
+
+  @Override
+  public String getName()
+  {
+    return name;
+  }
+
+  @Override
+  public Object getValue()
+  {
+    return getDescription();
+  }
+
+  @Override
+  public int hashCode()
+  {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (name == null? 0: name.hashCode());
+    return result;
+  }
+
+  @Override
   public boolean equals(final Object obj)
   {
     if (this == obj)
@@ -98,33 +125,6 @@ public final class CommandDescription
       return false;
     }
     return true;
-  }
-
-  @Override
-  public String getDescription()
-  {
-    return description == null? "": description;
-  }
-
-  @Override
-  public String getName()
-  {
-    return name;
-  }
-
-  @Override
-  public Object getValue()
-  {
-    return getDescription();
-  }
-
-  @Override
-  public int hashCode()
-  {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (name == null? 0: name.hashCode());
-    return result;
   }
 
   @Override

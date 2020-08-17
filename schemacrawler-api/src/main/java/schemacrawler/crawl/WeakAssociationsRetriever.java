@@ -35,13 +35,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.analysis.associations.ProposedWeakAssociation;
 import schemacrawler.analysis.associations.WeakAssociationsAnalyzer;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Retriever;
 import schemacrawler.utility.MetaDataUtility;
-import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.string.StringFormat;
 
 @Retriever

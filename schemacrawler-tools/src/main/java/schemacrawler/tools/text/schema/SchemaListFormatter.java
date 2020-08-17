@@ -44,8 +44,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseFormatter;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
-import us.fatehi.utility.html.Alignment;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
+import us.fatehi.utility.html.Alignment;
 
 /**
  * Text formatting of schema.
@@ -93,30 +93,6 @@ final class SchemaListFormatter
     {
       formattingHelper.writeDocumentStart();
     }
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void end()
-    throws SchemaCrawlerException
-  {
-    if (!options.isNoFooter())
-    {
-      formattingHelper.writeDocumentEnd();
-    }
-
-    super.end();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void handle(final ColumnDataType columnDataType)
-  {
-    // No output required
   }
 
   @Override
@@ -184,6 +160,58 @@ final class SchemaListFormatter
 
   @Override
   public void handle(final JdbcDriverInfo driverInfo)
+  {
+    // No output required
+  }
+
+  @Override
+  public final void handleHeaderEnd()
+    throws SchemaCrawlerException
+  {
+    // No output required
+  }
+
+  @Override
+  public final void handleHeaderStart()
+    throws SchemaCrawlerException
+  {
+    // No output required
+  }
+
+  @Override
+  public final void handleInfoEnd()
+    throws SchemaCrawlerException
+  {
+    // No output required
+  }
+
+  @Override
+  public final void handleInfoStart()
+    throws SchemaCrawlerException
+  {
+    // No output required
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void end()
+    throws SchemaCrawlerException
+  {
+    if (!options.isNoFooter())
+    {
+      formattingHelper.writeDocumentEnd();
+    }
+
+    super.end();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void handle(final ColumnDataType columnDataType)
   {
     // No output required
   }
@@ -287,34 +315,6 @@ final class SchemaListFormatter
    */
   @Override
   public void handleColumnDataTypesStart()
-  {
-    // No output required
-  }
-
-  @Override
-  public final void handleHeaderEnd()
-    throws SchemaCrawlerException
-  {
-    // No output required
-  }
-
-  @Override
-  public final void handleHeaderStart()
-    throws SchemaCrawlerException
-  {
-    // No output required
-  }
-
-  @Override
-  public final void handleInfoEnd()
-    throws SchemaCrawlerException
-  {
-    // No output required
-  }
-
-  @Override
-  public final void handleInfoStart()
-    throws SchemaCrawlerException
   {
     // No output required
   }

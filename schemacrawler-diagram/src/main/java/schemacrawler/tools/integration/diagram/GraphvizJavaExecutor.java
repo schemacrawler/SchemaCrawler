@@ -33,8 +33,8 @@ import static schemacrawler.tools.integration.diagram.GraphvizUtility.isGraphviz
 import java.nio.file.Path;
 import java.util.logging.Level;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.SchemaCrawlerLogger;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import us.fatehi.utility.string.StringFormat;
 
 final class GraphvizJavaExecutor

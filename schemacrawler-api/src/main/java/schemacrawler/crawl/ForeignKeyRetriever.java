@@ -42,6 +42,7 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
@@ -54,7 +55,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.utility.MetaDataUtility;
-import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.string.StringFormat;
 
 /**
@@ -263,8 +263,7 @@ final class ForeignKeyRetriever
 
     final NamedObjectList<MutableForeignKey> foreignKeys =
       new NamedObjectList<>();
-    final Query fkSql =
-      informationSchemaViews.getQuery(FOREIGN_KEYS);
+    final Query fkSql = informationSchemaViews.getQuery(FOREIGN_KEYS);
     final Connection connection = getDatabaseConnection();
     try (
       final Statement statement = connection.createStatement();

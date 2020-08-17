@@ -40,18 +40,18 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
+import schemacrawler.schema.TableTypes;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.schemacrawler.SchemaReference;
-import schemacrawler.schema.TableTypes;
-import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.string.StringFormat;
 
 /**
@@ -188,8 +188,7 @@ final class TableRetriever
     {
       throw new SchemaCrawlerSQLException("No tables SQL provided", null);
     }
-    final Query tablesSql =
-      informationSchemaViews.getQuery(TABLES);
+    final Query tablesSql = informationSchemaViews.getQuery(TABLES);
     final Connection connection = getDatabaseConnection();
     final TableTypes supportedTableTypes =
       getRetrieverConnection().getTableTypes();

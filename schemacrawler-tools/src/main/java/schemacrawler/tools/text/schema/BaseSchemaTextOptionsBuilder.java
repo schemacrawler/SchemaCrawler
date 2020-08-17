@@ -147,6 +147,34 @@ public abstract class BaseSchemaTextOptionsBuilder<B extends BaseSchemaTextOptio
     return (B) this;
   }
 
+  @Override
+  public Config toConfig()
+  {
+    final Config config = super.toConfig();
+
+    config.setBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES,
+                           isShowStandardColumnTypeNames);
+    config.setBooleanValue(SHOW_ORDINAL_NUMBERS, isShowOrdinalNumbers);
+    config.setBooleanValue(SHOW_ROW_COUNTS, isShowRowCounts);
+
+    config.setBooleanValue(HIDE_FOREIGN_KEY_NAMES, isHideForeignKeyNames);
+    config.setBooleanValue(HIDE_PRIMARY_KEY_NAMES, isHidePrimaryKeyNames);
+    config.setBooleanValue(HIDE_INDEX_NAMES, isHideIndexNames);
+    config.setBooleanValue(HIDE_TRIGGER_NAMES, isHideTriggerNames);
+    config.setBooleanValue(HIDE_ROUTINE_SPECIFIC_NAMES,
+                           isHideRoutineSpecificNames);
+    config.setBooleanValue(HIDE_CONSTRAINT_NAMES, isHideTableConstraintNames);
+    config.setBooleanValue(HIDE_REMARKS, isHideRemarks);
+    config.setBooleanValue(SHOW_WEAK_ASSOCIATIONS, isShowWeakAssociations);
+
+    config.setBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS,
+                           isAlphabeticalSortForForeignKeys);
+    config.setBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_INDEXES,
+                           isAlphabeticalSortForIndexes);
+
+    return config;
+  }
+
   public final B noConstraintNames()
   {
     return noConstraintNames(true);
@@ -307,34 +335,6 @@ public abstract class BaseSchemaTextOptionsBuilder<B extends BaseSchemaTextOptio
   {
     isAlphabeticalSortForIndexes = value;
     return (B) this;
-  }
-
-  @Override
-  public Config toConfig()
-  {
-    final Config config = super.toConfig();
-
-    config.setBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES,
-                           isShowStandardColumnTypeNames);
-    config.setBooleanValue(SHOW_ORDINAL_NUMBERS, isShowOrdinalNumbers);
-    config.setBooleanValue(SHOW_ROW_COUNTS, isShowRowCounts);
-
-    config.setBooleanValue(HIDE_FOREIGN_KEY_NAMES, isHideForeignKeyNames);
-    config.setBooleanValue(HIDE_PRIMARY_KEY_NAMES, isHidePrimaryKeyNames);
-    config.setBooleanValue(HIDE_INDEX_NAMES, isHideIndexNames);
-    config.setBooleanValue(HIDE_TRIGGER_NAMES, isHideTriggerNames);
-    config.setBooleanValue(HIDE_ROUTINE_SPECIFIC_NAMES,
-                           isHideRoutineSpecificNames);
-    config.setBooleanValue(HIDE_CONSTRAINT_NAMES, isHideTableConstraintNames);
-    config.setBooleanValue(HIDE_REMARKS, isHideRemarks);
-    config.setBooleanValue(SHOW_WEAK_ASSOCIATIONS, isShowWeakAssociations);
-
-    config.setBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS,
-                           isAlphabeticalSortForForeignKeys);
-    config.setBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_INDEXES,
-                           isAlphabeticalSortForIndexes);
-
-    return config;
   }
 
   /**

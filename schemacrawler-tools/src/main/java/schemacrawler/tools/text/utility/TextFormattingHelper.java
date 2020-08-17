@@ -29,8 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.utility;
 
 
-import us.fatehi.utility.html.Alignment;
 import us.fatehi.utility.Color;
+import us.fatehi.utility.html.Alignment;
 
 /**
  * Methods to format entire rows of output.

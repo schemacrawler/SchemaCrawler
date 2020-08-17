@@ -37,13 +37,13 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.Retriever;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.utility.JavaSqlTypes;
-import schemacrawler.SchemaCrawlerLogger;
 
 /**
  * A retriever uses database metadata to get the details about a result set.
@@ -108,7 +108,8 @@ final class ResultsRetriever
         final String databaseSpecificTypeName =
           resultsMetaData.getColumnTypeName(columnIndex);
         final int javaSqlType = resultsMetaData.getColumnType(columnIndex);
-        final String columnClassName = resultsMetaData.getColumnClassName(columnIndex);
+        final String columnClassName =
+          resultsMetaData.getColumnClassName(columnIndex);
         final MutableColumnDataType columnDataType =
           new MutableColumnDataType(schema, databaseSpecificTypeName);
         columnDataType.setJavaSqlType(javaSqlTypes.valueOf(javaSqlType));
@@ -138,15 +139,16 @@ final class ResultsRetriever
 
       try
       {
-        final boolean isNullable =
-          resultsMetaData.isNullable(columnIndex) == ResultSetMetaData.columnNullable;
+        final boolean isNullable = resultsMetaData.isNullable(columnIndex)
+                                   == ResultSetMetaData.columnNullable;
 
         column.setOrdinalPosition(columnIndex);
         column.setDisplaySize(resultsMetaData.getColumnDisplaySize(columnIndex));
         column.setAutoIncrement(resultsMetaData.isAutoIncrement(columnIndex));
         column.setCaseSensitive(resultsMetaData.isCaseSensitive(columnIndex));
         column.setCurrency(resultsMetaData.isCurrency(columnIndex));
-        column.setDefinitelyWritable(resultsMetaData.isDefinitelyWritable(columnIndex));
+        column.setDefinitelyWritable(resultsMetaData.isDefinitelyWritable(
+          columnIndex));
         column.setNullable(isNullable);
         column.setReadOnly(resultsMetaData.isReadOnly(columnIndex));
         column.setSearchable(resultsMetaData.isSearchable(columnIndex));

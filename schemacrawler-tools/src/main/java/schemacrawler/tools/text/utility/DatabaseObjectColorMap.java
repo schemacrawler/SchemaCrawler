@@ -38,12 +38,12 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.DatabaseObject;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
-import us.fatehi.utility.ioresource.FileInputResource;
 import us.fatehi.utility.Color;
 import us.fatehi.utility.RegularExpressionColorMap;
-import schemacrawler.SchemaCrawlerLogger;
+import us.fatehi.utility.ioresource.ClasspathInputResource;
+import us.fatehi.utility.ioresource.FileInputResource;
 
 public class DatabaseObjectColorMap
 {

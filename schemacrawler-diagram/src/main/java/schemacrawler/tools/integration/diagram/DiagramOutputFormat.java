@@ -33,9 +33,9 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.util.List;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputFormatState;
-import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.string.StringFormat;
 
 public enum DiagramOutputFormat
@@ -111,6 +111,16 @@ public enum DiagramOutputFormat
     }
   }
 
+  /**
+   * Checks if the value of the format is supported.
+   *
+   * @return True if the format is a diagram output format
+   */
+  public static boolean isSupportedFormat(final String format)
+  {
+    return fromFormatOrNull(format) != null;
+  }
+
   private static DiagramOutputFormat fromFormatOrNull(final String format)
   {
     if (isBlank(format))
@@ -126,17 +136,6 @@ public enum DiagramOutputFormat
     }
     return null;
   }
-
-  /**
-   * Checks if the value of the format is supported.
-   *
-   * @return True if the format is a diagram output format
-   */
-  public static boolean isSupportedFormat(final String format)
-  {
-    return fromFormatOrNull(format) != null;
-  }
-
   private final OutputFormatState outputFormatState;
 
   private DiagramOutputFormat(final String description)

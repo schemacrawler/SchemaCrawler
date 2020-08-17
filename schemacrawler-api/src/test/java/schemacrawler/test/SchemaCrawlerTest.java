@@ -834,7 +834,8 @@ public class SchemaCrawlerTest
           out.println(String.format("  - check option: %s",
                                     view.getCheckOption()));
           out.println(String.format("  - updatable?: %b", view.isUpdatable()));
-          out.println(String.format("  - definition: %s", view.getDefinition()));
+          out.println(String.format("  - definition: %s",
+                                    view.getDefinition()));
           out.println("  - table usage");
           for (Table usedTable : view.getTableUsage())
           {

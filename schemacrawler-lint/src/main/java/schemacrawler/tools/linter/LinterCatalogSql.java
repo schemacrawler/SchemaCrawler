@@ -56,7 +56,8 @@ public class LinterCatalogSql
     {
       // Linter is not configured
       return "SQL statement based catalog linter";
-    } else
+    }
+    else
     {
       return message;
     }
@@ -71,7 +72,7 @@ public class LinterCatalogSql
     requireNotBlank(message, "No message provided");
 
     sql = config.getStringValue("sql", null);
-    requireNotBlank(sql,"No SQL provided");
+    requireNotBlank(sql, "No SQL provided");
   }
 
   @Override
@@ -105,7 +106,8 @@ public class LinterCatalogSql
     }
     catch (final SQLException e)
     {
-      throw new SchemaCrawlerException("Could not execute SQL for catalog lints", e);
+      throw new SchemaCrawlerException("Could not execute SQL for catalog lints",
+                                       e);
     }
   }
 

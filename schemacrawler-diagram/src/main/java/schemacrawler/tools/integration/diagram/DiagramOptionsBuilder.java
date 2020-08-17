@@ -40,9 +40,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.text.schema.BaseSchemaTextOptionsBuilder;
-import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.string.StringFormat;
 
 public final class DiagramOptionsBuilder
@@ -75,6 +75,18 @@ public final class DiagramOptionsBuilder
     return new DiagramOptionsBuilder().fromOptions(options);
   }
 
+  public static DiagramOptions newDiagramOptions(final Config config)
+  {
+    return new DiagramOptionsBuilder()
+      .fromConfig(config)
+      .toOptions();
+  }
+
+  public static DiagramOptions newDiagramOptions()
+  {
+    return new DiagramOptionsBuilder().toOptions();
+  }
+
   private static Map<String, String> makeDefaultGraphvizAttributes()
   {
     final Map<String, String> graphvizAttributes = new HashMap<>();
@@ -93,19 +105,6 @@ public final class DiagramOptionsBuilder
 
     return graphvizAttributes;
   }
-
-  public static DiagramOptions newDiagramOptions(final Config config)
-  {
-    return new DiagramOptionsBuilder()
-      .fromConfig(config)
-      .toOptions();
-  }
-
-  public static DiagramOptions newDiagramOptions()
-  {
-    return new DiagramOptionsBuilder().toOptions();
-  }
-
   protected List<String> graphvizOpts;
   protected Map<String, String> graphvizAttributes;
   protected boolean isShowForeignKeyCardinality;
@@ -164,6 +163,23 @@ public final class DiagramOptionsBuilder
     return this;
   }
 
+  @Override
+  public Config toConfig()
+  {
+    final Config config = super.toConfig();
+
+    config.setBooleanValue(GRAPH_SHOW_PRIMARY_KEY_CARDINALITY,
+                           isShowPrimaryKeyCardinality);
+    config.setBooleanValue(GRAPH_SHOW_FOREIGN_KEY_CARDINALITY,
+                           isShowForeignKeyCardinality);
+
+    config.setStringValue(GRAPH_GRAPHVIZ_OPTS, join(graphvizOpts, " "));
+
+    graphvizAttributesToConfig(graphvizAttributes, config);
+
+    return config;
+  }
+
   public DiagramOptionsBuilder showForeignKeyCardinality()
   {
     return showForeignKeyCardinality(true);
@@ -184,23 +200,6 @@ public final class DiagramOptionsBuilder
   {
     isShowPrimaryKeyCardinality = value;
     return this;
-  }
-
-  @Override
-  public Config toConfig()
-  {
-    final Config config = super.toConfig();
-
-    config.setBooleanValue(GRAPH_SHOW_PRIMARY_KEY_CARDINALITY,
-                           isShowPrimaryKeyCardinality);
-    config.setBooleanValue(GRAPH_SHOW_FOREIGN_KEY_CARDINALITY,
-                           isShowForeignKeyCardinality);
-
-    config.setStringValue(GRAPH_GRAPHVIZ_OPTS, join(graphvizOpts, " "));
-
-    graphvizAttributesToConfig(graphvizAttributes, config);
-
-    return config;
   }
 
   @Override

@@ -52,20 +52,6 @@ public final class TestWriter
   }
 
   @Override
-  public void close()
-    throws IOException
-  {
-    out.close();
-  }
-
-  @Override
-  public void flush()
-    throws IOException
-  {
-    out.flush();
-  }
-
-  @Override
   public String getFileContents()
   {
     return out.getFileContents();
@@ -106,11 +92,27 @@ public final class TestWriter
     writeout(new String(cbuf, off, len));
   }
 
+  @Override
+  public void flush()
+    throws IOException
+  {
+    out.flush();
+  }
+
+  @Override
+  public void close()
+    throws IOException
+  {
+    out.close();
+  }
+
   private void writeout(final String x)
   {
     try
     {
-      out.write(Objects.toString(x).getBytes(UTF_8));
+      out.write(Objects
+                  .toString(x)
+                  .getBytes(UTF_8));
     }
     catch (final IOException e)
     {

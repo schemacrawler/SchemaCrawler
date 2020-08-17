@@ -42,8 +42,8 @@ import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
-import us.fatehi.utility.html.Alignment;
 import us.fatehi.utility.ObjectToString;
+import us.fatehi.utility.html.Alignment;
 
 /**
  * Text formatting of schema.
@@ -76,21 +76,6 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
     {
       formattingHelper.writeDocumentStart();
     }
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void end()
-    throws SchemaCrawlerException
-  {
-    if (!options.isNoFooter())
-    {
-      formattingHelper.writeDocumentEnd();
-    }
-
-    super.end();
   }
 
   @Override
@@ -294,6 +279,21 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
                                  "System Information");
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void end()
+    throws SchemaCrawlerException
+  {
+    if (!options.isNoFooter())
+    {
+      formattingHelper.writeDocumentEnd();
+    }
+
+    super.end();
+  }
+
   private void printJdbcDriverProperty(final JdbcDriverProperty driverProperty)
   {
     final String required =
@@ -311,6 +311,8 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
                                   "[driver property]");
     formattingHelper.writeDescriptionRow(driverProperty.getDescription());
     formattingHelper.writeDescriptionRow(details);
-    formattingHelper.writeDetailRow("", "value", ObjectToString.toString(value));
+    formattingHelper.writeDetailRow("",
+                                    "value",
+                                    ObjectToString.toString(value));
   }
 }

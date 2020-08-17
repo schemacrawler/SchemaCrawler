@@ -34,8 +34,8 @@ import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.SchemaCrawlerLogger;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import us.fatehi.utility.string.StringFormat;
 
 /**

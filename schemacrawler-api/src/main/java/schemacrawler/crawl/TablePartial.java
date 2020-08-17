@@ -89,12 +89,6 @@ final class TablePartial
   }
 
   @Override
-  public Collection<WeakAssociation> getWeakAssociations()
-  {
-    throw new NotLoadedException(this);
-  }
-
-  @Override
   public Collection<Column> getHiddenColumns()
   {
     throw new NotLoadedException(this);
@@ -102,6 +96,12 @@ final class TablePartial
 
   @Override
   public Collection<ForeignKey> getImportedForeignKeys()
+  {
+    throw new NotLoadedException(this);
+  }
+
+  @Override
+  public Collection<WeakAssociation> getWeakAssociations()
   {
     throw new NotLoadedException(this);
   }
@@ -173,6 +173,12 @@ final class TablePartial
   }
 
   @Override
+  public Optional<MutableTableConstraint> lookupTableConstraint(final String name)
+  {
+    throw new NotLoadedException(this);
+  }
+
+  @Override
   public Optional<ForeignKey> lookupForeignKey(final String name)
   {
     if (foreignKey
@@ -195,12 +201,6 @@ final class TablePartial
 
   @Override
   public Optional<? extends Privilege<Table>> lookupPrivilege(final String name)
-  {
-    throw new NotLoadedException(this);
-  }
-
-  @Override
-  public Optional<MutableTableConstraint> lookupTableConstraint(final String name)
   {
     throw new NotLoadedException(this);
   }

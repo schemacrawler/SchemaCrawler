@@ -32,11 +32,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
-import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.graph.DirectedGraph;
 import us.fatehi.utility.graph.GraphException;
 import us.fatehi.utility.graph.SimpleTopologicalSort;

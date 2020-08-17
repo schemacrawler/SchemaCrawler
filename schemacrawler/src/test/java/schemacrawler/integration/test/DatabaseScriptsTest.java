@@ -107,6 +107,12 @@ public class DatabaseScriptsTest
     }
 
     @Override
+    public int hashCode()
+    {
+      return Objects.hash(name, section, subSection);
+    }
+
+    @Override
     public boolean equals(final Object o)
     {
       if (this == o)
@@ -117,12 +123,6 @@ public class DatabaseScriptsTest
       return section == that.section
              && subSection == that.subSection
              && name.equals(that.name);
-    }
-
-    @Override
-    public int hashCode()
-    {
-      return Objects.hash(name, section, subSection);
     }
 
     public String toString()

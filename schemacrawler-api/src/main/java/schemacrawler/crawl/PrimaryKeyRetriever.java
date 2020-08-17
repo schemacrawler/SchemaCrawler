@@ -39,13 +39,13 @@ import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
-import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.string.StringFormat;
 
 /**
@@ -142,8 +142,7 @@ final class PrimaryKeyRetriever
       return;
     }
 
-    final Query pkSql =
-      informationSchemaViews.getQuery(PRIMARY_KEYS);
+    final Query pkSql = informationSchemaViews.getQuery(PRIMARY_KEYS);
     final Connection connection = getDatabaseConnection();
     try (
       final Statement statement = connection.createStatement();

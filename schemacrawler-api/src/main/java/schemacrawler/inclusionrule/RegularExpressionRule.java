@@ -48,10 +48,9 @@ public final class RegularExpressionRule
   implements InclusionRuleWithRegularExpression
 {
 
+  private static final long serialVersionUID = 3443758881974362293L;
   private static final SchemaCrawlerLogger LOGGER =
     SchemaCrawlerLogger.getLogger(RegularExpressionRule.class.getName());
-
-  private static final long serialVersionUID = 3443758881974362293L;
   private final Pattern patternExclude;
   private final Pattern patternInclude;
 

@@ -35,12 +35,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SearchableType;
 import schemacrawler.schemacrawler.Identifiers;
-import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.string.StringFormat;
 
 /**
@@ -54,11 +54,9 @@ final class MutableColumnDataType
   implements ColumnDataType
 {
 
+  private static final long serialVersionUID = 3688503281676530744L;
   private static final SchemaCrawlerLogger LOGGER =
     SchemaCrawlerLogger.getLogger(SchemaCrawler.class.getName());
-
-  private static final long serialVersionUID = 3688503281676530744L;
-
   private boolean autoIncrementable;
   private ColumnDataType baseType;
   private boolean caseSensitive;
@@ -156,33 +154,6 @@ final class MutableColumnDataType
   public String getDatabaseSpecificTypeName()
   {
     return getName();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public List<String> getEnumValues()
-  {
-    return enumValues;
-  }
-
-  void setEnumValues(final List<String> enumValues)
-  {
-    if (enumValues == null)
-    {
-      this.enumValues = new ArrayList<>();
-    }
-    else
-    {
-      this.enumValues = enumValues;
-    }
-  }
-
-  @Override
-  public boolean isEnumerated()
-  {
-    return !enumValues.isEmpty();
   }
 
   @Override
@@ -436,6 +407,33 @@ final class MutableColumnDataType
   public boolean isUserDefined()
   {
     return userDefined;
+  }
+
+  @Override
+  public boolean isEnumerated()
+  {
+    return !enumValues.isEmpty();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public List<String> getEnumValues()
+  {
+    return enumValues;
+  }
+
+  void setEnumValues(final List<String> enumValues)
+  {
+    if (enumValues == null)
+    {
+      this.enumValues = new ArrayList<>();
+    }
+    else
+    {
+      this.enumValues = enumValues;
+    }
   }
 
   void setUserDefined(final boolean userDefined)

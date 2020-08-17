@@ -41,6 +41,16 @@ public class TestContextParameterResolver
 {
 
   @Override
+  public boolean supportsParameter(final ParameterContext parameterContext,
+                                   final ExtensionContext extensionContext)
+    throws ParameterResolutionException
+  {
+    final Parameter parameter = parameterContext.getParameter();
+
+    return isParameterTestContext(parameter);
+  }
+
+  @Override
   public Object resolveParameter(final ParameterContext parameterContext,
                                  final ExtensionContext extensionContext)
     throws ParameterResolutionException
@@ -54,16 +64,6 @@ public class TestContextParameterResolver
     {
       throw new ParameterResolutionException("Could not resolve " + parameter);
     }
-  }
-
-  @Override
-  public boolean supportsParameter(final ParameterContext parameterContext,
-                                   final ExtensionContext extensionContext)
-    throws ParameterResolutionException
-  {
-    final Parameter parameter = parameterContext.getParameter();
-
-    return isParameterTestContext(parameter);
   }
 
   private boolean isParameterTestContext(final Parameter parameter)

@@ -49,10 +49,10 @@ class MutableView
 {
 
   private static final long serialVersionUID = 3257290248802284852L;
-
+  private final NamedObjectList<MutableTable> tableUsage =
+    new NamedObjectList<>();
   private CheckOptionType checkOption;
   private boolean updatable;
-  private final NamedObjectList<MutableTable> tableUsage = new NamedObjectList<>();
 
   MutableView(final Schema schema, final String name)
   {
@@ -108,7 +108,8 @@ class MutableView
 
   void addTableUsage(final MutableTable table)
   {
-    if (table != null) {
+    if (table != null)
+    {
       tableUsage.add(table);
     }
   }

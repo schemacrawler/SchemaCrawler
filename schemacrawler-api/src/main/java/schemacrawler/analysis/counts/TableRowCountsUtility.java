@@ -41,21 +41,6 @@ public final class TableRowCountsUtility
   private static final String TABLE_ROW_COUNT_KEY =
     "schemacrawler.table.row_count";
 
-  static void addRowCountToTable(final Table table, final long rowCount)
-  {
-    if (table != null)
-    {
-      if (rowCount >= 0)
-      {
-        table.setAttribute(TABLE_ROW_COUNT_KEY, rowCount);
-      }
-      else
-      {
-        table.removeAttribute(TABLE_ROW_COUNT_KEY);
-      }
-    }
-  }
-
   public static long getRowCount(final Table table)
   {
     if (table == null)
@@ -98,6 +83,21 @@ public final class TableRowCountsUtility
   public static boolean hasRowCount(final Table table)
   {
     return table != null && table.hasAttribute(TABLE_ROW_COUNT_KEY);
+  }
+
+  static void addRowCountToTable(final Table table, final long rowCount)
+  {
+    if (table != null)
+    {
+      if (rowCount >= 0)
+      {
+        table.setAttribute(TABLE_ROW_COUNT_KEY, rowCount);
+      }
+      else
+      {
+        table.removeAttribute(TABLE_ROW_COUNT_KEY);
+      }
+    }
   }
 
   private TableRowCountsUtility()

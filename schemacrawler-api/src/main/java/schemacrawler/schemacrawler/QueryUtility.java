@@ -45,6 +45,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.InclusionRuleWithRegularExpression;
 import schemacrawler.schema.Column;
@@ -52,9 +53,8 @@ import schemacrawler.schema.JavaSqlTypeGroup;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.utility.NamedObjectSort;
-import schemacrawler.SchemaCrawlerLogger;
-import us.fatehi.utility.string.StringFormat;
 import us.fatehi.utility.UtilityMarker;
+import us.fatehi.utility.string.StringFormat;
 
 @UtilityMarker
 public final class QueryUtility
