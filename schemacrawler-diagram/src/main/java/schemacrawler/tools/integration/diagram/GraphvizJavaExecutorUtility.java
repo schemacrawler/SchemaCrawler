@@ -15,9 +15,9 @@ import guru.nidi.graphviz.engine.Graphviz;
 import guru.nidi.graphviz.engine.GraphvizEngine;
 import guru.nidi.graphviz.engine.GraphvizJdkEngine;
 import guru.nidi.graphviz.engine.GraphvizV8Engine;
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import us.fatehi.utility.IOUtility;
-import schemacrawler.SchemaCrawlerLogger;
 
 public final class GraphvizJavaExecutorUtility
 {
@@ -57,6 +57,12 @@ public final class GraphvizJavaExecutorUtility
       Graphviz.useEngine(engines);
 
       final Format format = map(diagramOutputFormat);
+      if (format == null)
+      {
+        throw new IllegalArgumentException("Unsupported output format, "
+                                           + diagramOutputFormat);
+      }
+
       Graphviz
         .fromString(dotSource)
         .render(format)

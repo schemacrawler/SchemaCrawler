@@ -29,9 +29,11 @@ package schemacrawler.tools.integration.diagram;
 
 
 import static java.nio.file.Files.createTempFile;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAsClasspathResource;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
 import java.io.IOException;
@@ -69,12 +71,32 @@ public class GraphvizJavaExecutorTest
     final Path dotFile = copyResourceToTempFile("/javaexecutor/input.dot");
     final Path outputFile = createTempFile("sc", ".dot");
 
-    assertTrue(new GraphvizJavaExecutor(dotFile,
+    assertThat(new GraphvizJavaExecutor(dotFile,
                                         outputFile,
-                                        DiagramOutputFormat.png).canGenerate());
-    assertFalse(new GraphvizJavaExecutor(dotFile,
+                                        DiagramOutputFormat.png).canGenerate(),
+               is(true));
+    assertThat(new GraphvizJavaExecutor(dotFile,
                                         outputFile,
-                                        DiagramOutputFormat.scdot).canGenerate());
+                                        DiagramOutputFormat.scdot).canGenerate(),
+               is(false));
+  }
+
+  @Test
+  public void generate()
+    throws IOException, SchemaCrawlerException
+  {
+    final Path dotFile = copyResourceToTempFile("/javaexecutor/input.dot");
+    final Path outputFile = createTempFile("sc", ".dot");
+
+    final GraphvizJavaExecutor graphvizJavaExecutor =
+      new GraphvizJavaExecutor(dotFile, outputFile, DiagramOutputFormat.xdot);
+    assertThat(graphvizJavaExecutor.canGenerate(), is(true));
+
+    final boolean success = graphvizJavaExecutor.call();
+    assertThat(success, is(true));
+
+    assertThat(outputOf(outputFile),
+               hasSameContentAsClasspathResource("/javaexecutor/output.xdot"));
   }
 
 }

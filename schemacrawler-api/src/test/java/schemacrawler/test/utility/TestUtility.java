@@ -145,6 +145,7 @@ public final class TestUtility
     if (referenceReader == null)
 
     {
+      failures.add("Reference file not available, " + referenceFile);
       contentEquals = false;
     }
     else if ("png".equals(outputFormat))

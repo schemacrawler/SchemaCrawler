@@ -1,8 +1,5 @@
 digraph {
-    a -- b;
-    b -- c;
-    a -- c;
-    d -- c;
-    e -- c;
-    e -- a;
+    a -> b;
+    b -> c;
+    a -> c;
 }

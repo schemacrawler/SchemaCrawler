@@ -44,6 +44,7 @@ import java.util.stream.Collectors;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.junit.jupiter.api.Test;
 
 public class FileHasContent
   extends BaseMatcher<TestResource>
@@ -71,6 +72,11 @@ public class FileHasContent
   public static Matcher<TestResource> hasSameContentAs(final TestResource classpathTestResource)
   {
     return hasSameContentAndTypeAs(classpathTestResource, null, false);
+  }
+
+  public static Matcher<TestResource> hasSameContentAsClasspathResource(final String classpathTestResource)
+  {
+    return hasSameContentAndTypeAs(new TestResource(classpathTestResource), null, false);
   }
 
   public static TestResource outputOf(final TestOutputCapture testoutput)
