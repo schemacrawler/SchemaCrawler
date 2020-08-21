@@ -29,31 +29,32 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
-
-import java.nio.file.Path;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.test.utility.BaseSqliteTest;
-import schemacrawler.test.utility.DatabaseTestUtility;
-import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
-import schemacrawler.test.utility.TestLoggingExtension;
+import schemacrawler.test.utility.*;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
+
+import java.nio.file.Path;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
+import static schemacrawler.test.utility.FileHasContent.*;
 
 @ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestContextParameterResolver.class)
 public class AdditionalCasesTest
   extends BaseSqliteTest
 {
+
+  @Test
+  public void renameTable(final TestContext testContext)
+    throws Exception
+  {
+    run(testContext.testMethodFullName(), "/rename_table.sql", "schema,dump");
+  }
 
   @Test
   public void advancedUsage(final TestContext testContext)
