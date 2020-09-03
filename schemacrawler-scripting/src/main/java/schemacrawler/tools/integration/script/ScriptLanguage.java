@@ -37,7 +37,7 @@ public final class ScriptLanguage
 
   public ScriptLanguage()
   {
-    super("script-language", "script", "nashorn");
+    super("script-language", "script", "javascript");
   }
 
 }
