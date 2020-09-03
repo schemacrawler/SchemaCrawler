@@ -33,10 +33,11 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static us.fatehi.utility.Utility.commonPrefix;
+import static us.fatehi.utility.Utility.hasNoUpperCase;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.isClassAvailable;
+import static us.fatehi.utility.Utility.isIntegral;
 import static us.fatehi.utility.Utility.toSnakeCase;
-
 import org.junit.jupiter.api.Test;
 
 public class UtilityTest
@@ -50,6 +51,22 @@ public class UtilityTest
     assertThat(commonPrefix("preTest", "preCompile"), is("pre"));
     assertThat(commonPrefix("something", "nothing"), is(""));
     assertThat(commonPrefix("preTest", ""), is(""));
+  }
+
+  @Test
+  public void hasNoUpperCaseTest()
+  {
+    assertThat(hasNoUpperCase(null), is(false));
+    assertThat(hasNoUpperCase("A"), is(false));
+    assertThat(hasNoUpperCase("Aa"), is(false));
+    assertThat(hasNoUpperCase("A a"), is(false));
+
+    assertThat(hasNoUpperCase(""), is(true));
+    assertThat(hasNoUpperCase(" "), is(true));
+    assertThat(hasNoUpperCase("a"), is(true));
+    assertThat(hasNoUpperCase("aa"), is(true));
+    assertThat(hasNoUpperCase("a s"), is(true));
+    assertThat(hasNoUpperCase("1.0"), is(true));
   }
 
   @Test
@@ -77,6 +94,21 @@ public class UtilityTest
   {
     assertThat(isClassAvailable("java.lang.String"), is(true));
     assertThat(isClassAvailable("com.example.Unknown"), is(false));
+  }
+
+  @Test
+  public void isIntegralTest()
+  {
+    assertThat(isIntegral(null), is(false));
+    assertThat(isIntegral(""), is(false));
+    assertThat(isIntegral(" "), is(false));
+    assertThat(isIntegral("1.0"), is(false));
+    assertThat(isIntegral("-0.3"), is(false));
+    assertThat(isIntegral("a"), is(false));
+
+    assertThat(isIntegral("1"), is(true));
+    assertThat(isIntegral("+1"), is(true));
+    assertThat(isIntegral("-1"), is(true));
   }
 
   @Test

@@ -199,7 +199,7 @@ public final class Utility
    *   Text to check.
    * @return Whether the string is all lowercase.
    */
-  public static boolean isLowerCase(final String text)
+  public static boolean hasNoUpperCase(final String text)
   {
     return text != null && text.equals(text.toLowerCase());
   }

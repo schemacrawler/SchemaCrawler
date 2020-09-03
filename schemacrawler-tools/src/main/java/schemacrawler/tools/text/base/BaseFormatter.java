@@ -30,7 +30,7 @@ package schemacrawler.tools.text.base;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.convertForComparison;
-import static us.fatehi.utility.Utility.isLowerCase;
+import static us.fatehi.utility.Utility.hasNoUpperCase;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -125,7 +125,7 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
     {
       columnNullable = "";
     }
-    else if (isLowerCase(columnTypeName))
+    else if (hasNoUpperCase(columnTypeName))
     {
       columnNullable = " not null";
     }
