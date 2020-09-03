@@ -127,7 +127,7 @@
         <executions>
           <execution>
             <id>stage-site-markdown</id>
-            <phase>process-resources</phase>
+            <phase>test</phase>
             <configuration>
               <target name="stage-site-markdown"
                       description="Stage site Markdown, and generate Markdown content">
@@ -168,7 +168,7 @@
         <executions>
           <execution>
             <id>examples</id>
-            <phase>process-resources</phase>
+            <phase>test</phase>
             <goals>
               <goal>generate</goal>
             </goals>
@@ -184,7 +184,7 @@
           </execution>
           <execution>
             <id>website</id>
-            <phase>process-resources</phase>
+            <phase>test</phase>
             <goals>
               <goal>generate</goal>
             </goals>
