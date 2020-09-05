@@ -30,7 +30,7 @@ package schemacrawler.schemacrawler;
 
 
 public final class LoadOptionsBuilder
-  implements OptionsBuilder<LoadOptionsBuilder, LoadOptions>, ConfigOptionsBuilder<LoadOptionsBuilder, LoadOptions>
+  implements OptionsBuilder<LoadOptionsBuilder, LoadOptions>
 {
 
   public static LoadOptionsBuilder builder()
@@ -54,28 +54,6 @@ public final class LoadOptionsBuilder
     schemaInfoLevel = SchemaInfoLevelBuilder.standard();
   }
 
-  /**
-   * Options from properties.
-   *
-   * @param config
-   *   Configuration properties
-   */
-  @Override
-  public LoadOptionsBuilder fromConfig(final Config config)
-  {
-    if (config == null)
-    {
-      return this;
-    }
-
-    schemaInfoLevel = SchemaInfoLevelBuilder
-      .builder()
-      .fromConfig(config)
-      .toOptions();
-
-    return this;
-  }
-
   @Override
   public LoadOptionsBuilder fromOptions(final LoadOptions options)
   {
@@ -88,12 +66,6 @@ public final class LoadOptionsBuilder
     isLoadRowCounts = options.isLoadRowCounts();
 
     return this;
-  }
-
-  @Override
-  public Config toConfig()
-  {
-    throw new UnsupportedOperationException();
   }
 
   @Override

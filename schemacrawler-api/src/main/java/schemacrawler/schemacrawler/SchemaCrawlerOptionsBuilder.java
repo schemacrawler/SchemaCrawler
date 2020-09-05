@@ -92,11 +92,6 @@ public final class SchemaCrawlerOptionsBuilder
       .fromOptions(grepOptions)
       .fromConfig(config)
       .toOptions();
-    loadOptions = LoadOptionsBuilder
-      .builder()
-      .fromOptions(loadOptions)
-      .fromConfig(config)
-      .toOptions();
 
     return this;
   }

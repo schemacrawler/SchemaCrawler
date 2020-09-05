@@ -39,7 +39,6 @@ import static schemacrawler.schemacrawler.InfoLevel.detailed;
 import static schemacrawler.schemacrawler.InfoLevel.maximum;
 import static schemacrawler.schemacrawler.InfoLevel.minimum;
 import static schemacrawler.schemacrawler.InfoLevel.standard;
-import static us.fatehi.utility.Utility.toSnakeCase;
 
 public enum SchemaInfoRetrieval
 {
@@ -74,8 +73,6 @@ public enum SchemaInfoRetrieval
   retrieveWeakAssociations(table, maximum),
   ;
 
-  private static final String SC_SCHEMA_INFO_LEVEL =
-    "schemacrawler.schema_info_level.";
   private final DatabaseObjectInfoRetrieval databaseObjectInfoRetrieval;
   private final InfoLevel infoLevel;
 
@@ -95,11 +92,6 @@ public enum SchemaInfoRetrieval
   public InfoLevel getInfoLevel()
   {
     return infoLevel;
-  }
-
-  public String getKey()
-  {
-    return SC_SCHEMA_INFO_LEVEL + toSnakeCase(name());
   }
 
 }

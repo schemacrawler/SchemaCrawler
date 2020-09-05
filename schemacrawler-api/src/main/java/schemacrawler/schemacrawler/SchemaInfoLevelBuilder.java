@@ -38,7 +38,7 @@ import java.util.logging.Level;
 import schemacrawler.SchemaCrawlerLogger;
 
 public final class SchemaInfoLevelBuilder
-  implements OptionsBuilder<SchemaInfoLevelBuilder, SchemaInfoLevel>, ConfigOptionsBuilder<SchemaInfoLevelBuilder, SchemaInfoLevel>
+  implements OptionsBuilder<SchemaInfoLevelBuilder, SchemaInfoLevel>
 {
 
   private static final SchemaCrawlerLogger LOGGER =
@@ -126,27 +126,6 @@ public final class SchemaInfoLevelBuilder
   }
 
   @Override
-  public SchemaInfoLevelBuilder fromConfig(final Config config)
-  {
-    if (config == null)
-    {
-      return this;
-    }
-
-    for (final SchemaInfoRetrieval schemaInfoRetrieval : SchemaInfoRetrieval.values())
-    {
-      final String key = schemaInfoRetrieval.getKey();
-      if (config.containsKey(key))
-      {
-        final boolean booleanValue = config.getBooleanValue(key);
-        schemaInfoRetrievals.put(schemaInfoRetrieval, booleanValue);
-      }
-    }
-
-    return this;
-  }
-
-  @Override
   public SchemaInfoLevelBuilder fromOptions(final SchemaInfoLevel schemaInfoLevel)
   {
     if (schemaInfoLevel == null)
@@ -172,12 +151,6 @@ public final class SchemaInfoLevelBuilder
     }
 
     return this;
-  }
-
-  @Override
-  public Config toConfig()
-  {
-    throw new UnsupportedOperationException();
   }
 
   @Override
