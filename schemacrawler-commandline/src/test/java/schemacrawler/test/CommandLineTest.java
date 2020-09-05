@@ -123,6 +123,21 @@ public class CommandLineTest
   }
 
   @Test
+  public void commandLineOverridesWithSomePortableNames(final TestContext testContext,
+                                         final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<>();
+    args.put("-portable-names", Boolean.FALSE.toString());
+    
+    final Map<String, String> config = new HashMap<>();
+    config.put("schemacrawler.format.hide_primarykey_names", Boolean.TRUE.toString());
+    config.put("schemacrawler.format.hide_foreignkey_names", Boolean.TRUE.toString());
+
+    run(testContext, connectionInfo, args, config, "brief");
+  }
+
+  @Test
   public void commandLineOverridesWithTextShowOptionsConfig(
       final TestContext testContext,
       final DatabaseConnectionInfo connectionInfo) throws Exception
@@ -230,7 +245,7 @@ public class CommandLineTest
 
     run(testContext, connectionInfo, args, null, "brief");
   }
-
+  
   @Test
   public void commandLineTablesWithoutSorting(final TestContext testContext,
                                               final DatabaseConnectionInfo connectionInfo)
@@ -322,7 +337,7 @@ public class CommandLineTest
 
     run(testContext, connectionInfo, args, null, "brief");
   }
-
+  
   @Test
   public void commandLineWithQueryInConfig(final TestContext testContext,
                                            final DatabaseConnectionInfo connectionInfo)
@@ -337,7 +352,7 @@ public class CommandLineTest
 
     run(testContext, connectionInfo, args, config, command);
   }
-
+  
   @Test
   public void commandLineWithQueryOverInConfig(final TestContext testContext,
                                                final DatabaseConnectionInfo connectionInfo)
@@ -351,6 +366,34 @@ public class CommandLineTest
     config.put(command, "SELECT ${columns} FROM ${table} ORDER BY ${columns}");
 
     run(testContext, connectionInfo, args, config, command);
+  }
+
+  @Test
+  public void commandLineWithSomePortableNames1(final TestContext testContext,
+                                         final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<>();
+    // args.put("-portable-names", Boolean.TRUE.toString());
+    
+    final Map<String, String> config = new HashMap<>();
+    config.put("schemacrawler.format.hide_primarykey_names", Boolean.TRUE.toString());
+
+    run(testContext, connectionInfo, args, config, "brief");
+  }
+
+  @Test
+  public void commandLineWithSomePortableNames2(final TestContext testContext,
+                                         final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<>();
+    // args.put("-portable-names", Boolean.TRUE.toString());
+    
+    final Map<String, String> config = new HashMap<>();
+    config.put("schemacrawler.format.hide_foreignkey_names", Boolean.TRUE.toString());
+
+    run(testContext, connectionInfo, args, config, "brief");
   }
 
   @Test
