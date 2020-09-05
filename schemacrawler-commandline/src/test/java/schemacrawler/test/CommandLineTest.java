@@ -108,6 +108,21 @@ public class CommandLineTest
   }
 
   @Test
+  public void commandLineOverridesWithGrepConfig(final TestContext testContext,
+                                        final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<>();
+    args.put("-grep-columns", ".*BOOKS.ID");
+
+    final Map<String, String> config = new HashMap<>();
+    config.put("schemacrawler.grep.column.pattern.include", ".*AUTHORS.ID");
+    config.put("schemacrawler.grep.column.pattern.exclude", "");
+
+    run(testContext, connectionInfo, args, config, "brief");
+  }
+
+  @Test
   public void commandLineRoutinesWithColumnsSorting(final TestContext testContext,
                                                     final DatabaseConnectionInfo connectionInfo)
     throws Exception
@@ -222,7 +237,7 @@ public class CommandLineTest
 
     run(testContext, connectionInfo, args, null, "brief");
   }
-
+  
   @Test
   public void commandLineWithConfig(final TestContext testContext,
                                     final DatabaseConnectionInfo connectionInfo)
@@ -246,6 +261,19 @@ public class CommandLineTest
   }
   
   @Test
+  public void commandLineWithDefaults(final TestContext testContext,
+                                      final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<>();
+    args.put("-portable-names", Boolean.TRUE.toString());
+    // Testing all tables, routines
+    // Testing no sequences, synonyms
+
+    run(testContext, connectionInfo, args, null, "brief");
+  }
+  
+  @Test
   public void commandLineWithGrepConfig(final TestContext testContext,
                                         final DatabaseConnectionInfo connectionInfo)
     throws Exception
@@ -257,58 +285,6 @@ public class CommandLineTest
     config.put("schemacrawler.grep.column.pattern.exclude", "");
 
     run(testContext, connectionInfo, args, config, "brief");
-  }
-  
-  @Test
-  public void commandLineOverridesWithGrepConfig(final TestContext testContext,
-                                        final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-grep-columns", ".*BOOKS.ID");
-
-    final Map<String, String> config = new HashMap<>();
-    config.put("schemacrawler.grep.column.pattern.include", ".*AUTHORS.ID");
-    config.put("schemacrawler.grep.column.pattern.exclude", "");
-
-    run(testContext, connectionInfo, args, config, "brief");
-  }
-  
-  @Test
-  public void commandLineWithSortConfig(final TestContext testContext,
-                                        final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
-    final Map<String, String> args = new HashMap<>();
-
-    final Map<String, String> config = new HashMap<>();
-    config.put("schemacrawler.format.sort_alphabetically.tables",
-        Boolean.TRUE.toString());
-    config.put("schemacrawler.format.sort_alphabetically.table_columns",
-        Boolean.TRUE.toString());
-    config.put("schemacrawler.format.sort_alphabetically.table_foreignkeys",
-        Boolean.TRUE.toString());
-    config.put("schemacrawler.format.sort_alphabetically.table_indexes",
-        Boolean.TRUE.toString());
-    config.put("schemacrawler.format.sort_alphabetically.routines",
-        Boolean.TRUE.toString());
-    config.put("schemacrawler.format.sort_alphabetically.routine_columns",
-        Boolean.TRUE.toString());
-
-    run(testContext, connectionInfo, args, config, "brief");
-  }
-
-  @Test
-  public void commandLineWithDefaults(final TestContext testContext,
-                                      final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-portable-names", Boolean.TRUE.toString());
-    // Testing all tables, routines
-    // Testing no sequences, synonyms
-
-    run(testContext, connectionInfo, args, null, "brief");
   }
 
   @Test
@@ -354,6 +330,30 @@ public class CommandLineTest
     config.put(command, "SELECT ${columns} FROM ${table} ORDER BY ${columns}");
 
     run(testContext, connectionInfo, args, config, command);
+  }
+
+  @Test
+  public void commandLineWithSortConfig(final TestContext testContext,
+                                        final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<>();
+
+    final Map<String, String> config = new HashMap<>();
+    config.put("schemacrawler.format.sort_alphabetically.tables",
+        Boolean.TRUE.toString());
+    config.put("schemacrawler.format.sort_alphabetically.table_columns",
+        Boolean.TRUE.toString());
+    config.put("schemacrawler.format.sort_alphabetically.table_foreignkeys",
+        Boolean.TRUE.toString());
+    config.put("schemacrawler.format.sort_alphabetically.table_indexes",
+        Boolean.TRUE.toString());
+    config.put("schemacrawler.format.sort_alphabetically.routines",
+        Boolean.TRUE.toString());
+    config.put("schemacrawler.format.sort_alphabetically.routine_columns",
+        Boolean.TRUE.toString());
+
+    run(testContext, connectionInfo, args, config, "brief");
   }
 
 }
