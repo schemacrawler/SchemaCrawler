@@ -2,14 +2,11 @@ package schemacrawler.tools.integration.diagram;
 
 
 import static java.util.Objects.requireNonNull;
-
 import java.io.FileReader;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-
 import guru.nidi.graphviz.engine.Format;
 import guru.nidi.graphviz.engine.Graphviz;
 import guru.nidi.graphviz.engine.GraphvizEngine;
@@ -99,28 +96,6 @@ public final class GraphvizJavaExecutorUtility
     }
 
     return engines;
-  }
-
-  public static void main(final String[] args)
-    throws Exception
-  {
-    if (args.length != 3)
-    {
-      throw new IllegalArgumentException("<format> <DOT file> <output file>");
-    }
-
-    final DiagramOutputFormat diagramOutputFormat =
-      DiagramOutputFormat.valueOf(args[0]);
-    final Path dotFile = Paths
-      .get(args[1])
-      .normalize()
-      .toAbsolutePath();
-    final Path outputFile = Paths
-      .get(args[2])
-      .normalize()
-      .toAbsolutePath();
-
-    generateGraph(dotFile, outputFile, diagramOutputFormat);
   }
 
   private static Format map(final DiagramOutputFormat diagramOutputFormat)
