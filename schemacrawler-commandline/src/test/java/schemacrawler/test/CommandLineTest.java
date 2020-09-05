@@ -273,6 +273,30 @@ public class CommandLineTest
 
     run(testContext, connectionInfo, args, config, "brief");
   }
+  
+  @Test
+  public void commandLineWithSortConfig(final TestContext testContext,
+                                        final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<>();
+
+    final Map<String, String> config = new HashMap<>();
+    config.put("schemacrawler.format.sort_alphabetically.tables",
+        Boolean.TRUE.toString());
+    config.put("schemacrawler.format.sort_alphabetically.table_columns",
+        Boolean.TRUE.toString());
+    config.put("schemacrawler.format.sort_alphabetically.table_foreignkeys",
+        Boolean.TRUE.toString());
+    config.put("schemacrawler.format.sort_alphabetically.table_indexes",
+        Boolean.TRUE.toString());
+    config.put("schemacrawler.format.sort_alphabetically.routines",
+        Boolean.TRUE.toString());
+    config.put("schemacrawler.format.sort_alphabetically.routine_columns",
+        Boolean.TRUE.toString());
+
+    run(testContext, connectionInfo, args, config, "brief");
+  }
 
   @Test
   public void commandLineWithDefaults(final TestContext testContext,
