@@ -34,7 +34,7 @@ package schemacrawler.schemacrawler;
  * a schema.
  */
 public final class FilterOptionsBuilder
-  implements OptionsBuilder<FilterOptionsBuilder, FilterOptions>
+  implements OptionsBuilder<FilterOptionsBuilder, FilterOptions>, ConfigOptionsBuilder<FilterOptionsBuilder, FilterOptions>
 {
 
   public static FilterOptionsBuilder builder()

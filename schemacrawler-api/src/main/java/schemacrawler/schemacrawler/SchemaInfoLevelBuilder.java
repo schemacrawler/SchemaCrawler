@@ -38,7 +38,7 @@ import java.util.logging.Level;
 import schemacrawler.SchemaCrawlerLogger;
 
 public final class SchemaInfoLevelBuilder
-  implements OptionsBuilder<SchemaInfoLevelBuilder, SchemaInfoLevel>
+  implements OptionsBuilder<SchemaInfoLevelBuilder, SchemaInfoLevel>, ConfigOptionsBuilder<SchemaInfoLevelBuilder, SchemaInfoLevel>
 {
 
   private static final SchemaCrawlerLogger LOGGER =

@@ -34,7 +34,7 @@ package schemacrawler.schemacrawler;
  * schema.
  */
 public final class SchemaCrawlerOptionsBuilder
-  implements OptionsBuilder<SchemaCrawlerOptionsBuilder, SchemaCrawlerOptions>
+  implements OptionsBuilder<SchemaCrawlerOptionsBuilder, SchemaCrawlerOptions>, ConfigOptionsBuilder<SchemaCrawlerOptionsBuilder, SchemaCrawlerOptions>
 {
 
   public static SchemaCrawlerOptionsBuilder builder()

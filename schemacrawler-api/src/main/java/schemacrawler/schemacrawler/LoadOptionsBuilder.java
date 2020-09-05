@@ -30,7 +30,7 @@ package schemacrawler.schemacrawler;
 
 
 public final class LoadOptionsBuilder
-  implements OptionsBuilder<LoadOptionsBuilder, LoadOptions>
+  implements OptionsBuilder<LoadOptionsBuilder, LoadOptions>, ConfigOptionsBuilder<LoadOptionsBuilder, LoadOptions>
 {
 
   public static LoadOptionsBuilder builder()

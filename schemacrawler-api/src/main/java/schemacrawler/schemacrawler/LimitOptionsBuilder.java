@@ -62,7 +62,7 @@ import schemacrawler.schema.TableTypes;
  * schema.
  */
 public final class LimitOptionsBuilder
-  implements OptionsBuilder<LimitOptionsBuilder, LimitOptions>
+  implements OptionsBuilder<LimitOptionsBuilder, LimitOptions>, ConfigOptionsBuilder<LimitOptionsBuilder, LimitOptions>
 {
 
   public static LimitOptionsBuilder builder()
