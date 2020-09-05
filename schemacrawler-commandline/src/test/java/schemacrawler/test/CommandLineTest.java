@@ -369,6 +369,19 @@ public class CommandLineTest
   }
 
   @Test
+  public void commandLineWithQuoteOptionsConfig(final TestContext testContext,
+      final DatabaseConnectionInfo connectionInfo) throws Exception
+  {
+    final Map<String, String> args = new HashMap<>();
+
+    final Map<String, String> config = new HashMap<>();
+    config.put("schemacrawler.format.identifier_quoting_strategy",
+        "quote_all");
+
+    run(testContext, connectionInfo, args, config, "brief");
+  }
+
+  @Test
   public void commandLineWithSomePortableNames1(final TestContext testContext,
                                          final DatabaseConnectionInfo connectionInfo)
     throws Exception
@@ -419,7 +432,7 @@ public class CommandLineTest
 
     run(testContext, connectionInfo, args, config, "brief");
   }
-
+  
   @Test
   public void commandLineWithTextShowOptionsConfig(
       final TestContext testContext,
@@ -438,5 +451,5 @@ public class CommandLineTest
 
     run(testContext, connectionInfo, args, config, "brief");
   }
-
+  
 }
