@@ -34,7 +34,7 @@ package schemacrawler.schemacrawler;
  * a schema.
  */
 public final class FilterOptionsBuilder
-  implements OptionsBuilder<FilterOptionsBuilder, FilterOptions>, ConfigOptionsBuilder<FilterOptionsBuilder, FilterOptions>
+  implements OptionsBuilder<FilterOptionsBuilder, FilterOptions>
 {
 
   public static FilterOptionsBuilder builder()
@@ -64,23 +64,6 @@ public final class FilterOptionsBuilder
     return this;
   }
 
-  /**
-   * Options from properties.
-   *
-   * @param config
-   *   Configuration properties
-   */
-  @Override
-  public FilterOptionsBuilder fromConfig(final Config config)
-  {
-    if (config == null)
-    {
-      return this;
-    }
-
-    return this;
-  }
-
   @Override
   public FilterOptionsBuilder fromOptions(final FilterOptions options)
   {
@@ -95,12 +78,6 @@ public final class FilterOptionsBuilder
     parentTableFilterDepth = options.getParentTableFilterDepth();
 
     return this;
-  }
-
-  @Override
-  public Config toConfig()
-  {
-    throw new UnsupportedOperationException();
   }
 
   @Override

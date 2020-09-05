@@ -123,6 +123,27 @@ public class CommandLineTest
   }
 
   @Test
+  public void commandLineOverridesWithTextShowOptionsConfig(
+      final TestContext testContext,
+      final DatabaseConnectionInfo connectionInfo) throws Exception
+  {
+    final Map<String, String> args = new HashMap<>();
+    args.put("-no-remarks", Boolean.FALSE.toString());
+    args.put("-portable-names", Boolean.FALSE.toString());
+
+    final Map<String, String> config = new HashMap<>();
+    config.put("schemacrawler.format.no_remarks", Boolean.TRUE.toString());
+    config.put("schemacrawler.format.show_unqualified_names",
+        Boolean.TRUE.toString());
+    config.put("schemacrawler.format.show_standard_column_type_names",
+        Boolean.TRUE.toString());
+    config.put("schemacrawler.format.show_ordinal_numbers",
+        Boolean.TRUE.toString());
+
+    run(testContext, connectionInfo, args, config, "brief");
+  }
+
+  @Test
   public void commandLineRoutinesWithColumnsSorting(final TestContext testContext,
                                                     final DatabaseConnectionInfo connectionInfo)
     throws Exception
@@ -223,7 +244,7 @@ public class CommandLineTest
 
     run(testContext, connectionInfo, args, null, "brief");
   }
-
+  
   @Test
   public void commandLineTablesWithSorting(final TestContext testContext,
                                            final DatabaseConnectionInfo connectionInfo)
@@ -286,7 +307,7 @@ public class CommandLineTest
 
     run(testContext, connectionInfo, args, config, "brief");
   }
-
+  
   @Test
   public void commandLineWithNonDefaults(final TestContext testContext,
                                          final DatabaseConnectionInfo connectionInfo)
@@ -351,6 +372,25 @@ public class CommandLineTest
     config.put("schemacrawler.format.sort_alphabetically.routines",
         Boolean.TRUE.toString());
     config.put("schemacrawler.format.sort_alphabetically.routine_columns",
+        Boolean.TRUE.toString());
+
+    run(testContext, connectionInfo, args, config, "brief");
+  }
+
+  @Test
+  public void commandLineWithTextShowOptionsConfig(
+      final TestContext testContext,
+      final DatabaseConnectionInfo connectionInfo) throws Exception
+  {
+    final Map<String, String> args = new HashMap<>();
+
+    final Map<String, String> config = new HashMap<>();
+    config.put("schemacrawler.format.hide_remarks", Boolean.TRUE.toString());
+    config.put("schemacrawler.format.show_unqualified_names",
+        Boolean.TRUE.toString());
+    config.put("schemacrawler.format.show_standard_column_type_names",
+        Boolean.TRUE.toString());
+    config.put("schemacrawler.format.show_ordinal_numbers",
         Boolean.TRUE.toString());
 
     run(testContext, connectionInfo, args, config, "brief");
