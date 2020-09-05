@@ -258,6 +258,21 @@ public class CommandLineTest
 
     run(testContext, connectionInfo, args, config, "brief");
   }
+  
+  @Test
+  public void commandLineOverridesWithGrepConfig(final TestContext testContext,
+                                        final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<>();
+    args.put("-grep-columns", ".*BOOKS.ID");
+
+    final Map<String, String> config = new HashMap<>();
+    config.put("schemacrawler.grep.column.pattern.include", ".*AUTHORS.ID");
+    config.put("schemacrawler.grep.column.pattern.exclude", "");
+
+    run(testContext, connectionInfo, args, config, "brief");
+  }
 
   @Test
   public void commandLineWithDefaults(final TestContext testContext,
