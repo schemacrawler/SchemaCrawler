@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.ConfigOptionsBuilder;
 import schemacrawler.schemacrawler.OptionsBuilder;
 import us.fatehi.utility.ioresource.ConsoleOutputResource;
 import us.fatehi.utility.ioresource.FileOutputResource;
@@ -20,7 +21,7 @@ import us.fatehi.utility.ioresource.OutputResource;
 import us.fatehi.utility.ioresource.WriterOutputResource;
 
 public final class OutputOptionsBuilder
-  implements OptionsBuilder<OutputOptionsBuilder, OutputOptions>
+  implements OptionsBuilder<OutputOptionsBuilder, OutputOptions>, ConfigOptionsBuilder<OutputOptionsBuilder, OutputOptions>
 {
 
   private static final String SC_INPUT_ENCODING =

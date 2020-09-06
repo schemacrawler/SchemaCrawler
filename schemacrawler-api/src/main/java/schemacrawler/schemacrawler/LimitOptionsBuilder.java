@@ -62,7 +62,7 @@ import schemacrawler.schema.TableTypes;
  * schema.
  */
 public final class LimitOptionsBuilder
-  implements OptionsBuilder<LimitOptionsBuilder, LimitOptions>
+  implements OptionsBuilder<LimitOptionsBuilder, LimitOptions>, ConfigOptionsBuilder<LimitOptionsBuilder, LimitOptions>
 {
 
   public static LimitOptionsBuilder builder()
@@ -121,7 +121,7 @@ public final class LimitOptionsBuilder
       return this;
     }
 
-    for (DatabaseObjectRuleForInclusion ruleForInclusion : DatabaseObjectRuleForInclusion.values())
+    for (final DatabaseObjectRuleForInclusion ruleForInclusion : DatabaseObjectRuleForInclusion.values())
     {
       final InclusionRule inclusionRule = config.getInclusionRuleWithDefault(
         ruleForInclusion.getIncludePatternProperty(),

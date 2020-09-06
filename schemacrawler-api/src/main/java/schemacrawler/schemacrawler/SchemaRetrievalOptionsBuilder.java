@@ -44,7 +44,7 @@ import schemacrawler.utility.TypeMap;
 
 public final class SchemaRetrievalOptionsBuilder
   implements
-  OptionsBuilder<SchemaRetrievalOptionsBuilder, SchemaRetrievalOptions>
+  OptionsBuilder<SchemaRetrievalOptionsBuilder, SchemaRetrievalOptions>, ConfigOptionsBuilder<SchemaRetrievalOptionsBuilder, SchemaRetrievalOptions>
 {
 
   public static SchemaRetrievalOptionsBuilder builder()

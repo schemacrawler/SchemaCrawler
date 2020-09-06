@@ -40,11 +40,11 @@ package schemacrawler.schemacrawler;
  * @see <a href= "https://stackoverflow.com/questions/17164375/subclassing-a-java-builder-class">Subclassing
  *   a Java Builder class</a>
  */
-public interface OptionsBuilder<B extends OptionsBuilder<B, O>, O extends Options>
+public interface ConfigOptionsBuilder<B extends ConfigOptionsBuilder<B, O>, O extends Options>
 {
 
-  OptionsBuilder<B, O> fromOptions(O options);
-  
-  O toOptions();
+  ConfigOptionsBuilder<B, O> fromConfig(Config config);
 
+  Config toConfig();
+  
 }

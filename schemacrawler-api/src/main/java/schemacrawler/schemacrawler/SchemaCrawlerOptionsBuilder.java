@@ -34,7 +34,7 @@ package schemacrawler.schemacrawler;
  * schema.
  */
 public final class SchemaCrawlerOptionsBuilder
-  implements OptionsBuilder<SchemaCrawlerOptionsBuilder, SchemaCrawlerOptions>
+  implements OptionsBuilder<SchemaCrawlerOptionsBuilder, SchemaCrawlerOptions>, ConfigOptionsBuilder<SchemaCrawlerOptionsBuilder, SchemaCrawlerOptions>
 {
 
   public static SchemaCrawlerOptionsBuilder builder()
@@ -77,24 +77,16 @@ public final class SchemaCrawlerOptionsBuilder
       return this;
     }
 
+    // Load only inclusion rules for limit options
     limitOptions = LimitOptionsBuilder
       .builder()
       .fromOptions(limitOptions)
       .fromConfig(config)
       .toOptions();
-    filterOptions = FilterOptionsBuilder
-      .builder()
-      .fromOptions(filterOptions)
-      .fromConfig(config)
-      .toOptions();
+    // Load only inclusion rules for grep options
     grepOptions = GrepOptionsBuilder
       .builder()
       .fromOptions(grepOptions)
-      .fromConfig(config)
-      .toOptions();
-    loadOptions = LoadOptionsBuilder
-      .builder()
-      .fromOptions(loadOptions)
       .fromConfig(config)
       .toOptions();
 

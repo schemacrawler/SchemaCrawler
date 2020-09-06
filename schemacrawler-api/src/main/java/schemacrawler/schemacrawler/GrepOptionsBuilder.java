@@ -39,7 +39,7 @@ import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
  * grep options builder, to build the immutable options to crawl a schema.
  */
 public final class GrepOptionsBuilder
-  implements OptionsBuilder<GrepOptionsBuilder, GrepOptions>
+  implements OptionsBuilder<GrepOptionsBuilder, GrepOptions>, ConfigOptionsBuilder<GrepOptionsBuilder, GrepOptions>
 {
 
   private static final String SC_GREP_COLUMN_PATTERN_EXCLUDE =

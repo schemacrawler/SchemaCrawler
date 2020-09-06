@@ -1,0 +1,186 @@
+
+
+Tables
+========================================================================
+
+
+
+AUTHORS                                                          [table]
+------------------------------------------------------------------------
+1   ID                                INTEGER NOT NULL            
+2   FIRSTNAME                         VARCHAR(20) NOT NULL        
+3   LASTNAME                          VARCHAR(20) NOT NULL        
+6   CITY                              VARCHAR(50)                 
+7   STATE                             CHAR(2)                     
+8   POSTALCODE                        VARCHAR(10)                 
+9   COUNTRY                           VARCHAR(50)                 
+
+Primary Key
+
+PK_AUTHORS                                                 [primary key]
+1   ID                                                            
+
+Foreign Keys
+
+Z_FK_AUTHOR                                [foreign key, with no action]
+ 1  ID <--(0..many) BOOKAUTHORS.AUTHORID                              
+
+
+
+AUTHORSLIST                                                       [view]
+------------------------------------------------------------------------
+
+
+
+BOOKAUTHORS                                                      [table]
+------------------------------------------------------------------------
+1   BOOKID                            INTEGER NOT NULL            
+2   AUTHORID                          INTEGER NOT NULL            
+
+Foreign Keys
+
+Z_FK_AUTHOR                                [foreign key, with no action]
+ 1  AUTHORID (0..many)--> AUTHORS.ID                              
+
+SYS_FK_10128                               [foreign key, with no action]
+ 1  BOOKID (0..many)--> BOOKS.ID                                  
+
+
+
+BOOKS                                                            [table]
+------------------------------------------------------------------------
+1   ID                                INTEGER NOT NULL            
+7   PREVIOUSEDITIONID                 INTEGER                     
+
+Primary Key
+
+PK_BOOKS                                                   [primary key]
+1   ID                                                            
+
+Foreign Keys
+
+SYS_FK_10128                               [foreign key, with no action]
+ 1  ID <--(0..many) BOOKAUTHORS.BOOKID                              
+
+FK_PREVIOUSEDITION                         [foreign key, with no action]
+ 1  ID <--(0..1) PREVIOUSEDITIONID                                
+
+
+
+COUPONS                                                          [table]
+------------------------------------------------------------------------
+1   ID                                INTEGER NOT NULL            
+
+Primary Key
+
+PK_COUPONS                                                 [primary key]
+1   ID                                                            
+
+
+
+CUSTOMERDATA                                                     [table]
+------------------------------------------------------------------------
+1   ID                                INTEGER NOT NULL            
+
+Primary Key
+
+PK_CUSTOMERDATA                                            [primary key]
+1   ID                                                            
+
+
+
+CUSTOMERS                                                        [table]
+------------------------------------------------------------------------
+1   ID                                INTEGER NOT NULL            
+
+Primary Key
+
+PK_CUSTOMERS                                               [primary key]
+1   ID                                                            
+
+
+
+"Global Counts"                                                  [table]
+------------------------------------------------------------------------
+
+
+
+PUBLISHERS                                                       [table]
+------------------------------------------------------------------------
+1   ID                                INTEGER NOT NULL            
+                                    auto-incremented            
+
+Primary Key
+
+SYS_PK_10106                                               [primary key]
+1   ID                                                            
+
+Foreign Keys
+
+FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
+ 1  ID <--(0..many) ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ                                
+
+
+
+ΒΙΒΛΊΑ                                                           [table]
+------------------------------------------------------------------------
+1   ΜΟΝΑΔΙΚΌΣ                         SMALLINT NOT NULL           
+4   ΕΚΔΌΤΗΣ                           SMALLINT NOT NULL           
+
+Primary Key
+
+PK_ΒΙΒΛΊΑ                                                  [primary key]
+1   ΜΟΝΑΔΙΚΌΣ                                                     
+
+Foreign Keys
+
+FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
+ 1  ΕΚΔΌΤΗΣ (0..many)--> PUBLISHERS.ID                              
+
+
+
+REGIONS                                                          [table]
+------------------------------------------------------------------------
+3   POSTALCODE                        VARCHAR(10) NOT NULL        
+4   COUNTRY                           VARCHAR(50) NOT NULL        
+
+Primary Key
+
+PK_CUSTOMERS                                               [primary key]
+3   POSTALCODE                                                    
+4   COUNTRY                                                       
+
+Foreign Keys
+
+FK_SALES_REGIONS                           [foreign key, with no action]
+ 1  POSTALCODE <--(0..many) SALES.POSTALCODE                              
+ 2  COUNTRY <--(0..many) SALES.COUNTRY                              
+
+
+
+SALES                                                            [table]
+------------------------------------------------------------------------
+1   POSTALCODE                        VARCHAR(10) NOT NULL        
+2   COUNTRY                           VARCHAR(50) NOT NULL        
+6   SALESDATAID                       INTEGER                     
+
+Foreign Keys
+
+FK_SALES_SALESDATA                         [foreign key, with no action]
+ 1  SALESDATAID (0..many)--> SALESDATA.SALESDATAID                              
+
+FK_SALES_REGIONS                           [foreign key, with no action]
+ 1  POSTALCODE (0..many)--> REGIONS.POSTALCODE                              
+ 2  COUNTRY (0..many)--> REGIONS.COUNTRY                              
+
+
+
+SALESDATA                                                        [table]
+------------------------------------------------------------------------
+1   SALESDATAID                       INTEGER                     
+
+Foreign Keys
+
+FK_SALES_SALESDATA                         [foreign key, with no action]
+ 1  SALESDATAID <--(0..many) SALES.SALESDATAID                              
+

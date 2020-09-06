@@ -108,6 +108,57 @@ public class CommandLineTest
   }
 
   @Test
+  public void commandLineOverridesWithGrepConfig(final TestContext testContext,
+                                        final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<>();
+    args.put("-grep-columns", ".*BOOKS.ID");
+
+    final Map<String, String> config = new HashMap<>();
+    config.put("schemacrawler.grep.column.pattern.include", ".*AUTHORS.ID");
+    config.put("schemacrawler.grep.column.pattern.exclude", "");
+
+    run(testContext, connectionInfo, args, config, "brief");
+  }
+
+  @Test
+  public void commandLineOverridesWithSomePortableNames(final TestContext testContext,
+                                         final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<>();
+    args.put("-portable-names", Boolean.FALSE.toString());
+    
+    final Map<String, String> config = new HashMap<>();
+    config.put("schemacrawler.format.hide_primarykey_names", Boolean.TRUE.toString());
+    config.put("schemacrawler.format.hide_foreignkey_names", Boolean.TRUE.toString());
+
+    run(testContext, connectionInfo, args, config, "brief");
+  }
+
+  @Test
+  public void commandLineOverridesWithTextShowOptionsConfig(
+      final TestContext testContext,
+      final DatabaseConnectionInfo connectionInfo) throws Exception
+  {
+    final Map<String, String> args = new HashMap<>();
+    args.put("-no-remarks", Boolean.FALSE.toString());
+    args.put("-portable-names", Boolean.FALSE.toString());
+
+    final Map<String, String> config = new HashMap<>();
+    config.put("schemacrawler.format.no_remarks", Boolean.TRUE.toString());
+    config.put("schemacrawler.format.show_unqualified_names",
+        Boolean.TRUE.toString());
+    config.put("schemacrawler.format.show_standard_column_type_names",
+        Boolean.TRUE.toString());
+    config.put("schemacrawler.format.show_ordinal_numbers",
+        Boolean.TRUE.toString());
+
+    run(testContext, connectionInfo, args, config, "brief");
+  }
+
+  @Test
   public void commandLineRoutinesWithColumnsSorting(final TestContext testContext,
                                                     final DatabaseConnectionInfo connectionInfo)
     throws Exception
@@ -194,7 +245,7 @@ public class CommandLineTest
 
     run(testContext, connectionInfo, args, null, "brief");
   }
-
+  
   @Test
   public void commandLineTablesWithoutSorting(final TestContext testContext,
                                               final DatabaseConnectionInfo connectionInfo)
@@ -208,7 +259,7 @@ public class CommandLineTest
 
     run(testContext, connectionInfo, args, null, "brief");
   }
-
+  
   @Test
   public void commandLineTablesWithSorting(final TestContext testContext,
                                            final DatabaseConnectionInfo connectionInfo)
@@ -222,7 +273,7 @@ public class CommandLineTest
 
     run(testContext, connectionInfo, args, null, "brief");
   }
-
+  
   @Test
   public void commandLineWithConfig(final TestContext testContext,
                                     final DatabaseConnectionInfo connectionInfo)
@@ -244,7 +295,7 @@ public class CommandLineTest
 
     run(testContext, connectionInfo, args, config, "brief");
   }
-
+  
   @Test
   public void commandLineWithDefaults(final TestContext testContext,
                                       final DatabaseConnectionInfo connectionInfo)
@@ -257,7 +308,21 @@ public class CommandLineTest
 
     run(testContext, connectionInfo, args, null, "brief");
   }
+  
+  @Test
+  public void commandLineWithGrepConfig(final TestContext testContext,
+                                        final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<>();
 
+    final Map<String, String> config = new HashMap<>();
+    config.put("schemacrawler.grep.column.pattern.include", ".*AUTHORS.ID");
+    config.put("schemacrawler.grep.column.pattern.exclude", "");
+
+    run(testContext, connectionInfo, args, config, "brief");
+  }
+  
   @Test
   public void commandLineWithNonDefaults(final TestContext testContext,
                                          final DatabaseConnectionInfo connectionInfo)
@@ -272,7 +337,7 @@ public class CommandLineTest
 
     run(testContext, connectionInfo, args, null, "brief");
   }
-
+  
   @Test
   public void commandLineWithQueryInConfig(final TestContext testContext,
                                            final DatabaseConnectionInfo connectionInfo)
@@ -287,7 +352,7 @@ public class CommandLineTest
 
     run(testContext, connectionInfo, args, config, command);
   }
-
+  
   @Test
   public void commandLineWithQueryOverInConfig(final TestContext testContext,
                                                final DatabaseConnectionInfo connectionInfo)
@@ -303,4 +368,88 @@ public class CommandLineTest
     run(testContext, connectionInfo, args, config, command);
   }
 
+  @Test
+  public void commandLineWithQuoteOptionsConfig(final TestContext testContext,
+      final DatabaseConnectionInfo connectionInfo) throws Exception
+  {
+    final Map<String, String> args = new HashMap<>();
+
+    final Map<String, String> config = new HashMap<>();
+    config.put("schemacrawler.format.identifier_quoting_strategy",
+        "quote_all");
+
+    run(testContext, connectionInfo, args, config, "brief");
+  }
+
+  @Test
+  public void commandLineWithSomePortableNames1(final TestContext testContext,
+                                         final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<>();
+    // args.put("-portable-names", Boolean.TRUE.toString());
+    
+    final Map<String, String> config = new HashMap<>();
+    config.put("schemacrawler.format.hide_primarykey_names", Boolean.TRUE.toString());
+
+    run(testContext, connectionInfo, args, config, "brief");
+  }
+
+  @Test
+  public void commandLineWithSomePortableNames2(final TestContext testContext,
+                                         final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<>();
+    // args.put("-portable-names", Boolean.TRUE.toString());
+    
+    final Map<String, String> config = new HashMap<>();
+    config.put("schemacrawler.format.hide_foreignkey_names", Boolean.TRUE.toString());
+
+    run(testContext, connectionInfo, args, config, "brief");
+  }
+
+  @Test
+  public void commandLineWithSortConfig(final TestContext testContext,
+                                        final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<>();
+
+    final Map<String, String> config = new HashMap<>();
+    config.put("schemacrawler.format.sort_alphabetically.tables",
+        Boolean.TRUE.toString());
+    config.put("schemacrawler.format.sort_alphabetically.table_columns",
+        Boolean.TRUE.toString());
+    config.put("schemacrawler.format.sort_alphabetically.table_foreignkeys",
+        Boolean.TRUE.toString());
+    config.put("schemacrawler.format.sort_alphabetically.table_indexes",
+        Boolean.TRUE.toString());
+    config.put("schemacrawler.format.sort_alphabetically.routines",
+        Boolean.TRUE.toString());
+    config.put("schemacrawler.format.sort_alphabetically.routine_columns",
+        Boolean.TRUE.toString());
+
+    run(testContext, connectionInfo, args, config, "brief");
+  }
+  
+  @Test
+  public void commandLineWithTextShowOptionsConfig(
+      final TestContext testContext,
+      final DatabaseConnectionInfo connectionInfo) throws Exception
+  {
+    final Map<String, String> args = new HashMap<>();
+
+    final Map<String, String> config = new HashMap<>();
+    config.put("schemacrawler.format.hide_remarks", Boolean.TRUE.toString());
+    config.put("schemacrawler.format.show_unqualified_names",
+        Boolean.TRUE.toString());
+    config.put("schemacrawler.format.show_standard_column_type_names",
+        Boolean.TRUE.toString());
+    config.put("schemacrawler.format.show_ordinal_numbers",
+        Boolean.TRUE.toString());
+
+    run(testContext, connectionInfo, args, config, "brief");
+  }
+  
 }

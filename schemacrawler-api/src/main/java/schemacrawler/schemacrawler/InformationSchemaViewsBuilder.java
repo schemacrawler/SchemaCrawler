@@ -48,7 +48,7 @@ import us.fatehi.utility.TemplatingUtility;
  */
 public final class InformationSchemaViewsBuilder
   implements
-  OptionsBuilder<InformationSchemaViewsBuilder, InformationSchemaViews>
+  OptionsBuilder<InformationSchemaViewsBuilder, InformationSchemaViews>, ConfigOptionsBuilder<InformationSchemaViewsBuilder, InformationSchemaViews>
 {
 
   public static InformationSchemaViewsBuilder builder()
