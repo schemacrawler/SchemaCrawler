@@ -49,9 +49,6 @@ import static org.hamcrest.Matchers.is;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 import static us.fatehi.utility.IOUtility.isFileReadable;
 import static us.fatehi.utility.Utility.isBlank;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.BufferedReader;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
@@ -82,7 +79,8 @@ import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import java.util.zip.ZipInputStream;
-
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import org.apache.commons.io.FileUtils;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
@@ -94,7 +92,6 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsConfig;
 import us.fatehi.utility.IOUtility;
 
 public final class TestUtility
