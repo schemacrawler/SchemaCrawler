@@ -110,9 +110,10 @@ public final class SchemaRetrievalOptionsBuilder
       configProperties = new Config(config);
     }
 
-    informationSchemaViews = InformationSchemaViewsBuilder
-      .builder(informationSchemaViews)
-      .fromConfig(configProperties)
+    final InformationSchemaViewsBuilder informationSchemaViewsBuilder = InformationSchemaViewsBuilder
+      .builder(informationSchemaViews);
+    InformationSchemaViewsConfig.fromConfig(informationSchemaViewsBuilder, configProperties);
+    informationSchemaViews = informationSchemaViewsBuilder
       .toOptions();
 
     for (final SchemaInfoMetadataRetrievalStrategy key : SchemaInfoMetadataRetrievalStrategy.values())
