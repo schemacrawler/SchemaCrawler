@@ -61,6 +61,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsConfig;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
@@ -753,10 +754,7 @@ public abstract class AbstractSchemaCrawlerOutputTest
   @BeforeAll
   public void schemaRetrievalOptions() throws IOException
   {
-    final Config config = loadHsqldbConfig();
-
-    schemaRetrievalOptions =
-        SchemaRetrievalOptionsConfig.fromConfig((SchemaRetrievalOptionsBuilder) null, config).toOptions();
+    schemaRetrievalOptions = TestUtility.newSchemaRetrievalOptions();
   }
   
 }

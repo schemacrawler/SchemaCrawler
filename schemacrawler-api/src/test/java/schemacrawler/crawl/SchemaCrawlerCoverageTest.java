@@ -87,10 +87,9 @@ public class SchemaCrawlerCoverageTest
   public void loadCatalog(final Connection connection)
     throws Exception
   {
-    final Config config = loadHsqldbConfig();
 
     final SchemaRetrievalOptions schemaRetrievalOptions =
-      TestUtility.newSchemaRetrievalOptions(config);
+      TestUtility.newSchemaRetrievalOptions();
 
     final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
       .builder()

@@ -46,6 +46,7 @@ import static java.util.Objects.requireNonNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
+import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 import static us.fatehi.utility.IOUtility.isFileReadable;
 import static us.fatehi.utility.Utility.isBlank;
 
@@ -88,6 +89,9 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.InformationSchemaKey;
+import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsConfig;
@@ -411,16 +415,31 @@ public final class TestUtility
     return String.valueOf(javaSpecificationVersionInt);
   }
 
-  public static SchemaRetrievalOptions newSchemaRetrievalOptions(final Config config)
-  {
-    return SchemaRetrievalOptionsConfig.fromConfig((SchemaRetrievalOptionsBuilder) null, config)
-      .toOptions();
-  }
-  
   public static SchemaRetrievalOptions newSchemaRetrievalOptions()
+      throws IOException
   {
+    final Config config = loadHsqldbConfig();
+
+    final InformationSchemaViewsBuilder builder =
+        InformationSchemaViewsBuilder.builder();
+
+    for (final InformationSchemaKey key : InformationSchemaKey.values())
+    {
+      if (config.containsKey(key.getLookupKey()))
+      {
+        try
+        {
+          builder.withSql(key, config.get(key.getLookupKey()));
+        } catch (final IllegalArgumentException e)
+        {
+          // Ignore
+        }
+      }
+    }
+    final InformationSchemaViews informationSchemaViews = builder.toOptions();
+
     return SchemaRetrievalOptionsBuilder.builder()
-      .toOptions();
+        .withInformationSchemaViews(informationSchemaViews).toOptions();
   }
 
   private static Reader openNewCompressedInputReader(final InputStream inputStream,

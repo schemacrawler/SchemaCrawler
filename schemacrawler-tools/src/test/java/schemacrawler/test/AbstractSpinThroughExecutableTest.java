@@ -109,10 +109,8 @@ public abstract class AbstractSpinThroughExecutableTest
     throws Exception
   {
 
-    final Config config = loadHsqldbConfig();
-
     final SchemaRetrievalOptions schemaRetrievalOptions =
-      SchemaRetrievalOptionsConfig.fromConfig((SchemaRetrievalOptionsBuilder) null, config).toOptions();
+        TestUtility.newSchemaRetrievalOptions();
 
     assertAll(infoLevels().flatMap(infoLevel -> outputFormats().flatMap(
       outputFormat -> schemaTextDetailTypes().map(schemaTextDetailType -> () -> {
