@@ -25,15 +25,53 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-
 package schemacrawler.schemacrawler;
 
-/**
- * The database specific views to get additional database metadata in a standard
- * format.
- */
-public final class InformationSchemaViewsConfig
+public final class SchemaRetrievalOptionsConfig
 {
+
+  public static SchemaRetrievalOptionsBuilder fromConfig(
+      final SchemaRetrievalOptionsBuilder providedBuilder, final Config config)
+  {
+    final SchemaRetrievalOptionsBuilder builder;
+    if (providedBuilder == null)
+    {
+      builder = SchemaRetrievalOptionsBuilder.builder();
+    } 
+    else
+    {
+      builder = providedBuilder;
+    }
+
+    final Config configProperties;
+    if (config == null)
+    {
+      configProperties = new Config();
+    } 
+    else
+    {
+      configProperties = new Config(config);
+    }
+
+    final InformationSchemaViewsBuilder informationSchemaViewsBuilder =
+        InformationSchemaViewsBuilder
+            .builder(builder.getInformationSchemaViews());
+    SchemaRetrievalOptionsConfig.fromConfig(informationSchemaViewsBuilder,
+        configProperties);
+    builder
+        .withInformationSchemaViews(informationSchemaViewsBuilder.toOptions());
+
+    for (final SchemaInfoMetadataRetrievalStrategy key : SchemaInfoMetadataRetrievalStrategy
+        .values())
+    {
+      final MetadataRetrievalStrategy currentValue = builder.get(key);
+      final MetadataRetrievalStrategy configValue =
+          configProperties.getEnumValue(key.getConfigKey(), currentValue);
+      builder.with(key, configValue);
+    }
+
+    return builder;
+  }
 
   /**
    * Information schema views from a map.
@@ -52,12 +90,12 @@ public final class InformationSchemaViewsConfig
     {
       builder = providedBuilder;
     }
-
+  
     if (informationSchemaViewsSql == null)
     {
       return builder;
     }
-
+  
     for (final InformationSchemaKey key : InformationSchemaKey.values())
     {
       if (informationSchemaViewsSql.containsKey(key.getLookupKey()))
@@ -72,7 +110,7 @@ public final class InformationSchemaViewsConfig
         }
       }
     }
-
+  
     return builder;
   }
 

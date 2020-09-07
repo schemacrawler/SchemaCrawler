@@ -52,6 +52,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsConfig;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -110,11 +111,8 @@ public abstract class AbstractSpinThroughExecutableTest
 
     final Config config = loadHsqldbConfig();
 
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-      SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder.fromConfig(config);
     final SchemaRetrievalOptions schemaRetrievalOptions =
-      schemaRetrievalOptionsBuilder.toOptions();
+      SchemaRetrievalOptionsConfig.fromConfig((SchemaRetrievalOptionsBuilder) null, config).toOptions();
 
     assertAll(infoLevels().flatMap(infoLevel -> outputFormats().flatMap(
       outputFormat -> schemaTextDetailTypes().map(schemaTextDetailType -> () -> {

@@ -90,6 +90,7 @@ import org.xml.sax.SAXParseException;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsConfig;
 import us.fatehi.utility.IOUtility;
 
 public final class TestUtility
@@ -412,8 +413,7 @@ public final class TestUtility
 
   public static SchemaRetrievalOptions newSchemaRetrievalOptions(final Config config)
   {
-    return SchemaRetrievalOptionsBuilder.builder()
-      .fromConfig(config)
+    return SchemaRetrievalOptionsConfig.fromConfig((SchemaRetrievalOptionsBuilder) null, config)
       .toOptions();
   }
   
