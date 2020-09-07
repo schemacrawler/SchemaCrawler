@@ -48,7 +48,7 @@ import us.fatehi.utility.TemplatingUtility;
  */
 public final class InformationSchemaViewsBuilder
   implements
-  OptionsBuilder<InformationSchemaViewsBuilder, InformationSchemaViews>, ConfigOptionsBuilder<InformationSchemaViewsBuilder, InformationSchemaViews>
+  OptionsBuilder<InformationSchemaViewsBuilder, InformationSchemaViews>
 {
 
   public static InformationSchemaViewsBuilder builder()
@@ -67,51 +67,11 @@ public final class InformationSchemaViewsBuilder
     return new InformationSchemaViews();
   }
 
-  public static InformationSchemaViews newInformationSchemaViews(final Config config)
-  {
-    return new InformationSchemaViewsBuilder()
-      .fromConfig(config)
-      .toOptions();
-  }
-
   private final Map<InformationSchemaKey, String> informationSchemaQueries;
 
   private InformationSchemaViewsBuilder()
   {
     informationSchemaQueries = new EnumMap<>(InformationSchemaKey.class);
-  }
-
-  /**
-   * Information schema views from a map.
-   *
-   * @param informationSchemaViewsSql
-   *   Map of information schema view definitions.
-   */
-  @Override
-  public InformationSchemaViewsBuilder fromConfig(final Config informationSchemaViewsSql)
-  {
-    if (informationSchemaViewsSql == null)
-    {
-      return this;
-    }
-
-    for (final InformationSchemaKey key : InformationSchemaKey.values())
-    {
-      if (informationSchemaViewsSql.containsKey(key.getLookupKey()))
-      {
-        try
-        {
-          informationSchemaQueries.put(key,
-                                       informationSchemaViewsSql.get(key.getLookupKey()));
-        }
-        catch (final IllegalArgumentException e)
-        {
-          // Ignore
-        }
-      }
-    }
-
-    return this;
   }
 
   @Override
@@ -125,12 +85,6 @@ public final class InformationSchemaViewsBuilder
     informationSchemaQueries.putAll(informationSchemaViews.getAllInformationSchemaViews());
 
     return this;
-  }
-
-  @Override
-  public Config toConfig()
-  {
-    throw new UnsupportedOperationException();
   }
 
   @Override

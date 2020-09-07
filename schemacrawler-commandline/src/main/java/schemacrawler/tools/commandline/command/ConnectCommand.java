@@ -47,6 +47,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.utility.SchemaRetrievalOptionsConfig;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.UserCredentials;
@@ -217,8 +218,7 @@ public class ConnectCommand
     {
       final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
         databaseConnector.getSchemaRetrievalOptionsBuilder(connection);
-      schemaRetrievalOptionsBuilder.fromConfig(config);
-      state.setSchemaRetrievalOptionsBuilder(schemaRetrievalOptionsBuilder);
+      state.setSchemaRetrievalOptionsBuilder(SchemaRetrievalOptionsConfig.fromConfig(schemaRetrievalOptionsBuilder, config));
     }
   }
 

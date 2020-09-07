@@ -44,7 +44,7 @@ import schemacrawler.utility.TypeMap;
 
 public final class SchemaRetrievalOptionsBuilder
   implements
-  OptionsBuilder<SchemaRetrievalOptionsBuilder, SchemaRetrievalOptions>, ConfigOptionsBuilder<SchemaRetrievalOptionsBuilder, SchemaRetrievalOptions>
+  OptionsBuilder<SchemaRetrievalOptionsBuilder, SchemaRetrievalOptions>
 {
 
   public static SchemaRetrievalOptionsBuilder builder()
@@ -60,13 +60,6 @@ public final class SchemaRetrievalOptionsBuilder
   public static SchemaRetrievalOptions newSchemaRetrievalOptions()
   {
     return new SchemaRetrievalOptionsBuilder().toOptions();
-  }
-
-  public static SchemaRetrievalOptions newSchemaRetrievalOptions(final Config config)
-  {
-    return new SchemaRetrievalOptionsBuilder()
-      .fromConfig(config)
-      .toOptions();
   }
 
   DatabaseServerType dbServerType;
@@ -102,70 +95,6 @@ public final class SchemaRetrievalOptionsBuilder
     {
       metadataRetrievalStrategyMap.put(key, metadata);
     }
-  }
-
-  @Override
-  public SchemaRetrievalOptionsBuilder fromConfig(final Config config)
-  {
-    final Config configProperties;
-    if (config == null)
-    {
-      configProperties = new Config();
-    }
-    else
-    {
-      configProperties = new Config(config);
-    }
-
-    informationSchemaViews = InformationSchemaViewsBuilder
-      .builder(informationSchemaViews)
-      .fromConfig(configProperties)
-      .toOptions();
-
-    for (final SchemaInfoMetadataRetrievalStrategy key : SchemaInfoMetadataRetrievalStrategy.values())
-    {
-      final MetadataRetrievalStrategy currentValue =
-        metadataRetrievalStrategyMap.get(key);
-      final MetadataRetrievalStrategy configValue =
-        configProperties.getEnumValue(key.getConfigKey(), currentValue);
-      metadataRetrievalStrategyMap.put(key, configValue);
-    }
-
-    return this;
-  }
-
-  @Override
-  public SchemaRetrievalOptionsBuilder fromOptions(final SchemaRetrievalOptions options)
-  {
-    if (options == null)
-    {
-      return this;
-    }
-
-    dbServerType = options.getDatabaseServerType();
-    informationSchemaViews = options.getInformationSchemaViews();
-    overridesSupportSchemas = Optional.empty();
-    overridesSupportsCatalogs = Optional.empty();
-    supportsCatalogs = options.isSupportsCatalogs();
-    supportsSchemas = options.isSupportsSchemas();
-    identifierQuoteString = options.getIdentifierQuoteString();
-    identifiers = options.getIdentifiers();
-    overridesTypeMap = Optional.empty();
-    metadataRetrievalStrategyMap = options.getMetadataRetrievalStrategyMap();
-
-    return this;
-  }
-
-  @Override
-  public Config toConfig()
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public SchemaRetrievalOptions toOptions()
-  {
-    return new SchemaRetrievalOptions(this);
   }
 
   public SchemaRetrievalOptionsBuilder fromConnnection(final Connection connection)
@@ -204,152 +133,41 @@ public final class SchemaRetrievalOptionsBuilder
     return this;
   }
 
-  public SchemaRetrievalOptionsBuilder withDatabaseServerType(final DatabaseServerType dbServerType)
+  @Override
+  public SchemaRetrievalOptionsBuilder fromOptions(final SchemaRetrievalOptions options)
   {
-    if (dbServerType == null)
+    if (options == null)
     {
-      this.dbServerType = DatabaseServerType.UNKNOWN;
+      return this;
     }
-    else
-    {
-      this.dbServerType = dbServerType;
-    }
-    return this;
-  }
 
-  /**
-   * Overrides the JDBC driver provided information about whether the database
-   * supports catalogs.
-   */
-  public SchemaRetrievalOptionsBuilder withDoesNotSupportCatalogs()
-  {
-    overridesSupportsCatalogs = Optional.of(false);
-    return this;
-  }
-
-  /**
-   * Overrides the JDBC driver provided information about whether the database
-   * supports schema.
-   */
-  public SchemaRetrievalOptionsBuilder withDoesNotSupportSchemas()
-  {
-    overridesSupportSchemas = Optional.of(false);
-    return this;
-  }
-
-  public SchemaRetrievalOptionsBuilder with(final SchemaInfoMetadataRetrievalStrategy schemaInfoMetadataRetrievalStrategy,
-                                            final MetadataRetrievalStrategy metadataRetrievalStrategy)
-  {
-    if (schemaInfoMetadataRetrievalStrategy != null
-        && metadataRetrievalStrategy != null)
-    {
-      metadataRetrievalStrategyMap.put(schemaInfoMetadataRetrievalStrategy,
-                                       metadataRetrievalStrategy);
-    }
-    return this;
-  }
-
-  /**
-   * Overrides the JDBC driver provided information about the identifier quote
-   * string.
-   *
-   * @param identifierQuoteString
-   *   Value for the override
-   */
-  public SchemaRetrievalOptionsBuilder withIdentifierQuoteString(final String identifierQuoteString)
-  {
-    if (isBlank(identifierQuoteString))
-    {
-      this.identifierQuoteString = "";
-    }
-    else
-    {
-      this.identifierQuoteString = identifierQuoteString;
-    }
-    return this;
-  }
-
-  public SchemaRetrievalOptionsBuilder withInformationSchemaViews(final InformationSchemaViews informationSchemaViews)
-  {
-    this.informationSchemaViews = InformationSchemaViewsBuilder
-      .builder()
-      .fromOptions(informationSchemaViews)
-      .toOptions();
-    return this;
-  }
-
-  public SchemaRetrievalOptionsBuilder withInformationSchemaViews(final Map<String, String> informationSchemaViewsMap)
-  {
-    this.informationSchemaViews = InformationSchemaViewsBuilder
-      .builder(informationSchemaViews)
-      .fromConfig(new Config(informationSchemaViewsMap))
-      .toOptions();
-    return this;
-  }
-
-  public SchemaRetrievalOptionsBuilder withoutIdentifierQuoteString()
-  {
-    identifierQuoteString = "";
-    return this;
-  }
-
-  public SchemaRetrievalOptionsBuilder withoutSupportsCatalogs()
-  {
-    overridesSupportsCatalogs = Optional.empty();
-    return this;
-  }
-
-  public SchemaRetrievalOptionsBuilder withoutSupportsSchemas()
-  {
+    dbServerType = options.getDatabaseServerType();
+    informationSchemaViews = options.getInformationSchemaViews();
     overridesSupportSchemas = Optional.empty();
+    overridesSupportsCatalogs = Optional.empty();
+    supportsCatalogs = options.isSupportsCatalogs();
+    supportsSchemas = options.isSupportsSchemas();
+    identifierQuoteString = options.getIdentifierQuoteString();
+    identifiers = options.getIdentifiers();
+    overridesTypeMap = Optional.empty();
+    metadataRetrievalStrategyMap = options.getMetadataRetrievalStrategyMap();
+
     return this;
   }
 
-  /**
-   * Overrides the JDBC driver provided information about whether the database
-   * supports catalogs.
-   */
-  public SchemaRetrievalOptionsBuilder withSupportsCatalogs()
+  public MetadataRetrievalStrategy get(
+      final SchemaInfoMetadataRetrievalStrategy schemaInfoMetadataRetrievalStrategy)
   {
-    overridesSupportsCatalogs = Optional.of(true);
-    return this;
+    if (schemaInfoMetadataRetrievalStrategy != null)
+    {
+      return metadataRetrievalStrategyMap.get(schemaInfoMetadataRetrievalStrategy);
+    }
+    return null;
   }
 
-  /**
-   * Overrides the JDBC driver provided information about whether the database
-   * supports schema.
-   */
-  public SchemaRetrievalOptionsBuilder withSupportsSchemas()
+  public InformationSchemaViews getInformationSchemaViews()
   {
-    overridesSupportSchemas = Optional.of(true);
-    return this;
-  }
-
-  public SchemaRetrievalOptionsBuilder withTypeMap(final Map<String, Class<?>> typeMap)
-  {
-    if (typeMap == null)
-    {
-      overridesTypeMap = Optional.empty();
-    }
-    else
-    {
-      overridesTypeMap = Optional.of(new TypeMap(typeMap));
-    }
-    return this;
-  }
-
-  public SchemaRetrievalOptionsBuilder withEnumDataTypeHelper(final EnumDataTypeHelper enumDataTypeHelper)
-  {
-    if (enumDataTypeHelper != null)
-    {
-      this.enumDataTypeHelper = enumDataTypeHelper;
-    }
-    else
-    {
-      this.enumDataTypeHelper = NO_OP_ENUM_DATA_TYPE_HELPER;
-    }
-
-    return this;
+    return informationSchemaViews;
   }
 
   private String lookupIdentifierQuoteString(final DatabaseMetaData metaData)
@@ -422,6 +240,157 @@ public final class SchemaRetrievalOptionsBuilder
     }
 
     return supportsSchemas;
+  }
+
+  public void setInformationSchemaViews(
+      InformationSchemaViews informationSchemaViews)
+  {
+    this.informationSchemaViews = informationSchemaViews;
+  }
+
+  @Override
+  public SchemaRetrievalOptions toOptions()
+  {
+    return new SchemaRetrievalOptions(this);
+  }
+  
+  public SchemaRetrievalOptionsBuilder with(final SchemaInfoMetadataRetrievalStrategy schemaInfoMetadataRetrievalStrategy,
+                                            final MetadataRetrievalStrategy metadataRetrievalStrategy)
+  {
+    if (schemaInfoMetadataRetrievalStrategy != null
+        && metadataRetrievalStrategy != null)
+    {
+      metadataRetrievalStrategyMap.put(schemaInfoMetadataRetrievalStrategy,
+                                       metadataRetrievalStrategy);
+    }
+    return this;
+  }
+
+  public SchemaRetrievalOptionsBuilder withDatabaseServerType(final DatabaseServerType dbServerType)
+  {
+    if (dbServerType == null)
+    {
+      this.dbServerType = DatabaseServerType.UNKNOWN;
+    }
+    else
+    {
+      this.dbServerType = dbServerType;
+    }
+    return this;
+  }
+
+  /**
+   * Overrides the JDBC driver provided information about whether the database
+   * supports catalogs.
+   */
+  public SchemaRetrievalOptionsBuilder withDoesNotSupportCatalogs()
+  {
+    overridesSupportsCatalogs = Optional.of(false);
+    return this;
+  }
+
+  /**
+   * Overrides the JDBC driver provided information about whether the database
+   * supports schema.
+   */
+  public SchemaRetrievalOptionsBuilder withDoesNotSupportSchemas()
+  {
+    overridesSupportSchemas = Optional.of(false);
+    return this;
+  }
+
+  public SchemaRetrievalOptionsBuilder withEnumDataTypeHelper(final EnumDataTypeHelper enumDataTypeHelper)
+  {
+    if (enumDataTypeHelper != null)
+    {
+      this.enumDataTypeHelper = enumDataTypeHelper;
+    }
+    else
+    {
+      this.enumDataTypeHelper = NO_OP_ENUM_DATA_TYPE_HELPER;
+    }
+
+    return this;
+  }
+
+  /**
+   * Overrides the JDBC driver provided information about the identifier quote
+   * string.
+   *
+   * @param identifierQuoteString
+   *   Value for the override
+   */
+  public SchemaRetrievalOptionsBuilder withIdentifierQuoteString(final String identifierQuoteString)
+  {
+    if (isBlank(identifierQuoteString))
+    {
+      this.identifierQuoteString = "";
+    }
+    else
+    {
+      this.identifierQuoteString = identifierQuoteString;
+    }
+    return this;
+  }
+
+  public SchemaRetrievalOptionsBuilder withInformationSchemaViews(final InformationSchemaViews informationSchemaViews)
+  {
+    this.informationSchemaViews = InformationSchemaViewsBuilder
+      .builder()
+      .fromOptions(informationSchemaViews)
+      .toOptions();
+    return this;
+  }
+
+  public SchemaRetrievalOptionsBuilder withoutIdentifierQuoteString()
+  {
+    identifierQuoteString = "";
+    return this;
+  }
+
+  public SchemaRetrievalOptionsBuilder withoutSupportsCatalogs()
+  {
+    overridesSupportsCatalogs = Optional.empty();
+    return this;
+  }
+
+  public SchemaRetrievalOptionsBuilder withoutSupportsSchemas()
+  {
+    overridesSupportSchemas = Optional.empty();
+    return this;
+  }
+
+  /**
+   * Overrides the JDBC driver provided information about whether the database
+   * supports catalogs.
+   */
+  public SchemaRetrievalOptionsBuilder withSupportsCatalogs()
+  {
+    overridesSupportsCatalogs = Optional.of(true);
+    return this;
+  }
+
+  /**
+   * Overrides the JDBC driver provided information about whether the database
+   * supports schema.
+   */
+  public SchemaRetrievalOptionsBuilder withSupportsSchemas()
+  {
+    overridesSupportSchemas = Optional.of(true);
+    return this;
+  }
+
+  public SchemaRetrievalOptionsBuilder withTypeMap(final Map<String, Class<?>> typeMap)
+  {
+    if (typeMap == null)
+    {
+      overridesTypeMap = Optional.empty();
+    }
+    else
+    {
+      overridesTypeMap = Optional.of(new TypeMap(typeMap));
+    }
+    return this;
   }
 
 }

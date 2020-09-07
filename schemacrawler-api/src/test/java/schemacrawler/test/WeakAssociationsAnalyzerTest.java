@@ -34,14 +34,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
-import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-
 import java.sql.Connection;
 import java.util.Collection;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -50,16 +47,15 @@ import schemacrawler.analysis.associations.ProposedWeakAssociation;
 import schemacrawler.analysis.associations.WeakAssociationsAnalyzer;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.TestWriter;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -74,10 +70,8 @@ public class WeakAssociationsAnalyzerTest
   public void loadCatalog(final Connection connection)
     throws Exception
   {
-    final Config config = loadHsqldbConfig();
-
     final SchemaRetrievalOptions schemaRetrievalOptions =
-      SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(config);
+      TestUtility.newSchemaRetrievalOptions();
 
     final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
       .builder()

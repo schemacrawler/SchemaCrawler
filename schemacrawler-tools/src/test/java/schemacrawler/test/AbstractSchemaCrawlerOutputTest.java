@@ -31,18 +31,19 @@ package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
+import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.clean;
-
+import java.io.IOException;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.stream.Stream;
-
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
@@ -55,8 +56,9 @@ import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
@@ -68,6 +70,7 @@ import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@TestInstance(PER_CLASS)
 public abstract class AbstractSchemaCrawlerOutputTest
 {
 
@@ -88,6 +91,8 @@ public abstract class AbstractSchemaCrawlerOutputTest
     "no_schema_colors_output/";
   private static final String IDENTIFIER_QUOTING_OUTPUT =
     "identifier_quoting_output/";
+
+  private SchemaRetrievalOptions schemaRetrievalOptions;
 
   @Test
   public void compareCompositeOutput(final Connection connection)
@@ -133,13 +138,6 @@ public abstract class AbstractSchemaCrawlerOutputTest
 
         final String referenceFile = command + "." + outputFormat.getFormat();
 
-        final Config config = loadHsqldbConfig();
-
-        final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-          SchemaRetrievalOptionsBuilder
-            .builder()
-            .fromConfig(config);
-
         final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
           .builder()
           .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
@@ -165,7 +163,7 @@ public abstract class AbstractSchemaCrawlerOutputTest
           new SchemaCrawlerExecutable(command);
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setAdditionalConfiguration(queriesConfig);
-        executable.setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
+        executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
         assertThat(outputOf(executableExecution(connection,
                                                 executable,
@@ -202,13 +200,6 @@ public abstract class AbstractSchemaCrawlerOutputTest
       final String referenceFile =
         "schema,count,dump." + outputFormat.getFormat();
 
-      final Config config = loadHsqldbConfig();
-
-      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-        SchemaRetrievalOptionsBuilder
-          .builder()
-          .fromConfig(config);
-
       final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
         .builder()
         .includeSchemas(new RegularExpressionExclusionRule(
@@ -238,7 +229,7 @@ public abstract class AbstractSchemaCrawlerOutputTest
         new SchemaCrawlerExecutable(command);
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-      executable.setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
+      executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
       assertThat(outputOf(executableExecution(connection,
                                               executable,
@@ -425,13 +416,6 @@ public abstract class AbstractSchemaCrawlerOutputTest
       final String referenceFile =
         "schema,count,dump." + outputFormat.getFormat();
 
-      final Config config = loadHsqldbConfig();
-
-      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-        SchemaRetrievalOptionsBuilder
-          .builder()
-          .fromConfig(config);
-
       final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
         .builder()
         .includeSchemas(new RegularExpressionExclusionRule(
@@ -461,7 +445,7 @@ public abstract class AbstractSchemaCrawlerOutputTest
         new SchemaCrawlerExecutable(command);
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-      executable.setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
+      executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
       assertThat(outputOf(executableExecution(connection,
                                               executable,
@@ -471,7 +455,7 @@ public abstract class AbstractSchemaCrawlerOutputTest
                                          outputFormat));
     }));
   }
-
+  
   @Test
   public void compareRoutinesOutput(final Connection connection)
     throws Exception
@@ -490,13 +474,6 @@ public abstract class AbstractSchemaCrawlerOutputTest
     assertAll(outputFormats().map(outputFormat -> () -> {
 
       final String referenceFile = "routines." + outputFormat.getFormat();
-
-      final Config config = loadHsqldbConfig();
-
-      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-        SchemaRetrievalOptionsBuilder
-          .builder()
-          .fromConfig(config);
 
       final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
         .builder()
@@ -525,7 +502,7 @@ public abstract class AbstractSchemaCrawlerOutputTest
         new SchemaCrawlerExecutable(SchemaTextDetailType.details.name());
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-      executable.setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
+      executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
       assertThat(outputOf(executableExecution(connection,
                                               executable,
@@ -669,13 +646,6 @@ public abstract class AbstractSchemaCrawlerOutputTest
       final String referenceFile =
         "schema,count,dump." + outputFormat.getFormat();
 
-      final Config config = loadHsqldbConfig();
-
-      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-        SchemaRetrievalOptionsBuilder
-          .builder()
-          .fromConfig(config);
-
       final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
         .builder()
         .includeSchemas(new RegularExpressionExclusionRule(
@@ -705,7 +675,7 @@ public abstract class AbstractSchemaCrawlerOutputTest
                                     + Operation.dump);
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-      executable.setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
+      executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
       assertThat(outputOf(executableExecution(connection,
                                               executable,
@@ -778,4 +748,10 @@ public abstract class AbstractSchemaCrawlerOutputTest
 
   protected abstract Stream<OutputFormat> outputFormats();
 
+  @BeforeAll
+  public void schemaRetrievalOptions() throws IOException
+  {
+    schemaRetrievalOptions = TestUtility.newSchemaRetrievalOptions();
+  }
+  
 }
