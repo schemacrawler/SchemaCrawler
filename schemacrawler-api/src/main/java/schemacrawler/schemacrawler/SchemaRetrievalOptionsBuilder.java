@@ -62,13 +62,6 @@ public final class SchemaRetrievalOptionsBuilder
     return new SchemaRetrievalOptionsBuilder().toOptions();
   }
 
-  public static SchemaRetrievalOptions newSchemaRetrievalOptions(final Config config)
-  {
-    return new SchemaRetrievalOptionsBuilder()
-      .fromConfig(config)
-      .toOptions();
-  }
-
   DatabaseServerType dbServerType;
   String identifierQuoteString;
   Identifiers identifiers;
@@ -274,15 +267,6 @@ public final class SchemaRetrievalOptionsBuilder
     this.informationSchemaViews = InformationSchemaViewsBuilder
       .builder()
       .fromOptions(informationSchemaViews)
-      .toOptions();
-    return this;
-  }
-
-  public SchemaRetrievalOptionsBuilder withInformationSchemaViews(final Map<String, String> informationSchemaViewsMap)
-  {
-    this.informationSchemaViews = InformationSchemaViewsBuilder
-      .builder(informationSchemaViews)
-      .fromConfig(new Config(informationSchemaViewsMap))
       .toOptions();
     return this;
   }

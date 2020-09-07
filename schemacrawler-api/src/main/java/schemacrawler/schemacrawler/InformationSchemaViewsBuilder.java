@@ -67,13 +67,6 @@ public final class InformationSchemaViewsBuilder
     return new InformationSchemaViews();
   }
 
-  public static InformationSchemaViews newInformationSchemaViews(final Config config)
-  {
-    return new InformationSchemaViewsBuilder()
-      .fromConfig(config)
-      .toOptions();
-  }
-
   private final Map<InformationSchemaKey, String> informationSchemaQueries;
 
   private InformationSchemaViewsBuilder()
