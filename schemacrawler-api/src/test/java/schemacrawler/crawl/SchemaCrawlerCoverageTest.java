@@ -32,6 +32,7 @@ package schemacrawler.crawl;
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isPresentAndIs;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
@@ -42,7 +43,7 @@ import static schemacrawler.test.utility.ObjectPropertyTestUtility.checkIntegerP
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Optional;
-
+import java.util.regex.Pattern;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -253,7 +254,12 @@ public class SchemaCrawlerCoverageTest
     final JdbcDriverInfo jdbcDriverInfo = catalog.getJdbcDriverInfo();
 
     checkBooleanProperties(jdbcDriverInfo, "jdbcCompliant");
-
+    
+    assertThat(jdbcDriverInfo.toString(), matchesPattern(
+        Pattern.compile("-- driver: HSQL Database Engine Driver 2.5.1\\R"
+            + "-- driver class: org.hsqldb.jdbc.JDBCDriver\\R"
+            + "-- url: jdbc:hsqldb:hsql:\\/\\/0.0.0.0:\\d*/schemacrawler\\d*\\R"
+            + "-- jdbc compliant: false", Pattern.DOTALL)));
   }
 
   @Test
