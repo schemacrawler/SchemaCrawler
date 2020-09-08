@@ -26,12 +26,19 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.schemacrawler;
+package schemacrawler.tools.commandline.utility;
 
 
 import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion;
+import schemacrawler.schemacrawler.GrepOptions;
+import schemacrawler.schemacrawler.GrepOptionsBuilder;
+import schemacrawler.schemacrawler.LimitOptions;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 
 /**
  * SchemaCrawler options builder, to build the immutable options to crawl a
