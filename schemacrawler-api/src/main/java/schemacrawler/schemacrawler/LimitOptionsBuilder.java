@@ -62,7 +62,7 @@ import schemacrawler.schema.TableTypes;
  * schema.
  */
 public final class LimitOptionsBuilder
-  implements OptionsBuilder<LimitOptionsBuilder, LimitOptions>, ConfigOptionsBuilder<LimitOptionsBuilder, LimitOptions>
+  implements OptionsBuilder<LimitOptionsBuilder, LimitOptions>
 {
 
   public static LimitOptionsBuilder builder()
@@ -107,33 +107,6 @@ public final class LimitOptionsBuilder
     routineTypes = defaultRoutineTypes();
   }
 
-  /**
-   * Options from properties.
-   *
-   * @param config
-   *   Configuration properties
-   */
-  @Override
-  public LimitOptionsBuilder fromConfig(final Config config)
-  {
-    if (config == null)
-    {
-      return this;
-    }
-
-    for (final DatabaseObjectRuleForInclusion ruleForInclusion : DatabaseObjectRuleForInclusion.values())
-    {
-      final InclusionRule inclusionRule = config.getInclusionRuleWithDefault(
-        ruleForInclusion.getIncludePatternProperty(),
-        ruleForInclusion.getExcludePatternProperty(),
-        getDefaultInclusionRule(ruleForInclusion));
-
-      inclusionRules.put(ruleForInclusion, inclusionRule);
-    }
-
-    return this;
-  }
-
   @Override
   public LimitOptionsBuilder fromOptions(final LimitOptions options)
   {
@@ -152,12 +125,6 @@ public final class LimitOptionsBuilder
     routineTypes = EnumSet.copyOf(options.getRoutineTypes());
 
     return this;
-  }
-
-  @Override
-  public Config toConfig()
-  {
-    throw new UnsupportedOperationException();
   }
 
   @Override
@@ -395,8 +362,8 @@ public final class LimitOptionsBuilder
                    new RegularExpressionInclusionRule(pattern));
   }
 
-  private LimitOptionsBuilder include(final DatabaseObjectRuleForInclusion ruleForInclusion,
-                                      final InclusionRule inclusionRule)
+  public LimitOptionsBuilder include(final DatabaseObjectRuleForInclusion ruleForInclusion,
+                                     final InclusionRule inclusionRule)
   {
     if (inclusionRule == null)
     {
@@ -407,6 +374,16 @@ public final class LimitOptionsBuilder
       inclusionRules.put(ruleForInclusion, inclusionRule);
     }
     return this;
+  }
+
+  public InclusionRule get(final DatabaseObjectRuleForInclusion ruleForInclusion)
+  {
+    if (ruleForInclusion != null) 
+    {
+      inclusionRules.get(ruleForInclusion);
+    }
+    
+    return null;
   }
 
 }
