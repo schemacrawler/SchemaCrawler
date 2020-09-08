@@ -44,16 +44,16 @@ import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.Properties;
 import picocli.CommandLine;
 import schemacrawler.Main;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputFormat;
 import us.fatehi.utility.IOUtility;
 
@@ -63,7 +63,7 @@ public final class CommandlineTestUtility
   public static Path commandlineExecution(final DatabaseConnectionInfo connectionInfo,
                                           final String command,
                                           final Map<String, String> argsMap,
-                                          final Config config,
+                                          final Map<String, String> config,
                                           final OutputFormat outputFormat)
     throws Exception
   {
@@ -246,7 +246,7 @@ public final class CommandlineTestUtility
     }
   }
 
-  private static Path writeConfigToTempFile(final Config config)
+  private static Path writeConfigToTempFile(final Map<String, String> config)
     throws IOException
   {
     if (config == null)
@@ -258,12 +258,16 @@ public final class CommandlineTestUtility
       .createTempFilePath("test", ".properties")
       .normalize()
       .toAbsolutePath();
+    
+    final Properties properties = new Properties();
+    properties.putAll(config);
 
-    final Writer tempFileWriter =
-      newBufferedWriter(tempFile, WRITE, TRUNCATE_EXISTING, CREATE);
-    config
-      .toProperties()
-      .store(tempFileWriter, "Store config to temporary file for testing");
+    try (final Writer tempFileWriter =
+        newBufferedWriter(tempFile, WRITE, TRUNCATE_EXISTING, CREATE);)
+    {
+      properties.store(tempFileWriter,
+          "Store config to temporary file for testing");
+    }
 
     return tempFile;
   }

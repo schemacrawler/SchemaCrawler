@@ -6,10 +6,10 @@ import static org.mockito.Mockito.mock;
 import java.sql.Connection;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.catalogloader.CatalogLoader;
+import schemacrawler.tools.options.Config;
 
 public class TestCatalogLoader
   implements CatalogLoader

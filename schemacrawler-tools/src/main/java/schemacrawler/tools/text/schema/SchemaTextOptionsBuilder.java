@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.schema;
 
 
-import schemacrawler.schemacrawler.Config;
+import schemacrawler.tools.options.Config;
 
 public final class SchemaTextOptionsBuilder
   extends

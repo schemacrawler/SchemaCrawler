@@ -49,10 +49,10 @@ import picocli.CommandLine;
 import picocli.CommandLine.ParseResult;
 import picocli.CommandLine.PicocliException;
 import picocli.shell.jline3.PicocliJLineCompleter;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
+import schemacrawler.tools.options.Config;
 import schemacrawler.SchemaCrawlerLogger;
 
 public final class SchemaCrawlerShell

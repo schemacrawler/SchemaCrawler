@@ -42,9 +42,9 @@ import java.util.logging.Level;
 import picocli.CommandLine;
 import picocli.CommandLine.ParseResult;
 import schemacrawler.Version;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
+import schemacrawler.tools.options.Config;
 import schemacrawler.SchemaCrawlerLogger;
 
 public final class SchemaCrawlerCommandLine

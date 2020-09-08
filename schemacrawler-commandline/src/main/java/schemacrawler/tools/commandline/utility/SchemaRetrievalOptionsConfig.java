@@ -27,15 +27,59 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.commandline.utility;
 
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.tools.options.Config;
 
 public final class SchemaRetrievalOptionsConfig
 {
+
+  /**
+   * Information schema views from a map.
+   *
+   * @param informationSchemaViewsSql
+   *   Map of information schema view definitions.
+   */
+  public static InformationSchemaViewsBuilder fromConfig(final InformationSchemaViewsBuilder providedBuilder,
+      final Config informationSchemaViewsSql)
+  {
+    final InformationSchemaViewsBuilder builder;
+    if (providedBuilder == null) {
+      builder = InformationSchemaViewsBuilder.builder();
+    }
+    else 
+    {
+      builder = providedBuilder;
+    }
+  
+    if (informationSchemaViewsSql == null)
+    {
+      return builder;
+    }
+
+    for (final InformationSchemaKey informationSchemaKey : InformationSchemaKey
+        .values())
+    {
+      final String informationSchemaKeyConfigKey = String.format("select.%s.%s",
+          informationSchemaKey.getType(), informationSchemaKey);
+      if (informationSchemaViewsSql.containsKey(informationSchemaKeyConfigKey))
+      {
+        try
+        {
+          builder.withSql(informationSchemaKey,
+              informationSchemaViewsSql.get(informationSchemaKeyConfigKey));
+        } catch (final IllegalArgumentException e)
+        {
+          // Ignore
+        }
+      }
+    }
+  
+    return builder;
+  }
 
   public static SchemaRetrievalOptionsBuilder fromConfig(
       final SchemaRetrievalOptionsBuilder providedBuilder, final Config config)
@@ -68,56 +112,18 @@ public final class SchemaRetrievalOptionsConfig
     builder
         .withInformationSchemaViews(informationSchemaViewsBuilder.toOptions());
 
-    for (final SchemaInfoMetadataRetrievalStrategy key : SchemaInfoMetadataRetrievalStrategy
+    for (final SchemaInfoMetadataRetrievalStrategy metadataRetrievalStrategy : SchemaInfoMetadataRetrievalStrategy
         .values())
     {
-      final MetadataRetrievalStrategy currentValue = builder.get(key);
+      final MetadataRetrievalStrategy currentValue =
+          builder.get(metadataRetrievalStrategy);
+      final String configKey = "schemacrawler.schema.retrieval.strategy."
+          + metadataRetrievalStrategy.getKey();
       final MetadataRetrievalStrategy configValue =
-          configProperties.getEnumValue(key.getConfigKey(), currentValue);
-      builder.with(key, configValue);
+          configProperties.getEnumValue(configKey, currentValue);
+      builder.with(metadataRetrievalStrategy, configValue);
     }
 
-    return builder;
-  }
-
-  /**
-   * Information schema views from a map.
-   *
-   * @param informationSchemaViewsSql
-   *   Map of information schema view definitions.
-   */
-  public static InformationSchemaViewsBuilder fromConfig(final InformationSchemaViewsBuilder providedBuilder,
-      final Config informationSchemaViewsSql)
-  {
-    final InformationSchemaViewsBuilder builder;
-    if (providedBuilder == null) {
-      builder = InformationSchemaViewsBuilder.builder();
-    }
-    else 
-    {
-      builder = providedBuilder;
-    }
-  
-    if (informationSchemaViewsSql == null)
-    {
-      return builder;
-    }
-  
-    for (final InformationSchemaKey key : InformationSchemaKey.values())
-    {
-      if (informationSchemaViewsSql.containsKey(key.getLookupKey()))
-      {
-        try
-        {
-          builder.withSql(key,
-              informationSchemaViewsSql.get(key.getLookupKey()));
-        } catch (final IllegalArgumentException e)
-        {
-          // Ignore
-        }
-      }
-    }
-  
     return builder;
   }
 

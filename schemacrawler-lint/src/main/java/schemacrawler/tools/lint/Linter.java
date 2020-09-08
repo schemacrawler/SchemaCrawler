@@ -38,8 +38,8 @@ import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.NamedObject;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.options.Config;
 import us.fatehi.utility.string.StringFormat;
 
 /**

@@ -29,10 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.base;
 
 
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.ConfigOptionsBuilder;
 import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
 import schemacrawler.schemacrawler.OptionsBuilder;
+import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.ConfigOptionsBuilder;
 
 public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B, O>, O extends BaseTextOptions>
   implements OptionsBuilder<BaseTextOptionsBuilder<B, O>, O>, ConfigOptionsBuilder<BaseTextOptionsBuilder<B, O>, O>

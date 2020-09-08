@@ -30,7 +30,6 @@ package schemacrawler.test.utility;
 
 
 import static java.util.Objects.requireNonNull;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,11 +37,11 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
-
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -80,7 +79,7 @@ public final class DatabaseTestUtility
     return catalog;
   }
 
-  public static Config loadHsqldbConfig()
+  public static Map<String, String> loadHsqldbConfig()
     throws IOException
   {
     return loadConfigFromClasspathResource(
@@ -96,11 +95,11 @@ public final class DatabaseTestUtility
    * @throws IOException
    *   On an exception
    */
-  protected static Config loadConfigFromClasspathResource(final String resource)
-    throws IOException
+  protected static Map<String, String> loadConfigFromClasspathResource(
+      final String resource) throws IOException
   {
     final InputStream stream =
-      DatabaseTestUtility.class.getResourceAsStream(resource);
+        DatabaseTestUtility.class.getResourceAsStream(resource);
     requireNonNull(stream, "Could not load config from resource, " + resource);
     final Reader reader = new InputStreamReader(stream, StandardCharsets.UTF_8);
     final Properties properties = new Properties();
@@ -108,7 +107,15 @@ public final class DatabaseTestUtility
     {
       properties.load(bufferedReader);
     }
-    return new Config(properties);
+
+    final Map<String, String> config = new HashMap<>();
+    for (final String key : properties.stringPropertyNames())
+    {
+      final String value = properties.getProperty(key);
+      config.put(key, value);
+    }
+    
+    return config;
   }
 
   private static SchemaCrawlerOptions getMaximumSchemaCrawlerOptions()

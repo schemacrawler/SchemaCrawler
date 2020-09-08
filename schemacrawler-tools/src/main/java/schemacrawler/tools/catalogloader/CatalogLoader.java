@@ -32,9 +32,9 @@ package schemacrawler.tools.catalogloader;
 import java.sql.Connection;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.tools.options.Config;
 
 public interface CatalogLoader
 {

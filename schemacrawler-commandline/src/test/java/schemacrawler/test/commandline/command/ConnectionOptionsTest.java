@@ -39,11 +39,11 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.command.ConnectCommand;
 import schemacrawler.tools.commandline.command.DatabaseConnectable;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
+import schemacrawler.tools.options.Config;
 
 public class ConnectionOptionsTest
 {

@@ -31,7 +31,6 @@ package schemacrawler.schemacrawler;
 
 import java.util.Optional;
 import java.util.regex.Pattern;
-
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 
@@ -39,21 +38,8 @@ import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
  * grep options builder, to build the immutable options to crawl a schema.
  */
 public final class GrepOptionsBuilder
-  implements OptionsBuilder<GrepOptionsBuilder, GrepOptions>, ConfigOptionsBuilder<GrepOptionsBuilder, GrepOptions>
+  implements OptionsBuilder<GrepOptionsBuilder, GrepOptions>
 {
-
-  private static final String SC_GREP_COLUMN_PATTERN_EXCLUDE =
-    "schemacrawler.grep.column.pattern.exclude";
-  private static final String SC_GREP_COLUMN_PATTERN_INCLUDE =
-    "schemacrawler.grep.column.pattern.include";
-  private static final String SC_GREP_DEFINITION_PATTERN_EXCLUDE =
-    "schemacrawler.grep.definition.pattern.exclude";
-  private static final String SC_GREP_DEFINITION_PATTERN_INCLUDE =
-    "schemacrawler.grep.definition.pattern.include";
-  private static final String SC_GREP_ROUTINE_PARAMETER_PATTERN_EXCLUDE =
-    "schemacrawler.grep.routine.inout.pattern.exclude";
-  private static final String SC_GREP_ROUTINE_PARAMETER_PATTERN_INCLUDE =
-    "schemacrawler.grep.routine.inout.pattern.include";
 
   public static GrepOptionsBuilder builder()
   {
@@ -81,33 +67,6 @@ public final class GrepOptionsBuilder
     grepDefinitionInclusionRule = Optional.empty();
   }
 
-  /**
-   * Options from properties.
-   *
-   * @param config
-   *   Configuration properties
-   */
-  @Override
-  public GrepOptionsBuilder fromConfig(final Config config)
-  {
-    if (config == null)
-    {
-      return this;
-    }
-
-    grepColumnInclusionRule = config.getOptionalInclusionRule(
-      SC_GREP_COLUMN_PATTERN_INCLUDE,
-      SC_GREP_COLUMN_PATTERN_EXCLUDE);
-    grepRoutineParameterInclusionRule = config.getOptionalInclusionRule(
-      SC_GREP_ROUTINE_PARAMETER_PATTERN_INCLUDE,
-      SC_GREP_ROUTINE_PARAMETER_PATTERN_EXCLUDE);
-    grepDefinitionInclusionRule = config.getOptionalInclusionRule(
-      SC_GREP_DEFINITION_PATTERN_INCLUDE,
-      SC_GREP_DEFINITION_PATTERN_EXCLUDE);
-
-    return this;
-  }
-
   @Override
   public GrepOptionsBuilder fromOptions(final GrepOptions options)
   {
@@ -127,12 +86,6 @@ public final class GrepOptionsBuilder
     grepOnlyMatching = options.isGrepOnlyMatching();
 
     return this;
-  }
-
-  @Override
-  public Config toConfig()
-  {
-    throw new UnsupportedOperationException();
   }
 
   @Override

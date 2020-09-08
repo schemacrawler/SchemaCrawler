@@ -28,8 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.text.base.CommonTextOptionsBuilder;
 
 /**

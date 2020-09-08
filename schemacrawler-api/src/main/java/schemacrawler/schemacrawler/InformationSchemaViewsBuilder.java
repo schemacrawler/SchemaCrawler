@@ -112,11 +112,11 @@ public final class InformationSchemaViewsBuilder
       final String resource;
       if (classpath == null)
       {
-        resource = key.getResource();
+        resource = key + ".sql";
       }
       else
       {
-        resource = String.format("%s/%s", classpath, key.getResource());
+        resource = String.format("%s/%s.sql", classpath, key);
       }
       final String sql = readResourceFully(resource);
       if (!isBlank(sql))

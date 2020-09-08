@@ -29,8 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.databaseconnector;
 
 
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.Options;
+import schemacrawler.tools.options.Config;
 
 @FunctionalInterface
 public interface DatabaseConnectorOptions

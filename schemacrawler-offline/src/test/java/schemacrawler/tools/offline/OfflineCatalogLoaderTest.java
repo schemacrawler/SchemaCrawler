@@ -35,13 +35,13 @@ import static org.hamcrest.Matchers.nullValue;
 import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseDriver;
 import schemacrawler.tools.catalogloader.CatalogLoader;
+import schemacrawler.tools.options.Config;
 
 public class OfflineCatalogLoaderTest
 {

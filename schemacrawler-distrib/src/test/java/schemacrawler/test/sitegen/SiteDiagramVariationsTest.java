@@ -47,7 +47,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
@@ -55,6 +54,7 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
+import schemacrawler.tools.options.Config;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
@@ -73,8 +73,8 @@ public class SiteDiagramVariationsTest
     deleteIfExists(outputFile);
     assertThat(exists(outputFile), is(false));
 
-    final Config runConfig = new Config();
-    final Config informationSchema = loadHsqldbConfig();
+    final Map<String, String> runConfig = new HashMap<>();
+    final Map<String, String> informationSchema = loadHsqldbConfig();
     runConfig.putAll(informationSchema);
     if (config != null)
     {

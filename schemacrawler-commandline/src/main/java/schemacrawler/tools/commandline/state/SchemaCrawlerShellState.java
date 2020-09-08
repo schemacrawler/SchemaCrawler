@@ -35,9 +35,9 @@ import java.util.function.Supplier;
 import java.util.logging.Level;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.tools.options.Config;
 import schemacrawler.SchemaCrawlerLogger;
 
 public class SchemaCrawlerShellState

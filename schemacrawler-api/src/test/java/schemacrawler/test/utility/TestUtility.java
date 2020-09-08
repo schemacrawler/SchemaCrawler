@@ -86,7 +86,6 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
@@ -415,18 +414,21 @@ public final class TestUtility
   public static SchemaRetrievalOptions newSchemaRetrievalOptions()
       throws IOException
   {
-    final Config config = loadHsqldbConfig();
+    final Map<String, String> config = loadHsqldbConfig();
 
     final InformationSchemaViewsBuilder builder =
         InformationSchemaViewsBuilder.builder();
 
-    for (final InformationSchemaKey key : InformationSchemaKey.values())
+    for (final InformationSchemaKey informationSchemaKey : InformationSchemaKey
+        .values())
     {
-      if (config.containsKey(key.getLookupKey()))
+      final String lookupKey = String.format("select.%s.%s",
+          informationSchemaKey.getType(), informationSchemaKey);
+      if (config.containsKey(lookupKey))
       {
         try
         {
-          builder.withSql(key, config.get(key.getLookupKey()));
+          builder.withSql(informationSchemaKey, config.get(lookupKey));
         } catch (final IllegalArgumentException e)
         {
           // Ignore

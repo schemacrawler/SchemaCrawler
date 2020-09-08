@@ -65,23 +65,11 @@ public enum InformationSchemaKey
   VIEW_TABLE_USAGE(INFORMATION_SCHEMA),
   ;
 
-  private final String lookupKey;
   private final InformationSchemaKeyType type;
 
   InformationSchemaKey(final InformationSchemaKeyType type)
   {
     this.type = type;
-    lookupKey = String.format("select.%s.%s", type.name(), name());
-  }
-
-  public String getLookupKey()
-  {
-    return lookupKey;
-  }
-
-  public String getResource()
-  {
-    return name() + ".sql";
   }
 
   /**

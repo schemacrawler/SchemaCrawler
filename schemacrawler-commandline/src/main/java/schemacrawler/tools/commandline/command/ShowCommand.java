@@ -31,9 +31,9 @@ package schemacrawler.tools.commandline.command;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 /**

@@ -43,10 +43,9 @@ import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
-
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.lint.executable.LintOptionsBuilder;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputFormat;
 
 public final class LintTestUtility
