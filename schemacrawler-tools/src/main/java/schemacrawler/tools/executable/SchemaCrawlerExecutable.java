@@ -37,13 +37,13 @@ import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.utility.SchemaCrawlerUtility;

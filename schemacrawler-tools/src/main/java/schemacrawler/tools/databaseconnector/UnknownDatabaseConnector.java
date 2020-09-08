@@ -28,8 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.databaseconnector;
 
 
-import static schemacrawler.schemacrawler.Config.getSystemConfigurationProperty;
-
+import static schemacrawler.tools.options.Config.getSystemConfigurationProperty;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 

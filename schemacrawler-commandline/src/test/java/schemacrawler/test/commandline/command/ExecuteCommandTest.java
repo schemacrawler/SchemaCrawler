@@ -48,13 +48,13 @@ import java.sql.Connection;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import picocli.CommandLine;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.commandline.command.ExecuteCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.options.Config;
 import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)

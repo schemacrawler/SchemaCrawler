@@ -27,12 +27,12 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.commandline.utility;
 
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.tools.options.Config;
 
 public final class SchemaRetrievalOptionsConfig
 {

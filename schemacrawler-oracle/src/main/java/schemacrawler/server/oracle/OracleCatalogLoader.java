@@ -7,8 +7,8 @@ import static us.fatehi.utility.DatabaseUtility.executeScriptFromResource;
 import java.sql.Connection;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.catalogloader.SchemaCrawlerCatalogLoader;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 

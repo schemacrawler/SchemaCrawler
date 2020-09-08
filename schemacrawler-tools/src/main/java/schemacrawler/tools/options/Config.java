@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.schemacrawler;
+package schemacrawler.tools.options;
 
 
 import static java.util.Objects.requireNonNull;
@@ -44,6 +44,7 @@ import java.util.logging.Level;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionRule;
+import schemacrawler.schemacrawler.Options;
 import us.fatehi.utility.ObjectToString;
 import us.fatehi.utility.string.StringFormat;
 

@@ -40,10 +40,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import org.junitpioneer.jupiter.SetSystemProperty;
 import schemacrawler.plugin.EnumDataTypeHelper;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.TestDatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import schemacrawler.tools.options.Config;
 
 public class TestDatabaseConnectorTest
 {

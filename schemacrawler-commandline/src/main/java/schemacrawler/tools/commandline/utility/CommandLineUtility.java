@@ -39,7 +39,6 @@ import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Model.OptionSpec;
 import picocli.CommandLine.Model.UsageMessageSpec;
 import picocli.CommandLine.ParseResult;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
@@ -47,6 +46,7 @@ import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.executable.commandline.PluginCommandOption;
+import schemacrawler.tools.options.Config;
 import schemacrawler.SchemaCrawlerLogger;
 
 public class CommandLineUtility

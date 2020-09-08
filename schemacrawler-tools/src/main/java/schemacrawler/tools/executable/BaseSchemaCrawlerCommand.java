@@ -35,10 +35,10 @@ import static us.fatehi.utility.Utility.requireNotBlank;
 import java.sql.Connection;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 

@@ -37,10 +37,9 @@ import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
-
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.template.TemplateLanguageType;
+import schemacrawler.tools.options.Config;
 
 public class ScriptTestUtility
 {

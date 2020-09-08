@@ -40,12 +40,12 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.TextOutputFormat;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -66,8 +66,8 @@ public class CommandLineDiagramTest
     argsMap.put("-schemas", ".*\\.(?!FOR_LINT).*");
     argsMap.put("-info-level", "maximum");
 
-    final Config runConfig = new Config();
-    final Config informationSchema = loadHsqldbConfig();
+    final Map<String, String> runConfig = new HashMap<>();
+    final Map<String, String> informationSchema = loadHsqldbConfig();
     runConfig.putAll(informationSchema);
     if (config != null)
     {

@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.diagram;
 
 
-import static schemacrawler.schemacrawler.Config.getSystemConfigurationProperty;
+import static schemacrawler.tools.options.Config.getSystemConfigurationProperty;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.join;
 
@@ -41,7 +41,7 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
-import schemacrawler.schemacrawler.Config;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.text.schema.BaseSchemaTextOptionsBuilder;
 import us.fatehi.utility.string.StringFormat;
 

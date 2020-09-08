@@ -39,9 +39,9 @@ import java.util.List;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.executable.LintOptions;
+import schemacrawler.tools.options.Config;
 
 public final class LintUtility
 {

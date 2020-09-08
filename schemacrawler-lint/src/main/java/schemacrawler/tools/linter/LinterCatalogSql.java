@@ -37,10 +37,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.options.Config;
 
 public class LinterCatalogSql
   extends BaseLinter

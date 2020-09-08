@@ -37,9 +37,9 @@ import java.util.List;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.JavaSqlTypeGroup;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
+import schemacrawler.tools.options.Config;
 
 public class LinterTooManyLobs
   extends BaseLinter

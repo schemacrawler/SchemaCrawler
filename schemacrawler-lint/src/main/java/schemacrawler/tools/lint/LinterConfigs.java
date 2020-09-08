@@ -49,8 +49,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import schemacrawler.SchemaCrawlerLogger;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.options.Config;
 import us.fatehi.utility.ObjectToString;
 
 public class LinterConfigs

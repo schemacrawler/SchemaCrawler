@@ -38,7 +38,6 @@ import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
 import schemacrawler.plugin.EnumDataTypeHelper;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
@@ -46,6 +45,7 @@ import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import schemacrawler.tools.options.Config;
 import schemacrawler.utility.PropertiesUtility;
 import us.fatehi.utility.ioresource.InputResource;
 

@@ -37,10 +37,10 @@ import java.util.Map;
 import java.util.Set;
 
 import picocli.CommandLine.Option;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import schemacrawler.tools.options.Config;
 import us.fatehi.utility.TemplatingUtility;
 
 public class DatabaseConfigConnectionOptions

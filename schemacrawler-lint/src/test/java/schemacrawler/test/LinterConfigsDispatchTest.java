@@ -54,7 +54,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
@@ -67,6 +66,7 @@ import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.LinterConfig;
 import schemacrawler.tools.lint.LinterConfigs;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.TextOutputFormat;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)

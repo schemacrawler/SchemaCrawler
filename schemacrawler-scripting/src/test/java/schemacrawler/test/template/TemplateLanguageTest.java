@@ -33,9 +33,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.jupiter.api.Test;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.integration.template.TemplateLanguage;
 import schemacrawler.tools.integration.template.TemplateLanguageType;
+import schemacrawler.tools.options.Config;
 
 public class TemplateLanguageTest
 {

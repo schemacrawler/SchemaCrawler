@@ -34,7 +34,7 @@ import java.io.Serializable;
 
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionRule;
-import schemacrawler.schemacrawler.Config;
+import schemacrawler.tools.options.Config;
 import us.fatehi.utility.ObjectToString;
 
 public class LinterConfig

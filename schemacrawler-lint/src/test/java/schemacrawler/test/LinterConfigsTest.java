@@ -41,11 +41,11 @@ import java.io.Reader;
 import java.io.StringReader;
 
 import org.junit.jupiter.api.Test;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.LinterConfig;
 import schemacrawler.tools.lint.LinterConfigs;
+import schemacrawler.tools.options.Config;
 
 public class LinterConfigsTest
 {

@@ -29,8 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.utility;
 
 
-import static schemacrawler.schemacrawler.Config.getSystemConfigurationProperty;
-
+import static schemacrawler.tools.options.Config.getSystemConfigurationProperty;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

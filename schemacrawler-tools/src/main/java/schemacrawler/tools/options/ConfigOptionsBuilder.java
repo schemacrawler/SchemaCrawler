@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.options;
 
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.Options;
 
 /**

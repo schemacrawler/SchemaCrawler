@@ -8,9 +8,9 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.newComm
 
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.command.ConfigFileCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.options.Config;
 
 public class ConfigFileCommandTest
 {

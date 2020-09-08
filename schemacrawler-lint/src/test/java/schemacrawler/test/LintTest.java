@@ -46,7 +46,6 @@ import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -57,6 +56,7 @@ import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.LinterConfig;
 import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.lint.Linters;
+import schemacrawler.tools.options.Config;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class LintTest

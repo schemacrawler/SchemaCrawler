@@ -40,9 +40,9 @@ import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.options.Config;
 
 public class LinterTableWithBadlyNamedColumns
   extends BaseLinter

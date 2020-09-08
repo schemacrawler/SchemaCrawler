@@ -45,12 +45,12 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.options.TextOutputFormat;

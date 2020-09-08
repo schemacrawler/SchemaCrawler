@@ -32,9 +32,9 @@ package schemacrawler.tools.executable;
 import java.sql.Connection;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 
 /**
