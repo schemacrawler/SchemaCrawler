@@ -419,13 +419,16 @@ public final class TestUtility
     final InformationSchemaViewsBuilder builder =
         InformationSchemaViewsBuilder.builder();
 
-    for (final InformationSchemaKey key : InformationSchemaKey.values())
+    for (final InformationSchemaKey informationSchemaKey : InformationSchemaKey
+        .values())
     {
-      if (config.containsKey(key.getLookupKey()))
+      final String lookupKey = String.format("select.%s.%s",
+          informationSchemaKey.getType(), informationSchemaKey);
+      if (config.containsKey(lookupKey))
       {
         try
         {
-          builder.withSql(key, config.get(key.getLookupKey()));
+          builder.withSql(informationSchemaKey, config.get(lookupKey));
         } catch (final IllegalArgumentException e)
         {
           // Ignore

@@ -112,8 +112,8 @@ public final class SchemaCrawlerOptionsConfig
     for (final DatabaseObjectRuleForInclusion ruleForInclusion : DatabaseObjectRuleForInclusion.values())
     {
       final InclusionRule inclusionRule = config.getInclusionRuleWithDefault(
-        ruleForInclusion.getIncludePatternProperty(),
-        ruleForInclusion.getExcludePatternProperty(),
+        getIncludePatternProperty(ruleForInclusion),
+        getExcludePatternProperty(ruleForInclusion),
         getDefaultInclusionRule(ruleForInclusion));
 
       builder.include(ruleForInclusion, inclusionRule);
@@ -168,6 +168,20 @@ public final class SchemaCrawlerOptionsConfig
       defaultInclusionRule = new IncludeAll();
     }
     return defaultInclusionRule;
+  }
+
+  private static String getExcludePatternProperty(
+      final DatabaseObjectRuleForInclusion ruleForInclusion)
+  {
+    return String.format("schemacrawler.%s.pattern.exclude",
+        ruleForInclusion.getKey());
+  }
+
+  private static String getIncludePatternProperty(
+      final DatabaseObjectRuleForInclusion ruleForInclusion)
+  {
+    return String.format("schemacrawler.%s.pattern.include",
+        ruleForInclusion.getKey());
   }
   
 }

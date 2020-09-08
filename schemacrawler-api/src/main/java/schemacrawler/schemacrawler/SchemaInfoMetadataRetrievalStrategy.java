@@ -43,9 +43,6 @@ public enum SchemaInfoMetadataRetrievalStrategy
   typeInfoRetrievalStrategy("typeinfo"),
   ;
 
-  private static final String prefix =
-    "schemacrawler.schema.retrieval.strategy.";
-
   private final String key;
 
   SchemaInfoMetadataRetrievalStrategy(final String key)
@@ -53,9 +50,9 @@ public enum SchemaInfoMetadataRetrievalStrategy
     this.key = key;
   }
 
-  public String getConfigKey()
+  public String getKey()
   {
-    return prefix + key;
+    return key;
   }
 
 }
