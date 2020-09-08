@@ -40,50 +40,6 @@ import schemacrawler.inclusionrule.InclusionRule;
 public final class SchemaCrawlerOptionsConfig
 {
 
-  public static LimitOptionsBuilder fromConfig(final LimitOptionsBuilder providedBuilder, final Config config)
-  {
-    final LimitOptionsBuilder builder;
-    if (providedBuilder == null)
-    {
-      builder = LimitOptionsBuilder.builder();
-    }
-    else 
-    {
-      builder = providedBuilder;
-    }
-    
-    if (config == null)
-    {
-      return builder;
-    }
-
-    for (final DatabaseObjectRuleForInclusion ruleForInclusion : DatabaseObjectRuleForInclusion.values())
-    {
-      final InclusionRule inclusionRule = config.getInclusionRuleWithDefault(
-        ruleForInclusion.getIncludePatternProperty(),
-        ruleForInclusion.getExcludePatternProperty(),
-        getDefaultInclusionRule(ruleForInclusion));
-
-      builder.include(ruleForInclusion, inclusionRule);
-    }
-
-    return builder;
-  }
-  
-  private static InclusionRule getDefaultInclusionRule(final DatabaseObjectRuleForInclusion ruleForInclusion)
-  {
-    final InclusionRule defaultInclusionRule;
-    if (ruleForInclusion.isExcludeByDefault())
-    {
-      defaultInclusionRule = new ExcludeAll();
-    }
-    else
-    {
-      defaultInclusionRule = new IncludeAll();
-    }
-    return defaultInclusionRule;
-  }
-
   public static GrepOptionsBuilder fromConfig(final GrepOptionsBuilder providedBuilder,
       final Config config)
   {
@@ -127,6 +83,84 @@ public final class SchemaCrawlerOptionsConfig
             SC_GREP_DEFINITION_PATTERN_EXCLUDE).orElse(null));
 
     return builder;
+  }
+
+  public static LimitOptionsBuilder fromConfig(final LimitOptionsBuilder providedBuilder, final Config config)
+  {
+    final LimitOptionsBuilder builder;
+    if (providedBuilder == null)
+    {
+      builder = LimitOptionsBuilder.builder();
+    }
+    else 
+    {
+      builder = providedBuilder;
+    }
+    
+    if (config == null)
+    {
+      return builder;
+    }
+
+    for (final DatabaseObjectRuleForInclusion ruleForInclusion : DatabaseObjectRuleForInclusion.values())
+    {
+      final InclusionRule inclusionRule = config.getInclusionRuleWithDefault(
+        ruleForInclusion.getIncludePatternProperty(),
+        ruleForInclusion.getExcludePatternProperty(),
+        getDefaultInclusionRule(ruleForInclusion));
+
+      builder.include(ruleForInclusion, inclusionRule);
+    }
+
+    return builder;
+  }
+  
+  public static SchemaCrawlerOptionsBuilder fromConfig(
+      final SchemaCrawlerOptionsBuilder providedBuilder, final Config config)
+  {
+    final SchemaCrawlerOptionsBuilder builder;
+    if (providedBuilder == null)
+    {
+      builder = SchemaCrawlerOptionsBuilder.builder();
+    } else
+    {
+      builder = providedBuilder;
+    }
+
+    if (config == null)
+    {
+      return builder;
+    }
+
+    // Load only inclusion rules for limit options
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder().fromOptions(builder.getLimitOptions());
+    final LimitOptions limitOptions = SchemaCrawlerOptionsConfig
+        .fromConfig(limitOptionsBuilder, config).toOptions();
+    builder.withLimitOptions(limitOptions);
+
+    // Load only inclusion rules for grep options
+    final GrepOptionsBuilder grepOptionsBuilder =
+        GrepOptionsBuilder.builder().fromOptions(builder.getGrepOptions());
+    final GrepOptions grepOptions = SchemaCrawlerOptionsConfig
+        .fromConfig(grepOptionsBuilder, config).toOptions();
+    builder.withGrepOptions(grepOptions);
+
+    return builder;
+  }
+
+  private static InclusionRule getDefaultInclusionRule(final DatabaseObjectRuleForInclusion ruleForInclusion)
+  {
+    final InclusionRule defaultInclusionRule;
+    if (ruleForInclusion.isExcludeByDefault())
+    {
+      defaultInclusionRule = new ExcludeAll();
+    }
+    else
+    {
+      defaultInclusionRule = new IncludeAll();
+    }
+    return defaultInclusionRule;
   }
   
 }

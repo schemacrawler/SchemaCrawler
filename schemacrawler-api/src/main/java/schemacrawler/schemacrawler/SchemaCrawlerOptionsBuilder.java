@@ -34,7 +34,7 @@ package schemacrawler.schemacrawler;
  * schema.
  */
 public final class SchemaCrawlerOptionsBuilder
-  implements OptionsBuilder<SchemaCrawlerOptionsBuilder, SchemaCrawlerOptions>, ConfigOptionsBuilder<SchemaCrawlerOptionsBuilder, SchemaCrawlerOptions>
+  implements OptionsBuilder<SchemaCrawlerOptionsBuilder, SchemaCrawlerOptions>
 {
 
   public static SchemaCrawlerOptionsBuilder builder()
@@ -63,34 +63,6 @@ public final class SchemaCrawlerOptionsBuilder
     loadOptions = LoadOptionsBuilder.newLoadOptions();
   }
 
-  /**
-   * Options from properties.
-   *
-   * @param config
-   *   Configuration properties
-   */
-  @Override
-  public SchemaCrawlerOptionsBuilder fromConfig(final Config config)
-  {
-    if (config == null)
-    {
-      return this;
-    }
-
-    // Load only inclusion rules for limit options
-    final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder().fromOptions(limitOptions);
-    limitOptions = SchemaCrawlerOptionsConfig
-        .fromConfig(limitOptionsBuilder, config).toOptions();
-    // Load only inclusion rules for grep options
-    final GrepOptionsBuilder grepOptionsBuilder =
-        GrepOptionsBuilder.builder().fromOptions(grepOptions);
-    grepOptions = SchemaCrawlerOptionsConfig
-        .fromConfig(grepOptionsBuilder, config).toOptions();
-
-    return this;
-  }
-
   @Override
   public SchemaCrawlerOptionsBuilder fromOptions(final SchemaCrawlerOptions options)
   {
@@ -105,12 +77,6 @@ public final class SchemaCrawlerOptionsBuilder
     loadOptions = options.getLoadOptions();
 
     return this;
-  }
-
-  @Override
-  public Config toConfig()
-  {
-    throw new UnsupportedOperationException();
   }
 
   @Override
