@@ -13,7 +13,6 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.ConfigOptionsBuilder;
 import schemacrawler.schemacrawler.OptionsBuilder;
 import us.fatehi.utility.ioresource.ConsoleOutputResource;
 import us.fatehi.utility.ioresource.FileOutputResource;

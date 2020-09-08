@@ -25,8 +25,10 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.schemacrawler;
+package schemacrawler.tools.options;
 
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.Options;
 
 /**
  * Convoluted interface to allow for subclasses builders, while maintaining a
