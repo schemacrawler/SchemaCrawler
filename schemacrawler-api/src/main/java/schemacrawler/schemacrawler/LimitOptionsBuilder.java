@@ -376,14 +376,4 @@ public final class LimitOptionsBuilder
     return this;
   }
 
-  public InclusionRule get(final DatabaseObjectRuleForInclusion ruleForInclusion)
-  {
-    if (ruleForInclusion != null) 
-    {
-      inclusionRules.get(ruleForInclusion);
-    }
-    
-    return null;
-  }
-
 }

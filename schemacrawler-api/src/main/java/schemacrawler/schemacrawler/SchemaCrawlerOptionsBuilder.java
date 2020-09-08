@@ -83,11 +83,10 @@ public final class SchemaCrawlerOptionsBuilder
     limitOptions = SchemaCrawlerOptionsConfig
         .fromConfig(limitOptionsBuilder, config).toOptions();
     // Load only inclusion rules for grep options
-    grepOptions = GrepOptionsBuilder
-      .builder()
-      .fromOptions(grepOptions)
-      .fromConfig(config)
-      .toOptions();
+    final GrepOptionsBuilder grepOptionsBuilder =
+        GrepOptionsBuilder.builder().fromOptions(grepOptions);
+    grepOptions = SchemaCrawlerOptionsConfig
+        .fromConfig(grepOptionsBuilder, config).toOptions();
 
     return this;
   }

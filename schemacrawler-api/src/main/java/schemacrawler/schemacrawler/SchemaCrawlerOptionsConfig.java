@@ -29,33 +29,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
-import static schemacrawler.schema.RoutineType.function;
-import static schemacrawler.schema.RoutineType.procedure;
-import static schemacrawler.schema.RoutineType.unknown;
-import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForColumnInclusion;
-import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForRoutineInclusion;
-import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForRoutineParameterInclusion;
-import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSchemaInclusion;
-import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSequenceInclusion;
-import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSynonymInclusion;
-import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForTableInclusion;
-import static schemacrawler.utility.EnumUtility.enumValue;
-import static us.fatehi.utility.Utility.isBlank;
-
-import java.util.Collection;
-import java.util.EnumMap;
-import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Map;
-import java.util.regex.Pattern;
-
 import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
-import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
-import schemacrawler.schema.RoutineType;
-import schemacrawler.schema.TableTypes;
 
 /**
  * SchemaCrawler options builder, to build the immutable options to crawl a
@@ -64,12 +40,6 @@ import schemacrawler.schema.TableTypes;
 public final class SchemaCrawlerOptionsConfig
 {
 
-  /**
-   * Options from properties.
-   *
-   * @param config
-   *   Configuration properties
-   */
   public static LimitOptionsBuilder fromConfig(final LimitOptionsBuilder providedBuilder, final Config config)
   {
     final LimitOptionsBuilder builder;
@@ -92,12 +62,71 @@ public final class SchemaCrawlerOptionsConfig
       final InclusionRule inclusionRule = config.getInclusionRuleWithDefault(
         ruleForInclusion.getIncludePatternProperty(),
         ruleForInclusion.getExcludePatternProperty(),
-        builder.get(ruleForInclusion));
+        getDefaultInclusionRule(ruleForInclusion));
 
       builder.include(ruleForInclusion, inclusionRule);
     }
 
     return builder;
   }
+  
+  private static InclusionRule getDefaultInclusionRule(final DatabaseObjectRuleForInclusion ruleForInclusion)
+  {
+    final InclusionRule defaultInclusionRule;
+    if (ruleForInclusion.isExcludeByDefault())
+    {
+      defaultInclusionRule = new ExcludeAll();
+    }
+    else
+    {
+      defaultInclusionRule = new IncludeAll();
+    }
+    return defaultInclusionRule;
+  }
 
+  public static GrepOptionsBuilder fromConfig(final GrepOptionsBuilder providedBuilder,
+      final Config config)
+  {
+
+    final GrepOptionsBuilder builder;
+    if (providedBuilder == null)
+    {
+      builder = GrepOptionsBuilder.builder();
+    } else
+    {
+      builder = providedBuilder;
+    }
+
+    if (config == null)
+    {
+      return builder;
+    }
+
+    final String SC_GREP_COLUMN_PATTERN_EXCLUDE =
+        "schemacrawler.grep.column.pattern.exclude";
+    final String SC_GREP_COLUMN_PATTERN_INCLUDE =
+        "schemacrawler.grep.column.pattern.include";
+    final String SC_GREP_DEFINITION_PATTERN_EXCLUDE =
+        "schemacrawler.grep.definition.pattern.exclude";
+    final String SC_GREP_DEFINITION_PATTERN_INCLUDE =
+        "schemacrawler.grep.definition.pattern.include";
+    final String SC_GREP_ROUTINE_PARAMETER_PATTERN_EXCLUDE =
+        "schemacrawler.grep.routine.inout.pattern.exclude";
+    final String SC_GREP_ROUTINE_PARAMETER_PATTERN_INCLUDE =
+        "schemacrawler.grep.routine.inout.pattern.include";
+
+    builder.includeGreppedColumns(
+        config.getOptionalInclusionRule(SC_GREP_COLUMN_PATTERN_INCLUDE,
+            SC_GREP_COLUMN_PATTERN_EXCLUDE).orElse(null));
+    builder.includeGreppedRoutineParameters(config
+        .getOptionalInclusionRule(SC_GREP_ROUTINE_PARAMETER_PATTERN_INCLUDE,
+            SC_GREP_ROUTINE_PARAMETER_PATTERN_EXCLUDE)
+        .orElse(null));
+    builder.includeGreppedDefinitions(
+        config.getOptionalInclusionRule(SC_GREP_DEFINITION_PATTERN_INCLUDE,
+            SC_GREP_DEFINITION_PATTERN_EXCLUDE).orElse(null));
+
+    return builder;
+  }
+  
 }
