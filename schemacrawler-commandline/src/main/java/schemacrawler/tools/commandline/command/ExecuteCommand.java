@@ -44,6 +44,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.commandline.shell.AvailableCommandsCommand;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.utility.OutputOptionsConfig;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
 import schemacrawler.tools.options.Config;
@@ -103,9 +104,9 @@ public class ExecuteCommand
 
     try
     {
-      final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
-        .builder()
-        .fromConfig(state.getAdditionalConfiguration());
+      final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsConfig
+          .fromConfig(null, state.getAdditionalConfiguration());
+      
       if (commandOutputOptions
         .getOutputFile()
         .isPresent())
