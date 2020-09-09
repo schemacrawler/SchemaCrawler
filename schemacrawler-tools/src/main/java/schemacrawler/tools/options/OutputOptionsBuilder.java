@@ -18,13 +18,8 @@ import us.fatehi.utility.ioresource.OutputResource;
 import us.fatehi.utility.ioresource.WriterOutputResource;
 
 public final class OutputOptionsBuilder
-  implements OptionsBuilder<OutputOptionsBuilder, OutputOptions>, ConfigOptionsBuilder<OutputOptionsBuilder, OutputOptions>
+  implements OptionsBuilder<OutputOptionsBuilder, OutputOptions>
 {
-
-  private static final String SC_INPUT_ENCODING =
-    "schemacrawler.encoding.input";
-  private static final String SC_OUTPUT_ENCODING =
-    "schemacrawler.encoding.output";
 
   public static OutputOptionsBuilder builder()
   {
@@ -88,26 +83,6 @@ public final class OutputOptionsBuilder
   }
 
   @Override
-  public OutputOptionsBuilder fromConfig(final Config config)
-  {
-    final Config configProperties;
-    if (config == null)
-    {
-      configProperties = new Config();
-    }
-    else
-    {
-      configProperties = config;
-    }
-
-    withInputEncoding(configProperties.getStringValue(SC_INPUT_ENCODING,
-                                                      UTF_8.name())).withOutputEncoding(
-      configProperties.getStringValue(SC_OUTPUT_ENCODING, UTF_8.name()));
-
-    return this;
-  }
-
-  @Override
   public OutputOptionsBuilder fromOptions(final OutputOptions options)
   {
     if (options == null)
@@ -122,15 +97,6 @@ public final class OutputOptionsBuilder
     outputResource = options.getOutputResource();
 
     return this;
-  }
-
-  @Override
-  public Config toConfig()
-  {
-    final Config config = new Config();
-    config.setStringValue(SC_INPUT_ENCODING, inputEncodingCharset.name());
-    config.setStringValue(SC_OUTPUT_ENCODING, outputEncodingCharset.name());
-    return config;
   }
 
   @Override
