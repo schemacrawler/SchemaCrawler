@@ -50,7 +50,8 @@ public final class SQLiteDatabaseConnector
     super(new DatabaseServerType("sqlite", "SQLite"),
           new ClasspathInputResource("/schemacrawler-sqlite.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
-            "/sqlite.information_schema"));
+            "/sqlite.information_schema"),
+          (schemaRetrievalOptionsBuilder, connection) -> {});
   }
 
   @Override

@@ -51,7 +51,8 @@ public final class HyperSQLDatabaseConnector
     super(new DatabaseServerType("hsqldb", "HyperSQL DataBase"),
           new ClasspathInputResource("/schemacrawler-hsqldb.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
-            "/hsqldb.information_schema"));
+            "/hsqldb.information_schema"),
+          (schemaRetrievalOptionsBuilder, connection) -> {});
   }
 
   @Override

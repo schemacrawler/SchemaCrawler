@@ -58,7 +58,8 @@ final class UnknownDatabaseConnector
   {
     super(DatabaseServerType.UNKNOWN,
           new EmptyInputResource(),
-          (informationSchemaViewsBuilder, connection) -> {});
+          (informationSchemaViewsBuilder, connection) -> {},
+          (schemaRetrievalOptionsBuilder, connection) -> {});
   }
 
   @Override

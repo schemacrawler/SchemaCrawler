@@ -33,7 +33,8 @@ public final class TestDatabaseConnector
           new ClasspathInputResource(
             "/META-INF/schemacrawler-test-db.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
-            "/test-db.information_schema"));
+            "/test-db.information_schema"),
+          (schemaRetrievalOptionsBuilder, connection) -> {});
   }
 
   @Override

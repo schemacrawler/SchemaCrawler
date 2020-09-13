@@ -44,20 +44,17 @@ public final class PostgreSQLDatabaseConnector
   extends DatabaseConnector
 {
 
-  public PostgreSQLDatabaseConnector()
-    throws IOException
+  public PostgreSQLDatabaseConnector() throws IOException
   {
     super(new DatabaseServerType("postgresql", "PostgreSQL"),
-          new ClasspathInputResource(
+        new ClasspathInputResource(
             "/schemacrawler-postgresql.config.properties"),
-          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
-            "/postgresql.information_schema"));
-  }
-
-  @Override
-  public EnumDataTypeHelper getEnumDataTypeHelper()
-  {
-    return new PostgreSQLEnumDataTypeHelper();
+        (informationSchemaViewsBuilder,
+            connection) -> informationSchemaViewsBuilder
+                .fromResourceFolder("/postgresql.information_schema"),
+        (schemaRetrievalOptionsBuilder,
+            connection) -> schemaRetrievalOptionsBuilder
+                .withEnumDataTypeHelper(new PostgreSQLEnumDataTypeHelper()));
   }
 
   @Override

@@ -60,11 +60,15 @@ public abstract class DatabaseConnector
   private final InputResource configResource;
   private final DatabaseServerType dbServerType;
   private final BiConsumer<InformationSchemaViewsBuilder, Connection>
-    informationSchemaViewsBuilderForConnection;
+    informationSchemaViewsBuildProcess;
+  private final BiConsumer<SchemaRetrievalOptionsBuilder, Connection>
+  schemaRetrievalOptionsBuildProcess;
 
   protected DatabaseConnector(final DatabaseServerType dbServerType,
                               final InputResource configResource,
-                              final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection)
+                              final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuildProcess,
+                              final BiConsumer<SchemaRetrievalOptionsBuilder, Connection>
+  schemaRetrievalOptionsBuildProcess)
   {
     this.dbServerType =
       requireNonNull(dbServerType, "No database server type provided");
@@ -72,8 +76,11 @@ public abstract class DatabaseConnector
     this.configResource =
       requireNonNull(configResource, "No config resource provided");
 
-    this.informationSchemaViewsBuilderForConnection =
-      informationSchemaViewsBuilderForConnection;
+    this.informationSchemaViewsBuildProcess =
+        requireNonNull(informationSchemaViewsBuildProcess, "No information schema views build process provided");
+    
+    this.schemaRetrievalOptionsBuildProcess =
+        requireNonNull(schemaRetrievalOptionsBuildProcess, "No schema retrieval options build process provided");
   }
 
   /**
@@ -91,11 +98,6 @@ public abstract class DatabaseConnector
     return dbServerType;
   }
 
-  public EnumDataTypeHelper getEnumDataTypeHelper()
-  {
-    return NO_OP_ENUM_DATA_TYPE_HELPER;
-  }
-
   /**
    * Gets the complete bundled database specific configuration set, including
    * the SQL for information schema views.
@@ -108,15 +110,17 @@ public abstract class DatabaseConnector
     final InformationSchemaViews informationSchemaViews =
       InformationSchemaViewsBuilder
         .builder()
-        .withFunction(informationSchemaViewsBuilderForConnection, connection)
+        .withFunction(informationSchemaViewsBuildProcess, connection)
         .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
       SchemaRetrievalOptionsBuilder
         .builder()
         .withDatabaseServerType(dbServerType)
-        .withEnumDataTypeHelper(getEnumDataTypeHelper())
         .withInformationSchemaViews(informationSchemaViews)
         .fromConnnection(connection);
+    
+    // Allow database plugins to intercept and do further customization
+    schemaRetrievalOptionsBuildProcess.accept(schemaRetrievalOptionsBuilder, connection);
 
     return schemaRetrievalOptionsBuilder;
   }

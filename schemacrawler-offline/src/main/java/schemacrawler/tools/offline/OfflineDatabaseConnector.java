@@ -55,7 +55,8 @@ public final class OfflineDatabaseConnector
   {
     super(DB_SERVER_TYPE,
           new ClasspathInputResource("/schemacrawler-offline.config.properties"),
-          null);
+          (informationSchemaViewsBuilder, connection) -> {},
+          (schemaRetrievalOptionsBuilder, connection) -> {});
   }
 
   @Override

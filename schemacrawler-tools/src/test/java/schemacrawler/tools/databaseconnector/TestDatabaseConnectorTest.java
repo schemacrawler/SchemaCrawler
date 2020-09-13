@@ -70,12 +70,6 @@ public class TestDatabaseConnectorTest
                  .getDatabaseServerType()
                  .getDatabaseSystemIdentifier(), is("test-db"));
 
-    final EnumDataTypeHelper enumDataTypeHelper =
-      databaseConnector.getEnumDataTypeHelper();
-    assertThat(enumDataTypeHelper
-                 .getEnumDataTypeInfo(null, null, null)
-                 .getEnumValues(), is(empty()));
-
     assertThat(databaseConnector.supportsUrl("jdbc:test-db:somevalue"),
                is(true));
     assertThat(databaseConnector.supportsUrl("jdbc:newdb:somevalue"),
@@ -102,12 +96,6 @@ public class TestDatabaseConnectorTest
     assertThat(databaseConnector
                  .getDatabaseServerType()
                  .getDatabaseSystemIdentifier(), is(nullValue()));
-
-    final EnumDataTypeHelper enumDataTypeHelper =
-      databaseConnector.getEnumDataTypeHelper();
-    assertThat(enumDataTypeHelper
-                 .getEnumDataTypeInfo(null, null, null)
-                 .getEnumValues(), is(empty()));
 
     assertThat(databaseConnector.supportsUrl("jdbc:newdb:somevalue"),
                is(false));

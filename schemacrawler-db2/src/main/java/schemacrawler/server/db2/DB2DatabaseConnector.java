@@ -57,7 +57,8 @@ public final class DB2DatabaseConnector
     super(new DatabaseServerType("db2", "IBM DB2"),
           new ClasspathInputResource("/schemacrawler-db2.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
-            "/db2.information_schema"));
+            "/db2.information_schema"),
+          (schemaRetrievalOptionsBuilder, connection) -> {});
   }
 
   @Override

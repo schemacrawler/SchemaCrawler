@@ -147,7 +147,8 @@ public final class OracleDatabaseConnector
   {
     super(DB_SERVER_TYPE,
           new ClasspathInputResource("/schemacrawler-oracle.config.properties"),
-          new OracleInformationSchemaViewsBuilder());
+          new OracleInformationSchemaViewsBuilder(),
+          (schemaRetrievalOptionsBuilder, connection) -> {});
 
     System.setProperty("oracle.jdbc.Trace", "true");
   }

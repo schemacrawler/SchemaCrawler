@@ -44,19 +44,16 @@ public final class MySQLDatabaseConnector
   extends DatabaseConnector
 {
 
-  public MySQLDatabaseConnector()
-    throws IOException
+  public MySQLDatabaseConnector() throws IOException
   {
     super(new DatabaseServerType("mysql", "MySQL"),
-          new ClasspathInputResource("/schemacrawler-mysql.config.properties"),
-          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
-            "/mysql.information_schema"));
-  }
-
-  @Override
-  public EnumDataTypeHelper getEnumDataTypeHelper()
-  {
-    return new MySQLEnumDataTypeHelper();
+        new ClasspathInputResource("/schemacrawler-mysql.config.properties"),
+        (informationSchemaViewsBuilder,
+            connection) -> informationSchemaViewsBuilder
+                .fromResourceFolder("/mysql.information_schema"),
+        (schemaRetrievalOptionsBuilder,
+            connection) -> schemaRetrievalOptionsBuilder
+                .withEnumDataTypeHelper(new MySQLEnumDataTypeHelper()));
   }
 
   @Override

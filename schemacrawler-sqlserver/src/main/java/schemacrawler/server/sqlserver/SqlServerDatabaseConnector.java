@@ -54,7 +54,8 @@ public final class SqlServerDatabaseConnector
           new ClasspathInputResource(
             "/schemacrawler-sqlserver.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
-            "/sqlserver.information_schema"));
+            "/sqlserver.information_schema"),
+          (schemaRetrievalOptionsBuilder, connection) -> {});
   }
 
   @Override
