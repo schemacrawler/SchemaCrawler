@@ -31,11 +31,11 @@ package schemacrawler.tools.commandline.command;
 
 import java.util.Map;
 import picocli.CommandLine.Option;
-import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
+import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
 
-public class DatabaseServerHostConnectionOptions
-  implements DatabaseConnectionOptions
+public class ServerHostConnectionGroupOptions
+implements ConnectionOptions
 {
 
   @Option(names = {
@@ -66,34 +66,11 @@ public class DatabaseServerHostConnectionOptions
     "--urlx"
   }, description = "JDBC URL additional properties")
   private Map<String, String> urlx;
-
-  public String getDatabase()
-  {
-    return database;
-  }
-
+  
   @Override
-  public DatabaseConnector getDatabaseConnector()
+  public DatabaseConnectionOptions toDatabaseConnectionOptions()
   {
-    final DatabaseConnectorRegistry databaseConnectorRegistry =
-      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    return databaseConnectorRegistry.lookupDatabaseConnector(
-      databaseSystemIdentifier);
-  }
-
-  public String getHost()
-  {
-    return host;
-  }
-
-  public Integer getPort()
-  {
-    return port;
-  }
-
-  public Map<String, String> getUrlx()
-  {
-    return urlx;
+    return new DatabaseServerHostConnectionOptions(databaseSystemIdentifier, host, port, database, urlx);
   }
   
 }

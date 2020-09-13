@@ -37,10 +37,12 @@ import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.commandline.command.ConnectCommand;
-import schemacrawler.tools.commandline.command.DatabaseServerHostConnectionOptions;
-import schemacrawler.tools.commandline.command.DatabaseConnectionOptions;
-import schemacrawler.tools.commandline.command.DatabaseUrlConnectionOptions;
+import schemacrawler.tools.commandline.command.ConnectionOptions;
+import schemacrawler.tools.commandline.command.ServerHostConnectionGroupOptions;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
+import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
+import schemacrawler.tools.databaseconnector.DatabaseUrlConnectionOptions;
 import schemacrawler.tools.options.Config;
 
 public class ConnectionOptionsTest

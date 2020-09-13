@@ -28,31 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.command;
 
-
-import picocli.CommandLine.ArgGroup;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
 
-public class DatabaseConnectionGroupOptions
+
+public interface ConnectionOptions
 {
 
-  @ArgGroup(exclusive = false,
-            heading = "%nFor connecting to specific databases, use%n")
-  private ServerHostConnectionGroupOptions databaseConfigConnectionOptions;
-  @ArgGroup(exclusive = false,
-            heading = "%nIf your database does not have a "
-                      + "SchemaCrawler plug-in, use%n")
-  private UrlConnectionGroupOptions databaseUrlConnectionOptions;
-
-  DatabaseConnectionOptions getDatabaseConnectionOptions()
-  {
-    if (databaseConfigConnectionOptions != null)
-    {
-      return databaseConfigConnectionOptions.toDatabaseConnectionOptions();
-    }
-    else
-    {
-      return databaseUrlConnectionOptions.toDatabaseConnectionOptions();
-    }
-  }
+  DatabaseConnectionOptions toDatabaseConnectionOptions();
 
 }

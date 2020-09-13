@@ -48,8 +48,11 @@ import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.commandline.utility.SchemaCrawlerOptionsConfig;
 import schemacrawler.tools.commandline.utility.SchemaRetrievalOptionsConfig;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
+import schemacrawler.tools.databaseconnector.DatabaseUrlConnectionOptions;
 import schemacrawler.tools.databaseconnector.UserCredentials;
 import schemacrawler.tools.options.Config;
 import schemacrawler.SchemaCrawlerLogger;
@@ -184,7 +187,7 @@ public class ConnectCommand
     final DatabaseConnectionSource databaseConnectionSource;
     if (connectionOptions instanceof DatabaseServerHostConnectionOptions)
     {
-      DatabaseServerHostConnectionOptions serverHostConnectionOptions =
+      final DatabaseServerHostConnectionOptions serverHostConnectionOptions =
           (DatabaseServerHostConnectionOptions) connectionOptions;
       databaseConnectionSource = databaseConnector.newDatabaseConnectionSource(
           serverHostConnectionOptions.getHost(),

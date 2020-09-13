@@ -26,33 +26,31 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline.command;
+package schemacrawler.tools.databaseconnector;
 
-
-import picocli.CommandLine.ArgGroup;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
-
-public class DatabaseConnectionGroupOptions
+public class DatabaseUrlConnectionOptions
+  implements DatabaseConnectionOptions
 {
 
-  @ArgGroup(exclusive = false,
-            heading = "%nFor connecting to specific databases, use%n")
-  private ServerHostConnectionGroupOptions databaseConfigConnectionOptions;
-  @ArgGroup(exclusive = false,
-            heading = "%nIf your database does not have a "
-                      + "SchemaCrawler plug-in, use%n")
-  private UrlConnectionGroupOptions databaseUrlConnectionOptions;
+  private final String connectionUrl;
 
-  DatabaseConnectionOptions getDatabaseConnectionOptions()
+  public DatabaseUrlConnectionOptions(String connectionUrl)
   {
-    if (databaseConfigConnectionOptions != null)
-    {
-      return databaseConfigConnectionOptions.toDatabaseConnectionOptions();
-    }
-    else
-    {
-      return databaseUrlConnectionOptions.toDatabaseConnectionOptions();
-    }
+    this.connectionUrl = connectionUrl;
   }
 
+  @Override
+  public DatabaseConnector getDatabaseConnector()
+  {
+    final DatabaseConnectorRegistry databaseConnectorRegistry =
+      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    return databaseConnectorRegistry.lookupDatabaseConnectorFromUrl(
+      connectionUrl);
+  }
+
+  public String getConnectionUrl()
+  {
+    return connectionUrl;
+  }
+  
 }

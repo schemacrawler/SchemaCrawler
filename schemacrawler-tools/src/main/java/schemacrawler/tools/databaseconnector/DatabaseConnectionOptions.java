@@ -26,11 +26,10 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline.command;
+package schemacrawler.tools.databaseconnector;
 
 
 import schemacrawler.schemacrawler.Options;
-import schemacrawler.tools.databaseconnector.DatabaseConnector;
 
 
 public interface DatabaseConnectionOptions
