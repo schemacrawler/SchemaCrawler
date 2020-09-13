@@ -28,7 +28,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.offline;
 
 
+import static us.fatehi.utility.Utility.isBlank;
 import java.io.IOException;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
@@ -78,4 +80,29 @@ public final class OfflineDatabaseConnector
   {
     return url -> Pattern.matches("jdbc:offline:.*", url);
   }
+  
+  @Override
+  protected String constructConnectionUrl(final String providedHost,
+      final Integer providedPort, final String providedDatabase,
+      final Map<String, String> urlx)
+  {
+
+    final String defaultDatabase = "";
+    final String urlFormat =
+        "jdbc:offline:%s";
+
+    final String database;
+    if (isBlank(providedDatabase))
+    {
+      database = defaultDatabase;
+    } else
+    {
+      database = providedDatabase;
+    }
+
+    final String url = String.format(urlFormat, database);
+
+    return url;
+  }
+  
 }

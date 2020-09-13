@@ -30,6 +30,7 @@ package schemacrawler.tools.commandline.command;
 
 
 import picocli.CommandLine.ArgGroup;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorOptions;
 
 public class DatabaseConnectionOptions
 {
@@ -42,7 +43,7 @@ public class DatabaseConnectionOptions
                       + "SchemaCrawler plug-in, use%n")
   private DatabaseUrlConnectionOptions databaseUrlConnectionOptions;
 
-  DatabaseConnectable getDatabaseConnectable()
+  DatabaseConnectorOptions getDatabaseConnectable()
   {
     if (databaseConfigConnectionOptions != null)
     {

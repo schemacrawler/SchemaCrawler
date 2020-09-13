@@ -28,24 +28,22 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.sqlite;
 
 
+import static us.fatehi.utility.Utility.isBlank;
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
-
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.databaseconnector.DatabaseConnectorOptions;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public final class SQLiteDatabaseConnector
   extends DatabaseConnector
 {
-
+  
   public SQLiteDatabaseConnector()
     throws IOException
   {
@@ -62,25 +60,6 @@ public final class SQLiteDatabaseConnector
       super.getSchemaRetrievalOptionsBuilder(connection);
     schemaRetrievalOptionsBuilder.withIdentifierQuoteString("\"");
     return schemaRetrievalOptionsBuilder;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public DatabaseConnectionSource newDatabaseConnectionSource(final DatabaseConnectorOptions databaseConnectorOptions)
-    throws SchemaCrawlerException
-  {
-    try
-    {
-      Class.forName("org.sqlite.JDBC");
-    }
-    catch (final ClassNotFoundException e)
-    {
-      throw new SchemaCrawlerException("Could not load SQLite JDBC driver", e);
-    }
-
-    return super.newDatabaseConnectionSource(databaseConnectorOptions);
   }
 
   @Override
@@ -103,4 +82,28 @@ public final class SQLiteDatabaseConnector
     return url -> Pattern.matches("jdbc:sqlite:.*", url);
   }
 
+  @Override
+  protected String constructConnectionUrl(final String providedHost,
+      final Integer providedPort, final String providedDatabase,
+      final Map<String, String> urlx)
+  {
+
+    final String defaultDatabase = "";
+    final String urlFormat =
+        "jdbc:sqlite:%s";
+
+    final String database;
+    if (isBlank(providedDatabase))
+    {
+      database = defaultDatabase;
+    } else
+    {
+      database = providedDatabase;
+    }
+
+    final String url = String.format(urlFormat, database);
+
+    return url;
+  }
+  
 }

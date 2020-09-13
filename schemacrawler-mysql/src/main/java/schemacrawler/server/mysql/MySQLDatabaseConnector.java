@@ -28,7 +28,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.mysql;
 
 
+import static us.fatehi.utility.Utility.isBlank;
 import java.io.IOException;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
@@ -81,4 +83,48 @@ public final class MySQLDatabaseConnector
     return url -> Pattern.matches("jdbc:(mysql|mariadb):.*", url);
   }
 
+  @Override
+  protected String constructConnectionUrl(final String providedHost,
+      final Integer providedPort, final String providedDatabase,
+      final Map<String, String> urlx)
+  {
+
+    final String defaultHost = "localhost";
+    final int defaultPort = 3306;
+    final String defaultDatabase = "";
+    final String urlFormat =
+        "jdbc:mysql://%s:%d/%s?nullNamePatternMatchesAll=true&noAccessToProcedureBodies=true&logger=Jdk14Logger&dumpQueriesOnException=true&dumpMetadataOnColumnNotFound=true&maxQuerySizeToLog=4096&&disableMariaDbDriver&useInformationSchema=true&";
+    
+    final String host;
+    if (isBlank(providedHost))
+    {
+      host = defaultHost;
+    } else
+    {
+      host = providedHost;
+    }
+
+    final int port;
+    if (providedPort == null || providedPort < 0 || providedPort > 65535)
+    {
+      port = defaultPort;
+    } else
+    {
+      port = providedPort;
+    }
+
+    final String database;
+    if (isBlank(providedDatabase))
+    {
+      database = defaultDatabase;
+    } else
+    {
+      database = providedDatabase;
+    }
+
+    final String url = String.format(urlFormat, host, port, database);
+
+    return url;
+  }
+  
 }

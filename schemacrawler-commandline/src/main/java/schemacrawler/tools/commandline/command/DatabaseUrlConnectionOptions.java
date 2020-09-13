@@ -30,13 +30,12 @@ package schemacrawler.tools.commandline.command;
 
 
 import picocli.CommandLine.Option;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorOptions;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
-import schemacrawler.tools.options.Config;
 
 public class DatabaseUrlConnectionOptions
-  implements DatabaseConnectable
+  implements DatabaseConnectorOptions
 {
 
   @Option(names = {
@@ -53,12 +52,9 @@ public class DatabaseUrlConnectionOptions
       connectionUrl);
   }
 
-  @Override
-  public DatabaseConnectionSource toDatabaseConnectionSource(final Config config)
+  public String getConnectionUrl()
   {
-    final DatabaseConnectionSource databaseConnectionSource =
-      new DatabaseConnectionSource(connectionUrl, config);
-    return databaseConnectionSource;
+    return connectionUrl;
   }
-
+  
 }

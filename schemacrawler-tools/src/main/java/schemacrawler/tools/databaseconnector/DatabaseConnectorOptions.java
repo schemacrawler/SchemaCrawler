@@ -30,13 +30,12 @@ package schemacrawler.tools.databaseconnector;
 
 
 import schemacrawler.schemacrawler.Options;
-import schemacrawler.tools.options.Config;
 
-@FunctionalInterface
+
 public interface DatabaseConnectorOptions
   extends Options
 {
-
-  DatabaseConnectionSource toDatabaseConnectionSource(Config config);
+  
+  DatabaseConnector getDatabaseConnector();
 
 }

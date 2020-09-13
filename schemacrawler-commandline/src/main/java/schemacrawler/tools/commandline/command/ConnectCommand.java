@@ -50,6 +50,7 @@ import schemacrawler.tools.commandline.utility.SchemaCrawlerOptionsConfig;
 import schemacrawler.tools.commandline.utility.SchemaRetrievalOptionsConfig;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorOptions;
 import schemacrawler.tools.databaseconnector.UserCredentials;
 import schemacrawler.tools.options.Config;
 import schemacrawler.SchemaCrawlerLogger;
@@ -98,7 +99,7 @@ public class ConnectCommand
     {
       // Match the database connector in the best possible way, using the
       // server argument, or the JDBC connection URL
-      final DatabaseConnectable databaseConnectable = getDatabaseConnectable();
+      final DatabaseConnectorOptions databaseConnectable = getDatabaseConnectable();
       requireNonNull(databaseConnectable,
                      "No database connection options provided");
       final DatabaseConnector databaseConnector =
@@ -134,7 +135,7 @@ public class ConnectCommand
     }
   }
 
-  public DatabaseConnectable getDatabaseConnectable()
+  public DatabaseConnectorOptions getDatabaseConnectable()
   {
     if (databaseConnectionOptions == null)
     {
@@ -142,7 +143,7 @@ public class ConnectCommand
                                    "No database connection options provided");
     }
 
-    final DatabaseConnectable databaseConnectable =
+    final DatabaseConnectorOptions databaseConnectable =
       databaseConnectionOptions.getDatabaseConnectable();
     if (databaseConnectable == null)
     {
@@ -167,23 +168,40 @@ public class ConnectCommand
   }
 
   private void createDataSource(final DatabaseConnector databaseConnector,
-                                final DatabaseConnectable databaseConnectable,
-                                final UserCredentials userCredentials)
-    throws SchemaCrawlerException
+      final DatabaseConnectorOptions databaseConnectable,
+      final UserCredentials userCredentials) throws SchemaCrawlerException
   {
     requireNonNull(databaseConnector,
-                   "No database connection options provided");
+        "No database connection options provided");
     requireNonNull(databaseConnectable,
-                   "No database connection options provided");
+        "No database connection options provided");
     requireNonNull(userCredentials,
-                   "No database connection user credentials provided");
+        "No database connection user credentials provided");
 
     LOGGER.log(Level.FINE, () -> "Creating data-source");
 
     // Connect using connection options provided from the command-line,
     // provided configuration, and bundled configuration
-    final DatabaseConnectionSource databaseConnectionSource =
-      databaseConnector.newDatabaseConnectionSource(databaseConnectable);
+    final DatabaseConnectionSource databaseConnectionSource;
+    if (databaseConnectable instanceof DatabaseConfigConnectionOptions)
+    {
+      DatabaseConfigConnectionOptions databaseConfigConnectionOptions =
+          (DatabaseConfigConnectionOptions) databaseConnectable;
+      databaseConnectionSource = databaseConnector.newDatabaseConnectionSource(
+          databaseConfigConnectionOptions.getHost(),
+          databaseConfigConnectionOptions.getPort(),
+          databaseConfigConnectionOptions.getDatabase(),
+          databaseConfigConnectionOptions.getUrlx());
+    } else if (databaseConnectable instanceof DatabaseUrlConnectionOptions)
+    {
+      databaseConnectionSource = databaseConnector.newDatabaseConnectionSource(
+          ((DatabaseUrlConnectionOptions) databaseConnectable)
+              .getConnectionUrl());
+    } else
+    {
+      throw new SchemaCrawlerException("Database connection options not provided");
+    }
+
     databaseConnectionSource.setUserCredentials(userCredentials);
 
     state.setDataSource(databaseConnectionSource);

@@ -56,22 +56,20 @@ public class EmbeddedSQLiteWrapper
   private Path databaseFile;
 
   public DatabaseConnectionSource createDatabaseConnectionSource()
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
     requireNonNull(databaseFile, "Database file not loaded");
 
     try
     {
       final DatabaseConnectionSource connectionOptions =
-        new SQLiteDatabaseConnector().newDatabaseConnectionSource(config -> new DatabaseConnectionSource(
-          getConnectionUrl(),
-          config));
+          new SQLiteDatabaseConnector()
+              .newDatabaseConnectionSource(getConnectionUrl());
       return connectionOptions;
-    }
-    catch (final IOException e)
+    } catch (final IOException e)
     {
-      throw new SchemaCrawlerException("Cannot read SQLite database file, "
-                                       + databaseFile, e);
+      throw new SchemaCrawlerException(
+          "Cannot read SQLite database file, " + databaseFile, e);
     }
   }
 

@@ -28,7 +28,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.hsqldb;
 
 
+import static us.fatehi.utility.Utility.isBlank;
 import java.io.IOException;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
@@ -75,6 +77,50 @@ public final class HyperSQLDatabaseConnector
   protected Predicate<String> supportsUrlPredicate()
   {
     return url -> Pattern.matches("jdbc:hsqldb:.*", url);
+  }
+
+  @Override
+  protected String constructConnectionUrl(final String providedHost,
+      final Integer providedPort, final String providedDatabase,
+      final Map<String, String> urlx)
+  {
+
+    final String defaultHost = "localhost";
+    final int defaultPort = 9001;
+    final String defaultDatabase = "";
+    final String urlFormat =
+        "jdbc:hsqldb:hsql://%s:%d/%s;readonly=true;hsqldb.lock_file=false";
+
+    final String host;
+    if (isBlank(providedHost))
+    {
+      host = defaultHost;
+    } else
+    {
+      host = providedHost;
+    }
+
+    final int port;
+    if (providedPort == null || providedPort < 0 || providedPort > 65535)
+    {
+      port = defaultPort;
+    } else
+    {
+      port = providedPort;
+    }
+
+    final String database;
+    if (isBlank(providedDatabase))
+    {
+      database = defaultDatabase;
+    } else
+    {
+      database = providedDatabase;
+    }
+
+    final String url = String.format(urlFormat, host, port, database);
+
+    return url;
   }
 
 }

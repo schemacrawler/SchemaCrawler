@@ -34,6 +34,7 @@ import static schemacrawler.tools.executable.commandline.PluginCommand.newDataba
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
+import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
@@ -121,23 +122,36 @@ public abstract class DatabaseConnector
   }
 
   /**
-   * Creates a datasource for connecting to a database. Additional connection
-   * options are provided, from the command-line, and configuration file.
+   * Creates a datasource for connecting to a database.
    *
-   * @param databaseConnectorOptions
-   *   Configuration from the command-line
+   * @param connectionUrl
+   *   Database connection URL
    */
-  public DatabaseConnectionSource newDatabaseConnectionSource(final DatabaseConnectorOptions databaseConnectorOptions)
+  public DatabaseConnectionSource newDatabaseConnectionSource(final String connectionUrl)
     throws SchemaCrawlerException
   {
-    requireNonNull(databaseConnectorOptions,
-                   "No database connection options provided");
+    requireNonNull(connectionUrl,
+                   "No database connection URL provided");
 
     final DatabaseConnectionSource connectionOptions =
-      databaseConnectorOptions.toDatabaseConnectionSource(getConfig());
+      new DatabaseConnectionSource(connectionUrl);
 
     return connectionOptions;
   }
+  
+  public DatabaseConnectionSource newDatabaseConnectionSource(final String host,
+      final Integer port, final String database, final Map<String, String> urlx)
+      throws SchemaCrawlerException
+  {
+    final String connectionUrl = constructConnectionUrl(host,
+        port, database, urlx);
+
+    return newDatabaseConnectionSource(connectionUrl);
+  }
+
+  protected abstract String constructConnectionUrl(String host,
+      Integer port, String database, Map<String, String> urlx)
+    throws SchemaCrawlerException;
 
   public final boolean supportsUrl(final String url)
   {

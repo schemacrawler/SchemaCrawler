@@ -29,6 +29,7 @@ package schemacrawler.tools.databaseconnector;
 
 
 import static schemacrawler.tools.options.Config.getSystemConfigurationProperty;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
@@ -61,11 +62,11 @@ final class UnknownDatabaseConnector
   }
 
   @Override
-  public DatabaseConnectionSource newDatabaseConnectionSource(final DatabaseConnectorOptions databaseConnectorOptions)
+  public DatabaseConnectionSource newDatabaseConnectionSource(final String connectionUrl)
     throws SchemaCrawlerException
   {
     final DatabaseConnectionSource databaseConnectionSource =
-      super.newDatabaseConnectionSource(databaseConnectorOptions);
+      super.newDatabaseConnectionSource(connectionUrl);
 
     final String withoutDatabasePlugin = getSystemConfigurationProperty(
       "SC_IGNORE_MISSING_DATABASE_PLUGIN",
@@ -94,6 +95,14 @@ final class UnknownDatabaseConnector
   protected Predicate<String> supportsUrlPredicate()
   {
     return url -> false;
+  }
+
+  @Override
+  protected String constructConnectionUrl(String host, Integer port,
+      String database, Map<String, String> urlx)
+    throws SchemaCrawlerException
+  {
+    throw new SchemaCrawlerException("Cannot constract database connection operator for server without plugin");
   }
 
 }

@@ -29,78 +29,15 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 
-import static java.util.stream.Collectors.joining;
-import static us.fatehi.utility.Utility.isBlank;
-
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-
 import picocli.CommandLine.Option;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorOptions;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
-import schemacrawler.tools.options.Config;
-import us.fatehi.utility.TemplatingUtility;
 
 public class DatabaseConfigConnectionOptions
-  implements DatabaseConnectable
+  implements DatabaseConnectorOptions
 {
-
-  private static Map<String, String> parseConnectionProperties(final Config connectionProperties)
-  {
-    final String URLX = "urlx";
-    final String connectionPropertiesString = connectionProperties.get(URLX);
-    final Map<String, String> urlxProperties = new HashMap<>();
-    if (!isBlank(connectionPropertiesString))
-    {
-      for (final String property : connectionPropertiesString.split(";"))
-      {
-        if (!isBlank(property))
-        {
-          final String[] propertyValues = property.split("=");
-          if (propertyValues.length >= 2)
-          {
-            final String key = propertyValues[0];
-            final String value = propertyValues[1];
-            if (key != null && value != null)
-            {
-              // Properties is based on Hashtable, which cannot take
-              // null keys or values
-              urlxProperties.put(key, value);
-            }
-          }
-        }
-      }
-    }
-
-    return urlxProperties;
-  }
-
-  private static String parseConnectionUrl(final Config connectionProperties)
-  {
-    final String URL = "url";
-    final String oldConnectionUrl = connectionProperties.get(URL);
-
-    // Substitute parameters
-    TemplatingUtility.substituteVariables(connectionProperties);
-    final String connectionUrl = connectionProperties.get(URL);
-
-    // Check that all required parameters have been substituted
-    final Set<String> unmatchedVariables =
-      TemplatingUtility.extractTemplateVariables(connectionUrl);
-    if (!unmatchedVariables.isEmpty())
-    {
-      throw new IllegalArgumentException(String.format(
-        "Insufficient parameters for database connection URL: missing %s",
-        unmatchedVariables));
-    }
-
-    // Reset old connection URL
-    connectionProperties.put(URL, oldConnectionUrl);
-
-    return connectionUrl;
-  }
 
   @Option(names = {
     "--database"
@@ -131,6 +68,11 @@ public class DatabaseConfigConnectionOptions
   }, description = "JDBC URL additional properties")
   private Map<String, String> urlx;
 
+  public String getDatabase()
+  {
+    return database;
+  }
+
   @Override
   public DatabaseConnector getDatabaseConnector()
   {
@@ -140,60 +82,19 @@ public class DatabaseConfigConnectionOptions
       databaseSystemIdentifier);
   }
 
-  @Override
-  public DatabaseConnectionSource toDatabaseConnectionSource(final Config config)
+  public String getHost()
   {
-    // Override host, port, database and urlx
-    config.putAll(getDatabaseConnectionConfig());
-
-    // Substitute templated URL with provided value
-    final String connectionUrl = parseConnectionUrl(config);
-    // Get additional driver properties
-    final Map<String, String> connectionProperties =
-      parseConnectionProperties(config);
-
-    final DatabaseConnectionSource databaseConnectionSource =
-      new DatabaseConnectionSource(connectionUrl, connectionProperties);
-    return databaseConnectionSource;
+    return host;
   }
 
-  private Config getDatabaseConnectionConfig()
+  public Integer getPort()
   {
-    final Config config = new Config();
-
-    if (host != null)
-    {
-      config.put("host", host);
-    }
-
-    if (port != null)
-    {
-      if (port < 0 || port > 65535)
-      {
-        throw new IllegalArgumentException("Invalid port number, " + port);
-      }
-      if (port > 0)
-      {
-        config.put("port", String.valueOf(port));
-      }
-    }
-
-    if (database != null)
-    {
-      config.put("database", database);
-    }
-
-    if (urlx != null && !urlx.isEmpty())
-    {
-      final String urlxValue = urlx
-        .entrySet()
-        .stream()
-        .map(Object::toString)
-        .collect(joining("&"));
-      config.put("urlx", urlxValue);
-    }
-
-    return config;
+    return port;
   }
 
+  public Map<String, String> getUrlx()
+  {
+    return urlx;
+  }
+  
 }
