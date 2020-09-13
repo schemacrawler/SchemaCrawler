@@ -29,16 +29,12 @@ package schemacrawler.tools.databaseconnector;
 
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.plugin.EnumDataTypeHelper.NO_OP_ENUM_DATA_TYPE_HELPER;
 import static schemacrawler.tools.executable.commandline.PluginCommand.newDatabasePluginCommand;
 import static us.fatehi.utility.Utility.isBlank;
-
 import java.sql.Connection;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
-
-import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
