@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
-
+import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -34,7 +34,8 @@ public final class TestDatabaseConnector
             "/META-INF/schemacrawler-test-db.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
             "/test-db.information_schema"),
-          (schemaRetrievalOptionsBuilder, connection) -> {});
+          (schemaRetrievalOptionsBuilder, connection) -> {},
+          (limitOptionsBuilder, connection) -> {});
   }
 
   @Override

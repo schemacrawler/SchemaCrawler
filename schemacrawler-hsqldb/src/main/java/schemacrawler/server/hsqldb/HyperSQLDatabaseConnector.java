@@ -52,7 +52,8 @@ public final class HyperSQLDatabaseConnector
           new ClasspathInputResource("/schemacrawler-hsqldb.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
             "/hsqldb.information_schema"),
-          (schemaRetrievalOptionsBuilder, connection) -> {});
+          (schemaRetrievalOptionsBuilder, connection) -> {},
+          (limitOptionsBuilder, connection) -> {});
   }
 
   @Override

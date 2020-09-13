@@ -33,7 +33,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
-
+import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -54,7 +54,9 @@ public final class PostgreSQLDatabaseConnector
                 .fromResourceFolder("/postgresql.information_schema"),
         (schemaRetrievalOptionsBuilder,
             connection) -> schemaRetrievalOptionsBuilder
-                .withEnumDataTypeHelper(new PostgreSQLEnumDataTypeHelper()));
+                .withEnumDataTypeHelper(new PostgreSQLEnumDataTypeHelper()),
+                (limitOptionsBuilder, connection) -> limitOptionsBuilder
+                .includeSchemas(new RegularExpressionExclusionRule("pg_catalog|information_schema")));
   }
 
   @Override

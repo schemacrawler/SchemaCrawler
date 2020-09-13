@@ -33,7 +33,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
-
+import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -53,7 +53,9 @@ public final class MySQLDatabaseConnector
                 .fromResourceFolder("/mysql.information_schema"),
         (schemaRetrievalOptionsBuilder,
             connection) -> schemaRetrievalOptionsBuilder
-                .withEnumDataTypeHelper(new MySQLEnumDataTypeHelper()));
+                .withEnumDataTypeHelper(new MySQLEnumDataTypeHelper()),
+        (limitOptionsBuilder, connection) -> limitOptionsBuilder
+            .includeSchemas(new RegularExpressionExclusionRule("sys|mysql")));
   }
 
   @Override

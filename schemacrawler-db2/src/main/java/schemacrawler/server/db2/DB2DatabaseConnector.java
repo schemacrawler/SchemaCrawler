@@ -58,7 +58,8 @@ public final class DB2DatabaseConnector
           new ClasspathInputResource("/schemacrawler-db2.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
             "/db2.information_schema"),
-          (schemaRetrievalOptionsBuilder, connection) -> {});
+          (schemaRetrievalOptionsBuilder, connection) -> {},
+          (limitOptionsBuilder, connection) -> {});
   }
 
   @Override

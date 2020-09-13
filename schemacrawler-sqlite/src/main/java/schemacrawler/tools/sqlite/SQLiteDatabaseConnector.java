@@ -34,6 +34,7 @@ import java.sql.Connection;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
+import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -51,7 +52,8 @@ public final class SQLiteDatabaseConnector
           new ClasspathInputResource("/schemacrawler-sqlite.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
             "/sqlite.information_schema"),
-          (schemaRetrievalOptionsBuilder, connection) -> {});
+          (schemaRetrievalOptionsBuilder, connection) -> {},
+          (limitOptionsBuilder, connection) -> {});
   }
 
   @Override

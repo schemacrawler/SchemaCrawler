@@ -38,8 +38,10 @@ import java.util.function.Predicate;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
@@ -58,13 +60,16 @@ public abstract class DatabaseConnector
   private final BiConsumer<InformationSchemaViewsBuilder, Connection>
     informationSchemaViewsBuildProcess;
   private final BiConsumer<SchemaRetrievalOptionsBuilder, Connection>
-  schemaRetrievalOptionsBuildProcess;
+    schemaRetrievalOptionsBuildProcess;
+  private final BiConsumer<LimitOptionsBuilder, Connection>
+    limitOptionsBuildProcess;  
 
   protected DatabaseConnector(final DatabaseServerType dbServerType,
                               final InputResource configResource,
                               final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuildProcess,
                               final BiConsumer<SchemaRetrievalOptionsBuilder, Connection>
-  schemaRetrievalOptionsBuildProcess)
+  schemaRetrievalOptionsBuildProcess, final BiConsumer<LimitOptionsBuilder, Connection>
+  limitOptionsBuildProcess)
   {
     this.dbServerType =
       requireNonNull(dbServerType, "No database server type provided");
@@ -77,6 +82,9 @@ public abstract class DatabaseConnector
     
     this.schemaRetrievalOptionsBuildProcess =
         requireNonNull(schemaRetrievalOptionsBuildProcess, "No schema retrieval options build process provided");
+    
+    this.limitOptionsBuildProcess =
+        requireNonNull(limitOptionsBuildProcess, "No limit options build process provided");
   }
 
   /**
@@ -92,6 +100,17 @@ public abstract class DatabaseConnector
   public DatabaseServerType getDatabaseServerType()
   {
     return dbServerType;
+  }
+  
+  public void setDefaultsForSchemaCrawlerOptionsBuilder(
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder,
+      final Connection connection)
+  {
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder().fromOptions(schemaCrawlerOptionsBuilder.getLimitOptions());    
+    limitOptionsBuildProcess.accept(limitOptionsBuilder, connection);
+    
+    schemaCrawlerOptionsBuilder.withLimitOptionsBuilder(limitOptionsBuilder);
   }
 
   /**

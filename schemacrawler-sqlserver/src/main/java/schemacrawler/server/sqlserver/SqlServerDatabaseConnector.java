@@ -39,6 +39,8 @@ import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
 import schemacrawler.SchemaCrawlerLogger;
+import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
+import schemacrawler.inclusionrule.RegularExpressionRule;
 
 public final class SqlServerDatabaseConnector
   extends DatabaseConnector
@@ -47,15 +49,19 @@ public final class SqlServerDatabaseConnector
   private static final SchemaCrawlerLogger LOGGER =
     SchemaCrawlerLogger.getLogger(SqlServerDatabaseConnector.class.getName());
 
-  public SqlServerDatabaseConnector()
-    throws IOException
+  public SqlServerDatabaseConnector() throws IOException
   {
     super(new DatabaseServerType("sqlserver", "Microsoft SQL Server"),
-          new ClasspathInputResource(
+        new ClasspathInputResource(
             "/schemacrawler-sqlserver.config.properties"),
-          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
-            "/sqlserver.information_schema"),
-          (schemaRetrievalOptionsBuilder, connection) -> {});
+        (informationSchemaViewsBuilder,
+            connection) -> informationSchemaViewsBuilder
+                .fromResourceFolder("/sqlserver.information_schema"),
+        (schemaRetrievalOptionsBuilder, connection) -> {
+        },
+        (limitOptionsBuilder, connection) -> limitOptionsBuilder
+            .includeSchemas(new RegularExpressionRule(".*\\.dbo",
+                "model\\..*|master\\..*|msdb\\..*|tempdb\\..*|rdsadmin\\..*")));
   }
 
   @Override

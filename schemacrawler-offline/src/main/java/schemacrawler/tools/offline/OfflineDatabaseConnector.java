@@ -33,7 +33,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
-
+import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -56,7 +56,8 @@ public final class OfflineDatabaseConnector
     super(DB_SERVER_TYPE,
           new ClasspathInputResource("/schemacrawler-offline.config.properties"),
           (informationSchemaViewsBuilder, connection) -> {},
-          (schemaRetrievalOptionsBuilder, connection) -> {});
+          (schemaRetrievalOptionsBuilder, connection) -> {},
+          (limitOptionsBuilder, connection) -> {});
   }
 
   @Override

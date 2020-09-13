@@ -32,7 +32,7 @@ import static schemacrawler.tools.options.Config.getSystemConfigurationProperty;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
-
+import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import us.fatehi.utility.ioresource.EmptyInputResource;
@@ -59,7 +59,8 @@ final class UnknownDatabaseConnector
     super(DatabaseServerType.UNKNOWN,
           new EmptyInputResource(),
           (informationSchemaViewsBuilder, connection) -> {},
-          (schemaRetrievalOptionsBuilder, connection) -> {});
+          (schemaRetrievalOptionsBuilder, connection) -> {},
+          (limitOptionsBuilder, connection) -> {});
   }
 
   @Override
