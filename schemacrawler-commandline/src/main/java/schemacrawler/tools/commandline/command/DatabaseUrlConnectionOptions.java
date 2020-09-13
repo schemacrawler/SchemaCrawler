@@ -31,11 +31,10 @@ package schemacrawler.tools.commandline.command;
 
 import picocli.CommandLine.Option;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.databaseconnector.DatabaseConnectorOptions;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
 public class DatabaseUrlConnectionOptions
-  implements DatabaseConnectorOptions
+  implements DatabaseConnectionOptions
 {
 
   @Option(names = {

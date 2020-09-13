@@ -37,10 +37,10 @@ import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.commandline.command.ConnectCommand;
-import schemacrawler.tools.commandline.command.DatabaseConfigConnectionOptions;
+import schemacrawler.tools.commandline.command.DatabaseServerHostConnectionOptions;
+import schemacrawler.tools.commandline.command.DatabaseConnectionOptions;
 import schemacrawler.tools.commandline.command.DatabaseUrlConnectionOptions;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
-import schemacrawler.tools.databaseconnector.DatabaseConnectorOptions;
 import schemacrawler.tools.options.Config;
 
 public class ConnectionOptionsTest
@@ -55,7 +55,7 @@ public class ConnectionOptionsTest
       new ConnectCommand(new SchemaCrawlerShellState());
     new CommandLine(optionsParser).parseArgs(args);
     assertThrows(CommandLine.ParameterException.class,
-                 () -> optionsParser.getDatabaseConnectable());
+                 () -> optionsParser.getDatabaseConnectionOptions());
   }
 
   @Test
@@ -68,7 +68,7 @@ public class ConnectionOptionsTest
     final CommandLine commandLine = newCommandLine(optionsParser, null, true);
     commandLine.parseArgs(args);
     assertThrows(CommandLine.ParameterException.class,
-                 () -> optionsParser.getDatabaseConnectable());
+                 () -> optionsParser.getDatabaseConnectionOptions());
   }
 
   @Test
@@ -93,8 +93,8 @@ public class ConnectionOptionsTest
       new ConnectCommand(new SchemaCrawlerShellState());
     new CommandLine(optionsParser).parseArgs(args);
 
-    final DatabaseConnectorOptions databaseConnectorOptions =
-        optionsParser.getDatabaseConnectable();
+    final DatabaseConnectionOptions databaseConnectorOptions =
+        optionsParser.getDatabaseConnectionOptions();
       final DatabaseServerType databaseServerType =
           databaseConnectorOptions.getDatabaseConnector().getDatabaseServerType();
 
@@ -116,8 +116,8 @@ public class ConnectionOptionsTest
       new ConnectCommand(new SchemaCrawlerShellState());
     newCommandLine(optionsParser, null, true).parseArgs(args);
 
-    final DatabaseConnectorOptions databaseConnectorOptions =
-      optionsParser.getDatabaseConnectable();
+    final DatabaseConnectionOptions databaseConnectorOptions =
+      optionsParser.getDatabaseConnectionOptions();
     final DatabaseServerType databaseServerType =
         databaseConnectorOptions.getDatabaseConnector().getDatabaseServerType();
 
@@ -169,8 +169,8 @@ public class ConnectionOptionsTest
       new ConnectCommand(new SchemaCrawlerShellState());
     newCommandLine(optionsParser, null, true).parseArgs(args);
 
-    final DatabaseConnectorOptions databaseConnectorOptions =
-        optionsParser.getDatabaseConnectable();
+    final DatabaseConnectionOptions databaseConnectorOptions =
+        optionsParser.getDatabaseConnectionOptions();
       final DatabaseServerType databaseServerType =
           databaseConnectorOptions.getDatabaseConnector().getDatabaseServerType();
 
@@ -244,16 +244,16 @@ public class ConnectionOptionsTest
       new ConnectCommand(new SchemaCrawlerShellState());
     newCommandLine(optionsParser, null, true).parseArgs(args);
 
-    final DatabaseConnectorOptions databaseConnectorOptions =
-        optionsParser.getDatabaseConnectable();
+    final DatabaseConnectionOptions databaseConnectorOptions =
+        optionsParser.getDatabaseConnectionOptions();
       final DatabaseServerType databaseServerType =
           databaseConnectorOptions.getDatabaseConnector().getDatabaseServerType();
 
-      assertThat(((DatabaseConfigConnectionOptions)databaseConnectorOptions).getHost(),
+      assertThat(((DatabaseServerHostConnectionOptions)databaseConnectorOptions).getHost(),
         is("somehost"));
-      assertThat(((DatabaseConfigConnectionOptions)databaseConnectorOptions).getPort(),
+      assertThat(((DatabaseServerHostConnectionOptions)databaseConnectorOptions).getPort(),
           is(1234));
-      assertThat(((DatabaseConfigConnectionOptions)databaseConnectorOptions).getDatabase(),
+      assertThat(((DatabaseServerHostConnectionOptions)databaseConnectorOptions).getDatabase(),
           is("adatabase"));      
       assertThat(databaseServerType
                    .getDatabaseSystemIdentifier(),

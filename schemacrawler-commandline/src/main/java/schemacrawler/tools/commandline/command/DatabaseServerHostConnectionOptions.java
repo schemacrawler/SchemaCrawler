@@ -32,11 +32,10 @@ package schemacrawler.tools.commandline.command;
 import java.util.Map;
 import picocli.CommandLine.Option;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.databaseconnector.DatabaseConnectorOptions;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
-public class DatabaseConfigConnectionOptions
-  implements DatabaseConnectorOptions
+public class DatabaseServerHostConnectionOptions
+  implements DatabaseConnectionOptions
 {
 
   @Option(names = {

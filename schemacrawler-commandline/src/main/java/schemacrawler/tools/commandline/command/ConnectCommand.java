@@ -50,7 +50,6 @@ import schemacrawler.tools.commandline.utility.SchemaCrawlerOptionsConfig;
 import schemacrawler.tools.commandline.utility.SchemaRetrievalOptionsConfig;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.databaseconnector.DatabaseConnectorOptions;
 import schemacrawler.tools.databaseconnector.UserCredentials;
 import schemacrawler.tools.options.Config;
 import schemacrawler.SchemaCrawlerLogger;
@@ -80,7 +79,7 @@ public class ConnectCommand
     SchemaCrawlerLogger.getLogger(ConnectCommand.class.getName());
 
   @ArgGroup(exclusive = true)
-  private DatabaseConnectionOptions databaseConnectionOptions;
+  private DatabaseConnectionGroupOptions databaseConnectionGroupOptions;
   @Spec
   private Model.CommandSpec spec;
   @Mixin
@@ -99,11 +98,11 @@ public class ConnectCommand
     {
       // Match the database connector in the best possible way, using the
       // server argument, or the JDBC connection URL
-      final DatabaseConnectorOptions databaseConnectable = getDatabaseConnectable();
-      requireNonNull(databaseConnectable,
+      final DatabaseConnectionOptions databaseConnectionOptions = getDatabaseConnectionOptions();
+      requireNonNull(databaseConnectionOptions,
                      "No database connection options provided");
       final DatabaseConnector databaseConnector =
-        databaseConnectable.getDatabaseConnector();
+        databaseConnectionOptions.getDatabaseConnector();
       requireNonNull(databaseConnector,
                      "No database connection options provided");
       LOGGER.log(Level.INFO,
@@ -120,7 +119,7 @@ public class ConnectCommand
       state.addAdditionalConfiguration(config);
       loadSchemaCrawlerOptionsBuilder();
       createDataSource(databaseConnector,
-                       databaseConnectable,
+                       databaseConnectionOptions,
                        getUserCredentials());
       loadSchemaRetrievalOptionsBuilder(databaseConnector);
 
@@ -135,23 +134,23 @@ public class ConnectCommand
     }
   }
 
-  public DatabaseConnectorOptions getDatabaseConnectable()
+  public DatabaseConnectionOptions getDatabaseConnectionOptions()
   {
+    if (databaseConnectionGroupOptions == null)
+    {
+      throw new ParameterException(spec.commandLine(),
+                                   "No database connection options provided");
+    }
+
+    final DatabaseConnectionOptions databaseConnectionOptions =
+      databaseConnectionGroupOptions.getDatabaseConnectionOptions();
     if (databaseConnectionOptions == null)
     {
       throw new ParameterException(spec.commandLine(),
                                    "No database connection options provided");
     }
 
-    final DatabaseConnectorOptions databaseConnectable =
-      databaseConnectionOptions.getDatabaseConnectable();
-    if (databaseConnectable == null)
-    {
-      throw new ParameterException(spec.commandLine(),
-                                   "No database connection options provided");
-    }
-
-    return databaseConnectable;
+    return databaseConnectionOptions;
   }
 
   private UserCredentials getUserCredentials()
@@ -168,12 +167,12 @@ public class ConnectCommand
   }
 
   private void createDataSource(final DatabaseConnector databaseConnector,
-      final DatabaseConnectorOptions databaseConnectable,
+      final DatabaseConnectionOptions connectionOptions,
       final UserCredentials userCredentials) throws SchemaCrawlerException
   {
     requireNonNull(databaseConnector,
-        "No database connection options provided");
-    requireNonNull(databaseConnectable,
+        "No database plugin provided");
+    requireNonNull(connectionOptions,
         "No database connection options provided");
     requireNonNull(userCredentials,
         "No database connection user credentials provided");
@@ -183,19 +182,19 @@ public class ConnectCommand
     // Connect using connection options provided from the command-line,
     // provided configuration, and bundled configuration
     final DatabaseConnectionSource databaseConnectionSource;
-    if (databaseConnectable instanceof DatabaseConfigConnectionOptions)
+    if (connectionOptions instanceof DatabaseServerHostConnectionOptions)
     {
-      DatabaseConfigConnectionOptions databaseConfigConnectionOptions =
-          (DatabaseConfigConnectionOptions) databaseConnectable;
+      DatabaseServerHostConnectionOptions serverHostConnectionOptions =
+          (DatabaseServerHostConnectionOptions) connectionOptions;
       databaseConnectionSource = databaseConnector.newDatabaseConnectionSource(
-          databaseConfigConnectionOptions.getHost(),
-          databaseConfigConnectionOptions.getPort(),
-          databaseConfigConnectionOptions.getDatabase(),
-          databaseConfigConnectionOptions.getUrlx());
-    } else if (databaseConnectable instanceof DatabaseUrlConnectionOptions)
+          serverHostConnectionOptions.getHost(),
+          serverHostConnectionOptions.getPort(),
+          serverHostConnectionOptions.getDatabase(),
+          serverHostConnectionOptions.getUrlx());
+    } else if (connectionOptions instanceof DatabaseUrlConnectionOptions)
     {
       databaseConnectionSource = databaseConnector.newDatabaseConnectionSource(
-          ((DatabaseUrlConnectionOptions) databaseConnectable)
+          ((DatabaseUrlConnectionOptions) connectionOptions)
               .getConnectionUrl());
     } else
     {
