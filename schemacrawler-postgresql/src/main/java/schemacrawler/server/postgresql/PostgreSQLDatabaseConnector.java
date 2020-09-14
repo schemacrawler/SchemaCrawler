@@ -49,7 +49,7 @@ public final class PostgreSQLDatabaseConnector
         (schemaRetrievalOptionsBuilder,
             connection) -> schemaRetrievalOptionsBuilder
                 .withEnumDataTypeHelper(new PostgreSQLEnumDataTypeHelper()),
-        (limitOptionsBuilder, connection) -> limitOptionsBuilder
+        (limitOptionsBuilder) -> limitOptionsBuilder
         .includeSchemas(new RegularExpressionExclusionRule("pg_catalog|information_schema")),
                 () -> DatabaseConnectionUrlBuilder.builder(
                     "jdbc:postgresql://${host}:${port}/${database}?ApplicationName=SchemaCrawler;loggerLevel=DEBUG")

@@ -49,7 +49,7 @@ public final class MySQLDatabaseConnector
         (schemaRetrievalOptionsBuilder,
             connection) -> schemaRetrievalOptionsBuilder
                 .withEnumDataTypeHelper(new MySQLEnumDataTypeHelper()),
-        (limitOptionsBuilder, connection) -> limitOptionsBuilder
+        (limitOptionsBuilder) -> limitOptionsBuilder
             .includeSchemas(new RegularExpressionExclusionRule("sys|mysql")),
         new MySQLUrlBuilder());
   }

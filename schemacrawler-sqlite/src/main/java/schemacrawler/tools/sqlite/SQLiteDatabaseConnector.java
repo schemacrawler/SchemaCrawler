@@ -46,7 +46,7 @@ public final class SQLiteDatabaseConnector
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
             "/sqlite.information_schema"),
           (schemaRetrievalOptionsBuilder, connection) -> schemaRetrievalOptionsBuilder.withIdentifierQuoteString("\""),
-          (limitOptionsBuilder, connection) -> {},
+          (limitOptionsBuilder) -> {},
           () -> DatabaseConnectionUrlBuilder.builder(
               "jdbc:sqlite:${database}"));
   }

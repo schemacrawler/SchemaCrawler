@@ -52,7 +52,7 @@ public final class OfflineDatabaseConnector
           url -> url != null && url.startsWith("jdbc:offline:"),
           (informationSchemaViewsBuilder, connection) -> {},
           (schemaRetrievalOptionsBuilder, connection) -> {},
-          (limitOptionsBuilder, connection) -> {},
+          (limitOptionsBuilder) -> {},
           () -> DatabaseConnectionUrlBuilder.builder(
               "jdbc:offline:${database}"));
   }

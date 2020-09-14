@@ -49,7 +49,7 @@ public final class DB2DatabaseConnector
                 .fromResourceFolder("/db2.information_schema"),
         (schemaRetrievalOptionsBuilder, connection) -> schemaRetrievalOptionsBuilder.with(tableColumnsRetrievalStrategy,
             data_dictionary_all),
-        (limitOptionsBuilder, connection) -> {}, 
+        (limitOptionsBuilder) -> {}, 
         () -> DatabaseConnectionUrlBuilder.builder(
             "jdbc:db2://${host}:${port}/${database}:retrieveMessagesFromServerOnGetMessage=true;")
             .withDefaultPort(50000));

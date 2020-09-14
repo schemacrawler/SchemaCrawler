@@ -48,7 +48,7 @@ public final class SqlServerDatabaseConnector
                 .fromResourceFolder("/sqlserver.information_schema"),
         (schemaRetrievalOptionsBuilder, connection) -> {
         },
-        (limitOptionsBuilder, connection) -> limitOptionsBuilder
+        (limitOptionsBuilder) -> limitOptionsBuilder
             .includeSchemas(new RegularExpressionRule(".*\\.dbo",
                 "model\\..*|master\\..*|msdb\\..*|tempdb\\..*|rdsadmin\\..*")),
         () -> DatabaseConnectionUrlBuilder.builder(

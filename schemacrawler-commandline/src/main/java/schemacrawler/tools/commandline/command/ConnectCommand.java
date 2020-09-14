@@ -119,7 +119,7 @@ public class ConnectCommand
       state.sweep();
 
       state.addAdditionalConfiguration(config);
-      loadSchemaCrawlerOptionsBuilder();
+      loadSchemaCrawlerOptionsBuilder(databaseConnector);
       createDataSource(databaseConnector,
                        databaseConnectionOptions,
                        getUserCredentials());
@@ -208,14 +208,19 @@ public class ConnectCommand
     state.setDataSource(databaseConnectionSource);
   }
 
-  private void loadSchemaCrawlerOptionsBuilder()
+  private void loadSchemaCrawlerOptionsBuilder(
+      final DatabaseConnector databaseConnector)
   {
     LOGGER.log(Level.FINE, () -> "Creating SchemaCrawler options builder");
 
     final Config config = state.getAdditionalConfiguration();
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-        SchemaCrawlerOptionsConfig
-            .fromConfig((SchemaCrawlerOptionsBuilder) null, config);
+        SchemaCrawlerOptionsBuilder.builder();
+    // Set defaults from database plugins, such as default schema excludes
+    databaseConnector
+        .setDefaultsForSchemaCrawlerOptionsBuilder(schemaCrawlerOptionsBuilder);
+    // Override with options from config file
+    SchemaCrawlerOptionsConfig.fromConfig(schemaCrawlerOptionsBuilder, config);
     state.setSchemaCrawlerOptionsBuilder(schemaCrawlerOptionsBuilder);
   }
 

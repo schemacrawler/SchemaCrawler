@@ -28,7 +28,7 @@ public final class TestDatabaseConnector
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
             "/test-db.information_schema"),
           (schemaRetrievalOptionsBuilder, connection) -> {},
-          (limitOptionsBuilder, connection) -> {},
+          (limitOptionsBuilder) -> {},
           () -> DatabaseConnectionUrlBuilder.builder(""));
   }
 

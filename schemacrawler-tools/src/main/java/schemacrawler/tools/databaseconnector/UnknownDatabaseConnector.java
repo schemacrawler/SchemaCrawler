@@ -56,7 +56,7 @@ final class UnknownDatabaseConnector
           url -> false,
           (informationSchemaViewsBuilder, connection) -> {},
           (schemaRetrievalOptionsBuilder, connection) -> {},
-          (limitOptionsBuilder, connection) -> {},
+          (limitOptionsBuilder) -> {},
           () -> DatabaseConnectionUrlBuilder.builder(""));
   }
 

@@ -34,6 +34,7 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.sql.Connection;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import schemacrawler.schemacrawler.DatabaseServerType;
@@ -59,7 +60,7 @@ public abstract class DatabaseConnector
     informationSchemaViewsBuildProcess;
   private final BiConsumer<SchemaRetrievalOptionsBuilder, Connection>
     schemaRetrievalOptionsBuildProcess;
-  private final BiConsumer<LimitOptionsBuilder, Connection>
+  private final Consumer<LimitOptionsBuilder>
     limitOptionsBuildProcess;  
   private final Supplier<DatabaseConnectionUrlBuilder> urlBuildProcess;
 
@@ -67,7 +68,7 @@ public abstract class DatabaseConnector
                               final Predicate<String> supportsUrl,
                               final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuildProcess,
                               final BiConsumer<SchemaRetrievalOptionsBuilder, Connection> schemaRetrievalOptionsBuildProcess,
-                              final BiConsumer<LimitOptionsBuilder, Connection> limitOptionsBuildProcess,
+                              final Consumer<LimitOptionsBuilder> limitOptionsBuildProcess,
                               final Supplier<DatabaseConnectionUrlBuilder> urlBuildProcess)
   {
     this.dbServerType =
@@ -97,12 +98,11 @@ public abstract class DatabaseConnector
   }
   
   public final void setDefaultsForSchemaCrawlerOptionsBuilder(
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder,
-      final Connection connection)
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder)
   {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder().fromOptions(schemaCrawlerOptionsBuilder.getLimitOptions());    
-    limitOptionsBuildProcess.accept(limitOptionsBuilder, connection);
+    limitOptionsBuildProcess.accept(limitOptionsBuilder);
     
     schemaCrawlerOptionsBuilder.withLimitOptionsBuilder(limitOptionsBuilder);
   }

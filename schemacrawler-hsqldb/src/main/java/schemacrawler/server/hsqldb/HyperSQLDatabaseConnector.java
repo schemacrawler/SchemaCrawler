@@ -45,9 +45,8 @@ public final class HyperSQLDatabaseConnector
         (informationSchemaViewsBuilder,
             connection) -> informationSchemaViewsBuilder
                 .fromResourceFolder("/hsqldb.information_schema"),
-        (schemaRetrievalOptionsBuilder, connection) -> {
-        }, (limitOptionsBuilder, connection) -> {
-        },
+        (schemaRetrievalOptionsBuilder, connection) -> {}, 
+        (limitOptionsBuilder) -> {},
         () -> DatabaseConnectionUrlBuilder.builder(
             "jdbc:hsqldb:hsql://${host}:${port}/${database};readonly=true;hsqldb.lock_file=false")
             .withDefaultPort(9001));
