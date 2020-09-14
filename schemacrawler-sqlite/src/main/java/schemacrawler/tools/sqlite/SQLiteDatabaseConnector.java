@@ -28,15 +28,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.sqlite;
 
 
-import static us.fatehi.utility.Utility.isBlank;
 import java.io.IOException;
 import java.sql.Connection;
-import java.util.Map;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
-import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
@@ -53,7 +51,9 @@ public final class SQLiteDatabaseConnector
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
             "/sqlite.information_schema"),
           (schemaRetrievalOptionsBuilder, connection) -> {},
-          (limitOptionsBuilder, connection) -> {});
+          (limitOptionsBuilder, connection) -> {},
+          () -> DatabaseConnectionUrlBuilder.builder(
+              "jdbc:sqlite:${database}"));
   }
 
   @Override
@@ -83,30 +83,6 @@ public final class SQLiteDatabaseConnector
   protected Predicate<String> supportsUrlPredicate()
   {
     return url -> Pattern.matches("jdbc:sqlite:.*", url);
-  }
-
-  @Override
-  protected String constructConnectionUrl(final String providedHost,
-      final Integer providedPort, final String providedDatabase,
-      final Map<String, String> urlx)
-  {
-
-    final String defaultDatabase = "";
-    final String urlFormat =
-        "jdbc:sqlite:%s";
-
-    final String database;
-    if (isBlank(providedDatabase))
-    {
-      database = defaultDatabase;
-    } else
-    {
-      database = providedDatabase;
-    }
-
-    final String url = String.format(urlFormat, database);
-
-    return url;
   }
   
 }

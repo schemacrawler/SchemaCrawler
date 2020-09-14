@@ -29,10 +29,8 @@ package schemacrawler.tools.databaseconnector;
 
 
 import static schemacrawler.tools.options.Config.getSystemConfigurationProperty;
-import java.util.Map;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
-import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import us.fatehi.utility.ioresource.EmptyInputResource;
@@ -60,7 +58,8 @@ final class UnknownDatabaseConnector
           new EmptyInputResource(),
           (informationSchemaViewsBuilder, connection) -> {},
           (schemaRetrievalOptionsBuilder, connection) -> {},
-          (limitOptionsBuilder, connection) -> {});
+          (limitOptionsBuilder, connection) -> {},
+          () -> DatabaseConnectionUrlBuilder.builder(""));
   }
 
   @Override
@@ -97,14 +96,6 @@ final class UnknownDatabaseConnector
   protected Predicate<String> supportsUrlPredicate()
   {
     return url -> false;
-  }
-
-  @Override
-  protected String constructConnectionUrl(String host, Integer port,
-      String database, Map<String, String> urlx)
-    throws SchemaCrawlerException
-  {
-    throw new SchemaCrawlerException("Cannot constract database connection operator for server without plugin");
   }
 
 }

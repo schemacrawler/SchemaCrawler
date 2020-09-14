@@ -28,19 +28,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.sqlserver;
 
 
-import static us.fatehi.utility.Utility.isBlank;
 import java.io.IOException;
-import java.util.Map;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
-
+import schemacrawler.SchemaCrawlerLogger;
+import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.schemacrawler.DatabaseServerType;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
-import schemacrawler.SchemaCrawlerLogger;
-import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
-import schemacrawler.inclusionrule.RegularExpressionRule;
 
 public final class SqlServerDatabaseConnector
   extends DatabaseConnector
@@ -61,7 +58,10 @@ public final class SqlServerDatabaseConnector
         },
         (limitOptionsBuilder, connection) -> limitOptionsBuilder
             .includeSchemas(new RegularExpressionRule(".*\\.dbo",
-                "model\\..*|master\\..*|msdb\\..*|tempdb\\..*|rdsadmin\\..*")));
+                "model\\..*|master\\..*|msdb\\..*|tempdb\\..*|rdsadmin\\..*")),
+            () -> DatabaseConnectionUrlBuilder.builder(
+                "jdbc:sqlserver://${host}:${port};databaseName=${database};applicationName=SchemaCrawler")
+                .withDefaultPort(1433));
   }
 
   @Override
@@ -95,50 +95,6 @@ public final class SqlServerDatabaseConnector
   protected Predicate<String> supportsUrlPredicate()
   {
     return url -> Pattern.matches("jdbc:sqlserver:.*", url);
-  }
-
-  @Override
-  protected String constructConnectionUrl(final String providedHost,
-      final Integer providedPort, final String providedDatabase,
-      final Map<String, String> urlx)
-  {
-
-    final String defaultHost = "localhost";
-    final int defaultPort = 1433;
-    final String defaultDatabase = "";
-    final String urlFormat =
-        "jdbc:sqlserver://%s:%d;databaseName=%s;applicationName=SchemaCrawler";
-          
-    final String host;
-    if (isBlank(providedHost))
-    {
-      host = defaultHost;
-    } else
-    {
-      host = providedHost;
-    }
-
-    final int port;
-    if (providedPort == null || providedPort < 0 || providedPort > 65535)
-    {
-      port = defaultPort;
-    } else
-    {
-      port = providedPort;
-    }
-
-    final String database;
-    if (isBlank(providedDatabase))
-    {
-      database = defaultDatabase;
-    } else
-    {
-      database = providedDatabase;
-    }
-
-    final String url = String.format(urlFormat, host, port, database);
-
-    return url;
   }
   
 }

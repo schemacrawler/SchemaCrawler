@@ -35,6 +35,7 @@ import java.sql.Connection;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
@@ -63,28 +64,34 @@ public abstract class DatabaseConnector
     schemaRetrievalOptionsBuildProcess;
   private final BiConsumer<LimitOptionsBuilder, Connection>
     limitOptionsBuildProcess;  
+  private final Supplier<DatabaseConnectionUrlBuilder> urlBuildProcess;
 
   protected DatabaseConnector(final DatabaseServerType dbServerType,
                               final InputResource configResource,
                               final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuildProcess,
-                              final BiConsumer<SchemaRetrievalOptionsBuilder, Connection>
-  schemaRetrievalOptionsBuildProcess, final BiConsumer<LimitOptionsBuilder, Connection>
-  limitOptionsBuildProcess)
+                              final BiConsumer<SchemaRetrievalOptionsBuilder, Connection> schemaRetrievalOptionsBuildProcess,
+                              final BiConsumer<LimitOptionsBuilder, Connection> limitOptionsBuildProcess,
+                              final Supplier<DatabaseConnectionUrlBuilder> urlBuildProcess)
   {
     this.dbServerType =
-      requireNonNull(dbServerType, "No database server type provided");
+        requireNonNull(dbServerType, "No database server type provided");
 
     this.configResource =
-      requireNonNull(configResource, "No config resource provided");
+        requireNonNull(configResource, "No config resource provided");
 
     this.informationSchemaViewsBuildProcess =
-        requireNonNull(informationSchemaViewsBuildProcess, "No information schema views build process provided");
-    
+        requireNonNull(informationSchemaViewsBuildProcess,
+            "No information schema views build process provided");
+
     this.schemaRetrievalOptionsBuildProcess =
-        requireNonNull(schemaRetrievalOptionsBuildProcess, "No schema retrieval options build process provided");
-    
-    this.limitOptionsBuildProcess =
-        requireNonNull(limitOptionsBuildProcess, "No limit options build process provided");
+        requireNonNull(schemaRetrievalOptionsBuildProcess,
+            "No schema retrieval options build process provided");
+
+    this.limitOptionsBuildProcess = requireNonNull(limitOptionsBuildProcess,
+        "No limit options build process provided");
+
+    this.urlBuildProcess =
+        requireNonNull(urlBuildProcess, "No URL builder provided");
   }
 
   /**
@@ -152,25 +159,29 @@ public abstract class DatabaseConnector
     requireNonNull(connectionUrl,
                    "No database connection URL provided");
 
-    final DatabaseConnectionSource connectionOptions =
+    final DatabaseConnectionSource databaseConnectionSource =
       new DatabaseConnectionSource(connectionUrl);
 
-    return connectionOptions;
+    return databaseConnectionSource;
   }
   
   public DatabaseConnectionSource newDatabaseConnectionSource(final String host,
       final Integer port, final String database, final Map<String, String> urlx)
       throws SchemaCrawlerException
   {
-    final String connectionUrl = constructConnectionUrl(host,
-        port, database, urlx);
+    final DatabaseConnectionUrlBuilder databaseConnectionUrlBuilder = urlBuildProcess.get();
+    databaseConnectionUrlBuilder.withHost(host);
+    databaseConnectionUrlBuilder.withPort(port);
+    databaseConnectionUrlBuilder.withDatabase(database);
+    databaseConnectionUrlBuilder.withUrlx(urlx);
 
-    return newDatabaseConnectionSource(connectionUrl);
+    final String connectionUrl = databaseConnectionUrlBuilder.toURL();
+    final Map<String, String> connectionUrlx = databaseConnectionUrlBuilder.toURLx();
+    final DatabaseConnectionSource databaseConnectionSource =
+        new DatabaseConnectionSource(connectionUrl, connectionUrlx);
+    
+    return databaseConnectionSource;
   }
-
-  protected abstract String constructConnectionUrl(String host,
-      Integer port, String database, Map<String, String> urlx)
-    throws SchemaCrawlerException;
 
   public final boolean supportsUrl(final String url)
   {
