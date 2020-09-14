@@ -34,9 +34,7 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-
 import java.nio.file.Path;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.InfoLevel;
@@ -49,7 +47,6 @@ import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.testdb.TestSchemaCreatorMain;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.options.Config;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import us.fatehi.utility.IOUtility;
@@ -92,10 +89,6 @@ public class SQLiteExecutableTest
       .toAbsolutePath();
 
     TestSchemaCreatorMain.call("--url", "jdbc:sqlite:" + sqliteDbFile);
-
-    final Config config = new Config();
-    config.put("server", "sqlite");
-    config.put("database", sqliteDbFile.toString());
 
     final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
       .builder()

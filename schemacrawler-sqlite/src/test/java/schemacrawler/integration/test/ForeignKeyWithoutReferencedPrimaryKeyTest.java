@@ -34,9 +34,7 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-
 import java.nio.file.Path;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -46,7 +44,6 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.options.Config;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
@@ -71,10 +68,6 @@ public class ForeignKeyWithoutReferencedPrimaryKeyTest
     throws Exception
   {
     final Path sqliteDbFile = createTestDatabase(databaseSqlResource);
-
-    final Config config = new Config();
-    config.put("server", "sqlite");
-    config.put("database", sqliteDbFile.toString());
 
     final SchemaCrawlerOptions options =
       DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
