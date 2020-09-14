@@ -37,7 +37,6 @@ import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public final class SqlServerDatabaseConnector
   extends DatabaseConnector
@@ -49,8 +48,6 @@ public final class SqlServerDatabaseConnector
   public SqlServerDatabaseConnector() throws IOException
   {
     super(new DatabaseServerType("sqlserver", "Microsoft SQL Server"),
-        new ClasspathInputResource(
-            "/schemacrawler-sqlserver.config.properties"),
         (informationSchemaViewsBuilder,
             connection) -> informationSchemaViewsBuilder
                 .fromResourceFolder("/sqlserver.information_schema"),
@@ -59,9 +56,9 @@ public final class SqlServerDatabaseConnector
         (limitOptionsBuilder, connection) -> limitOptionsBuilder
             .includeSchemas(new RegularExpressionRule(".*\\.dbo",
                 "model\\..*|master\\..*|msdb\\..*|tempdb\\..*|rdsadmin\\..*")),
-            () -> DatabaseConnectionUrlBuilder.builder(
-                "jdbc:sqlserver://${host}:${port};databaseName=${database};applicationName=SchemaCrawler")
-                .withDefaultPort(1433));
+        () -> DatabaseConnectionUrlBuilder.builder(
+            "jdbc:sqlserver://${host}:${port};databaseName=${database};applicationName=SchemaCrawler")
+            .withDefaultPort(1433));
   }
 
   @Override

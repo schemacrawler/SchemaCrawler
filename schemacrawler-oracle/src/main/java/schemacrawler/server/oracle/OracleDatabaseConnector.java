@@ -48,7 +48,6 @@ import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public final class OracleDatabaseConnector
   extends DatabaseConnector
@@ -61,13 +60,12 @@ public final class OracleDatabaseConnector
   public OracleDatabaseConnector() throws IOException
   {
     super(DB_SERVER_TYPE,
-        new ClasspathInputResource("/schemacrawler-oracle.config.properties"),
         new OracleInformationSchemaViewsBuilder(),
         (schemaRetrievalOptionsBuilder, connection) -> {},
         (limitOptionsBuilder, connection) -> limitOptionsBuilder
             .includeSchemas(new RegularExpressionExclusionRule(
                 "ANONYMOUS|APEX_PUBLIC_USER|APPQOSSYS|BI|CTXSYS|DBSNMP|DIP|EXFSYS|FLOWS_30000|FLOWS_FILES|GSMADMIN_INTERNAL|HR|IX|LBACSYS|MDDATA|MDSYS|MGMT_VIEW|OE|OLAPSYS|ORACLE_OCM|ORDPLUGINS|ORDSYS|OUTLN|OWBSYS|PM|RDSADMIN|SCOTT|SH|SI_INFORMTN_SCHEMA|SPATIAL_CSW_ADMIN_USR|SPATIAL_WFS_ADMIN_USR|SYS|SYSMAN|\\\"SYSTEM\\\"|TSMSYS|WKPROXY|WKSYS|WK_TEST|WMSYS|XDB|APEX_[0-9]{6}|FLOWS_[0-9]{5,6}|XS\\$NULL")),
-            new OracleUrlBuilder());
+        new OracleUrlBuilder());
 
     System.setProperty("oracle.jdbc.Trace", "true");
   }

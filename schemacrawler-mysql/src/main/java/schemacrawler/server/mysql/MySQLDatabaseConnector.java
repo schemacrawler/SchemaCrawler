@@ -35,7 +35,6 @@ import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public final class MySQLDatabaseConnector
   extends DatabaseConnector
@@ -44,7 +43,6 @@ public final class MySQLDatabaseConnector
   public MySQLDatabaseConnector() throws IOException
   {
     super(new DatabaseServerType("mysql", "MySQL"),
-        new ClasspathInputResource("/schemacrawler-mysql.config.properties"),
         (informationSchemaViewsBuilder,
             connection) -> informationSchemaViewsBuilder
                 .fromResourceFolder("/mysql.information_schema"),
@@ -53,7 +51,7 @@ public final class MySQLDatabaseConnector
                 .withEnumDataTypeHelper(new MySQLEnumDataTypeHelper()),
         (limitOptionsBuilder, connection) -> limitOptionsBuilder
             .includeSchemas(new RegularExpressionExclusionRule("sys|mysql")),
-            new MySQLUrlBuilder());
+        new MySQLUrlBuilder());
   }
 
   @Override

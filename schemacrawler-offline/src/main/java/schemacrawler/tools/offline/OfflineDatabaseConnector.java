@@ -35,7 +35,6 @@ import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public final class OfflineDatabaseConnector
   extends DatabaseConnector
@@ -52,7 +51,6 @@ public final class OfflineDatabaseConnector
     throws IOException
   {
     super(DB_SERVER_TYPE,
-          new ClasspathInputResource("/schemacrawler-offline.config.properties"),
           (informationSchemaViewsBuilder, connection) -> {},
           (schemaRetrievalOptionsBuilder, connection) -> {},
           (limitOptionsBuilder, connection) -> {},

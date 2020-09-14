@@ -39,7 +39,6 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public final class DB2DatabaseConnector
   extends DatabaseConnector
@@ -48,12 +47,11 @@ public final class DB2DatabaseConnector
   public DB2DatabaseConnector() throws IOException
   {
     super(new DatabaseServerType("db2", "IBM DB2"),
-        new ClasspathInputResource("/schemacrawler-db2.config.properties"),
         (informationSchemaViewsBuilder,
             connection) -> informationSchemaViewsBuilder
                 .fromResourceFolder("/db2.information_schema"),
-        (schemaRetrievalOptionsBuilder, connection) -> {}, 
-        (limitOptionsBuilder, connection) -> {},
+        (schemaRetrievalOptionsBuilder, connection) -> {},
+        (limitOptionsBuilder, connection) -> {}, 
         () -> DatabaseConnectionUrlBuilder.builder(
             "jdbc:db2://${host}:${port}/${database}:retrieveMessagesFromServerOnGetMessage=true;")
             .withDefaultPort(50000));

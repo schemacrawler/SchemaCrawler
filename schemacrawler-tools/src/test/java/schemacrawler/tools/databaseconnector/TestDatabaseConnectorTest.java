@@ -30,20 +30,14 @@ package schemacrawler.tools.databaseconnector;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.Matchers.aMapWithSize;
-import static org.hamcrest.Matchers.anEmptyMap;
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import org.junit.jupiter.api.Test;
 import org.junitpioneer.jupiter.SetSystemProperty;
-import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.TestDatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import schemacrawler.tools.options.Config;
 
 public class TestDatabaseConnectorTest
 {
@@ -57,10 +51,6 @@ public class TestDatabaseConnectorTest
     throws Exception
   {
     final DatabaseConnector databaseConnector = new TestDatabaseConnector();
-
-    final Config config = databaseConnector.getConfig();
-    assertThat(config, is(notNullValue()));
-    assertThat(config, aMapWithSize(4));
 
     final PluginCommand helpCommand = databaseConnector.getHelpCommand();
     assertThat(helpCommand, is(notNullValue()));
@@ -84,10 +74,6 @@ public class TestDatabaseConnectorTest
   public void unknownDatabaseConnector()
   {
     final DatabaseConnector databaseConnector = DatabaseConnector.UNKNOWN;
-
-    final Config config = databaseConnector.getConfig();
-    assertThat(config, is(notNullValue()));
-    assertThat(config, is(anEmptyMap()));
 
     final PluginCommand helpCommand = databaseConnector.getHelpCommand();
     assertThat(helpCommand, is(notNullValue()));

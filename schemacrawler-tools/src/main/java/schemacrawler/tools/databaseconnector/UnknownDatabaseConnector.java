@@ -33,7 +33,6 @@ import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import us.fatehi.utility.ioresource.EmptyInputResource;
 
 final class UnknownDatabaseConnector
   extends DatabaseConnector
@@ -55,7 +54,6 @@ final class UnknownDatabaseConnector
   UnknownDatabaseConnector()
   {
     super(DatabaseServerType.UNKNOWN,
-          new EmptyInputResource(),
           (informationSchemaViewsBuilder, connection) -> {},
           (schemaRetrievalOptionsBuilder, connection) -> {},
           (limitOptionsBuilder, connection) -> {},

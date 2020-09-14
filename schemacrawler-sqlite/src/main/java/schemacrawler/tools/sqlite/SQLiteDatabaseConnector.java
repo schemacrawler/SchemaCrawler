@@ -37,7 +37,6 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public final class SQLiteDatabaseConnector
   extends DatabaseConnector
@@ -47,7 +46,6 @@ public final class SQLiteDatabaseConnector
     throws IOException
   {
     super(new DatabaseServerType("sqlite", "SQLite"),
-          new ClasspathInputResource("/schemacrawler-sqlite.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
             "/sqlite.information_schema"),
           (schemaRetrievalOptionsBuilder, connection) -> {},

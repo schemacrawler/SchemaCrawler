@@ -45,9 +45,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import schemacrawler.tools.options.Config;
-import schemacrawler.utility.PropertiesUtility;
-import us.fatehi.utility.ioresource.InputResource;
 
 public abstract class DatabaseConnector
   implements Options
@@ -56,7 +53,6 @@ public abstract class DatabaseConnector
   public static final DatabaseConnector UNKNOWN =
     new UnknownDatabaseConnector();
 
-  private final InputResource configResource;
   private final DatabaseServerType dbServerType;
   private final BiConsumer<InformationSchemaViewsBuilder, Connection>
     informationSchemaViewsBuildProcess;
@@ -67,7 +63,6 @@ public abstract class DatabaseConnector
   private final Supplier<DatabaseConnectionUrlBuilder> urlBuildProcess;
 
   protected DatabaseConnector(final DatabaseServerType dbServerType,
-                              final InputResource configResource,
                               final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuildProcess,
                               final BiConsumer<SchemaRetrievalOptionsBuilder, Connection> schemaRetrievalOptionsBuildProcess,
                               final BiConsumer<LimitOptionsBuilder, Connection> limitOptionsBuildProcess,
@@ -75,9 +70,6 @@ public abstract class DatabaseConnector
   {
     this.dbServerType =
         requireNonNull(dbServerType, "No database server type provided");
-
-    this.configResource =
-        requireNonNull(configResource, "No config resource provided");
 
     this.informationSchemaViewsBuildProcess =
         requireNonNull(informationSchemaViewsBuildProcess,
@@ -92,16 +84,6 @@ public abstract class DatabaseConnector
 
     this.urlBuildProcess =
         requireNonNull(urlBuildProcess, "No URL builder provided");
-  }
-
-  /**
-   * Gets the complete bundled database configuration set. This is useful in
-   * building the SchemaCrawler options.
-   */
-  public final Config getConfig()
-  {
-    // configResource is not null - checked in the constructor
-    return PropertiesUtility.loadConfig(configResource);
   }
 
   public DatabaseServerType getDatabaseServerType()

@@ -8,7 +8,6 @@ import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 /**
  * SchemaCrawler database support plug-in.
@@ -28,8 +27,6 @@ public final class TestDatabaseConnector
     throws IOException
   {
     super(DB_SERVER_TYPE,
-          new ClasspathInputResource(
-            "/META-INF/schemacrawler-test-db.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
             "/test-db.information_schema"),
           (schemaRetrievalOptionsBuilder, connection) -> {},

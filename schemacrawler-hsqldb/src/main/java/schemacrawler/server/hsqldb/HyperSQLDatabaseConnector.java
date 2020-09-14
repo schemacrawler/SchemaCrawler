@@ -35,7 +35,6 @@ import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public final class HyperSQLDatabaseConnector
   extends DatabaseConnector
@@ -45,7 +44,6 @@ public final class HyperSQLDatabaseConnector
     throws IOException
   {
     super(new DatabaseServerType("hsqldb", "HyperSQL DataBase"),
-          new ClasspathInputResource("/schemacrawler-hsqldb.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
             "/hsqldb.information_schema"),
           (schemaRetrievalOptionsBuilder, connection) -> {},
