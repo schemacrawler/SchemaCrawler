@@ -61,11 +61,11 @@ final class UnknownDatabaseConnector
   }
 
   @Override
-  public DatabaseConnectionSource newDatabaseConnectionSource(final String connectionUrl)
+  public DatabaseConnectionSource newDatabaseConnectionSource(final DatabaseConnectionOptions connectionOptions)
     throws SchemaCrawlerException
   {
     final DatabaseConnectionSource databaseConnectionSource =
-      super.newDatabaseConnectionSource(connectionUrl);
+      super.newDatabaseConnectionSource(connectionOptions);
 
     final String withoutDatabasePlugin = getSystemConfigurationProperty(
       "SC_IGNORE_MISSING_DATABASE_PLUGIN",

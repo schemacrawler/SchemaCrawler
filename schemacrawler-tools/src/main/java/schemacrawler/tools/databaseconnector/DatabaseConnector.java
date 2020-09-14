@@ -140,33 +140,52 @@ public abstract class DatabaseConnector
    * @param connectionUrl
    *   Database connection URL
    */
-  public DatabaseConnectionSource newDatabaseConnectionSource(final String connectionUrl)
-    throws SchemaCrawlerException
-  {
-    requireNonNull(connectionUrl,
-                   "No database connection URL provided");
-
-    final DatabaseConnectionSource databaseConnectionSource =
-      new DatabaseConnectionSource(connectionUrl);
-
-    return databaseConnectionSource;
-  }
-  
-  public DatabaseConnectionSource newDatabaseConnectionSource(final String host,
-      final Integer port, final String database, final Map<String, String> urlx)
+  public DatabaseConnectionSource newDatabaseConnectionSource(
+      final DatabaseConnectionOptions connectionOptions)
       throws SchemaCrawlerException
   {
-    final DatabaseConnectionUrlBuilder databaseConnectionUrlBuilder = urlBuildProcess.get();
-    databaseConnectionUrlBuilder.withHost(host);
-    databaseConnectionUrlBuilder.withPort(port);
-    databaseConnectionUrlBuilder.withDatabase(database);
-    databaseConnectionUrlBuilder.withUrlx(urlx);
+    requireNonNull(connectionOptions,
+        "No database connection options provided");
 
-    final String connectionUrl = databaseConnectionUrlBuilder.toURL();
-    final Map<String, String> connectionUrlx = databaseConnectionUrlBuilder.toURLx();
-    final DatabaseConnectionSource databaseConnectionSource =
-        new DatabaseConnectionSource(connectionUrl, connectionUrlx);
-    
+    // Connect using connection options provided from the command-line,
+    // provided configuration, and bundled configuration
+    final DatabaseConnectionSource databaseConnectionSource;
+    if (connectionOptions instanceof DatabaseUrlConnectionOptions)
+    {
+      final DatabaseUrlConnectionOptions databaseUrlConnectionOptions =
+          (DatabaseUrlConnectionOptions) connectionOptions;
+      databaseConnectionSource = new DatabaseConnectionSource(
+          databaseUrlConnectionOptions.getConnectionUrl());
+    }
+    else if (connectionOptions instanceof DatabaseServerHostConnectionOptions)
+    {
+      final DatabaseServerHostConnectionOptions serverHostConnectionOptions =
+          (DatabaseServerHostConnectionOptions) connectionOptions;
+
+      final String host = serverHostConnectionOptions.getHost();
+      final Integer port = serverHostConnectionOptions.getPort();
+      final String database = serverHostConnectionOptions.getDatabase();
+      final Map<String, String> urlx = serverHostConnectionOptions.getUrlx();
+
+      final DatabaseConnectionUrlBuilder databaseConnectionUrlBuilder =
+          urlBuildProcess.get();
+      databaseConnectionUrlBuilder.withHost(host);
+      databaseConnectionUrlBuilder.withPort(port);
+      databaseConnectionUrlBuilder.withDatabase(database);
+      databaseConnectionUrlBuilder.withUrlx(urlx);
+
+      final String connectionUrl = databaseConnectionUrlBuilder.toURL();
+      final Map<String, String> connectionUrlx =
+          databaseConnectionUrlBuilder.toURLx();
+      databaseConnectionSource =
+          new DatabaseConnectionSource(connectionUrl, connectionUrlx);
+    }
+    else
+    {
+      throw new SchemaCrawlerException(
+          "Could not create new database connection source");
+    }
+
     return databaseConnectionSource;
   }
 

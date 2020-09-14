@@ -102,7 +102,7 @@ public class TestDatabaseConnectorTest
         "jdbc:hsqldb:hsql://localhost:9001/schemacrawler");
 
     final DatabaseConnectionSource databaseConnectionSource =
-      databaseConnector.newDatabaseConnectionSource("jdbc:hsqldb:hsql://localhost:9001/schemacrawler");
+      databaseConnector.newDatabaseConnectionSource(new DatabaseUrlConnectionOptions("jdbc:hsqldb:hsql://localhost:9001/schemacrawler"));
     assertThat(databaseConnectionSource.getConnectionUrl(),
                is(expectedDatabaseConnectionSource.getConnectionUrl()));
 
@@ -115,7 +115,7 @@ public class TestDatabaseConnectorTest
 
     assertThrows(SchemaCrawlerException.class,
                  () -> databaseConnector.newDatabaseConnectionSource(
-                     "jdbc:mysql://localhost:9001/schemacrawler"));
+                     new DatabaseUrlConnectionOptions("jdbc:mysql://localhost:9001/schemacrawler")));
        
   }
 
@@ -131,7 +131,7 @@ public class TestDatabaseConnectorTest
         "jdbc:mysql://localhost:9001/schemacrawler");
 
     final DatabaseConnectionSource databaseConnectionSource =
-      databaseConnector.newDatabaseConnectionSource("jdbc:mysql://localhost:9001/schemacrawler");
+      databaseConnector.newDatabaseConnectionSource(new DatabaseUrlConnectionOptions("jdbc:mysql://localhost:9001/schemacrawler"));
     assertThat(databaseConnectionSource.getConnectionUrl(),
                is(expectedDatabaseConnectionSource.getConnectionUrl()));
 

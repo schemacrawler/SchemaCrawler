@@ -43,6 +43,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
+import schemacrawler.tools.databaseconnector.DatabaseUrlConnectionOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
@@ -62,9 +63,11 @@ public class EmbeddedSQLiteWrapper
 
     try
     {
+      final DatabaseUrlConnectionOptions urlConnectionOptions = 
+          new DatabaseUrlConnectionOptions(getConnectionUrl());
       final DatabaseConnectionSource connectionOptions =
           new SQLiteDatabaseConnector()
-              .newDatabaseConnectionSource(getConnectionUrl());
+              .newDatabaseConnectionSource(urlConnectionOptions);
       return connectionOptions;
     } catch (final IOException e)
     {
