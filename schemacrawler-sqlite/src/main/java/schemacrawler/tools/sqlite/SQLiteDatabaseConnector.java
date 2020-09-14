@@ -29,11 +29,7 @@ package schemacrawler.tools.sqlite;
 
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.util.function.Predicate;
-import java.util.regex.Pattern;
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -46,21 +42,13 @@ public final class SQLiteDatabaseConnector
     throws IOException
   {
     super(new DatabaseServerType("sqlite", "SQLite"),
+          url -> url != null && url.startsWith("jdbc:sqlite:"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
             "/sqlite.information_schema"),
-          (schemaRetrievalOptionsBuilder, connection) -> {},
+          (schemaRetrievalOptionsBuilder, connection) -> schemaRetrievalOptionsBuilder.withIdentifierQuoteString("\""),
           (limitOptionsBuilder, connection) -> {},
           () -> DatabaseConnectionUrlBuilder.builder(
               "jdbc:sqlite:${database}"));
-  }
-
-  @Override
-  public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(final Connection connection)
-  {
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-      super.getSchemaRetrievalOptionsBuilder(connection);
-    schemaRetrievalOptionsBuilder.withIdentifierQuoteString("\"");
-    return schemaRetrievalOptionsBuilder;
   }
 
   @Override
@@ -75,12 +63,6 @@ public final class SQLiteDatabaseConnector
       .addOption("port", "Should be omitted", Integer.class)
       .addOption("database", "SQLite database file path", String.class);
     return pluginCommand;
-  }
-
-  @Override
-  protected Predicate<String> supportsUrlPredicate()
-  {
-    return url -> Pattern.matches("jdbc:sqlite:.*", url);
   }
   
 }

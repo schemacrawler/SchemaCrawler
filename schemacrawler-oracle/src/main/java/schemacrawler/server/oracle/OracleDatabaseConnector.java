@@ -40,12 +40,8 @@ import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.ta
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablesRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.typeInfoRetrievalStrategy;
 import java.io.IOException;
-import java.sql.Connection;
-import java.util.function.Predicate;
-import java.util.regex.Pattern;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 
@@ -59,34 +55,27 @@ public final class OracleDatabaseConnector
 
   public OracleDatabaseConnector() throws IOException
   {
-    super(DB_SERVER_TYPE,
-        new OracleInformationSchemaViewsBuilder(),
-        (schemaRetrievalOptionsBuilder, connection) -> {},
+    super(DB_SERVER_TYPE, 
+        url -> url != null && url.startsWith("jdbc:oracle:"),
+        new OracleInformationSchemaViewsBuilder(),        
+        (schemaRetrievalOptionsBuilder,
+            connection) -> schemaRetrievalOptionsBuilder
+                .with(typeInfoRetrievalStrategy, data_dictionary_all)
+                .with(tablesRetrievalStrategy, data_dictionary_all)
+                .with(tableColumnsRetrievalStrategy, data_dictionary_all)
+                .with(primaryKeysRetrievalStrategy, data_dictionary_all)
+                .with(foreignKeysRetrievalStrategy, data_dictionary_all)
+                .with(indexesRetrievalStrategy, data_dictionary_all)
+                .with(proceduresRetrievalStrategy, data_dictionary_all)
+                .with(procedureParametersRetrievalStrategy, data_dictionary_all)
+                .with(functionsRetrievalStrategy, data_dictionary_all)
+                .with(functionParametersRetrievalStrategy, data_dictionary_all),
         (limitOptionsBuilder, connection) -> limitOptionsBuilder
             .includeSchemas(new RegularExpressionExclusionRule(
                 "ANONYMOUS|APEX_PUBLIC_USER|APPQOSSYS|BI|CTXSYS|DBSNMP|DIP|EXFSYS|FLOWS_30000|FLOWS_FILES|GSMADMIN_INTERNAL|HR|IX|LBACSYS|MDDATA|MDSYS|MGMT_VIEW|OE|OLAPSYS|ORACLE_OCM|ORDPLUGINS|ORDSYS|OUTLN|OWBSYS|PM|RDSADMIN|SCOTT|SH|SI_INFORMTN_SCHEMA|SPATIAL_CSW_ADMIN_USR|SPATIAL_WFS_ADMIN_USR|SYS|SYSMAN|\\\"SYSTEM\\\"|TSMSYS|WKPROXY|WKSYS|WK_TEST|WMSYS|XDB|APEX_[0-9]{6}|FLOWS_[0-9]{5,6}|XS\\$NULL")),
         new OracleUrlBuilder());
 
     System.setProperty("oracle.jdbc.Trace", "true");
-  }
-
-  @Override
-  public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(final Connection connection)
-  {
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-      super.getSchemaRetrievalOptionsBuilder(connection);
-    schemaRetrievalOptionsBuilder
-      .with(typeInfoRetrievalStrategy, data_dictionary_all)
-      .with(tablesRetrievalStrategy, data_dictionary_all)
-      .with(tableColumnsRetrievalStrategy, data_dictionary_all)
-      .with(primaryKeysRetrievalStrategy, data_dictionary_all)
-      .with(foreignKeysRetrievalStrategy, data_dictionary_all)
-      .with(indexesRetrievalStrategy, data_dictionary_all)
-      .with(proceduresRetrievalStrategy, data_dictionary_all)
-      .with(procedureParametersRetrievalStrategy, data_dictionary_all)
-      .with(functionsRetrievalStrategy, data_dictionary_all)
-      .with(functionParametersRetrievalStrategy, data_dictionary_all);
-    return schemaRetrievalOptionsBuilder;
   }
 
   @Override
@@ -109,12 +98,6 @@ public final class OracleDatabaseConnector
                  + "SELECT GLOBAL_NAME FROM GLOBAL_NAME",
                  String.class);
     return pluginCommand;
-  }
-
-  @Override
-  protected Predicate<String> supportsUrlPredicate()
-  {
-    return url -> Pattern.matches("jdbc:oracle:.*", url);
   }
 
 }

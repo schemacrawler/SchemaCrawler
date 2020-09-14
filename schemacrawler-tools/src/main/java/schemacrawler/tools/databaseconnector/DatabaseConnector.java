@@ -54,6 +54,7 @@ public abstract class DatabaseConnector
     new UnknownDatabaseConnector();
 
   private final DatabaseServerType dbServerType;
+  private final Predicate<String> supportsUrl;
   private final BiConsumer<InformationSchemaViewsBuilder, Connection>
     informationSchemaViewsBuildProcess;
   private final BiConsumer<SchemaRetrievalOptionsBuilder, Connection>
@@ -63,6 +64,7 @@ public abstract class DatabaseConnector
   private final Supplier<DatabaseConnectionUrlBuilder> urlBuildProcess;
 
   protected DatabaseConnector(final DatabaseServerType dbServerType,
+                              final Predicate<String> supportsUrl,
                               final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuildProcess,
                               final BiConsumer<SchemaRetrievalOptionsBuilder, Connection> schemaRetrievalOptionsBuildProcess,
                               final BiConsumer<LimitOptionsBuilder, Connection> limitOptionsBuildProcess,
@@ -70,6 +72,9 @@ public abstract class DatabaseConnector
   {
     this.dbServerType =
         requireNonNull(dbServerType, "No database server type provided");
+
+    this.supportsUrl =
+        requireNonNull(supportsUrl, "No predicate for URL support provided");
 
     this.informationSchemaViewsBuildProcess =
         requireNonNull(informationSchemaViewsBuildProcess,
@@ -86,12 +91,12 @@ public abstract class DatabaseConnector
         requireNonNull(urlBuildProcess, "No URL builder provided");
   }
 
-  public DatabaseServerType getDatabaseServerType()
+  public final DatabaseServerType getDatabaseServerType()
   {
     return dbServerType;
   }
   
-  public void setDefaultsForSchemaCrawlerOptionsBuilder(
+  public final void setDefaultsForSchemaCrawlerOptionsBuilder(
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder,
       final Connection connection)
   {
@@ -109,7 +114,7 @@ public abstract class DatabaseConnector
    * @param connection
    *   Database connection
    */
-  public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(final Connection connection)
+  public final SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(final Connection connection)
   {
     final InformationSchemaViews informationSchemaViews =
       InformationSchemaViewsBuilder
@@ -171,7 +176,7 @@ public abstract class DatabaseConnector
     {
       return false;
     }
-    return supportsUrlPredicate().test(url);
+    return supportsUrl.test(url);
   }
 
   @Override
@@ -196,7 +201,5 @@ public abstract class DatabaseConnector
                                + dbServerType.getDatabaseSystemName());
     return pluginCommand;
   }
-
-  protected abstract Predicate<String> supportsUrlPredicate();
 
 }

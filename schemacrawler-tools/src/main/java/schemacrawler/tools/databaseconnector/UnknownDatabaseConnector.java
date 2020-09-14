@@ -29,7 +29,6 @@ package schemacrawler.tools.databaseconnector;
 
 
 import static schemacrawler.tools.options.Config.getSystemConfigurationProperty;
-import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -54,6 +53,7 @@ final class UnknownDatabaseConnector
   UnknownDatabaseConnector()
   {
     super(DatabaseServerType.UNKNOWN,
+          url -> false,
           (informationSchemaViewsBuilder, connection) -> {},
           (schemaRetrievalOptionsBuilder, connection) -> {},
           (limitOptionsBuilder, connection) -> {},
@@ -88,12 +88,6 @@ final class UnknownDatabaseConnector
     }
 
     return databaseConnectionSource;
-  }
-
-  @Override
-  protected Predicate<String> supportsUrlPredicate()
-  {
-    return url -> false;
   }
 
 }

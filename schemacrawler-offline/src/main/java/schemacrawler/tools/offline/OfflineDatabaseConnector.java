@@ -29,8 +29,6 @@ package schemacrawler.tools.offline;
 
 
 import java.io.IOException;
-import java.util.function.Predicate;
-import java.util.regex.Pattern;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -51,6 +49,7 @@ public final class OfflineDatabaseConnector
     throws IOException
   {
     super(DB_SERVER_TYPE,
+          url -> url != null && url.startsWith("jdbc:offline:"),
           (informationSchemaViewsBuilder, connection) -> {},
           (schemaRetrievalOptionsBuilder, connection) -> {},
           (limitOptionsBuilder, connection) -> {},
@@ -73,12 +72,6 @@ public final class OfflineDatabaseConnector
                  "File name and location of the database metadata snapshot",
                  String.class);
     return pluginCommand;
-  }
-
-  @Override
-  protected Predicate<String> supportsUrlPredicate()
-  {
-    return url -> Pattern.matches("jdbc:offline:.*", url);
   }
   
 }

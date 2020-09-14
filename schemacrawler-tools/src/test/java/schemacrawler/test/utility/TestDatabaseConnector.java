@@ -20,13 +20,11 @@ public final class TestDatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final DatabaseServerType DB_SERVER_TYPE =
-    new DatabaseServerType("test-db", "Test Database");
-
   public TestDatabaseConnector()
     throws IOException
   {
-    super(DB_SERVER_TYPE,
+    super(new DatabaseServerType("test-db", "Test Database"),
+          url -> url != null && url.startsWith("jdbc:test-db:"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
             "/test-db.information_schema"),
           (schemaRetrievalOptionsBuilder, connection) -> {},
@@ -43,12 +41,6 @@ public final class TestDatabaseConnector
                             + "Loads SchemaCrawler plug-in for Test Database",
                             String.class);
     return pluginCommand;
-  }
-
-  @Override
-  protected Predicate<String> supportsUrlPredicate()
-  {
-    return url -> Pattern.matches("jdbc:test-db:.*", url);
   }
   
 }

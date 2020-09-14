@@ -29,7 +29,6 @@ package schemacrawler.server.mysql;
 
 
 import java.io.IOException;
-import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.DatabaseServerType;
@@ -43,6 +42,7 @@ public final class MySQLDatabaseConnector
   public MySQLDatabaseConnector() throws IOException
   {
     super(new DatabaseServerType("mysql", "MySQL"),
+        url -> url != null && Pattern.matches("jdbc:(mysql|mariadb):.*", url),
         (informationSchemaViewsBuilder,
             connection) -> informationSchemaViewsBuilder
                 .fromResourceFolder("/mysql.information_schema"),
@@ -70,12 +70,6 @@ public final class MySQLDatabaseConnector
                  Integer.class)
       .addOption("database", "Database name", String.class);
     return pluginCommand;
-  }
-
-  @Override
-  protected Predicate<String> supportsUrlPredicate()
-  {
-    return url -> Pattern.matches("jdbc:(mysql|mariadb):.*", url);
   }
   
 }

@@ -29,8 +29,6 @@ package schemacrawler.server.postgresql;
 
 
 import java.io.IOException;
-import java.util.function.Predicate;
-import java.util.regex.Pattern;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
@@ -44,6 +42,7 @@ public final class PostgreSQLDatabaseConnector
   public PostgreSQLDatabaseConnector() throws IOException
   {
     super(new DatabaseServerType("postgresql", "PostgreSQL"),
+        url -> url != null && url.startsWith("jdbc:postgresql:"),
         (informationSchemaViewsBuilder,
             connection) -> informationSchemaViewsBuilder
                 .fromResourceFolder("/postgresql.information_schema"),
@@ -81,12 +80,6 @@ public final class PostgreSQLDatabaseConnector
                  + "Optional, uses the PGDATABASE environmental variable if available",
                  String.class);
     return pluginCommand;
-  }
-
-  @Override
-  protected Predicate<String> supportsUrlPredicate()
-  {
-    return url -> Pattern.matches("jdbc:postgresql:.*", url);
   }
   
 }

@@ -29,9 +29,6 @@ package schemacrawler.server.sqlserver;
 
 
 import java.io.IOException;
-import java.util.function.Predicate;
-import java.util.regex.Pattern;
-import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
@@ -42,12 +39,10 @@ public final class SqlServerDatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(SqlServerDatabaseConnector.class.getName());
-
   public SqlServerDatabaseConnector() throws IOException
   {
     super(new DatabaseServerType("sqlserver", "Microsoft SQL Server"),
+        url -> url != null && url.startsWith("jdbc:sqlserver:"),
         (informationSchemaViewsBuilder,
             connection) -> informationSchemaViewsBuilder
                 .fromResourceFolder("/sqlserver.information_schema"),
@@ -86,12 +81,6 @@ public final class SqlServerDatabaseConnector
                  + "--schemas=<database>.dbo",
                  String.class);
     return pluginCommand;
-  }
-
-  @Override
-  protected Predicate<String> supportsUrlPredicate()
-  {
-    return url -> Pattern.matches("jdbc:sqlserver:.*", url);
   }
   
 }
