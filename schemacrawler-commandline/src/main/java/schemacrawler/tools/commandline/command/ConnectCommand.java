@@ -30,17 +30,16 @@ package schemacrawler.tools.commandline.command;
 
 
 import static java.util.Objects.requireNonNull;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
-
 import picocli.CommandLine.ArgGroup;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Model;
 import picocli.CommandLine.ParameterException;
 import picocli.CommandLine.Spec;
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
@@ -51,11 +50,8 @@ import schemacrawler.tools.commandline.utility.SchemaRetrievalOptionsConfig;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
-import schemacrawler.tools.databaseconnector.DatabaseUrlConnectionOptions;
 import schemacrawler.tools.databaseconnector.UserCredentials;
 import schemacrawler.tools.options.Config;
-import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.string.StringFormat;
 
 @Command(name = "connect",
@@ -107,7 +103,7 @@ public class ConnectCommand
       final DatabaseConnector databaseConnector =
         databaseConnectionOptions.getDatabaseConnector();
       requireNonNull(databaseConnector,
-                     "No database connection options provided");
+                     "No database plugin located (not even unknown)");
       LOGGER.log(Level.INFO,
                  new StringFormat("Using database plugin <%s>",
                                   databaseConnector.getDatabaseServerType()));
@@ -182,7 +178,7 @@ public class ConnectCommand
     LOGGER.log(Level.FINE, "Creating data-source");
 
     // Connect using connection options provided from the command-line,
-    // provided configuration, and bundled configuration
+    // provided configuration, and database plugin defaults
     final DatabaseConnectionSource databaseConnectionSource =
         databaseConnector.newDatabaseConnectionSource(connectionOptions);
     databaseConnectionSource.setUserCredentials(userCredentials);
@@ -195,36 +191,35 @@ public class ConnectCommand
   {
     LOGGER.log(Level.FINE, "Creating SchemaCrawler options builder");
 
-    final Config config = state.getAdditionalConfiguration();
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
         SchemaCrawlerOptionsBuilder.builder();
-    // Set defaults from database plugins, such as default schema excludes
+    // Set defaults from database plugin, such as default schema excludes
     databaseConnector
         .setDefaultsForSchemaCrawlerOptionsBuilder(schemaCrawlerOptionsBuilder);
     // Override with options from config file
+    final Config config = state.getAdditionalConfiguration();
     SchemaCrawlerOptionsConfig.fromConfig(schemaCrawlerOptionsBuilder, config);
+    
     state.setSchemaCrawlerOptionsBuilder(schemaCrawlerOptionsBuilder);
   }
 
-  private void loadSchemaRetrievalOptionsBuilder(final DatabaseConnector databaseConnector)
-    throws SQLException
+  private void loadSchemaRetrievalOptionsBuilder(
+      final DatabaseConnector databaseConnector)
+      throws SQLException
   {
     requireNonNull(databaseConnector,
-                   "No database connection options provided");
+        "No database connection options provided");
 
-    LOGGER.log(Level.FINE,
-               "Creating SchemaCrawler retrieval options builder");
+    LOGGER.log(Level.FINE, "Creating SchemaCrawler retrieval options builder");
 
     final Config config = state.getAdditionalConfiguration();
-    try (
-      final Connection connection = state
-        .getDataSource()
-        .get()
-    )
+    try (final Connection connection = state.getDataSource().get())
     {
       final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-        databaseConnector.getSchemaRetrievalOptionsBuilder(connection);
-      state.setSchemaRetrievalOptionsBuilder(SchemaRetrievalOptionsConfig.fromConfig(schemaRetrievalOptionsBuilder, config));
+          databaseConnector.getSchemaRetrievalOptionsBuilder(connection);
+      state
+          .setSchemaRetrievalOptionsBuilder(SchemaRetrievalOptionsConfig
+              .fromConfig(schemaRetrievalOptionsBuilder, config));
     }
   }
 
