@@ -141,6 +141,14 @@ public final class SchemaCrawlerExecutable
     // Fail early (before loading the catalog) if the command is not
     // available
     final SchemaCrawlerCommand scCommand = loadCommand();
+    
+    // Set options
+    scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    scCommand.setOutputOptions(outputOptions);
+    scCommand.setAdditionalConfiguration(additionalConfiguration);
+    scCommand.setIdentifiers(schemaRetrievalOptions.getIdentifiers());
+    
+    // Initialize, and check if the command is available
     scCommand.initialize();
     scCommand.checkAvailability();
 
@@ -149,9 +157,11 @@ public final class SchemaCrawlerExecutable
       loadCatalog();
     }
 
+    // Prepare to execute
     scCommand.setCatalog(catalog);
     scCommand.setConnection(connection);
 
+    // Execute
     scCommand.execute();
   }
 
@@ -222,14 +232,17 @@ public final class SchemaCrawlerExecutable
   private SchemaCrawlerCommand loadCommand()
     throws SchemaCrawlerException
   {
-    // NOTE: The daisy chain command may change the provided output
-    // options for each chained command
-    final SchemaCrawlerCommand scCommand = new CommandSchemaCrawlerCommand(command);
-    scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    scCommand.setOutputOptions(outputOptions);
-    scCommand.setAdditionalConfiguration(additionalConfiguration);
-    scCommand.setIdentifiers(schemaRetrievalOptions.getIdentifiers());
-
+    final CommandRegistry commandRegistry =
+        CommandRegistry.getCommandRegistry();
+    final SchemaCrawlerCommand scCommand = commandRegistry
+        .configureNewCommand(command, schemaCrawlerOptions,
+            additionalConfiguration, outputOptions);
+    if (scCommand == null)
+    {
+      throw new SchemaCrawlerException(
+          "Could not configure command, " + command);
+    }
+    
     return scCommand;
   }
 
