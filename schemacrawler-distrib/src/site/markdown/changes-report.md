@@ -1,5 +1,11 @@
 # SchemaCrawler Change History
 
+<a name="a16.10.1"></a>
+## Release 16.10.1 - 2020-09-20
+
+- Set defaults programatically from database plugins
+
+
 <a name="a16.9.5"></a>
 ## Release 16.9.5 - 2020-09-10
 
