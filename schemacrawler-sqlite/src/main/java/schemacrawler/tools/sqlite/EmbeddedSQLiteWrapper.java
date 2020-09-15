@@ -43,6 +43,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
+import schemacrawler.tools.databaseconnector.DatabaseUrlConnectionOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
@@ -56,22 +57,22 @@ public class EmbeddedSQLiteWrapper
   private Path databaseFile;
 
   public DatabaseConnectionSource createDatabaseConnectionSource()
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
     requireNonNull(databaseFile, "Database file not loaded");
 
     try
     {
+      final DatabaseUrlConnectionOptions urlConnectionOptions = 
+          new DatabaseUrlConnectionOptions(getConnectionUrl());
       final DatabaseConnectionSource connectionOptions =
-        new SQLiteDatabaseConnector().newDatabaseConnectionSource(config -> new DatabaseConnectionSource(
-          getConnectionUrl(),
-          config));
+          new SQLiteDatabaseConnector()
+              .newDatabaseConnectionSource(urlConnectionOptions);
       return connectionOptions;
-    }
-    catch (final IOException e)
+    } catch (final IOException e)
     {
-      throw new SchemaCrawlerException("Cannot read SQLite database file, "
-                                       + databaseFile, e);
+      throw new SchemaCrawlerException(
+          "Cannot read SQLite database file, " + databaseFile, e);
     }
   }
 

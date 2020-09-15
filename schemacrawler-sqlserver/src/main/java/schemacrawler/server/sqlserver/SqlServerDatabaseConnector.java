@@ -29,30 +29,31 @@ package schemacrawler.server.sqlserver;
 
 
 import java.io.IOException;
-import java.util.function.Predicate;
-import java.util.regex.Pattern;
-
+import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.schemacrawler.DatabaseServerType;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
-import schemacrawler.SchemaCrawlerLogger;
 
 public final class SqlServerDatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(SqlServerDatabaseConnector.class.getName());
-
-  public SqlServerDatabaseConnector()
-    throws IOException
+  public SqlServerDatabaseConnector() throws IOException
   {
     super(new DatabaseServerType("sqlserver", "Microsoft SQL Server"),
-          new ClasspathInputResource(
-            "/schemacrawler-sqlserver.config.properties"),
-          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
-            "/sqlserver.information_schema"));
+        url -> url != null && url.startsWith("jdbc:sqlserver:"),
+        (informationSchemaViewsBuilder,
+            connection) -> informationSchemaViewsBuilder
+                .fromResourceFolder("/sqlserver.information_schema"),
+        (schemaRetrievalOptionsBuilder, connection) -> {
+        },
+        (limitOptionsBuilder) -> limitOptionsBuilder
+            .includeSchemas(new RegularExpressionRule(".*\\.dbo",
+                "model\\..*|master\\..*|msdb\\..*|tempdb\\..*|rdsadmin\\..*")),
+        () -> DatabaseConnectionUrlBuilder.builder(
+            "jdbc:sqlserver://${host}:${port};databaseName=${database};applicationName=SchemaCrawler")
+            .withDefaultPort(1433));
   }
 
   @Override
@@ -81,11 +82,5 @@ public final class SqlServerDatabaseConnector
                  String.class);
     return pluginCommand;
   }
-
-  @Override
-  protected Predicate<String> supportsUrlPredicate()
-  {
-    return url -> Pattern.matches("jdbc:sqlserver:.*", url);
-  }
-
+  
 }

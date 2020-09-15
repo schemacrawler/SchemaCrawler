@@ -29,32 +29,29 @@ package schemacrawler.server.mysql;
 
 
 import java.io.IOException;
-import java.util.function.Predicate;
 import java.util.regex.Pattern;
-
-import schemacrawler.plugin.EnumDataTypeHelper;
+import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public final class MySQLDatabaseConnector
   extends DatabaseConnector
 {
 
-  public MySQLDatabaseConnector()
-    throws IOException
+  public MySQLDatabaseConnector() throws IOException
   {
     super(new DatabaseServerType("mysql", "MySQL"),
-          new ClasspathInputResource("/schemacrawler-mysql.config.properties"),
-          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
-            "/mysql.information_schema"));
-  }
-
-  @Override
-  public EnumDataTypeHelper getEnumDataTypeHelper()
-  {
-    return new MySQLEnumDataTypeHelper();
+        url -> url != null && Pattern.matches("jdbc:(mysql|mariadb):.*", url),
+        (informationSchemaViewsBuilder,
+            connection) -> informationSchemaViewsBuilder
+                .fromResourceFolder("/mysql.information_schema"),
+        (schemaRetrievalOptionsBuilder,
+            connection) -> schemaRetrievalOptionsBuilder
+                .withEnumDataTypeHelper(new MySQLEnumDataTypeHelper()),
+        (limitOptionsBuilder) -> limitOptionsBuilder
+            .includeSchemas(new RegularExpressionExclusionRule("sys|mysql")),
+        new MySQLUrlBuilder());
   }
 
   @Override
@@ -74,11 +71,5 @@ public final class MySQLDatabaseConnector
       .addOption("database", "Database name", String.class);
     return pluginCommand;
   }
-
-  @Override
-  protected Predicate<String> supportsUrlPredicate()
-  {
-    return url -> Pattern.matches("jdbc:(mysql|mariadb):.*", url);
-  }
-
+  
 }

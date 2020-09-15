@@ -29,33 +29,31 @@ package schemacrawler.server.postgresql;
 
 
 import java.io.IOException;
-import java.util.function.Predicate;
-import java.util.regex.Pattern;
-
-import schemacrawler.plugin.EnumDataTypeHelper;
+import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.DatabaseServerType;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public final class PostgreSQLDatabaseConnector
   extends DatabaseConnector
 {
 
-  public PostgreSQLDatabaseConnector()
-    throws IOException
+  public PostgreSQLDatabaseConnector() throws IOException
   {
     super(new DatabaseServerType("postgresql", "PostgreSQL"),
-          new ClasspathInputResource(
-            "/schemacrawler-postgresql.config.properties"),
-          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
-            "/postgresql.information_schema"));
-  }
-
-  @Override
-  public EnumDataTypeHelper getEnumDataTypeHelper()
-  {
-    return new PostgreSQLEnumDataTypeHelper();
+        url -> url != null && url.startsWith("jdbc:postgresql:"),
+        (informationSchemaViewsBuilder,
+            connection) -> informationSchemaViewsBuilder
+                .fromResourceFolder("/postgresql.information_schema"),
+        (schemaRetrievalOptionsBuilder,
+            connection) -> schemaRetrievalOptionsBuilder
+                .withEnumDataTypeHelper(new PostgreSQLEnumDataTypeHelper()),
+        (limitOptionsBuilder) -> limitOptionsBuilder
+        .includeSchemas(new RegularExpressionExclusionRule("pg_catalog|information_schema")),
+                () -> DatabaseConnectionUrlBuilder.builder(
+                    "jdbc:postgresql://${host}:${port}/${database}?ApplicationName=SchemaCrawler;loggerLevel=DEBUG")
+                    .withDefaultPort(5432));
   }
 
   @Override
@@ -83,11 +81,5 @@ public final class PostgreSQLDatabaseConnector
                  String.class);
     return pluginCommand;
   }
-
-  @Override
-  protected Predicate<String> supportsUrlPredicate()
-  {
-    return url -> Pattern.matches("jdbc:postgresql:.*", url);
-  }
-
+  
 }

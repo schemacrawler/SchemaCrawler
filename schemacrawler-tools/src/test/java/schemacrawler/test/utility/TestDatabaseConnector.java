@@ -4,11 +4,10 @@ package schemacrawler.test.utility;
 import java.io.IOException;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
-
 import schemacrawler.schemacrawler.DatabaseServerType;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 /**
  * SchemaCrawler database support plug-in.
@@ -21,17 +20,16 @@ public final class TestDatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final DatabaseServerType DB_SERVER_TYPE =
-    new DatabaseServerType("test-db", "Test Database");
-
   public TestDatabaseConnector()
     throws IOException
   {
-    super(DB_SERVER_TYPE,
-          new ClasspathInputResource(
-            "/META-INF/schemacrawler-test-db.config.properties"),
+    super(new DatabaseServerType("test-db", "Test Database"),
+          url -> url != null && url.startsWith("jdbc:test-db:"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
-            "/test-db.information_schema"));
+            "/test-db.information_schema"),
+          (schemaRetrievalOptionsBuilder, connection) -> {},
+          (limitOptionsBuilder) -> {},
+          () -> DatabaseConnectionUrlBuilder.builder(""));
   }
 
   @Override
@@ -44,11 +42,5 @@ public final class TestDatabaseConnector
                             String.class);
     return pluginCommand;
   }
-
-  @Override
-  protected Predicate<String> supportsUrlPredicate()
-  {
-    return url -> Pattern.matches("jdbc:test-db:.*", url);
-  }
-
+  
 }

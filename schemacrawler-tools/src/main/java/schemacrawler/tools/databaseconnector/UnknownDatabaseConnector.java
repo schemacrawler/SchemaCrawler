@@ -29,12 +29,9 @@ package schemacrawler.tools.databaseconnector;
 
 
 import static schemacrawler.tools.options.Config.getSystemConfigurationProperty;
-import java.util.function.Predicate;
 import java.util.regex.Pattern;
-
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import us.fatehi.utility.ioresource.EmptyInputResource;
 
 final class UnknownDatabaseConnector
   extends DatabaseConnector
@@ -56,16 +53,19 @@ final class UnknownDatabaseConnector
   UnknownDatabaseConnector()
   {
     super(DatabaseServerType.UNKNOWN,
-          new EmptyInputResource(),
-          (informationSchemaViewsBuilder, connection) -> {});
+          url -> false,
+          (informationSchemaViewsBuilder, connection) -> {},
+          (schemaRetrievalOptionsBuilder, connection) -> {},
+          (limitOptionsBuilder) -> {},
+          () -> DatabaseConnectionUrlBuilder.builder(""));
   }
 
   @Override
-  public DatabaseConnectionSource newDatabaseConnectionSource(final DatabaseConnectorOptions databaseConnectorOptions)
+  public DatabaseConnectionSource newDatabaseConnectionSource(final DatabaseConnectionOptions connectionOptions)
     throws SchemaCrawlerException
   {
     final DatabaseConnectionSource databaseConnectionSource =
-      super.newDatabaseConnectionSource(databaseConnectorOptions);
+      super.newDatabaseConnectionSource(connectionOptions);
 
     final String withoutDatabasePlugin = getSystemConfigurationProperty(
       "SC_IGNORE_MISSING_DATABASE_PLUGIN",
@@ -88,12 +88,6 @@ final class UnknownDatabaseConnector
     }
 
     return databaseConnectionSource;
-  }
-
-  @Override
-  protected Predicate<String> supportsUrlPredicate()
-  {
-    return url -> false;
   }
 
 }

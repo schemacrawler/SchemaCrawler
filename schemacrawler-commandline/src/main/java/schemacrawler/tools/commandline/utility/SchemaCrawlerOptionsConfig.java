@@ -29,8 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.utility;
 
 
-import schemacrawler.inclusionrule.ExcludeAll;
-import schemacrawler.inclusionrule.IncludeAll;
+import java.util.Optional;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion;
 import schemacrawler.schemacrawler.GrepOptions;
@@ -111,12 +110,14 @@ public final class SchemaCrawlerOptionsConfig
 
     for (final DatabaseObjectRuleForInclusion ruleForInclusion : DatabaseObjectRuleForInclusion.values())
     {
-      final InclusionRule inclusionRule = config.getInclusionRuleWithDefault(
-        getIncludePatternProperty(ruleForInclusion),
-        getExcludePatternProperty(ruleForInclusion),
-        getDefaultInclusionRule(ruleForInclusion));
-
-      builder.include(ruleForInclusion, inclusionRule);
+      final Optional<InclusionRule> optionalInclusionRule = config.getOptionalInclusionRule(
+          getIncludePatternProperty(ruleForInclusion),
+          getExcludePatternProperty(ruleForInclusion));
+      
+      if (optionalInclusionRule.isPresent()) {      
+        final InclusionRule inclusionRule = optionalInclusionRule.get();
+        builder.include(ruleForInclusion, inclusionRule);
+      }
     }
 
     return builder;
@@ -154,20 +155,6 @@ public final class SchemaCrawlerOptionsConfig
     builder.withGrepOptions(grepOptions);
 
     return builder;
-  }
-
-  private static InclusionRule getDefaultInclusionRule(final DatabaseObjectRuleForInclusion ruleForInclusion)
-  {
-    final InclusionRule defaultInclusionRule;
-    if (ruleForInclusion.isExcludeByDefault())
-    {
-      defaultInclusionRule = new ExcludeAll();
-    }
-    else
-    {
-      defaultInclusionRule = new IncludeAll();
-    }
-    return defaultInclusionRule;
   }
 
   private static String getExcludePatternProperty(

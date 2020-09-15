@@ -204,16 +204,6 @@ public final class Config
     return enumValue(value, defaultValue);
   }
 
-  public InclusionRule getInclusionRuleWithDefault(final String includePatternProperty,
-                                                   final String excludePatternProperty,
-                                                   final InclusionRule inclusionRule)
-  {
-    requireNonNull(inclusionRule);
-    final Optional<InclusionRule> optionalInclusionRule =
-      getOptionalInclusionRule(includePatternProperty, excludePatternProperty);
-    return optionalInclusionRule.orElse(inclusionRule);
-  }
-
   /**
    * Gets the value of a property as an integer.
    *

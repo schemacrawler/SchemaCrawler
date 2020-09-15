@@ -30,19 +30,19 @@ package schemacrawler.test.commandline.command;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.collection.IsMapContaining.hasEntry;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
-
-import java.lang.reflect.Field;
-import java.util.Map;
-
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
+import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.commandline.command.ConnectCommand;
-import schemacrawler.tools.commandline.command.DatabaseConnectable;
+import schemacrawler.tools.commandline.command.ConnectionOptions;
+import schemacrawler.tools.commandline.command.ServerHostConnectionGroupOptions;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
+import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
+import schemacrawler.tools.databaseconnector.DatabaseUrlConnectionOptions;
 import schemacrawler.tools.options.Config;
 
 public class ConnectionOptionsTest
@@ -57,7 +57,7 @@ public class ConnectionOptionsTest
       new ConnectCommand(new SchemaCrawlerShellState());
     new CommandLine(optionsParser).parseArgs(args);
     assertThrows(CommandLine.ParameterException.class,
-                 () -> optionsParser.getDatabaseConnectable());
+                 () -> optionsParser.getDatabaseConnectionOptions());
   }
 
   @Test
@@ -70,7 +70,7 @@ public class ConnectionOptionsTest
     final CommandLine commandLine = newCommandLine(optionsParser, null, true);
     commandLine.parseArgs(args);
     assertThrows(CommandLine.ParameterException.class,
-                 () -> optionsParser.getDatabaseConnectable());
+                 () -> optionsParser.getDatabaseConnectionOptions());
   }
 
   @Test
@@ -94,10 +94,17 @@ public class ConnectionOptionsTest
     final ConnectCommand optionsParser =
       new ConnectCommand(new SchemaCrawlerShellState());
     new CommandLine(optionsParser).parseArgs(args);
-    assertThrows(IllegalArgumentException.class,
-                 () -> optionsParser
-                   .getDatabaseConnectable()
-                   .toDatabaseConnectionSource(new Config()));
+
+    final DatabaseConnectionOptions databaseConnectorOptions =
+        optionsParser.getDatabaseConnectionOptions();
+      final DatabaseServerType databaseServerType =
+          databaseConnectorOptions.getDatabaseConnector().getDatabaseServerType();
+
+      assertThat(((DatabaseUrlConnectionOptions)databaseConnectorOptions).getConnectionUrl(),
+        is(" "));
+      assertThat(databaseServerType
+                   .getDatabaseSystemIdentifier(),
+                 is(nullValue()));
   }
 
   @Test
@@ -109,18 +116,18 @@ public class ConnectionOptionsTest
 
     final ConnectCommand optionsParser =
       new ConnectCommand(new SchemaCrawlerShellState());
-    final CommandLine commandLine = newCommandLine(optionsParser, null, true);
-    commandLine.parseArgs(args);
+    newCommandLine(optionsParser, null, true).parseArgs(args);
 
-    final DatabaseConnectable databaseConnectable =
-      optionsParser.getDatabaseConnectable();
-    final DatabaseConnectionSource databaseConnectionSource =
-      databaseConnectable.toDatabaseConnectionSource(new Config());
+    final DatabaseConnectionOptions databaseConnectorOptions =
+      optionsParser.getDatabaseConnectionOptions();
+    final DatabaseServerType databaseServerType =
+        databaseConnectorOptions.getDatabaseConnector().getDatabaseServerType();
 
-    assertThat(databaseConnectionSource
-                 .toString()
-                 .replaceAll("\r", ""),
-               is("driver=<unknown>\nurl=jdbc:database_url\n"));
+    assertThat(((DatabaseUrlConnectionOptions)databaseConnectorOptions).getConnectionUrl(),
+      is("jdbc:database_url"));
+    assertThat(databaseServerType
+                 .getDatabaseSystemIdentifier(),
+               is(nullValue()));
   }
 
   @Test
@@ -162,24 +169,18 @@ public class ConnectionOptionsTest
 
     final ConnectCommand optionsParser =
       new ConnectCommand(new SchemaCrawlerShellState());
-    final CommandLine commandLine = newCommandLine(optionsParser, null, true);
-    commandLine.parseArgs(args);
+    newCommandLine(optionsParser, null, true).parseArgs(args);
 
-    final DatabaseConnectable databaseConnectable =
-      optionsParser.getDatabaseConnectable();
-    final DatabaseConnectionSource databaseConnectionSource =
-      databaseConnectable.toDatabaseConnectionSource(config);
+    final DatabaseConnectionOptions databaseConnectorOptions =
+        optionsParser.getDatabaseConnectionOptions();
+      final DatabaseServerType databaseServerType =
+          databaseConnectorOptions.getDatabaseConnector().getDatabaseServerType();
 
-    // Assert internal field for connection properties
-    final Field f = databaseConnectionSource
-      .getClass()
-      .getDeclaredField("connectionProperties");
-    f.setAccessible(true);
-    final Map<String, String> connectionProperties =
-      (Map<String, String>) f.get(databaseConnectionSource);
-
-    assertThat(connectionProperties, hasEntry("key1", "value1"));
-    assertThat(connectionProperties, hasEntry("key2", "value2"));
+      assertThat(databaseServerType
+                   .getDatabaseSystemIdentifier(),
+                 is("test-db"));
+      
+      // TODO: test urlx parameters
   }
 
   @Test
@@ -243,19 +244,22 @@ public class ConnectionOptionsTest
 
     final ConnectCommand optionsParser =
       new ConnectCommand(new SchemaCrawlerShellState());
-    final CommandLine commandLine = newCommandLine(optionsParser, null, true);
-    commandLine.parseArgs(args);
+    newCommandLine(optionsParser, null, true).parseArgs(args);
 
-    final DatabaseConnectable databaseConnectable =
-      optionsParser.getDatabaseConnectable();
-    final DatabaseConnectionSource databaseConnectionSource =
-      databaseConnectable.toDatabaseConnectionSource(config);
+    final DatabaseConnectionOptions databaseConnectorOptions =
+        optionsParser.getDatabaseConnectionOptions();
+      final DatabaseServerType databaseServerType =
+          databaseConnectorOptions.getDatabaseConnector().getDatabaseServerType();
 
-    assertThat(databaseConnectionSource
-                 .toString()
-                 .replaceAll("\r", ""),
-               is(
-                 "driver=<unknown>\nurl=jdbc:test-db://somehost:1234/adatabase\n"));
+      assertThat(((DatabaseServerHostConnectionOptions)databaseConnectorOptions).getHost(),
+        is("somehost"));
+      assertThat(((DatabaseServerHostConnectionOptions)databaseConnectorOptions).getPort(),
+          is(1234));
+      assertThat(((DatabaseServerHostConnectionOptions)databaseConnectorOptions).getDatabase(),
+          is("adatabase"));      
+      assertThat(databaseServerType
+                   .getDatabaseSystemIdentifier(),
+                 is("test-db"));
   }
 
   @Test

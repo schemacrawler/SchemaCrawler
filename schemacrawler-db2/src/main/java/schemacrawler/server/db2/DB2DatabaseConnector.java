@@ -30,43 +30,29 @@ package schemacrawler.server.db2;
 
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
-
 import java.io.IOException;
-import java.sql.Connection;
-import java.util.function.Predicate;
-import java.util.regex.Pattern;
-
-import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public final class DB2DatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(DB2DatabaseConnector.class.getName());
-
-  public DB2DatabaseConnector()
-    throws IOException
+  public DB2DatabaseConnector() throws IOException
   {
     super(new DatabaseServerType("db2", "IBM DB2"),
-          new ClasspathInputResource("/schemacrawler-db2.config.properties"),
-          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
-            "/db2.information_schema"));
-  }
-
-  @Override
-  public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(final Connection connection)
-  {
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-      super.getSchemaRetrievalOptionsBuilder(connection);
-    schemaRetrievalOptionsBuilder.with(tableColumnsRetrievalStrategy,
-                                       data_dictionary_all);
-    return schemaRetrievalOptionsBuilder;
+        url -> url != null && url.startsWith("jdbc:db2:"),
+        (informationSchemaViewsBuilder,
+            connection) -> informationSchemaViewsBuilder
+                .fromResourceFolder("/db2.information_schema"),
+        (schemaRetrievalOptionsBuilder, connection) -> schemaRetrievalOptionsBuilder.with(tableColumnsRetrievalStrategy,
+            data_dictionary_all),
+        (limitOptionsBuilder) -> {}, 
+        () -> DatabaseConnectionUrlBuilder.builder(
+            "jdbc:db2://${host}:${port}/${database}:retrieveMessagesFromServerOnGetMessage=true;")
+            .withDefaultPort(50000));
   }
 
   @Override
@@ -86,11 +72,5 @@ public final class DB2DatabaseConnector
       .addOption("database", "Database name", String.class);
     return pluginCommand;
   }
-
-  @Override
-  protected Predicate<String> supportsUrlPredicate()
-  {
-    return url -> Pattern.matches("jdbc:db2:.*", url);
-  }
-
+  
 }

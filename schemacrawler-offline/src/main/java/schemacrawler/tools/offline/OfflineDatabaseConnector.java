@@ -29,13 +29,10 @@ package schemacrawler.tools.offline;
 
 
 import java.io.IOException;
-import java.util.function.Predicate;
-import java.util.regex.Pattern;
-
 import schemacrawler.schemacrawler.DatabaseServerType;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public final class OfflineDatabaseConnector
   extends DatabaseConnector
@@ -52,8 +49,12 @@ public final class OfflineDatabaseConnector
     throws IOException
   {
     super(DB_SERVER_TYPE,
-          new ClasspathInputResource("/schemacrawler-offline.config.properties"),
-          null);
+          url -> url != null && url.startsWith("jdbc:offline:"),
+          (informationSchemaViewsBuilder, connection) -> {},
+          (schemaRetrievalOptionsBuilder, connection) -> {},
+          (limitOptionsBuilder) -> {},
+          () -> DatabaseConnectionUrlBuilder.builder(
+              "jdbc:offline:${database}"));
   }
 
   @Override
@@ -72,10 +73,5 @@ public final class OfflineDatabaseConnector
                  String.class);
     return pluginCommand;
   }
-
-  @Override
-  protected Predicate<String> supportsUrlPredicate()
-  {
-    return url -> Pattern.matches("jdbc:offline:.*", url);
-  }
+  
 }

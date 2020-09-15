@@ -29,27 +29,27 @@ package schemacrawler.server.hsqldb;
 
 
 import java.io.IOException;
-import java.util.function.Predicate;
-import java.util.regex.Pattern;
-
 import schemacrawler.schemacrawler.DatabaseServerType;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public final class HyperSQLDatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final long serialVersionUID = 5148345984002037384L;
-
-  public HyperSQLDatabaseConnector()
-    throws IOException
+  public HyperSQLDatabaseConnector() throws IOException
   {
     super(new DatabaseServerType("hsqldb", "HyperSQL DataBase"),
-          new ClasspathInputResource("/schemacrawler-hsqldb.config.properties"),
-          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
-            "/hsqldb.information_schema"));
+        url -> url != null && url.startsWith("jdbc:hsqldb:"),
+        (informationSchemaViewsBuilder,
+            connection) -> informationSchemaViewsBuilder
+                .fromResourceFolder("/hsqldb.information_schema"),
+        (schemaRetrievalOptionsBuilder, connection) -> {}, 
+        (limitOptionsBuilder) -> {},
+        () -> DatabaseConnectionUrlBuilder.builder(
+            "jdbc:hsqldb:hsql://${host}:${port}/${database};readonly=true;hsqldb.lock_file=false")
+            .withDefaultPort(9001));
   }
 
   @Override
@@ -69,12 +69,6 @@ public final class HyperSQLDatabaseConnector
                  Integer.class)
       .addOption("database", "Database name", String.class);
     return pluginCommand;
-  }
-
-  @Override
-  protected Predicate<String> supportsUrlPredicate()
-  {
-    return url -> Pattern.matches("jdbc:hsqldb:.*", url);
   }
 
 }

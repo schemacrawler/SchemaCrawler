@@ -25,18 +25,34 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+package schemacrawler.server.mysql;
 
-package schemacrawler.tools.databaseconnector;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 
-
-import schemacrawler.schemacrawler.Options;
-import schemacrawler.tools.options.Config;
-
-@FunctionalInterface
-public interface DatabaseConnectorOptions
-  extends Options
+public class MySQLUrlBuilder implements Supplier<DatabaseConnectionUrlBuilder>
 {
 
-  DatabaseConnectionSource toDatabaseConnectionSource(Config config);
+  @Override
+  public DatabaseConnectionUrlBuilder get()
+  {
+    final Map<String, String> map = new HashMap<>();
+    map.put("nullNamePatternMatchesAll", "true");
+    map.put("noAccessToProcedureBodies", "true");
+    map.put("logger", "Jdk14Logger");
+    map.put("dumpQueriesOnException", "true");
+    map.put("dumpMetadataOnColumnNotFound", "true");
+    map.put("maxQuerySizeToLog", "4096");
+    map.put("disableMariaDbDriver", "true");
+    map.put("useInformationSchema", "true");
+    
+    final DatabaseConnectionUrlBuilder urlBuilder = DatabaseConnectionUrlBuilder
+        .builder("jdbc:mysql://${host}:${port}/${database}")
+        .withDefaultPort(3306).withDefaultUrlx(map);
+    
+    return urlBuilder;
+  }
 
 }

@@ -28,14 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.command;
 
+import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
 
-import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.databaseconnector.DatabaseConnectorOptions;
 
-public interface DatabaseConnectable
-  extends DatabaseConnectorOptions
+public interface ConnectionOptions
 {
 
-  DatabaseConnector getDatabaseConnector();
+  DatabaseConnectionOptions toDatabaseConnectionOptions();
 
 }

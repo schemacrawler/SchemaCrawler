@@ -29,58 +29,26 @@ package schemacrawler.tools.sqlite;
 
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.util.function.Predicate;
-import java.util.regex.Pattern;
-
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.databaseconnector.DatabaseConnectorOptions;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public final class SQLiteDatabaseConnector
   extends DatabaseConnector
 {
-
+  
   public SQLiteDatabaseConnector()
     throws IOException
   {
     super(new DatabaseServerType("sqlite", "SQLite"),
-          new ClasspathInputResource("/schemacrawler-sqlite.config.properties"),
+          url -> url != null && url.startsWith("jdbc:sqlite:"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
-            "/sqlite.information_schema"));
-  }
-
-  @Override
-  public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(final Connection connection)
-  {
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-      super.getSchemaRetrievalOptionsBuilder(connection);
-    schemaRetrievalOptionsBuilder.withIdentifierQuoteString("\"");
-    return schemaRetrievalOptionsBuilder;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public DatabaseConnectionSource newDatabaseConnectionSource(final DatabaseConnectorOptions databaseConnectorOptions)
-    throws SchemaCrawlerException
-  {
-    try
-    {
-      Class.forName("org.sqlite.JDBC");
-    }
-    catch (final ClassNotFoundException e)
-    {
-      throw new SchemaCrawlerException("Could not load SQLite JDBC driver", e);
-    }
-
-    return super.newDatabaseConnectionSource(databaseConnectorOptions);
+            "/sqlite.information_schema"),
+          (schemaRetrievalOptionsBuilder, connection) -> schemaRetrievalOptionsBuilder.withIdentifierQuoteString("\""),
+          (limitOptionsBuilder) -> {},
+          () -> DatabaseConnectionUrlBuilder.builder(
+              "jdbc:sqlite:${database}"));
   }
 
   @Override
@@ -96,11 +64,5 @@ public final class SQLiteDatabaseConnector
       .addOption("database", "SQLite database file path", String.class);
     return pluginCommand;
   }
-
-  @Override
-  protected Predicate<String> supportsUrlPredicate()
-  {
-    return url -> Pattern.matches("jdbc:sqlite:.*", url);
-  }
-
+  
 }
