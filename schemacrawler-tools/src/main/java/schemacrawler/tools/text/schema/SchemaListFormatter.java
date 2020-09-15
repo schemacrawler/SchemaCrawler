@@ -89,10 +89,7 @@ final class SchemaListFormatter
   @Override
   public void begin()
   {
-    if (!options.isNoHeader())
-    {
-      formattingHelper.writeDocumentStart();
-    }
+    formattingHelper.writeDocumentStart();
   }
 
   @Override
@@ -199,11 +196,7 @@ final class SchemaListFormatter
   public void end()
     throws SchemaCrawlerException
   {
-    if (!options.isNoFooter())
-    {
-      formattingHelper.writeDocumentEnd();
-    }
-
+    formattingHelper.writeDocumentEnd();
     super.end();
   }
 

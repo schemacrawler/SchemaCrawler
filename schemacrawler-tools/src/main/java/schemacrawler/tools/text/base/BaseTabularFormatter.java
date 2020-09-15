@@ -72,10 +72,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
   @Override
   public void begin()
   {
-    if (!options.isNoHeader())
-    {
-      formattingHelper.writeDocumentStart();
-    }
+    formattingHelper.writeDocumentStart();
   }
 
   @Override
@@ -286,11 +283,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
   public void end()
     throws SchemaCrawlerException
   {
-    if (!options.isNoFooter())
-    {
-      formattingHelper.writeDocumentEnd();
-    }
-
+    formattingHelper.writeDocumentEnd();
     super.end();
   }
 

@@ -41,18 +41,12 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
   protected static final String SCHEMACRAWLER_FORMAT_PREFIX =
     "schemacrawler.format.";
 
-  private static final String NO_HEADER =
-    SCHEMACRAWLER_FORMAT_PREFIX + "no_header";
-  private static final String NO_FOOTER =
-    SCHEMACRAWLER_FORMAT_PREFIX + "no_footer";
   private static final String NO_SCHEMACRAWLER_INFO =
     SCHEMACRAWLER_FORMAT_PREFIX + "no_schemacrawler_info";
   private static final String SHOW_DATABASE_INFO =
     SCHEMACRAWLER_FORMAT_PREFIX + "show_database_info";
   private static final String SHOW_JDBC_DRIVER_INFO =
     SCHEMACRAWLER_FORMAT_PREFIX + "show_jdbc_driver_info";
-  private static final String APPEND_OUTPUT =
-    SCHEMACRAWLER_FORMAT_PREFIX + "append_output";
 
   private static final String SHOW_UNQUALIFIED_NAMES =
     SCHEMACRAWLER_FORMAT_PREFIX + "show_unqualified_names";
@@ -77,9 +71,6 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
   protected boolean isAlphabeticalSortForRoutines;
   protected boolean isAlphabeticalSortForTableColumns;
   protected boolean isAlphabeticalSortForTables = true;
-  protected boolean isAppendOutput;
-  protected boolean isNoFooter;
-  protected boolean isNoHeader;
   protected boolean isNoSchemaCrawlerInfo;
   protected boolean isShowDatabaseInfo;
   protected boolean isShowJdbcDriverInfo;
@@ -92,12 +83,6 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
     // All fields are set to the defaults
   }
 
-  public final B appendOutput()
-  {
-    isAppendOutput = true;
-    return (B) this;
-  }
-
   @Override
   public B fromConfig(final Config map)
   {
@@ -108,12 +93,9 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
 
     final Config config = new Config(map);
 
-    isNoFooter = config.getBooleanValue(NO_FOOTER);
-    isNoHeader = config.getBooleanValue(NO_HEADER);
     isShowDatabaseInfo = config.getBooleanValue(SHOW_DATABASE_INFO);
     isShowJdbcDriverInfo = config.getBooleanValue(SHOW_JDBC_DRIVER_INFO);
     isNoSchemaCrawlerInfo = config.getBooleanValue(NO_SCHEMACRAWLER_INFO);
-    isAppendOutput = config.getBooleanValue(APPEND_OUTPUT);
 
     isShowUnqualifiedNames = config.getBooleanValue(SHOW_UNQUALIFIED_NAMES);
 
@@ -147,12 +129,9 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
       return (B) this;
     }
 
-    isNoFooter = options.isNoFooter();
-    isNoHeader = options.isNoHeader();
     isShowDatabaseInfo = options.isShowDatabaseInfo();
     isShowJdbcDriverInfo = options.isShowJdbcDriverInfo();
     isNoSchemaCrawlerInfo = options.isNoSchemaCrawlerInfo();
-    isAppendOutput = options.isAppendOutput();
 
     isShowUnqualifiedNames = options.isShowUnqualifiedNames();
 
@@ -176,12 +155,9 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
   {
     final Config config = new Config();
 
-    config.setBooleanValue(NO_FOOTER, isNoFooter);
-    config.setBooleanValue(NO_HEADER, isNoHeader);
     config.setBooleanValue(NO_SCHEMACRAWLER_INFO, isNoSchemaCrawlerInfo);
     config.setBooleanValue(SHOW_DATABASE_INFO, isShowDatabaseInfo);
     config.setBooleanValue(SHOW_JDBC_DRIVER_INFO, isShowJdbcDriverInfo);
-    config.setBooleanValue(APPEND_OUTPUT, isAppendOutput);
 
     config.setBooleanValue(SHOW_UNQUALIFIED_NAMES, isShowUnqualifiedNames);
 
@@ -201,28 +177,6 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
     config.setEnumValue(IDENTIFIER_QUOTING_STRATEGY, identifierQuotingStrategy);
 
     return config;
-  }
-
-  public final B noFooter()
-  {
-    return noFooter(true);
-  }
-
-  public final B noFooter(final boolean value)
-  {
-    isNoFooter = value;
-    return (B) this;
-  }
-
-  public final B noHeader()
-  {
-    return noHeader(true);
-  }
-
-  public final B noHeader(final boolean value)
-  {
-    isNoHeader = value;
-    return (B) this;
   }
 
   /**
@@ -263,12 +217,6 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
   public final B noSchemaCrawlerInfo(final boolean value)
   {
     isNoSchemaCrawlerInfo = value;
-    return (B) this;
-  }
-
-  public final B overwriteOutput()
-  {
-    isAppendOutput = false;
     return (B) this;
   }
 

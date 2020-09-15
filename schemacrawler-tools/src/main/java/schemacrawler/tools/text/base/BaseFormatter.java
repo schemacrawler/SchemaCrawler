@@ -87,7 +87,7 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
     try
     {
       out =
-        new PrintWriter(outputOptions.openNewOutputWriter(options.isAppendOutput()),
+        new PrintWriter(outputOptions.openNewOutputWriter(false),
                         true);
     }
     catch (final IOException e)

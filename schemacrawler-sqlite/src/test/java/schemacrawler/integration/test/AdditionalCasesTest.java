@@ -53,7 +53,7 @@ public class AdditionalCasesTest
   public void renameTable(final TestContext testContext)
     throws Exception
   {
-    run(testContext.testMethodFullName(), "/rename_table.sql", "details,dump");
+    run(testContext.testMethodFullName(), "/rename_table.sql", "details");
   }
 
   @Test

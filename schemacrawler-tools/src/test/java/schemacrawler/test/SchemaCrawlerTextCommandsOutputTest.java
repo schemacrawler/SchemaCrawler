@@ -143,8 +143,6 @@ public class SchemaCrawlerTextCommandsOutputTest
       CommonTextOptionsBuilder.builder();
     commonTextOptions.fromConfig(config);
     commonTextOptions.noInfo();
-    commonTextOptions.noHeader();
-    commonTextOptions.noFooter();
     commonTextOptions.sortTables(true);
     config.putAll(commonTextOptions.toConfig());
 

@@ -42,9 +42,6 @@ public abstract class BaseTextOptions
   private final boolean isAlphabeticalSortForTableColumns;
   private final boolean isAlphabeticalSortForRoutines;
   private final boolean isAlphabeticalSortForRoutineParameters;
-  private final boolean isAppendOutput;
-  private final boolean isNoFooter;
-  private final boolean isNoHeader;
   private final boolean isNoSchemaCrawlerInfo;
   private final boolean isShowDatabaseInfo;
   private final boolean isShowJdbcDriverInfo;
@@ -62,9 +59,6 @@ public abstract class BaseTextOptions
     isAlphabeticalSortForRoutines = builder.isAlphabeticalSortForRoutines;
     isAlphabeticalSortForRoutineParameters =
       builder.isAlphabeticalSortForRoutineParameters;
-    isAppendOutput = builder.isAppendOutput;
-    isNoFooter = builder.isNoFooter;
-    isNoHeader = builder.isNoHeader;
     isNoSchemaCrawlerInfo = builder.isNoSchemaCrawlerInfo;
     isShowDatabaseInfo = builder.isShowDatabaseInfo;
     isShowJdbcDriverInfo = builder.isShowJdbcDriverInfo;
@@ -96,21 +90,6 @@ public abstract class BaseTextOptions
   public boolean isAlphabeticalSortForTables()
   {
     return isAlphabeticalSortForTables;
-  }
-
-  public boolean isAppendOutput()
-  {
-    return isAppendOutput;
-  }
-
-  public boolean isNoFooter()
-  {
-    return isNoFooter;
-  }
-
-  public boolean isNoHeader()
-  {
-    return isNoHeader;
   }
 
   public boolean isNoInfo()

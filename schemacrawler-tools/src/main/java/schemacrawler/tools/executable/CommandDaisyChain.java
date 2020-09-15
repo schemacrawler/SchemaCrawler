@@ -76,27 +76,13 @@ public final class CommandDaisyChain
 
       if (commands.hasMultipleCommands())
       {
-        if (commands.isFirstCommand(command))
+        if (commands.isLastCommand(command))
         {
-          // First command - no footer
-          commonTextOptionsBuilder.noFooter();
-        }
-        else if (commands.isLastCommand(command))
-        {
-          // Last command - no header, or info
-          commonTextOptionsBuilder.noHeader();
           commonTextOptionsBuilder.noInfo();
-
-          commonTextOptionsBuilder.appendOutput();
         }
         else
         {
-          // Middle command - no header, footer, or info
-          commonTextOptionsBuilder.noHeader();
           commonTextOptionsBuilder.noInfo();
-          commonTextOptionsBuilder.noFooter();
-
-          commonTextOptionsBuilder.appendOutput();
         }
       }
 
