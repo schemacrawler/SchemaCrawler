@@ -224,7 +224,7 @@ public final class SchemaCrawlerExecutable
   {
     // NOTE: The daisy chain command may change the provided output
     // options for each chained command
-    final SchemaCrawlerCommand scCommand = new CommandDaisyChain(command);
+    final SchemaCrawlerCommand scCommand = new CommandSchemaCrawlerCommand(command);
     scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
     scCommand.setOutputOptions(outputOptions);
     scCommand.setAdditionalConfiguration(additionalConfiguration);
