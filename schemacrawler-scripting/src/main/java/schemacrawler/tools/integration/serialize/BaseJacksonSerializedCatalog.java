@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.integration.serialize;
 
-
 import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;
 import static com.fasterxml.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS;
 import static com.fasterxml.jackson.databind.SerializationFeature.USE_EQUALITY_FOR_OBJECT_ID;
@@ -58,198 +57,154 @@ import com.fasterxml.jackson.databind.ser.PropertyFilter;
 import com.fasterxml.jackson.databind.ser.PropertyWriter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
-/**
- * Decorates a database to allow for serialization to and from plain Java
- * serialization.
- */
-public abstract class BaseJacksonSerializedCatalog
-  implements CatalogSerializer
-{
+/** Decorates a database to allow for serialization to and from plain Java serialization. */
+public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer {
 
-  private static final long serialVersionUID = 5314326260124511414L;
+  private static class IgnoreExceptionBeanPropertyFilter extends SimpleBeanPropertyFilter {
 
-
-  private static class IgnoreExceptionBeanPropertyFilter
-    extends SimpleBeanPropertyFilter
-  {
-
-    private static final List<String> PARTIAL_PROPERTIES = Arrays.asList("name",
-                                                                        "short-name",
-                                                                        "full-name",
-                                                                        "attributes",
-                                                                        "parent-partial",
-                                                                        "remarks",
-                                                                        "schema");
+    private static final List<String> PARTIAL_PROPERTIES =
+        Arrays.asList(
+            "name", "short-name", "full-name", "attributes", "parent-partial", "remarks", "schema");
 
     @Override
-    protected boolean include(BeanPropertyWriter writer)
-    {
-      return true;
-    }
-
-    @Override
-    protected boolean include(PropertyWriter writer)
-    {
-      return true;
-    }
-
-    @Override
-    public void serializeAsField(final Object pojo,
-                                 final JsonGenerator jgen,
-                                 final SerializerProvider provider,
-                                 final PropertyWriter writer)
-      throws Exception
-    {
-      if (include(writer))
-      {
-        try
-        {
+    public void serializeAsField(
+        final Object pojo,
+        final JsonGenerator jgen,
+        final SerializerProvider provider,
+        final PropertyWriter writer)
+        throws Exception {
+      if (include(writer)) {
+        try {
           if (pojo instanceof PartialDatabaseObject
-              && !PARTIAL_PROPERTIES.contains(writer.getName()))
-          {
+              && !PARTIAL_PROPERTIES.contains(writer.getName())) {
             return;
           }
-          if (writer instanceof BeanPropertyWriter)
-          {
+          if (writer instanceof BeanPropertyWriter) {
             final Object value = ((BeanPropertyWriter) writer).get(pojo);
           }
           writer.serializeAsField(pojo, jgen, provider);
-        }
-        catch (final Exception e)
-        {
+        } catch (final Exception e) {
           return;
         }
-      }
-      else if (!jgen.canOmitFields())
-      {
+      } else if (!jgen.canOmitFields()) {
         writer.serializeAsOmittedField(pojo, jgen, provider);
       }
     }
-  }
 
+    @Override
+    protected boolean include(BeanPropertyWriter writer) {
+      return true;
+    }
+
+    @Override
+    protected boolean include(PropertyWriter writer) {
+      return true;
+    }
+  }
 
   private final Catalog catalog;
   private final SortedSet<Column> allTableColumns;
 
-  public BaseJacksonSerializedCatalog(final Catalog catalog)
-  {
+  public BaseJacksonSerializedCatalog(final Catalog catalog) {
     this.catalog = requireNonNull(catalog, "No catalog provided");
     allTableColumns = new TreeSet<>();
     loadAllTableColumns();
   }
 
-  public Set<Column> getAllTableColumns()
-  {
+  public Set<Column> getAllTableColumns() {
     return new TreeSet<>(allTableColumns);
   }
 
-  public Catalog getCatalog()
-  {
+  @Override
+  public Catalog getCatalog() {
     return catalog;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public void save(final OutputStream out)
-    throws SchemaCrawlerException
-  {
+  public void save(final OutputStream out) throws SchemaCrawlerException {
     requireNonNull(out, "No output stream provided");
-    try
-    {
+    try {
       final ObjectMapper mapper = newConfiguredObjectMapper();
       mapper.writeValue(out, this);
-    }
-    catch (final Exception e)
-    {
+    } catch (final Exception e) {
       throw new SchemaCrawlerException("Could not serialize catalog", e);
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public void save(final Writer out)
-    throws SchemaCrawlerException
-  {
+  public void save(final Writer out) throws SchemaCrawlerException {
     requireNonNull(out, "No writer provided");
-    try
-    {
+    try {
       final ObjectMapper mapper = newConfiguredObjectMapper();
       mapper.writeValue(out, this);
-    }
-    catch (final Exception e)
-    {
+    } catch (final Exception e) {
       throw new SchemaCrawlerException("Could not serialize catalog", e);
     }
   }
 
   protected abstract ObjectMapper newObjectMapper();
 
-  private ObjectMapper newConfiguredObjectMapper()
-  {
-    @JsonIgnoreProperties({
-                            "parent",
-                            "referenced-column",
-                            "exported-foreign-keys",
-                            "imported-foreign-keys"
-                          })
-    @JsonPropertyOrder(value = {
-      "@uuid",
-      "name",
-      "short-name",
-      "full-name",
-      "crawl-info",
-      "schema-crawler-info",
-      "jvm-system-info",
-      "operating-system-info",
-      "database-info",
-      "jdbc-driver-info",
-      "schemas",
-      "system-column-data-types",
-      "column-data-types",
-      "all-table-columns"
-    }, alphabetic = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class,
-                      property = "@uuid")
-    @JsonNaming(PropertyNamingStrategy.KebabCaseStrategy.class)
-    @JsonFilter("ignore-getter-errors-filter")
-    class JacksonAnnotationMixIn
-    {
-
-    }
-
-    final FilterProvider
-      filters = new SimpleFilterProvider().addFilter("ignore-getter-errors-filter",
-                                                     (PropertyFilter) new IgnoreExceptionBeanPropertyFilter());
-
-    final ObjectMapper mapper = newObjectMapper();
-    mapper.enable(ORDER_MAP_ENTRIES_BY_KEYS,
-                  INDENT_OUTPUT,
-                  USE_EQUALITY_FOR_OBJECT_ID,
-                  WRITE_ENUMS_USING_TO_STRING);
-    mapper.addMixIn(Object.class, JacksonAnnotationMixIn.class);
-    mapper.setFilterProvider(filters);
-    return mapper;
-  }
-
-  private void loadAllTableColumns()
-  {
-    for (final Table table : catalog.getTables())
-    {
-      for (final Column column : table.getColumns())
-      {
+  private void loadAllTableColumns() {
+    for (final Table table : catalog.getTables()) {
+      for (final Column column : table.getColumns()) {
         allTableColumns.add(column);
       }
     }
   }
 
+  private ObjectMapper newConfiguredObjectMapper() {
+    @JsonIgnoreProperties({
+      "parent",
+      "referenced-column",
+      "exported-foreign-keys",
+      "imported-foreign-keys"
+    })
+    @JsonPropertyOrder(
+        value = {
+          "@uuid",
+          "name",
+          "short-name",
+          "full-name",
+          "crawl-info",
+          "schema-crawler-info",
+          "jvm-system-info",
+          "operating-system-info",
+          "database-info",
+          "jdbc-driver-info",
+          "schemas",
+          "system-column-data-types",
+          "column-data-types",
+          "all-table-columns"
+        },
+        alphabetic = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@uuid")
+    @JsonNaming(PropertyNamingStrategy.KebabCaseStrategy.class)
+    @JsonFilter("ignore-getter-errors-filter")
+    class JacksonAnnotationMixIn {}
+
+    final FilterProvider filters =
+        new SimpleFilterProvider()
+            .addFilter(
+                "ignore-getter-errors-filter",
+                (PropertyFilter) new IgnoreExceptionBeanPropertyFilter());
+
+    final ObjectMapper mapper = newObjectMapper();
+    mapper.enable(
+        ORDER_MAP_ENTRIES_BY_KEYS,
+        INDENT_OUTPUT,
+        USE_EQUALITY_FOR_OBJECT_ID,
+        WRITE_ENUMS_USING_TO_STRING);
+    mapper.addMixIn(Object.class, JacksonAnnotationMixIn.class);
+    mapper.setFilterProvider(filters);
+    return mapper;
+  }
 }

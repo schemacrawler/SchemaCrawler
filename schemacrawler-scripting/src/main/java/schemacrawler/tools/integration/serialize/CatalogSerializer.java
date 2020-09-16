@@ -27,38 +27,13 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.integration.serialize;
 
-
 import java.io.OutputStream;
 import java.io.Writer;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
-public interface CatalogSerializer
-{
-
-  /**
-   * Serialize catalog to a binary stream. If the serialization format is
-   * text-based, specified character encoding will not be honored.
-   *
-   * @param out
-   *   Output stream
-   * @throws SchemaCrawlerException
-   */
-  void save(final OutputStream out)
-    throws SchemaCrawlerException;
-
-  /**
-   * Serialize catalog to a binary stream. If the serialization format is
-   * text-based, specified character encoding will be honored. If the
-   * serialization format is binary, and exception will be thrown.
-   *
-   * @param out
-   *   Output stream
-   * @throws SchemaCrawlerException
-   */
-  void save(final Writer out)
-    throws SchemaCrawlerException;
+public interface CatalogSerializer {
 
   /**
    * Gets the catalog wrapped by ths savable.
@@ -67,4 +42,22 @@ public interface CatalogSerializer
    */
   Catalog getCatalog();
 
+  /**
+   * Serialize catalog to a binary stream. If the serialization format is text-based, specified
+   * character encoding will not be honored.
+   *
+   * @param out Output stream
+   * @throws SchemaCrawlerException
+   */
+  void save(final OutputStream out) throws SchemaCrawlerException;
+
+  /**
+   * Serialize catalog to a binary stream. If the serialization format is text-based, specified
+   * character encoding will be honored. If the serialization format is binary, and exception will
+   * be thrown.
+   *
+   * @param out Output stream
+   * @throws SchemaCrawlerException
+   */
+  void save(final Writer out) throws SchemaCrawlerException;
 }

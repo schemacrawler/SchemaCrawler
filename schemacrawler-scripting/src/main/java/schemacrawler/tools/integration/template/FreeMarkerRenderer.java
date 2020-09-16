@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.integration.template;
 
-
 import java.io.File;
 import java.io.Writer;
 import java.util.Locale;
@@ -47,54 +46,40 @@ import schemacrawler.tools.options.OutputOptions;
  *
  * @author Sualeh Fatehi
  */
-public final class FreeMarkerRenderer
-  extends BaseTemplateRenderer
-{
+public final class FreeMarkerRenderer extends BaseTemplateRenderer {
 
   @Override
-  public final void execute()
-    throws Exception
-  {
+  public void execute() throws Exception {
 
     final OutputOptions outputOptions = getOutputOptions();
 
     String templateLocation = getResourceFilename();
     String templatePath = ".";
     final File templateFilePath = new File(templateLocation);
-    if (templateFilePath.exists())
-    {
-      templatePath = templateFilePath
-        .getAbsoluteFile()
-        .getParent();
+    if (templateFilePath.exists()) {
+      templatePath = templateFilePath.getAbsoluteFile().getParent();
       templateLocation = templateFilePath.getName();
     }
 
-    System.setProperty(freemarker.log.Logger.SYSTEM_PROPERTY_NAME_LOGGER_LIBRARY,
-                       freemarker.log.Logger.LIBRARY_NAME_JUL);
+    System.setProperty(
+        freemarker.log.Logger.SYSTEM_PROPERTY_NAME_LOGGER_LIBRARY,
+        freemarker.log.Logger.LIBRARY_NAME_JUL);
 
     // Create a new instance of the configuration
     final Configuration cfg = new Configuration(Configuration.VERSION_2_3_28);
 
-    final TemplateLoader ctl =
-      new ClassTemplateLoader(FreeMarkerRenderer.class, "/");
+    final TemplateLoader ctl = new ClassTemplateLoader(FreeMarkerRenderer.class, "/");
     final TemplateLoader ftl = new FileTemplateLoader(new File(templatePath));
-    final TemplateLoader mtl = new MultiTemplateLoader(new TemplateLoader[] {
-      ctl, ftl
-    });
+    final TemplateLoader mtl = new MultiTemplateLoader(new TemplateLoader[] {ctl, ftl});
     cfg.setTemplateLoader(mtl);
-    cfg.setEncoding(Locale.getDefault(),
-                    outputOptions
-                      .getInputCharset()
-                      .name());
+    cfg.setEncoding(Locale.getDefault(), outputOptions.getInputCharset().name());
     cfg.setWhitespaceStripping(true);
 
-    try (final Writer writer = outputOptions.openNewOutputWriter())
-    {
+    try (final Writer writer = outputOptions.openNewOutputWriter()) {
       // Evaluate the template
       final Template template = cfg.getTemplate(templateLocation);
       final Map<String, Object> context = getContext();
       template.process(context, writer);
     }
   }
-
 }

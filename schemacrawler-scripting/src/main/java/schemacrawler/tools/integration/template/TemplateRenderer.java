@@ -1,6 +1,5 @@
 package schemacrawler.tools.integration.template;
 
-
 import java.util.Map;
 
 import schemacrawler.tools.options.OutputOptions;
@@ -33,17 +32,13 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
+public interface TemplateRenderer {
 
-public interface TemplateRenderer
-{
-
-  void setResourceFilename(String resourceFilename);
+  void execute() throws Exception;
 
   void setContext(Map<String, Object> context);
 
   void setOutputOptions(OutputOptions outputOptions);
 
-  void execute()
-    throws Exception;
-
+  void setResourceFilename(String resourceFilename);
 }

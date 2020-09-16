@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.serialize;
 
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -53,6 +52,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
@@ -69,8 +69,7 @@ import us.fatehi.utility.IOUtility;
 @ExtendWith(TestContextParameterResolver.class)
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
-public class CommandLineSerializeCommandTest
-{
+public class CommandLineSerializeCommandTest {
 
   private static boolean DEBUG = true;
 
@@ -81,26 +80,39 @@ public class CommandLineSerializeCommandTest
 
   @BeforeEach
   public void _setupDirectory(final TestContext testContext)
-    throws IOException, URISyntaxException
-  {
-    if (directory != null)
-    {
+      throws IOException, URISyntaxException {
+    if (directory != null) {
       return;
     }
     directory = testContext.resolveTargetFromRootPath(".");
   }
 
   @AfterEach
-  public void cleanUpStreams()
-  {
+  public void cleanUpStreams() {
     System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
     System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
   }
 
+  @Test
+  public void commandLineJava(final DatabaseConnectionInfo connectionInfo) throws Exception {
+    assertThatOutputIsCorrect(
+        commandlineSerialize(connectionInfo, SerializationFormat.java), is("ACED"));
+  }
+
+  @Test
+  public void commandLineJson(final DatabaseConnectionInfo connectionInfo) throws Exception {
+    assertThatOutputIsCorrect(
+        commandlineSerialize(connectionInfo, SerializationFormat.json), is(oneOf("7B0D", "7B0A")));
+  }
+
+  @Test
+  public void commandLineYaml(final DatabaseConnectionInfo connectionInfo) throws Exception {
+    assertThatOutputIsCorrect(
+        commandlineSerialize(connectionInfo, SerializationFormat.yaml), is("2D2D"));
+  }
+
   @BeforeEach
-  public void setUpStreams()
-    throws Exception
-  {
+  public void setUpStreams() throws Exception {
     out = new TestOutputStream();
     System.setOut(new PrintStream(out));
 
@@ -108,65 +120,29 @@ public class CommandLineSerializeCommandTest
     System.setErr(new PrintStream(err));
   }
 
-  @Test
-  public void commandLineJava(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
-    assertThatOutputIsCorrect(commandlineSerialize(connectionInfo,
-                                                   SerializationFormat.java),
-                              is("ACED"));
-  }
-
-  @Test
-  public void commandLineJson(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
-    assertThatOutputIsCorrect(commandlineSerialize(connectionInfo,
-                                                   SerializationFormat.json),
-                              is(oneOf("7B0D", "7B0A")));
-  }
-
-  @Test
-  public void commandLineYaml(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
-    assertThatOutputIsCorrect(commandlineSerialize(connectionInfo,
-                                                   SerializationFormat.yaml),
-                              is("2D2D"));
-  }
-
-  private void assertThatOutputIsCorrect(final Path testOutputFile,
-                                         final Matcher<String> fileHeaderMatcher)
-    throws IOException
-  {
+  private void assertThatOutputIsCorrect(
+      final Path testOutputFile, final Matcher<String> fileHeaderMatcher) throws IOException {
     assertThat(outputOf(err), hasNoContent());
     assertThat(outputOf(out), hasNoContent());
     assertThat(Files.size(testOutputFile), greaterThan(0L));
     assertThat(fileHeaderOf(testOutputFile), fileHeaderMatcher);
   }
 
-  private Path commandlineSerialize(final DatabaseConnectionInfo connectionInfo,
-                                    final SerializationFormat serializationFormat)
-    throws Exception
-  {
+  private Path commandlineSerialize(
+      final DatabaseConnectionInfo connectionInfo, final SerializationFormat serializationFormat)
+      throws Exception {
     final Map<String, String> argsMap = new HashMap<>();
     argsMap.put("-info-level", InfoLevel.standard.name());
 
     final OutputFormat outputFormat = serializationFormat;
     final Path testOutputFile = IOUtility.createTempFilePath("test", "");
 
-    commandlineExecution(connectionInfo,
-                         "serialize",
-                         argsMap,
-                         null,
-                         outputFormat.getFormat(),
-                         testOutputFile);
-    if (DEBUG)
-    {
-      if (serializationFormat != null)
-      {
-        final Path copied = directory.resolve("serialize."
-                                              + serializationFormat.getFileExtension());
+    commandlineExecution(
+        connectionInfo, "serialize", argsMap, null, outputFormat.getFormat(), testOutputFile);
+    if (DEBUG) {
+      if (serializationFormat != null) {
+        final Path copied =
+            directory.resolve("serialize." + serializationFormat.getFileExtension());
         Files.copy(testOutputFile, copied, StandardCopyOption.REPLACE_EXISTING);
         // System.out.println(copied.toAbsolutePath());
       }
@@ -174,5 +150,4 @@ public class CommandLineSerializeCommandTest
 
     return testOutputFile;
   }
-
 }

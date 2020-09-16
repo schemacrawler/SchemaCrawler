@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.serialize;
 
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.oneOf;
@@ -41,6 +40,7 @@ import java.sql.Connection;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -54,56 +54,38 @@ import schemacrawler.tools.integration.serialize.SerializationFormat;
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public class ExecutableSerializeCommandTest
-{
+public class ExecutableSerializeCommandTest {
 
-  private static Path executeSerialize(final Connection connection,
-                                       final SerializationFormat serializationFormat)
-    throws Exception
-  {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-      .builder()
-      .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+  private static Path executeSerialize(
+      final Connection connection, final SerializationFormat serializationFormat) throws Exception {
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withLimitOptionsBuilder(limitOptionsBuilder);
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-      schemaCrawlerOptionsBuilder.toOptions();
+        SchemaCrawlerOptionsBuilder.builder().withLimitOptionsBuilder(limitOptionsBuilder);
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
-    final SchemaCrawlerExecutable executable =
-      new SchemaCrawlerExecutable("serialize");
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("serialize");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
     return executableExecution(connection, executable, serializationFormat);
   }
 
   @Test
-  public void executableSerializeJson(final Connection connection)
-    throws Exception
-  {
-    assertThat(fileHeaderOf(executeSerialize(connection,
-                                             SerializationFormat.json)),
-               is(oneOf("7B0D", "7B0A")));
-  }
-
-  @Test
-  public void executableSerializeYaml(final Connection connection)
-    throws Exception
-  {
-    assertThat(fileHeaderOf(executeSerialize(connection,
-                                             SerializationFormat.yaml)),
-               is("2D2D"));
-  }
-
-  @Test
   @Disabled("Cannot compare files during testing, since a new file is generated")
-  public void executableSerializeJava(final Connection connection)
-    throws Exception
-  {
-    assertThat(fileHeaderOf(executeSerialize(connection,
-                                             SerializationFormat.java)),
-               is("ACED"));
+  public void executableSerializeJava(final Connection connection) throws Exception {
+    assertThat(fileHeaderOf(executeSerialize(connection, SerializationFormat.java)), is("ACED"));
   }
 
+  @Test
+  public void executableSerializeJson(final Connection connection) throws Exception {
+    assertThat(
+        fileHeaderOf(executeSerialize(connection, SerializationFormat.json)),
+        is(oneOf("7B0D", "7B0A")));
+  }
+
+  @Test
+  public void executableSerializeYaml(final Connection connection) throws Exception {
+    assertThat(fileHeaderOf(executeSerialize(connection, SerializationFormat.yaml)), is("2D2D"));
+  }
 }

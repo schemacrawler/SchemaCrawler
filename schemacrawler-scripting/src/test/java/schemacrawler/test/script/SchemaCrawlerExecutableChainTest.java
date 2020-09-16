@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.script;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -45,6 +44,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -59,42 +59,28 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public class SchemaCrawlerExecutableChainTest
-{
+public class SchemaCrawlerExecutableChainTest {
 
   @Test
-  public void chainJavaScript(final Connection connection)
-    throws Exception
-  {
-    final SchemaCrawlerExecutable executable =
-      new SchemaCrawlerExecutable("script");
+  public void chainJavaScript(final Connection connection) throws Exception {
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("script");
     final Path testOutputFile = IOUtility.createTempFilePath("sc", "data");
 
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-      .builder()
-      .includeAllRoutines();
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder().includeAllRoutines();
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withLimitOptionsBuilder(limitOptionsBuilder);
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-      schemaCrawlerOptionsBuilder.toOptions();
+        SchemaCrawlerOptionsBuilder.builder().withLimitOptionsBuilder(limitOptionsBuilder);
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
-    final SchemaTextOptionsBuilder textOptionsBuilder =
-      SchemaTextOptionsBuilder.builder();
-    textOptionsBuilder
-      .noSchemaCrawlerInfo(false)
-      .showDatabaseInfo()
-      .showJdbcDriverInfo();
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo().showJdbcDriverInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    final Config additionalConfiguration = SchemaTextOptionsBuilder
-      .builder(textOptions)
-      .toConfig();
+    final Config additionalConfiguration = SchemaTextOptionsBuilder.builder(textOptions).toConfig();
     additionalConfiguration.put("script", "/chain.js");
 
     final OutputOptions outputOptions =
-      OutputOptionsBuilder.newOutputOptions("text", testOutputFile);
+        OutputOptionsBuilder.newOutputOptions("text", testOutputFile);
 
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setOutputOptions(outputOptions);
@@ -102,15 +88,13 @@ public class SchemaCrawlerExecutableChainTest
     executable.setConnection(connection);
     executable.execute();
 
-    assertThat("Created files \"schema.txt\" and \"schema.png\""
-               + System.lineSeparator(),
-               equalTo(readFully(new FileReader(testOutputFile.toFile()))));
+    assertThat(
+        "Created files \"schema.txt\" and \"schema.png\"" + System.lineSeparator(),
+        equalTo(readFully(new FileReader(testOutputFile.toFile()))));
 
-    final List<String> failures = compareOutput("schema.txt",
-                                                Paths.get("schema.txt"),
-                                                TextOutputFormat.text.name());
-    if (failures.size() > 0)
-    {
+    final List<String> failures =
+        compareOutput("schema.txt", Paths.get("schema.txt"), TextOutputFormat.text.name());
+    if (failures.size() > 0) {
       fail(failures.toString());
     }
 
@@ -118,5 +102,4 @@ public class SchemaCrawlerExecutableChainTest
     validateDiagram(diagramFile);
     Files.deleteIfExists(diagramFile);
   }
-
 }

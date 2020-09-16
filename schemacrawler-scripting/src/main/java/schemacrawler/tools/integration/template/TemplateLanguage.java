@@ -28,36 +28,24 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.integration.template;
 
-
 import schemacrawler.tools.integration.BaseLanguage;
 
-public final class TemplateLanguage
-  extends BaseLanguage
-{
+public final class TemplateLanguage extends BaseLanguage {
 
-  public TemplateLanguage()
-  {
-    super("templating-language",
-          "template",
-          TemplateLanguageType.unknown.name());
+  public TemplateLanguage() {
+    super("templating-language", "template", TemplateLanguageType.unknown.name());
   }
 
-  public final TemplateLanguageType getTemplateLanguageType()
-  {
+  public TemplateLanguageType getTemplateLanguageType() {
     final String language = getLanguage();
 
-    try
-    {
-      final TemplateLanguageType templateLanguageType =
-        TemplateLanguageType.valueOf(language);
+    try {
+      final TemplateLanguageType templateLanguageType = TemplateLanguageType.valueOf(language);
       return templateLanguageType;
-    }
-    catch (final IllegalArgumentException e)
-    {
+    } catch (final IllegalArgumentException e) {
       // Ignore
     }
 
     return TemplateLanguageType.unknown;
   }
-
 }

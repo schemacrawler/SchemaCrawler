@@ -28,23 +28,23 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.integration.script;
 
+import java.io.Reader;
+import java.io.Writer;
+import java.nio.charset.Charset;
+import java.util.logging.Level;
 
 import javax.script.Compilable;
 import javax.script.CompiledScript;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
-import java.io.Reader;
-import java.io.Writer;
-import java.nio.charset.Charset;
-import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.executable.CommandChain;
-import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.ObjectToString;
-import schemacrawler.SchemaCrawlerLogger;
+import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.string.StringFormat;
 
 /**
@@ -52,55 +52,45 @@ import us.fatehi.utility.string.StringFormat;
  *
  * @author Sualeh Fatehi
  */
-public final class ScriptCommand
-  extends BaseSchemaCrawlerCommand
-{
+public final class ScriptCommand extends BaseSchemaCrawlerCommand {
 
   static final String COMMAND = "script";
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(ScriptCommand.class.getName());
+      SchemaCrawlerLogger.getLogger(ScriptCommand.class.getName());
 
-  private static void logScriptEngineDetails(final Level level,
-                                             final ScriptEngineFactory scriptEngineFactory)
-  {
-    if (!LOGGER.isLoggable(level))
-    {
+  private static void logScriptEngineDetails(
+      final Level level, final ScriptEngineFactory scriptEngineFactory) {
+    if (!LOGGER.isLoggable(level)) {
       return;
     }
 
-    LOGGER.log(level,
-               String.format(
-                 "Using script engine%n%s %s (%s %s)%nScript engine names: %s%nSupported file extensions: %s",
-                 scriptEngineFactory.getEngineName(),
-                 scriptEngineFactory.getEngineVersion(),
-                 scriptEngineFactory.getLanguageName(),
-                 scriptEngineFactory.getLanguageVersion(),
-                 ObjectToString.toString(scriptEngineFactory.getNames()),
-                 ObjectToString.toString(scriptEngineFactory.getExtensions())));
+    LOGGER.log(
+        level,
+        String.format(
+            "Using script engine%n%s %s (%s %s)%nScript engine names: %s%nSupported file extensions: %s",
+            scriptEngineFactory.getEngineName(),
+            scriptEngineFactory.getEngineVersion(),
+            scriptEngineFactory.getLanguageName(),
+            scriptEngineFactory.getLanguageVersion(),
+            ObjectToString.toString(scriptEngineFactory.getNames()),
+            ObjectToString.toString(scriptEngineFactory.getExtensions())));
   }
 
   private final ScriptLanguage scriptLanguage;
 
-  public ScriptCommand()
-  {
+  public ScriptCommand() {
     super(COMMAND);
     scriptLanguage = new ScriptLanguage();
   }
 
   @Override
-  public void checkAvailability()
-    throws Exception
-  {
+  public void checkAvailability() throws Exception {
     getScriptEngine();
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final void execute()
-    throws Exception
-  {
+  public void execute() throws Exception {
     checkCatalog();
 
     scriptLanguage.addConfig(getAdditionalConfiguration());
@@ -109,68 +99,47 @@ public final class ScriptCommand
 
     final ScriptEngine scriptEngine = getScriptEngine();
     final InputResource inputResource = scriptLanguage.getResource();
-    try (
-      final Reader reader = inputResource.openNewInputReader(inputCharset);
-      final Writer writer = outputOptions.openNewOutputWriter()
-    )
-    {
+    try (final Reader reader = inputResource.openNewInputReader(inputCharset);
+        final Writer writer = outputOptions.openNewOutputWriter()) {
       final CommandChain chain = new CommandChain(this);
 
       // Set up the context
-      scriptEngine
-        .getContext()
-        .setWriter(writer);
+      scriptEngine.getContext().setWriter(writer);
       scriptEngine.put("catalog", catalog);
       scriptEngine.put("connection", connection);
       scriptEngine.put("chain", chain);
 
       // Evaluate the script
-      if (scriptEngine instanceof Compilable)
-      {
-        final CompiledScript script =
-          ((Compilable) scriptEngine).compile(reader);
+      if (scriptEngine instanceof Compilable) {
+        final CompiledScript script = ((Compilable) scriptEngine).compile(reader);
         script.eval();
-      }
-      else
-      {
+      } else {
         scriptEngine.eval(reader);
       }
     }
-
   }
 
   @Override
-  public boolean usesConnection()
-  {
+  public boolean usesConnection() {
     return true;
   }
 
-  private ScriptEngine getScriptEngine()
-    throws SchemaCrawlerException
-  {
+  private ScriptEngine getScriptEngine() throws SchemaCrawlerException {
     final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
     ScriptEngine scriptEngine = null;
     final String scriptingLanguage = scriptLanguage.getLanguage();
-    LOGGER.log(Level.CONFIG,
-               new StringFormat("Using script language <%s>",
-                                scriptingLanguage));
-    try
-    {
+    LOGGER.log(Level.CONFIG, new StringFormat("Using script language <%s>", scriptingLanguage));
+    try {
       scriptEngine = scriptEngineManager.getEngineByName(scriptingLanguage);
-    }
-    catch (final Exception e)
-    {
+    } catch (final Exception e) {
       // Ignore exception
     }
 
-    if (scriptEngine == null)
-    {
-      scriptEngine =
-        scriptEngineManager.getEngineByExtension(scriptingLanguage);
+    if (scriptEngine == null) {
+      scriptEngine = scriptEngineManager.getEngineByExtension(scriptingLanguage);
     }
 
-    if (scriptEngine == null)
-    {
+    if (scriptEngine == null) {
       throw new SchemaCrawlerException("Script engine not found");
     }
 
@@ -178,5 +147,4 @@ public final class ScriptCommand
 
     return scriptEngine;
   }
-
 }

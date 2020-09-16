@@ -27,26 +27,19 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.integration.serialize;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import schemacrawler.schema.Catalog;
 
-/**
- * Decorates a database to allow for serialization to JSON serialization.
- */
-public final class JsonSerializedCatalog
-  extends BaseJacksonSerializedCatalog
-{
+/** Decorates a database to allow for serialization to JSON serialization. */
+public final class JsonSerializedCatalog extends BaseJacksonSerializedCatalog {
 
-  public JsonSerializedCatalog(final Catalog catalog)
-  {
+  public JsonSerializedCatalog(final Catalog catalog) {
     super(catalog);
   }
 
   @Override
-  protected ObjectMapper newObjectMapper()
-  {
+  protected ObjectMapper newObjectMapper() {
     return new ObjectMapper();
   }
-
 }

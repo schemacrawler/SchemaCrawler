@@ -145,9 +145,6 @@ public final class UserCredentialsOptions {
     }
   }
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(UserCredentialsOptions.class.getName());
-
   @ArgGroup private PasswordOptions passwordOptions;
   @Spec private Model.CommandSpec spec;
 

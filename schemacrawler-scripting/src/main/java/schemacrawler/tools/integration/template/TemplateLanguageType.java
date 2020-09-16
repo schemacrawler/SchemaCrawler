@@ -27,36 +27,26 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.integration.template;
 
-
-public enum TemplateLanguageType
-{
+public enum TemplateLanguageType {
   unknown(null, null),
   velocity("schemacrawler.tools.integration.template.VelocityRenderer", "vm"),
-  freemarker("schemacrawler.tools.integration.template.FreeMarkerRenderer",
-             "ftl"),
-  mustache("schemacrawler.tools.integration.template.MustacheRenderer",
-           "mustache"),
-  thymeleaf("schemacrawler.tools.integration.template.ThymeleafRenderer",
-            "thymeleaf");
+  freemarker("schemacrawler.tools.integration.template.FreeMarkerRenderer", "ftl"),
+  mustache("schemacrawler.tools.integration.template.MustacheRenderer", "mustache"),
+  thymeleaf("schemacrawler.tools.integration.template.ThymeleafRenderer", "thymeleaf");
 
   private final String fileExtension;
   private final String templateRendererClassName;
 
-  TemplateLanguageType(final String templateRendererClassName,
-                       final String fileExtension)
-  {
+  TemplateLanguageType(final String templateRendererClassName, final String fileExtension) {
     this.templateRendererClassName = templateRendererClassName;
     this.fileExtension = fileExtension;
   }
 
-  public String getFileExtension()
-  {
+  public String getFileExtension() {
     return fileExtension;
   }
 
-  public String getTemplateRendererClassName()
-  {
+  public String getTemplateRendererClassName() {
     return templateRendererClassName;
   }
-
 }

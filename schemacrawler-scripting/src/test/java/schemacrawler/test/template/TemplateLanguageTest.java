@@ -28,68 +28,56 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.template;
 
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.jupiter.api.Test;
+
 import schemacrawler.tools.integration.template.TemplateLanguage;
 import schemacrawler.tools.integration.template.TemplateLanguageType;
 import schemacrawler.tools.options.Config;
 
-public class TemplateLanguageTest
-{
+public class TemplateLanguageTest {
 
   @Test
-  public void templateLanguageByName()
-    throws Exception
-  {
+  public void templateLanguageByName() throws Exception {
     final TemplateLanguage templateLanguage = new TemplateLanguage();
-    for (final TemplateLanguageType templateLanguageType : TemplateLanguageType.values())
-    {
+    for (final TemplateLanguageType templateLanguageType : TemplateLanguageType.values()) {
       final Config config = new Config();
       config.put("templating-language", templateLanguageType.name());
       templateLanguage.addConfig(config);
 
-      assertThat(templateLanguage.getTemplateLanguageType(),
-                 is(templateLanguageType));
+      assertThat(templateLanguage.getTemplateLanguageType(), is(templateLanguageType));
     }
   }
 
   @Test
-  public void templateLanguageForNull()
-  {
-    final TemplateLanguage templateLanguage = new TemplateLanguage();
-    final Config config = new Config();
-    config.put("templating-language", null);
-    templateLanguage.addConfig(config);
-
-    assertThat(templateLanguage.getTemplateLanguageType(),
-               is(TemplateLanguageType.unknown));
-  }
-
-  @Test
-  public void templateLanguageForBlank()
-  {
-    final TemplateLanguage templateLanguage = new TemplateLanguage();
-    final Config config = new Config();
-    config.put("templating-language", "");
-    templateLanguage.addConfig(config);
-
-    assertThat(templateLanguage.getTemplateLanguageType(),
-               is(TemplateLanguageType.unknown));
-  }
-
-  @Test
-  public void templateLanguageForBadValue()
-  {
+  public void templateLanguageForBadValue() {
     final TemplateLanguage templateLanguage = new TemplateLanguage();
     final Config config = new Config();
     config.put("templating-language", "bad-value");
     templateLanguage.addConfig(config);
 
-    assertThat(templateLanguage.getTemplateLanguageType(),
-               is(TemplateLanguageType.unknown));
+    assertThat(templateLanguage.getTemplateLanguageType(), is(TemplateLanguageType.unknown));
   }
 
+  @Test
+  public void templateLanguageForBlank() {
+    final TemplateLanguage templateLanguage = new TemplateLanguage();
+    final Config config = new Config();
+    config.put("templating-language", "");
+    templateLanguage.addConfig(config);
+
+    assertThat(templateLanguage.getTemplateLanguageType(), is(TemplateLanguageType.unknown));
+  }
+
+  @Test
+  public void templateLanguageForNull() {
+    final TemplateLanguage templateLanguage = new TemplateLanguage();
+    final Config config = new Config();
+    config.put("templating-language", null);
+    templateLanguage.addConfig(config);
+
+    assertThat(templateLanguage.getTemplateLanguageType(), is(TemplateLanguageType.unknown));
+  }
 }

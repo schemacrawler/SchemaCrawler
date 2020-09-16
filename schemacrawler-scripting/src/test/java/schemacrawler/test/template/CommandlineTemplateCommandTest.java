@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.template;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -37,6 +36,7 @@ import static schemacrawler.test.utility.ScriptTestUtility.commandLineTemplateEx
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
@@ -46,47 +46,41 @@ import schemacrawler.tools.integration.template.TemplateLanguageType;
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public class CommandlineTemplateCommandTest
-{
+public class CommandlineTemplateCommandTest {
 
   @Test
-  public void commandlineFreeMarker(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
-    assertThat(outputOf(commandLineTemplateExecution(connectionInfo,
-                                                     TemplateLanguageType.freemarker,
-                                                     "/plaintextschema.ftl")),
-               hasSameContentAs(classpathResource("executableForFreeMarker.txt")));
+  public void commandlineFreeMarker(final DatabaseConnectionInfo connectionInfo) throws Exception {
+    assertThat(
+        outputOf(
+            commandLineTemplateExecution(
+                connectionInfo, TemplateLanguageType.freemarker, "/plaintextschema.ftl")),
+        hasSameContentAs(classpathResource("executableForFreeMarker.txt")));
   }
 
   @Test
-  public void commandlineMustache(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
-    assertThat(outputOf(commandLineTemplateExecution(connectionInfo,
-                                                     TemplateLanguageType.mustache,
-                                                     "/plaintextschema.mustache")),
-               hasSameContentAs(classpathResource("executableForMustache.txt")));
+  public void commandlineMustache(final DatabaseConnectionInfo connectionInfo) throws Exception {
+    assertThat(
+        outputOf(
+            commandLineTemplateExecution(
+                connectionInfo, TemplateLanguageType.mustache, "/plaintextschema.mustache")),
+        hasSameContentAs(classpathResource("executableForMustache.txt")));
   }
 
   @Test
-  public void commandlineThymeleaf(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
-    assertThat(outputOf(commandLineTemplateExecution(connectionInfo,
-                                                     TemplateLanguageType.thymeleaf,
-                                                     "/plaintextschema.thymeleaf")),
-               hasSameContentAs(classpathResource("executableForThymeleaf.txt")));
+  public void commandlineThymeleaf(final DatabaseConnectionInfo connectionInfo) throws Exception {
+    assertThat(
+        outputOf(
+            commandLineTemplateExecution(
+                connectionInfo, TemplateLanguageType.thymeleaf, "/plaintextschema.thymeleaf")),
+        hasSameContentAs(classpathResource("executableForThymeleaf.txt")));
   }
 
   @Test
-  public void commandlineVelocity(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
-    assertThat(outputOf(commandLineTemplateExecution(connectionInfo,
-                                                     TemplateLanguageType.velocity,
-                                                     "/plaintextschema.vm")),
-               hasSameContentAs(classpathResource("executableForVelocity.txt")));
+  public void commandlineVelocity(final DatabaseConnectionInfo connectionInfo) throws Exception {
+    assertThat(
+        outputOf(
+            commandLineTemplateExecution(
+                connectionInfo, TemplateLanguageType.velocity, "/plaintextschema.vm")),
+        hasSameContentAs(classpathResource("executableForVelocity.txt")));
   }
-
 }
