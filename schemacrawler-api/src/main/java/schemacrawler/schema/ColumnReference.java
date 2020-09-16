@@ -28,18 +28,14 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 import java.io.Serializable;
 
 /**
- * Represents a single column mapping from a primary key column to a foreign key
- * column.
+ * Represents a single column mapping from a primary key column to a foreign key column.
  *
  * @author Sualeh Fatehi
  */
-public interface ColumnReference
-  extends Serializable, Comparable<ColumnReference>
-{
+public interface ColumnReference extends Serializable, Comparable<ColumnReference> {
 
   /**
    * Gets the foreign key column.
@@ -54,5 +50,4 @@ public interface ColumnReference
    * @return Primary key column
    */
   Column getPrimaryKeyColumn();
-
 }

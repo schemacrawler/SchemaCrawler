@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.utility;
 
-
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.io.IOException;
@@ -35,89 +34,64 @@ import java.io.Writer;
 import java.nio.file.Path;
 import java.util.Objects;
 
-public final class TestWriter
-  extends Writer
-  implements TestOutputCapture
-{
+public final class TestWriter extends Writer implements TestOutputCapture {
 
-  private static final String lineSeparator =
-    System.getProperty("line.separator");
+  private static final String lineSeparator = System.getProperty("line.separator");
 
   private final TestOutputStream out;
 
-  public TestWriter()
-    throws IOException
-  {
+  public TestWriter() throws IOException {
     out = new TestOutputStream();
   }
 
   @Override
-  public String getFileContents()
-  {
+  public void close() throws IOException {
+    out.close();
+  }
+
+  @Override
+  public void flush() throws IOException {
+    out.flush();
+  }
+
+  @Override
+  public String getFileContents() {
     return out.getFileContents();
   }
 
   @Override
-  public Path getFilePath()
-  {
+  public Path getFilePath() {
     return out.getFilePath();
   }
 
-  public void println()
-  {
+  public void println() {
     writeout(lineSeparator);
   }
 
-  public void println(final Object x)
-  {
+  public void println(final Object x) {
     println(Objects.toString(x));
   }
 
-  public void println(final String x)
-  {
+  public void println(final String x) {
     writeout(x);
     println();
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return out.toString();
   }
 
   @Override
-  public void write(final char[] cbuf, final int off, final int len)
-    throws IOException
-  {
+  public void write(final char[] cbuf, final int off, final int len) throws IOException {
     writeout(new String(cbuf, off, len));
   }
 
-  @Override
-  public void flush()
-    throws IOException
-  {
-    out.flush();
-  }
-
-  @Override
-  public void close()
-    throws IOException
-  {
-    out.close();
-  }
-
-  private void writeout(final String x)
-  {
-    try
-    {
-      out.write(Objects
-                  .toString(x)
-                  .getBytes(UTF_8));
-    }
-    catch (final IOException e)
-    {
+  private void writeout(final String x) {
+    try {
+      out.write(Objects.toString(x).getBytes(UTF_8));
+    } catch (final IOException e) {
       // Ignore
     }
   }
-
 }

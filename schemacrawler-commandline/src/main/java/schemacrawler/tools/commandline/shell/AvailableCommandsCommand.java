@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.shell;
 
-
 import static picocli.CommandLine.Help.Column.Overflow.SPAN;
 import static picocli.CommandLine.Help.Column.Overflow.WRAP;
 import static picocli.CommandLine.Help.TextTable.forColumns;
@@ -45,68 +44,57 @@ import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.CommandRegistry;
 
-@Command(name = "commands",
-         header = "** List available SchemaCrawler commands",
-         headerHeading = "",
-         synopsisHeading = "Shell Command:%n",
-         customSynopsis = {
-           "commands"
-         },
-         optionListHeading = "Options:%n")
-public class AvailableCommandsCommand
-  implements Runnable
-{
+@Command(
+    name = "commands",
+    header = "** List available SchemaCrawler commands",
+    headerHeading = "",
+    synopsisHeading = "Shell Command:%n",
+    customSynopsis = {"commands"},
+    optionListHeading = "Options:%n")
+public class AvailableCommandsCommand implements Runnable {
 
-  private static String availableCommandsDescriptive()
-  {
+  private static String availableCommandsDescriptive() {
     final CommandLine.Help.ColorScheme.Builder colorSchemaBuilder =
-      new CommandLine.Help.ColorScheme.Builder();
+        new CommandLine.Help.ColorScheme.Builder();
     colorSchemaBuilder.ansi(CommandLine.Help.Ansi.OFF);
-    final TextTable textTable = forColumns(colorSchemaBuilder.build(),
-                                           new Column(15, 1, SPAN),
-                                           new Column(65, 1, WRAP));
-    try
-    {
-      final Collection<CommandDescription> commandDescriptions = CommandRegistry
-        .getCommandRegistry()
-        .getSupportedCommands();
-      commandDescriptions.add(new CommandDescription("<query_name>",
-                                                     "Shows results of query <query_name>, "
-                                                     + "as specified in the configuration properties file"));
-      commandDescriptions.add(new CommandDescription("<query>",
-                                                     String.join("\n",
-                                                                 "Shows results of SQL <query>",
-                                                                 "The query itself can contain the variables ${table}, ${columns} "
-                                                                 + "and ${tabletype}, or system properties referenced as ${<system-property-name>}",
-                                                                 "Queries without any variables are executed exactly once",
-                                                                 "Queries with variables are executed once for each table, "
-                                                                 + "with the variables substituted")));
+    final TextTable textTable =
+        forColumns(colorSchemaBuilder.build(), new Column(15, 1, SPAN), new Column(65, 1, WRAP));
+    try {
+      final Collection<CommandDescription> commandDescriptions =
+          CommandRegistry.getCommandRegistry().getSupportedCommands();
+      commandDescriptions.add(
+          new CommandDescription(
+              "<query_name>",
+              "Shows results of query <query_name>, "
+                  + "as specified in the configuration properties file"));
+      commandDescriptions.add(
+          new CommandDescription(
+              "<query>",
+              String.join(
+                  "\n",
+                  "Shows results of SQL <query>",
+                  "The query itself can contain the variables ${table}, ${columns} "
+                      + "and ${tabletype}, or system properties referenced as ${<system-property-name>}",
+                  "Queries without any variables are executed exactly once",
+                  "Queries with variables are executed once for each table, "
+                      + "with the variables substituted")));
 
-      for (final CommandDescription commandDescription : commandDescriptions)
-      {
-        textTable.addRowValues(commandDescription.getName(),
-                               commandDescription.getDescription());
+      for (final CommandDescription commandDescription : commandDescriptions) {
+        textTable.addRowValues(commandDescription.getName(), commandDescription.getDescription());
       }
-    }
-    catch (final SchemaCrawlerException e)
-    {
-      throw new SchemaCrawlerRuntimeException(
-        "Could not initialize command registry",
-        e);
+    } catch (final SchemaCrawlerException e) {
+      throw new SchemaCrawlerRuntimeException("Could not initialize command registry", e);
     }
     return textTable.toString();
   }
 
   @Override
-  public void run()
-  {
+  public void run() {
     final String availableCommands = availableCommandsDescriptive();
-    if (!isBlank(availableCommands))
-    {
+    if (!isBlank(availableCommands)) {
       System.out.println();
       System.out.println("Available SchemaCrawler commands:");
       System.out.println(availableCommands);
     }
   }
-
 }

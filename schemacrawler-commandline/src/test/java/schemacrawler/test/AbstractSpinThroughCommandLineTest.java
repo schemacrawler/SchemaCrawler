@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
@@ -44,6 +43,7 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
@@ -56,88 +56,91 @@ import schemacrawler.tools.text.schema.SchemaTextDetailType;
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public abstract class AbstractSpinThroughCommandLineTest
-{
+public abstract class AbstractSpinThroughCommandLineTest {
 
   private static final String SPIN_THROUGH_OUTPUT = "spin_through_output/";
 
   @BeforeAll
-  public static void clean()
-    throws Exception
-  {
+  public static void clean() throws Exception {
     TestUtility.clean(SPIN_THROUGH_OUTPUT);
   }
 
-  private static Stream<InfoLevel> infoLevels()
-  {
-    return Arrays
-      .stream(InfoLevel.values())
-      .filter(infoLevel -> infoLevel != InfoLevel.unknown);
+  private static Stream<InfoLevel> infoLevels() {
+    return Arrays.stream(InfoLevel.values()).filter(infoLevel -> infoLevel != InfoLevel.unknown);
   }
 
-  private static String referenceFile(final SchemaTextDetailType schemaTextDetailType,
-                                      final InfoLevel infoLevel,
-                                      final OutputFormat outputFormat,
-                                      final String javaVersion)
-  {
-    final String referenceFile = String.format("%d%d.%s_%s%s.%s",
-                                               schemaTextDetailType.ordinal(),
-                                               infoLevel.ordinal(),
-                                               schemaTextDetailType,
-                                               infoLevel,
-                                               javaVersion,
-                                               outputFormat.getFormat());
+  private static String referenceFile(
+      final SchemaTextDetailType schemaTextDetailType,
+      final InfoLevel infoLevel,
+      final OutputFormat outputFormat,
+      final String javaVersion) {
+    final String referenceFile =
+        String.format(
+            "%d%d.%s_%s%s.%s",
+            schemaTextDetailType.ordinal(),
+            infoLevel.ordinal(),
+            schemaTextDetailType,
+            infoLevel,
+            javaVersion,
+            outputFormat.getFormat());
     return referenceFile;
   }
 
-  private static Stream<SchemaTextDetailType> schemaTextDetailTypes()
-  {
+  private static Stream<SchemaTextDetailType> schemaTextDetailTypes() {
     return Arrays.stream(SchemaTextDetailType.values());
   }
 
   @Test
-  public void spinThroughMain(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
-    assertAll(infoLevels().flatMap(infoLevel -> outputFormats().flatMap(
-      outputFormat -> schemaTextDetailTypes().map(schemaTextDetailType -> () -> {
+  public void spinThroughMain(final DatabaseConnectionInfo connectionInfo) throws Exception {
+    assertAll(
+        infoLevels()
+            .flatMap(
+                infoLevel ->
+                    outputFormats()
+                        .flatMap(
+                            outputFormat ->
+                                schemaTextDetailTypes()
+                                    .map(
+                                        schemaTextDetailType ->
+                                            () -> {
+                                              final String javaVersion;
+                                              if (schemaTextDetailType
+                                                      == SchemaTextDetailType.details
+                                                  && infoLevel == InfoLevel.maximum) {
+                                                javaVersion = "." + javaVersion();
+                                              } else {
+                                                javaVersion = "";
+                                              }
+                                              final String referenceFile =
+                                                  referenceFile(
+                                                      schemaTextDetailType,
+                                                      infoLevel,
+                                                      outputFormat,
+                                                      javaVersion);
 
-        final String javaVersion;
-        if (schemaTextDetailType == SchemaTextDetailType.details
-            && infoLevel == InfoLevel.maximum)
-        {
-          javaVersion = "." + javaVersion();
-        }
-        else
-        {
-          javaVersion = "";
-        }
-        final String referenceFile = referenceFile(schemaTextDetailType,
-                                                   infoLevel,
-                                                   outputFormat,
-                                                   javaVersion);
+                                              final String command = schemaTextDetailType.name();
 
-        final String command = schemaTextDetailType.name();
+                                              final Map<String, String> argsMap = new HashMap<>();
+                                              argsMap.put("-sequences", ".*");
+                                              argsMap.put("-synonyms", ".*");
+                                              argsMap.put("-routines", ".*");
+                                              argsMap.put("-no-info", Boolean.FALSE.toString());
+                                              argsMap.put("-info-level", infoLevel.name());
 
-        final Map<String, String> argsMap = new HashMap<>();
-        argsMap.put("-sequences", ".*");
-        argsMap.put("-synonyms", ".*");
-        argsMap.put("-routines", ".*");
-        argsMap.put("-no-info", Boolean.FALSE.toString());
-        argsMap.put("-info-level", infoLevel.name());
-
-        assertThat(outputOf(commandlineExecution(connectionInfo,
-                                                 command,
-                                                 argsMap,
-                                                 "/hsqldb.INFORMATION_SCHEMA.config.properties",
-                                                 outputFormat)),
-                   hasSameContentAndTypeAs(classpathResource(SPIN_THROUGH_OUTPUT
-                                                             + referenceFile),
-                                           outputFormat));
-
-      }))));
+                                              assertThat(
+                                                  outputOf(
+                                                      commandlineExecution(
+                                                          connectionInfo,
+                                                          command,
+                                                          argsMap,
+                                                          "/hsqldb.INFORMATION_SCHEMA.config.properties",
+                                                          outputFormat)),
+                                                  hasSameContentAndTypeAs(
+                                                      classpathResource(
+                                                          SPIN_THROUGH_OUTPUT + referenceFile),
+                                                      outputFormat));
+                                            }))));
   }
 
   protected abstract Stream<OutputFormat> outputFormats();
-
 }

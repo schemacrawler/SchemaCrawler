@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.utility;
 
-
 import static java.util.stream.Collectors.toMap;
 import static us.fatehi.utility.Utility.isBlank;
 
@@ -44,20 +43,17 @@ import java.util.logging.Level;
 import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.string.StringFormat;
 
-public final class TypeMap
-  implements Map<String, Class<?>>
-{
+public final class TypeMap implements Map<String, Class<?>> {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(TypeMap.class.getName());
+      SchemaCrawlerLogger.getLogger(TypeMap.class.getName());
 
   /**
-   * The default mappings are from the JDBC Specification 4.2, Appendix B - Data
-   * Type Conversion Tables, Table B-3 - Mapping from JDBC Types to Java Object
-   * Types. A JDBC driver may override these default mappings.
+   * The default mappings are from the JDBC Specification 4.2, Appendix B - Data Type Conversion
+   * Tables, Table B-3 - Mapping from JDBC Types to Java Object Types. A JDBC driver may override
+   * these default mappings.
    */
-  private static Map<SQLType, Class<?>> createDefaultTypeMap()
-  {
+  private static Map<SQLType, Class<?>> createDefaultTypeMap() {
     final Map<SQLType, Class<?>> defaultTypeMap = new HashMap<>();
 
     defaultTypeMap.put(JDBCType.ARRAY, java.sql.Array.class);
@@ -94,8 +90,7 @@ public final class TypeMap
     defaultTypeMap.put(JDBCType.STRUCT, java.sql.Struct.class);
     defaultTypeMap.put(JDBCType.TIME, java.sql.Time.class);
     defaultTypeMap.put(JDBCType.TIMESTAMP, java.sql.Timestamp.class);
-    defaultTypeMap.put(JDBCType.TIMESTAMP_WITH_TIMEZONE,
-                       java.time.OffsetDateTime.class);
+    defaultTypeMap.put(JDBCType.TIMESTAMP_WITH_TIMEZONE, java.time.OffsetDateTime.class);
     defaultTypeMap.put(JDBCType.TIME_WITH_TIMEZONE, java.time.OffsetTime.class);
     defaultTypeMap.put(JDBCType.TINYINT, Integer.class);
     defaultTypeMap.put(JDBCType.VARBINARY, byte[].class);
@@ -106,195 +101,147 @@ public final class TypeMap
 
   private final Map<String, Class<?>> sqlTypeMap;
 
-  public TypeMap()
-  {
+  public TypeMap() {
     sqlTypeMap = new HashMap<>();
 
     final Map<SQLType, Class<?>> defaultTypeMap = createDefaultTypeMap();
-    for (final Entry<SQLType, Class<?>> sqlTypeMapping : defaultTypeMap.entrySet())
-    {
-      sqlTypeMap.put(sqlTypeMapping
-                       .getKey()
-                       .getName(), sqlTypeMapping.getValue());
+    for (final Entry<SQLType, Class<?>> sqlTypeMapping : defaultTypeMap.entrySet()) {
+      sqlTypeMap.put(sqlTypeMapping.getKey().getName(), sqlTypeMapping.getValue());
     }
   }
 
-  public TypeMap(final Connection connection)
-  {
+  public TypeMap(final Connection connection) {
     this();
 
-    if (connection != null)
-    {
+    if (connection != null) {
       // Override and add mappings from the connection
-      try
-      {
+      try {
         final Map<String, Class<?>> typeMap = connection.getTypeMap();
-        if (typeMap != null && !typeMap.isEmpty())
-        {
+        if (typeMap != null && !typeMap.isEmpty()) {
           sqlTypeMap.putAll(typeMap);
         }
-      }
-      catch (final Exception e)
-      {
+      } catch (final Exception e) {
         // Catch all exceptions, since even though most JDBC drivers
         // would throw SQLException, but the Sybase Adaptive
         // Server driver throws UnimplementedOperationException
-        LOGGER.log(Level.WARNING,
-                   "Could not obtain data type map from connection",
-                   e);
+        LOGGER.log(Level.WARNING, "Could not obtain data type map from connection", e);
       }
     }
   }
 
-  public TypeMap(final Map<String, Class<?>> sqlTypeMap)
-  {
-    if (sqlTypeMap == null)
-    {
+  public TypeMap(final Map<String, Class<?>> sqlTypeMap) {
+    if (sqlTypeMap == null) {
       this.sqlTypeMap = new HashMap<>();
-    }
-    else
-    {
+    } else {
       this.sqlTypeMap = new HashMap<>(sqlTypeMap);
     }
   }
 
+  @Override
+  public void clear() {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public boolean containsKey(final Object key) {
+    return sqlTypeMap.containsKey(key);
+  }
+
+  @Override
+  public boolean containsValue(final Object value) {
+    return sqlTypeMap.containsValue(value);
+  }
+
+  @Override
+  public Set<Entry<String, Class<?>>> entrySet() {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public boolean equals(final Object o) {
+    return sqlTypeMap.equals(o);
+  }
+
+  @Override
+  public Class<?> get(final Object key) {
+    if (containsKey(key)) {
+      return sqlTypeMap.get(key);
+    } else {
+      return Object.class;
+    }
+  }
+
   /**
-   * Gets the Java type mapping for a data type. If no mapping exists, returns
-   * null. If a class name is passed in, it overrides the mapping in the type
-   * map.
+   * Gets the Java type mapping for a data type. If no mapping exists, returns null. If a class name
+   * is passed in, it overrides the mapping in the type map.
    *
-   * @param typeName
-   *   Type name to find a mapping for.
-   * @param className
-   *   Overridden class name
+   * @param typeName Type name to find a mapping for.
+   * @param className Overridden class name
    * @return Mapped class
    */
-  public Class<?> get(final String typeName, final String className)
-  {
-    if (isBlank(className))
-    {
+  public Class<?> get(final String typeName, final String className) {
+    if (isBlank(className)) {
       return sqlTypeMap.get(typeName);
-    }
-    else
-    {
-      try
-      {
+    } else {
+      try {
         return Class.forName(className);
-      }
-      catch (final ClassNotFoundException e)
-      {
-        LOGGER.log(Level.WARNING,
-                   new StringFormat(
-                     "Could not obtain class mapping for data type <%s>",
-                     typeName),
-                   e);
+      } catch (final ClassNotFoundException e) {
+        LOGGER.log(
+            Level.WARNING,
+            new StringFormat("Could not obtain class mapping for data type <%s>", typeName),
+            e);
         return null;
       }
     }
   }
 
   @Override
-  public int hashCode()
-  {
+  public int hashCode() {
     return sqlTypeMap.hashCode();
   }
 
   @Override
-  public boolean equals(final Object o)
-  {
-    return sqlTypeMap.equals(o);
-  }
-
-  @Override
-  public String toString()
-  {
-    final Map<String, String> typeClassNameMap = sqlTypeMap
-      .entrySet()
-      .stream()
-      .collect(toMap(Map.Entry::getKey,
-                     e -> e
-                       .getValue()
-                       .getCanonicalName()));
-    return typeClassNameMap.toString();
-  }
-
-  @Override
-  public int size()
-  {
-    return sqlTypeMap.size();
-  }
-
-  @Override
-  public boolean isEmpty()
-  {
+  public boolean isEmpty() {
     return sqlTypeMap.isEmpty();
   }
 
   @Override
-  public boolean containsKey(final Object key)
-  {
-    return sqlTypeMap.containsKey(key);
-  }
-
-  @Override
-  public boolean containsValue(final Object value)
-  {
-    return sqlTypeMap.containsValue(value);
-  }
-
-  @Override
-  public Class<?> get(final Object key)
-  {
-    if (containsKey(key))
-    {
-      return sqlTypeMap.get(key);
-    }
-    else
-    {
-      return Object.class;
-    }
-  }
-
-  @Override
-  public Class<?> put(final String key, final Class<?> value)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public Class<?> remove(final Object key)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public void putAll(final Map<? extends String, ? extends Class<?>> m)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public void clear()
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public Set<String> keySet()
-  {
+  public Set<String> keySet() {
     return new HashSet<>(sqlTypeMap.keySet());
   }
 
   @Override
-  public Collection<Class<?>> values()
-  {
-    return new HashSet<>(sqlTypeMap.values());
-  }
-
-  @Override
-  public Set<Entry<String, Class<?>>> entrySet()
-  {
+  public Class<?> put(final String key, final Class<?> value) {
     throw new UnsupportedOperationException();
   }
 
+  @Override
+  public void putAll(final Map<? extends String, ? extends Class<?>> m) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public Class<?> remove(final Object key) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public int size() {
+    return sqlTypeMap.size();
+  }
+
+  @Override
+  public String toString() {
+    final Map<String, String> typeClassNameMap =
+        sqlTypeMap
+            .entrySet()
+            .stream()
+            .collect(toMap(Map.Entry::getKey, e -> e.getValue().getCanonicalName()));
+    return typeClassNameMap.toString();
+  }
+
+  @Override
+  public Collection<Class<?>> values() {
+    return new HashSet<>(sqlTypeMap.values());
+  }
 }

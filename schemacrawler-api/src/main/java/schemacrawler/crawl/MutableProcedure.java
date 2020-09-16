@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
@@ -42,69 +41,50 @@ import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
 
 /**
- * Represents a database procedure. Created from metadata returned by a JDBC
- * call.
+ * Represents a database procedure. Created from metadata returned by a JDBC call.
  *
  * @author Sualeh Fatehi
  */
-final class MutableProcedure
-  extends MutableRoutine
-  implements Procedure
-{
+final class MutableProcedure extends MutableRoutine implements Procedure {
 
   private static final long serialVersionUID = 3906925686089134130L;
-  private final NamedObjectList<MutableProcedureParameter> columns =
-    new NamedObjectList<>();
+  private final NamedObjectList<MutableProcedureParameter> columns = new NamedObjectList<>();
   private ProcedureReturnType returnType;
 
-  MutableProcedure(final Schema schema, final String name)
-  {
+  MutableProcedure(final Schema schema, final String name) {
     super(schema, name);
     // Default values
     returnType = ProcedureReturnType.unknown;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public List<ProcedureParameter> getParameters()
-  {
+  public List<ProcedureParameter> getParameters() {
     return new ArrayList<>(columns.values());
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public ProcedureReturnType getReturnType()
-  {
+  public ProcedureReturnType getReturnType() {
     return returnType;
   }
 
-  void setReturnType(final ProcedureReturnType returnType)
-  {
-    this.returnType = requireNonNull(returnType, "Null procedure return type");
-  }
-
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public Optional<MutableProcedureParameter> lookupParameter(final String name)
-  {
-    return columns.lookup(this, name);
-  }
-
-  @Override
-  public RoutineType getRoutineType()
-  {
+  public RoutineType getRoutineType() {
     return RoutineType.procedure;
   }
 
-  void addParameter(final MutableProcedureParameter column)
-  {
+  /** {@inheritDoc} */
+  @Override
+  public Optional<MutableProcedureParameter> lookupParameter(final String name) {
+    return columns.lookup(this, name);
+  }
+
+  void addParameter(final MutableProcedureParameter column) {
     columns.add(column);
   }
 
+  void setReturnType(final ProcedureReturnType returnType) {
+    this.returnType = requireNonNull(returnType, "Null procedure return type");
+  }
 }

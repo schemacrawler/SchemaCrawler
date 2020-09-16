@@ -28,26 +28,20 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import schemacrawler.schema.Function;
 import schemacrawler.schema.FunctionParameter;
 
 /**
- * Represents a column in a database function. Created from metadata returned by
- * a JDBC call.
+ * Represents a column in a database function. Created from metadata returned by a JDBC call.
  *
  * @author Sualeh Fatehi
  */
-final class MutableFunctionParameter
-  extends MutableRoutineParameter<Function>
-  implements FunctionParameter
-{
+final class MutableFunctionParameter extends MutableRoutineParameter<Function>
+    implements FunctionParameter {
 
   private static final long serialVersionUID = 3546361725629772857L;
 
-  MutableFunctionParameter(final Function parent, final String name)
-  {
+  MutableFunctionParameter(final Function parent, final String name) {
     super(new FunctionReference(parent), name);
   }
-
 }

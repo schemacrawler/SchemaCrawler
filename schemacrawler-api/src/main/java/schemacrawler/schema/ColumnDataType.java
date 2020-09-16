@@ -28,18 +28,15 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 import java.util.List;
 
 /**
- * Represents a column type. Provides the java.sql.Types type, the
- * java.sql.Types type name, and the database specific data type name.
+ * Represents a column type. Provides the java.sql.Types type, the java.sql.Types type name, and the
+ * database specific data type name.
  *
  * @author Sualeh Fatehi
  */
-public interface ColumnDataType
-  extends DatabaseObject
-{
+public interface ColumnDataType extends DatabaseObject {
 
   /**
    * Gets the base type of the data type.
@@ -61,6 +58,13 @@ public interface ColumnDataType
    * @return Database specific data type name
    */
   String getDatabaseSpecificTypeName();
+
+  /**
+   * Get list of enum values if the data type is enumerated.
+   *
+   * @return List of enum values
+   */
+  List<String> getEnumValues();
 
   /**
    * Gets the java.sql.Types type.
@@ -147,6 +151,13 @@ public interface ColumnDataType
   boolean isCaseSensitive();
 
   /**
+   * Whether the data type is enumerated.
+   *
+   * @return Whether the data type is enumerated
+   */
+  boolean isEnumerated();
+
+  /**
    * Whether the data type has a fixed precision scale.
    *
    * @return Whether the data type has a fixed precision scale
@@ -173,19 +184,4 @@ public interface ColumnDataType
    * @return Whether the data type is user-defined
    */
   boolean isUserDefined();
-
-  /**
-   * Whether the data type is enumerated.
-   *
-   * @return Whether the data type is enumerated
-   */
-  boolean isEnumerated();
-
-  /**
-   * Get list of enum values if the data type is enumerated.
-   *
-   * @return List of enum values
-   */
-  List<String> getEnumValues();
-
 }

@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility;
 
-
 import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -40,41 +39,29 @@ import java.util.regex.Pattern;
  * @author Sualeh Fatehi
  */
 @UtilityMarker
-public final class Utility
-{
+public final class Utility {
 
-  public static String commonPrefix(final String string1, final String string2)
-  {
-    if (string1 == null || string2 == null)
-    {
+  public static String commonPrefix(final String string1, final String string2) {
+    if (string1 == null || string2 == null) {
       return "";
     }
     final int index = indexOfDifference(string1, string2);
-    if (index == -1)
-    {
+    if (index == -1) {
       return null;
-    }
-    else
-    {
-      return string1
-        .substring(0, index)
-        .toLowerCase();
+    } else {
+      return string1.substring(0, index).toLowerCase();
     }
   }
 
-  public static String convertForComparison(final String text)
-  {
-    if (text == null || text.length() == 0)
-    {
+  public static String convertForComparison(final String text) {
+    if (text == null || text.length() == 0) {
       return text;
     }
 
     final StringBuilder builder = new StringBuilder(text.length());
-    for (int i = 0; i < text.length(); i++)
-    {
+    for (int i = 0; i < text.length(); i++) {
       final char ch = text.charAt(i);
-      if (Character.isLetterOrDigit(ch) || ch == '_' || ch == '.')
-      {
+      if (Character.isLetterOrDigit(ch) || ch == '_' || ch == '.') {
         builder.append(Character.toLowerCase(ch));
       }
     }
@@ -83,64 +70,29 @@ public final class Utility
     return textWithoutQuotes;
   }
 
-  private static int indexOfDifference(final String string1,
-                                       final String string2)
-  {
-    if (string1 == null || string2 == null)
-    {
-      return 0;
-    }
-    int i;
-    for (i = 0; i < string1.length() && i < string2.length(); ++i)
-    {
-      if (string1.charAt(i) != string2.charAt(i))
-      {
-        break;
-      }
-    }
-    if (i < string2.length() || i < string1.length())
-    {
-      return i;
-    }
-    return -1;
-  }
-
   /**
-   * Checks if the text is null or empty, and throws an exception if it is.
+   * Checks if the text is all lowercase.
    *
-   * @param text
-   *   Text to check.
-   * @return Provided string, if not blank.
-   * @throws IllegalArgumentException
-   *   If the provided string is blank
+   * @param text Text to check.
+   * @return Whether the string is all lowercase.
    */
-  public static String requireNotBlank(final String text, final String message)
-  {
-    if (isBlank(text))
-    {
-      throw new IllegalArgumentException(message);
-    }
-    return text;
+  public static boolean hasNoUpperCase(final String text) {
+    return text != null && text.equals(text.toLowerCase());
   }
 
   /**
    * Checks if the text is null or empty.
    *
-   * @param text
-   *   Text to check.
+   * @param text Text to check.
    * @return Whether the string is blank.
    */
-  public static boolean isBlank(final CharSequence text)
-  {
-    if (text == null || text.length() == 0)
-    {
+  public static boolean isBlank(final CharSequence text) {
+    if (text == null || text.length() == 0) {
       return true;
     }
 
-    for (int i = 0; i < text.length(); i++)
-    {
-      if (!Character.isWhitespace(text.charAt(i)))
-      {
+    for (int i = 0; i < text.length(); i++) {
+      if (!Character.isWhitespace(text.charAt(i))) {
         return false;
       }
     }
@@ -150,19 +102,14 @@ public final class Utility
   /**
    * Checks if a class is available on the classpath.
    *
-   * @param className
-   *   Class to check
+   * @param className Class to check
    * @return True if the class is available, false otherwise
    */
-  public static boolean isClassAvailable(final String className)
-  {
-    try
-    {
+  public static boolean isClassAvailable(final String className) {
+    try {
       Class.forName(className, false, Utility.class.getClassLoader());
       return true;
-    }
-    catch (final Exception e)
-    {
+    } catch (final Exception e) {
       return false;
     }
   }
@@ -170,91 +117,91 @@ public final class Utility
   /**
    * Checks if the text contains an integer only.
    *
-   * @param text
-   *   Text to check.
+   * @param text Text to check.
    * @return Whether the string is an integer.
    */
-  public static boolean isIntegral(final CharSequence text)
-  {
-    if (text == null || text.length() == 0)
-    {
+  public static boolean isIntegral(final CharSequence text) {
+    if (text == null || text.length() == 0) {
       return false;
     }
 
-    for (int i = 0; i < text.length(); i++)
-    {
+    for (int i = 0; i < text.length(); i++) {
       final char ch = text.charAt(i);
-      if (!Character.isDigit(ch) && ch != '+' && ch != '-')
-      {
+      if (!Character.isDigit(ch) && ch != '+' && ch != '-') {
         return false;
       }
     }
     return true;
   }
 
-  /**
-   * Checks if the text is all lowercase.
-   *
-   * @param text
-   *   Text to check.
-   * @return Whether the string is all lowercase.
-   */
-  public static boolean hasNoUpperCase(final String text)
-  {
-    return text != null && text.equals(text.toLowerCase());
-  }
-
-  public static String join(final Collection<String> collection,
-                            final String separator)
-  {
-    if (collection == null || collection.isEmpty())
-    {
+  public static String join(final Collection<String> collection, final String separator) {
+    if (collection == null || collection.isEmpty()) {
       return null;
     }
 
     final StringJoiner joiner = new StringJoiner(separator);
     joiner.setEmptyValue("");
-    for (final String string : collection)
-    {
+    for (final String string : collection) {
       joiner.add(string);
     }
 
     return joiner.toString();
   }
 
-  public static String join(final Map<?, ?> map, final String separator)
-  {
-    if (map == null || map.isEmpty())
-    {
+  public static String join(final Map<?, ?> map, final String separator) {
+    if (map == null || map.isEmpty()) {
       return null;
     }
 
     final StringJoiner joiner = new StringJoiner(separator);
-    for (final Entry<?, ?> entry : map.entrySet())
-    {
+    for (final Entry<?, ?> entry : map.entrySet()) {
       joiner.add(String.format("%s=%s", entry.getKey(), entry.getValue()));
     }
 
     return joiner.toString();
   }
 
-  public static String toSnakeCase(final String identifier)
-  {
-    if (isBlank(identifier))
-    {
+  /**
+   * Checks if the text is null or empty, and throws an exception if it is.
+   *
+   * @param text Text to check.
+   * @return Provided string, if not blank.
+   * @throws IllegalArgumentException If the provided string is blank
+   */
+  public static String requireNotBlank(final String text, final String message) {
+    if (isBlank(text)) {
+      throw new IllegalArgumentException(message);
+    }
+    return text;
+  }
+
+  public static String toSnakeCase(final String identifier) {
+    if (isBlank(identifier)) {
       return identifier;
     }
     final Pattern identifyCamelCase = Pattern.compile("([A-Z])");
-    final String snakeCaseIdentifier = identifyCamelCase
-      .matcher(identifier)
-      .replaceAll("_$1")
-      .toLowerCase();
+    final String snakeCaseIdentifier =
+        identifyCamelCase.matcher(identifier).replaceAll("_$1").toLowerCase();
     return snakeCaseIdentifier;
   }
 
-  private Utility()
-  {
-    // Prevent instantiation
+  private static int indexOfDifference(final String string1, final String string2) {
+    if (string1 == null || string2 == null) {
+      return 0;
+    }
+    int i;
+    for (i = 0; i < string1.length() && i < string2.length(); ++i) {
+      if (string1.charAt(i) != string2.charAt(i)) {
+        break;
+      }
+    }
+    if (i < string2.length() || i < string1.length()) {
+      return i;
+    }
+    return -1;
   }
 
+  private Utility() {
+    // Prevent instantiation
+  }
 }

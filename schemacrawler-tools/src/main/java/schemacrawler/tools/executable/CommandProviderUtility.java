@@ -27,41 +27,33 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.executable;
 
-
 import java.util.ArrayList;
 import java.util.Collection;
 
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
-public class CommandProviderUtility
-{
+public class CommandProviderUtility {
 
-  public static Collection<CommandDescription> operationCommands()
-  {
+  public static Collection<CommandDescription> operationCommands() {
     final Collection<CommandDescription> supportedCommands = new ArrayList<>();
-    for (final Operation operation : Operation.values())
-    {
-      supportedCommands.add(new CommandDescription(operation.name(),
-                                                   operation.getDescription()));
+    for (final Operation operation : Operation.values()) {
+      supportedCommands.add(new CommandDescription(operation.name(), operation.getDescription()));
     }
     return supportedCommands;
   }
 
-  public static Collection<CommandDescription> schemaTextCommands()
-  {
+  public static Collection<CommandDescription> schemaTextCommands() {
     final Collection<CommandDescription> supportedCommands = new ArrayList<>();
-    for (final SchemaTextDetailType schemaTextDetailType : SchemaTextDetailType.values())
-    {
-      supportedCommands.add(new CommandDescription(schemaTextDetailType.name(),
-                                                   schemaTextDetailType.getDescription()));
+    for (final SchemaTextDetailType schemaTextDetailType : SchemaTextDetailType.values()) {
+      supportedCommands.add(
+          new CommandDescription(
+              schemaTextDetailType.name(), schemaTextDetailType.getDescription()));
     }
     return supportedCommands;
   }
 
-  private CommandProviderUtility()
-  {
+  private CommandProviderUtility() {
     // Prevent instantiation
   }
-
 }

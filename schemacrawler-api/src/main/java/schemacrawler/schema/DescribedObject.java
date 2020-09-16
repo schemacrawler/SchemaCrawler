@@ -28,9 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
-public interface DescribedObject
-{
+public interface DescribedObject {
 
   /**
    * Getter for remarks.
@@ -45,5 +43,4 @@ public interface DescribedObject
    * @return Remarks
    */
   boolean hasRemarks();
-
 }

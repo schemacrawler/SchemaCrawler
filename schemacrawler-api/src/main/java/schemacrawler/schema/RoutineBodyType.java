@@ -28,24 +28,13 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
+/** Routine body. */
+public enum RoutineBodyType {
 
-/**
- * Routine body.
- */
-public enum RoutineBodyType
-{
-
-  /**
-   * Unknown
-   */
+  /** Unknown */
   unknown,
-  /**
-   * SQL.
-   */
+  /** SQL. */
   sql,
-  /**
-   * External.
-   */
+  /** External. */
   external
-
 }

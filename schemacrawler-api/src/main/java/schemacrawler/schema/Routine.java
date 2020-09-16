@@ -27,13 +27,10 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schema;
 
-
 import java.util.List;
 import java.util.Optional;
 
-public interface Routine
-  extends DatabaseObject, TypedObject<RoutineType>, DefinedObject
-{
+public interface Routine extends DatabaseObject, TypedObject<RoutineType>, DefinedObject {
 
   /**
    * Gets the list of parameters in ordinal order.
@@ -73,11 +70,8 @@ public interface Routine
   /**
    * Gets a parameter by unqualified name.
    *
-   * @param name
-   *   Unqualified name
+   * @param name Unqualified name
    * @return Parameter.
    */
-  <C extends RoutineParameter<? extends Routine>> Optional<C> lookupParameter(
-    String name);
-
+  <C extends RoutineParameter<? extends Routine>> Optional<C> lookupParameter(String name);
 }

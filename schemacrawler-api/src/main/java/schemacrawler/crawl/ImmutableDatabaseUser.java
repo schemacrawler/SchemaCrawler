@@ -27,17 +27,15 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.crawl;
 
-
 import schemacrawler.schema.DatabaseUser;
 
-final class ImmutableDatabaseUser
-  extends AbstractNamedObjectWithAttributes
-  implements DatabaseUser
-{
+final class ImmutableDatabaseUser extends AbstractNamedObjectWithAttributes
+    implements DatabaseUser {
 
-  ImmutableDatabaseUser(final String name)
-  {
+  /** */
+  private static final long serialVersionUID = -2454810590096151457L;
+
+  ImmutableDatabaseUser(final String name) {
     super(name);
   }
-
 }

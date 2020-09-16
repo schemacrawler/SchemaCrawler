@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.executable;
 
-
 import java.sql.Connection;
 
 import schemacrawler.schema.Catalog;
@@ -42,67 +41,56 @@ import schemacrawler.tools.options.OutputOptions;
  *
  * @author Sualeh Fatehi
  */
-public interface SchemaCrawlerCommand
-{
+public interface SchemaCrawlerCommand {
 
   /**
-   * Checks whether a command is available, and throws an exception if it is not
-   * available.
+   * Checks whether a command is available, and throws an exception if it is not available.
    *
-   * @throws Exception
-   *   On an exception
+   * @throws Exception On an exception
    */
-  void checkAvailability()
-    throws Exception;
+  void checkAvailability() throws Exception;
 
   /**
-   * Executes functionality for SchemaCrawler, after database metadata has been
-   * obtained.
+   * Executes functionality for SchemaCrawler, after database metadata has been obtained.
    *
-   * @throws Exception
-   *   On an exception
+   * @throws Exception On an exception
    */
-  void execute()
-    throws Exception;
+  void execute() throws Exception;
 
   Config getAdditionalConfiguration();
 
-  void setAdditionalConfiguration(Config config);
-
   Catalog getCatalog();
-
-  void setCatalog(Catalog catalog);
 
   String getCommand();
 
   Connection getConnection();
 
-  void setConnection(Connection connection);
-
   Identifiers getIdentifiers();
-
-  void setIdentifiers(Identifiers identifiers);
 
   OutputOptions getOutputOptions();
 
-  void setOutputOptions(OutputOptions outputOptions);
-
   SchemaCrawlerOptions getSchemaCrawlerOptions();
-
-  void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
 
   /**
    * Initializes the command for execution.
    *
-   * @throws Exception
-   *   On an exception
+   * @throws Exception On an exception
    */
-  void initialize()
-    throws Exception;
+  void initialize() throws Exception;
 
-  default boolean usesConnection()
-  {
+  void setAdditionalConfiguration(Config config);
+
+  void setCatalog(Catalog catalog);
+
+  void setConnection(Connection connection);
+
+  void setIdentifiers(Identifiers identifiers);
+
+  void setOutputOptions(OutputOptions outputOptions);
+
+  void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
+
+  default boolean usesConnection() {
     return false;
   }
-
 }

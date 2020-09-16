@@ -28,8 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.utility;
 
-
 import java.util.Optional;
+
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion;
 import schemacrawler.schemacrawler.GrepOptions;
@@ -39,35 +39,25 @@ import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.options.Config;
 
-/**
- * SchemaCrawler options builder, to build the immutable options to crawl a
- * schema.
- */
-public final class SchemaCrawlerOptionsConfig
-{
+/** SchemaCrawler options builder, to build the immutable options to crawl a schema. */
+public final class SchemaCrawlerOptionsConfig {
 
-  public static GrepOptionsBuilder fromConfig(final GrepOptionsBuilder providedBuilder,
-      final Config config)
-  {
+  public static GrepOptionsBuilder fromConfig(
+      final GrepOptionsBuilder providedBuilder, final Config config) {
 
     final GrepOptionsBuilder builder;
-    if (providedBuilder == null)
-    {
+    if (providedBuilder == null) {
       builder = GrepOptionsBuilder.builder();
-    } else
-    {
+    } else {
       builder = providedBuilder;
     }
 
-    if (config == null)
-    {
+    if (config == null) {
       return builder;
     }
 
-    final String SC_GREP_COLUMN_PATTERN_EXCLUDE =
-        "schemacrawler.grep.column.pattern.exclude";
-    final String SC_GREP_COLUMN_PATTERN_INCLUDE =
-        "schemacrawler.grep.column.pattern.include";
+    final String SC_GREP_COLUMN_PATTERN_EXCLUDE = "schemacrawler.grep.column.pattern.exclude";
+    final String SC_GREP_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.column.pattern.include";
     final String SC_GREP_DEFINITION_PATTERN_EXCLUDE =
         "schemacrawler.grep.definition.pattern.exclude";
     final String SC_GREP_DEFINITION_PATTERN_INCLUDE =
@@ -78,43 +68,46 @@ public final class SchemaCrawlerOptionsConfig
         "schemacrawler.grep.routine.inout.pattern.include";
 
     builder.includeGreppedColumns(
-        config.getOptionalInclusionRule(SC_GREP_COLUMN_PATTERN_INCLUDE,
-            SC_GREP_COLUMN_PATTERN_EXCLUDE).orElse(null));
-    builder.includeGreppedRoutineParameters(config
-        .getOptionalInclusionRule(SC_GREP_ROUTINE_PARAMETER_PATTERN_INCLUDE,
-            SC_GREP_ROUTINE_PARAMETER_PATTERN_EXCLUDE)
-        .orElse(null));
+        config
+            .getOptionalInclusionRule(
+                SC_GREP_COLUMN_PATTERN_INCLUDE, SC_GREP_COLUMN_PATTERN_EXCLUDE)
+            .orElse(null));
+    builder.includeGreppedRoutineParameters(
+        config
+            .getOptionalInclusionRule(
+                SC_GREP_ROUTINE_PARAMETER_PATTERN_INCLUDE,
+                SC_GREP_ROUTINE_PARAMETER_PATTERN_EXCLUDE)
+            .orElse(null));
     builder.includeGreppedDefinitions(
-        config.getOptionalInclusionRule(SC_GREP_DEFINITION_PATTERN_INCLUDE,
-            SC_GREP_DEFINITION_PATTERN_EXCLUDE).orElse(null));
+        config
+            .getOptionalInclusionRule(
+                SC_GREP_DEFINITION_PATTERN_INCLUDE, SC_GREP_DEFINITION_PATTERN_EXCLUDE)
+            .orElse(null));
 
     return builder;
   }
 
-  public static LimitOptionsBuilder fromConfig(final LimitOptionsBuilder providedBuilder, final Config config)
-  {
+  public static LimitOptionsBuilder fromConfig(
+      final LimitOptionsBuilder providedBuilder, final Config config) {
     final LimitOptionsBuilder builder;
-    if (providedBuilder == null)
-    {
+    if (providedBuilder == null) {
       builder = LimitOptionsBuilder.builder();
-    }
-    else 
-    {
+    } else {
       builder = providedBuilder;
     }
-    
-    if (config == null)
-    {
+
+    if (config == null) {
       return builder;
     }
 
-    for (final DatabaseObjectRuleForInclusion ruleForInclusion : DatabaseObjectRuleForInclusion.values())
-    {
-      final Optional<InclusionRule> optionalInclusionRule = config.getOptionalInclusionRule(
-          getIncludePatternProperty(ruleForInclusion),
-          getExcludePatternProperty(ruleForInclusion));
-      
-      if (optionalInclusionRule.isPresent()) {      
+    for (final DatabaseObjectRuleForInclusion ruleForInclusion :
+        DatabaseObjectRuleForInclusion.values()) {
+      final Optional<InclusionRule> optionalInclusionRule =
+          config.getOptionalInclusionRule(
+              getIncludePatternProperty(ruleForInclusion),
+              getExcludePatternProperty(ruleForInclusion));
+
+      if (optionalInclusionRule.isPresent()) {
         final InclusionRule inclusionRule = optionalInclusionRule.get();
         builder.include(ruleForInclusion, inclusionRule);
       }
@@ -122,53 +115,44 @@ public final class SchemaCrawlerOptionsConfig
 
     return builder;
   }
-  
+
   public static SchemaCrawlerOptionsBuilder fromConfig(
-      final SchemaCrawlerOptionsBuilder providedBuilder, final Config config)
-  {
+      final SchemaCrawlerOptionsBuilder providedBuilder, final Config config) {
     final SchemaCrawlerOptionsBuilder builder;
-    if (providedBuilder == null)
-    {
+    if (providedBuilder == null) {
       builder = SchemaCrawlerOptionsBuilder.builder();
-    } else
-    {
+    } else {
       builder = providedBuilder;
     }
 
-    if (config == null)
-    {
+    if (config == null) {
       return builder;
     }
 
     // Load only inclusion rules for limit options
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder().fromOptions(builder.getLimitOptions());
-    final LimitOptions limitOptions = SchemaCrawlerOptionsConfig
-        .fromConfig(limitOptionsBuilder, config).toOptions();
+    final LimitOptions limitOptions =
+        SchemaCrawlerOptionsConfig.fromConfig(limitOptionsBuilder, config).toOptions();
     builder.withLimitOptions(limitOptions);
 
     // Load only inclusion rules for grep options
     final GrepOptionsBuilder grepOptionsBuilder =
         GrepOptionsBuilder.builder().fromOptions(builder.getGrepOptions());
-    final GrepOptions grepOptions = SchemaCrawlerOptionsConfig
-        .fromConfig(grepOptionsBuilder, config).toOptions();
+    final GrepOptions grepOptions =
+        SchemaCrawlerOptionsConfig.fromConfig(grepOptionsBuilder, config).toOptions();
     builder.withGrepOptions(grepOptions);
 
     return builder;
   }
 
   private static String getExcludePatternProperty(
-      final DatabaseObjectRuleForInclusion ruleForInclusion)
-  {
-    return String.format("schemacrawler.%s.pattern.exclude",
-        ruleForInclusion.getKey());
+      final DatabaseObjectRuleForInclusion ruleForInclusion) {
+    return String.format("schemacrawler.%s.pattern.exclude", ruleForInclusion.getKey());
   }
 
   private static String getIncludePatternProperty(
-      final DatabaseObjectRuleForInclusion ruleForInclusion)
-  {
-    return String.format("schemacrawler.%s.pattern.include",
-        ruleForInclusion.getKey());
+      final DatabaseObjectRuleForInclusion ruleForInclusion) {
+    return String.format("schemacrawler.%s.pattern.include", ruleForInclusion.getKey());
   }
-  
 }

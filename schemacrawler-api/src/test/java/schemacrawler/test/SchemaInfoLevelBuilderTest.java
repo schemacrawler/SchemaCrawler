@@ -28,26 +28,21 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 import org.junit.jupiter.api.Test;
+
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 
-public class SchemaInfoLevelBuilderTest
-{
+public class SchemaInfoLevelBuilderTest {
 
   @Test
-  public void testFromOptions()
-  {
+  public void testFromOptions() {
     final SchemaInfoLevel options1 = SchemaInfoLevelBuilder.standard();
-    final SchemaInfoLevel options2 = SchemaInfoLevelBuilder
-      .builder()
-      .fromOptions(options1)
-      .toOptions();
+    final SchemaInfoLevel options2 =
+        SchemaInfoLevelBuilder.builder().fromOptions(options1).toOptions();
     assertThat(options1, equalTo(options2));
   }
-
 }

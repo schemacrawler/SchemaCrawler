@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.commandline.command;
 
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -38,50 +37,36 @@ import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.CommandRegistry;
 
-public class AvailableCommands
-  implements Iterable<String>
-{
+public class AvailableCommands implements Iterable<String> {
 
-  private static List<String> availableCommands()
-  {
+  private static List<String> availableCommands() {
     final List<String> availableCommands = new ArrayList<>();
-    try
-    {
-      final Collection<CommandDescription> commandDescriptions = CommandRegistry
-        .getCommandRegistry()
-        .getSupportedCommands();
+    try {
+      final Collection<CommandDescription> commandDescriptions =
+          CommandRegistry.getCommandRegistry().getSupportedCommands();
 
-      for (final CommandDescription commandDescription : commandDescriptions)
-      {
+      for (final CommandDescription commandDescription : commandDescriptions) {
         final String description = commandDescription.getName();
         availableCommands.add(description);
       }
-    }
-    catch (final SchemaCrawlerException e)
-    {
-      throw new SchemaCrawlerRuntimeException(
-        "Could not initialize command registry",
-        e);
+    } catch (final SchemaCrawlerException e) {
+      throw new SchemaCrawlerRuntimeException("Could not initialize command registry", e);
     }
     return availableCommands;
   }
 
   private final List<String> availableCommands;
 
-  public AvailableCommands()
-  {
+  public AvailableCommands() {
     availableCommands = availableCommands();
   }
 
   @Override
-  public Iterator<String> iterator()
-  {
+  public Iterator<String> iterator() {
     return availableCommands.iterator();
   }
 
-  public int size()
-  {
+  public int size() {
     return availableCommands.size();
   }
-
 }

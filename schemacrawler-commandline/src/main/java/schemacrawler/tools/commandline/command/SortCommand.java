@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.command;
 
-
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
@@ -41,94 +40,91 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
  *
  * @author Sualeh Fatehi
  */
-@Command(name = "sort",
-         header = "** Sort database objects in output",
-         description = {
-           ""
-         },
-         headerHeading = "",
-         synopsisHeading = "Shell Command:%n",
-         customSynopsis = {
-           "sort"
-         },
-         optionListHeading = "Options:%n")
-public final class SortCommand
-  extends BaseStateHolder
-  implements Runnable
-{
+@Command(
+    name = "sort",
+    header = "** Sort database objects in output",
+    description = {""},
+    headerHeading = "",
+    synopsisHeading = "Shell Command:%n",
+    customSynopsis = {"sort"},
+    optionListHeading = "Options:%n")
+public final class SortCommand extends BaseStateHolder implements Runnable {
 
-  @Option(names = { "--sort-columns" }, description = {
-    "Sort columns in a table alphabetically",
-    "--sort-columns=<sortcolumns>",
-    "<sortcolumns> can be true or false",
-    "Optional, defaults to false"
-  }, negatable = true)
+  @Option(
+      names = {"--sort-columns"},
+      description = {
+        "Sort columns in a table alphabetically",
+        "--sort-columns=<sortcolumns>",
+        "<sortcolumns> can be true or false",
+        "Optional, defaults to false"
+      },
+      negatable = true)
   private Boolean sortcolumns;
-  @Option(names = { "--sort-parameters" }, description = {
-    "Sort parameters in a routine alphabetically",
-    "--sort-parameters=<sortparameters>",
-    "<sortparameters> can be true or false",
-    "Optional, defaults to false"
-  }, negatable = true)
+
+  @Option(
+      names = {"--sort-parameters"},
+      description = {
+        "Sort parameters in a routine alphabetically",
+        "--sort-parameters=<sortparameters>",
+        "<sortparameters> can be true or false",
+        "Optional, defaults to false"
+      },
+      negatable = true)
   private Boolean sortparameters;
-  @Option(names = { "--sort-routines" }, description = {
-    "Sort routines alphabetically",
-    "--sort-routines=<sortroutines>",
-    "<sortroutines> can be true or false",
-    "Optional, defaults to true"
-  }, negatable = true)
+
+  @Option(
+      names = {"--sort-routines"},
+      description = {
+        "Sort routines alphabetically",
+        "--sort-routines=<sortroutines>",
+        "<sortroutines> can be true or false",
+        "Optional, defaults to true"
+      },
+      negatable = true)
   private Boolean sortroutines;
-  @Option(names = { "--sort-tables" }, description = {
-    "Sort tables alphabetically",
-    "--sort-tables=<sorttables>",
-    "<sorttables> can be true or false",
-    "Optional, defaults to true"
-  }, negatable = true)
+
+  @Option(
+      names = {"--sort-tables"},
+      description = {
+        "Sort tables alphabetically",
+        "--sort-tables=<sorttables>",
+        "<sorttables> can be true or false",
+        "Optional, defaults to true"
+      },
+      negatable = true)
   private Boolean sorttables;
 
-  public SortCommand(final SchemaCrawlerShellState state)
-  {
+  public SortCommand(final SchemaCrawlerShellState state) {
     super(state);
   }
 
   @Override
-  public void run()
-  {
-    final SchemaTextOptionsBuilder optionsBuilder = SchemaTextOptionsBuilder
-      .builder()
-      .fromConfig(state.getAdditionalConfiguration());
+  public void run() {
+    final SchemaTextOptionsBuilder optionsBuilder =
+        SchemaTextOptionsBuilder.builder().fromConfig(state.getAdditionalConfiguration());
 
-    if (sorttables != null)
-    {
+    if (sorttables != null) {
       optionsBuilder.sortTables(sorttables);
     }
-    if (sortcolumns != null)
-    {
+    if (sortcolumns != null) {
       optionsBuilder.sortTableColumns(sortcolumns);
     }
 
-    if (sortroutines != null)
-    {
+    if (sortroutines != null) {
       optionsBuilder.sortRoutines(sortroutines);
     }
-    if (sortparameters != null)
-    {
+    if (sortparameters != null) {
       optionsBuilder.sortRoutineParameters(sortparameters);
     }
 
     // Set updated configuration options
     final Config config;
-    if (state.getAdditionalConfiguration() != null)
-    {
+    if (state.getAdditionalConfiguration() != null) {
       config = state.getAdditionalConfiguration();
-    }
-    else
-    {
+    } else {
       config = new Config();
     }
     config.putAll(optionsBuilder.toConfig());
     state.addAdditionalConfiguration(config);
-
   }
-
 }

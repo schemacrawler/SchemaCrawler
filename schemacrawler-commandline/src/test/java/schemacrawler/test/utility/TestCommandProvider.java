@@ -27,51 +27,38 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.utility;
 
-
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 
-public class TestCommandProvider
-  extends BaseCommandProvider
-{
+public class TestCommandProvider extends BaseCommandProvider {
 
   public static final String COMMAND = "test-command";
   public static final String DESCRIPTION_HEADER =
-    "Test command which is not deployed with the release";
+      "Test command which is not deployed with the release";
 
-  public TestCommandProvider()
-  {
+  public TestCommandProvider() {
     super(new CommandDescription(COMMAND, DESCRIPTION_HEADER));
   }
 
   @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
-  {
+  public PluginCommand getCommandLineCommand() {
+    final PluginCommand pluginCommand = newPluginCommand(COMMAND, "** " + DESCRIPTION_HEADER);
+    pluginCommand.addOption("test-command-parameter", "Parameter for test command", String.class);
+    return pluginCommand;
+  }
+
+  @Override
+  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command) {
     throw new UnsupportedOperationException(DESCRIPTION_HEADER);
   }
 
   @Override
-  public boolean supportsOutputFormat(final String command,
-                                      final OutputOptions outputOptions)
-  {
+  public boolean supportsOutputFormat(final String command, final OutputOptions outputOptions) {
     return false;
   }
-
-  @Override
-  public PluginCommand getCommandLineCommand()
-  {
-    final PluginCommand pluginCommand =
-      newPluginCommand(COMMAND, "** " + DESCRIPTION_HEADER);
-    pluginCommand.addOption("test-command-parameter",
-                            "Parameter for test command",
-                            String.class);
-    return pluginCommand;
-  }
-
 }

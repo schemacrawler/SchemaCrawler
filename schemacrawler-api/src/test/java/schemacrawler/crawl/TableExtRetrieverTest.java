@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.crawl;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
@@ -47,6 +46,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.Table;
@@ -64,115 +64,119 @@ import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class TableExtRetrieverTest
-{
+public class TableExtRetrieverTest {
 
   private MutableCatalog catalog;
 
   @Test
-  @DisplayName("Retrieve table definitions from INFORMATION_SCHEMA")
-  public void tableDefinitions(final Connection connection)
-    throws Exception
-  {
-
-    final String definition = "TEST Table definition";
-
-    final InformationSchemaViews informationSchemaViews =
-      InformationSchemaViewsBuilder
-        .builder()
-        .withSql(EXT_TABLES,
-                 String.format(
-                   "SELECT DISTINCT TABLE_CAT AS TABLE_CATALOG, TABLE_SCHEM AS TABLE_SCHEMA, "
-                   + "TABLE_NAME, '%s' AS TABLE_DEFINITION "
-                   + "FROM INFORMATION_SCHEMA.SYSTEM_TABLES",
-                   definition))
-        .toOptions();
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-      SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder.withInformationSchemaViews(
-      informationSchemaViews);
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-      schemaRetrievalOptionsBuilder.toOptions();
-    final RetrieverConnection retrieverConnection =
-      new RetrieverConnection(connection, schemaRetrievalOptions);
-
-    final SchemaCrawlerOptions options =
-      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-
-    final TableExtRetriever tableExtRetriever =
-      new TableExtRetriever(retrieverConnection, catalog, options);
-    tableExtRetriever.retrieveTableDefinitions();
-
-    final Collection<Table> tables = catalog.getTables();
-    assertThat(tables, hasSize(19));
-    for (final Table table : tables)
-    {
-      assertThat(table.getDefinition(), is(definition));
-    }
-  }
-
-  @Test
   @DisplayName("Retrieve index definitions from INFORMATION_SCHEMA")
-  public void indexInfo(final Connection connection)
-    throws Exception
-  {
+  public void indexInfo(final Connection connection) throws Exception {
 
     final String remarks = "TEST Index remarks";
     final String definition = "TEST Index definition";
 
     final InformationSchemaViews informationSchemaViews =
-      InformationSchemaViewsBuilder
-        .builder()
-        .withSql(EXT_INDEXES,
-                 String.format(
-                   "SELECT DISTINCT TABLE_CAT AS INDEX_CATALOG, TABLE_SCHEM AS INDEX_SCHEMA, "
-                   + "TABLE_NAME, INDEX_NAME, '%s' AS REMARKS, '%s' AS INDEX_DEFINITION "
-                   + "FROM INFORMATION_SCHEMA.SYSTEM_INDEXINFO",
-                   remarks,
-                   definition))
-        .toOptions();
+        InformationSchemaViewsBuilder.builder()
+            .withSql(
+                EXT_INDEXES,
+                String.format(
+                    "SELECT DISTINCT TABLE_CAT AS INDEX_CATALOG, TABLE_SCHEM AS INDEX_SCHEMA, "
+                        + "TABLE_NAME, INDEX_NAME, '%s' AS REMARKS, '%s' AS INDEX_DEFINITION "
+                        + "FROM INFORMATION_SCHEMA.SYSTEM_INDEXINFO",
+                    remarks, definition))
+            .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-      SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder.withInformationSchemaViews(
-      informationSchemaViews);
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-      schemaRetrievalOptionsBuilder.toOptions();
+        SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder.withInformationSchemaViews(informationSchemaViews);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection =
-      new RetrieverConnection(connection, schemaRetrievalOptions);
+        new RetrieverConnection(connection, schemaRetrievalOptions);
 
-    final SchemaCrawlerOptions options =
-      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
     final TableExtRetriever tableExtRetriever =
-      new TableExtRetriever(retrieverConnection, catalog, options);
+        new TableExtRetriever(retrieverConnection, catalog, options);
     tableExtRetriever.retrieveIndexInformation();
 
     final Collection<Table> tables = catalog.getTables();
     assertThat(tables, hasSize(19));
-    for (final Table table : tables)
-    {
-      for (final Index index : table.getIndexes())
-      {
+    for (final Table table : tables) {
+      for (final Index index : table.getIndexes()) {
         assertThat(index.getRemarks(), is(remarks));
         assertThat(index.getDefinition(), is(definition));
       }
     }
   }
 
+  @BeforeAll
+  public void loadBaseCatalog(final Connection connection) throws SchemaCrawlerException {
+    catalog =
+        (MutableCatalog)
+            getCatalog(
+                connection,
+                SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
+                SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
+
+    final Collection<Table> tables = catalog.getTables();
+    assertThat(tables, hasSize(19));
+    for (final Table table : tables) {
+      for (final Index index : table.getIndexes()) {
+        final List<IndexColumn> columns = index.getColumns();
+        assertThat(columns, is(not(empty())));
+        for (final IndexColumn column : columns) {
+          assertThat(column.isGenerated(), is(false));
+          assertThat(column.getDefinition(), is(""));
+        }
+      }
+    }
+  }
+
+  @Test
+  @DisplayName("Retrieve table definitions from INFORMATION_SCHEMA")
+  public void tableDefinitions(final Connection connection) throws Exception {
+
+    final String definition = "TEST Table definition";
+
+    final InformationSchemaViews informationSchemaViews =
+        InformationSchemaViewsBuilder.builder()
+            .withSql(
+                EXT_TABLES,
+                String.format(
+                    "SELECT DISTINCT TABLE_CAT AS TABLE_CATALOG, TABLE_SCHEM AS TABLE_SCHEMA, "
+                        + "TABLE_NAME, '%s' AS TABLE_DEFINITION "
+                        + "FROM INFORMATION_SCHEMA.SYSTEM_TABLES",
+                    definition))
+            .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+        SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder.withInformationSchemaViews(informationSchemaViews);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection =
+        new RetrieverConnection(connection, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final TableExtRetriever tableExtRetriever =
+        new TableExtRetriever(retrieverConnection, catalog, options);
+    tableExtRetriever.retrieveTableDefinitions();
+
+    final Collection<Table> tables = catalog.getTables();
+    assertThat(tables, hasSize(19));
+    for (final Table table : tables) {
+      assertThat(table.getDefinition(), is(definition));
+    }
+  }
+
   @Test
   @DisplayName("Retrieve view table usage from INFORMATION_SCHEMA")
-  public void viewTableUsage(final Connection connection)
-    throws Exception
-  {
+  public void viewTableUsage(final Connection connection) throws Exception {
 
     int viewCount;
     final Collection<Table> tables = catalog.getTables();
     viewCount = 0;
     assertThat(tables, hasSize(19));
-    for (final Table table : tables)
-    {
-      if (!(table instanceof View))
-      {
+    for (final Table table : tables) {
+      if (!(table instanceof View)) {
         continue;
       }
       viewCount = viewCount + 1;
@@ -182,36 +186,31 @@ public class TableExtRetrieverTest
     assertThat(viewCount, is(1));
 
     final InformationSchemaViews informationSchemaViews =
-      InformationSchemaViewsBuilder
-        .builder()
-        .withSql(VIEW_TABLE_USAGE,
-                 "SELECT "
-                 + "VIEW_CATALOG, VIEW_SCHEMA, VIEW_NAME, "
-                 + "TABLE_CATALOG, TABLE_SCHEMA, TABLE_NAME "
-                 + "FROM INFORMATION_SCHEMA.VIEW_TABLE_USAGE")
-        .toOptions();
+        InformationSchemaViewsBuilder.builder()
+            .withSql(
+                VIEW_TABLE_USAGE,
+                "SELECT "
+                    + "VIEW_CATALOG, VIEW_SCHEMA, VIEW_NAME, "
+                    + "TABLE_CATALOG, TABLE_SCHEMA, TABLE_NAME "
+                    + "FROM INFORMATION_SCHEMA.VIEW_TABLE_USAGE")
+            .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-      SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder.withInformationSchemaViews(
-      informationSchemaViews);
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-      schemaRetrievalOptionsBuilder.toOptions();
+        SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder.withInformationSchemaViews(informationSchemaViews);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection =
-      new RetrieverConnection(connection, schemaRetrievalOptions);
+        new RetrieverConnection(connection, schemaRetrievalOptions);
 
-    final SchemaCrawlerOptions options =
-      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
     final TableExtRetriever tableExtRetriever =
-      new TableExtRetriever(retrieverConnection, catalog, options);
+        new TableExtRetriever(retrieverConnection, catalog, options);
     tableExtRetriever.retrieveViewTableUsage();
 
     viewCount = 0;
     assertThat(tables, hasSize(19));
-    for (final Table table : tables)
-    {
-      if (!(table instanceof View))
-      {
+    for (final Table table : tables) {
+      if (!(table instanceof View)) {
         continue;
       }
       viewCount = viewCount + 1;
@@ -220,31 +219,4 @@ public class TableExtRetrieverTest
     }
     assertThat(viewCount, is(1));
   }
-
-  @BeforeAll
-  public void loadBaseCatalog(final Connection connection)
-    throws SchemaCrawlerException
-  {
-    catalog = (MutableCatalog) getCatalog(connection,
-                                          SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
-                                          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
-
-    final Collection<Table> tables = catalog.getTables();
-    assertThat(tables, hasSize(19));
-    for (final Table table : tables)
-    {
-      for (final Index index : table.getIndexes())
-      {
-        final List<IndexColumn> columns = index.getColumns();
-        assertThat(columns, is(not(empty())));
-        for (final IndexColumn column : columns)
-        {
-          assertThat(column.isGenerated(), is(false));
-          assertThat(column.getDefinition(), is(""));
-        }
-
-      }
-    }
-  }
-
 }

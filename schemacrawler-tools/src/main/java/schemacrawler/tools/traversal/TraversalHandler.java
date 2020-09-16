@@ -27,40 +27,28 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.traversal;
 
-
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
-public interface TraversalHandler
-{
+public interface TraversalHandler {
 
-  void begin()
-    throws SchemaCrawlerException;
+  void begin() throws SchemaCrawlerException;
 
-  void end()
-    throws SchemaCrawlerException;
+  void end() throws SchemaCrawlerException;
 
-  void handle(CrawlInfo crawlInfo)
-    throws SchemaCrawlerException;
+  void handle(CrawlInfo crawlInfo) throws SchemaCrawlerException;
 
-  void handle(DatabaseInfo databaseInfo)
-    throws SchemaCrawlerException;
+  void handle(DatabaseInfo databaseInfo) throws SchemaCrawlerException;
 
-  void handle(JdbcDriverInfo jdbcDriverInfo)
-    throws SchemaCrawlerException;
+  void handle(JdbcDriverInfo jdbcDriverInfo) throws SchemaCrawlerException;
 
-  void handleHeaderEnd()
-    throws SchemaCrawlerException;
+  void handleHeaderEnd() throws SchemaCrawlerException;
 
-  void handleHeaderStart()
-    throws SchemaCrawlerException;
+  void handleHeaderStart() throws SchemaCrawlerException;
 
-  void handleInfoEnd()
-    throws SchemaCrawlerException;
+  void handleInfoEnd() throws SchemaCrawlerException;
 
-  void handleInfoStart()
-    throws SchemaCrawlerException;
-
+  void handleInfoStart() throws SchemaCrawlerException;
 }

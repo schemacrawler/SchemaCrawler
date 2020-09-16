@@ -27,12 +27,8 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schema;
 
-
-public enum RoutineType
-{
-
+public enum RoutineType {
   unknown,
   procedure,
   function
-
 }

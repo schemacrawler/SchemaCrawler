@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schemacrawler;
 
-
 import static schemacrawler.schema.RoutineType.function;
 import static schemacrawler.schema.RoutineType.procedure;
 import static schemacrawler.schema.RoutineType.unknown;
@@ -57,49 +56,37 @@ import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.TableTypes;
 
-/**
- * SchemaCrawler options builder, to build the immutable options to crawl a
- * schema.
- */
+/** SchemaCrawler options builder, to build the immutable options to crawl a schema. */
 public final class LimitOptionsBuilder
-  implements OptionsBuilder<LimitOptionsBuilder, LimitOptions>
-{
+    implements OptionsBuilder<LimitOptionsBuilder, LimitOptions> {
 
-  public static LimitOptionsBuilder builder()
-  {
+  public static LimitOptionsBuilder builder() {
     return new LimitOptionsBuilder();
   }
 
-  public static LimitOptions newLimitOptions()
-  {
+  public static LimitOptions newLimitOptions() {
     return builder().toOptions();
   }
 
-  private static EnumSet<RoutineType> defaultRoutineTypes()
-  {
+  private static EnumSet<RoutineType> defaultRoutineTypes() {
     return EnumSet.of(function, procedure);
   }
 
-  private static TableTypes defaultTableTypes()
-  {
+  private static TableTypes defaultTableTypes() {
     return TableTypes.from("BASE TABLE", "TABLE", "VIEW");
   }
 
-  private final Map<DatabaseObjectRuleForInclusion, InclusionRule>
-    inclusionRules;
+  private final Map<DatabaseObjectRuleForInclusion, InclusionRule> inclusionRules;
   private String tableNamePattern;
   private TableTypes tableTypes;
   private EnumSet<RoutineType> routineTypes;
 
-  /**
-   * Default options.
-   */
-  private LimitOptionsBuilder()
-  {
+  /** Default options. */
+  private LimitOptionsBuilder() {
     inclusionRules = new EnumMap<>(DatabaseObjectRuleForInclusion.class);
 
-    for (DatabaseObjectRuleForInclusion ruleForInclusion : DatabaseObjectRuleForInclusion.values())
-    {
+    for (DatabaseObjectRuleForInclusion ruleForInclusion :
+        DatabaseObjectRuleForInclusion.values()) {
       resetToDefault(ruleForInclusion);
     }
 
@@ -108,15 +95,13 @@ public final class LimitOptionsBuilder
   }
 
   @Override
-  public LimitOptionsBuilder fromOptions(final LimitOptions options)
-  {
-    if (options == null)
-    {
+  public LimitOptionsBuilder fromOptions(final LimitOptions options) {
+    if (options == null) {
       return this;
     }
 
-    for (DatabaseObjectRuleForInclusion ruleForInclusion : DatabaseObjectRuleForInclusion.values())
-    {
+    for (DatabaseObjectRuleForInclusion ruleForInclusion :
+        DatabaseObjectRuleForInclusion.values()) {
       inclusionRules.put(ruleForInclusion, options.get(ruleForInclusion));
     }
 
@@ -127,169 +112,134 @@ public final class LimitOptionsBuilder
     return this;
   }
 
-  @Override
-  public LimitOptions toOptions()
-  {
-    return new LimitOptions(new EnumMap<>(inclusionRules),
-                            tableTypes,
-                            tableNamePattern,
-                            routineTypes);
+  public LimitOptionsBuilder include(
+      final DatabaseObjectRuleForInclusion ruleForInclusion, final InclusionRule inclusionRule) {
+    if (inclusionRule == null) {
+      resetToDefault(ruleForInclusion);
+    } else {
+      inclusionRules.put(ruleForInclusion, inclusionRule);
+    }
+    return this;
   }
 
-  public LimitOptionsBuilder includeAllRoutines()
-  {
+  public LimitOptionsBuilder includeAllRoutines() {
     includeRoutines(new IncludeAll());
     return this;
   }
 
-  public LimitOptionsBuilder includeAllSequences()
-  {
+  public LimitOptionsBuilder includeAllSequences() {
     includeSequences(new IncludeAll());
     return this;
   }
 
-  public LimitOptionsBuilder includeAllSynonyms()
-  {
+  public LimitOptionsBuilder includeAllSynonyms() {
     includeSynonyms(new IncludeAll());
     return this;
   }
 
-  public LimitOptionsBuilder includeColumns(final InclusionRule columnInclusionRule)
-  {
+  public LimitOptionsBuilder includeColumns(final InclusionRule columnInclusionRule) {
     return include(ruleForColumnInclusion, columnInclusionRule);
   }
 
-  public LimitOptionsBuilder includeColumns(final Pattern columnPattern)
-  {
+  public LimitOptionsBuilder includeColumns(final Pattern columnPattern) {
     return include(ruleForColumnInclusion, columnPattern);
   }
 
-  public LimitOptionsBuilder includeSchemas(final Pattern schemaPattern)
-  {
-    return include(ruleForSchemaInclusion, schemaPattern);
+  public LimitOptionsBuilder includeRoutineParameters(
+      final InclusionRule routineParameterInclusionRule) {
+    return include(ruleForRoutineParameterInclusion, routineParameterInclusionRule);
   }
 
-  public LimitOptionsBuilder includeTables(final Pattern tablePattern)
-  {
-    return include(ruleForTableInclusion, tablePattern);
-  }
-
-  public LimitOptionsBuilder includeRoutines(final Pattern routinePattern)
-  {
-    return include(ruleForRoutineInclusion, routinePattern);
-  }
-
-  public LimitOptionsBuilder includeSequences(final Pattern sequencePattern)
-  {
-    return include(ruleForSequenceInclusion, sequencePattern);
-  }
-
-  public LimitOptionsBuilder includeSynonyms(final Pattern synonymPattern)
-  {
-    return include(ruleForSynonymInclusion, synonymPattern);
-  }
-
-  public LimitOptionsBuilder includeRoutineParameters(final InclusionRule routineParameterInclusionRule)
-  {
-    return include(ruleForRoutineParameterInclusion,
-                   routineParameterInclusionRule);
-  }
-
-  public LimitOptionsBuilder includeRoutines(final InclusionRule routineInclusionRule)
-  {
+  public LimitOptionsBuilder includeRoutines(final InclusionRule routineInclusionRule) {
     return include(ruleForRoutineInclusion, routineInclusionRule);
   }
 
-  public LimitOptionsBuilder includeSchemas(final InclusionRule schemaInclusionRule)
-  {
+  public LimitOptionsBuilder includeRoutines(final Pattern routinePattern) {
+    return include(ruleForRoutineInclusion, routinePattern);
+  }
+
+  public LimitOptionsBuilder includeSchemas(final InclusionRule schemaInclusionRule) {
     return include(ruleForSchemaInclusion, schemaInclusionRule);
   }
 
-  public LimitOptionsBuilder includeSequences(final InclusionRule sequenceInclusionRule)
-  {
+  public LimitOptionsBuilder includeSchemas(final Pattern schemaPattern) {
+    return include(ruleForSchemaInclusion, schemaPattern);
+  }
+
+  public LimitOptionsBuilder includeSequences(final InclusionRule sequenceInclusionRule) {
     return include(ruleForSequenceInclusion, sequenceInclusionRule);
   }
 
-  public LimitOptionsBuilder includeSynonyms(final InclusionRule synonymInclusionRule)
-  {
+  public LimitOptionsBuilder includeSequences(final Pattern sequencePattern) {
+    return include(ruleForSequenceInclusion, sequencePattern);
+  }
+
+  public LimitOptionsBuilder includeSynonyms(final InclusionRule synonymInclusionRule) {
     return include(ruleForSynonymInclusion, synonymInclusionRule);
   }
 
-  public LimitOptionsBuilder includeTables(final InclusionRule tableInclusionRule)
-  {
+  public LimitOptionsBuilder includeSynonyms(final Pattern synonymPattern) {
+    return include(ruleForSynonymInclusion, synonymPattern);
+  }
+
+  public LimitOptionsBuilder includeTables(final InclusionRule tableInclusionRule) {
     return include(ruleForTableInclusion, tableInclusionRule);
+  }
+
+  public LimitOptionsBuilder includeTables(final Pattern tablePattern) {
+    return include(ruleForTableInclusion, tablePattern);
   }
 
   /**
    * Sets routine types from a collection of routine types.
    *
-   * @param routineTypes
-   *   Collection of routine types. Can be null if all supported routine types
-   *   are requested.
+   * @param routineTypes Collection of routine types. Can be null if all supported routine types are
+   *     requested.
    */
-  public LimitOptionsBuilder routineTypes(final Collection<RoutineType> routineTypes)
-  {
-    if (routineTypes == null)
-    {
+  public LimitOptionsBuilder routineTypes(final Collection<RoutineType> routineTypes) {
+    if (routineTypes == null) {
       // null signifies include all routine types (except unknown)
       this.routineTypes = defaultRoutineTypes();
-    }
-    else if (routineTypes.isEmpty())
-    {
+    } else if (routineTypes.isEmpty()) {
       this.routineTypes = EnumSet.noneOf(RoutineType.class);
-    }
-    else
-    {
+    } else {
       this.routineTypes = EnumSet.copyOf(routineTypes);
     }
     return this;
   }
 
   /**
-   * Sets routine types from a comma-separated list of routine types. A null
-   * string resets to the defaults, which includes all procedures and
-   * functions.
+   * Sets routine types from a comma-separated list of routine types. A null string resets to the
+   * defaults, which includes all procedures and functions.
    *
-   * @param routineTypesString
-   *   Comma-separated list of routine types. Can be null if all supported
-   *   routine types are requested.
+   * @param routineTypesString Comma-separated list of routine types. Can be null if all supported
+   *     routine types are requested.
    */
-  public LimitOptionsBuilder routineTypes(final String routineTypesString)
-  {
+  public LimitOptionsBuilder routineTypes(final String routineTypesString) {
     final Collection<RoutineType> routineTypesCollection;
-    if (routineTypesString != null)
-    {
+    if (routineTypesString != null) {
       routineTypesCollection = new HashSet<>();
       final String[] routineTypeStrings = routineTypesString.split(",");
-      if (routineTypeStrings != null && routineTypeStrings.length > 0)
-      {
-        for (final String routineTypeString : routineTypeStrings)
-        {
+      if (routineTypeStrings != null && routineTypeStrings.length > 0) {
+        for (final String routineTypeString : routineTypeStrings) {
           final RoutineType routineType =
-            enumValue(routineTypeString.toLowerCase(Locale.ENGLISH), unknown);
-          if (routineType != unknown)
-          {
+              enumValue(routineTypeString.toLowerCase(Locale.ENGLISH), unknown);
+          if (routineType != unknown) {
             routineTypesCollection.add(routineType);
           }
         }
       }
-    }
-    else
-    {
+    } else {
       routineTypesCollection = null;
     }
 
     return routineTypes(routineTypesCollection);
   }
 
-  public LimitOptionsBuilder tableNamePattern(final String tableNamePattern)
-  {
-    if (isBlank(tableNamePattern))
-    {
+  public LimitOptionsBuilder tableNamePattern(final String tableNamePattern) {
+    if (isBlank(tableNamePattern)) {
       this.tableNamePattern = null;
-    }
-    else
-    {
+    } else {
       this.tableNamePattern = tableNamePattern;
     }
     return this;
@@ -298,12 +248,10 @@ public final class LimitOptionsBuilder
   /**
    * Sets table types from a collection of table types.
    *
-   * @param tableTypeStrings
-   *   Collection of table types. Can be null if all supported table types are
-   *   requested.
+   * @param tableTypeStrings Collection of table types. Can be null if all supported table types are
+   *     requested.
    */
-  public LimitOptionsBuilder tableTypes(final Collection<String> tableTypeStrings)
-  {
+  public LimitOptionsBuilder tableTypes(final Collection<String> tableTypeStrings) {
     this.tableTypes = TableTypes.from(tableTypeStrings);
     return this;
   }
@@ -311,69 +259,49 @@ public final class LimitOptionsBuilder
   /**
    * Sets table types from an array of table types.
    *
-   * @param tableTypeStrings
-   *   Collection of table types. Can be null if all supported table types are
-   *   requested.
+   * @param tableTypeStrings Collection of table types. Can be null if all supported table types are
+   *     requested.
    */
-  public LimitOptionsBuilder tableTypes(final String... tableTypeStrings)
-  {
+  public LimitOptionsBuilder tableTypes(final String... tableTypeStrings) {
     this.tableTypes = TableTypes.from(tableTypeStrings);
     return this;
   }
 
   /**
-   * Sets table types requested for output from a comma-separated list of table
-   * types. For example: TABLE,VIEW,SYSTEM_TABLE,GLOBAL TEMPORARY,ALIAS,SYNONYM
+   * Sets table types requested for output from a comma-separated list of table types. For example:
+   * TABLE,VIEW,SYSTEM_TABLE,GLOBAL TEMPORARY,ALIAS,SYNONYM
    *
-   * @param tableTypesString
-   *   Comma-separated list of table types. Can be null if all supported table
-   *   types are requested.
+   * @param tableTypesString Comma-separated list of table types. Can be null if all supported table
+   *     types are requested.
    */
-  public LimitOptionsBuilder tableTypes(final String tableTypesString)
-  {
+  public LimitOptionsBuilder tableTypes(final String tableTypesString) {
     this.tableTypes = TableTypes.from(tableTypesString);
     return this;
   }
 
-  private InclusionRule getDefaultInclusionRule(final DatabaseObjectRuleForInclusion ruleForInclusion)
-  {
+  @Override
+  public LimitOptions toOptions() {
+    return new LimitOptions(
+        new EnumMap<>(inclusionRules), tableTypes, tableNamePattern, routineTypes);
+  }
+
+  private InclusionRule getDefaultInclusionRule(
+      final DatabaseObjectRuleForInclusion ruleForInclusion) {
     final InclusionRule defaultInclusionRule;
-    if (ruleForInclusion.isExcludeByDefault())
-    {
+    if (ruleForInclusion.isExcludeByDefault()) {
       defaultInclusionRule = new ExcludeAll();
-    }
-    else
-    {
+    } else {
       defaultInclusionRule = new IncludeAll();
     }
     return defaultInclusionRule;
   }
 
-  private void resetToDefault(final DatabaseObjectRuleForInclusion ruleForInclusion)
-  {
-    inclusionRules.put(ruleForInclusion,
-                       getDefaultInclusionRule(ruleForInclusion));
+  private LimitOptionsBuilder include(
+      final DatabaseObjectRuleForInclusion ruleForInclusion, final Pattern pattern) {
+    return include(ruleForInclusion, new RegularExpressionInclusionRule(pattern));
   }
 
-  private LimitOptionsBuilder include(final DatabaseObjectRuleForInclusion ruleForInclusion,
-                                      final Pattern pattern)
-  {
-    return include(ruleForInclusion,
-                   new RegularExpressionInclusionRule(pattern));
+  private void resetToDefault(final DatabaseObjectRuleForInclusion ruleForInclusion) {
+    inclusionRules.put(ruleForInclusion, getDefaultInclusionRule(ruleForInclusion));
   }
-
-  public LimitOptionsBuilder include(final DatabaseObjectRuleForInclusion ruleForInclusion,
-                                     final InclusionRule inclusionRule)
-  {
-    if (inclusionRule == null)
-    {
-      resetToDefault(ruleForInclusion);
-    }
-    else
-    {
-      inclusionRules.put(ruleForInclusion, inclusionRule);
-    }
-    return this;
-  }
-
 }

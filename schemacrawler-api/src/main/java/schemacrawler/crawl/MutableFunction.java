@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
@@ -42,69 +41,50 @@ import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
 
 /**
- * Represents a database function. Created from metadata returned by a JDBC
- * call.
+ * Represents a database function. Created from metadata returned by a JDBC call.
  *
  * @author Sualeh Fatehi
  */
-final class MutableFunction
-  extends MutableRoutine
-  implements Function
-{
+final class MutableFunction extends MutableRoutine implements Function {
 
   private static final long serialVersionUID = 3906925686089134130L;
-  private final NamedObjectList<MutableFunctionParameter> columns =
-    new NamedObjectList<>();
+  private final NamedObjectList<MutableFunctionParameter> columns = new NamedObjectList<>();
   private FunctionReturnType returnType;
 
-  MutableFunction(final Schema schema, final String name)
-  {
+  MutableFunction(final Schema schema, final String name) {
     super(schema, name);
     // Default values
     returnType = FunctionReturnType.unknown;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public List<FunctionParameter> getParameters()
-  {
+  public List<FunctionParameter> getParameters() {
     return new ArrayList<>(columns.values());
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public FunctionReturnType getReturnType()
-  {
+  public FunctionReturnType getReturnType() {
     return returnType;
   }
 
-  void setReturnType(final FunctionReturnType returnType)
-  {
-    this.returnType = requireNonNull(returnType, "Null function return type");
-  }
-
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public Optional<MutableFunctionParameter> lookupParameter(final String name)
-  {
-    return columns.lookup(this, name);
-  }
-
-  @Override
-  public RoutineType getRoutineType()
-  {
+  public RoutineType getRoutineType() {
     return RoutineType.function;
   }
 
-  void addParameter(final MutableFunctionParameter column)
-  {
+  /** {@inheritDoc} */
+  @Override
+  public Optional<MutableFunctionParameter> lookupParameter(final String name) {
+    return columns.lookup(this, name);
+  }
+
+  void addParameter(final MutableFunctionParameter column) {
     columns.add(column);
   }
 
+  void setReturnType(final FunctionReturnType returnType) {
+    this.returnType = requireNonNull(returnType, "Null function return type");
+  }
 }

@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.crawl;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.empty;
@@ -52,6 +51,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ForeignKey;
@@ -78,46 +78,32 @@ import schemacrawler.utility.NamedObjectSort;
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ForeignKeyRetrieverTest
-{
+public class ForeignKeyRetrieverTest {
 
-  public static void verifyRetrieveForeignKeys(final Catalog catalog)
-    throws IOException
-  {
+  public static void verifyRetrieveForeignKeys(final Catalog catalog) throws IOException {
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout)
-    {
-      final Schema[] schemas = catalog
-        .getSchemas()
-        .toArray(new Schema[0]);
+    try (final TestWriter out = testout) {
+      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(5));
-      for (final Schema schema : schemas)
-      {
+      for (final Schema schema : schemas) {
         out.println("schema: " + schema.getFullName());
-        final Table[] tables = catalog
-          .getTables(schema)
-          .toArray(new Table[0]);
+        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
         Arrays.sort(tables, NamedObjectSort.alphabetical);
-        for (final Table table : tables)
-        {
+        for (final Table table : tables) {
           out.println("  table: " + table.getFullName());
           final Collection<ForeignKey> foreignKeys = table.getForeignKeys();
-          for (final ForeignKey foreignKey : foreignKeys)
-          {
+          for (final ForeignKey foreignKey : foreignKeys) {
             out.println("    foreign key: " + foreignKey.getName());
             out.println("      specific name: " + foreignKey.getSpecificName());
-            out.println("      deferrability: "
-                        + foreignKey.getDeferrability());
+            out.println("      deferrability: " + foreignKey.getDeferrability());
             out.println("      delete rule: " + foreignKey.getDeleteRule());
             out.println("      update rule: " + foreignKey.getUpdateRule());
 
             out.println("      column references: ");
             final List<ForeignKeyColumnReference> columnReferences =
-              foreignKey.getColumnReferences();
-            for (final ForeignKeyColumnReference columnReference : columnReferences)
-            {
-              out.println("        key sequence: "
-                          + columnReference.getKeySequence());
+                foreignKey.getColumnReferences();
+            for (final ForeignKeyColumnReference columnReference : columnReferences) {
+              out.println("        key sequence: " + columnReference.getKeySequence());
               out.println("          " + columnReference);
             }
           }
@@ -125,75 +111,68 @@ public class ForeignKeyRetrieverTest
       }
     }
     // IMPORTANT: The data dictionary test should return the same information as the metadata test
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(
-                 "SchemaCrawlerTest.foreignKeys")));
+    assertThat(
+        outputOf(testout), hasSameContentAs(classpathResource("SchemaCrawlerTest.foreignKeys")));
   }
 
   private MutableCatalog catalog;
 
   @Test
   @DisplayName("Retrieve foreign keys from data dictionary")
-  public void fkFromDataDictionary(final Connection connection)
-    throws Exception
-  {
+  public void fkFromDataDictionary(final Connection connection) throws Exception {
     final InformationSchemaViews informationSchemaViews =
-      InformationSchemaViewsBuilder
-        .builder()
-        .withSql(InformationSchemaKey.FOREIGN_KEYS,
-                 "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_CROSSREFERENCE")
-        .toOptions();
+        InformationSchemaViewsBuilder.builder()
+            .withSql(
+                InformationSchemaKey.FOREIGN_KEYS,
+                "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_CROSSREFERENCE")
+            .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-      SchemaRetrievalOptionsBuilder.builder();
+        SchemaRetrievalOptionsBuilder.builder();
     schemaRetrievalOptionsBuilder
-      .with(foreignKeysRetrievalStrategy, data_dictionary_all)
-      .withInformationSchemaViews(informationSchemaViews);
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-      schemaRetrievalOptionsBuilder.toOptions();
+        .with(foreignKeysRetrievalStrategy, data_dictionary_all)
+        .withInformationSchemaViews(informationSchemaViews);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection =
-      new RetrieverConnection(connection, schemaRetrievalOptions);
+        new RetrieverConnection(connection, schemaRetrievalOptions);
 
-    final SchemaCrawlerOptions options =
-      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
     final ForeignKeyRetriever foreignKeyRetriever =
-      new ForeignKeyRetriever(retrieverConnection, catalog, options);
+        new ForeignKeyRetriever(retrieverConnection, catalog, options);
     foreignKeyRetriever.retrieveForeignKeys(catalog.getAllTables());
 
     verifyRetrieveForeignKeys(catalog);
   }
 
   @BeforeAll
-  public void loadBaseCatalog(final Connection connection)
-    throws SchemaCrawlerException
-  {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-      .builder()
-      .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
-      .builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder
-                             .builder()
-                             .withInfoLevel(InfoLevel.standard)
-                             .setRetrieveForeignKeys(false)
-                             .toOptions());
+  public void loadBaseCatalog(final Connection connection) throws SchemaCrawlerException {
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder()
+            .withSchemaInfoLevel(
+                SchemaInfoLevelBuilder.builder()
+                    .withInfoLevel(InfoLevel.standard)
+                    .setRetrieveForeignKeys(false)
+                    .toOptions());
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withLimitOptionsBuilder(limitOptionsBuilder)
-        .withLoadOptionsBuilder(loadOptionsBuilder)
-        .toOptions();
-    catalog = (MutableCatalog) getCatalog(connection,
-                                          SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
-                                          schemaCrawlerOptions);
+        SchemaCrawlerOptionsBuilder.builder()
+            .withLimitOptionsBuilder(limitOptionsBuilder)
+            .withLoadOptionsBuilder(loadOptionsBuilder)
+            .toOptions();
+    catalog =
+        (MutableCatalog)
+            getCatalog(
+                connection,
+                SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
+                schemaCrawlerOptions);
 
     final Collection<Table> tables = catalog.getTables();
     assertThat(tables, hasSize(13));
-    for (final Table table : tables)
-    {
+    for (final Table table : tables) {
       assertThat(table.getColumns(), is(not(empty())));
       assertThat(table.getForeignKeys(), is(empty()));
     }
   }
-
 }

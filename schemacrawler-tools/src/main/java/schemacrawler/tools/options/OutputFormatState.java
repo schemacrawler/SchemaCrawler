@@ -27,35 +27,29 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.options;
 
-
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class OutputFormatState
-  implements OutputFormat
-{
+public final class OutputFormatState implements OutputFormat {
 
   private final List<String> formatSpecifiers;
   private final String description;
 
-  public OutputFormatState(final String formatSpecifier,
-                           final String description,
-                           final String... additionalFormatSpecifiers)
-  {
+  public OutputFormatState(
+      final String formatSpecifier,
+      final String description,
+      final String... additionalFormatSpecifiers) {
     requireNotBlank(formatSpecifier, "No formation provided");
 
     this.description = requireNotBlank(description, "No description provided");
     formatSpecifiers = new ArrayList<>();
     formatSpecifiers.add(formatSpecifier);
-    if (additionalFormatSpecifiers != null)
-    {
-      for (final String additionalFormatSpecifier : additionalFormatSpecifiers)
-      {
-        if (!isBlank(additionalFormatSpecifier))
-        {
+    if (additionalFormatSpecifiers != null) {
+      for (final String additionalFormatSpecifier : additionalFormatSpecifiers) {
+        if (!isBlank(additionalFormatSpecifier)) {
           formatSpecifiers.add(additionalFormatSpecifier);
         }
       }
@@ -63,36 +57,29 @@ public final class OutputFormatState
   }
 
   @Override
-  public String getDescription()
-  {
+  public String getDescription() {
     return description;
   }
 
   @Override
-  public String getFormat()
-  {
+  public String getFormat() {
     return formatSpecifiers.get(0);
   }
 
   @Override
-  public List<String> getFormats()
-  {
+  public List<String> getFormats() {
     return new ArrayList<>(formatSpecifiers);
   }
 
   /**
    * Checks if the provided format is supported.
    *
-   * @param format
-   *   Format to check
+   * @param format Format to check
    * @return If the format is supported, ignoring case.
    */
-  public boolean isSupportedFormat(final String format)
-  {
-    for (final String formatSpecifier : formatSpecifiers)
-    {
-      if (formatSpecifier.equalsIgnoreCase(format))
-      {
+  public boolean isSupportedFormat(final String format) {
+    for (final String formatSpecifier : formatSpecifiers) {
+      if (formatSpecifier.equalsIgnoreCase(format)) {
         return true;
       }
     }
@@ -100,9 +87,7 @@ public final class OutputFormatState
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return String.format("%s %s", formatSpecifiers, description);
   }
-
 }

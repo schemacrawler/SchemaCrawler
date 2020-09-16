@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.text.utility;
 
-
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.PrintWriter;
@@ -41,76 +40,56 @@ import us.fatehi.utility.Color;
  *
  * @author Sualeh Fatehi
  */
-public class PlainTextFormattingHelper
-  extends BaseTextFormattingHelper
-{
+public class PlainTextFormattingHelper extends BaseTextFormattingHelper {
 
-  public PlainTextFormattingHelper(final PrintWriter out,
-                                   final TextOutputFormat outputFormat)
-  {
+  public PlainTextFormattingHelper(final PrintWriter out, final TextOutputFormat outputFormat) {
     super(out, outputFormat);
   }
 
   @Override
-  public String createLeftArrow()
-  {
+  public String createLeftArrow() {
     return "<--";
   }
 
   @Override
-  public String createRightArrow()
-  {
+  public String createRightArrow() {
     return "-->";
   }
 
   @Override
-  public String createWeakLeftArrow()
-  {
+  public String createWeakLeftArrow() {
     return "<~~";
   }
 
   @Override
-  public String createWeakRightArrow()
-  {
+  public String createWeakRightArrow() {
     return "~~>";
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public void writeDocumentEnd()
-  {
+  public void writeDocumentEnd() {
     // No output required
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public void writeDocumentStart()
-  {
+  public void writeDocumentStart() {
     // No output required
   }
 
   @Override
-  public void writeHeader(final DocumentHeaderType type, final String header)
-  {
-    if (!isBlank(header))
-    {
+  public void writeHeader(final DocumentHeaderType type, final String header) {
+    if (!isBlank(header)) {
       final String defaultSeparator = separator("=");
 
       final String prefix;
       final String separator;
-      if (type == null)
-      {
+      if (type == null) {
         prefix = System.lineSeparator();
         separator = defaultSeparator;
-      }
-      else
-      {
-        switch (type)
-        {
+      } else {
+        switch (type) {
           case title:
             prefix = System.lineSeparator();
             separator = separator("_");
@@ -126,44 +105,28 @@ public class PlainTextFormattingHelper
             break;
         }
       }
-      out.println(System.lineSeparator()
-                  + prefix
-                  + header
-                  + System.lineSeparator()
-                  + separator
-                  + prefix);
+      out.println(
+          System.lineSeparator() + prefix + header + System.lineSeparator() + separator + prefix);
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public void writeObjectEnd()
-  {
+  public void writeObjectEnd() {
     out.println();
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public void writeObjectNameRow(final String id,
-                                 final String name,
-                                 final String description,
-                                 final Color backgroundColor)
-  {
+  public void writeObjectNameRow(
+      final String id, final String name, final String description, final Color backgroundColor) {
     writeNameRow(name, description);
     out.println(DASHED_SEPARATOR);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public void writeObjectStart()
-  {
+  public void writeObjectStart() {
     // No output required
   }
-
 }

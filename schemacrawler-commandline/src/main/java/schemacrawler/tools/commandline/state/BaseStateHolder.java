@@ -28,17 +28,13 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.state;
 
-
 import static java.util.Objects.requireNonNull;
 
-public abstract class BaseStateHolder
-{
+public abstract class BaseStateHolder {
 
   protected final SchemaCrawlerShellState state;
 
-  protected BaseStateHolder(final SchemaCrawlerShellState state)
-  {
+  protected BaseStateHolder(final SchemaCrawlerShellState state) {
     this.state = requireNonNull(state, "No shell state provided");
   }
-
 }

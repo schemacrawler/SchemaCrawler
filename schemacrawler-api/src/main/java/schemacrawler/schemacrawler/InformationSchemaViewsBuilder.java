@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schemacrawler;
 
-
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.IOUtility.readResourceFully;
 import static us.fatehi.utility.Utility.isBlank;
@@ -42,43 +41,33 @@ import java.util.function.BiConsumer;
 import us.fatehi.utility.ObjectToString;
 import us.fatehi.utility.TemplatingUtility;
 
-/**
- * The database specific views to get additional database metadata in a standard
- * format.
- */
+/** The database specific views to get additional database metadata in a standard format. */
 public final class InformationSchemaViewsBuilder
-  implements
-  OptionsBuilder<InformationSchemaViewsBuilder, InformationSchemaViews>
-{
+    implements OptionsBuilder<InformationSchemaViewsBuilder, InformationSchemaViews> {
 
-  public static InformationSchemaViewsBuilder builder()
-  {
+  public static InformationSchemaViewsBuilder builder() {
     return new InformationSchemaViewsBuilder();
   }
 
-  public static InformationSchemaViewsBuilder builder(final InformationSchemaViews informationSchemaViews)
-  {
-    return new InformationSchemaViewsBuilder().fromOptions(
-      informationSchemaViews);
+  public static InformationSchemaViewsBuilder builder(
+      final InformationSchemaViews informationSchemaViews) {
+    return new InformationSchemaViewsBuilder().fromOptions(informationSchemaViews);
   }
 
-  public static InformationSchemaViews newInformationSchemaViews()
-  {
+  public static InformationSchemaViews newInformationSchemaViews() {
     return new InformationSchemaViews();
   }
 
   private final Map<InformationSchemaKey, String> informationSchemaQueries;
 
-  private InformationSchemaViewsBuilder()
-  {
+  private InformationSchemaViewsBuilder() {
     informationSchemaQueries = new EnumMap<>(InformationSchemaKey.class);
   }
 
   @Override
-  public InformationSchemaViewsBuilder fromOptions(final InformationSchemaViews informationSchemaViews)
-  {
-    if (informationSchemaViews == null)
-    {
+  public InformationSchemaViewsBuilder fromOptions(
+      final InformationSchemaViews informationSchemaViews) {
+    if (informationSchemaViews == null) {
       return this;
     }
 
@@ -87,40 +76,26 @@ public final class InformationSchemaViewsBuilder
     return this;
   }
 
-  @Override
-  public InformationSchemaViews toOptions()
-  {
-    return new InformationSchemaViews(informationSchemaQueries);
-  }
-
   /**
    * Information schema views from a map.
    *
-   * @param classpath
-   *   Classpath location for SQL queries.
+   * @param classpath Classpath location for SQL queries.
    * @return Builder
    */
-  public InformationSchemaViewsBuilder fromResourceFolder(final String classpath)
-  {
-    if (isBlank(classpath))
-    {
+  public InformationSchemaViewsBuilder fromResourceFolder(final String classpath) {
+    if (isBlank(classpath)) {
       return this;
     }
 
-    for (final InformationSchemaKey key : InformationSchemaKey.values())
-    {
+    for (final InformationSchemaKey key : InformationSchemaKey.values()) {
       final String resource;
-      if (classpath == null)
-      {
+      if (classpath == null) {
         resource = key + ".sql";
-      }
-      else
-      {
+      } else {
         resource = String.format("%s/%s.sql", classpath, key);
       }
       final String sql = readResourceFully(resource);
-      if (!isBlank(sql))
-      {
+      if (!isBlank(sql)) {
         informationSchemaQueries.put(key, sql);
       }
     }
@@ -128,13 +103,11 @@ public final class InformationSchemaViewsBuilder
     return this;
   }
 
-  public void substituteAll(final String templateKey,
-                            final String templateValue)
-  {
+  public void substituteAll(final String templateKey, final String templateValue) {
     final Map<String, String> map = new HashMap<>();
     map.put(templateKey, templateValue);
-    for (final Map.Entry<InformationSchemaKey, String> query : informationSchemaQueries.entrySet())
-    {
+    for (final Map.Entry<InformationSchemaKey, String> query :
+        informationSchemaQueries.entrySet()) {
       String sql = query.getValue();
       sql = TemplatingUtility.expandTemplate(sql, map);
       query.setValue(sql);
@@ -142,43 +115,39 @@ public final class InformationSchemaViewsBuilder
   }
 
   @Override
-  public String toString()
-  {
+  public InformationSchemaViews toOptions() {
+    return new InformationSchemaViews(informationSchemaQueries);
+  }
+
+  @Override
+  public String toString() {
     return ObjectToString.toString(informationSchemaQueries);
   }
 
-  /**
-   * Sets definitions SQL.
-   *
-   * @param key
-   *   SQL query key
-   * @param sql
-   *   Definitions SQL.
-   * @return Builder
-   */
-  public InformationSchemaViewsBuilder withSql(final InformationSchemaKey key,
-                                               final String sql)
-  {
-    requireNonNull(key, "No key provided");
-    if (isBlank(sql))
-    {
-      informationSchemaQueries.remove(key);
-    }
-    else
-    {
-      informationSchemaQueries.put(key, sql);
-    }
-    return this;
-  }
-
-  public InformationSchemaViewsBuilder withFunction(final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection,
-                                                    final Connection connection)
-  {
-    if (informationSchemaViewsBuilderForConnection != null)
-    {
+  public InformationSchemaViewsBuilder withFunction(
+      final BiConsumer<InformationSchemaViewsBuilder, Connection>
+          informationSchemaViewsBuilderForConnection,
+      final Connection connection) {
+    if (informationSchemaViewsBuilderForConnection != null) {
       informationSchemaViewsBuilderForConnection.accept(this, connection);
     }
     return this;
   }
 
+  /**
+   * Sets definitions SQL.
+   *
+   * @param key SQL query key
+   * @param sql Definitions SQL.
+   * @return Builder
+   */
+  public InformationSchemaViewsBuilder withSql(final InformationSchemaKey key, final String sql) {
+    requireNonNull(key, "No key provided");
+    if (isBlank(sql)) {
+      informationSchemaQueries.remove(key);
+    } else {
+      informationSchemaQueries.put(key, sql);
+    }
+    return this;
+  }
 }

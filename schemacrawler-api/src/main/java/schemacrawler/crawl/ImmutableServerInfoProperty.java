@@ -27,58 +27,42 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.crawl;
 
-
 import static us.fatehi.utility.Utility.isBlank;
 
 import schemacrawler.schema.Property;
 
-final class ImmutableServerInfoProperty
-  extends AbstractProperty
-{
+final class ImmutableServerInfoProperty extends AbstractProperty {
 
   private static final long serialVersionUID = -2744384718272515235L;
 
   private final String description;
 
-  ImmutableServerInfoProperty(final String name,
-                              final String value,
-                              final String description)
-  {
+  ImmutableServerInfoProperty(final String name, final String value, final String description) {
     super(name, value);
 
-    if (isBlank(description))
-    {
+    if (isBlank(description)) {
       this.description = "";
-    }
-    else
-    {
+    } else {
       this.description = description;
     }
   }
 
   @Override
-  public int compareTo(final Property otherProperty)
-  {
-    if (otherProperty == null)
-    {
+  public int compareTo(final Property otherProperty) {
+    if (otherProperty == null) {
       return -1;
-    }
-    else
-    {
+    } else {
       return getName().compareToIgnoreCase(otherProperty.getName());
     }
   }
 
   @Override
-  public String getDescription()
-  {
+  public String getDescription() {
     return description;
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return getName() + " = " + getValue();
   }
-
 }

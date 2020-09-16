@@ -27,12 +27,10 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schema;
 
-
 import java.io.Serializable;
 
 public interface Grant<D extends DatabaseObject>
-  extends Serializable, Comparable<Grant<D>>, ContainedObject<Privilege<D>>
-{
+    extends Serializable, Comparable<Grant<D>>, ContainedObject<Privilege<D>> {
 
   /**
    * Gets the grantee.
@@ -54,5 +52,4 @@ public interface Grant<D extends DatabaseObject>
    * @return Is grantable
    */
   boolean isGrantable();
-
 }

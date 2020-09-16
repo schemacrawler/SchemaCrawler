@@ -27,12 +27,8 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schema;
 
-
-public enum TableRelationshipType
-{
-
+public enum TableRelationshipType {
   none,
   parent,
   child
-
 }

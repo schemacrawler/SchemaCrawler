@@ -28,19 +28,13 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 import static java.sql.DatabaseMetaData.typePredBasic;
 import static java.sql.DatabaseMetaData.typePredChar;
 import static java.sql.DatabaseMetaData.typePredNone;
 import static java.sql.DatabaseMetaData.typeSearchable;
 
-/**
- * An enumeration wrapper around JDBC search predicates.
- */
-public enum SearchableType
-  implements IdentifiedEnum
-{
-
+/** An enumeration wrapper around JDBC search predicates. */
+public enum SearchableType implements IdentifiedEnum {
   unknown(-1, "unknown"),
   notSearchable(typePredNone, "not searchable"),
   searchableWithLike(typePredChar, "only searchable with where .. like"),
@@ -50,35 +44,24 @@ public enum SearchableType
   private final int id;
   private final String text;
 
-  SearchableType(final int id, final String text)
-  {
+  SearchableType(final int id, final String text) {
     this.id = id;
     this.text = text;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public int id()
-  {
+  public int id() {
     return id;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String toString()
-  {
-    if (this == unknown)
-    {
+  public String toString() {
+    if (this == unknown) {
       return "not searchable";
-    }
-    else
-    {
+    } else {
       return text;
     }
   }
-
 }

@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schemacrawler;
 
-
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 
@@ -39,16 +38,13 @@ import schemacrawler.utility.TypeMap;
 import us.fatehi.utility.ObjectToString;
 
 /**
- * Provides for database specific overrides for SchemaCrawler functionality.
- * This can add or inject database plugins, or override defaults. It is
- * recommended to build these options using factory methods in
- * SchemaCrawlerUtility.
+ * Provides for database specific overrides for SchemaCrawler functionality. This can add or inject
+ * database plugins, or override defaults. It is recommended to build these options using factory
+ * methods in SchemaCrawlerUtility.
  *
  * @author Sualeh Fatehi <sualeh@hotmail.com>
  */
-public final class SchemaRetrievalOptions
-  implements Options
-{
+public final class SchemaRetrievalOptions implements Options {
 
   private final DatabaseServerType dbServerType;
   private final String identifierQuoteString;
@@ -59,12 +55,11 @@ public final class SchemaRetrievalOptions
   private final TypeMap typeMap;
   private final EnumDataTypeHelper enumDataTypeHelper;
   EnumMap<SchemaInfoMetadataRetrievalStrategy, MetadataRetrievalStrategy>
-    metadataRetrievalStrategyMap;
+      metadataRetrievalStrategyMap;
 
-  protected SchemaRetrievalOptions(final SchemaRetrievalOptionsBuilder builder)
-  {
+  protected SchemaRetrievalOptions(final SchemaRetrievalOptionsBuilder builder) {
     final SchemaRetrievalOptionsBuilder bldr =
-      builder == null? SchemaRetrievalOptionsBuilder.builder(): builder;
+        builder == null ? SchemaRetrievalOptionsBuilder.builder() : builder;
     dbServerType = bldr.dbServerType;
     supportsSchemas = bldr.supportsSchemas;
     supportsCatalogs = bldr.supportsCatalogs;
@@ -73,83 +68,67 @@ public final class SchemaRetrievalOptions
     identifiers = bldr.identifiers;
     typeMap = bldr.overridesTypeMap.orElse(new TypeMap());
     enumDataTypeHelper = bldr.enumDataTypeHelper;
-    metadataRetrievalStrategyMap =
-      new EnumMap<>(bldr.metadataRetrievalStrategyMap);
+    metadataRetrievalStrategyMap = new EnumMap<>(bldr.metadataRetrievalStrategyMap);
   }
 
-  public EnumDataTypeHelper getEnumDataTypeHelper()
-  {
-    return enumDataTypeHelper;
-  }
-
-  public DatabaseServerType getDatabaseServerType()
-  {
-    return dbServerType;
-  }
-
-  public MetadataRetrievalStrategy get(final SchemaInfoMetadataRetrievalStrategy schemaInfoMetadataRetrievalStrategy)
-  {
-    requireNonNull(schemaInfoMetadataRetrievalStrategy,
-                   "No schema info metadata retrieval strategy provided");
+  public MetadataRetrievalStrategy get(
+      final SchemaInfoMetadataRetrievalStrategy schemaInfoMetadataRetrievalStrategy) {
+    requireNonNull(
+        schemaInfoMetadataRetrievalStrategy, "No schema info metadata retrieval strategy provided");
     return metadataRetrievalStrategyMap.get(schemaInfoMetadataRetrievalStrategy);
   }
 
-  public String getIdentifierQuoteString()
-  {
-    if (!hasOverrideForIdentifierQuoteString())
-    {
+  public DatabaseServerType getDatabaseServerType() {
+    return dbServerType;
+  }
+
+  public EnumDataTypeHelper getEnumDataTypeHelper() {
+    return enumDataTypeHelper;
+  }
+
+  public String getIdentifierQuoteString() {
+    if (!hasOverrideForIdentifierQuoteString()) {
       return "";
     }
     return identifierQuoteString;
   }
 
-  public Identifiers getIdentifiers()
-  {
+  public Identifiers getIdentifiers() {
     return identifiers;
   }
 
-  public InformationSchemaViews getInformationSchemaViews()
-  {
+  public InformationSchemaViews getInformationSchemaViews() {
     return informationSchemaViews;
   }
 
-  public TypeMap getTypeMap()
-  {
+  public TypeMap getTypeMap() {
     return typeMap;
   }
 
-  public boolean hasOverrideForIdentifierQuoteString()
-  {
+  public boolean hasOverrideForIdentifierQuoteString() {
     return !isBlank(identifierQuoteString);
   }
 
-  public boolean hasOverrideForTypeMap()
-  {
+  public boolean hasOverrideForTypeMap() {
     return typeMap != null;
   }
 
-  public boolean isSupportsCatalogs()
-  {
+  public boolean isSupportsCatalogs() {
     return supportsCatalogs;
   }
 
-  public boolean isSupportsSchemas()
-  {
+  public boolean isSupportsSchemas() {
     return supportsSchemas;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String toString()
-  {
+  public String toString() {
     return ObjectToString.toString(this);
   }
 
-  Map<SchemaInfoMetadataRetrievalStrategy, MetadataRetrievalStrategy> getMetadataRetrievalStrategyMap()
-  {
+  Map<SchemaInfoMetadataRetrievalStrategy, MetadataRetrievalStrategy>
+      getMetadataRetrievalStrategyMap() {
     return new EnumMap<>(metadataRetrievalStrategyMap);
   }
-
 }

@@ -27,11 +27,8 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schema;
 
-
 @FunctionalInterface
-public interface Reducer<N extends NamedObject>
-{
+public interface Reducer<N extends NamedObject> {
 
   void reduce(final ReducibleCollection<? extends N> namedObjects);
-
 }

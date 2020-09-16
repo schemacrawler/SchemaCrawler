@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schema;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.io.Serializable;
@@ -38,43 +37,32 @@ import java.sql.SQLType;
  *
  * @author Sualeh Fatehi
  */
-public final class JavaSqlType
-  implements SQLType, Serializable, Comparable<JavaSqlType>
-{
+public final class JavaSqlType implements SQLType, Serializable, Comparable<JavaSqlType> {
 
   private static final long serialVersionUID = 2614819974745473431L;
-  /**
-   * Unknown SQL data type.
-   */
+  /** Unknown SQL data type. */
   public static final JavaSqlType UNKNOWN =
-    new JavaSqlType(unknownSQLType(), Object.class, JavaSqlTypeGroup.unknown);
+      new JavaSqlType(unknownSQLType(), Object.class, JavaSqlTypeGroup.unknown);
 
-  private static SQLType unknownSQLType()
-  {
-    final class UnknownSQLType
-      implements SQLType, Serializable
-    {
+  private static SQLType unknownSQLType() {
+    final class UnknownSQLType implements SQLType, Serializable {
 
       private static final long serialVersionUID = -2579002704227573365L;
 
       @Override
-      public String getName()
-      {
+      public String getName() {
         return "UNKNOWN";
       }
 
       @Override
-      public String getVendor()
-      {
+      public String getVendor() {
         return "us.fatehi.schemacrawler";
       }
 
       @Override
-      public Integer getVendorTypeNumber()
-      {
+      public Integer getVendorTypeNumber() {
         return Integer.MIN_VALUE;
       }
-
     }
 
     return new UnknownSQLType();
@@ -84,106 +72,79 @@ public final class JavaSqlType
   private final JavaSqlTypeGroup javaSqlTypeGroup;
   private final SQLType sqlType;
 
-  public JavaSqlType(final SQLType sqlType,
-                     final Class<?> defaultMappedClass,
-                     final JavaSqlTypeGroup javaSqlTypeGroup)
-  {
+  public JavaSqlType(
+      final SQLType sqlType,
+      final Class<?> defaultMappedClass,
+      final JavaSqlTypeGroup javaSqlTypeGroup) {
     this.sqlType = requireNonNull(sqlType, "No SQLType provided");
     this.defaultMappedClass =
-      requireNonNull(defaultMappedClass, "Np default mapped class provided");
-    this.javaSqlTypeGroup =
-      requireNonNull(javaSqlTypeGroup, "No SQLType group provided");
+        requireNonNull(defaultMappedClass, "Np default mapped class provided");
+    this.javaSqlTypeGroup = requireNonNull(javaSqlTypeGroup, "No SQLType group provided");
   }
 
   @Override
-  public int compareTo(final JavaSqlType otherSqlDataType)
-  {
-    return sqlType
-      .getName()
-      .compareTo(otherSqlDataType.sqlType.getName());
+  public int compareTo(final JavaSqlType otherSqlDataType) {
+    return sqlType.getName().compareTo(otherSqlDataType.sqlType.getName());
   }
 
-  public Class<?> getDefaultMappedClass()
-  {
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final JavaSqlType other = (JavaSqlType) obj;
+    if (sqlType == null) {
+      return other.sqlType == null;
+    } else {
+      return sqlType.getVendorTypeNumber().equals(other.sqlType.getVendorTypeNumber());
+    }
+  }
+
+  public Class<?> getDefaultMappedClass() {
     return defaultMappedClass;
   }
 
-  public JavaSqlTypeGroup getJavaSqlTypeGroup()
-  {
+  public JavaSqlTypeGroup getJavaSqlTypeGroup() {
     return javaSqlTypeGroup;
   }
 
   @Override
-  public String getName()
-  {
+  public String getName() {
     return sqlType.getName();
   }
 
   @Override
-  public String getVendor()
-  {
+  public String getVendor() {
     return sqlType.getVendor();
   }
 
   @Override
-  public Integer getVendorTypeNumber()
-  {
+  public Integer getVendorTypeNumber() {
     final Integer vendorTypeNumber = sqlType.getVendorTypeNumber();
-    if (vendorTypeNumber != null)
-    {
+    if (vendorTypeNumber != null) {
       return vendorTypeNumber;
-    }
-    else
-    {
-      return Integer.valueOf(Integer.MAX_VALUE);
+    } else {
+      return Integer.MAX_VALUE;
     }
   }
 
   @Override
-  public int hashCode()
-  {
+  public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result =
-      prime * result + (sqlType == null? 0: sqlType.getVendorTypeNumber());
+    result = prime * result + (sqlType == null ? 0 : sqlType.getVendorTypeNumber());
     return result;
   }
 
   @Override
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
-      return true;
-    }
-    if (obj == null)
-    {
-      return false;
-    }
-    if (getClass() != obj.getClass())
-    {
-      return false;
-    }
-    final JavaSqlType other = (JavaSqlType) obj;
-    if (sqlType == null)
-    {
-      return other.sqlType == null;
-    }
-    else
-    {
-      return sqlType
-        .getVendorTypeNumber()
-        .equals(other.sqlType.getVendorTypeNumber());
-    }
+  public String toString() {
+    return String.format(
+        "%s\t%d\t%s", sqlType.getName(), sqlType.getVendorTypeNumber(), javaSqlTypeGroup);
   }
-
-  @Override
-  public String toString()
-  {
-    return String.format("%s\t%d\t%s",
-                         sqlType.getName(),
-                         sqlType.getVendorTypeNumber(),
-                         javaSqlTypeGroup);
-  }
-
 }

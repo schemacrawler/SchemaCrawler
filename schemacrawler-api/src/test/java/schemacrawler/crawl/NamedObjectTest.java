@@ -27,24 +27,22 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.crawl;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import org.junit.jupiter.api.Test;
+
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
 
-public class NamedObjectTest
-{
+public class NamedObjectTest {
 
   public static final TableType TABLE = new TableType("TABLE");
 
   @Test
-  public void tableNames()
-  {
-    final String[] schemaNames = new String[] { "DBO", "PUBLIC" };
+  public void tableNames() {
+    final String[] schemaNames = new String[] {"DBO", "PUBLIC"};
     final String[] tableNames = {
       "CUSTOMER", "CUSTOMERLIST", "INVOICE", "ITEM", "PRODUCT", "SUPPLIER"
     };
@@ -53,18 +51,14 @@ public class NamedObjectTest
     final NamedObjectList<Table> tables = new NamedObjectList<>();
 
     final MutableCatalog catalog = new MutableCatalog("DATABASE");
-    for (final String schemaName : schemaNames)
-    {
+    for (final String schemaName : schemaNames) {
       final Schema schema = catalog.addSchema("CATALOG", schemaName);
-      for (final String tableName : tableNames)
-      {
+      for (final String tableName : tableNames) {
         table = new MutableTable(schema, tableName);
         table.setTableType(TABLE);
         tables.add(table);
       }
     }
     assertThat(tables.size(), is(schemaNames.length * tableNames.length));
-
   }
-
 }

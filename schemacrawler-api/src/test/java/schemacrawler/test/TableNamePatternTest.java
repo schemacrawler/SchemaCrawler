@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
@@ -41,6 +40,7 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -55,54 +55,38 @@ import schemacrawler.utility.NamedObjectSort;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
-public class TableNamePatternTest
-{
+public class TableNamePatternTest {
 
   @Test
-  public void tableNamePattern(final TestContext testContext,
-                               final Connection connection)
-    throws Exception
-  {
+  public void tableNamePattern(final TestContext testContext, final Connection connection)
+      throws Exception {
 
     final String referenceFile = testContext.testMethodFullName();
 
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout)
-    {
+    try (final TestWriter out = testout) {
 
       final String tableNamePattern = "%Counts";
 
-      final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-        .builder()
-        .tableNamePattern(tableNamePattern);
+      final LimitOptionsBuilder limitOptionsBuilder =
+          LimitOptionsBuilder.builder().tableNamePattern(tableNamePattern);
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-        SchemaCrawlerOptionsBuilder
-          .builder()
-          .withLimitOptionsBuilder(limitOptionsBuilder);
-      final SchemaCrawlerOptions schemaCrawlerOptions =
-        schemaCrawlerOptionsBuilder.toOptions();
+          SchemaCrawlerOptionsBuilder.builder().withLimitOptionsBuilder(limitOptionsBuilder);
+      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
       final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
-      final Schema[] schemas = catalog
-        .getSchemas()
-        .toArray(new Schema[0]);
+      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(6));
-      for (final Schema schema : schemas)
-      {
+      for (final Schema schema : schemas) {
         out.println("schema: " + schema.getFullName());
-        final Table[] tables = catalog
-          .getTables(schema)
-          .toArray(new Table[0]);
+        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
         Arrays.sort(tables, NamedObjectSort.alphabetical);
-        for (final Table table : tables)
-        {
+        for (final Table table : tables) {
           out.println("  table: " + table.getFullName());
         }
       }
     }
 
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(referenceFile)));
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(referenceFile)));
   }
-
 }

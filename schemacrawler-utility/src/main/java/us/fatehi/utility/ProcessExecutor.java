@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility;
 
-
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.IOUtility.createTempFilePath;
 
@@ -40,12 +39,9 @@ import java.util.logging.Logger;
 
 import us.fatehi.utility.string.StringFormat;
 
-public class ProcessExecutor
-  implements Callable<Integer>
-{
+public class ProcessExecutor implements Callable<Integer> {
 
-  private static final Logger LOGGER =
-    Logger.getLogger(ProcessExecutor.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ProcessExecutor.class.getName());
 
   private List<String> command;
   private Path processOutput;
@@ -53,18 +49,14 @@ public class ProcessExecutor
   private int exitCode;
 
   @Override
-  public Integer call()
-    throws Exception
-  {
+  public Integer call() throws Exception {
     requireNonNull(command, "No command provided");
 
-    try
-    {
+    try {
       processOutput = createTempFilePath("temp", "stdout");
       processError = createTempFilePath("temp", "stderr");
 
-      if (command.isEmpty())
-      {
+      if (command.isEmpty()) {
         return null;
       }
 
@@ -76,11 +68,8 @@ public class ProcessExecutor
 
       final Process process = processBuilder.start();
       exitCode = process.waitFor();
-    }
-    catch (final Throwable t)
-    {
-      if (exitCode == 0)
-      {
+    } catch (final Throwable t) {
+      if (exitCode == 0) {
         exitCode = Integer.MIN_VALUE;
       }
       LOGGER.log(Level.SEVERE, t.getMessage(), t);
@@ -89,29 +78,23 @@ public class ProcessExecutor
     return exitCode;
   }
 
-  public List<String> getCommand()
-  {
+  public List<String> getCommand() {
     return command;
   }
 
-  public int getExitCode()
-  {
+  public int getExitCode() {
     return exitCode;
   }
 
-  public Path getProcessError()
-  {
+  public Path getProcessError() {
     return processError;
   }
 
-  public Path getProcessOutput()
-  {
+  public Path getProcessOutput() {
     return processOutput;
   }
 
-  public void setCommandLine(final List<String> args)
-  {
+  public void setCommandLine(final List<String> args) {
     command = new ArrayList<>(args);
   }
-
 }

@@ -27,40 +27,32 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility;
 
-
 import java.util.Iterator;
 import java.util.List;
 
 @UtilityMarker
-public class CompareUtility
-{
+public class CompareUtility {
 
-  public static <T extends Comparable<? super T>> int compareLists(final List<? extends T> list1,
-                                                                   final List<? extends T> list2)
-  {
+  public static <T extends Comparable<? super T>> int compareLists(
+      final List<? extends T> list1, final List<? extends T> list2) {
 
-    if (list1 == null && list2 == null)
-    {
+    if (list1 == null && list2 == null) {
       return 0;
     }
-    if (list1 == null)
-    {
+    if (list1 == null) {
       return -1;
     }
-    if (list2 == null)
-    {
+    if (list2 == null) {
       return 1;
     }
 
     int comparison = Integer.compare(list1.size(), list2.size());
 
-    if (comparison == 0)
-    {
+    if (comparison == 0) {
       final Iterator<? extends T> iter1 = list1.iterator();
       final Iterator<? extends T> iter2 = list2.iterator();
 
-      while (comparison == 0 && iter1.hasNext() && iter2.hasNext())
-      {
+      while (comparison == 0 && iter1.hasNext() && iter2.hasNext()) {
         final T object1 = iter1.next();
         final T object2 = iter2.next();
 
@@ -71,8 +63,5 @@ public class CompareUtility
     return comparison;
   }
 
-  private CompareUtility()
-  {
-  }
-
+  private CompareUtility() {}
 }

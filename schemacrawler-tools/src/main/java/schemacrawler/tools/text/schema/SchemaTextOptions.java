@@ -28,14 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.text.schema;
 
+public final class SchemaTextOptions extends BaseSchemaTextOptions {
 
-public final class SchemaTextOptions
-  extends BaseSchemaTextOptions
-{
-
-  protected SchemaTextOptions(final SchemaTextOptionsBuilder builder)
-  {
+  protected SchemaTextOptions(final SchemaTextOptionsBuilder builder) {
     super(builder);
   }
-
 }

@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import static schemacrawler.schemacrawler.InformationSchemaKey.SCHEMATA;
 
 import java.sql.Connection;
@@ -51,21 +50,19 @@ import schemacrawler.schemacrawler.SchemaReference;
 import us.fatehi.utility.DatabaseUtility;
 import us.fatehi.utility.string.StringFormat;
 
-final class SchemaRetriever
-  extends AbstractRetriever
-{
+final class SchemaRetriever extends AbstractRetriever {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(SchemaRetriever.class.getName());
+      SchemaCrawlerLogger.getLogger(SchemaRetriever.class.getName());
 
   private final boolean supportsCatalogs;
   private final boolean supportsSchemas;
 
-  SchemaRetriever(final RetrieverConnection retrieverConnection,
-                  final MutableCatalog catalog,
-                  final SchemaCrawlerOptions options)
-    throws SQLException
-  {
+  SchemaRetriever(
+      final RetrieverConnection retrieverConnection,
+      final MutableCatalog catalog,
+      final SchemaCrawlerOptions options)
+      throws SQLException {
     super(retrieverConnection, catalog, options);
 
     supportsCatalogs = retrieverConnection.isSupportsCatalogs();
@@ -75,19 +72,14 @@ final class SchemaRetriever
   /**
    * Retrieves a list of schemas from the database.
    *
-   * @param schemaInclusionRule
-   *   Schema inclusion rule
-   * @throws SQLException
-   *   On an exception
+   * @param schemaInclusionRule Schema inclusion rule
+   * @throws SQLException On an exception
    */
-  void retrieveSchemas(final InclusionRule schemaInclusionRule)
-    throws SQLException
-  {
+  void retrieveSchemas(final InclusionRule schemaInclusionRule) throws SQLException {
     final InclusionRuleFilter<Schema> schemaFilter =
-      new InclusionRuleFilter<>(schemaInclusionRule, true);
+        new InclusionRuleFilter<>(schemaInclusionRule, true);
 
-    if (schemaFilter.isExcludeAll())
-    {
+    if (schemaFilter.isExcludeAll()) {
       return;
     }
 
@@ -95,20 +87,15 @@ final class SchemaRetriever
 
     // Prefer to retrieve schemas from the INFORMATION_SCHEMA views
     schemaRefs = retrieveAllSchemasFromInformationSchemaViews();
-    if (schemaRefs.isEmpty())
-    {
+    if (schemaRefs.isEmpty()) {
       schemaRefs.addAll(retrieveAllSchemas());
     }
 
     // Filter out schemas
-    for (final Iterator<SchemaReference> iterator =
-         schemaRefs.iterator(); iterator.hasNext(); )
-    {
+    for (final Iterator<SchemaReference> iterator = schemaRefs.iterator(); iterator.hasNext(); ) {
       final SchemaReference schemaRef = iterator.next();
-      if (!schemaFilter.test(schemaRef))
-      {
-        LOGGER.log(Level.FINER,
-                   new StringFormat("Excluding schema <%s>", schemaRef));
+      if (!schemaFilter.test(schemaRef)) {
+        LOGGER.log(Level.FINER, new StringFormat("Excluding schema <%s>", schemaRef));
         iterator.remove();
         // continue
       }
@@ -116,18 +103,15 @@ final class SchemaRetriever
 
     // Create schemas for the catalogs, as well as create the schema
     // reference cache
-    for (final SchemaReference schemaRef : schemaRefs)
-    {
+    for (final SchemaReference schemaRef : schemaRefs) {
       catalog.addSchema(schemaRef);
     }
 
     // Add an empty schema reference for databases that do not support
     // neither catalogs nor schemas
-    if (!supportsCatalogs && !supportsSchemas)
-    {
+    if (!supportsCatalogs && !supportsSchemas) {
       catalog.addSchema(new SchemaReference(null, null));
     }
-
   }
 
   /**
@@ -135,111 +119,76 @@ final class SchemaRetriever
    *
    * @return All catalog names in the database
    */
-  private Set<String> retrieveAllCatalogs()
-  {
+  private Set<String> retrieveAllCatalogs() {
     LOGGER.log(Level.INFO, "Retrieving all catalogs");
 
     final Set<String> catalogNames = new HashSet<>();
 
-    if (supportsCatalogs)
-    {
-      try
-      {
+    if (supportsCatalogs) {
+      try {
         int numCatalogs = 0;
         final List<String> metaDataCatalogNames =
-          DatabaseUtility.readResultsVector(getMetaData().getCatalogs());
-        for (final String catalogName : metaDataCatalogNames)
-        {
+            DatabaseUtility.readResultsVector(getMetaData().getCatalogs());
+        for (final String catalogName : metaDataCatalogNames) {
           numCatalogs = numCatalogs + 1;
           catalogNames.add(catalogName);
         }
-        LOGGER.log(Level.INFO,
-                   new StringFormat("Processed %d catalogs", numCatalogs));
-      }
-      catch (final SQLException e)
-      {
+        LOGGER.log(Level.INFO, new StringFormat("Processed %d catalogs", numCatalogs));
+      } catch (final SQLException e) {
         LOGGER.log(Level.WARNING, e.getMessage(), e);
       }
-      LOGGER.log(Level.FINER,
-                 new StringFormat("Retrieved catalogs <%s>", catalogNames));
+      LOGGER.log(Level.FINER, new StringFormat("Retrieved catalogs <%s>", catalogNames));
     }
 
     return catalogNames;
   }
 
-  private Set<SchemaReference> retrieveAllSchemas()
-    throws SQLException
-  {
+  private Set<SchemaReference> retrieveAllSchemas() throws SQLException {
     LOGGER.log(Level.INFO, "Retrieving all schemas");
 
     final Set<SchemaReference> schemaRefs = new HashSet<>();
     final Set<String> allCatalogNames = retrieveAllCatalogs();
-    if (supportsSchemas)
-    {
+    if (supportsSchemas) {
       int numSchemas = 0;
-      try (
-        final MetadataResultSet results = new MetadataResultSet(getMetaData().getSchemas())
-      )
-      {
+      try (final MetadataResultSet results = new MetadataResultSet(getMetaData().getSchemas())) {
         results.setDescription("retrieveAllSchemas");
-        while (results.next())
-        {
+        while (results.next()) {
           numSchemas = numSchemas + 1;
-          final String catalogName =
-            normalizeCatalogName(results.getString("TABLE_CATALOG"));
+          final String catalogName = normalizeCatalogName(results.getString("TABLE_CATALOG"));
           final String schemaName = results.getString("TABLE_SCHEM");
-          LOGGER.log(Level.FINER,
-                     new StringFormat("Retrieving schema: %s --> %s",
-                                      catalogName,
-                                      schemaName));
-          if (catalogName == null)
-          {
-            if (allCatalogNames.isEmpty())
-            {
+          LOGGER.log(
+              Level.FINER,
+              new StringFormat("Retrieving schema: %s --> %s", catalogName, schemaName));
+          if (catalogName == null) {
+            if (allCatalogNames.isEmpty()) {
               schemaRefs.add(new SchemaReference(null, schemaName));
-            }
-            else
-            {
-              for (final String expectedCatalogName : allCatalogNames)
-              {
-                schemaRefs.add(new SchemaReference(expectedCatalogName,
-                                                   schemaName));
+            } else {
+              for (final String expectedCatalogName : allCatalogNames) {
+                schemaRefs.add(new SchemaReference(expectedCatalogName, schemaName));
               }
             }
-          }
-          else
-          {
+          } else {
             schemaRefs.add(new SchemaReference(catalogName, schemaName));
           }
         }
       }
-      LOGGER.log(Level.INFO,
-                 new StringFormat("Processed %d schemas", numSchemas));
-    }
-    else
-
-    {
-      for (final String catalogName : allCatalogNames)
-      {
-        LOGGER.log(Level.FINER,
-                   new StringFormat("Retrieving schema: %s --> %s",
-                                    catalogName,
-                                    null));
+      LOGGER.log(Level.INFO, new StringFormat("Processed %d schemas", numSchemas));
+    } else {
+      for (final String catalogName : allCatalogNames) {
+        LOGGER.log(
+            Level.FINER, new StringFormat("Retrieving schema: %s --> %s", catalogName, null));
         schemaRefs.add(new SchemaReference(catalogName, null));
       }
     }
     return schemaRefs;
   }
 
-  private Set<SchemaReference> retrieveAllSchemasFromInformationSchemaViews()
-    throws SQLException
-  {
+  private Set<SchemaReference> retrieveAllSchemasFromInformationSchemaViews() throws SQLException {
     final Set<SchemaReference> schemaRefs = new HashSet<>();
 
     final InformationSchemaViews informationSchemaViews =
-      getRetrieverConnection().getInformationSchemaViews();
-    if (!informationSchemaViews.hasQuery(SCHEMATA))
-    {
+        getRetrieverConnection().getInformationSchemaViews();
+    if (!informationSchemaViews.hasQuery(SCHEMATA)) {
       LOGGER.log(Level.FINE, "Schemata SQL statement was not provided");
       return schemaRefs;
     }
@@ -247,35 +196,24 @@ final class SchemaRetriever
 
     final Connection connection = getDatabaseConnection();
 
-    try (
-      final Statement statement = connection.createStatement();
-      final MetadataResultSet results = new MetadataResultSet(schemataSql,
-                                                              statement,
-                                                              getSchemaInclusionRule())
-    )
-    {
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results =
+            new MetadataResultSet(schemataSql, statement, getSchemaInclusionRule())) {
       results.setDescription("retrieveAllSchemasFromInformationSchemaViews");
       int numSchemas = 0;
-      while (results.next())
-      {
+      while (results.next()) {
         numSchemas = numSchemas + 1;
         final String catalogName = results.getString("CATALOG_NAME");
         final String schemaName = results.getString("SCHEMA_NAME");
-        LOGGER.log(Level.FINER,
-                   new StringFormat("Retrieving schema: %s --> %s",
-                                    catalogName,
-                                    schemaName));
+        LOGGER.log(
+            Level.FINER, new StringFormat("Retrieving schema: %s --> %s", catalogName, schemaName));
         schemaRefs.add(new SchemaReference(catalogName, schemaName));
       }
-      LOGGER.log(Level.INFO,
-                 new StringFormat("Processed %d schemas", numSchemas));
-    }
-    catch (final Exception e)
-    {
+      LOGGER.log(Level.INFO, new StringFormat("Processed %d schemas", numSchemas));
+    } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve schemas", e);
     }
 
     return schemaRefs;
   }
-
 }

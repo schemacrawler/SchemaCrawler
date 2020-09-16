@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.test.graph;
 
-
 import java.util.Collection;
 import java.util.List;
 
@@ -37,31 +36,27 @@ import us.fatehi.utility.graph.SimpleCycleDetector;
 import us.fatehi.utility.graph.SimpleTopologicalSort;
 import us.fatehi.utility.graph.TarjanStronglyConnectedComponentFinder;
 
-abstract class GraphTestBase
-{
+abstract class GraphTestBase {
 
   private final boolean DEBUG = false;
 
-  protected <T extends Comparable<? super T>> boolean containsCycleSimple(final DirectedGraph<T> graph)
-  {
-    final boolean containsCycle =
-      new SimpleCycleDetector<>(graph).containsCycle();
+  protected <T extends Comparable<? super T>> boolean containsCycleSimple(
+      final DirectedGraph<T> graph) {
+    final boolean containsCycle = new SimpleCycleDetector<>(graph).containsCycle();
 
-    if (DEBUG && containsCycle)
-    {
+    if (DEBUG && containsCycle) {
       System.out.println(graph);
     }
 
     return containsCycle;
   }
 
-  protected <T extends Comparable<? super T>> boolean containsCycleTarjan(final DirectedGraph<T> graph)
-  {
+  protected <T extends Comparable<? super T>> boolean containsCycleTarjan(
+      final DirectedGraph<T> graph) {
     final Collection<List<T>> sccs =
-      new TarjanStronglyConnectedComponentFinder<>(graph).detectCycles();
+        new TarjanStronglyConnectedComponentFinder<>(graph).detectCycles();
 
-    if (DEBUG)
-    {
+    if (DEBUG) {
       System.out.print(graph.getName());
       System.out.println(sccs);
     }
@@ -70,9 +65,7 @@ abstract class GraphTestBase
   }
 
   protected <T extends Comparable<? super T>> List<T> topologicalSort(final DirectedGraph<T> graph)
-    throws GraphException
-  {
+      throws GraphException {
     return new SimpleTopologicalSort<>(graph).topologicalSort();
   }
-
 }

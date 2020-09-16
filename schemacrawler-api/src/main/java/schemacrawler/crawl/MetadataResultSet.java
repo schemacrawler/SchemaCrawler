@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import static java.sql.Types.BLOB;
 import static java.sql.Types.CLOB;
 import static java.sql.Types.LONGNVARCHAR;
@@ -69,18 +68,16 @@ import schemacrawler.utility.BinaryData;
 import us.fatehi.utility.string.StringFormat;
 
 /**
- * A wrapper around a JDBC resultset obtained from a database metadata call.
- * This allows type-safe methods to obtain boolean, integer and string data,
- * while abstracting away the quirks of the JDBC metadata API.
+ * A wrapper around a JDBC resultset obtained from a database metadata call. This allows type-safe
+ * methods to obtain boolean, integer and string data, while abstracting away the quirks of the JDBC
+ * metadata API.
  *
  * @author Sualeh Fatehi
  */
-public final class MetadataResultSet
-  implements AutoCloseable
-{
+public final class MetadataResultSet implements AutoCloseable {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(MetadataResultSet.class.getName());
+      SchemaCrawlerLogger.getLogger(MetadataResultSet.class.getName());
 
   private static final int FETCHSIZE = 20;
 
@@ -91,25 +88,18 @@ public final class MetadataResultSet
   private int rowCount;
   private boolean showLobs;
 
-  public MetadataResultSet(final Query query,
-                           final Statement statement,
-                           final InclusionRule schemaInclusionRule)
-    throws SQLException
-  {
+  public MetadataResultSet(
+      final Query query, final Statement statement, final InclusionRule schemaInclusionRule)
+      throws SQLException {
     this(executeAgainstSchema(query, statement, schemaInclusionRule));
     description = query.getName();
   }
 
-  public MetadataResultSet(final ResultSet resultSet)
-    throws SQLException
-  {
+  public MetadataResultSet(final ResultSet resultSet) throws SQLException {
     results = requireNonNull(resultSet, "Cannot use null results");
-    try
-    {
+    try {
       results.setFetchSize(FETCHSIZE);
-    }
-    catch (final NullPointerException | SQLException e)
-    {
+    } catch (final NullPointerException | SQLException e) {
       LOGGER.log(Level.WARNING, "Could not set fetch size", e);
     }
 
@@ -118,76 +108,36 @@ public final class MetadataResultSet
     showLobs = true;
   }
 
-  public void setShowLobs(final boolean showLobs)
-  {
-    this.showLobs = showLobs;
-  }
-
-  public String[] getColumnNames()
-  {
-    final List<String> columnNames = new ArrayList<>();
-    resultsColumns.forEach(resultsColumn -> columnNames.add(resultsColumn.getName()));
-    return columnNames.toArray(new String[columnNames.size()]);
-  }
-
-  public List<Object> row()
-    throws SQLException
-  {
-    final List<Object> currentRow = new ArrayList<>();
-    for (final ResultsColumn resultsColumn : resultsColumns)
-    {
-      currentRow.add(getColumnData(resultsColumn));
-    }
-
-    return currentRow;
-  }
-
   /**
-   * Releases this <code>ResultSet</code> object's database and JDBC resources
-   * immediately instead of waiting for this to happen when it is automatically
-   * closed.
+   * Releases this <code>ResultSet</code> object's database and JDBC resources immediately instead
+   * of waiting for this to happen when it is automatically closed.
    *
-   * @throws SQLException
-   *   On an exception
+   * @throws SQLException On an exception
    */
   @Override
-  public void close()
-    throws SQLException
-  {
+  public void close() throws SQLException {
     results.close();
 
-    if (LOGGER.isLoggable(Level.INFO) && !isBlank(description))
-    {
-      LOGGER.log(Level.INFO,
-                 new StringFormat("Processed %d rows for <%s>",
-                                  rowCount,
-                                  description));
+    if (LOGGER.isLoggable(Level.INFO) && !isBlank(description)) {
+      LOGGER.log(Level.INFO, new StringFormat("Processed %d rows for <%s>", rowCount, description));
     }
   }
 
   /**
-   * Gets unread (and therefore unmapped) columns from the database metadata
-   * resultset, and makes them available as addiiotnal attributes.
+   * Gets unread (and therefore unmapped) columns from the database metadata resultset, and makes
+   * them available as addiiotnal attributes.
    *
    * @return Map of additional attributes to the database object
    */
-  public Map<String, Object> getAttributes()
-  {
+  public Map<String, Object> getAttributes() {
     final Map<String, Object> attributes = new HashMap<>();
-    for (final ResultsColumn resultsColumn : resultsColumns)
-    {
-      if (!readColumns.contains(resultsColumn))
-      {
-        try
-        {
-          final String key = resultsColumn
-            .getLabel()
-            .toUpperCase();
+    for (final ResultsColumn resultsColumn : resultsColumns) {
+      if (!readColumns.contains(resultsColumn)) {
+        try {
+          final String key = resultsColumn.getLabel().toUpperCase();
           final Object value = getColumnData(resultsColumn);
           attributes.put(key, value);
-        }
-        catch (final SQLException | ArrayIndexOutOfBoundsException e)
-        {
+        } catch (final SQLException | ArrayIndexOutOfBoundsException e) {
           /*
            * MySQL connector is broken and can cause
            * ArrayIndexOutOfBoundsExceptions for no good reason (tested
@@ -195,31 +145,26 @@ public final class MetadataResultSet
            * the exception, we can still get some useful data out of the
            * database.
            */
-          LOGGER.log(Level.WARNING,
-                     new StringFormat("Could not read value for column <%s>",
-                                      resultsColumn),
-                     e);
+          LOGGER.log(
+              Level.WARNING,
+              new StringFormat("Could not read value for column <%s>", resultsColumn),
+              e);
         }
       }
     }
     return attributes;
   }
 
-  public BigInteger getBigInteger(final String columnName)
-  {
+  public BigInteger getBigInteger(final String columnName) {
     String stringBigInteger = getString(columnName);
-    if (isBlank(stringBigInteger))
-    {
+    if (isBlank(stringBigInteger)) {
       return null;
     }
     stringBigInteger = stringBigInteger.replaceAll("[, ]", stringBigInteger);
     BigInteger value;
-    try
-    {
+    try {
       value = new BigInteger(stringBigInteger);
-    }
-    catch (final Exception e)
-    {
+    } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not get big integer value", e);
       return null;
     }
@@ -229,70 +174,55 @@ public final class MetadataResultSet
   /**
    * Checks if the value of a column from the result set evaluates to true.
    *
-   * @param columnName
-   *   Column name to check
+   * @param columnName Column name to check
    * @return Whether the string evaluates to true
    */
-  public boolean getBoolean(final String columnName)
-  {
-    if (useColumn(columnName))
-    {
-      try
-      {
+  public boolean getBoolean(final String columnName) {
+    if (useColumn(columnName)) {
+      try {
         final Object booleanValue = results.getObject(columnName);
         final String stringBooleanValue;
-        if (results.wasNull() || booleanValue == null)
-        {
-          LOGGER.log(Level.FINER,
-                     new StringFormat(
-                       "NULL value for column <%s>, so evaluating to 'false'",
-                       columnName));
+        if (results.wasNull() || booleanValue == null) {
+          LOGGER.log(
+              Level.FINER,
+              new StringFormat("NULL value for column <%s>, so evaluating to 'false'", columnName));
           return false;
-        }
-        else
-        {
-          stringBooleanValue = String
-            .valueOf(booleanValue)
-            .trim();
+        } else {
+          stringBooleanValue = String.valueOf(booleanValue).trim();
         }
 
-        if (isIntegral(stringBooleanValue))
-        {
+        if (isIntegral(stringBooleanValue)) {
           return !stringBooleanValue.equals("0");
-        }
-        else
-        {
+        } else {
           return stringBooleanValue.equalsIgnoreCase("yes")
-                 || stringBooleanValue.equalsIgnoreCase("true");
+              || stringBooleanValue.equalsIgnoreCase("true");
         }
-      }
-      catch (final SQLException e)
-      {
-        LOGGER.log(Level.WARNING,
-                   new StringFormat(
-                     "Could not read boolean value for column <%s>",
-                     columnName),
-                   e);
+      } catch (final SQLException e) {
+        LOGGER.log(
+            Level.WARNING,
+            new StringFormat("Could not read boolean value for column <%s>", columnName),
+            e);
       }
     }
     return false;
   }
 
+  public String[] getColumnNames() {
+    final List<String> columnNames = new ArrayList<>();
+    resultsColumns.forEach(resultsColumn -> columnNames.add(resultsColumn.getName()));
+    return columnNames.toArray(new String[columnNames.size()]);
+  }
+
   /**
    * Reads the value of a column from the result set as an enum.
    *
-   * @param columnName
-   *   Column name
-   * @param defaultValue
-   *   Default enum value to return
+   * @param columnName Column name
+   * @param defaultValue Default enum value to return
    * @return Enum value of the column, or the default if not available
    */
-  public <E extends Enum<E>> E getEnum(final String columnName,
-                                       final E defaultValue)
-  {
+  public <E extends Enum<E>> E getEnum(final String columnName, final E defaultValue) {
     final String value = getString(columnName);
-    if (isBlank(value))
-    {
+    if (isBlank(value)) {
       return defaultValue;
     }
     return enumValue(value.toLowerCase(Locale.ENGLISH), defaultValue);
@@ -301,15 +231,12 @@ public final class MetadataResultSet
   /**
    * Reads the value of a column from the result set as an enum.
    *
-   * @param columnName
-   *   Column name
-   * @param defaultValue
-   *   Default enum value to return
+   * @param columnName Column name
+   * @param defaultValue Default enum value to return
    * @return Enum value of the column, or the default if not available
    */
-  public <E extends Enum<E> & IdentifiedEnum> E getEnumFromId(final String columnName,
-                                                              final E defaultValue)
-  {
+  public <E extends Enum<E> & IdentifiedEnum> E getEnumFromId(
+      final String columnName, final E defaultValue) {
     requireNonNull(defaultValue, "No default value provided");
     final int value = getInt(columnName, defaultValue.id());
     return enumValueFromId(value, defaultValue);
@@ -318,133 +245,104 @@ public final class MetadataResultSet
   /**
    * Reads the value of a column from the result set as an enum.
    *
-   * @param columnName
-   *   Column name
-   * @param defaultValue
-   *   Default enum value to return
+   * @param columnName Column name
+   * @param defaultValue Default enum value to return
    * @return Enum value of the column, or the default if not available
    */
-  public <E extends Enum<E> & IdentifiedEnum> E getEnumFromShortId(final String columnName,
-                                                                   final E defaultValue)
-  {
+  public <E extends Enum<E> & IdentifiedEnum> E getEnumFromShortId(
+      final String columnName, final E defaultValue) {
     requireNonNull(defaultValue, "No default value provided");
     final int value = getShort(columnName, (short) defaultValue.id());
     return enumValueFromId(value, defaultValue);
   }
 
   /**
-   * Reads the value of a column from the result set as an integer. If the value
-   * was null, returns the default.
+   * Reads the value of a column from the result set as an integer. If the value was null, returns
+   * the default.
    *
-   * @param columnName
-   *   Column name
-   * @param defaultValue
-   *   Default value
+   * @param columnName Column name
+   * @param defaultValue Default value
    * @return Integer value of the column, or the default if not available
    */
-  public int getInt(final String columnName, final int defaultValue)
-  {
+  public int getInt(final String columnName, final int defaultValue) {
     int value = defaultValue;
-    if (useColumn(columnName))
-    {
-      try
-      {
+    if (useColumn(columnName)) {
+      try {
         value = results.getInt(columnName);
-        if (results.wasNull())
-        {
-          LOGGER.log(Level.FINER,
-                     new StringFormat(
-                       "NULL int value for column <%s>, so using default %d",
-                       columnName,
-                       defaultValue));
+        if (results.wasNull()) {
+          LOGGER.log(
+              Level.FINER,
+              new StringFormat(
+                  "NULL int value for column <%s>, so using default %d", columnName, defaultValue));
           value = defaultValue;
         }
-      }
-      catch (final SQLException e)
-      {
-        LOGGER.log(Level.WARNING,
-                   new StringFormat(
-                     "Could not read integer value for column <%s>",
-                     columnName),
-                   e);
+      } catch (final SQLException e) {
+        LOGGER.log(
+            Level.WARNING,
+            new StringFormat("Could not read integer value for column <%s>", columnName),
+            e);
       }
     }
     return value;
   }
 
   /**
-   * Reads the value of a column from the result set as a long. If the value was
-   * null, returns the default.
+   * Reads the value of a column from the result set as a long. If the value was null, returns the
+   * default.
    *
-   * @param columnName
-   *   Column name
-   * @param defaultValue
-   *   Default value
+   * @param columnName Column name
+   * @param defaultValue Default value
    * @return Long value of the column, or the default if not available
    */
-  public long getLong(final String columnName, final long defaultValue)
-  {
+  public long getLong(final String columnName, final long defaultValue) {
     long value = defaultValue;
-    if (useColumn(columnName))
-    {
-      try
-      {
+    if (useColumn(columnName)) {
+      try {
         value = results.getLong(columnName);
-        if (results.wasNull())
-        {
-          LOGGER.log(Level.FINER,
-                     new StringFormat(
-                       "NULL long value for column <%s>, so using default %d",
-                       columnName,
-                       defaultValue));
+        if (results.wasNull()) {
+          LOGGER.log(
+              Level.FINER,
+              new StringFormat(
+                  "NULL long value for column <%s>, so using default %d",
+                  columnName, defaultValue));
           value = defaultValue;
         }
-      }
-      catch (final SQLException e)
-      {
-        LOGGER.log(Level.WARNING,
-                   new StringFormat("Could not read long value for column <%s>",
-                                    columnName),
-                   e);
+      } catch (final SQLException e) {
+        LOGGER.log(
+            Level.WARNING,
+            new StringFormat("Could not read long value for column <%s>", columnName),
+            e);
       }
     }
     return value;
   }
 
   /**
-   * Reads the value of a column from the result set as a short. If the value
-   * was null, returns the default.
+   * Reads the value of a column from the result set as a short. If the value was null, returns the
+   * default.
    *
-   * @param columnName
-   *   Column name
-   * @param defaultValue
-   *   Default value
+   * @param columnName Column name
+   * @param defaultValue Default value
    * @return Short value of the column, or the default if not available
    */
-  public short getShort(final String columnName, final short defaultValue)
-  {
+  public short getShort(final String columnName, final short defaultValue) {
     short value = defaultValue;
-    if (useColumn(columnName))
-    {
-      try
-      {
+    if (useColumn(columnName)) {
+      try {
         value = results.getShort(columnName);
-        if (results.wasNull())
-        {
-          LOGGER.log(Level.FINER,
-                     new StringFormat(
-                       "NULL short value for column <%s>, so using default %d",
-                       columnName,
-                       defaultValue));
+        if (results.wasNull()) {
+          LOGGER.log(
+              Level.FINER,
+              new StringFormat(
+                  "NULL short value for column <%s>, so using default %d",
+                  columnName, defaultValue));
           value = defaultValue;
         }
-      }
-      catch (final SQLException e)
-      {
-        LOGGER.log(Level.WARNING,
-                   new StringFormat("Could not read short value for column <%s>",
-                                    columnName),
-                   e);
+      } catch (final SQLException e) {
+        LOGGER.log(
+            Level.WARNING,
+            new StringFormat("Could not read short value for column <%s>", columnName),
+            e);
       }
     }
     return value;
@@ -453,94 +351,83 @@ public final class MetadataResultSet
   /**
    * Reads the value of a column from the result set as a string.
    *
-   * @param columnName
-   *   Column name
+   * @param columnName Column name
    * @return String value of the column, or null if not available
    */
-  public String getString(final String columnName)
-  {
+  public String getString(final String columnName) {
     String value = null;
-    if (useColumn(columnName))
-    {
-      try
-      {
+    if (useColumn(columnName)) {
+      try {
         value = results.getString(columnName);
-        if (results.wasNull())
-        {
+        if (results.wasNull()) {
           value = null;
         }
 
-        if (value != null)
-        {
+        if (value != null) {
           value = value.trim();
         }
-      }
-      catch (final SQLException e)
-      {
-        LOGGER.log(Level.WARNING,
-                   new StringFormat(
-                     "Could not read string value for column <%s>",
-                     columnName),
-                   e);
+      } catch (final SQLException e) {
+        LOGGER.log(
+            Level.WARNING,
+            new StringFormat("Could not read string value for column <%s>", columnName),
+            e);
       }
     }
     return value;
   }
 
   /**
-   * Moves the cursor down one row from its current position. A
-   * <code>ResultSet</code> cursor is initially positioned before the
-   * first row; the first call to the method <code>next</code> makes the first
-   * row the current row; the second call makes the second row the current row,
-   * and so on.
+   * Moves the cursor down one row from its current position. A <code>ResultSet</code> cursor is
+   * initially positioned before the first row; the first call to the method <code>next</code> makes
+   * the first row the current row; the second call makes the second row the current row, and so on.
    *
-   * @return <code>true</code> if the new current row is valid;
-   *   <code>false</code> if there are no more rows
-   * @throws SQLException
-   *   On a database access error
+   * @return <code>true</code> if the new current row is valid; <code>false</code> if there are no
+   *     more rows
+   * @throws SQLException On a database access error
    */
-  public boolean next()
-    throws SQLException
-  {
+  public boolean next() throws SQLException {
     readColumns = new HashSet<>();
 
     final boolean next = results.next();
     logSQLWarnings(results);
-    if (next)
-    {
+    if (next) {
       rowCount = rowCount + 1;
     }
     return next;
   }
 
-  public void setDescription(final String description)
-  {
+  public List<Object> row() throws SQLException {
+    final List<Object> currentRow = new ArrayList<>();
+    for (final ResultsColumn resultsColumn : resultsColumns) {
+      currentRow.add(getColumnData(resultsColumn));
+    }
+
+    return currentRow;
+  }
+
+  public void setDescription(final String description) {
     this.description = description;
   }
 
-  private Object getColumnData(final ResultsColumn resultsColumn)
-    throws SQLException
-  {
-    final int javaSqlType = resultsColumn
-      .getColumnDataType()
-      .getJavaSqlType()
-      .getVendorTypeNumber();
+  public void setShowLobs(final boolean showLobs) {
+    this.showLobs = showLobs;
+  }
+
+  private Object getColumnData(final ResultsColumn resultsColumn) throws SQLException {
+    final int javaSqlType =
+        resultsColumn.getColumnDataType().getJavaSqlType().getVendorTypeNumber();
     final int ordinalPosition = resultsColumn.getOrdinalPosition();
 
     Object columnData;
 
-    switch (javaSqlType)
-    {
+    switch (javaSqlType) {
       case BLOB:
       case LONGVARBINARY:
         // Do not read binary data - just determine if it is NULL
         final Object object = results.getObject(ordinalPosition);
-        if (results.wasNull() || object == null)
-        {
+        if (results.wasNull() || object == null) {
           columnData = null;
-        }
-        else
-        {
+        } else {
           columnData = new BinaryData();
         }
         break;
@@ -549,19 +436,15 @@ public final class MetadataResultSet
       case LONGNVARCHAR:
       case LONGVARCHAR:
         final Reader reader = results.getCharacterStream(ordinalPosition);
-        if (results.wasNull() || reader == null)
-        {
+        if (results.wasNull() || reader == null) {
           columnData = null;
-        }
-        else
-        {
+        } else {
           columnData = readCharacterData(reader);
         }
         break;
       default:
         columnData = results.getObject(ordinalPosition);
-        if (results.wasNull())
-        {
+        if (results.wasNull()) {
           columnData = null;
         }
         break;
@@ -569,17 +452,12 @@ public final class MetadataResultSet
     return columnData;
   }
 
-  private Object readCharacterData(final Reader reader)
-  {
-    try
-    {
-      if (reader != null && showLobs)
-      {
+  private Object readCharacterData(final Reader reader) {
+    try {
+      if (reader != null && showLobs) {
         return readFully(reader);
       }
-    }
-    catch (final Exception e)
-    {
+    } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not read character data", e);
       return new BinaryData();
     }
@@ -587,12 +465,9 @@ public final class MetadataResultSet
     return new BinaryData();
   }
 
-  private boolean useColumn(final String columnName)
-  {
-    final Optional<ResultsColumn> optionalResultsColumn =
-      resultsColumns.lookupColumn(columnName);
+  private boolean useColumn(final String columnName) {
+    final Optional<ResultsColumn> optionalResultsColumn = resultsColumns.lookupColumn(columnName);
     optionalResultsColumn.ifPresent(readColumns::add);
     return optionalResultsColumn.isPresent();
   }
-
 }

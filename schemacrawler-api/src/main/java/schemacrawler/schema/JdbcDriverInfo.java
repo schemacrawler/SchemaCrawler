@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 import java.util.Collection;
 
 import schemacrawler.ProductVersion;
@@ -38,9 +37,7 @@ import schemacrawler.ProductVersion;
  *
  * @author Sualeh Fatehi
  */
-public interface JdbcDriverInfo
-  extends ProductVersion
-{
+public interface JdbcDriverInfo extends ProductVersion {
 
   /**
    * Gets the database connection URL.
@@ -64,15 +61,13 @@ public interface JdbcDriverInfo
   Collection<JdbcDriverProperty> getDriverProperties();
 
   /**
-   * Reports whether this JDBC driver is a genuine JDBC Compliant
-   * <sup><font size=-2>TM</font></sup> driver.
-   * <p>
-   * JDBC compliance requires full support for the JDBC API and full support for
-   * SQL 92 Entry Level.
+   * Reports whether this JDBC driver is a genuine JDBC Compliant <sup><font size=-2>TM</font></sup>
+   * driver.
    *
-   * @return <code>true</code> if this driver is JDBC Compliant;
-   *   <code>false</code> otherwise
+   * <p>JDBC compliance requires full support for the JDBC API and full support for SQL 92 Entry
+   * Level.
+   *
+   * @return <code>true</code> if this driver is JDBC Compliant; <code>false</code> otherwise
    */
   boolean isJdbcCompliant();
-
 }

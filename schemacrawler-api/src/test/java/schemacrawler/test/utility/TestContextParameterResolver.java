@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.utility;
 
-
 import java.lang.reflect.Parameter;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -36,41 +35,30 @@ import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
 
-public class TestContextParameterResolver
-  implements ParameterResolver
-{
+public class TestContextParameterResolver implements ParameterResolver {
 
   @Override
-  public boolean supportsParameter(final ParameterContext parameterContext,
-                                   final ExtensionContext extensionContext)
-    throws ParameterResolutionException
-  {
+  public Object resolveParameter(
+      final ParameterContext parameterContext, final ExtensionContext extensionContext)
+      throws ParameterResolutionException {
+    final Parameter parameter = parameterContext.getParameter();
+    if (isParameterTestContext(parameter)) {
+      return new TestContext(extensionContext);
+    } else {
+      throw new ParameterResolutionException("Could not resolve " + parameter);
+    }
+  }
+
+  @Override
+  public boolean supportsParameter(
+      final ParameterContext parameterContext, final ExtensionContext extensionContext)
+      throws ParameterResolutionException {
     final Parameter parameter = parameterContext.getParameter();
 
     return isParameterTestContext(parameter);
   }
 
-  @Override
-  public Object resolveParameter(final ParameterContext parameterContext,
-                                 final ExtensionContext extensionContext)
-    throws ParameterResolutionException
-  {
-    final Parameter parameter = parameterContext.getParameter();
-    if (isParameterTestContext(parameter))
-    {
-      return new TestContext(extensionContext);
-    }
-    else
-    {
-      throw new ParameterResolutionException("Could not resolve " + parameter);
-    }
+  private boolean isParameterTestContext(final Parameter parameter) {
+    return parameter.getType().equals(TestContext.class);
   }
-
-  private boolean isParameterTestContext(final Parameter parameter)
-  {
-    return parameter
-      .getType()
-      .equals(TestContext.class);
-  }
-
 }

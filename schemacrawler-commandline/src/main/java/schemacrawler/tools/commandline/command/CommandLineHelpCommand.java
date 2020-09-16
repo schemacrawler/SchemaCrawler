@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.command;
 
-
 import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_COMMAND_LIST;
 import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_DESCRIPTION;
 import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_FOOTER;
@@ -59,108 +58,96 @@ import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.executable.commandline.PluginCommandType;
 
-@Command(name = "help",
-         header = "Display SchemaCrawler command-line help",
-         helpCommand = true,
-         headerHeading = "",
-         synopsisHeading = "Shell Command:%n",
-         customSynopsis = {
-           "help"
-         },
-         optionListHeading = "Options:%n")
-public final class CommandLineHelpCommand
-  implements Runnable
-{
+@Command(
+    name = "help",
+    header = "Display SchemaCrawler command-line help",
+    helpCommand = true,
+    headerHeading = "",
+    synopsisHeading = "Shell Command:%n",
+    customSynopsis = {"help"},
+    optionListHeading = "Options:%n")
+public final class CommandLineHelpCommand implements Runnable {
 
   @Parameters(index = "0", arity = "0..1")
   private String command;
-  @Option(names = {
-    "-h", "--help"
-  }, usageHelp = true, description = "Displays SchemaCrawler command-line help")
+
+  @Option(
+      names = {"-h", "--help"},
+      usageHelp = true,
+      description = "Displays SchemaCrawler command-line help")
   private boolean helpRequested;
 
-  public boolean isHelpRequested()
-  {
+  public boolean isHelpRequested() {
     return helpRequested;
   }
 
   @Override
-  public void run()
-  {
+  public void run() {
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    final CommandLine parent = newCommandLine(new SchemaCrawlerShellCommands(),
-                                              new StateFactory(state),
-                                              false);
+    final CommandLine parent =
+        newCommandLine(new SchemaCrawlerShellCommands(), new StateFactory(state), false);
 
-    if (!isBlank(command))
-    {
+    if (!isBlank(command)) {
       configureHelpForSubcommand(parent);
       showHelpForSubcommand(parent, command);
-    }
-    else
-    {
+    } else {
       showCompleteHelp(parent);
     }
-
   }
 
-  private void showCompleteHelp(final CommandLine parent)
-  {
-    new SystemCommand(new SchemaCrawlerShellState()).printVersion();
-
-    System.out.printf("%n%n");
-
-    Stream
-      .of(Stream.of("log",
-                    "config-file",
-                    "connect",
-                    "limit",
-                    "grep",
-                    "filter",
-                    "load"),
-          StreamSupport
-            .stream(new AvailableCommands().spliterator(), false)
-            .map(PluginCommandType.command::toPluginCommandName),
-          Stream.of("show", "sort", "execute"))
-      .flatMap(i -> i)
-      .forEach(command -> showHelpForSubcommand(parent, command));
-  }
-
-  private Optional<CommandLine> lookupServerCommand(final String command)
-  {
-    final String databaseSystemIdentifier;
-    if (command.contains(":"))
-    {
-      databaseSystemIdentifier = command.split(":")[1];
+  private void configureHelpForSubcommand(final CommandLine commandLine) {
+    if (commandLine == null) {
+      return;
     }
-    else
-    {
+
+    commandLine.setHelpSectionKeys(
+        Arrays.asList( // SECTION_KEY_HEADER_HEADING,
+            SECTION_KEY_HEADER,
+            // SECTION_KEY_SYNOPSIS_HEADING,
+            // SECTION_KEY_SYNOPSIS,
+            // SECTION_KEY_DESCRIPTION_HEADING,
+            SECTION_KEY_DESCRIPTION,
+            // SECTION_KEY_PARAMETER_LIST_HEADING,
+            SECTION_KEY_PARAMETER_LIST,
+            // SECTION_KEY_OPTION_LIST_HEADING,
+            SECTION_KEY_OPTION_LIST,
+            // SECTION_KEY_COMMAND_LIST_HEADING,
+            SECTION_KEY_COMMAND_LIST,
+            // SECTION_KEY_FOOTER_HEADING,
+            SECTION_KEY_FOOTER));
+  }
+
+  private Optional<CommandLine> lookupCommand(final CommandLine parent, final String command) {
+    return Optional.ofNullable(parent.getSubcommands().get(command));
+  }
+
+  private Optional<CommandLine> lookupServerCommand(final String command) {
+    final String databaseSystemIdentifier;
+    if (command.contains(":")) {
+      databaseSystemIdentifier = command.split(":")[1];
+    } else {
       databaseSystemIdentifier = command;
     }
 
     final DatabaseConnectorRegistry databaseConnectorRegistry =
-      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    if (!databaseConnectorRegistry.hasDatabaseSystemIdentifier(
-      databaseSystemIdentifier))
-    {
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    if (!databaseConnectorRegistry.hasDatabaseSystemIdentifier(databaseSystemIdentifier)) {
       return Optional.empty();
     }
 
     final DatabaseConnector databaseConnector =
-      databaseConnectorRegistry.lookupDatabaseConnector(databaseSystemIdentifier);
+        databaseConnectorRegistry.lookupDatabaseConnector(databaseSystemIdentifier);
     final PluginCommand helpCommand = databaseConnector.getHelpCommand();
 
     @Command
-    class EmptyCommand
-    {}
+    class EmptyCommand {}
 
     final CommandLine commandLine = new CommandLine(new EmptyCommand());
     addPluginCommand(commandLine, helpCommand, false);
 
     final CommandLine subcommandLine =
-      lookupCommand(commandLine, helpCommand.getName()).orElse(null);
-    if (subcommandLine == null)
-    {
+        lookupCommand(commandLine, helpCommand.getName()).orElse(null);
+    if (subcommandLine == null) {
       return Optional.empty();
     }
     configureCommandLine(subcommandLine);
@@ -169,58 +156,33 @@ public final class CommandLineHelpCommand
     return Optional.of(subcommandLine);
   }
 
-  private void configureHelpForSubcommand(final CommandLine commandLine)
-  {
-    if (commandLine == null)
-    {
-      return;
-    }
+  private void showCompleteHelp(final CommandLine parent) {
+    new SystemCommand(new SchemaCrawlerShellState()).printVersion();
 
-    commandLine.setHelpSectionKeys(Arrays.asList(// SECTION_KEY_HEADER_HEADING,
-                                                 SECTION_KEY_HEADER,
-                                                 // SECTION_KEY_SYNOPSIS_HEADING,
-                                                 // SECTION_KEY_SYNOPSIS,
-                                                 // SECTION_KEY_DESCRIPTION_HEADING,
-                                                 SECTION_KEY_DESCRIPTION,
-                                                 // SECTION_KEY_PARAMETER_LIST_HEADING,
-                                                 SECTION_KEY_PARAMETER_LIST,
-                                                 // SECTION_KEY_OPTION_LIST_HEADING,
-                                                 SECTION_KEY_OPTION_LIST,
-                                                 // SECTION_KEY_COMMAND_LIST_HEADING,
-                                                 SECTION_KEY_COMMAND_LIST,
-                                                 // SECTION_KEY_FOOTER_HEADING,
-                                                 SECTION_KEY_FOOTER));
+    System.out.printf("%n%n");
+
+    Stream.of(
+            Stream.of("log", "config-file", "connect", "limit", "grep", "filter", "load"),
+            StreamSupport.stream(new AvailableCommands().spliterator(), false)
+                .map(PluginCommandType.command::toPluginCommandName),
+            Stream.of("show", "sort", "execute"))
+        .flatMap(i -> i)
+        .forEach(command -> showHelpForSubcommand(parent, command));
   }
 
-  private void showHelpForSubcommand(final CommandLine parent,
-                                     final String command)
-  {
-    if (parent == null)
-    {
+  private void showHelpForSubcommand(final CommandLine parent, final String command) {
+    if (parent == null) {
       return;
     }
-    if (isBlank(command))
-    {
+    if (isBlank(command)) {
       return;
     }
 
     final CommandLine subCommand =
-      lookupServerCommand(command).orElse(lookupCommand(parent, command).orElse(
-        null));
-    if (subCommand != null)
-    {
+        lookupServerCommand(command).orElse(lookupCommand(parent, command).orElse(null));
+    if (subCommand != null) {
       subCommand.usage(System.out, Help.Ansi.AUTO);
       System.out.printf("%n%n");
     }
-
   }
-
-  private Optional<CommandLine> lookupCommand(final CommandLine parent,
-                                              final String command)
-  {
-    return Optional.ofNullable(parent
-                                 .getSubcommands()
-                                 .get(command));
-  }
-
 }

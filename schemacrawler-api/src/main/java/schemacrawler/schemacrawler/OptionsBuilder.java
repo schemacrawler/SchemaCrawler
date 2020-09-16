@@ -27,24 +27,19 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schemacrawler;
 
-
 /**
- * Convoluted interface to allow for subclasses builders, while maintaining a
- * fluent interface.
+ * Convoluted interface to allow for subclasses builders, while maintaining a fluent interface.
  *
- * @param <B>
- *   Builder
- * @param <O>
- *   Options to be built
+ * @param <B> Builder
+ * @param <O> Options to be built
  * @author Sualeh Fatehi
- * @see <a href= "https://stackoverflow.com/questions/17164375/subclassing-a-java-builder-class">Subclassing
- *   a Java Builder class</a>
+ * @see <a href=
+ *     "https://stackoverflow.com/questions/17164375/subclassing-a-java-builder-class">Subclassing a
+ *     Java Builder class</a>
  */
-public interface OptionsBuilder<B extends OptionsBuilder<B, O>, O extends Options>
-{
+public interface OptionsBuilder<B extends OptionsBuilder<B, O>, O extends Options> {
 
   OptionsBuilder<B, O> fromOptions(O options);
-  
-  O toOptions();
 
+  O toOptions();
 }

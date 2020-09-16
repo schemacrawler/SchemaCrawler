@@ -1,9 +1,7 @@
 package schemacrawler.test.utility;
 
-
 import java.io.IOException;
-import java.util.function.Predicate;
-import java.util.regex.Pattern;
+
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -11,36 +9,31 @@ import schemacrawler.tools.executable.commandline.PluginCommand;
 
 /**
  * SchemaCrawler database support plug-in.
- * <p>
- * Plug-in to support a hypothetical RMDBS, "Test Database".
+ *
+ * <p>Plug-in to support a hypothetical RMDBS, "Test Database".
  *
  * @see <a href="https://www.schemacrawler.com">SchemaCrawler</a>
  */
-public final class TestDatabaseConnector
-  extends DatabaseConnector
-{
+public final class TestDatabaseConnector extends DatabaseConnector {
 
-  public TestDatabaseConnector()
-    throws IOException
-  {
-    super(new DatabaseServerType("test-db", "Test Database"),
-          url -> url != null && url.startsWith("jdbc:test-db:"),
-          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder.fromResourceFolder(
-            "/test-db.information_schema"),
-          (schemaRetrievalOptionsBuilder, connection) -> {},
-          (limitOptionsBuilder) -> {},
-          () -> DatabaseConnectionUrlBuilder.builder(""));
+  public TestDatabaseConnector() throws IOException {
+    super(
+        new DatabaseServerType("test-db", "Test Database"),
+        url -> url != null && url.startsWith("jdbc:test-db:"),
+        (informationSchemaViewsBuilder, connection) ->
+            informationSchemaViewsBuilder.fromResourceFolder("/test-db.information_schema"),
+        (schemaRetrievalOptionsBuilder, connection) -> {},
+        (limitOptionsBuilder) -> {},
+        () -> DatabaseConnectionUrlBuilder.builder(""));
   }
 
   @Override
-  public PluginCommand getHelpCommand()
-  {
+  public PluginCommand getHelpCommand() {
     final PluginCommand pluginCommand = super.getHelpCommand();
-    pluginCommand.addOption("server",
-                            "--server=test-db%n"
-                            + "Loads SchemaCrawler plug-in for Test Database",
-                            String.class);
+    pluginCommand.addOption(
+        "server",
+        "--server=test-db%n" + "Loads SchemaCrawler plug-in for Test Database",
+        String.class);
     return pluginCommand;
   }
-  
 }

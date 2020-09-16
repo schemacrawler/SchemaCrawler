@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -37,9 +36,7 @@ import java.util.Optional;
  *
  * @author Sualeh Fatehi
  */
-public interface ResultsColumns
-  extends NamedObject, Iterable<ResultsColumn>
-{
+public interface ResultsColumns extends NamedObject, Iterable<ResultsColumn> {
 
   /**
    * Gets the list of columns in ordinal order.
@@ -58,10 +55,8 @@ public interface ResultsColumns
   /**
    * Gets a column by name.
    *
-   * @param name
-   *   Name
+   * @param name Name
    * @return Column.
    */
   <C extends ResultsColumn> Optional<C> lookupColumn(String name);
-
 }

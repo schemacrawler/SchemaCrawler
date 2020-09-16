@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.executable;
 
-
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
@@ -50,19 +49,17 @@ import schemacrawler.utility.SchemaCrawlerUtility;
 import us.fatehi.utility.string.StringFormat;
 
 /**
- * Wrapper executable for any SchemaCrawler command. Looks up the command
- * registry, and instantiates the registered executable for the command. If the
- * command is not a known command, SchemaCrawlerExecutable will check if it is a
- * query configured in the properties. If not, it will assume that a query is
- * specified on the command-line, and execute that.
+ * Wrapper executable for any SchemaCrawler command. Looks up the command registry, and instantiates
+ * the registered executable for the command. If the command is not a known command,
+ * SchemaCrawlerExecutable will check if it is a query configured in the properties. If not, it will
+ * assume that a query is specified on the command-line, and execute that.
  *
  * @author Sualeh Fatehi
  */
-public final class SchemaCrawlerExecutable
-{
+public final class SchemaCrawlerExecutable {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(SchemaCrawlerExecutable.class.getName());
+      SchemaCrawlerLogger.getLogger(SchemaCrawlerExecutable.class.getName());
 
   private final String command;
   private Config additionalConfiguration;
@@ -72,88 +69,36 @@ public final class SchemaCrawlerExecutable
   private SchemaCrawlerOptions schemaCrawlerOptions;
   private SchemaRetrievalOptions schemaRetrievalOptions;
 
-  public SchemaCrawlerExecutable(final String command)
-  {
+  public SchemaCrawlerExecutable(final String command) {
     this.command = requireNotBlank(command, "No command specified");
 
-    schemaCrawlerOptions =
-      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    schemaCrawlerOptions = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     outputOptions = OutputOptionsBuilder.newOutputOptions();
     additionalConfiguration = new Config();
   }
 
-  public SchemaCrawlerOptions getSchemaCrawlerOptions()
-  {
-    return schemaCrawlerOptions;
-  }
+  public void execute() throws Exception {
 
-  public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
-  {
-    if (schemaCrawlerOptions == null)
-    {
-      this.schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-    }
-    else
-    {
-      this.schemaCrawlerOptions = schemaCrawlerOptions;
-    }
-  }
-
-  public Catalog getCatalog()
-  {
-    return catalog;
-  }
-
-  public void setCatalog(final Catalog catalog)
-  {
-    this.catalog = catalog;
-  }
-
-  public OutputOptions getOutputOptions()
-  {
-    return outputOptions;
-  }
-
-  public final void setOutputOptions(final OutputOptions outputOptions)
-  {
-    if (outputOptions == null)
-    {
-      this.outputOptions = OutputOptionsBuilder.newOutputOptions();
-    }
-    else
-    {
-      this.outputOptions = outputOptions;
-    }
-  }
-
-  public final void execute()
-    throws Exception
-  {
-
-    if (schemaRetrievalOptions == null)
-    {
-      schemaRetrievalOptions =
-        SchemaCrawlerUtility.matchSchemaRetrievalOptions(connection);
+    if (schemaRetrievalOptions == null) {
+      schemaRetrievalOptions = SchemaCrawlerUtility.matchSchemaRetrievalOptions(connection);
     }
 
     // Load the command to see if it is available
     // Fail early (before loading the catalog) if the command is not
     // available
     final SchemaCrawlerCommand scCommand = loadCommand();
-    
+
     // Set options
     scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
     scCommand.setOutputOptions(outputOptions);
     scCommand.setAdditionalConfiguration(additionalConfiguration);
     scCommand.setIdentifiers(schemaRetrievalOptions.getIdentifiers());
-    
+
     // Initialize, and check if the command is available
     scCommand.initialize();
     scCommand.checkAvailability();
 
-    if (catalog == null)
-    {
+    if (catalog == null) {
       loadCatalog();
     }
 
@@ -165,60 +110,76 @@ public final class SchemaCrawlerExecutable
     scCommand.execute();
   }
 
-  public boolean hasConnection()
-  {
-    if (connection == null)
-    {
+  public Catalog getCatalog() {
+    return catalog;
+  }
+
+  public OutputOptions getOutputOptions() {
+    return outputOptions;
+  }
+
+  public SchemaCrawlerOptions getSchemaCrawlerOptions() {
+    return schemaCrawlerOptions;
+  }
+
+  public boolean hasConnection() {
+    if (connection == null) {
       return false;
     }
-    try
-    {
+    try {
       final boolean closed = connection.isClosed();
       return !closed;
-    }
-    catch (final SQLException e)
-    {
+    } catch (final SQLException e) {
       LOGGER.log(Level.FINE, e.getMessage(), e);
       return true;
     }
   }
 
-  public final void setAdditionalConfiguration(final Config additionalConfiguration)
-  {
+  public void setAdditionalConfiguration(final Config additionalConfiguration) {
     // Make a defensive copy
     this.additionalConfiguration = new Config(additionalConfiguration);
   }
 
-  public void setConnection(final Connection connection)
-  {
+  public void setCatalog(final Catalog catalog) {
+    this.catalog = catalog;
+  }
+
+  public void setConnection(final Connection connection) {
     this.connection = requireNonNull(connection, "No connection provided");
   }
 
-  public void setSchemaRetrievalOptions(final SchemaRetrievalOptions schemaRetrievalOptions)
-  {
+  public void setOutputOptions(final OutputOptions outputOptions) {
+    if (outputOptions == null) {
+      this.outputOptions = OutputOptionsBuilder.newOutputOptions();
+    } else {
+      this.outputOptions = outputOptions;
+    }
+  }
+
+  public void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions) {
+    if (schemaCrawlerOptions == null) {
+      this.schemaCrawlerOptions = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    } else {
+      this.schemaCrawlerOptions = schemaCrawlerOptions;
+    }
+  }
+
+  public void setSchemaRetrievalOptions(final SchemaRetrievalOptions schemaRetrievalOptions) {
     this.schemaRetrievalOptions = schemaRetrievalOptions;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final String toString()
-  {
+  public String toString() {
     return command;
   }
 
-  private void loadCatalog()
-    throws Exception
-  {
-    final CatalogLoaderRegistry catalogLoaderRegistry =
-      new CatalogLoaderRegistry();
+  private void loadCatalog() throws Exception {
+    final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
     final CatalogLoader catalogLoader =
-      catalogLoaderRegistry.lookupCatalogLoader(schemaRetrievalOptions
-                                                  .getDatabaseServerType()
-                                                  .getDatabaseSystemIdentifier());
-    LOGGER.log(Level.CONFIG,
-               new StringFormat("Catalog loader: %s", getClass().getName()));
+        catalogLoaderRegistry.lookupCatalogLoader(
+            schemaRetrievalOptions.getDatabaseServerType().getDatabaseSystemIdentifier());
+    LOGGER.log(Level.CONFIG, new StringFormat("Catalog loader: %s", getClass().getName()));
 
     catalogLoader.setAdditionalConfiguration(additionalConfiguration);
     catalogLoader.setConnection(connection);
@@ -229,21 +190,15 @@ public final class SchemaCrawlerExecutable
     requireNonNull(catalog, "Catalog could not be retrieved");
   }
 
-  private SchemaCrawlerCommand loadCommand()
-    throws SchemaCrawlerException
-  {
-    final CommandRegistry commandRegistry =
-        CommandRegistry.getCommandRegistry();
-    final SchemaCrawlerCommand scCommand = commandRegistry
-        .configureNewCommand(command, schemaCrawlerOptions,
-            additionalConfiguration, outputOptions);
-    if (scCommand == null)
-    {
-      throw new SchemaCrawlerException(
-          "Could not configure command, " + command);
+  private SchemaCrawlerCommand loadCommand() throws SchemaCrawlerException {
+    final CommandRegistry commandRegistry = CommandRegistry.getCommandRegistry();
+    final SchemaCrawlerCommand scCommand =
+        commandRegistry.configureNewCommand(
+            command, schemaCrawlerOptions, additionalConfiguration, outputOptions);
+    if (scCommand == null) {
+      throw new SchemaCrawlerException("Could not configure command, " + command);
     }
-    
+
     return scCommand;
   }
-
 }

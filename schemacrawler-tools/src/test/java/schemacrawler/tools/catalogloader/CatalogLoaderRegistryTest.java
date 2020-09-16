@@ -28,43 +28,37 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.catalogloader;
 
-
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.jupiter.api.Test;
+
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
-public class CatalogLoaderRegistryTest
-{
+public class CatalogLoaderRegistryTest {
 
   @Test
-  public void catalogLoaderRegistry()
-    throws SchemaCrawlerException
-  {
+  public void catalogLoaderRegistry() throws SchemaCrawlerException {
     final CatalogLoaderRegistry registry = new CatalogLoaderRegistry();
 
     // Look up test catalog loader
     assertThat(registry.hasDatabaseSystemIdentifier("test-db"), is(true));
     assertThat(registry.lookupCatalogLoader("test-db"), is(not(nullValue())));
-    assertThat(registry
-                 .lookupCatalogLoader("test-db")
-                 .getClass().getSimpleName(), is("TestCatalogLoader"));
-    assertThat(registry
-                 .lookupCatalogLoader("test-db")
-                 .getDatabaseSystemIdentifier(), is("test-db"));
+    assertThat(
+        registry.lookupCatalogLoader("test-db").getClass().getSimpleName(),
+        is("TestCatalogLoader"));
+    assertThat(
+        registry.lookupCatalogLoader("test-db").getDatabaseSystemIdentifier(), is("test-db"));
 
     // Look up unknown catalog loader
     assertThat(registry.hasDatabaseSystemIdentifier("some-db"), is(false));
     assertThat(registry.lookupCatalogLoader("some-db"), is(not(nullValue())));
-    assertThat(registry
-                 .lookupCatalogLoader("some-db")
-                 .getClass().getSimpleName(), is("SchemaCrawlerCatalogLoader"));
-    assertThat(registry
-                 .lookupCatalogLoader("some-db")
-                 .getDatabaseSystemIdentifier(), is(nullValue()));
+    assertThat(
+        registry.lookupCatalogLoader("some-db").getClass().getSimpleName(),
+        is("SchemaCrawlerCatalogLoader"));
+    assertThat(
+        registry.lookupCatalogLoader("some-db").getDatabaseSystemIdentifier(), is(nullValue()));
   }
-
 }

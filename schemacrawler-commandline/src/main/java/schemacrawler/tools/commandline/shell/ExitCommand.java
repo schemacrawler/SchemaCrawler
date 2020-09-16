@@ -28,35 +28,27 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.shell;
 
-
 import java.util.logging.Level;
 
 import picocli.CommandLine.Command;
 import schemacrawler.SchemaCrawlerLogger;
 
-@Command(name = "exit",
-         aliases = {
-           "quit", "terminate"
-         },
-         header = "** Terminate the interactive shell",
-         headerHeading = "",
-         synopsisHeading = "Shell Command:%n",
-         customSynopsis = {
-           "exit"
-         },
-         optionListHeading = "Options:%n")
-public class ExitCommand
-  implements Runnable
-{
+@Command(
+    name = "exit",
+    aliases = {"quit", "terminate"},
+    header = "** Terminate the interactive shell",
+    headerHeading = "",
+    synopsisHeading = "Shell Command:%n",
+    customSynopsis = {"exit"},
+    optionListHeading = "Options:%n")
+public class ExitCommand implements Runnable {
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(ExitCommand.class.getName());
+      SchemaCrawlerLogger.getLogger(ExitCommand.class.getName());
 
   @Override
-  public void run()
-  {
+  public void run() {
     LOGGER.log(Level.INFO, "exit");
 
     System.exit(0);
   }
-
 }

@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.analysis.associations;
 
-
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 
@@ -47,39 +46,33 @@ import us.fatehi.utility.Utility;
 import us.fatehi.utility.string.ObjectToStringFormat;
 import us.fatehi.utility.string.StringFormat;
 
-final class TableMatchKeys
-{
+final class TableMatchKeys {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(TableMatchKeys.class.getName());
+      SchemaCrawlerLogger.getLogger(TableMatchKeys.class.getName());
 
   private final List<Table> tables;
 
   private final Multimap<Table, String> tableKeys;
 
-  TableMatchKeys(final List<Table> tables)
-  {
+  TableMatchKeys(final List<Table> tables) {
     this.tables = requireNonNull(tables, "No tables provided");
     tableKeys = new Multimap<>();
 
     analyzeTables();
   }
 
-  public List<String> get(final Table table)
-  {
+  public List<String> get(final Table table) {
     return tableKeys.get(table);
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return tableKeys.toString();
   }
 
-  private void analyzeTables()
-  {
-    if (tables.isEmpty())
-    {
+  private void analyzeTables() {
+    if (tables.isEmpty()) {
       return;
     }
 
@@ -87,65 +80,44 @@ final class TableMatchKeys
     mapTableNameMatches(tables, prefixes);
 
     LOGGER.log(Level.FINE, new StringFormat("Table prefixes=%s", prefixes));
-    LOGGER.log(Level.FINE,
-               new StringFormat("Table matches map: %s",
-                                new ObjectToStringFormat(tableKeys)));
-
+    LOGGER.log(
+        Level.FINE, new StringFormat("Table matches map: %s", new ObjectToStringFormat(tableKeys)));
   }
 
   /**
    * Finds table prefixes. A prefix ends with "_".
    *
-   * @param tables
-   *   Tables
+   * @param tables Tables
    * @return Table name prefixes
    */
-  private Collection<String> findTableNamePrefixes(final List<Table> tables)
-  {
+  private Collection<String> findTableNamePrefixes(final List<Table> tables) {
     final SortedMap<String, Integer> prefixesMap = new TreeMap<>();
-    for (int i = 0; i < tables.size(); i++)
-    {
-      for (int j = i + 1; j < tables.size(); j++)
-      {
-        final String table1 = tables
-          .get(i)
-          .getName();
-        final String table2 = tables
-          .get(j)
-          .getName();
+    for (int i = 0; i < tables.size(); i++) {
+      for (int j = i + 1; j < tables.size(); j++) {
+        final String table1 = tables.get(i).getName();
+        final String table2 = tables.get(j).getName();
         final String commonPrefix = Utility.commonPrefix(table1, table2);
-        if (!isBlank(commonPrefix) && commonPrefix.endsWith("_"))
-        {
+        if (!isBlank(commonPrefix) && commonPrefix.endsWith("_")) {
           final List<String> splitCommonPrefixes = new ArrayList<>();
           final String[] splitPrefix = commonPrefix.split("_");
-          if (splitPrefix != null && splitPrefix.length > 0)
-          {
-            for (int k = 0; k < splitPrefix.length; k++)
-            {
+          if (splitPrefix != null && splitPrefix.length > 0) {
+            for (int k = 0; k < splitPrefix.length; k++) {
               final StringBuilder buffer = new StringBuilder(1024);
-              for (int l = 0; l < k; l++)
-              {
-                buffer
-                  .append(splitPrefix[l])
-                  .append("_");
+              for (int l = 0; l < k; l++) {
+                buffer.append(splitPrefix[l]).append("_");
               }
-              if (buffer.length() > 0)
-              {
+              if (buffer.length() > 0) {
                 splitCommonPrefixes.add(buffer.toString());
               }
             }
           }
           splitCommonPrefixes.add(commonPrefix);
 
-          for (final String splitCommonPrefix : splitCommonPrefixes)
-          {
+          for (final String splitCommonPrefix : splitCommonPrefixes) {
             final int prevCount;
-            if (prefixesMap.containsKey(splitCommonPrefix))
-            {
+            if (prefixesMap.containsKey(splitCommonPrefix)) {
               prevCount = prefixesMap.get(splitCommonPrefix);
-            }
-            else
-            {
+            } else {
               prevCount = 0;
             }
             prefixesMap.put(splitCommonPrefix, prevCount + 1);
@@ -156,22 +128,19 @@ final class TableMatchKeys
 
     // Make sure we have the smallest prefixes
     final List<String> keySet = new ArrayList<>(prefixesMap.keySet());
-    keySet.sort((key1, key2) -> {
-      int comparison = 0;
-      comparison = key2.length() - key1.length();
-      if (comparison == 0)
-      {
-        comparison = key2.compareTo(key1);
-      }
-      return comparison;
-    });
-    for (int i = 0; i < keySet.size(); i++)
-    {
-      for (int j = i + 1; j < keySet.size(); j++)
-      {
+    keySet.sort(
+        (key1, key2) -> {
+          int comparison = 0;
+          comparison = key2.length() - key1.length();
+          if (comparison == 0) {
+            comparison = key2.compareTo(key1);
+          }
+          return comparison;
+        });
+    for (int i = 0; i < keySet.size(); i++) {
+      for (int j = i + 1; j < keySet.size(); j++) {
         final String longPrefix = keySet.get(i);
-        if (longPrefix.startsWith(keySet.get(j)))
-        {
+        if (longPrefix.startsWith(keySet.get(j))) {
           prefixesMap.remove(longPrefix);
           break;
         }
@@ -180,26 +149,16 @@ final class TableMatchKeys
 
     // Sort prefixes by the number of tables using them, in descending
     // order
-    final List<Map.Entry<String, Integer>> prefixesList =
-      new ArrayList<>(prefixesMap.entrySet());
-    Collections.sort(prefixesList,
-                     (entry1, entry2) -> entry1
-                       .getValue()
-                       .compareTo(entry2.getValue()));
+    final List<Map.Entry<String, Integer>> prefixesList = new ArrayList<>(prefixesMap.entrySet());
+    Collections.sort(
+        prefixesList, (entry1, entry2) -> entry1.getValue().compareTo(entry2.getValue()));
 
     // Reduce the number of prefixes in use
     final List<String> prefixes = new ArrayList<>();
-    for (int i = 0; i < prefixesList.size(); i++)
-    {
-      final boolean add = i < 5
-                          || prefixesList
-                               .get(i)
-                               .getValue() > prefixesMap.size() * 0.5;
-      if (add)
-      {
-        prefixes.add(prefixesList
-                       .get(i)
-                       .getKey());
+    for (int i = 0; i < prefixesList.size(); i++) {
+      final boolean add = i < 5 || prefixesList.get(i).getValue() > prefixesMap.size() * 0.5;
+      if (add) {
+        prefixes.add(prefixesList.get(i).getKey());
       }
     }
     prefixes.add("");
@@ -207,27 +166,18 @@ final class TableMatchKeys
     return prefixes;
   }
 
-  private void mapTableNameMatches(final List<Table> tables,
-                                   final Collection<String> prefixes)
-  {
-    for (final Table table : tables)
-    {
-      for (final String prefix : prefixes)
-      {
-        String matchTableName = table
-          .getName()
-          .toLowerCase();
-        if (matchTableName.startsWith(prefix))
-        {
+  private void mapTableNameMatches(final List<Table> tables, final Collection<String> prefixes) {
+    for (final Table table : tables) {
+      for (final String prefix : prefixes) {
+        String matchTableName = table.getName().toLowerCase();
+        if (matchTableName.startsWith(prefix)) {
           matchTableName = matchTableName.substring(prefix.length());
           matchTableName = Inflection.singularize(matchTableName);
-          if (!isBlank(matchTableName))
-          {
+          if (!isBlank(matchTableName)) {
             tableKeys.add(table, matchTableName);
           }
         }
       }
     }
   }
-
 }

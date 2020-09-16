@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.options;
 
-
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.List;
@@ -37,39 +36,27 @@ import java.util.logging.Level;
 import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * Enumeration for text format type.
- */
-public enum TextOutputFormat
-  implements OutputFormat
-{
-
+/** Enumeration for text format type. */
+public enum TextOutputFormat implements OutputFormat {
   text("Plain text format", "txt"),
   html("HyperText Markup Language (HTML) format"),
   tsv("Tab-separated values (TSV) format");
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(TextOutputFormat.class.getName());
+      SchemaCrawlerLogger.getLogger(TextOutputFormat.class.getName());
 
   /**
    * Gets the value from the format.
    *
-   * @param format
-   *   Text output format.
+   * @param format Text output format.
    * @return TextOutputFormat
    */
-  public static TextOutputFormat fromFormat(final String format)
-  {
+  public static TextOutputFormat fromFormat(final String format) {
     final TextOutputFormat outputFormat = fromFormatOrNull(format);
-    if (outputFormat == null)
-    {
-      LOGGER.log(Level.CONFIG,
-                 new StringFormat("Unknown format <%s>, using default",
-                                  format));
+    if (outputFormat == null) {
+      LOGGER.log(Level.CONFIG, new StringFormat("Unknown format <%s>, using default", format));
       return text;
-    }
-    else
-    {
+    } else {
       return outputFormat;
     }
   }
@@ -79,62 +66,49 @@ public enum TextOutputFormat
    *
    * @return True if the format is a text output format
    */
-  public static boolean isSupportedFormat(final String format)
-  {
+  public static boolean isSupportedFormat(final String format) {
     return fromFormatOrNull(format) != null;
   }
 
-  private static TextOutputFormat fromFormatOrNull(final String format)
-  {
-    if (isBlank(format))
-    {
+  private static TextOutputFormat fromFormatOrNull(final String format) {
+    if (isBlank(format)) {
       return null;
     }
-    for (final TextOutputFormat outputFormat : TextOutputFormat.values())
-    {
-      if (outputFormat.outputFormatState.isSupportedFormat(format))
-      {
+    for (final TextOutputFormat outputFormat : TextOutputFormat.values()) {
+      if (outputFormat.outputFormatState.isSupportedFormat(format)) {
         return outputFormat;
       }
     }
     return null;
   }
+
   private final OutputFormatState outputFormatState;
 
-  private TextOutputFormat(final String description)
-  {
+  private TextOutputFormat(final String description) {
     outputFormatState = new OutputFormatState(name(), description);
   }
 
-  private TextOutputFormat(final String description,
-                           final String... additionalFormatSpecifiers)
-  {
-    outputFormatState =
-      new OutputFormatState(name(), description, additionalFormatSpecifiers);
+  private TextOutputFormat(final String description, final String... additionalFormatSpecifiers) {
+    outputFormatState = new OutputFormatState(name(), description, additionalFormatSpecifiers);
   }
 
   @Override
-  public String getDescription()
-  {
+  public String getDescription() {
     return outputFormatState.getDescription();
   }
 
   @Override
-  public String getFormat()
-  {
+  public String getFormat() {
     return outputFormatState.getFormat();
   }
 
   @Override
-  public List<String> getFormats()
-  {
+  public List<String> getFormats() {
     return outputFormatState.getFormats();
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return outputFormatState.toString();
   }
-
 }

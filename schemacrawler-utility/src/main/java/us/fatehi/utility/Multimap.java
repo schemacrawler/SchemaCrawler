@@ -27,26 +27,20 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Multimap<K, V>
-  extends HashMap<K, List<V>>
-{
+public class Multimap<K, V> extends HashMap<K, List<V>> {
 
   private static final long serialVersionUID = 1470713639458689002L;
 
-  public V add(final K key, final V value)
-  {
+  public V add(final K key, final V value) {
     List<V> values = null;
-    if (containsKey(key))
-    {
+    if (containsKey(key)) {
       values = get(key);
     }
-    if (values == null)
-    {
+    if (values == null) {
       values = new ArrayList<>();
     }
     put(key, values);
@@ -54,5 +48,4 @@ public class Multimap<K, V>
     values.add(value);
     return value;
   }
-
 }

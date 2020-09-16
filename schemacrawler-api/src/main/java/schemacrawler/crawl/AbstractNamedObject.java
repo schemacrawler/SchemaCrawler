@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -42,95 +41,71 @@ import schemacrawler.utility.NamedObjectSort;
  *
  * @author Sualeh Fatehi
  */
-abstract class AbstractNamedObject
-  implements NamedObject
-{
+abstract class AbstractNamedObject implements NamedObject {
 
   private static final long serialVersionUID = -1486322887991472729L;
 
   private final String name;
 
   /**
-   * Effective Java - Item 17 - Minimize Mutability - Package-private
-   * constructors make a class effectively final
+   * Effective Java - Item 17 - Minimize Mutability - Package-private constructors make a class
+   * effectively final
    *
-   * @param name
-   *   Name of the named object
+   * @param name Name of the named object
    */
-  AbstractNamedObject(final String name)
-  {
+  AbstractNamedObject(final String name) {
     this.name = name;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public int compareTo(final NamedObject obj)
-  {
-    if (obj == null)
-    {
+  public int compareTo(final NamedObject obj) {
+    if (obj == null) {
       return -1;
     }
 
     return NamedObjectSort.alphabetical.compare(this, obj);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public String getFullName()
-  {
-    return getName();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final String getName()
-  {
-    return name;
-  }
-
-  @Override
-  public List<String> toUniqueLookupKey()
-  {
-    return new ArrayList<>(Arrays.asList(name));
-  }
-
-  @Override
-  public int hashCode()
-  {
-    return Objects.hash(name);
-  }
-
-  @Override
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
+  public boolean equals(final Object obj) {
+    if (this == obj) {
       return true;
     }
-    if (obj == null)
-    {
+    if (obj == null) {
       return false;
     }
-    if (!(obj instanceof AbstractNamedObject))
-    {
+    if (!(obj instanceof AbstractNamedObject)) {
       return false;
     }
     return Objects.equals(name, ((NamedObject) obj).getName());
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final String toString()
-  {
+  public String getFullName() {
+    return getName();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String getName() {
+    return name;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(name);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
     return getFullName();
   }
 
+  @Override
+  public List<String> toUniqueLookupKey() {
+    return new ArrayList<>(Arrays.asList(name));
+  }
 }

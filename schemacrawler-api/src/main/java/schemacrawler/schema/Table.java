@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -40,9 +39,7 @@ import schemacrawler.crawl.WeakAssociation;
  *
  * @author Sualeh Fatehi
  */
-public interface Table
-  extends DatabaseObject, TypedObject<TableType>, DefinedObject
-{
+public interface Table extends DatabaseObject, TypedObject<TableType>, DefinedObject {
 
   /**
    * Gets the list of columns in ordinal order.
@@ -52,16 +49,15 @@ public interface Table
   List<Column> getColumns();
 
   /**
-   * Gets the list of exported foreign keys. That is, only those whose primary
-   * key is referenced in another table.
+   * Gets the list of exported foreign keys. That is, only those whose primary key is referenced in
+   * another table.
    *
    * @return Exported foreign keys of the table.
    */
   Collection<ForeignKey> getExportedForeignKeys();
 
   /**
-   * Gets the list of all foreign keys of the table, including imported and
-   * exported foreign keys.
+   * Gets the list of all foreign keys of the table, including imported and exported foreign keys.
    *
    * @return Foreign keys of the table.
    */
@@ -75,19 +71,12 @@ public interface Table
   Collection<Column> getHiddenColumns();
 
   /**
-   * Gets the list of imported foreign keys. That is, only those that reference
-   * a primary key another table.
+   * Gets the list of imported foreign keys. That is, only those that reference a primary key
+   * another table.
    *
    * @return Imported foreign keys of the table.
    */
   Collection<ForeignKey> getImportedForeignKeys();
-
-  /**
-   * Gets the list of weak associations.
-   *
-   * @return Weak associations of the table.
-   */
-  Collection<WeakAssociation> getWeakAssociations();
 
   /**
    * Gets the list of indexes.
@@ -111,12 +100,11 @@ public interface Table
   Collection<Privilege<Table>> getPrivileges();
 
   /**
-   * Gets the tables related to this one, based on the specified relationship
-   * type. Child tables are those who have a foreign key from this table. Parent
-   * tables are those to which this table has a foreign key.
+   * Gets the tables related to this one, based on the specified relationship type. Child tables are
+   * those who have a foreign key from this table. Parent tables are those to which this table has a
+   * foreign key.
    *
-   * @param tableRelationshipType
-   *   Table relationship type
+   * @param tableRelationshipType Table relationship type
    * @return Related tables.
    */
   Collection<Table> getRelatedTables(final TableRelationshipType tableRelationshipType);
@@ -143,6 +131,13 @@ public interface Table
   Collection<Trigger> getTriggers();
 
   /**
+   * Gets the list of weak associations.
+   *
+   * @return Weak associations of the table.
+   */
+  Collection<WeakAssociation> getWeakAssociations();
+
+  /**
    * Checks if the table has a primary key.
    *
    * @return True if the table has a primary key.
@@ -152,26 +147,15 @@ public interface Table
   /**
    * Gets a column by unqualified name.
    *
-   * @param name
-   *   Unqualified name
+   * @param name Unqualified name
    * @return Column.
    */
   <C extends Column> Optional<C> lookupColumn(String name);
 
   /**
-   * Gets a table constraint by unqualified name.
-   *
-   * @param name
-   *   Name
-   * @return Table constraint.
-   */
-  <C extends TableConstraint> Optional<C> lookupTableConstraint(String name);
-
-  /**
    * Gets a foreign key by name.
    *
-   * @param name
-   *   Name
+   * @param name Name
    * @return Foreign key.
    */
   <F extends ForeignKey> Optional<F> lookupForeignKey(String name);
@@ -179,8 +163,7 @@ public interface Table
   /**
    * Gets an index by unqualified name.
    *
-   * @param name
-   *   Name
+   * @param name Name
    * @return Index.
    */
   <I extends Index> Optional<I> lookupIndex(String name);
@@ -188,19 +171,24 @@ public interface Table
   /**
    * Gets a privilege by unqualified name.
    *
-   * @param name
-   *   Name
+   * @param name Name
    * @return Privilege.
    */
   <P extends Privilege<Table>> Optional<P> lookupPrivilege(String name);
 
   /**
+   * Gets a table constraint by unqualified name.
+   *
+   * @param name Name
+   * @return Table constraint.
+   */
+  <C extends TableConstraint> Optional<C> lookupTableConstraint(String name);
+
+  /**
    * Gets a trigger by unqualified name.
    *
-   * @param name
-   *   Name
+   * @param name Name
    * @return Trigger.
    */
   <T extends Trigger> Optional<T> lookupTrigger(String name);
-
 }

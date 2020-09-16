@@ -28,15 +28,9 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.html;
 
-
-/**
- * Enumeration for text format type.
- */
-public enum TagOutputFormat
-{
-
+/** Enumeration for text format type. */
+public enum TagOutputFormat {
   text, // Plain text format
   html, // HyperText Markup Language (HTML) format,
   tsv, // Tab-separated values (TSV) format
-
 }

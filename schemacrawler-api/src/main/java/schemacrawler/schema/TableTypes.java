@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schema;
 
-
 import static java.util.Comparator.naturalOrder;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.DatabaseUtility.readResultsVector;
@@ -48,34 +47,25 @@ import java.util.logging.Level;
 import schemacrawler.SchemaCrawlerLogger;
 
 /**
- * Represents a collection of tables types for a database system, as returned by
- * the database server itself. A live database connection is required to obtain
- * this information. The case of the table type name is preserved, though
- * look-ups are case-insensitive.
+ * Represents a collection of tables types for a database system, as returned by the database server
+ * itself. A live database connection is required to obtain this information. The case of the table
+ * type name is preserved, though look-ups are case-insensitive.
  */
-public final class TableTypes
-  implements Iterable<TableType>
-{
+public final class TableTypes implements Iterable<TableType> {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(TableTypes.class.getName());
+      SchemaCrawlerLogger.getLogger(TableTypes.class.getName());
 
-  /**
-   * Obtain a collection of tables types from provided list.
-   */
-  public static TableTypes from(final Collection<String> tableTypeStrings)
-  {
+  /** Obtain a collection of tables types from provided list. */
+  public static TableTypes from(final Collection<String> tableTypeStrings) {
     final Collection<TableType> tableTypes;
-    if (tableTypeStrings == null)
-    {
+    if (tableTypeStrings == null) {
       return new TableTypes(null);
     }
 
     tableTypes = new HashSet<>();
-    for (final String tableTypeString : tableTypeStrings)
-    {
-      if (!isBlank(tableTypeString))
-      {
+    for (final String tableTypeString : tableTypeStrings) {
+      if (!isBlank(tableTypeString)) {
         tableTypes.add(new TableType(tableTypeString));
       }
     }
@@ -83,109 +73,115 @@ public final class TableTypes
   }
 
   /**
-   * Obtain a collection of tables types for a database system, as returned by
-   * the database server itself.
+   * Obtain a collection of tables types for a database system, as returned by the database server
+   * itself.
    */
-  public static TableTypes from(final Connection connection)
-  {
+  public static TableTypes from(final Connection connection) {
     requireNonNull(connection, "No connection provided");
 
     final Collection<TableType> tableTypes = new HashSet<>();
-    try (
-      final ResultSet tableTypesResults = connection
-        .getMetaData()
-        .getTableTypes()
-    )
-    {
-      final List<String> tableTypeStrings =
-        readResultsVector(tableTypesResults);
-      for (final String tableTypeString : tableTypeStrings)
-      {
-        if (!isBlank(tableTypeString))
-        {
+    try (final ResultSet tableTypesResults = connection.getMetaData().getTableTypes()) {
+      final List<String> tableTypeStrings = readResultsVector(tableTypesResults);
+      for (final String tableTypeString : tableTypeStrings) {
+        if (!isBlank(tableTypeString)) {
           tableTypes.add(new TableType(tableTypeString));
         }
       }
-    }
-    catch (final Exception e)
-    {
-      LOGGER.log(Level.WARNING,
-                 "Could not obtain table types from connection",
-                 e);
+    } catch (final Exception e) {
+      LOGGER.log(Level.WARNING, "Could not obtain table types from connection", e);
     }
     return new TableTypes(tableTypes);
   }
 
-  public static TableTypes from(final String... tableTypeStrings)
-  {
-    if (tableTypeStrings == null)
-    {
+  public static TableTypes from(final String... tableTypeStrings) {
+    if (tableTypeStrings == null) {
       return new TableTypes(null);
     }
     return TableTypes.from(Arrays.asList(tableTypeStrings));
   }
 
-  public static TableTypes from(final String tableTypesString)
-  {
-    if (tableTypesString == null)
-    {
+  public static TableTypes from(final String tableTypesString) {
+    if (tableTypesString == null) {
       return new TableTypes(null);
     }
     final String[] tableTypeStrings = tableTypesString.split(",");
     return TableTypes.from(tableTypeStrings);
   }
 
-  public static TableTypes includeNone()
-  {
-    return from("");
+  public static TableTypes includeAll() {
+    return from((Collection<String>) null);
   }
 
-  public static TableTypes includeAll()
-  {
-    return from((Collection<String>) null);
+  public static TableTypes includeNone() {
+    return from("");
   }
 
   private final List<TableType> tableTypes;
 
-  private TableTypes(final Collection<TableType> tableTypesCollection)
-  {
-    if (tableTypesCollection == null)
-    {
+  private TableTypes(final Collection<TableType> tableTypesCollection) {
+    if (tableTypesCollection == null) {
       tableTypes = null;
-    }
-    else
-    {
+    } else {
       tableTypes = new ArrayList<>(tableTypesCollection);
       Collections.sort(tableTypes);
     }
   }
 
+  public boolean isIncludeAll() {
+    return tableTypes == null;
+  }
+
+  public boolean isIncludeNone() {
+    return tableTypes.isEmpty();
+  }
+
+  @Override
+  public Iterator<TableType> iterator() {
+    if (isIncludeAll()) {
+      throw new IllegalArgumentException("Include all table types, but none are known");
+    }
+    return tableTypes.iterator();
+  }
+
   /**
-   * Filters table types not known to the database system. Returns values in the
-   * same case as known to the database system, even though the search (that is,
-   * values in the input collection) is case-insensitive.
+   * Looks up a table type, from the provided string. The search (that is, value of the provided
+   * string) is case-insensitive.
    *
-   * @param tableTypesKeepList
-   *   Table types to compare to, and use as a keep list.
+   * @return Matched table type
+   */
+  public Optional<TableType> lookupTableType(final String tableTypeString) {
+    if (isIncludeAll()) {
+      return Optional.of(new TableType(tableTypeString));
+    }
+
+    for (final TableType tableType : tableTypes) {
+      if (tableType.isEqualTo(tableTypeString)) {
+        return Optional.of(tableType);
+      }
+    }
+    return Optional.empty();
+  }
+
+  /**
+   * Filters table types not known to the database system. Returns values in the same case as known
+   * to the database system, even though the search (that is, values in the input collection) is
+   * case-insensitive.
+   *
+   * @param tableTypesKeepList Table types to compare to, and use as a keep list.
    * @return Returns values in the same case as known to the database system.
    */
-  public TableTypes subsetFrom(final TableTypes tableTypesKeepList)
-  {
+  public TableTypes subsetFrom(final TableTypes tableTypesKeepList) {
     requireNonNull(tableTypesKeepList, "No keep list of table types provided");
-    if (tableTypesKeepList.isIncludeAll())
-    {
+    if (tableTypesKeepList.isIncludeAll()) {
       return this;
     }
-    if (tableTypesKeepList.isIncludeNone())
-    {
+    if (tableTypesKeepList.isIncludeNone()) {
       return new TableTypes(null);
     }
 
     final List<TableType> filteredTableTypes = new ArrayList<>();
-    for (final TableType tableType : tableTypesKeepList)
-    {
-      if (this.tableTypes.contains(tableType))
-      {
+    for (final TableType tableType : tableTypesKeepList) {
+      if (this.tableTypes.contains(tableType)) {
         // Add value in the same case as known to the database system
         final int index = this.tableTypes.indexOf(tableType);
         filteredTableTypes.add(this.tableTypes.get(index));
@@ -195,73 +191,19 @@ public final class TableTypes
     return new TableTypes(filteredTableTypes);
   }
 
-  @Override
-  public Iterator<TableType> iterator()
-  {
-    if (isIncludeAll())
-    {
-      throw new IllegalArgumentException(
-        "Include all table types, but none are known");
+  public String[] toArray() {
+    if (isIncludeAll()) {
+      return null;
     }
-    return tableTypes.iterator();
+    return tableTypes.stream().map(tableType -> tableType.getTableType()).toArray(String[]::new);
   }
 
-  /**
-   * Looks up a table type, from the provided string. The search (that is, value
-   * of the provided string) is case-insensitive.
-   *
-   * @return Matched table type
-   */
-  public Optional<TableType> lookupTableType(final String tableTypeString)
-  {
-    if (isIncludeAll())
-    {
-      return Optional.of(new TableType(tableTypeString));
-    }
-
-    for (final TableType tableType : tableTypes)
-    {
-      if (tableType.isEqualTo(tableTypeString))
-      {
-        return Optional.of(tableType);
-      }
-    }
-    return Optional.empty();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String toString()
-  {
-    if (isIncludeAll())
-    {
+  public String toString() {
+    if (isIncludeAll()) {
       return "<all table types>";
     }
     return tableTypes.toString();
   }
-
-  public String[] toArray()
-  {
-    if (isIncludeAll())
-    {
-      return null;
-    }
-    return tableTypes
-      .stream()
-      .map(tableType -> tableType.getTableType())
-      .toArray(String[]::new);
-  }
-
-  public boolean isIncludeNone()
-  {
-    return tableTypes.isEmpty();
-  }
-
-  public boolean isIncludeAll()
-  {
-    return tableTypes == null;
-  }
-
 }

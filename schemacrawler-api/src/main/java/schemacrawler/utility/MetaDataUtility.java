@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.utility;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
@@ -50,149 +49,125 @@ import us.fatehi.utility.UtilityMarker;
  * @author sfatehi
  */
 @UtilityMarker
-public final class MetaDataUtility
-{
+public final class MetaDataUtility {
 
-  public static Collection<List<String>> allIndexCoumnNames(final Table table)
-  {
+  public enum ForeignKeyCardinality {
+    unknown(""),
+    zero_one("(0..1)"),
+    zero_many("(0..many)"),
+    one_one("(1..1)");
+
+    private final String description;
+
+    ForeignKeyCardinality(final String description) {
+      this.description = requireNonNull(description, "No description provided");
+    }
+
+    @Override
+    public String toString() {
+      return description;
+    }
+  }
+
+  public static Collection<List<String>> allIndexCoumnNames(final Table table) {
     return indexCoumnNames(table, false);
   }
 
-  public static List<String> columnNames(final Index index)
-  {
-    if (index == null)
-    {
+  public static List<String> columnNames(final Index index) {
+    if (index == null) {
       return Collections.emptyList();
     }
 
     final List<String> columnNames = new ArrayList<>();
-    for (final Column indexColumn : index)
-    {
+    for (final Column indexColumn : index) {
       columnNames.add(indexColumn.getFullName());
     }
     return columnNames;
   }
 
-  public static String constructForeignKeyName(final Column pkColumn,
-                                               final Column fkColumn)
-  {
+  public static String constructForeignKeyName(final Column pkColumn, final Column fkColumn) {
     requireNonNull(pkColumn, "No primary key column provided");
     requireNonNull(fkColumn, "No foreign key column provided");
 
     final Table pkTable = pkColumn.getParent();
     final Table fkParent = fkColumn.getParent();
-    final String pkHex = Integer.toHexString(pkTable
-                                               .getFullName()
-                                               .hashCode());
-    final String fkHex = Integer.toHexString(fkParent
-                                               .getFullName()
-                                               .hashCode());
-    final String foreignKeyName = String
-      .format("SC_%s_%s", pkHex, fkHex)
-      .toUpperCase();
+    final String pkHex = Integer.toHexString(pkTable.getFullName().hashCode());
+    final String fkHex = Integer.toHexString(fkParent.getFullName().hashCode());
+    final String foreignKeyName = String.format("SC_%s_%s", pkHex, fkHex).toUpperCase();
     return foreignKeyName;
   }
 
-  public static boolean containsGeneratedColumns(final Index index)
-  {
-    if (index == null)
-    {
+  public static boolean containsGeneratedColumns(final Index index) {
+    if (index == null) {
       return false;
     }
 
-    for (final Column indexColumn : index)
-    {
-      if (indexColumn.isGenerated())
-      {
+    for (final Column indexColumn : index) {
+      if (indexColumn.isGenerated()) {
         return true;
       }
     }
     return false;
   }
 
-  public static ForeignKeyCardinality findForeignKeyCardinality(final BaseForeignKey<?> foreignKey)
-  {
-    if (foreignKey == null)
-    {
+  public static ForeignKeyCardinality findForeignKeyCardinality(
+      final BaseForeignKey<?> foreignKey) {
+    if (foreignKey == null) {
       return ForeignKeyCardinality.unknown;
     }
     final boolean isForeignKeyUnique = isForeignKeyUnique(foreignKey);
 
-    final ColumnReference columnRef0 = foreignKey
-      .getColumnReferences()
-      .get(0);
+    final ColumnReference columnRef0 = foreignKey.getColumnReferences().get(0);
     final Column fkColumn = columnRef0.getForeignKeyColumn();
     final boolean isColumnReference = fkColumn instanceof PartialDatabaseObject;
 
     final ForeignKeyCardinality connectivity;
-    if (isColumnReference)
-    {
+    if (isColumnReference) {
       connectivity = ForeignKeyCardinality.unknown;
-    }
-    else if (isForeignKeyUnique)
-    {
+    } else if (isForeignKeyUnique) {
       connectivity = ForeignKeyCardinality.zero_one;
-    }
-    else
-    {
+    } else {
       connectivity = ForeignKeyCardinality.zero_many;
     }
     return connectivity;
   }
 
-  public static List<String> foreignKeyColumnNames(final BaseForeignKey<? extends ColumnReference> foreignKey)
-  {
-    if (foreignKey == null)
-    {
+  public static List<String> foreignKeyColumnNames(
+      final BaseForeignKey<? extends ColumnReference> foreignKey) {
+    if (foreignKey == null) {
       return Collections.emptyList();
     }
     final List<String> columnNames = new ArrayList<>();
-    for (final ColumnReference columnReference : foreignKey)
-    {
-      columnNames.add(columnReference
-                        .getForeignKeyColumn()
-                        .getFullName());
+    for (final ColumnReference columnReference : foreignKey) {
+      columnNames.add(columnReference.getForeignKeyColumn().getFullName());
     }
     return columnNames;
   }
 
-  public static boolean isForeignKeyUnique(final BaseForeignKey<?> foreignKey)
-  {
-    if (foreignKey == null)
-    {
+  public static boolean isForeignKeyUnique(final BaseForeignKey<?> foreignKey) {
+    if (foreignKey == null) {
       return false;
     }
-    final ColumnReference columnRef0 = foreignKey
-      .getColumnReferences()
-      .get(0);
-    final Table fkTable = columnRef0
-      .getForeignKeyColumn()
-      .getParent();
-    final Collection<List<String>> uniqueIndexCoumnNames =
-      uniqueIndexCoumnNames(fkTable);
-    final List<String> foreignKeyColumnNames =
-      foreignKeyColumnNames(foreignKey);
+    final ColumnReference columnRef0 = foreignKey.getColumnReferences().get(0);
+    final Table fkTable = columnRef0.getForeignKeyColumn().getParent();
+    final Collection<List<String>> uniqueIndexCoumnNames = uniqueIndexCoumnNames(fkTable);
+    final List<String> foreignKeyColumnNames = foreignKeyColumnNames(foreignKey);
     return uniqueIndexCoumnNames.contains(foreignKeyColumnNames);
   }
 
-  public static Collection<List<String>> uniqueIndexCoumnNames(final Table table)
-  {
+  public static Collection<List<String>> uniqueIndexCoumnNames(final Table table) {
     return indexCoumnNames(table, true);
   }
 
-  private static Collection<List<String>> indexCoumnNames(final Table table,
-                                                          final boolean includeUniqueOnly)
-  {
+  private static Collection<List<String>> indexCoumnNames(
+      final Table table, final boolean includeUniqueOnly) {
     final List<List<String>> allIndexCoumns = new ArrayList<>();
-    if (table instanceof PartialDatabaseObject)
-    {
+    if (table instanceof PartialDatabaseObject) {
       return allIndexCoumns;
     }
 
-    for (final Index index : table.getIndexes())
-    {
-      if (includeUniqueOnly && !index.isUnique())
-      {
+    for (final Index index : table.getIndexes()) {
+      if (includeUniqueOnly && !index.isUnique()) {
         continue;
       }
 
@@ -202,31 +177,7 @@ public final class MetaDataUtility
     return allIndexCoumns;
   }
 
-  public enum ForeignKeyCardinality
-  {
-    unknown(""),
-    zero_one("(0..1)"),
-    zero_many("(0..many)"),
-    one_one("(1..1)");
-
-    private final String description;
-
-    ForeignKeyCardinality(final String description)
-    {
-      this.description = requireNonNull(description, "No description provided");
-    }
-
-    @Override
-    public String toString()
-    {
-      return description;
-    }
-
-  }
-
-  private MetaDataUtility()
-  {
+  private MetaDataUtility() {
     // Prevent instantiation
   }
-
 }

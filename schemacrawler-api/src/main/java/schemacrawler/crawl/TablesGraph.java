@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.crawl;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -41,82 +40,56 @@ import us.fatehi.utility.graph.DirectedGraph;
 import us.fatehi.utility.graph.GraphException;
 import us.fatehi.utility.graph.SimpleTopologicalSort;
 
-final class TablesGraph
-  extends DirectedGraph<Table>
-{
+final class TablesGraph extends DirectedGraph<Table> {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(TablesGraph.class.getName());
+      SchemaCrawlerLogger.getLogger(TablesGraph.class.getName());
 
-  TablesGraph(final NamedObjectList<MutableTable> tables)
-  {
+  TablesGraph(final NamedObjectList<MutableTable> tables) {
     super("catalog");
 
-    if (tables == null)
-    {
+    if (tables == null) {
       return;
     }
 
-    for (final Table table : tables)
-    {
+    for (final Table table : tables) {
       addVertex(table);
-      for (final ForeignKey foreignKey : table.getForeignKeys())
-      {
-        for (final ForeignKeyColumnReference columnRef : foreignKey)
-        {
-          addEdge(columnRef
-                    .getPrimaryKeyColumn()
-                    .getParent(),
-                  columnRef
-                    .getForeignKeyColumn()
-                    .getParent());
+      for (final ForeignKey foreignKey : table.getForeignKeys()) {
+        for (final ForeignKeyColumnReference columnRef : foreignKey) {
+          addEdge(
+              columnRef.getPrimaryKeyColumn().getParent(),
+              columnRef.getForeignKeyColumn().getParent());
         }
       }
     }
-
   }
 
-  /**
-   * Set the sort order for tables and views.
-   */
-  void setTablesSortIndexes()
-  {
-    try
-    {
+  /** Set the sort order for tables and views. */
+  void setTablesSortIndexes() {
+    try {
       final List<Table> sortedTables = topologicalSort();
       final List<View> sortedViews = new ArrayList<>();
       int sortIndex = 0;
-      for (final Table table : sortedTables)
-      {
-        if (table instanceof View)
-        {
+      for (final Table table : sortedTables) {
+        if (table instanceof View) {
           sortedViews.add((View) table);
-        }
-        else if (table instanceof MutableTable)
-        {
+        } else if (table instanceof MutableTable) {
           ((MutableTable) table).setSortIndex(sortIndex);
           sortIndex++;
         }
       }
-      for (final View view : sortedViews)
-      {
-        if (view instanceof MutableView)
-        {
+      for (final View view : sortedViews) {
+        if (view instanceof MutableView) {
           ((MutableView) view).setSortIndex(sortIndex);
           sortIndex++;
         }
       }
-    }
-    catch (final GraphException e)
-    {
+    } catch (final GraphException e) {
       LOGGER.log(Level.CONFIG, e.getMessage());
     }
   }
 
-  private List<Table> topologicalSort()
-    throws GraphException
-  {
+  private List<Table> topologicalSort() throws GraphException {
     return new SimpleTopologicalSort<>(this).topologicalSort();
   }
-
 }

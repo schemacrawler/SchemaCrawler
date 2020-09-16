@@ -27,9 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schema;
 
-
-public enum JavaSqlTypeGroup
-{
+public enum JavaSqlTypeGroup {
   unknown,
   binary,
   bit,
@@ -44,12 +42,10 @@ public enum JavaSqlTypeGroup
   large_object,
   object;
 
-  public static JavaSqlTypeGroup valueOf(final int type)
-  {
+  public static JavaSqlTypeGroup valueOf(final int type) {
 
     final JavaSqlTypeGroup typeGroup;
-    switch (type)
-    {
+    switch (type) {
       case java.sql.Types.ARRAY:
       case java.sql.Types.DISTINCT:
       case java.sql.Types.JAVA_OBJECT:
@@ -118,5 +114,4 @@ public enum JavaSqlTypeGroup
     }
     return typeGroup;
   }
-
 }

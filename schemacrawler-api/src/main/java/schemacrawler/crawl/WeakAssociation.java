@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
@@ -50,90 +49,45 @@ import us.fatehi.utility.CompareUtility;
  *
  * @author Sualeh Fatehi
  */
-public final class WeakAssociation
-  implements BaseForeignKey<WeakAssociationColumnReference>
-{
+public final class WeakAssociation implements BaseForeignKey<WeakAssociationColumnReference> {
 
   private static final long serialVersionUID = -5164664131926303038L;
 
   private final String name;
-  private final SortedSet<WeakAssociationColumnReference> columnReferences =
-    new TreeSet<>();
+  private final SortedSet<WeakAssociationColumnReference> columnReferences = new TreeSet<>();
 
-  public WeakAssociation(final String name)
-  {
+  public WeakAssociation(final String name) {
     this.name = requireNonNull(name, "No name provided");
   }
 
   /**
    * {@inheritDoc}
-   * <p>
-   * Note: Since foreign keys are not always explicitly named in databases, the
-   * sorting routine orders the foreign keys by the names of the columns in the
-   * foreign keys.
-   * </p>
+   *
+   * <p>Note: Since foreign keys are not always explicitly named in databases, the sorting routine
+   * orders the foreign keys by the names of the columns in the foreign keys.
    */
   @Override
-  public int compareTo(final NamedObject obj)
-  {
-    if (obj == null)
-    {
+  public int compareTo(final NamedObject obj) {
+    if (obj == null) {
       return -1;
     }
 
     final BaseForeignKey<?> other = (BaseForeignKey<?>) obj;
-    final List<? extends ColumnReference> thisColumnReferences =
-      getColumnReferences();
-    final List<? extends ColumnReference> otherColumnReferences =
-      other.getColumnReferences();
+    final List<? extends ColumnReference> thisColumnReferences = getColumnReferences();
+    final List<? extends ColumnReference> otherColumnReferences = other.getColumnReferences();
 
-    return CompareUtility.compareLists(thisColumnReferences,
-                                       otherColumnReferences);
+    return CompareUtility.compareLists(thisColumnReferences, otherColumnReferences);
   }
 
   @Override
-  public List<WeakAssociationColumnReference> getColumnReferences()
-  {
-    return new ArrayList<>(columnReferences);
-  }
-
-  @Override
-  public String getFullName()
-  {
-    return getName();
-  }
-
-  @Override
-  public String getName()
-  {
-    return name;
-  }
-
-  @Override
-  public List<String> toUniqueLookupKey()
-  {
-    return Arrays.asList(getName());
-  }
-
-  @Override
-  public int hashCode()
-  {
-    return Objects.hash(columnReferences);
-  }
-
-  @Override
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
+  public boolean equals(final Object obj) {
+    if (this == obj) {
       return true;
     }
-    if (obj == null)
-    {
+    if (obj == null) {
       return false;
     }
-    if (!(obj instanceof WeakAssociation))
-    {
+    if (!(obj instanceof WeakAssociation)) {
       return false;
     }
     final WeakAssociation other = (WeakAssociation) obj;
@@ -141,21 +95,41 @@ public final class WeakAssociation
   }
 
   @Override
-  public String toString()
-  {
+  public List<WeakAssociationColumnReference> getColumnReferences() {
+    return new ArrayList<>(columnReferences);
+  }
+
+  @Override
+  public String getFullName() {
+    return getName();
+  }
+
+  @Override
+  public String getName() {
+    return name;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(columnReferences);
+  }
+
+  @Override
+  public Iterator<WeakAssociationColumnReference> iterator() {
+    return columnReferences.iterator();
+  }
+
+  @Override
+  public String toString() {
     return columnReferences.toString();
   }
 
   @Override
-  public Iterator<WeakAssociationColumnReference> iterator()
-  {
-    return columnReferences.iterator();
+  public List<String> toUniqueLookupKey() {
+    return Arrays.asList(getName());
   }
 
-  void addColumnReference(final Column pkColumn, final Column fkColumn)
-  {
-    columnReferences.add(new WeakAssociationColumnReference(pkColumn,
-                                                            fkColumn));
+  void addColumnReference(final Column pkColumn, final Column fkColumn) {
+    columnReferences.add(new WeakAssociationColumnReference(pkColumn, fkColumn));
   }
-
 }

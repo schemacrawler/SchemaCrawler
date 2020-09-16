@@ -28,21 +28,16 @@ http://www.gnu.org/licenses/
 
 package schemacrawler;
 
-
 /**
  * SchemaCrawler information.
  *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
-public final class SchemaCrawlerInfo
-  extends BaseProductVersion
-{
+public final class SchemaCrawlerInfo extends BaseProductVersion {
 
   private static final long serialVersionUID = 4051323422934251828L;
 
-  public SchemaCrawlerInfo()
-  {
+  public SchemaCrawlerInfo() {
     super(Version.getProductName(), Version.getVersion());
   }
-
 }

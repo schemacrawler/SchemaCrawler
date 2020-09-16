@@ -27,13 +27,10 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.utility;
 
-
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
-final class NeuteredLinesFilter
-  implements Predicate<String>
-{
+final class NeuteredLinesFilter implements Predicate<String> {
 
   private final Pattern[] neuters = {
     //
@@ -47,8 +44,7 @@ final class NeuteredLinesFilter
     Pattern.compile("\\s+<product(Name|Version)>.*"),
     Pattern.compile(".*[A-Za-z]+ \\d+, 201[456] \\d+:\\d+ [AP]M.*"),
     Pattern.compile(".*20[12][890]-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.*"),
-    Pattern.compile(
-      ".*20[12][890]-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d.*"),
+    Pattern.compile(".*20[12][890]-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d.*"),
     // JSON and YAML output
     Pattern.compile("- column @uuid: .*"),
     Pattern.compile("\\s+\"?run-id\"?\\s?: .*"),
@@ -95,24 +91,16 @@ final class NeuteredLinesFilter
     // PostgreSQL
     // -- unnamed objects
     Pattern.compile(".*pg_temp_.*"),
-    };
+  };
 
-  /**
-   * Should we keep the line - that is, not ignore it?
-   */
+  /** Should we keep the line - that is, not ignore it? */
   @Override
-  public boolean test(final String line)
-  {
-    for (final Pattern neuter : neuters)
-    {
-      if (neuter
-        .matcher(line)
-        .matches())
-      {
+  public boolean test(final String line) {
+    for (final Pattern neuter : neuters) {
+      if (neuter.matcher(line).matches()) {
         return false;
       }
     }
     return true;
   }
-
 }

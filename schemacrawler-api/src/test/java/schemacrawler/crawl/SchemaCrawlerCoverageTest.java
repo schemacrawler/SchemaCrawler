@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isPresentAndIs;
 import static org.hamcrest.CoreMatchers.is;
@@ -38,14 +37,17 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.ObjectPropertyTestUtility.checkBooleanProperties;
 import static schemacrawler.test.utility.ObjectPropertyTestUtility.checkIntegerProperties;
+
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.regex.Pattern;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
@@ -75,238 +77,161 @@ import schemacrawler.test.utility.TestUtility;
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class SchemaCrawlerCoverageTest
-{
+public class SchemaCrawlerCoverageTest {
 
   private Catalog catalog;
 
-  @BeforeAll
-  public void loadCatalog(final Connection connection)
-    throws Exception
-  {
+  @Test
+  public void columnDataTypeProperties() throws Exception {
+    final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
+    final Table table = catalog.lookupTable(schema, "AUTHORS").get();
+    final Column column = table.lookupColumn("FIRSTNAME").get();
+    final ColumnDataType columnDataType = column.getColumnDataType();
 
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-      TestUtility.newSchemaRetrievalOptions();
-
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-      .builder()
-      .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
-      .includeAllSynonyms()
-      .includeAllSequences()
-      .includeAllRoutines();
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
-      .builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-      .loadRowCounts();
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withLimitOptionsBuilder(limitOptionsBuilder)
-        .withLoadOptionsBuilder(loadOptionsBuilder);
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-      schemaCrawlerOptionsBuilder.toOptions();
-
-    catalog =
-      getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
+    checkBooleanProperties(
+        columnDataType,
+        "autoIncrementable",
+        "caseSensitive",
+        "fixedPrecisionScale",
+        "nullable",
+        "unsigned",
+        "userDefined");
   }
 
   @Test
-  public void coverIndexColumn()
-  {
+  public void columnProperties() throws Exception {
     final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
-    final Table table = catalog
-      .lookupTable(schema, "AUTHORS")
-      .get();
-    final Index index = table
-      .lookupIndex("IDX_B_AUTHORS")
-      .get();
-    final IndexColumn indexColumn = index
-      .getColumns()
-      .get(0);
-    final Column column = table
-      .lookupColumn(indexColumn.getName())
-      .get();
+    final Table table = catalog.lookupTable(schema, "AUTHORS").get();
+    final Column column = table.lookupColumn("FIRSTNAME").get();
+
+    checkBooleanProperties(column, "autoIncremented", "generated", "hidden");
+  }
+
+  @Test
+  public void coverIndexColumn() {
+    final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
+    final Table table = catalog.lookupTable(schema, "AUTHORS").get();
+    final Index index = table.lookupIndex("IDX_B_AUTHORS").get();
+    final IndexColumn indexColumn = index.getColumns().get(0);
+    final Column column = table.lookupColumn(indexColumn.getName()).get();
 
     compareColumnFields(indexColumn, column);
 
     assertThat(indexColumn.hasDefinition(), is(false));
     assertThat(indexColumn.getIndex(), is(index));
     assertThat(indexColumn.getIndexOrdinalPosition(), is(1));
-    assertThat(indexColumn.getSortSequence(),
-               is(IndexColumnSortSequence.ascending));
-
+    assertThat(indexColumn.getSortSequence(), is(IndexColumnSortSequence.ascending));
   }
 
   @Test
-  public void coverTableConstraintColumn()
-  {
+  public void coverTableConstraintColumn() {
     final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
-    final Table table = catalog
-      .lookupTable(schema, "AUTHORS")
-      .get();
-    final TableConstraint tableConstraint =
-      new ArrayList<>(table.getTableConstraints()).get(0);
-    final TableConstraintColumn tableConstraintColumn = tableConstraint
-      .getColumns()
-      .get(0);
-    final Column column = table
-      .lookupColumn(tableConstraintColumn.getName())
-      .get();
+    final Table table = catalog.lookupTable(schema, "AUTHORS").get();
+    final TableConstraint tableConstraint = new ArrayList<>(table.getTableConstraints()).get(0);
+    final TableConstraintColumn tableConstraintColumn = tableConstraint.getColumns().get(0);
+    final Column column = table.lookupColumn(tableConstraintColumn.getName()).get();
 
     compareColumnFields(tableConstraintColumn, column);
 
     assertThat(tableConstraintColumn.getTableConstraint(), is(tableConstraint));
-    assertThat(tableConstraintColumn.getTableConstraintOrdinalPosition(),
-               is(0));
-
+    assertThat(tableConstraintColumn.getTableConstraintOrdinalPosition(), is(0));
   }
 
   @Test
-  public void columnProperties()
-    throws Exception
-  {
+  public void indexProperties() throws Exception {
     final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
-    final Table table = catalog
-      .lookupTable(schema, "AUTHORS")
-      .get();
-    final Column column = table
-      .lookupColumn("FIRSTNAME")
-      .get();
+    final Table table = catalog.lookupTable(schema, "AUTHORS").get();
+    final Index index = table.lookupIndex("IDX_B_AUTHORS").get();
 
-    checkBooleanProperties(column, "autoIncremented", "generated", "hidden");
-
+    checkIntegerProperties(index, "cardinality", "pages");
+    checkBooleanProperties(index, "unique");
   }
 
   @Test
-  public void columnDataTypeProperties()
-    throws Exception
-  {
-    final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
-    final Table table = catalog
-      .lookupTable(schema, "AUTHORS")
-      .get();
-    final Column column = table
-      .lookupColumn("FIRSTNAME")
-      .get();
-    final ColumnDataType columnDataType = column.getColumnDataType();
+  public void jdbcDriverInfoProperties() throws Exception {
+    final JdbcDriverInfo jdbcDriverInfo = catalog.getJdbcDriverInfo();
 
-    checkBooleanProperties(columnDataType,
-                           "autoIncrementable",
-                           "caseSensitive",
-                           "fixedPrecisionScale",
-                           "nullable",
-                           "unsigned",
-                           "userDefined");
+    checkBooleanProperties(jdbcDriverInfo, "jdbcCompliant");
 
+    assertThat(
+        jdbcDriverInfo.toString(),
+        matchesPattern(
+            Pattern.compile(
+                "-- driver: HSQL Database Engine Driver 2.5.1\\R"
+                    + "-- driver class: org.hsqldb.jdbc.JDBCDriver\\R"
+                    + "-- url: jdbc:hsqldb:hsql:\\/\\/0.0.0.0:\\d*/schemacrawler\\d*\\R"
+                    + "-- jdbc compliant: false",
+                Pattern.DOTALL)));
+  }
+
+  @BeforeAll
+  public void loadCatalog(final Connection connection) throws Exception {
+
+    final SchemaRetrievalOptions schemaRetrievalOptions = TestUtility.newSchemaRetrievalOptions();
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
+            .includeAllSynonyms()
+            .includeAllSequences()
+            .includeAllRoutines();
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder()
+            .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+            .loadRowCounts();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
+        SchemaCrawlerOptionsBuilder.builder()
+            .withLimitOptionsBuilder(limitOptionsBuilder)
+            .withLoadOptionsBuilder(loadOptionsBuilder);
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
+
+    catalog = getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
   }
 
   @Test
-  public void primaryKey()
-    throws Exception
-  {
+  public void primaryKey() throws Exception {
     final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
-    final Table table = catalog
-      .lookupTable(schema, "AUTHORS")
-      .get();
+    final Table table = catalog.lookupTable(schema, "AUTHORS").get();
     final PrimaryKey primaryKey = table.getPrimaryKey();
 
     assertThat(primaryKey.getFullName(), is("PUBLIC.BOOKS.AUTHORS.PK_AUTHORS"));
-    assertThat(primaryKey
-                 .getColumns()
-                 .toString(), is("[PUBLIC.BOOKS.AUTHORS.ID]"));
+    assertThat(primaryKey.getColumns().toString(), is("[PUBLIC.BOOKS.AUTHORS.ID]"));
     assertThat(primaryKey.getType(), is(TableConstraintType.primary_key));
     assertThat(primaryKey.isDeferrable(), is(false));
     assertThat(primaryKey.isInitiallyDeferred(), is(false));
 
-    final TableConstraint constraint =
-      new MutableTableConstraint(table, primaryKey.getName());
+    final TableConstraint constraint = new MutableTableConstraint(table, primaryKey.getName());
     final Optional<TableConstraint> optionalTableConstraint =
-      table.lookupTableConstraint(primaryKey.getName());
+        table.lookupTableConstraint(primaryKey.getName());
     assertThat(optionalTableConstraint, isPresentAndIs(constraint));
-
   }
 
   @Test
-  public void indexProperties()
-    throws Exception
-  {
+  public void sequenceProperties() throws Exception {
     final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
-    final Table table = catalog
-      .lookupTable(schema, "AUTHORS")
-      .get();
-    final Index index = table
-      .lookupIndex("IDX_B_AUTHORS")
-      .get();
-
-    checkIntegerProperties(index, "cardinality", "pages");
-    checkBooleanProperties(index, "unique");
-
-  }
-
-  @Test
-  public void jdbcDriverInfoProperties()
-    throws Exception
-  {
-    final JdbcDriverInfo jdbcDriverInfo = catalog.getJdbcDriverInfo();
-
-    checkBooleanProperties(jdbcDriverInfo, "jdbcCompliant");
-    
-    assertThat(jdbcDriverInfo.toString(), matchesPattern(
-        Pattern.compile("-- driver: HSQL Database Engine Driver 2.5.1\\R"
-            + "-- driver class: org.hsqldb.jdbc.JDBCDriver\\R"
-            + "-- url: jdbc:hsqldb:hsql:\\/\\/0.0.0.0:\\d*/schemacrawler\\d*\\R"
-            + "-- jdbc compliant: false", Pattern.DOTALL)));
-  }
-
-  @Test
-  public void sequenceProperties()
-    throws Exception
-  {
-    final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
-    final Sequence sequence = catalog
-      .lookupSequence(schema, "PUBLISHER_ID_SEQ")
-      .get();
+    final Sequence sequence = catalog.lookupSequence(schema, "PUBLISHER_ID_SEQ").get();
 
     checkBooleanProperties(sequence, "cycle");
-
   }
 
   @Test
-  public void viewProperties()
-    throws Exception
-  {
+  public void tableAttributes() throws Exception {
     final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
-    final View view = (View) catalog
-      .lookupTable(schema, "AUTHORSLIST")
-      .get();
-
-    checkBooleanProperties(view, "updatable");
-
-  }
-
-  @Test
-  public void tableAttributes()
-    throws Exception
-  {
-    final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
-    final Table table = catalog
-      .lookupTable(schema, "AUTHORS")
-      .get();
+    final Table table = catalog.lookupTable(schema, "AUTHORS").get();
 
     assertThat(table.hasAttribute("unknown"), is(false));
     assertThat(table.lookupAttribute("unknown"), isEmpty());
     assertThat(table.hasAttribute("schemacrawler.table.row_count"), is(true));
-    assertThat(table.lookupAttribute("schemacrawler.table.row_count"),
-               isPresentAndIs(20L));
+    assertThat(table.lookupAttribute("schemacrawler.table.row_count"), isPresentAndIs(20L));
 
     assertThat(table.getAttribute("unknown", "no value"), is("no value"));
     assertThat(table.getAttribute("unknown", 10.5f), is(10.5f));
-    assertThat(table.getAttribute("schemacrawler.table.row_count", 10L),
-               is(20L));
-    assertThrows(ClassCastException.class, () -> {
-      final String string =
-        table.getAttribute("schemacrawler.table.row_count", "no value");
-    });
+    assertThat(table.getAttribute("schemacrawler.table.row_count", 10L), is(20L));
+    assertThrows(
+        ClassCastException.class,
+        () -> {
+          final String string = table.getAttribute("schemacrawler.table.row_count", "no value");
+        });
 
     assertThat(table.hasAttribute("new_one"), is(false));
     table.setAttribute("new_one", "some_value");
@@ -319,32 +244,31 @@ public class SchemaCrawlerCoverageTest
     assertThat(table.hasAttribute("new_one"), is(false));
   }
 
-  private void compareColumnFields(final Column wrappedColumn,
-                                   final Column column)
-  {
+  @Test
+  public void viewProperties() throws Exception {
+    final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
+    final View view = (View) catalog.lookupTable(schema, "AUTHORSLIST").get();
+
+    checkBooleanProperties(view, "updatable");
+  }
+
+  private void compareColumnFields(final Column wrappedColumn, final Column column) {
     assertThat(wrappedColumn.getFullName(), is(column.getFullName()));
-    assertThat(wrappedColumn.getColumnDataType(),
-               is(column.getColumnDataType()));
+    assertThat(wrappedColumn.getColumnDataType(), is(column.getColumnDataType()));
     assertThat(wrappedColumn.getDecimalDigits(), is(column.getDecimalDigits()));
-    assertThat(wrappedColumn.getOrdinalPosition(),
-               is(column.getOrdinalPosition()));
+    assertThat(wrappedColumn.getOrdinalPosition(), is(column.getOrdinalPosition()));
     assertThat(wrappedColumn.getSize(), is(column.getSize()));
     assertThat(wrappedColumn.getWidth(), is(column.getWidth()));
     assertThat(wrappedColumn.isNullable(), is(column.isNullable()));
     assertThat(wrappedColumn.getDefaultValue(), is(column.getDefaultValue()));
     assertThat(wrappedColumn.getPrivileges(), is(column.getPrivileges()));
-    assertThat(wrappedColumn.isAutoIncremented(),
-               is(column.isAutoIncremented()));
+    assertThat(wrappedColumn.isAutoIncremented(), is(column.isAutoIncremented()));
     assertThat(wrappedColumn.isGenerated(), is(column.isGenerated()));
     assertThat(wrappedColumn.isHidden(), is(column.isHidden()));
-    assertThat(wrappedColumn.isPartOfForeignKey(),
-               is(column.isPartOfForeignKey()));
+    assertThat(wrappedColumn.isPartOfForeignKey(), is(column.isPartOfForeignKey()));
     assertThat(wrappedColumn.isPartOfIndex(), is(column.isPartOfIndex()));
-    assertThat(wrappedColumn.isPartOfPrimaryKey(),
-               is(column.isPartOfPrimaryKey()));
-    assertThat(wrappedColumn.isPartOfUniqueIndex(),
-               is(column.isPartOfUniqueIndex()));
+    assertThat(wrappedColumn.isPartOfPrimaryKey(), is(column.isPartOfPrimaryKey()));
+    assertThat(wrappedColumn.isPartOfUniqueIndex(), is(column.isPartOfUniqueIndex()));
     assertThat(wrappedColumn.getType(), is(column.getType()));
   }
-
 }

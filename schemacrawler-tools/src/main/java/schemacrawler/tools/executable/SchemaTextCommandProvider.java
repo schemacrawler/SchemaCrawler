@@ -27,33 +27,23 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.executable;
 
-
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextRenderer;
 
-public final class SchemaTextCommandProvider
-  extends BaseCommandProvider
-{
+public final class SchemaTextCommandProvider extends BaseCommandProvider {
 
-  SchemaTextCommandProvider()
-  {
+  SchemaTextCommandProvider() {
     super(CommandProviderUtility.schemaTextCommands());
   }
 
   @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
-  {
+  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command) {
     return new SchemaTextRenderer(command);
   }
 
   @Override
-  public boolean supportsOutputFormat(final String command,
-                                      final OutputOptions outputOptions)
-  {
-    return supportsOutputFormat(command,
-                                outputOptions,
-                                TextOutputFormat::isSupportedFormat);
+  public boolean supportsOutputFormat(final String command, final OutputOptions outputOptions) {
+    return supportsOutputFormat(command, outputOptions, TextOutputFormat::isSupportedFormat);
   }
-
 }

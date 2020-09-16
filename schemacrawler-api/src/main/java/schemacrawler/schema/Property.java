@@ -27,12 +27,9 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schema;
 
-
 import java.io.Serializable;
 
-public interface Property
-  extends Serializable, Comparable<Property>
-{
+public interface Property extends Serializable, Comparable<Property> {
 
   /**
    * Gets the description of the property.
@@ -54,5 +51,4 @@ public interface Property
    * @return Value
    */
   Object getValue();
-
 }

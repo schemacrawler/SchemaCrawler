@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.plugin;
 
-
 import static schemacrawler.plugin.EnumDataTypeInfo.EMPTY_ENUM_DATA_TYPE_INFO;
 
 import java.sql.Connection;
@@ -37,14 +36,11 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 
 @FunctionalInterface
-public interface EnumDataTypeHelper
-{
+public interface EnumDataTypeHelper {
 
   EnumDataTypeHelper NO_OP_ENUM_DATA_TYPE_HELPER =
-    (column, columnDataType, connection) -> EMPTY_ENUM_DATA_TYPE_INFO;
+      (column, columnDataType, connection) -> EMPTY_ENUM_DATA_TYPE_INFO;
 
-  EnumDataTypeInfo getEnumDataTypeInfo(Column column,
-                                       ColumnDataType columnDataType,
-                                       Connection connection);
-
+  EnumDataTypeInfo getEnumDataTypeInfo(
+      Column column, ColumnDataType columnDataType, Connection connection);
 }

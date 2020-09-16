@@ -27,9 +27,4 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schema;
 
-
-public interface DatabaseProperty
-  extends Property
-{
-
-}
+public interface DatabaseProperty extends Property {}

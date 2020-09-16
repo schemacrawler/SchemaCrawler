@@ -27,10 +27,10 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.crawl;
 
+import org.junit.jupiter.api.Test;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import org.junit.jupiter.api.Test;
 import schemacrawler.BaseProductVersion;
 import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.IncludeAll;
@@ -45,156 +45,104 @@ import us.fatehi.utility.Color;
 import us.fatehi.utility.graph.DirectedEdge;
 import us.fatehi.utility.graph.Vertex;
 
-public class EqualsTest
-{
+public class EqualsTest {
 
   @Test
-  public void baseProductVersion()
-  {
-    EqualsVerifier
-      .forClass(BaseProductVersion.class)
-      .verify();
+  public void baseProductVersion() {
+    EqualsVerifier.forClass(BaseProductVersion.class).verify();
   }
 
   @Test
-  public void color()
-  {
-    EqualsVerifier
-      .forClass(Color.class)
-      .verify();
+  public void color() {
+    EqualsVerifier.forClass(Color.class).verify();
   }
 
   @Test
-  public void columnReference()
-  {
-    EqualsVerifier
-      .forClass(BaseColumnReference.class)
-      .verify();
+  public void columnReference() {
+    EqualsVerifier.forClass(BaseColumnReference.class).verify();
   }
 
   @Test
-  public void directedEdge()
-  {
-    EqualsVerifier
-      .forClass(DirectedEdge.class)
-      .verify();
-  }
+  public void databaseObject() {
+    class TestDatabaseObject extends AbstractDatabaseObject {
 
-  @Test
-  public void inclusionRules()
-  {
-    EqualsVerifier
-      .forClass(IncludeAll.class)
-      .verify();
-    EqualsVerifier
-      .forClass(ExcludeAll.class)
-      .verify();
-    EqualsVerifier
-      .forClass(RegularExpressionInclusionRule.class)
-      .verify();
-    EqualsVerifier
-      .forClass(RegularExpressionExclusionRule.class)
-      .verify();
-  }
+      /** */
+      private static final long serialVersionUID = 6661972079180914099L;
 
-  @Test
-  public void namedObject()
-  {
-    EqualsVerifier
-      .forClass(AbstractNamedObject.class)
-      .suppress(Warning.STRICT_INHERITANCE)
-      .verify();
-  }
-
-  @Test
-  public void namedObjectWithAttributes()
-  {
-    EqualsVerifier
-      .forClass(AbstractNamedObjectWithAttributes.class)
-      .withIgnoredFields("remarks", "attributeMap")
-      .suppress(Warning.STRICT_INHERITANCE)
-      .verify();
-  }
-
-  @Test
-  public void databaseObject()
-  {
-    class TestDatabaseObject
-      extends AbstractDatabaseObject
-    {
-
-      TestDatabaseObject(final Schema schema, final String name)
-      {
+      TestDatabaseObject(final Schema schema, final String name) {
         super(schema, name);
       }
-
     }
 
-    EqualsVerifier
-      .forClass(TestDatabaseObject.class)
-      .suppress(Warning.STRICT_INHERITANCE)
-      .withIgnoredFields("attributeMap", "remarks")
-      .verify();
+    EqualsVerifier.forClass(TestDatabaseObject.class)
+        .suppress(Warning.STRICT_INHERITANCE)
+        .withIgnoredFields("attributeMap", "remarks")
+        .verify();
   }
 
   @Test
-  public void privilege()
-  {
-    final Table table1 =
-      new MutableTable(new SchemaReference("catalog", "schema"), "table1");
-    final Table table2 =
-      new MutableTable(new SchemaReference("catalog", "schema"), "table2");
-
-    EqualsVerifier
-      .forClass(MutablePrivilege.class)
-      .withIgnoredFields("remarks", "grants", "parent", "attributeMap")
-      .withPrefabValues(DatabaseObjectReference.class,
-                        new TableReference(table1),
-                        new TableReference(table2))
-      .suppress(Warning.STRICT_INHERITANCE)
-      .verify();
+  public void directedEdge() {
+    EqualsVerifier.forClass(DirectedEdge.class).verify();
   }
 
   @Test
-  public void property()
-  {
-    EqualsVerifier
-      .forClass(AbstractProperty.class)
-      .verify();
+  public void inclusionRules() {
+    EqualsVerifier.forClass(IncludeAll.class).verify();
+    EqualsVerifier.forClass(ExcludeAll.class).verify();
+    EqualsVerifier.forClass(RegularExpressionInclusionRule.class).verify();
+    EqualsVerifier.forClass(RegularExpressionExclusionRule.class).verify();
   }
 
   @Test
-  public void schemaInfoLevel()
-  {
-    EqualsVerifier
-      .forClass(SchemaInfoLevel.class)
-      .verify();
+  public void namedObject() {
+    EqualsVerifier.forClass(AbstractNamedObject.class)
+        .suppress(Warning.STRICT_INHERITANCE)
+        .verify();
   }
 
   @Test
-  public void schemaReference()
-  {
-    EqualsVerifier
-      .forClass(SchemaReference.class)
-      .withIgnoredFields("attributeMap")
-      .verify();
+  public void namedObjectWithAttributes() {
+    EqualsVerifier.forClass(AbstractNamedObjectWithAttributes.class)
+        .withIgnoredFields("remarks", "attributeMap")
+        .suppress(Warning.STRICT_INHERITANCE)
+        .verify();
   }
 
   @Test
-  public void tableType()
-  {
-    EqualsVerifier
-      .forClass(TableType.class)
-      .verify();
+  public void privilege() {
+    final Table table1 = new MutableTable(new SchemaReference("catalog", "schema"), "table1");
+    final Table table2 = new MutableTable(new SchemaReference("catalog", "schema"), "table2");
+
+    EqualsVerifier.forClass(MutablePrivilege.class)
+        .withIgnoredFields("remarks", "grants", "parent", "attributeMap")
+        .withPrefabValues(
+            DatabaseObjectReference.class, new TableReference(table1), new TableReference(table2))
+        .suppress(Warning.STRICT_INHERITANCE)
+        .verify();
   }
 
   @Test
-  public void vertex()
-  {
-    EqualsVerifier
-      .forClass(Vertex.class)
-      .withIgnoredFields("attributes")
-      .verify();
+  public void property() {
+    EqualsVerifier.forClass(AbstractProperty.class).verify();
   }
 
+  @Test
+  public void schemaInfoLevel() {
+    EqualsVerifier.forClass(SchemaInfoLevel.class).verify();
+  }
+
+  @Test
+  public void schemaReference() {
+    EqualsVerifier.forClass(SchemaReference.class).withIgnoredFields("attributeMap").verify();
+  }
+
+  @Test
+  public void tableType() {
+    EqualsVerifier.forClass(TableType.class).verify();
+  }
+
+  @Test
+  public void vertex() {
+    EqualsVerifier.forClass(Vertex.class).withIgnoredFields("attributes").verify();
+  }
 }

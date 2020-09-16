@@ -28,16 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 /**
  * Represents the database schema.
  *
  * @author Sualeh Fatehi
  */
-public interface Schema
-  extends NamedObject, AttributedObject, DescribedObject
-{
+public interface Schema extends NamedObject, AttributedObject, DescribedObject {
 
   String getCatalogName();
-
 }

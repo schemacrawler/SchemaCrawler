@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
@@ -39,41 +38,31 @@ import schemacrawler.schema.ProcedureParameter;
 import schemacrawler.schema.ProcedureReturnType;
 import schemacrawler.schema.RoutineType;
 
-final class ProcedurePartial
-  extends RoutinePartial
-  implements Procedure
-{
+final class ProcedurePartial extends RoutinePartial implements Procedure {
 
   private static final long serialVersionUID = -1529756351918040452L;
 
-  ProcedurePartial(final Procedure procedure)
-  {
-    super(requireNonNull(procedure, "No procedure provided").getSchema(),
-          procedure.getName());
+  ProcedurePartial(final Procedure procedure) {
+    super(requireNonNull(procedure, "No procedure provided").getSchema(), procedure.getName());
   }
 
   @Override
-  public List<ProcedureParameter> getParameters()
-  {
+  public List<ProcedureParameter> getParameters() {
     throw new NotLoadedException(this);
   }
 
   @Override
-  public ProcedureReturnType getReturnType()
-  {
+  public ProcedureReturnType getReturnType() {
     throw new NotLoadedException(this);
   }
 
   @Override
-  public RoutineType getRoutineType()
-  {
+  public RoutineType getRoutineType() {
     return RoutineType.procedure;
   }
 
   @Override
-  public Optional<ProcedureParameter> lookupParameter(final String name)
-  {
+  public Optional<ProcedureParameter> lookupParameter(final String name) {
     throw new NotLoadedException(this);
   }
-
 }

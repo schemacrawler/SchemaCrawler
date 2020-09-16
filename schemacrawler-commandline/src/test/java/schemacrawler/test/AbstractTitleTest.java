@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
@@ -43,6 +42,7 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
@@ -54,58 +54,51 @@ import schemacrawler.tools.options.OutputFormat;
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public abstract class AbstractTitleTest
-{
+public abstract class AbstractTitleTest {
 
   private static final String TITLE_OUTPUT = "title_output/";
 
   @BeforeAll
-  public static void clean()
-    throws Exception
-  {
+  public static void clean() throws Exception {
     TestUtility.clean(TITLE_OUTPUT);
   }
 
   @Test
-  public void commandLineWithTitle(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
-    assertAll(outputFormats().flatMap(outputFormat -> commands().map(command -> () -> {
+  public void commandLineWithTitle(final DatabaseConnectionInfo connectionInfo) throws Exception {
+    assertAll(
+        outputFormats()
+            .flatMap(
+                outputFormat ->
+                    commands()
+                        .map(
+                            command ->
+                                () -> {
+                                  final String referenceFile = referenceFile(command, outputFormat);
 
-      final String referenceFile = referenceFile(command, outputFormat);
+                                  final Map<String, String> argsMap = new HashMap<>();
+                                  argsMap.put("-schemas", ".*\\.(?!FOR_LINT).*");
+                                  argsMap.put("-info-level", InfoLevel.standard.name());
+                                  argsMap.put("-title", "Database Design for Books and Publishers");
 
-      final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("-schemas", ".*\\.(?!FOR_LINT).*");
-      argsMap.put("-info-level", InfoLevel.standard.name());
-      argsMap.put("-title", "Database Design for Books and Publishers");
-
-      assertThat(outputOf(commandlineExecution(connectionInfo,
-                                               command,
-                                               argsMap,
-                                               outputFormat)),
-                 hasSameContentAndTypeAs(classpathResource(TITLE_OUTPUT
-                                                           + referenceFile),
-                                         outputFormat));
-
-    })));
+                                  assertThat(
+                                      outputOf(
+                                          commandlineExecution(
+                                              connectionInfo, command, argsMap, outputFormat)),
+                                      hasSameContentAndTypeAs(
+                                          classpathResource(TITLE_OUTPUT + referenceFile),
+                                          outputFormat));
+                                })));
   }
 
-  protected Stream<String> commands()
-  {
-    return Arrays
-      .asList("schema", "list")
-      .stream();
+  protected Stream<String> commands() {
+    return Arrays.asList("schema", "list").stream();
   }
 
   protected abstract Stream<OutputFormat> outputFormats();
 
-  private String referenceFile(final String command,
-                               final OutputFormat outputFormat)
-  {
-    final String referenceFile = String.format("commandLineWithTitle_%s.%s",
-                                               command,
-                                               outputFormat.getFormat());
+  private String referenceFile(final String command, final OutputFormat outputFormat) {
+    final String referenceFile =
+        String.format("commandLineWithTitle_%s.%s", command, outputFormat.getFormat());
     return referenceFile;
   }
-
 }

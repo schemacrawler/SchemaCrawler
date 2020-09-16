@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.INDEXES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
@@ -52,35 +51,28 @@ import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import us.fatehi.utility.string.StringFormat;
 
 /**
- * A retriever uses database metadata to get the details about the database
- * tables.
+ * A retriever uses database metadata to get the details about the database tables.
  *
  * @author Sualeh Fatehi
  */
-final class IndexRetriever
-  extends AbstractRetriever
-{
+final class IndexRetriever extends AbstractRetriever {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(IndexRetriever.class.getName());
+      SchemaCrawlerLogger.getLogger(IndexRetriever.class.getName());
 
-  IndexRetriever(final RetrieverConnection retrieverConnection,
-                 final MutableCatalog catalog,
-                 final SchemaCrawlerOptions options)
-  {
+  IndexRetriever(
+      final RetrieverConnection retrieverConnection,
+      final MutableCatalog catalog,
+      final SchemaCrawlerOptions options) {
     super(retrieverConnection, catalog, options);
   }
 
-  void retrieveIndexes(final NamedObjectList<MutableTable> allTables)
-    throws SQLException
-  {
+  void retrieveIndexes(final NamedObjectList<MutableTable> allTables) throws SQLException {
     requireNonNull(allTables, "No tables provided");
 
-    switch (getRetrieverConnection().get(indexesRetrievalStrategy))
-    {
+    switch (getRetrieverConnection().get(indexesRetrievalStrategy)) {
       case data_dictionary_all:
-        LOGGER.log(Level.INFO,
-                   "Retrieving indexes, using fast data dictionary retrieval");
+        LOGGER.log(Level.INFO, "Retrieving indexes, using fast data dictionary retrieval");
         retrieveIndexesFromDataDictionary(allTables);
         break;
 
@@ -92,26 +84,19 @@ final class IndexRetriever
       default:
         break;
     }
-
   }
 
-  private void createIndexes(final MutableTable table,
-                             final MetadataResultSet results)
-    throws SQLException
-  {
-    while (results.next())
-    {
+  private void createIndexes(final MutableTable table, final MetadataResultSet results)
+      throws SQLException {
+    while (results.next()) {
       createIndexForTable(table, results);
     }
   }
 
-  private void createIndexForTable(final MutableTable table,
-                                   final MetadataResultSet results)
-  {
+  private void createIndexForTable(final MutableTable table, final MetadataResultSet results) {
     // "TABLE_CAT", "TABLE_SCHEM", "TABLE_NAME"
     String indexName = results.getString("INDEX_NAME");
-    LOGGER.log(Level.FINE,
-               new StringFormat("Retrieving index <%s.%s>", table, indexName));
+    LOGGER.log(Level.FINE, new StringFormat("Retrieving index <%s.%s>", table, indexName));
 
     // Work-around PostgreSQL JDBC driver bugs by unquoting column
     // names first
@@ -120,69 +105,53 @@ final class IndexRetriever
     // #6253 -
     // http://www.postgresql.org/message-id/201110121403.p9CE3fsx039675@wwwmaster.postgresql.org
     final String columnName = results.getString("COLUMN_NAME");
-    if (isBlank(columnName))
-    {
+    if (isBlank(columnName)) {
       return;
     }
-    LOGGER.log(Level.FINE,
-               new StringFormat("Retrieving index column <%s.%s.%s>",
-                                table,
-                                indexName,
-                                columnName));
+    LOGGER.log(
+        Level.FINE,
+        new StringFormat("Retrieving index column <%s.%s.%s>", table, indexName, columnName));
 
     final boolean uniqueIndex = !results.getBoolean("NON_UNIQUE");
     final IndexType type = results.getEnumFromId("TYPE", IndexType.unknown);
     final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
     final IndexColumnSortSequence sortSequence =
-      IndexColumnSortSequence.valueOfFromCode(results.getString("ASC_OR_DESC"));
+        IndexColumnSortSequence.valueOfFromCode(results.getString("ASC_OR_DESC"));
     final int cardinality = results.getInt("CARDINALITY", 0);
     final int pages = results.getInt("PAGES", 0);
 
     final Column column;
-    final Optional<MutableColumn> columnOptional =
-      table.lookupColumn(columnName);
-    if (columnOptional.isPresent())
-    {
+    final Optional<MutableColumn> columnOptional = table.lookupColumn(columnName);
+    if (columnOptional.isPresent()) {
       final MutableColumn mutableColumn = columnOptional.get();
       mutableColumn.markAsPartOfIndex();
-      if (uniqueIndex)
-      {
+      if (uniqueIndex) {
         mutableColumn.markAsPartOfUniqueIndex();
       }
       column = mutableColumn;
-    }
-    else
-    {
+    } else {
       // Indexes may have pseudo-columns, that are not part of the table
       // for example, Oracle function-based indexes have columns from
       // the result of a function
       column = new ColumnPartial(table, columnName);
     }
 
-    if (isBlank(indexName))
-    {
-      indexName = String.format("SC_%s",
-                                Integer
-                                  .toHexString(column
-                                                 .getFullName()
-                                                 .hashCode())
-                                  .toUpperCase());
+    if (isBlank(indexName)) {
+      indexName =
+          String.format(
+              "SC_%s", Integer.toHexString(column.getFullName().hashCode()).toUpperCase());
     }
 
     final Optional<MutableIndex> indexOptional = table.lookupIndex(indexName);
     final MutableIndex index;
-    if (indexOptional.isPresent())
-    {
+    if (indexOptional.isPresent()) {
       index = indexOptional.get();
-    }
-    else
-    {
+    } else {
       index = new MutableIndex(table, indexName);
       table.addIndex(index);
     }
 
-    final MutableIndexColumn indexColumn =
-      new MutableIndexColumn(index, column);
+    final MutableIndexColumn indexColumn = new MutableIndexColumn(index, column);
     indexColumn.setKeyOrdinalPosition(ordinalPosition);
     indexColumn.setSortSequence(sortSequence);
     //
@@ -195,86 +164,63 @@ final class IndexRetriever
   }
 
   private void retrieveIndexesFromDataDictionary(final NamedObjectList<MutableTable> allTables)
-    throws SchemaCrawlerSQLException
-  {
+      throws SchemaCrawlerSQLException {
     final InformationSchemaViews informationSchemaViews =
-      getRetrieverConnection().getInformationSchemaViews();
+        getRetrieverConnection().getInformationSchemaViews();
 
-    if (!informationSchemaViews.hasQuery(INDEXES))
-    {
+    if (!informationSchemaViews.hasQuery(INDEXES)) {
       LOGGER.log(Level.FINE, "Extended indexes SQL statement was not provided");
       return;
     }
 
     final Query indexesSql = informationSchemaViews.getQuery(INDEXES);
     final Connection connection = getDatabaseConnection();
-    try (
-      final Statement statement = connection.createStatement();
-      final MetadataResultSet results = new MetadataResultSet(indexesSql,
-                                                              statement,
-                                                              getSchemaInclusionRule())
-    )
-    {
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results =
+            new MetadataResultSet(indexesSql, statement, getSchemaInclusionRule())) {
       results.setDescription("retrieveIndexesFromDataDictionary");
-      while (results.next())
-      {
-        final String catalogName =
-          normalizeCatalogName(results.getString("TABLE_CAT"));
-        final String schemaName =
-          normalizeSchemaName(results.getString("TABLE_SCHEM"));
+      while (results.next()) {
+        final String catalogName = normalizeCatalogName(results.getString("TABLE_CAT"));
+        final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEM"));
         final String tableName = results.getString("TABLE_NAME");
 
         final Optional<MutableTable> optionalTable =
-          lookupTable(catalogName, schemaName, tableName);
-        if (!optionalTable.isPresent())
-        {
+            lookupTable(catalogName, schemaName, tableName);
+        if (!optionalTable.isPresent()) {
           continue;
         }
         final MutableTable table = optionalTable.get();
         createIndexForTable(table, results);
       }
-    }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerSQLException(
-        "Could not retrieve indexes from SQL:\n" + indexesSql,
-        e);
-    }
-  }
-
-  private void retrieveTableIndexesFromMetadata(final MutableTable table,
-                                                final boolean unique)
-    throws SQLException
-  {
-
-    final Schema tableSchema = table.getSchema();
-    try (
-      final MetadataResultSet results = new MetadataResultSet(getMetaData().getIndexInfo(
-        tableSchema.getCatalogName(),
-        tableSchema.getName(),
-        table.getName(),
-        unique,
-        true/* approximate */))
-    )
-    {
-      createIndexes(table, results);
-    }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerSQLException(
-        "Could not retrieve indexes for table " + table,
-        e);
+    } catch (final SQLException e) {
+      throw new SchemaCrawlerSQLException("Could not retrieve indexes from SQL:\n" + indexesSql, e);
     }
   }
 
   private void retrieveIndexesFromMetadata(final NamedObjectList<MutableTable> allTables)
-    throws SQLException
-  {
-    for (final MutableTable table : allTables)
-    {
+      throws SQLException {
+    for (final MutableTable table : allTables) {
       retrieveTableIndexesFromMetadata(table, false);
       retrieveTableIndexesFromMetadata(table, true);
     }
   }
 
+  private void retrieveTableIndexesFromMetadata(final MutableTable table, final boolean unique)
+      throws SQLException {
+
+    final Schema tableSchema = table.getSchema();
+    try (final MetadataResultSet results =
+        new MetadataResultSet(
+            getMetaData()
+                .getIndexInfo(
+                    tableSchema.getCatalogName(),
+                    tableSchema.getName(),
+                    table.getName(),
+                    unique,
+                    true /* approximate */))) {
+      createIndexes(table, results);
+    } catch (final SQLException e) {
+      throw new SchemaCrawlerSQLException("Could not retrieve indexes for table " + table, e);
+    }
+  }
 }

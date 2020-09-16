@@ -27,23 +27,61 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.commandline.command;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 import org.junit.jupiter.api.Test;
+
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.command.LogCommand;
 import schemacrawler.tools.commandline.command.LogLevel;
 
-public class LogCommandTest
-{
+public class LogCommandTest {
 
   @Test
-  public void noArgs()
-  {
+  public void loglevel() {
+    final String[] args = {"--log-level", "FINE"};
+
+    final LogCommand optionsParser = new LogCommand();
+    newCommandLine(optionsParser, null, true).parseArgs(args);
+
+    assertThat(optionsParser.getLogLevel(), is(LogLevel.FINE));
+  }
+
+  @Test
+  public void loglevelBadValue() {
+    final String[] args = {"--log-level", "BAD"};
+
+    final LogCommand optionsParser = new LogCommand();
+    assertThrows(
+        CommandLine.ParameterException.class,
+        () -> newCommandLine(optionsParser, null, true).parseArgs(args));
+  }
+
+  @Test
+  public void loglevelMixedCase() {
+    final String[] args = {"--log-level", "FinE"};
+
+    final LogCommand optionsParser = new LogCommand();
+    newCommandLine(optionsParser, null, true).parseArgs(args);
+
+    assertThat(optionsParser.getLogLevel(), is(LogLevel.FINE));
+  }
+
+  @Test
+  public void loglevelNoValue() {
+    final String[] args = {"--log-level"};
+
+    final LogCommand optionsParser = new LogCommand();
+    assertThrows(
+        CommandLine.MissingParameterException.class,
+        () -> newCommandLine(optionsParser, null, true).parseArgs(args));
+  }
+
+  @Test
+  public void noArgs() {
     final String[] args = new String[0];
 
     final LogCommand optionsParser = new LogCommand();
@@ -53,60 +91,12 @@ public class LogCommandTest
   }
 
   @Test
-  public void noValidArgs()
-  {
-    final String[] args = { "--some-option" };
+  public void noValidArgs() {
+    final String[] args = {"--some-option"};
 
     final LogCommand optionsParser = new LogCommand();
     newCommandLine(optionsParser, null, true).parseArgs(args);
 
     assertThat(optionsParser.getLogLevel(), is(LogLevel.OFF));
   }
-
-  @Test
-  public void loglevelNoValue()
-  {
-    final String[] args = { "--log-level" };
-
-    final LogCommand optionsParser = new LogCommand();
-    assertThrows(CommandLine.MissingParameterException.class,
-                 () -> newCommandLine(optionsParser,
-                                      null,
-                                      true).parseArgs(args));
-  }
-
-  @Test
-  public void loglevelBadValue()
-  {
-    final String[] args = { "--log-level", "BAD" };
-
-    final LogCommand optionsParser = new LogCommand();
-    assertThrows(CommandLine.ParameterException.class,
-                 () -> newCommandLine(optionsParser,
-                                      null,
-                                      true).parseArgs(args));
-  }
-
-  @Test
-  public void loglevel()
-  {
-    final String[] args = { "--log-level", "FINE" };
-
-    final LogCommand optionsParser = new LogCommand();
-    newCommandLine(optionsParser, null, true).parseArgs(args);
-
-    assertThat(optionsParser.getLogLevel(), is(LogLevel.FINE));
-  }
-
-  @Test
-  public void loglevelMixedCase()
-  {
-    final String[] args = { "--log-level", "FinE" };
-
-    final LogCommand optionsParser = new LogCommand();
-    newCommandLine(optionsParser, null, true).parseArgs(args);
-
-    assertThat(optionsParser.getLogLevel(), is(LogLevel.FINE));
-  }
-
 }

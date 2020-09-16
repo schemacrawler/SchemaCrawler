@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.text.base;
 
-
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.convertForComparison;
 import static us.fatehi.utility.Utility.hasNoUpperCase;
@@ -50,9 +49,7 @@ import schemacrawler.tools.text.utility.PlainTextFormattingHelper;
 import schemacrawler.tools.text.utility.TextFormattingHelper;
 import schemacrawler.tools.traversal.TraversalHandler;
 
-public abstract class BaseFormatter<O extends BaseTextOptions>
-  implements TraversalHandler
-{
+public abstract class BaseFormatter<O extends BaseTextOptions> implements TraversalHandler {
 
   protected final O options;
   protected final OutputOptions outputOptions;
@@ -62,43 +59,35 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
   protected final boolean printVerboseDatabaseInfo;
   private final PrintWriter out;
 
-  protected BaseFormatter(final O options,
-                          final boolean printVerboseDatabaseInfo,
-                          final OutputOptions outputOptions,
-                          final String identifierQuoteString)
-    throws SchemaCrawlerException
-  {
+  protected BaseFormatter(
+      final O options,
+      final boolean printVerboseDatabaseInfo,
+      final OutputOptions outputOptions,
+      final String identifierQuoteString)
+      throws SchemaCrawlerException {
     this.options = requireNonNull(options, "Options not provided");
 
-    this.outputOptions =
-      requireNonNull(outputOptions, "Output options not provided");
+    this.outputOptions = requireNonNull(outputOptions, "Output options not provided");
 
     colorMap = DatabaseObjectColorMap.initialize(options.isNoSchemaColors());
 
-    this.printVerboseDatabaseInfo =
-      !options.isNoInfo() && printVerboseDatabaseInfo;
+    this.printVerboseDatabaseInfo = !options.isNoInfo() && printVerboseDatabaseInfo;
 
-    identifiers = Identifiers
-      .identifiers()
-      .withIdentifierQuoteString(identifierQuoteString)
-      .withIdentifierQuotingStrategy(options.getIdentifierQuotingStrategy())
-      .build();
+    identifiers =
+        Identifiers.identifiers()
+            .withIdentifierQuoteString(identifierQuoteString)
+            .withIdentifierQuotingStrategy(options.getIdentifierQuotingStrategy())
+            .build();
 
-    try
-    {
-      out =
-        new PrintWriter(outputOptions.openNewOutputWriter(false),
-                        true);
-    }
-    catch (final IOException e)
-    {
+    try {
+      out = new PrintWriter(outputOptions.openNewOutputWriter(false), true);
+    } catch (final IOException e) {
       throw new SchemaCrawlerException("Cannot open output writer", e);
     }
 
     final TextOutputFormat outputFormat =
-      TextOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
-    switch (outputFormat)
-    {
+        TextOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
+    switch (outputFormat) {
       case html:
         formattingHelper = new HtmlFormattingHelper(out, outputFormat);
         break;
@@ -110,54 +99,40 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
   }
 
   @Override
-  public void end()
-    throws SchemaCrawlerException
-  {
+  public void end() throws SchemaCrawlerException {
     out.flush();
     out.close();
   }
 
-  protected String columnNullable(final String columnTypeName,
-                                  final boolean isNullable)
-  {
+  protected String columnNullable(final String columnTypeName, final boolean isNullable) {
     final String columnNullable;
-    if (isNullable)
-    {
+    if (isNullable) {
       columnNullable = "";
-    }
-    else if (hasNoUpperCase(columnTypeName))
-    {
+    } else if (hasNoUpperCase(columnTypeName)) {
       columnNullable = " not null";
-    }
-    else
-    {
+    } else {
       columnNullable = " NOT NULL";
     }
 
     return columnNullable;
   }
 
-  protected boolean isColumnSignificant(final Column column)
-  {
-    return column != null && (column instanceof IndexColumn
-                              || column.isPartOfPrimaryKey()
-                              || column.isPartOfForeignKey()
-                              || column.isPartOfIndex());
+  protected boolean isColumnSignificant(final Column column) {
+    return column != null
+        && (column instanceof IndexColumn
+            || column.isPartOfPrimaryKey()
+            || column.isPartOfForeignKey()
+            || column.isPartOfIndex());
   }
 
-  protected String nodeId(final DatabaseObject dbObject)
-  {
-    if (dbObject == null)
-    {
+  protected String nodeId(final DatabaseObject dbObject) {
+    if (dbObject == null) {
       return "";
-    }
-    else
-    {
+    } else {
       final List<String> dbObjectLookupKey = dbObject.toUniqueLookupKey();
       return convertForComparison(dbObject.getName())
-             + "_"
-             + Integer.toHexString(Arrays.hashCode(dbObjectLookupKey.toArray()));
+          + "_"
+          + Integer.toHexString(Arrays.hashCode(dbObjectLookupKey.toArray()));
     }
   }
-
 }

@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
@@ -42,6 +41,7 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
@@ -57,95 +57,74 @@ import schemacrawler.utility.MetaDataUtility.ForeignKeyCardinality;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
-public class MetadataUtilityTest
-{
+public class MetadataUtilityTest {
 
   @Test
-  public void fkUtilities(final TestContext testContext,
-                          final Connection connection)
-    throws Exception
-  {
+  public void fkUtilities(final TestContext testContext, final Connection connection)
+      throws Exception {
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+        schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
 
-    final Schema schema = catalog
-      .lookupSchema("PUBLIC.BOOKS")
-      .get();
+    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
     assertThat("BOOKS Schema not found", schema, notNullValue());
 
-    final Table table = catalog
-      .lookupTable(schema, "BOOKS")
-      .get();
+    final Table table = catalog.lookupTable(schema, "BOOKS").get();
     assertThat("BOOKS Table not found", table, notNullValue());
 
-    final ForeignKey fk = table
-      .getForeignKeys()
-      .toArray(new ForeignKey[0])[0];
+    final ForeignKey fk = table.getForeignKeys().toArray(new ForeignKey[0])[0];
     assertThat("Foreign key not found", fk, notNullValue());
 
-    final ColumnReference columnReference = fk
-      .getColumnReferences()
-      .toArray(new ColumnReference[0])[0];
+    final ColumnReference columnReference =
+        fk.getColumnReferences().toArray(new ColumnReference[0])[0];
     assertThat("Column reference not found", columnReference, notNullValue());
 
-    assertThat(MetaDataUtility.constructForeignKeyName(columnReference.getForeignKeyColumn(),
-                                                       columnReference.getPrimaryKeyColumn()),
-               is("SC_AA4376_AFD2BA21"));
+    assertThat(
+        MetaDataUtility.constructForeignKeyName(
+            columnReference.getForeignKeyColumn(), columnReference.getPrimaryKeyColumn()),
+        is("SC_AA4376_AFD2BA21"));
 
-    assertThat(MetaDataUtility.findForeignKeyCardinality(fk),
-               is(ForeignKeyCardinality.zero_many));
+    assertThat(MetaDataUtility.findForeignKeyCardinality(fk), is(ForeignKeyCardinality.zero_many));
 
-    assertThat(MetaDataUtility.foreignKeyColumnNames(fk),
-               containsInAnyOrder("PUBLIC.BOOKS.BOOKAUTHORS.BOOKID"));
+    assertThat(
+        MetaDataUtility.foreignKeyColumnNames(fk),
+        containsInAnyOrder("PUBLIC.BOOKS.BOOKAUTHORS.BOOKID"));
   }
 
   @Test
-  public void tableUtilities(final TestContext testContext,
-                             final Connection connection)
-    throws Exception
-  {
+  public void tableUtilities(final TestContext testContext, final Connection connection)
+      throws Exception {
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+        schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
 
-    final Schema schema = catalog
-      .lookupSchema("PUBLIC.BOOKS")
-      .get();
+    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
     assertThat("BOOKS Schema not found", schema, notNullValue());
 
-    final Table table = catalog
-      .lookupTable(schema, "BOOKS")
-      .get();
+    final Table table = catalog.lookupTable(schema, "BOOKS").get();
     assertThat("BOOKS Table not found", table, notNullValue());
 
-    assertThat(MetaDataUtility
-                 .allIndexCoumnNames(table)
-                 .stream()
-                 .flatMap(List::stream)
-                 .collect(Collectors.toSet()),
-               containsInAnyOrder("PUBLIC.BOOKS.BOOKS.ID",
-                                  "PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID"));
+    assertThat(
+        MetaDataUtility.allIndexCoumnNames(table)
+            .stream()
+            .flatMap(List::stream)
+            .collect(Collectors.toSet()),
+        containsInAnyOrder("PUBLIC.BOOKS.BOOKS.ID", "PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID"));
 
-    assertThat(MetaDataUtility
-                 .uniqueIndexCoumnNames(table)
-                 .stream()
-                 .flatMap(List::stream)
-                 .collect(Collectors.toSet()),
-               containsInAnyOrder("PUBLIC.BOOKS.BOOKS.ID",
-                                  "PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID"));
+    assertThat(
+        MetaDataUtility.uniqueIndexCoumnNames(table)
+            .stream()
+            .flatMap(List::stream)
+            .collect(Collectors.toSet()),
+        containsInAnyOrder("PUBLIC.BOOKS.BOOKS.ID", "PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID"));
 
-    final Index index = table
-      .getIndexes()
-      .toArray(new Index[0])[0];
+    final Index index = table.getIndexes().toArray(new Index[0])[0];
     assertThat("Index not found", index, notNullValue());
 
-    assertThat(MetaDataUtility.columnNames(index),
-               containsInAnyOrder("PUBLIC.BOOKS.BOOKS.ID"));
+    assertThat(MetaDataUtility.columnNames(index), containsInAnyOrder("PUBLIC.BOOKS.BOOKS.ID"));
 
     assertThat(MetaDataUtility.containsGeneratedColumns(index), is(false));
   }
-
 }

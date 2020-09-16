@@ -27,52 +27,44 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test;
 
-
 import static java.util.stream.Collectors.toList;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry.getDatabaseConnectorRegistry;
 
 import java.util.List;
 import java.util.stream.StreamSupport;
 
 import org.junit.jupiter.api.Test;
+
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
-public class DatabaseConnectorRegistryTest
-{
+public class DatabaseConnectorRegistryTest {
 
   @Test
-  public void databaseConnectorRegistry()
-  {
-    final DatabaseConnectorRegistry databaseConnectorRegistry =
-      getDatabaseConnectorRegistry();
-    final List<DatabaseServerType> databaseServerTypes = StreamSupport
-      .stream(databaseConnectorRegistry.spliterator(), false)
-      .collect(toList());
+  public void databaseConnectorRegistry() {
+    final DatabaseConnectorRegistry databaseConnectorRegistry = getDatabaseConnectorRegistry();
+    final List<DatabaseServerType> databaseServerTypes =
+        StreamSupport.stream(databaseConnectorRegistry.spliterator(), false).collect(toList());
 
     assertThat(databaseServerTypes, hasSize(1));
-    assertThat(databaseConnectorRegistry.hasDatabaseSystemIdentifier("test-db"),
-               is(true));
+    assertThat(databaseConnectorRegistry.hasDatabaseSystemIdentifier("test-db"), is(true));
 
     final DatabaseConnector testDbConnector =
-      databaseConnectorRegistry.lookupDatabaseConnector("test-db");
+        databaseConnectorRegistry.lookupDatabaseConnector("test-db");
     assertThat(testDbConnector, is(notNullValue()));
-    assertThat(testDbConnector
-                 .getDatabaseServerType()
-                 .getDatabaseSystemIdentifier(), is("test-db"));
+    assertThat(
+        testDbConnector.getDatabaseServerType().getDatabaseSystemIdentifier(), is("test-db"));
 
     final DatabaseConnector unknownConnector =
-      databaseConnectorRegistry.lookupDatabaseConnector("newdb");
+        databaseConnectorRegistry.lookupDatabaseConnector("newdb");
     assertThat(unknownConnector, is(notNullValue()));
-    assertThat(unknownConnector
-                 .getDatabaseServerType()
-                 .getDatabaseSystemIdentifier(), is(nullValue()));
+    assertThat(
+        unknownConnector.getDatabaseServerType().getDatabaseSystemIdentifier(), is(nullValue()));
   }
-
 }

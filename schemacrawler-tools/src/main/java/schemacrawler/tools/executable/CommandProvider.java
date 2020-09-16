@@ -27,29 +27,27 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.executable;
 
-
 import java.util.Collection;
+
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 
-public interface CommandProvider
-{
-
-  Collection<CommandDescription> getSupportedCommands();
-
-  SchemaCrawlerCommand newSchemaCrawlerCommand(String command)
-    throws SchemaCrawlerException;
-
-  boolean supportsSchemaCrawlerCommand(String command,
-                                       SchemaCrawlerOptions schemaCrawlerOptions,
-                                       Config additionalConfiguration,
-                                       OutputOptions outputOptions);
-
-  boolean supportsOutputFormat(String command, OutputOptions outputOptions);
+public interface CommandProvider {
 
   PluginCommand getCommandLineCommand();
 
+  Collection<CommandDescription> getSupportedCommands();
+
+  SchemaCrawlerCommand newSchemaCrawlerCommand(String command) throws SchemaCrawlerException;
+
+  boolean supportsOutputFormat(String command, OutputOptions outputOptions);
+
+  boolean supportsSchemaCrawlerCommand(
+      String command,
+      SchemaCrawlerOptions schemaCrawlerOptions,
+      Config additionalConfiguration,
+      OutputOptions outputOptions);
 }

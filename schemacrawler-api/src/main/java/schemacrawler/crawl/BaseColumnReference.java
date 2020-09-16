@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.crawl;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.util.Objects;
@@ -36,105 +35,75 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 
 /**
- * Represents a single column mapping from a primary key column to a foreign key
- * column.
+ * Represents a single column mapping from a primary key column to a foreign key column.
  *
  * @author Sualeh Fatehi
  */
-public abstract class BaseColumnReference
-  implements ColumnReference, Comparable<ColumnReference>
-{
+public abstract class BaseColumnReference implements ColumnReference, Comparable<ColumnReference> {
 
   private static final long serialVersionUID = -4411771492159843382L;
 
   private final Column foreignKeyColumn;
   private final Column primaryKeyColumn;
 
-  protected BaseColumnReference(final Column primaryKeyColumn,
-                                final Column foreignKeyColumn)
-  {
-    this.primaryKeyColumn =
-      requireNonNull(primaryKeyColumn, "No primary key column provided");
-    this.foreignKeyColumn =
-      requireNonNull(foreignKeyColumn, "No foreign key column provided");
+  protected BaseColumnReference(final Column primaryKeyColumn, final Column foreignKeyColumn) {
+    this.primaryKeyColumn = requireNonNull(primaryKeyColumn, "No primary key column provided");
+    this.foreignKeyColumn = requireNonNull(foreignKeyColumn, "No foreign key column provided");
   }
 
   @Override
-  public int compareTo(final ColumnReference columnRef)
-  {
-    if (columnRef == null)
-    {
+  public int compareTo(final ColumnReference columnRef) {
+    if (columnRef == null) {
       return -1;
     }
 
     int compare = 0;
-    if (compare == 0)
-    {
-      compare = primaryKeyColumn
-        .getFullName()
-        .compareTo(columnRef
-                     .getPrimaryKeyColumn()
-                     .getFullName());
+    if (compare == 0) {
+      compare =
+          primaryKeyColumn.getFullName().compareTo(columnRef.getPrimaryKeyColumn().getFullName());
     }
-    if (compare == 0)
-    {
-      compare = foreignKeyColumn
-        .getFullName()
-        .compareTo(columnRef
-                     .getForeignKeyColumn()
-                     .getFullName());
+    if (compare == 0) {
+      compare =
+          foreignKeyColumn.getFullName().compareTo(columnRef.getForeignKeyColumn().getFullName());
     }
     return compare;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public Column getForeignKeyColumn()
-  {
-    return foreignKeyColumn;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Column getPrimaryKeyColumn()
-  {
-    return primaryKeyColumn;
-  }
-
-  @Override
-  public final int hashCode()
-  {
-    return Objects.hash(foreignKeyColumn, primaryKeyColumn);
-  }
-
-  @Override
-  public final boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
+  public final boolean equals(final Object obj) {
+    if (this == obj) {
       return true;
     }
-    if (obj == null)
-    {
+    if (obj == null) {
       return false;
     }
-    if (!(obj instanceof BaseColumnReference))
-    {
+    if (!(obj instanceof BaseColumnReference)) {
       return false;
     }
     final ColumnReference other = (ColumnReference) obj;
     return Objects.equals(foreignKeyColumn, other.getForeignKeyColumn())
-           && Objects.equals(primaryKeyColumn, other.getPrimaryKeyColumn());
+        && Objects.equals(primaryKeyColumn, other.getPrimaryKeyColumn());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Column getForeignKeyColumn() {
+    return foreignKeyColumn;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Column getPrimaryKeyColumn() {
+    return primaryKeyColumn;
   }
 
   @Override
-  public String toString()
-  {
-    return primaryKeyColumn + " <-- " + foreignKeyColumn;
+  public final int hashCode() {
+    return Objects.hash(foreignKeyColumn, primaryKeyColumn);
   }
 
+  @Override
+  public String toString() {
+    return primaryKeyColumn + " <-- " + foreignKeyColumn;
+  }
 }

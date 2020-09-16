@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.ioresource;
 
-
 import static us.fatehi.utility.ioresource.InputResourceUtility.wrapWriter;
 
 import java.io.BufferedWriter;
@@ -38,28 +37,20 @@ import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public final class ConsoleOutputResource
-  implements OutputResource
-{
+public final class ConsoleOutputResource implements OutputResource {
 
-  private static final Logger LOGGER =
-    Logger.getLogger(ConsoleOutputResource.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ConsoleOutputResource.class.getName());
 
   @Override
-  public Writer openNewOutputWriter(final Charset charset,
-                                    final boolean appendOutput)
-    throws IOException
-  {
-    final Writer writer =
-      new BufferedWriter(new OutputStreamWriter(System.out, charset));
+  public Writer openNewOutputWriter(final Charset charset, final boolean appendOutput)
+      throws IOException {
+    final Writer writer = new BufferedWriter(new OutputStreamWriter(System.out, charset));
     LOGGER.log(Level.INFO, "Opened output writer to console");
     return wrapWriter(getDescription(), writer, false);
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return "<console>";
   }
-
 }

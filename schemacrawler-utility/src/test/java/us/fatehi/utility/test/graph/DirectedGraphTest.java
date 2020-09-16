@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.test.graph;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -35,40 +34,31 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
+
 import us.fatehi.utility.graph.DirectedGraph;
 import us.fatehi.utility.graph.GraphException;
 
-public class DirectedGraphTest
-  extends GraphTestBase
-{
+public class DirectedGraphTest extends GraphTestBase {
 
   @Test
-  public void cycles()
-    throws Exception
-  {
+  public void cycles() throws Exception {
     final DirectedGraph<String> graph = makeGraph();
     graph.addEdge("C", "A");
 
     assertThat(containsCycleSimple(graph), is(true));
     assertThat(containsCycleTarjan(graph), is(true));
-
   }
 
   @Test
-  public void noCycles()
-    throws Exception
-  {
+  public void noCycles() throws Exception {
     final DirectedGraph<String> graph = makeGraph();
 
     assertThat(containsCycleSimple(graph), is(false));
     assertThat(containsCycleTarjan(graph), is(false));
-
   }
 
   @Test
-  public void smallCycle()
-    throws Exception
-  {
+  public void smallCycle() throws Exception {
     final DirectedGraph<String> graph = new DirectedGraph<>("");
 
     assertThat(containsCycleSimple(graph), is(false));
@@ -79,63 +69,52 @@ public class DirectedGraphTest
 
     assertThat(containsCycleSimple(graph), is(true));
     assertThat(containsCycleTarjan(graph), is(true));
-
   }
 
   @Test
-  public void topologicalSort()
-    throws Exception
-  {
-    for (int i = 0; i < 8; i++)
-    {
+  public void topologicalSort() throws Exception {
+    for (int i = 0; i < 8; i++) {
       final DirectedGraph<String> graph = makeGraph();
 
-      assertThat("Test run #" + (i + 1),
-                 topologicalSort(graph),
-                 is(Arrays.asList("A", "E", "B", "D", "C")));
+      assertThat(
+          "Test run #" + (i + 1),
+          topologicalSort(graph),
+          is(Arrays.asList("A", "E", "B", "D", "C")));
     }
   }
 
   @Test
-  public void topologicalSortCyclical()
-    throws Exception
-  {
+  public void topologicalSortCyclical() throws Exception {
     final DirectedGraph<String> graph = makeGraph();
     graph.addEdge("C", "A");
 
-    assertThrows(GraphException.class,
-                 () -> topologicalSort(graph),
-                 () -> Arrays
-                   .asList("E", "A", "D", "B", "C")
-                   .toString());
+    assertThrows(
+        GraphException.class,
+        () -> topologicalSort(graph),
+        () -> Arrays.asList("E", "A", "D", "B", "C").toString());
   }
 
   @Test
-  public void toStringTest()
-    throws Exception
-  {
+  public void toStringTest() throws Exception {
     final DirectedGraph<String> graph = makeGraph();
 
-    assertThat(graph.toString(),
-               is(
-                 "digraph {\n  A;\n  B;\n  C;\n  D;\n  E;\n  A -> B;\n  B -> C;\n  A -> D;\n}\n"));
-
+    assertThat(
+        graph.toString(),
+        is("digraph {\n  A;\n  B;\n  C;\n  D;\n  E;\n  A -> B;\n  B -> C;\n  A -> D;\n}\n"));
   }
 
-  private DirectedGraph<String> makeGraph()
-  {
+  private DirectedGraph<String> makeGraph() {
 
-    final DirectedGraph<String> graph = new DirectedGraph<String>("")
-    {
-      {
-        addEdge("A", "B");
-        addEdge("B", "C");
-        addEdge("A", "D");
-        addVertex("E");
-      }
-    };
+    final DirectedGraph<String> graph =
+        new DirectedGraph<String>("") {
+          {
+            addEdge("A", "B");
+            addEdge("B", "C");
+            addEdge("A", "D");
+            addVertex("E");
+          }
+        };
 
     return graph;
   }
-
 }

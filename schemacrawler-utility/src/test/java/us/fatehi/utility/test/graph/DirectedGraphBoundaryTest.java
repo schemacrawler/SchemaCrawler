@@ -27,54 +27,42 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.test.graph;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import org.junit.jupiter.api.Test;
+
 import us.fatehi.utility.graph.DirectedGraph;
 
 /**
  * Tests from https://github.com/danielrbradley/CycleDetection/blob/master/
  * StronglyConnectedComponentsTests/StronglyConnectedComponentTests.cs
  */
-public class DirectedGraphBoundaryTest
-  extends GraphTestBase
-{
+public class DirectedGraphBoundaryTest extends GraphTestBase {
 
   @Test
-  public void emptyGraph()
-    throws Exception
-  {
+  public void emptyGraph() throws Exception {
     final DirectedGraph<String> graph = new DirectedGraph<>("");
 
     assertThat(containsCycleSimple(graph), is(false));
     assertThat(containsCycleTarjan(graph), is(false));
-
   }
 
   @Test
-  public void selfLoop()
-    throws Exception
-  {
+  public void selfLoop() throws Exception {
     final DirectedGraph<String> graph = new DirectedGraph<>("");
     graph.addEdge("A", "A");
 
     assertThat(containsCycleSimple(graph), is(false));
     assertThat(containsCycleTarjan(graph), is(false));
-
   }
 
   @Test
-  public void singleVertex()
-    throws Exception
-  {
+  public void singleVertex() throws Exception {
     final DirectedGraph<String> graph = new DirectedGraph<>("");
     graph.addVertex("A");
 
     assertThat(containsCycleSimple(graph), is(false));
     assertThat(containsCycleTarjan(graph), is(false));
-
   }
-
 }

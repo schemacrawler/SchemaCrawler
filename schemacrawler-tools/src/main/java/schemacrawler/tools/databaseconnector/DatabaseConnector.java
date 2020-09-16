@@ -27,16 +27,17 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.databaseconnector;
 
-
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.executable.commandline.PluginCommand.newDatabasePluginCommand;
 import static us.fatehi.utility.Utility.isBlank;
+
 import java.sql.Connection;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
@@ -47,87 +48,79 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 
-public abstract class DatabaseConnector
-  implements Options
-{
+public abstract class DatabaseConnector implements Options {
 
-  public static final DatabaseConnector UNKNOWN =
-    new UnknownDatabaseConnector();
+  public static final DatabaseConnector UNKNOWN = new UnknownDatabaseConnector();
 
   private final DatabaseServerType dbServerType;
   private final Predicate<String> supportsUrl;
   private final BiConsumer<InformationSchemaViewsBuilder, Connection>
-    informationSchemaViewsBuildProcess;
+      informationSchemaViewsBuildProcess;
   private final BiConsumer<SchemaRetrievalOptionsBuilder, Connection>
-    schemaRetrievalOptionsBuildProcess;
-  private final Consumer<LimitOptionsBuilder>
-    limitOptionsBuildProcess;  
+      schemaRetrievalOptionsBuildProcess;
+  private final Consumer<LimitOptionsBuilder> limitOptionsBuildProcess;
   private final Supplier<DatabaseConnectionUrlBuilder> urlBuildProcess;
 
-  protected DatabaseConnector(final DatabaseServerType dbServerType,
-                              final Predicate<String> supportsUrl,
-                              final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuildProcess,
-                              final BiConsumer<SchemaRetrievalOptionsBuilder, Connection> schemaRetrievalOptionsBuildProcess,
-                              final Consumer<LimitOptionsBuilder> limitOptionsBuildProcess,
-                              final Supplier<DatabaseConnectionUrlBuilder> urlBuildProcess)
-  {
-    this.dbServerType =
-        requireNonNull(dbServerType, "No database server type provided");
+  protected DatabaseConnector(
+      final DatabaseServerType dbServerType,
+      final Predicate<String> supportsUrl,
+      final BiConsumer<InformationSchemaViewsBuilder, Connection>
+          informationSchemaViewsBuildProcess,
+      final BiConsumer<SchemaRetrievalOptionsBuilder, Connection>
+          schemaRetrievalOptionsBuildProcess,
+      final Consumer<LimitOptionsBuilder> limitOptionsBuildProcess,
+      final Supplier<DatabaseConnectionUrlBuilder> urlBuildProcess) {
+    this.dbServerType = requireNonNull(dbServerType, "No database server type provided");
 
-    this.supportsUrl =
-        requireNonNull(supportsUrl, "No predicate for URL support provided");
+    this.supportsUrl = requireNonNull(supportsUrl, "No predicate for URL support provided");
 
     this.informationSchemaViewsBuildProcess =
-        requireNonNull(informationSchemaViewsBuildProcess,
+        requireNonNull(
+            informationSchemaViewsBuildProcess,
             "No information schema views build process provided");
 
     this.schemaRetrievalOptionsBuildProcess =
-        requireNonNull(schemaRetrievalOptionsBuildProcess,
+        requireNonNull(
+            schemaRetrievalOptionsBuildProcess,
             "No schema retrieval options build process provided");
 
-    this.limitOptionsBuildProcess = requireNonNull(limitOptionsBuildProcess,
-        "No limit options build process provided");
+    this.limitOptionsBuildProcess =
+        requireNonNull(limitOptionsBuildProcess, "No limit options build process provided");
 
-    this.urlBuildProcess =
-        requireNonNull(urlBuildProcess, "No URL builder provided");
+    this.urlBuildProcess = requireNonNull(urlBuildProcess, "No URL builder provided");
   }
 
-  public final DatabaseServerType getDatabaseServerType()
-  {
+  public final DatabaseServerType getDatabaseServerType() {
     return dbServerType;
   }
-  
-  public final void setDefaultsForSchemaCrawlerOptionsBuilder(
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder)
-  {
-    final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder().fromOptions(schemaCrawlerOptionsBuilder.getLimitOptions());    
-    limitOptionsBuildProcess.accept(limitOptionsBuilder);
-    
-    schemaCrawlerOptionsBuilder.withLimitOptionsBuilder(limitOptionsBuilder);
+
+  public PluginCommand getHelpCommand() {
+
+    final PluginCommand pluginCommand =
+        newDatabasePluginCommand(
+            dbServerType.getDatabaseSystemIdentifier(),
+            "** Connect to " + dbServerType.getDatabaseSystemName());
+    return pluginCommand;
   }
 
   /**
-   * Gets the complete bundled database specific configuration set, including
-   * the SQL for information schema views.
+   * Gets the complete bundled database specific configuration set, including the SQL for
+   * information schema views.
    *
-   * @param connection
-   *   Database connection
+   * @param connection Database connection
    */
-  public final SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(final Connection connection)
-  {
+  public final SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(
+      final Connection connection) {
     final InformationSchemaViews informationSchemaViews =
-      InformationSchemaViewsBuilder
-        .builder()
-        .withFunction(informationSchemaViewsBuildProcess, connection)
-        .toOptions();
+        InformationSchemaViewsBuilder.builder()
+            .withFunction(informationSchemaViewsBuildProcess, connection)
+            .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-      SchemaRetrievalOptionsBuilder
-        .builder()
-        .withDatabaseServerType(dbServerType)
-        .withInformationSchemaViews(informationSchemaViews)
-        .fromConnnection(connection);
-    
+        SchemaRetrievalOptionsBuilder.builder()
+            .withDatabaseServerType(dbServerType)
+            .withInformationSchemaViews(informationSchemaViews)
+            .fromConnnection(connection);
+
     // Allow database plugins to intercept and do further customization
     schemaRetrievalOptionsBuildProcess.accept(schemaRetrievalOptionsBuilder, connection);
 
@@ -137,28 +130,21 @@ public abstract class DatabaseConnector
   /**
    * Creates a datasource for connecting to a database.
    *
-   * @param connectionUrl
-   *   Database connection URL
+   * @param connectionUrl Database connection URL
    */
   public DatabaseConnectionSource newDatabaseConnectionSource(
-      final DatabaseConnectionOptions connectionOptions)
-      throws SchemaCrawlerException
-  {
-    requireNonNull(connectionOptions,
-        "No database connection options provided");
+      final DatabaseConnectionOptions connectionOptions) throws SchemaCrawlerException {
+    requireNonNull(connectionOptions, "No database connection options provided");
 
     // Connect using connection options provided from the command-line,
     // provided configuration, and bundled configuration
     final DatabaseConnectionSource databaseConnectionSource;
-    if (connectionOptions instanceof DatabaseUrlConnectionOptions)
-    {
+    if (connectionOptions instanceof DatabaseUrlConnectionOptions) {
       final DatabaseUrlConnectionOptions databaseUrlConnectionOptions =
           (DatabaseUrlConnectionOptions) connectionOptions;
-      databaseConnectionSource = new DatabaseConnectionSource(
-          databaseUrlConnectionOptions.getConnectionUrl());
-    }
-    else if (connectionOptions instanceof DatabaseServerHostConnectionOptions)
-    {
+      databaseConnectionSource =
+          new DatabaseConnectionSource(databaseUrlConnectionOptions.getConnectionUrl());
+    } else if (connectionOptions instanceof DatabaseServerHostConnectionOptions) {
       final DatabaseServerHostConnectionOptions serverHostConnectionOptions =
           (DatabaseServerHostConnectionOptions) connectionOptions;
 
@@ -167,58 +153,44 @@ public abstract class DatabaseConnector
       final String database = serverHostConnectionOptions.getDatabase();
       final Map<String, String> urlx = serverHostConnectionOptions.getUrlx();
 
-      final DatabaseConnectionUrlBuilder databaseConnectionUrlBuilder =
-          urlBuildProcess.get();
+      final DatabaseConnectionUrlBuilder databaseConnectionUrlBuilder = urlBuildProcess.get();
       databaseConnectionUrlBuilder.withHost(host);
       databaseConnectionUrlBuilder.withPort(port);
       databaseConnectionUrlBuilder.withDatabase(database);
       databaseConnectionUrlBuilder.withUrlx(urlx);
 
       final String connectionUrl = databaseConnectionUrlBuilder.toURL();
-      final Map<String, String> connectionUrlx =
-          databaseConnectionUrlBuilder.toURLx();
-      databaseConnectionSource =
-          new DatabaseConnectionSource(connectionUrl, connectionUrlx);
-    }
-    else
-    {
-      throw new SchemaCrawlerException(
-          "Could not create new database connection source");
+      final Map<String, String> connectionUrlx = databaseConnectionUrlBuilder.toURLx();
+      databaseConnectionSource = new DatabaseConnectionSource(connectionUrl, connectionUrlx);
+    } else {
+      throw new SchemaCrawlerException("Could not create new database connection source");
     }
 
     return databaseConnectionSource;
   }
 
-  public final boolean supportsUrl(final String url)
-  {
-    if (isBlank(url))
-    {
+  public final void setDefaultsForSchemaCrawlerOptionsBuilder(
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder) {
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder().fromOptions(schemaCrawlerOptionsBuilder.getLimitOptions());
+    limitOptionsBuildProcess.accept(limitOptionsBuilder);
+
+    schemaCrawlerOptionsBuilder.withLimitOptionsBuilder(limitOptionsBuilder);
+  }
+
+  public final boolean supportsUrl(final String url) {
+    if (isBlank(url)) {
       return false;
     }
     return supportsUrl.test(url);
   }
 
   @Override
-  public String toString()
-  {
-    if (dbServerType.isUnknownDatabaseSystem())
-    {
+  public String toString() {
+    if (dbServerType.isUnknownDatabaseSystem()) {
       return "Database connector for unknown database system type";
-    }
-    else
-    {
+    } else {
       return "Database connector for " + dbServerType;
     }
   }
-
-  public PluginCommand getHelpCommand()
-  {
-
-    final PluginCommand pluginCommand =
-      newDatabasePluginCommand(dbServerType.getDatabaseSystemIdentifier(),
-                               "** Connect to "
-                               + dbServerType.getDatabaseSystemName());
-    return pluginCommand;
-  }
-
 }

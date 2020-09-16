@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.util.Objects;
@@ -38,75 +37,58 @@ import java.util.Objects;
  *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
-public class BaseProductVersion
-  implements ProductVersion
-{
+public class BaseProductVersion implements ProductVersion {
 
   private static final long serialVersionUID = 4051323422934251828L;
 
   private final String productName;
   private final String productVersion;
 
-  public BaseProductVersion(final ProductVersion productVersion)
-  {
-    this(requireNonNull(productVersion,
-                        "No product name provided").getProductName(),
-         productVersion.getProductVersion());
+  public BaseProductVersion(final ProductVersion productVersion) {
+    this(
+        requireNonNull(productVersion, "No product name provided").getProductName(),
+        productVersion.getProductVersion());
   }
 
-  public BaseProductVersion(final String productName,
-                            final String productVersion)
-  {
+  public BaseProductVersion(final String productName, final String productVersion) {
     this.productName = requireNonNull(productName, "No product name provided");
-    this.productVersion =
-      requireNonNull(productVersion, "No product version provided");
+    this.productVersion = requireNonNull(productVersion, "No product version provided");
   }
 
   @Override
-  public String getProductName()
-  {
-    return productName;
-  }
-
-  @Override
-  public String getProductVersion()
-  {
-    return productVersion;
-  }
-
-  @Override
-  public final int hashCode()
-  {
-    return Objects.hash(productName, productVersion);
-  }
-
-  @Override
-  public final boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
+  public final boolean equals(final Object obj) {
+    if (this == obj) {
       return true;
     }
-    if (obj == null)
-    {
+    if (obj == null) {
       return false;
     }
-    if (!(obj instanceof BaseProductVersion))
-    {
+    if (!(obj instanceof BaseProductVersion)) {
       return false;
     }
     final ProductVersion other = (ProductVersion) obj;
     return Objects.equals(productName, other.getProductName())
-           && Objects.equals(productVersion, other.getProductVersion());
+        && Objects.equals(productVersion, other.getProductVersion());
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public String toString()
-  {
+  public String getProductName() {
+    return productName;
+  }
+
+  @Override
+  public String getProductVersion() {
+    return productVersion;
+  }
+
+  @Override
+  public final int hashCode() {
+    return Objects.hash(productName, productVersion);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public String toString() {
     return String.format("%s %s", productName, productVersion);
   }
-
 }

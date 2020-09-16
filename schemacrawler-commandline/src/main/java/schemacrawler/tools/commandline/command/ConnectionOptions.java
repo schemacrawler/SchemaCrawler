@@ -30,10 +30,7 @@ package schemacrawler.tools.commandline.command;
 
 import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
 
-
-public interface ConnectionOptions
-{
+public interface ConnectionOptions {
 
   DatabaseConnectionOptions toDatabaseConnectionOptions();
-
 }

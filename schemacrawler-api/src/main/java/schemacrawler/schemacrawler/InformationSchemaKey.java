@@ -27,15 +27,12 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schemacrawler;
 
-
 import static schemacrawler.schemacrawler.InformationSchemaKeyType.ADDITIONAL_INFO;
 import static schemacrawler.schemacrawler.InformationSchemaKeyType.DATABASE_METADATA;
 import static schemacrawler.schemacrawler.InformationSchemaKeyType.INFORMATION_SCHEMA;
 import static schemacrawler.schemacrawler.InformationSchemaKeyType.METADATA_EXTENSION;
 
-public enum InformationSchemaKey
-{
-
+public enum InformationSchemaKey {
   ADDITIONAL_COLUMN_ATTRIBUTES(ADDITIONAL_INFO),
   ADDITIONAL_TABLE_ATTRIBUTES(ADDITIONAL_INFO),
   CHECK_CONSTRAINTS(INFORMATION_SCHEMA),
@@ -67,17 +64,12 @@ public enum InformationSchemaKey
 
   private final InformationSchemaKeyType type;
 
-  InformationSchemaKey(final InformationSchemaKeyType type)
-  {
+  InformationSchemaKey(final InformationSchemaKeyType type) {
     this.type = type;
   }
 
-  /**
-   * @return the type
-   */
-  public InformationSchemaKeyType getType()
-  {
+  /** @return the type */
+  public InformationSchemaKeyType getType() {
     return type;
   }
-
 }

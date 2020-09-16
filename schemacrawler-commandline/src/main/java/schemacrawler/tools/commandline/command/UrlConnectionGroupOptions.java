@@ -28,24 +28,20 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.command;
 
-
 import picocli.CommandLine.Option;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
 import schemacrawler.tools.databaseconnector.DatabaseUrlConnectionOptions;
 
-public class UrlConnectionGroupOptions 
-  implements ConnectionOptions
-{
+public class UrlConnectionGroupOptions implements ConnectionOptions {
 
-  @Option(names = {
-    "--url"
-  }, required = true, description = "JDBC connection URL to the database")
+  @Option(
+      names = {"--url"},
+      required = true,
+      description = "JDBC connection URL to the database")
   private String connectionUrl;
 
   @Override
-  public DatabaseConnectionOptions toDatabaseConnectionOptions()
-  {
+  public DatabaseConnectionOptions toDatabaseConnectionOptions() {
     return new DatabaseUrlConnectionOptions(connectionUrl);
   }
-  
 }

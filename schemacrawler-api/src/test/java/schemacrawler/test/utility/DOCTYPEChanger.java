@@ -11,9 +11,8 @@
  * LICENSE for more details.
  */
 
-//package com.simonstl.xml;
+// package com.simonstl.xml;
 package schemacrawler.test.utility;
-
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -24,27 +23,18 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 /**
- * <p>
- * This class adds a DOCTYPE to an incoming XML document or replaces its
- * existing DOCTYPE declaration if it has one.
- * </p>
+ * This class adds a DOCTYPE to an incoming XML document or replaces its existing DOCTYPE
+ * declaration if it has one.
  *
  * @author Simon St.Laurent
  * @version 0.01 $Date: 2000/08/02 $
  */
-public final class DOCTYPEChanger
-  extends FilterReader
-{
+public final class DOCTYPEChanger extends FilterReader {
 
-  /**
-   * This class defines a main() method to test the DOCTYPEChanger
-   */
-  public static void main(final String[] args)
-  {
-    try
-    {
-      if (args.length != 1)
-      {
+  /** This class defines a main() method to test the DOCTYPEChanger */
+  public static void main(final String[] args) {
+    try {
+      if (args.length != 1) {
         throw new IllegalArgumentException("Wrong number of arguments");
       }
       // Create a stream to read and clean the file
@@ -55,17 +45,13 @@ public final class DOCTYPEChanger
       tester.setInternalSubset("this is a test");
       tester.setReplace(false);
 
-      try (final BufferedReader in = new BufferedReader(tester))
-      {
+      try (final BufferedReader in = new BufferedReader(tester)) {
         String line;
-        while ((line = in.readLine()) != null)
-        {
+        while ((line = in.readLine()) != null) {
           System.out.println(line);
         }
       }
-    }
-    catch (final Exception e)
-    {
+    } catch (final Exception e) {
       e.printStackTrace();
       System.err.println("Usage: java DOCTYPEChanger <filename>");
     }
@@ -83,165 +69,81 @@ public final class DOCTYPEChanger
   protected StringBuilder myBuffer = new StringBuilder();
 
   /**
-   * This method is a placeholder - all 'real' activity appears in the int
-   * read() method. This placeholder is substantially from Java I/O by Elliotte
-   * Rusty Harold, http://www.oreilly.com/catalog/javaio/.
+   * This method is a placeholder - all 'real' activity appears in the int read() method. This
+   * placeholder is substantially from Java I/O by Elliotte Rusty Harold,
+   * http://www.oreilly.com/catalog/javaio/.
    */
   private boolean endOfStream = false;
 
-  public DOCTYPEChanger(final InputStream in)
-  {
+  public DOCTYPEChanger(final InputStream in) {
     this(new InputStreamReader(in));
   }
 
-  public DOCTYPEChanger(final Reader in)
-  {
+  public DOCTYPEChanger(final Reader in) {
     super(new BufferedReader(in));
   }
 
-  /**
-   * Returns the internal subset.
-   */
-
-  public String getInternalSubset()
-  {
+  /** Returns the internal subset. */
+  public String getInternalSubset() {
     return internalSubsetContent;
   }
 
-  /**
-   * Use this method to set the internal subset identified by the DOCTYPE
-   * declaration. If set, the result will be &lt;!DOCTYPE
-   * <i>rootElement</i> <i>PUBLIC or SYSTEM identifiers</i> [
-   * <i>internalSubset</i>]>&gt;
-   */
-
-  public void setInternalSubset(final String subsetContents)
-  {
-    internalSubsetContent = subsetContents;
-  }
-
-  /**
-   * Returns the public identifier. Mostly useful to see if you set it
-   * previously.
-   */
-
-  public String getPublicIdentifier()
-  {
+  /** Returns the public identifier. Mostly useful to see if you set it previously. */
+  public String getPublicIdentifier() {
     return publicIdentifier;
   }
 
-  /**
-   * Use setPublicIdentifier to set the public identifer identified by the
-   * DOCTYPE declaration. If set, the result will be &lt;!DOCTYPE
-   * <i>rootElement</i> PUBLIC '<i>publicIdentifier</i>' '
-   * <i>systemIdentifer</i>' <i>[internalSubset, if present]></i>&gt; .
-   * You must also set a system identifier for this to work properly.
-   */
-
-  public void setPublicIdentifier(final String identifier)
-  {
-    publicIdentifier = identifier;
-  }
-
-  /**
-   * Returns the root element. Mostly useful to see if you set it previously.
-   */
-
-  public String getRootElement()
-  {
+  /** Returns the root element. Mostly useful to see if you set it previously. */
+  public String getRootElement() {
     return rootElement;
   }
 
-  /**
-   * Use setRootElement to set the root element identified by the DOCTYPE
-   * declaration.
-   */
-
-  public void setRootElement(final String elementName)
-  {
-    rootElement = elementName;
-  }
-
-  /**
-   * Returns the system identifier. Mostly useful to see if you set it
-   * previously.
-   */
-
-  public String getSystemIdentifier()
-  {
+  /** Returns the system identifier. Mostly useful to see if you set it previously. */
+  public String getSystemIdentifier() {
     return systemIdentifier;
   }
 
-  /**
-   * Use setSystemIdentifier to set the public identifer identified by the
-   * DOCTYPE declaration. If set without a public identifier, the result will be
-   * &lt;!DOCTYPE <i>rootElement</i> SYSTEM '
-   * <i>systemIdentifer</i>' <i>[internalSubset, if present]></i>&gt;
-   */
-
-  public void setSystemIdentifier(final String identifier)
-  {
-    systemIdentifier = identifier;
-  }
-
   @Override
-  public int read()
-    throws IOException
-  {
+  public int read() throws IOException {
     int c = 32;
-    if (myBuffer.length() == 0)
-    {
+    if (myBuffer.length() == 0) {
       c = in.read();
-      if (c == 60 && docStarted == false)
-      {
+      if (c == 60 && docStarted == false) {
         // figure out if we have a DOCTYPE declaration
         final int d = in.read();
-        switch (d)
-        {
+        switch (d) {
           case 63: // question mark, let it go
             myBuffer.append((char) d);
             break;
 
           case 33: // either comment or DOCTYPE
             int e = in.read();
-            if (e == 68)
-            {
+            if (e == 68) {
               // DOCTYPE! Bingo.
               // INCLUDE/IGNORE are prohibited from
               // internal subset, so we'll look for
               // ]> and >.
-              if (replace)
-              {
-                while (cycle == true)
-                {
+              if (replace) {
+                while (cycle == true) {
                   e = in.read();
-                  if (e == 91)
-                  {
+                  if (e == 91) {
                     internalSubset = true;
                   }
-                  if (e == 62 && internalSubset == false)
-                  {
+                  if (e == 62 && internalSubset == false) {
                     // end of DOCTYPE
                     addDocType();
                     cycle = false;
                   }
-                  if (e == 93)
-                  {
+                  if (e == 93) {
                     internalSubset = false;
                   }
-
                 } // end while
-              }
-              else
-              {// end replace
+              } else { // end replace
                 myBuffer.append((char) d);
                 myBuffer.append((char) e);
-
               } // end else
               docStarted = true;
-            }
-            else
-            {// e didn't equal 68
+            } else { // e didn't equal 68
               myBuffer.append((char) d);
               myBuffer.append((char) e);
             } // end e==68
@@ -253,35 +155,25 @@ public final class DOCTYPEChanger
             myBuffer.append((char) d);
             docStarted = true;
             break;
-
-        }// end switch
-
+        } // end switch
       } // end c==60, docStarted==false
-    }
-    else
-    {
+    } else {
       c = feedFromInternalBuffer();
     }
     return c;
-
   }
 
   @Override
-  public int read(final char[] text, final int offset, final int length)
-    throws IOException
-  {
+  public int read(final char[] text, final int offset, final int length) throws IOException {
 
-    if (endOfStream)
-    {
+    if (endOfStream) {
       return -1;
     }
     int numRead = 0;
 
-    for (int i = offset; i < offset + length; i++)
-    {
+    for (int i = offset; i < offset + length; i++) {
       final int temp = this.read();
-      if (temp == -1)
-      {
+      if (temp == -1) {
         endOfStream = true;
         break;
       }
@@ -289,35 +181,59 @@ public final class DOCTYPEChanger
       numRead++;
     }
     return numRead;
-
   }
 
   /**
-   * Use setReplace to indicate whether to replace the DOCTYPE declarations for
-   * documents that already have one. False means don't replace, true means do
-   * replace.
+   * Use this method to set the internal subset identified by the DOCTYPE declaration. If set, the
+   * result will be &lt;!DOCTYPE <i>rootElement</i> <i>PUBLIC or SYSTEM identifiers</i> [
+   * <i>internalSubset</i>]>&gt;
    */
+  public void setInternalSubset(final String subsetContents) {
+    internalSubsetContent = subsetContents;
+  }
 
-  public void setReplace(final boolean replaceChoice)
-  {
+  /**
+   * Use setPublicIdentifier to set the public identifer identified by the DOCTYPE declaration. If
+   * set, the result will be &lt;!DOCTYPE <i>rootElement</i> PUBLIC '<i>publicIdentifier</i>' '
+   * <i>systemIdentifer</i>' <i>[internalSubset, if present]></i>&gt; . You must also set a system
+   * identifier for this to work properly.
+   */
+  public void setPublicIdentifier(final String identifier) {
+    publicIdentifier = identifier;
+  }
+
+  /**
+   * Use setReplace to indicate whether to replace the DOCTYPE declarations for documents that
+   * already have one. False means don't replace, true means do replace.
+   */
+  public void setReplace(final boolean replaceChoice) {
     replace = replaceChoice;
   }
 
-  protected void addDocType()
-  {
+  /** Use setRootElement to set the root element identified by the DOCTYPE declaration. */
+  public void setRootElement(final String elementName) {
+    rootElement = elementName;
+  }
+
+  /**
+   * Use setSystemIdentifier to set the public identifer identified by the DOCTYPE declaration. If
+   * set without a public identifier, the result will be &lt;!DOCTYPE <i>rootElement</i> SYSTEM '
+   * <i>systemIdentifer</i>' <i>[internalSubset, if present]></i>&gt;
+   */
+  public void setSystemIdentifier(final String identifier) {
+    systemIdentifier = identifier;
+  }
+
+  protected void addDocType() {
     myBuffer.append("!DOCTYPE ");
     myBuffer.append(rootElement);
-    if (publicIdentifier.equals(""))
-    {
-      if (!systemIdentifier.equals(""))
-      {
+    if (publicIdentifier.equals("")) {
+      if (!systemIdentifier.equals("")) {
         myBuffer.append(" SYSTEM '");
         myBuffer.append(systemIdentifier);
         myBuffer.append("'");
       }
-    }
-    else
-    {
+    } else {
       myBuffer.append(" PUBLIC '");
       myBuffer.append(publicIdentifier);
       myBuffer.append("' '");
@@ -326,8 +242,7 @@ public final class DOCTYPEChanger
     }
     myBuffer.append(" ");
 
-    if (!internalSubsetContent.equals(""))
-    {
+    if (!internalSubsetContent.equals("")) {
       myBuffer.append(" [\n");
       myBuffer.append(internalSubsetContent);
       myBuffer.append("\n]");
@@ -335,11 +250,9 @@ public final class DOCTYPEChanger
 
     myBuffer.append(">\n");
     docStarted = true;
-
   }
 
-  protected int feedFromInternalBuffer()
-  {
+  protected int feedFromInternalBuffer() {
     // feed out the buffer a character at a time
     final int retChar = myBuffer.charAt(0);
     myBuffer.reverse();
@@ -347,5 +260,4 @@ public final class DOCTYPEChanger
     myBuffer.reverse();
     return retChar;
   }
-
 }

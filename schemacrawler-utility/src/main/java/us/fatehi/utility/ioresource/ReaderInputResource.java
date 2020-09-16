@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.ioresource;
 
-
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.ioresource.InputResourceUtility.wrapReader;
 
@@ -38,32 +37,24 @@ import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ReaderInputResource
-  implements InputResource
-{
+public class ReaderInputResource implements InputResource {
 
-  private static final Logger LOGGER =
-    Logger.getLogger(ReaderInputResource.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ReaderInputResource.class.getName());
 
   private final Reader reader;
 
-  public ReaderInputResource(final Reader reader)
-  {
+  public ReaderInputResource(final Reader reader) {
     this.reader = requireNonNull(reader, "No reader provided");
   }
 
   @Override
-  public Reader openNewInputReader(final Charset charset)
-    throws IOException
-  {
+  public Reader openNewInputReader(final Charset charset) throws IOException {
     LOGGER.log(Level.INFO, "Input to provided reader");
     return wrapReader(getDescription(), new BufferedReader(reader), false);
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return "<reader>";
   }
-
 }

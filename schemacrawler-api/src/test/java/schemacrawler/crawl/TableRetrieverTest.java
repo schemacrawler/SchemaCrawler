@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.crawl;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.empty;
@@ -48,6 +47,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
@@ -75,95 +75,74 @@ import schemacrawler.utility.NamedObjectSort;
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class TableRetrieverTest
-{
+public class TableRetrieverTest {
 
   private MutableCatalog catalog;
 
-  @Test
-  @DisplayName("Retrieve tables from data dictionary")
-  public void tablesFromDataDictionary(final TestContext testContext,
-                                       final Connection connection)
-    throws Exception
-  {
-    final InformationSchemaViews informationSchemaViews =
-      InformationSchemaViewsBuilder
-        .builder()
-        .withSql(InformationSchemaKey.TABLES,
-                 "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES")
-        .toOptions();
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-      SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder
-      .with(tablesRetrievalStrategy, data_dictionary_all)
-      .withInformationSchemaViews(informationSchemaViews);
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-      schemaRetrievalOptionsBuilder.toOptions();
-    final RetrieverConnection retrieverConnection =
-      new RetrieverConnection(connection, schemaRetrievalOptions);
-
-    final SchemaCrawlerOptions options =
-      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-
-    final TableRetriever tableRetriever =
-      new TableRetriever(retrieverConnection, catalog, options);
-    tableRetriever.retrieveTables(catalog.getAllSchemas(),
-                                  "",
-                                  TableTypes.from("TABLE", "VIEW"),
-                                  new IncludeAll());
-
-    final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout)
-    {
-      final Schema[] schemas = ((Catalog) catalog)
-        .getSchemas()
-        .toArray(new Schema[0]);
-      assertThat("Schema count does not match", schemas, arrayWithSize(5));
-      for (final Schema schema : schemas)
-      {
-        final Table[] tables = ((Catalog) catalog)
-          .getTables(schema)
-          .toArray(new Table[0]);
-        Arrays.sort(tables, NamedObjectSort.alphabetical);
-        for (final Table table : tables)
-        {
-          out.println(String.format("%s [%s]",
-                                    table.getFullName(),
-                                    table.getTableType()));
-        }
-      }
-    }
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
-
-  }
-
   @BeforeAll
-  public void loadBaseCatalog(final Connection connection)
-    throws SchemaCrawlerException
-  {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-      .builder()
-      .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
-      .builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder
-                             .builder()
-                             .withInfoLevel(InfoLevel.minimum)
-                             .setRetrieveTables(false)
-                             .toOptions());
+  public void loadBaseCatalog(final Connection connection) throws SchemaCrawlerException {
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder()
+            .withSchemaInfoLevel(
+                SchemaInfoLevelBuilder.builder()
+                    .withInfoLevel(InfoLevel.minimum)
+                    .setRetrieveTables(false)
+                    .toOptions());
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withLimitOptionsBuilder(limitOptionsBuilder)
-        .withLoadOptionsBuilder(loadOptionsBuilder)
-        .toOptions();
-    catalog = (MutableCatalog) getCatalog(connection,
-                                          SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
-                                          schemaCrawlerOptions);
+        SchemaCrawlerOptionsBuilder.builder()
+            .withLimitOptionsBuilder(limitOptionsBuilder)
+            .withLoadOptionsBuilder(loadOptionsBuilder)
+            .toOptions();
+    catalog =
+        (MutableCatalog)
+            getCatalog(
+                connection,
+                SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
+                schemaCrawlerOptions);
 
     final Collection<Table> tables = catalog.getTables();
     assertThat(tables, is(empty()));
   }
 
+  @Test
+  @DisplayName("Retrieve tables from data dictionary")
+  public void tablesFromDataDictionary(final TestContext testContext, final Connection connection)
+      throws Exception {
+    final InformationSchemaViews informationSchemaViews =
+        InformationSchemaViewsBuilder.builder()
+            .withSql(InformationSchemaKey.TABLES, "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES")
+            .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+        SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder
+        .with(tablesRetrievalStrategy, data_dictionary_all)
+        .withInformationSchemaViews(informationSchemaViews);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection =
+        new RetrieverConnection(connection, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final TableRetriever tableRetriever = new TableRetriever(retrieverConnection, catalog, options);
+    tableRetriever.retrieveTables(
+        catalog.getAllSchemas(), "", TableTypes.from("TABLE", "VIEW"), new IncludeAll());
+
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout) {
+      final Schema[] schemas = ((Catalog) catalog).getSchemas().toArray(new Schema[0]);
+      assertThat("Schema count does not match", schemas, arrayWithSize(5));
+      for (final Schema schema : schemas) {
+        final Table[] tables = ((Catalog) catalog).getTables(schema).toArray(new Table[0]);
+        Arrays.sort(tables, NamedObjectSort.alphabetical);
+        for (final Table table : tables) {
+          out.println(String.format("%s [%s]", table.getFullName(), table.getTableType()));
+        }
+      }
+    }
+    assertThat(
+        outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+  }
 }

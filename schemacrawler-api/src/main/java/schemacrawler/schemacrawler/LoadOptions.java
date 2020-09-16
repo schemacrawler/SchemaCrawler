@@ -27,34 +27,26 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schemacrawler;
 
-
 import static java.util.Objects.requireNonNull;
 
 import us.fatehi.utility.ObjectToString;
 
-public final class LoadOptions
-  implements Options
-{
+public final class LoadOptions implements Options {
 
   private final boolean isLoadRowCounts;
   private final SchemaInfoLevel schemaInfoLevel;
 
-  LoadOptions(final SchemaInfoLevel schemaInfoLevel,
-              final boolean isLoadRowCounts)
-  {
-    this.schemaInfoLevel =
-      requireNonNull(schemaInfoLevel, "No schema info level provided");
+  LoadOptions(final SchemaInfoLevel schemaInfoLevel, final boolean isLoadRowCounts) {
+    this.schemaInfoLevel = requireNonNull(schemaInfoLevel, "No schema info level provided");
     this.isLoadRowCounts = isLoadRowCounts;
   }
 
   /**
-   * Gets the schema information level, identifying to what level the schema
-   * should be crawled.
+   * Gets the schema information level, identifying to what level the schema should be crawled.
    *
    * @return Schema information level.
    */
-  public SchemaInfoLevel getSchemaInfoLevel()
-  {
+  public SchemaInfoLevel getSchemaInfoLevel() {
     return schemaInfoLevel;
   }
 
@@ -63,18 +55,13 @@ public final class LoadOptions
    *
    * @return Whether to load row counts
    */
-  public boolean isLoadRowCounts()
-  {
+  public boolean isLoadRowCounts() {
     return isLoadRowCounts;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String toString()
-  {
+  public String toString() {
     return ObjectToString.toString(this);
   }
-
 }

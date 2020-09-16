@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.executable;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.nio.file.Path;
@@ -39,26 +38,20 @@ import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 
 /**
- * Allows chaining multiple executables together, that produce different
- * artifacts, such as an image and a HTML file.
+ * Allows chaining multiple executables together, that produce different artifacts, such as an image
+ * and a HTML file.
  */
-public final class CommandChain
-  extends BaseCommandChain
-{
+public final class CommandChain extends BaseCommandChain {
 
   private static final String COMMAND = "chain";
 
   /**
    * Copy configuration settings from another command.
    *
-   * @param scCommand
-   *   Other command
-   * @throws SchemaCrawlerException
-   *   On an exception
+   * @param scCommand Other command
+   * @throws SchemaCrawlerException On an exception
    */
-  public CommandChain(final SchemaCrawlerCommand scCommand)
-    throws SchemaCrawlerException
-  {
+  public CommandChain(final SchemaCrawlerCommand scCommand) throws SchemaCrawlerException {
     super(COMMAND);
 
     requireNonNull(scCommand, "No command provided, for settings");
@@ -73,46 +66,36 @@ public final class CommandChain
     setIdentifiers(scCommand.getIdentifiers());
   }
 
-  public final SchemaCrawlerCommand addNext(final String command,
-                                            final OutputFormat outputFormat,
-                                            final Path outputFile)
-    throws SchemaCrawlerException
-  {
+  public SchemaCrawlerCommand addNext(
+      final String command, final OutputFormat outputFormat, final Path outputFile)
+      throws SchemaCrawlerException {
     requireNonNull(command, "No command provided");
     requireNonNull(outputFormat, "No output format provided");
     requireNonNull(outputFile, "No output file provided");
 
-    return addNext(command,
-                   outputFormat.getFormat(),
-                   outputFile
-                     .normalize()
-                     .toAbsolutePath()
-                     .toString());
+    return addNext(
+        command, outputFormat.getFormat(), outputFile.normalize().toAbsolutePath().toString());
   }
 
-  public final SchemaCrawlerCommand addNext(final String command,
-                                            final String outputFormat,
-                                            final String outputFileName)
-    throws SchemaCrawlerException
-  {
+  public SchemaCrawlerCommand addNext(
+      final String command, final String outputFormat, final String outputFileName)
+      throws SchemaCrawlerException {
     requireNonNull(command, "No command provided");
     requireNonNull(outputFormat, "No output format provided");
     requireNonNull(outputFileName, "No output file name provided");
 
     final Path outputFile = Paths.get(outputFileName);
-    final OutputOptions outputOptions = OutputOptionsBuilder
-      .builder(getOutputOptions())
-      .withOutputFormatValue(outputFormat)
-      .withOutputFile(outputFile)
-      .toOptions();
+    final OutputOptions outputOptions =
+        OutputOptionsBuilder.builder(getOutputOptions())
+            .withOutputFormatValue(outputFormat)
+            .withOutputFile(outputFile)
+            .toOptions();
 
     return addNextAndConfigureForExecution(command, outputOptions);
   }
 
   @Override
-  public void execute()
-    throws Exception
-  {
+  public void execute() throws Exception {
     checkCatalog();
 
     initializeChain();
@@ -121,9 +104,7 @@ public final class CommandChain
   }
 
   @Override
-  public boolean usesConnection()
-  {
+  public boolean usesConnection() {
     return false;
   }
-
 }

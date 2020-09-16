@@ -27,9 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schema;
 
-
-public interface IdentifiedEnum
-{
+public interface IdentifiedEnum {
 
   /**
    * Gets the id.
@@ -37,5 +35,4 @@ public interface IdentifiedEnum
    * @return id
    */
   int id();
-
 }

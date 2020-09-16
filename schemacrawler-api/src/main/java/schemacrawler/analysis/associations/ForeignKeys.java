@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.analysis.associations;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
@@ -39,32 +38,26 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
 
-final class ForeignKeys
-{
+final class ForeignKeys {
 
   private final Collection<ColumnReference> foreignKeys;
 
-  ForeignKeys(final List<Table> tables)
-  {
+  ForeignKeys(final List<Table> tables) {
     foreignKeys = mapForeignKeyColumns(tables);
   }
 
-  public boolean contains(final ProposedWeakAssociation columnMap)
-  {
-    if (columnMap == null)
-    {
+  public boolean contains(final ProposedWeakAssociation columnMap) {
+    if (columnMap == null) {
       return false;
     }
 
     // We have to loop through the collection, since we want to use the
     // equals from the WeakAssociation
-    for (final ColumnReference columnReference : foreignKeys)
-    {
+    for (final ColumnReference columnReference : foreignKeys) {
       final ProposedWeakAssociation columnReferenceAsProposal =
-        new ProposedWeakAssociation(columnReference);
+          new ProposedWeakAssociation(columnReference);
       final boolean equals = columnMap.equals(columnReferenceAsProposal);
-      if (equals)
-      {
+      if (equals) {
         return true;
       }
     }
@@ -72,22 +65,17 @@ final class ForeignKeys
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return foreignKeys.toString();
   }
 
-  private Collection<ColumnReference> mapForeignKeyColumns(final List<Table> tables)
-  {
+  private Collection<ColumnReference> mapForeignKeyColumns(final List<Table> tables) {
     requireNonNull(tables, "No tables provided");
 
     final Collection<ColumnReference> fkColumnsMap = new HashSet<>();
-    for (final Table table : tables)
-    {
-      for (final ForeignKey foreignKey : table.getForeignKeys())
-      {
-        for (final ForeignKeyColumnReference columnRef : foreignKey)
-        {
+    for (final Table table : tables) {
+      for (final ForeignKey foreignKey : table.getForeignKeys()) {
+        for (final ForeignKeyColumnReference columnRef : foreignKey) {
           fkColumnsMap.add(columnRef);
         }
       }

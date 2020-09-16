@@ -27,11 +27,9 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.commandline.command;
 
-
 import java.util.logging.Level;
 
-public enum LogLevel
-{
+public enum LogLevel {
   OFF(Level.OFF),
   SEVERE(Level.SEVERE),
   WARNING(Level.WARNING),
@@ -44,14 +42,11 @@ public enum LogLevel
 
   private final Level level;
 
-  LogLevel(final Level level)
-  {
+  LogLevel(final Level level) {
     this.level = level;
   }
 
-  public Level getLevel()
-  {
+  public Level getLevel() {
     return level;
   }
-
 }

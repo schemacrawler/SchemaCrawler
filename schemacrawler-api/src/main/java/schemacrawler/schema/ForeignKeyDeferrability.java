@@ -28,18 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 import static java.sql.DatabaseMetaData.importedKeyInitiallyDeferred;
 import static java.sql.DatabaseMetaData.importedKeyInitiallyImmediate;
 import static java.sql.DatabaseMetaData.importedKeyNotDeferrable;
 
-/**
- * An enumeration wrapper around the JDBC deferrability value for foreign keys.
- */
-public enum ForeignKeyDeferrability
-  implements IdentifiedEnum
-{
-
+/** An enumeration wrapper around the JDBC deferrability value for foreign keys. */
+public enum ForeignKeyDeferrability implements IdentifiedEnum {
   unknown(-1, "unknown"),
   initiallyDeferred(importedKeyInitiallyDeferred, "initially deferred"),
   initiallyImmediate(importedKeyInitiallyImmediate, "initially immediate"),
@@ -48,28 +42,20 @@ public enum ForeignKeyDeferrability
   private final int id;
   private final String text;
 
-  ForeignKeyDeferrability(final int id, final String text)
-  {
+  ForeignKeyDeferrability(final int id, final String text) {
     this.id = id;
     this.text = text;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public int id()
-  {
+  public int id() {
     return id;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String toString()
-  {
+  public String toString() {
     return text;
   }
-
 }

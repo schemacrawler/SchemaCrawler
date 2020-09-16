@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.test.ioresource;
 
-
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -38,30 +37,21 @@ import static us.fatehi.utility.IOUtility.readFully;
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
+
 import us.fatehi.utility.ioresource.StringInputResource;
 
-public class StringInputResourceTest
-{
+public class StringInputResourceTest {
 
   @Test
-  public void nullArgs()
-  {
-    assertThat(readFully(new StringInputResource(null).openNewInputReader(UTF_8)),
-               is(""));
-  }
-
-  @Test
-  public void happyPath()
-    throws IOException
-  {
-    final StringInputResource resource =
-      new StringInputResource("hello, world");
-    assertThat("Description does not match",
-               resource.getDescription(),
-               is("<data>"));
+  public void happyPath() throws IOException {
+    final StringInputResource resource = new StringInputResource("hello, world");
+    assertThat("Description does not match", resource.getDescription(), is("<data>"));
     assertThat("toString() does not match", resource.toString(), is("<data>"));
-    assertThat(readFully(resource.openNewInputReader(UTF_8)),
-               startsWith("hello, world"));
+    assertThat(readFully(resource.openNewInputReader(UTF_8)), startsWith("hello, world"));
   }
 
+  @Test
+  public void nullArgs() {
+    assertThat(readFully(new StringInputResource(null).openNewInputReader(UTF_8)), is(""));
+  }
 }

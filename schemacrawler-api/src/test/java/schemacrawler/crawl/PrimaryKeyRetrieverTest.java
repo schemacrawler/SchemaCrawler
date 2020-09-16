@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.crawl;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.empty;
@@ -52,6 +51,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Schema;
@@ -74,123 +74,100 @@ import schemacrawler.utility.NamedObjectSort;
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class PrimaryKeyRetrieverTest
-{
+public class PrimaryKeyRetrieverTest {
 
-  public static void verifyRetrievePrimaryKeys(final Catalog catalog)
-    throws IOException
-  {
+  public static void verifyRetrievePrimaryKeys(final Catalog catalog) throws IOException {
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout)
-    {
-      final Schema[] schemas = catalog
-        .getSchemas()
-        .toArray(new Schema[0]);
+    try (final TestWriter out = testout) {
+      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(5));
-      for (final Schema schema : schemas)
-      {
-        final Table[] tables = catalog
-          .getTables(schema)
-          .toArray(new Table[0]);
+      for (final Schema schema : schemas) {
+        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
         Arrays.sort(tables, NamedObjectSort.alphabetical);
-        for (final Table table : tables)
-        {
+        for (final Table table : tables) {
           out.println(table.getFullName());
-          if (table.hasPrimaryKey())
-          {
+          if (table.hasPrimaryKey()) {
             final PrimaryKey primaryKey = table.getPrimaryKey();
-            out.println(String.format("  primary key: %s",
-                                      primaryKey.getName()));
-            out.println(String.format("    columns: %s",
-                                      primaryKey.getColumns()));
-            out.println(String.format("    constraint type: %s",
-                                      primaryKey.getConstraintType()));
-            out.println(String.format("    is deferrable: %b",
-                                      primaryKey.isDeferrable()));
-            out.println(String.format("    is initially deferred: %b",
-                                      primaryKey.isInitiallyDeferred()));
+            out.println(String.format("  primary key: %s", primaryKey.getName()));
+            out.println(String.format("    columns: %s", primaryKey.getColumns()));
+            out.println(String.format("    constraint type: %s", primaryKey.getConstraintType()));
+            out.println(String.format("    is deferrable: %b", primaryKey.isDeferrable()));
+            out.println(
+                String.format("    is initially deferred: %b", primaryKey.isInitiallyDeferred()));
           }
         }
       }
     }
     // IMPORTANT: The data dictionary should return the same information as the metadata test
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(
-                 "SchemaCrawlerTest.primaryKeys")));
+    assertThat(
+        outputOf(testout), hasSameContentAs(classpathResource("SchemaCrawlerTest.primaryKeys")));
   }
 
   private MutableCatalog catalog;
 
+  @BeforeAll
+  public void loadBaseCatalog(final Connection connection) throws SchemaCrawlerException {
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.minimum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.builder()
+            .withLoadOptionsBuilder(loadOptionsBuilder)
+            .toOptions();
+    catalog =
+        (MutableCatalog)
+            getCatalog(
+                connection,
+                SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
+                schemaCrawlerOptions);
+
+    final Collection<Table> tables = catalog.getTables();
+    assertThat(tables, hasSize(19));
+    for (final Table table : tables) {
+      assertThat(table.getIndexes(), is(empty()));
+      assertThat(table.getPrimaryKey(), is(nullValue()));
+    }
+  }
+
   @Test
   @DisplayName("Retrieve primary keys from data dictionary")
-  public void primaryKeysFromDataDictionary(final Connection connection)
-    throws Exception
-  {
+  public void primaryKeysFromDataDictionary(final Connection connection) throws Exception {
     final InformationSchemaViews informationSchemaViews =
-      InformationSchemaViewsBuilder
-        .builder()
-        .withSql(InformationSchemaKey.PRIMARY_KEYS,
-                 "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_PRIMARYKEYS")
-        .toOptions();
+        InformationSchemaViewsBuilder.builder()
+            .withSql(
+                InformationSchemaKey.PRIMARY_KEYS,
+                "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_PRIMARYKEYS")
+            .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-      SchemaRetrievalOptionsBuilder.builder();
+        SchemaRetrievalOptionsBuilder.builder();
     schemaRetrievalOptionsBuilder
-      .with(primaryKeysRetrievalStrategy, data_dictionary_all)
-      .withInformationSchemaViews(informationSchemaViews);
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-      schemaRetrievalOptionsBuilder.toOptions();
+        .with(primaryKeysRetrievalStrategy, data_dictionary_all)
+        .withInformationSchemaViews(informationSchemaViews);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection =
-      new RetrieverConnection(connection, schemaRetrievalOptions);
+        new RetrieverConnection(connection, schemaRetrievalOptions);
 
-    final SchemaCrawlerOptions options =
-      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
     final PrimaryKeyRetriever primaryKeyRetriever =
-      new PrimaryKeyRetriever(retrieverConnection, catalog, options);
+        new PrimaryKeyRetriever(retrieverConnection, catalog, options);
     primaryKeyRetriever.retrievePrimaryKeys(catalog.getAllTables());
 
     final Collection<Table> tables = catalog.getTables();
     assertThat(tables, hasSize(19));
-    for (final Table table : tables)
-    {
-      if (!Arrays
-        .asList("Global Counts",
-                "AUTHORSLIST",
-                "BOOKAUTHORS",
-                "PUBLICATIONWRITERS",
-                "SALES",
-                "SALESDATA")
-        .contains(table.getName()))
-      {
-        assertThat("Did not find primary key for " + table.getFullName(),
-                   table.getPrimaryKey(),
-                   is(not(nullValue())));
+    for (final Table table : tables) {
+      if (!Arrays.asList(
+              "Global Counts",
+              "AUTHORSLIST",
+              "BOOKAUTHORS",
+              "PUBLICATIONWRITERS",
+              "SALES",
+              "SALESDATA")
+          .contains(table.getName())) {
+        assertThat(
+            "Did not find primary key for " + table.getFullName(),
+            table.getPrimaryKey(),
+            is(not(nullValue())));
       }
-    }
-  }
-
-  @BeforeAll
-  public void loadBaseCatalog(final Connection connection)
-    throws SchemaCrawlerException
-  {
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
-      .builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.minimum());
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withLoadOptionsBuilder(loadOptionsBuilder)
-        .toOptions();
-    catalog = (MutableCatalog) getCatalog(connection,
-                                          SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
-                                          schemaCrawlerOptions);
-
-    final Collection<Table> tables = catalog.getTables();
-    assertThat(tables, hasSize(19));
-    for (final Table table : tables)
-    {
-      assertThat(table.getIndexes(), is(empty()));
-      assertThat(table.getPrimaryKey(), is(nullValue()));
     }
   }
 }

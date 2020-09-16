@@ -27,9 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schemacrawler;
 
-
-public enum InformationSchemaKeyType
-{
+public enum InformationSchemaKeyType {
   ADDITIONAL_INFO,
   INFORMATION_SCHEMA,
   DATABASE_METADATA,

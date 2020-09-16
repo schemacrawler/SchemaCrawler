@@ -27,66 +27,54 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schemacrawler;
 
-
 import us.fatehi.utility.ObjectToString;
 
-public final class FilterOptions
-  implements Options
-{
+public final class FilterOptions implements Options {
 
   private final int childTableFilterDepth;
   private final boolean isNoEmptyTables;
   private final int parentTableFilterDepth;
 
-  FilterOptions(final boolean isNoEmptyTables,
-                final int childTableFilterDepth,
-                final int parentTableFilterDepth)
-  {
+  FilterOptions(
+      final boolean isNoEmptyTables,
+      final int childTableFilterDepth,
+      final int parentTableFilterDepth) {
     this.isNoEmptyTables = isNoEmptyTables;
 
-    if (childTableFilterDepth < 0)
-    {
-      throw new IllegalArgumentException("Invalid child table filter depth, "
-                                         + childTableFilterDepth);
+    if (childTableFilterDepth < 0) {
+      throw new IllegalArgumentException(
+          "Invalid child table filter depth, " + childTableFilterDepth);
     }
     this.childTableFilterDepth = childTableFilterDepth;
 
-    if (parentTableFilterDepth < 0)
-    {
-      throw new IllegalArgumentException("Invalid parent table filter depth, "
-                                         + parentTableFilterDepth);
+    if (parentTableFilterDepth < 0) {
+      throw new IllegalArgumentException(
+          "Invalid parent table filter depth, " + parentTableFilterDepth);
     }
     this.parentTableFilterDepth = parentTableFilterDepth;
   }
 
-  public int getChildTableFilterDepth()
-  {
+  public int getChildTableFilterDepth() {
     return childTableFilterDepth;
   }
 
-  public int getParentTableFilterDepth()
-  {
+  public int getParentTableFilterDepth() {
     return parentTableFilterDepth;
   }
 
   /**
-   * If infolevel=maximum, this option will remove empty tables (that is, tables
-   * with no rows of data) from the catalog.
+   * If infolevel=maximum, this option will remove empty tables (that is, tables with no rows of
+   * data) from the catalog.
    *
    * @return Whether to hide empty tables
    */
-  public boolean isNoEmptyTables()
-  {
+  public boolean isNoEmptyTables() {
     return isNoEmptyTables;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String toString()
-  {
+  public String toString() {
     return ObjectToString.toString(this);
   }
-
 }

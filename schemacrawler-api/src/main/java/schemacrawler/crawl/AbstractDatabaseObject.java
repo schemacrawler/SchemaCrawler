@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
@@ -46,60 +45,44 @@ import schemacrawler.schemacrawler.Identifiers;
  *
  * @author Sualeh Fatehi
  */
-abstract class AbstractDatabaseObject
-  extends AbstractNamedObjectWithAttributes
-  implements DatabaseObject
-{
+abstract class AbstractDatabaseObject extends AbstractNamedObjectWithAttributes
+    implements DatabaseObject {
 
   private static final long serialVersionUID = 3099561832386790624L;
 
   private final Schema schema;
 
   /**
-   * Effective Java - Item 17 - Minimize Mutability - Package-private
-   * constructors make a class effectively final
+   * Effective Java - Item 17 - Minimize Mutability - Package-private constructors make a class
+   * effectively final
    *
-   * @param schema
-   *   Schema of this object
-   * @param name
-   *   Name of the named object
+   * @param schema Schema of this object
+   * @param name Name of the named object
    */
-  AbstractDatabaseObject(final Schema schema, final String name)
-  {
+  AbstractDatabaseObject(final Schema schema, final String name) {
     super(name);
     this.schema = requireNonNull(schema, "No schema provided");
   }
 
   @Override
-  public int compareTo(final NamedObject obj)
-  {
-    if (obj == null)
-    {
+  public int compareTo(final NamedObject obj) {
+    if (obj == null) {
       return -1;
     }
 
-    if (obj instanceof DatabaseObject)
-    {
-      final int schemaCompareTo =
-        getSchema().compareTo(((DatabaseObject) obj).getSchema());
-      if (schemaCompareTo != 0)
-      {
+    if (obj instanceof DatabaseObject) {
+      final int schemaCompareTo = getSchema().compareTo(((DatabaseObject) obj).getSchema());
+      if (schemaCompareTo != 0) {
         return schemaCompareTo;
       }
-      if (this instanceof TypedObject && obj instanceof TypedObject)
-      {
-        try
-        {
-          final int typeCompareTo = ((TypedObject) this)
-            .getType()
-            .compareTo(((TypedObject) obj).getType());
-          if (typeCompareTo != 0)
-          {
+      if (this instanceof TypedObject && obj instanceof TypedObject) {
+        try {
+          final int typeCompareTo =
+              ((TypedObject) this).getType().compareTo(((TypedObject) obj).getType());
+          if (typeCompareTo != 0) {
             return typeCompareTo;
           }
-        }
-        catch (final Exception e)
-        {
+        } catch (final Exception e) {
           // Ignore, since getType() may not be implemented by partial
           // database
           // objects
@@ -110,27 +93,33 @@ abstract class AbstractDatabaseObject
     return super.compareTo(obj);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public String getFullName()
-  {
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (!super.equals(obj)) {
+      return false;
+    }
+    if (!(obj instanceof DatabaseObject)) {
+      return false;
+    }
+    return Objects.equals(schema, ((DatabaseObject) obj).getSchema());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public String getFullName() {
     return Identifiers.STANDARD.quoteFullName(this);
   }
 
   @Override
-  public List<String> toUniqueLookupKey()
-  {
-    // Make a defensive copy
-    final List<String> lookupKey = new ArrayList<>(schema.toUniqueLookupKey());
-    lookupKey.add(getName());
-    return lookupKey;
+  public final Schema getSchema() {
+    return schema;
   }
 
   @Override
-  public int hashCode()
-  {
+  public int hashCode() {
     final int prime = 31;
     int result = super.hashCode();
     result = prime * result + Objects.hash(schema);
@@ -138,27 +127,10 @@ abstract class AbstractDatabaseObject
   }
 
   @Override
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
-      return true;
-    }
-    if (!super.equals(obj))
-    {
-      return false;
-    }
-    if (!(obj instanceof DatabaseObject))
-    {
-      return false;
-    }
-    return Objects.equals(schema, ((DatabaseObject) obj).getSchema());
+  public List<String> toUniqueLookupKey() {
+    // Make a defensive copy
+    final List<String> lookupKey = new ArrayList<>(schema.toUniqueLookupKey());
+    lookupKey.add(getName());
+    return lookupKey;
   }
-
-  @Override
-  public final Schema getSchema()
-  {
-    return schema;
-  }
-
 }

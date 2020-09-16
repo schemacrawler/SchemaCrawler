@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import static schemacrawler.schemacrawler.InformationSchemaKey.SEQUENCES;
 
 import java.math.BigInteger;
@@ -50,95 +49,73 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaReference;
 
 /**
- * A retriever that uses database metadata to get the extended details about the
- * database sequences.
+ * A retriever that uses database metadata to get the extended details about the database sequences.
  *
  * @author Sualeh Fatehi
  */
-final class SequenceRetriever
-  extends AbstractRetriever
-{
+final class SequenceRetriever extends AbstractRetriever {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(SequenceRetriever.class.getName());
+      SchemaCrawlerLogger.getLogger(SequenceRetriever.class.getName());
 
-  SequenceRetriever(final RetrieverConnection retrieverConnection,
-                    final MutableCatalog catalog,
-                    final SchemaCrawlerOptions options)
-    throws SQLException
-  {
+  SequenceRetriever(
+      final RetrieverConnection retrieverConnection,
+      final MutableCatalog catalog,
+      final SchemaCrawlerOptions options)
+      throws SQLException {
     super(retrieverConnection, catalog, options);
   }
 
   /**
    * Retrieves the sequence definitions from the database.
    *
-   * @param sequenceInclusionRule
-   *   Rule for including sequences
-   * @throws SQLException
-   *   On a SQL exception
+   * @param sequenceInclusionRule Rule for including sequences
+   * @throws SQLException On a SQL exception
    */
-  void retrieveSequenceInformation(final InclusionRule sequenceInclusionRule)
-    throws SQLException
-  {
+  void retrieveSequenceInformation(final InclusionRule sequenceInclusionRule) throws SQLException {
     final InclusionRuleFilter<Sequence> sequenceFilter =
-      new InclusionRuleFilter<>(sequenceInclusionRule, false);
-    if (sequenceFilter.isExcludeAll())
-    {
-      LOGGER.log(Level.INFO,
-                 "Not retrieving sequences, since this was not requested");
+        new InclusionRuleFilter<>(sequenceInclusionRule, false);
+    if (sequenceFilter.isExcludeAll()) {
+      LOGGER.log(Level.INFO, "Not retrieving sequences, since this was not requested");
       return;
     }
 
     LOGGER.log(Level.INFO, "Retrieving sequences");
 
     final InformationSchemaViews informationSchemaViews =
-      getRetrieverConnection().getInformationSchemaViews();
-    if (!informationSchemaViews.hasQuery(SEQUENCES))
-    {
-      LOGGER.log(Level.FINE,
-                 "Sequence definition SQL statement was not provided");
+        getRetrieverConnection().getInformationSchemaViews();
+    if (!informationSchemaViews.hasQuery(SEQUENCES)) {
+      LOGGER.log(Level.FINE, "Sequence definition SQL statement was not provided");
       return;
     }
 
     final NamedObjectList<SchemaReference> schemas = getAllSchemas();
 
-    final Query sequencesDefinitionSql =
-      informationSchemaViews.getQuery(SEQUENCES);
+    final Query sequencesDefinitionSql = informationSchemaViews.getQuery(SEQUENCES);
     final Connection connection = getDatabaseConnection();
 
-    try (
-      final Statement statement = connection.createStatement();
-      final MetadataResultSet results = new MetadataResultSet(
-        sequencesDefinitionSql,
-        statement,
-        getSchemaInclusionRule())
-    )
-    {
-      while (results.next())
-      {
-        final String catalogName =
-          normalizeCatalogName(results.getString("SEQUENCE_CATALOG"));
-        final String schemaName =
-          normalizeSchemaName(results.getString("SEQUENCE_SCHEMA"));
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results =
+            new MetadataResultSet(sequencesDefinitionSql, statement, getSchemaInclusionRule())) {
+      while (results.next()) {
+        final String catalogName = normalizeCatalogName(results.getString("SEQUENCE_CATALOG"));
+        final String schemaName = normalizeSchemaName(results.getString("SEQUENCE_SCHEMA"));
         final String sequenceName = results.getString("SEQUENCE_NAME");
         final BigInteger startValue = results.getBigInteger("START_VALUE");
         final BigInteger minimumValue = results.getBigInteger("MINIMUM_VALUE");
         final BigInteger maximumValue = results.getBigInteger("MAXIMUM_VALUE");
         final BigInteger increment = results.getBigInteger("INCREMENT");
-        final long longIncrement = increment == null? 1L: increment.longValue();
+        final long longIncrement = increment == null ? 1L : increment.longValue();
         final boolean cycle = results.getBoolean("CYCLE_OPTION");
 
         final Optional<SchemaReference> optionalSchema =
-          schemas.lookup(Arrays.asList(catalogName, schemaName));
-        if (!optionalSchema.isPresent())
-        {
+            schemas.lookup(Arrays.asList(catalogName, schemaName));
+        if (!optionalSchema.isPresent()) {
           continue;
         }
         final Schema schema = optionalSchema.get();
 
-        final MutableSequence sequence =
-          new MutableSequence(schema, sequenceName);
+        final MutableSequence sequence = new MutableSequence(schema, sequenceName);
         sequence.setStartValue(startValue);
         sequence.setMaximumValue(maximumValue);
         sequence.setMinimumValue(minimumValue);
@@ -147,18 +124,12 @@ final class SequenceRetriever
 
         sequence.addAttributes(results.getAttributes());
 
-        if (sequenceFilter.test(sequence))
-        {
+        if (sequenceFilter.test(sequence)) {
           catalog.addSequence(sequence);
         }
-
       }
-    }
-    catch (final Exception e)
-    {
+    } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve sequences", e);
     }
-
   }
-
 }

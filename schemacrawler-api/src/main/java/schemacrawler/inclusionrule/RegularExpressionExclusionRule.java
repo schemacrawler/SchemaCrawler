@@ -28,18 +28,15 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.inclusionrule;
 
-
 import java.util.regex.Pattern;
 
 /**
- * Specifies exclusion patterns that can be applied to the names, definitions,
- * and other attributes of named objects.
+ * Specifies exclusion patterns that can be applied to the names, definitions, and other attributes
+ * of named objects.
  *
  * @author Sualeh Fatehi
  */
-public final class RegularExpressionExclusionRule
-  implements InclusionRuleWithRegularExpression
-{
+public final class RegularExpressionExclusionRule implements InclusionRuleWithRegularExpression {
 
   private static final long serialVersionUID = 6274652266761961575L;
 
@@ -48,17 +45,12 @@ public final class RegularExpressionExclusionRule
   /**
    * Set exclude pattern. Include nothing.
    *
-   * @param patternExclude
-   *   Exclusion pattern. If null, excludes nothing.
+   * @param patternExclude Exclusion pattern. If null, excludes nothing.
    */
-  public RegularExpressionExclusionRule(final Pattern patternExclude)
-  {
-    if (patternExclude == null)
-    {
+  public RegularExpressionExclusionRule(final Pattern patternExclude) {
+    if (patternExclude == null) {
       inclusionRule = new IncludeAll();
-    }
-    else
-    {
+    } else {
       inclusionRule = new RegularExpressionRule(null, patternExclude);
     }
   }
@@ -66,91 +58,66 @@ public final class RegularExpressionExclusionRule
   /**
    * Set exclude pattern. Include nothing.
    *
-   * @param patternExclude
-   *   Exclusion pattern. If null, excludes nothing.
+   * @param patternExclude Exclusion pattern. If null, excludes nothing.
    */
-  public RegularExpressionExclusionRule(final String patternExclude)
-  {
-    this(patternExclude == null? null: Pattern.compile(patternExclude));
+  public RegularExpressionExclusionRule(final String patternExclude) {
+    this(patternExclude == null ? null : Pattern.compile(patternExclude));
   }
 
   @Override
-  public Pattern getExclusionPattern()
-  {
-    if (inclusionRule instanceof InclusionRuleWithRegularExpression)
-    {
-      return ((InclusionRuleWithRegularExpression) inclusionRule).getExclusionPattern();
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
     }
-    else
-    {
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final RegularExpressionExclusionRule other = (RegularExpressionExclusionRule) obj;
+    if (inclusionRule == null) {
+      return other.inclusionRule == null;
+    } else {
+      return inclusionRule.equals(other.inclusionRule);
+    }
+  }
+
+  @Override
+  public Pattern getExclusionPattern() {
+    if (inclusionRule instanceof InclusionRuleWithRegularExpression) {
+      return ((InclusionRuleWithRegularExpression) inclusionRule).getExclusionPattern();
+    } else {
       return InclusionRuleWithRegularExpression.super.getExclusionPattern();
     }
   }
 
   @Override
-  public Pattern getInclusionPattern()
-  {
-    if (inclusionRule instanceof InclusionRuleWithRegularExpression)
-    {
+  public Pattern getInclusionPattern() {
+    if (inclusionRule instanceof InclusionRuleWithRegularExpression) {
       return ((InclusionRuleWithRegularExpression) inclusionRule).getInclusionPattern();
-    }
-    else
-    {
+    } else {
       return InclusionRuleWithRegularExpression.super.getInclusionPattern();
     }
   }
 
   @Override
-  public int hashCode()
-  {
+  public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result =
-      prime * result + (inclusionRule == null? 0: inclusionRule.hashCode());
+    result = prime * result + (inclusionRule == null ? 0 : inclusionRule.hashCode());
     return result;
   }
 
+  /** {@inheritDoc} */
   @Override
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
-      return true;
-    }
-    if (obj == null)
-    {
-      return false;
-    }
-    if (getClass() != obj.getClass())
-    {
-      return false;
-    }
-    final RegularExpressionExclusionRule other =
-      (RegularExpressionExclusionRule) obj;
-    if (inclusionRule == null)
-    {
-      return other.inclusionRule == null;
-    }
-    else
-    { return inclusionRule.equals(other.inclusionRule); }
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String toString()
-  {
-    return inclusionRule.toString();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean test(final String text)
-  {
+  public boolean test(final String text) {
     return inclusionRule.test(text);
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public String toString() {
+    return inclusionRule.toString();
+  }
 }

@@ -28,65 +28,51 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineBodyType;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
 
-abstract class RoutinePartial
-  extends AbstractDatabaseObject
-  implements Routine, PartialDatabaseObject
-{
+abstract class RoutinePartial extends AbstractDatabaseObject
+    implements Routine, PartialDatabaseObject {
 
   private static final long serialVersionUID = 1508498300413360531L;
 
   /**
-   * Effective Java - Item 17 - Minimize Mutability - Package-private
-   * constructors make a class effectively final
+   * Effective Java - Item 17 - Minimize Mutability - Package-private constructors make a class
+   * effectively final
    *
-   * @param schema
-   *   Schema of this object
-   * @param name
-   *   Name of the named object
+   * @param schema Schema of this object
+   * @param name Name of the named object
    */
-  RoutinePartial(final Schema schema, final String name)
-  {
+  RoutinePartial(final Schema schema, final String name) {
     super(schema, name);
   }
 
   @Override
-  public final String getDefinition()
-  {
+  public final String getDefinition() {
     throw new NotLoadedException(this);
   }
 
   @Override
-  public final boolean hasDefinition()
-  {
+  public final RoutineBodyType getRoutineBodyType() {
     throw new NotLoadedException(this);
   }
 
   @Override
-  public final RoutineBodyType getRoutineBodyType()
-  {
+  public final String getSpecificName() {
     throw new NotLoadedException(this);
   }
 
+  /** {@inheritDoc} */
   @Override
-  public final String getSpecificName()
-  {
-    throw new NotLoadedException(this);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final RoutineType getType()
-  {
+  public final RoutineType getType() {
     return getRoutineType();
   }
 
+  @Override
+  public final boolean hasDefinition() {
+    throw new NotLoadedException(this);
+  }
 }

@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.filter;
 
-
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSchemaInclusion;
 
 import java.util.function.Predicate;
@@ -38,32 +37,23 @@ import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion;
 import schemacrawler.schemacrawler.LimitOptions;
 
-final class DatabaseObjectFilter<D extends DatabaseObject>
-  implements Predicate<D>
-{
+final class DatabaseObjectFilter<D extends DatabaseObject> implements Predicate<D> {
 
   private final InclusionRule databaseObjectInclusionRule;
   private final InclusionRule schemaInclusionRule;
 
-  DatabaseObjectFilter(final LimitOptions options,
-                       final DatabaseObjectRuleForInclusion databaseObjectRuleForInclusion)
-  {
-    if (options != null)
-    {
+  DatabaseObjectFilter(
+      final LimitOptions options,
+      final DatabaseObjectRuleForInclusion databaseObjectRuleForInclusion) {
+    if (options != null) {
       schemaInclusionRule = options.get(ruleForSchemaInclusion);
-    }
-    else
-    {
+    } else {
       schemaInclusionRule = new IncludeAll();
     }
 
-    if (databaseObjectRuleForInclusion != null)
-    {
-      this.databaseObjectInclusionRule =
-        options.get(databaseObjectRuleForInclusion);
-    }
-    else
-    {
+    if (databaseObjectRuleForInclusion != null) {
+      this.databaseObjectInclusionRule = options.get(databaseObjectRuleForInclusion);
+    } else {
       this.databaseObjectInclusionRule = new IncludeAll();
     }
   }
@@ -71,32 +61,24 @@ final class DatabaseObjectFilter<D extends DatabaseObject>
   /**
    * Check for database object limiting rules.
    *
-   * @param databaseObject
-   *   Database object to check
+   * @param databaseObject Database object to check
    * @return Whether the table should be included
    */
   @Override
-  public boolean test(final D databaseObject)
-  {
-    if (databaseObject == null)
-    {
+  public boolean test(final D databaseObject) {
+    if (databaseObject == null) {
       return false;
     }
 
     boolean include = true;
 
-    if (include && schemaInclusionRule != null)
-    {
-      include = schemaInclusionRule.test(databaseObject
-                                           .getSchema()
-                                           .getFullName());
+    if (include && schemaInclusionRule != null) {
+      include = schemaInclusionRule.test(databaseObject.getSchema().getFullName());
     }
-    if (include && databaseObjectInclusionRule != null)
-    {
+    if (include && databaseObjectInclusionRule != null) {
       include = databaseObjectInclusionRule.test(databaseObject.getFullName());
     }
 
     return include;
   }
-
 }

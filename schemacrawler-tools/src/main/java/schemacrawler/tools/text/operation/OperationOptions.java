@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.text.operation;
 
-
 import schemacrawler.tools.text.base.BaseTextOptions;
 
 /**
@@ -36,14 +35,11 @@ import schemacrawler.tools.text.base.BaseTextOptions;
  *
  * @author Sualeh Fatehi
  */
-public final class OperationOptions
-  extends BaseTextOptions
-{
+public final class OperationOptions extends BaseTextOptions {
 
   private final boolean isShowLobs;
 
-  protected OperationOptions(final OperationOptionsBuilder builder)
-  {
+  protected OperationOptions(final OperationOptionsBuilder builder) {
     super(builder);
     isShowLobs = builder.isShowLobs;
   }
@@ -53,8 +49,7 @@ public final class OperationOptions
    *
    * @return Whether to show LOBs.
    */
-  public boolean isShowLobs()
-  {
+  public boolean isShowLobs() {
     return isShowLobs;
   }
 }

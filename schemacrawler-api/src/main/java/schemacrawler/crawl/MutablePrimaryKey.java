@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraintType;
@@ -38,34 +37,26 @@ import schemacrawler.schema.TableConstraintType;
  *
  * @author Sualeh Fatehi
  */
-final class MutablePrimaryKey
-  extends MutableTableConstraint
-  implements PrimaryKey
-{
+final class MutablePrimaryKey extends MutableTableConstraint implements PrimaryKey {
 
   private static final long serialVersionUID = -7169206178562782087L;
 
-  MutablePrimaryKey(final Table parent, final String name)
-  {
+  MutablePrimaryKey(final Table parent, final String name) {
     super(parent, name);
   }
 
   @Override
-  public TableConstraintType getConstraintType()
-  {
+  public TableConstraintType getConstraintType() {
     return TableConstraintType.primary_key;
   }
 
   @Override
-  public boolean isDeferrable()
-  {
+  public boolean isDeferrable() {
     return false;
   }
 
   @Override
-  public boolean isInitiallyDeferred()
-  {
+  public boolean isInitiallyDeferred() {
     return false;
   }
-
 }

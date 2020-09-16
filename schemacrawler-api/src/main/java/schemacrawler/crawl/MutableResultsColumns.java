@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -42,45 +41,31 @@ import schemacrawler.schema.ResultsColumns;
  *
  * @author Sualeh Fatehi
  */
-final class MutableResultsColumns
-  extends AbstractNamedObject
-  implements ResultsColumns
-{
+final class MutableResultsColumns extends AbstractNamedObject implements ResultsColumns {
 
   private static final long serialVersionUID = 5204766782914559188L;
 
-  private final NamedObjectList<MutableResultsColumn> columns =
-    new NamedObjectList<>();
+  private final NamedObjectList<MutableResultsColumn> columns = new NamedObjectList<>();
 
-  MutableResultsColumns(final String name)
-  {
+  MutableResultsColumns(final String name) {
     super(name);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public List<ResultsColumn> getColumns()
-  {
+  public List<ResultsColumn> getColumns() {
     return new ArrayList<>(columns.values());
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String getColumnsListAsString()
-  {
+  public String getColumnsListAsString() {
     String columnsList = "";
     final List<ResultsColumn> columns = getColumns();
-    if (columns != null && !columns.isEmpty())
-    {
+    if (columns != null && !columns.isEmpty()) {
       final StringBuilder buffer = new StringBuilder(1024);
-      for (int i = 0; i < columns.size(); i++)
-      {
-        if (i > 0)
-        {
+      for (int i = 0; i < columns.size(); i++) {
+        if (i > 0) {
           buffer.append(", ");
         }
         final ResultsColumn column = columns.get(i);
@@ -91,38 +76,29 @@ final class MutableResultsColumns
     return columnsList;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public Optional<MutableResultsColumn> lookupColumn(final String name)
-  {
+  public Iterator<ResultsColumn> iterator() {
+    return getColumns().iterator();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Optional<MutableResultsColumn> lookupColumn(final String name) {
     // Look up by name, full name or label
-    if (name == null)
-    {
+    if (name == null) {
       return Optional.empty();
     }
-    for (final MutableResultsColumn column : columns)
-    {
-      if (name.equalsIgnoreCase(column.getLabel()) ||
-          name.equalsIgnoreCase(column.getFullName()) ||
-          name.equalsIgnoreCase(column.getName()))
-      {
+    for (final MutableResultsColumn column : columns) {
+      if (name.equalsIgnoreCase(column.getLabel())
+          || name.equalsIgnoreCase(column.getFullName())
+          || name.equalsIgnoreCase(column.getName())) {
         return Optional.of(column);
       }
     }
     return Optional.empty();
   }
 
-  @Override
-  public Iterator<ResultsColumn> iterator()
-  {
-    return getColumns().iterator();
-  }
-
-  void addColumn(final MutableResultsColumn column)
-  {
+  void addColumn(final MutableResultsColumn column) {
     columns.add(column);
   }
-
 }

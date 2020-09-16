@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.utility;
 
-
 import java.lang.reflect.Parameter;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -38,42 +37,55 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
+
 import schemacrawler.testdb.TestDatabase;
 import us.fatehi.utility.LoggingConfig;
 
 public class TestDatabaseConnectionParameterResolver
-  implements ParameterResolver, BeforeAllCallback
-{
+    implements ParameterResolver, BeforeAllCallback {
 
-  private final static TestDatabase testDatabase = TestDatabase.initialize();
+  private static final TestDatabase testDatabase = TestDatabase.initialize();
 
-  private static boolean isParameterConnection(final Parameter parameter)
-  {
-    return parameter
-      .getType()
-      .equals(Connection.class);
+  private static boolean isParameterConnection(final Parameter parameter) {
+    return parameter.getType().equals(Connection.class);
   }
 
-  private static boolean isParameterDatabaseConnectionInfo(final Parameter parameter)
-  {
-    return parameter
-      .getType()
-      .equals(DatabaseConnectionInfo.class);
+  private static boolean isParameterDatabaseConnectionInfo(final Parameter parameter) {
+    return parameter.getType().equals(DatabaseConnectionInfo.class);
   }
 
   @Override
-  public void beforeAll(final ExtensionContext context)
-    throws Exception
-  {
+  public void beforeAll(final ExtensionContext context) throws Exception {
     // Turn off logging
     new LoggingConfig();
   }
 
   @Override
-  public boolean supportsParameter(final ParameterContext parameterContext,
-                                   final ExtensionContext extensionContext)
-    throws ParameterResolutionException
-  {
+  public Object resolveParameter(
+      final ParameterContext parameterContext, final ExtensionContext extensionContext)
+      throws ParameterResolutionException {
+    try {
+      final Parameter parameter = parameterContext.getParameter();
+      if (isParameterConnection(parameter)) {
+        return testDatabase.getConnection();
+      } else if (isParameterDatabaseConnectionInfo(parameter)) {
+        return new DatabaseConnectionInfo(
+            testDatabase.getHost(),
+            testDatabase.getPort(),
+            testDatabase.getDatabase(),
+            testDatabase.getConnectionUrl());
+      } else {
+        throw new ParameterResolutionException("Could not resolve " + parameter);
+      }
+    } catch (final SQLException e) {
+      throw new ParameterResolutionException("", e);
+    }
+  }
+
+  @Override
+  public boolean supportsParameter(
+      final ParameterContext parameterContext, final ExtensionContext extensionContext)
+      throws ParameterResolutionException {
     final boolean hasConnection;
     final boolean hasDatabaseConnectionInfo;
     final Parameter parameter = parameterContext.getParameter();
@@ -83,36 +95,4 @@ public class TestDatabaseConnectionParameterResolver
 
     return hasConnection || hasDatabaseConnectionInfo;
   }
-
-  @Override
-  public Object resolveParameter(final ParameterContext parameterContext,
-                                 final ExtensionContext extensionContext)
-    throws ParameterResolutionException
-  {
-    try
-    {
-      final Parameter parameter = parameterContext.getParameter();
-      if (isParameterConnection(parameter))
-      {
-        return testDatabase.getConnection();
-      }
-      else if (isParameterDatabaseConnectionInfo(parameter))
-      {
-        return new DatabaseConnectionInfo(testDatabase.getHost(),
-                                          testDatabase.getPort(),
-                                          testDatabase.getDatabase(),
-                                          testDatabase.getConnectionUrl());
-      }
-      else
-      {
-        throw new ParameterResolutionException("Could not resolve "
-                                               + parameter);
-      }
-    }
-    catch (final SQLException e)
-    {
-      throw new ParameterResolutionException("", e);
-    }
-  }
-
 }

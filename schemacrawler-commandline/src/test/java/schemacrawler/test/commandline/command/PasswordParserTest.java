@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.commandline.command;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
@@ -40,16 +39,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
+
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.command.UserCredentialsOptions;
 import schemacrawler.tools.databaseconnector.UserCredentials;
 
-public class PasswordParserTest
-{
+public class PasswordParserTest {
 
   @Test
-  public void noArgs()
-  {
+  public void noArgs() {
     final String[] args = new String[0];
 
     final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
@@ -70,9 +68,8 @@ public class PasswordParserTest
   }
 
   @Test
-  public void noValidArgs()
-  {
-    final String[] args = { "--some-option" };
+  public void noValidArgs() {
+    final String[] args = {"--some-option"};
 
     final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
     final CommandLine commandLine = newCommandLine(optionsParser, null, true);
@@ -86,9 +83,8 @@ public class PasswordParserTest
   }
 
   @Test
-  public void password()
-  {
-    final String[] args = { "--password", "pwd123" };
+  public void password() {
+    final String[] args = {"--password", "pwd123"};
 
     final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
     final CommandLine commandLine = newCommandLine(optionsParser, null, true);
@@ -102,14 +98,27 @@ public class PasswordParserTest
   }
 
   @Test
-  public void passwordEmptyFile()
-    throws Exception
-  {
+  public void passwordEmptyEnv() {
+    final String[] args = {"--password:env", "NO_ENV"};
+
+    final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
+    final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+    commandLine.parseArgs(args);
+    final UserCredentials options = optionsParser.getUserCredentials();
+
+    assertThat(options.hasUser(), is(false));
+    assertThat(options.hasPassword(), is(false));
+    assertThat(options.getUser(), is(nullValue()));
+    assertThat(options.getPassword(), is(nullValue()));
+  }
+
+  @Test
+  public void passwordEmptyFile() throws Exception {
     final Path path = Files.createTempFile("password-file", ".txt");
     final File file = path.toFile();
     file.deleteOnExit();
 
-    final String[] args = { "--password:file", file.getAbsolutePath() };
+    final String[] args = {"--password:file", file.getAbsolutePath()};
 
     final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
     final CommandLine commandLine = newCommandLine(optionsParser, null, true);
@@ -123,31 +132,13 @@ public class PasswordParserTest
   }
 
   @Test
-  public void passwordEmptyEnv()
-  {
-    final String[] args = { "--password:env", "NO_ENV" };
-
-    final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
-    final CommandLine commandLine = newCommandLine(optionsParser, null, true);
-    commandLine.parseArgs(args);
-    final UserCredentials options = optionsParser.getUserCredentials();
-
-    assertThat(options.hasUser(), is(false));
-    assertThat(options.hasPassword(), is(false));
-    assertThat(options.getUser(), is(nullValue()));
-    assertThat(options.getPassword(), is(nullValue()));
-  }
-
-  @Test
-  public void passwordFile()
-    throws Exception
-  {
+  public void passwordFile() throws Exception {
     final Path path = Files.createTempFile("password-file", ".txt");
     final File file = path.toFile();
     Files.write(path, "pwd123".getBytes(StandardCharsets.UTF_8));
     file.deleteOnExit();
 
-    final String[] args = { "--password:file", file.getAbsolutePath() };
+    final String[] args = {"--password:file", file.getAbsolutePath()};
 
     final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
     final CommandLine commandLine = newCommandLine(optionsParser, null, true);
@@ -167,37 +158,31 @@ public class PasswordParserTest
   }
 
   @Test
-  public void passwordNoFile()
-    throws Exception
-  {
-    final String[] args = { "--password:file", "./no-file.txt" };
-
-    final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
-    final CommandLine commandLine = newCommandLine(optionsParser, null, true);
-    commandLine.parseArgs(args);
-    assertThrows(CommandLine.ParameterException.class,
-                 () -> optionsParser.getUserCredentials());
-  }
-
-  @Test
-  public void passwordFilePlusPassword()
-    throws Exception
-  {
+  public void passwordFilePlusPassword() throws Exception {
     final Path path = Files.createTempFile("password-file", ".txt");
     final File file = path.toFile();
     Files.write(path, "pwd123".getBytes(StandardCharsets.UTF_8));
     file.deleteOnExit();
 
-    final String[] args = {
-      "--password:file", file.getAbsolutePath(), "--password", "pwd123"
-    };
+    final String[] args = {"--password:file", file.getAbsolutePath(), "--password", "pwd123"};
 
     final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
 
-    assertThrows(CommandLine.MutuallyExclusiveArgsException.class, () -> {
-      final CommandLine commandLine = newCommandLine(optionsParser, null, true);
-      commandLine.parseArgs(args);
-    });
+    assertThrows(
+        CommandLine.MutuallyExclusiveArgsException.class,
+        () -> {
+          final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+          commandLine.parseArgs(args);
+        });
   }
 
+  @Test
+  public void passwordNoFile() throws Exception {
+    final String[] args = {"--password:file", "./no-file.txt"};
+
+    final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
+    final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+    commandLine.parseArgs(args);
+    assertThrows(CommandLine.ParameterException.class, () -> optionsParser.getUserCredentials());
+  }
 }

@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
@@ -48,195 +47,151 @@ import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
 
-final class TablePartial
-  extends AbstractDatabaseObject
-  implements Table, PartialDatabaseObject
-{
+final class TablePartial extends AbstractDatabaseObject implements Table, PartialDatabaseObject {
 
   private static final long serialVersionUID = -5968964551235088703L;
 
   private Column column;
   private ForeignKey foreignKey;
 
-  TablePartial(final Schema schema, final String tableName)
-  {
+  TablePartial(final Schema schema, final String tableName) {
     super(schema, tableName);
   }
 
-  TablePartial(final Table table)
-  {
-    this(requireNonNull(table, "No table provided").getSchema(),
-         table.getName());
+  TablePartial(final Table table) {
+    this(requireNonNull(table, "No table provided").getSchema(), table.getName());
     addAttributes(table.getAttributes());
   }
 
   @Override
-  public List<Column> getColumns()
-  {
+  public List<Column> getColumns() {
     throw new NotLoadedException(this);
   }
 
   @Override
-  public Collection<ForeignKey> getExportedForeignKeys()
-  {
+  public String getDefinition() {
     throw new NotLoadedException(this);
   }
 
   @Override
-  public Collection<ForeignKey> getForeignKeys()
-  {
+  public Collection<ForeignKey> getExportedForeignKeys() {
     throw new NotLoadedException(this);
   }
 
   @Override
-  public Collection<Column> getHiddenColumns()
-  {
+  public Collection<ForeignKey> getForeignKeys() {
     throw new NotLoadedException(this);
   }
 
   @Override
-  public Collection<ForeignKey> getImportedForeignKeys()
-  {
+  public Collection<Column> getHiddenColumns() {
     throw new NotLoadedException(this);
   }
 
   @Override
-  public Collection<WeakAssociation> getWeakAssociations()
-  {
+  public Collection<ForeignKey> getImportedForeignKeys() {
     throw new NotLoadedException(this);
   }
 
   @Override
-  public Collection<Index> getIndexes()
-  {
+  public Collection<Index> getIndexes() {
     throw new NotLoadedException(this);
   }
 
   @Override
-  public PrimaryKey getPrimaryKey()
-  {
+  public PrimaryKey getPrimaryKey() {
     throw new NotLoadedException(this);
   }
 
   @Override
-  public Collection<Privilege<Table>> getPrivileges()
-  {
+  public Collection<Privilege<Table>> getPrivileges() {
     throw new NotLoadedException(this);
   }
 
   @Override
-  public Collection<Table> getRelatedTables(final TableRelationshipType tableRelationshipType)
-  {
+  public Collection<Table> getRelatedTables(final TableRelationshipType tableRelationshipType) {
     throw new NotLoadedException(this);
   }
 
   @Override
-  public Collection<TableConstraint> getTableConstraints()
-  {
+  public Collection<TableConstraint> getTableConstraints() {
     throw new NotLoadedException(this);
   }
 
   @Override
-  public TableType getTableType()
-  {
+  public TableType getTableType() {
     throw new NotLoadedException(this);
   }
 
   @Override
-  public Collection<Trigger> getTriggers()
-  {
-    throw new NotLoadedException(this);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final boolean hasPrimaryKey()
-  {
+  public Collection<Trigger> getTriggers() {
     throw new NotLoadedException(this);
   }
 
   @Override
-  public Optional<Column> lookupColumn(final String name)
-  {
-    if (column
-      .getName()
-      .equals(name))
-    {
+  public TableType getType() {
+    throw new NotLoadedException(this);
+  }
+
+  @Override
+  public Collection<WeakAssociation> getWeakAssociations() {
+    throw new NotLoadedException(this);
+  }
+
+  @Override
+  public boolean hasDefinition() {
+    throw new NotLoadedException(this);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean hasPrimaryKey() {
+    throw new NotLoadedException(this);
+  }
+
+  @Override
+  public Optional<Column> lookupColumn(final String name) {
+    if (column.getName().equals(name)) {
       return Optional.ofNullable(column);
-    }
-    else
-    {
+    } else {
       return Optional.empty();
     }
   }
 
   @Override
-  public Optional<MutableTableConstraint> lookupTableConstraint(final String name)
-  {
-    throw new NotLoadedException(this);
-  }
-
-  @Override
-  public Optional<ForeignKey> lookupForeignKey(final String name)
-  {
-    if (foreignKey
-      .getName()
-      .equals(name))
-    {
+  public Optional<ForeignKey> lookupForeignKey(final String name) {
+    if (foreignKey.getName().equals(name)) {
       return Optional.ofNullable(foreignKey);
-    }
-    else
-    {
+    } else {
       return Optional.empty();
     }
   }
 
   @Override
-  public Optional<TableConstraint> lookupIndex(final String name)
-  {
+  public Optional<TableConstraint> lookupIndex(final String name) {
     throw new NotLoadedException(this);
   }
 
   @Override
-  public Optional<? extends Privilege<Table>> lookupPrivilege(final String name)
-  {
+  public Optional<? extends Privilege<Table>> lookupPrivilege(final String name) {
     throw new NotLoadedException(this);
   }
 
   @Override
-  public Optional<Trigger> lookupTrigger(final String name)
-  {
+  public Optional<MutableTableConstraint> lookupTableConstraint(final String name) {
     throw new NotLoadedException(this);
   }
 
   @Override
-  public String getDefinition()
-  {
+  public Optional<Trigger> lookupTrigger(final String name) {
     throw new NotLoadedException(this);
   }
 
-  @Override
-  public boolean hasDefinition()
-  {
-    throw new NotLoadedException(this);
-  }
-
-  @Override
-  public TableType getType()
-  {
-    throw new NotLoadedException(this);
-  }
-
-  void addColumn(final Column column)
-  {
+  void addColumn(final Column column) {
     this.column = column;
   }
 
-  void addForeignKey(final ForeignKey foreignKey)
-  {
+  void addForeignKey(final ForeignKey foreignKey) {
     this.foreignKey = foreignKey;
   }
-
 }

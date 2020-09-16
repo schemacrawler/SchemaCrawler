@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.analysis.associations;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
@@ -36,73 +35,55 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import us.fatehi.utility.Multimap;
 
-final class ColumnMatchKeysMap
-{
+final class ColumnMatchKeysMap {
 
   private final Multimap<String, Column> columnsForMatchKey;
   private final Multimap<Column, String> matchKeysForColumn;
 
-  ColumnMatchKeysMap(final List<Table> tables)
-  {
+  ColumnMatchKeysMap(final List<Table> tables) {
     requireNonNull(tables, "No tables provided");
     columnsForMatchKey = new Multimap<>();
     matchKeysForColumn = new Multimap<>();
 
-    for (final Table table : tables)
-    {
+    for (final Table table : tables) {
       mapColumnNameMatches(table);
     }
   }
 
-  public boolean containsKey(final Column column)
-  {
+  public boolean containsKey(final Column column) {
     return matchKeysForColumn.containsKey(column);
   }
 
-  public boolean containsKey(final String columnKey)
-  {
+  public boolean containsKey(final String columnKey) {
     return columnsForMatchKey.containsKey(columnKey);
   }
 
-  public List<String> get(final Column column)
-  {
+  public List<String> get(final Column column) {
     return matchKeysForColumn.get(column);
   }
 
-  public List<Column> get(final String matchKey)
-  {
+  public List<Column> get(final String matchKey) {
     return columnsForMatchKey.get(matchKey);
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return columnsForMatchKey.toString();
   }
 
-  private void mapColumnNameMatches(final Table table)
-  {
-    for (final Column column : table.getColumns())
-    {
-      String matchColumnName = column
-        .getName()
-        .toLowerCase();
-      if (matchColumnName.endsWith("_id"))
-      {
-        matchColumnName =
-          matchColumnName.substring(0, matchColumnName.length() - 3);
+  private void mapColumnNameMatches(final Table table) {
+    for (final Column column : table.getColumns()) {
+      String matchColumnName = column.getName().toLowerCase();
+      if (matchColumnName.endsWith("_id")) {
+        matchColumnName = matchColumnName.substring(0, matchColumnName.length() - 3);
       }
-      if (matchColumnName.endsWith("id") && !matchColumnName.equals("id"))
-      {
-        matchColumnName =
-          matchColumnName.substring(0, matchColumnName.length() - 2);
+      if (matchColumnName.endsWith("id") && !matchColumnName.equals("id")) {
+        matchColumnName = matchColumnName.substring(0, matchColumnName.length() - 2);
       }
-      if (!matchColumnName.equals("id"))
-      {
+      if (!matchColumnName.equals("id")) {
         columnsForMatchKey.add(matchColumnName, column);
         matchKeysForColumn.add(column, matchColumnName);
       }
     }
   }
-
 }

@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.commandline;
 
-
 import static java.util.Objects.requireNonNull;
 import static picocli.CommandLine.printHelpIfRequested;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
@@ -45,121 +44,85 @@ import org.jline.reader.UserInterruptException;
 import org.jline.reader.impl.DefaultParser;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
+
 import picocli.CommandLine;
 import picocli.CommandLine.ParseResult;
 import picocli.CommandLine.PicocliException;
 import picocli.shell.jline3.PicocliJLineCompleter;
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 import schemacrawler.tools.options.Config;
-import schemacrawler.SchemaCrawlerLogger;
 
-public final class SchemaCrawlerShell
-{
+public final class SchemaCrawlerShell {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(SchemaCrawlerShell.class.getName());
+      SchemaCrawlerLogger.getLogger(SchemaCrawlerShell.class.getName());
 
-  public static void execute(final String[] args)
-    throws Exception
-  {
+  public static void execute(final String[] args) throws Exception {
     requireNonNull(args, "No arguments provided");
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     final StateFactory stateFactory = new StateFactory(state);
 
-    final SchemaCrawlerShellCommands commands =
-      new SchemaCrawlerShellCommands();
-    final CommandLine commandLine =
-      newCommandLine(commands, stateFactory, false);
+    final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
+    final CommandLine commandLine = newCommandLine(commands, stateFactory, false);
 
-    final Terminal terminal = TerminalBuilder
-      .builder()
-      .build();
-    final LineReader reader = LineReaderBuilder
-      .builder()
-      .terminal(terminal)
-      .completer(new PicocliJLineCompleter(commandLine.getCommandSpec()))
-      .parser(new DefaultParser())
-      .build();
+    final Terminal terminal = TerminalBuilder.builder().build();
+    final LineReader reader =
+        LineReaderBuilder.builder()
+            .terminal(terminal)
+            .completer(new PicocliJLineCompleter(commandLine.getCommandSpec()))
+            .parser(new DefaultParser())
+            .build();
 
-    while (true)
-    {
-      try
-      {
-        final String line = reader.readLine("schemacrawler> ",
-                                            null,
-                                            (MaskingCallback) null,
-                                            null);
-        final ParsedLine pl = reader
-          .getParser()
-          .parse(line, 0);
-        final String[] arguments = pl
-          .words()
-          .toArray(new String[0]);
+    while (true) {
+      try {
+        final String line = reader.readLine("schemacrawler> ", null, (MaskingCallback) null, null);
+        final ParsedLine pl = reader.getParser().parse(line, 0);
+        final String[] arguments = pl.words().toArray(new String[0]);
 
         parseAndRun(state, commandLine, arguments);
-      }
-      catch (final UserInterruptException e)
-      {
+      } catch (final UserInterruptException e) {
         // Ignore
-      }
-      catch (final EndOfFileException e)
-      {
+      } catch (final EndOfFileException e) {
         return;
-      }
-      catch (final Exception e)
-      {
+      } catch (final Exception e) {
         System.err.println("ERROR: " + e.getMessage());
         LOGGER.log(Level.WARNING, e.getMessage(), e);
       }
     }
   }
 
-  private static void parseAndRun(final SchemaCrawlerShellState state,
-                                  final CommandLine commandLine,
-                                  final String[] arguments)
-    throws SchemaCrawlerException
-  {
+  private static void parseAndRun(
+      final SchemaCrawlerShellState state, final CommandLine commandLine, final String[] arguments)
+      throws SchemaCrawlerException {
 
     boolean badCommand = true;
 
     final ParseResult parseResult = commandLine.parseArgs(arguments);
-    if (printHelpIfRequested(parseResult))
-    {
+    if (printHelpIfRequested(parseResult)) {
       return;
     }
 
     final Config additionalConfig = retrievePluginOptions(parseResult);
     state.addAdditionalConfiguration(additionalConfig);
 
-    if (parseResult.hasSubcommand())
-    {
-      for (final CommandLine subcommandLine : parseResult
-        .subcommand()
-        .asCommandLineList())
-      {
-        try
-        {
+    if (parseResult.hasSubcommand()) {
+      for (final CommandLine subcommandLine : parseResult.subcommand().asCommandLineList()) {
+        try {
           final Runnable command = subcommandLine.getCommand();
-          if (command != null)
-          {
-            LOGGER.log(Level.INFO,
-                       "Running command " + command
-                         .getClass()
-                         .getSimpleName());
+          if (command != null) {
+            LOGGER.log(Level.INFO, "Running command " + command.getClass().getSimpleName());
             command.run();
 
             badCommand = false;
             break;
           }
-        }
-        catch (final PicocliException e)
-        {
+        } catch (final PicocliException e) {
           Throwable cause = e.getCause();
-          if (cause == null)
-          {
+          if (cause == null) {
             cause = e;
           }
           state.setLastException(cause);
@@ -175,8 +138,7 @@ public final class SchemaCrawlerShell
       }
     }
 
-    if (badCommand)
-    {
+    if (badCommand) {
       System.out.println("ERROR: Bad command");
       System.out.println();
       System.out.println("Get help using:");
@@ -184,9 +146,7 @@ public final class SchemaCrawlerShell
     }
   }
 
-  private SchemaCrawlerShell()
-  {
+  private SchemaCrawlerShell() {
     // Prevent instantiation
   }
-
 }

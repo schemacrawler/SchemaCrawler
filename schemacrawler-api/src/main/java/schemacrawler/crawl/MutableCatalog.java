@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
@@ -53,87 +52,60 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaReference;
 
 /**
- * Database and connection information. Created from metadata returned by a JDBC
- * call, and other sources of information.
+ * Database and connection information. Created from metadata returned by a JDBC call, and other
+ * sources of information.
  *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
-final class MutableCatalog
-  extends AbstractNamedObjectWithAttributes
-  implements Catalog, Reducible
-{
+final class MutableCatalog extends AbstractNamedObjectWithAttributes implements Catalog, Reducible {
 
-  private static final long serialVersionUID = 4051323422934251828L;
-
-
-  private final static class FilterBySchema
-    implements Predicate<DatabaseObject>
-  {
+  private static final class FilterBySchema implements Predicate<DatabaseObject> {
 
     private final Schema schema;
 
-    public FilterBySchema(final Schema schema)
-    {
+    public FilterBySchema(final Schema schema) {
       this.schema = requireNonNull(schema, "No schema provided");
     }
 
     @Override
-    public boolean test(final DatabaseObject databaseObject)
-    {
-      return databaseObject != null && databaseObject
-        .getSchema()
-        .equals(schema);
+    public boolean test(final DatabaseObject databaseObject) {
+      return databaseObject != null && databaseObject.getSchema().equals(schema);
     }
-
   }
 
+  private static final long serialVersionUID = 4051323422934251828L;
 
-  private final NamedObjectList<MutableColumnDataType> columnDataTypes =
-    new NamedObjectList<>();
+  private final NamedObjectList<MutableColumnDataType> columnDataTypes = new NamedObjectList<>();
   private final MutableDatabaseInfo databaseInfo;
   private final MutableJdbcDriverInfo jdbcDriverInfo;
-  private final NamedObjectList<MutableRoutine> routines =
-    new NamedObjectList<>();
-  private final NamedObjectList<SchemaReference> schemas =
-    new NamedObjectList<>();
-  private final NamedObjectList<MutableSequence> sequences =
-    new NamedObjectList<>();
-  private final NamedObjectList<MutableSynonym> synonyms =
-    new NamedObjectList<>();
+  private final NamedObjectList<MutableRoutine> routines = new NamedObjectList<>();
+  private final NamedObjectList<SchemaReference> schemas = new NamedObjectList<>();
+  private final NamedObjectList<MutableSequence> sequences = new NamedObjectList<>();
+  private final NamedObjectList<MutableSynonym> synonyms = new NamedObjectList<>();
   private final NamedObjectList<MutableTable> tables = new NamedObjectList<>();
-  private final NamedObjectList<ImmutableDatabaseUser> databaseUsers =
-    new NamedObjectList<>();
+  private final NamedObjectList<ImmutableDatabaseUser> databaseUsers = new NamedObjectList<>();
   private final MutableCrawlInfo crawlInfo;
 
-  MutableCatalog(final String name)
-  {
+  MutableCatalog(final String name) {
     super(name);
     databaseInfo = new MutableDatabaseInfo();
     jdbcDriverInfo = new MutableJdbcDriverInfo();
     crawlInfo = new MutableCrawlInfo();
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Collection<ColumnDataType> getColumnDataTypes()
-  {
+  public Collection<ColumnDataType> getColumnDataTypes() {
     return new ArrayList<>(columnDataTypes.values());
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Collection<ColumnDataType> getColumnDataTypes(final Schema schema)
-  {
+  public Collection<ColumnDataType> getColumnDataTypes(final Schema schema) {
     final FilterBySchema filter = new FilterBySchema(schema);
     final Collection<ColumnDataType> columnDataTypes = new ArrayList<>();
-    for (final ColumnDataType columnDataType : this.columnDataTypes)
-    {
-      if (filter.test(columnDataType))
-      {
+    for (final ColumnDataType columnDataType : this.columnDataTypes) {
+      if (filter.test(columnDataType)) {
         columnDataTypes.add(columnDataType);
       }
     }
@@ -141,377 +113,263 @@ final class MutableCatalog
   }
 
   @Override
-  public CrawlInfo getCrawlInfo()
-  {
+  public CrawlInfo getCrawlInfo() {
     return crawlInfo;
   }
 
   @Override
-  public MutableDatabaseInfo getDatabaseInfo()
-  {
+  public MutableDatabaseInfo getDatabaseInfo() {
     return databaseInfo;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public MutableJdbcDriverInfo getJdbcDriverInfo()
-  {
+  public Collection<DatabaseUser> getDatabaseUsers() {
+    return new ArrayList<>(databaseUsers.values());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public MutableJdbcDriverInfo getJdbcDriverInfo() {
     return jdbcDriverInfo;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Collection<Routine> getRoutines()
-  {
+  public Collection<Routine> getRoutines() {
     return new ArrayList<>(routines.values());
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Collection<Routine> getRoutines(final Schema schema)
-  {
+  public Collection<Routine> getRoutines(final Schema schema) {
     final FilterBySchema filter = new FilterBySchema(schema);
     final Collection<Routine> routines = new ArrayList<>();
-    for (final Routine routine : this.routines)
-    {
-      if (filter.test(routine))
-      {
+    for (final Routine routine : this.routines) {
+      if (filter.test(routine)) {
         routines.add(routine);
       }
     }
     return routines;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Collection<Schema> getSchemas()
-  {
+  public Collection<Schema> getSchemas() {
     return new ArrayList<>(schemas.values());
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Collection<Sequence> getSequences()
-  {
+  public Collection<Sequence> getSequences() {
     return new ArrayList<>(sequences.values());
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Collection<Sequence> getSequences(final Schema schema)
-  {
+  public Collection<Sequence> getSequences(final Schema schema) {
     final FilterBySchema filter = new FilterBySchema(schema);
     final Collection<Sequence> sequences = new ArrayList<>();
-    for (final Sequence sequence : this.sequences)
-    {
-      if (filter.test(sequence))
-      {
+    for (final Sequence sequence : this.sequences) {
+      if (filter.test(sequence)) {
         sequences.add(sequence);
       }
     }
     return sequences;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Collection<Synonym> getSynonyms()
-  {
+  public Collection<Synonym> getSynonyms() {
     return new ArrayList<>(synonyms.values());
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Collection<Synonym> getSynonyms(final Schema schema)
-  {
+  public Collection<Synonym> getSynonyms(final Schema schema) {
     final FilterBySchema filter = new FilterBySchema(schema);
     final Collection<Synonym> synonyms = new ArrayList<>();
-    for (final Synonym synonym : this.synonyms)
-    {
-      if (filter.test(synonym))
-      {
+    for (final Synonym synonym : this.synonyms) {
+      if (filter.test(synonym)) {
         synonyms.add(synonym);
       }
     }
     return synonyms;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Collection<ColumnDataType> getSystemColumnDataTypes()
-  {
+  public Collection<ColumnDataType> getSystemColumnDataTypes() {
     return getColumnDataTypes(new SchemaReference());
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Collection<Table> getTables()
-  {
+  public Collection<Table> getTables() {
     return new ArrayList<>(tables.values());
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Collection<Table> getTables(final Schema schema)
-  {
+  public Collection<Table> getTables(final Schema schema) {
     final FilterBySchema filter = new FilterBySchema(schema);
     final Collection<Table> tables = new ArrayList<>();
-    for (final Table table : this.tables)
-    {
-      if (filter.test(table))
-      {
+    for (final Table table : this.tables) {
+      if (filter.test(table)) {
         tables.add(table);
       }
     }
     return tables;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Optional<MutableColumnDataType> lookupColumnDataType(final Schema schema,
-                                                              final String name)
-  {
+  public Optional<MutableColumnDataType> lookupColumnDataType(
+      final Schema schema, final String name) {
     return columnDataTypes.lookup(schema, name);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Optional<MutableRoutine> lookupRoutine(final Schema schema,
-                                                final String name)
-  {
+  public Optional<MutableRoutine> lookupRoutine(final Schema schema, final String name) {
     return routines.lookup(schema, name);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Optional<SchemaReference> lookupSchema(final String name)
-  {
+  public Optional<SchemaReference> lookupSchema(final String name) {
     // Schemas need to be looked up by full name, since either the
     // catalog or schema may be null, depending on the database
-    if (name == null)
-    {
+    if (name == null) {
       return Optional.empty();
     }
-    for (final SchemaReference schema : schemas)
-    {
-      if (name.equals(schema.getFullName()))
-      {
+    for (final SchemaReference schema : schemas) {
+      if (name.equals(schema.getFullName())) {
         return Optional.of(schema);
       }
     }
     return Optional.empty();
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Optional<MutableSequence> lookupSequence(final Schema schemaRef,
-                                                  final String name)
-  {
+  public Optional<MutableSequence> lookupSequence(final Schema schemaRef, final String name) {
     return sequences.lookup(schemaRef, name);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Optional<MutableSynonym> lookupSynonym(final Schema schemaRef,
-                                                final String name)
-  {
+  public Optional<MutableSynonym> lookupSynonym(final Schema schemaRef, final String name) {
     return synonyms.lookup(schemaRef, name);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Optional<MutableColumnDataType> lookupSystemColumnDataType(final String name)
-  {
+  public Optional<MutableColumnDataType> lookupSystemColumnDataType(final String name) {
     return lookupColumnDataType(new SchemaReference(), name);
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Optional<MutableTable> lookupTable(final Schema schemaRef,
-                                            final String name)
-  {
-    return tables.lookup(schemaRef, name);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Collection<DatabaseUser> getDatabaseUsers()
-  {
-    return new ArrayList<>(databaseUsers.values());
-  }
-
-  public Optional<MutableTable> lookupTable(final List<String> tableLookupKey)
-  {
+  public Optional<MutableTable> lookupTable(final List<String> tableLookupKey) {
     return tables.lookup(tableLookupKey);
   }
 
+  /** {@inheritDoc} */
   @Override
-  public <N extends NamedObject> void reduce(final Class<N> clazz,
-                                             final Reducer<N> reducer)
-  {
-    if (reducer == null)
-    {
+  public Optional<MutableTable> lookupTable(final Schema schemaRef, final String name) {
+    return tables.lookup(schemaRef, name);
+  }
+
+  @Override
+  public <N extends NamedObject> void reduce(final Class<N> clazz, final Reducer<N> reducer) {
+    if (reducer == null) {
       return;
-    }
-    else if (Schema.class.isAssignableFrom(clazz))
-    {
+    } else if (Schema.class.isAssignableFrom(clazz)) {
       ((Reducer<Schema>) reducer).reduce(schemas);
-    }
-    else if (Table.class.isAssignableFrom(clazz))
-    {
+    } else if (Table.class.isAssignableFrom(clazz)) {
       // Filter the list of tables based on grep criteria, and
       // parent-child relationships
       ((Reducer<Table>) reducer).reduce(tables);
-    }
-    else if (Routine.class.isAssignableFrom(clazz))
-    {
+    } else if (Routine.class.isAssignableFrom(clazz)) {
       // Filter the list of routines based on grep criteria
       ((Reducer<Routine>) reducer).reduce(routines);
-    }
-    else if (Synonym.class.isAssignableFrom(clazz))
-    {
+    } else if (Synonym.class.isAssignableFrom(clazz)) {
       ((Reducer<Synonym>) reducer).reduce(synonyms);
-    }
-    else if (Sequence.class.isAssignableFrom(clazz))
-    {
+    } else if (Sequence.class.isAssignableFrom(clazz)) {
       ((Reducer<Sequence>) reducer).reduce(sequences);
     }
   }
 
-  void addColumnDataType(final MutableColumnDataType columnDataType)
-  {
-    if (columnDataType != null)
-    {
+  void addColumnDataType(final MutableColumnDataType columnDataType) {
+    if (columnDataType != null) {
       columnDataTypes.add(columnDataType);
     }
   }
 
-  void addRoutine(final MutableRoutine routine)
-  {
+  void addDatabaseUser(final ImmutableDatabaseUser databaseUser) {
+    databaseUsers.add(databaseUser);
+  }
+
+  void addRoutine(final MutableRoutine routine) {
     routines.add(routine);
   }
 
-  Schema addSchema(final SchemaReference schema)
-  {
+  Schema addSchema(final SchemaReference schema) {
     schemas.add(schema);
     return schema;
   }
 
-  Schema addSchema(final String catalogName, final String schemaName)
-  {
+  Schema addSchema(final String catalogName, final String schemaName) {
     return addSchema(new SchemaReference(catalogName, schemaName));
   }
 
-  void addSequence(final MutableSequence sequence)
-  {
+  void addSequence(final MutableSequence sequence) {
     sequences.add(sequence);
   }
 
-  void addSynonym(final MutableSynonym synonym)
-  {
+  void addSynonym(final MutableSynonym synonym) {
     synonyms.add(synonym);
   }
 
-  void addTable(final MutableTable table)
-  {
+  void addTable(final MutableTable table) {
     tables.add(table);
   }
 
-  void addDatabaseUser(final ImmutableDatabaseUser databaseUser)
-  {
-    databaseUsers.add(databaseUser);
-  }
-
-  NamedObjectList<MutableRoutine> getAllRoutines()
-  {
+  NamedObjectList<MutableRoutine> getAllRoutines() {
     return routines;
   }
 
-  NamedObjectList<SchemaReference> getAllSchemas()
-  {
+  NamedObjectList<SchemaReference> getAllSchemas() {
     return schemas;
   }
 
-  NamedObjectList<MutableTable> getAllTables()
-  {
+  NamedObjectList<MutableTable> getAllTables() {
     return tables;
   }
 
-  MutableColumnDataType lookupBaseColumnDataTypeByType(final int baseType)
-  {
+  MutableColumnDataType lookupBaseColumnDataTypeByType(final int baseType) {
     final SchemaReference systemSchema = new SchemaReference();
     MutableColumnDataType columnDataType = null;
     int count = 0;
-    for (final MutableColumnDataType currentColumnDataType : columnDataTypes)
-    {
-      if (baseType == currentColumnDataType
-        .getJavaSqlType()
-        .getVendorTypeNumber())
-      {
-        if (currentColumnDataType
-          .getSchema()
-          .equals(systemSchema))
-        {
+    for (final MutableColumnDataType currentColumnDataType : columnDataTypes) {
+      if (baseType == currentColumnDataType.getJavaSqlType().getVendorTypeNumber()) {
+        if (currentColumnDataType.getSchema().equals(systemSchema)) {
           columnDataType = currentColumnDataType;
           count = count + 1;
         }
       }
     }
-    if (count == 1)
-    {
+    if (count == 1) {
       return columnDataType;
-    }
-    else
-    {
+    } else {
       return null;
     }
   }
 
-  Optional<MutableRoutine> lookupRoutine(final List<String> routineLookupKey)
-  {
+  Optional<MutableRoutine> lookupRoutine(final List<String> routineLookupKey) {
     return routines.lookup(routineLookupKey);
   }
 
-  void setCrawlInfo()
-  {
+  void setCrawlInfo() {
     crawlInfo.setDatabaseInfo(jdbcDriverInfo, databaseInfo);
   }
-
 }

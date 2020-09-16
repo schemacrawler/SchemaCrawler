@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.shell;
 
-
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Unmatched;
 
@@ -37,20 +36,16 @@ import picocli.CommandLine.Unmatched;
  *
  * @author Sualeh Fatehi
  */
-public final class InteractiveShellOptions
-{
+public final class InteractiveShellOptions {
 
-  @Option(names = {
-    "--interactive", "--shell"
-  }, description = "Start SchemaCrawler interactive shell")
+  @Option(
+      names = {"--interactive", "--shell"},
+      description = "Start SchemaCrawler interactive shell")
   private boolean interactive;
 
-  @Unmatched
-  private String[] otherOptions;
+  @Unmatched private String[] otherOptions;
 
-  public boolean isInteractive()
-  {
+  public boolean isInteractive() {
     return interactive;
   }
-
 }

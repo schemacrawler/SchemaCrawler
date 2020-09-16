@@ -28,53 +28,35 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * Condition timing type.
- */
-public enum ConditionTimingType
-{
+/** Condition timing type. */
+public enum ConditionTimingType {
 
-  /**
-   * Unknown
-   */
+  /** Unknown */
   unknown("unknown"),
-  /**
-   * Before
-   */
+  /** Before */
   before("BEFORE"),
-  /**
-   * Instead of
-   */
+  /** Instead of */
   instead_of("INSTEAD OF"),
-  /**
-   * After
-   */
+  /** After */
   after("AFTER");
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(ConditionTimingType.class.getName());
+      SchemaCrawlerLogger.getLogger(ConditionTimingType.class.getName());
 
   /**
    * Find the enumeration value corresponding to the string.
    *
-   * @param value
-   *   Sort sequence code.
+   * @param value Sort sequence code.
    * @return Enumeration value
    */
-  public static ConditionTimingType valueOfFromValue(final String value)
-  {
-    for (final ConditionTimingType type : ConditionTimingType.values())
-    {
-      if (type
-        .getValue()
-        .equalsIgnoreCase(value))
-      {
+  public static ConditionTimingType valueOfFromValue(final String value) {
+    for (final ConditionTimingType type : ConditionTimingType.values()) {
+      if (type.getValue().equalsIgnoreCase(value)) {
         return type;
       }
     }
@@ -84,8 +66,7 @@ public enum ConditionTimingType
 
   private final String value;
 
-  ConditionTimingType(final String value)
-  {
+  ConditionTimingType(final String value) {
     this.value = value;
   }
 
@@ -94,9 +75,7 @@ public enum ConditionTimingType
    *
    * @return Value
    */
-  public final String getValue()
-  {
+  public final String getValue() {
     return value;
   }
-
 }

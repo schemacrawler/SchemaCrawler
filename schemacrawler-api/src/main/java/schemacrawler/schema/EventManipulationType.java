@@ -28,28 +28,15 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
+/** Event manipulation type. */
+public enum EventManipulationType {
 
-/**
- * Event manipulation type.
- */
-public enum EventManipulationType
-{
-
-  /**
-   * Unknown
-   */
+  /** Unknown */
   unknown,
-  /**
-   * Insert
-   */
+  /** Insert */
   insert,
-  /**
-   * Delete
-   */
+  /** Delete */
   delete,
-  /**
-   * Update
-   */
+  /** Update */
   update
-
 }

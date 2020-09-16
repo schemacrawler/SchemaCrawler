@@ -28,14 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.databaseconnector;
 
-
 import schemacrawler.schemacrawler.Options;
 
+public interface DatabaseConnectionOptions extends Options {
 
-public interface DatabaseConnectionOptions
-  extends Options
-{
-  
   DatabaseConnector getDatabaseConnector();
-
 }

@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.test.string;
 
-
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Paths.get;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -41,68 +40,54 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
+
 import us.fatehi.utility.string.FileContents;
 
-public class FileContentsTest
-{
+public class FileContentsTest {
 
   public static final Charset UTF_32 = Charset.forName("UTF-32");
 
   @Test
-  public void nullArgs()
-  {
-    assertThrows(NullPointerException.class, () -> new FileContents(null));
-    assertThrows(NullPointerException.class,
-                 () -> new FileContents(null, null));
-    assertThrows(NullPointerException.class,
-                 () -> new FileContents(get("nofile.txt"), null));
-  }
-
-  @Test
-  public void missingFile()
-  {
-    assertThat(new FileContents(get("nofile.txt")).get(), is(""));
-  }
-
-  @Test
-  public void emptyFile()
-    throws IOException
-  {
-    final Path tempFile = Files.createTempFile("test", ".txt");
-    assertThat(new FileContents(tempFile).get(), is(""));
-  }
-
-  @Test
-  public void dataFile()
-    throws IOException
-  {
+  public void dataFile() throws IOException {
     final Path tempFile = Files.createTempFile("test", ".txt");
     Files.write(tempFile, "hello, world".getBytes());
     assertThat(new FileContents(tempFile).get(), is("hello, world"));
   }
 
   @Test
-  public void dataFileMatchEncoding()
-    throws IOException
-  {
+  public void dataFileBadEncoding() throws IOException {
     final Path tempFile = Files.createTempFile("test", ".txt");
-    Files.write(tempFile, "hello, world".getBytes("UTF-32"));
-    assertThat(new FileContents(tempFile, UTF_32).get(),
-               is("hello, world"));
-
-    // Assert toString
-    assertThat(new FileContents(tempFile, UTF_32).get(),
-               is(new FileContents(tempFile, UTF_32).toString()));
+    Files.write(tempFile, "hello".getBytes(UTF_8));
+    assertThat(new FileContents(tempFile, UTF_32).get(), is("\uFFFD\uFFFD"));
   }
 
   @Test
-  public void dataFileBadEncoding()
-    throws IOException
-  {
+  public void dataFileMatchEncoding() throws IOException {
     final Path tempFile = Files.createTempFile("test", ".txt");
-    Files.write(tempFile, "hello".getBytes(UTF_8));
-    assertThat(new FileContents(tempFile, UTF_32).get(),
-               is("\uFFFD\uFFFD"));
+    Files.write(tempFile, "hello, world".getBytes("UTF-32"));
+    assertThat(new FileContents(tempFile, UTF_32).get(), is("hello, world"));
+
+    // Assert toString
+    assertThat(
+        new FileContents(tempFile, UTF_32).get(),
+        is(new FileContents(tempFile, UTF_32).toString()));
   }
 
+  @Test
+  public void emptyFile() throws IOException {
+    final Path tempFile = Files.createTempFile("test", ".txt");
+    assertThat(new FileContents(tempFile).get(), is(""));
+  }
+
+  @Test
+  public void missingFile() {
+    assertThat(new FileContents(get("nofile.txt")).get(), is(""));
+  }
+
+  @Test
+  public void nullArgs() {
+    assertThrows(NullPointerException.class, () -> new FileContents(null));
+    assertThrows(NullPointerException.class, () -> new FileContents(null, null));
+    assertThrows(NullPointerException.class, () -> new FileContents(get("nofile.txt"), null));
+  }
 }

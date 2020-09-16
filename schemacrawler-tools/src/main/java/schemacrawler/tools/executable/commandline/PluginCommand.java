@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.executable.commandline;
 
-
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.executable.commandline.PluginCommandType.command;
 import static schemacrawler.tools.executable.commandline.PluginCommandType.server;
@@ -41,50 +40,31 @@ import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.function.Supplier;
 
-public class PluginCommand
-  implements Iterable<PluginCommandOption>
-{
+public class PluginCommand implements Iterable<PluginCommandOption> {
 
-  public static PluginCommand empty()
-  {
+  public static PluginCommand empty() {
     return new PluginCommand(command, null, null, null, null, null);
   }
 
-  public static PluginCommand newPluginCommand(final String name,
-                                               final String helpHeader)
-  {
-    return new PluginCommand(command, name, helpHeader, null, null, null);
-  }
-
-  public static PluginCommand newDatabasePluginCommand(final String name,
-                                                       final String helpHeader)
-  {
+  public static PluginCommand newDatabasePluginCommand(final String name, final String helpHeader) {
     return new PluginCommand(server, name, helpHeader, null, null, null);
   }
 
-  public static PluginCommand newPluginCommand(final String name,
-                                               final String helpHeader,
-                                               final String helpDescription)
-  {
-    return new PluginCommand(command,
-                             name,
-                             helpHeader,
-                             helpDescription,
-                             null,
-                             null);
+  public static PluginCommand newPluginCommand(final String name, final String helpHeader) {
+    return new PluginCommand(command, name, helpHeader, null, null, null);
   }
 
-  public static PluginCommand newPluginCommand(final String name,
-                                               final String helpHeader,
-                                               final String helpDescription,
-                                               final Supplier<String> helpFooter)
-  {
-    return new PluginCommand(command,
-                             name,
-                             helpHeader,
-                             helpDescription,
-                             helpFooter,
-                             null);
+  public static PluginCommand newPluginCommand(
+      final String name, final String helpHeader, final String helpDescription) {
+    return new PluginCommand(command, name, helpHeader, helpDescription, null, null);
+  }
+
+  public static PluginCommand newPluginCommand(
+      final String name,
+      final String helpHeader,
+      final String helpDescription,
+      final Supplier<String> helpFooter) {
+    return new PluginCommand(command, name, helpHeader, helpDescription, helpFooter, null);
   }
 
   private final PluginCommandType type;
@@ -94,129 +74,100 @@ public class PluginCommand
   private final Supplier<String> helpFooter;
   private final Collection<PluginCommandOption> options;
 
-  private PluginCommand(final PluginCommandType type,
-                        final String name,
-                        final String helpHeader,
-                        final String helpDescription,
-                        final Supplier<String> helpFooter,
-                        final Collection<PluginCommandOption> options)
-  {
+  private PluginCommand(
+      final PluginCommandType type,
+      final String name,
+      final String helpHeader,
+      final String helpDescription,
+      final Supplier<String> helpFooter,
+      final Collection<PluginCommandOption> options) {
     this.type = requireNonNull(type, "No plugin command type provided");
-    if (options == null)
-    {
+    if (options == null) {
       this.options = new ArrayList<>();
-    }
-    else
-    {
+    } else {
       this.options = new HashSet<>(options);
     }
 
-    if (isBlank(name) && !this.options.isEmpty())
-    {
+    if (isBlank(name) && !this.options.isEmpty()) {
       throw new IllegalArgumentException("No command name provided");
     }
     this.name = name;
 
-    if (isBlank(helpHeader))
-    {
+    if (isBlank(helpHeader)) {
       this.helpHeader = null;
-    }
-    else
-    {
+    } else {
       this.helpHeader = helpHeader;
     }
 
-    if (isBlank(helpDescription))
-    {
+    if (isBlank(helpDescription)) {
       this.helpDescription = null;
-    }
-    else
-    {
+    } else {
       this.helpDescription = helpDescription;
     }
 
     this.helpFooter = helpFooter;
   }
 
-  public Supplier<String> getHelpFooter()
-  {
-    return helpFooter;
-  }
-
-  public boolean hasHelpFooter()
-  {
-    return helpFooter != null;
-  }
-
-  public String getHelpDescription()
-  {
-    return helpDescription;
-  }
-
-  public String getHelpHeader()
-  {
-    return helpHeader;
+  public PluginCommand addOption(
+      final String name, final String helpText, final Class<?> valueClass) {
+    final PluginCommandOption option = new PluginCommandOption(name, helpText, valueClass);
+    if (option != null) {
+      options.add(option);
+    }
+    return this;
   }
 
   @Override
-  public int hashCode()
-  {
-    return Objects.hash(name);
-  }
-
-  @Override
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals(final Object o) {
+    if (this == o) {
       return true;
     }
-    if (!(o instanceof PluginCommand))
-    {
+    if (!(o instanceof PluginCommand)) {
       return false;
     }
     final PluginCommand that = (PluginCommand) o;
     return Objects.equals(name, that.name);
   }
 
-  @Override
-  public String toString()
-  {
-    return new StringJoiner(", ",
-                            PluginCommand.class.getSimpleName() + "[",
-                            "]")
-      .add("name='" + name + "'")
-      .add("options=" + options)
-      .toString();
+  public String getHelpDescription() {
+    return helpDescription;
   }
 
-  @Override
-  public Iterator<PluginCommandOption> iterator()
-  {
-    return options.iterator();
+  public Supplier<String> getHelpFooter() {
+    return helpFooter;
   }
 
-  public boolean isEmpty()
-  {
-    return isBlank(name) && options.isEmpty();
+  public String getHelpHeader() {
+    return helpHeader;
   }
 
-  public PluginCommand addOption(final String name,
-                                 final String helpText,
-                                 final Class<?> valueClass)
-  {
-    final PluginCommandOption option =
-      new PluginCommandOption(name, helpText, valueClass);
-    if (option != null)
-    {
-      options.add(option);
-    }
-    return this;
-  }
-
-  public String getName()
-  {
+  public String getName() {
     return type.toPluginCommandName(name);
   }
 
+  @Override
+  public int hashCode() {
+    return Objects.hash(name);
+  }
+
+  public boolean hasHelpFooter() {
+    return helpFooter != null;
+  }
+
+  public boolean isEmpty() {
+    return isBlank(name) && options.isEmpty();
+  }
+
+  @Override
+  public Iterator<PluginCommandOption> iterator() {
+    return options.iterator();
+  }
+
+  @Override
+  public String toString() {
+    return new StringJoiner(", ", PluginCommand.class.getSimpleName() + "[", "]")
+        .add("name='" + name + "'")
+        .add("options=" + options)
+        .toString();
+  }
 }

@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.command;
 
-
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
@@ -41,98 +40,97 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
  *
  * @author Sualeh Fatehi
  */
-@Command(name = "show",
-         header = "** Show information in output",
-         description = {
-           "",
-         },
-         headerHeading = "",
-         synopsisHeading = "Shell Command:%n",
-         customSynopsis = {
-           "show"
-         },
-         optionListHeading = "Options:%n")
-public final class ShowCommand
-  extends BaseStateHolder
-  implements Runnable
-{
+@Command(
+    name = "show",
+    header = "** Show information in output",
+    description = {
+      "",
+    },
+    headerHeading = "",
+    synopsisHeading = "Shell Command:%n",
+    customSynopsis = {"show"},
+    optionListHeading = "Options:%n")
+public final class ShowCommand extends BaseStateHolder implements Runnable {
 
-  @Option(names = { "--no-info" }, description = {
-    "Hide or show database information",
-    "--no-info=<boolean>",
-    "<boolean> can be true or false",
-    "Optional, defaults to false"
-  }, negatable = true)
+  @Option(
+      names = {"--no-info"},
+      description = {
+        "Hide or show database information",
+        "--no-info=<boolean>",
+        "<boolean> can be true or false",
+        "Optional, defaults to false"
+      },
+      negatable = true)
   private Boolean noinfo;
-  @Option(names = { "--no-remarks" }, description = {
-    "Hide or show table and column remarks",
-    "--no-remarks=<boolean>",
-    "<boolean> can be true or false",
-    "Optional, defaults to false"
-  }, negatable = true)
+
+  @Option(
+      names = {"--no-remarks"},
+      description = {
+        "Hide or show table and column remarks",
+        "--no-remarks=<boolean>",
+        "<boolean> can be true or false",
+        "Optional, defaults to false"
+      },
+      negatable = true)
   private Boolean noremarks;
-  @Option(names = { "--portable-names" }, description = {
-    "Allow for easy comparison between databases, "
-    + "by hiding or showing foreign key names, constraint names, "
-    + "trigger names, specific names for routines, "
-    + "or index and primary key names, "
-    + "and fully-qualified table names",
-    "--portable-names=<boolean>",
-    "<boolean> can be true or false",
-    "Optional, defaults to false"
-  }, negatable = true)
+
+  @Option(
+      names = {"--portable-names"},
+      description = {
+        "Allow for easy comparison between databases, "
+            + "by hiding or showing foreign key names, constraint names, "
+            + "trigger names, specific names for routines, "
+            + "or index and primary key names, "
+            + "and fully-qualified table names",
+        "--portable-names=<boolean>",
+        "<boolean> can be true or false",
+        "Optional, defaults to false"
+      },
+      negatable = true)
   private Boolean portablenames;
-  @Option(names = { "--weak-associations" }, description = {
-    "Hide or show inferred relationships between tables, "
-    + "based on common table and column naming conventions",
-    "--weak-associations=<boolean>",
-    "<boolean> can be true or false",
-    "Optional, defaults to false"
-  }, negatable = true)
+
+  @Option(
+      names = {"--weak-associations"},
+      description = {
+        "Hide or show inferred relationships between tables, "
+            + "based on common table and column naming conventions",
+        "--weak-associations=<boolean>",
+        "<boolean> can be true or false",
+        "Optional, defaults to false"
+      },
+      negatable = true)
   private Boolean weakassociations;
 
-  public ShowCommand(final SchemaCrawlerShellState state)
-  {
+  public ShowCommand(final SchemaCrawlerShellState state) {
     super(state);
   }
 
   @Override
-  public void run()
-  {
-    final SchemaTextOptionsBuilder optionsBuilder = SchemaTextOptionsBuilder
-      .builder()
-      .fromConfig(state.getAdditionalConfiguration());
+  public void run() {
+    final SchemaTextOptionsBuilder optionsBuilder =
+        SchemaTextOptionsBuilder.builder().fromConfig(state.getAdditionalConfiguration());
 
-    if (noinfo != null)
-    {
+    if (noinfo != null) {
       optionsBuilder.noInfo(noinfo);
     }
-    if (noremarks != null)
-    {
+    if (noremarks != null) {
       optionsBuilder.noRemarks(noremarks);
     }
-    if (weakassociations != null)
-    {
+    if (weakassociations != null) {
       optionsBuilder.weakAssociations(weakassociations);
     }
-    if (portablenames != null)
-    {
+    if (portablenames != null) {
       optionsBuilder.portableNames(portablenames);
     }
 
     // Set updated configuration options
     final Config config;
-    if (state.getAdditionalConfiguration() != null)
-    {
+    if (state.getAdditionalConfiguration() != null) {
       config = state.getAdditionalConfiguration();
-    }
-    else
-    {
+    } else {
       config = new Config();
     }
     config.putAll(optionsBuilder.toConfig());
     state.addAdditionalConfiguration(config);
-
   }
-
 }

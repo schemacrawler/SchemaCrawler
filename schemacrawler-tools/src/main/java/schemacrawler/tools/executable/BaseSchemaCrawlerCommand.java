@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.executable;
 
-
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
@@ -47,9 +46,7 @@ import schemacrawler.tools.options.OutputOptionsBuilder;
  *
  * @author Sualeh Fatehi
  */
-public abstract class BaseSchemaCrawlerCommand
-  implements SchemaCrawlerCommand
-{
+public abstract class BaseSchemaCrawlerCommand implements SchemaCrawlerCommand {
 
   protected final String command;
   protected Config additionalConfiguration;
@@ -59,166 +56,122 @@ public abstract class BaseSchemaCrawlerCommand
   protected OutputOptions outputOptions;
   protected SchemaCrawlerOptions schemaCrawlerOptions;
 
-  protected BaseSchemaCrawlerCommand(final String command)
-  {
+  protected BaseSchemaCrawlerCommand(final String command) {
     this.command = requireNotBlank(command, "No command specified");
 
-    schemaCrawlerOptions =
-      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    schemaCrawlerOptions = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     outputOptions = OutputOptionsBuilder.newOutputOptions();
     additionalConfiguration = new Config();
   }
 
   @Override
-  public void checkAvailability()
-    throws Exception
-  {
+  public void checkAvailability() throws Exception {
     // Nothing additional to check at this point.
     // Most command should be available after their class is loaded,
     // and imports are resolved.
   }
 
   @Override
-  public final Config getAdditionalConfiguration()
-  {
+  public final Config getAdditionalConfiguration() {
     return additionalConfiguration;
   }
 
   @Override
-  public final void setAdditionalConfiguration(final Config additionalConfiguration)
-  {
-    this.additionalConfiguration = requireNonNull(additionalConfiguration,
-                                                  "No additional configuration provided");
-  }
-
-  @Override
-  public Catalog getCatalog()
-  {
+  public Catalog getCatalog() {
     return catalog;
   }
 
+  /** {@inheritDoc} */
   @Override
-  public void setCatalog(final Catalog catalog)
-  {
-    this.catalog = catalog;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final String getCommand()
-  {
+  public final String getCommand() {
     return command;
   }
 
   @Override
-  public Connection getConnection()
-  {
+  public Connection getConnection() {
     return connection;
   }
 
   @Override
-  public void setConnection(final Connection connection)
-  {
+  public Identifiers getIdentifiers() {
+    return identifiers;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final OutputOptions getOutputOptions() {
+    return outputOptions;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final SchemaCrawlerOptions getSchemaCrawlerOptions() {
+    return schemaCrawlerOptions;
+  }
+
+  @Override
+  public void initialize() throws Exception {
+    checkOptions();
+  }
+
+  @Override
+  public final void setAdditionalConfiguration(final Config additionalConfiguration) {
+    this.additionalConfiguration =
+        requireNonNull(additionalConfiguration, "No additional configuration provided");
+  }
+
+  @Override
+  public void setCatalog(final Catalog catalog) {
+    this.catalog = catalog;
+  }
+
+  @Override
+  public void setConnection(final Connection connection) {
     this.connection = connection;
   }
 
   @Override
-  public Identifiers getIdentifiers()
-  {
-    return identifiers;
-  }
-
-  @Override
-  public void setIdentifiers(final Identifiers identifiers)
-  {
+  public void setIdentifiers(final Identifiers identifiers) {
     this.identifiers = identifiers;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final OutputOptions getOutputOptions()
-  {
-    return outputOptions;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final void setOutputOptions(final OutputOptions outputOptions)
-  {
-    if (outputOptions != null)
-    {
+  public final void setOutputOptions(final OutputOptions outputOptions) {
+    if (outputOptions != null) {
       this.outputOptions = outputOptions;
-    }
-    else
-    {
+    } else {
       this.outputOptions = OutputOptionsBuilder.newOutputOptions();
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final SchemaCrawlerOptions getSchemaCrawlerOptions()
-  {
-    return schemaCrawlerOptions;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
-  {
-    if (schemaCrawlerOptions != null)
-    {
+  public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions) {
+    if (schemaCrawlerOptions != null) {
       this.schemaCrawlerOptions = schemaCrawlerOptions;
-    }
-    else
-    {
-      this.schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    } else {
+      this.schemaCrawlerOptions = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     }
   }
 
+  /** {@inheritDoc} */
   @Override
-  public void initialize()
-    throws Exception
-  {
-    checkOptions();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final String toString()
-  {
+  public final String toString() {
     return command;
   }
 
-  protected void checkCatalog()
-  {
+  protected void checkCatalog() {
     requireNonNull(catalog, "No database catalog provided");
-    if (usesConnection())
-    {
+    if (usesConnection()) {
       requireNonNull(connection, "No database connection provided");
     }
   }
 
-  private void checkOptions()
-  {
+  private void checkOptions() {
     requireNonNull(schemaCrawlerOptions, "No SchemaCrawler options provided");
-    requireNonNull(additionalConfiguration,
-                   "No additional configuration provided");
+    requireNonNull(additionalConfiguration, "No additional configuration provided");
     requireNonNull(outputOptions, "No output options provided");
     requireNonNull(identifiers, "No database identifiers provided");
   }
-
 }

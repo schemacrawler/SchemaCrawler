@@ -28,15 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 /**
  * Represents an trigger.
  *
  * @author Sualeh Fatehi
  */
-public interface Trigger
-  extends DependantObject<Table>
-{
+public interface Trigger extends DependantObject<Table> {
 
   /**
    * Gets the WHEN clause of the trigger.
@@ -67,21 +64,19 @@ public interface Trigger
   String getActionStatement();
 
   /**
-   * Gets the condition timing. BEFORE = the trigger is executed before the
-   * triggering data manipulation operation; INSTEAD OF = the trigger is
-   * executed instead of the triggering data manipulation operation; AFTER = the
-   * trigger is executed after the triggering data manipulation operation.
+   * Gets the condition timing. BEFORE = the trigger is executed before the triggering data
+   * manipulation operation; INSTEAD OF = the trigger is executed instead of the triggering data
+   * manipulation operation; AFTER = the trigger is executed after the triggering data manipulation
+   * operation.
    *
    * @return Condition timing.
    */
   ConditionTimingType getConditionTiming();
 
   /**
-   * Gets the event manipulation type. The trigger event - INSERT, DELETE, or
-   * UPDATE.
+   * Gets the event manipulation type. The trigger event - INSERT, DELETE, or UPDATE.
    *
    * @return Event manipulation type
    */
   EventManipulationType getEventManipulationType();
-
 }

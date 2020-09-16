@@ -27,15 +27,11 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schemacrawler;
 
-
-public enum DatabaseObjectInfoRetrieval
-{
-
+public enum DatabaseObjectInfoRetrieval {
   base,
   table,
   routine,
   database,
   other,
   ;
-
 }

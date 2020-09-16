@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schemacrawler;
 
-
 import static schemacrawler.schemacrawler.SchemaInfoLevelBuilder.detailed;
 import static schemacrawler.schemacrawler.SchemaInfoLevelBuilder.maximum;
 import static schemacrawler.schemacrawler.SchemaInfoLevelBuilder.minimum;
@@ -39,9 +38,7 @@ import java.util.logging.Level;
 import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.string.StringFormat;
 
-public enum InfoLevel
-{
-
+public enum InfoLevel {
   unknown(() -> standard()),
   minimum(() -> minimum()),
   standard(() -> standard()),
@@ -49,32 +46,24 @@ public enum InfoLevel
   maximum(() -> maximum());
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(InfoLevel.class.getName());
+      SchemaCrawlerLogger.getLogger(InfoLevel.class.getName());
 
-  public static InfoLevel valueOfFromString(final String infoLevelValue)
-  {
-    try
-    {
+  public static InfoLevel valueOfFromString(final String infoLevelValue) {
+    try {
       return InfoLevel.valueOf(infoLevelValue);
-    }
-    catch (final IllegalArgumentException | NullPointerException e)
-    {
-      LOGGER.log(Level.INFO,
-                 new StringFormat("Unknown infolevel <%s>", infoLevelValue));
+    } catch (final IllegalArgumentException | NullPointerException e) {
+      LOGGER.log(Level.INFO, new StringFormat("Unknown infolevel <%s>", infoLevelValue));
       return unknown;
     }
   }
 
   private final Supplier<SchemaInfoLevel> toSchemaInfoLevelFunction;
 
-  InfoLevel(final Supplier<SchemaInfoLevel> toSchemaInfoLevelFunction)
-  {
+  InfoLevel(final Supplier<SchemaInfoLevel> toSchemaInfoLevelFunction) {
     this.toSchemaInfoLevelFunction = toSchemaInfoLevelFunction;
   }
 
-  public final SchemaInfoLevel toSchemaInfoLevel()
-  {
+  public final SchemaInfoLevel toSchemaInfoLevel() {
     return toSchemaInfoLevelFunction.get();
   }
-
 }

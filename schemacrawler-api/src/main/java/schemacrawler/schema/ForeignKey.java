@@ -28,16 +28,16 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 /**
  * Represents a foreign-key mapping to a primary key in another table.
  *
  * @author Sualeh Fatehi
  */
 public interface ForeignKey
-  extends BaseForeignKey<ForeignKeyColumnReference>, AttributedObject,
-  DescribedObject, Constraint
-{
+    extends BaseForeignKey<ForeignKeyColumnReference>,
+        AttributedObject,
+        DescribedObject,
+        Constraint {
 
   /**
    * Gets the deferrability.
@@ -54,8 +54,7 @@ public interface ForeignKey
   ForeignKeyUpdateRule getDeleteRule();
 
   /**
-   * Gets a generated specific name for databases that support non-unique
-   * foreign key names.
+   * Gets a generated specific name for databases that support non-unique foreign key names.
    *
    * @return Specific name of a foreign key
    */
@@ -67,5 +66,4 @@ public interface ForeignKey
    * @return Update rule
    */
   ForeignKeyUpdateRule getUpdateRule();
-
 }

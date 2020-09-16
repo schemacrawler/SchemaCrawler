@@ -27,9 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schemacrawler;
 
-
-public enum MetadataRetrievalStrategy
-{
+public enum MetadataRetrievalStrategy {
 
   // use JDBC metadata calls to retrieve information one database object at a time;
   // each JDBC driver decides how to honor these requests
@@ -37,5 +35,4 @@ public enum MetadataRetrievalStrategy
   // use the INFORMATION_SCHEMA or database-specific data dictionary queries to
   // retrieve information for all database objects together
   data_dictionary_all
-
 }

@@ -27,58 +27,42 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.crawl;
 
-
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexColumnSortSequence;
 
-final class MutableIndexColumn
-  extends MutableKeyColumn
-  implements IndexColumn
-{
+final class MutableIndexColumn extends MutableKeyColumn implements IndexColumn {
 
   private static final long serialVersionUID = -6923211341742623556L;
 
   private final Index index;
   private IndexColumnSortSequence sortSequence;
 
-  MutableIndexColumn(final Index index, final Column column)
-  {
+  MutableIndexColumn(final Index index, final Column column) {
     super(column);
     this.index = index;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Index getIndex()
-  {
+  public Index getIndex() {
     return index;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public int getIndexOrdinalPosition()
-  {
+  public int getIndexOrdinalPosition() {
     return getKeyOrdinalPosition();
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public IndexColumnSortSequence getSortSequence()
-  {
+  public IndexColumnSortSequence getSortSequence() {
     return sortSequence;
   }
 
-  void setSortSequence(final IndexColumnSortSequence sortSequence)
-  {
+  void setSortSequence(final IndexColumnSortSequence sortSequence) {
     this.sortSequence = sortSequence;
   }
-
 }

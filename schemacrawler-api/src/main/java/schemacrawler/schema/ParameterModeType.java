@@ -27,49 +27,30 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schema;
 
+public enum ParameterModeType {
 
-public enum ParameterModeType
-{
-
-  /**
-   * Unknown.
-   */
+  /** Unknown. */
   unknown("unknown"),
-  /**
-   * In.
-   */
+  /** In. */
   in("in"),
-  /**
-   * In/ out.
-   */
+  /** In/ out. */
   inOut("in/ out"),
-  /**
-   * Out.
-   */
+  /** Out. */
   out("out"),
-  /**
-   * Return.
-   */
+  /** Return. */
   returnValue("return"),
-  /**
-   * Return.
-   */
+  /** Return. */
   result("result");
 
   private final String text;
 
-  ParameterModeType(final String text)
-  {
+  ParameterModeType(final String text) {
     this.text = text;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String toString()
-  {
+  public String toString() {
     return text;
   }
-
 }

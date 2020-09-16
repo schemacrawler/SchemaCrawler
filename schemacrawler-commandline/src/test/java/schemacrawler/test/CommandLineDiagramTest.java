@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
@@ -40,28 +39,26 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
-import schemacrawler.tools.options.Config;
-import schemacrawler.tools.options.TextOutputFormat;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
-public class CommandLineDiagramTest
-{
+public class CommandLineDiagramTest {
 
   private static final String COMMAND_LINE_DIAGRAM_OUTPUT = "command_line_diagram_output/";
 
-  private static void run(final TestContext testContext,
-                          final DatabaseConnectionInfo connectionInfo,
-                          final Map<String, String> argsMap,
-                          final Map<String, String> config,
-                          final String command)
-    throws Exception
-  {
+  private static void run(
+      final TestContext testContext,
+      final DatabaseConnectionInfo connectionInfo,
+      final Map<String, String> argsMap,
+      final Map<String, String> config,
+      final String command)
+      throws Exception {
     argsMap.put("-no-info", Boolean.TRUE.toString());
     argsMap.put("-schemas", ".*\\.(?!FOR_LINT).*");
     argsMap.put("-info-level", "maximum");
@@ -69,47 +66,38 @@ public class CommandLineDiagramTest
     final Map<String, String> runConfig = new HashMap<>();
     final Map<String, String> informationSchema = loadHsqldbConfig();
     runConfig.putAll(informationSchema);
-    if (config != null)
-    {
+    if (config != null) {
       runConfig.putAll(config);
     }
 
-    assertThat(outputOf(commandlineExecution(connectionInfo,
-                                             command,
-                                             argsMap,
-                                             runConfig,
-                                             DiagramOutputFormat.scdot)),
-               hasSameContentAs(classpathResource(COMMAND_LINE_DIAGRAM_OUTPUT
-                                                  + testContext.testMethodName()
-                                                  + ".scdot")));
+    assertThat(
+        outputOf(
+            commandlineExecution(
+                connectionInfo, command, argsMap, runConfig, DiagramOutputFormat.scdot)),
+        hasSameContentAs(
+            classpathResource(
+                COMMAND_LINE_DIAGRAM_OUTPUT + testContext.testMethodName() + ".scdot")));
   }
 
   @Test
   public void commandLineWithCardinalityOptionsConfig(
-      final TestContext testContext,
-      final DatabaseConnectionInfo connectionInfo) throws Exception
-  {
+      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> args = new HashMap<>();
 
     final Map<String, String> config = new HashMap<>();
-    config.put("schemacrawler.graph.show.primarykey.cardinality",
-        Boolean.FALSE.toString());
-    config.put("schemacrawler.graph.show.foreignkey.cardinality",
-        Boolean.FALSE.toString());
+    config.put("schemacrawler.graph.show.primarykey.cardinality", Boolean.FALSE.toString());
+    config.put("schemacrawler.graph.show.foreignkey.cardinality", Boolean.FALSE.toString());
 
     run(testContext, connectionInfo, args, config, "brief");
   }
-  
+
   @Test
   public void commandLineWithDefaults(
-      final TestContext testContext,
-      final DatabaseConnectionInfo connectionInfo) throws Exception
-  {
+      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> args = new HashMap<>();
 
     final Map<String, String> config = new HashMap<>();
 
     run(testContext, connectionInfo, args, config, "brief");
   }
-  
 }

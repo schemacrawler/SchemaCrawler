@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.ArrayList;
@@ -44,19 +43,16 @@ import schemacrawler.schemacrawler.Identifiers;
 import us.fatehi.utility.string.StringFormat;
 
 /**
- * Represents a column type. Provides the java.sql.Types type, the
- * java.sql.Types type name, and the database specific data type name.
+ * Represents a column type. Provides the java.sql.Types type, the java.sql.Types type name, and the
+ * database specific data type name.
  *
  * @author Sualeh Fatehi
  */
-final class MutableColumnDataType
-  extends AbstractDatabaseObject
-  implements ColumnDataType
-{
+final class MutableColumnDataType extends AbstractDatabaseObject implements ColumnDataType {
 
   private static final long serialVersionUID = 3688503281676530744L;
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(SchemaCrawler.class.getName());
+      SchemaCrawlerLogger.getLogger(SchemaCrawler.class.getName());
   private boolean autoIncrementable;
   private ColumnDataType baseType;
   private boolean caseSensitive;
@@ -78,8 +74,7 @@ final class MutableColumnDataType
   private boolean userDefined;
   private List<String> enumValues;
 
-  MutableColumnDataType(final ColumnDataType columnDataType)
-  {
+  MutableColumnDataType(final ColumnDataType columnDataType) {
     this(columnDataType.getSchema(), columnDataType.getName());
 
     autoIncrementable = columnDataType.isAutoIncrementable();
@@ -103,8 +98,7 @@ final class MutableColumnDataType
     enumValues = new ArrayList<>(columnDataType.getEnumValues());
   }
 
-  MutableColumnDataType(final Schema schema, final String name)
-  {
+  MutableColumnDataType(final Schema schema, final String name) {
     super(schema, name);
 
     javaSqlType = JavaSqlType.UNKNOWN;
@@ -119,358 +113,251 @@ final class MutableColumnDataType
     enumValues = new ArrayList<>();
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public ColumnDataType getBaseType()
-  {
+  public ColumnDataType getBaseType() {
     return baseType;
   }
 
-  void setBaseType(final ColumnDataType baseType)
-  {
-    this.baseType = baseType;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String getCreateParameters()
-  {
+  public String getCreateParameters() {
     return createParameters;
   }
 
-  void setCreateParameters(final String createParams)
-  {
-    createParameters = createParams;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String getDatabaseSpecificTypeName()
-  {
+  public String getDatabaseSpecificTypeName() {
     return getName();
   }
 
+  /** {@inheritDoc} */
   @Override
-  public JavaSqlType getJavaSqlType()
-  {
-    return javaSqlType;
-  }
-
-  void setJavaSqlType(final JavaSqlType javaSqlType)
-  {
-    if (javaSqlType != null)
-    {
-      this.javaSqlType = javaSqlType;
-    }
-    else
-    {
-      this.javaSqlType = JavaSqlType.UNKNOWN;
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String getLiteralPrefix()
-  {
-    return literalPrefix;
-  }
-
-  void setLiteralPrefix(final String literalPrefix)
-  {
-    this.literalPrefix = literalPrefix;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String getLiteralSuffix()
-  {
-    return literalSuffix;
-  }
-
-  void setLiteralSuffix(final String literalSuffix)
-  {
-    this.literalSuffix = literalSuffix;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String getLocalTypeName()
-  {
-    return localizedTypeName;
-  }
-
-  void setLocalTypeName(final String localTypeName)
-  {
-    localizedTypeName = localTypeName;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public int getMaximumScale()
-  {
-    return maximumScale;
-  }
-
-  void setMaximumScale(final int maximumScale)
-  {
-    this.maximumScale = maximumScale;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public int getMinimumScale()
-  {
-    return minimumScale;
-  }
-
-  void setMinimumScale(final int minimumScale)
-  {
-    this.minimumScale = minimumScale;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public int getNumPrecisionRadix()
-  {
-    return numPrecisionRadix;
-  }
-
-  void setNumPrecisionRadix(final int numPrecisionRadix)
-  {
-    this.numPrecisionRadix = numPrecisionRadix;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public long getPrecision()
-  {
-    return precision;
-  }
-
-  void setPrecision(final long precision)
-  {
-    this.precision = precision;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public SearchableType getSearchable()
-  {
-    return searchable;
-  }
-
-  void setSearchable(final SearchableType searchable)
-  {
-    this.searchable = searchable;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Class<?> getTypeMappedClass()
-  {
-    return javaSqlTypeMappedClass;
-  }
-
-  void setTypeMappedClass(final Class<?> mappedClass)
-  {
-    if (mappedClass != null)
-    {
-      javaSqlTypeMappedClass = mappedClass;
-    }
-    else
-    {
-      javaSqlTypeMappedClass = Object.class;
-    }
-  }
-
-  void setTypeMappedClass(final String mappedClassName)
-  {
-    if (!isBlank(mappedClassName))
-    {
-      try
-      {
-        javaSqlTypeMappedClass = Class.forName(mappedClassName);
-      }
-      catch (final ClassNotFoundException e)
-      {
-        LOGGER.log(Level.FINE,
-                   new StringFormat("Could not load mapped class <%s>",
-                                    mappedClassName),
-                   e);
-        javaSqlTypeMappedClass = Object.class;
-      }
-    }
-    else
-    {
-      javaSqlTypeMappedClass = Object.class;
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isAutoIncrementable()
-  {
-    return autoIncrementable;
-  }
-
-  void setAutoIncrementable(final boolean autoIncrementable)
-  {
-    this.autoIncrementable = autoIncrementable;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isCaseSensitive()
-  {
-    return caseSensitive;
-  }
-
-  void setCaseSensitive(final boolean caseSensitive)
-  {
-    this.caseSensitive = caseSensitive;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isFixedPrecisionScale()
-  {
-    return fixedPrecisionScale;
-  }
-
-  void setFixedPrecisionScale(final boolean fixedPrecisionScale)
-  {
-    this.fixedPrecisionScale = fixedPrecisionScale;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isNullable()
-  {
-    return nullable;
-  }
-
-  void setNullable(final boolean nullable)
-  {
-    this.nullable = nullable;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isUnsigned()
-  {
-    return unsigned;
-  }
-
-  void setUnsigned(final boolean unsignedAttribute)
-  {
-    unsigned = unsignedAttribute;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isUserDefined()
-  {
-    return userDefined;
-  }
-
-  @Override
-  public boolean isEnumerated()
-  {
-    return !enumValues.isEmpty();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public List<String> getEnumValues()
-  {
+  public List<String> getEnumValues() {
     return enumValues;
   }
 
-  void setEnumValues(final List<String> enumValues)
-  {
-    if (enumValues == null)
-    {
-      this.enumValues = new ArrayList<>();
-    }
-    else
-    {
-      this.enumValues = enumValues;
-    }
-  }
-
-  void setUserDefined(final boolean userDefined)
-  {
-    this.userDefined = userDefined;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String getFullName()
-  {
+  public String getFullName() {
     buildFullName();
     return fullName;
   }
 
-  private void buildFullName()
-  {
-    if (fullName != null)
-    {
+  @Override
+  public JavaSqlType getJavaSqlType() {
+    return javaSqlType;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public String getLiteralPrefix() {
+    return literalPrefix;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public String getLiteralSuffix() {
+    return literalSuffix;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public String getLocalTypeName() {
+    return localizedTypeName;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public int getMaximumScale() {
+    return maximumScale;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public int getMinimumScale() {
+    return minimumScale;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public int getNumPrecisionRadix() {
+    return numPrecisionRadix;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public long getPrecision() {
+    return precision;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public SearchableType getSearchable() {
+    return searchable;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Class<?> getTypeMappedClass() {
+    return javaSqlTypeMappedClass;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean isAutoIncrementable() {
+    return autoIncrementable;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean isCaseSensitive() {
+    return caseSensitive;
+  }
+
+  @Override
+  public boolean isEnumerated() {
+    return !enumValues.isEmpty();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean isFixedPrecisionScale() {
+    return fixedPrecisionScale;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean isNullable() {
+    return nullable;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean isUnsigned() {
+    return unsigned;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean isUserDefined() {
+    return userDefined;
+  }
+
+  void setAutoIncrementable(final boolean autoIncrementable) {
+    this.autoIncrementable = autoIncrementable;
+  }
+
+  void setBaseType(final ColumnDataType baseType) {
+    this.baseType = baseType;
+  }
+
+  void setCaseSensitive(final boolean caseSensitive) {
+    this.caseSensitive = caseSensitive;
+  }
+
+  void setCreateParameters(final String createParams) {
+    createParameters = createParams;
+  }
+
+  void setEnumValues(final List<String> enumValues) {
+    if (enumValues == null) {
+      this.enumValues = new ArrayList<>();
+    } else {
+      this.enumValues = enumValues;
+    }
+  }
+
+  void setFixedPrecisionScale(final boolean fixedPrecisionScale) {
+    this.fixedPrecisionScale = fixedPrecisionScale;
+  }
+
+  void setJavaSqlType(final JavaSqlType javaSqlType) {
+    if (javaSqlType != null) {
+      this.javaSqlType = javaSqlType;
+    } else {
+      this.javaSqlType = JavaSqlType.UNKNOWN;
+    }
+  }
+
+  void setLiteralPrefix(final String literalPrefix) {
+    this.literalPrefix = literalPrefix;
+  }
+
+  void setLiteralSuffix(final String literalSuffix) {
+    this.literalSuffix = literalSuffix;
+  }
+
+  void setLocalTypeName(final String localTypeName) {
+    localizedTypeName = localTypeName;
+  }
+
+  void setMaximumScale(final int maximumScale) {
+    this.maximumScale = maximumScale;
+  }
+
+  void setMinimumScale(final int minimumScale) {
+    this.minimumScale = minimumScale;
+  }
+
+  void setNullable(final boolean nullable) {
+    this.nullable = nullable;
+  }
+
+  void setNumPrecisionRadix(final int numPrecisionRadix) {
+    this.numPrecisionRadix = numPrecisionRadix;
+  }
+
+  void setPrecision(final long precision) {
+    this.precision = precision;
+  }
+
+  void setSearchable(final SearchableType searchable) {
+    this.searchable = searchable;
+  }
+
+  void setTypeMappedClass(final Class<?> mappedClass) {
+    if (mappedClass != null) {
+      javaSqlTypeMappedClass = mappedClass;
+    } else {
+      javaSqlTypeMappedClass = Object.class;
+    }
+  }
+
+  void setTypeMappedClass(final String mappedClassName) {
+    if (!isBlank(mappedClassName)) {
+      try {
+        javaSqlTypeMappedClass = Class.forName(mappedClassName);
+      } catch (final ClassNotFoundException e) {
+        LOGGER.log(
+            Level.FINE, new StringFormat("Could not load mapped class <%s>", mappedClassName), e);
+        javaSqlTypeMappedClass = Object.class;
+      }
+    } else {
+      javaSqlTypeMappedClass = Object.class;
+    }
+  }
+
+  void setUnsigned(final boolean unsignedAttribute) {
+    unsigned = unsignedAttribute;
+  }
+
+  void setUserDefined(final boolean userDefined) {
+    this.userDefined = userDefined;
+  }
+
+  private void buildFullName() {
+    if (fullName != null) {
       return;
     }
     final Schema schema = getSchema();
-    if (!isBlank(schema.getFullName()))
-    {
-      final Identifiers identifiers = Identifiers
-        .identifiers()
-        .withIdentifierQuoteString("\"")
-        .build();
+    if (!isBlank(schema.getFullName())) {
+      final Identifiers identifiers =
+          Identifiers.identifiers().withIdentifierQuoteString("\"").build();
       fullName = identifiers.quoteFullName(this);
-    }
-    else
-    {
+    } else {
       // System data-types are reserved words, but should not be quoted
       fullName = getName();
     }
   }
-
 }

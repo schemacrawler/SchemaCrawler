@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.test.ioresource;
 
-
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.createTempFile;
 import static java.nio.file.Files.newBufferedReader;
@@ -42,22 +41,13 @@ import java.io.Writer;
 import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
+
 import us.fatehi.utility.ioresource.FileOutputResource;
 
-public class FileOutputResourceTest
-{
+public class FileOutputResourceTest {
 
   @Test
-  public void nullArgs()
-  {
-    assertThrows(NullPointerException.class,
-                 () -> new FileOutputResource(null));
-  }
-
-  @Test
-  public void happyPath()
-    throws IOException
-  {
+  public void happyPath() throws IOException {
     final Path tempFile = createTempFile("sc", ".txt");
 
     final FileOutputResource outputResource = new FileOutputResource(tempFile);
@@ -72,4 +62,8 @@ public class FileOutputResourceTest
     assertThat(readFully(newBufferedReader(tempFile)), is("hello, world"));
   }
 
+  @Test
+  public void nullArgs() {
+    assertThrows(NullPointerException.class, () -> new FileOutputResource(null));
+  }
 }

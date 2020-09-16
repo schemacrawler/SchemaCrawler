@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.crawl;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
@@ -46,6 +45,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
@@ -71,86 +71,74 @@ import schemacrawler.utility.NamedObjectSort;
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class RoutineRetrieverProceduresTest
-{
+public class RoutineRetrieverProceduresTest {
 
   private MutableCatalog catalog;
 
-  @Test
-  @DisplayName("Retrieve procedures from data dictionary")
-  public void proceduresFromDataDictionary(final TestContext testContext,
-                                           final Connection connection)
-    throws Exception
-  {
-    final InformationSchemaViews informationSchemaViews =
-      InformationSchemaViewsBuilder
-        .builder()
-        .withSql(InformationSchemaKey.PROCEDURES,
-                 "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_PROCEDURES")
-        .toOptions();
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-      SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder
-      .with(proceduresRetrievalStrategy, data_dictionary_all)
-      .withInformationSchemaViews(informationSchemaViews);
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-      schemaRetrievalOptionsBuilder.toOptions();
-    final RetrieverConnection retrieverConnection =
-      new RetrieverConnection(connection, schemaRetrievalOptions);
-
-    final SchemaCrawlerOptions options =
-      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-
-    final RoutineRetriever procedureRetriever =
-      new RoutineRetriever(retrieverConnection, catalog, options);
-    procedureRetriever.retrieveProcedures(catalog.getAllSchemas(),
-                                          new IncludeAll());
-
-    final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout)
-    {
-      final Routine[] procedures = ((Catalog) catalog)
-        .getRoutines()
-        .toArray(new Routine[0]);
-      Arrays.sort(procedures, NamedObjectSort.alphabetical);
-      for (final Routine procedure : procedures)
-      {
-        out.println(String.format("%s (%s) [%s]",
-                                  procedure.getFullName(),
-                                  procedure.getSpecificName(),
-                                  procedure.getRoutineType()));
-      }
-    }
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
-
-  }
-
   @BeforeAll
-  public void loadBaseCatalog(final Connection connection)
-    throws SchemaCrawlerException
-  {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-      .builder()
-      .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"));
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
-      .builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder
-                             .builder()
-                             .withInfoLevel(InfoLevel.minimum)
-                             .setRetrieveRoutines(false)
-                             .toOptions());
+  public void loadBaseCatalog(final Connection connection) throws SchemaCrawlerException {
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"));
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder()
+            .withSchemaInfoLevel(
+                SchemaInfoLevelBuilder.builder()
+                    .withInfoLevel(InfoLevel.minimum)
+                    .setRetrieveRoutines(false)
+                    .toOptions());
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withLimitOptionsBuilder(limitOptionsBuilder)
-        .withLoadOptionsBuilder(loadOptionsBuilder)
-        .toOptions();
-    catalog = (MutableCatalog) getCatalog(connection,
-                                          SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
-                                          schemaCrawlerOptions);
+        SchemaCrawlerOptionsBuilder.builder()
+            .withLimitOptionsBuilder(limitOptionsBuilder)
+            .withLoadOptionsBuilder(loadOptionsBuilder)
+            .toOptions();
+    catalog =
+        (MutableCatalog)
+            getCatalog(
+                connection,
+                SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
+                schemaCrawlerOptions);
 
     assertThat(catalog.getRoutines(), is(empty()));
   }
 
+  @Test
+  @DisplayName("Retrieve procedures from data dictionary")
+  public void proceduresFromDataDictionary(
+      final TestContext testContext, final Connection connection) throws Exception {
+    final InformationSchemaViews informationSchemaViews =
+        InformationSchemaViewsBuilder.builder()
+            .withSql(
+                InformationSchemaKey.PROCEDURES,
+                "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_PROCEDURES")
+            .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+        SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder
+        .with(proceduresRetrievalStrategy, data_dictionary_all)
+        .withInformationSchemaViews(informationSchemaViews);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection =
+        new RetrieverConnection(connection, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final RoutineRetriever procedureRetriever =
+        new RoutineRetriever(retrieverConnection, catalog, options);
+    procedureRetriever.retrieveProcedures(catalog.getAllSchemas(), new IncludeAll());
+
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout) {
+      final Routine[] procedures = ((Catalog) catalog).getRoutines().toArray(new Routine[0]);
+      Arrays.sort(procedures, NamedObjectSort.alphabetical);
+      for (final Routine procedure : procedures) {
+        out.println(
+            String.format(
+                "%s (%s) [%s]",
+                procedure.getFullName(), procedure.getSpecificName(), procedure.getRoutineType()));
+      }
+    }
+    assertThat(
+        outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+  }
 }

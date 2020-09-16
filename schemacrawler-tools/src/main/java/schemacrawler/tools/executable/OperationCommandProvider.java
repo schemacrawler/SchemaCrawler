@@ -27,60 +27,51 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.executable;
 
-
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.operation.OperationCommand;
 
-final class OperationCommandProvider
-  extends BaseCommandProvider
-{
+final class OperationCommandProvider extends BaseCommandProvider {
 
-  OperationCommandProvider()
-  {
+  OperationCommandProvider() {
     super(CommandProviderUtility.operationCommands());
   }
 
   @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
-  {
+  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command) {
     return new OperationCommand(command);
   }
 
   @Override
-  public boolean supportsOutputFormat(final String command,
-                                      final OutputOptions outputOptions)
-  {
+  public boolean supportsOutputFormat(final String command, final OutputOptions outputOptions) {
     return true;
   }
 
   @Override
-  public boolean supportsSchemaCrawlerCommand(final String command,
-                                              final SchemaCrawlerOptions schemaCrawlerOptions,
-                                              final Config additionalConfiguration,
-                                              final OutputOptions outputOptions)
-  {
+  public boolean supportsSchemaCrawlerCommand(
+      final String command,
+      final SchemaCrawlerOptions schemaCrawlerOptions,
+      final Config additionalConfiguration,
+      final OutputOptions outputOptions) {
     // Check if the command is an operation
     final boolean isOperation = supportsCommand(command);
 
     /// Check if the command is a named query
     final boolean isNamedQuery;
-    if (additionalConfiguration != null)
-    {
+    if (additionalConfiguration != null) {
       isNamedQuery = additionalConfiguration.containsKey(command);
-    }
-    else
-    {
+    } else {
       isNamedQuery = false;
     }
 
-    // Operation and query output is only in text or HTMl, but nevertheless some operations such as count
+    // Operation and query output is only in text or HTMl, but nevertheless some operations such as
+    // count
     // can be represented on diagrams (since the catalog is annotated with attributes).
-    // Also, if a query is part of a comma-separated list of commands, the run should not fail due to a bad output format.
+    // Also, if a query is part of a comma-separated list of commands, the run should not fail due
+    // to a bad output format.
     // So no check is done for output format.
     final boolean supportsSchemaCrawlerCommand = isOperation || isNamedQuery;
     return supportsSchemaCrawlerCommand;
   }
-
 }

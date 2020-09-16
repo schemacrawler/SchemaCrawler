@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 import java.util.List;
 
 /**
@@ -36,9 +35,7 @@ import java.util.List;
  *
  * @author Sualeh Fatehi
  */
-public interface BaseForeignKey<R extends ColumnReference>
-  extends NamedObject, Iterable<R>
-{
+public interface BaseForeignKey<R extends ColumnReference> extends NamedObject, Iterable<R> {
 
   /**
    * Gets the list of column pairs.
@@ -46,5 +43,4 @@ public interface BaseForeignKey<R extends ColumnReference>
    * @return Column pairs
    */
   List<R> getColumnReferences();
-
 }

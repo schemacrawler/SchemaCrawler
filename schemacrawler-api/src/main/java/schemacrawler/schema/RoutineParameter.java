@@ -27,10 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schema;
 
-
-public interface RoutineParameter<R extends Routine>
-  extends BaseColumn<R>
-{
+public interface RoutineParameter<R extends Routine> extends BaseColumn<R> {
 
   /**
    * Gets the routine column type.
@@ -45,5 +42,4 @@ public interface RoutineParameter<R extends Routine>
    * @return The number of decimal digits precision for the column.
    */
   int getPrecision();
-
 }

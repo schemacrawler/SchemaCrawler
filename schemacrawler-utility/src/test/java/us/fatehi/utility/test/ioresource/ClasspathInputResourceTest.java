@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.test.ioresource;
 
-
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.endsWith;
@@ -40,43 +39,32 @@ import static us.fatehi.utility.IOUtility.readFully;
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
+
 import us.fatehi.utility.ioresource.ClasspathInputResource;
 
-public class ClasspathInputResourceTest
-{
+public class ClasspathInputResourceTest {
 
   @Test
-  public void nullArgs()
-  {
-    assertThrows(NullPointerException.class,
-                 () -> new ClasspathInputResource(null));
+  public void badArgs() {
+    assertThrows(IOException.class, () -> new ClasspathInputResource("no_resource"));
   }
 
   @Test
-  public void badArgs()
-  {
-    assertThrows(IOException.class,
-                 () -> new ClasspathInputResource("no_resource"));
-  }
-
-  @Test
-  public void happyPath()
-    throws IOException
-  {
+  public void happyPath() throws IOException {
     final String classpathResource = "/test-resource.txt";
-    final ClasspathInputResource resource =
-      new ClasspathInputResource(classpathResource);
-    assertThat("Classpath resource does not match",
-               resource.getClasspathResource(),
-               is(classpathResource));
-    assertThat("Description does not match",
-               resource.getDescription(),
-               endsWith(classpathResource));
-    assertThat("toString() does not match",
-               resource.toString(),
-               endsWith(classpathResource));
-    assertThat(readFully(resource.openNewInputReader(UTF_8)),
-               startsWith("hello, world"));
+    final ClasspathInputResource resource = new ClasspathInputResource(classpathResource);
+    assertThat(
+        "Classpath resource does not match",
+        resource.getClasspathResource(),
+        is(classpathResource));
+    assertThat(
+        "Description does not match", resource.getDescription(), endsWith(classpathResource));
+    assertThat("toString() does not match", resource.toString(), endsWith(classpathResource));
+    assertThat(readFully(resource.openNewInputReader(UTF_8)), startsWith("hello, world"));
   }
 
+  @Test
+  public void nullArgs() {
+    assertThrows(NullPointerException.class, () -> new ClasspathInputResource(null));
+  }
 }

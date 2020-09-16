@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.ConditionTimingType;
 import schemacrawler.schema.EventManipulationType;
@@ -40,10 +39,7 @@ import schemacrawler.schema.Trigger;
  *
  * @author Sualeh Fatehi
  */
-class MutableTrigger
-  extends AbstractDependantObject<Table>
-  implements Trigger
-{
+class MutableTrigger extends AbstractDependantObject<Table> implements Trigger {
 
   private static final long serialVersionUID = -1619291073229701764L;
   private final StringBuilder actionCondition;
@@ -53,8 +49,7 @@ class MutableTrigger
   private ConditionTimingType conditionTiming;
   private EventManipulationType eventManipulationType;
 
-  MutableTrigger(final Table parent, final String name)
-  {
+  MutableTrigger(final Table parent, final String name) {
     super(new TableReference(parent), name);
     // Default values
     eventManipulationType = EventManipulationType.unknown;
@@ -64,94 +59,67 @@ class MutableTrigger
     actionStatement = new StringBuilder(1024);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String getActionCondition()
-  {
+  public String getActionCondition() {
     return actionCondition.toString();
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public int getActionOrder()
-  {
+  public int getActionOrder() {
     return actionOrder;
   }
 
-  void setActionOrder(final int actionOrder)
-  {
-    this.actionOrder = actionOrder;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public ActionOrientationType getActionOrientation()
-  {
+  public ActionOrientationType getActionOrientation() {
     return actionOrientation;
   }
 
-  void setActionOrientation(final ActionOrientationType actionOrientation)
-  {
-    this.actionOrientation = actionOrientation;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String getActionStatement()
-  {
+  public String getActionStatement() {
     return actionStatement.toString();
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public ConditionTimingType getConditionTiming()
-  {
+  public ConditionTimingType getConditionTiming() {
     return conditionTiming;
   }
 
-  void setConditionTiming(final ConditionTimingType conditionTiming)
-  {
-    this.conditionTiming = conditionTiming;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public EventManipulationType getEventManipulationType()
-  {
+  public EventManipulationType getEventManipulationType() {
     return eventManipulationType;
   }
 
-  void setEventManipulationType(final EventManipulationType eventManipulationType)
-  {
-    this.eventManipulationType = eventManipulationType;
-  }
-
-  void appendActionCondition(final String actionCondition)
-  {
-    if (actionCondition != null)
-    {
+  void appendActionCondition(final String actionCondition) {
+    if (actionCondition != null) {
       this.actionCondition.append(actionCondition);
     }
   }
 
-  void appendActionStatement(final String actionStatement)
-  {
-    if (actionStatement != null)
-    {
+  void appendActionStatement(final String actionStatement) {
+    if (actionStatement != null) {
       this.actionStatement.append(actionStatement);
     }
   }
 
+  void setActionOrder(final int actionOrder) {
+    this.actionOrder = actionOrder;
+  }
+
+  void setActionOrientation(final ActionOrientationType actionOrientation) {
+    this.actionOrientation = actionOrientation;
+  }
+
+  void setConditionTiming(final ConditionTimingType conditionTiming) {
+    this.conditionTiming = conditionTiming;
+  }
+
+  void setEventManipulationType(final EventManipulationType eventManipulationType) {
+    this.eventManipulationType = eventManipulationType;
+  }
 }

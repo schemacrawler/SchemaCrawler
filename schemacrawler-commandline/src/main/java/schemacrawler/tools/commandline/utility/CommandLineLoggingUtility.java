@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.commandline.utility;
 
-
 import static us.fatehi.utility.Utility.join;
 
 import java.io.File;
@@ -41,138 +40,107 @@ import java.util.logging.Level;
 
 import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
-import schemacrawler.Version;
 import schemacrawler.SchemaCrawlerLogger;
-import us.fatehi.utility.string.StringFormat;
+import schemacrawler.Version;
 import us.fatehi.utility.UtilityMarker;
+import us.fatehi.utility.string.StringFormat;
 
 @UtilityMarker
-public final class CommandLineLoggingUtility
-{
+public final class CommandLineLoggingUtility {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(CommandLineLoggingUtility.class.getName());
+      SchemaCrawlerLogger.getLogger(CommandLineLoggingUtility.class.getName());
 
-
-  public static void logFullStackTrace(final Level level, final Throwable t)
-  {
-    if (level == null || !LOGGER.isLoggable(level))
-    {
+  public static void logFullStackTrace(final Level level, final Throwable t) {
+    if (level == null || !LOGGER.isLoggable(level)) {
       return;
     }
-    if (t == null)
-    {
+    if (t == null) {
       return;
     }
 
     LOGGER.log(level, t.getMessage(), t);
   }
 
-  public static void logSafeArguments(final String[] args)
-  {
-    if (!LOGGER.isLoggable(Level.INFO))
-    {
+  public static void logSafeArguments(final String[] args) {
+    if (!LOGGER.isLoggable(Level.INFO)) {
       return;
     }
 
-    LOGGER.log(Level.INFO,
-               String.format("Environment:%n%s %s%n%s%n%s%n",
-                             Version.getProductName(),
-                             Version.getVersion(),
-                             new OperatingSystemInfo(),
-                             new JvmSystemInfo()));
+    LOGGER.log(
+        Level.INFO,
+        String.format(
+            "Environment:%n%s %s%n%s%n%s%n",
+            Version.getProductName(),
+            Version.getVersion(),
+            new OperatingSystemInfo(),
+            new JvmSystemInfo()));
 
-    if (args == null)
-    {
+    if (args == null) {
       return;
     }
 
     final StringJoiner argsList = new StringJoiner(System.lineSeparator());
-    for (final Iterator<String> iterator = Arrays
-      .asList(args)
-      .iterator(); iterator.hasNext(); )
-    {
+    for (final Iterator<String> iterator = Arrays.asList(args).iterator(); iterator.hasNext(); ) {
       final String arg = iterator.next();
-      if (arg == null)
-      {
+      if (arg == null) {
         continue;
-      }
-      else if (arg.startsWith("-password="))
-      {
+      } else if (arg.startsWith("-password=")) {
         argsList.add("-password=*****");
-      }
-      else if (arg.startsWith("-password"))
-      {
+      } else if (arg.startsWith("-password")) {
         argsList.add("-password");
-        if (iterator.hasNext())
-        {
+        if (iterator.hasNext()) {
           // Skip over the password
           iterator.next();
           argsList.add("*****");
         }
-      }
-      else
-      {
+      } else {
         argsList.add(arg);
       }
     }
 
-    LOGGER.log(Level.INFO,
-               new StringFormat("Command line: %n%s", argsList.toString()));
+    LOGGER.log(Level.INFO, new StringFormat("Command line: %n%s", argsList.toString()));
   }
 
-  public static void logSystemClasspath()
-  {
-    if (!LOGGER.isLoggable(Level.CONFIG))
-    {
+  public static void logSystemClasspath() {
+    if (!LOGGER.isLoggable(Level.CONFIG)) {
       return;
     }
 
-    LOGGER.log(Level.CONFIG,
-               String.format("Classpath: %n%s",
-                             printPath(System.getProperty("java.class.path"))));
-    LOGGER.log(Level.CONFIG,
-               String.format("LD_LIBRARY_PATH: %n%s",
-                             printPath(System.getenv("LD_LIBRARY_PATH"))));
+    LOGGER.log(
+        Level.CONFIG,
+        String.format("Classpath: %n%s", printPath(System.getProperty("java.class.path"))));
+    LOGGER.log(
+        Level.CONFIG,
+        String.format("LD_LIBRARY_PATH: %n%s", printPath(System.getenv("LD_LIBRARY_PATH"))));
   }
 
-  public static void logSystemProperties()
-  {
-    if (!LOGGER.isLoggable(Level.CONFIG))
-    {
+  public static void logSystemProperties() {
+    if (!LOGGER.isLoggable(Level.CONFIG)) {
       return;
     }
 
     final SortedMap<String, String> systemProperties = new TreeMap<>();
-    for (final Entry<Object, Object> propertyValue : System
-      .getProperties()
-      .entrySet())
-    {
+    for (final Entry<Object, Object> propertyValue : System.getProperties().entrySet()) {
       final String name = (String) propertyValue.getKey();
-      if ((name.startsWith("java.") || name.startsWith("os."))
-          && !name.endsWith(".path"))
-      {
+      if ((name.startsWith("java.") || name.startsWith("os.")) && !name.endsWith(".path")) {
         systemProperties.put(name, (String) propertyValue.getValue());
       }
     }
 
-    LOGGER.log(Level.CONFIG,
-               String.format("System properties: %n%s",
-                             join(systemProperties, System.lineSeparator())));
+    LOGGER.log(
+        Level.CONFIG,
+        String.format("System properties: %n%s", join(systemProperties, System.lineSeparator())));
   }
 
-  private static String printPath(final String path)
-  {
-    if (path == null)
-    {
+  private static String printPath(final String path) {
+    if (path == null) {
       return "";
     }
     return String.join(System.lineSeparator(), path.split(File.pathSeparator));
   }
 
-  private CommandLineLoggingUtility()
-  {
+  private CommandLineLoggingUtility() {
     // Prevent instantiation
   }
-
 }

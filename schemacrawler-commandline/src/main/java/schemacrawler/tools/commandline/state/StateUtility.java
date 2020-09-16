@@ -28,69 +28,46 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.state;
 
-
 import java.util.function.Supplier;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import us.fatehi.utility.string.ObjectToStringFormat;
-import schemacrawler.SchemaCrawlerLogger;
 
-public final class StateUtility
-{
+public final class StateUtility {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(StateUtility.class.getName());
+      SchemaCrawlerLogger.getLogger(StateUtility.class.getName());
 
-  private static void log(final Level level,
-                          final Supplier<String> toLog,
-                          final boolean showlog)
-  {
-    if (showlog)
-    {
-      System.out.println(toLog.get());
-    }
-    else
-    {
-      LOGGER.log(level, toLog);
-    }
-  }
-
-  public static void logState(final SchemaCrawlerShellState state,
-                              final boolean showlog)
-  {
-    if (state == null)
-    {
+  public static void logState(final SchemaCrawlerShellState state, final boolean showlog) {
+    if (state == null) {
       return;
     }
 
-    if (!state.isConnected())
-    {
+    if (!state.isConnected()) {
       log(Level.CONFIG, () -> "No database connection available", showlog);
     }
-    if (state.getSchemaCrawlerOptionsBuilder() != null)
-    {
-      final SchemaCrawlerOptions schemaCrawlerOptions = state
-        .getSchemaCrawlerOptionsBuilder()
-        .toOptions();
-      log(Level.CONFIG,
-          new ObjectToStringFormat(schemaCrawlerOptions),
-          showlog);
+    if (state.getSchemaCrawlerOptionsBuilder() != null) {
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+          state.getSchemaCrawlerOptionsBuilder().toOptions();
+      log(Level.CONFIG, new ObjectToStringFormat(schemaCrawlerOptions), showlog);
     }
-    if (state.getSchemaRetrievalOptionsBuilder() != null)
-    {
-      final SchemaRetrievalOptions schemaRetrievalOptions = state
-        .getSchemaRetrievalOptionsBuilder()
-        .toOptions();
-      log(Level.CONFIG,
-          new ObjectToStringFormat(schemaRetrievalOptions),
-          showlog);
+    if (state.getSchemaRetrievalOptionsBuilder() != null) {
+      final SchemaRetrievalOptions schemaRetrievalOptions =
+          state.getSchemaRetrievalOptionsBuilder().toOptions();
+      log(Level.CONFIG, new ObjectToStringFormat(schemaRetrievalOptions), showlog);
     }
 
-    log(Level.FINE,
-        new ObjectToStringFormat(state.getAdditionalConfiguration()),
-        showlog);
+    log(Level.FINE, new ObjectToStringFormat(state.getAdditionalConfiguration()), showlog);
   }
 
+  private static void log(final Level level, final Supplier<String> toLog, final boolean showlog) {
+    if (showlog) {
+      System.out.println(toLog.get());
+    } else {
+      LOGGER.log(level, toLog);
+    }
+  }
 }

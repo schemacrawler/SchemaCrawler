@@ -28,22 +28,16 @@ http://www.gnu.org/licenses/
 
 package schemacrawler;
 
-
 /**
  * Operating system information.
  *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
-public final class OperatingSystemInfo
-  extends BaseProductVersion
-{
+public final class OperatingSystemInfo extends BaseProductVersion {
 
   private static final long serialVersionUID = 4051323422934251828L;
 
-  public OperatingSystemInfo()
-  {
-    super(System.getProperty("os.name", "<unknown>"),
-          System.getProperty("os.version", ""));
+  public OperatingSystemInfo() {
+    super(System.getProperty("os.name", "<unknown>"), System.getProperty("os.version", ""));
   }
-
 }

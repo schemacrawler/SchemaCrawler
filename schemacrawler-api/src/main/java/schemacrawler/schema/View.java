@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 import java.util.Collection;
 import java.util.Optional;
 
@@ -37,24 +36,15 @@ import java.util.Optional;
  *
  * @author Sualeh Fatehi
  */
-public interface View
-  extends Table
-{
+public interface View extends Table {
 
   /**
-   * Type of WITH CHECK OPTION. Is CASCADE if the original view was created by
-   * using the WITH CHECK OPTION. Otherwise, NONE is returned.
+   * Type of WITH CHECK OPTION. Is CASCADE if the original view was created by using the WITH CHECK
+   * OPTION. Otherwise, NONE is returned.
    *
    * @return Check option.
    */
   CheckOptionType getCheckOption();
-
-  /**
-   * Specifies whether the view is updatable.
-   *
-   * @return Whether the view is updatable.
-   */
-  boolean isUpdatable();
 
   /**
    * Gets tables used by the view.
@@ -64,12 +54,17 @@ public interface View
   Collection<Table> getTableUsage();
 
   /**
+   * Specifies whether the view is updatable.
+   *
+   * @return Whether the view is updatable.
+   */
+  boolean isUpdatable();
+
+  /**
    * Gets a referenced table by unqualified name.
    *
-   * @param name
-   *   Name
+   * @param name Name
    * @return Referenced table.
    */
   <T extends Table> Optional<T> lookupTable(Schema schema, String name);
-
 }

@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility;
 
-
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 
@@ -49,310 +48,219 @@ import us.fatehi.utility.string.StringFormat;
  * @author Sualeh Fatehi
  */
 @UtilityMarker
-public final class DatabaseUtility
-{
+public final class DatabaseUtility {
 
-  private static final Logger LOGGER =
-    Logger.getLogger(DatabaseUtility.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(DatabaseUtility.class.getName());
 
-  public static Connection checkConnection(final Connection connection)
-    throws SQLException
-  {
-    try
-    {
+  public static Connection checkConnection(final Connection connection) throws SQLException {
+    try {
       requireNonNull(connection, "No database connection provided");
-      if (connection.isClosed())
-      {
+      if (connection.isClosed()) {
         throw new SQLException("Connection is closed");
       }
-    }
-    catch (final NullPointerException e)
-    {
+    } catch (final NullPointerException e) {
       throw new SQLException(e.getMessage(), e);
     }
 
     return connection;
   }
 
-  public static ResultSet checkResultSet(final ResultSet resultSet)
-    throws SQLException
-  {
-    try
-    {
+  public static ResultSet checkResultSet(final ResultSet resultSet) throws SQLException {
+    try {
       requireNonNull(resultSet, "No result-set provided");
-      if (resultSet.isClosed())
-      {
+      if (resultSet.isClosed()) {
         throw new SQLException("Result-set is closed");
       }
-    }
-    catch (final NullPointerException e)
-    {
+    } catch (final NullPointerException e) {
       throw new SQLException(e.getMessage(), e);
     }
 
     return resultSet;
   }
 
-  public static Statement createStatement(final Connection connection)
-    throws SQLException
-  {
+  public static Statement createStatement(final Connection connection) throws SQLException {
     checkConnection(connection);
     return connection.createStatement();
   }
 
-  public static void executeScriptFromResource(final Connection connection,
-                                               final String scriptResource)
-  {
-    try (final Statement statement = createStatement(connection))
-    {
+  public static void executeScriptFromResource(
+      final Connection connection, final String scriptResource) {
+    try (final Statement statement = createStatement(connection)) {
       final String sqlScript = IOUtility.readResourceFully(scriptResource);
-      if (!isBlank(sqlScript))
-      {
-        for (final String sql : sqlScript.split(";"))
-        {
-          if (isBlank(sql))
-          {
+      if (!isBlank(sqlScript)) {
+        for (final String sql : sqlScript.split(";")) {
+          if (isBlank(sql)) {
             continue;
           }
 
           final ResultSet resultSet = executeSql(statement, sql);
-          if (resultSet != null)
-          {
-            LOGGER.log(Level.WARNING,
-                       new StringFormat("Ignoring results from query <%s>",
-                                        sql));
+          if (resultSet != null) {
+            LOGGER.log(Level.WARNING, new StringFormat("Ignoring results from query <%s>", sql));
             resultSet.close();
           }
         }
       }
-    }
-    catch (final SQLException e)
-    {
+    } catch (final SQLException e) {
       LOGGER.log(Level.WARNING, e.getMessage(), e);
     }
   }
 
-  public static ResultSet executeSql(final Statement statement,
-                                     final String sql)
-    throws SQLException
-  {
-    if (statement == null)
-    {
+  public static ResultSet executeSql(final Statement statement, final String sql)
+      throws SQLException {
+    if (statement == null) {
       return null;
     }
-    if (isBlank(sql))
-    {
-      LOGGER.log(Level.FINE,
-                 "No SQL provided",
-                 new RuntimeException("No SQL provided"));
+    if (isBlank(sql)) {
+      LOGGER.log(Level.FINE, "No SQL provided", new RuntimeException("No SQL provided"));
       return null;
     }
 
-    try
-    {
+    try {
       statement.clearWarnings();
 
       final boolean hasResults = statement.execute(sql);
       logSQLWarnings(statement);
-      if (hasResults)
-      {
+      if (hasResults) {
         return statement.getResultSet();
-      }
-      else
-      {
+      } else {
         final int updateCount = statement.getUpdateCount();
-        LOGGER.log(Level.FINE,
-                   new StringFormat(
-                     "No results. Update count of %d for query: %s",
-                     updateCount,
-                     sql));
+        LOGGER.log(
+            Level.FINE,
+            new StringFormat("No results. Update count of %d for query: %s", updateCount, sql));
         return null;
       }
 
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING,
-                 e,
-                 new StringFormat("Error executing SQL <%s>", sql));
+    } catch (final SQLException e) {
+      LOGGER.log(Level.WARNING, e, new StringFormat("Error executing SQL <%s>", sql));
       throw e;
     }
   }
 
-  public static long executeSqlForLong(final Connection connection,
-                                       final String sql)
-    throws SQLException
-  {
+  public static long executeSqlForLong(final Connection connection, final String sql)
+      throws SQLException {
     final Object longValue = executeSqlForScalar(connection, sql);
     // Error checking
-    if (longValue == null || !(longValue instanceof Number))
-    {
-      throw new SQLException(
-        "Cannot get a long value result from SQL query");
+    if (longValue == null || !(longValue instanceof Number)) {
+      throw new SQLException("Cannot get a long value result from SQL query");
     }
 
     return ((Number) longValue).longValue();
   }
 
-  public static Object executeSqlForScalar(final Connection connection,
-                                           final String sql)
-    throws SQLException
-  {
-    try (
-      final Statement statement = createStatement(connection);
-      final ResultSet resultSet = executeSql(statement, sql)
-    )
-    {
-      if (resultSet == null)
-      {
+  public static Object executeSqlForScalar(final Connection connection, final String sql)
+      throws SQLException {
+    try (final Statement statement = createStatement(connection);
+        final ResultSet resultSet = executeSql(statement, sql)) {
+      if (resultSet == null) {
         return null;
       }
 
       // Error checking
-      if (resultSet
-            .getMetaData()
-            .getColumnCount() != 1)
-      {
+      if (resultSet.getMetaData().getColumnCount() != 1) {
         throw new SQLException("Too many columns of data returned");
       }
 
       Object scalar;
-      if (resultSet.next())
-      {
+      if (resultSet.next()) {
         scalar = resultSet.getObject(1);
-        if (resultSet.wasNull())
-        {
+        if (resultSet.wasNull()) {
           scalar = null;
         }
-      }
-      else
-      {
-        LOGGER.log(Level.WARNING,
-                   new StringFormat("No rows of data returned for query <%s>",
-                                    sql));
+      } else {
+        LOGGER.log(Level.WARNING, new StringFormat("No rows of data returned for query <%s>", sql));
         scalar = null;
       }
 
       // Error checking
-      if (resultSet.next())
-      {
+      if (resultSet.next()) {
         throw new SQLException("Too many rows of data returned");
       }
 
       return scalar;
-    }
-    catch (final SQLException e)
-    {
+    } catch (final SQLException e) {
       throw new SQLException(String.format("%s%n%s", e.getMessage(), sql), e);
     }
   }
 
-  public static void logSQLWarnings(final ResultSet resultSet)
-  {
-    if (resultSet == null)
-    {
+  public static void logSQLWarnings(final ResultSet resultSet) {
+    if (resultSet == null) {
       return;
     }
-    if (!LOGGER.isLoggable(Level.INFO))
-    {
+    if (!LOGGER.isLoggable(Level.INFO)) {
       return;
     }
 
-    try
-    {
+    try {
       logSQLWarnings(resultSet.getWarnings());
       resultSet.clearWarnings();
-    }
-    catch (final SQLException e)
-    {
+    } catch (final SQLException e) {
       // NOTE: Do not show exception while logging warnings
       LOGGER.log(Level.WARNING, "Could not log SQL warnings for result set");
     }
-
   }
 
-  public static void logSQLWarnings(final Statement statement)
-  {
-    if (statement == null)
-    {
+  public static void logSQLWarnings(final Statement statement) {
+    if (statement == null) {
       return;
     }
-    if (!LOGGER.isLoggable(Level.INFO))
-    {
+    if (!LOGGER.isLoggable(Level.INFO)) {
       return;
     }
 
-    try
-    {
+    try {
       logSQLWarnings(statement.getWarnings());
       statement.clearWarnings();
-    }
-    catch (final SQLException e)
-    {
+    } catch (final SQLException e) {
       // NOTE: Do not show exception while logging warnings
       LOGGER.log(Level.WARNING, "Could not log SQL warnings for statement");
     }
-
   }
 
   /**
    * Reads a single column result set as a list.
    *
-   * @param results
-   *   Result set
+   * @param results Result set
    * @return List
-   * @throws SQLException
-   *   On an exception
+   * @throws SQLException On an exception
    */
-  public static List<String> readResultsVector(final ResultSet results)
-    throws SQLException
-  {
+  public static List<String> readResultsVector(final ResultSet results) throws SQLException {
     final List<String> values = new ArrayList<>();
-    if (results == null)
-    {
+    if (results == null) {
       return values;
     }
 
-    try
-    {
-      while (results.next())
-      {
+    try {
+      while (results.next()) {
         final String value = results.getString(1);
-        if (!results.wasNull() && !isBlank(value))
-        {
+        if (!results.wasNull() && !isBlank(value)) {
           values.add(value.trim());
         }
       }
-    }
-    finally
-    {
+    } finally {
       results.close();
     }
     return values;
   }
 
-  private static void logSQLWarnings(final SQLWarning sqlWarning)
-  {
+  private static void logSQLWarnings(final SQLWarning sqlWarning) {
     final Level level = Level.FINER;
-    if (!LOGGER.isLoggable(level))
-    {
+    if (!LOGGER.isLoggable(level)) {
       return;
     }
 
     SQLWarning currentSqlWarning = sqlWarning;
-    while (currentSqlWarning != null)
-    {
-      final String message = String.format("%s%nError code: %d, SQL state: %s",
-                                           currentSqlWarning.getMessage(),
-                                           currentSqlWarning.getErrorCode(),
-                                           currentSqlWarning.getSQLState());
+    while (currentSqlWarning != null) {
+      final String message =
+          String.format(
+              "%s%nError code: %d, SQL state: %s",
+              currentSqlWarning.getMessage(),
+              currentSqlWarning.getErrorCode(),
+              currentSqlWarning.getSQLState());
       LOGGER.log(level, message, currentSqlWarning);
       currentSqlWarning = currentSqlWarning.getNextWarning();
     }
   }
 
-  private DatabaseUtility()
-  { // Prevent instantiation
+  private DatabaseUtility() { // Prevent instantiation
   }
-
 }

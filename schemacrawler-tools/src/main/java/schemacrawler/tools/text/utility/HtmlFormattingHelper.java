@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.text.utility;
 
-
 import static us.fatehi.utility.IOUtility.readResourceFully;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.html.TagBuilder.span;
@@ -46,154 +45,111 @@ import us.fatehi.utility.html.TagOutputFormat;
  *
  * @author Sualeh Fatehi
  */
-public final class HtmlFormattingHelper
-  extends BaseTextFormattingHelper
-{
+public final class HtmlFormattingHelper extends BaseTextFormattingHelper {
 
   private static final String HTML_HEADER = htmlHeader();
-  private static final String HTML_FOOTER =
-    "</body>" + System.lineSeparator() + "</html>";
+  private static final String HTML_FOOTER = "</body>" + System.lineSeparator() + "</html>";
 
-  private static String htmlHeader()
-  {
+  private static String htmlHeader() {
     final StringBuilder styleSheet = new StringBuilder(4096);
     styleSheet
-      .append(System.lineSeparator())
-      .append(readResourceFully("/sc.css"))
-      .append(System.lineSeparator())
-      .append(readResourceFully("/sc_output.css"))
-      .append(System.lineSeparator());
+        .append(System.lineSeparator())
+        .append(readResourceFully("/sc.css"))
+        .append(System.lineSeparator())
+        .append(readResourceFully("/sc_output.css"))
+        .append(System.lineSeparator());
 
     final String htmlHeaderTemplate = readResourceFully("/html.header.txt");
     final String htmlHeader = String.format(htmlHeaderTemplate, styleSheet);
     return htmlHeader;
   }
 
-  public HtmlFormattingHelper(final PrintWriter out,
-                              final TextOutputFormat outputFormat)
-  {
+  public HtmlFormattingHelper(final PrintWriter out, final TextOutputFormat outputFormat) {
     super(out, outputFormat);
   }
 
   @Override
-  public String createLeftArrow()
-  {
+  public String createLeftArrow() {
     return "\u2190";
   }
 
   @Override
-  public String createRightArrow()
-  {
+  public String createRightArrow() {
     return "\u2192";
   }
 
   @Override
-  public String createWeakLeftArrow()
-  {
+  public String createWeakLeftArrow() {
     return "\u21dc";
   }
 
   @Override
-  public String createWeakRightArrow()
-  {
+  public String createWeakRightArrow() {
     return "\u21dd";
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public void writeDocumentEnd()
-  {
+  public void writeDocumentEnd() {
     out.println(HTML_FOOTER);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public void writeDocumentStart()
-  {
+  public void writeDocumentStart() {
     out.println(HTML_HEADER);
   }
 
   @Override
-  public void writeHeader(final DocumentHeaderType type, final String header)
-  {
-    if (!isBlank(header) && type != null)
-    {
-      out.println(String.format("%s%n<%s>%s</%s>%n",
-                                type.getPrefix(),
-                                type.getHeaderTag(),
-                                header,
-                                type.getHeaderTag()));
+  public void writeHeader(final DocumentHeaderType type, final String header) {
+    if (!isBlank(header) && type != null) {
+      out.println(
+          String.format(
+              "%s%n<%s>%s</%s>%n",
+              type.getPrefix(), type.getHeaderTag(), header, type.getHeaderTag()));
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public void writeObjectEnd()
-  {
-    out
-      .append("</table>")
-      .println();
+  public void writeObjectEnd() {
+    out.append("</table>").println();
     out.println("<p>&#160;</p>");
     out.println();
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public void writeObjectNameRow(final String id,
-                                 final String name,
-                                 final String description,
-                                 final Color backgroundColor)
-  {
+  public void writeObjectNameRow(
+      final String id, final String name, final String description, final Color backgroundColor) {
 
-    final Tag caption = TagBuilder
-      .caption()
-      .withStyle(String.format("background-color: %s;", backgroundColor))
-      .make();
+    final Tag caption =
+        TagBuilder.caption()
+            .withStyle(String.format("background-color: %s;", backgroundColor))
+            .make();
 
-    if (!isBlank(name))
-    {
-      final Tag span = span()
-        .withEscapedText(name)
-        .withStyleClass("caption_name")
-        .make();
-      if (!isBlank(id))
-      {
+    if (!isBlank(name)) {
+      final Tag span = span().withEscapedText(name).withStyleClass("caption_name").make();
+      if (!isBlank(id)) {
         span.addAttribute("id", id);
       }
       caption.addInnerTag(span);
     }
-    if (!isBlank(description))
-    {
-      final Tag span = span()
-        .withEscapedText(description)
-        .withStyleClass("caption_description")
-        .make();
+    if (!isBlank(description)) {
+      final Tag span =
+          span().withEscapedText(description).withStyleClass("caption_description").make();
       caption.addInnerTag(span);
     }
 
     final StringBuilder buffer = new StringBuilder(1024);
-    buffer
-      .append(caption.render(TagOutputFormat.html))
-      .append(System.lineSeparator());
+    buffer.append(caption.render(TagOutputFormat.html)).append(System.lineSeparator());
 
     out.println(buffer.toString());
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public void writeObjectStart()
-  {
+  public void writeObjectStart() {
     out.println("<table>");
   }
-
 }

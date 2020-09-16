@@ -27,9 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schema;
 
-
-public interface DefinedObject
-{
+public interface DefinedObject {
 
   /**
    * Gets the definition.
@@ -44,5 +42,4 @@ public interface DefinedObject
    * @return True if there is a definition
    */
   boolean hasDefinition();
-
 }

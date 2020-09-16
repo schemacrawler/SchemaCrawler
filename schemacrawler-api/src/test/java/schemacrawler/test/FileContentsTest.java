@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -40,30 +39,25 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
+
 import us.fatehi.utility.IOUtility;
 import us.fatehi.utility.string.FileContents;
 
-public class FileContentsTest
-{
+public class FileContentsTest {
 
   @Test
-  public void badEncoding()
-    throws IOException
-  {
+  public void badEncoding() throws IOException {
     final String text = "Hello, World!";
 
     final Path tempFilePath = IOUtility.createTempFilePath("test", ".dat");
     Files.write(tempFilePath, text.getBytes(StandardCharsets.UTF_8));
 
-    final FileContents fileContents =
-      new FileContents(tempFilePath, StandardCharsets.UTF_16);
+    final FileContents fileContents = new FileContents(tempFilePath, StandardCharsets.UTF_16);
     assertThat(fileContents.get(), is(not(text)));
   }
 
   @Test
-  public void happyPath()
-    throws IOException
-  {
+  public void happyPath() throws IOException {
     final String text = "Hello, World!";
 
     final Path tempFilePath = IOUtility.createTempFilePath("test", ".dat");
@@ -74,22 +68,16 @@ public class FileContentsTest
   }
 
   @Test
-  public void notReadable()
-    throws IOException
-  {
+  public void notReadable() throws IOException {
     final FileContents fileContents = new FileContents(Paths.get("fakepath"));
     assertThat(fileContents.get(), is(""));
   }
 
   @Test
-  public void nullcheck()
-    throws IOException
-  {
+  public void nullcheck() throws IOException {
     assertThrows(NullPointerException.class, () -> new FileContents(null));
 
     final Path tempFilePath = IOUtility.createTempFilePath("test", ".dat");
-    assertThrows(NullPointerException.class,
-                 () -> new FileContents(tempFilePath, null));
+    assertThrows(NullPointerException.class, () -> new FileContents(tempFilePath, null));
   }
-
 }

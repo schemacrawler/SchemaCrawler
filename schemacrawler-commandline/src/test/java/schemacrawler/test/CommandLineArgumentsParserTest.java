@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test;
 
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -37,19 +36,16 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
+
 import schemacrawler.tools.commandline.utility.CommandLineArgumentsParser;
 
-public class CommandLineArgumentsParserTest
-{
+public class CommandLineArgumentsParserTest {
 
   @Test
-  public void mixed1()
-  {
-    final List<String> args =
-      Arrays.asList("--blah", "value with spaces", "othernonoption");
+  public void mixed1() {
+    final List<String> args = Arrays.asList("--blah", "value with spaces", "othernonoption");
 
-    final CommandLineArgumentsParser parser =
-      new CommandLineArgumentsParser(args);
+    final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(args);
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
@@ -65,15 +61,11 @@ public class CommandLineArgumentsParserTest
   }
 
   @Test
-  public void mixed2()
-  {
-    final List<String> args = Arrays.asList("--blah",
-                                            "value with spaces",
-                                            "othernonoption",
-                                            "--other option");
+  public void mixed2() {
+    final List<String> args =
+        Arrays.asList("--blah", "value with spaces", "othernonoption", "--other option");
 
-    final CommandLineArgumentsParser parser =
-      new CommandLineArgumentsParser(args);
+    final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(args);
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
@@ -91,12 +83,10 @@ public class CommandLineArgumentsParserTest
   }
 
   @Test
-  public void nonOptionArguments1()
-  {
+  public void nonOptionArguments1() {
     final List<String> args = Arrays.asList("nonoption with spaces");
 
-    final CommandLineArgumentsParser parser =
-      new CommandLineArgumentsParser(args);
+    final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(args);
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
@@ -105,18 +95,14 @@ public class CommandLineArgumentsParserTest
     final List<String> nonOptionArguments = parser.getNonOptionArguments();
     assertThat(nonOptionArguments.size(), is(1));
     assertThat((nonOptionArguments.contains("random")), is(false));
-    assertThat((nonOptionArguments.contains("nonoption with spaces")),
-               is(true));
+    assertThat((nonOptionArguments.contains("nonoption with spaces")), is(true));
   }
 
   @Test
-  public void nonOptionArguments2()
-  {
-    final List<String> args =
-      Arrays.asList("nonoption with spaces", "othernonoption");
+  public void nonOptionArguments2() {
+    final List<String> args = Arrays.asList("nonoption with spaces", "othernonoption");
 
-    final CommandLineArgumentsParser parser =
-      new CommandLineArgumentsParser(args);
+    final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(args);
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
@@ -125,18 +111,15 @@ public class CommandLineArgumentsParserTest
     final List<String> nonOptionArguments = parser.getNonOptionArguments();
     assertThat(nonOptionArguments.size(), is(2));
     assertThat((nonOptionArguments.contains("random")), is(false));
-    assertThat((nonOptionArguments.contains("nonoption with spaces")),
-               is(true));
+    assertThat((nonOptionArguments.contains("nonoption with spaces")), is(true));
     assertThat((nonOptionArguments.contains("othernonoption")), is(true));
   }
 
   @Test
-  public void noOption()
-  {
+  public void noOption() {
     final List<String> args = Arrays.asList("--=blah");
 
-    final CommandLineArgumentsParser parser =
-      new CommandLineArgumentsParser(args);
+    final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(args);
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
@@ -151,12 +134,10 @@ public class CommandLineArgumentsParserTest
   }
 
   @Test
-  public void noOptionOrValue()
-  {
+  public void noOptionOrValue() {
     final List<String> args = Arrays.asList("--");
 
-    final CommandLineArgumentsParser parser =
-      new CommandLineArgumentsParser(args);
+    final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(args);
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
@@ -171,12 +152,10 @@ public class CommandLineArgumentsParserTest
   }
 
   @Test
-  public void noOptionOrValueButImplied()
-  {
+  public void noOptionOrValueButImplied() {
     final List<String> args = Arrays.asList("--=");
 
-    final CommandLineArgumentsParser parser =
-      new CommandLineArgumentsParser(args);
+    final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(args);
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
@@ -191,12 +170,10 @@ public class CommandLineArgumentsParserTest
   }
 
   @Test
-  public void noValue()
-  {
+  public void noValue() {
     final List<String> args = Arrays.asList("--blah");
 
-    final CommandLineArgumentsParser parser =
-      new CommandLineArgumentsParser(args);
+    final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(args);
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
@@ -211,12 +188,10 @@ public class CommandLineArgumentsParserTest
   }
 
   @Test
-  public void noValue2()
-  {
+  public void noValue2() {
     final List<String> args = Arrays.asList("--blah", "--foo");
 
-    final CommandLineArgumentsParser parser =
-      new CommandLineArgumentsParser(args);
+    final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(args);
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
@@ -233,12 +208,10 @@ public class CommandLineArgumentsParserTest
   }
 
   @Test
-  public void noValueButImplied()
-  {
+  public void noValueButImplied() {
     final List<String> args = Arrays.asList("--blah=");
 
-    final CommandLineArgumentsParser parser =
-      new CommandLineArgumentsParser(args);
+    final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(args);
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
@@ -253,25 +226,19 @@ public class CommandLineArgumentsParserTest
   }
 
   @Test
-  public void optionAndValue()
-  {
+  public void optionAndValue() {
     final List<String> args = Arrays.asList("--blah=3");
 
-    final CommandLineArgumentsParser parser =
-      new CommandLineArgumentsParser(args);
+    final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(args);
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
 
     assertThat(optionsMap.size(), is(1));
 
-    assertThat((optionsMap.containsKey("random")),
+    assertThat((optionsMap.containsKey("random")), is(false));
 
-               is(false));
-
-    assertThat((optionsMap.containsKey("blah")),
-
-               is(true));
+    assertThat((optionsMap.containsKey("blah")), is(true));
 
     assertThat(optionsMap.get("blah"), is("3"));
 
@@ -279,18 +246,14 @@ public class CommandLineArgumentsParserTest
 
     assertThat(nonOptionArguments.size(), is(0));
 
-    assertThat((nonOptionArguments.contains("random")),
-
-               is(false));
+    assertThat((nonOptionArguments.contains("random")), is(false));
   }
 
   @Test
-  public void repeatedOption()
-  {
+  public void repeatedOption() {
     final List<String> args = Arrays.asList("--blah=4", "--blah=3");
 
-    final CommandLineArgumentsParser parser =
-      new CommandLineArgumentsParser(args);
+    final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(args);
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
@@ -303,5 +266,4 @@ public class CommandLineArgumentsParserTest
     assertThat(nonOptionArguments.size(), is(0));
     assertThat((nonOptionArguments.contains("random")), is(false));
   }
-
 }

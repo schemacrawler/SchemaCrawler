@@ -33,51 +33,42 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
-public class EnumDataTypeInfo
-{
+public class EnumDataTypeInfo {
 
   public static final EnumDataTypeInfo EMPTY_ENUM_DATA_TYPE_INFO =
-    new EnumDataTypeInfo(false, false, new ArrayList<>());
+      new EnumDataTypeInfo(false, false, new ArrayList<>());
 
   private final boolean isColumnEnumerated;
   private final boolean isColumnDataTypeEnumerated;
   private final List<String> enumValues;
 
-  public EnumDataTypeInfo(final boolean isColumnEnumerated,
-                          final boolean isColumnDataTypeEnumerated,
-                          final List<String> enumValues)
-  {
+  public EnumDataTypeInfo(
+      final boolean isColumnEnumerated,
+      final boolean isColumnDataTypeEnumerated,
+      final List<String> enumValues) {
     this.isColumnEnumerated = isColumnEnumerated;
     this.isColumnDataTypeEnumerated = isColumnDataTypeEnumerated;
-    this.enumValues = new ArrayList<>(requireNonNull(enumValues,
-                                                     "No enum values list provided"));
+    this.enumValues = new ArrayList<>(requireNonNull(enumValues, "No enum values list provided"));
   }
 
-  public boolean isColumnEnumerated()
-  {
-    return isColumnEnumerated;
-  }
-
-  public boolean isColumnDataTypeEnumerated()
-  {
-    return isColumnDataTypeEnumerated;
-  }
-
-  public List<String> getEnumValues()
-  {
+  public List<String> getEnumValues() {
     return enumValues;
   }
 
-  @Override
-  public String toString()
-  {
-    return new StringJoiner(", ",
-                            EnumDataTypeInfo.class.getSimpleName() + "[",
-                            "]")
-      .add("isColumnEnumerated=" + isColumnEnumerated)
-      .add("isColumnDataTypeEnumerated=" + isColumnDataTypeEnumerated)
-      .add("enumValues=" + enumValues)
-      .toString();
+  public boolean isColumnDataTypeEnumerated() {
+    return isColumnDataTypeEnumerated;
   }
 
+  public boolean isColumnEnumerated() {
+    return isColumnEnumerated;
+  }
+
+  @Override
+  public String toString() {
+    return new StringJoiner(", ", EnumDataTypeInfo.class.getSimpleName() + "[", "]")
+        .add("isColumnEnumerated=" + isColumnEnumerated)
+        .add("isColumnDataTypeEnumerated=" + isColumnDataTypeEnumerated)
+        .add("enumValues=" + enumValues)
+        .toString();
+  }
 }

@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.traversal;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
@@ -45,68 +44,53 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.utility.NamedObjectSort;
 
-public class SchemaTraverser
-{
+public class SchemaTraverser {
 
   private Catalog catalog;
   private SchemaTraversalHandler handler;
   private Comparator<NamedObject> tablesComparator;
   private Comparator<NamedObject> routinesComparator;
 
-  public SchemaTraverser()
-  {
+  public SchemaTraverser() {
     tablesComparator = NamedObjectSort.natural;
     routinesComparator = NamedObjectSort.natural;
   }
 
-  public Catalog getCatalog()
-  {
+  public Catalog getCatalog() {
     return catalog;
   }
 
-  public void setCatalog(final Catalog catalog)
-  {
-    this.catalog = requireNonNull(catalog, "No catalog provided");
-  }
-
-  public SchemaTraversalHandler getHandler()
-  {
+  public SchemaTraversalHandler getHandler() {
     return handler;
   }
 
-  public void setHandler(final SchemaTraversalHandler handler)
-  {
-    this.handler = requireNonNull(handler, "No handler provided");
-  }
-
-  public Comparator<NamedObject> getRoutinesComparator()
-  {
+  public Comparator<NamedObject> getRoutinesComparator() {
     return routinesComparator;
   }
 
-  public void setRoutinesComparator(final Comparator<NamedObject> routinesComparator)
-  {
-    this.routinesComparator =
-      requireNonNull(routinesComparator, "No routines comparator provided");
-  }
-
-  public Comparator<NamedObject> getTablesComparator()
-  {
+  public Comparator<NamedObject> getTablesComparator() {
     return tablesComparator;
   }
 
-  public void setTablesComparator(final Comparator<NamedObject> tablesComparator)
-  {
-    this.tablesComparator =
-      requireNonNull(tablesComparator, "No tables comparator provided");
+  public void setCatalog(final Catalog catalog) {
+    this.catalog = requireNonNull(catalog, "No catalog provided");
   }
 
-  public final void traverse()
-    throws SchemaCrawlerException
-  {
+  public void setHandler(final SchemaTraversalHandler handler) {
+    this.handler = requireNonNull(handler, "No handler provided");
+  }
 
-    final Collection<ColumnDataType> columnDataTypes =
-      catalog.getColumnDataTypes();
+  public void setRoutinesComparator(final Comparator<NamedObject> routinesComparator) {
+    this.routinesComparator = requireNonNull(routinesComparator, "No routines comparator provided");
+  }
+
+  public void setTablesComparator(final Comparator<NamedObject> tablesComparator) {
+    this.tablesComparator = requireNonNull(tablesComparator, "No tables comparator provided");
+  }
+
+  public final void traverse() throws SchemaCrawlerException {
+
+    final Collection<ColumnDataType> columnDataTypes = catalog.getColumnDataTypes();
     final Collection<Table> tables = catalog.getTables();
     final Collection<Routine> routines = catalog.getRoutines();
     final Collection<Synonym> synonyms = catalog.getSynonyms();
@@ -118,60 +102,50 @@ public class SchemaTraverser
     handler.handle(catalog.getCrawlInfo());
     handler.handleHeaderEnd();
 
-    if (!tables.isEmpty())
-    {
+    if (!tables.isEmpty()) {
 
       handler.handleTablesStart();
 
       final List<? extends Table> tablesList = new ArrayList<>(tables);
       tablesList.sort(tablesComparator);
-      for (final Table table : tablesList)
-      {
+      for (final Table table : tablesList) {
         handler.handle(table);
       }
 
       handler.handleTablesEnd();
     }
 
-    if (!routines.isEmpty())
-    {
+    if (!routines.isEmpty()) {
       handler.handleRoutinesStart();
 
       final List<? extends Routine> routinesList = new ArrayList<>(routines);
       routinesList.sort(routinesComparator);
-      for (final Routine routine : routinesList)
-      {
+      for (final Routine routine : routinesList) {
         handler.handle(routine);
       }
 
       handler.handleRoutinesEnd();
     }
 
-    if (!sequences.isEmpty())
-    {
+    if (!sequences.isEmpty()) {
       handler.handleSequencesStart();
-      for (final Sequence sequence : sequences)
-      {
+      for (final Sequence sequence : sequences) {
         handler.handle(sequence);
       }
       handler.handleSequencesEnd();
     }
 
-    if (!synonyms.isEmpty())
-    {
+    if (!synonyms.isEmpty()) {
       handler.handleSynonymsStart();
-      for (final Synonym synonym : synonyms)
-      {
+      for (final Synonym synonym : synonyms) {
         handler.handle(synonym);
       }
       handler.handleSynonymsEnd();
     }
 
-    if (!columnDataTypes.isEmpty())
-    {
+    if (!columnDataTypes.isEmpty()) {
       handler.handleColumnDataTypesStart();
-      for (final ColumnDataType columnDataType : columnDataTypes)
-      {
+      for (final ColumnDataType columnDataType : columnDataTypes) {
         handler.handle(columnDataType);
       }
       handler.handleColumnDataTypesEnd();
@@ -184,5 +158,4 @@ public class SchemaTraverser
 
     handler.end();
   }
-
 }

@@ -28,9 +28,4 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
-public interface DatabaseUser
-  extends NamedObject, AttributedObject
-{
-
-}
+public interface DatabaseUser extends NamedObject, AttributedObject {}

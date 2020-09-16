@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.FUNCTIONS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.PROCEDURES;
@@ -60,46 +59,38 @@ import schemacrawler.schemacrawler.SchemaReference;
 import us.fatehi.utility.string.StringFormat;
 
 /**
- * A retriever uses database metadata to get the details about the database
- * procedures.
+ * A retriever uses database metadata to get the details about the database procedures.
  *
  * @author Sualeh Fatehi
  */
-final class RoutineRetriever
-  extends AbstractRetriever
-{
+final class RoutineRetriever extends AbstractRetriever {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(RoutineRetriever.class.getName());
+      SchemaCrawlerLogger.getLogger(RoutineRetriever.class.getName());
 
-  RoutineRetriever(final RetrieverConnection retrieverConnection,
-                   final MutableCatalog catalog,
-                   final SchemaCrawlerOptions options)
-    throws SQLException
-  {
+  RoutineRetriever(
+      final RetrieverConnection retrieverConnection,
+      final MutableCatalog catalog,
+      final SchemaCrawlerOptions options)
+      throws SQLException {
     super(retrieverConnection, catalog, options);
   }
 
-  void retrieveFunctions(final NamedObjectList<SchemaReference> schemas,
-                         final InclusionRule routineInclusionRule)
-    throws SQLException
-  {
+  void retrieveFunctions(
+      final NamedObjectList<SchemaReference> schemas, final InclusionRule routineInclusionRule)
+      throws SQLException {
     requireNonNull(schemas, "No schemas provided");
 
     final InclusionRuleFilter<Function> functionFilter =
-      new InclusionRuleFilter<>(routineInclusionRule, false);
-    if (functionFilter.isExcludeAll())
-    {
-      LOGGER.log(Level.INFO,
-                 "Not retrieving functions, since this was not requested");
+        new InclusionRuleFilter<>(routineInclusionRule, false);
+    if (functionFilter.isExcludeAll()) {
+      LOGGER.log(Level.INFO, "Not retrieving functions, since this was not requested");
       return;
     }
 
-    switch (getRetrieverConnection().get(functionsRetrievalStrategy))
-    {
+    switch (getRetrieverConnection().get(functionsRetrievalStrategy)) {
       case data_dictionary_all:
-        LOGGER.log(Level.INFO,
-                   "Retrieving functions, using fast data dictionary retrieval");
+        LOGGER.log(Level.INFO, "Retrieving functions, using fast data dictionary retrieval");
         retrieveFunctionsFromDataDictionary(schemas, functionFilter);
         break;
 
@@ -111,29 +102,23 @@ final class RoutineRetriever
       default:
         break;
     }
-
   }
 
-  void retrieveProcedures(final NamedObjectList<SchemaReference> schemas,
-                          final InclusionRule routineInclusionRule)
-    throws SQLException
-  {
+  void retrieveProcedures(
+      final NamedObjectList<SchemaReference> schemas, final InclusionRule routineInclusionRule)
+      throws SQLException {
     requireNonNull(schemas, "No schemas provided");
 
     final InclusionRuleFilter<Procedure> procedureFilter =
-      new InclusionRuleFilter<>(routineInclusionRule, false);
-    if (procedureFilter.isExcludeAll())
-    {
-      LOGGER.log(Level.INFO,
-                 "Not retrieving procedures, since this was not requested");
+        new InclusionRuleFilter<>(routineInclusionRule, false);
+    if (procedureFilter.isExcludeAll()) {
+      LOGGER.log(Level.INFO, "Not retrieving procedures, since this was not requested");
       return;
     }
 
-    switch (getRetrieverConnection().get(proceduresRetrievalStrategy))
-    {
+    switch (getRetrieverConnection().get(proceduresRetrievalStrategy)) {
       case data_dictionary_all:
-        LOGGER.log(Level.INFO,
-                   "Retrieving procedures, using fast data dictionary retrieval");
+        LOGGER.log(Level.INFO, "Retrieving procedures, using fast data dictionary retrieval");
         retrieveProceduresFromDataDictionary(schemas, procedureFilter);
         break;
 
@@ -145,45 +130,37 @@ final class RoutineRetriever
       default:
         break;
     }
-
   }
 
-  private void createFunction(final MetadataResultSet results,
-                              final NamedObjectList<SchemaReference> schemas,
-                              final InclusionRuleFilter<Function> functionFilter)
-  {
-    final String catalogName =
-      normalizeCatalogName(results.getString("FUNCTION_CAT"));
-    final String schemaName =
-      normalizeSchemaName(results.getString("FUNCTION_SCHEM"));
+  private void createFunction(
+      final MetadataResultSet results,
+      final NamedObjectList<SchemaReference> schemas,
+      final InclusionRuleFilter<Function> functionFilter) {
+    final String catalogName = normalizeCatalogName(results.getString("FUNCTION_CAT"));
+    final String schemaName = normalizeSchemaName(results.getString("FUNCTION_SCHEM"));
     final String functionName = results.getString("FUNCTION_NAME");
-    LOGGER.log(Level.FINE,
-               new StringFormat("Retrieving function <%s.%s.%s>",
-                                catalogName,
-                                schemaName,
-                                functionName));
+    LOGGER.log(
+        Level.FINE,
+        new StringFormat("Retrieving function <%s.%s.%s>", catalogName, schemaName, functionName));
 
-    if (isBlank(functionName))
-    {
+    if (isBlank(functionName)) {
       return;
     }
 
     final FunctionReturnType functionType =
-      results.getEnumFromShortId("FUNCTION_TYPE", FunctionReturnType.unknown);
+        results.getEnumFromShortId("FUNCTION_TYPE", FunctionReturnType.unknown);
     final String remarks = results.getString("REMARKS");
     final String specificName = results.getString("SPECIFIC_NAME");
 
     final Optional<SchemaReference> optionalSchema =
-      schemas.lookup(Arrays.asList(catalogName, schemaName));
-    if (!optionalSchema.isPresent())
-    {
+        schemas.lookup(Arrays.asList(catalogName, schemaName));
+    if (!optionalSchema.isPresent()) {
       return;
     }
     final Schema schema = optionalSchema.get();
 
     final MutableFunction function = new MutableFunction(schema, functionName);
-    if (functionFilter.test(function))
-    {
+    if (functionFilter.test(function)) {
       function.setReturnType(functionType);
       function.setSpecificName(specificName);
       function.setRemarks(remarks);
@@ -193,41 +170,34 @@ final class RoutineRetriever
     }
   }
 
-  private void createProcedure(final MetadataResultSet results,
-                               final NamedObjectList<SchemaReference> schemas,
-                               final InclusionRuleFilter<Procedure> procedureFilter)
-  {
-    final String catalogName =
-      normalizeCatalogName(results.getString("PROCEDURE_CAT"));
-    final String schemaName =
-      normalizeSchemaName(results.getString("PROCEDURE_SCHEM"));
+  private void createProcedure(
+      final MetadataResultSet results,
+      final NamedObjectList<SchemaReference> schemas,
+      final InclusionRuleFilter<Procedure> procedureFilter) {
+    final String catalogName = normalizeCatalogName(results.getString("PROCEDURE_CAT"));
+    final String schemaName = normalizeSchemaName(results.getString("PROCEDURE_SCHEM"));
     final String procedureName = results.getString("PROCEDURE_NAME");
-    LOGGER.log(Level.FINE,
-               new StringFormat("Retrieving procedure <%s.%s.%s>",
-                                catalogName,
-                                schemaName,
-                                procedureName));
-    if (isBlank(procedureName))
-    {
+    LOGGER.log(
+        Level.FINE,
+        new StringFormat(
+            "Retrieving procedure <%s.%s.%s>", catalogName, schemaName, procedureName));
+    if (isBlank(procedureName)) {
       return;
     }
     final ProcedureReturnType procedureType =
-      results.getEnumFromShortId("PROCEDURE_TYPE", ProcedureReturnType.unknown);
+        results.getEnumFromShortId("PROCEDURE_TYPE", ProcedureReturnType.unknown);
     final String remarks = results.getString("REMARKS");
     final String specificName = results.getString("SPECIFIC_NAME");
 
     final Optional<SchemaReference> optionalSchema =
-      schemas.lookup(Arrays.asList(catalogName, schemaName));
-    if (!optionalSchema.isPresent())
-    {
+        schemas.lookup(Arrays.asList(catalogName, schemaName));
+    if (!optionalSchema.isPresent()) {
       return;
     }
     final Schema schema = optionalSchema.get();
 
-    final MutableProcedure procedure =
-      new MutableProcedure(schema, procedureName);
-    if (procedureFilter.test(procedure))
-    {
+    final MutableProcedure procedure = new MutableProcedure(schema, procedureName);
+    if (procedureFilter.test(procedure)) {
       procedure.setReturnType(procedureType);
       procedure.setSpecificName(specificName);
       procedure.setRemarks(remarks);
@@ -237,141 +207,100 @@ final class RoutineRetriever
     }
   }
 
-  private void retrieveFunctionsFromDataDictionary(final NamedObjectList<SchemaReference> schemas,
-                                                   final InclusionRuleFilter<Function> functionFilter)
-    throws SQLException
-  {
+  private void retrieveFunctionsFromDataDictionary(
+      final NamedObjectList<SchemaReference> schemas,
+      final InclusionRuleFilter<Function> functionFilter)
+      throws SQLException {
     final InformationSchemaViews informationSchemaViews =
-      getRetrieverConnection().getInformationSchemaViews();
-    if (!informationSchemaViews.hasQuery(FUNCTIONS))
-    {
+        getRetrieverConnection().getInformationSchemaViews();
+    if (!informationSchemaViews.hasQuery(FUNCTIONS)) {
       throw new SchemaCrawlerSQLException("No functions SQL provided", null);
     }
     final Query functionsSql = informationSchemaViews.getQuery(FUNCTIONS);
     final Connection connection = getDatabaseConnection();
-    try (
-      final Statement statement = connection.createStatement();
-      final MetadataResultSet results = new MetadataResultSet(functionsSql,
-                                                              statement,
-                                                              getSchemaInclusionRule())
-    )
-    {
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results =
+            new MetadataResultSet(functionsSql, statement, getSchemaInclusionRule())) {
       results.setDescription("retrieveFunctionsFromDataDictionary");
       int numFunctions = 0;
-      while (results.next())
-      {
+      while (results.next()) {
         numFunctions = numFunctions + 1;
         createFunction(results, schemas, functionFilter);
       }
-      LOGGER.log(Level.INFO,
-                 new StringFormat("Processed %d functions", numFunctions));
+      LOGGER.log(Level.INFO, new StringFormat("Processed %d functions", numFunctions));
     }
   }
 
-  private void retrieveFunctionsFromMetadata(final NamedObjectList<SchemaReference> schemas,
-                                             final InclusionRuleFilter<Function> functionFilter)
-  {
-    for (final Schema schema : schemas)
-    {
-      LOGGER.log(Level.INFO,
-                 new StringFormat("Retrieving functions for schema <%s>",
-                                  schema));
+  private void retrieveFunctionsFromMetadata(
+      final NamedObjectList<SchemaReference> schemas,
+      final InclusionRuleFilter<Function> functionFilter) {
+    for (final Schema schema : schemas) {
+      LOGGER.log(Level.INFO, new StringFormat("Retrieving functions for schema <%s>", schema));
 
       final String catalogName = schema.getCatalogName();
       final String schemaName = schema.getName();
 
-      try (
-        final MetadataResultSet results = new MetadataResultSet(getMetaData().getFunctions(
-          catalogName,
-          schemaName,
-          null))
-      )
-      {
+      try (final MetadataResultSet results =
+          new MetadataResultSet(getMetaData().getFunctions(catalogName, schemaName, null))) {
         results.setDescription("retrieveFunctionsFromMetadata");
         int numFunctions = 0;
-        while (results.next())
-        {
+        while (results.next()) {
           numFunctions = numFunctions + 1;
           createFunction(results, schemas, functionFilter);
         }
-        LOGGER.log(Level.INFO,
-                   new StringFormat("Processed %d functions", numFunctions));
-      }
-      catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
-      {
-        logSQLFeatureNotSupported(new StringFormat(
-          "Could not retrieve functions"), e);
-      }
-      catch (final SQLException e)
-      {
-        logPossiblyUnsupportedSQLFeature(new StringFormat(
-          "Could not retrieve functions"), e);
+        LOGGER.log(Level.INFO, new StringFormat("Processed %d functions", numFunctions));
+      } catch (final AbstractMethodError | SQLFeatureNotSupportedException e) {
+        logSQLFeatureNotSupported(new StringFormat("Could not retrieve functions"), e);
+      } catch (final SQLException e) {
+        logPossiblyUnsupportedSQLFeature(new StringFormat("Could not retrieve functions"), e);
       }
     }
   }
 
-  private void retrieveProceduresFromDataDictionary(final NamedObjectList<SchemaReference> schemas,
-                                                    final InclusionRuleFilter<Procedure> procedureFilter)
-    throws SQLException
-  {
+  private void retrieveProceduresFromDataDictionary(
+      final NamedObjectList<SchemaReference> schemas,
+      final InclusionRuleFilter<Procedure> procedureFilter)
+      throws SQLException {
     final InformationSchemaViews informationSchemaViews =
-      getRetrieverConnection().getInformationSchemaViews();
-    if (!informationSchemaViews.hasQuery(PROCEDURES))
-    {
+        getRetrieverConnection().getInformationSchemaViews();
+    if (!informationSchemaViews.hasQuery(PROCEDURES)) {
       throw new SchemaCrawlerSQLException("No procedures SQL provided", null);
     }
     final Query proceduresSql = informationSchemaViews.getQuery(PROCEDURES);
     final Connection connection = getDatabaseConnection();
-    try (
-      final Statement statement = connection.createStatement();
-      final MetadataResultSet results = new MetadataResultSet(proceduresSql,
-                                                              statement,
-                                                              getSchemaInclusionRule())
-    )
-    {
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results =
+            new MetadataResultSet(proceduresSql, statement, getSchemaInclusionRule())) {
       results.setDescription("retrieveProceduresFromDataDictionary");
       int numProcedures = 0;
-      while (results.next())
-      {
+      while (results.next()) {
         numProcedures = numProcedures + 1;
         createProcedure(results, schemas, procedureFilter);
       }
-      LOGGER.log(Level.INFO,
-                 new StringFormat("Processed %d procedures", numProcedures));
+      LOGGER.log(Level.INFO, new StringFormat("Processed %d procedures", numProcedures));
     }
   }
 
-  private void retrieveProceduresFromMetadata(final NamedObjectList<SchemaReference> schemas,
-                                              final InclusionRuleFilter<Procedure> procedureFilter)
-    throws SQLException
-  {
-    for (final Schema schema : schemas)
-    {
-      LOGGER.log(Level.INFO,
-                 new StringFormat("Retrieving procedures for schema <%s>",
-                                  schema));
+  private void retrieveProceduresFromMetadata(
+      final NamedObjectList<SchemaReference> schemas,
+      final InclusionRuleFilter<Procedure> procedureFilter)
+      throws SQLException {
+    for (final Schema schema : schemas) {
+      LOGGER.log(Level.INFO, new StringFormat("Retrieving procedures for schema <%s>", schema));
 
       final String catalogName = schema.getCatalogName();
       final String schemaName = schema.getName();
 
-      try (
-        final MetadataResultSet results = new MetadataResultSet(getMetaData().getProcedures(
-          catalogName,
-          schemaName,
-          null))
-      )
-      {
+      try (final MetadataResultSet results =
+          new MetadataResultSet(getMetaData().getProcedures(catalogName, schemaName, null))) {
         results.setDescription("retrieveProceduresFromMetadata");
         int numProcedures = 0;
-        while (results.next())
-        {
+        while (results.next()) {
           numProcedures = numProcedures + 1;
           createProcedure(results, schemas, procedureFilter);
         }
-        LOGGER.log(Level.INFO,
-                   new StringFormat("Processed %d procedures", numProcedures));
+        LOGGER.log(Level.INFO, new StringFormat("Processed %d procedures", numProcedures));
       }
     }
   }
-
 }

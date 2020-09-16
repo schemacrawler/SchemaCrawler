@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import static schemacrawler.schemacrawler.InformationSchemaKey.ROUTINES;
 
 import java.sql.Connection;
@@ -45,78 +44,59 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import us.fatehi.utility.string.StringFormat;
 
 /**
- * A retriever that uses database metadata to get the extended details about the
- * database routines.
+ * A retriever that uses database metadata to get the extended details about the database routines.
  *
  * @author Sualeh Fatehi
  */
-final class RoutineExtRetriever
-  extends AbstractRetriever
-{
+final class RoutineExtRetriever extends AbstractRetriever {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(RoutineExtRetriever.class.getName());
+      SchemaCrawlerLogger.getLogger(RoutineExtRetriever.class.getName());
 
-  RoutineExtRetriever(final RetrieverConnection retrieverConnection,
-                      final MutableCatalog catalog,
-                      final SchemaCrawlerOptions options)
-    throws SQLException
-  {
+  RoutineExtRetriever(
+      final RetrieverConnection retrieverConnection,
+      final MutableCatalog catalog,
+      final SchemaCrawlerOptions options)
+      throws SQLException {
     super(retrieverConnection, catalog, options);
   }
 
   /**
    * Retrieves a routine definitions from the database.
    *
-   * @throws SQLException
-   *   On a SQL exception
+   * @throws SQLException On a SQL exception
    */
-  void retrieveRoutineInformation()
-    throws SQLException
-  {
+  void retrieveRoutineInformation() throws SQLException {
     final InformationSchemaViews informationSchemaViews =
-      getRetrieverConnection().getInformationSchemaViews();
-    if (!informationSchemaViews.hasQuery(ROUTINES))
-    {
-      LOGGER.log(Level.INFO,
-                 "Not retrieving routine definitions, since this was not requested");
-      LOGGER.log(Level.FINE,
-                 "Routine definition SQL statement was not provided");
+        getRetrieverConnection().getInformationSchemaViews();
+    if (!informationSchemaViews.hasQuery(ROUTINES)) {
+      LOGGER.log(Level.INFO, "Not retrieving routine definitions, since this was not requested");
+      LOGGER.log(Level.FINE, "Routine definition SQL statement was not provided");
       return;
     }
 
     LOGGER.log(Level.INFO, "Retrieving routine definitions");
 
-    final Query routineDefinitionsSql =
-      informationSchemaViews.getQuery(ROUTINES);
+    final Query routineDefinitionsSql = informationSchemaViews.getQuery(ROUTINES);
     final Connection connection = getDatabaseConnection();
-    try (
-      final Statement statement = connection.createStatement();
-      final MetadataResultSet results = new MetadataResultSet(
-        routineDefinitionsSql,
-        statement,
-        getSchemaInclusionRule())
-    )
-    {
-      while (results.next())
-      {
-        final String catalogName =
-          normalizeCatalogName(results.getString("ROUTINE_CATALOG"));
-        final String schemaName =
-          normalizeSchemaName(results.getString("ROUTINE_SCHEMA"));
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results =
+            new MetadataResultSet(routineDefinitionsSql, statement, getSchemaInclusionRule())) {
+      while (results.next()) {
+        final String catalogName = normalizeCatalogName(results.getString("ROUTINE_CATALOG"));
+        final String schemaName = normalizeSchemaName(results.getString("ROUTINE_SCHEMA"));
         final String routineName = results.getString("ROUTINE_NAME");
         final String specificName = results.getString("SPECIFIC_NAME");
 
         final Optional<MutableRoutine> routineOptional =
-          lookupRoutine(catalogName, schemaName, routineName, specificName);
-        if (routineOptional.isPresent())
-        {
+            lookupRoutine(catalogName, schemaName, routineName, specificName);
+        if (routineOptional.isPresent()) {
           final MutableRoutine routine = routineOptional.get();
-          LOGGER.log(Level.FINER,
-                     new StringFormat("Retrieving routine information for <%s>",
-                                      routineName));
+          LOGGER.log(
+              Level.FINER,
+              new StringFormat("Retrieving routine information for <%s>", routineName));
           final RoutineBodyType routineBodyType =
-            results.getEnum("ROUTINE_BODY", RoutineBodyType.unknown);
+              results.getEnum("ROUTINE_BODY", RoutineBodyType.unknown);
           final String definition = results.getString("ROUTINE_DEFINITION");
 
           routine.setRoutineBodyType(routineBodyType);
@@ -125,11 +105,8 @@ final class RoutineExtRetriever
           routine.addAttributes(results.getAttributes());
         }
       }
-    }
-    catch (final Exception e)
-    {
+    } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve routines", e);
     }
   }
-
 }

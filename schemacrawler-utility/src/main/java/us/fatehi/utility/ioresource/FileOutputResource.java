@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.ioresource;
 
-
 import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.CREATE;
@@ -46,53 +45,37 @@ import java.util.logging.Logger;
 
 import us.fatehi.utility.string.StringFormat;
 
-public final class FileOutputResource
-  implements OutputResource
-{
+public final class FileOutputResource implements OutputResource {
 
-  private static final Logger LOGGER =
-    Logger.getLogger(FileOutputResource.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(FileOutputResource.class.getName());
 
   private final Path outputFile;
 
-  public FileOutputResource(final Path filePath)
-  {
-    outputFile = requireNonNull(filePath, "No file path provided")
-      .normalize()
-      .toAbsolutePath();
+  public FileOutputResource(final Path filePath) {
+    outputFile = requireNonNull(filePath, "No file path provided").normalize().toAbsolutePath();
   }
 
-  public Path getOutputFile()
-  {
+  public Path getOutputFile() {
     return outputFile;
   }
 
   @Override
-  public Writer openNewOutputWriter(final Charset charset,
-                                    final boolean appendOutput)
-    throws IOException
-  {
+  public Writer openNewOutputWriter(final Charset charset, final boolean appendOutput)
+      throws IOException {
     requireNonNull(charset, "No output charset provided");
     final OpenOption[] openOptions;
-    if (appendOutput)
-    {
-      openOptions = new OpenOption[] { WRITE, CREATE, APPEND };
-    }
-    else
-    {
-      openOptions = new OpenOption[] { WRITE, CREATE, TRUNCATE_EXISTING };
+    if (appendOutput) {
+      openOptions = new OpenOption[] {WRITE, CREATE, APPEND};
+    } else {
+      openOptions = new OpenOption[] {WRITE, CREATE, TRUNCATE_EXISTING};
     }
     final Writer writer = newBufferedWriter(outputFile, charset, openOptions);
-    LOGGER.log(Level.INFO,
-               new StringFormat("Opened output writer to file <%s>",
-                                outputFile));
+    LOGGER.log(Level.INFO, new StringFormat("Opened output writer to file <%s>", outputFile));
     return wrapWriter(getDescription(), writer, true);
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return outputFile.toString();
   }
-
 }

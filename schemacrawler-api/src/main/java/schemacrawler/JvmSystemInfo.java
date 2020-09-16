@@ -28,24 +28,21 @@ http://www.gnu.org/licenses/
 
 package schemacrawler;
 
-
 /**
  * JVM system information.
  *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
-public final class JvmSystemInfo
-  extends BaseProductVersion
-{
+public final class JvmSystemInfo extends BaseProductVersion {
 
   private static final long serialVersionUID = 4051323422934251828L;
 
-  public JvmSystemInfo()
-  {
-    super(String.format("%s %s",
-                        System.getProperty("java.vm.vendor", "<unknown>"),
-                        System.getProperty("java.vm.name", "<unknown>")),
-          System.getProperty("java.runtime.version", ""));
+  public JvmSystemInfo() {
+    super(
+        String.format(
+            "%s %s",
+            System.getProperty("java.vm.vendor", "<unknown>"),
+            System.getProperty("java.vm.name", "<unknown>")),
+        System.getProperty("java.runtime.version", ""));
   }
-
 }

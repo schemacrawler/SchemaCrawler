@@ -28,67 +28,50 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import schemacrawler.schema.ParameterModeType;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineParameter;
 
 /**
- * Represents a column in a database routine. Created from metadata returned by
- * a JDBC call.
+ * Represents a column in a database routine. Created from metadata returned by a JDBC call.
  *
  * @author Sualeh Fatehi
  */
-abstract class MutableRoutineParameter<R extends Routine>
-  extends AbstractColumn<R>
-  implements RoutineParameter<R>
-{
+abstract class MutableRoutineParameter<R extends Routine> extends AbstractColumn<R>
+    implements RoutineParameter<R> {
 
   private static final long serialVersionUID = 3546361725629772857L;
 
   private ParameterModeType parameterMode;
 
   /**
-   * Effective Java - Item 17 - Minimize Mutability - Package-private
-   * constructors make a class effectively final
+   * Effective Java - Item 17 - Minimize Mutability - Package-private constructors make a class
+   * effectively final
    *
-   * @param parent
-   *   Parent of this object
-   * @param name
-   *   Name of the named object
+   * @param parent Parent of this object
+   * @param name Name of the named object
    */
-  MutableRoutineParameter(final DatabaseObjectReference<R> parent,
-                          final String name)
-  {
+  MutableRoutineParameter(final DatabaseObjectReference<R> parent, final String name) {
     super(parent, name);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public ParameterModeType getParameterMode()
-  {
+  public ParameterModeType getParameterMode() {
     return parameterMode;
   }
 
-  void setParameterMode(final ParameterModeType parameterMode)
-  {
-    this.parameterMode = parameterMode;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final int getPrecision()
-  {
+  public final int getPrecision() {
     return getDecimalDigits();
   }
 
-  final void setPrecision(final int precision)
-  {
-    setDecimalDigits(precision);
+  void setParameterMode(final ParameterModeType parameterMode) {
+    this.parameterMode = parameterMode;
   }
 
+  final void setPrecision(final int precision) {
+    setDecimalDigits(precision);
+  }
 }

@@ -27,18 +27,13 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schemacrawler;
 
-
 import java.util.Optional;
 
 import schemacrawler.inclusionrule.InclusionRule;
 import us.fatehi.utility.ObjectToString;
 
-/**
- * SchemaCrawler options.
- */
-public final class GrepOptions
-  implements Options
-{
+/** SchemaCrawler options. */
+public final class GrepOptions implements Options {
 
   private final InclusionRule grepColumnInclusionRule;
   private final InclusionRule grepDefinitionInclusionRule;
@@ -46,12 +41,12 @@ public final class GrepOptions
   private final boolean grepOnlyMatching;
   private final InclusionRule grepRoutineParameterInclusionRule;
 
-  GrepOptions(final InclusionRule grepColumnInclusionRule,
-              final InclusionRule grepRoutineParameterInclusionRule,
-              final InclusionRule grepDefinitionInclusionRule,
-              final boolean grepInvertMatch,
-              final boolean grepOnlyMatching)
-  {
+  GrepOptions(
+      final InclusionRule grepColumnInclusionRule,
+      final InclusionRule grepRoutineParameterInclusionRule,
+      final InclusionRule grepDefinitionInclusionRule,
+      final boolean grepInvertMatch,
+      final boolean grepOnlyMatching) {
     this.grepColumnInclusionRule = grepColumnInclusionRule;
     this.grepRoutineParameterInclusionRule = grepRoutineParameterInclusionRule;
     this.grepDefinitionInclusionRule = grepDefinitionInclusionRule;
@@ -64,8 +59,7 @@ public final class GrepOptions
    *
    * @return Column inclusion rule for grep.
    */
-  public Optional<InclusionRule> getGrepColumnInclusionRule()
-  {
+  public Optional<InclusionRule> getGrepColumnInclusionRule() {
     return Optional.ofNullable(grepColumnInclusionRule);
   }
 
@@ -74,8 +68,7 @@ public final class GrepOptions
    *
    * @return Definitions inclusion rule for grep.
    */
-  public Optional<InclusionRule> getGrepDefinitionInclusionRule()
-  {
+  public Optional<InclusionRule> getGrepDefinitionInclusionRule() {
     return Optional.ofNullable(grepDefinitionInclusionRule);
   }
 
@@ -84,18 +77,15 @@ public final class GrepOptions
    *
    * @return Routine column rule for grep.
    */
-  public Optional<InclusionRule> getGrepRoutineParameterInclusionRule()
-  {
+  public Optional<InclusionRule> getGrepRoutineParameterInclusionRule() {
     return Optional.ofNullable(grepRoutineParameterInclusionRule);
   }
 
-  public boolean isGrepColumns()
-  {
+  public boolean isGrepColumns() {
     return grepColumnInclusionRule != null;
   }
 
-  public boolean isGrepDefinitions()
-  {
+  public boolean isGrepDefinitions() {
     return grepDefinitionInclusionRule != null;
   }
 
@@ -104,32 +94,22 @@ public final class GrepOptions
    *
    * @return Whether to invert matches.
    */
-  public boolean isGrepInvertMatch()
-  {
+  public boolean isGrepInvertMatch() {
     return grepInvertMatch;
   }
 
-  /**
-   * Whether grep includes show foreign keys that reference other non-matching
-   * tables.
-   */
-  public boolean isGrepOnlyMatching()
-  {
+  /** Whether grep includes show foreign keys that reference other non-matching tables. */
+  public boolean isGrepOnlyMatching() {
     return grepOnlyMatching;
   }
 
-  public boolean isGrepRoutineParameters()
-  {
+  public boolean isGrepRoutineParameters() {
     return grepRoutineParameterInclusionRule != null;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String toString()
-  {
+  public String toString() {
     return ObjectToString.toString(this);
   }
-
 }

@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.hasSize;
@@ -46,6 +45,7 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
@@ -66,304 +66,210 @@ import schemacrawler.test.utility.TestWriter;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
-public class SchemaCrawlerGrepTest
-{
+public class SchemaCrawlerGrepTest {
 
   @Test
-  public void grepColumns(final TestContext testContext,
-                          final Connection connection)
-    throws Exception
-  {
+  public void grepColumns(final TestContext testContext, final Connection connection)
+      throws Exception {
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout)
-    {
-      final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder
-        .builder()
-        .includeGreppedColumns(new RegularExpressionInclusionRule(
-          ".*\\..*\\.BOOKID"));
+    try (final TestWriter out = testout) {
+      final GrepOptionsBuilder grepOptionsBuilder =
+          GrepOptionsBuilder.builder()
+              .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\..*\\.BOOKID"));
       final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder
-          .builder()
-          .withGrepOptions(grepOptionsBuilder.toOptions())
-          .toOptions();
+          SchemaCrawlerOptionsBuilder.builder()
+              .withGrepOptions(grepOptionsBuilder.toOptions())
+              .toOptions();
 
       final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
-      final Schema[] schemas = catalog
-        .getSchemas()
-        .toArray(new Schema[0]);
+      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(6));
-      for (final Schema schema : schemas)
-      {
+      for (final Schema schema : schemas) {
         out.println("schema: " + schema.getFullName());
-        final Table[] tables = catalog
-          .getTables(schema)
-          .toArray(new Table[0]);
-        for (final Table table : tables)
-        {
+        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
+        for (final Table table : tables) {
           out.println("  table: " + table.getFullName());
-          final Column[] columns = table
-            .getColumns()
-            .toArray(new Column[0]);
+          final Column[] columns = table.getColumns().toArray(new Column[0]);
           Arrays.sort(columns);
-          for (final Column column : columns)
-          {
+          for (final Column column : columns) {
             out.println("    column: " + column.getFullName());
           }
         }
       }
     }
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+    assertThat(
+        outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
-  public void grepColumnsAndIncludeParentTables(final Connection connection)
-    throws Exception
-  {
-    final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder
-      .builder()
-      .includeGreppedColumns(new RegularExpressionInclusionRule(
-        ".*\\.BOOKAUTHORS\\..*"));
-    final FilterOptionsBuilder filterOptionsBuilder = FilterOptionsBuilder
-      .builder()
-      .parentTableFilterDepth(1);
-    SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-      .builder()
-      .withGrepOptions(grepOptionsBuilder.toOptions())
-      .toOptions();
+  public void grepColumnsAndIncludeParentTables(final Connection connection) throws Exception {
+    final GrepOptionsBuilder grepOptionsBuilder =
+        GrepOptionsBuilder.builder()
+            .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.BOOKAUTHORS\\..*"));
+    final FilterOptionsBuilder filterOptionsBuilder =
+        FilterOptionsBuilder.builder().parentTableFilterDepth(1);
+    SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.builder()
+            .withGrepOptions(grepOptionsBuilder.toOptions())
+            .toOptions();
 
     Catalog catalog;
     Schema schema;
     Table table;
 
     catalog = getCatalog(connection, schemaCrawlerOptions);
-    schema = catalog
-      .lookupSchema("PUBLIC.BOOKS")
-      .get();
+    schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
     assertThat("Schema PUBLIC.BOOKS not found", schema, notNullValue());
     assertThat(catalog.getTables(schema), hasSize(1));
-    table = catalog
-      .lookupTable(schema, "BOOKAUTHORS")
-      .get();
+    table = catalog.lookupTable(schema, "BOOKAUTHORS").get();
     assertThat("Table BOOKAUTHORS not found", table, notNullValue());
 
-    schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-      .builder()
-      .fromOptions(schemaCrawlerOptions)
-      .withFilterOptionsBuilder(filterOptionsBuilder)
-      .toOptions();
+    schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.builder()
+            .fromOptions(schemaCrawlerOptions)
+            .withFilterOptionsBuilder(filterOptionsBuilder)
+            .toOptions();
     catalog = getCatalog(connection, schemaCrawlerOptions);
-    schema = catalog
-      .lookupSchema("PUBLIC.BOOKS")
-      .get();
+    schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
     assertThat("Schema PUBLIC.BOOKS not found", schema, notNullValue());
-    assertThat(catalog
-                 .getTables(schema)
-                 .size(), is(3));
-    table = catalog
-      .lookupTable(schema, "BOOKAUTHORS")
-      .get();
+    assertThat(catalog.getTables(schema).size(), is(3));
+    table = catalog.lookupTable(schema, "BOOKAUTHORS").get();
     assertThat("Table BOOKAUTHORS not found", table, notNullValue());
-    table = catalog
-      .lookupTable(schema, "BOOKS")
-      .get();
+    table = catalog.lookupTable(schema, "BOOKS").get();
     assertThat("Table BOOKS not found", table, notNullValue());
-    table = catalog
-      .lookupTable(schema, "AUTHORS")
-      .get();
+    table = catalog.lookupTable(schema, "AUTHORS").get();
     assertThat("Table AUTHORS not found", table, notNullValue());
-
   }
 
   @Test
-  public void grepCombined(final TestContext testContext,
-                           final Connection connection)
-    throws Exception
-  {
+  public void grepCombined(final TestContext testContext, final Connection connection)
+      throws Exception {
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout)
-    {
-      final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder
-        .builder()
-        .includeGreppedColumns(new RegularExpressionInclusionRule(
-          ".*\\..*\\.BOOKID"))
-        .includeGreppedDefinitions(new RegularExpressionInclusionRule(
-          ".*book author.*"));
+    try (final TestWriter out = testout) {
+      final GrepOptionsBuilder grepOptionsBuilder =
+          GrepOptionsBuilder.builder()
+              .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\..*\\.BOOKID"))
+              .includeGreppedDefinitions(new RegularExpressionInclusionRule(".*book author.*"));
       final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder
-          .builder()
-          .withGrepOptions(grepOptionsBuilder.toOptions())
-          .toOptions();
+          SchemaCrawlerOptionsBuilder.builder()
+              .withGrepOptions(grepOptionsBuilder.toOptions())
+              .toOptions();
 
       final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
-      final Schema[] schemas = catalog
-        .getSchemas()
-        .toArray(new Schema[0]);
+      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(6));
-      for (final Schema schema : schemas)
-      {
+      for (final Schema schema : schemas) {
         out.println("schema: " + schema.getFullName());
-        final Table[] tables = catalog
-          .getTables(schema)
-          .toArray(new Table[0]);
-        for (final Table table : tables)
-        {
+        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
+        for (final Table table : tables) {
           out.println("  table: " + table.getFullName());
-          final Column[] columns = table
-            .getColumns()
-            .toArray(new Column[0]);
+          final Column[] columns = table.getColumns().toArray(new Column[0]);
           Arrays.sort(columns);
-          for (final Column column : columns)
-          {
+          for (final Column column : columns) {
             out.println("    column: " + column.getFullName());
           }
         }
       }
     }
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+    assertThat(
+        outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
-  public void grepDefinitions(final TestContext testContext,
-                              final Connection connection)
-    throws Exception
-  {
+  public void grepDefinitions(final TestContext testContext, final Connection connection)
+      throws Exception {
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout)
-    {
-      final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder
-        .builder()
-        .includeGreppedDefinitions(new RegularExpressionInclusionRule(
-          ".*book author.*"));
+    try (final TestWriter out = testout) {
+      final GrepOptionsBuilder grepOptionsBuilder =
+          GrepOptionsBuilder.builder()
+              .includeGreppedDefinitions(new RegularExpressionInclusionRule(".*book author.*"));
       final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder
-          .builder()
-          .withGrepOptions(grepOptionsBuilder.toOptions())
-          .toOptions();
+          SchemaCrawlerOptionsBuilder.builder()
+              .withGrepOptions(grepOptionsBuilder.toOptions())
+              .toOptions();
 
       final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
-      final Schema[] schemas = catalog
-        .getSchemas()
-        .toArray(new Schema[0]);
+      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(6));
-      for (final Schema schema : schemas)
-      {
+      for (final Schema schema : schemas) {
         out.println("schema: " + schema.getFullName());
-        final Table[] tables = catalog
-          .getTables(schema)
-          .toArray(new Table[0]);
-        for (final Table table : tables)
-        {
+        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
+        for (final Table table : tables) {
           out.println("  table: " + table.getFullName());
-          final Column[] columns = table
-            .getColumns()
-            .toArray(new Column[0]);
+          final Column[] columns = table.getColumns().toArray(new Column[0]);
           Arrays.sort(columns);
-          for (final Column column : columns)
-          {
+          for (final Column column : columns) {
             out.println("    column: " + column.getFullName());
           }
         }
       }
     }
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+    assertThat(
+        outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
-  public void grepProcedures(final TestContext testContext,
-                             final Connection connection)
-    throws Exception
-  {
+  public void grepProcedures(final TestContext testContext, final Connection connection)
+      throws Exception {
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout)
-    {
-      final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-        .builder()
-        .includeAllRoutines();
-      final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder
-        .builder()
-        .includeGreppedRoutineParameters(new RegularExpressionInclusionRule(
-          ".*\\.B_COUNT"));
+    try (final TestWriter out = testout) {
+      final LimitOptionsBuilder limitOptionsBuilder =
+          LimitOptionsBuilder.builder().includeAllRoutines();
+      final GrepOptionsBuilder grepOptionsBuilder =
+          GrepOptionsBuilder.builder()
+              .includeGreppedRoutineParameters(new RegularExpressionInclusionRule(".*\\.B_COUNT"));
       final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder
-          .builder()
-          .withLimitOptionsBuilder(limitOptionsBuilder)
-          .withGrepOptions(grepOptionsBuilder.toOptions())
-          .toOptions();
+          SchemaCrawlerOptionsBuilder.builder()
+              .withLimitOptionsBuilder(limitOptionsBuilder)
+              .withGrepOptions(grepOptionsBuilder.toOptions())
+              .toOptions();
 
       final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
-      final Schema[] schemas = catalog
-        .getSchemas()
-        .toArray(new Schema[0]);
+      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(6));
-      for (final Schema schema : schemas)
-      {
+      for (final Schema schema : schemas) {
         out.println("schema: " + schema.getFullName());
-        final Routine[] routines = catalog
-          .getRoutines(schema)
-          .toArray(new Routine[0]);
-        for (final Routine routine : routines)
-        {
+        final Routine[] routines = catalog.getRoutines(schema).toArray(new Routine[0]);
+        for (final Routine routine : routines) {
           out.println("  routine: " + routine.getFullName());
-          final RoutineParameter[] parameters = routine
-            .getParameters()
-            .toArray(new RoutineParameter[0]);
-          for (final RoutineParameter column : parameters)
-          {
+          final RoutineParameter[] parameters =
+              routine.getParameters().toArray(new RoutineParameter[0]);
+          for (final RoutineParameter column : parameters) {
             out.println("    parameter: " + column.getFullName());
           }
         }
       }
     }
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
-
+    assertThat(
+        outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
-  public void noEmptyTables(final TestContext testContext,
-                            final Connection connection)
-    throws Exception
-  {
+  public void noEmptyTables(final TestContext testContext, final Connection connection)
+      throws Exception {
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout)
-    {
-      final FilterOptionsBuilder filterOptionsBuilder = FilterOptionsBuilder
-        .builder()
-        .noEmptyTables();
-      final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
-        .builder()
-        .loadRowCounts();
+    try (final TestWriter out = testout) {
+      final FilterOptionsBuilder filterOptionsBuilder =
+          FilterOptionsBuilder.builder().noEmptyTables();
+      final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder().loadRowCounts();
       final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder
-          .builder()
-          .withFilterOptionsBuilder(filterOptionsBuilder)
-          .withLoadOptionsBuilder(loadOptionsBuilder)
-          .toOptions();
+          SchemaCrawlerOptionsBuilder.builder()
+              .withFilterOptionsBuilder(filterOptionsBuilder)
+              .withLoadOptionsBuilder(loadOptionsBuilder)
+              .toOptions();
 
       final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
-      final Schema[] schemas = catalog
-        .getSchemas()
-        .toArray(new Schema[0]);
+      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(6));
-      for (final Schema schema : schemas)
-      {
-        final Table[] tables = catalog
-          .getTables(schema)
-          .toArray(new Table[0]);
-        for (final Table table : tables)
-        {
+      for (final Schema schema : schemas) {
+        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
+        for (final Table table : tables) {
           assertThat(hasRowCount(table), is(true));
-          out.println(String.format("%s [%s]",
-                                    table.getFullName(),
-                                    getRowCountMessage(table)));
+          out.println(String.format("%s [%s]", table.getFullName(), getRowCountMessage(table)));
         }
       }
     }
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+    assertThat(
+        outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
-
 }

@@ -28,22 +28,17 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import java.math.BigInteger;
 
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Sequence;
 
 /**
- * Represents a database sequence. Created from metadata returned by a JDBC
- * call.
+ * Represents a database sequence. Created from metadata returned by a JDBC call.
  *
  * @author Sualeh Fatehi
  */
-final class MutableSequence
-  extends AbstractDatabaseObject
-  implements Sequence
-{
+final class MutableSequence extends AbstractDatabaseObject implements Sequence {
 
   private static final long serialVersionUID = -4774695374454532899L;
 
@@ -53,76 +48,56 @@ final class MutableSequence
   private BigInteger maximumValue;
   private BigInteger minimumValue;
 
-  MutableSequence(final Schema schema, final String name)
-  {
+  MutableSequence(final Schema schema, final String name) {
     super(schema, name);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public long getIncrement()
-  {
+  public long getIncrement() {
     return increment;
   }
 
-  void setIncrement(final long increment)
-  {
-    this.increment = increment;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public BigInteger getMaximumValue()
-  {
+  public BigInteger getMaximumValue() {
     return maximumValue;
   }
 
-  void setMaximumValue(final BigInteger maximumValue)
-  {
-    this.maximumValue = maximumValue;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public BigInteger getMinimumValue()
-  {
+  public BigInteger getMinimumValue() {
     return minimumValue;
   }
 
-  void setMinimumValue(final BigInteger minimumValue)
-  {
-    this.minimumValue = minimumValue;
-  }
-
   @Override
-  public BigInteger getStartValue()
-  {
+  public BigInteger getStartValue() {
     return startValue;
   }
 
-  void setStartValue(final BigInteger startValue)
-  {
-    this.startValue = startValue;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public boolean isCycle()
-  {
+  public boolean isCycle() {
     return cycle;
   }
 
-  void setCycle(final boolean cycle)
-  {
+  void setCycle(final boolean cycle) {
     this.cycle = cycle;
   }
 
+  void setIncrement(final long increment) {
+    this.increment = increment;
+  }
+
+  void setMaximumValue(final BigInteger maximumValue) {
+    this.maximumValue = maximumValue;
+  }
+
+  void setMinimumValue(final BigInteger minimumValue) {
+    this.minimumValue = minimumValue;
+  }
+
+  void setStartValue(final BigInteger startValue) {
+    this.startValue = startValue;
+  }
 }

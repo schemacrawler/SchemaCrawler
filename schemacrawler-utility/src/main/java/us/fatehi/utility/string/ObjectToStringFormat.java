@@ -27,27 +27,21 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.string;
 
-
 import java.util.function.Supplier;
 
 import us.fatehi.utility.ObjectToString;
 
-public final class ObjectToStringFormat
-  implements Supplier<String>
-{
+public final class ObjectToStringFormat implements Supplier<String> {
 
   private final Object args;
 
-  public ObjectToStringFormat(final Object args)
-  {
+  public ObjectToStringFormat(final Object args) {
     this.args = args;
   }
 
   @Override
-  public String get()
-  {
-    if (args == null)
-    {
+  public String get() {
+    if (args == null) {
       return "";
     }
 
@@ -55,9 +49,7 @@ public final class ObjectToStringFormat
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return get();
   }
-
 }

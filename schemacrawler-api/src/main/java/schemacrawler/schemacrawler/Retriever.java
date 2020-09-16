@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schemacrawler;
 
-
 import static java.lang.annotation.ElementType.TYPE;
 
 import java.lang.annotation.Documented;
@@ -37,8 +36,5 @@ import java.lang.annotation.Target;
 
 @Documented
 @Retention(RetentionPolicy.SOURCE)
-@Target(value = { TYPE })
-public @interface Retriever
-{
-
-}
+@Target(value = {TYPE})
+public @interface Retriever {}

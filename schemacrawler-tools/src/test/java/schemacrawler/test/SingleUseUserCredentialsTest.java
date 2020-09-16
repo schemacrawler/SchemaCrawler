@@ -27,58 +27,37 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test;
 
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
+
 import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
 
-public class SingleUseUserCredentialsTest
-{
+public class SingleUseUserCredentialsTest {
 
   @Test
-  public void noCredentials()
-  {
-    final SingleUseUserCredentials userCredentials =
-      new SingleUseUserCredentials();
-
-    assertThat(userCredentials.hasUser(), is(false));
-    assertThat(userCredentials.getUser(), is(nullValue()));
-    assertThat(userCredentials.hasPassword(), is(false));
-    assertThat(userCredentials.getPassword(), is(nullValue()));
-    assertThat(userCredentials.toString(),
-               is("UserCredentials [user=\"null\", password=\"*****\"]"));
-  }
-
-  @Test
-  public void blankCredentials()
-  {
-    final SingleUseUserCredentials userCredentials =
-      new SingleUseUserCredentials("", "");
+  public void blankCredentials() {
+    final SingleUseUserCredentials userCredentials = new SingleUseUserCredentials("", "");
 
     assertThat(userCredentials.hasUser(), is(false));
     assertThat(userCredentials.getUser(), is(""));
     assertThat(userCredentials.hasPassword(), is(true));
     assertThat(userCredentials.getPassword(), is(""));
-    assertThat(userCredentials.toString(),
-               is("UserCredentials [user=\"\", password=\"*****\"]"));
+    assertThat(userCredentials.toString(), is("UserCredentials [user=\"\", password=\"*****\"]"));
   }
 
   @Test
-  public void clearPassword()
-  {
-    final SingleUseUserCredentials userCredentials =
-      new SingleUseUserCredentials("sa", "sa");
+  public void clearPassword() {
+    final SingleUseUserCredentials userCredentials = new SingleUseUserCredentials("sa", "sa");
 
     assertThat(userCredentials.hasUser(), is(true));
     assertThat(userCredentials.getUser(), is("sa"));
     assertThat(userCredentials.hasPassword(), is(true));
     assertThat(userCredentials.getPassword(), is("sa"));
-    assertThat(userCredentials.toString(),
-               is("UserCredentials [user=\"sa\", password=\"*****\"]"));
+    assertThat(userCredentials.toString(), is("UserCredentials [user=\"sa\", password=\"*****\"]"));
 
     // Get password also clears the password, so assert everything again
 
@@ -89,10 +68,8 @@ public class SingleUseUserCredentialsTest
   }
 
   @Test
-  public void clearPasswordBeforeGetPassword()
-  {
-    final SingleUseUserCredentials userCredentials =
-      new SingleUseUserCredentials("sa", "sa");
+  public void clearPasswordBeforeGetPassword() {
+    final SingleUseUserCredentials userCredentials = new SingleUseUserCredentials("sa", "sa");
 
     assertThat(userCredentials.hasUser(), is(true));
     assertThat(userCredentials.getUser(), is("sa"));
@@ -107,4 +84,15 @@ public class SingleUseUserCredentialsTest
     assertThrows(IllegalAccessError.class, () -> userCredentials.getPassword());
   }
 
+  @Test
+  public void noCredentials() {
+    final SingleUseUserCredentials userCredentials = new SingleUseUserCredentials();
+
+    assertThat(userCredentials.hasUser(), is(false));
+    assertThat(userCredentials.getUser(), is(nullValue()));
+    assertThat(userCredentials.hasPassword(), is(false));
+    assertThat(userCredentials.getPassword(), is(nullValue()));
+    assertThat(
+        userCredentials.toString(), is("UserCredentials [user=\"null\", password=\"*****\"]"));
+  }
 }

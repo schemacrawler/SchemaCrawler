@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.sql.ResultSet;
@@ -46,24 +45,20 @@ import us.fatehi.utility.StopWatch;
  *
  * @author Sualeh Fatehi
  */
-public final class ResultsCrawler
-{
+public final class ResultsCrawler {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(ResultsCrawler.class.getName());
+      SchemaCrawlerLogger.getLogger(ResultsCrawler.class.getName());
 
   private final ResultSet results;
 
   /**
    * Constructs a SchemaCrawler object, from a result-set.
    *
-   * @param results
-   *   Result-set of data.
-   * @throws SchemaCrawlerException
-   *   On a SchemaCrawler exception
+   * @param results Result-set of data.
+   * @throws SchemaCrawlerException On a SchemaCrawler exception
    */
-  public ResultsCrawler(final ResultSet results)
-  {
+  public ResultsCrawler(final ResultSet results) {
     // NOTE: Do not check if the result set is closed, since some JDBC
     // drivers like SQLite may not work
     this.results = requireNonNull(results, "No result-set specified");
@@ -73,40 +68,28 @@ public final class ResultsCrawler
    * Crawls the database, to obtain result set metadata.
    *
    * @return Result set metadata
-   * @throws SchemaCrawlerException
-   *   On an exception
+   * @throws SchemaCrawlerException On an exception
    */
-  public ResultsColumns crawl()
-    throws SQLException
-  {
+  public ResultsColumns crawl() throws SQLException {
 
     final StopWatch stopWatch = new StopWatch("crawlResultSet");
 
     LOGGER.log(Level.INFO, "Crawling result set");
 
-    try
-    {
+    try {
       final ResultsRetriever resultsRetriever = new ResultsRetriever(results);
       final ResultsColumns resultsColumns =
-        stopWatch.time("retrieveResults", resultsRetriever::retrieveResults);
+          stopWatch.time("retrieveResults", resultsRetriever::retrieveResults);
 
       LOGGER.log(Level.INFO, stopWatch.stringify());
 
       return resultsColumns;
-    }
-    catch (final Exception e)
-    {
-      if (e instanceof SQLException)
-      {
+    } catch (final Exception e) {
+      if (e instanceof SQLException) {
         throw (SQLException) e;
-      }
-      else
-      {
-        throw new SchemaCrawlerSQLException(
-          "Could not retrieve result-set metadata",
-          e);
+      } else {
+        throw new SchemaCrawlerSQLException("Could not retrieve result-set metadata", e);
       }
     }
   }
-
 }
