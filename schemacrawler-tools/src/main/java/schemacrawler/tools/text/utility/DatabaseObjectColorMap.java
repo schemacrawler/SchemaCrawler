@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.utility;
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.utility.PropertiesUtility.loadProperties;
+import static schemacrawler.tools.commandline.utility.PropertiesUtility.loadProperties;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.IOException;
