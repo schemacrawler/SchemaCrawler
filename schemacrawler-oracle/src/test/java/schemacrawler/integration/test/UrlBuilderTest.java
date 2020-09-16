@@ -25,29 +25,25 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.server.oracle;
+package schemacrawler.integration.test;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Supplier;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
+import org.junit.jupiter.api.Test;
+
+import schemacrawler.server.oracle.OracleUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 
-public class OracleUrlBuilder implements Supplier<DatabaseConnectionUrlBuilder>
-{
+public class UrlBuilderTest {
 
-  @Override
-  public DatabaseConnectionUrlBuilder get()
-  {
-    final Map<String, String> map = new HashMap<>();
-    map.put("remarksReporting", "true");
-    map.put("restrictGetTables", "true");
-    map.put("useFetchSizeWithLongColumn", "true");
-    
-    final DatabaseConnectionUrlBuilder urlBuilder = DatabaseConnectionUrlBuilder
-        .builder("jdbc:oracle:thin:@//${host}:${port}/${database}")
-        .withDefaultPort(1521).withDefaultUrlx(map);
-    
-    return urlBuilder;
+  @Test
+  public void toUrl() {
+    final DatabaseConnectionUrlBuilder urlBuilder = new OracleUrlBuilder().get();
+    urlBuilder.withDatabase("schemacrawler");
+
+    assertThat(urlBuilder.toURL(), is("jdbc:oracle:thin:@//localhost:1521/schemacrawler"));
+    assertThat(urlBuilder.toURLx().size(), is(3));
   }
-
+  
 }
