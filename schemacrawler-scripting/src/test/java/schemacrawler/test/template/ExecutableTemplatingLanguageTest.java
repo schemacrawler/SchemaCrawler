@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.template;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
@@ -42,6 +41,7 @@ import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -51,14 +51,10 @@ import schemacrawler.tools.options.Config;
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public class ExecutableTemplatingLanguageTest
-{
+public class ExecutableTemplatingLanguageTest {
 
-  private static Path executableTemplateFromFile(final Connection connection,
-                                                 final String language,
-                                                 final Path scriptFile)
-    throws Exception
-  {
+  private static Path executableTemplateFromFile(
+      final Connection connection, final String language, final Path scriptFile) throws Exception {
     final SchemaCrawlerExecutable executable = executableOf("template");
     final Config additionalConfiguration = new Config();
     additionalConfiguration.put("template", scriptFile.toString());
@@ -69,14 +65,10 @@ public class ExecutableTemplatingLanguageTest
   }
 
   @Test
-  public void executableVelocity(final Connection connection)
-    throws Exception
-  {
+  public void executableVelocity(final Connection connection) throws Exception {
     final Path scriptFile = copyResourceToTempFile("/plaintextschema.vm");
-    assertThat(outputOf(executableTemplateFromFile(connection,
-                                                   "velocity",
-                                                   scriptFile)),
-               hasSameContentAs(classpathResource("executableForVelocity.txt")));
+    assertThat(
+        outputOf(executableTemplateFromFile(connection, "velocity", scriptFile)),
+        hasSameContentAs(classpathResource("executableForVelocity.txt")));
   }
-
 }

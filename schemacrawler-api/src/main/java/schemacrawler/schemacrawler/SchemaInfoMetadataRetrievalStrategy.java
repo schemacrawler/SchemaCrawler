@@ -28,9 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schemacrawler;
 
-
-public enum SchemaInfoMetadataRetrievalStrategy
-{
+public enum SchemaInfoMetadataRetrievalStrategy {
   foreignKeysRetrievalStrategy("foreignkeys"),
   functionParametersRetrievalStrategy("functionparameters"),
   functionsRetrievalStrategy("functions"),
@@ -45,14 +43,11 @@ public enum SchemaInfoMetadataRetrievalStrategy
 
   private final String key;
 
-  SchemaInfoMetadataRetrievalStrategy(final String key)
-  {
+  SchemaInfoMetadataRetrievalStrategy(final String key) {
     this.key = key;
   }
 
-  public String getKey()
-  {
+  public String getKey() {
     return key;
   }
-
 }

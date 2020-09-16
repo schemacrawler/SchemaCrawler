@@ -30,22 +30,18 @@ package schemacrawler.tools.options;
 import schemacrawler.schemacrawler.Options;
 
 /**
- * Convoluted interface to allow for subclasses builders, while maintaining a
- * fluent interface.
+ * Convoluted interface to allow for subclasses builders, while maintaining a fluent interface.
  *
- * @param <B>
- *   Builder
- * @param <O>
- *   Options to be built
+ * @param <B> Builder
+ * @param <O> Options to be built
  * @author Sualeh Fatehi
- * @see <a href= "https://stackoverflow.com/questions/17164375/subclassing-a-java-builder-class">Subclassing
- *   a Java Builder class</a>
+ * @see <a href=
+ *     "https://stackoverflow.com/questions/17164375/subclassing-a-java-builder-class">Subclassing a
+ *     Java Builder class</a>
  */
-public interface ConfigOptionsBuilder<B extends ConfigOptionsBuilder<B, O>, O extends Options>
-{
+public interface ConfigOptionsBuilder<B extends ConfigOptionsBuilder<B, O>, O extends Options> {
 
   ConfigOptionsBuilder<B, O> fromConfig(Config config);
 
   Config toConfig();
-  
 }

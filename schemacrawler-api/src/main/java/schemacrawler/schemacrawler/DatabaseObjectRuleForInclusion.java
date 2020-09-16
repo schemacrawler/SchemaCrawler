@@ -27,10 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schemacrawler;
 
-
-public enum DatabaseObjectRuleForInclusion
-{
-
+public enum DatabaseObjectRuleForInclusion {
   ruleForColumnInclusion("column", false),
   ruleForRoutineInclusion("routine", true),
   ruleForRoutineParameterInclusion("routine.inout", false),
@@ -43,21 +40,16 @@ public enum DatabaseObjectRuleForInclusion
   private final String key;
   private final boolean excludeByDefault;
 
-  DatabaseObjectRuleForInclusion(final String key,
-                                 final boolean excludeByDefault)
-  {
+  DatabaseObjectRuleForInclusion(final String key, final boolean excludeByDefault) {
     this.key = key;
     this.excludeByDefault = excludeByDefault;
-  }  
+  }
 
-  public String getKey()
-  {
+  public String getKey() {
     return key;
   }
 
-  public boolean isExcludeByDefault()
-  {
+  public boolean isExcludeByDefault() {
     return excludeByDefault;
   }
-
 }

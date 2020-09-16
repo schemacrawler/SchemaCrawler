@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.util.function.Supplier;
@@ -35,33 +34,24 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
-public class SchemaCrawlerLogger
-{
+public class SchemaCrawlerLogger {
 
   private static final String loggerClass = SchemaCrawlerLogger.class.getName();
 
-  public static SchemaCrawlerLogger getLogger(final String name)
-  {
+  public static SchemaCrawlerLogger getLogger(final String name) {
     return new SchemaCrawlerLogger(Logger.getLogger(name));
   }
 
-  private static void updateSource(final LogRecord lr, final int depth)
-  {
-    final StackTraceElement[] steArray = Thread
-      .currentThread()
-      .getStackTrace();
-    if (steArray == null)
-    {
+  private static void updateSource(final LogRecord lr, final int depth) {
+    final StackTraceElement[] steArray = Thread.currentThread().getStackTrace();
+    if (steArray == null) {
       return;
     }
-    for (int i = 1; i < steArray.length; i++)
-    {
+    for (int i = 1; i < steArray.length; i++) {
       final StackTraceElement ste = steArray[i];
-      if (!loggerClass.equals(ste.getClassName()))
-      {
+      if (!loggerClass.equals(ste.getClassName())) {
         final int index = i + depth;
-        if (index >= 0 && index < steArray.length)
-        {
+        if (index >= 0 && index < steArray.length) {
           final StackTraceElement ste_i = steArray[index];
           lr.setSourceMethodName(ste_i.getMethodName());
           lr.setSourceClassName(ste_i.getClassName());
@@ -73,66 +63,49 @@ public class SchemaCrawlerLogger
 
   private final Logger logger;
 
-  private SchemaCrawlerLogger(final Logger logger)
-  {
+  private SchemaCrawlerLogger(final Logger logger) {
     this.logger = requireNonNull(logger, "No logger provided");
   }
 
-  public boolean isLoggable(final Level level)
-  {
+  public boolean isLoggable(final Level level) {
     return logger.isLoggable(level);
   }
 
-  public void log(final Level level,
-                  final int depth,
-                  final String msg,
-                  final Throwable thrown)
-  {
+  public void log(final Level level, final int depth, final String msg, final Throwable thrown) {
     requireNonNull(level, "No log level provided");
 
-    if (!logger.isLoggable(level))
-    {
+    if (!logger.isLoggable(level)) {
       return;
     }
 
     final LogRecord lr = new LogRecord(level, msg);
     updateSource(lr, depth);
-    if (thrown != null)
-    {
+    if (thrown != null) {
       lr.setThrown(thrown);
     }
 
     logger.log(lr);
   }
 
-  public void log(final Level level, final String msg)
-  {
+  public void log(final Level level, final String msg) {
     log(level, msg, null);
   }
 
-  public void log(final Level level, final String msg, final Throwable thrown)
-  {
+  public void log(final Level level, final String msg, final Throwable thrown) {
     log(level, 0, msg, thrown);
   }
 
-  public void log(final Level level, final Supplier<String> msgSupplier)
-  {
-    if (!logger.isLoggable(level))
-    {
+  public void log(final Level level, final Supplier<String> msgSupplier) {
+    if (!logger.isLoggable(level)) {
       return;
     }
     log(level, msgSupplier.get());
   }
 
-  public void log(final Level level,
-                  final Supplier<String> msgSupplier,
-                  final Throwable thrown)
-  {
-    if (!logger.isLoggable(level))
-    {
+  public void log(final Level level, final Supplier<String> msgSupplier, final Throwable thrown) {
+    if (!logger.isLoggable(level)) {
       return;
     }
     log(level, msgSupplier.get(), thrown);
   }
-
 }

@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.commandline.command;
 
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -35,17 +34,13 @@ import java.util.List;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
-public class AvailableServers
-  implements Iterable<String>
-{
+public class AvailableServers implements Iterable<String> {
 
-  private static List<String> availableServers()
-  {
+  private static List<String> availableServers() {
     final List<String> availableServers = new ArrayList<>();
     final DatabaseConnectorRegistry databaseConnectorRegistry =
-      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    for (final DatabaseServerType serverType : databaseConnectorRegistry)
-    {
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    for (final DatabaseServerType serverType : databaseConnectorRegistry) {
       final String description = serverType.getDatabaseSystemIdentifier();
       availableServers.add(description);
     }
@@ -54,20 +49,16 @@ public class AvailableServers
 
   private final List<String> availableServers;
 
-  public AvailableServers()
-  {
+  public AvailableServers() {
     availableServers = availableServers();
   }
 
   @Override
-  public Iterator<String> iterator()
-  {
+  public Iterator<String> iterator() {
     return availableServers.iterator();
   }
 
-  public int size()
-  {
+  public int size() {
     return availableServers.size();
   }
-
 }

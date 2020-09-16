@@ -1,6 +1,5 @@
 package schemacrawler.tools.commandline;
 
-
 import picocli.CommandLine.Command;
 import schemacrawler.tools.commandline.command.CommandLineHelpCommand;
 import schemacrawler.tools.commandline.command.ConfigFileCommand;
@@ -20,26 +19,24 @@ import schemacrawler.tools.commandline.shell.ExitCommand;
 import schemacrawler.tools.commandline.shell.SweepCommand;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 
-@Command(subcommands = {
-  CommandLineHelpCommand.class,
-  LogCommand.class,
-  ConfigFileCommand.class,
-  ConnectCommand.class,
-  FilterCommand.class,
-  GrepCommand.class,
-  LimitCommand.class,
-  ShowCommand.class,
-  SortCommand.class,
-  LoadCommand.class,
-  ExecuteCommand.class,
-  AvailableCommandsCommand.class,
-  AvailableServersCommand.class,
-  DisconnectCommand.class,
-  SweepCommand.class,
-  SystemCommand.class,
-  ExitCommand.class
-})
-public class SchemaCrawlerShellCommands
-{
-
-}
+@Command(
+    subcommands = {
+      CommandLineHelpCommand.class,
+      LogCommand.class,
+      ConfigFileCommand.class,
+      ConnectCommand.class,
+      FilterCommand.class,
+      GrepCommand.class,
+      LimitCommand.class,
+      ShowCommand.class,
+      SortCommand.class,
+      LoadCommand.class,
+      ExecuteCommand.class,
+      AvailableCommandsCommand.class,
+      AvailableServersCommand.class,
+      DisconnectCommand.class,
+      SweepCommand.class,
+      SystemCommand.class,
+      ExitCommand.class
+    })
+public class SchemaCrawlerShellCommands {}

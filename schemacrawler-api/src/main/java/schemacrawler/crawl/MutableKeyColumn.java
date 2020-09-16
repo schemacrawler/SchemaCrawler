@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.crawl;
 
-
 import java.util.Collection;
 import java.util.Optional;
 
@@ -38,250 +37,178 @@ import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Table;
 
-class MutableKeyColumn
-  extends AbstractDependantObject<Table>
-  implements Column, DefinedObject
-{
+class MutableKeyColumn extends AbstractDependantObject<Table> implements Column, DefinedObject {
+
+  /** */
+  private static final long serialVersionUID = 6988029161945610279L;
 
   private final Column column;
   private final StringBuilder definition;
   private int keyOrdinalPosition;
 
-  MutableKeyColumn(final Column column)
-  {
+  MutableKeyColumn(final Column column) {
     super(new TableReference(column.getParent()), column.getName());
     this.column = column;
     definition = new StringBuilder();
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public int compareTo(final NamedObject obj)
-  {
-    if (obj == null)
-    {
+  public int compareTo(final NamedObject obj) {
+    if (obj == null) {
       return -1;
     }
 
     int comparison = 0;
 
-    if (obj instanceof MutableKeyColumn)
-    {
+    if (obj instanceof MutableKeyColumn) {
       final MutableKeyColumn other = (MutableKeyColumn) obj;
       comparison = keyOrdinalPosition - other.keyOrdinalPosition;
     }
 
-    if (comparison == 0)
-    {
+    if (comparison == 0) {
       comparison = super.compareTo(obj);
     }
 
     return comparison;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public ColumnDataType getColumnDataType()
-  {
+  public ColumnDataType getColumnDataType() {
     return column.getColumnDataType();
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public int getDecimalDigits()
-  {
+  public int getDecimalDigits() {
     return column.getDecimalDigits();
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public int getOrdinalPosition()
-  {
-    return column.getOrdinalPosition();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public int getSize()
-  {
-    return column.getSize();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String getWidth()
-  {
-    return column.getWidth();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isNullable()
-  {
-    return column.isNullable();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String getDefaultValue()
-  {
+  public String getDefaultValue() {
     return column.getDefaultValue();
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Collection<Privilege<Column>> getPrivileges()
-  {
-    return column.getPrivileges();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Column getReferencedColumn()
-  {
-    return column.getReferencedColumn();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isAutoIncremented()
-  {
-    return column.isAutoIncremented();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isGenerated()
-  {
-    return column.isGenerated();
-  }
-
-  void setGenerated(final boolean isGenerated)
-  {
-    if (column instanceof MutableColumn)
-    {
-      ((MutableColumn) column).setGenerated(isGenerated);
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isHidden()
-  {
-    return column.isHidden();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isPartOfForeignKey()
-  {
-    return column.isPartOfForeignKey();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isPartOfIndex()
-  {
-    return column.isPartOfIndex();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isPartOfPrimaryKey()
-  {
-    return column.isPartOfPrimaryKey();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isPartOfUniqueIndex()
-  {
-    return column.isPartOfUniqueIndex();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Optional<? extends Privilege<Column>> lookupPrivilege(final String name)
-  {
-    return column.lookupPrivilege(name);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String getDefinition()
-  {
+  public String getDefinition() {
     return definition.toString();
   }
 
+  /** {@inheritDoc} */
   @Override
-  public boolean hasDefinition()
-  {
-    return definition.length() > 0;
+  public int getOrdinalPosition() {
+    return column.getOrdinalPosition();
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public ColumnDataType getType()
-  {
+  public Collection<Privilege<Column>> getPrivileges() {
+    return column.getPrivileges();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Column getReferencedColumn() {
+    return column.getReferencedColumn();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public int getSize() {
+    return column.getSize();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public ColumnDataType getType() {
     return column.getType();
   }
 
-  int getKeyOrdinalPosition()
-  {
-    return keyOrdinalPosition;
+  /** {@inheritDoc} */
+  @Override
+  public String getWidth() {
+    return column.getWidth();
   }
 
-  void setKeyOrdinalPosition(final int keyOrdinalPosition)
-  {
-    this.keyOrdinalPosition = keyOrdinalPosition;
+  @Override
+  public boolean hasDefinition() {
+    return definition.length() > 0;
   }
 
-  void appendDefinition(final String definition)
-  {
-    if (definition != null)
-    {
+  /** {@inheritDoc} */
+  @Override
+  public boolean isAutoIncremented() {
+    return column.isAutoIncremented();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean isGenerated() {
+    return column.isGenerated();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean isHidden() {
+    return column.isHidden();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean isNullable() {
+    return column.isNullable();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean isPartOfForeignKey() {
+    return column.isPartOfForeignKey();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean isPartOfIndex() {
+    return column.isPartOfIndex();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean isPartOfPrimaryKey() {
+    return column.isPartOfPrimaryKey();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean isPartOfUniqueIndex() {
+    return column.isPartOfUniqueIndex();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Optional<? extends Privilege<Column>> lookupPrivilege(final String name) {
+    return column.lookupPrivilege(name);
+  }
+
+  void appendDefinition(final String definition) {
+    if (definition != null) {
       this.definition.append(definition);
     }
   }
 
+  int getKeyOrdinalPosition() {
+    return keyOrdinalPosition;
+  }
+
+  void setGenerated(final boolean isGenerated) {
+    if (column instanceof MutableColumn) {
+      ((MutableColumn) column).setGenerated(isGenerated);
+    }
+  }
+
+  void setKeyOrdinalPosition(final int keyOrdinalPosition) {
+    this.keyOrdinalPosition = keyOrdinalPosition;
+  }
 }

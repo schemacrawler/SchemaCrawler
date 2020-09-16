@@ -28,23 +28,21 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.state;
 
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.options.Config;
-import schemacrawler.SchemaCrawlerLogger;
 
-public class SchemaCrawlerShellState
-{
+public class SchemaCrawlerShellState {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(SchemaCrawlerShellState.class.getName());
+      SchemaCrawlerLogger.getLogger(SchemaCrawlerShellState.class.getName());
 
   private Config additionalConfiguration;
   private Config baseConfiguration;
@@ -54,118 +52,61 @@ public class SchemaCrawlerShellState
   private SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder;
   private SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder;
 
-  public Throwable getLastException()
-  {
-    return lastException;
-  }
-
-  public void setLastException(final Throwable lastException)
-  {
-    this.lastException = lastException;
-  }
-
-  public Supplier<Connection> getDataSource()
-  {
-    return dataSource;
-  }
-
-  public void setDataSource(final Supplier<Connection> dataSource)
-  {
-    this.dataSource = dataSource;
-  }
-
-  public Config getBaseConfiguration()
-  {
-    if (baseConfiguration != null)
-    {
-      return baseConfiguration;
-    }
-    else
-    {
-      return new Config();
-    }
-  }
-
-  public void setBaseConfiguration(final Config baseConfiguration)
-  {
-    if (baseConfiguration != null)
-    {
-      this.baseConfiguration = baseConfiguration;
-    }
-    else
-    {
-      this.baseConfiguration = new Config();
-    }
-  }
-
-  public void disconnect()
-  {
-    dataSource = null;
-  }
-
-  public Config getAdditionalConfiguration()
-  {
-    return additionalConfiguration;
-  }
-
-  public void addAdditionalConfiguration(final Config additionalConfiguration)
-  {
-    if (additionalConfiguration == null)
-    {
+  public void addAdditionalConfiguration(final Config additionalConfiguration) {
+    if (additionalConfiguration == null) {
       return;
     }
-    if (this.additionalConfiguration == null)
-    {
+    if (this.additionalConfiguration == null) {
       this.additionalConfiguration = new Config();
     }
     this.additionalConfiguration.putAll(additionalConfiguration);
   }
 
-  public Catalog getCatalog()
-  {
+  public void disconnect() {
+    dataSource = null;
+  }
+
+  public Config getAdditionalConfiguration() {
+    return additionalConfiguration;
+  }
+
+  public Config getBaseConfiguration() {
+    if (baseConfiguration != null) {
+      return baseConfiguration;
+    } else {
+      return new Config();
+    }
+  }
+
+  public Catalog getCatalog() {
     return catalog;
   }
 
-  public void setCatalog(final Catalog catalog)
-  {
-    this.catalog = catalog;
+  public Supplier<Connection> getDataSource() {
+    return dataSource;
   }
 
-  public SchemaCrawlerOptionsBuilder getSchemaCrawlerOptionsBuilder()
-  {
+  public Throwable getLastException() {
+    return lastException;
+  }
+
+  public SchemaCrawlerOptionsBuilder getSchemaCrawlerOptionsBuilder() {
     return schemaCrawlerOptionsBuilder;
   }
 
-  public void setSchemaCrawlerOptionsBuilder(final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder)
-  {
-    this.schemaCrawlerOptionsBuilder = schemaCrawlerOptionsBuilder;
-  }
-
-  public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder()
-  {
+  public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder() {
     return schemaRetrievalOptionsBuilder;
   }
 
-  public void setSchemaRetrievalOptionsBuilder(final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder)
-  {
-    this.schemaRetrievalOptionsBuilder = schemaRetrievalOptionsBuilder;
-  }
-
-  public boolean isConnected()
-  {
-    if (dataSource == null)
-    {
+  public boolean isConnected() {
+    if (dataSource == null) {
       return false;
     }
-    try (final Connection connection = dataSource.get())
-    {
-      if (!connection.isValid(0))
-      {
+    try (final Connection connection = dataSource.get()) {
+      if (!connection.isValid(0)) {
         throw new SQLException("Connection is not valid");
       }
-    }
-    catch (final NullPointerException | SQLException e)
-    {
+    } catch (final NullPointerException | SQLException e) {
       LOGGER.log(Level.WARNING, e.getMessage(), e);
       return false;
     }
@@ -173,13 +114,41 @@ public class SchemaCrawlerShellState
     return true;
   }
 
-  public boolean isLoaded()
-  {
+  public boolean isLoaded() {
     return catalog != null;
   }
 
-  public void sweep()
-  {
+  public void setBaseConfiguration(final Config baseConfiguration) {
+    if (baseConfiguration != null) {
+      this.baseConfiguration = baseConfiguration;
+    } else {
+      this.baseConfiguration = new Config();
+    }
+  }
+
+  public void setCatalog(final Catalog catalog) {
+    this.catalog = catalog;
+  }
+
+  public void setDataSource(final Supplier<Connection> dataSource) {
+    this.dataSource = dataSource;
+  }
+
+  public void setLastException(final Throwable lastException) {
+    this.lastException = lastException;
+  }
+
+  public void setSchemaCrawlerOptionsBuilder(
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder) {
+    this.schemaCrawlerOptionsBuilder = schemaCrawlerOptionsBuilder;
+  }
+
+  public void setSchemaRetrievalOptionsBuilder(
+      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder) {
+    this.schemaRetrievalOptionsBuilder = schemaRetrievalOptionsBuilder;
+  }
+
+  public void sweep() {
     catalog = null;
     additionalConfiguration = null;
     schemaCrawlerOptionsBuilder = null;
@@ -188,5 +157,4 @@ public class SchemaCrawlerShellState
 
     disconnect();
   }
-
 }

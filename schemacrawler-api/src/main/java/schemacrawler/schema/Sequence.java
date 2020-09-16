@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 import java.math.BigInteger;
 
 /**
@@ -36,9 +35,7 @@ import java.math.BigInteger;
  *
  * @author Sualeh Fatehi
  */
-public interface Sequence
-  extends DatabaseObject
-{
+public interface Sequence extends DatabaseObject {
 
   /**
    * Gets the increment of the sequence.
@@ -69,10 +66,8 @@ public interface Sequence
   BigInteger getStartValue();
 
   /**
-   * Indicates whether or not the sequence can continue to generate values after
-   * reaching its maximum or minimum value. return True if the sequence
-   * continues to generate values.
+   * Indicates whether or not the sequence can continue to generate values after reaching its
+   * maximum or minimum value. return True if the sequence continues to generate values.
    */
   boolean isCycle();
-
 }

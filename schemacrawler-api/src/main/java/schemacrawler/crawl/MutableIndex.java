@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
@@ -48,23 +47,18 @@ import us.fatehi.utility.CompareUtility;
  *
  * @author Sualeh Fatehi
  */
-class MutableIndex
-  extends AbstractDependantObject<Table>
-  implements Index
-{
+class MutableIndex extends AbstractDependantObject<Table> implements Index {
 
   private static final long serialVersionUID = 4051326747138079028L;
 
-  private final NamedObjectList<MutableIndexColumn> columns =
-    new NamedObjectList<>();
+  private final NamedObjectList<MutableIndexColumn> columns = new NamedObjectList<>();
   private final StringBuilder definition;
   private int cardinality;
   private IndexType indexType;
   private boolean isUnique;
   private int pages;
 
-  MutableIndex(final Table parent, final String name)
-  {
+  MutableIndex(final Table parent, final String name) {
     super(new TableReference(parent), name);
     // Default values
     indexType = IndexType.unknown;
@@ -73,17 +67,13 @@ class MutableIndex
 
   /**
    * {@inheritDoc}
-   * <p>
-   * Note: Since indexes are not always explicitly named in databases, the
-   * sorting routine orders the indexes by the names of the columns in the
-   * index.
-   * </p>
+   *
+   * <p>Note: Since indexes are not always explicitly named in databases, the sorting routine orders
+   * the indexes by the names of the columns in the index.
    */
   @Override
-  public final int compareTo(final NamedObject obj)
-  {
-    if (obj == null || !(obj instanceof Index))
-    {
+  public final int compareTo(final NamedObject obj) {
+    if (obj == null || !(obj instanceof Index)) {
       return -1;
     }
 
@@ -91,154 +81,113 @@ class MutableIndex
 
     int compareTo = 0;
 
-    if (compareTo == 0)
-    {
+    if (compareTo == 0) {
       final List<IndexColumn> thisColumns = getColumns();
       final List<IndexColumn> thatColumns = that.getColumns();
 
       compareTo = CompareUtility.compareLists(thisColumns, thatColumns);
     }
 
-    if (compareTo == 0)
-    {
-      if (isUnique != that.isUnique())
-      {
-        compareTo = isUnique? -1: 1;
+    if (compareTo == 0) {
+      if (isUnique != that.isUnique()) {
+        compareTo = isUnique ? -1 : 1;
       }
     }
 
-    if (compareTo == 0)
-    {
-      compareTo = indexType.ordinal() - that
-        .getIndexType()
-        .ordinal();
+    if (compareTo == 0) {
+      compareTo = indexType.ordinal() - that.getIndexType().ordinal();
     }
 
-    if (compareTo == 0)
-    {
+    if (compareTo == 0) {
       compareTo = super.compareTo(obj);
     }
 
     return compareTo;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final int getCardinality()
-  {
+  public final int getCardinality() {
     return cardinality;
   }
 
-  final void setCardinality(final int cardinality)
-  {
-    this.cardinality = cardinality;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final List<IndexColumn> getColumns()
-  {
+  public final List<IndexColumn> getColumns() {
     return new ArrayList<>(columns.values());
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final IndexType getIndexType()
-  {
+  public final String getDefinition() {
+    return definition.toString();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final IndexType getIndexType() {
     return indexType;
   }
 
-  final void setIndexType(final IndexType indexType)
-  {
-    this.indexType = requireNonNull(indexType, "Null index type");
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final int getPages()
-  {
+  public final int getPages() {
     return pages;
   }
 
-  final void setPages(final int pages)
-  {
-    this.pages = pages;
+  /** {@inheritDoc} */
+  @Override
+  public final IndexType getType() {
+    return getIndexType();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public boolean isUnique()
-  {
+  public final boolean hasDefinition() {
+    return definition.length() > 0;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean isUnique() {
     return isUnique;
   }
 
-  final void setUnique(final boolean unique)
-  {
-    isUnique = unique;
+  @Override
+  public final Iterator<IndexColumn> iterator() {
+    return getColumns().iterator();
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final Optional<MutableIndexColumn> lookupColumn(final String name)
-  {
+  public final Optional<MutableIndexColumn> lookupColumn(final String name) {
     // NOTE: Index columns are still table columns, so they need to be
     // looked up with a table lookup key
     return columns.lookup(getParent(), name);
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final String getDefinition()
-  {
-    return definition.toString();
-  }
-
-  @Override
-  public final boolean hasDefinition()
-  {
-    return definition.length() > 0;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final IndexType getType()
-  {
-    return getIndexType();
-  }
-
-  @Override
-  public final Iterator<IndexColumn> iterator()
-  {
-    return getColumns().iterator();
-  }
-
-  final void addColumn(final MutableIndexColumn column)
-  {
+  final void addColumn(final MutableIndexColumn column) {
     columns.add(column);
   }
 
-  final void appendDefinition(final String definition)
-  {
-    if (definition != null)
-    {
+  final void appendDefinition(final String definition) {
+    if (definition != null) {
       this.definition.append(definition);
     }
   }
 
+  final void setCardinality(final int cardinality) {
+    this.cardinality = cardinality;
+  }
+
+  final void setIndexType(final IndexType indexType) {
+    this.indexType = requireNonNull(indexType, "Null index type");
+  }
+
+  final void setPages(final int pages) {
+    this.pages = pages;
+  }
+
+  final void setUnique(final boolean unique) {
+    isUnique = unique;
+  }
 }

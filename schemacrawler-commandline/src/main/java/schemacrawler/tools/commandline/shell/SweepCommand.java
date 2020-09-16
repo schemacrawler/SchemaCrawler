@@ -28,40 +28,32 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.shell;
 
-
 import java.util.logging.Level;
 
 import picocli.CommandLine.Command;
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
-import schemacrawler.SchemaCrawlerLogger;
 
-@Command(name = "sweep",
-         aliases = { "clean" },
-         header = "** Disconnect from a database, and clear loaded catalog",
-         headerHeading = "",
-         synopsisHeading = "Shell Command:%n",
-         customSynopsis = {
-           "sweep"
-         },
-         optionListHeading = "Options:%n")
-public class SweepCommand
-  extends BaseStateHolder
-  implements Runnable
-{
+@Command(
+    name = "sweep",
+    aliases = {"clean"},
+    header = "** Disconnect from a database, and clear loaded catalog",
+    headerHeading = "",
+    synopsisHeading = "Shell Command:%n",
+    customSynopsis = {"sweep"},
+    optionListHeading = "Options:%n")
+public class SweepCommand extends BaseStateHolder implements Runnable {
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(SweepCommand.class.getName());
+      SchemaCrawlerLogger.getLogger(SweepCommand.class.getName());
 
-  public SweepCommand(final SchemaCrawlerShellState state)
-  {
+  public SweepCommand(final SchemaCrawlerShellState state) {
     super(state);
   }
 
   @Override
-  public void run()
-  {
+  public void run() {
     LOGGER.log(Level.INFO, "sweep");
     state.sweep();
   }
-
 }

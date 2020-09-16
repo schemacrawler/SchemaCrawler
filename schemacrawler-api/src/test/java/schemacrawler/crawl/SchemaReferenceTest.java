@@ -27,24 +27,19 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.crawl;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import org.junit.jupiter.api.Test;
+
 import schemacrawler.schemacrawler.SchemaReference;
 
-public class SchemaReferenceTest
-{
+public class SchemaReferenceTest {
 
   @Test
-  public void schemaRef()
-  {
-    assertThat(new SchemaReference("catalog", "schema").getFullName(),
-               is("catalog.schema"));
+  public void schemaRef() {
+    assertThat(new SchemaReference("catalog", "schema").getFullName(), is("catalog.schema"));
     assertThat(new SchemaReference(null, "schema").getFullName(), is("schema"));
-    assertThat(new SchemaReference("catalog", null).getFullName(),
-               is("catalog"));
+    assertThat(new SchemaReference("catalog", null).getFullName(), is("catalog"));
   }
-
 }

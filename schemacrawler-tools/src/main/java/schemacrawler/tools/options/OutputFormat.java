@@ -28,16 +28,13 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.options;
 
-
 import java.util.List;
 
-public interface OutputFormat
-{
+public interface OutputFormat {
 
   String getDescription();
 
   String getFormat();
 
   List<String> getFormats();
-
 }

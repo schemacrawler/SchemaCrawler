@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.crawl;
 
-
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
@@ -38,16 +37,12 @@ import java.util.Set;
 import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.Property;
 
-class ImmutableDatabaseProperty
-  extends AbstractProperty
-  implements DatabaseProperty
-{
+class ImmutableDatabaseProperty extends AbstractProperty implements DatabaseProperty {
 
   private static final long serialVersionUID = -7150431683440256142L;
   private static final Set<Entry<String, String>> acronyms;
 
-  static
-  {
+  static {
     final Map<String, String> acronymsMap = new HashMap<>();
     acronymsMap.put("JDBC", "Jdbc");
     acronymsMap.put("ANSI", "Ansi");
@@ -59,68 +54,47 @@ class ImmutableDatabaseProperty
     acronyms = Collections.unmodifiableSet(acronymsMap.entrySet());
   }
 
-  ImmutableDatabaseProperty(final String name, final Object value)
-  {
+  ImmutableDatabaseProperty(final String name, final Object value) {
     super(name, (Serializable) value);
   }
 
   @Override
-  public int compareTo(final Property otherProperty)
-  {
-    if (otherProperty == null || otherProperty.getDescription() == null)
-    {
+  public int compareTo(final Property otherProperty) {
+    if (otherProperty == null || otherProperty.getDescription() == null) {
       return -1;
-    }
-    else
-    {
+    } else {
       return getDescription().compareToIgnoreCase(otherProperty.getDescription());
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String getDescription()
-  {
+  public String getDescription() {
     final String get = "get";
     String description = getName();
-    if (description.startsWith(get))
-    {
+    if (description.startsWith(get)) {
       description = description.substring(get.length());
     }
 
-    for (final Entry<String, String> acronym : acronyms)
-    {
-      description =
-        description.replaceAll(acronym.getKey(), acronym.getValue());
+    for (final Entry<String, String> acronym : acronyms) {
+      description = description.replaceAll(acronym.getKey(), acronym.getValue());
     }
 
     final int strLen = description.length();
     final StringBuilder buffer = new StringBuilder(strLen);
-    for (int i = 0; i < strLen; i++)
-    {
+    for (int i = 0; i < strLen; i++) {
       final char ch = description.charAt(i);
-      if (Character.isUpperCase(ch) || Character.isTitleCase(ch))
-      {
-        buffer
-          .append(' ')
-          .append(Character.toLowerCase(ch));
-      }
-      else
-      {
+      if (Character.isUpperCase(ch) || Character.isTitleCase(ch)) {
+        buffer.append(' ').append(Character.toLowerCase(ch));
+      } else {
         buffer.append(ch);
       }
     }
     description = buffer.toString();
 
-    for (final Entry<String, String> acronym : acronyms)
-    {
-      description = description.replaceAll(acronym
-                                             .getValue()
-                                             .toLowerCase(), acronym.getKey());
-      description =
-        description.replaceAll(acronym.getValue(), acronym.getKey());
+    for (final Entry<String, String> acronym : acronyms) {
+      description = description.replaceAll(acronym.getValue().toLowerCase(), acronym.getKey());
+      description = description.replaceAll(acronym.getValue(), acronym.getKey());
     }
 
     description = description.trim();
@@ -128,9 +102,7 @@ class ImmutableDatabaseProperty
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return getDescription() + " = " + getValue();
   }
-
 }

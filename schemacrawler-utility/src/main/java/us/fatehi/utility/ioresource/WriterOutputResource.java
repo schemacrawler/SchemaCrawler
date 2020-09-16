@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.ioresource;
 
-
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.ioresource.InputResourceUtility.wrapWriter;
 
@@ -37,32 +36,24 @@ import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public final class WriterOutputResource
-  implements OutputResource
-{
+public final class WriterOutputResource implements OutputResource {
 
-  private static final Logger LOGGER =
-    Logger.getLogger(WriterOutputResource.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(WriterOutputResource.class.getName());
 
   private final Writer writer;
 
-  public WriterOutputResource(final Writer writer)
-  {
+  public WriterOutputResource(final Writer writer) {
     this.writer = requireNonNull(writer, "No writer provided");
   }
 
   @Override
-  public Writer openNewOutputWriter(final Charset charset,
-                                    final boolean appendOutput)
-  {
+  public Writer openNewOutputWriter(final Charset charset, final boolean appendOutput) {
     LOGGER.log(Level.INFO, "Output to provided writer");
     return wrapWriter(getDescription(), new BufferedWriter(writer), false);
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return "<writer>";
   }
-
 }

@@ -1,6 +1,5 @@
 package schemacrawler.tools.commandline;
 
-
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Mixin;
 import schemacrawler.tools.commandline.command.ConfigFileCommand;
@@ -16,30 +15,17 @@ import schemacrawler.tools.commandline.command.ShowStateCommand;
 import schemacrawler.tools.commandline.command.SortCommand;
 
 @Command
-class SchemaCrawlerCommandLineCommands
-{
+class SchemaCrawlerCommandLineCommands {
 
-  @Mixin
-  private ConfigFileCommand configfile;
-  @Mixin
-  private ConnectCommand connect;
-  @Mixin
-  private ExecuteCommand execute;
-  @Mixin
-  private FilterCommand filter;
-  @Mixin
-  private GrepCommand grep;
-  @Mixin
-  private LimitCommand limit;
-  @Mixin
-  private LoadCommand load;
-  @Mixin
-  private LogCommand log;
-  @Mixin
-  private ShowCommand show;
-  @Mixin
-  private ShowStateCommand showstate;
-  @Mixin
-  private SortCommand sort;
-
+  @Mixin private ConfigFileCommand configfile;
+  @Mixin private ConnectCommand connect;
+  @Mixin private ExecuteCommand execute;
+  @Mixin private FilterCommand filter;
+  @Mixin private GrepCommand grep;
+  @Mixin private LimitCommand limit;
+  @Mixin private LoadCommand load;
+  @Mixin private LogCommand log;
+  @Mixin private ShowCommand show;
+  @Mixin private ShowStateCommand showstate;
+  @Mixin private SortCommand sort;
 }

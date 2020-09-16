@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.PRIMARY_KEYS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.primaryKeysRetrievalStrategy;
@@ -49,36 +48,29 @@ import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import us.fatehi.utility.string.StringFormat;
 
 /**
- * A retriever uses database metadata to get the details about the database
- * tables.
+ * A retriever uses database metadata to get the details about the database tables.
  *
  * @author Sualeh Fatehi
  */
-final class PrimaryKeyRetriever
-  extends AbstractRetriever
-{
+final class PrimaryKeyRetriever extends AbstractRetriever {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(PrimaryKeyRetriever.class.getName());
+      SchemaCrawlerLogger.getLogger(PrimaryKeyRetriever.class.getName());
 
-  PrimaryKeyRetriever(final RetrieverConnection retrieverConnection,
-                      final MutableCatalog catalog,
-                      final SchemaCrawlerOptions options)
-    throws SQLException
-  {
+  PrimaryKeyRetriever(
+      final RetrieverConnection retrieverConnection,
+      final MutableCatalog catalog,
+      final SchemaCrawlerOptions options)
+      throws SQLException {
     super(retrieverConnection, catalog, options);
   }
 
-  void retrievePrimaryKeys(final NamedObjectList<MutableTable> allTables)
-    throws SQLException
-  {
+  void retrievePrimaryKeys(final NamedObjectList<MutableTable> allTables) throws SQLException {
     requireNonNull(allTables, "No tables provided");
 
-    switch (getRetrieverConnection().get(primaryKeysRetrievalStrategy))
-    {
+    switch (getRetrieverConnection().get(primaryKeysRetrievalStrategy)) {
       case data_dictionary_all:
-        LOGGER.log(Level.INFO,
-                   "Retrieving primary keys, using fast data dictionary retrieval");
+        LOGGER.log(Level.INFO, "Retrieving primary keys, using fast data dictionary retrieval");
         retrievePrimaryKeysFromDataDictionary(allTables);
         break;
 
@@ -90,39 +82,32 @@ final class PrimaryKeyRetriever
       default:
         break;
     }
-
   }
 
-  private void createPrimaryKeyForTable(final MutableTable table,
-                                        final MetadataResultSet results)
-  {
+  private void createPrimaryKeyForTable(final MutableTable table, final MetadataResultSet results) {
     MutablePrimaryKey primaryKey;
     // "TABLE_CAT", "TABLE_SCHEM", "TABLE_NAME"
     final String columnName = results.getString("COLUMN_NAME");
     final String primaryKeyName = results.getString("PK_NAME");
     final int keySequence = Integer.parseInt(results.getString("KEY_SEQ"));
-    LOGGER.log(Level.FINE,
-               new StringFormat("Retrieving primary column <%s.%s.%s>",
-                                table,
-                                primaryKeyName,
-                                columnName));
+    LOGGER.log(
+        Level.FINE,
+        new StringFormat(
+            "Retrieving primary column <%s.%s.%s>", table, primaryKeyName, columnName));
 
     primaryKey = table.getPrimaryKey();
-    if (primaryKey == null)
-    {
+    if (primaryKey == null) {
       primaryKey = new MutablePrimaryKey(table, primaryKeyName);
       table.setPrimaryKey(primaryKey);
     }
 
     // Register primary key information
-    final Optional<MutableColumn> columnOptional =
-      table.lookupColumn(columnName);
-    if (columnOptional.isPresent())
-    {
+    final Optional<MutableColumn> columnOptional = table.lookupColumn(columnName);
+    if (columnOptional.isPresent()) {
       final MutableColumn column = columnOptional.get();
       column.markAsPartOfPrimaryKey();
       final MutableTableConstraintColumn pkColumn =
-        new MutableTableConstraintColumn(primaryKey, column);
+          new MutableTableConstraintColumn(primaryKey, column);
       pkColumn.setKeyOrdinalPosition(keySequence);
       //
       primaryKey.addColumn(pkColumn);
@@ -130,83 +115,58 @@ final class PrimaryKeyRetriever
   }
 
   private void retrievePrimaryKeysFromDataDictionary(final NamedObjectList<MutableTable> allTables)
-    throws SchemaCrawlerSQLException
-  {
+      throws SchemaCrawlerSQLException {
     final InformationSchemaViews informationSchemaViews =
-      getRetrieverConnection().getInformationSchemaViews();
+        getRetrieverConnection().getInformationSchemaViews();
 
-    if (!informationSchemaViews.hasQuery(PRIMARY_KEYS))
-    {
-      LOGGER.log(Level.FINE,
-                 "Extended primary keys SQL statement was not provided");
+    if (!informationSchemaViews.hasQuery(PRIMARY_KEYS)) {
+      LOGGER.log(Level.FINE, "Extended primary keys SQL statement was not provided");
       return;
     }
 
     final Query pkSql = informationSchemaViews.getQuery(PRIMARY_KEYS);
     final Connection connection = getDatabaseConnection();
-    try (
-      final Statement statement = connection.createStatement();
-      final MetadataResultSet results = new MetadataResultSet(pkSql,
-                                                              statement,
-                                                              getSchemaInclusionRule())
-    )
-    {
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results =
+            new MetadataResultSet(pkSql, statement, getSchemaInclusionRule())) {
       results.setDescription("retrievePrimaryKeysFromDataDictionary");
-      while (results.next())
-      {
-        final String catalogName =
-          normalizeCatalogName(results.getString("TABLE_CAT"));
-        final String schemaName =
-          normalizeSchemaName(results.getString("TABLE_SCHEM"));
+      while (results.next()) {
+        final String catalogName = normalizeCatalogName(results.getString("TABLE_CAT"));
+        final String schemaName = normalizeSchemaName(results.getString("TABLE_SCHEM"));
         final String tableName = results.getString("TABLE_NAME");
 
         final Optional<MutableTable> optionalTable =
-          lookupTable(catalogName, schemaName, tableName);
-        if (!optionalTable.isPresent())
-        {
+            lookupTable(catalogName, schemaName, tableName);
+        if (!optionalTable.isPresent()) {
           continue;
         }
         final MutableTable table = optionalTable.get();
         createPrimaryKeyForTable(table, results);
       }
-    }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerSQLException(
-        "Could not retrieve primary keys from SQL:\n" + pkSql,
-        e);
+    } catch (final SQLException e) {
+      throw new SchemaCrawlerSQLException("Could not retrieve primary keys from SQL:\n" + pkSql, e);
     }
   }
 
   private void retrievePrimaryKeysFromMetadata(final NamedObjectList<MutableTable> allTables)
-    throws SQLException
-  {
-    for (final MutableTable table : allTables)
-    {
-      if (table instanceof View)
-      {
+      throws SQLException {
+    for (final MutableTable table : allTables) {
+      if (table instanceof View) {
         continue;
       }
       final Schema tableSchema = table.getSchema();
-      try (
-        final MetadataResultSet results = new MetadataResultSet(getMetaData().getPrimaryKeys(
-          tableSchema.getCatalogName(),
-          tableSchema.getName(),
-          table.getName()))
-      )
-      {
-        while (results.next())
-        {
+      try (final MetadataResultSet results =
+          new MetadataResultSet(
+              getMetaData()
+                  .getPrimaryKeys(
+                      tableSchema.getCatalogName(), tableSchema.getName(), table.getName()))) {
+        while (results.next()) {
           createPrimaryKeyForTable(table, results);
         }
-      }
-      catch (final SQLException e)
-      {
+      } catch (final SQLException e) {
         throw new SchemaCrawlerSQLException(
-          "Could not retrieve primary keys for table " + table,
-          e);
+            "Could not retrieve primary keys for table " + table, e);
       }
     }
   }
-
 }

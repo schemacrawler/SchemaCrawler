@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
@@ -38,14 +37,13 @@ import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.isClassAvailable;
 import static us.fatehi.utility.Utility.isIntegral;
 import static us.fatehi.utility.Utility.toSnakeCase;
+
 import org.junit.jupiter.api.Test;
 
-public class UtilityTest
-{
+public class UtilityTest {
 
   @Test
-  public void commonPrefixTest()
-  {
+  public void commonPrefixTest() {
     assertThat(commonPrefix("preTest", null), is(""));
     assertThat(commonPrefix(null, "preCompile"), is(""));
     assertThat(commonPrefix("preTest", "preCompile"), is("pre"));
@@ -54,8 +52,7 @@ public class UtilityTest
   }
 
   @Test
-  public void hasNoUpperCaseTest()
-  {
+  public void hasNoUpperCaseTest() {
     assertThat(hasNoUpperCase(null), is(false));
     assertThat(hasNoUpperCase("A"), is(false));
     assertThat(hasNoUpperCase("Aa"), is(false));
@@ -70,8 +67,7 @@ public class UtilityTest
   }
 
   @Test
-  public void isBlankTest()
-  {
+  public void isBlankTest() {
     assertThat(isBlank(null), is(true));
     assertThat(isBlank(""), is(true));
     assertThat(isBlank(" "), is(true));
@@ -90,15 +86,13 @@ public class UtilityTest
   }
 
   @Test
-  public void isClassAvailableTest()
-  {
+  public void isClassAvailableTest() {
     assertThat(isClassAvailable("java.lang.String"), is(true));
     assertThat(isClassAvailable("com.example.Unknown"), is(false));
   }
 
   @Test
-  public void isIntegralTest()
-  {
+  public void isIntegralTest() {
     assertThat(isIntegral(null), is(false));
     assertThat(isIntegral(""), is(false));
     assertThat(isIntegral(" "), is(false));
@@ -112,8 +106,7 @@ public class UtilityTest
   }
 
   @Test
-  public void snakeCaseTest()
-  {
+  public void snakeCaseTest() {
     assertThat(toSnakeCase(null), nullValue());
     assertThat(toSnakeCase("a b"), equalTo("a b"));
     assertThat(toSnakeCase("ab"), equalTo("ab"));
@@ -122,5 +115,4 @@ public class UtilityTest
     assertThat(toSnakeCase("abIj"), equalTo("ab_ij"));
     assertThat(toSnakeCase("ABC"), equalTo("_a_b_c"));
   }
-
 }

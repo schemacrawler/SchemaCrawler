@@ -28,49 +28,33 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * An enumeration wrapper around index sort sequences.
- */
-public enum IndexColumnSortSequence
-{
+/** An enumeration wrapper around index sort sequences. */
+public enum IndexColumnSortSequence {
 
-  /**
-   * Unknown
-   */
+  /** Unknown */
   unknown("unknown"),
-  /**
-   * Ascending.
-   */
+  /** Ascending. */
   ascending("A"),
-  /**
-   * Descending.
-   */
+  /** Descending. */
   descending("D");
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(IndexColumnSortSequence.class.getName());
+      SchemaCrawlerLogger.getLogger(IndexColumnSortSequence.class.getName());
 
   /**
    * Find the enumeration value corresponding to the string.
    *
-   * @param code
-   *   Sort sequence code.
+   * @param code Sort sequence code.
    * @return Enumeration value
    */
-  public static IndexColumnSortSequence valueOfFromCode(final String code)
-  {
-    for (final IndexColumnSortSequence type : IndexColumnSortSequence.values())
-    {
-      if (type
-        .getCode()
-        .equalsIgnoreCase(code))
-      {
+  public static IndexColumnSortSequence valueOfFromCode(final String code) {
+    for (final IndexColumnSortSequence type : IndexColumnSortSequence.values()) {
+      if (type.getCode().equalsIgnoreCase(code)) {
         return type;
       }
     }
@@ -80,8 +64,7 @@ public enum IndexColumnSortSequence
 
   private final String code;
 
-  IndexColumnSortSequence(final String code)
-  {
+  IndexColumnSortSequence(final String code) {
     this.code = code;
   }
 
@@ -90,9 +73,7 @@ public enum IndexColumnSortSequence
    *
    * @return Index sort sequence code
    */
-  String getCode()
-  {
+  String getCode() {
     return code;
   }
-
 }

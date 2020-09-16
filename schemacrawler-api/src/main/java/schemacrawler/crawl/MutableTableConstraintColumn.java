@@ -27,42 +27,29 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.crawl;
 
-
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
 
-final class MutableTableConstraintColumn
-  extends MutableKeyColumn
-  implements TableConstraintColumn
-{
+final class MutableTableConstraintColumn extends MutableKeyColumn implements TableConstraintColumn {
 
   private static final long serialVersionUID = -6923211341742623556L;
 
   private final TableConstraint tableConstraint;
 
-  MutableTableConstraintColumn(final TableConstraint tableConstraint,
-                               final MutableColumn column)
-  {
+  MutableTableConstraintColumn(final TableConstraint tableConstraint, final MutableColumn column) {
     super(column);
     this.tableConstraint = tableConstraint;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public TableConstraint getTableConstraint()
-  {
+  public TableConstraint getTableConstraint() {
     return tableConstraint;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public int getTableConstraintOrdinalPosition()
-  {
+  public int getTableConstraintOrdinalPosition() {
     return getKeyOrdinalPosition();
   }
-
 }

@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.utility;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.is;
@@ -40,29 +39,20 @@ import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
-public class TestAssertNoSystemOutOutput
-  implements BeforeEachCallback, AfterEachCallback
-{
+public class TestAssertNoSystemOutOutput implements BeforeEachCallback, AfterEachCallback {
 
   private TestOutputStream out;
 
   @Override
-  public void afterEach(final ExtensionContext context)
-    throws Exception
-  {
+  public void afterEach(final ExtensionContext context) throws Exception {
     System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
 
-    assertThat("Expected no System.out output",
-               out.getFileContents(),
-               is(emptyString()));
+    assertThat("Expected no System.out output", out.getFileContents(), is(emptyString()));
   }
 
   @Override
-  public void beforeEach(final ExtensionContext context)
-    throws Exception
-  {
+  public void beforeEach(final ExtensionContext context) throws Exception {
     out = new TestOutputStream();
     System.setOut(new PrintStream(out));
   }
-
 }

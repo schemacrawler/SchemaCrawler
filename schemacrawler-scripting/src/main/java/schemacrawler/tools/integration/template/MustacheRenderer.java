@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.integration.template;
 
-
 import static us.fatehi.utility.ioresource.InputResourceUtility.createInputResource;
 
 import java.io.Writer;
@@ -38,22 +37,19 @@ import java.util.Map;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
-import us.fatehi.utility.ioresource.InputResource;
+
 import schemacrawler.tools.options.OutputOptions;
+import us.fatehi.utility.ioresource.InputResource;
 
 /**
  * Main executor for the Mustache integration.
  *
  * @author Sualeh Fatehi
  */
-public final class MustacheRenderer
-  extends BaseTemplateRenderer
-{
+public final class MustacheRenderer extends BaseTemplateRenderer {
 
   @Override
-  public final void execute()
-    throws Exception
-  {
+  public void execute() throws Exception {
     final OutputOptions outputOptions = getOutputOptions();
 
     final String templateLocation = getResourceFilename();
@@ -61,18 +57,13 @@ public final class MustacheRenderer
 
     final MustacheFactory mustacheFactory = new DefaultMustacheFactory();
     final Mustache mustache =
-      mustacheFactory.compile(inputResource.openNewInputReader(StandardCharsets.UTF_8),
-                              templateLocation);
+        mustacheFactory.compile(
+            inputResource.openNewInputReader(StandardCharsets.UTF_8), templateLocation);
 
-    try (final Writer writer = outputOptions.openNewOutputWriter())
-    {
+    try (final Writer writer = outputOptions.openNewOutputWriter()) {
       // Evaluate the template
       final Map<String, Object> context = getContext();
-      mustache
-        .execute(writer, context)
-        .flush();
+      mustache.execute(writer, context).flush();
     }
-
   }
-
 }

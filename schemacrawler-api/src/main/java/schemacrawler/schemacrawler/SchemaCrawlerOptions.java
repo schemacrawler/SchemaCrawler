@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schemacrawler;
 
-
 import static java.util.Objects.requireNonNull;
 
 import us.fatehi.utility.ObjectToString;
@@ -37,55 +36,43 @@ import us.fatehi.utility.ObjectToString;
  *
  * @author Sualeh Fatehi
  */
-public final class SchemaCrawlerOptions
-  implements Options
-{
+public final class SchemaCrawlerOptions implements Options {
 
   private final LimitOptions limitOptions;
   private final FilterOptions filterOptions;
   private final GrepOptions grepOptions;
   private final LoadOptions loadOptions;
 
-  SchemaCrawlerOptions(final LimitOptions limitOptions,
-                       final FilterOptions filterOptions,
-                       final GrepOptions grepOptions,
-                       final LoadOptions loadOptions)
-  {
-    this.limitOptions =
-      requireNonNull(limitOptions, "No limit options provided");
-    this.filterOptions =
-      requireNonNull(filterOptions, "No filter options provided");
+  SchemaCrawlerOptions(
+      final LimitOptions limitOptions,
+      final FilterOptions filterOptions,
+      final GrepOptions grepOptions,
+      final LoadOptions loadOptions) {
+    this.limitOptions = requireNonNull(limitOptions, "No limit options provided");
+    this.filterOptions = requireNonNull(filterOptions, "No filter options provided");
     this.grepOptions = requireNonNull(grepOptions, "No grep options provided");
     this.loadOptions = requireNonNull(loadOptions, "No load options provided");
   }
 
-  public GrepOptions getGrepOptions()
-  {
-    return grepOptions;
-  }
-
-  public LoadOptions getLoadOptions()
-  {
-    return loadOptions;
-  }
-
-  public FilterOptions getFilterOptions()
-  {
+  public FilterOptions getFilterOptions() {
     return filterOptions;
   }
 
-  public LimitOptions getLimitOptions()
-  {
+  public GrepOptions getGrepOptions() {
+    return grepOptions;
+  }
+
+  public LimitOptions getLimitOptions() {
     return limitOptions;
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String toString()
-  {
-    return ObjectToString.toString(this);
+  public LoadOptions getLoadOptions() {
+    return loadOptions;
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public String toString() {
+    return ObjectToString.toString(this);
+  }
 }

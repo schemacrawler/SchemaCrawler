@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -51,23 +50,18 @@ import us.fatehi.utility.CompareUtility;
  *
  * @author Sualeh Fatehi
  */
-final class MutableForeignKey
-  extends AbstractNamedObjectWithAttributes
-  implements ForeignKey
-{
+final class MutableForeignKey extends AbstractNamedObjectWithAttributes implements ForeignKey {
 
   private static final long serialVersionUID = 4121411795974895671L;
 
-  private final SortedSet<MutableForeignKeyColumnReference> columnReferences =
-    new TreeSet<>();
+  private final SortedSet<MutableForeignKeyColumnReference> columnReferences = new TreeSet<>();
   private final StringBuilder definition;
   private ForeignKeyDeferrability deferrability;
   private ForeignKeyUpdateRule deleteRule;
   private String specificName;
   private ForeignKeyUpdateRule updateRule;
 
-  MutableForeignKey(final String name)
-  {
+  MutableForeignKey(final String name) {
     super(name);
 
     definition = new StringBuilder();
@@ -80,159 +74,119 @@ final class MutableForeignKey
 
   /**
    * {@inheritDoc}
-   * <p>
-   * Note: Since foreign keys are not always explicitly named in databases, the
-   * sorting routine orders the foreign keys by the names of the columns in the
-   * foreign keys.
-   * </p>
+   *
+   * <p>Note: Since foreign keys are not always explicitly named in databases, the sorting routine
+   * orders the foreign keys by the names of the columns in the foreign keys.
    */
   @Override
-  public int compareTo(final NamedObject obj)
-  {
-    if (obj == null)
-    {
+  public int compareTo(final NamedObject obj) {
+    if (obj == null) {
       return -1;
     }
 
     final BaseForeignKey<?> other = (BaseForeignKey<?>) obj;
-    final List<? extends ColumnReference> thisColumnReferences =
-      getColumnReferences();
-    final List<? extends ColumnReference> otherColumnReferences =
-      other.getColumnReferences();
+    final List<? extends ColumnReference> thisColumnReferences = getColumnReferences();
+    final List<? extends ColumnReference> otherColumnReferences = other.getColumnReferences();
 
-    return CompareUtility.compareLists(thisColumnReferences,
-                                       otherColumnReferences);
+    return CompareUtility.compareLists(thisColumnReferences, otherColumnReferences);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public List<ForeignKeyColumnReference> getColumnReferences() {
+    return new ArrayList<>(columnReferences);
   }
 
   @Override
-  public List<String> toUniqueLookupKey()
-  {
+  public TableConstraintType getConstraintType() {
+    return TableConstraintType.foreign_key;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public ForeignKeyDeferrability getDeferrability() {
+    return deferrability;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public String getDefinition() {
+    return definition.toString();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public ForeignKeyUpdateRule getDeleteRule() {
+    return deleteRule;
+  }
+
+  @Override
+  public String getSpecificName() {
+    return specificName;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public ForeignKeyUpdateRule getUpdateRule() {
+    return updateRule;
+  }
+
+  @Override
+  public boolean hasDefinition() {
+    return definition.length() > 0;
+  }
+
+  @Override
+  public boolean isDeferrable() {
+    return isInitiallyDeferred();
+  }
+
+  @Override
+  public boolean isInitiallyDeferred() {
+    if (deferrability == null) {
+      throw new NotLoadedException(this);
+    }
+    return deferrability == ForeignKeyDeferrability.initiallyDeferred;
+  }
+
+  @Override
+  public Iterator<ForeignKeyColumnReference> iterator() {
+    return new ArrayList<ForeignKeyColumnReference>(columnReferences).iterator();
+  }
+
+  @Override
+  public List<String> toUniqueLookupKey() {
     // Make a defensive copy
     final List<String> lookupKey = new ArrayList<>(super.toUniqueLookupKey());
     lookupKey.add(specificName);
     return lookupKey;
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public List<ForeignKeyColumnReference> getColumnReferences()
-  {
-    return new ArrayList<>(columnReferences);
-  }
-
-  @Override
-  public TableConstraintType getConstraintType()
-  {
-    return TableConstraintType.foreign_key;
-  }
-
-  @Override
-  public boolean isDeferrable()
-  {
-    return isInitiallyDeferred();
-  }
-
-  @Override
-  public boolean isInitiallyDeferred()
-  {
-    if (deferrability == null)
-    {
-      throw new NotLoadedException(this);
-    }
-    return deferrability == ForeignKeyDeferrability.initiallyDeferred;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final ForeignKeyDeferrability getDeferrability()
-  {
-    return deferrability;
-  }
-
-  final void setDeferrability(final ForeignKeyDeferrability deferrability)
-  {
-    this.deferrability = deferrability;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final ForeignKeyUpdateRule getDeleteRule()
-  {
-    return deleteRule;
-  }
-
-  final void setDeleteRule(final ForeignKeyUpdateRule deleteRule)
-  {
-    this.deleteRule = deleteRule;
-  }
-
-  @Override
-  public String getSpecificName()
-  {
-    return specificName;
-  }
-
-  void setSpecificName(final String specificName)
-  {
-    this.specificName = specificName;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final ForeignKeyUpdateRule getUpdateRule()
-  {
-    return updateRule;
-  }
-
-  final void setUpdateRule(final ForeignKeyUpdateRule updateRule)
-  {
-    this.updateRule = updateRule;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String getDefinition()
-  {
-    return definition.toString();
-  }
-
-  @Override
-  public boolean hasDefinition()
-  {
-    return definition.length() > 0;
-  }
-
-  @Override
-  public Iterator<ForeignKeyColumnReference> iterator()
-  {
-    return new ArrayList<ForeignKeyColumnReference>(columnReferences).iterator();
-  }
-
-  void addColumnReference(final int keySequence,
-                          final Column pkColumn,
-                          final Column fkColumn)
-  {
+  void addColumnReference(final int keySequence, final Column pkColumn, final Column fkColumn) {
     final MutableForeignKeyColumnReference fkColumnReference =
-      new MutableForeignKeyColumnReference(keySequence, pkColumn, fkColumn);
+        new MutableForeignKeyColumnReference(keySequence, pkColumn, fkColumn);
     columnReferences.add(fkColumnReference);
   }
 
-  void appendDefinition(final String definition)
-  {
-    if (definition != null)
-    {
+  void appendDefinition(final String definition) {
+    if (definition != null) {
       this.definition.append(definition);
     }
   }
 
+  void setDeferrability(final ForeignKeyDeferrability deferrability) {
+    this.deferrability = deferrability;
+  }
+
+  void setDeleteRule(final ForeignKeyUpdateRule deleteRule) {
+    this.deleteRule = deleteRule;
+  }
+
+  void setSpecificName(final String specificName) {
+    this.specificName = specificName;
+  }
+
+  void setUpdateRule(final ForeignKeyUpdateRule updateRule) {
+    this.updateRule = updateRule;
+  }
 }

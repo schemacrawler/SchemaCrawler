@@ -28,23 +28,17 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.text.base;
 
-
 import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
 import schemacrawler.schemacrawler.Options;
 
-public abstract class BaseTextOptions
-  implements Options
-{
+public abstract class BaseTextOptions implements Options {
 
   private final boolean isAlphabeticalSortForTables;
   private final boolean isAlphabeticalSortForTableColumns;
   private final boolean isAlphabeticalSortForRoutines;
   private final boolean isAlphabeticalSortForRoutineParameters;
-  private final boolean isAppendOutput;
-  private final boolean isNoFooter;
-  private final boolean isNoHeader;
   private final boolean isNoSchemaCrawlerInfo;
   private final boolean isShowDatabaseInfo;
   private final boolean isShowJdbcDriverInfo;
@@ -52,19 +46,13 @@ public abstract class BaseTextOptions
   private final boolean isNoSchemaColors;
   private final IdentifierQuotingStrategy identifierQuotingStrategy;
 
-  protected BaseTextOptions(final BaseTextOptionsBuilder<?, ? extends BaseTextOptions> builder)
-  {
+  protected BaseTextOptions(final BaseTextOptionsBuilder<?, ? extends BaseTextOptions> builder) {
     requireNonNull(builder, "No builder provided");
 
     isAlphabeticalSortForTables = builder.isAlphabeticalSortForTables;
-    isAlphabeticalSortForTableColumns =
-      builder.isAlphabeticalSortForTableColumns;
+    isAlphabeticalSortForTableColumns = builder.isAlphabeticalSortForTableColumns;
     isAlphabeticalSortForRoutines = builder.isAlphabeticalSortForRoutines;
-    isAlphabeticalSortForRoutineParameters =
-      builder.isAlphabeticalSortForRoutineParameters;
-    isAppendOutput = builder.isAppendOutput;
-    isNoFooter = builder.isNoFooter;
-    isNoHeader = builder.isNoHeader;
+    isAlphabeticalSortForRoutineParameters = builder.isAlphabeticalSortForRoutineParameters;
     isNoSchemaCrawlerInfo = builder.isNoSchemaCrawlerInfo;
     isShowDatabaseInfo = builder.isShowDatabaseInfo;
     isShowJdbcDriverInfo = builder.isShowJdbcDriverInfo;
@@ -73,76 +61,47 @@ public abstract class BaseTextOptions
     identifierQuotingStrategy = builder.identifierQuotingStrategy;
   }
 
-  public IdentifierQuotingStrategy getIdentifierQuotingStrategy()
-  {
+  public IdentifierQuotingStrategy getIdentifierQuotingStrategy() {
     return identifierQuotingStrategy;
   }
 
-  public boolean isAlphabeticalSortForRoutineParameters()
-  {
+  public boolean isAlphabeticalSortForRoutineParameters() {
     return isAlphabeticalSortForRoutineParameters;
   }
 
-  public boolean isAlphabeticalSortForRoutines()
-  {
+  public boolean isAlphabeticalSortForRoutines() {
     return isAlphabeticalSortForRoutines;
   }
 
-  public boolean isAlphabeticalSortForTableColumns()
-  {
+  public boolean isAlphabeticalSortForTableColumns() {
     return isAlphabeticalSortForTableColumns;
   }
 
-  public boolean isAlphabeticalSortForTables()
-  {
+  public boolean isAlphabeticalSortForTables() {
     return isAlphabeticalSortForTables;
   }
 
-  public boolean isAppendOutput()
-  {
-    return isAppendOutput;
+  public boolean isNoInfo() {
+    return isNoSchemaCrawlerInfo && !isShowDatabaseInfo && !isShowJdbcDriverInfo;
   }
 
-  public boolean isNoFooter()
-  {
-    return isNoFooter;
-  }
-
-  public boolean isNoHeader()
-  {
-    return isNoHeader;
-  }
-
-  public boolean isNoInfo()
-  {
-    return isNoSchemaCrawlerInfo
-           && !isShowDatabaseInfo
-           && !isShowJdbcDriverInfo;
-  }
-
-  public boolean isNoSchemaColors()
-  {
+  public boolean isNoSchemaColors() {
     return isNoSchemaColors;
   }
 
-  public boolean isNoSchemaCrawlerInfo()
-  {
+  public boolean isNoSchemaCrawlerInfo() {
     return isNoSchemaCrawlerInfo;
   }
 
-  public boolean isShowDatabaseInfo()
-  {
+  public boolean isShowDatabaseInfo() {
     return isShowDatabaseInfo;
   }
 
-  public boolean isShowJdbcDriverInfo()
-  {
+  public boolean isShowJdbcDriverInfo() {
     return isShowJdbcDriverInfo;
   }
 
-  public boolean isShowUnqualifiedNames()
-  {
+  public boolean isShowUnqualifiedNames() {
     return isShowUnqualifiedNames;
   }
-
 }

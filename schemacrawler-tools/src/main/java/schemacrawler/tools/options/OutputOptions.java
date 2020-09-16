@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.options;
 
-
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 
@@ -50,9 +49,7 @@ import us.fatehi.utility.ioresource.OutputResource;
  *
  * @author Sualeh Fatehi
  */
-public final class OutputOptions
-  implements Options
-{
+public final class OutputOptions implements Options {
 
   private final Charset inputEncodingCharset;
   private final Charset outputEncodingCharset;
@@ -60,84 +57,45 @@ public final class OutputOptions
   private final OutputResource outputResource;
   private final String title;
 
-  OutputOptions(final Charset inputEncodingCharset,
-                final OutputResource outputResource,
-                final Charset outputEncodingCharset,
-                final String outputFormatValue,
-                final String title)
-  {
-    this.inputEncodingCharset =
-      requireNonNull(inputEncodingCharset, "No input encoding provided");
-    this.outputResource =
-      requireNonNull(outputResource, "No output resource provided");
+  OutputOptions(
+      final Charset inputEncodingCharset,
+      final OutputResource outputResource,
+      final Charset outputEncodingCharset,
+      final String outputFormatValue,
+      final String title) {
+    this.inputEncodingCharset = requireNonNull(inputEncodingCharset, "No input encoding provided");
+    this.outputResource = requireNonNull(outputResource, "No output resource provided");
     this.outputEncodingCharset =
-      requireNonNull(outputEncodingCharset, "No output encoding provided");
-    this.outputFormatValue =
-      requireNonNull(outputFormatValue, "No output format value provided");
+        requireNonNull(outputEncodingCharset, "No output encoding provided");
+    this.outputFormatValue = requireNonNull(outputFormatValue, "No output format value provided");
     this.title = title;
   }
 
-  /**
-   * Title for the output.
-   *
-   * @return Title for the output
-   */
-  public String getTitle()
-  {
-    return title;
-  }
-
-  /**
-   * Checks whether there is a title for the output.
-   *
-   * @return Whether there is a title
-   */
-  public boolean hasTitle()
-  {
-    return !isBlank(title);
-  }
-
-  /**
-   * Character encoding for input files, such as scripts and templates.
-   */
-  public Charset getInputCharset()
-  {
+  /** Character encoding for input files, such as scripts and templates. */
+  public Charset getInputCharset() {
     return inputEncodingCharset;
   }
 
-  /**
-   * Character encoding for output files.
-   */
-  public Charset getOutputCharset()
-  {
+  /** Character encoding for output files. */
+  public Charset getOutputCharset() {
     return outputEncodingCharset;
   }
 
-  public Path getOutputFile(final String extension)
-  {
+  public Path getOutputFile(final String extension) {
     final Path outputFile;
-    if (outputResource instanceof FileOutputResource)
-    {
+    if (outputResource instanceof FileOutputResource) {
       outputFile = ((FileOutputResource) outputResource).getOutputFile();
-    }
-    else
-    {
+    } else {
       final String fileExtension;
-      if (isBlank(extension))
-      {
+      if (isBlank(extension)) {
         fileExtension = "";
-      }
-      else
-      {
+      } else {
         fileExtension = extension;
       }
-      outputFile = Paths
-        .get(".",
-             String.format("schemacrawler-%s.%s",
-                           UUID.randomUUID(),
-                           fileExtension))
-        .normalize()
-        .toAbsolutePath();
+      outputFile =
+          Paths.get(".", String.format("schemacrawler-%s.%s", UUID.randomUUID(), fileExtension))
+              .normalize()
+              .toAbsolutePath();
     }
     return outputFile;
   }
@@ -147,46 +105,53 @@ public final class OutputOptions
    *
    * @return Output format value.
    */
-  public String getOutputFormatValue()
-  {
+  public String getOutputFormatValue() {
     return outputFormatValue;
   }
 
   /**
-   * Gets the output reader. If the output resource is null, first set it to
-   * console output.
+   * Title for the output.
+   *
+   * @return Title for the output
+   */
+  public String getTitle() {
+    return title;
+  }
+
+  /**
+   * Checks whether there is a title for the output.
+   *
+   * @return Whether there is a title
+   */
+  public boolean hasTitle() {
+    return !isBlank(title);
+  }
+
+  /**
+   * Gets the output reader. If the output resource is null, first set it to console output.
    *
    * @return Output writer
-   * @throws IOException
-   *   On an exception
+   * @throws IOException On an exception
    */
-  public Writer openNewOutputWriter()
-    throws IOException
-  {
+  public Writer openNewOutputWriter() throws IOException {
     return openNewOutputWriter(false);
   }
 
   /**
-   * Gets the output reader. If the output resource is null, first set it to
-   * console output.
+   * Gets the output reader. If the output resource is null, first set it to console output.
    *
    * @throws SchemaCrawlerException
    */
-  public Writer openNewOutputWriter(final boolean appendOutput)
-    throws IOException
-  {
+  public Writer openNewOutputWriter(final boolean appendOutput) throws IOException {
     return outputResource.openNewOutputWriter(getOutputCharset(), appendOutput);
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return ObjectToString.toString(this);
   }
 
-  OutputResource getOutputResource()
-  {
+  OutputResource getOutputResource() {
     return outputResource;
   }
-
 }

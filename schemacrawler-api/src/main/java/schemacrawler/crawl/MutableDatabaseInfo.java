@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import static java.util.Comparator.naturalOrder;
 
 import java.util.ArrayList;
@@ -43,14 +42,12 @@ import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.Property;
 
 /**
- * Database and connection information. Created from metadata returned by a JDBC
- * call, and other sources of information.
+ * Database and connection information. Created from metadata returned by a JDBC call, and other
+ * sources of information.
  *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
-final class MutableDatabaseInfo
-  implements DatabaseInfo
-{
+final class MutableDatabaseInfo implements DatabaseInfo {
 
   private static final long serialVersionUID = 4051323422934251828L;
   private final Set<DatabaseProperty> databaseProperties = new HashSet<>();
@@ -59,96 +56,70 @@ final class MutableDatabaseInfo
   private String productVersion = "";
   private String userName = "";
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String getProductName()
-  {
+  public String getProductName() {
     return productName;
   }
 
-  void setProductName(final String productName)
-  {
-    this.productName = productName;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String getProductVersion()
-  {
+  public String getProductVersion() {
     return productVersion;
   }
 
-  void setProductVersion(final String productVersion)
-  {
-    this.productVersion = productVersion;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Collection<DatabaseProperty> getProperties()
-  {
-    final List<DatabaseProperty> properties =
-      new ArrayList<>(databaseProperties);
+  public Collection<DatabaseProperty> getProperties() {
+    final List<DatabaseProperty> properties = new ArrayList<>(databaseProperties);
     properties.sort(naturalOrder());
     return properties;
   }
 
   @Override
-  public Collection<Property> getServerInfo()
-  {
+  public Collection<Property> getServerInfo() {
     return new TreeSet<>(serverInfo);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String getUserName()
-  {
+  public String getUserName() {
     return userName;
   }
 
-  void setUserName(final String userName)
-  {
-    this.userName = userName;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String toString()
-  {
+  public String toString() {
     final StringBuilder info = new StringBuilder(1024);
-    info
-      .append("-- database: ")
-      .append(getProductName())
-      .append(' ')
-      .append(getProductVersion())
-      .append(System.lineSeparator());
+    info.append("-- database: ")
+        .append(getProductName())
+        .append(' ')
+        .append(getProductVersion())
+        .append(System.lineSeparator());
     return info.toString();
   }
 
-  void addAll(final Collection<ImmutableDatabaseProperty> dbProperties)
-  {
-    if (dbProperties != null)
-    {
+  void addAll(final Collection<ImmutableDatabaseProperty> dbProperties) {
+    if (dbProperties != null) {
       databaseProperties.addAll(dbProperties);
     }
   }
 
-  void addServerInfo(final Property property)
-  {
-    if (property != null)
-    {
+  void addServerInfo(final Property property) {
+    if (property != null) {
       serverInfo.add(property);
     }
   }
 
+  void setProductName(final String productName) {
+    this.productName = productName;
+  }
+
+  void setProductVersion(final String productVersion) {
+    this.productVersion = productVersion;
+  }
+
+  void setUserName(final String userName) {
+    this.userName = userName;
+  }
 }

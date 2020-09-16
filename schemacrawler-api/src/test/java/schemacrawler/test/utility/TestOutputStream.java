@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.utility;
 
-
 import static java.nio.file.Files.newOutputStream;
 import static java.nio.file.Files.readAllBytes;
 import static java.nio.file.StandardOpenOption.CREATE;
@@ -41,53 +40,39 @@ import java.nio.file.Path;
 
 import us.fatehi.utility.IOUtility;
 
-public final class TestOutputStream
-  extends OutputStream
-  implements TestOutputCapture
-{
+public final class TestOutputStream extends OutputStream implements TestOutputCapture {
 
   private final Path tempFile;
   private final OutputStream out;
 
-  public TestOutputStream()
-    throws IOException
-  {
+  public TestOutputStream() throws IOException {
     tempFile = IOUtility.createTempFilePath("test", "");
     out = newOutputStream(tempFile, WRITE, CREATE, TRUNCATE_EXISTING);
   }
 
   @Override
-  public String getFileContents()
-  {
-    try
-    {
+  public String getFileContents() {
+    try {
       out.flush();
       out.close();
       return new String(readAllBytes(tempFile), StandardCharsets.UTF_8);
-    }
-    catch (final IOException e)
-    {
+    } catch (final IOException e) {
       throw new RuntimeException(e);
     }
   }
 
   @Override
-  public Path getFilePath()
-  {
+  public Path getFilePath() {
     return tempFile;
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return tempFile.toString();
   }
 
   @Override
-  public void write(final int b)
-    throws IOException
-  {
+  public void write(final int b) throws IOException {
     out.write(b);
   }
-
 }

@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
@@ -38,19 +37,15 @@ import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Table;
 
 /**
- * Represents a column in a database table or routine. Created from metadata
- * returned by a JDBC call.
+ * Represents a column in a database table or routine. Created from metadata returned by a JDBC
+ * call.
  *
  * @author Sualeh Fatehi
  */
-final class MutableColumn
-  extends AbstractColumn<Table>
-  implements Column
-{
+final class MutableColumn extends AbstractColumn<Table> implements Column {
 
   private static final long serialVersionUID = 3834591019449528633L;
-  private final NamedObjectList<MutablePrivilege<Column>> privileges =
-    new NamedObjectList<>();
+  private final NamedObjectList<MutablePrivilege<Column>> privileges = new NamedObjectList<>();
   private String defaultValue;
   private boolean isAutoIncremented;
   private boolean isGenerated;
@@ -60,153 +55,109 @@ final class MutableColumn
   private boolean isPartOfUniqueIndex;
   private Column referencedColumn;
 
-  MutableColumn(final Table parent, final String name)
-  {
+  MutableColumn(final Table parent, final String name) {
     super(new TableReference(parent), name);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String getDefaultValue()
-  {
+  public String getDefaultValue() {
     return defaultValue;
   }
 
-  void setDefaultValue(final String defaultValue)
-  {
-    this.defaultValue = defaultValue;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Collection<Privilege<Column>> getPrivileges()
-  {
+  public Collection<Privilege<Column>> getPrivileges() {
     return new ArrayList<>(privileges.values());
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Column getReferencedColumn()
-  {
+  public Column getReferencedColumn() {
     return referencedColumn;
   }
 
-  void setReferencedColumn(final Column referencedColumn)
-  {
-    this.referencedColumn = referencedColumn;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public boolean isAutoIncremented()
-  {
+  public boolean isAutoIncremented() {
     return isAutoIncremented;
   }
 
-  void setAutoIncremented(final boolean isAutoIncremented)
-  {
-    this.isAutoIncremented = isAutoIncremented;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public boolean isGenerated()
-  {
+  public boolean isGenerated() {
     return isGenerated;
   }
 
-  void setGenerated(final boolean isGenerated)
-  {
-    this.isGenerated = isGenerated;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public boolean isHidden()
-  {
+  public boolean isHidden() {
     return isHidden;
   }
 
-  void setHidden(final boolean isHidden)
-  {
-    this.isHidden = isHidden;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public boolean isPartOfForeignKey()
-  {
+  public boolean isPartOfForeignKey() {
     return referencedColumn != null;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public boolean isPartOfIndex()
-  {
+  public boolean isPartOfIndex() {
     return isPartOfIndex;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public boolean isPartOfPrimaryKey()
-  {
+  public boolean isPartOfPrimaryKey() {
     return isPartOfPrimaryKey;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public boolean isPartOfUniqueIndex()
-  {
+  public boolean isPartOfUniqueIndex() {
     return isPartOfUniqueIndex;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Optional<MutablePrivilege<Column>> lookupPrivilege(final String name)
-  {
+  public Optional<MutablePrivilege<Column>> lookupPrivilege(final String name) {
     return privileges.lookup(this, name);
   }
 
-  void addPrivilege(final MutablePrivilege<Column> privilege)
-  {
+  void addPrivilege(final MutablePrivilege<Column> privilege) {
     privileges.add(privilege);
   }
 
-  void markAsPartOfIndex()
-  {
+  void markAsPartOfIndex() {
     isPartOfIndex = true;
   }
 
-  void markAsPartOfPrimaryKey()
-  {
+  void markAsPartOfPrimaryKey() {
     isPartOfPrimaryKey = true;
   }
 
-  void markAsPartOfUniqueIndex()
-  {
+  void markAsPartOfUniqueIndex() {
     isPartOfUniqueIndex = true;
   }
 
+  void setAutoIncremented(final boolean isAutoIncremented) {
+    this.isAutoIncremented = isAutoIncremented;
+  }
+
+  void setDefaultValue(final String defaultValue) {
+    this.defaultValue = defaultValue;
+  }
+
+  void setGenerated(final boolean isGenerated) {
+    this.isGenerated = isGenerated;
+  }
+
+  void setHidden(final boolean isHidden) {
+    this.isHidden = isHidden;
+  }
+
+  void setReferencedColumn(final Column referencedColumn) {
+    this.referencedColumn = referencedColumn;
+  }
 }

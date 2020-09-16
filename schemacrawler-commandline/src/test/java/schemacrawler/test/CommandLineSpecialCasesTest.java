@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test;
 
-
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.newBufferedWriter;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -51,6 +50,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.Main;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestContext;
@@ -58,20 +58,16 @@ import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.test.utility.TestWriter;
-import schemacrawler.tools.options.Config;
 import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
-public class CommandLineSpecialCasesTest
-{
+public class CommandLineSpecialCasesTest {
 
   private static final String COMMAND_LINE_SPECIAL_CASES_OUTPUT =
-    "command_line_special_cases_output/";
+      "command_line_special_cases_output/";
 
-  private static Path createConfig(final Map<String, String> config)
-    throws IOException
-  {
+  private static Path createConfig(final Map<String, String> config) throws IOException {
     final String prefix = "SchemaCrawler.TestCommandLineConfig";
     final Path configFile = IOUtility.createTempFilePath(prefix, "properties");
     final Properties configProperties = new Properties();
@@ -84,17 +80,14 @@ public class CommandLineSpecialCasesTest
   private TestOutputStream out;
 
   @AfterEach
-  public void cleanUpStreams()
-  {
+  public void cleanUpStreams() {
     System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
     System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
   }
 
   @Test
-  public void htmlxWithoutOutputFilename(final TestContext testContext,
-                                         final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
+  public void htmlxWithoutOutputFilename(
+      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> argsMap = new HashMap<>();
     argsMap.put("-command", "schema");
     argsMap.put("-output-format", "htmlx");
@@ -104,9 +97,7 @@ public class CommandLineSpecialCasesTest
   }
 
   @BeforeEach
-  public void setUpStreams()
-    throws Exception
-  {
+  public void setUpStreams() throws Exception {
     out = new TestOutputStream();
     System.setOut(new PrintStream(out));
 
@@ -114,15 +105,14 @@ public class CommandLineSpecialCasesTest
     System.setErr(new PrintStream(err));
   }
 
-  private void run(final TestContext testContext,
-                   final Map<String, String> argsMapOverride,
-                   final Map<String, String> config,
-                   final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
+  private void run(
+      final TestContext testContext,
+      final Map<String, String> argsMapOverride,
+      final Map<String, String> config,
+      final DatabaseConnectionInfo connectionInfo)
+      throws Exception {
     final TestWriter outputFile = new TestWriter();
-    try (final TestWriter outFile = outputFile)
-    {
+    try (final TestWriter outFile = outputFile) {
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("-url", connectionInfo.getConnectionUrl());
       argsMap.put("-user", "sa");
@@ -133,8 +123,7 @@ public class CommandLineSpecialCasesTest
       final Map<String, String> runConfig = new HashMap<>();
       final Map<String, String> informationSchema = loadHsqldbConfig();
       runConfig.putAll(informationSchema);
-      if (config != null)
-      {
+      if (config != null) {
         runConfig.putAll(config);
       }
 
@@ -146,11 +135,10 @@ public class CommandLineSpecialCasesTest
 
     assertThat(outputOf(outputFile), hasNoContent());
     assertThat(outputOf(out), hasNoContent());
-    assertThat(outputOf(err),
-               hasSameContentAs(classpathResource(
-                 COMMAND_LINE_SPECIAL_CASES_OUTPUT
-                 + testContext.testMethodName()
-                 + ".stderr.txt")));
+    assertThat(
+        outputOf(err),
+        hasSameContentAs(
+            classpathResource(
+                COMMAND_LINE_SPECIAL_CASES_OUTPUT + testContext.testMethodName() + ".stderr.txt")));
   }
-
 }

@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import static java.util.Comparator.naturalOrder;
 
 import java.util.ArrayList;
@@ -41,142 +40,100 @@ import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
 
 /**
- * JDBC driver information. Created from metadata returned by a JDBC call, and
- * other sources of information.
+ * JDBC driver information. Created from metadata returned by a JDBC call, and other sources of
+ * information.
  *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
-final class MutableJdbcDriverInfo
-  implements JdbcDriverInfo
-{
+final class MutableJdbcDriverInfo implements JdbcDriverInfo {
 
   private static final long serialVersionUID = 8030156654422512161L;
-  private final Set<ImmutableJdbcDriverProperty> jdbcDriverProperties =
-    new HashSet<>();
+  private final Set<ImmutableJdbcDriverProperty> jdbcDriverProperties = new HashSet<>();
   private String connectionUrl = "";
   private String driverClassName = "";
   private String driverName = "";
   private String driverVersion = "";
   private boolean jdbcCompliant;
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String getConnectionUrl()
-  {
+  public String getConnectionUrl() {
     return connectionUrl;
   }
 
-  void setConnectionUrl(final String connectionUrl)
-  {
-    this.connectionUrl = connectionUrl;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String getDriverClassName()
-  {
+  public String getDriverClassName() {
     return driverClassName;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Collection<JdbcDriverProperty> getDriverProperties()
-  {
-    final List<JdbcDriverProperty> properties =
-      new ArrayList<>(jdbcDriverProperties);
+  public Collection<JdbcDriverProperty> getDriverProperties() {
+    final List<JdbcDriverProperty> properties = new ArrayList<>(jdbcDriverProperties);
     properties.sort(naturalOrder());
     return properties;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public boolean isJdbcCompliant()
-  {
-    return jdbcCompliant;
-  }
-
-  void setJdbcCompliant(final boolean jdbcCompliant)
-  {
-    this.jdbcCompliant = jdbcCompliant;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String getProductName()
-  {
+  public String getProductName() {
     return driverName;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String getProductVersion()
-  {
+  public String getProductVersion() {
     return driverVersion;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String toString()
-  {
+  public boolean isJdbcCompliant() {
+    return jdbcCompliant;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public String toString() {
     final StringBuilder info = new StringBuilder(1024);
-    info
-      .append("-- driver: ")
-      .append(getProductName())
-      .append(' ')
-      .append(getProductVersion())
-      .append(System.lineSeparator());
-    info
-      .append("-- driver class: ")
-      .append(getDriverClassName())
-      .append(System.lineSeparator());
-    info
-      .append("-- url: ")
-      .append(getConnectionUrl())
-      .append(System.lineSeparator());
-    info
-      .append("-- jdbc compliant: ")
-      .append(isJdbcCompliant());
+    info.append("-- driver: ")
+        .append(getProductName())
+        .append(' ')
+        .append(getProductVersion())
+        .append(System.lineSeparator());
+    info.append("-- driver class: ").append(getDriverClassName()).append(System.lineSeparator());
+    info.append("-- url: ").append(getConnectionUrl()).append(System.lineSeparator());
+    info.append("-- jdbc compliant: ").append(isJdbcCompliant());
     return info.toString();
   }
 
   /**
    * Adds a JDBC driver property.
    *
-   * @param jdbcDriverProperty
-   *   JDBC driver property
+   * @param jdbcDriverProperty JDBC driver property
    */
-  void addJdbcDriverProperty(final ImmutableJdbcDriverProperty jdbcDriverProperty)
-  {
+  void addJdbcDriverProperty(final ImmutableJdbcDriverProperty jdbcDriverProperty) {
     jdbcDriverProperties.add(jdbcDriverProperty);
   }
 
-  void setDriverName(final String driverName)
-  {
+  void setConnectionUrl(final String connectionUrl) {
+    this.connectionUrl = connectionUrl;
+  }
+
+  void setDriverName(final String driverName) {
     this.driverName = driverName;
   }
 
-  void setDriverVersion(final String driverVersion)
-  {
+  void setDriverVersion(final String driverVersion) {
     this.driverVersion = driverVersion;
   }
 
-  void setJdbcDriverClassName(final String jdbcDriverClassName)
-  {
-    driverClassName = jdbcDriverClassName;
+  void setJdbcCompliant(final boolean jdbcCompliant) {
+    this.jdbcCompliant = jdbcCompliant;
   }
 
+  void setJdbcDriverClassName(final String jdbcDriverClassName) {
+    driverClassName = jdbcDriverClassName;
+  }
 }

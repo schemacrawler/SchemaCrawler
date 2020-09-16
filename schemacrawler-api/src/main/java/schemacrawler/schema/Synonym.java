@@ -28,15 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 /**
  * Represents a database synonym.
  *
  * @author Matt Albrecht, Sualeh Fatehi
  */
-public interface Synonym
-  extends DatabaseObject
-{
+public interface Synonym extends DatabaseObject {
 
   /**
    * Gets the referenced object, which may or may not actually exist.
@@ -44,5 +41,4 @@ public interface Synonym
    * @return Referenced object.
    */
   DatabaseObject getReferencedObject();
-
 }

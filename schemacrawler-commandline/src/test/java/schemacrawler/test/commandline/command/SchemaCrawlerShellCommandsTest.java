@@ -27,31 +27,25 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.commandline.command;
 
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
+
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 
-public class SchemaCrawlerShellCommandsTest
-{
+public class SchemaCrawlerShellCommandsTest {
 
   @Test
-  public void noArgs()
-  {
-    final String[] args = new String[] { "bad-command" };
+  public void noArgs() {
+    final String[] args = new String[] {"bad-command"};
 
-    final SchemaCrawlerShellCommands optionsParser =
-      new SchemaCrawlerShellCommands();
+    final SchemaCrawlerShellCommands optionsParser = new SchemaCrawlerShellCommands();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    final CommandLine commandLine =
-      new CommandLine(optionsParser, new StateFactory(state));
+    final CommandLine commandLine = new CommandLine(optionsParser, new StateFactory(state));
 
-    assertThrows(CommandLine.UnmatchedArgumentException.class,
-                 () -> commandLine.parseArgs(args));
+    assertThrows(CommandLine.UnmatchedArgumentException.class, () -> commandLine.parseArgs(args));
   }
-
 }

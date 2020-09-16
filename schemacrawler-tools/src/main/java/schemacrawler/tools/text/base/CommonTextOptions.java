@@ -27,14 +27,9 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.text.base;
 
+public final class CommonTextOptions extends BaseTextOptions {
 
-public final class CommonTextOptions
-  extends BaseTextOptions
-{
-
-  protected CommonTextOptions(final BaseTextOptionsBuilder<?, CommonTextOptions> builder)
-  {
+  protected CommonTextOptions(final BaseTextOptionsBuilder<?, CommonTextOptions> builder) {
     super(builder);
   }
-
 }

@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.inclusionrule;
 
-
 import java.util.regex.Pattern;
 
 /**
@@ -35,46 +34,37 @@ import java.util.regex.Pattern;
  *
  * @author Sualeh Fatehi
  */
-public final class ExcludeAll
-  implements InclusionRuleWithRegularExpression
-{
+public final class ExcludeAll implements InclusionRuleWithRegularExpression {
 
   private static final long serialVersionUID = -2992724018349021861L;
 
   @Override
-  public Pattern getExclusionPattern()
-  {
-    return InclusionRuleWithRegularExpression.super.getInclusionPattern();
-  }
-
-  @Override
-  public Pattern getInclusionPattern()
-  {
-    return InclusionRuleWithRegularExpression.super.getExclusionPattern();
-  }
-
-  @Override
-  public int hashCode()
-  {
-    return 2;
-  }
-
-  @Override
-  public boolean equals(final Object obj)
-  {
+  public boolean equals(final Object obj) {
     return obj instanceof ExcludeAll;
   }
 
   @Override
-  public String toString()
-  {
-    return getClass().getSimpleName();
+  public Pattern getExclusionPattern() {
+    return InclusionRuleWithRegularExpression.super.getInclusionPattern();
   }
 
   @Override
-  public boolean test(final String text)
-  {
+  public Pattern getInclusionPattern() {
+    return InclusionRuleWithRegularExpression.super.getExclusionPattern();
+  }
+
+  @Override
+  public int hashCode() {
+    return 2;
+  }
+
+  @Override
+  public boolean test(final String text) {
     return false;
   }
 
+  @Override
+  public String toString() {
+    return getClass().getSimpleName();
+  }
 }

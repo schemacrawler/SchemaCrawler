@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.html;
 
-
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.HashMap;
@@ -40,37 +39,30 @@ import us.fatehi.utility.Color;
  *
  * @author Sualeh Fatehi
  */
-public final class TagBuilder
-{
+public final class TagBuilder {
 
-  public static TagBuilder anchor()
-  {
+  public static TagBuilder anchor() {
     return new TagBuilder("a");
   }
 
-  public static TagBuilder span()
-  {
+  public static TagBuilder caption() {
+    return new TagBuilder("caption").withIndent(true);
+  }
+
+  public static TagBuilder span() {
     return new TagBuilder("span");
   }
 
-  public static TagBuilder tableHeaderCell()
-  {
-    return new TagBuilder("th");
-  }
-
-  public static TagBuilder tableCell()
-  {
+  public static TagBuilder tableCell() {
     return new TagBuilder("td");
   }
 
-  public static TagBuilder tableRow()
-  {
-    return new TagBuilder("tr").withIndent(true);
+  public static TagBuilder tableHeaderCell() {
+    return new TagBuilder("th");
   }
 
-  public static TagBuilder caption()
-  {
-    return new TagBuilder("caption").withIndent(true);
+  public static TagBuilder tableRow() {
+    return new TagBuilder("tr").withIndent(true);
   }
 
   private final String tag;
@@ -84,111 +76,94 @@ public final class TagBuilder
   private boolean emphasizeText;
   private boolean indent;
 
-  private TagBuilder(final String tag)
-  {
+  private TagBuilder(final String tag) {
     this.tag = tag;
     this.attributes = new HashMap<>();
   }
 
-  public TagBuilder withIndent(final boolean indent)
-  {
-    this.indent = indent;
-    return this;
+  public Tag make() {
+    return new Tag(
+        this.tag,
+        text,
+        escapeText,
+        characterWidth,
+        align,
+        emphasizeText,
+        styleClass,
+        bgColor,
+        indent,
+        attributes);
   }
 
-  public Tag make()
-  {
-    return new Tag(this.tag,
-                   text,
-                   escapeText,
-                   characterWidth,
-                   align,
-                   emphasizeText,
-                   styleClass,
-                   bgColor,
-                   indent,
-                   attributes);
-  }
-
-  public TagBuilder withStyleClass(final String styleClass)
-  {
-    this.styleClass = styleClass;
-    return this;
-  }
-
-  public TagBuilder withStyle(final String style)
-  {
-    if (style != null)
-    {
-      attributes.put("style", style);
-    }
-    return this;
-  }
-
-  public TagBuilder withWidth(final int characterWidth)
-  {
-    this.characterWidth = characterWidth;
-    return this;
-  }
-
-  public TagBuilder withAlignment(final Alignment align)
-  {
+  public TagBuilder withAlignment(final Alignment align) {
     this.align = align;
     return this;
   }
 
-  public TagBuilder withText(final String text)
-  {
-    this.text = text;
+  public TagBuilder withBackground(final Color bgColor) {
+    this.bgColor = bgColor;
     return this;
   }
 
-  public TagBuilder withEscapedText(final String text)
-  {
+  public TagBuilder withColumnSpan(final int columnSpan) {
+    attributes.put("colspan", String.valueOf(columnSpan));
+    return this;
+  }
+
+  public TagBuilder withEmphasis() {
+    this.emphasizeText = true;
+    return this;
+  }
+
+  public TagBuilder withEmphasis(final boolean emphasizeText) {
+    this.emphasizeText = emphasizeText;
+    return this;
+  }
+
+  public TagBuilder withEscapedText(final String text) {
     this.text = text;
     this.escapeText = true;
     return this;
   }
 
-  public TagBuilder withEscapedText(final String text, final boolean escapeText)
-  {
+  public TagBuilder withEscapedText(final String text, final boolean escapeText) {
     this.text = text;
     this.escapeText = escapeText;
     return this;
   }
 
-  public TagBuilder withBackground(final Color bgColor)
-  {
-    this.bgColor = bgColor;
-    return this;
-  }
-
-  public TagBuilder withEmphasis()
-  {
-    this.emphasizeText = true;
-    return this;
-  }
-
-  public TagBuilder withEmphasis(final boolean emphasizeText)
-  {
-    this.emphasizeText = emphasizeText;
-    return this;
-  }
-
-  public TagBuilder withColumnSpan(final int columnSpan)
-  {
-    attributes.put("colspan", String.valueOf(columnSpan));
-    return this;
-  }
-
-  public TagBuilder withHyperlink(final String href)
-  {
-    if (isBlank(href))
-    {
+  public TagBuilder withHyperlink(final String href) {
+    if (isBlank(href)) {
       return this;
     }
     attributes.put("href", href);
     return this;
   }
 
+  public TagBuilder withIndent(final boolean indent) {
+    this.indent = indent;
+    return this;
+  }
+
+  public TagBuilder withStyle(final String style) {
+    if (style != null) {
+      attributes.put("style", style);
+    }
+    return this;
+  }
+
+  public TagBuilder withStyleClass(final String styleClass) {
+    this.styleClass = styleClass;
+    return this;
+  }
+
+  public TagBuilder withText(final String text) {
+    this.text = text;
+    return this;
+  }
+
+  public TagBuilder withWidth(final int characterWidth) {
+    this.characterWidth = characterWidth;
+    return this;
+  }
 }

@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.serialize;
 
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -51,12 +50,14 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.MissingNode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.MissingNode;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.DatabaseTestUtility;
@@ -69,88 +70,71 @@ import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
-public class CatalogJsonSerializationTest
-{
+public class CatalogJsonSerializationTest {
 
   private static final boolean DEBUG = true;
   private Path directory;
 
   @BeforeEach
   public void _setupDirectory(final TestContext testContext)
-    throws IOException, URISyntaxException
-  {
-    if (directory != null)
-    {
+      throws IOException, URISyntaxException {
+    if (directory != null) {
       return;
     }
     directory = testContext.resolveTargetFromRootPath(".");
   }
 
   @Test
-  public void catalogSerializationWithJson(final TestContext testContext,
-                                           final Connection connection)
-    throws Exception
-  {
+  public void catalogSerializationWithJson(
+      final TestContext testContext, final Connection connection) throws Exception {
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+        DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
 
-    final Path testOutputFile =
-      IOUtility.createTempFilePath("sc_serialized_catalog", "json");
-    try (final OutputStream out = new FileOutputStream(testOutputFile.toFile()))
-    {
+    final Path testOutputFile = IOUtility.createTempFilePath("sc_serialized_catalog", "json");
+    try (final OutputStream out = new FileOutputStream(testOutputFile.toFile())) {
       new JsonSerializedCatalog(catalog).save(out);
     }
-    assertThat("Catalog was not serialized",
-               Files.size(testOutputFile),
-               greaterThan(0L));
+    assertThat("Catalog was not serialized", Files.size(testOutputFile), greaterThan(0L));
     assertThat(fileHeaderOf(testOutputFile), is(oneOf("7B0D", "7B0A")));
 
-    if (DEBUG)
-    {
-      final Path copied =
-        directory.resolve(testContext.testMethodFullName() + ".json");
+    if (DEBUG) {
+      final Path copied = directory.resolve(testContext.testMethodFullName() + ".json");
       Files.copy(testOutputFile, copied, StandardCopyOption.REPLACE_EXISTING);
     }
 
     // Read generated JSON file, and assert values
     final ObjectMapper objectMapper = new ObjectMapper();
     final JsonNode catalogNode = objectMapper.readTree(testOutputFile.toFile());
-    assertThat("Catalog schemas were not serialized",
-               catalogNode.findPath("schemas"),
-               not(instanceOf(MissingNode.class)));
+    assertThat(
+        "Catalog schemas were not serialized",
+        catalogNode.findPath("schemas"),
+        not(instanceOf(MissingNode.class)));
 
-    final JsonNode allTableColumnsNode =
-      catalogNode.findPath("all-table-columns");
-    assertThat("Table columns were not serialized",
-               allTableColumnsNode,
-               not(instanceOf(MissingNode.class)));
+    final JsonNode allTableColumnsNode = catalogNode.findPath("all-table-columns");
+    assertThat(
+        "Table columns were not serialized",
+        allTableColumnsNode,
+        not(instanceOf(MissingNode.class)));
 
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout)
-    {
+    try (final TestWriter out = testout) {
       allTableColumnsNode
-        .elements()
-        .forEachRemaining(columnNode -> {
-          final JsonNode columnFullnameNode = columnNode.get("full-name");
-          if (columnFullnameNode != null)
-          {
-            out.println("- column @uuid: " + columnNode
-              .get("@uuid")
-              .asText());
-            out.println("  " + columnFullnameNode.asText());
-          }
-          else
-          {
-            fail("Table column object not found - " + columnNode.asText());
-          }
-        });
+          .elements()
+          .forEachRemaining(
+              columnNode -> {
+                final JsonNode columnFullnameNode = columnNode.get("full-name");
+                if (columnFullnameNode != null) {
+                  out.println("- column @uuid: " + columnNode.get("@uuid").asText());
+                  out.println("  " + columnFullnameNode.asText());
+                } else {
+                  fail("Table column object not found - " + columnNode.asText());
+                }
+              });
     }
 
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
-
+    assertThat(
+        outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
-
 }

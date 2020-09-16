@@ -27,10 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schema;
 
-
-public interface IndexColumn
-  extends Column, DefinedObject
-{
+public interface IndexColumn extends Column, DefinedObject {
 
   /**
    * Gets the index this column belongs to.
@@ -52,5 +49,4 @@ public interface IndexColumn
    * @return Sort sequence
    */
   IndexColumnSortSequence getSortSequence();
-
 }

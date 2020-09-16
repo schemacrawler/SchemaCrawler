@@ -27,9 +27,7 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.html;
 
-
-public enum Alignment
-{
+public enum Alignment {
   inherit,
   left,
   right

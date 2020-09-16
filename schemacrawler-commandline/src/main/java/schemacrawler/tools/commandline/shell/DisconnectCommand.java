@@ -28,40 +28,32 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.shell;
 
-
 import java.util.logging.Level;
 
 import picocli.CommandLine.Command;
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
-import schemacrawler.SchemaCrawlerLogger;
 
-@Command(name = "disconnect",
-         header = "** Disconnect from a database",
-         headerHeading = "",
-         synopsisHeading = "Shell Command:%n",
-         customSynopsis = {
-           "disconnect"
-         },
-         optionListHeading = "Options:%n")
-public class DisconnectCommand
-  extends BaseStateHolder
-  implements Runnable
-{
+@Command(
+    name = "disconnect",
+    header = "** Disconnect from a database",
+    headerHeading = "",
+    synopsisHeading = "Shell Command:%n",
+    customSynopsis = {"disconnect"},
+    optionListHeading = "Options:%n")
+public class DisconnectCommand extends BaseStateHolder implements Runnable {
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(DisconnectCommand.class.getName());
+      SchemaCrawlerLogger.getLogger(DisconnectCommand.class.getName());
 
-  public DisconnectCommand(final SchemaCrawlerShellState state)
-  {
+  public DisconnectCommand(final SchemaCrawlerShellState state) {
     super(state);
   }
 
   @Override
-  public void run()
-  {
+  public void run() {
     LOGGER.log(Level.INFO, "disconnect");
 
     state.disconnect();
   }
-
 }

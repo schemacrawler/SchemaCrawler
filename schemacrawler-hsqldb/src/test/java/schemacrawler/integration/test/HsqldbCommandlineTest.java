@@ -114,7 +114,7 @@ public class HsqldbCommandlineTest
       argsMap.put("-password", "");
       argsMap.put("g", testConfigFile.toString());
       argsMap.put("-no-info", Boolean.FALSE.toString());
-      argsMap.put("-command", "details,dump,count,hsqldb.tables");
+      argsMap.put("-command", "details");
       argsMap.put("-info-level", "maximum");
       argsMap.put("-synonyms", ".*");
       argsMap.put("-routines", ".*");
@@ -151,9 +151,7 @@ public class HsqldbCommandlineTest
     final SchemaCrawler schemaCrawler = new SchemaCrawler(connection,
                                                           schemaRetrievalOptions,
                                                           schemaCrawlerOptions);
-    final Catalog catalog1 = schemaCrawler.crawl();
-
-    final Catalog catalog = catalog1;
+    final Catalog catalog = schemaCrawler.crawl();
     assertThat(catalog, notNullValue());
 
     assertThat(catalog.getSchemas(), hasSize(6));

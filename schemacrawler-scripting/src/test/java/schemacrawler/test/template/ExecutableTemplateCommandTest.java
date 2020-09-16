@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.template;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -39,6 +38,7 @@ import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -47,47 +47,39 @@ import schemacrawler.tools.integration.template.TemplateLanguageType;
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public class ExecutableTemplateCommandTest
-{
+public class ExecutableTemplateCommandTest {
 
   @Test
-  public void executableFreeMarker(final Connection connection)
-    throws Exception
-  {
-    assertThat(outputOf(templateExecution(connection,
-                                          TemplateLanguageType.freemarker,
-                                          "/plaintextschema.ftl")),
-               hasSameContentAs(classpathResource("executableForFreeMarker.txt")));
+  public void executableFreeMarker(final Connection connection) throws Exception {
+    assertThat(
+        outputOf(
+            templateExecution(connection, TemplateLanguageType.freemarker, "/plaintextschema.ftl")),
+        hasSameContentAs(classpathResource("executableForFreeMarker.txt")));
   }
 
   @Test
-  public void executableMustache(final Connection connection)
-    throws Exception
-  {
-    assertThat(outputOf(templateExecution(connection,
-                                          TemplateLanguageType.mustache,
-                                          "/plaintextschema.mustache")),
-               hasSameContentAs(classpathResource("executableForMustache.txt")));
+  public void executableMustache(final Connection connection) throws Exception {
+    assertThat(
+        outputOf(
+            templateExecution(
+                connection, TemplateLanguageType.mustache, "/plaintextschema.mustache")),
+        hasSameContentAs(classpathResource("executableForMustache.txt")));
   }
 
   @Test
-  public void executableThymeleaf(final Connection connection)
-    throws Exception
-  {
-    assertThat(outputOf(templateExecution(connection,
-                                          TemplateLanguageType.thymeleaf,
-                                          "/plaintextschema.thymeleaf")),
-               hasSameContentAs(classpathResource("executableForThymeleaf.txt")));
+  public void executableThymeleaf(final Connection connection) throws Exception {
+    assertThat(
+        outputOf(
+            templateExecution(
+                connection, TemplateLanguageType.thymeleaf, "/plaintextschema.thymeleaf")),
+        hasSameContentAs(classpathResource("executableForThymeleaf.txt")));
   }
 
   @Test
-  public void executableVelocity(final Connection connection)
-    throws Exception
-  {
-    assertThat(outputOf(templateExecution(connection,
-                                          TemplateLanguageType.velocity,
-                                          "/plaintextschema.vm")),
-               hasSameContentAs(classpathResource("executableForVelocity.txt")));
+  public void executableVelocity(final Connection connection) throws Exception {
+    assertThat(
+        outputOf(
+            templateExecution(connection, TemplateLanguageType.velocity, "/plaintextschema.vm")),
+        hasSameContentAs(classpathResource("executableForVelocity.txt")));
   }
-
 }

@@ -28,33 +28,29 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.text.schema;
 
-
-/**
- * Enumeration for level of schema text output detail.
- */
-public enum SchemaTextDetailType
-{
-  brief("Shows basic schema information, "
-        + "for tables, views and routines, columns, "
-        + "primary keys, and foreign keys"),
-  schema("Shows the commonly needed detail of the schema, "
-         + "including details of tables, views and routines, columns, "
-         + "primary keys, indexes, foreign keys, and triggers"),
-  details("Shows maximum possible detail of the schema, "
+/** Enumeration for level of schema text output detail. */
+public enum SchemaTextDetailType {
+  brief(
+      "Shows basic schema information, "
+          + "for tables, views and routines, columns, "
+          + "primary keys, and foreign keys"),
+  schema(
+      "Shows the commonly needed detail of the schema, "
+          + "including details of tables, views and routines, columns, "
+          + "primary keys, indexes, foreign keys, and triggers"),
+  details(
+      "Shows maximum possible detail of the schema, "
           + "including privileges, and details of privileges, triggers, "
           + "and check constraints"),
   list("Shows a list of schema objects");
 
   private final String description;
 
-  SchemaTextDetailType(final String description)
-  {
+  SchemaTextDetailType(final String description) {
     this.description = description;
   }
 
-  public String getDescription()
-  {
+  public String getDescription() {
     return description;
   }
-
 }

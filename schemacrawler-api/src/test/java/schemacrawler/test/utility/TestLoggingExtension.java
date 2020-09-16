@@ -27,21 +27,16 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.utility;
 
-
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+
 import us.fatehi.utility.LoggingConfig;
 
-public class TestLoggingExtension
-  implements BeforeAllCallback
-{
+public class TestLoggingExtension implements BeforeAllCallback {
 
   @Override
-  public void beforeAll(final ExtensionContext context)
-    throws Exception
-  {
+  public void beforeAll(final ExtensionContext context) throws Exception {
     // Turn off logging
     new LoggingConfig();
   }
-
 }

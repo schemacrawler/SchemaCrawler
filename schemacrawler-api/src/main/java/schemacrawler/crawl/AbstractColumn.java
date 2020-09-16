@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import schemacrawler.schema.BaseColumn;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DatabaseObject;
@@ -36,15 +35,13 @@ import schemacrawler.schema.JavaSqlTypeGroup;
 import schemacrawler.schema.NamedObject;
 
 /**
- * Represents a column in a database for tables and routines. Created from
- * metadata returned by a JDBC call.
+ * Represents a column in a database for tables and routines. Created from metadata returned by a
+ * JDBC call.
  *
  * @author Sualeh Fatehi
  */
-abstract class AbstractColumn<P extends DatabaseObject>
-  extends AbstractDependantObject<P>
-  implements BaseColumn<P>
-{
+abstract class AbstractColumn<P extends DatabaseObject> extends AbstractDependantObject<P>
+    implements BaseColumn<P> {
 
   private static final long serialVersionUID = -8492662324895309485L;
 
@@ -55,170 +52,124 @@ abstract class AbstractColumn<P extends DatabaseObject>
   private int size;
 
   /**
-   * Effective Java - Item 17 - Minimize Mutability - Package-private
-   * constructors make a class effectively final
+   * Effective Java - Item 17 - Minimize Mutability - Package-private constructors make a class
+   * effectively final
    *
-   * @param parent
-   *   Parent of this object
-   * @param name
-   *   Name of the named object
+   * @param parent Parent of this object
+   * @param name Name of the named object
    */
-  AbstractColumn(final DatabaseObjectReference<P> parent, final String name)
-  {
+  AbstractColumn(final DatabaseObjectReference<P> parent, final String name) {
     super(parent, name);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final int compareTo(final NamedObject obj)
-  {
-    if (obj == null)
-    {
+  public final int compareTo(final NamedObject obj) {
+    if (obj == null) {
       return -1;
     }
 
     final BaseColumn<P> other = (BaseColumn<P>) obj;
     int comparison = 0;
 
-    if (comparison == 0)
-    {
+    if (comparison == 0) {
       comparison = ordinalPosition - other.getOrdinalPosition();
     }
-    if (comparison == 0)
-    {
+    if (comparison == 0) {
       comparison = super.compareTo(other);
     }
 
     return comparison;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final ColumnDataType getColumnDataType()
-  {
+  public final ColumnDataType getColumnDataType() {
     return columnDataType;
   }
 
-  final void setColumnDataType(final ColumnDataType columnDataType)
-  {
-    this.columnDataType = columnDataType;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final int getDecimalDigits()
-  {
+  public final int getDecimalDigits() {
     return decimalDigits;
   }
 
-  final void setDecimalDigits(final int decimalDigits)
-  {
-    this.decimalDigits = decimalDigits;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final int getOrdinalPosition()
-  {
+  public final int getOrdinalPosition() {
     return ordinalPosition;
   }
 
-  final void setOrdinalPosition(final int ordinalPosition)
-  {
-    this.ordinalPosition = ordinalPosition;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final int getSize()
-  {
+  public final int getSize() {
     return size;
   }
 
-  /**
-   * Sets the column size.
-   *
-   * @param size
-   *   Size of the column
-   */
-  final void setSize(final int size)
-  {
-    this.size = size;
+  /** {@inheritDoc} */
+  @Override
+  public final ColumnDataType getType() {
+    return getColumnDataType();
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final String getWidth()
-  {
+  public final String getWidth() {
 
     final ColumnDataType columnDataType = getColumnDataType();
-    if (columnDataType == null)
-    {
+    if (columnDataType == null) {
       return "";
     }
 
-    if (size <= 0 || size >= 2_000_000_000)
-    {
+    if (size <= 0 || size >= 2_000_000_000) {
       return "";
     }
 
-    final JavaSqlTypeGroup sqlDataTypeGroup = columnDataType
-      .getJavaSqlType()
-      .getJavaSqlTypeGroup();
-    final boolean needWidth = sqlDataTypeGroup == JavaSqlTypeGroup.character
-                              || sqlDataTypeGroup == JavaSqlTypeGroup.real;
+    final JavaSqlTypeGroup sqlDataTypeGroup = columnDataType.getJavaSqlType().getJavaSqlTypeGroup();
+    final boolean needWidth =
+        sqlDataTypeGroup == JavaSqlTypeGroup.character || sqlDataTypeGroup == JavaSqlTypeGroup.real;
 
     final StringBuilder columnWidthBuffer = new StringBuilder(64);
-    if (needWidth)
-    {
+    if (needWidth) {
       columnWidthBuffer.append('(');
       columnWidthBuffer.append(size);
-      if (sqlDataTypeGroup == JavaSqlTypeGroup.real)
-      {
-        columnWidthBuffer
-          .append(", ")
-          .append(getDecimalDigits());
+      if (sqlDataTypeGroup == JavaSqlTypeGroup.real) {
+        columnWidthBuffer.append(", ").append(getDecimalDigits());
       }
       columnWidthBuffer.append(')');
     }
 
     return columnWidthBuffer.toString();
-
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final boolean isNullable()
-  {
+  public final boolean isNullable() {
     return nullable;
   }
 
-  final void setNullable(final boolean nullable)
-  {
+  final void setColumnDataType(final ColumnDataType columnDataType) {
+    this.columnDataType = columnDataType;
+  }
+
+  final void setDecimalDigits(final int decimalDigits) {
+    this.decimalDigits = decimalDigits;
+  }
+
+  final void setNullable(final boolean nullable) {
     this.nullable = nullable;
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final ColumnDataType getType()
-  {
-    return getColumnDataType();
+  final void setOrdinalPosition(final int ordinalPosition) {
+    this.ordinalPosition = ordinalPosition;
   }
 
+  /**
+   * Sets the column size.
+   *
+   * @param size Size of the column
+   */
+  final void setSize(final int size) {
+    this.size = size;
+  }
 }

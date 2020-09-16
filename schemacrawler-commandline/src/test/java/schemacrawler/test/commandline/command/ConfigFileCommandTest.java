@@ -1,28 +1,25 @@
 package schemacrawler.test.commandline.command;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.anEmptyMap;
 import static org.hamcrest.Matchers.is;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 import org.junit.jupiter.api.Test;
+
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.command.ConfigFileCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.options.Config;
 
-public class ConfigFileCommandTest
-{
+public class ConfigFileCommandTest {
 
   @Test
-  public void noArgs()
-  {
-    final String[] args = new String[0];
+  public void allArgs() {
+    final String[] args = {"-g", "a_file", "additional", "--extra"};
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    final CommandLine commandLine =
-      newCommandLine(new ConfigFileCommand(state), null, false);
+    final CommandLine commandLine = newCommandLine(new ConfigFileCommand(state), null, false);
     commandLine.execute(args);
     final Config config = state.getBaseConfiguration();
 
@@ -30,27 +27,11 @@ public class ConfigFileCommandTest
   }
 
   @Test
-  public void noValidArgs()
-  {
-    final String[] args = { "--some-option" };
+  public void commandNoValue() {
+    final String[] args = {"-g"};
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    final CommandLine commandLine =
-      newCommandLine(new ConfigFileCommand(state), null, false);
-    commandLine.execute(args);
-    final Config config = state.getBaseConfiguration();
-
-    assertThat("Config is not empty", config, is(anEmptyMap()));
-  }
-
-  @Test
-  public void commandNoValue()
-  {
-    final String[] args = { "-g" };
-
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    final CommandLine commandLine =
-      newCommandLine(new ConfigFileCommand(state), null, false);
+    final CommandLine commandLine = newCommandLine(new ConfigFileCommand(state), null, false);
     commandLine.execute(args);
     final Config config = state.getBaseConfiguration();
 
@@ -58,19 +39,26 @@ public class ConfigFileCommandTest
   }
 
   @Test
-  public void allArgs()
-  {
-    final String[] args = {
-      "-g", "a_file", "additional", "--extra"
-    };
+  public void noArgs() {
+    final String[] args = new String[0];
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    final CommandLine commandLine =
-      newCommandLine(new ConfigFileCommand(state), null, false);
+    final CommandLine commandLine = newCommandLine(new ConfigFileCommand(state), null, false);
     commandLine.execute(args);
     final Config config = state.getBaseConfiguration();
 
     assertThat("Config is not empty", config, is(anEmptyMap()));
   }
 
+  @Test
+  public void noValidArgs() {
+    final String[] args = {"--some-option"};
+
+    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final CommandLine commandLine = newCommandLine(new ConfigFileCommand(state), null, false);
+    commandLine.execute(args);
+    final Config config = state.getBaseConfiguration();
+
+    assertThat("Config is not empty", config, is(anEmptyMap()));
+  }
 }

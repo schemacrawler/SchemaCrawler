@@ -28,18 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 import static java.sql.DatabaseMetaData.procedureNoResult;
 import static java.sql.DatabaseMetaData.procedureResultUnknown;
 import static java.sql.DatabaseMetaData.procedureReturnsResult;
 
-/**
- * An enumeration wrapper around JDBC procedure return types.
- */
-public enum ProcedureReturnType
-  implements RoutineReturnType
-{
-
+/** An enumeration wrapper around JDBC procedure return types. */
+public enum ProcedureReturnType implements RoutineReturnType {
   unknown(procedureResultUnknown, "result unknown"),
   noResult(procedureNoResult, "no result"),
   returnsResult(procedureReturnsResult, "returns result");
@@ -47,28 +41,20 @@ public enum ProcedureReturnType
   private final int id;
   private final String text;
 
-  ProcedureReturnType(final int id, final String text)
-  {
+  ProcedureReturnType(final int id, final String text) {
     this.id = id;
     this.text = text;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public int id()
-  {
+  public int id() {
     return id;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String toString()
-  {
+  public String toString() {
     return text;
   }
-
 }

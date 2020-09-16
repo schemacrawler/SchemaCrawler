@@ -27,28 +27,22 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.ioresource;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.io.Reader;
 import java.io.StringReader;
 import java.nio.charset.Charset;
 
-public class EmptyInputResource
-  implements InputResource
-{
+public class EmptyInputResource implements InputResource {
 
   @Override
-  public Reader openNewInputReader(final Charset charset)
-  {
+  public Reader openNewInputReader(final Charset charset) {
     requireNonNull(charset, "No input charset provided");
     return new StringReader("");
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return "<empty>";
   }
-
 }

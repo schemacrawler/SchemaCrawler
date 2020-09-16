@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler;
 
-
 import static us.fatehi.utility.IOUtility.readResourceFully;
 
 import java.io.BufferedReader;
@@ -36,26 +35,40 @@ import java.io.IOException;
 import java.io.StringReader;
 
 /**
- * Version information for this product. Has methods to obtain information about
- * the product, as well as a main method, so it can be called from the
- * command-line.
+ * Version information for this product. Has methods to obtain information about the product, as
+ * well as a main method, so it can be called from the command-line.
  *
  * @author Sualeh Fatehi
  */
-public final class Version
-{
+public final class Version {
 
   private static final String ABOUT;
   private static final String PRODUCTNAME = "SchemaCrawler";
   private static final String VERSION;
+
+  static {
+    ABOUT = readResourceFully("/help/SchemaCrawler.txt");
+
+    String[] productLine;
+    try (final BufferedReader reader = new BufferedReader(new StringReader(ABOUT))) {
+      final String readLine = reader.readLine();
+      if (readLine != null) {
+        productLine = readLine.split(" ");
+      } else {
+        productLine = new String[] {PRODUCTNAME, ""};
+      }
+    } catch (final IOException e) {
+      productLine = new String[] {PRODUCTNAME, ""};
+    }
+    VERSION = productLine[1];
+  }
 
   /**
    * Information about this product.
    *
    * @return Information about this product.
    */
-  public static String about()
-  {
+  public static String about() {
     return ABOUT;
   }
 
@@ -64,8 +77,7 @@ public final class Version
    *
    * @return Product name.
    */
-  public static String getProductName()
-  {
+  public static String getProductName() {
     return PRODUCTNAME;
   }
 
@@ -74,49 +86,20 @@ public final class Version
    *
    * @return Product version number.
    */
-  public static String getVersion()
-  {
+  public static String getVersion() {
     return VERSION;
   }
 
   /**
    * Main routine. Prints information about this product.
    *
-   * @param args
-   *   Arguments to the main routine - they are ignored.
+   * @param args Arguments to the main routine - they are ignored.
    */
-  public static void main(final String[] args)
-  {
+  public static void main(final String[] args) {
     System.out.println(about());
   }
 
-  static
-  {
-    ABOUT = readResourceFully("/help/SchemaCrawler.txt");
-
-    String[] productLine;
-    try (final BufferedReader reader = new BufferedReader(new StringReader(ABOUT)))
-    {
-      final String readLine = reader.readLine();
-      if (readLine != null)
-      {
-        productLine = readLine.split(" ");
-      }
-      else
-      {
-        productLine = new String[] { PRODUCTNAME, "" };
-      }
-    }
-    catch (final IOException e)
-    {
-      productLine = new String[] { PRODUCTNAME, "" };
-    }
-    VERSION = productLine[1];
-  }
-
-  private Version()
-  {
+  private Version() {
     // Prevent external instantiation
   }
-
 }

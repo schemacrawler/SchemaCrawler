@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.crawl;
 
-
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 import static org.hamcrest.CoreMatchers.is;
@@ -47,6 +46,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -62,14 +62,11 @@ import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 @ExtendWith(TestContextParameterResolver.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
-public class SchemaRetrieverTest
-{
+public class SchemaRetrieverTest {
 
   @Test
   @DisplayName("Verify that schemas can be obtained from INFORMATION_SCHEMA")
-  public void schemataView(final Connection connection)
-    throws SQLException
-  {
+  public void schemataView(final Connection connection) throws SQLException {
     // Mock database metadata, so we can check if it is being used over the INFORMATION_SCHEMA
     final DatabaseMetaData databaseMetaData = mock(DatabaseMetaData.class);
     final Connection spyConnection = spy(connection);
@@ -78,40 +75,37 @@ public class SchemaRetrieverTest
     final MutableCatalog catalog = new MutableCatalog("test_catalog");
 
     final InformationSchemaViews informationSchemaViews =
-      InformationSchemaViewsBuilder
-        .builder()
-        .withSql(InformationSchemaKey.SCHEMATA,
-                 "SELECT * FROM INFORMATION_SCHEMA.SCHEMATA")
-        .toOptions();
+        InformationSchemaViewsBuilder.builder()
+            .withSql(InformationSchemaKey.SCHEMATA, "SELECT * FROM INFORMATION_SCHEMA.SCHEMATA")
+            .toOptions();
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-      SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder.withInformationSchemaViews(
-      informationSchemaViews);
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-      schemaRetrievalOptionsBuilder.toOptions();
+        SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder.withInformationSchemaViews(informationSchemaViews);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
     final RetrieverConnection retrieverConnection =
-      new RetrieverConnection(spyConnection, schemaRetrievalOptions);
+        new RetrieverConnection(spyConnection, schemaRetrievalOptions);
 
-    final SchemaCrawlerOptions options =
-      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
     final SchemaRetriever schemaRetriever =
-      new SchemaRetriever(retrieverConnection, catalog, options);
+        new SchemaRetriever(retrieverConnection, catalog, options);
     schemaRetriever.retrieveSchemas(new IncludeAll());
 
     verify(databaseMetaData, times(0)).getSchemas();
-    assertThat(schemaRetriever
-                 .getAllSchemas()
-                 .values()
-                 .stream()
-                 .map(schema -> schema.getFullName())
-                 .collect(toList()),
-               is(asList("PUBLIC.BOOKS",
-                         "PUBLIC.FOR_LINT",
-                         "PUBLIC.INFORMATION_SCHEMA",
-                         "PUBLIC.PUBLIC",
-                         "PUBLIC.\"PUBLISHER SALES\"",
-                         "PUBLIC.SYSTEM_LOBS")));
+    assertThat(
+        schemaRetriever
+            .getAllSchemas()
+            .values()
+            .stream()
+            .map(schema -> schema.getFullName())
+            .collect(toList()),
+        is(
+            asList(
+                "PUBLIC.BOOKS",
+                "PUBLIC.FOR_LINT",
+                "PUBLIC.INFORMATION_SCHEMA",
+                "PUBLIC.PUBLIC",
+                "PUBLIC.\"PUBLISHER SALES\"",
+                "PUBLIC.SYSTEM_LOBS")));
   }
-
 }

@@ -28,25 +28,16 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schemacrawler;
 
-
-/**
- * Exception for the SchemaCrawler.
- */
-public class SchemaCrawlerRuntimeException
-  extends RuntimeException
-{
+/** Exception for the SchemaCrawler. */
+public class SchemaCrawlerRuntimeException extends RuntimeException {
 
   private static final long serialVersionUID = 3257848770627713076L;
 
-  public SchemaCrawlerRuntimeException(final String message)
-  {
+  public SchemaCrawlerRuntimeException(final String message) {
     super(message);
   }
 
-  public SchemaCrawlerRuntimeException(final String message,
-                                       final Throwable cause)
-  {
+  public SchemaCrawlerRuntimeException(final String message, final Throwable cause) {
     super(message + ": " + cause.getMessage(), cause);
   }
-
 }

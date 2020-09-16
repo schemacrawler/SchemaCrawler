@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.crawl;
 
-
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.io.Serializable;
@@ -36,73 +35,52 @@ import java.util.Objects;
 
 import schemacrawler.schema.Property;
 
-abstract class AbstractProperty
-  implements Property
-{
+abstract class AbstractProperty implements Property {
 
   private static final long serialVersionUID = -7150431683440256142L;
 
   private final String name;
   private final Serializable value;
 
-  AbstractProperty(final String name, final Serializable value)
-  {
+  AbstractProperty(final String name, final Serializable value) {
     requireNotBlank(name, "No property name provided");
     this.name = name.trim();
-    if (value != null && value
-      .getClass()
-      .isArray())
-    {
+    if (value != null && value.getClass().isArray()) {
       this.value = (Serializable) Arrays.asList((Object[]) value);
-    }
-    else
-    {
+    } else {
       this.value = value;
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public final String getName()
-  {
+  public final boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (!(obj instanceof Property)) {
+      return false;
+    }
+    final Property other = (Property) obj;
+    return Objects.equals(name, other.getName()) && Objects.equals(value, other.getValue());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String getName() {
     return name;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Serializable getValue()
-  {
+  public Serializable getValue() {
     return value;
   }
 
   @Override
-  public final int hashCode()
-  {
+  public final int hashCode() {
     return Objects.hash(name, value);
   }
-
-  @Override
-  public final boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
-      return true;
-    }
-    if (obj == null)
-    {
-      return false;
-    }
-    if (!(obj instanceof Property))
-    {
-      return false;
-    }
-    final Property other = (Property) obj;
-    return Objects.equals(name, other.getName()) && Objects.equals(value,
-                                                                   other.getValue());
-  }
-
 }

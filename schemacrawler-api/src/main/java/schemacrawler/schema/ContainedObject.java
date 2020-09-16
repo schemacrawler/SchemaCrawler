@@ -27,10 +27,8 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schema;
 
-
 @FunctionalInterface
-public interface ContainedObject<P>
-{
+public interface ContainedObject<P> {
 
   /**
    * Gets the parent.
@@ -38,5 +36,4 @@ public interface ContainedObject<P>
    * @return Parent
    */
   P getParent();
-
 }

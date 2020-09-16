@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.commandline.common;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.anEmptyMap;
 import static org.hamcrest.Matchers.is;
@@ -37,21 +36,18 @@ import java.lang.reflect.Field;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
+
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
-public class SchemaCrawlerStateTest
-{
+public class SchemaCrawlerStateTest {
 
   @Test
-  public void baseConfigNull()
-    throws Exception
-  {
+  public void baseConfigNull() throws Exception {
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
 
     assertThat(state.getBaseConfiguration(), is(anEmptyMap()));
     // Assert internal field
-    final Map<String, String> baseConfigurationBefore =
-      getBaseConfiguration(state);
+    final Map<String, String> baseConfigurationBefore = getBaseConfiguration(state);
     assertThat(baseConfigurationBefore, is(nullValue()));
 
     // TEST
@@ -59,19 +55,14 @@ public class SchemaCrawlerStateTest
 
     assertThat(state.getBaseConfiguration(), is(anEmptyMap()));
     // Assert internal field
-    final Map<String, String> baseConfigurationAfter =
-      getBaseConfiguration(state);
+    final Map<String, String> baseConfigurationAfter = getBaseConfiguration(state);
     assertThat(baseConfigurationAfter, is(anEmptyMap()));
   }
 
   private Map<String, String> getBaseConfiguration(final SchemaCrawlerShellState state)
-    throws NoSuchFieldException, IllegalAccessException
-  {
-    final Field f = state
-      .getClass()
-      .getDeclaredField("baseConfiguration");
+      throws NoSuchFieldException, IllegalAccessException {
+    final Field f = state.getClass().getDeclaredField("baseConfiguration");
     f.setAccessible(true);
     return (Map<String, String>) f.get(state);
   }
-
 }

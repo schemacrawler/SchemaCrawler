@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.command;
 
-
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Model;
 import picocli.CommandLine.Option;
@@ -44,93 +43,83 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
  *
  * @author Sualeh Fatehi
  */
-@Command(name = "filter",
-         header = "** Filter database object metadata",
-         description = {
-           "",
-         },
-         headerHeading = "",
-         synopsisHeading = "Shell Command:%n",
-         customSynopsis = {
-           "filter"
-         },
-         optionListHeading = "Options:%n")
-public final class FilterCommand
-  extends BaseStateHolder
-  implements Runnable
-{
+@Command(
+    name = "filter",
+    header = "** Filter database object metadata",
+    description = {
+      "",
+    },
+    headerHeading = "",
+    synopsisHeading = "Shell Command:%n",
+    customSynopsis = {"filter"},
+    optionListHeading = "Options:%n")
+public final class FilterCommand extends BaseStateHolder implements Runnable {
 
-  @Option(names = "--children", description = {
-    "<children> is the number of generations of descendants for the tables "
-    + "selected by grep, and shown in the results", "Optional, default is 0"
-  })
+  @Option(
+      names = "--children",
+      description = {
+        "<children> is the number of generations of descendants for the tables "
+            + "selected by grep, and shown in the results",
+        "Optional, default is 0"
+      })
   private Integer children;
-  @Option(names = "--no-empty-tables", description = {
-    "Includes only tables that have rows of data",
-    "Requires table row counts to be loaded",
-    "Optional, default is false"
-  }, negatable = true)
+
+  @Option(
+      names = "--no-empty-tables",
+      description = {
+        "Includes only tables that have rows of data",
+        "Requires table row counts to be loaded",
+        "Optional, default is false"
+      },
+      negatable = true)
   private Boolean noemptytables;
-  @Option(names = "--parents", description = {
-    "<parents> is the number of generations of ancestors for the tables "
-    + "selected by grep, and shown in the results", "Optional, default is 0"
-  })
+
+  @Option(
+      names = "--parents",
+      description = {
+        "<parents> is the number of generations of ancestors for the tables "
+            + "selected by grep, and shown in the results",
+        "Optional, default is 0"
+      })
   private Integer parents;
 
-  @Spec
-  private Model.CommandSpec spec;
+  @Spec private Model.CommandSpec spec;
 
-  public FilterCommand(final SchemaCrawlerShellState state)
-  {
+  public FilterCommand(final SchemaCrawlerShellState state) {
     super(state);
   }
 
   @Override
-  public void run()
-  {
+  public void run() {
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      state.getSchemaCrawlerOptionsBuilder();
+        state.getSchemaCrawlerOptionsBuilder();
 
-    final FilterOptionsBuilder optionsBuilder = FilterOptionsBuilder
-      .builder()
-      .fromOptions(schemaCrawlerOptionsBuilder.getFilterOptions());
+    final FilterOptionsBuilder optionsBuilder =
+        FilterOptionsBuilder.builder().fromOptions(schemaCrawlerOptionsBuilder.getFilterOptions());
 
-    if (parents != null)
-    {
-      if (parents >= 0)
-      {
+    if (parents != null) {
+      if (parents >= 0) {
         optionsBuilder.parentTableFilterDepth(parents);
-      }
-      else
-      {
-        throw new ParameterException(spec.commandLine(),
-                                     "Please provide a valid value for --parents");
+      } else {
+        throw new ParameterException(
+            spec.commandLine(), "Please provide a valid value for --parents");
       }
     }
 
-    if (children != null)
-    {
-      if (children >= 0)
-      {
+    if (children != null) {
+      if (children >= 0) {
         optionsBuilder.childTableFilterDepth(children);
-      }
-      else
-      {
-        throw new ParameterException(spec.commandLine(),
-                                     "Please provide a valid value for --children");
+      } else {
+        throw new ParameterException(
+            spec.commandLine(), "Please provide a valid value for --children");
       }
     }
 
-    if (noemptytables != null)
-    {
+    if (noemptytables != null) {
       optionsBuilder.noEmptyTables(noemptytables);
     }
 
-    state
-      .getSchemaCrawlerOptionsBuilder()
-      .withFilterOptionsBuilder(optionsBuilder);
-
+    state.getSchemaCrawlerOptionsBuilder().withFilterOptionsBuilder(optionsBuilder);
   }
-
 }

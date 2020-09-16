@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.command;
 
-
 import static us.fatehi.utility.Utility.isBlank;
 
 import picocli.CommandLine.Model;
@@ -41,28 +40,22 @@ import picocli.CommandLine.Spec;
  *
  * @author Sualeh Fatehi
  */
-public final class CommandOptions
-{
+public final class CommandOptions {
 
-  @Option(names = {
-    "-c", "--command"
-  },
-          required = true,
-          description = "SchemaCrawler command",
-          completionCandidates = AvailableCommands.class)
+  @Option(
+      names = {"-c", "--command"},
+      required = true,
+      description = "SchemaCrawler command",
+      completionCandidates = AvailableCommands.class)
   private String command;
 
-  @Spec
-  private Model.CommandSpec spec;
+  @Spec private Model.CommandSpec spec;
 
-  public String getCommand()
-  {
-    if (isBlank(command))
-    {
+  public String getCommand() {
+    if (isBlank(command)) {
       throw new ParameterException(spec.commandLine(), "No command provided");
     }
 
     return command;
   }
-
 }

@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 import java.util.Collection;
 import java.util.Optional;
 
@@ -37,9 +36,7 @@ import java.util.Optional;
  *
  * @author Sualeh Fatehi
  */
-public interface Column
-  extends BaseColumn<Table>
-{
+public interface Column extends BaseColumn<Table> {
 
   /**
    * Gets the default data value for the column.
@@ -47,16 +44,6 @@ public interface Column
    * @return Default data value for the column
    */
   String getDefaultValue();
-
-  /**
-   * Checks whether there is a default data value for the column.
-   *
-   * @return Whether there is a default data value
-   */
-  default boolean hasDefaultValue()
-  {
-    return getDefaultValue() != null;
-  }
 
   /**
    * Gets the list of privileges for the table.
@@ -71,6 +58,15 @@ public interface Column
    * @return Referenced column
    */
   Column getReferencedColumn();
+
+  /**
+   * Checks whether there is a default data value for the column.
+   *
+   * @return Whether there is a default data value
+   */
+  default boolean hasDefaultValue() {
+    return getDefaultValue() != null;
+  }
 
   /**
    * True if this column is auto-incremented.
@@ -124,10 +120,8 @@ public interface Column
   /**
    * Gets a privilege by unqualified name.
    *
-   * @param name
-   *   Unqualified name
+   * @param name Unqualified name
    * @return Privilege.
    */
   <P extends Privilege<Column>> Optional<P> lookupPrivilege(String name);
-
 }

@@ -28,26 +28,20 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schemacrawler;
 
-
 import java.util.Optional;
 import java.util.regex.Pattern;
+
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 
-/**
- * grep options builder, to build the immutable options to crawl a schema.
- */
-public final class GrepOptionsBuilder
-  implements OptionsBuilder<GrepOptionsBuilder, GrepOptions>
-{
+/** grep options builder, to build the immutable options to crawl a schema. */
+public final class GrepOptionsBuilder implements OptionsBuilder<GrepOptionsBuilder, GrepOptions> {
 
-  public static GrepOptionsBuilder builder()
-  {
+  public static GrepOptionsBuilder builder() {
     return new GrepOptionsBuilder();
   }
 
-  public static GrepOptions newGrepOptions()
-  {
+  public static GrepOptions newGrepOptions() {
     return builder().toOptions();
   }
 
@@ -57,123 +51,97 @@ public final class GrepOptionsBuilder
   private boolean grepOnlyMatching;
   private Optional<InclusionRule> grepRoutineParameterInclusionRule;
 
-  /**
-   * Default options.
-   */
-  private GrepOptionsBuilder()
-  {
+  /** Default options. */
+  private GrepOptionsBuilder() {
     grepColumnInclusionRule = Optional.empty();
     grepRoutineParameterInclusionRule = Optional.empty();
     grepDefinitionInclusionRule = Optional.empty();
   }
 
   @Override
-  public GrepOptionsBuilder fromOptions(final GrepOptions options)
-  {
-    if (options == null)
-    {
+  public GrepOptionsBuilder fromOptions(final GrepOptions options) {
+    if (options == null) {
       return this;
     }
 
     grepColumnInclusionRule = options.getGrepColumnInclusionRule();
-    grepRoutineParameterInclusionRule = Optional
-      .ofNullable(options.getGrepRoutineParameterInclusionRule())
-      .orElse(null);
-    grepDefinitionInclusionRule = Optional
-      .ofNullable(options.getGrepDefinitionInclusionRule())
-      .orElse(null);
+    grepRoutineParameterInclusionRule =
+        Optional.ofNullable(options.getGrepRoutineParameterInclusionRule()).orElse(null);
+    grepDefinitionInclusionRule =
+        Optional.ofNullable(options.getGrepDefinitionInclusionRule()).orElse(null);
     grepInvertMatch = options.isGrepInvertMatch();
     grepOnlyMatching = options.isGrepOnlyMatching();
 
     return this;
   }
 
-  @Override
-  public GrepOptions toOptions()
-  {
-    final GrepOptions grepOptions =
-      new GrepOptions(grepColumnInclusionRule.orElse(null),
-                      grepRoutineParameterInclusionRule.orElse(null),
-                      grepDefinitionInclusionRule.orElse(null),
-                      grepInvertMatch,
-                      grepOnlyMatching);
-
-    return grepOptions;
-  }
-
-  public GrepOptionsBuilder grepOnlyMatching(final boolean grepOnlyMatching)
-  {
+  public GrepOptionsBuilder grepOnlyMatching(final boolean grepOnlyMatching) {
     this.grepOnlyMatching = grepOnlyMatching;
     return this;
   }
 
-  public GrepOptionsBuilder includeGreppedColumns(final InclusionRule grepColumnInclusionRule)
-  {
+  public GrepOptionsBuilder includeGreppedColumns(final InclusionRule grepColumnInclusionRule) {
     this.grepColumnInclusionRule = Optional.ofNullable(grepColumnInclusionRule);
     return this;
   }
 
-  public GrepOptionsBuilder includeGreppedColumns(final Pattern grepColumnPattern)
-  {
-    if (grepColumnPattern == null)
-    {
+  public GrepOptionsBuilder includeGreppedColumns(final Pattern grepColumnPattern) {
+    if (grepColumnPattern == null) {
       grepColumnInclusionRule = Optional.empty();
-    }
-    else
-    {
-      grepColumnInclusionRule =
-        Optional.of(new RegularExpressionInclusionRule(grepColumnPattern));
+    } else {
+      grepColumnInclusionRule = Optional.of(new RegularExpressionInclusionRule(grepColumnPattern));
     }
     return this;
   }
 
-  public GrepOptionsBuilder includeGreppedDefinitions(final InclusionRule grepDefinitionInclusionRule)
-  {
-    this.grepDefinitionInclusionRule =
-      Optional.ofNullable(grepDefinitionInclusionRule);
+  public GrepOptionsBuilder includeGreppedDefinitions(
+      final InclusionRule grepDefinitionInclusionRule) {
+    this.grepDefinitionInclusionRule = Optional.ofNullable(grepDefinitionInclusionRule);
     return this;
   }
 
-  public GrepOptionsBuilder includeGreppedDefinitions(final Pattern grepDefinitionPattern)
-  {
-    if (grepDefinitionPattern == null)
-    {
+  public GrepOptionsBuilder includeGreppedDefinitions(final Pattern grepDefinitionPattern) {
+    if (grepDefinitionPattern == null) {
       grepDefinitionInclusionRule = Optional.empty();
-    }
-    else
-    {
+    } else {
       grepDefinitionInclusionRule =
-        Optional.of(new RegularExpressionInclusionRule(grepDefinitionPattern));
+          Optional.of(new RegularExpressionInclusionRule(grepDefinitionPattern));
     }
     return this;
   }
 
-  public GrepOptionsBuilder includeGreppedRoutineParameters(final InclusionRule grepRoutineParameterInclusionRule)
-  {
-    this.grepRoutineParameterInclusionRule =
-      Optional.ofNullable(grepRoutineParameterInclusionRule);
+  public GrepOptionsBuilder includeGreppedRoutineParameters(
+      final InclusionRule grepRoutineParameterInclusionRule) {
+    this.grepRoutineParameterInclusionRule = Optional.ofNullable(grepRoutineParameterInclusionRule);
     return this;
   }
 
-  public GrepOptionsBuilder includeGreppedRoutineParameters(final Pattern grepRoutineParametersPattern)
-  {
-    if (grepRoutineParametersPattern == null)
-    {
+  public GrepOptionsBuilder includeGreppedRoutineParameters(
+      final Pattern grepRoutineParametersPattern) {
+    if (grepRoutineParametersPattern == null) {
       grepRoutineParameterInclusionRule = Optional.empty();
-    }
-    else
-    {
+    } else {
       grepRoutineParameterInclusionRule =
-        Optional.of(new RegularExpressionInclusionRule(
-          grepRoutineParametersPattern));
+          Optional.of(new RegularExpressionInclusionRule(grepRoutineParametersPattern));
     }
     return this;
   }
 
-  public GrepOptionsBuilder invertGrepMatch(final boolean grepInvertMatch)
-  {
+  public GrepOptionsBuilder invertGrepMatch(final boolean grepInvertMatch) {
     this.grepInvertMatch = grepInvertMatch;
     return this;
   }
 
+  @Override
+  public GrepOptions toOptions() {
+    final GrepOptions grepOptions =
+        new GrepOptions(
+            grepColumnInclusionRule.orElse(null),
+            grepRoutineParameterInclusionRule.orElse(null),
+            grepDefinitionInclusionRule.orElse(null),
+            grepInvertMatch,
+            grepOnlyMatching);
+
+    return grepOptions;
+  }
 }

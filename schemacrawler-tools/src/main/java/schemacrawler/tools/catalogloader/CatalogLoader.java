@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.catalogloader;
 
-
 import java.sql.Connection;
 
 import schemacrawler.schema.Catalog;
@@ -36,28 +35,25 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.options.Config;
 
-public interface CatalogLoader
-{
+public interface CatalogLoader {
 
   Config getAdditionalConfiguration();
 
-  void setAdditionalConfiguration(Config config);
-
   Connection getConnection();
-
-  void setConnection(Connection connection);
 
   String getDatabaseSystemIdentifier();
 
   SchemaCrawlerOptions getSchemaCrawlerOptions();
 
-  void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
-
   SchemaRetrievalOptions getSchemaRetrievalOptions();
 
+  Catalog loadCatalog() throws Exception;
+
+  void setAdditionalConfiguration(Config config);
+
+  void setConnection(Connection connection);
+
+  void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
+
   void setSchemaRetrievalOptions(SchemaRetrievalOptions schemaRetrievalOptions);
-
-  Catalog loadCatalog()
-    throws Exception;
-
 }

@@ -28,15 +28,15 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.catalogloader;
 
-
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
+
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
@@ -44,87 +44,68 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseDriver;
 import schemacrawler.tools.options.Config;
 
-public class SchemaCrawlerCatalogLoaderTest
-{
+public class SchemaCrawlerCatalogLoaderTest {
 
   @Test
-  public void additionalConfiguration()
-  {
+  public void additionalConfiguration() {
     final CatalogLoader catalogLoader = new SchemaCrawlerCatalogLoader();
 
-    assertThat(catalogLoader.getAdditionalConfiguration(),
-               is(not(nullValue())));
-    assertThat(catalogLoader
-                 .getAdditionalConfiguration()
-                 .size(), is(0));
+    assertThat(catalogLoader.getAdditionalConfiguration(), is(not(nullValue())));
+    assertThat(catalogLoader.getAdditionalConfiguration().size(), is(0));
 
     final Config config = new Config();
     config.put("hello", "world");
     catalogLoader.setAdditionalConfiguration(config);
 
-    assertThat(catalogLoader.getAdditionalConfiguration(),
-               is(not(nullValue())));
-    assertThat(catalogLoader
-                 .getAdditionalConfiguration()
-                 .containsKey("hello"), is(true));
+    assertThat(catalogLoader.getAdditionalConfiguration(), is(not(nullValue())));
+    assertThat(catalogLoader.getAdditionalConfiguration().containsKey("hello"), is(true));
   }
 
   @Test
-  public void connection()
-  {
+  public void connection() {
     final CatalogLoader catalogLoader = new SchemaCrawlerCatalogLoader();
 
     assertThat(catalogLoader.getConnection(), is(nullValue()));
 
-    final Connection connection =
-      new TestDatabaseDriver().connect("jdbc:test-db:test", null);
+    final Connection connection = new TestDatabaseDriver().connect("jdbc:test-db:test", null);
     catalogLoader.setConnection(connection);
 
     assertThat(catalogLoader.getConnection(), is(not(nullValue())));
   }
 
   @Test
-  public void databaseSystemIdentifier()
-  {
-    assertThat(new SchemaCrawlerCatalogLoader().getDatabaseSystemIdentifier(),
-               is(nullValue()));
+  public void databaseSystemIdentifier() {
+    assertThat(new SchemaCrawlerCatalogLoader().getDatabaseSystemIdentifier(), is(nullValue()));
 
-    assertThat(new SchemaCrawlerCatalogLoader("test-db").getDatabaseSystemIdentifier(),
-               is("test-db"));
+    assertThat(
+        new SchemaCrawlerCatalogLoader("test-db").getDatabaseSystemIdentifier(), is("test-db"));
   }
 
   @Test
-  public void schemaCrawlerOptions()
-  {
+  public void schemaCrawlerOptions() {
     final CatalogLoader catalogLoader = new SchemaCrawlerCatalogLoader();
 
     assertThat(catalogLoader.getSchemaCrawlerOptions(), is(not(nullValue())));
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     catalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
     assertThat(catalogLoader.getSchemaCrawlerOptions(), is(not(nullValue())));
-    assertThat(catalogLoader
-                 .getSchemaCrawlerOptions()
-                 .equals(schemaCrawlerOptions), is(true));
+    assertThat(catalogLoader.getSchemaCrawlerOptions().equals(schemaCrawlerOptions), is(true));
   }
 
   @Test
-  public void schemaRetrievalOptions()
-  {
+  public void schemaRetrievalOptions() {
     final CatalogLoader catalogLoader = new SchemaCrawlerCatalogLoader();
 
     assertThat(catalogLoader.getSchemaRetrievalOptions(), is(not(nullValue())));
 
     final SchemaRetrievalOptions schemaRetrievalOptions =
-      SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
     catalogLoader.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
     assertThat(catalogLoader.getSchemaRetrievalOptions(), is(not(nullValue())));
-    assertThat(catalogLoader
-                 .getSchemaRetrievalOptions()
-                 .equals(schemaRetrievalOptions), is(true));
+    assertThat(catalogLoader.getSchemaRetrievalOptions().equals(schemaRetrievalOptions), is(true));
   }
-
 }

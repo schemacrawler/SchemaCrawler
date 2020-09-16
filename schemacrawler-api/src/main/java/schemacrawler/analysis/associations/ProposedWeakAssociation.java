@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.analysis.associations;
 
-
 import java.util.AbstractMap;
 
 import schemacrawler.schema.Column;
@@ -36,43 +35,34 @@ import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.Table;
 
 public final class ProposedWeakAssociation
-  extends AbstractMap.SimpleImmutableEntry<Column, Column>
-{
+    extends AbstractMap.SimpleImmutableEntry<Column, Column> {
 
-  ProposedWeakAssociation(final Column key, final Column value)
-  {
+  /** */
+  private static final long serialVersionUID = 24677218335455928L;
+
+  ProposedWeakAssociation(final Column key, final Column value) {
     super(key, value);
   }
 
-  ProposedWeakAssociation(final ColumnReference columnReference)
-  {
-    super(columnReference.getPrimaryKeyColumn(),
-          columnReference.getForeignKeyColumn());
+  ProposedWeakAssociation(final ColumnReference columnReference) {
+    super(columnReference.getPrimaryKeyColumn(), columnReference.getForeignKeyColumn());
   }
 
-  public boolean isValid()
-  {
+  public boolean isValid() {
     final Column primaryKeyColumn = getKey();
     final Column foreignKeyColumn = getValue();
 
     final Table pkTable = primaryKeyColumn.getParent();
     final Table fkTable = foreignKeyColumn.getParent();
-    if ((foreignKeyColumn.isPartOfPrimaryKey()
-         || foreignKeyColumn.isPartOfUniqueIndex())
-        && pkTable.compareTo(fkTable) > 0)
-    {
+    if ((foreignKeyColumn.isPartOfPrimaryKey() || foreignKeyColumn.isPartOfUniqueIndex())
+        && pkTable.compareTo(fkTable) > 0) {
       return false;
     }
 
     final ColumnDataType fkColumnType = foreignKeyColumn.getColumnDataType();
     final ColumnDataType pkColumnType = primaryKeyColumn.getColumnDataType();
-    final boolean isValid = fkColumnType
-      .getJavaSqlType()
-      .getName()
-      .equals(pkColumnType
-                .getJavaSqlType()
-                .getName());
+    final boolean isValid =
+        fkColumnType.getJavaSqlType().getName().equals(pkColumnType.getJavaSqlType().getName());
     return isValid;
   }
-
 }

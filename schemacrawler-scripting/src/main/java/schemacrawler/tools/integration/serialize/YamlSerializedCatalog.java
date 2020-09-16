@@ -27,27 +27,20 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.integration.serialize;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+
 import schemacrawler.schema.Catalog;
 
-/**
- * Decorates a database to allow for serialization to YAML serialization.
- */
-public final class YamlSerializedCatalog
-  extends BaseJacksonSerializedCatalog
-{
+/** Decorates a database to allow for serialization to YAML serialization. */
+public final class YamlSerializedCatalog extends BaseJacksonSerializedCatalog {
 
-  public YamlSerializedCatalog(final Catalog catalog)
-  {
+  public YamlSerializedCatalog(final Catalog catalog) {
     super(catalog);
   }
 
   @Override
-  protected ObjectMapper newObjectMapper()
-  {
+  protected ObjectMapper newObjectMapper() {
     return new ObjectMapper(new YAMLFactory());
   }
-
 }

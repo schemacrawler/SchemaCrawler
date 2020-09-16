@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.serialize;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
@@ -42,6 +41,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import picocli.CommandLine;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
@@ -49,48 +49,39 @@ import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.commandline.command.CommandLineHelpCommand;
 
 @ExtendWith(TestContextParameterResolver.class)
-public class CommandLineSerializeHelpTest
-{
+public class CommandLineSerializeHelpTest {
 
-  private static final String COMMANDLINE_HELP_OUTPUT =
-    "commandline_help_output/";
+  private static final String COMMANDLINE_HELP_OUTPUT = "commandline_help_output/";
 
   private TestOutputStream err;
   private TestOutputStream out;
 
   @AfterEach
-  public void cleanUpStreams()
-  {
+  public void cleanUpStreams() {
     System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
     System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
   }
 
   @Test
-  public void helpSerialize(final TestContext testContext)
-  {
-    final String[] args = {
-      "--help", "command:serialize"
-    };
+  public void helpSerialize(final TestContext testContext) {
+    final String[] args = {"--help", "command:serialize"};
 
     final CommandLineHelpCommand optionsParser = new CommandLineHelpCommand();
     new CommandLine(optionsParser).parseArgs(args);
     optionsParser.run();
 
     assertThat(outputOf(err), hasNoContent());
-    assertThat(outputOf(out),
-               hasSameContentAs(classpathResource(COMMANDLINE_HELP_OUTPUT
-                                                  + "help.serialize.stdout.txt")));
+    assertThat(
+        outputOf(out),
+        hasSameContentAs(classpathResource(COMMANDLINE_HELP_OUTPUT + "help.serialize.stdout.txt")));
   }
 
   @BeforeEach
-  public void setUpStreams()
-    throws Exception
-  {
+  public void setUpStreams() throws Exception {
     out = new TestOutputStream();
     System.setOut(new PrintStream(out));
 
     err = new TestOutputStream();
     System.setErr(new PrintStream(err));
   }
-
 }

@@ -27,16 +27,11 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.graph;
 
-
-public class GraphException
-  extends Exception
-{
+public class GraphException extends Exception {
 
   private static final long serialVersionUID = 5978689857777212149L;
 
-  public GraphException(final String message)
-  {
+  public GraphException(final String message) {
     super(message);
   }
-
 }

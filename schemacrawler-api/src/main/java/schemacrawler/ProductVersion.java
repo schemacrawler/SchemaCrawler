@@ -28,12 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler;
 
-
 import java.io.Serializable;
 
-public interface ProductVersion
-  extends Serializable
-{
+public interface ProductVersion extends Serializable {
 
   /**
    * Gets the name of the product.
@@ -48,5 +45,4 @@ public interface ProductVersion
    * @return Version of the product
    */
   String getProductVersion();
-
 }

@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,112 +36,81 @@ import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableConstraintType;
 
-/**
- * Represents a table constraint.
- */
-class MutableTableConstraint
-  extends AbstractDependantObject<Table>
-  implements TableConstraint
-{
+/** Represents a table constraint. */
+class MutableTableConstraint extends AbstractDependantObject<Table> implements TableConstraint {
 
   private static final long serialVersionUID = 1155277343302693656L;
 
-  private final NamedObjectList<MutableTableConstraintColumn> columns =
-    new NamedObjectList<>();
+  private final NamedObjectList<MutableTableConstraintColumn> columns = new NamedObjectList<>();
   private final StringBuilder definition;
   private boolean deferrable;
   private boolean initiallyDeferred;
   private TableConstraintType tableConstraintType;
 
-  MutableTableConstraint(final Table parent, final String name)
-  {
+  MutableTableConstraint(final Table parent, final String name) {
     super(new TableReference(parent), name);
     definition = new StringBuilder();
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public List<TableConstraintColumn> getColumns()
-  {
+  public List<TableConstraintColumn> getColumns() {
     return new ArrayList<>(columns.values());
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public TableConstraintType getConstraintType()
-  {
+  public TableConstraintType getConstraintType() {
     return tableConstraintType;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String getDefinition()
-  {
+  public String getDefinition() {
     return definition.toString();
   }
 
   @Override
-  public boolean hasDefinition()
-  {
-    return definition.length() > 0;
-  }
-
-  @Override
-  public TableConstraintType getType()
-  {
+  public TableConstraintType getType() {
     return getConstraintType();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public boolean isDeferrable()
-  {
+  public boolean hasDefinition() {
+    return definition.length() > 0;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean isDeferrable() {
     return deferrable;
   }
 
-  void setDeferrable(final boolean deferrable)
-  {
-    this.deferrable = deferrable;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public boolean isInitiallyDeferred()
-  {
+  public boolean isInitiallyDeferred() {
     return initiallyDeferred;
   }
 
-  void setInitiallyDeferred(final boolean initiallyDeferred)
-  {
-    this.initiallyDeferred = initiallyDeferred;
-  }
-
-  public void setTableConstraintType(final TableConstraintType tableConstraintType)
-  {
+  public void setTableConstraintType(final TableConstraintType tableConstraintType) {
     this.tableConstraintType = tableConstraintType;
   }
 
-  void addColumn(final MutableTableConstraintColumn column)
-  {
+  void addColumn(final MutableTableConstraintColumn column) {
     columns.add(column);
   }
 
-  void appendDefinition(final String definition)
-  {
-    if (definition != null)
-    {
+  void appendDefinition(final String definition) {
+    if (definition != null) {
       this.definition.append(definition);
     }
   }
 
+  void setDeferrable(final boolean deferrable) {
+    this.deferrable = deferrable;
+  }
+
+  void setInitiallyDeferred(final boolean initiallyDeferred) {
+    this.initiallyDeferred = initiallyDeferred;
+  }
 }

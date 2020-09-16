@@ -29,16 +29,15 @@ package schemacrawler.tools.databaseconnector;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
+
 import java.util.HashMap;
 import java.util.Map;
+
 import us.fatehi.utility.TemplatingUtility;
 
-public class DatabaseConnectionUrlBuilder
-{
+public class DatabaseConnectionUrlBuilder {
 
-  public static DatabaseConnectionUrlBuilder builder(
-      final String connectionUrlPattern)
-  {
+  public static DatabaseConnectionUrlBuilder builder(final String connectionUrlPattern) {
     return new DatabaseConnectionUrlBuilder(connectionUrlPattern);
   }
 
@@ -53,45 +52,34 @@ public class DatabaseConnectionUrlBuilder
   private Integer providedPort;
   private Map<String, String> providedUrlx;
 
-  private DatabaseConnectionUrlBuilder(final String connectionUrlPattern)
-  {
-    this.connectionUrlPattern = requireNonNull(connectionUrlPattern,
-        "No database connection URL pattern provided");
+  private DatabaseConnectionUrlBuilder(final String connectionUrlPattern) {
+    this.connectionUrlPattern =
+        requireNonNull(connectionUrlPattern, "No database connection URL pattern provided");
 
     this.defaultHost = "localhost";
     this.defaultDatabase = "";
   }
 
-  public String toURL()
-  {
+  public String toURL() {
 
     final String host;
-    if (isBlank(providedHost))
-    {
+    if (isBlank(providedHost)) {
       host = defaultHost;
-    }
-    else
-    {
+    } else {
       host = providedHost;
     }
 
     final int port;
-    if (providedPort == null || providedPort < 0 || providedPort > 65535)
-    {
+    if (providedPort == null || providedPort < 0 || providedPort > 65535) {
       port = defaultPort;
-    }
-    else
-    {
+    } else {
       port = providedPort;
     }
 
     final String database;
-    if (isBlank(providedDatabase))
-    {
+    if (isBlank(providedDatabase)) {
       database = defaultDatabase;
-    }
-    else
-    {
+    } else {
       database = providedDatabase;
     }
 
@@ -100,74 +88,59 @@ public class DatabaseConnectionUrlBuilder
     map.put("port", String.valueOf(port));
     map.put("database", database);
 
-    final String url =
-        TemplatingUtility.expandTemplate(connectionUrlPattern, map);
+    final String url = TemplatingUtility.expandTemplate(connectionUrlPattern, map);
 
     return url;
   }
 
-  public Map<String, String> toURLx()
-  {
+  public Map<String, String> toURLx() {
     final Map<String, String> urlx = new HashMap<>();
-    if (defaultUrlx != null)
-    {
+    if (defaultUrlx != null) {
       urlx.putAll(defaultUrlx);
     }
-    if (providedUrlx != null)
-    {
+    if (providedUrlx != null) {
       urlx.putAll(providedUrlx);
     }
     return urlx;
   }
 
-  public DatabaseConnectionUrlBuilder withDatabase(String database)
-  {
+  public DatabaseConnectionUrlBuilder withDatabase(String database) {
     this.providedDatabase = database;
     return this;
   }
 
-  public DatabaseConnectionUrlBuilder withDefaultDatabase(
-      String defaultDatabase)
-  {
+  public DatabaseConnectionUrlBuilder withDefaultDatabase(String defaultDatabase) {
     this.defaultDatabase = defaultDatabase;
     return this;
   }
 
-  public DatabaseConnectionUrlBuilder withDefaultHost(String defaultHost)
-  {
+  public DatabaseConnectionUrlBuilder withDefaultHost(String defaultHost) {
     this.defaultHost = defaultHost;
     return this;
   }
 
-  public DatabaseConnectionUrlBuilder withDefaultPort(int defaultPort)
-  {
+  public DatabaseConnectionUrlBuilder withDefaultPort(int defaultPort) {
     this.defaultPort = defaultPort;
     return this;
   }
 
-  public DatabaseConnectionUrlBuilder withDefaultUrlx(
-      Map<String, String> defaultUrlx)
-  {
+  public DatabaseConnectionUrlBuilder withDefaultUrlx(Map<String, String> defaultUrlx) {
     this.defaultUrlx = defaultUrlx;
     return this;
   }
 
-  public DatabaseConnectionUrlBuilder withHost(String host)
-  {
+  public DatabaseConnectionUrlBuilder withHost(String host) {
     this.providedHost = host;
     return this;
   }
 
-  public DatabaseConnectionUrlBuilder withPort(Integer port)
-  {
+  public DatabaseConnectionUrlBuilder withPort(Integer port) {
     this.providedPort = port;
     return this;
   }
 
-  public DatabaseConnectionUrlBuilder withUrlx(Map<String, String> urlx)
-  {
+  public DatabaseConnectionUrlBuilder withUrlx(Map<String, String> urlx) {
     this.providedUrlx = urlx;
     return this;
   }
-
 }

@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.command;
 
-
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.IOException;
@@ -41,154 +40,132 @@ import picocli.CommandLine.Model;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.ParameterException;
 import picocli.CommandLine.Spec;
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.tools.commandline.state.MultiUseUserCredentials;
 import schemacrawler.tools.databaseconnector.UserCredentials;
-import schemacrawler.SchemaCrawlerLogger;
 
 /**
  * Options for the command-line.
  *
  * @author sfatehi
  */
-public final class UserCredentialsOptions
-{
+public final class UserCredentialsOptions {
 
-  private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(UserCredentialsOptions.class.getName());
-
-
-  public static class PasswordOptions
-  {
-    @Option(names = "--password:env",
-            description = "Database password, from an environmental variable value",
-            paramLabel = "<environment variable name>")
+  public static class PasswordOptions {
+    @Option(
+        names = "--password:env",
+        description = "Database password, from an environmental variable value",
+        paramLabel = "<environment variable name>")
     private String passwordEnvironmentVariable;
-    @Option(names = "--password:file",
-            description = "Database password, read from a file",
-            paramLabel = "<path to password file>")
+
+    @Option(
+        names = "--password:file",
+        description = "Database password, read from a file",
+        paramLabel = "<path to password file>")
     private Path passwordFile;
-    @Option(names = "--password:prompt",
-            interactive = true,
-            description = "Database password, prompted from the console")
+
+    @Option(
+        names = "--password:prompt",
+        interactive = true,
+        description = "Database password, prompted from the console")
     private String passwordPrompted;
-    @Option(names = {
-      "--password"
-    }, description = "Database password", paramLabel = "<password>")
+
+    @Option(
+        names = {"--password"},
+        description = "Database password",
+        paramLabel = "<password>")
     private String passwordProvided;
 
     /**
-     * Get password from various sources, in order of precedence. The password
-     * cannot be specified in more than one way.
+     * Get password from various sources, in order of precedence. The password cannot be specified
+     * in more than one way.
      *
      * @return Password, can be null
      */
-    String getPassword()
-    {
+    String getPassword() {
       String password = getPasswordProvided();
 
-      if (password == null)
-      {
+      if (password == null) {
         password = getPasswordPrompted();
       }
-      if (password == null)
-      {
+      if (password == null) {
         password = getPasswordFromFile();
       }
-      if (password == null)
-      {
+      if (password == null) {
         password = getPasswordFromEnvironment();
       }
 
       return password;
     }
 
-    private String getPasswordProvided()
-    {
-      return passwordProvided;
-    }
-
-    private String getPasswordPrompted()
-    {
-      return passwordPrompted;
-    }
-
-    private String getPasswordFromEnvironment()
-    {
-      if (isBlank(passwordEnvironmentVariable))
-      {
+    private String getPasswordFromEnvironment() {
+      if (isBlank(passwordEnvironmentVariable)) {
         return null;
       }
 
       String passwordEnvironment = null;
-      try
-      {
+      try {
         passwordEnvironment = System.getenv(passwordEnvironmentVariable);
-      }
-      catch (final Exception e)
-      {
-        throw new IllegalArgumentException(String.format(
-          "Password could not be read from environmental variable <%s>",
-          passwordEnvironmentVariable), e);
+      } catch (final Exception e) {
+        throw new IllegalArgumentException(
+            String.format(
+                "Password could not be read from environmental variable <%s>",
+                passwordEnvironmentVariable),
+            e);
       }
 
       return passwordEnvironment;
     }
 
-    private String getPasswordFromFile()
-    {
-      if (passwordFile == null)
-      {
+    private String getPasswordFromFile() {
+      if (passwordFile == null) {
         return null;
       }
 
       String password = null;
-      try
-      {
+      try {
         final List<String> lines = Files.readAllLines(passwordFile);
-        if (!lines.isEmpty()) {password = lines.get(0);}
-      }
-      catch (final IOException e)
-      {
-        throw new IllegalArgumentException(String.format(
-          "Password could not be read from file <%s>",
-          passwordFile), e);
+        if (!lines.isEmpty()) {
+          password = lines.get(0);
+        }
+      } catch (final IOException e) {
+        throw new IllegalArgumentException(
+            String.format("Password could not be read from file <%s>", passwordFile), e);
       }
 
       return password;
     }
 
+    private String getPasswordPrompted() {
+      return passwordPrompted;
+    }
+
+    private String getPasswordProvided() {
+      return passwordProvided;
+    }
   }
 
+  @ArgGroup private PasswordOptions passwordOptions;
+  @Spec private Model.CommandSpec spec;
 
-  @ArgGroup
-  private PasswordOptions passwordOptions;
-  @Spec
-  private Model.CommandSpec spec;
-  @Option(names = {
-    "--user"
-  }, description = "Database user name")
+  @Option(
+      names = {"--user"},
+      description = "Database user name")
   private String user;
 
-  public UserCredentials getUserCredentials()
-  {
+  public UserCredentials getUserCredentials() {
     return new MultiUseUserCredentials(user, getPassword());
   }
 
-  private String getPassword()
-  {
-    if (passwordOptions == null)
-    {
+  private String getPassword() {
+    if (passwordOptions == null) {
       return null;
     }
 
-    try
-    {
+    try {
       return passwordOptions.getPassword();
-    }
-    catch (final Exception e)
-    {
+    } catch (final Exception e) {
       throw new ParameterException(spec.commandLine(), "No password provided");
     }
   }
-
 }

@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.utility;
 
-
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
 
@@ -41,21 +40,18 @@ import schemacrawler.tools.options.Config;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.string.StringFormat;
 
-public class PropertiesUtility
-{
+public class PropertiesUtility {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(PropertiesUtility.class.getName());
+      SchemaCrawlerLogger.getLogger(PropertiesUtility.class.getName());
 
   /**
    * Loads a properties file.
    *
-   * @param inputResource
-   *   Config resource.
+   * @param inputResource Config resource.
    * @return Config
    */
-  public static Config loadConfig(final InputResource inputResource)
-  {
+  public static Config loadConfig(final InputResource inputResource) {
     final Properties properties = loadProperties(inputResource);
     return new Config(properties);
   }
@@ -63,35 +59,25 @@ public class PropertiesUtility
   /**
    * Loads a properties file.
    *
-   * @param inputResource
-   *   Properties resource.
+   * @param inputResource Properties resource.
    * @return Properties
    */
-  public static Properties loadProperties(final InputResource inputResource)
-  {
+  public static Properties loadProperties(final InputResource inputResource) {
     requireNonNull(inputResource, "No input resource provided");
-    LOGGER.log(Level.INFO,
-               new StringFormat("Loading properties from <%s>", inputResource));
+    LOGGER.log(Level.INFO, new StringFormat("Loading properties from <%s>", inputResource));
 
-    try (final Reader reader = inputResource.openNewInputReader(UTF_8);)
-    {
+    try (final Reader reader = inputResource.openNewInputReader(UTF_8); ) {
       final Properties properties = new Properties();
       properties.load(reader);
       return properties;
-    }
-    catch (final IOException e)
-    {
-      LOGGER.log(Level.WARNING,
-                 new StringFormat("Cannot load properties from <%s>",
-                                  inputResource),
-                 e);
+    } catch (final IOException e) {
+      LOGGER.log(
+          Level.WARNING, new StringFormat("Cannot load properties from <%s>", inputResource), e);
       return new Properties();
     }
   }
 
-  private PropertiesUtility()
-  {
+  private PropertiesUtility() {
     // Prevent instantiation
   }
-
 }

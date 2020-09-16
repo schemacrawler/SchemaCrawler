@@ -28,62 +28,44 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.integration.template;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
-import schemacrawler.SchemaCrawlerLogger;
 
-public final class TemplateCommand
-  extends BaseSchemaCrawlerCommand
-{
+public final class TemplateCommand extends BaseSchemaCrawlerCommand {
 
   static final String COMMAND = "template";
 
-  private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(TemplateCommand.class.getName());
-
   private final TemplateLanguage templateLanguage;
 
-  public TemplateCommand()
-  {
+  public TemplateCommand() {
     super(COMMAND);
     templateLanguage = new TemplateLanguage();
   }
 
   @Override
-  public void checkAvailability()
-    throws Exception
-  {
+  public void checkAvailability() throws Exception {
     // Nothing to check at this point. The Command should be available
     // after the class is loaded, and imports are resolved.
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final void execute()
-    throws Exception
-  {
+  public void execute() throws Exception {
     checkCatalog();
 
     templateLanguage.addConfig(getAdditionalConfiguration());
 
-    final TemplateLanguageType languageType =
-      templateLanguage.getTemplateLanguageType();
-    if (languageType == TemplateLanguageType.unknown)
-    {
+    final TemplateLanguageType languageType = templateLanguage.getTemplateLanguageType();
+    if (languageType == TemplateLanguageType.unknown) {
       throw new SchemaCrawlerException("No template language provided");
     }
-    final String templateRendererClassName =
-      languageType.getTemplateRendererClassName();
+    final String templateRendererClassName = languageType.getTemplateRendererClassName();
     final Class<TemplateRenderer> templateRendererClass =
-      (Class<TemplateRenderer>) Class.forName(templateRendererClassName);
-    final TemplateRenderer templateRenderer =
-      templateRendererClass.newInstance();
+        (Class<TemplateRenderer>) Class.forName(templateRendererClassName);
+    final TemplateRenderer templateRenderer = templateRendererClass.newInstance();
 
     final Map<String, Object> context = new HashMap<>();
     context.put("catalog", catalog);
@@ -94,13 +76,10 @@ public final class TemplateCommand
     templateRenderer.setOutputOptions(outputOptions);
 
     templateRenderer.execute();
-
   }
 
   @Override
-  public boolean usesConnection()
-  {
+  public boolean usesConnection() {
     return true;
   }
-
 }

@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.DatabaseUtility.checkConnection;
 import static us.fatehi.utility.Utility.isBlank;
@@ -56,11 +55,10 @@ import us.fatehi.utility.string.StringFormat;
  *
  * @author Sualeh Fatehi
  */
-final class RetrieverConnection
-{
+final class RetrieverConnection {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(RetrieverConnection.class.getName());
+      SchemaCrawlerLogger.getLogger(RetrieverConnection.class.getName());
 
   private final Connection connection;
   private final JavaSqlTypes javaSqlTypes;
@@ -68,72 +66,58 @@ final class RetrieverConnection
   private final SchemaRetrievalOptions schemaRetrievalOptions;
   private final TableTypes tableTypes;
 
-  RetrieverConnection(final Connection connection,
-                      final SchemaRetrievalOptions schemaRetrievalOptions)
-    throws SQLException
-  {
+  RetrieverConnection(
+      final Connection connection, final SchemaRetrievalOptions schemaRetrievalOptions)
+      throws SQLException {
 
     this.connection = checkConnection(connection);
     metaData = connection.getMetaData();
-    this.schemaRetrievalOptions = requireNonNull(schemaRetrievalOptions,
-                                                 "No database specific overrides provided");
+    this.schemaRetrievalOptions =
+        requireNonNull(schemaRetrievalOptions, "No database specific overrides provided");
 
     tableTypes = TableTypes.from(connection);
-    LOGGER.log(Level.CONFIG,
-               new StringFormat("Supported table types are <%s>", tableTypes));
+    LOGGER.log(Level.CONFIG, new StringFormat("Supported table types are <%s>", tableTypes));
 
     javaSqlTypes = new JavaSqlTypes();
   }
 
-  public MetadataRetrievalStrategy get(final SchemaInfoMetadataRetrievalStrategy schemaInfoMetadataRetrievalStrategy)
-  {
+  public MetadataRetrievalStrategy get(
+      final SchemaInfoMetadataRetrievalStrategy schemaInfoMetadataRetrievalStrategy) {
     return schemaRetrievalOptions.get(schemaInfoMetadataRetrievalStrategy);
   }
 
-  public Driver getDriver()
-    throws SQLException
-  {
+  public Driver getDriver() throws SQLException {
     Driver jdbcDriver = null;
 
-    final String jdbcDriverClassName = schemaRetrievalOptions
-      .getDatabaseServerType()
-      .getJdbcDriverClassName();
-    if (!isBlank(jdbcDriverClassName))
-    {
-      try
-      {
+    final String jdbcDriverClassName =
+        schemaRetrievalOptions.getDatabaseServerType().getJdbcDriverClassName();
+    if (!isBlank(jdbcDriverClassName)) {
+      try {
         final Class<? extends Driver> jdbcDriverClass =
-          (Class<? extends Driver>) Class.forName(jdbcDriverClassName);
-        jdbcDriver = jdbcDriverClass
-          .getDeclaredConstructor()
-          .newInstance();
-      }
-      catch (final Exception e)
-      {
-        LOGGER.log(Level.WARNING,
-                   "No JDBC driver found for " + jdbcDriverClassName,
-                   e);
+            (Class<? extends Driver>) Class.forName(jdbcDriverClassName);
+        jdbcDriver = jdbcDriverClass.getDeclaredConstructor().newInstance();
+      } catch (final Exception e) {
+        LOGGER.log(Level.WARNING, "No JDBC driver found for " + jdbcDriverClassName, e);
       }
     }
 
-    if (jdbcDriver == null)
-    {
-      jdbcDriver = DriverManager.getDriver(connection
-                                             .getMetaData()
-                                             .getURL());
+    if (jdbcDriver == null) {
+      jdbcDriver = DriverManager.getDriver(connection.getMetaData().getURL());
     }
 
-    if (jdbcDriver == null)
-    {
+    if (jdbcDriver == null) {
       throw new SQLException("No JDBC driver found");
     }
 
     return jdbcDriver;
   }
 
-  Connection getConnection()
-  {
+  Connection getConnection() {
     return connection;
+  }
+
+  EnumDataTypeHelper getEnumDataTypeHelper() {
+    return schemaRetrievalOptions.getEnumDataTypeHelper();
   }
 
   /**
@@ -141,44 +125,31 @@ final class RetrieverConnection
    *
    * @return INFORMATION_SCHEMA views selects
    */
-  InformationSchemaViews getInformationSchemaViews()
-  {
+  InformationSchemaViews getInformationSchemaViews() {
     return schemaRetrievalOptions.getInformationSchemaViews();
   }
 
-  EnumDataTypeHelper getEnumDataTypeHelper()
-  {
-    return schemaRetrievalOptions.getEnumDataTypeHelper();
-  }
-
-  JavaSqlTypes getJavaSqlTypes()
-  {
+  JavaSqlTypes getJavaSqlTypes() {
     return javaSqlTypes;
   }
 
-  DatabaseMetaData getMetaData()
-  {
+  DatabaseMetaData getMetaData() {
     return metaData;
   }
 
-  TableTypes getTableTypes()
-  {
+  TableTypes getTableTypes() {
     return tableTypes;
   }
 
-  TypeMap getTypeMap()
-  {
+  TypeMap getTypeMap() {
     return schemaRetrievalOptions.getTypeMap();
   }
 
-  boolean isSupportsCatalogs()
-  {
+  boolean isSupportsCatalogs() {
     return schemaRetrievalOptions.isSupportsCatalogs();
   }
 
-  boolean isSupportsSchemas()
-  {
+  boolean isSupportsSchemas() {
     return schemaRetrievalOptions.isSupportsSchemas();
   }
-
 }

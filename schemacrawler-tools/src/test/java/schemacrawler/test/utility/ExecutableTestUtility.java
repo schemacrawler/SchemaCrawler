@@ -28,11 +28,11 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.utility;
 
-
 import java.nio.file.Path;
 import java.sql.Connection;
 
 import org.hamcrest.Matcher;
+
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -42,40 +42,32 @@ import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.options.TextOutputFormat;
 
-public final class ExecutableTestUtility
-{
+public final class ExecutableTestUtility {
 
-  public static Path executableExecution(final Connection connection,
-                                         final SchemaCrawlerExecutable executable)
-    throws Exception
-  {
-    return executableExecution(connection,
-                               executable,
-                               TextOutputFormat.text.getFormat());
+  public static Path executableExecution(
+      final Connection connection, final SchemaCrawlerExecutable executable) throws Exception {
+    return executableExecution(connection, executable, TextOutputFormat.text.getFormat());
   }
 
-  public static Path executableExecution(final Connection connection,
-                                         final SchemaCrawlerExecutable executable,
-                                         final OutputFormat outputFormat)
-    throws Exception
-  {
-    return executableExecution(connection,
-                               executable,
-                               outputFormat.getFormat());
+  public static Path executableExecution(
+      final Connection connection,
+      final SchemaCrawlerExecutable executable,
+      final OutputFormat outputFormat)
+      throws Exception {
+    return executableExecution(connection, executable, outputFormat.getFormat());
   }
 
-  public static Path executableExecution(final Connection connection,
-                                         final SchemaCrawlerExecutable executable,
-                                         final String outputFormatValue)
-    throws Exception
-  {
+  public static Path executableExecution(
+      final Connection connection,
+      final SchemaCrawlerExecutable executable,
+      final String outputFormatValue)
+      throws Exception {
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout)
-    {
-      final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
-        .builder(executable.getOutputOptions())
-        .withOutputFormatValue(outputFormatValue)
-        .withOutputWriter(out);
+    try (final TestWriter out = testout) {
+      final OutputOptionsBuilder outputOptionsBuilder =
+          OutputOptionsBuilder.builder(executable.getOutputOptions())
+              .withOutputFormatValue(outputFormatValue)
+              .withOutputWriter(out);
 
       executable.setOutputOptions(outputOptionsBuilder.toOptions());
       executable.setConnection(connection);
@@ -84,41 +76,30 @@ public final class ExecutableTestUtility
     return testout.getFilePath();
   }
 
-  public static SchemaCrawlerExecutable executableOf(final String command)
-  {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-      .builder()
-      .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+  public static SchemaCrawlerExecutable executableOf(final String command) {
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withLimitOptionsBuilder(limitOptionsBuilder);
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-      schemaCrawlerOptionsBuilder.toOptions();
+        SchemaCrawlerOptionsBuilder.builder().withLimitOptionsBuilder(limitOptionsBuilder);
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
-    final SchemaCrawlerExecutable executable =
-      new SchemaCrawlerExecutable(command);
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     return executable;
   }
 
-  public static Matcher<TestResource> hasSameContentAndTypeAs(final TestResource classpathTestResource,
-                                                              final OutputFormat outputFormat)
-  {
-    return hasSameContentAndTypeAs(classpathTestResource,
-                                   outputFormat.getFormat());
+  public static Matcher<TestResource> hasSameContentAndTypeAs(
+      final TestResource classpathTestResource, final OutputFormat outputFormat) {
+    return hasSameContentAndTypeAs(classpathTestResource, outputFormat.getFormat());
   }
 
-  public static Matcher<TestResource> hasSameContentAndTypeAs(final TestResource classpathTestResource,
-                                                              final String outputFormat)
-  {
-    return FileHasContent.hasSameContentAndTypeAs(classpathTestResource,
-                                                  outputFormat);
+  public static Matcher<TestResource> hasSameContentAndTypeAs(
+      final TestResource classpathTestResource, final String outputFormat) {
+    return FileHasContent.hasSameContentAndTypeAs(classpathTestResource, outputFormat);
   }
 
-  private ExecutableTestUtility()
-  {
+  private ExecutableTestUtility() {
     // Prevent instantiation
   }
-
 }

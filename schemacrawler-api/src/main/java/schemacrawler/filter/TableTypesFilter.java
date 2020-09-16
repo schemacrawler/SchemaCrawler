@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.filter;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.util.function.Predicate;
@@ -36,43 +35,31 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.TableTypes;
 import schemacrawler.schemacrawler.LimitOptions;
 
-public class TableTypesFilter
-  implements Predicate<Table>
-{
+public class TableTypesFilter implements Predicate<Table> {
 
   private final TableTypes tableTypes;
 
-  public TableTypesFilter()
-  {
+  public TableTypesFilter() {
     tableTypes = TableTypes.includeAll();
   }
 
-  public TableTypesFilter(final LimitOptions options)
-  {
+  public TableTypesFilter(final LimitOptions options) {
     requireNonNull(options, "No limit options provided");
     tableTypes = options.getTableTypes();
   }
 
-  public TableTypesFilter(final String... tableTypesFiltered)
-  {
+  public TableTypesFilter(final String... tableTypesFiltered) {
     tableTypes = TableTypes.from(tableTypesFiltered);
   }
 
   /**
    * Check for table limiting rules.
    *
-   * @param table
-   *   Table to check
+   * @param table Table to check
    * @return Whether the table should be included
    */
   @Override
-  public boolean test(final Table table)
-  {
-    return tableTypes
-      .lookupTableType(table
-                         .getTableType()
-                         .getTableType())
-      .isPresent();
+  public boolean test(final Table table) {
+    return tableTypes.lookupTableType(table.getTableType().getTableType()).isPresent();
   }
-
 }

@@ -28,13 +28,5 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
-/**
- * Represents a database object, with partially populated metadata. Marker
- * interface.
- */
-public interface PartialDatabaseObject
-  extends DatabaseObject
-{
-
-}
+/** Represents a database object, with partially populated metadata. Marker interface. */
+public interface PartialDatabaseObject extends DatabaseObject {}

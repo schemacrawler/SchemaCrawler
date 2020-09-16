@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler;
 
-
 import static java.util.Objects.requireNonNull;
 import static picocli.CommandLine.populateCommand;
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSafeArguments;
@@ -44,15 +43,10 @@ import schemacrawler.tools.commandline.shell.InteractiveShellOptions;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
-/**
- * Main class that takes arguments for a database for crawling a schema.
- */
-public final class Main
-{
+/** Main class that takes arguments for a database for crawling a schema. */
+public final class Main {
 
-  public static void main(final String... args)
-    throws Exception
-  {
+  public static void main(final String... args) throws Exception {
     requireNonNull(args, "No arguments provided");
 
     final CommandLine commandLine = new CommandLine(new LogCommand());
@@ -63,63 +57,48 @@ public final class Main
     logSystemClasspath();
     logSystemProperties();
 
-    final InteractiveShellOptions interactiveShellOptions =
-      new InteractiveShellOptions();
+    final InteractiveShellOptions interactiveShellOptions = new InteractiveShellOptions();
     populateCommand(interactiveShellOptions, args);
 
     final boolean isInteractive = interactiveShellOptions.isInteractive();
-    if (isInteractive)
-    {
+    if (isInteractive) {
       SchemaCrawlerShell.execute(args);
-    }
-    else
-    {
-      if (showHelpIfRequested(args))
-      {
+    } else {
+      if (showHelpIfRequested(args)) {
         return;
       }
-      if (showVersionIfRequested(args))
-      {
+      if (showVersionIfRequested(args)) {
         return;
       }
       SchemaCrawlerCommandLine.execute(args);
     }
-
   }
 
-  private static boolean showHelpIfRequested(final String[] args)
-  {
-    final CommandLineHelpCommand commandLineHelpCommand =
-      new CommandLineHelpCommand();
+  private static boolean showHelpIfRequested(final String[] args) {
+    final CommandLineHelpCommand commandLineHelpCommand = new CommandLineHelpCommand();
     final CommandLine commandLine = new CommandLine(commandLineHelpCommand);
     commandLine.setUnmatchedArgumentsAllowed(true);
     commandLine.parseArgs(args);
-    if (commandLineHelpCommand.isHelpRequested())
-    {
+    if (commandLineHelpCommand.isHelpRequested()) {
       commandLineHelpCommand.run();
       return true;
     }
     return false;
   }
 
-  private static boolean showVersionIfRequested(final String[] args)
-  {
-    final SystemCommand systemCommand =
-      new SystemCommand(new SchemaCrawlerShellState());
+  private static boolean showVersionIfRequested(final String[] args) {
+    final SystemCommand systemCommand = new SystemCommand(new SchemaCrawlerShellState());
     final CommandLine commandLine = new CommandLine(systemCommand);
     commandLine.setUnmatchedArgumentsAllowed(true);
     commandLine.parseArgs(args);
-    if (systemCommand.isVersionRequested())
-    {
+    if (systemCommand.isVersionRequested()) {
       systemCommand.run();
       return true;
     }
     return false;
   }
 
-  private Main()
-  {
+  private Main() {
     // Prevent instantiation
   }
-
 }

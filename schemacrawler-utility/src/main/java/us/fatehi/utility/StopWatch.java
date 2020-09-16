@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility;
 
-
 import static java.time.temporal.ChronoField.HOUR_OF_DAY;
 import static java.time.temporal.ChronoField.MINUTE_OF_HOUR;
 import static java.time.temporal.ChronoField.NANO_OF_SECOND;
@@ -43,45 +42,38 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.function.Supplier;
 
-public final class StopWatch
-{
+public final class StopWatch {
 
-  private static final DateTimeFormatter df = new DateTimeFormatterBuilder()
-    .appendValue(HOUR_OF_DAY, 2)
-    .appendLiteral(':')
-    .appendValue(MINUTE_OF_HOUR, 2)
-    .appendLiteral(':')
-    .appendValue(SECOND_OF_MINUTE, 2)
-    .appendFraction(NANO_OF_SECOND, 3, 3, true)
-    .toFormatter();
-
-
-  private static final class TaskInfo
-  {
+  private static final class TaskInfo {
 
     private final Duration duration;
     private final String taskName;
 
-    TaskInfo(final String taskName, final Duration duration)
-    {
+    TaskInfo(final String taskName, final Duration duration) {
       this.taskName = taskName;
       this.duration = duration;
     }
 
-    public Duration getDuration()
-    {
+    public Duration getDuration() {
       return duration;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
       final LocalTime durationLocal = LocalTime.ofNanoOfDay(duration.toNanos());
       return String.format("%s - <%s>", durationLocal.format(df), taskName);
     }
-
   }
 
+  private static final DateTimeFormatter df =
+      new DateTimeFormatterBuilder()
+          .appendValue(HOUR_OF_DAY, 2)
+          .appendLiteral(':')
+          .appendValue(MINUTE_OF_HOUR, 2)
+          .appendLiteral(':')
+          .appendValue(SECOND_OF_MINUTE, 2)
+          .appendFraction(NANO_OF_SECOND, 3, 3, true)
+          .toFormatter();
 
   private final String id;
   private final List<TaskInfo> tasks = new LinkedList<>();
@@ -91,14 +83,12 @@ public final class StopWatch
   private Instant start;
   private Duration totalDuration;
 
-  public StopWatch(final String id)
-  {
+  public StopWatch(final String id) {
     this.id = id;
     totalDuration = Duration.ofNanos(0);
   }
 
-  public String getId()
-  {
+  public String getId() {
     return id;
   }
 
@@ -107,8 +97,7 @@ public final class StopWatch
    *
    * @see #currentTaskName
    */
-  public boolean isRunning()
-  {
+  public boolean isRunning() {
     return running;
   }
 
@@ -117,45 +106,45 @@ public final class StopWatch
    *
    * @return String supplier.
    */
-  public Supplier<String> stringify()
-  {
+  public Supplier<String> stringify() {
     return () -> {
       final StringBuilder buffer = new StringBuilder(1024);
 
-      final LocalTime totalDurationLocal =
-        LocalTime.ofNanoOfDay(totalDuration.toNanos());
-      buffer.append(String.format("Total time taken for <%s> - %s hours%n",
-                                  id,
-                                  totalDurationLocal.format(df)));
+      final LocalTime totalDurationLocal = LocalTime.ofNanoOfDay(totalDuration.toNanos());
+      buffer.append(
+          String.format(
+              "Total time taken for <%s> - %s hours%n", id, totalDurationLocal.format(df)));
 
-      for (final TaskInfo task : tasks)
-      {
-        buffer.append(String.format("-%5.1f%% - %s%n",
-                                    calculatePercentage(task.getDuration(),
-                                                        totalDuration),
-                                    task));
+      for (final TaskInfo task : tasks) {
+        buffer.append(
+            String.format(
+                "-%5.1f%% - %s%n", calculatePercentage(task.getDuration(), totalDuration), task));
       }
 
       return buffer.toString();
     };
   }
 
-  public <V> V time(final String taskName, final Callable<V> callable)
-    throws Exception
-  {
+  public <V> V time(final String taskName, final Callable<V> callable) throws Exception {
     start(taskName);
     final V returnValue = callable.call();
     stop();
     return returnValue;
   }
 
-  private void start(final String taskName)
-  {
-    if (running)
-    {
-      throw new IllegalStateException(String.format(
-        "Cannot stop <%s>, since it is already running",
-        id));
+  private double calculatePercentage(final Duration duration, final Duration totalDuration) {
+    final long totalMillis = totalDuration.toMillis();
+    if (totalMillis == 0) {
+      return 0;
+    } else {
+      return duration.toMillis() * 100D / totalMillis;
+    }
+  }
+
+  private void start(final String taskName) {
+    if (running) {
+      throw new IllegalStateException(
+          String.format("Cannot stop <%s>, since it is already running", id));
     }
 
     running = true;
@@ -163,13 +152,10 @@ public final class StopWatch
     start = Instant.now();
   }
 
-  private void stop()
-  {
-    if (!running)
-    {
-      throw new IllegalStateException(String.format(
-        "Cannot stop <%s>, since it is not running",
-        id));
+  private void stop() {
+    if (!running) {
+      throw new IllegalStateException(
+          String.format("Cannot stop <%s>, since it is not running", id));
     }
 
     final Instant stop = Instant.now();
@@ -184,19 +170,4 @@ public final class StopWatch
     currentTaskName = null;
     start = null;
   }
-
-  private double calculatePercentage(final Duration duration,
-                                     final Duration totalDuration)
-  {
-    final long totalMillis = totalDuration.toMillis();
-    if (totalMillis == 0)
-    {
-      return 0;
-    }
-    else
-    {
-      return duration.toMillis() * 100D / totalMillis;
-    }
-  }
-
 }

@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 import java.util.Collection;
 import java.util.Optional;
 
@@ -37,9 +36,7 @@ import java.util.Optional;
  *
  * @author Sualeh Fatehi
  */
-public interface Catalog
-  extends NamedObject, AttributedObject, DescribedObject
-{
+public interface Catalog extends NamedObject, AttributedObject, DescribedObject {
 
   /**
    * Gets the column data types
@@ -58,6 +55,13 @@ public interface Catalog
   CrawlInfo getCrawlInfo();
 
   DatabaseInfo getDatabaseInfo();
+
+  /**
+   * Gets the database users
+   *
+   * @return Database users
+   */
+  Collection<DatabaseUser> getDatabaseUsers();
 
   JdbcDriverInfo getJdbcDriverInfo();
 
@@ -134,18 +138,15 @@ public interface Catalog
   /**
    * Gets the column data types defined in the schema, by name.
    *
-   * @param name
-   *   Name
+   * @param name Name
    * @return Column data types
    */
-  <C extends ColumnDataType> Optional<C> lookupColumnDataType(Schema schema,
-                                                              String name);
+  <C extends ColumnDataType> Optional<C> lookupColumnDataType(Schema schema, String name);
 
   /**
    * Gets a routine by unqualified name.
    *
-   * @param name
-   *   Name
+   * @param name Name
    * @return Routine.
    */
   <R extends Routine> Optional<R> lookupRoutine(Schema schema, String name);
@@ -153,8 +154,7 @@ public interface Catalog
   /**
    * Gets a schema by name.
    *
-   * @param name
-   *   Schema name
+   * @param name Schema name
    * @return Schema.
    */
   <S extends Schema> Optional<S> lookupSchema(String name);
@@ -162,8 +162,7 @@ public interface Catalog
   /**
    * Gets the sequence by unqualified name.
    *
-   * @param name
-   *   Name
+   * @param name Name
    * @return Sequence.
    */
   <S extends Sequence> Optional<S> lookupSequence(Schema schema, String name);
@@ -171,8 +170,7 @@ public interface Catalog
   /**
    * Gets the synonym by unqualified name.
    *
-   * @param name
-   *   Name
+   * @param name Name
    * @return Synonym.
    */
   <S extends Synonym> Optional<S> lookupSynonym(Schema schema, String name);
@@ -180,8 +178,7 @@ public interface Catalog
   /**
    * Gets the column data types defined by the RDBMS system, by name.
    *
-   * @param name
-   *   Column data type name
+   * @param name Column data type name
    * @return Column data type
    */
   <C extends ColumnDataType> Optional<C> lookupSystemColumnDataType(String name);
@@ -189,17 +186,8 @@ public interface Catalog
   /**
    * Gets a table by unqualified name.
    *
-   * @param name
-   *   Name
+   * @param name Name
    * @return Table.
    */
   <T extends Table> Optional<T> lookupTable(Schema schema, String name);
-
-  /**
-   * Gets the database users
-   *
-   * @return Database users
-   */
-  Collection<DatabaseUser> getDatabaseUsers();
-
 }

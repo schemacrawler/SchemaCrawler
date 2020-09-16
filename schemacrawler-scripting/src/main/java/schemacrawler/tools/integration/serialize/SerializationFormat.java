@@ -27,73 +27,50 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.integration.serialize;
 
-
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.List;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputFormatState;
-import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.string.StringFormat;
 
-public enum SerializationFormat
-  implements OutputFormat
-{
-  java("Java serialization",
-       "schemacrawler.tools.integration.serialize.JavaSerializedCatalog",
-       true,
-       "ser"),
-  json("JavaScript Object Notation (JSON) serialization format",
-       "schemacrawler.tools.integration.serialize.JsonSerializedCatalog",
-       false,
-       "json"),
-  yaml("YAML Ain't Markup Language (YAML) serialization format",
-       "schemacrawler.tools.integration.serialize.YamlSerializedCatalog",
-       false,
-       "yaml");
+public enum SerializationFormat implements OutputFormat {
+  java(
+      "Java serialization",
+      "schemacrawler.tools.integration.serialize.JavaSerializedCatalog",
+      true,
+      "ser"),
+  json(
+      "JavaScript Object Notation (JSON) serialization format",
+      "schemacrawler.tools.integration.serialize.JsonSerializedCatalog",
+      false,
+      "json"),
+  yaml(
+      "YAML Ain't Markup Language (YAML) serialization format",
+      "schemacrawler.tools.integration.serialize.YamlSerializedCatalog",
+      false,
+      "yaml");
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(SerializationFormat.class.getName());
+      SchemaCrawlerLogger.getLogger(SerializationFormat.class.getName());
 
   /**
    * Gets the value from the format.
    *
-   * @param format
-   *   Text output format.
+   * @param format Text output format.
    * @return SerializationFormat
    */
-  public static SerializationFormat fromFormat(final String format)
-  {
+  public static SerializationFormat fromFormat(final String format) {
     final SerializationFormat outputFormat = fromFormatOrNull(format);
-    if (outputFormat == null)
-    {
-      LOGGER.log(Level.CONFIG,
-                 new StringFormat("Unknown format <%s>, using default",
-                                  format));
+    if (outputFormat == null) {
+      LOGGER.log(Level.CONFIG, new StringFormat("Unknown format <%s>, using default", format));
       return java;
-    }
-    else
-    {
+    } else {
       return outputFormat;
     }
-  }
-
-  private static SerializationFormat fromFormatOrNull(final String format)
-  {
-    if (isBlank(format))
-    {
-      return null;
-    }
-    for (final SerializationFormat outputFormat : SerializationFormat.values())
-    {
-      if (outputFormat.outputFormatState.isSupportedFormat(format))
-      {
-        return outputFormat;
-      }
-    }
-    return null;
   }
 
   /**
@@ -101,64 +78,66 @@ public enum SerializationFormat
    *
    * @return True if the format is a text output format
    */
-  public static boolean isSupportedFormat(final String format)
-  {
+  public static boolean isSupportedFormat(final String format) {
     return fromFormatOrNull(format) != null;
+  }
+
+  private static SerializationFormat fromFormatOrNull(final String format) {
+    if (isBlank(format)) {
+      return null;
+    }
+    for (final SerializationFormat outputFormat : SerializationFormat.values()) {
+      if (outputFormat.outputFormatState.isSupportedFormat(format)) {
+        return outputFormat;
+      }
+    }
+    return null;
   }
 
   private final OutputFormatState outputFormatState;
   private final String serializerClassName;
   private final boolean isBinaryFormat;
 
-  SerializationFormat(final String description,
-                      final String serializerClassName,
-                      final boolean isBinaryFormat,
-                      final String... additionalFormatSpecifiers)
-  {
-    outputFormatState =
-      new OutputFormatState(name(), description, additionalFormatSpecifiers);
+  SerializationFormat(
+      final String description,
+      final String serializerClassName,
+      final boolean isBinaryFormat,
+      final String... additionalFormatSpecifiers) {
+    outputFormatState = new OutputFormatState(name(), description, additionalFormatSpecifiers);
     this.serializerClassName = serializerClassName;
     this.isBinaryFormat = isBinaryFormat;
   }
 
-  public boolean isBinaryFormat()
-  {
-    return isBinaryFormat;
+  @Override
+  public String getDescription() {
+    return outputFormatState.getDescription();
   }
 
-  public String getFileExtension()
-  {
+  public String getFileExtension() {
     final List<String> formats = outputFormatState.getFormats();
     return formats.get(formats.size() - 1);
   }
 
-  public String getSerializerClassName()
-  {
-    return serializerClassName;
-  }
-
   @Override
-  public String getDescription()
-  {
-    return outputFormatState.getDescription();
-  }
-
-  @Override
-  public String getFormat()
-  {
+  public String getFormat() {
     return outputFormatState.getFormat();
   }
 
   @Override
-  public List<String> getFormats()
-  {
+  public List<String> getFormats() {
     return outputFormatState.getFormats();
   }
 
-  @Override
-  public String toString()
-  {
-    return outputFormatState.toString();
+  public String getSerializerClassName() {
+    return serializerClassName;
   }
 
+  public boolean isBinaryFormat() {
+    return isBinaryFormat;
+  }
+
+  @Override
+  public String toString() {
+    return outputFormatState.toString();
+  }
 }

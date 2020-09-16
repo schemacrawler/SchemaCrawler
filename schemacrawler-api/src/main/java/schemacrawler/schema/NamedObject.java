@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -37,9 +36,7 @@ import java.util.List;
  *
  * @author Sualeh Fatehi
  */
-public interface NamedObject
-  extends Serializable, Comparable<NamedObject>
-{
+public interface NamedObject extends Serializable, Comparable<NamedObject> {
 
   /**
    * Getter for fully qualified name of object.
@@ -55,9 +52,6 @@ public interface NamedObject
    */
   String getName();
 
-  /**
-   * A value guaranteed to be unique in the database for this object.
-   */
+  /** A value guaranteed to be unique in the database for this object. */
   List<String> toUniqueLookupKey();
-
 }

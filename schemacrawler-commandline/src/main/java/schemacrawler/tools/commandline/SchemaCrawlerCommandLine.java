@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.commandline;
 
-
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logFullStackTrace;
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSafeArguments;
@@ -41,112 +40,86 @@ import java.util.logging.Level;
 
 import picocli.CommandLine;
 import picocli.CommandLine.ParseResult;
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.Version;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 import schemacrawler.tools.options.Config;
-import schemacrawler.SchemaCrawlerLogger;
 
-public final class SchemaCrawlerCommandLine
-{
+public final class SchemaCrawlerCommandLine {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(SchemaCrawlerCommandLine.class.getName());
+      SchemaCrawlerLogger.getLogger(SchemaCrawlerCommandLine.class.getName());
 
-  public static void execute(final String[] args)
-  {
-    try
-    {
+  public static void execute(final String[] args) {
+    try {
       requireNonNull(args, "No arguments provided");
 
       final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
       final StateFactory stateFactory = new StateFactory(state);
 
-      final SchemaCrawlerCommandLineCommands commands =
-        new SchemaCrawlerCommandLineCommands();
-      final CommandLine commandLine =
-        newCommandLine(commands, stateFactory, true);
+      final SchemaCrawlerCommandLineCommands commands = new SchemaCrawlerCommandLineCommands();
+      final CommandLine commandLine = newCommandLine(commands, stateFactory, true);
       final ParseResult parseResult = commandLine.parseArgs(args);
       final Config additionalConfig = retrievePluginOptions(parseResult);
       state.addAdditionalConfiguration(additionalConfig);
 
       executeCommandLine(commandLine);
-    }
-    catch (final Throwable throwable)
-    {
+    } catch (final Throwable throwable) {
       logSafeArguments(args);
       logFullStackTrace(Level.SEVERE, throwable);
 
       final String errorMessage;
-      if (throwable instanceof picocli.CommandLine.PicocliException)
-      {
+      if (throwable instanceof picocli.CommandLine.PicocliException) {
         final Throwable cause = throwable.getCause();
-        if (cause != null && !isBlank(cause.getMessage()))
-        {
+        if (cause != null && !isBlank(cause.getMessage())) {
           errorMessage = cause.getMessage();
-        }
-        else
-        {
+        } else {
           errorMessage = throwable.getMessage();
         }
-      }
-      else
-      {
+      } else {
         errorMessage = throwable.getMessage();
       }
 
       printCommandLineErrorMessage(errorMessage);
     }
-
   }
 
-  private static void printCommandLineErrorMessage(final String errorMessage)
-  {
-    System.err.printf("%s %s%n%n",
-                      Version.getProductName(),
-                      Version.getVersion());
-    if (!isBlank(errorMessage))
-    {
-      System.err.printf("Error: %s%n%n", errorMessage);
+  private static void executeCommandLine(final CommandLine commandLine) {
+    final Map<String, Object> subcommands = commandLine.getMixins();
+
+    for (final String commandName :
+        new String[] {
+          "log",
+          "configfile",
+          "connect",
+          "filter",
+          "limit",
+          "grep",
+          "show",
+          "sort",
+          "showstate",
+          "load",
+          "execute"
+        }) {
+      final Runnable command = (Runnable) subcommands.get(commandName);
+      LOGGER.log(Level.INFO, "Running command " + command.getClass().getSimpleName());
+      command.run();
     }
-    else
-    {
+  }
+
+  private static void printCommandLineErrorMessage(final String errorMessage) {
+    System.err.printf("%s %s%n%n", Version.getProductName(), Version.getVersion());
+    if (!isBlank(errorMessage)) {
+      System.err.printf("Error: %s%n%n", errorMessage);
+    } else {
       System.err.printf("Error: Unknown error%n%n");
     }
 
     System.err.println(readResourceFully("/command-line-error.footer.txt"));
   }
 
-  private static void executeCommandLine(final CommandLine commandLine)
-  {
-    final Map<String, Object> subcommands = commandLine.getMixins();
-
-    for (final String commandName : new String[] {
-      "log",
-      "configfile",
-      "connect",
-      "filter",
-      "limit",
-      "grep",
-      "show",
-      "sort",
-      "showstate",
-      "load",
-      "execute"
-    })
-    {
-      final Runnable command = (Runnable) subcommands.get(commandName);
-      LOGGER.log(Level.INFO,
-                 "Running command " + command
-                   .getClass()
-                   .getSimpleName());
-      command.run();
-    }
-  }
-
-  private SchemaCrawlerCommandLine()
-  {
+  private SchemaCrawlerCommandLine() {
     // Prevent instantiation
   }
-
 }

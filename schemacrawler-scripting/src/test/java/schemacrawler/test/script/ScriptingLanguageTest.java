@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.script;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
@@ -42,6 +41,7 @@ import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -49,14 +49,10 @@ import schemacrawler.tools.options.Config;
 
 @ExtendWith(TestAssertNoSystemOutOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public class ScriptingLanguageTest
-{
+public class ScriptingLanguageTest {
 
-  private static Path executableScriptFromFile(final Connection connection,
-                                               final String language,
-                                               final Path scriptFile)
-    throws Exception
-  {
+  private static Path executableScriptFromFile(
+      final Connection connection, final String language, final Path scriptFile) throws Exception {
     final SchemaCrawlerExecutable executable = executableOf("script");
     final Config additionalConfiguration = new Config();
     additionalConfiguration.put("script", scriptFile.toString());
@@ -67,14 +63,10 @@ public class ScriptingLanguageTest
   }
 
   @Test
-  public void executableGroovy(final Connection connection)
-    throws Exception
-  {
+  public void executableGroovy(final Connection connection) throws Exception {
     final Path scriptFile = copyResourceToTempFile("/plaintextschema.groovy");
-    assertThat(outputOf(executableScriptFromFile(connection,
-                                                 "groovy",
-                                                 scriptFile)),
-               hasSameContentAs(classpathResource("script_output.txt")));
+    assertThat(
+        outputOf(executableScriptFromFile(connection, "groovy", scriptFile)),
+        hasSameContentAs(classpathResource("script_output.txt")));
   }
-
 }

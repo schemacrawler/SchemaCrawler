@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.filter;
 
-
 import java.util.Collection;
 import java.util.function.Predicate;
 
@@ -35,20 +34,14 @@ import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schemacrawler.LimitOptions;
 
-class RoutineTypesFilter
-  implements Predicate<Routine>
-{
+class RoutineTypesFilter implements Predicate<Routine> {
 
   private final Collection<RoutineType> routineTypes;
 
-  public RoutineTypesFilter(final LimitOptions options)
-  {
-    if (options != null)
-    {
+  public RoutineTypesFilter(final LimitOptions options) {
+    if (options != null) {
       routineTypes = options.getRoutineTypes();
-    }
-    else
-    {
+    } else {
       routineTypes = null;
     }
   }
@@ -56,25 +49,19 @@ class RoutineTypesFilter
   /**
    * Check for routine limiting rules.
    *
-   * @param routine
-   *   Routine to check
+   * @param routine Routine to check
    * @return Whether the routine should be included
    */
   @Override
-  public boolean test(final Routine routine)
-  {
+  public boolean test(final Routine routine) {
     final boolean include;
 
-    if (routineTypes != null)
-    {
+    if (routineTypes != null) {
       include = routineTypes.contains(routine.getRoutineType());
-    }
-    else
-    {
+    } else {
       include = true;
     }
 
     return include;
   }
-
 }

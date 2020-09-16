@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.commandline.command;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsMapContaining.hasEntry;
@@ -47,6 +46,7 @@ import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.TestContext;
@@ -59,64 +59,52 @@ import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
-public class ExecuteCommandTest
-{
+public class ExecuteCommandTest {
 
   @Test
-  public void executeCommand(final Connection connection,
-                             final TestContext testContext)
-    throws SchemaCrawlerException, IOException
-  {
+  public void executeCommand(final Connection connection, final TestContext testContext)
+      throws SchemaCrawlerException, IOException {
 
-    final SchemaCrawlerShellState state =
-      createLoadedSchemaCrawlerShellState(connection);
+    final SchemaCrawlerShellState state = createLoadedSchemaCrawlerShellState(connection);
 
     final Path testOutputFile = IOUtility.createTempFilePath("test", ".txt");
 
-    final String[] args = new String[] {
-      "-c", "schema", "-o", testOutputFile.toString()
-    };
+    final String[] args = new String[] {"-c", "schema", "-o", testOutputFile.toString()};
 
     final ExecuteCommand serializeCommand = new ExecuteCommand(state);
-    final CommandLine commandLine =
-      newCommandLine(serializeCommand, null, false);
+    final CommandLine commandLine = newCommandLine(serializeCommand, null, false);
 
     commandLine.execute(args);
 
-    assertThat(outputOf(testOutputFile),
-               hasSameContentAs(classpathResource(testContext.testMethodFullName()
-                                                  + ".txt")));
+    assertThat(
+        outputOf(testOutputFile),
+        hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
   }
 
   @Test
-  public void testPluginOptions()
-    throws SchemaCrawlerException
-  {
+  public void testPluginOptions() throws SchemaCrawlerException {
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
 
-    final String[] args = new String[] {
-      "-c",
-      "test",
-      "--test-command-parameter",
-      "parameter-value",
-      "--unknown-parameter",
-      "some-value"
-    };
+    final String[] args =
+        new String[] {
+          "-c",
+          "test",
+          "--test-command-parameter",
+          "parameter-value",
+          "--unknown-parameter",
+          "some-value"
+        };
 
     final ExecuteCommand executeTestCommand = new ExecuteCommand(state);
-    final CommandLine commandLine =
-      newCommandLine(executeTestCommand, null, false);
+    final CommandLine commandLine = newCommandLine(executeTestCommand, null, false);
 
     final CommandLine.ParseResult parseResult = commandLine.parseArgs(args);
     final Config additionalConfig = retrievePluginOptions(parseResult);
 
-    assertThat(additionalConfig,
-               hasEntry(is("test-command-parameter"), is("parameter-value")));
+    assertThat(additionalConfig, hasEntry(is("test-command-parameter"), is("parameter-value")));
     assertThat(additionalConfig, not(hasKey(is("unknown-parameter"))));
 
-    assertThrows(CommandLine.ExecutionException.class,
-                 () -> executeTestCommand.run());
+    assertThrows(CommandLine.ExecutionException.class, () -> executeTestCommand.run());
   }
-
 }

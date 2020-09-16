@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.DatabaseObject;
@@ -36,35 +35,26 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Synonym;
 
 /**
- * Represents a database synonym. Created from metadata returned by a JDBC
- * call.
+ * Represents a database synonym. Created from metadata returned by a JDBC call.
  *
  * @author Matt Albrecht, Sualeh Fatehi
  */
-final class MutableSynonym
-  extends AbstractDatabaseObject
-  implements Synonym
-{
+final class MutableSynonym extends AbstractDatabaseObject implements Synonym {
 
   private static final long serialVersionUID = -5980593047288755771L;
 
   private DatabaseObject referencedObject;
 
-  MutableSynonym(final Schema schema, final String name)
-  {
+  MutableSynonym(final Schema schema, final String name) {
     super(schema, name);
   }
 
   @Override
-  public DatabaseObject getReferencedObject()
-  {
+  public DatabaseObject getReferencedObject() {
     return referencedObject;
   }
 
-  void setReferencedObject(final DatabaseObject referencedObject)
-  {
-    this.referencedObject =
-      requireNonNull(referencedObject, "Referenced object not provided");
+  void setReferencedObject(final DatabaseObject referencedObject) {
+    this.referencedObject = requireNonNull(referencedObject, "Referenced object not provided");
   }
-
 }

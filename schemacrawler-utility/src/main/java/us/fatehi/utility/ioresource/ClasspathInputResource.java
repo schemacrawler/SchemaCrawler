@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.ioresource;
 
-
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.ioresource.InputResourceUtility.wrapReader;
 
@@ -40,63 +39,44 @@ import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ClasspathInputResource
-  implements InputResource
-{
+public class ClasspathInputResource implements InputResource {
 
-  private static final Logger LOGGER =
-    Logger.getLogger(ClasspathInputResource.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ClasspathInputResource.class.getName());
 
   private final String classpathResource;
 
-  public ClasspathInputResource(final String classpathResource)
-    throws IOException
-  {
-    this.classpathResource =
-      requireNonNull(classpathResource, "No classpath resource provided");
-    if (ClasspathInputResource.class.getResource(this.classpathResource)
-        == null)
-    {
-      final IOException e = new IOException("Cannot read classpath resource, "
-                                            + this.classpathResource);
+  public ClasspathInputResource(final String classpathResource) throws IOException {
+    this.classpathResource = requireNonNull(classpathResource, "No classpath resource provided");
+    if (ClasspathInputResource.class.getResource(this.classpathResource) == null) {
+      final IOException e =
+          new IOException("Cannot read classpath resource, " + this.classpathResource);
       LOGGER.log(Level.FINE, e.getMessage(), e);
       throw e;
     }
   }
 
-  public String getClasspathResource()
-  {
+  public String getClasspathResource() {
     return classpathResource;
   }
 
   @Override
-  public String getDescription()
-  {
-    return ClasspathInputResource.class
-      .getResource(classpathResource)
-      .toExternalForm();
+  public String getDescription() {
+    return ClasspathInputResource.class.getResource(classpathResource).toExternalForm();
   }
 
   @Override
-  public Reader openNewInputReader(final Charset charset)
-    throws IOException
-  {
+  public Reader openNewInputReader(final Charset charset) throws IOException {
     requireNonNull(charset, "No input charset provided");
     final InputStream inputStream =
-      ClasspathInputResource.class.getResourceAsStream(classpathResource);
-    final Reader reader =
-      new BufferedReader(new InputStreamReader(inputStream, charset));
-    LOGGER.log(Level.INFO,
-               "Opened input reader to classpath resource, "
-               + classpathResource);
+        ClasspathInputResource.class.getResourceAsStream(classpathResource);
+    final Reader reader = new BufferedReader(new InputStreamReader(inputStream, charset));
+    LOGGER.log(Level.INFO, "Opened input reader to classpath resource, " + classpathResource);
 
     return wrapReader(getDescription(), reader, true);
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return classpathResource;
   }
-
 }

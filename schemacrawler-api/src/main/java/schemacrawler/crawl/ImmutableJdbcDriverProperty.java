@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import static java.util.Comparator.naturalOrder;
 import static us.fatehi.utility.Utility.isBlank;
 
@@ -43,114 +42,80 @@ import schemacrawler.schema.JdbcDriverProperty;
 import schemacrawler.schema.Property;
 
 /**
- * Represents a JDBC driver property, and it's value. Created from metadata
- * returned by a JDBC call, and other sources of information.
+ * Represents a JDBC driver property, and it's value. Created from metadata returned by a JDBC call,
+ * and other sources of information.
  *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
-final class ImmutableJdbcDriverProperty
-  extends AbstractProperty
-  implements JdbcDriverProperty
-{
+final class ImmutableJdbcDriverProperty extends AbstractProperty implements JdbcDriverProperty {
 
   private static final long serialVersionUID = 8030156654422512161L;
   private final List<String> choices;
   private final String description;
   private final boolean required;
 
-  ImmutableJdbcDriverProperty(final DriverPropertyInfo driverPropertyInfo)
-  {
+  ImmutableJdbcDriverProperty(final DriverPropertyInfo driverPropertyInfo) {
     super(driverPropertyInfo.name, driverPropertyInfo.value);
     description = driverPropertyInfo.description;
     required = driverPropertyInfo.required;
 
-    if (driverPropertyInfo.choices == null)
-    {
+    if (driverPropertyInfo.choices == null) {
       choices = Collections.emptyList();
-    }
-    else
-    {
+    } else {
       choices = Arrays.asList(driverPropertyInfo.choices);
       choices.sort(naturalOrder());
     }
   }
 
   @Override
-  public int compareTo(final Property otherProperty)
-  {
-    if (otherProperty == null)
-    {
+  public int compareTo(final Property otherProperty) {
+    if (otherProperty == null) {
       return -1;
-    }
-    else
-    {
+    } else {
       return getName().compareToIgnoreCase(otherProperty.getName());
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Collection<String> getChoices()
-  {
+  public Collection<String> getChoices() {
     return new ArrayList<>(choices);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public boolean isRequired()
-  {
-    return required;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String getDescription()
-  {
-    if (description != null)
-    {
+  public String getDescription() {
+    if (description != null) {
       return description;
-    }
-    else
-    {
+    } else {
       return "";
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String getValue()
-  {
+  public String getValue() {
     return (String) super.getValue();
   }
 
-  public boolean hasDescription()
-  {
+  public boolean hasDescription() {
     return !isBlank(getDescription());
   }
 
+  /** {@inheritDoc} */
   @Override
-  public String toString()
-  {
-    final StringBuilder buffer = new StringBuilder();
-    buffer.append(String.format("%s = %s%n", getName(), getValue()));
-    if (hasDescription())
-    {
-      buffer
-        .append(getDescription())
-        .append(String.format("%n"));
-    }
-    buffer.append(String.format("  is required? %b%n  choices: %s",
-                                isRequired(),
-                                getChoices()));
-    return buffer.toString();
+  public boolean isRequired() {
+    return required;
   }
 
+  @Override
+  public String toString() {
+    final StringBuilder buffer = new StringBuilder();
+    buffer.append(String.format("%s = %s%n", getName(), getValue()));
+    if (hasDescription()) {
+      buffer.append(getDescription()).append(String.format("%n"));
+    }
+    buffer.append(String.format("  is required? %b%n  choices: %s", isRequired(), getChoices()));
+    return buffer.toString();
+  }
 }

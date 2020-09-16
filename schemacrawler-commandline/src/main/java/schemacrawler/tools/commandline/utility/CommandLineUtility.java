@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.commandline.utility;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.util.HashSet;
@@ -47,73 +46,25 @@ import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.executable.commandline.PluginCommandOption;
 import schemacrawler.tools.options.Config;
-import schemacrawler.SchemaCrawlerLogger;
 
-public class CommandLineUtility
-{
+public class CommandLineUtility {
 
-  private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(CommandLineUtility.class.getName());
-
-  private static void addDatabasePluginHelpCommands(final CommandLine commandLine,
-                                                    final boolean addAsMixins)
-  {
-    final DatabaseConnectorRegistry databaseConnectorRegistry =
-      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    for (final DatabaseServerType databaseServerType : databaseConnectorRegistry)
-    {
-      final String pluginCommandName =
-        databaseServerType.getDatabaseSystemIdentifier();
-      final CommandSpec pluginCommandSpec = CommandSpec
-        .create()
-        .name(pluginCommandName);
-      if (addAsMixins)
-      {
-        commandLine.addMixin(pluginCommandName, pluginCommandSpec);
-      }
-      else
-      {
-        commandLine.addSubcommand(pluginCommandName, pluginCommandSpec);
-      }
-    }
-  }
-
-  public static void addPluginCommand(final CommandLine commandLine,
-                                      final PluginCommand pluginCommand,
-                                      final boolean addAsMixins)
-  {
-    if (pluginCommand == null || pluginCommand.isEmpty())
-    {
+  public static void addPluginCommand(
+      final CommandLine commandLine, final PluginCommand pluginCommand, final boolean addAsMixins) {
+    if (pluginCommand == null || pluginCommand.isEmpty()) {
       return;
     }
 
     final CommandSpec pluginCommandSpec = toCommandSpec(pluginCommand);
     final String pluginCommandName = pluginCommandSpec.name();
-    if (addAsMixins)
-    {
+    if (addAsMixins) {
       commandLine.addMixin(pluginCommandName, pluginCommandSpec);
-    }
-    else
-    {
+    } else {
       commandLine.addSubcommand(pluginCommandName, pluginCommandSpec);
     }
   }
 
-  private static void addPluginCommands(final CommandLine commandLine,
-                                        final boolean addAsMixins)
-    throws SchemaCrawlerException
-  {
-    // Add commands for plugins
-    final CommandRegistry commandRegistry =
-      CommandRegistry.getCommandRegistry();
-    for (final PluginCommand pluginCommand : commandRegistry.getCommandLineCommands())
-    {
-      addPluginCommand(commandLine, pluginCommand, addAsMixins);
-    }
-  }
-
-  public static CommandLine configureCommandLine(final CommandLine commandLine)
-  {
+  public static CommandLine configureCommandLine(final CommandLine commandLine) {
     commandLine.setUnmatchedArgumentsAllowed(true);
     commandLine.setCaseInsensitiveEnumValuesAllowed(true);
     commandLine.setTrimQuotes(true);
@@ -122,96 +73,60 @@ public class CommandLineUtility
     return commandLine;
   }
 
-  public static CommandLine newCommandLine(final Object object,
-                                           final IFactory factory,
-                                           final boolean addPluginsAsMixins)
-  {
+  public static CommandLine newCommandLine(
+      final Object object, final IFactory factory, final boolean addPluginsAsMixins) {
     final CommandLine commandLine = newCommandLine(object, factory);
-    try
-    {
+    try {
       addPluginCommands(commandLine, addPluginsAsMixins);
       addDatabasePluginHelpCommands(commandLine, addPluginsAsMixins);
       configureCommandLine(commandLine);
+    } catch (final SchemaCrawlerException e) {
+      throw new SchemaCrawlerRuntimeException("Could not initialize command-line", e);
     }
-    catch (final SchemaCrawlerException e)
-    {
-      throw new SchemaCrawlerRuntimeException(
-        "Could not initialize command-line",
-        e);
-    }
-    return commandLine;
-  }
-
-  private static CommandLine newCommandLine(final Object object,
-                                            final IFactory factory)
-  {
-    final CommandLine commandLine;
-    if (factory == null)
-    {
-      commandLine = new CommandLine(object);
-    }
-    else
-    {
-      commandLine = new CommandLine(object, factory);
-    }
-
     return commandLine;
   }
 
   /**
-   * SchemaCrawler plugins are registered on-the-fly, by adding them to the
-   * classpath. Inspect the command-line to see if there are any additional
-   * plugin-specific options passed in from the command-line, and put them in
-   * the configuration.
+   * SchemaCrawler plugins are registered on-the-fly, by adding them to the classpath. Inspect the
+   * command-line to see if there are any additional plugin-specific options passed in from the
+   * command-line, and put them in the configuration.
    *
-   * @param parseResult
-   *   Result of parsing the command-line
+   * @param parseResult Result of parsing the command-line
    * @return Config with additional plugin-specific command-line options
-   * @throws SchemaCrawlerException
-   *   On an exception
+   * @throws SchemaCrawlerException On an exception
    */
   public static Config retrievePluginOptions(final ParseResult parseResult)
-    throws SchemaCrawlerException
-  {
+      throws SchemaCrawlerException {
     requireNonNull(parseResult, "No parse result provided");
 
-    final CommandRegistry commandRegistry =
-      CommandRegistry.getCommandRegistry();
+    final CommandRegistry commandRegistry = CommandRegistry.getCommandRegistry();
     final Config additionalConfig = new Config();
     final Set<String> pluginOptionNames = new HashSet<>();
-    for (final PluginCommand pluginCommand : commandRegistry.getCommandLineCommands())
-    {
-      if (pluginCommand == null || pluginCommand.isEmpty())
-      {
+    for (final PluginCommand pluginCommand : commandRegistry.getCommandLineCommands()) {
+      if (pluginCommand == null || pluginCommand.isEmpty()) {
         continue;
       }
-      for (final PluginCommandOption option : pluginCommand)
-      {
+      for (final PluginCommandOption option : pluginCommand) {
         final String optionName = option.getName();
         pluginOptionNames.add(optionName);
-        if (parseResult.hasMatchedOption(optionName))
-        {
+        if (parseResult.hasMatchedOption(optionName)) {
           final Object value = parseResult.matchedOptionValue(optionName, null);
-          additionalConfig.put(optionName,
-                               value == null? null: String.valueOf(value));
+          additionalConfig.put(optionName, value == null ? null : String.valueOf(value));
         }
       }
     }
 
     final CommandLineArgumentsParser commandLineArgumentsParser =
-      new CommandLineArgumentsParser(parseResult.originalArgs());
+        new CommandLineArgumentsParser(parseResult.originalArgs());
     commandLineArgumentsParser.parse();
-    additionalConfig.putAll(commandLineArgumentsParser.getFilteredOptionsMap(
-      pluginOptionNames));
+    additionalConfig.putAll(commandLineArgumentsParser.getFilteredOptionsMap(pluginOptionNames));
 
     return additionalConfig;
   }
 
-  public static CommandSpec toCommandSpec(final PluginCommand pluginCommand)
-  {
+  public static CommandSpec toCommandSpec(final PluginCommand pluginCommand) {
     requireNonNull(pluginCommand, "No plugin command provided");
-    if (pluginCommand.isEmpty())
-    {
+    if (pluginCommand.isEmpty()) {
       throw new NullPointerException("Empty plugin command provided");
     }
 
@@ -223,44 +138,67 @@ public class CommandLineUtility
     usageMessageSpec.synopsisHeading("Command:%n");
     usageMessageSpec.customSynopsis(pluginCommandName);
     usageMessageSpec.optionListHeading("Options:%n");
-    if (pluginCommand.hasHelpFooter())
-    {
+    if (pluginCommand.hasHelpFooter()) {
       usageMessageSpec.footer(pluginCommand.getHelpFooter().get());
     }
 
-    final CommandSpec pluginCommandSpec = CommandSpec
-      .create()
-      .name(pluginCommandName)
-      .usageMessage(usageMessageSpec);
-    for (final PluginCommandOption option : pluginCommand)
-    {
+    final CommandSpec pluginCommandSpec =
+        CommandSpec.create().name(pluginCommandName).usageMessage(usageMessageSpec);
+    for (final PluginCommandOption option : pluginCommand) {
       final String optionName = option.getName();
       final String paramName = String.format("<%s>", optionName);
       final String helpText;
-      if (option
-        .getValueClass()
-        .isEnum())
-      {
-        helpText = String.format("%s%nUse one of ${COMPLETION-CANDIDATES}",
-                                 option.getHelpText());
-      }
-      else
-      {
+      if (option.getValueClass().isEnum()) {
+        helpText = String.format("%s%nUse one of ${COMPLETION-CANDIDATES}", option.getHelpText());
+      } else {
         helpText = option.getHelpText();
       }
-      pluginCommandSpec.addOption(OptionSpec
-                                    .builder("--" + optionName)
-                                    .description(helpText)
-                                    .paramLabel(paramName)
-                                    .type(option.getValueClass())
-                                    .build());
+      pluginCommandSpec.addOption(
+          OptionSpec.builder("--" + optionName)
+              .description(helpText)
+              .paramLabel(paramName)
+              .type(option.getValueClass())
+              .build());
     }
     return pluginCommandSpec;
   }
 
-  private CommandLineUtility()
-  {
-    // Prevent instantiation
+  private static void addDatabasePluginHelpCommands(
+      final CommandLine commandLine, final boolean addAsMixins) {
+    final DatabaseConnectorRegistry databaseConnectorRegistry =
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    for (final DatabaseServerType databaseServerType : databaseConnectorRegistry) {
+      final String pluginCommandName = databaseServerType.getDatabaseSystemIdentifier();
+      final CommandSpec pluginCommandSpec = CommandSpec.create().name(pluginCommandName);
+      if (addAsMixins) {
+        commandLine.addMixin(pluginCommandName, pluginCommandSpec);
+      } else {
+        commandLine.addSubcommand(pluginCommandName, pluginCommandSpec);
+      }
+    }
   }
 
+  private static void addPluginCommands(final CommandLine commandLine, final boolean addAsMixins)
+      throws SchemaCrawlerException {
+    // Add commands for plugins
+    final CommandRegistry commandRegistry = CommandRegistry.getCommandRegistry();
+    for (final PluginCommand pluginCommand : commandRegistry.getCommandLineCommands()) {
+      addPluginCommand(commandLine, pluginCommand, addAsMixins);
+    }
+  }
+
+  private static CommandLine newCommandLine(final Object object, final IFactory factory) {
+    final CommandLine commandLine;
+    if (factory == null) {
+      commandLine = new CommandLine(object);
+    } else {
+      commandLine = new CommandLine(object, factory);
+    }
+
+    return commandLine;
+  }
+
+  private CommandLineUtility() {
+    // Prevent instantiation
+  }
 }

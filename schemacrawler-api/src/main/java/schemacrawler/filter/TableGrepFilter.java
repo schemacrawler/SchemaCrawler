@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.filter;
 
-
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Level;
@@ -40,46 +39,35 @@ import schemacrawler.schema.Trigger;
 import schemacrawler.schemacrawler.GrepOptions;
 import us.fatehi.utility.string.StringFormat;
 
-class TableGrepFilter
-  implements Predicate<Table>
-{
+class TableGrepFilter implements Predicate<Table> {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(TableGrepFilter.class.getName());
+      SchemaCrawlerLogger.getLogger(TableGrepFilter.class.getName());
 
   private final InclusionRule grepColumnInclusionRule;
   private final InclusionRule grepDefinitionInclusionRule;
   private final boolean invertMatch;
 
-  public TableGrepFilter(final GrepOptions options)
-  {
+  public TableGrepFilter(final GrepOptions options) {
     invertMatch = options.isGrepInvertMatch();
 
-    grepColumnInclusionRule = options
-      .getGrepColumnInclusionRule()
-      .orElse(null);
-    grepDefinitionInclusionRule = options
-      .getGrepDefinitionInclusionRule()
-      .orElse(null);
+    grepColumnInclusionRule = options.getGrepColumnInclusionRule().orElse(null);
+    grepDefinitionInclusionRule = options.getGrepDefinitionInclusionRule().orElse(null);
   }
 
   /**
-   * Special case for "grep" like functionality. Handle table if a table column
-   * inclusion rule is found, and at least one column matches the rule.
+   * Special case for "grep" like functionality. Handle table if a table column inclusion rule is
+   * found, and at least one column matches the rule.
    *
-   * @param table
-   *   Table to check
+   * @param table Table to check
    * @return Whether the column should be included
    */
   @Override
-  public boolean test(final Table table)
-  {
+  public boolean test(final Table table) {
     final boolean checkIncludeForColumns = grepColumnInclusionRule != null;
-    final boolean checkIncludeForDefinitions =
-      grepDefinitionInclusionRule != null;
+    final boolean checkIncludeForDefinitions = grepDefinitionInclusionRule != null;
 
-    if (!checkIncludeForColumns && !checkIncludeForDefinitions)
-    {
+    if (!checkIncludeForColumns && !checkIncludeForDefinitions) {
       return true;
     }
 
@@ -87,64 +75,51 @@ class TableGrepFilter
     boolean includeForDefinitions = false;
     final List<Column> columns = table.getColumns();
     // Check if info-level=minimum, and no columns were retrieved
-    if (columns.isEmpty())
-    {
+    if (columns.isEmpty()) {
       includeForColumns = true;
       includeForDefinitions = true;
     }
-    for (final Column column : columns)
-    {
-      if (checkIncludeForColumns)
-      {
-        if (grepColumnInclusionRule.test(column.getFullName()))
-        {
+    for (final Column column : columns) {
+      if (checkIncludeForColumns) {
+        if (grepColumnInclusionRule.test(column.getFullName())) {
           includeForColumns = true;
           break;
         }
       }
-      if (checkIncludeForDefinitions)
-      {
-        if (grepDefinitionInclusionRule.test(column.getRemarks()))
-        {
+      if (checkIncludeForDefinitions) {
+        if (grepDefinitionInclusionRule.test(column.getRemarks())) {
           includeForDefinitions = true;
           break;
         }
       }
     }
     // Additional include checks for definitions
-    if (checkIncludeForDefinitions)
-    {
-      if (grepDefinitionInclusionRule.test(table.getRemarks()))
-      {
+    if (checkIncludeForDefinitions) {
+      if (grepDefinitionInclusionRule.test(table.getRemarks())) {
         includeForDefinitions = true;
       }
-      if (grepDefinitionInclusionRule.test(table.getDefinition()))
-      {
+      if (grepDefinitionInclusionRule.test(table.getDefinition())) {
         includeForDefinitions = true;
       }
-      for (final Trigger trigger : table.getTriggers())
-      {
-        if (grepDefinitionInclusionRule.test(trigger.getActionStatement()))
-        {
+      for (final Trigger trigger : table.getTriggers()) {
+        if (grepDefinitionInclusionRule.test(trigger.getActionStatement())) {
           includeForDefinitions = true;
           break;
         }
       }
     }
 
-    boolean include = checkIncludeForColumns && includeForColumns
-                      || checkIncludeForDefinitions && includeForDefinitions;
-    if (invertMatch)
-    {
+    boolean include =
+        checkIncludeForColumns && includeForColumns
+            || checkIncludeForDefinitions && includeForDefinitions;
+    if (invertMatch) {
       include = !include;
     }
 
-    if (!include)
-    {
+    if (!include) {
       LOGGER.log(Level.FINE, new StringFormat("Excluding table <%s>", table));
     }
 
     return include;
   }
-
 }

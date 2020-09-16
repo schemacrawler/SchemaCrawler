@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.integration.serialize;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
@@ -40,73 +39,47 @@ import java.io.Writer;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
-/**
- * Decorates a database to allow for serialization to and from plain Java
- * serialization.
- */
-public final class JavaSerializedCatalog
-  implements CatalogSerializer
-{
+/** Decorates a database to allow for serialization to and from plain Java serialization. */
+public final class JavaSerializedCatalog implements CatalogSerializer {
 
-  private static Catalog readCatalog(final InputStream in)
-    throws SchemaCrawlerException
-  {
+  private static Catalog readCatalog(final InputStream in) throws SchemaCrawlerException {
     requireNonNull(in, "No input stream provided");
-    try (final ObjectInputStream objIn = new ObjectInputStream(in))
-    {
+    try (final ObjectInputStream objIn = new ObjectInputStream(in)) {
       return (Catalog) objIn.readObject();
-    }
-    catch (ClassNotFoundException | IOException e)
-    {
+    } catch (ClassNotFoundException | IOException e) {
       throw new SchemaCrawlerException("Cannot deserialize catalog", e);
     }
   }
 
   private final Catalog catalog;
 
-  public JavaSerializedCatalog(final Catalog catalog)
-  {
+  public JavaSerializedCatalog(final Catalog catalog) {
     this.catalog = requireNonNull(catalog, "No catalog provided");
   }
 
-  public JavaSerializedCatalog(final InputStream in)
-    throws SchemaCrawlerException
-  {
+  public JavaSerializedCatalog(final InputStream in) throws SchemaCrawlerException {
     this(readCatalog(in));
   }
 
   @Override
-  public Catalog getCatalog()
-  {
+  public Catalog getCatalog() {
     return catalog;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public void save(final OutputStream out)
-    throws SchemaCrawlerException
-  {
+  public void save(final OutputStream out) throws SchemaCrawlerException {
     requireNonNull(out, "No output stream provided");
-    try (final ObjectOutputStream objOut = new ObjectOutputStream(out))
-    {
+    try (final ObjectOutputStream objOut = new ObjectOutputStream(out)) {
       objOut.writeObject(catalog);
-    }
-    catch (final IOException e)
-    {
+    } catch (final IOException e) {
       throw new SchemaCrawlerException("Could not serialize catalog", e);
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public void save(final Writer out)
-  {
-    throw new UnsupportedOperationException(
-      "Cannot serialize binary format using character data");
+  public void save(final Writer out) {
+    throw new UnsupportedOperationException("Cannot serialize binary format using character data");
   }
-
 }

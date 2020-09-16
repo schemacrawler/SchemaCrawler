@@ -27,12 +27,9 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.databaseconnector;
 
-
 import schemacrawler.schemacrawler.Options;
 
-public interface UserCredentials
-  extends Options
-{
+public interface UserCredentials extends Options {
 
   void clearPassword();
 
@@ -43,5 +40,4 @@ public interface UserCredentials
   boolean hasPassword();
 
   boolean hasUser();
-
 }

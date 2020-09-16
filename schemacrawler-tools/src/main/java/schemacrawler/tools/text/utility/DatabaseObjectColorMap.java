@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.text.utility;
 
-
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.utility.PropertiesUtility.loadProperties;
 import static us.fatehi.utility.Utility.isBlank;
@@ -45,45 +44,35 @@ import us.fatehi.utility.RegularExpressionColorMap;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
 import us.fatehi.utility.ioresource.FileInputResource;
 
-public class DatabaseObjectColorMap
-{
+public class DatabaseObjectColorMap {
 
   public static final Color default_object_color = Color.fromHSV(0, 0, 0.95f);
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(DatabaseObjectColorMap.class.getName());
+      SchemaCrawlerLogger.getLogger(DatabaseObjectColorMap.class.getName());
   private static final String SCHEMACRAWLER_COLORMAP_PROPERTIES =
-    "schemacrawler.colormap.properties";
+      "schemacrawler.colormap.properties";
 
-  public static DatabaseObjectColorMap initialize(final boolean noColors)
-  {
+  public static DatabaseObjectColorMap initialize(final boolean noColors) {
     final Properties properties = new Properties();
-    if (noColors)
-    {
+    if (noColors) {
       return new DatabaseObjectColorMap(properties, noColors);
     }
 
     // Load from classpath and also current directory, in that order
-    try
-    {
+    try {
       final ClasspathInputResource classpathColorMap =
-        new ClasspathInputResource("/" + SCHEMACRAWLER_COLORMAP_PROPERTIES);
+          new ClasspathInputResource("/" + SCHEMACRAWLER_COLORMAP_PROPERTIES);
       properties.putAll(loadProperties(classpathColorMap));
-    }
-    catch (final IOException e)
-    {
+    } catch (final IOException e) {
       LOGGER.log(Level.CONFIG, "Could not load color map from CLASSPATH");
     }
 
-    try
-    {
+    try {
       final FileInputResource fileColorMap =
-        new FileInputResource(Paths.get("./"
-                                        + SCHEMACRAWLER_COLORMAP_PROPERTIES));
+          new FileInputResource(Paths.get("./" + SCHEMACRAWLER_COLORMAP_PROPERTIES));
 
       properties.putAll(loadProperties(fileColorMap));
-    }
-    catch (final IOException e)
-    {
+    } catch (final IOException e) {
       LOGGER.log(Level.CONFIG, "Could not load color map from file");
     }
 
@@ -93,51 +82,35 @@ public class DatabaseObjectColorMap
   private final RegularExpressionColorMap colorMap;
   private final boolean noColors;
 
-  private DatabaseObjectColorMap(final Properties properties,
-                                 final boolean noColors)
-  {
+  private DatabaseObjectColorMap(final Properties properties, final boolean noColors) {
     this.noColors = noColors;
     colorMap = new RegularExpressionColorMap(properties);
   }
 
-  public Color getColor(final DatabaseObject dbObject)
-  {
+  public Color getColor(final DatabaseObject dbObject) {
     requireNonNull(dbObject, "No database object provided");
-    if (noColors)
-    {
+    if (noColors) {
       return default_object_color;
     }
 
     final Color tableColor;
-    final String schemaName = dbObject
-      .getSchema()
-      .getFullName();
+    final String schemaName = dbObject.getSchema().getFullName();
     final Optional<Color> colorMatch = colorMap.match(schemaName);
-    if (!colorMatch.isPresent())
-    {
+    if (!colorMatch.isPresent()) {
       tableColor = generatePastelColor(schemaName);
       colorMap.putLiteral(schemaName, tableColor);
-    }
-    else
-    {
+    } else {
       tableColor = colorMatch.get();
     }
     return tableColor;
   }
 
-  private Color generatePastelColor(final String text)
-  {
+  private Color generatePastelColor(final String text) {
     final float hue;
-    if (isBlank(text))
-    {
+    if (isBlank(text)) {
       hue = 0.123456f;
-    }
-    else
-    {
-      final int hash = new StringBuilder(text)
-        .reverse()
-        .toString()
-        .hashCode();
+    } else {
+      final int hash = new StringBuilder(text).reverse().toString().hashCode();
       hue = hash / 32771f % 1;
     }
 
@@ -147,5 +120,4 @@ public class DatabaseObjectColorMap
     final Color color = Color.fromHSV(hue, saturation, brightness);
     return color;
   }
-
 }

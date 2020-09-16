@@ -30,51 +30,40 @@ package schemacrawler.test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+
 import org.junit.jupiter.api.Test;
+
 import nl.jqno.equalsverifier.EqualsVerifier;
 import schemacrawler.tools.executable.CommandDescription;
 
-public class CommandDescriptionTest
-{
+public class CommandDescriptionTest {
 
   @Test
-  public void commandDescription()
-  {
-    EqualsVerifier.forClass(CommandDescription.class)
-        .withIgnoredFields("description").verify();
+  public void commandDescription() {
+    EqualsVerifier.forClass(CommandDescription.class).withIgnoredFields("description").verify();
   }
 
   @Test
-  public void testString()
-  {
-    final CommandDescription commandDescription1 =
-        new CommandDescription("hello", "world");
+  public void compareTo() {
+    final CommandDescription commandDescription1 = new CommandDescription("hello1", "world");
+    final CommandDescription commandDescription2 = new CommandDescription("hello", "  ");
+    assertThat(commandDescription1.compareTo(commandDescription2), is(equalTo(1)));
+
+    assertThat(commandDescription1.compareTo(null), is(equalTo(-1)));
+  }
+
+  @Test
+  public void testString() {
+    final CommandDescription commandDescription1 = new CommandDescription("hello", "world");
     assertThat(commandDescription1.getName(), is(equalTo("hello")));
     assertThat(commandDescription1.getDescription(), is(equalTo("world")));
     assertThat(commandDescription1.getValue(), is(equalTo("world")));
     assertThat(commandDescription1.toString(), is(equalTo("hello - world")));
 
-
-    final CommandDescription commandDescription2 =
-        new CommandDescription("hello", "  ");
+    final CommandDescription commandDescription2 = new CommandDescription("hello", "  ");
     assertThat(commandDescription2.getName(), is(equalTo("hello")));
     assertThat(commandDescription2.getDescription(), is(equalTo("")));
     assertThat(commandDescription2.getValue(), is(equalTo("")));
     assertThat(commandDescription2.toString(), is(equalTo("hello")));
   }
-
-  @Test
-  public void compareTo()
-  {
-    final CommandDescription commandDescription1 =
-        new CommandDescription("hello1", "world");
-    final CommandDescription commandDescription2 =
-        new CommandDescription("hello", "  ");
-    assertThat(commandDescription1.compareTo(commandDescription2),
-        is(equalTo(1)));
-
-    assertThat(commandDescription1.compareTo(null), is(equalTo(-1)));
-  }
-
-
 }

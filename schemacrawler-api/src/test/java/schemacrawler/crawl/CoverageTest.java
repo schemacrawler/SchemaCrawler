@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.crawl;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -37,58 +36,54 @@ import java.sql.SQLException;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public class CoverageTest
-{
+public class CoverageTest {
 
   @Test
-  public void namedObjectList()
-  {
+  public void namedObjectList() {
     final NamedObjectList<NamedObject> list = new NamedObjectList<>();
-    list.add(new AbstractNamedObject("name1")
-    {
+    list.add(
+        new AbstractNamedObject("name1") {
 
-      private static final long serialVersionUID = -514565049545540452L;
+          private static final long serialVersionUID = -514565049545540452L;
+        });
+    list.add(
+        new AbstractNamedObject("name2") {
 
-    });
-    list.add(new AbstractNamedObject("name2")
-    {
-
-      private static final long serialVersionUID = 6176088733525976950L;
-
-    });
+          private static final long serialVersionUID = 6176088733525976950L;
+        });
     assertThat(list.size(), equalTo(2));
     assertThat(list.toString(), equalTo("name1, name2"));
   }
 
   @Test
-  public void namedObjectListNull()
-  {
-    assertThrows(NullPointerException.class, () -> {
-      final NamedObjectList<NamedObject> list = new NamedObjectList<>();
-      list.add(null);
-    });
+  public void namedObjectListNull() {
+    assertThrows(
+        NullPointerException.class,
+        () -> {
+          final NamedObjectList<NamedObject> list = new NamedObjectList<>();
+          list.add(null);
+        });
   }
 
   @Test
-  public void retrieverConnection()
-    throws SQLException
-  {
+  public void retrieverConnection() throws SQLException {
     assertThrows(SQLException.class, () -> new RetrieverConnection(null, null));
   }
 
   @Test
   public void retrieverConnectionClosed(final Connection connection)
-    throws SQLException, SchemaCrawlerException
-  {
-    assertThrows(SQLException.class, () -> {
-      connection.close();
-      new RetrieverConnection(connection, null);
-    });
+      throws SQLException, SchemaCrawlerException {
+    assertThrows(
+        SQLException.class,
+        () -> {
+          connection.close();
+          new RetrieverConnection(connection, null);
+        });
   }
-
 }

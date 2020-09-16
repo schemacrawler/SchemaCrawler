@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.text.operation;
 
-
 import static schemacrawler.analysis.counts.TableRowCountsUtility.getRowCountMessage;
 
 import java.sql.ResultSet;
@@ -51,20 +50,14 @@ import us.fatehi.utility.html.Alignment;
  *
  * @author Sualeh Fatehi
  */
-final class DataTextFormatter
-  extends BaseTabularFormatter<OperationOptions>
-  implements DataTraversalHandler
-{
+final class DataTextFormatter extends BaseTabularFormatter<OperationOptions>
+    implements DataTraversalHandler {
 
-  private static String getMessage(final double aggregate)
-  {
+  private static String getMessage(final double aggregate) {
     final Number number;
-    if (Math.abs(aggregate - (int) aggregate) < 1E-10D)
-    {
+    if (Math.abs(aggregate - (int) aggregate) < 1E-10D) {
       number = Integer.valueOf((int) aggregate);
-    }
-    else
-    {
+    } else {
       number = Double.valueOf(aggregate);
     }
     final String message = getRowCountMessage(number);
@@ -77,83 +70,60 @@ final class DataTextFormatter
   /**
    * Text formatting of data.
    *
-   * @param operation
-   *   Options for text formatting of data
-   * @param options
-   *   Options for text formatting of data
-   * @param outputOptions
-   *   Options for text formatting of data
-   * @param identifierQuoteString
-   *   Quote character for identifier
+   * @param operation Options for text formatting of data
+   * @param options Options for text formatting of data
+   * @param outputOptions Options for text formatting of data
+   * @param identifierQuoteString Quote character for identifier
    */
-  DataTextFormatter(final Operation operation,
-                    final OperationOptions options,
-                    final OutputOptions outputOptions,
-                    final String identifierQuoteString)
-    throws SchemaCrawlerException
-  {
-    super(options,
-      /* printVerboseDatabaseInfo */
-          false, outputOptions, identifierQuoteString);
+  DataTextFormatter(
+      final Operation operation,
+      final OperationOptions options,
+      final OutputOptions outputOptions,
+      final String identifierQuoteString)
+      throws SchemaCrawlerException {
+    super(
+        options,
+        /* printVerboseDatabaseInfo */
+        false,
+        outputOptions,
+        identifierQuoteString);
     this.operation = operation;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public void end()
-    throws SchemaCrawlerException
-  {
-    if (operation == Operation.count)
-    {
+  public void end() throws SchemaCrawlerException {
+    if (operation == Operation.count) {
       formattingHelper.writeObjectEnd();
     }
 
     super.end();
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public void handleData(final Query query, final ResultSet rows)
-    throws SchemaCrawlerException
-  {
+  public void handleData(final Query query, final ResultSet rows) throws SchemaCrawlerException {
     final String title;
-    if (query != null)
-    {
+    if (query != null) {
       title = query.getName();
-    }
-    else
-    {
+    } else {
       title = "";
     }
 
     handleData(title, rows);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public void handleData(final Table table, final ResultSet rows)
-    throws SchemaCrawlerException
-  {
+  public void handleData(final Table table, final ResultSet rows) throws SchemaCrawlerException {
     final String tableName;
-    if (table != null)
-    {
-      if (options.isShowUnqualifiedNames())
-      {
+    if (table != null) {
+      if (options.isShowUnqualifiedNames()) {
         tableName = identifiers.quoteName(table);
-      }
-      else
-      {
+      } else {
         tableName = identifiers.quoteFullName(table);
       }
-    }
-    else
-    {
+    } else {
       tableName = "";
     }
 
@@ -163,25 +133,17 @@ final class DataTextFormatter
   /**
    * Handles an aggregate operation, such as a count, for a given table.
    *
-   * @param title
-   *   Title
-   * @param results
-   *   Results
+   * @param title Title
+   * @param results Results
    */
-  private void handleAggregateOperationForTable(final String title,
-                                                final ResultSet results)
-    throws SchemaCrawlerException
-  {
+  private void handleAggregateOperationForTable(final String title, final ResultSet results)
+      throws SchemaCrawlerException {
     long aggregate = 0;
-    try
-    {
-      if (results.next())
-      {
+    try {
+      if (results.next()) {
         aggregate = results.getLong(1);
       }
-    }
-    catch (final SQLException e)
-    {
+    } catch (final SQLException e) {
       throw new SchemaCrawlerException("Could not obtain aggregate data", e);
     }
     final String message = getMessage(aggregate);
@@ -189,40 +151,30 @@ final class DataTextFormatter
     formattingHelper.writeNameValueRow(title, message, Alignment.right);
   }
 
-  private void handleData(final String title, final ResultSet rows)
-    throws SchemaCrawlerException
-  {
-    if (rows == null)
-    {
+  private void handleData(final String title, final ResultSet rows) throws SchemaCrawlerException {
+    if (rows == null) {
       return;
     }
 
-    if (dataBlockCount == 0)
-    {
+    if (dataBlockCount == 0) {
       printHeader();
     }
 
-    if (operation == Operation.count)
-    {
+    if (operation == Operation.count) {
       handleAggregateOperationForTable(title, rows);
-    }
-    else
-    {
+    } else {
       formattingHelper.println();
       formattingHelper.println();
       formattingHelper.writeObjectStart();
       formattingHelper.writeObjectNameRow("", title, "", Color.white);
-      try
-      {
+      try {
         final MetadataResultSet dataRows = new MetadataResultSet(rows);
         dataRows.setShowLobs(options.isShowLobs());
 
         formattingHelper.writeRowHeader(dataRows.getColumnNames());
 
         iterateRows(dataRows);
-      }
-      catch (final SQLException e)
-      {
+      } catch (final SQLException e) {
         throw new SchemaCrawlerException(e.getMessage(), e);
       }
       formattingHelper.writeObjectEnd();
@@ -231,37 +183,26 @@ final class DataTextFormatter
     dataBlockCount++;
   }
 
-  private void iterateRows(final MetadataResultSet dataRows)
-    throws SQLException
-  {
-    while (dataRows.next())
-    {
+  private void iterateRows(final MetadataResultSet dataRows) throws SQLException {
+    while (dataRows.next()) {
       final List<Object> currentRow = dataRows.row();
-      final Object[] columnData =
-        currentRow.toArray(new Object[currentRow.size()]);
+      final Object[] columnData = currentRow.toArray(new Object[currentRow.size()]);
       formattingHelper.writeRow(columnData);
     }
   }
 
-  private void printHeader()
-  {
-    if (operation == null)
-    {
+  private void printHeader() {
+    if (operation == null) {
       // If there is no operation, assume that the command is a query
       formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Query");
       return;
     }
 
-    formattingHelper.writeHeader(DocumentHeaderType.subTitle,
-                                 operation.getTitle());
+    formattingHelper.writeHeader(DocumentHeaderType.subTitle, operation.getTitle());
 
-    if (operation == Operation.count)
-    {
+    if (operation == Operation.count) {
       formattingHelper.writeObjectStart();
-      formattingHelper.writeObjectNameRow("",
-                                          operation.getTitle(),
-                                          "",
-                                          Color.white);
+      formattingHelper.writeObjectNameRow("", operation.getTitle(), "", Color.white);
     }
   }
 }

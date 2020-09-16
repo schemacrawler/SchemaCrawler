@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -39,38 +38,29 @@ import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 
 import org.junit.jupiter.api.Test;
+
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 
-public class DatabaseConnectionSourceTest
-{
+public class DatabaseConnectionSourceTest {
 
   @Test
-  public void databaseConnectionSource()
-    throws SQLException, ClassNotFoundException
-  {
+  public void databaseConnectionSource() throws SQLException, ClassNotFoundException {
     // Load test database driver
     Class.forName("schemacrawler.test.utility.TestDatabaseDriver");
 
     final DatabaseConnectionSource connectionSource =
-      new DatabaseConnectionSource("jdbc:test-db:test");
+        new DatabaseConnectionSource("jdbc:test-db:test");
 
-    assertThat(connectionSource
-                 .toString()
-                 .replaceAll("\\R", "~"),
-               is(
-                 "driver=schemacrawler.test.utility.TestDatabaseDriver~url=jdbc:test-db:test~"));
+    assertThat(
+        connectionSource.toString().replaceAll("\\R", "~"),
+        is("driver=schemacrawler.test.utility.TestDatabaseDriver~url=jdbc:test-db:test~"));
     assertThat(connectionSource.getUserCredentials(), is(not(nullValue())));
-    assertThat(connectionSource
-                 .getJdbcDriver()
-                 .getClass()
-                 .getSimpleName(), is("TestDatabaseDriver"));
+    assertThat(
+        connectionSource.getJdbcDriver().getClass().getSimpleName(), is("TestDatabaseDriver"));
 
     final Connection connection = connectionSource.get();
 
     assertThat(connection, is(not(nullValue())));
-    assertThrows(SQLFeatureNotSupportedException.class,
-                 () -> connection.getMetaData());
-
+    assertThrows(SQLFeatureNotSupportedException.class, () -> connection.getMetaData());
   }
-
 }

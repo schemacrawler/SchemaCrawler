@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schemacrawler;
 
-
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.values;
 
@@ -37,44 +36,49 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-/**
- * Descriptor for level of schema detail to be retrieved when crawling a
- * schema.
- */
-public final class SchemaInfoLevel
-  implements Options
-{
+/** Descriptor for level of schema detail to be retrieved when crawling a schema. */
+public final class SchemaInfoLevel implements Options {
 
   private final boolean[] schemaInfoRetrievals;
   private final String tag;
 
-  SchemaInfoLevel(final String tag,
-                  final Map<SchemaInfoRetrieval, Boolean> schemaInfoRetrievalsMap)
-  {
+  SchemaInfoLevel(
+      final String tag, final Map<SchemaInfoRetrieval, Boolean> schemaInfoRetrievalsMap) {
     requireNonNull(tag, "No tag provided");
     this.tag = tag;
 
-    requireNonNull(schemaInfoRetrievalsMap,
-                   "No schema info retrievals provided");
+    requireNonNull(schemaInfoRetrievalsMap, "No schema info retrievals provided");
     final SchemaInfoRetrieval[] schemaInfoRetrievalsArray = values();
     schemaInfoRetrievals = new boolean[schemaInfoRetrievalsArray.length];
-    for (final SchemaInfoRetrieval schemaInfoRetrieval : schemaInfoRetrievalsArray)
-    {
+    for (final SchemaInfoRetrieval schemaInfoRetrieval : schemaInfoRetrievalsArray) {
       final boolean schemaInfoRetrievalValue =
-        schemaInfoRetrievalsMap.getOrDefault(schemaInfoRetrieval, false);
-      schemaInfoRetrievals[schemaInfoRetrieval.ordinal()] =
-        schemaInfoRetrievalValue;
+          schemaInfoRetrievalsMap.getOrDefault(schemaInfoRetrieval, false);
+      schemaInfoRetrievals[schemaInfoRetrieval.ordinal()] = schemaInfoRetrievalValue;
     }
   }
 
-  public String getTag()
-  {
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (!(obj instanceof SchemaInfoLevel)) {
+      return false;
+    }
+    final SchemaInfoLevel other = (SchemaInfoLevel) obj;
+    return Arrays.equals(schemaInfoRetrievals, other.schemaInfoRetrievals)
+        && Objects.equals(tag, other.tag);
+  }
+
+  public String getTag() {
     return tag;
   }
 
   @Override
-  public int hashCode()
-  {
+  public int hashCode() {
     final int prime = 31;
     int result = 1;
     result = prime * result + Arrays.hashCode(schemaInfoRetrievals);
@@ -82,46 +86,19 @@ public final class SchemaInfoLevel
     return result;
   }
 
-  @Override
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
-      return true;
-    }
-    if (obj == null)
-    {
-      return false;
-    }
-    if (!(obj instanceof SchemaInfoLevel))
-    {
-      return false;
-    }
-    final SchemaInfoLevel other = (SchemaInfoLevel) obj;
-    return Arrays.equals(schemaInfoRetrievals, other.schemaInfoRetrievals)
-           && Objects.equals(tag, other.tag);
-  }
-
-  @Override
-  public String toString()
-  {
-    final StringJoiner settings = new StringJoiner(System.lineSeparator());
-    for (final SchemaInfoRetrieval schemaInfoRetrieval : values())
-    {
-      settings.add(String.format("  %s=%b",
-                                 schemaInfoRetrieval.name(),
-                                 is(schemaInfoRetrieval)));
-    }
-    return String.format("SchemaInfoLevel <%s>%n{%n%s%n}%n", tag, settings);
-  }
-
-  public boolean is(final SchemaInfoRetrieval schemaInfoRetrieval)
-  {
-    if (schemaInfoRetrieval == null)
-    {
+  public boolean is(final SchemaInfoRetrieval schemaInfoRetrieval) {
+    if (schemaInfoRetrieval == null) {
       return false;
     }
     return schemaInfoRetrievals[schemaInfoRetrieval.ordinal()];
   }
 
+  @Override
+  public String toString() {
+    final StringJoiner settings = new StringJoiner(System.lineSeparator());
+    for (final SchemaInfoRetrieval schemaInfoRetrieval : values()) {
+      settings.add(String.format("  %s=%b", schemaInfoRetrieval.name(), is(schemaInfoRetrieval)));
+    }
+    return String.format("SchemaInfoLevel <%s>%n{%n%s%n}%n", tag, settings);
+  }
 }

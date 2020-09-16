@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schemacrawler;
 
-
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.DatabaseObjectInfoRetrieval.base;
 import static schemacrawler.schemacrawler.DatabaseObjectInfoRetrieval.database;
@@ -40,8 +39,7 @@ import static schemacrawler.schemacrawler.InfoLevel.maximum;
 import static schemacrawler.schemacrawler.InfoLevel.minimum;
 import static schemacrawler.schemacrawler.InfoLevel.standard;
 
-public enum SchemaInfoRetrieval
-{
+public enum SchemaInfoRetrieval {
   retrieveAdditionalColumnAttributes(table, maximum),
   retrieveAdditionalColumnMetadata(table, maximum),
   retrieveAdditionalDatabaseInfo(database, maximum),
@@ -76,22 +74,17 @@ public enum SchemaInfoRetrieval
   private final DatabaseObjectInfoRetrieval databaseObjectInfoRetrieval;
   private final InfoLevel infoLevel;
 
-  SchemaInfoRetrieval(final DatabaseObjectInfoRetrieval databaseObjectInfoRetrieval,
-                      final InfoLevel infoLevel)
-  {
+  SchemaInfoRetrieval(
+      final DatabaseObjectInfoRetrieval databaseObjectInfoRetrieval, final InfoLevel infoLevel) {
     this.infoLevel = requireNonNull(infoLevel);
-    this.databaseObjectInfoRetrieval =
-      requireNonNull(databaseObjectInfoRetrieval);
+    this.databaseObjectInfoRetrieval = requireNonNull(databaseObjectInfoRetrieval);
   }
 
-  public DatabaseObjectInfoRetrieval getDatabaseObjectInfoRetrieval()
-  {
+  public DatabaseObjectInfoRetrieval getDatabaseObjectInfoRetrieval() {
     return databaseObjectInfoRetrieval;
   }
 
-  public InfoLevel getInfoLevel()
-  {
+  public InfoLevel getInfoLevel() {
     return infoLevel;
   }
-
 }

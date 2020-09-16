@@ -27,9 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schema;
 
-
-public interface TypedObject<T extends Comparable<? super T>>
-{
+public interface TypedObject<T extends Comparable<? super T>> {
 
   /**
    * Gets the type of the object. Synonym for another getter method.
@@ -37,5 +35,4 @@ public interface TypedObject<T extends Comparable<? super T>>
    * @return Type of the object
    */
   T getType();
-
 }

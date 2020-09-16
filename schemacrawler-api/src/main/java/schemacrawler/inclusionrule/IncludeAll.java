@@ -27,40 +27,32 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.inclusionrule;
 
-
 /**
  * Include all names, definitions, and other attributes of named objects.
  *
  * @author Sualeh Fatehi
  */
-public final class IncludeAll
-  implements InclusionRuleWithRegularExpression
-{
+public final class IncludeAll implements InclusionRuleWithRegularExpression {
 
   private static final long serialVersionUID = -2992724018349021861L;
 
   @Override
-  public int hashCode()
-  {
-    return 1;
-  }
-
-  @Override
-  public boolean equals(final Object obj)
-  {
+  public boolean equals(final Object obj) {
     return obj instanceof IncludeAll;
   }
 
   @Override
-  public String toString()
-  {
-    return getClass().getSimpleName();
+  public int hashCode() {
+    return 1;
   }
 
   @Override
-  public boolean test(final String text)
-  {
+  public boolean test(final String text) {
     return true;
   }
 
+  @Override
+  public String toString() {
+    return getClass().getSimpleName();
+  }
 }

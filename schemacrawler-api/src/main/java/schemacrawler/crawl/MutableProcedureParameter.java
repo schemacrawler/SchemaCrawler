@@ -28,26 +28,20 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureParameter;
 
 /**
- * Represents a column in a database procedure. Created from metadata returned
- * by a JDBC call.
+ * Represents a column in a database procedure. Created from metadata returned by a JDBC call.
  *
  * @author Sualeh Fatehi
  */
-final class MutableProcedureParameter
-  extends MutableRoutineParameter<Procedure>
-  implements ProcedureParameter
-{
+final class MutableProcedureParameter extends MutableRoutineParameter<Procedure>
+    implements ProcedureParameter {
 
   private static final long serialVersionUID = 3546361725629772857L;
 
-  MutableProcedureParameter(final Procedure parent, final String name)
-  {
+  MutableProcedureParameter(final Procedure parent, final String name) {
     super(new ProcedureReference(parent), name);
   }
-
 }

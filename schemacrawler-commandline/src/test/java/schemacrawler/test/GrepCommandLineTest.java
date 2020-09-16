@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test;
 
-
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.CREATE;
@@ -46,6 +45,7 @@ import java.util.Properties;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
@@ -56,87 +56,78 @@ import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public class GrepCommandLineTest
-{
+public class GrepCommandLineTest {
 
   private static final String GREP_OUTPUT = "grep_output/";
 
   @Test
-  public void grep(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
+  public void grep(final DatabaseConnectionInfo connectionInfo) throws Exception {
     clean(GREP_OUTPUT);
 
     final List<String> failures = new ArrayList<>();
 
-    final String[][] grepArgs = new String[][] {
-      new String[] {
-        "--grep-columns=.*\\.STREET|.*\\.PRICE",
-        }, new String[] {
-      "--grep-columns=.*\\..*NAME",
-      }, new String[] {
-      "--grep-def=.*book authors.*",
-      }, new String[] {
-      "--tables=", "--routines=.*", "--grep-parameters=.*\\.B_COUNT",
-      }, new String[] {
-      "--tables=", "--routines=.*", "--grep-parameters=.*\\.B_OFFSET",
-      }, new String[] {
-      "--grep-columns=.*\\.STREET|.*\\.PRICE", "--grep-def=.*book authors.*",
-      },
-      };
-    for (int i = 0; i < grepArgs.length; i++)
-    {
+    final String[][] grepArgs =
+        new String[][] {
+          new String[] {
+            "--grep-columns=.*\\.STREET|.*\\.PRICE",
+          },
+          new String[] {
+            "--grep-columns=.*\\..*NAME",
+          },
+          new String[] {
+            "--grep-def=.*book authors.*",
+          },
+          new String[] {
+            "--tables=", "--routines=.*", "--grep-parameters=.*\\.B_COUNT",
+          },
+          new String[] {
+            "--tables=", "--routines=.*", "--grep-parameters=.*\\.B_OFFSET",
+          },
+          new String[] {
+            "--grep-columns=.*\\.STREET|.*\\.PRICE", "--grep-def=.*book authors.*",
+          },
+        };
+    for (int i = 0; i < grepArgs.length; i++) {
       final String[] grepArgsForRun = grepArgs[i];
 
-      final SchemaTextDetailType schemaTextDetailType =
-        SchemaTextDetailType.details;
+      final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType.details;
       final InfoLevel infoLevel = InfoLevel.detailed;
-      final Path additionalProperties = IOUtility.createTempFilePath(
-        "hsqldb.INFORMATION_SCHEMA.config",
-        "properties");
-      final Writer writer = newBufferedWriter(additionalProperties,
-                                              UTF_8,
-                                              WRITE,
-                                              CREATE,
-                                              TRUNCATE_EXISTING);
+      final Path additionalProperties =
+          IOUtility.createTempFilePath("hsqldb.INFORMATION_SCHEMA.config", "properties");
+      final Writer writer =
+          newBufferedWriter(additionalProperties, UTF_8, WRITE, CREATE, TRUNCATE_EXISTING);
       final Properties properties = new Properties();
-      properties.load(getClass().getResourceAsStream(
-        "/hsqldb.INFORMATION_SCHEMA.config.properties"));
+      properties.load(
+          getClass().getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
       properties.store(writer, getClass().getName());
 
       final String referenceFile = String.format("grep%02d.txt", i + 1);
 
-      final Path testOutputFile =
-        IOUtility.createTempFilePath(referenceFile, "data");
+      final Path testOutputFile = IOUtility.createTempFilePath(referenceFile, "data");
 
       final OutputFormat outputFormat = TextOutputFormat.text;
 
-      final List<String> args = new ArrayList<>(Arrays.asList("--url="
-                                                              + connectionInfo.getConnectionUrl(),
-                                                              "--user=sa",
-                                                              "--password=",
-                                                              "-g="
-                                                              + additionalProperties.toString(),
-                                                              "--info-level="
-                                                              + infoLevel,
-                                                              "--command="
-                                                              + schemaTextDetailType,
-                                                              "--output-format="
-                                                              + outputFormat.getFormat(),
-                                                              "--output-file="
-                                                              + testOutputFile.toString(),
-                                                              "--no-info"));
+      final List<String> args =
+          new ArrayList<>(
+              Arrays.asList(
+                  "--url=" + connectionInfo.getConnectionUrl(),
+                  "--user=sa",
+                  "--password=",
+                  "-g=" + additionalProperties.toString(),
+                  "--info-level=" + infoLevel,
+                  "--command=" + schemaTextDetailType,
+                  "--output-format=" + outputFormat.getFormat(),
+                  "--output-file=" + testOutputFile.toString(),
+                  "--no-info"));
       args.addAll(Arrays.asList(grepArgsForRun));
 
       Main.main(args.toArray(new String[args.size()]));
 
-      failures.addAll(compareOutput(GREP_OUTPUT + referenceFile,
-                                    testOutputFile,
-                                    outputFormat.getFormat()));
+      failures.addAll(
+          compareOutput(GREP_OUTPUT + referenceFile, testOutputFile, outputFormat.getFormat()));
     }
 
-    if (failures.size() > 0)
-    {
+    if (failures.size() > 0) {
       fail(failures.toString());
     }
   }

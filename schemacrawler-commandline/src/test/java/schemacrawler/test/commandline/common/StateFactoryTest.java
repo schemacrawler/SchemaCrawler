@@ -27,23 +27,20 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.commandline.common;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 
 import org.junit.jupiter.api.Test;
+
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 
-public class StateFactoryTest
-{
+public class StateFactoryTest {
 
   @Test
-  public void stateFactory()
-    throws Exception
-  {
+  public void stateFactory() throws Exception {
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     final StateFactory stateFactory = new StateFactory(state);
     final String string = stateFactory.create(null);
@@ -52,9 +49,7 @@ public class StateFactoryTest
   }
 
   @Test
-  public void stateFactoryString()
-    throws Exception
-  {
+  public void stateFactoryString() throws Exception {
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     final StateFactory stateFactory = new StateFactory(state);
     final String string = stateFactory.create(String.class);
@@ -62,5 +57,4 @@ public class StateFactoryTest
     assertThat(string, not(nullValue()));
     assertThat(string.isEmpty(), is(true));
   }
-
 }

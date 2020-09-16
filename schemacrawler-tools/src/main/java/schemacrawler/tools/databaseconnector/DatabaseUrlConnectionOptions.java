@@ -28,29 +28,22 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.databaseconnector;
 
-public class DatabaseUrlConnectionOptions
-  implements DatabaseConnectionOptions
-{
+public class DatabaseUrlConnectionOptions implements DatabaseConnectionOptions {
 
   private final String connectionUrl;
 
-  public DatabaseUrlConnectionOptions(String connectionUrl)
-  {
+  public DatabaseUrlConnectionOptions(String connectionUrl) {
     this.connectionUrl = connectionUrl;
   }
 
-  @Override
-  public DatabaseConnector getDatabaseConnector()
-  {
-    final DatabaseConnectorRegistry databaseConnectorRegistry =
-      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    return databaseConnectorRegistry.lookupDatabaseConnectorFromUrl(
-      connectionUrl);
-  }
-
-  public String getConnectionUrl()
-  {
+  public String getConnectionUrl() {
     return connectionUrl;
   }
-  
+
+  @Override
+  public DatabaseConnector getDatabaseConnector() {
+    final DatabaseConnectorRegistry databaseConnectorRegistry =
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    return databaseConnectorRegistry.lookupDatabaseConnectorFromUrl(connectionUrl);
+  }
 }

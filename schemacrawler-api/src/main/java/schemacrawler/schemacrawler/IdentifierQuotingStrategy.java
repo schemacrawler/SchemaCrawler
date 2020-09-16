@@ -27,9 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schemacrawler;
 
-
-public enum IdentifierQuotingStrategy
-{
+public enum IdentifierQuotingStrategy {
   quote_none,
   quote_all,
   quote_if_special_characters,

@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schemacrawler;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
@@ -46,23 +45,19 @@ import us.fatehi.utility.ObjectToString;
  *
  * @author Sualeh Fatehi
  */
-public final class LimitOptions
-  implements Options
-{
+public final class LimitOptions implements Options {
 
-  private final Map<DatabaseObjectRuleForInclusion, InclusionRule>
-    inclusionRules;
+  private final Map<DatabaseObjectRuleForInclusion, InclusionRule> inclusionRules;
   private final EnumSet<RoutineType> routineTypes;
   private final String tableNamePattern;
   private final TableTypes tableTypes;
 
-  LimitOptions(final Map<DatabaseObjectRuleForInclusion, InclusionRule> inclusionRules,
-               final TableTypes tableTypes,
-               final String tableNamePattern,
-               final EnumSet<RoutineType> routineTypes)
-  {
-    this.inclusionRules =
-      requireNonNull(inclusionRules, "No inclusion rules provided");
+  LimitOptions(
+      final Map<DatabaseObjectRuleForInclusion, InclusionRule> inclusionRules,
+      final TableTypes tableTypes,
+      final String tableNamePattern,
+      final EnumSet<RoutineType> routineTypes) {
+    this.inclusionRules = requireNonNull(inclusionRules, "No inclusion rules provided");
 
     this.tableTypes = requireNonNull(tableTypes, "No table types provided");
     this.tableNamePattern = tableNamePattern;
@@ -71,69 +66,55 @@ public final class LimitOptions
     this.routineTypes = EnumSet.copyOf(routineTypes);
   }
 
-  public Collection<RoutineType> getRoutineTypes()
-  {
-    return EnumSet.copyOf(routineTypes);
-  }
-
-  /**
-   * Gets the table name pattern. A null value indicates do not take table
-   * pattern into account.
-   *
-   * @return Table name pattern
-   */
-  public String getTableNamePattern()
-  {
-    return tableNamePattern;
-  }
-
-  /**
-   * Returns the table types requested for output. This can be null, if all
-   * supported table types are required in the output.
-   *
-   * @return All table types requested for output
-   */
-  public TableTypes getTableTypes()
-  {
-    return tableTypes;
-  }
-
   /**
    * Gets the inclusion rule.
    *
    * @return Inclusion rule.
    */
-  public InclusionRule get(final DatabaseObjectRuleForInclusion inclusionRuleKey)
-  {
+  public InclusionRule get(final DatabaseObjectRuleForInclusion inclusionRuleKey) {
     final InclusionRule defaultInclusionRule;
-    if (inclusionRuleKey.isExcludeByDefault())
-    {
+    if (inclusionRuleKey.isExcludeByDefault()) {
       defaultInclusionRule = new ExcludeAll();
-    }
-    else
-    {
+    } else {
       defaultInclusionRule = new IncludeAll();
     }
     return inclusionRules.getOrDefault(inclusionRuleKey, defaultInclusionRule);
   }
 
-  public boolean isIncludeAll(final DatabaseObjectRuleForInclusion inclusionRuleKey)
-  {
-    return get(inclusionRuleKey).equals(new IncludeAll());
-  }
-
-  public boolean isExcludeAll(final DatabaseObjectRuleForInclusion inclusionRuleKey)
-  {
-    return get(inclusionRuleKey).equals(new ExcludeAll());
+  public Collection<RoutineType> getRoutineTypes() {
+    return EnumSet.copyOf(routineTypes);
   }
 
   /**
-   * {@inheritDoc}
+   * Gets the table name pattern. A null value indicates do not take table pattern into account.
+   *
+   * @return Table name pattern
    */
-  @Override
-  public String toString()
-  {
-    return ObjectToString.toString(this);
+  public String getTableNamePattern() {
+    return tableNamePattern;
   }
 
+  /**
+   * Returns the table types requested for output. This can be null, if all supported table types
+   * are required in the output.
+   *
+   * @return All table types requested for output
+   */
+  public TableTypes getTableTypes() {
+    return tableTypes;
+  }
+
+  public boolean isExcludeAll(final DatabaseObjectRuleForInclusion inclusionRuleKey) {
+    return get(inclusionRuleKey).equals(new ExcludeAll());
+  }
+
+  public boolean isIncludeAll(final DatabaseObjectRuleForInclusion inclusionRuleKey) {
+    return get(inclusionRuleKey).equals(new IncludeAll());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public String toString() {
+    return ObjectToString.toString(this);
+  }
 }

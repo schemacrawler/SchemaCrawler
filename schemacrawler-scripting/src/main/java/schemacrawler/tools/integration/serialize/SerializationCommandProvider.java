@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.integration.serialize;
 
-
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
 
 import schemacrawler.tools.executable.BaseCommandProvider;
@@ -36,43 +35,32 @@ import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.OutputOptions;
 
-public class SerializationCommandProvider
-  extends BaseCommandProvider
-{
+public class SerializationCommandProvider extends BaseCommandProvider {
 
-  private static final String DESCRIPTION_HEADER =
-    "Create an offline catalog snapshot";
+  private static final String DESCRIPTION_HEADER = "Create an offline catalog snapshot";
 
-  public SerializationCommandProvider()
-  {
-    super(new CommandDescription(SerializationCommand.COMMAND,
-                                 DESCRIPTION_HEADER));
+  public SerializationCommandProvider() {
+    super(new CommandDescription(SerializationCommand.COMMAND, DESCRIPTION_HEADER));
   }
 
   @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
-  {
-    return new SerializationCommand();
-  }
-
-  @Override
-  public boolean supportsOutputFormat(final String command,
-                                      final OutputOptions outputOptions)
-  {
-    return supportsOutputFormat(command,
-                                outputOptions,
-                                SerializationFormat::isSupportedFormat);
-  }
-
-  @Override
-  public PluginCommand getCommandLineCommand()
-  {
+  public PluginCommand getCommandLineCommand() {
     final PluginCommand pluginCommand =
-      newPluginCommand(SerializationCommand.COMMAND,
-                        "** " + DESCRIPTION_HEADER,
-                        "For more information, see https://www.schemacrawler.com/serialize.html %n");
+        newPluginCommand(
+            SerializationCommand.COMMAND,
+            "** " + DESCRIPTION_HEADER,
+            "For more information, see https://www.schemacrawler.com/serialize.html %n");
 
     return pluginCommand;
   }
 
+  @Override
+  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command) {
+    return new SerializationCommand();
+  }
+
+  @Override
+  public boolean supportsOutputFormat(final String command, final OutputOptions outputOptions) {
+    return supportsOutputFormat(command, outputOptions, SerializationFormat::isSupportedFormat);
+  }
 }

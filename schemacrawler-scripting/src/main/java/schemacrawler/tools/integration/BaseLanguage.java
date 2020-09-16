@@ -28,68 +28,56 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.integration;
 
-
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.ioresource.InputResourceUtility.createInputResource;
-import schemacrawler.tools.options.Config;
 import static us.fatehi.utility.IOUtility.getFileExtension;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.ioresource.InputResourceUtility.createInputResource;
+
+import schemacrawler.tools.options.Config;
 import us.fatehi.utility.ioresource.InputResource;
 
-public abstract class BaseLanguage
-{
+public abstract class BaseLanguage {
 
   private final Config config;
   private final String defaultLanguage;
   private final String languageKey;
   private final String resourceKey;
 
-  protected BaseLanguage(final String languageKey,
-                         final String resourceKey,
-                         final String defaultLanguage)
-  {
+  protected BaseLanguage(
+      final String languageKey, final String resourceKey, final String defaultLanguage) {
     this.languageKey = requireNonNull(languageKey, "No language key provided");
     this.resourceKey = requireNonNull(resourceKey, "No resource key provided");
-    this.defaultLanguage =
-      requireNonNull(defaultLanguage, "No default language provided");
+    this.defaultLanguage = requireNonNull(defaultLanguage, "No default language provided");
     config = new Config();
   }
 
-  public void addConfig(final Config additionalConfig)
-  {
-    if (additionalConfig != null && !additionalConfig.isEmpty())
-    {
+  public void addConfig(final Config additionalConfig) {
+    if (additionalConfig != null && !additionalConfig.isEmpty()) {
       config.putAll(additionalConfig);
     }
   }
 
-  public final String getLanguage()
-  {
+  public final String getLanguage() {
     // Check if language is specified
     final String language = config.getStringValue(languageKey, null);
-    if (!isBlank(language))
-    {
+    if (!isBlank(language)) {
       return language;
     }
 
     // Use the script file extension if the language is not specified
     final String fileExtension = getFileExtension(getResourceFilename());
-    if (!isBlank(fileExtension))
-    {
+    if (!isBlank(fileExtension)) {
       return fileExtension;
     }
 
     return defaultLanguage;
   }
 
-  public final InputResource getResource()
-  {
+  public final InputResource getResource() {
     return createInputResource(getResourceFilename());
   }
 
-  public String getResourceFilename()
-  {
+  public String getResourceFilename() {
     return config.getStringValue(resourceKey, null);
   }
-
 }

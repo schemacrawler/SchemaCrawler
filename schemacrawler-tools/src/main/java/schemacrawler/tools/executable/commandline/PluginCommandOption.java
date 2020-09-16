@@ -27,90 +27,68 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.executable.commandline;
 
-
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class PluginCommandOption
-{
+public class PluginCommandOption {
 
   private final String helpText;
   private final String name;
   private final Class<?> valueClass;
 
-  PluginCommandOption(final String name,
-                      final String helpText,
-                      final Class<?> valueClass)
-  {
+  PluginCommandOption(final String name, final String helpText, final Class<?> valueClass) {
     this.name = requireNonNull(name, "No option name provided");
 
-    if (isBlank(helpText))
-    {
+    if (isBlank(helpText)) {
       this.helpText = null;
-    }
-    else
-    {
+    } else {
       this.helpText = helpText;
     }
 
-    if (valueClass == null)
-    {
+    if (valueClass == null) {
       this.valueClass = String.class;
-    }
-    else
-    {
+    } else {
       this.valueClass = valueClass;
     }
   }
 
-  public Class<?> getValueClass()
-  {
-    return valueClass;
-  }
-
-  public String getName()
-  {
-    return name;
-  }
-
-  public String getHelpText()
-  {
-    return helpText;
-  }
-
   @Override
-  public int hashCode()
-  {
-    return Objects.hash(getName());
-  }
-
-  @Override
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals(final Object o) {
+    if (this == o) {
       return true;
     }
-    if (!(o instanceof PluginCommandOption))
-    {
+    if (!(o instanceof PluginCommandOption)) {
       return false;
     }
     final PluginCommandOption that = (PluginCommandOption) o;
     return Objects.equals(getName(), that.getName());
   }
 
-  @Override
-  public String toString()
-  {
-    return new StringJoiner(", ",
-                            PluginCommandOption.class.getSimpleName() + "[",
-                            "]")
-      .add("name='" + name + "'")
-      .add("valueClass=" + valueClass.getCanonicalName())
-      .toString();
+  public String getHelpText() {
+    return helpText;
   }
 
+  public String getName() {
+    return name;
+  }
+
+  public Class<?> getValueClass() {
+    return valueClass;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getName());
+  }
+
+  @Override
+  public String toString() {
+    return new StringJoiner(", ", PluginCommandOption.class.getSimpleName() + "[", "]")
+        .add("name='" + name + "'")
+        .add("valueClass=" + valueClass.getCanonicalName())
+        .toString();
+  }
 }

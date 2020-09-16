@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
@@ -42,6 +41,7 @@ import java.util.logging.Level;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
@@ -59,67 +59,46 @@ import schemacrawler.utility.NamedObjectSort;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
-public class ExcludeTest
-{
+public class ExcludeTest {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(ExcludeTest.class.getName());
+      SchemaCrawlerLogger.getLogger(ExcludeTest.class.getName());
 
   @Test
-  public void excludeColumns(final TestContext testContext,
-                             final Connection connection)
-    throws Exception
-  {
+  public void excludeColumns(final TestContext testContext, final Connection connection)
+      throws Exception {
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout)
-    {
-      final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-        .builder()
-        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
-        .includeColumns(new RegularExpressionExclusionRule(".*\\..*\\.ID"));
+    try (final TestWriter out = testout) {
+      final LimitOptionsBuilder limitOptionsBuilder =
+          LimitOptionsBuilder.builder()
+              .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
+              .includeColumns(new RegularExpressionExclusionRule(".*\\..*\\.ID"));
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-        SchemaCrawlerOptionsBuilder
-          .builder()
-          .withLimitOptionsBuilder(limitOptionsBuilder);
-      final SchemaCrawlerOptions schemaCrawlerOptions =
-        schemaCrawlerOptionsBuilder.toOptions();
+          SchemaCrawlerOptionsBuilder.builder().withLimitOptionsBuilder(limitOptionsBuilder);
+      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
       final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
-      final Schema[] schemas = catalog
-        .getSchemas()
-        .toArray(new Schema[0]);
+      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(5));
-      for (final Schema schema : schemas)
-      {
+      for (final Schema schema : schemas) {
         out.println("schema: " + schema.getFullName());
-        final Table[] tables = catalog
-          .getTables(schema)
-          .toArray(new Table[0]);
+        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
         Arrays.sort(tables, NamedObjectSort.alphabetical);
-        for (final Table table : tables)
-        {
+        for (final Table table : tables) {
           out.println("  table: " + table.getFullName());
-          final Column[] columns = table
-            .getColumns()
-            .toArray(new Column[0]);
+          final Column[] columns = table.getColumns().toArray(new Column[0]);
           Arrays.sort(columns);
-          for (final Column column : columns)
-          {
+          for (final Column column : columns) {
             LOGGER.log(Level.FINE, column.toString());
             out.println("    column: " + column.getFullName());
-            out.println("      database type: " + column
-              .getColumnDataType()
-              .getDatabaseSpecificTypeName());
-            out.println("      type: " + column
-              .getColumnDataType()
-              .getJavaSqlType()
-              .getName());
+            out.println(
+                "      database type: " + column.getColumnDataType().getDatabaseSpecificTypeName());
+            out.println("      type: " + column.getColumnDataType().getJavaSqlType().getName());
           }
         }
       }
     }
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+    assertThat(
+        outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
-
 }

@@ -28,15 +28,13 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 /**
  * Column for tables and routines.
  *
  * @author Sualeh Fatehi
  */
 public interface BaseColumn<D extends DatabaseObject>
-  extends DependantObject<D>, TypedObject<ColumnDataType>
-{
+    extends DependantObject<D>, TypedObject<ColumnDataType> {
 
   /**
    * Gets the column data type.
@@ -60,16 +58,16 @@ public interface BaseColumn<D extends DatabaseObject>
   int getOrdinalPosition();
 
   /**
-   * Get the column size. For char or date types this is the maximum number of
-   * characters, for numeric or decimal types this is precision.
+   * Get the column size. For char or date types this is the maximum number of characters, for
+   * numeric or decimal types this is precision.
    *
    * @return Column size
    */
   int getSize();
 
   /**
-   * Gets the width of the column, if the column width is required. (Column
-   * width is not significant for column types such as TIME and DATE.)
+   * Gets the width of the column, if the column width is required. (Column width is not significant
+   * for column types such as TIME and DATE.)
    *
    * @return Column width as a String
    */
@@ -81,5 +79,4 @@ public interface BaseColumn<D extends DatabaseObject>
    * @return Whether the column is nullable
    */
   boolean isNullable();
-
 }

@@ -28,15 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 /**
  * Represents a table constraint.
  *
  * @author Sualeh Fatehi
  */
-public interface Constraint
-  extends NamedObject, DefinedObject
-{
+public interface Constraint extends NamedObject, DefinedObject {
 
   /**
    * Gets the table constraint type.
@@ -58,5 +55,4 @@ public interface Constraint
    * @return Whether the constraint is initially deferred
    */
   boolean isInitiallyDeferred();
-
 }

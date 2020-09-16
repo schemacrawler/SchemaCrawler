@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.utility;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayDeque;
@@ -42,37 +41,33 @@ import java.util.Set;
 
 /**
  * Command-line options parser. Not POSIX compliant. Follows these POSIX rules:
+ *
  * <ul>
- * <li>Arguments are options if they begin with a hyphen delimiter
- * ('-').</li>
- * <li>Certain options require an argument. For example, the '-o'
- * command of the ld command requires an argument—an output file name.
- * </li>
- * <li>Options typically precede other non-option arguments.</li>
- * <li>Options may be supplied in any order, or appear multiple times.
- * The interpretation is left up to the particular application program.
- * </li>
+ *   <li>Arguments are options if they begin with a hyphen delimiter ('-').
+ *   <li>Certain options require an argument. For example, the '-o' command of the ld command
+ *       requires an argument—an output file name.
+ *   <li>Options typically precede other non-option arguments.
+ *   <li>Options may be supplied in any order, or appear multiple times. The interpretation is left
+ *       up to the particular application program.
  * </ul>
+ *
  * Does not honor these POSIX rules:
+ *
  * <ul>
- * <li>Multiple options may follow a hyphen delimiter in a single token
- * if the options do not take arguments. Thus, '-abc' is equivalent to
- * '-a -b -c'.</li>
- * <li>Option names are single alphanumeric characters (as for isalnum;
- * see Classification of Characters).</li>
- * <li>An option and its argument may or may not appear as separate
- * tokens. (In other words, the whitespace separating them is optional.)
- * Thus, '-o foo' and '-ofoo' are equivalent.</li>
- * <li>The argument '--' terminates all options; any following arguments
- * are treated as non-option arguments, even if they begin with a
- * hyphen.</li>
- * <li>A token consisting of a single hyphen character is interpreted as
- * an ordinary non-option argument. By convention, it is used to specify
- * input from or output to the standard input and output streams.</li>
+ *   <li>Multiple options may follow a hyphen delimiter in a single token if the options do not take
+ *       arguments. Thus, '-abc' is equivalent to '-a -b -c'.
+ *   <li>Option names are single alphanumeric characters (as for isalnum; see Classification of
+ *       Characters).
+ *   <li>An option and its argument may or may not appear as separate tokens. (In other words, the
+ *       whitespace separating them is optional.) Thus, '-o foo' and '-ofoo' are equivalent.
+ *   <li>The argument '--' terminates all options; any following arguments are treated as non-option
+ *       arguments, even if they begin with a hyphen.
+ *   <li>A token consisting of a single hyphen character is interpreted as an ordinary non-option
+ *       argument. By convention, it is used to specify input from or output to the standard input
+ *       and output streams.
  * </ul>
  */
-public class CommandLineArgumentsParser
-{
+public class CommandLineArgumentsParser {
 
   private static final String DASH = "--";
 
@@ -80,102 +75,72 @@ public class CommandLineArgumentsParser
   private final Map<String, String> optionsMap;
   private final List<String> nonOptionArguments;
 
-  public CommandLineArgumentsParser(final Collection<String> args)
-  {
+  public CommandLineArgumentsParser(final Collection<String> args) {
     this.args = requireNonNull(args, "No arguments provided");
     optionsMap = new HashMap<>();
     nonOptionArguments = new ArrayList<>();
   }
 
-  public List<String> getNonOptionArguments()
-  {
+  public Map<String, String> getFilteredOptionsMap(final Set<String> pluginOptionNames) {
+    final Map<String, String> filteredOptionsMap = new HashMap<>(optionsMap);
+
+    if (pluginOptionNames != null) {
+      filteredOptionsMap.entrySet().removeIf(entry -> !pluginOptionNames.contains(entry.getKey()));
+    }
+    return filteredOptionsMap;
+  }
+
+  public List<String> getNonOptionArguments() {
     return nonOptionArguments;
   }
 
-  public Map<String, String> getOptionsMap()
-  {
+  public Map<String, String> getOptionsMap() {
     return optionsMap;
   }
 
-  /**
-   * Extract the options and non-option arguments from the given list of
-   * command-line arguments.
-   */
-  public void parse()
-  {
+  /** Extract the options and non-option arguments from the given list of command-line arguments. */
+  public void parse() {
     final Deque<String> argsList = new ArrayDeque<>(args);
-    while (true)
-    {
+    while (true) {
       final String currentArg = argsList.pollFirst();
-      if (currentArg == null)
-      {
-        if (argsList.isEmpty())
-        {
+      if (currentArg == null) {
+        if (argsList.isEmpty()) {
           break;
-        }
-        else
-        {
+        } else {
           continue;
         }
       }
-      if (currentArg.startsWith(DASH))
-      {
+      if (currentArg.startsWith(DASH)) {
         // Handle --arg=value
-        if (currentArg.contains("="))
-        {
+        if (currentArg.contains("=")) {
           final String[] split = currentArg.split("=", 2);
           final String option = split[0].replaceAll("^-+", "");
           final String value;
-          if (split.length == 2)
-          {
+          if (split.length == 2) {
             value = split[1];
-          }
-          else
-          {
+          } else {
             value = null;
           }
           optionsMap.put(option, value);
-        }
-        else
-        {
+        } else {
           // Look at the next argument, and if is an option, that means
           // there is no value for the current option
           final String option = currentArg.replaceAll("^-+", "");
           final String value = argsList.peekFirst();
-          if (value != null && value.startsWith(DASH))
-          {
+          if (value != null && value.startsWith(DASH)) {
             optionsMap.put(option, null);
-          }
-          else
-          {
+          } else {
             optionsMap.put(option, argsList.pollFirst());
           }
         }
-      }
-      else
-      {
+      } else {
         nonOptionArguments.add(currentArg);
       }
     }
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return new ArrayList<>(args).toString();
   }
-
-  public Map<String, String> getFilteredOptionsMap(final Set<String> pluginOptionNames)
-  {
-    final Map<String, String> filteredOptionsMap = new HashMap<>(optionsMap);
-
-    if (pluginOptionNames != null)
-    {
-      filteredOptionsMap
-        .entrySet()
-        .removeIf(entry -> !pluginOptionNames.contains(entry.getKey()));
-    }
-    return filteredOptionsMap;
-  }
-
 }

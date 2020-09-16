@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -46,6 +45,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
@@ -60,65 +60,60 @@ import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
-public class MetadataRetrievalStrategyTest
-{
+public class MetadataRetrievalStrategyTest {
 
   private static final String METADATA_RETRIEVAL_STRATEGY_OUTPUT =
-    "metadata_retrieval_strategy_output/";
+      "metadata_retrieval_strategy_output/";
 
   private TestOutputStream out;
   private TestOutputStream err;
 
   @AfterEach
-  public void cleanUpStreams()
-  {
+  public void cleanUpStreams() {
     System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
     System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
   }
 
   @Test
-  public void overrideMetadataRetrievalStrategy(final TestContext testContext,
-                                                final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
+  public void overrideMetadataRetrievalStrategy(
+      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     clean(METADATA_RETRIEVAL_STRATEGY_OUTPUT);
 
-    final SchemaTextDetailType schemaTextDetailType =
-      SchemaTextDetailType.schema;
+    final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType.schema;
     final InfoLevel infoLevel = InfoLevel.minimum;
     final OutputFormat outputFormat = TextOutputFormat.text;
 
     final Config config = new Config();
-    config.put("schemacrawler.schema.retrieval.strategy.tables",
-               MetadataRetrievalStrategy.data_dictionary_all.name());
+    config.put(
+        "schemacrawler.schema.retrieval.strategy.tables",
+        MetadataRetrievalStrategy.data_dictionary_all.name());
 
     final Map<String, String> argsMap = new HashMap<>();
     argsMap.put("-info-level", infoLevel.name());
     argsMap.put("-no-info", "true");
 
     // Check that System.err has an error
-    assertThat(outputOf(commandlineExecution(connectionInfo,
-                                             schemaTextDetailType.name(),
-                                             argsMap,
-                                             config,
-                                             outputFormat)), hasNoContent());
+    assertThat(
+        outputOf(
+            commandlineExecution(
+                connectionInfo, schemaTextDetailType.name(), argsMap, config, outputFormat)),
+        hasNoContent());
 
-    assertThat(outputOf(err),
-               hasSameContentAs(classpathResource(
-                 METADATA_RETRIEVAL_STRATEGY_OUTPUT
-                 + testContext.testMethodName()
-                 + ".stderr.txt")));
+    assertThat(
+        outputOf(err),
+        hasSameContentAs(
+            classpathResource(
+                METADATA_RETRIEVAL_STRATEGY_OUTPUT
+                    + testContext.testMethodName()
+                    + ".stderr.txt")));
   }
 
   @BeforeEach
-  public void setUpStreams()
-    throws Exception
-  {
+  public void setUpStreams() throws Exception {
     out = new TestOutputStream();
     System.setOut(new PrintStream(out));
 
     err = new TestOutputStream();
     System.setErr(new PrintStream(err));
   }
-
 }

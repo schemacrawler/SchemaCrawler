@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schemacrawler;
 
-
 import static us.fatehi.utility.Utility.convertForComparison;
 import static us.fatehi.utility.Utility.isBlank;
 
@@ -43,9 +42,7 @@ import java.util.Optional;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
 
-public final class SchemaReference
-  implements Schema
-{
+public final class SchemaReference implements Schema {
 
   private static final long serialVersionUID = -5309848447599233878L;
   private final Map<String, Object> attributeMap = new HashMap<>();
@@ -53,206 +50,149 @@ public final class SchemaReference
   private final String schemaName;
   private transient String fullName;
 
-  public SchemaReference()
-  {
+  public SchemaReference() {
     this(null, null);
   }
 
-  public SchemaReference(final String catalogName, final String schemaName)
-  {
+  public SchemaReference(final String catalogName, final String schemaName) {
     this.catalogName = catalogName;
     this.schemaName = schemaName;
   }
 
   @Override
-  public int compareTo(final NamedObject otherSchemaRef)
-  {
-    if (otherSchemaRef == null)
-    {
+  public int compareTo(final NamedObject otherSchemaRef) {
+    if (otherSchemaRef == null) {
       return -1;
-    }
-    else
-    {
-      return convertForComparison(getFullName()).compareTo(convertForComparison(
-        otherSchemaRef.getFullName()));
+    } else {
+      return convertForComparison(getFullName())
+          .compareTo(convertForComparison(otherSchemaRef.getFullName()));
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public final <T> T getAttribute(final String name)
-  {
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (!(obj instanceof SchemaReference)) {
+      return false;
+    }
+    final Schema other = (Schema) obj;
+    return Objects.equals(catalogName, other.getCatalogName())
+        && Objects.equals(schemaName, other.getName());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public <T> T getAttribute(final String name) {
     return getAttribute(name, null);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final <T> T getAttribute(final String name, final T defaultValue)
-  {
+  public <T> T getAttribute(final String name, final T defaultValue) {
     final Object attributeValue = attributeMap.get(name);
-    if (attributeValue == null)
-    {
+    if (attributeValue == null) {
       return defaultValue;
-    }
-    else
-    {
-      try
-      {
+    } else {
+      try {
         return (T) attributeValue;
-      }
-      catch (final ClassCastException e)
-      {
+      } catch (final ClassCastException e) {
         return defaultValue;
       }
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final Map<String, Object> getAttributes()
-  {
+  public Map<String, Object> getAttributes() {
     return Collections.unmodifiableMap(attributeMap);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public boolean hasAttribute(final String name)
-  {
+  public String getCatalogName() {
+    return catalogName;
+  }
+
+  @Override
+  public String getFullName() {
+    buildFullName();
+    return fullName;
+  }
+
+  @Override
+  public String getName() {
+    return schemaName;
+  }
+
+  @Override
+  public String getRemarks() {
+    return "";
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean hasAttribute(final String name) {
     return attributeMap.containsKey(name);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public final <T> Optional<T> lookupAttribute(final String name)
-  {
+  public int hashCode() {
+    return Objects.hash(catalogName, schemaName);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean hasRemarks() {
+    return false;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public <T> Optional<T> lookupAttribute(final String name) {
     return Optional.of(getAttribute(name));
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final void removeAttribute(final String name)
-  {
-    if (!isBlank(name))
-    {
+  public void removeAttribute(final String name) {
+    if (!isBlank(name)) {
       attributeMap.remove(name);
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final void setAttribute(final String name, final Object value)
-  {
-    if (!isBlank(name))
-    {
-      if (value == null)
-      {
+  public void setAttribute(final String name, final Object value) {
+    if (!isBlank(name)) {
+      if (value == null) {
         attributeMap.remove(name);
-      }
-      else
-      {
+      } else {
         attributeMap.put(name, value);
       }
     }
   }
 
   @Override
-  public String getCatalogName()
-  {
-    return catalogName;
-  }
-
-  @Override
-  public String getFullName()
-  {
-    buildFullName();
-    return fullName;
-  }
-
-  @Override
-  public String getName()
-  {
-    return schemaName;
-  }
-
-  @Override
-  public List<String> toUniqueLookupKey()
-  {
-    return new ArrayList<>(Arrays.asList(catalogName, schemaName));
-  }
-
-  @Override
-  public String getRemarks()
-  {
-    return "";
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean hasRemarks()
-  {
-    return false;
-  }
-
-  @Override
-  public int hashCode()
-  {
-    return Objects.hash(catalogName, schemaName);
-  }
-
-  @Override
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
-      return true;
-    }
-    if (obj == null)
-    {
-      return false;
-    }
-    if (!(obj instanceof SchemaReference))
-    {
-      return false;
-    }
-    final Schema other = (Schema) obj;
-    return Objects.equals(catalogName, other.getCatalogName())
-           && Objects.equals(schemaName, other.getName());
-  }
-
-  @Override
-  public String toString()
-  {
+  public String toString() {
     return getFullName();
   }
 
-  private void buildFullName()
-  {
-    if (fullName != null)
-    {
+  @Override
+  public List<String> toUniqueLookupKey() {
+    return new ArrayList<>(Arrays.asList(catalogName, schemaName));
+  }
+
+  private void buildFullName() {
+    if (fullName != null) {
       return;
     }
 
-    final Identifiers identifiers = Identifiers
-      .identifiers()
-      .withIdentifierQuoteString("\"")
-      .build();
+    final Identifiers identifiers =
+        Identifiers.identifiers().withIdentifierQuoteString("\"").build();
     fullName = identifiers.quoteFullName(this);
   }
-
 }

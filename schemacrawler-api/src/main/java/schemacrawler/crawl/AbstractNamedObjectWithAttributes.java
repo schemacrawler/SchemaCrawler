@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.Collections;
@@ -44,149 +43,103 @@ import schemacrawler.schema.DescribedObject;
  *
  * @author Sualeh Fatehi
  */
-abstract class AbstractNamedObjectWithAttributes
-  extends AbstractNamedObject
-  implements AttributedObject, DescribedObject
-{
+abstract class AbstractNamedObjectWithAttributes extends AbstractNamedObject
+    implements AttributedObject, DescribedObject {
 
   private static final long serialVersionUID = -1486322887991472729L;
   private final Map<String, Object> attributeMap;
   private String remarks;
 
   /**
-   * Effective Java - Item 17 - Minimize Mutability - Package-private
-   * constructors make a class effectively final
+   * Effective Java - Item 17 - Minimize Mutability - Package-private constructors make a class
+   * effectively final
    *
-   * @param name
-   *   Name of the named object
+   * @param name Name of the named object
    */
-  AbstractNamedObjectWithAttributes(final String name)
-  {
+  AbstractNamedObjectWithAttributes(final String name) {
     super(name);
     attributeMap = new HashMap<>();
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final <T> T getAttribute(final String name)
-  {
+  public final <T> T getAttribute(final String name) {
     return getAttribute(name, null);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
   public final <T> T getAttribute(final String name, final T defaultValue)
-    throws ClassCastException
-  {
+      throws ClassCastException {
     final Object attributeValue = attributeMap.get(name);
-    if (attributeValue == null)
-    {
+    if (attributeValue == null) {
       return defaultValue;
-    }
-    else
-    {
+    } else {
       return (T) attributeValue;
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final Map<String, Object> getAttributes()
-  {
+  public final Map<String, Object> getAttributes() {
     return Collections.unmodifiableMap(attributeMap);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final boolean hasAttribute(final String name)
-  {
+  public final String getRemarks() {
+    return remarks;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean hasAttribute(final String name) {
     return attributeMap.containsKey(name);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final <T> Optional<T> lookupAttribute(final String name)
-  {
+  public final boolean hasRemarks() {
+    return remarks != null && !remarks.isEmpty();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final <T> Optional<T> lookupAttribute(final String name) {
     return Optional.ofNullable(getAttribute(name));
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final void removeAttribute(final String name)
-  {
-    if (!isBlank(name))
-    {
+  public final void removeAttribute(final String name) {
+    if (!isBlank(name)) {
       attributeMap.remove(name);
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final void setAttribute(final String name, final Object value)
-  {
-    if (!isBlank(name))
-    {
-      if (value == null)
-      {
+  public final void setAttribute(final String name, final Object value) {
+    if (!isBlank(name)) {
+      if (value == null) {
         attributeMap.remove(name);
-      }
-      else
-      {
+      } else {
         attributeMap.put(name, value);
       }
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final String getRemarks()
-  {
-    return remarks;
-  }
-
-  protected final void setRemarks(final String remarks)
-  {
-    if (remarks == null)
-    {
-      this.remarks = "";
-    }
-    else
-    {
-      this.remarks = remarks;
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final boolean hasRemarks()
-  {
-    return remarks != null && !remarks.isEmpty();
-  }
-
-  protected final void addAttributes(final Map<String, Object> values)
-  {
-    if (values != null)
-    {
+  protected final void addAttributes(final Map<String, Object> values) {
+    if (values != null) {
       attributeMap.putAll(values);
     }
   }
 
+  protected final void setRemarks(final String remarks) {
+    if (remarks == null) {
+      this.remarks = "";
+    } else {
+      this.remarks = remarks;
+    }
+  }
 }

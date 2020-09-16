@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility;
 
-
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.createTempDirectory;
 import static java.nio.file.Files.exists;
@@ -56,99 +55,73 @@ import java.util.logging.Logger;
  * @author Sualeh Fatehi
  */
 @UtilityMarker
-public final class IOUtility
-{
+public final class IOUtility {
 
-  private static final Logger LOGGER =
-    Logger.getLogger(IOUtility.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(IOUtility.class.getName());
 
   /**
    * Reads the stream fully, and writes to the writer.
    *
-   * @param reader
-   *   Reader to read.
-   * @param writer
-   *   Writer to copy to
+   * @param reader Reader to read.
+   * @param writer Writer to copy to
    */
-  public static void copy(final Reader reader, final Writer writer)
-  {
-    if (reader == null)
-    {
+  public static void copy(final Reader reader, final Writer writer) {
+    if (reader == null) {
       LOGGER.log(Level.WARNING, "Cannot read null reader");
       return;
     }
-    if (writer == null)
-    {
+    if (writer == null) {
       LOGGER.log(Level.WARNING, "Cannot write null writer");
       return;
     }
 
     final char[] buffer = new char[0x10000];
-    try
-    {
+    try {
       // Do not close resources - that is the responsibility of the
       // caller
       final Reader bufferedReader = new BufferedReader(reader, buffer.length);
-      final BufferedWriter bufferedWriter =
-        new BufferedWriter(writer, buffer.length);
+      final BufferedWriter bufferedWriter = new BufferedWriter(writer, buffer.length);
 
       int read;
-      do
-      {
+      do {
         read = bufferedReader.read(buffer, 0, buffer.length);
-        if (read > 0)
-        {
+        if (read > 0) {
           bufferedWriter.write(buffer, 0, read);
         }
-      }
-      while (read >= 0);
+      } while (read >= 0);
 
       bufferedWriter.flush();
-    }
-    catch (final IOException e)
-    {
+    } catch (final IOException e) {
       LOGGER.log(Level.WARNING, e.getMessage(), e);
     }
   }
 
-  public static Path createTempFilePath(final String stem,
-                                        final String extension)
-    throws IOException
-  {
-    final Path tempFilePath = createTempDirectory(null)
-      .resolve(randomUUID() + "." + extension)
-      .normalize()
-      .toAbsolutePath();
-    tempFilePath
-      .toFile()
-      .deleteOnExit();
+  public static Path createTempFilePath(final String stem, final String extension)
+      throws IOException {
+    final Path tempFilePath =
+        createTempDirectory(null)
+            .resolve(randomUUID() + "." + extension)
+            .normalize()
+            .toAbsolutePath();
+    tempFilePath.toFile().deleteOnExit();
     return tempFilePath;
   }
 
-  public static String getFileExtension(final Path file)
-  {
-    if (file == null)
-    {
+  public static String getFileExtension(final Path file) {
+    if (file == null) {
       return "";
-    }
-    else
-    {
+    } else {
       final String fileName = file.toString();
-      return getFileExtension(fileName == null? "": fileName);
+      return getFileExtension(fileName == null ? "" : fileName);
     }
   }
 
-  public static String getFileExtension(final String fileName)
-  {
+  public static String getFileExtension(final String fileName) {
     final String ext;
-    if (fileName != null)
-    {
-      ext = fileName.lastIndexOf('.') == -1?
-            "":
-            fileName.substring(fileName.lastIndexOf('.') + 1);
-    }
-    else
-    {
+    if (fileName != null) {
+      ext =
+          fileName.lastIndexOf('.') == -1 ? "" : fileName.substring(fileName.lastIndexOf('.') + 1);
+    } else {
       ext = "";
     }
     return ext;
@@ -157,29 +130,21 @@ public final class IOUtility
   /**
    * Checks if an input file can be read. The file must contain some data.
    *
-   * @param file
-   *   Input file to read
+   * @param file Input file to read
    * @return True if the file can be read, false otherwise.
    */
-  public static boolean isFileReadable(final Path file)
-  {
-    if (file == null)
-    {
+  public static boolean isFileReadable(final Path file) {
+    if (file == null) {
       return false;
     }
-    if (!isReadable(file) || !isRegularFile(file))
-    {
+    if (!isReadable(file) || !isRegularFile(file)) {
       return false;
     }
-    try
-    {
-      if (size(file) == 0)
-      {
+    try {
+      if (size(file) == 0) {
         return false;
       }
-    }
-    catch (final IOException e)
-    {
+    } catch (final IOException e) {
       // Not a critical check, so ignore exception
     }
     return true;
@@ -188,31 +153,25 @@ public final class IOUtility
   /**
    * Checks if an output file can be written. The file does not need to exist.
    *
-   * @param file
-   *   Output file to write
+   * @param file Output file to write
    * @return True if the file can be written, false otherwise.
    */
-  public static boolean isFileWritable(final Path file)
-  {
-    if (file == null)
-    {
+  public static boolean isFileWritable(final Path file) {
+    if (file == null) {
       return false;
     }
-    if (isDirectory(file))
-    {
+    if (isDirectory(file)) {
       return false;
     }
     final Path parentPath = file.getParent();
     return parentPath != null
-           && exists(parentPath)
-           && isDirectory(parentPath)
-           && isWritable(parentPath);
+        && exists(parentPath)
+        && isDirectory(parentPath)
+        && isWritable(parentPath);
   }
 
-  public static String readFully(final InputStream stream)
-  {
-    if (stream == null)
-    {
+  public static String readFully(final InputStream stream) {
+    if (stream == null) {
       return null;
     }
     final Reader reader = new InputStreamReader(stream, UTF_8);
@@ -222,41 +181,31 @@ public final class IOUtility
   /**
    * Reads the stream fully, and returns a byte array of data.
    *
-   * @param reader
-   *   Reader to read.
+   * @param reader Reader to read.
    * @return Byte array
    */
-  public static String readFully(final Reader reader)
-  {
-    if (reader == null)
-    {
+  public static String readFully(final Reader reader) {
+    if (reader == null) {
       LOGGER.log(Level.WARNING, "Cannot read null reader");
       return "";
     }
 
-    try
-    {
+    try {
       final StringWriter writer = new StringWriter();
       copy(reader, writer);
       writer.close();
       return writer.toString();
-    }
-    catch (final IOException e)
-    {
+    } catch (final IOException e) {
       LOGGER.log(Level.WARNING, e.getMessage(), e);
       return "";
     }
-
   }
 
-  public static String readResourceFully(final String resource)
-  {
+  public static String readResourceFully(final String resource) {
     return readFully(IOUtility.class.getResourceAsStream(resource));
   }
 
-  private IOUtility()
-  {
+  private IOUtility() {
     // Prevent instantiation
   }
-
 }

@@ -1,6 +1,5 @@
 package schemacrawler.test.utility;
 
-
 /*
 ========================================================================
 SchemaCrawler
@@ -37,45 +36,33 @@ import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
+
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.template.TemplateLanguageType;
 import schemacrawler.tools.options.Config;
 
-public class ScriptTestUtility
-{
+public class ScriptTestUtility {
 
-  private static Map<String, String> additionalArgsMap()
-  {
-    final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("-schemas", "((?!FOR_LINT).)*");
-    argsMap.put("-info-level", "standard");
-    return argsMap;
-  }
-
-  public static Path commandLineScriptExecution(final DatabaseConnectionInfo connectionInfo,
-                                                final String script)
-    throws Exception
-  {
+  public static Path commandLineScriptExecution(
+      final DatabaseConnectionInfo connectionInfo, final String script) throws Exception {
     final Map<String, String> argsMap = additionalArgsMap();
     argsMap.put("-" + "script", script);
     return commandlineExecution(connectionInfo, "script", argsMap, "text");
   }
 
-  public static Path commandLineTemplateExecution(final DatabaseConnectionInfo connectionInfo,
-                                                  final TemplateLanguageType templateLanguage,
-                                                  final String template)
-    throws Exception
-  {
+  public static Path commandLineTemplateExecution(
+      final DatabaseConnectionInfo connectionInfo,
+      final TemplateLanguageType templateLanguage,
+      final String template)
+      throws Exception {
     final Map<String, String> argsMap = additionalArgsMap();
     argsMap.put("-template", template);
     argsMap.put("-templating-language", templateLanguage.name());
     return commandlineExecution(connectionInfo, "template", argsMap, "text");
   }
 
-  public static Path scriptExecution(final Connection connection,
-                                     final String script)
-    throws Exception
-  {
+  public static Path scriptExecution(final Connection connection, final String script)
+      throws Exception {
     final SchemaCrawlerExecutable executable = executableOf("script");
     final Config additionalConfiguration = new Config();
     additionalConfiguration.put("script", script);
@@ -84,11 +71,11 @@ public class ScriptTestUtility
     return executableExecution(connection, executable, "text");
   }
 
-  public static Path templateExecution(final Connection connection,
-                                       final TemplateLanguageType templateLanguage,
-                                       final String templateResource)
-    throws Exception
-  {
+  public static Path templateExecution(
+      final Connection connection,
+      final TemplateLanguageType templateLanguage,
+      final String templateResource)
+      throws Exception {
     final SchemaCrawlerExecutable executable = executableOf("template");
     final Config additionalConfiguration = new Config();
     additionalConfiguration.put("template", templateResource);
@@ -98,4 +85,10 @@ public class ScriptTestUtility
     return executableExecution(connection, executable, "text");
   }
 
+  private static Map<String, String> additionalArgsMap() {
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("-schemas", "((?!FOR_LINT).)*");
+    argsMap.put("-info-level", "standard");
+    return argsMap;
+  }
 }

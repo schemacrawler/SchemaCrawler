@@ -27,44 +27,33 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.text.base;
 
-
 import schemacrawler.tools.options.Config;
 
 public final class CommonTextOptionsBuilder
-  extends BaseTextOptionsBuilder<CommonTextOptionsBuilder, CommonTextOptions>
-{
+    extends BaseTextOptionsBuilder<CommonTextOptionsBuilder, CommonTextOptions> {
 
-  public static CommonTextOptionsBuilder builder()
-  {
+  public static CommonTextOptionsBuilder builder() {
     return new CommonTextOptionsBuilder();
   }
 
-  public static CommonTextOptionsBuilder builder(final CommonTextOptions options)
-  {
+  public static CommonTextOptionsBuilder builder(final CommonTextOptions options) {
     return new CommonTextOptionsBuilder().fromOptions(options);
   }
 
-  public static CommonTextOptions newCommonTextOptions()
-  {
+  public static CommonTextOptions newCommonTextOptions() {
     return new CommonTextOptionsBuilder().toOptions();
   }
 
-  public static CommonTextOptions newCommonTextOptions(final Config config)
-  {
-    return new CommonTextOptionsBuilder()
-      .fromConfig(config)
-      .toOptions();
+  public static CommonTextOptions newCommonTextOptions(final Config config) {
+    return new CommonTextOptionsBuilder().fromConfig(config).toOptions();
   }
 
-  private CommonTextOptionsBuilder()
-  {
+  private CommonTextOptionsBuilder() {
     // Set default values, if any
   }
 
   @Override
-  public CommonTextOptions toOptions()
-  {
+  public CommonTextOptions toOptions() {
     return new CommonTextOptions(this);
   }
-
 }

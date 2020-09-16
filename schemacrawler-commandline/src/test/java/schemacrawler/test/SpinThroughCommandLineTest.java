@@ -27,22 +27,16 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test;
 
-
 import java.util.Arrays;
 import java.util.stream.Stream;
 
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 
-public class SpinThroughCommandLineTest
-  extends AbstractSpinThroughCommandLineTest
-{
+public class SpinThroughCommandLineTest extends AbstractSpinThroughCommandLineTest {
 
-  public Stream<OutputFormat> outputFormats()
-  {
-    return Arrays.stream(new OutputFormat[] {
-      TextOutputFormat.text, TextOutputFormat.html
-    });
+  @Override
+  public Stream<OutputFormat> outputFormats() {
+    return Arrays.stream(new OutputFormat[] {TextOutputFormat.text, TextOutputFormat.html});
   }
-
 }

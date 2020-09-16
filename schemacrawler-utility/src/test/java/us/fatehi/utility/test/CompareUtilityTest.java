@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
@@ -38,51 +37,44 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
+
 import us.fatehi.utility.CompareUtility;
 
-public class CompareUtilityTest
-{
+public class CompareUtilityTest {
 
   @Test
-  public void nullArgs()
-  {
-    assertThat(CompareUtility.compareLists(null, null), is(0));
-    assertThat(CompareUtility.compareLists(null, new ArrayList<String>()),
-               is(lessThan(0)));
-    assertThat(CompareUtility.compareLists(new ArrayList<String>(), null),
-               is(greaterThan(0)));
-  }
-
-  @Test
-  public void equal()
-  {
+  public void equal() {
     // Zero length
-    assertThat(CompareUtility.compareLists(new ArrayList<String>(),
-                                           new ArrayList<String>()), is(0));
+    assertThat(
+        CompareUtility.compareLists(new ArrayList<String>(), new ArrayList<String>()), is(0));
 
     // Same length and values
-    assertThat(CompareUtility.compareLists(Arrays.asList("hello"),
-                                           Arrays.asList("hello")), is(0));
+    assertThat(CompareUtility.compareLists(Arrays.asList("hello"), Arrays.asList("hello")), is(0));
   }
 
   @Test
-  public void unequal()
-  {
-    // Different lengths
-    assertThat(CompareUtility.compareLists(Arrays.asList("hello"),
-                                           new ArrayList<String>()),
-               is(greaterThan(0)));
-    assertThat(CompareUtility.compareLists(new ArrayList<String>(),
-                                           Arrays.asList("hello")),
-               is(lessThan(0)));
-
-    // Same length different values
-    assertThat(CompareUtility.compareLists(Arrays.asList("zorro"),
-                                           Arrays.asList("hello")),
-               is(greaterThan(0)));
-    assertThat(CompareUtility.compareLists(Arrays.asList("hello"),
-                                           Arrays.asList("zorro")),
-               is(lessThan(0)));
+  public void nullArgs() {
+    assertThat(CompareUtility.compareLists(null, null), is(0));
+    assertThat(CompareUtility.compareLists(null, new ArrayList<String>()), is(lessThan(0)));
+    assertThat(CompareUtility.compareLists(new ArrayList<String>(), null), is(greaterThan(0)));
   }
 
+  @Test
+  public void unequal() {
+    // Different lengths
+    assertThat(
+        CompareUtility.compareLists(Arrays.asList("hello"), new ArrayList<String>()),
+        is(greaterThan(0)));
+    assertThat(
+        CompareUtility.compareLists(new ArrayList<String>(), Arrays.asList("hello")),
+        is(lessThan(0)));
+
+    // Same length different values
+    assertThat(
+        CompareUtility.compareLists(Arrays.asList("zorro"), Arrays.asList("hello")),
+        is(greaterThan(0)));
+    assertThat(
+        CompareUtility.compareLists(Arrays.asList("hello"), Arrays.asList("zorro")),
+        is(lessThan(0)));
+  }
 }

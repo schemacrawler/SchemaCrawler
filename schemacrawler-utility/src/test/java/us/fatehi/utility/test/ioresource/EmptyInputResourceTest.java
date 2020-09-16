@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.test.ioresource;
 
-
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -36,20 +35,16 @@ import static org.hamcrest.Matchers.startsWith;
 import static us.fatehi.utility.IOUtility.readFully;
 
 import org.junit.jupiter.api.Test;
+
 import us.fatehi.utility.ioresource.EmptyInputResource;
 
-public class EmptyInputResourceTest
-{
+public class EmptyInputResourceTest {
 
   @Test
-  public void happyPath()
-  {
+  public void happyPath() {
     final EmptyInputResource resource = new EmptyInputResource();
-    assertThat("Description does not match",
-               resource.getDescription(),
-               is("<empty>"));
+    assertThat("Description does not match", resource.getDescription(), is("<empty>"));
     assertThat("toString() does not match", resource.toString(), is("<empty>"));
     assertThat(readFully(resource.openNewInputReader(UTF_8)), startsWith(""));
   }
-
 }

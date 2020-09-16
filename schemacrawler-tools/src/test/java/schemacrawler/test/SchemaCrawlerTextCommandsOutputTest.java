@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -41,6 +40,7 @@ import java.sql.Connection;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -53,110 +53,81 @@ import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public class SchemaCrawlerTextCommandsOutputTest
-{
+public class SchemaCrawlerTextCommandsOutputTest {
 
   private static final String COMMAND_OUTPUT = "command_output/";
 
   @BeforeAll
-  public static void before()
-    throws Exception
-  {
+  public static void before() throws Exception {
     clean(COMMAND_OUTPUT);
   }
 
   @Test
-  public void queryOutput(final Connection connection)
-    throws Exception
-  {
-    final String queryCommand = "all_tables";
-    final Config config = new Config();
-    config.put(queryCommand,
-               "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES ORDER BY TABLE_SCHEM, TABLE_NAME");
-
-    textOutputTest(queryCommand, connection, config);
-  }
-
-  @Test
-  public void queryOverOutput(final Connection connection)
-    throws Exception
-  {
-    final String queryCommand = "dump_tables";
-    final Config config = new Config();
-    config.put(queryCommand,
-               "SELECT ${orderbycolumns} FROM ${table} ORDER BY ${orderbycolumns}");
-
-    textOutputTest(queryCommand, connection, config);
-  }
-
-  @Test
-  public void operationOutput(final Connection connection)
-    throws Exception
-  {
-    for (final Operation operation : Operation.values())
-    {
+  public void operationOutput(final Connection connection) throws Exception {
+    for (final Operation operation : Operation.values()) {
       textOutputTest(operation.name(), connection, new Config());
     }
   }
 
   @Test
-  public void schemaTextOutput(final Connection connection)
-    throws Exception
-  {
-    for (final SchemaTextDetailType schemaTextDetailType : SchemaTextDetailType.values())
-    {
+  public void queryOutput(final Connection connection) throws Exception {
+    final String queryCommand = "all_tables";
+    final Config config = new Config();
+    config.put(
+        queryCommand,
+        "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES ORDER BY TABLE_SCHEM, TABLE_NAME");
+
+    textOutputTest(queryCommand, connection, config);
+  }
+
+  @Test
+  public void queryOverOutput(final Connection connection) throws Exception {
+    final String queryCommand = "dump_tables";
+    final Config config = new Config();
+    config.put(queryCommand, "SELECT ${orderbycolumns} FROM ${table} ORDER BY ${orderbycolumns}");
+
+    textOutputTest(queryCommand, connection, config);
+  }
+
+  @Test
+  public void schemaTextOutput(final Connection connection) throws Exception {
+    for (final SchemaTextDetailType schemaTextDetailType : SchemaTextDetailType.values()) {
       textOutputTest(schemaTextDetailType.name(), connection, new Config());
     }
   }
 
   @Test
-  public void sortedColumnsOutput(final Connection connection)
-    throws Exception
-  {
+  public void sortedColumnsOutput(final Connection connection) throws Exception {
     final String queryCommand = "dump_tables_sorted_columns";
     final Config config = new Config();
-    config.put("schemacrawler.format.sort_alphabetically.table_columns",
-               Boolean.TRUE.toString());
-    config.put(queryCommand,
-               "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}");
+    config.put("schemacrawler.format.sort_alphabetically.table_columns", Boolean.TRUE.toString());
+    config.put(queryCommand, "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}");
 
     textOutputTest(queryCommand, connection, config);
   }
 
-  private void textOutputTest(final String command,
-                              final Connection connection,
-                              final Config config)
-    throws Exception
-  {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-      .builder()
-      .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
-      .includeAllRoutines();
+  private void textOutputTest(
+      final String command, final Connection connection, final Config config) throws Exception {
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
+            .includeAllRoutines();
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withLimitOptionsBuilder(limitOptionsBuilder);
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-      schemaCrawlerOptionsBuilder.toOptions();
+        SchemaCrawlerOptionsBuilder.builder().withLimitOptionsBuilder(limitOptionsBuilder);
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
-    final CommonTextOptionsBuilder commonTextOptions =
-      CommonTextOptionsBuilder.builder();
+    final CommonTextOptionsBuilder commonTextOptions = CommonTextOptionsBuilder.builder();
     commonTextOptions.fromConfig(config);
     commonTextOptions.noInfo();
-    commonTextOptions.noHeader();
-    commonTextOptions.noFooter();
     commonTextOptions.sortTables(true);
     config.putAll(commonTextOptions.toConfig());
 
-    final SchemaCrawlerExecutable executable =
-      new SchemaCrawlerExecutable(command);
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(config);
 
-    assertThat(outputOf(executableExecution(connection, executable)),
-               hasSameContentAs(classpathResource(COMMAND_OUTPUT
-                                                  + command
-                                                  + ".txt")));
+    assertThat(
+        outputOf(executableExecution(connection, executable)),
+        hasSameContentAs(classpathResource(COMMAND_OUTPUT + command + ".txt")));
   }
-
 }

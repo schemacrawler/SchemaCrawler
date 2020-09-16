@@ -28,37 +28,27 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schemacrawler;
 
+public final class LoadOptionsBuilder implements OptionsBuilder<LoadOptionsBuilder, LoadOptions> {
 
-public final class LoadOptionsBuilder
-  implements OptionsBuilder<LoadOptionsBuilder, LoadOptions>
-{
-
-  public static LoadOptionsBuilder builder()
-  {
+  public static LoadOptionsBuilder builder() {
     return new LoadOptionsBuilder();
   }
 
-  public static LoadOptions newLoadOptions()
-  {
+  public static LoadOptions newLoadOptions() {
     return builder().toOptions();
   }
 
   private boolean isLoadRowCounts;
   private SchemaInfoLevel schemaInfoLevel;
 
-  /**
-   * Default options.
-   */
-  private LoadOptionsBuilder()
-  {
+  /** Default options. */
+  private LoadOptionsBuilder() {
     schemaInfoLevel = SchemaInfoLevelBuilder.standard();
   }
 
   @Override
-  public LoadOptionsBuilder fromOptions(final LoadOptions options)
-  {
-    if (options == null)
-    {
+  public LoadOptionsBuilder fromOptions(final LoadOptions options) {
+    if (options == null) {
       return this;
     }
 
@@ -68,55 +58,41 @@ public final class LoadOptionsBuilder
     return this;
   }
 
-  @Override
-  public LoadOptions toOptions()
-  {
-    return new LoadOptions(schemaInfoLevel, isLoadRowCounts);
-  }
-
-  /**
-   * Corresponds to the --load-row-counts command-line argument.
-   */
-  public final LoadOptionsBuilder loadRowCounts()
-  {
+  /** Corresponds to the --load-row-counts command-line argument. */
+  public LoadOptionsBuilder loadRowCounts() {
     return loadRowCounts(true);
   }
 
-  /**
-   * Corresponds to the --load-row-counts=&lt;boolean&gt; command-line
-   * argument.
-   */
-  public final LoadOptionsBuilder loadRowCounts(final boolean value)
-  {
+  /** Corresponds to the --load-row-counts=&lt;boolean&gt; command-line argument. */
+  public LoadOptionsBuilder loadRowCounts(final boolean value) {
     isLoadRowCounts = value;
     return this;
   }
 
-  public LoadOptionsBuilder withSchemaInfoLevel(final SchemaInfoLevel schemaInfoLevel)
-  {
-    if (schemaInfoLevel != null)
-    {
-      this.schemaInfoLevel = schemaInfoLevel;
-    }
-    return this;
+  @Override
+  public LoadOptions toOptions() {
+    return new LoadOptions(schemaInfoLevel, isLoadRowCounts);
   }
 
-  public LoadOptionsBuilder withSchemaInfoLevelBuilder(final SchemaInfoLevelBuilder schemaInfoLevelBuilder)
-  {
-    if (schemaInfoLevelBuilder != null)
-    {
-      this.schemaInfoLevel = schemaInfoLevelBuilder.toOptions();
-    }
-    return this;
-  }
-
-  public LoadOptionsBuilder withInfoLevel(final InfoLevel infoLevel)
-  {
-    if (infoLevel != null)
-    {
+  public LoadOptionsBuilder withInfoLevel(final InfoLevel infoLevel) {
+    if (infoLevel != null) {
       this.schemaInfoLevel = infoLevel.toSchemaInfoLevel();
     }
     return this;
   }
 
+  public LoadOptionsBuilder withSchemaInfoLevel(final SchemaInfoLevel schemaInfoLevel) {
+    if (schemaInfoLevel != null) {
+      this.schemaInfoLevel = schemaInfoLevel;
+    }
+    return this;
+  }
+
+  public LoadOptionsBuilder withSchemaInfoLevelBuilder(
+      final SchemaInfoLevelBuilder schemaInfoLevelBuilder) {
+    if (schemaInfoLevelBuilder != null) {
+      this.schemaInfoLevel = schemaInfoLevelBuilder.toOptions();
+    }
+    return this;
+  }
 }

@@ -27,62 +27,48 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.utility;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.nio.file.Path;
 import java.util.Optional;
 
-final class TestResource
-{
+final class TestResource {
   private final Path path;
   private final String resource;
 
-  public TestResource()
-  {
+  public TestResource() {
     path = null;
     resource = null;
   }
 
-  TestResource(final Path path)
-  {
+  TestResource(final Path path) {
     requireNonNull(path, "No path provided");
     this.path = path;
     resource = null;
   }
 
-  TestResource(final String resource)
-  {
+  TestResource(final String resource) {
     requireNonNull(resource, "No resource provided");
     path = null;
     this.resource = resource;
   }
 
-  public Optional<String> getClasspathResource()
-  {
+  public Optional<String> getClasspathResource() {
     return Optional.ofNullable(resource);
   }
 
-  public Optional<Path> getFileResource()
-  {
+  public Optional<Path> getFileResource() {
     return Optional.ofNullable(path);
   }
 
   @Override
-  public String toString()
-  {
-    if (path != null)
-    {
+  public String toString() {
+    if (path != null) {
       return String.format("file: <%s>", path);
-    }
-    else if (resource != null)
-    {
+    } else if (resource != null) {
       return String.format("classpath: <%s>", resource);
-    }
-    else
-    {
+    } else {
       return "<empty>";
     }
   }
-
 }

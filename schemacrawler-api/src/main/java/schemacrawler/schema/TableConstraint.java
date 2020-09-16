@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 import java.util.List;
 
 /**
@@ -37,8 +36,7 @@ import java.util.List;
  * @author Sualeh Fatehi
  */
 public interface TableConstraint
-  extends Constraint, DependantObject<Table>, TypedObject<TableConstraintType>
-{
+    extends Constraint, DependantObject<Table>, TypedObject<TableConstraintType> {
 
   /**
    * Gets the list of columns in ordinal order.
@@ -54,5 +52,4 @@ public interface TableConstraint
    */
   @Override
   TableConstraintType getConstraintType();
-
 }

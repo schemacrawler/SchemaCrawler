@@ -28,19 +28,15 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 /**
  * Represents a column in a result set.
  *
  * @author Sualeh Fatehi
  */
-public interface ResultsColumn
-  extends BaseColumn<Table>
-{
+public interface ResultsColumn extends BaseColumn<Table> {
 
   /**
-   * Gets the normal maximum number of characters allowed as the width of the
-   * designated column.
+   * Gets the normal maximum number of characters allowed as the width of the designated column.
    *
    * @return The column's normal maximum width in characters
    */
@@ -75,8 +71,7 @@ public interface ResultsColumn
   boolean isCurrency();
 
   /**
-   * Indicates whether a write on the designated column will definitely
-   * succeed.
+   * Indicates whether a write on the designated column will definitely succeed.
    *
    * @return Whether a write on the designated column will definitely succeed
    */
@@ -104,12 +99,9 @@ public interface ResultsColumn
   boolean isSigned();
 
   /**
-   * Indicates whether it is possible for a write on the designated column to
-   * succeed.
+   * Indicates whether it is possible for a write on the designated column to succeed.
    *
-   * @return Whether it is possible for a write on the designated column to
-   *   succeed
+   * @return Whether it is possible for a write on the designated column to succeed
    */
   boolean isWritable();
-
 }

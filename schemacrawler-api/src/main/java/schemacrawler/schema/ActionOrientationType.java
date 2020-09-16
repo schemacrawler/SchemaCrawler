@@ -28,24 +28,13 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
+/** Action orientation type. */
+public enum ActionOrientationType {
 
-/**
- * Action orientation type.
- */
-public enum ActionOrientationType
-{
-
-  /**
-   * Unknown
-   */
+  /** Unknown */
   unknown,
-  /**
-   * Row
-   */
+  /** Row */
   row,
-  /**
-   * Statement
-   */
+  /** Statement */
   statement
-
 }

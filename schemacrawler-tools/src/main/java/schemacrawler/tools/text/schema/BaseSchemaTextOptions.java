@@ -28,14 +28,11 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.text.schema;
 
-
 import java.util.Objects;
 
 import schemacrawler.tools.text.base.BaseTextOptions;
 
-public abstract class BaseSchemaTextOptions
-  extends BaseTextOptions
-{
+public abstract class BaseSchemaTextOptions extends BaseTextOptions {
 
   private final boolean isAlphabeticalSortForForeignKeys;
   private final boolean isAlphabeticalSortForIndexes;
@@ -51,8 +48,8 @@ public abstract class BaseSchemaTextOptions
   private final boolean isShowStandardColumnTypeNames;
   private final boolean isShowRowCounts;
 
-  protected BaseSchemaTextOptions(final BaseSchemaTextOptionsBuilder<?, ? extends BaseSchemaTextOptions> builder)
-  {
+  protected BaseSchemaTextOptions(
+      final BaseSchemaTextOptionsBuilder<?, ? extends BaseSchemaTextOptions> builder) {
     super(builder);
 
     isAlphabeticalSortForForeignKeys = builder.isAlphabeticalSortForForeignKeys;
@@ -70,116 +67,97 @@ public abstract class BaseSchemaTextOptions
     isShowRowCounts = builder.isShowRowCounts;
   }
 
-  public boolean isAlphabeticalSortForForeignKeys()
-  {
-    return isAlphabeticalSortForForeignKeys;
-  }
-
   @Override
-  public int hashCode()
-  {
-    return Objects.hash(isAlphabeticalSortForForeignKeys,
-                        isAlphabeticalSortForIndexes,
-                        isHideForeignKeyNames,
-                        isHideIndexNames,
-                        isHidePrimaryKeyNames,
-                        isHideRemarks,
-                        isHideRoutineSpecificNames,
-                        isHideTableConstraintNames,
-                        isHideTriggerNames,
-                        isShowWeakAssociations,
-                        isShowOrdinalNumbers,
-                        isShowStandardColumnTypeNames,
-                        isShowRowCounts);
-  }
-
-  @Override
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals(final Object o) {
+    if (this == o) {
       return true;
     }
-    if (!(o instanceof BaseSchemaTextOptions))
-    {
+    if (!(o instanceof BaseSchemaTextOptions)) {
       return false;
     }
     final BaseSchemaTextOptions that = (BaseSchemaTextOptions) o;
-    return isAlphabeticalSortForForeignKeys
-           == that.isAlphabeticalSortForForeignKeys
-           && isAlphabeticalSortForIndexes == that.isAlphabeticalSortForIndexes
-           && isHideForeignKeyNames == that.isHideForeignKeyNames
-           && isHideIndexNames == that.isHideIndexNames
-           && isHidePrimaryKeyNames == that.isHidePrimaryKeyNames
-           && isHideRemarks == that.isHideRemarks
-           && isHideRoutineSpecificNames == that.isHideRoutineSpecificNames
-           && isHideTableConstraintNames == that.isHideTableConstraintNames
-           && isHideTriggerNames == that.isHideTriggerNames
-           && isShowWeakAssociations == that.isShowWeakAssociations
-           && isShowOrdinalNumbers == that.isShowOrdinalNumbers
-           && isShowStandardColumnTypeNames
-              == that.isShowStandardColumnTypeNames
-           && isShowRowCounts == that.isShowRowCounts;
+    return isAlphabeticalSortForForeignKeys == that.isAlphabeticalSortForForeignKeys
+        && isAlphabeticalSortForIndexes == that.isAlphabeticalSortForIndexes
+        && isHideForeignKeyNames == that.isHideForeignKeyNames
+        && isHideIndexNames == that.isHideIndexNames
+        && isHidePrimaryKeyNames == that.isHidePrimaryKeyNames
+        && isHideRemarks == that.isHideRemarks
+        && isHideRoutineSpecificNames == that.isHideRoutineSpecificNames
+        && isHideTableConstraintNames == that.isHideTableConstraintNames
+        && isHideTriggerNames == that.isHideTriggerNames
+        && isShowWeakAssociations == that.isShowWeakAssociations
+        && isShowOrdinalNumbers == that.isShowOrdinalNumbers
+        && isShowStandardColumnTypeNames == that.isShowStandardColumnTypeNames
+        && isShowRowCounts == that.isShowRowCounts;
   }
 
-  public boolean isAlphabeticalSortForIndexes()
-  {
+  @Override
+  public int hashCode() {
+    return Objects.hash(
+        isAlphabeticalSortForForeignKeys,
+        isAlphabeticalSortForIndexes,
+        isHideForeignKeyNames,
+        isHideIndexNames,
+        isHidePrimaryKeyNames,
+        isHideRemarks,
+        isHideRoutineSpecificNames,
+        isHideTableConstraintNames,
+        isHideTriggerNames,
+        isShowWeakAssociations,
+        isShowOrdinalNumbers,
+        isShowStandardColumnTypeNames,
+        isShowRowCounts);
+  }
+
+  public boolean isAlphabeticalSortForForeignKeys() {
+    return isAlphabeticalSortForForeignKeys;
+  }
+
+  public boolean isAlphabeticalSortForIndexes() {
     return isAlphabeticalSortForIndexes;
   }
 
-  public boolean isHideForeignKeyNames()
-  {
+  public boolean isHideForeignKeyNames() {
     return isHideForeignKeyNames;
   }
 
-  public boolean isHideIndexNames()
-  {
+  public boolean isHideIndexNames() {
     return isHideIndexNames;
   }
 
-  public boolean isHidePrimaryKeyNames()
-  {
+  public boolean isHidePrimaryKeyNames() {
     return isHidePrimaryKeyNames;
   }
 
-  public boolean isHideRemarks()
-  {
+  public boolean isHideRemarks() {
     return isHideRemarks;
   }
 
-  public boolean isHideRoutineSpecificNames()
-  {
+  public boolean isHideRoutineSpecificNames() {
     return isHideRoutineSpecificNames;
   }
 
-  public boolean isHideTableConstraintNames()
-  {
+  public boolean isHideTableConstraintNames() {
     return isHideTableConstraintNames;
   }
 
-  public boolean isHideTriggerNames()
-  {
+  public boolean isHideTriggerNames() {
     return isHideTriggerNames;
   }
 
-  public boolean isShowOrdinalNumbers()
-  {
+  public boolean isShowOrdinalNumbers() {
     return isShowOrdinalNumbers;
   }
 
-  public boolean isShowRowCounts()
-  {
+  public boolean isShowRowCounts() {
     return isShowRowCounts;
   }
 
-  public boolean isShowStandardColumnTypeNames()
-  {
+  public boolean isShowStandardColumnTypeNames() {
     return isShowStandardColumnTypeNames;
   }
 
-  public boolean isShowWeakAssociations()
-  {
+  public boolean isShowWeakAssociations() {
     return isShowWeakAssociations;
   }
-
 }

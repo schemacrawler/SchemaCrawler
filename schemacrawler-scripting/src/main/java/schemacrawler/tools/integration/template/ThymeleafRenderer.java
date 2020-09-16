@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.integration.template;
 
-
 import java.io.Writer;
 import java.nio.charset.Charset;
 
@@ -39,6 +38,7 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 import org.thymeleaf.templateresolver.UrlTemplateResolver;
+
 import schemacrawler.tools.options.OutputOptions;
 
 /**
@@ -46,22 +46,17 @@ import schemacrawler.tools.options.OutputOptions;
  *
  * @author Sualeh Fatehi
  */
-public final class ThymeleafRenderer
-  extends BaseTemplateRenderer
-{
+public final class ThymeleafRenderer extends BaseTemplateRenderer {
 
-  private static ITemplateResolver configure(final AbstractConfigurableTemplateResolver templateResolver,
-                                             final Charset inputEncoding)
-  {
+  private static ITemplateResolver configure(
+      final AbstractConfigurableTemplateResolver templateResolver, final Charset inputEncoding) {
     templateResolver.setCharacterEncoding(inputEncoding.name());
     templateResolver.setTemplateMode("HTML5");
     return templateResolver;
   }
 
   @Override
-  public final void execute()
-    throws Exception
-  {
+  public void execute() throws Exception {
     final OutputOptions outputOptions = getOutputOptions();
 
     final Context context = new Context();
@@ -74,21 +69,17 @@ public final class ThymeleafRenderer
     fileResolver.setCheckExistence(true);
     templateEngine.addTemplateResolver(configure(fileResolver, inputCharset));
 
-    final ClassLoaderTemplateResolver classpathResolver =
-      new ClassLoaderTemplateResolver();
+    final ClassLoaderTemplateResolver classpathResolver = new ClassLoaderTemplateResolver();
     classpathResolver.setCheckExistence(true);
-    templateEngine.addTemplateResolver(configure(classpathResolver,
-                                                 inputCharset));
+    templateEngine.addTemplateResolver(configure(classpathResolver, inputCharset));
 
     final UrlTemplateResolver urlResolver = new UrlTemplateResolver();
     urlResolver.setCheckExistence(true);
     templateEngine.addTemplateResolver(configure(urlResolver, inputCharset));
 
     final String templateLocation = getResourceFilename();
-    try (final Writer writer = outputOptions.openNewOutputWriter())
-    {
+    try (final Writer writer = outputOptions.openNewOutputWriter()) {
       templateEngine.process(templateLocation, context, writer);
     }
   }
-
 }

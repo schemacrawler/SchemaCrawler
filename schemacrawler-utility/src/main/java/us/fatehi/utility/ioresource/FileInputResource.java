@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.ioresource;
 
-
 import static java.nio.file.Files.exists;
 import static java.nio.file.Files.newBufferedReader;
 import static java.util.Objects.requireNonNull;
@@ -44,62 +43,45 @@ import java.util.logging.Logger;
 
 import us.fatehi.utility.string.StringFormat;
 
-public class FileInputResource
-  implements InputResource
-{
+public class FileInputResource implements InputResource {
 
-  private static final Logger LOGGER =
-    Logger.getLogger(FileInputResource.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(FileInputResource.class.getName());
 
   private final Path inputFile;
 
-  public FileInputResource(final Path filePath)
-    throws IOException
-  {
+  public FileInputResource(final Path filePath) throws IOException {
     this(filePath, false);
   }
 
-  private FileInputResource(final Path filePath, final boolean allowEmptyFile)
-    throws IOException
-  {
-    inputFile = requireNonNull(filePath, "No file path provided")
-      .normalize()
-      .toAbsolutePath();
-    if (!isFileReadable(inputFile))
-    {
+  private FileInputResource(final Path filePath, final boolean allowEmptyFile) throws IOException {
+    inputFile = requireNonNull(filePath, "No file path provided").normalize().toAbsolutePath();
+    if (!isFileReadable(inputFile)) {
       final IOException e = new IOException("Cannot read file, " + inputFile);
       LOGGER.log(Level.FINE, e.getMessage(), e);
       throw e;
     }
   }
 
-  public Path getInputFile()
-  {
+  public Path getInputFile() {
     return inputFile;
   }
 
   @Override
-  public Reader openNewInputReader(final Charset charset)
-    throws IOException
-  {
+  public Reader openNewInputReader(final Charset charset) throws IOException {
     requireNonNull(charset, "No input charset provided");
 
-    if (!exists(inputFile))
-    {
+    if (!exists(inputFile)) {
       return new StringReader("");
     }
 
     final Reader reader = newBufferedReader(inputFile, charset);
-    LOGGER.log(Level.INFO,
-               new StringFormat("Opened input reader to file <%s>", inputFile));
+    LOGGER.log(Level.INFO, new StringFormat("Opened input reader to file <%s>", inputFile));
 
     return wrapReader(getDescription(), reader, true);
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return inputFile.toString();
   }
-
 }

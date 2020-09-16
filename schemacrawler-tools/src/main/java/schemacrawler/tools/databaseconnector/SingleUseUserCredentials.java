@@ -27,64 +27,48 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.databaseconnector;
 
-
 import static us.fatehi.utility.Utility.isBlank;
 
-public final class SingleUseUserCredentials
-  implements UserCredentials
-{
+public final class SingleUseUserCredentials implements UserCredentials {
 
   private final String user;
   private final char[] password;
   private boolean isCleared;
 
-  public SingleUseUserCredentials()
-  {
+  public SingleUseUserCredentials() {
     user = null;
     password = null;
   }
 
-  public SingleUseUserCredentials(final String user, final String password)
-  {
+  public SingleUseUserCredentials(final String user, final String password) {
     this.user = user;
-    if (password == null)
-    {
+    if (password == null) {
       this.password = null;
-    }
-    else
-    {
+    } else {
       this.password = password.toCharArray();
     }
   }
 
   @Override
-  public void clearPassword()
-  {
+  public void clearPassword() {
     isCleared = true;
-    if (hasPassword())
-    {
-      for (int i = 0; i < password.length; i++)
-      {
+    if (hasPassword()) {
+      for (int i = 0; i < password.length; i++) {
         password[i] = 0;
       }
     }
   }
 
   @Override
-  public String getPassword()
-  {
-    if (isCleared)
-    {
+  public String getPassword() {
+    if (isCleared) {
       throw new IllegalAccessError("Password has been cleared");
     }
 
     final String passwordString;
-    if (password == null)
-    {
+    if (password == null) {
       passwordString = null;
-    }
-    else
-    {
+    } else {
       passwordString = new String(password);
     }
 
@@ -94,27 +78,22 @@ public final class SingleUseUserCredentials
   }
 
   @Override
-  public String getUser()
-  {
+  public String getUser() {
     return user;
   }
 
   @Override
-  public boolean hasPassword()
-  {
+  public boolean hasPassword() {
     return !isCleared && password != null;
   }
 
   @Override
-  public boolean hasUser()
-  {
+  public boolean hasUser() {
     return !isBlank(user);
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return "UserCredentials [user=\"" + user + "\", password=\"*****\"]";
   }
-
 }

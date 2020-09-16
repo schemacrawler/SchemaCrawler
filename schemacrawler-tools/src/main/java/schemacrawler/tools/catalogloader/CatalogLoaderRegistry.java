@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.catalogloader;
 
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
@@ -43,53 +42,39 @@ import us.fatehi.utility.string.StringFormat;
  *
  * @author Sualeh Fatehi
  */
-public final class CatalogLoaderRegistry
-{
+public final class CatalogLoaderRegistry {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(CatalogLoaderRegistry.class.getName());
+      SchemaCrawlerLogger.getLogger(CatalogLoaderRegistry.class.getName());
 
   private static Map<String, CatalogLoader> loadCatalogLoaderRegistry()
-    throws SchemaCrawlerException
-  {
+      throws SchemaCrawlerException {
 
     final Map<String, CatalogLoader> catalogLoaderRegistry = new HashMap<>();
 
-    try
-    {
-      final ServiceLoader<CatalogLoader> serviceLoader =
-        ServiceLoader.load(CatalogLoader.class);
-      for (final CatalogLoader catalogLoader : serviceLoader)
-      {
-        final String databaseSystemIdentifier =
-          catalogLoader.getDatabaseSystemIdentifier();
-        try
-        {
-          LOGGER.log(Level.CONFIG,
-                     new StringFormat("Loading catalog loader, %s=%s",
-                                      databaseSystemIdentifier,
-                                      catalogLoader
-                                        .getClass()
-                                        .getName()));
+    try {
+      final ServiceLoader<CatalogLoader> serviceLoader = ServiceLoader.load(CatalogLoader.class);
+      for (final CatalogLoader catalogLoader : serviceLoader) {
+        final String databaseSystemIdentifier = catalogLoader.getDatabaseSystemIdentifier();
+        try {
+          LOGGER.log(
+              Level.CONFIG,
+              new StringFormat(
+                  "Loading catalog loader, %s=%s",
+                  databaseSystemIdentifier, catalogLoader.getClass().getName()));
 
           catalogLoaderRegistry.put(databaseSystemIdentifier, catalogLoader);
-        }
-        catch (final Exception e)
-        {
-          LOGGER.log(Level.CONFIG,
-                     new StringFormat("Could not load catalog loader, %s=%s",
-                                      databaseSystemIdentifier,
-                                      catalogLoader
-                                        .getClass()
-                                        .getName()),
-                     e);
+        } catch (final Exception e) {
+          LOGGER.log(
+              Level.CONFIG,
+              new StringFormat(
+                  "Could not load catalog loader, %s=%s",
+                  databaseSystemIdentifier, catalogLoader.getClass().getName()),
+              e);
         }
       }
-    }
-    catch (final Exception e)
-    {
-      throw new SchemaCrawlerException("Could not load catalog loader registry",
-                                       e);
+    } catch (final Exception e) {
+      throw new SchemaCrawlerException("Could not load catalog loader registry", e);
     }
 
     return catalogLoaderRegistry;
@@ -97,27 +82,19 @@ public final class CatalogLoaderRegistry
 
   private final Map<String, CatalogLoader> catalogLoaderRegistry;
 
-  public CatalogLoaderRegistry()
-    throws SchemaCrawlerException
-  {
+  public CatalogLoaderRegistry() throws SchemaCrawlerException {
     catalogLoaderRegistry = loadCatalogLoaderRegistry();
   }
 
-  public boolean hasDatabaseSystemIdentifier(final String databaseSystemIdentifier)
-  {
+  public boolean hasDatabaseSystemIdentifier(final String databaseSystemIdentifier) {
     return catalogLoaderRegistry.containsKey(databaseSystemIdentifier);
   }
 
-  public CatalogLoader lookupCatalogLoader(final String databaseSystemIdentifier)
-  {
-    if (hasDatabaseSystemIdentifier(databaseSystemIdentifier))
-    {
+  public CatalogLoader lookupCatalogLoader(final String databaseSystemIdentifier) {
+    if (hasDatabaseSystemIdentifier(databaseSystemIdentifier)) {
       return catalogLoaderRegistry.get(databaseSystemIdentifier);
-    }
-    else
-    {
+    } else {
       return new SchemaCrawlerCatalogLoader();
     }
   }
-
 }

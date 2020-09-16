@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.test.html;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static us.fatehi.utility.html.TagBuilder.caption;
@@ -35,34 +34,33 @@ import static us.fatehi.utility.html.TagBuilder.span;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import us.fatehi.utility.Color;
 import us.fatehi.utility.html.Tag;
 import us.fatehi.utility.html.TagOutputFormat;
 
-public class CaptionTest
-{
+public class CaptionTest {
 
   @DisplayName("caption: basic output")
   @Test
-  public void caption1()
-  {
-    final Tag caption = caption()
-      .withText("display text")
-      .withStyleClass("class")
-      .withBackground(Color.fromRGB(255, 0, 100))
-      .make();
+  public void caption1() {
+    final Tag caption =
+        caption()
+            .withText("display text")
+            .withStyleClass("class")
+            .withBackground(Color.fromRGB(255, 0, 100))
+            .make();
     caption.addAttribute("sometag", "customvalue");
     caption.addInnerTag(span().withText("display text").make());
 
     assertThat(caption.getTagName(), is("caption"));
     assertThat(caption.toString(), is("caption"));
 
-    assertThat(caption.render(TagOutputFormat.html).replace(System.lineSeparator(), "~"),
-               is(
-                 "\t<caption sometag='customvalue' bgcolor='#FF0064' class='class'>~\t\t<span>display text</span>~\t</caption>"));
+    assertThat(
+        caption.render(TagOutputFormat.html).replace(System.lineSeparator(), "~"),
+        is(
+            "\t<caption sometag='customvalue' bgcolor='#FF0064' class='class'>~\t\t<span>display text</span>~\t</caption>"));
     assertThat(caption.render(TagOutputFormat.text), is("display text"));
     assertThat(caption.render(TagOutputFormat.tsv), is("display text"));
-
   }
-
 }

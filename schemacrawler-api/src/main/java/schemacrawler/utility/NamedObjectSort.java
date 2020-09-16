@@ -28,61 +28,40 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.utility;
 
-
 import static us.fatehi.utility.Utility.convertForComparison;
 
 import java.util.Comparator;
 
 import schemacrawler.schema.NamedObject;
 
-public enum NamedObjectSort
-  implements Comparator<NamedObject>
-{
+public enum NamedObjectSort implements Comparator<NamedObject> {
 
-  /**
-   * Alphabetical sort.
-   */
-  alphabetical
-    {
-      @Override
-      public int compare(final NamedObject namedObject1,
-                         final NamedObject namedObject2)
-      {
-        return convertForComparison(namedObject1.getFullName()).compareTo(
-          convertForComparison(namedObject2.getFullName()));
-      }
-    },
-
-  /**
-   * Natural sort.
-   */
-  natural
-    {
-      @Override
-      public int compare(final NamedObject namedObject1,
-                         final NamedObject namedObject2)
-      {
-        return namedObject1.compareTo(namedObject2);
-      }
-    };
-
-  public static NamedObjectSort getNamedObjectSort(final boolean alphabeticalSort)
-  {
-    if (alphabeticalSort)
-    {
-      return NamedObjectSort.alphabetical;
+  /** Alphabetical sort. */
+  alphabetical {
+    @Override
+    public int compare(final NamedObject namedObject1, final NamedObject namedObject2) {
+      return convertForComparison(namedObject1.getFullName())
+          .compareTo(convertForComparison(namedObject2.getFullName()));
     }
-    else
-    {
+  },
+
+  /** Natural sort. */
+  natural {
+    @Override
+    public int compare(final NamedObject namedObject1, final NamedObject namedObject2) {
+      return namedObject1.compareTo(namedObject2);
+    }
+  };
+
+  public static NamedObjectSort getNamedObjectSort(final boolean alphabeticalSort) {
+    if (alphabeticalSort) {
+      return NamedObjectSort.alphabetical;
+    } else {
       return NamedObjectSort.natural;
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public abstract int compare(final NamedObject namedObject1,
-                              final NamedObject namedObject2);
-
+  public abstract int compare(final NamedObject namedObject1, final NamedObject namedObject2);
 }

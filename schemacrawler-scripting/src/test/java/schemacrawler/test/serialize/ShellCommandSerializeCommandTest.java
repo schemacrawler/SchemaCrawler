@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.serialize;
 
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -52,6 +51,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -63,23 +63,19 @@ import schemacrawler.tools.options.Config;
 import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public class ShellCommandSerializeCommandTest
-{
+public class ShellCommandSerializeCommandTest {
 
   private TestOutputStream err;
   private TestOutputStream out;
 
   @AfterEach
-  public void cleanUpStreams()
-  {
+  public void cleanUpStreams() {
     System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
     System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
   }
 
   @BeforeEach
-  public void setUpStreams()
-    throws Exception
-  {
+  public void setUpStreams() throws Exception {
     out = new TestOutputStream();
     System.setOut(new PrintStream(out));
 
@@ -89,24 +85,19 @@ public class ShellCommandSerializeCommandTest
 
   @Test
   public void shellSerializeJson(final Connection connection)
-    throws SchemaCrawlerException, IOException
-  {
+      throws SchemaCrawlerException, IOException {
 
     final SerializationFormat serializationFormat = SerializationFormat.json;
 
-    final SchemaCrawlerShellState state =
-      createLoadedSchemaCrawlerShellState(connection);
+    final SchemaCrawlerShellState state = createLoadedSchemaCrawlerShellState(connection);
 
     final Path testOutputFile =
-      IOUtility.createTempFilePath("test", "." + serializationFormat.name());
+        IOUtility.createTempFilePath("test", "." + serializationFormat.name());
 
-    final String[] args = new String[] {
-      "-c", "serialize", "-o", testOutputFile.toString()
-    };
+    final String[] args = new String[] {"-c", "serialize", "-o", testOutputFile.toString()};
 
     final ExecuteCommand serializeCommand = new ExecuteCommand(state);
-    final CommandLine commandLine =
-      newCommandLine(serializeCommand, null, false);
+    final CommandLine commandLine = newCommandLine(serializeCommand, null, false);
 
     final CommandLine.ParseResult parseResult = commandLine.parseArgs(args);
     final Config additionalConfig = retrievePluginOptions(parseResult);
@@ -120,14 +111,11 @@ public class ShellCommandSerializeCommandTest
     assertThatOutputIsCorrect(testOutputFile, is(oneOf("7B0D", "7B0A")));
   }
 
-  private void assertThatOutputIsCorrect(final Path testOutputFile,
-                                         final Matcher<String> fileHeaderMatcher)
-    throws IOException
-  {
+  private void assertThatOutputIsCorrect(
+      final Path testOutputFile, final Matcher<String> fileHeaderMatcher) throws IOException {
     assertThat(outputOf(err), hasNoContent());
     assertThat(outputOf(out), hasNoContent());
     assertThat(Files.size(testOutputFile), greaterThan(0L));
     assertThat(fileHeaderOf(testOutputFile), fileHeaderMatcher);
   }
-
 }

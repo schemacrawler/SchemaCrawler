@@ -27,19 +27,17 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 
 import org.junit.jupiter.api.Test;
+
 import us.fatehi.utility.Multimap;
 
-public class MultimapTest
-{
+public class MultimapTest {
 
   @Test
-  public void add()
-  {
+  public void add() {
     final Multimap<String, Integer> multimap = new Multimap<>();
     multimap.add("foo", 1);
     multimap.add("bar", 2);
@@ -47,5 +45,4 @@ public class MultimapTest
     assertThat(multimap.get("foo"), containsInAnyOrder(1, 3));
     assertThat(multimap.get("bar"), containsInAnyOrder(2));
   }
-
 }

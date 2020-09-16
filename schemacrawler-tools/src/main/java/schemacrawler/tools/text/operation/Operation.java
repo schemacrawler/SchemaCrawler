@@ -28,64 +28,42 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.text.operation;
 
-
 import schemacrawler.schemacrawler.Query;
 
-/**
- * Database operations.
- */
-public enum Operation
-{
+/** Database operations. */
+public enum Operation {
 
+  /** Count operation */
+  count("Row Count", "Shows counts of rows in the tables", "SELECT COUNT(*) FROM ${table}"),
+  /** Dump operation */
+  dump(
+      "Dump",
+      "Shows data from all rows in the tables",
+      "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}"),
   /**
-   * Count operation
+   * Quick dump operation, where columns do not need to be retrieved (minimum infolevel), but the
+   * order of rows may not be preserved from run to run.
    */
-  count("Row Count",
-        "Shows counts of rows in the tables",
-        "SELECT COUNT(*) FROM ${table}"),
-  /**
-   * Dump operation
-   */
-  dump("Dump",
-       "Shows data from all rows in the tables",
-       "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}"),
-  /**
-   * Quick dump operation, where columns do not need to be retrieved (minimum
-   * infolevel), but the order of rows may not be preserved from run to run.
-   */
-  quickdump("Dump",
-            "Shows data from all rows in the tables, "
-            + "but row order is not guaranteed - "
-            + "this can be used with a minimum info-level for speed",
-            "SELECT * FROM ${table}"),
+  quickdump(
+      "Dump",
+      "Shows data from all rows in the tables, "
+          + "but row order is not guaranteed - "
+          + "this can be used with a minimum info-level for speed",
+      "SELECT * FROM ${table}"),
   ;
 
   private final String description;
   private final String queryString;
   private final String title;
 
-  Operation(final String title,
-            final String description,
-            final String queryString)
-  {
+  Operation(final String title, final String description, final String queryString) {
     this.title = title;
     this.description = description;
     this.queryString = queryString;
   }
 
-  public String getDescription()
-  {
+  public String getDescription() {
     return description;
-  }
-
-  /**
-   * Operation title.
-   *
-   * @return Operation title
-   */
-  public String getTitle()
-  {
-    return title;
   }
 
   /**
@@ -93,9 +71,16 @@ public enum Operation
    *
    * @return Query
    */
-  public Query getQuery()
-  {
+  public Query getQuery() {
     return new Query(name(), queryString);
   }
 
+  /**
+   * Operation title.
+   *
+   * @return Operation title
+   */
+  public String getTitle() {
+    return title;
+  }
 }

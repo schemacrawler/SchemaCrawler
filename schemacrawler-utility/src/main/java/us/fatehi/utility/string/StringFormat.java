@@ -27,45 +27,34 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.string;
 
-
 import java.util.Formatter;
 import java.util.function.Supplier;
 
 import us.fatehi.utility.Utility;
 
-public final class StringFormat
-  implements Supplier<String>
-{
+public final class StringFormat implements Supplier<String> {
 
   private final Object[] args;
   private final String format;
 
-  public StringFormat(final String format, final Object... args)
-  {
+  public StringFormat(final String format, final Object... args) {
     this.format = format;
     this.args = args;
   }
 
   @Override
-  public String get()
-  {
-    if (Utility.isBlank(format) || args == null || args.length == 0)
-    {
+  public String get() {
+    if (Utility.isBlank(format) || args == null || args.length == 0) {
       return format;
     }
 
-    try (final Formatter formatter = new Formatter())
-    {
-      return formatter
-        .format(format, args)
-        .toString();
+    try (final Formatter formatter = new Formatter()) {
+      return formatter.format(format, args).toString();
     }
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return get();
   }
-
 }

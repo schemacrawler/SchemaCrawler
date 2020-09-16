@@ -27,17 +27,13 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.utility;
 
-
 import java.io.Closeable;
 import java.io.Flushable;
 import java.nio.file.Path;
 
-public interface TestOutputCapture
-  extends Flushable, Closeable
-{
+public interface TestOutputCapture extends Flushable, Closeable {
 
   String getFileContents();
 
   Path getFilePath();
-
 }

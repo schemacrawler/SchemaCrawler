@@ -28,117 +28,89 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.executable;
 
-
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import schemacrawler.schema.Property;
 
-public final class CommandDescription
-  implements Property
-{
+public final class CommandDescription implements Property {
 
   private static final long serialVersionUID = 2444083929278551904L;
 
   private final String name;
   private final String description;
 
-  public CommandDescription(final String name, final String description)
-  {
+  public CommandDescription(final String name, final String description) {
     this.name = requireNotBlank(name, "Command name not provided");
 
-    if (isBlank(description))
-    {
+    if (isBlank(description)) {
       this.description = null;
-    }
-    else
-    {
+    } else {
       this.description = description;
     }
   }
 
   @Override
-  public int compareTo(final Property otherProperty)
-  {
-    if (otherProperty == null)
-    {
+  public int compareTo(final Property otherProperty) {
+    if (otherProperty == null) {
       return -1;
-    }
-    else
-    {
+    } else {
       return getName().compareToIgnoreCase(otherProperty.getName());
     }
   }
 
   @Override
-  public String getDescription()
-  {
-    return description == null? "": description;
-  }
-
-  @Override
-  public String getName()
-  {
-    return name;
-  }
-
-  @Override
-  public Object getValue()
-  {
-    return getDescription();
-  }
-
-  @Override
-  public int hashCode()
-  {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (name == null? 0: name.hashCode());
-    return result;
-  }
-
-  @Override
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
+  public boolean equals(final Object obj) {
+    if (this == obj) {
       return true;
     }
-    if (obj == null)
-    {
+    if (obj == null) {
       return false;
     }
-    if (!(obj instanceof CommandDescription))
-    {
+    if (!(obj instanceof CommandDescription)) {
       return false;
     }
     final CommandDescription other = (CommandDescription) obj;
-    if (name == null)
-    {
-      if (other.name != null)
-      {
+    if (name == null) {
+      if (other.name != null) {
         return false;
       }
-    }
-    else if (!name.equals(other.name))
-    {
+    } else if (!name.equals(other.name)) {
       return false;
     }
     return true;
   }
 
   @Override
-  public String toString()
-  {
+  public String getDescription() {
+    return description == null ? "" : description;
+  }
+
+  @Override
+  public String getName() {
+    return name;
+  }
+
+  @Override
+  public Object getValue() {
+    return getDescription();
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (name == null ? 0 : name.hashCode());
+    return result;
+  }
+
+  @Override
+  public String toString() {
     final StringBuilder builder = new StringBuilder();
     builder.append(name);
-    if (description != null)
-    {
-      builder
-        .append(" - ")
-        .append(description);
+    if (description != null) {
+      builder.append(" - ").append(description);
     }
     return builder.toString();
   }
-
 }

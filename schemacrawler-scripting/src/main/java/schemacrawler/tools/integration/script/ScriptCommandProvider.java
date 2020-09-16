@@ -27,53 +27,40 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.integration.script;
 
-
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 
-public class ScriptCommandProvider
-  extends BaseCommandProvider
-{
+public class ScriptCommandProvider extends BaseCommandProvider {
 
   public static final String DESCRIPTION_HEADER =
-    "Process a script file, such as JavaScript, "
-    + "against the database schema";
+      "Process a script file, such as JavaScript, " + "against the database schema";
 
-  public ScriptCommandProvider()
-  {
+  public ScriptCommandProvider() {
     super(new CommandDescription(ScriptCommand.COMMAND, DESCRIPTION_HEADER));
   }
 
   @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
-  {
+  public PluginCommand getCommandLineCommand() {
+    final PluginCommand pluginCommand =
+        newPluginCommand(ScriptCommand.COMMAND, "** " + DESCRIPTION_HEADER);
+    pluginCommand
+        .addOption("script", "Path to the script file or to the CLASSPATH resource", String.class)
+        .addOption("script-language", "Scripting language", String.class);
+    return pluginCommand;
+  }
+
+  @Override
+  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command) {
     return new ScriptCommand();
   }
 
   @Override
-  public boolean supportsOutputFormat(final String command,
-                                      final OutputOptions outputOptions)
-  {
+  public boolean supportsOutputFormat(final String command, final OutputOptions outputOptions) {
     return true;
   }
-
-  @Override
-  public PluginCommand getCommandLineCommand()
-  {
-    final PluginCommand pluginCommand =
-      newPluginCommand(ScriptCommand.COMMAND, "** " + DESCRIPTION_HEADER);
-    pluginCommand
-      .addOption("script",
-                 "Path to the script file or to the CLASSPATH resource",
-                 String.class)
-      .addOption("script-language", "Scripting language", String.class);
-    return pluginCommand;
-  }
-
 }

@@ -37,12 +37,10 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.LintTestUtility.executeLintCommandLine;
 import static schemacrawler.test.utility.TestUtility.clean;
-
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
@@ -51,19 +49,14 @@ import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.lint.executable.LintReportOutputFormat;
-import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
-import schemacrawler.tools.text.operation.Operation;
-import schemacrawler.tools.text.schema.SchemaTextDetailType;
-import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestAssertNoSystemErrOutput.class)
@@ -72,69 +65,6 @@ public class LintOutputTest
 {
 
   private static final String TEXT_OUTPUT = "lint_text_output/";
-  private static final String COMPOSITE_OUTPUT = "lint_composite_output/";
-
-  @Test
-  public void compareCompositeOutput(final Connection connection)
-    throws Exception
-  {
-    clean(COMPOSITE_OUTPUT);
-
-    final String queryCommand1 = "dump_top5";
-    final Config queriesConfig = new Config();
-    queriesConfig.put(queryCommand1,
-                      "SELECT TOP 5 ${orderbycolumns} FROM ${table} ORDER BY ${orderbycolumns}");
-
-    final String[] commands = new String[] {
-      SchemaTextDetailType.brief + "," + Operation.count + "," + "lint",
-      queryCommand1 + "," + SchemaTextDetailType.brief + "," + "lint",
-      };
-
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-      .builder()
-      .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
-      .builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withLimitOptionsBuilder(limitOptionsBuilder)
-        .withLoadOptionsBuilder(loadOptionsBuilder);
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-      schemaCrawlerOptionsBuilder.toOptions();
-
-    assertAll(Arrays
-                .stream(new OutputFormat[] {
-                  TextOutputFormat.text, TextOutputFormat.html
-                })
-                .flatMap(outputFormat -> Arrays
-                  .stream(commands)
-                  .map(command -> () -> {
-
-                    final String referenceFile =
-                      command + "." + outputFormat.getFormat();
-
-                    final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
-                      SchemaTextOptionsBuilder.builder();
-                    schemaTextOptionsBuilder.noInfo(false);
-                    queriesConfig.putAll(schemaTextOptionsBuilder.toConfig());
-
-                    final SchemaCrawlerExecutable executable =
-                      new SchemaCrawlerExecutable(command);
-                    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-                    executable.setAdditionalConfiguration(queriesConfig);
-
-                    assertThat(outputOf(executableExecution(connection,
-                                                            executable,
-                                                            outputFormat)),
-                               hasSameContentAndTypeAs(classpathResource(
-                                 COMPOSITE_OUTPUT + referenceFile),
-                                                       outputFormat));
-
-                  })));
-  }
-
   @Test
   public void commandlineLintReportOutput(final DatabaseConnectionInfo connectionInfo)
     throws Exception

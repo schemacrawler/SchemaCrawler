@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.commandline.command;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -47,6 +46,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -56,23 +56,48 @@ import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public class LoadedShellCommandsTest
-{
+public class LoadedShellCommandsTest {
 
   private TestOutputStream err;
   private TestOutputStream out;
 
   @AfterEach
-  public void cleanUpStreams()
-  {
+  public void cleanUpStreams() {
     System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
     System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
   }
 
+  @Test
+  public void isLoaded(final Connection connection) throws SchemaCrawlerException {
+    final SchemaCrawlerShellState state = createLoadedSchemaCrawlerShellState(connection);
+
+    final String[] args = new String[] {"--is-loaded"};
+
+    final SystemCommand optionsParser = new SystemCommand(state);
+    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    commandLine.execute(args);
+
+    assertThat(outputOf(err), hasNoContent());
+    assertThat(out.getFileContents(), startsWith("Database metadata is loaded"));
+  }
+
+  @Test
+  public void isNotConnected(final Connection connection) {
+    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    state.setDataSource(() -> connection); // is-connected
+
+    final String[] args = new String[] {"--is-loaded"};
+
+    final SystemCommand optionsParser = new SystemCommand(state);
+    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    commandLine.execute(args);
+
+    assertThat(outputOf(err), hasNoContent());
+    assertThat(out.getFileContents(), startsWith("Database metadata is not loaded"));
+  }
+
   @BeforeEach
-  public void setUpStreams()
-    throws Exception
-  {
+  public void setUpStreams() throws Exception {
     out = new TestOutputStream();
     System.setOut(new PrintStream(out));
 
@@ -81,50 +106,8 @@ public class LoadedShellCommandsTest
   }
 
   @Test
-  public void isLoaded(final Connection connection)
-    throws SchemaCrawlerException
-  {
-    final SchemaCrawlerShellState state =
-      createLoadedSchemaCrawlerShellState(connection);
-
-    final String[] args = new String[] {
-      "--is-loaded"
-    };
-
-    final SystemCommand optionsParser = new SystemCommand(state);
-    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
-    commandLine.execute(args);
-
-    assertThat(outputOf(err), hasNoContent());
-    assertThat(out.getFileContents(),
-               startsWith("Database metadata is loaded"));
-  }
-
-  @Test
-  public void isNotConnected(final Connection connection)
-  {
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    state.setDataSource(() -> connection); // is-connected
-
-    final String[] args = new String[] {
-      "--is-loaded"
-    };
-
-    final SystemCommand optionsParser = new SystemCommand(state);
-    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
-    commandLine.execute(args);
-
-    assertThat(outputOf(err), hasNoContent());
-    assertThat(out.getFileContents(),
-               startsWith("Database metadata is not loaded"));
-  }
-
-  @Test
-  public void sweepCatalog(final Connection connection)
-    throws SchemaCrawlerException
-  {
-    final SchemaCrawlerShellState state =
-      createLoadedSchemaCrawlerShellState(connection);
+  public void sweepCatalog(final Connection connection) throws SchemaCrawlerException {
+    final SchemaCrawlerShellState state = createLoadedSchemaCrawlerShellState(connection);
 
     final String[] args = new String[0];
 
@@ -138,8 +121,7 @@ public class LoadedShellCommandsTest
   }
 
   @Test
-  public void sweepCatalogWithNoState()
-  {
+  public void sweepCatalogWithNoState() {
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
 
     final String[] args = new String[0];
@@ -152,5 +134,4 @@ public class LoadedShellCommandsTest
 
     assertThat(state.getCatalog(), is(nullValue()));
   }
-
 }

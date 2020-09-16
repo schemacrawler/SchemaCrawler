@@ -28,9 +28,4 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
-public interface RoutineReturnType
-  extends IdentifiedEnum
-{
-
-}
+public interface RoutineReturnType extends IdentifiedEnum {}

@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.options;
 
-
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.utility.EnumUtility.enumValue;
 import static us.fatehi.utility.Utility.isBlank;
@@ -53,34 +52,26 @@ import us.fatehi.utility.string.StringFormat;
  *
  * @author Sualeh Fatehi
  */
-public final class Config
-  implements Options, Map<String, String>
-{
+public final class Config implements Options, Map<String, String> {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(Config.class.getName());
+      SchemaCrawlerLogger.getLogger(Config.class.getName());
 
-  public static String getSystemConfigurationProperty(final String key,
-                                                      final String defaultValue)
-  {
+  public static String getSystemConfigurationProperty(final String key, final String defaultValue) {
     final String systemPropertyValue = System.getProperty(key);
-    if (!isBlank(systemPropertyValue))
-    {
-      LOGGER.log(Level.CONFIG,
-                 new StringFormat("Using value from system property <%s=%s>",
-                                  key,
-                                  systemPropertyValue));
+    if (!isBlank(systemPropertyValue)) {
+      LOGGER.log(
+          Level.CONFIG,
+          new StringFormat("Using value from system property <%s=%s>", key, systemPropertyValue));
       return systemPropertyValue;
     }
 
     final String envVariableValue = System.getenv(key);
-    if (!isBlank(envVariableValue))
-    {
-      LOGGER.log(Level.CONFIG,
-                 new StringFormat(
-                   "Using value from enivronmental variable <%s=%s>",
-                   key,
-                   envVariableValue));
+    if (!isBlank(envVariableValue)) {
+      LOGGER.log(
+          Level.CONFIG,
+          new StringFormat(
+              "Using value from enivronmental variable <%s=%s>", key, envVariableValue));
       return envVariableValue;
     }
 
@@ -90,18 +81,14 @@ public final class Config
   /**
    * Copies properties into a map.
    *
-   * @param properties
-   *   Properties to copy
+   * @param properties Properties to copy
    * @return Map of properties and values
    */
-  private static Map<String, String> propertiesMap(final Properties properties)
-  {
+  private static Map<String, String> propertiesMap(final Properties properties) {
     final Map<String, String> propertiesMap = new HashMap<>();
-    if (properties != null)
-    {
+    if (properties != null) {
       final Set<Map.Entry<Object, Object>> entries = properties.entrySet();
-      for (final Map.Entry<Object, Object> entry : entries)
-      {
+      for (final Map.Entry<Object, Object> entry : entries) {
         propertiesMap.put((String) entry.getKey(), (String) entry.getValue());
       }
     }
@@ -110,25 +97,19 @@ public final class Config
 
   private final Map<String, String> config;
 
-  /**
-   * Creates an empty config.
-   */
-  public Config()
-  {
+  /** Creates an empty config. */
+  public Config() {
     config = new HashMap<>();
   }
 
   /**
    * Copies config into a map.
    *
-   * @param config
-   *   Config to copy
+   * @param config Config to copy
    */
-  public Config(final Map<String, String> config)
-  {
+  public Config(final Map<String, String> config) {
     this();
-    if (config != null)
-    {
+    if (config != null) {
       putAll(config);
     }
   }
@@ -136,55 +117,65 @@ public final class Config
   /**
    * Copies properties into a map.
    *
-   * @param properties
-   *   Properties to copy
+   * @param properties Properties to copy
    */
-  public Config(final Properties properties)
-  {
+  public Config(final Properties properties) {
     this(propertiesMap(properties));
+  }
+
+  @Override
+  public void clear() {
+    config.clear();
+  }
+
+  @Override
+  public boolean containsKey(final Object key) {
+    return config.containsKey(key);
+  }
+
+  @Override
+  public boolean containsValue(final Object value) {
+    return config.containsValue(value);
+  }
+
+  @Override
+  public Set<java.util.Map.Entry<String, String>> entrySet() {
+    return config.entrySet();
+  }
+
+  @Override
+  public String get(final Object key) {
+    return config.get(key);
   }
 
   /**
    * Gets the value of a property as a boolean.
    *
-   * @param propertyName
-   *   Property name
+   * @param propertyName Property name
    * @return Boolean value
    */
-  public boolean getBooleanValue(final String propertyName)
-  {
+  public boolean getBooleanValue(final String propertyName) {
     return getBooleanValue(propertyName, false);
   }
 
-  public boolean getBooleanValue(final String propertyName,
-                                 final boolean defaultValue)
-  {
-    return Boolean.parseBoolean(getStringValue(propertyName,
-                                               Boolean.toString(defaultValue)));
+  public boolean getBooleanValue(final String propertyName, final boolean defaultValue) {
+    return Boolean.parseBoolean(getStringValue(propertyName, Boolean.toString(defaultValue)));
   }
 
   /**
    * Gets the value of a property as an double.
    *
-   * @param propertyName
-   *   Property name
+   * @param propertyName Property name
    * @return Double value
    */
-  public double getDoubleValue(final String propertyName,
-                               final double defaultValue)
-  {
-    try
-    {
-      return Double.parseDouble(getStringValue(propertyName,
-                                               String.valueOf(defaultValue)));
-    }
-    catch (final NumberFormatException e)
-    {
-      LOGGER.log(Level.FINEST,
-                 new StringFormat(
-                   "Could not parse double value for property <%s>",
-                   propertyName),
-                 e);
+  public double getDoubleValue(final String propertyName, final double defaultValue) {
+    try {
+      return Double.parseDouble(getStringValue(propertyName, String.valueOf(defaultValue)));
+    } catch (final NumberFormatException e) {
+      LOGGER.log(
+          Level.FINEST,
+          new StringFormat("Could not parse double value for property <%s>", propertyName),
+          e);
       return defaultValue;
     }
   }
@@ -192,13 +183,10 @@ public final class Config
   /**
    * Gets the value of a property as an enum.
    *
-   * @param propertyName
-   *   Property name
+   * @param propertyName Property name
    * @return Enum value
    */
-  public <E extends Enum<E>> E getEnumValue(final String propertyName,
-                                            final E defaultValue)
-  {
+  public <E extends Enum<E>> E getEnumValue(final String propertyName, final E defaultValue) {
     requireNonNull(defaultValue, "No default value provided");
     final String value = getStringValue(propertyName, defaultValue.name());
     return enumValue(value, defaultValue);
@@ -207,24 +195,17 @@ public final class Config
   /**
    * Gets the value of a property as an integer.
    *
-   * @param propertyName
-   *   Property name
+   * @param propertyName Property name
    * @return Integer value
    */
-  public int getIntegerValue(final String propertyName, final int defaultValue)
-  {
-    try
-    {
-      return Integer.parseInt(getStringValue(propertyName,
-                                             String.valueOf(defaultValue)));
-    }
-    catch (final NumberFormatException e)
-    {
-      LOGGER.log(Level.FINEST,
-                 new StringFormat(
-                   "Could not parse integer value for property <%s>",
-                   propertyName),
-                 e);
+  public int getIntegerValue(final String propertyName, final int defaultValue) {
+    try {
+      return Integer.parseInt(getStringValue(propertyName, String.valueOf(defaultValue)));
+    } catch (final NumberFormatException e) {
+      LOGGER.log(
+          Level.FINEST,
+          new StringFormat("Could not parse integer value for property <%s>", propertyName),
+          e);
       return defaultValue;
     }
   }
@@ -232,58 +213,42 @@ public final class Config
   /**
    * Gets the value of a property as an long.
    *
-   * @param propertyName
-   *   Property name
+   * @param propertyName Property name
    * @return Long value
    */
-  public long getLongValue(final String propertyName, final long defaultValue)
-  {
-    try
-    {
-      return Long.parseLong(getStringValue(propertyName,
-                                           String.valueOf(defaultValue)));
-    }
-    catch (final NumberFormatException e)
-    {
-      LOGGER.log(Level.FINEST,
-                 new StringFormat("Could not parse long value for property <%s>",
-                                  propertyName),
-                 e);
+  public long getLongValue(final String propertyName, final long defaultValue) {
+    try {
+      return Long.parseLong(getStringValue(propertyName, String.valueOf(defaultValue)));
+    } catch (final NumberFormatException e) {
+      LOGGER.log(
+          Level.FINEST,
+          new StringFormat("Could not parse long value for property <%s>", propertyName),
+          e);
       return defaultValue;
     }
   }
 
-  public Optional<InclusionRule> getOptionalInclusionRule(final String includePatternProperty,
-                                                          final String excludePatternProperty)
-  {
+  public Optional<InclusionRule> getOptionalInclusionRule(
+      final String includePatternProperty, final String excludePatternProperty) {
     final String includePattern = getStringValue(includePatternProperty, null);
     final String excludePattern = getStringValue(excludePatternProperty, null);
-    if (isBlank(includePattern) && isBlank(excludePattern))
-    {
+    if (isBlank(includePattern) && isBlank(excludePattern)) {
       return Optional.empty();
-    }
-    else
-    {
-      return Optional.of(new RegularExpressionRule(includePattern,
-                                                   excludePattern));
+    } else {
+      return Optional.of(new RegularExpressionRule(includePattern, excludePattern));
     }
   }
 
   /**
    * Gets the value of a property as a string.
    *
-   * @param propertyName
-   *   Property name
-   * @param defaultValue
-   *   Default value
+   * @param propertyName Property name
+   * @param defaultValue Default value
    * @return String value
    */
-  public String getStringValue(final String propertyName,
-                               final String defaultValue)
-  {
+  public String getStringValue(final String propertyName, final String defaultValue) {
     String value = get(propertyName);
-    if (value == null)
-    {
+    if (value == null) {
       value = defaultValue;
     }
     return value;
@@ -292,124 +257,68 @@ public final class Config
   /**
    * Checks if a value is available.
    *
-   * @param propertyName
-   *   Property name
+   * @param propertyName Property name
    * @return True if a value ia available.
    */
-  public boolean hasValue(final String propertyName)
-  {
+  public boolean hasValue(final String propertyName) {
     return config.containsKey(propertyName);
   }
 
-  public void putAll(final Properties properties)
-  {
-    config.putAll(propertiesMap(properties));
-  }
-
-  public void setBooleanValue(final String propertyName, final boolean value)
-  {
-    put(propertyName, Boolean.toString(value));
-  }
-
-  public <E extends Enum<E>> void setEnumValue(final String propertyName,
-                                               final E value)
-  {
-    if (value == null)
-    {
-      remove(propertyName);
-    }
-    else
-    {
-      put(propertyName, value.name());
-    }
-  }
-
-  public void setStringValue(final String propertyName, final String value)
-  {
-    if (value == null)
-    {
-      remove(propertyName);
-    }
-    else
-    {
-      put(propertyName, value);
-    }
-  }
-
   @Override
-  public int size()
-  {
-    return config.size();
-  }
-
-  @Override
-  public boolean isEmpty()
-  {
+  public boolean isEmpty() {
     return config.isEmpty();
   }
 
   @Override
-  public boolean containsKey(final Object key)
-  {
-    return config.containsKey(key);
+  public Set<String> keySet() {
+    return config.keySet();
   }
 
   @Override
-  public boolean containsValue(final Object value)
-  {
-    return config.containsValue(value);
-  }
-
-  @Override
-  public String get(final Object key)
-  {
-    return config.get(key);
-  }
-
-  @Override
-  public String put(final String key, final String value)
-  {
+  public String put(final String key, final String value) {
     return config.put(key, value);
   }
 
   @Override
-  public String remove(final Object key)
-  {
-    return config.remove(key);
-  }
-
-  @Override
-  public void putAll(final Map<? extends String, ? extends String> m)
-  {
-    if (m == null)
-    {
+  public void putAll(final Map<? extends String, ? extends String> m) {
+    if (m == null) {
       return;
     }
     config.putAll(m);
   }
 
-  @Override
-  public void clear()
-  {
-    config.clear();
+  public void putAll(final Properties properties) {
+    config.putAll(propertiesMap(properties));
   }
 
   @Override
-  public Set<String> keySet()
-  {
-    return config.keySet();
+  public String remove(final Object key) {
+    return config.remove(key);
+  }
+
+  public void setBooleanValue(final String propertyName, final boolean value) {
+    put(propertyName, Boolean.toString(value));
+  }
+
+  public <E extends Enum<E>> void setEnumValue(final String propertyName, final E value) {
+    if (value == null) {
+      remove(propertyName);
+    } else {
+      put(propertyName, value.name());
+    }
+  }
+
+  public void setStringValue(final String propertyName, final String value) {
+    if (value == null) {
+      remove(propertyName);
+    } else {
+      put(propertyName, value);
+    }
   }
 
   @Override
-  public Collection<String> values()
-  {
-    return config.values();
-  }
-
-  @Override
-  public Set<java.util.Map.Entry<String, String>> entrySet()
-  {
-    return config.entrySet();
+  public int size() {
+    return config.size();
   }
 
   /**
@@ -417,20 +326,21 @@ public final class Config
    *
    * @return Properties
    */
-  public Properties toProperties()
-  {
+  public Properties toProperties() {
     final Properties properties = new Properties();
-    for (final Entry<String, String> entry : config.entrySet())
-    {
+    for (final Entry<String, String> entry : config.entrySet()) {
       properties.put(entry.getKey(), entry.getValue());
     }
     return properties;
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return ObjectToString.toString(this);
   }
 
+  @Override
+  public Collection<String> values() {
+    return config.values();
+  }
 }

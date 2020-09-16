@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.integration.serialize;
 
-
 import static java.nio.file.Files.newOutputStream;
 
 import java.io.OutputStream;
@@ -44,63 +43,45 @@ import schemacrawler.tools.options.OutputOptionsBuilder;
  *
  * @author Sualeh Fatehi
  */
-public final class SerializationCommand
-  extends BaseSchemaCrawlerCommand
-{
+public final class SerializationCommand extends BaseSchemaCrawlerCommand {
 
   static final String COMMAND = "serialize";
 
-  public SerializationCommand()
-  {
+  public SerializationCommand() {
     super(COMMAND);
   }
 
   @Override
-  public void checkAvailability()
-    throws Exception
-  {
+  public void checkAvailability() throws Exception {
     // Nothing additional to check at this point. The Command should be
     // available after the class is loaded, and imports are resolved.
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public void execute()
-    throws Exception
-  {
+  public void execute() throws Exception {
     checkCatalog();
 
     final SerializationFormat serializationFormat =
-      SerializationFormat.fromFormat(outputOptions.getOutputFormatValue());
+        SerializationFormat.fromFormat(outputOptions.getOutputFormatValue());
 
-    final String serializerClassName =
-      serializationFormat.getSerializerClassName();
+    final String serializerClassName = serializationFormat.getSerializerClassName();
     final Class<CatalogSerializer> serializableCatalogClass =
-      (Class<CatalogSerializer>) Class.forName(serializerClassName);
-    final CatalogSerializer serializableCatalog = serializableCatalogClass
-      .getDeclaredConstructor(Catalog.class)
-      .newInstance(catalog);
+        (Class<CatalogSerializer>) Class.forName(serializerClassName);
+    final CatalogSerializer serializableCatalog =
+        serializableCatalogClass.getDeclaredConstructor(Catalog.class).newInstance(catalog);
 
-    if (serializationFormat.isBinaryFormat())
-    {
+    if (serializationFormat.isBinaryFormat()) {
       // Force a file to be created for binary formats such as Java serialization
-      final Path outputFile =
-        outputOptions.getOutputFile(serializationFormat.getFileExtension());
+      final Path outputFile = outputOptions.getOutputFile(serializationFormat.getFileExtension());
 
-      outputOptions = OutputOptionsBuilder
-        .builder(outputOptions)
-        .withOutputFile(outputFile)
-        .toOptions();
+      outputOptions =
+          OutputOptionsBuilder.builder(outputOptions).withOutputFile(outputFile).toOptions();
 
-      try (final OutputStream out = newOutputStream(outputFile))
-      {
+      try (final OutputStream out = newOutputStream(outputFile)) {
         serializableCatalog.save(out);
       }
-    }
-    else
-    {
+    } else {
       final Writer out = outputOptions.openNewOutputWriter();
       serializableCatalog.save(out);
       // NOTE: Jackson closes the output writer, so no need for a try-with-resources block
@@ -108,9 +89,7 @@ public final class SerializationCommand
   }
 
   @Override
-  public boolean usesConnection()
-  {
+  public boolean usesConnection() {
     return false;
   }
-
 }

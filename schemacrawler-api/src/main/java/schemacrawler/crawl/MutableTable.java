@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -56,197 +55,124 @@ import schemacrawler.utility.NamedObjectSort;
  *
  * @author Sualeh Fatehi
  */
-class MutableTable
-  extends AbstractDatabaseObject
-  implements Table
-{
+class MutableTable extends AbstractDatabaseObject implements Table {
 
-  private static final long serialVersionUID = 3257290248802284852L;
-
-
-  private enum TableAssociationType
-  {
-
+  private enum TableAssociationType {
     all,
     exported,
     imported
   }
 
+  private static final long serialVersionUID = 3257290248802284852L;
 
-  private final NamedObjectList<MutableColumn> columns =
-    new NamedObjectList<>();
-  private final NamedObjectList<MutableTableConstraint> constraints =
-    new NamedObjectList<>();
+  private final NamedObjectList<MutableColumn> columns = new NamedObjectList<>();
+  private final NamedObjectList<MutableTableConstraint> constraints = new NamedObjectList<>();
   private final StringBuilder definition;
-  private final NamedObjectList<MutableForeignKey> foreignKeys =
-    new NamedObjectList<>();
-  private final NamedObjectList<WeakAssociation> weakAssociations =
-    new NamedObjectList<>();
-  private final NamedObjectList<MutableColumn> hiddenColumns =
-    new NamedObjectList<>();
+  private final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
+  private final NamedObjectList<WeakAssociation> weakAssociations = new NamedObjectList<>();
+  private final NamedObjectList<MutableColumn> hiddenColumns = new NamedObjectList<>();
   private final NamedObjectList<MutableIndex> indexes = new NamedObjectList<>();
-  private final NamedObjectList<MutablePrivilege<Table>> privileges =
-    new NamedObjectList<>();
-  private final NamedObjectList<MutableTrigger> triggers =
-    new NamedObjectList<>();
+  private final NamedObjectList<MutablePrivilege<Table>> privileges = new NamedObjectList<>();
+  private final NamedObjectList<MutableTrigger> triggers = new NamedObjectList<>();
   private MutablePrimaryKey primaryKey;
   private int sortIndex;
   private TableType tableType = TableType.UNKNOWN; // Default value
 
-  MutableTable(final Schema schema, final String name)
-  {
+  MutableTable(final Schema schema, final String name) {
     super(schema, name);
     definition = new StringBuilder();
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public int compareTo(final NamedObject obj)
-  {
-    if (obj == null)
-    {
+  public int compareTo(final NamedObject obj) {
+    if (obj == null) {
       return -1;
     }
 
     int comparison = 0;
 
-    if (comparison == 0 && obj instanceof MutableTable)
-    {
+    if (comparison == 0 && obj instanceof MutableTable) {
       comparison = sortIndex - ((MutableTable) obj).sortIndex;
     }
-    if (comparison == 0)
-    {
+    if (comparison == 0) {
       comparison = super.compareTo(obj);
     }
 
     return comparison;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public List<Column> getColumns()
-  {
+  public List<Column> getColumns() {
     return new ArrayList<>(columns.values());
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Collection<ForeignKey> getExportedForeignKeys()
-  {
+  public String getDefinition() {
+    return definition.toString();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Collection<ForeignKey> getExportedForeignKeys() {
     return getForeignKeys(TableAssociationType.exported);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Collection<ForeignKey> getForeignKeys()
-  {
+  public Collection<ForeignKey> getForeignKeys() {
     return getForeignKeys(TableAssociationType.all);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Collection<Column> getHiddenColumns()
-  {
+  public Collection<Column> getHiddenColumns() {
     return new HashSet<>(hiddenColumns.values());
   }
 
   @Override
-  public Collection<ForeignKey> getImportedForeignKeys()
-  {
+  public Collection<ForeignKey> getImportedForeignKeys() {
     return getForeignKeys(TableAssociationType.imported);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Collection<WeakAssociation> getWeakAssociations()
-  {
-    return new ArrayList<>(weakAssociations.values());
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Collection<Index> getIndexes()
-  {
+  public Collection<Index> getIndexes() {
     return new ArrayList<>(indexes.values());
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public MutablePrimaryKey getPrimaryKey()
-  {
+  public MutablePrimaryKey getPrimaryKey() {
     return primaryKey;
   }
 
-  final void setPrimaryKey(final MutablePrimaryKey primaryKey)
-  {
-    if (primaryKey == null)
-    {
-      return;
-    }
-    else
-    {
-      this.primaryKey = primaryKey;
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Collection<Privilege<Table>> getPrivileges()
-  {
+  public Collection<Privilege<Table>> getPrivileges() {
     return new ArrayList<>(privileges.values());
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Collection<Table> getRelatedTables(final TableRelationshipType tableRelationshipType)
-  {
+  public Collection<Table> getRelatedTables(final TableRelationshipType tableRelationshipType) {
     final Set<Table> relatedTables = new HashSet<>();
-    if (tableRelationshipType != null
-        && tableRelationshipType != TableRelationshipType.none)
-    {
-      final List<MutableForeignKey> foreignKeysList =
-        new ArrayList<>(foreignKeys.values());
-      for (final ForeignKey foreignKey : foreignKeysList)
-      {
-        for (final ForeignKeyColumnReference columnReference : foreignKey)
-        {
-          final Table parentTable = columnReference
-            .getPrimaryKeyColumn()
-            .getParent();
-          final Table childTable = columnReference
-            .getForeignKeyColumn()
-            .getParent();
-          switch (tableRelationshipType)
-          {
+    if (tableRelationshipType != null && tableRelationshipType != TableRelationshipType.none) {
+      final List<MutableForeignKey> foreignKeysList = new ArrayList<>(foreignKeys.values());
+      for (final ForeignKey foreignKey : foreignKeysList) {
+        for (final ForeignKeyColumnReference columnReference : foreignKey) {
+          final Table parentTable = columnReference.getPrimaryKeyColumn().getParent();
+          final Table childTable = columnReference.getForeignKeyColumn().getParent();
+          switch (tableRelationshipType) {
             case parent:
-              if (equals(childTable))
-              {
+              if (equals(childTable)) {
                 relatedTables.add(parentTable);
               }
               break;
             case child:
-              if (equals(parentTable))
-              {
+              if (equals(parentTable)) {
                 relatedTables.add(childTable);
               }
               break;
@@ -262,240 +188,177 @@ class MutableTable
     return relatedTablesList;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Collection<TableConstraint> getTableConstraints()
-  {
+  public Collection<TableConstraint> getTableConstraints() {
     return new ArrayList<>(constraints.values());
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public TableType getTableType()
-  {
+  public TableType getTableType() {
     return tableType;
   }
 
-  final void setTableType(final TableType tableType)
-  {
-    if (tableType == null)
-    {
-      this.tableType = TableType.UNKNOWN;
-    }
-    else
-    {
-      this.tableType = tableType;
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Collection<Trigger> getTriggers()
-  {
+  public Collection<Trigger> getTriggers() {
     return new ArrayList<>(triggers.values());
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public final boolean hasPrimaryKey()
-  {
+  public final TableType getType() {
+    return getTableType();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Collection<WeakAssociation> getWeakAssociations() {
+    return new ArrayList<>(weakAssociations.values());
+  }
+
+  @Override
+  public boolean hasDefinition() {
+    return definition.length() > 0;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean hasPrimaryKey() {
     return getPrimaryKey() != null;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Optional<MutableColumn> lookupColumn(final String name)
-  {
+  public Optional<MutableColumn> lookupColumn(final String name) {
     Optional<MutableColumn> optionalColumn = columns.lookup(this, name);
-    if (!optionalColumn.isPresent())
-    {
+    if (!optionalColumn.isPresent()) {
       optionalColumn = hiddenColumns.lookup(this, name);
     }
     return optionalColumn;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Optional<MutableTableConstraint> lookupTableConstraint(final String name)
-  {
-    return constraints.lookup(this, name);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Optional<MutableForeignKey> lookupForeignKey(final String name)
-  {
+  public Optional<MutableForeignKey> lookupForeignKey(final String name) {
     return foreignKeys.lookup(this, name);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Optional<MutableIndex> lookupIndex(final String name)
-  {
+  public Optional<MutableIndex> lookupIndex(final String name) {
     return indexes.lookup(this, name);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public Optional<MutablePrivilege<Table>> lookupPrivilege(final String name)
-  {
+  public Optional<MutablePrivilege<Table>> lookupPrivilege(final String name) {
     return privileges.lookup(this, name);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Optional<MutableTableConstraint> lookupTableConstraint(final String name) {
+    return constraints.lookup(this, name);
   }
 
   /**
    * Looks up a trigger by name.
    *
-   * @param triggerName
-   *   Trigger name
+   * @param triggerName Trigger name
    * @return Trigger, if found, or null
    */
   @Override
-  public Optional<MutableTrigger> lookupTrigger(final String triggerName)
-  {
+  public Optional<MutableTrigger> lookupTrigger(final String triggerName) {
     return triggers.lookup(this, triggerName);
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String getDefinition()
-  {
-    return definition.toString();
-  }
-
-  @Override
-  public boolean hasDefinition()
-  {
-    return definition.length() > 0;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final TableType getType()
-  {
-    return getTableType();
-  }
-
-  final void addColumn(final MutableColumn column)
-  {
+  final void addColumn(final MutableColumn column) {
     columns.add(column);
   }
 
-  final void addForeignKey(final MutableForeignKey foreignKey)
-  {
+  final void addForeignKey(final MutableForeignKey foreignKey) {
     foreignKeys.add(foreignKey);
   }
 
-  final void addWeakAssociation(final WeakAssociation weakAssociation)
-  {
-    weakAssociations.add(weakAssociation);
-  }
-
-  final void addHiddenColumn(final MutableColumn column)
-  {
+  final void addHiddenColumn(final MutableColumn column) {
     hiddenColumns.add(column);
   }
 
-  final void addIndex(final MutableIndex index)
-  {
+  final void addIndex(final MutableIndex index) {
     indexes.add(index);
   }
 
-  final void addPrivilege(final MutablePrivilege<Table> privilege)
-  {
+  final void addPrivilege(final MutablePrivilege<Table> privilege) {
     privileges.add(privilege);
   }
 
-  final void addTableConstraint(final MutableTableConstraint tableConstraint)
-  {
+  final void addTableConstraint(final MutableTableConstraint tableConstraint) {
     constraints.add(tableConstraint);
   }
 
-  final void addTrigger(final MutableTrigger trigger)
-  {
+  final void addTrigger(final MutableTrigger trigger) {
     triggers.add(trigger);
   }
 
-  final void appendDefinition(final String definition)
-  {
-    if (definition != null)
-    {
+  final void addWeakAssociation(final WeakAssociation weakAssociation) {
+    weakAssociations.add(weakAssociation);
+  }
+
+  final void appendDefinition(final String definition) {
+    if (definition != null) {
       this.definition.append(definition);
     }
   }
 
-  final void setSortIndex(final int sortIndex)
-  {
-    this.sortIndex = sortIndex;
-  }
-
-  NamedObjectList<MutableColumn> getAllColumns()
-  {
+  NamedObjectList<MutableColumn> getAllColumns() {
     return columns;
   }
 
-  private Collection<ForeignKey> getForeignKeys(final TableAssociationType tableAssociationType)
-  {
-    final List<ForeignKey> foreignKeysList =
-      new ArrayList<>(foreignKeys.values());
-    if (tableAssociationType != null
-        && tableAssociationType != TableAssociationType.all)
-    {
-      for (final Iterator<ForeignKey> iterator =
-           foreignKeysList.iterator(); iterator.hasNext(); )
-      {
+  final void setPrimaryKey(final MutablePrimaryKey primaryKey) {
+    if (primaryKey == null) {
+      return;
+    } else {
+      this.primaryKey = primaryKey;
+    }
+  }
+
+  final void setSortIndex(final int sortIndex) {
+    this.sortIndex = sortIndex;
+  }
+
+  final void setTableType(final TableType tableType) {
+    if (tableType == null) {
+      this.tableType = TableType.UNKNOWN;
+    } else {
+      this.tableType = tableType;
+    }
+  }
+
+  private Collection<ForeignKey> getForeignKeys(final TableAssociationType tableAssociationType) {
+    final List<ForeignKey> foreignKeysList = new ArrayList<>(foreignKeys.values());
+    if (tableAssociationType != null && tableAssociationType != TableAssociationType.all) {
+      for (final Iterator<ForeignKey> iterator = foreignKeysList.iterator(); iterator.hasNext(); ) {
         final ForeignKey mutableForeignKey = iterator.next();
         boolean isExportedKey = false;
         boolean isImportedKey = false;
-        for (final ForeignKeyColumnReference columnReference : mutableForeignKey)
-        {
-          if (columnReference
-            .getPrimaryKeyColumn()
-            .getParent()
-            .equals(this))
-          {
+        for (final ForeignKeyColumnReference columnReference : mutableForeignKey) {
+          if (columnReference.getPrimaryKeyColumn().getParent().equals(this)) {
             isExportedKey = true;
           }
-          if (columnReference
-            .getForeignKeyColumn()
-            .getParent()
-            .equals(this))
-          {
+          if (columnReference.getForeignKeyColumn().getParent().equals(this)) {
             isImportedKey = true;
           }
         }
-        switch (tableAssociationType)
-        {
+        switch (tableAssociationType) {
           case exported:
-            if (!isExportedKey)
-            {
+            if (!isExportedKey) {
               iterator.remove();
             }
             break;
           case imported:
-            if (!isImportedKey)
-            {
+            if (!isImportedKey) {
               iterator.remove();
             }
             break;
@@ -506,5 +369,4 @@ class MutableTable
     }
     return foreignKeysList;
   }
-
 }

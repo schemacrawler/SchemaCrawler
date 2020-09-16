@@ -27,19 +27,12 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.graph;
 
-
 import java.util.Collection;
 import java.util.Objects;
 
-public class SimpleCycleDetector<T extends Comparable<? super T>>
-{
+public class SimpleCycleDetector<T extends Comparable<? super T>> {
 
-  private static final String ATTRIBUTE_TRAVERSAL_STATE = "traversalstate";
-
-
-  enum TraversalState
-  {
-
+  enum TraversalState {
     notStarted("white"),
     inProgress("lightgray"),
     marked("red"),
@@ -47,23 +40,20 @@ public class SimpleCycleDetector<T extends Comparable<? super T>>
 
     private final String color;
 
-    TraversalState(final String color)
-    {
+    TraversalState(final String color) {
       this.color = color;
     }
 
-    public String getColor()
-    {
+    public String getColor() {
       return color;
     }
-
   }
 
+  private static final String ATTRIBUTE_TRAVERSAL_STATE = "traversalstate";
 
   private final DirectedGraph<T> graph;
 
-  public SimpleCycleDetector(final DirectedGraph<T> graph)
-  {
+  public SimpleCycleDetector(final DirectedGraph<T> graph) {
     this.graph = Objects.requireNonNull(graph, "No diagram provided");
   }
 
@@ -72,16 +62,11 @@ public class SimpleCycleDetector<T extends Comparable<? super T>>
    *
    * @return true if the diagram contains a cycle, false otherwise
    */
-  public boolean containsCycle()
-  {
+  public boolean containsCycle() {
     final Collection<Vertex<T>> vertices = clearTraversalStates();
-    for (final Vertex<T> vertex : vertices)
-    {
-      if (vertex.getAttribute(ATTRIBUTE_TRAVERSAL_STATE)
-          == TraversalState.notStarted)
-      {
-        if (visitForCyles(vertex))
-        {
+    for (final Vertex<T> vertex : vertices) {
+      if (vertex.getAttribute(ATTRIBUTE_TRAVERSAL_STATE) == TraversalState.notStarted) {
+        if (visitForCyles(vertex)) {
           return true;
         }
       }
@@ -90,36 +75,25 @@ public class SimpleCycleDetector<T extends Comparable<? super T>>
     return false;
   }
 
-  private Collection<Vertex<T>> clearTraversalStates()
-  {
+  private Collection<Vertex<T>> clearTraversalStates() {
     final Collection<Vertex<T>> vertices = graph.vertexSet();
-    for (final Vertex<T> vertex : vertices)
-    {
+    for (final Vertex<T> vertex : vertices) {
       vertex.putAttribute(ATTRIBUTE_TRAVERSAL_STATE, TraversalState.notStarted);
     }
     return vertices;
   }
 
-  private boolean visitForCyles(final Vertex<T> vertex)
-  {
+  private boolean visitForCyles(final Vertex<T> vertex) {
     vertex.putAttribute(ATTRIBUTE_TRAVERSAL_STATE, TraversalState.inProgress);
 
-    for (final DirectedEdge<T> edge : graph.edgeSet())
-    {
-      if (edge.isFrom(vertex))
-      {
+    for (final DirectedEdge<T> edge : graph.edgeSet()) {
+      if (edge.isFrom(vertex)) {
         final Vertex<T> to = edge.getTo();
-        if (to.getAttribute(ATTRIBUTE_TRAVERSAL_STATE)
-            == TraversalState.inProgress)
-        {
+        if (to.getAttribute(ATTRIBUTE_TRAVERSAL_STATE) == TraversalState.inProgress) {
           to.putAttribute(ATTRIBUTE_TRAVERSAL_STATE, TraversalState.marked);
           return true;
-        }
-        else if (to.getAttribute(ATTRIBUTE_TRAVERSAL_STATE)
-                 == TraversalState.notStarted)
-        {
-          if (visitForCyles(to))
-          {
+        } else if (to.getAttribute(ATTRIBUTE_TRAVERSAL_STATE) == TraversalState.notStarted) {
+          if (visitForCyles(to)) {
             return true;
           }
         }
@@ -130,5 +104,4 @@ public class SimpleCycleDetector<T extends Comparable<? super T>>
 
     return false;
   }
-
 }

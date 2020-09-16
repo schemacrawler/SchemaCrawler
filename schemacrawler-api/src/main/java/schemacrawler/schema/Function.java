@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -37,9 +36,7 @@ import java.util.Optional;
  *
  * @author Sualeh Fatehi
  */
-public interface Function
-  extends Routine
-{
+public interface Function extends Routine {
 
   /**
    * Gets the list of columns in ordinal order.
@@ -68,11 +65,9 @@ public interface Function
   /**
    * Gets a column by name.
    *
-   * @param name
-   *   Name
+   * @param name Name
    * @return Column of the procedure
    */
   @Override
   Optional<? extends FunctionParameter> lookupParameter(String name);
-
 }

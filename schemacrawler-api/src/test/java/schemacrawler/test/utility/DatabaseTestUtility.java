@@ -28,8 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.utility;
 
-
 import static java.util.Objects.requireNonNull;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,6 +40,7 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -50,88 +51,71 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 
-public final class DatabaseTestUtility
-{
+public final class DatabaseTestUtility {
 
-  public final static SchemaCrawlerOptions
-    schemaCrawlerOptionsWithMaximumSchemaInfoLevel =
-    getMaximumSchemaCrawlerOptions();
+  public static final SchemaCrawlerOptions schemaCrawlerOptionsWithMaximumSchemaInfoLevel =
+      getMaximumSchemaCrawlerOptions();
 
-  public static Catalog getCatalog(final Connection connection,
-                                   final SchemaCrawlerOptions schemaCrawlerOptions)
-    throws SchemaCrawlerException
-  {
-    return getCatalog(connection,
-                      SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
-                      schemaCrawlerOptions);
+  public static Catalog getCatalog(
+      final Connection connection, final SchemaCrawlerOptions schemaCrawlerOptions)
+      throws SchemaCrawlerException {
+    return getCatalog(
+        connection,
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
+        schemaCrawlerOptions);
   }
 
-  public static Catalog getCatalog(final Connection connection,
-                                   final SchemaRetrievalOptions schemaRetrievalOptions,
-                                   final SchemaCrawlerOptions schemaCrawlerOptions)
-    throws SchemaCrawlerException
-  {
-    final SchemaCrawler schemaCrawler = new SchemaCrawler(connection,
-                                                          schemaRetrievalOptions,
-                                                          schemaCrawlerOptions);
+  public static Catalog getCatalog(
+      final Connection connection,
+      final SchemaRetrievalOptions schemaRetrievalOptions,
+      final SchemaCrawlerOptions schemaCrawlerOptions)
+      throws SchemaCrawlerException {
+    final SchemaCrawler schemaCrawler =
+        new SchemaCrawler(connection, schemaRetrievalOptions, schemaCrawlerOptions);
     final Catalog catalog = schemaCrawler.crawl();
 
     return catalog;
   }
 
-  public static Map<String, String> loadHsqldbConfig()
-    throws IOException
-  {
-    return loadConfigFromClasspathResource(
-      "/hsqldb.INFORMATION_SCHEMA.config.properties");
+  public static Map<String, String> loadHsqldbConfig() throws IOException {
+    return loadConfigFromClasspathResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
   }
 
   /**
    * Loads a properties file from a CLASSPATH resource.
    *
-   * @param resource
-   *   A CLASSPATH resource.
+   * @param resource A CLASSPATH resource.
    * @return Config loaded from classpath resource
-   * @throws IOException
-   *   On an exception
+   * @throws IOException On an exception
    */
-  protected static Map<String, String> loadConfigFromClasspathResource(
-      final String resource) throws IOException
-  {
-    final InputStream stream =
-        DatabaseTestUtility.class.getResourceAsStream(resource);
+  protected static Map<String, String> loadConfigFromClasspathResource(final String resource)
+      throws IOException {
+    final InputStream stream = DatabaseTestUtility.class.getResourceAsStream(resource);
     requireNonNull(stream, "Could not load config from resource, " + resource);
     final Reader reader = new InputStreamReader(stream, StandardCharsets.UTF_8);
     final Properties properties = new Properties();
-    try (final BufferedReader bufferedReader = new BufferedReader(reader))
-    {
+    try (final BufferedReader bufferedReader = new BufferedReader(reader)) {
       properties.load(bufferedReader);
     }
 
     final Map<String, String> config = new HashMap<>();
-    for (final String key : properties.stringPropertyNames())
-    {
+    for (final String key : properties.stringPropertyNames()) {
       final String value = properties.getProperty(key);
       config.put(key, value);
     }
-    
+
     return config;
   }
 
-  private static SchemaCrawlerOptions getMaximumSchemaCrawlerOptions()
-  {
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
-      .builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    return SchemaCrawlerOptionsBuilder
-      .builder()
-      .withLoadOptionsBuilder(loadOptionsBuilder)
-      .toOptions();
+  private static SchemaCrawlerOptions getMaximumSchemaCrawlerOptions() {
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    return SchemaCrawlerOptionsBuilder.builder()
+        .withLoadOptionsBuilder(loadOptionsBuilder)
+        .toOptions();
   }
 
-  private DatabaseTestUtility()
-  {
+  private DatabaseTestUtility() {
     // Prevent instantiation
   }
-
 }

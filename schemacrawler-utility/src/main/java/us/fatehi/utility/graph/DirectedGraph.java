@@ -27,40 +27,33 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.graph;
 
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-public class DirectedGraph<T extends Comparable<? super T>>
-{
+public class DirectedGraph<T extends Comparable<? super T>> {
 
   private final Set<DirectedEdge<T>> edges;
   private final String name;
   private final Map<T, Vertex<T>> verticesMap;
 
-  public DirectedGraph(final String name)
-  {
+  public DirectedGraph(final String name) {
     this.name = name;
     verticesMap = new HashMap<>();
     edges = new HashSet<>();
   }
 
   /**
-   * Adds vertices, and a directed edge between them. Simple directed graphs do
-   * not allow self-loops. https://en.wikipedia.org/wiki/Loop_(graph_theory)
+   * Adds vertices, and a directed edge between them. Simple directed graphs do not allow
+   * self-loops. https://en.wikipedia.org/wiki/Loop_(graph_theory)
    *
-   * @param from
-   *   Vertex value at the start of the edge
-   * @param to
-   *   Vertex value at the end of the edge
+   * @param from Vertex value at the start of the edge
+   * @param to Vertex value at the end of the edge
    */
-  public void addEdge(final T from, final T to)
-  {
-    if (!from.equals(to))
-    {
+  public void addEdge(final T from, final T to) {
+    if (!from.equals(to)) {
       edges.add(new DirectedEdge<>(addVertex(from), addVertex(to)));
     }
   }
@@ -68,49 +61,35 @@ public class DirectedGraph<T extends Comparable<? super T>>
   /**
    * Adds a vertex.
    *
-   * @param value
-   *   Vertex value
+   * @param value Vertex value
    * @return The newly added vertex
    */
-  public Vertex<T> addVertex(final T value)
-  {
+  public Vertex<T> addVertex(final T value) {
     final Vertex<T> vertex;
-    if (verticesMap.containsKey(value))
-    {
+    if (verticesMap.containsKey(value)) {
       vertex = verticesMap.get(value);
-    }
-    else
-    {
+    } else {
       vertex = new Vertex<>(value);
       verticesMap.put(value, vertex);
     }
     return vertex;
   }
 
-  public Set<DirectedEdge<T>> edgeSet()
-  {
+  public Set<DirectedEdge<T>> edgeSet() {
     return new HashSet<>(edges);
   }
 
-  /**
-   * @return the name
-   */
-  public String getName()
-  {
+  /** @return the name */
+  public String getName() {
     return name;
   }
 
-  public Set<DirectedEdge<T>> getOutgoingEdges(final Vertex<T> vertexFrom)
-  {
+  public Set<DirectedEdge<T>> getOutgoingEdges(final Vertex<T> vertexFrom) {
     Objects.requireNonNull(vertexFrom, "No vertex provided");
 
     final Set<DirectedEdge<T>> outgoingEdges = new HashSet<>();
-    for (final DirectedEdge<T> edge : edges)
-    {
-      if (edge
-        .getFrom()
-        .equals(vertexFrom))
-      {
+    for (final DirectedEdge<T> edge : edges) {
+      if (edge.getFrom().equals(vertexFrom)) {
         outgoingEdges.add(edge);
       }
     }
@@ -118,40 +97,28 @@ public class DirectedGraph<T extends Comparable<? super T>>
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     final StringBuilder writer = new StringBuilder(4096);
     writer.append("digraph {\n");
-    if (name != null && !name.isEmpty())
-    {
+    if (name != null && !name.isEmpty()) {
       writer.append(String.format("  [label=\"%s\"]%n", name));
     }
-    for (final Vertex<T> vertex : verticesMap.values())
-    {
-      writer
-        .append("  ")
-        .append(vertex);
-      if (vertex.hasAttribute("fillcolor"))
-      {
-        writer.append(String.format(" [fillcolor=%s, style=filled]",
-                                    vertex.getAttribute("fillcolor")));
+    for (final Vertex<T> vertex : verticesMap.values()) {
+      writer.append("  ").append(vertex);
+      if (vertex.hasAttribute("fillcolor")) {
+        writer.append(
+            String.format(" [fillcolor=%s, style=filled]", vertex.getAttribute("fillcolor")));
       }
       writer.append(";\n");
     }
-    for (final DirectedEdge<T> edge : edges)
-    {
-      writer
-        .append("  ")
-        .append(edge)
-        .append(";\n");
+    for (final DirectedEdge<T> edge : edges) {
+      writer.append("  ").append(edge).append(";\n");
     }
     writer.append("}\n");
     return writer.toString();
   }
 
-  public Set<Vertex<T>> vertexSet()
-  {
+  public Set<Vertex<T>> vertexSet() {
     return new HashSet<>(verticesMap.values());
   }
-
 }

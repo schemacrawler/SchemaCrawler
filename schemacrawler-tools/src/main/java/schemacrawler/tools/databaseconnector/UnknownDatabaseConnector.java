@@ -27,67 +27,57 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.databaseconnector;
 
-
 import static schemacrawler.tools.options.Config.getSystemConfigurationProperty;
+
 import java.util.regex.Pattern;
+
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
-final class UnknownDatabaseConnector
-  extends DatabaseConnector
-{
+final class UnknownDatabaseConnector extends DatabaseConnector {
 
-  private static final Pattern[] patterns = new Pattern[] {
-    Pattern.compile("jdbc:db2:.*"),
-    Pattern.compile("jdbc:(mysql|mariadb):.*"),
-    Pattern.compile("jdbc:oracle:.*"),
-    Pattern.compile("jdbc:postgresql:.*"),
-    Pattern.compile("jdbc:sqlite:.*"),
-    Pattern.compile("jdbc:sqlserver:.*"),
-    };
+  private static final Pattern[] patterns =
+      new Pattern[] {
+        Pattern.compile("jdbc:db2:.*"),
+        Pattern.compile("jdbc:(mysql|mariadb):.*"),
+        Pattern.compile("jdbc:oracle:.*"),
+        Pattern.compile("jdbc:postgresql:.*"),
+        Pattern.compile("jdbc:sqlite:.*"),
+        Pattern.compile("jdbc:sqlserver:.*"),
+      };
 
-  /**
-   * Constructor for unknown databases. Bypass the null-checks of the main
-   * constructor
-   */
-  UnknownDatabaseConnector()
-  {
-    super(DatabaseServerType.UNKNOWN,
-          url -> false,
-          (informationSchemaViewsBuilder, connection) -> {},
-          (schemaRetrievalOptionsBuilder, connection) -> {},
-          (limitOptionsBuilder) -> {},
-          () -> DatabaseConnectionUrlBuilder.builder(""));
+  /** Constructor for unknown databases. Bypass the null-checks of the main constructor */
+  UnknownDatabaseConnector() {
+    super(
+        DatabaseServerType.UNKNOWN,
+        url -> false,
+        (informationSchemaViewsBuilder, connection) -> {},
+        (schemaRetrievalOptionsBuilder, connection) -> {},
+        (limitOptionsBuilder) -> {},
+        () -> DatabaseConnectionUrlBuilder.builder(""));
   }
 
   @Override
-  public DatabaseConnectionSource newDatabaseConnectionSource(final DatabaseConnectionOptions connectionOptions)
-    throws SchemaCrawlerException
-  {
+  public DatabaseConnectionSource newDatabaseConnectionSource(
+      final DatabaseConnectionOptions connectionOptions) throws SchemaCrawlerException {
     final DatabaseConnectionSource databaseConnectionSource =
-      super.newDatabaseConnectionSource(connectionOptions);
+        super.newDatabaseConnectionSource(connectionOptions);
 
-    final String withoutDatabasePlugin = getSystemConfigurationProperty(
-      "SC_IGNORE_MISSING_DATABASE_PLUGIN",
-      Boolean.FALSE.toString());
-    if (!Boolean.valueOf(withoutDatabasePlugin))
-    {
+    final String withoutDatabasePlugin =
+        getSystemConfigurationProperty(
+            "SC_IGNORE_MISSING_DATABASE_PLUGIN", Boolean.FALSE.toString());
+    if (!Boolean.valueOf(withoutDatabasePlugin)) {
       // Check if SchemaCrawler database plugin is in use
       final String url = databaseConnectionSource.getConnectionUrl();
-      for (final Pattern pattern : patterns)
-      {
-        if (pattern
-          .matcher(url)
-          .matches())
-        {
-          throw new SchemaCrawlerException(String.format(
-            "SchemaCrawler database plugin should be on the CLASSPATH for <%s>",
-            url));
+      for (final Pattern pattern : patterns) {
+        if (pattern.matcher(url).matches()) {
+          throw new SchemaCrawlerException(
+              String.format(
+                  "SchemaCrawler database plugin should be on the CLASSPATH for <%s>", url));
         }
       }
     }
 
     return databaseConnectionSource;
   }
-
 }

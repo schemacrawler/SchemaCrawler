@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.crawl;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
@@ -41,116 +40,88 @@ import java.lang.ref.WeakReference;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.PartialDatabaseObject;
 
-class DatabaseObjectReference<D extends DatabaseObject>
-  implements Serializable
-{
+class DatabaseObjectReference<D extends DatabaseObject> implements Serializable {
 
   private static final long serialVersionUID = 1748828818899660921L;
 
   private Reference<D> databaseObjectRef;
   private D partial;
 
-  DatabaseObjectReference(final D databaseObject, final D partial)
-  {
-    databaseObjectRef = new SoftReference<>(requireNonNull(databaseObject,
-                                                           "Database object not provided"));
+  DatabaseObjectReference(final D databaseObject, final D partial) {
+    databaseObjectRef =
+        new SoftReference<>(requireNonNull(databaseObject, "Database object not provided"));
 
-    this.partial =
-      requireNonNull(partial, "Partial database object not provided");
-    if (!(partial instanceof PartialDatabaseObject))
-    {
+    this.partial = requireNonNull(partial, "Partial database object not provided");
+    if (!(partial instanceof PartialDatabaseObject)) {
       throw new IllegalArgumentException("Partial database object not provided");
     }
 
-    if (!partial.equals(databaseObject))
-    {
-      throw new IllegalArgumentException(
-        "Inconsistent database object reference");
+    if (!partial.equals(databaseObject)) {
+      throw new IllegalArgumentException("Inconsistent database object reference");
     }
   }
 
+  @Override
+  public final boolean equals(final Object obj) {
+    return partial.equals(obj);
+  }
+
   /**
-   * {@inheritDoc} Modification over the Reference, always returns a non-null
-   * value.
+   * {@inheritDoc} Modification over the Reference, always returns a non-null value.
    *
    * @see java.lang.ref.SoftReference#get()
    */
-  public final D get()
-  {
+  public final D get() {
     final D dereferencedDatabaseObject;
-    if (databaseObjectRef != null)
-    {
+    if (databaseObjectRef != null) {
       dereferencedDatabaseObject = databaseObjectRef.get();
-    }
-    else
-    {
+    } else {
       dereferencedDatabaseObject = null;
     }
 
-    if (dereferencedDatabaseObject == null)
-    {
+    if (dereferencedDatabaseObject == null) {
       return partial;
-    }
-    else
-    {
+    } else {
       return dereferencedDatabaseObject;
     }
   }
 
   @Override
-  public final int hashCode()
-  {
+  public final int hashCode() {
     return partial.hashCode();
   }
 
-  @Override
-  public final boolean equals(final Object obj)
-  {
-    return partial.equals(obj);
-  }
-
-  @Override
-  public String toString()
-  {
-    return partial.toString();
-  }
-
-  public boolean isPartialDatabaseObjectReference()
-  {
+  public boolean isPartialDatabaseObjectReference() {
     return this.get() instanceof PartialDatabaseObject;
   }
 
+  @Override
+  public String toString() {
+    return partial.toString();
+  }
+
   /**
-   * Read saved content of the reference, construct new reference, and the
-   * partial.
+   * Read saved content of the reference, construct new reference, and the partial.
    *
    * @throws IOException
    * @throws ClassNotFoundException
    */
-  private void readObject(final ObjectInputStream in)
-    throws IOException, ClassNotFoundException
-  {
-    if (in != null)
-    {
+  private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+    if (in != null) {
       partial = (D) in.readObject();
       databaseObjectRef = new WeakReference(in.readObject());
     }
   }
 
   /**
-   * Write only content of the reference. A Reference itself is not
-   * serializable.
+   * Write only content of the reference. A Reference itself is not serializable.
    *
    * @throws java.io.IOException
    */
-  private void writeObject(final ObjectOutputStream out)
-    throws IOException
-  {
-    if (out != null)
-    {
+  private void writeObject(final ObjectOutputStream out) throws IOException {
+    if (out != null) {
       out.writeObject(partial);
       out.writeObject(databaseObjectRef.get());
     }
   }
-
 }

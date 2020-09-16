@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 import java.util.Collection;
 
 import schemacrawler.ProductVersion;
@@ -38,9 +37,7 @@ import schemacrawler.ProductVersion;
  *
  * @author Sualeh Fatehi
  */
-public interface DatabaseInfo
-  extends ProductVersion
-{
+public interface DatabaseInfo extends ProductVersion {
 
   /**
    * Gets all database properties.
@@ -62,5 +59,4 @@ public interface DatabaseInfo
    * @return Database user name
    */
   String getUserName();
-
 }

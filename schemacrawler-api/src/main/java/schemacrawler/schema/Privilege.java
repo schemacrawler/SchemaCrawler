@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 import java.util.Collection;
 
 /**
@@ -36,10 +35,7 @@ import java.util.Collection;
  *
  * @author Sualeh Fatehi
  */
-public interface Privilege<D extends DatabaseObject>
-  extends NamedObject, DependantObject<D>
-{
+public interface Privilege<D extends DatabaseObject> extends NamedObject, DependantObject<D> {
 
   Collection<Grant<D>> getGrants();
-
 }

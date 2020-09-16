@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.ioresource;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.io.FilterReader;
@@ -38,22 +37,61 @@ import java.io.Writer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class InputResourceUtility
-{
+public class InputResourceUtility {
 
-  public static Writer wrapWriter(final String description,
-                                  final Writer writer,
-                                  final boolean shouldClose)
-  {
-    requireNonNull(writer, "No writer provided");
-    return new FilterWriter(writer)
-    {
+  /**
+   * Creates an input resource from the classpath, or from the file system. If neither are found,
+   * returns an empty input resource.
+   *
+   * @param inputResourceName Name of input resource.
+   * @return Input resource
+   */
+  public static InputResource createInputResource(final String inputResourceName) {
+    InputResource inputResource = null;
+    try {
+      final Path filePath = Paths.get(inputResourceName);
+      inputResource = new FileInputResource(filePath);
+    } catch (final Exception e) {
+      // No-op
+    }
+    try {
+      if (inputResource == null) {
+        inputResource = new ClasspathInputResource(inputResourceName);
+      }
+    } catch (final Exception e) {
+      // No-op
+    }
+    if (inputResource == null) {
+      inputResource = new EmptyInputResource();
+    }
+    return inputResource;
+  }
+
+  public static Reader wrapReader(
+      final String description, final Reader reader, final boolean shouldClose) {
+    requireNonNull(reader, "No reader provided");
+    return new FilterReader(reader) {
       @Override
-      public void close()
-        throws IOException
-      {
-        if (shouldClose)
-        {
+      public void close() throws IOException {
+        if (shouldClose) {
+          super.close();
+        }
+      }
+
+      @Override
+      public String toString() {
+        return description;
+      }
+    };
+  }
+
+  public static Writer wrapWriter(
+      final String description, final Writer writer, final boolean shouldClose) {
+    requireNonNull(writer, "No writer provided");
+    return new FilterWriter(writer) {
+      @Override
+      public void close() throws IOException {
+        if (shouldClose) {
           super.close();
         } else {
           super.flush();
@@ -61,79 +99,13 @@ public class InputResourceUtility
       }
 
       @Override
-      public String toString()
-      {
+      public String toString() {
         return description;
       }
     };
   }
 
-  public static Reader wrapReader(final String description,
-                                  final Reader reader,
-                                  final boolean shouldClose)
-  {
-    requireNonNull(reader, "No reader provided");
-    return new FilterReader(reader)
-    {
-      @Override
-      public void close()
-        throws IOException
-      {
-        if (shouldClose)
-        {
-          super.close();
-        }
-      }
-
-      @Override
-      public String toString()
-      {
-        return description;
-      }
-    };
-  }
-
-  /**
-   * Creates an input resource from the classpath, or from the file system. If
-   * neither are found, returns an empty input resource.
-   *
-   * @param inputResourceName
-   *   Name of input resource.
-   * @return Input resource
-   */
-  public static InputResource createInputResource(final String inputResourceName)
-  {
-    InputResource inputResource = null;
-    try
-    {
-      final Path filePath = Paths.get(inputResourceName);
-      inputResource = new FileInputResource(filePath);
-    }
-    catch (final Exception e)
-    {
-      // No-op
-    }
-    try
-    {
-      if (inputResource == null)
-      {
-        inputResource = new ClasspathInputResource(inputResourceName);
-      }
-    }
-    catch (final Exception e)
-    {
-      // No-op
-    }
-    if (inputResource == null)
-    {
-      inputResource = new EmptyInputResource();
-    }
-    return inputResource;
-  }
-
-  private InputResourceUtility()
-  {
+  private InputResourceUtility() {
     // Prevent instantiation
   }
-
 }

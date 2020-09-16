@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.test.string;
 
-
 import static java.util.regex.Pattern.DOTALL;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -42,25 +41,18 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.junit.jupiter.api.Test;
+
 import us.fatehi.utility.string.ObjectToStringFormat;
 
-public class ObjectToStringFormatTest
-{
+public class ObjectToStringFormatTest {
 
   @Test
-  public void nullArgs()
-  {
-    assertThat(new ObjectToStringFormat(null).get(), is(""));
-  }
-
-  @Test
-  public void happyPath()
-  {
-    assertThat(new ObjectToStringFormat("hello, world").get(),
-               is("hello, world"));
+  public void happyPath() {
+    assertThat(new ObjectToStringFormat("hello, world").get(), is("hello, world"));
     // Test toString
-    assertThat(new ObjectToStringFormat("hello, world").get(),
-               is(new ObjectToStringFormat("hello, world").toString()));
+    assertThat(
+        new ObjectToStringFormat("hello, world").get(),
+        is(new ObjectToStringFormat("hello, world").toString()));
 
     final List<String> list = Arrays.asList("one", "two", "three");
     assertThat(new ObjectToStringFormat(list).get(), is("one, two, three"));
@@ -69,13 +61,17 @@ public class ObjectToStringFormatTest
     map.put("one", 1);
     map.put("two", 2);
     map.put("three", 3);
-    assertThat(new ObjectToStringFormat(map)
-                 .get()
-                 .replace(System.lineSeparator(), "\n"),
-               is("\none: 1\nthree: 3\ntwo: 2"));
+    assertThat(
+        new ObjectToStringFormat(map).get().replace(System.lineSeparator(), "\n"),
+        is("\none: 1\nthree: 3\ntwo: 2"));
 
-    assertThat(new ObjectToStringFormat(Instant.now()).get(),
-               matchesPattern(Pattern.compile(".*nanos: \\d.*seconds: \\d.*", DOTALL)));
+    assertThat(
+        new ObjectToStringFormat(Instant.now()).get(),
+        matchesPattern(Pattern.compile(".*nanos: \\d.*seconds: \\d.*", DOTALL)));
   }
 
+  @Test
+  public void nullArgs() {
+    assertThat(new ObjectToStringFormat(null).get(), is(""));
+  }
 }

@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 import java.util.Map;
 import java.util.Optional;
 
@@ -37,14 +36,12 @@ import java.util.Optional;
  *
  * @author Sualeh Fatehi
  */
-public interface AttributedObject
-{
+public interface AttributedObject {
 
   /**
    * Gets an attribute.
    *
-   * @param name
-   *   Attribute name.
+   * @param name Attribute name.
    * @return Attribute value.
    */
   <T> T getAttribute(final String name);
@@ -52,15 +49,12 @@ public interface AttributedObject
   /**
    * Gets an attribute.
    *
-   * @param name
-   *   Attribute name.
+   * @param name Attribute name.
    * @return Attribute value.
-   * @throws ClassCastException
-   *   If the attribute class is not assignable from the the default value
-   *   class.
+   * @throws ClassCastException If the attribute class is not assignable from the the default value
+   *     class.
    */
-  <T> T getAttribute(String name, T defaultValue)
-    throws ClassCastException;
+  <T> T getAttribute(String name, T defaultValue) throws ClassCastException;
 
   /**
    * Gets all attributes.
@@ -72,8 +66,7 @@ public interface AttributedObject
   /**
    * Checks is an attribute is available.
    *
-   * @param name
-   *   Attribute name.
+   * @param name Attribute name.
    * @return If attribute is available.
    */
   boolean hasAttribute(String name);
@@ -81,8 +74,7 @@ public interface AttributedObject
   /**
    * Gets an attribute.
    *
-   * @param name
-   *   Attribute name.
+   * @param name Attribute name.
    * @return Attribute value.
    */
   <T> Optional<T> lookupAttribute(final String name);
@@ -90,19 +82,15 @@ public interface AttributedObject
   /**
    * Removes an attribute.
    *
-   * @param name
-   *   Attribute name
+   * @param name Attribute name
    */
   void removeAttribute(String name);
 
   /**
    * Sets an attribute.
    *
-   * @param name
-   *   Attribute name
-   * @param value
-   *   Attribute value
+   * @param name Attribute name
+   * @param value Attribute value
    */
   <T> void setAttribute(String name, T value);
-
 }

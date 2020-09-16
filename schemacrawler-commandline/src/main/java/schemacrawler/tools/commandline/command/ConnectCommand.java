@@ -28,11 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.command;
 
-
 import static java.util.Objects.requireNonNull;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
+
 import picocli.CommandLine.ArgGroup;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Mixin;
@@ -54,59 +55,63 @@ import schemacrawler.tools.databaseconnector.UserCredentials;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.string.StringFormat;
 
-@Command(name = "connect",
-         header = "** Connect to the database",
-         description = {
-           "",
-           "For database connections, please read",
-           "https://www.schemacrawler.com/database-support.html",
-           "first, before running SchemaCrawler",
-           ""
-         },
-         headerHeading = "",
-         synopsisHeading = "Shell Command:%n",
-         customSynopsis = {
-           "connect"
-         },
-         optionListHeading = "Options:%n")
-public class ConnectCommand
-  extends BaseStateHolder
-  implements Runnable
-{
+@Command(
+    name = "connect",
+    header = "** Connect to the database",
+    description = {
+      "",
+      "For database connections, please read",
+      "https://www.schemacrawler.com/database-support.html",
+      "first, before running SchemaCrawler",
+      ""
+    },
+    headerHeading = "",
+    synopsisHeading = "Shell Command:%n",
+    customSynopsis = {"connect"},
+    optionListHeading = "Options:%n")
+public class ConnectCommand extends BaseStateHolder implements Runnable {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(ConnectCommand.class.getName());
+      SchemaCrawlerLogger.getLogger(ConnectCommand.class.getName());
 
   @ArgGroup(exclusive = true)
   private DatabaseConnectionGroupOptions databaseConnectionGroupOptions;
-  @Spec
-  private Model.CommandSpec spec;
-  @Mixin
-  private UserCredentialsOptions userCredentialsOptions;
 
-  public ConnectCommand(final SchemaCrawlerShellState state)
-  {
+  @Spec private Model.CommandSpec spec;
+  @Mixin private UserCredentialsOptions userCredentialsOptions;
+
+  public ConnectCommand(final SchemaCrawlerShellState state) {
     super(state);
   }
 
-  @Override
-  public void run()
-  {
+  public DatabaseConnectionOptions getDatabaseConnectionOptions() {
+    if (databaseConnectionGroupOptions == null) {
+      throw new ParameterException(spec.commandLine(), "No database connection options provided");
+    }
 
-    try
-    {
+    final DatabaseConnectionOptions databaseConnectionOptions =
+        databaseConnectionGroupOptions.getDatabaseConnectionOptions();
+    if (databaseConnectionOptions == null) {
+      throw new ParameterException(spec.commandLine(), "No database connection options provided");
+    }
+
+    return databaseConnectionOptions;
+  }
+
+  @Override
+  public void run() {
+
+    try {
       // Match the database connector in the best possible way, using the
       // server argument, or the JDBC connection URL
       final DatabaseConnectionOptions databaseConnectionOptions = getDatabaseConnectionOptions();
-      requireNonNull(databaseConnectionOptions,
-                     "No database connection options provided");
-      final DatabaseConnector databaseConnector =
-        databaseConnectionOptions.getDatabaseConnector();
-      requireNonNull(databaseConnector,
-                     "No database plugin located (not even unknown)");
-      LOGGER.log(Level.INFO,
-                 new StringFormat("Using database plugin <%s>",
-                                  databaseConnector.getDatabaseServerType()));
+      requireNonNull(databaseConnectionOptions, "No database connection options provided");
+      final DatabaseConnector databaseConnector = databaseConnectionOptions.getDatabaseConnector();
+      requireNonNull(databaseConnector, "No database plugin located (not even unknown)");
+      LOGGER.log(
+          Level.INFO,
+          new StringFormat(
+              "Using database plugin <%s>", databaseConnector.getDatabaseServerType()));
 
       final Config config = new Config();
       config.putAll(state.getAdditionalConfiguration());
@@ -116,64 +121,24 @@ public class ConnectCommand
 
       state.addAdditionalConfiguration(config);
       loadSchemaCrawlerOptionsBuilder(databaseConnector);
-      createDataSource(databaseConnector,
-                       databaseConnectionOptions,
-                       getUserCredentials());
+      createDataSource(databaseConnector, databaseConnectionOptions, getUserCredentials());
       loadSchemaRetrievalOptionsBuilder(databaseConnector);
 
-    }
-    catch (final SchemaCrawlerException e)
-    {
+    } catch (final SchemaCrawlerException e) {
       throw new RuntimeException(e.getMessage(), e);
-    }
-    catch (final SQLException e)
-    {
+    } catch (final SQLException e) {
       throw new RuntimeException("Cannot connect to database", e);
     }
   }
 
-  public DatabaseConnectionOptions getDatabaseConnectionOptions()
-  {
-    if (databaseConnectionGroupOptions == null)
-    {
-      throw new ParameterException(spec.commandLine(),
-                                   "No database connection options provided");
-    }
-
-    final DatabaseConnectionOptions databaseConnectionOptions =
-      databaseConnectionGroupOptions.getDatabaseConnectionOptions();
-    if (databaseConnectionOptions == null)
-    {
-      throw new ParameterException(spec.commandLine(),
-                                   "No database connection options provided");
-    }
-
-    return databaseConnectionOptions;
-  }
-
-  private UserCredentials getUserCredentials()
-  {
-
-    if (userCredentialsOptions == null)
-    {
-      throw new ParameterException(spec.commandLine(),
-                                   "No database connection credentials provided");
-    }
-    final UserCredentials userCredentials =
-      userCredentialsOptions.getUserCredentials();
-    return userCredentials;
-  }
-
-  private void createDataSource(final DatabaseConnector databaseConnector,
+  private void createDataSource(
+      final DatabaseConnector databaseConnector,
       final DatabaseConnectionOptions connectionOptions,
       final UserCredentials userCredentials)
-      throws SchemaCrawlerException
-  {
+      throws SchemaCrawlerException {
     requireNonNull(databaseConnector, "No database plugin provided");
-    requireNonNull(connectionOptions,
-        "No database connection options provided");
-    requireNonNull(userCredentials,
-        "No database connection user credentials provided");
+    requireNonNull(connectionOptions, "No database connection options provided");
+    requireNonNull(userCredentials, "No database connection user credentials provided");
 
     LOGGER.log(Level.FINE, "Creating data-source");
 
@@ -186,41 +151,42 @@ public class ConnectCommand
     state.setDataSource(databaseConnectionSource);
   }
 
-  private void loadSchemaCrawlerOptionsBuilder(
-      final DatabaseConnector databaseConnector)
-  {
+  private UserCredentials getUserCredentials() {
+
+    if (userCredentialsOptions == null) {
+      throw new ParameterException(
+          spec.commandLine(), "No database connection credentials provided");
+    }
+    final UserCredentials userCredentials = userCredentialsOptions.getUserCredentials();
+    return userCredentials;
+  }
+
+  private void loadSchemaCrawlerOptionsBuilder(final DatabaseConnector databaseConnector) {
     LOGGER.log(Level.FINE, "Creating SchemaCrawler options builder");
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
         SchemaCrawlerOptionsBuilder.builder();
     // Set defaults from database plugin, such as default schema excludes
-    databaseConnector
-        .setDefaultsForSchemaCrawlerOptionsBuilder(schemaCrawlerOptionsBuilder);
+    databaseConnector.setDefaultsForSchemaCrawlerOptionsBuilder(schemaCrawlerOptionsBuilder);
     // Override with options from config file
     final Config config = state.getAdditionalConfiguration();
     SchemaCrawlerOptionsConfig.fromConfig(schemaCrawlerOptionsBuilder, config);
-    
+
     state.setSchemaCrawlerOptionsBuilder(schemaCrawlerOptionsBuilder);
   }
 
-  private void loadSchemaRetrievalOptionsBuilder(
-      final DatabaseConnector databaseConnector)
-      throws SQLException
-  {
-    requireNonNull(databaseConnector,
-        "No database connection options provided");
+  private void loadSchemaRetrievalOptionsBuilder(final DatabaseConnector databaseConnector)
+      throws SQLException {
+    requireNonNull(databaseConnector, "No database connection options provided");
 
     LOGGER.log(Level.FINE, "Creating SchemaCrawler retrieval options builder");
 
     final Config config = state.getAdditionalConfiguration();
-    try (final Connection connection = state.getDataSource().get())
-    {
+    try (final Connection connection = state.getDataSource().get()) {
       final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
           databaseConnector.getSchemaRetrievalOptionsBuilder(connection);
-      state
-          .setSchemaRetrievalOptionsBuilder(SchemaRetrievalOptionsConfig
-              .fromConfig(schemaRetrievalOptionsBuilder, config));
+      state.setSchemaRetrievalOptionsBuilder(
+          SchemaRetrievalOptionsConfig.fromConfig(schemaRetrievalOptionsBuilder, config));
     }
   }
-
 }

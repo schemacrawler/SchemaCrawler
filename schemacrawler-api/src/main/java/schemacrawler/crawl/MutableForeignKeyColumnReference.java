@@ -28,62 +28,47 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKeyColumnReference;
 
 /**
- * Represents a single column mapping from a primary key column to a foreign key
- * column.
+ * Represents a single column mapping from a primary key column to a foreign key column.
  *
  * @author Sualeh Fatehi
  */
-final class MutableForeignKeyColumnReference
-  extends BaseColumnReference
-  implements ForeignKeyColumnReference
-{
+final class MutableForeignKeyColumnReference extends BaseColumnReference
+    implements ForeignKeyColumnReference {
 
   private static final long serialVersionUID = 3689073962672273464L;
 
   private final int keySequence;
 
-  MutableForeignKeyColumnReference(final int keySequence,
-                                   final Column primaryKeyColumn,
-                                   final Column foreignKeyColumn)
-  {
+  MutableForeignKeyColumnReference(
+      final int keySequence, final Column primaryKeyColumn, final Column foreignKeyColumn) {
     super(primaryKeyColumn, foreignKeyColumn);
     this.keySequence = keySequence;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public int compareTo(final ColumnReference other1)
-  {
+  public int compareTo(final ColumnReference other1) {
     int comparison = 0;
 
     final ForeignKeyColumnReference other = (ForeignKeyColumnReference) other1;
-    if (comparison == 0)
-    {
+    if (comparison == 0) {
       comparison = getKeySequence() - other.getKeySequence();
     }
-    if (comparison == 0)
-    {
+    if (comparison == 0) {
       comparison = super.compareTo(other1);
     }
 
     return comparison;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public int getKeySequence()
-  {
+  public int getKeySequence() {
     return keySequence;
   }
-
 }

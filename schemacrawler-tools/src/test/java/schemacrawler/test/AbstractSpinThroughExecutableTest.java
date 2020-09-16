@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
@@ -35,12 +34,15 @@ import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAnd
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
+
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.stream.Stream;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -59,108 +61,116 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public abstract class AbstractSpinThroughExecutableTest
-{
+public abstract class AbstractSpinThroughExecutableTest {
 
   private static final String SPIN_THROUGH_OUTPUT = "spin_through_output/";
 
   @BeforeAll
-  public static void clean()
-    throws Exception
-  {
+  public static void clean() throws Exception {
     TestUtility.clean(SPIN_THROUGH_OUTPUT);
   }
 
-  private static Stream<InfoLevel> infoLevels()
-  {
-    return Arrays
-      .stream(InfoLevel.values())
-      .filter(infoLevel -> infoLevel != InfoLevel.unknown);
+  private static Stream<InfoLevel> infoLevels() {
+    return Arrays.stream(InfoLevel.values()).filter(infoLevel -> infoLevel != InfoLevel.unknown);
   }
 
-  private static String referenceFile(final SchemaTextDetailType schemaTextDetailType,
-                                      final InfoLevel infoLevel,
-                                      final OutputFormat outputFormat,
-                                      final String javaVersion)
-  {
-    final String referenceFile = String.format("%d%d.%s_%s%s.%s",
-                                               schemaTextDetailType.ordinal(),
-                                               infoLevel.ordinal(),
-                                               schemaTextDetailType,
-                                               infoLevel,
-                                               javaVersion,
-                                               outputFormat.getFormat());
+  private static String referenceFile(
+      final SchemaTextDetailType schemaTextDetailType,
+      final InfoLevel infoLevel,
+      final OutputFormat outputFormat,
+      final String javaVersion) {
+    final String referenceFile =
+        String.format(
+            "%d%d.%s_%s%s.%s",
+            schemaTextDetailType.ordinal(),
+            infoLevel.ordinal(),
+            schemaTextDetailType,
+            infoLevel,
+            javaVersion,
+            outputFormat.getFormat());
     return referenceFile;
   }
 
-  private static Stream<SchemaTextDetailType> schemaTextDetailTypes()
-  {
+  private static Stream<SchemaTextDetailType> schemaTextDetailTypes() {
     return Arrays.stream(SchemaTextDetailType.values());
   }
 
   @Test
-  public void spinThroughExecutable(final Connection connection)
-    throws Exception
-  {
+  public void spinThroughExecutable(final Connection connection) throws Exception {
 
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-        TestUtility.newSchemaRetrievalOptions();
+    final SchemaRetrievalOptions schemaRetrievalOptions = TestUtility.newSchemaRetrievalOptions();
 
-    assertAll(infoLevels().flatMap(infoLevel -> outputFormats().flatMap(
-      outputFormat -> schemaTextDetailTypes().map(schemaTextDetailType -> () -> {
+    assertAll(
+        infoLevels()
+            .flatMap(
+                infoLevel ->
+                    outputFormats()
+                        .flatMap(
+                            outputFormat ->
+                                schemaTextDetailTypes()
+                                    .map(
+                                        schemaTextDetailType ->
+                                            () -> {
+                                              final String javaVersion;
+                                              if (schemaTextDetailType
+                                                      == SchemaTextDetailType.details
+                                                  && infoLevel == InfoLevel.maximum) {
+                                                javaVersion = "." + javaVersion();
+                                              } else {
+                                                javaVersion = "";
+                                              }
+                                              final String referenceFile =
+                                                  referenceFile(
+                                                      schemaTextDetailType,
+                                                      infoLevel,
+                                                      outputFormat,
+                                                      javaVersion);
 
-        final String javaVersion;
-        if (schemaTextDetailType == SchemaTextDetailType.details
-            && infoLevel == InfoLevel.maximum)
-        {
-          javaVersion = "." + javaVersion();
-        }
-        else
-        {
-          javaVersion = "";
-        }
-        final String referenceFile = referenceFile(schemaTextDetailType,
-                                                   infoLevel,
-                                                   outputFormat,
-                                                   javaVersion);
+                                              final LimitOptionsBuilder limitOptionsBuilder =
+                                                  LimitOptionsBuilder.builder()
+                                                      .includeAllSequences()
+                                                      .includeAllSynonyms()
+                                                      .includeAllRoutines();
+                                              final LoadOptionsBuilder loadOptionsBuilder =
+                                                  LoadOptionsBuilder.builder()
+                                                      .withSchemaInfoLevel(
+                                                          infoLevel.toSchemaInfoLevel());
+                                              final SchemaCrawlerOptionsBuilder
+                                                  schemaCrawlerOptionsBuilder =
+                                                      SchemaCrawlerOptionsBuilder.builder()
+                                                          .withLimitOptionsBuilder(
+                                                              limitOptionsBuilder)
+                                                          .withLoadOptionsBuilder(
+                                                              loadOptionsBuilder);
+                                              final SchemaCrawlerOptions schemaCrawlerOptions =
+                                                  schemaCrawlerOptionsBuilder.toOptions();
 
-        final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-          .builder()
-          .includeAllSequences()
-          .includeAllSynonyms()
-          .includeAllRoutines();
-        final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
-          .builder()
-          .withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());
-        final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-          SchemaCrawlerOptionsBuilder
-            .builder()
-            .withLimitOptionsBuilder(limitOptionsBuilder)
-            .withLoadOptionsBuilder(loadOptionsBuilder);
-        final SchemaCrawlerOptions schemaCrawlerOptions =
-          schemaCrawlerOptionsBuilder.toOptions();
+                                              final SchemaTextOptionsBuilder
+                                                  schemaTextOptionsBuilder =
+                                                      SchemaTextOptionsBuilder.builder();
+                                              schemaTextOptionsBuilder.noInfo(false);
 
-        final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
-          SchemaTextOptionsBuilder.builder();
-        schemaTextOptionsBuilder.noInfo(false);
+                                              final SchemaCrawlerExecutable executable =
+                                                  new SchemaCrawlerExecutable(
+                                                      schemaTextDetailType.name());
+                                              executable.setSchemaCrawlerOptions(
+                                                  schemaCrawlerOptions);
+                                              executable.setAdditionalConfiguration(
+                                                  schemaTextOptionsBuilder.toConfig());
 
-        final SchemaCrawlerExecutable executable =
-          new SchemaCrawlerExecutable(schemaTextDetailType.name());
-        executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-        executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
+                                              executable.setSchemaRetrievalOptions(
+                                                  schemaRetrievalOptions);
 
-        executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
-
-        assertThat(outputOf(executableExecution(connection,
-                                                executable,
-                                                outputFormat)),
-                   hasSameContentAndTypeAs(classpathResource(SPIN_THROUGH_OUTPUT
-                                                             + referenceFile),
-                                           outputFormat));
-
-      }))));
+                                              assertThat(
+                                                  outputOf(
+                                                      executableExecution(
+                                                          connection, executable, outputFormat)),
+                                                  hasSameContentAndTypeAs(
+                                                      classpathResource(
+                                                          SPIN_THROUGH_OUTPUT + referenceFile),
+                                                      outputFormat));
+                                            }))));
   }
 
   protected abstract Stream<OutputFormat> outputFormats();
-
 }

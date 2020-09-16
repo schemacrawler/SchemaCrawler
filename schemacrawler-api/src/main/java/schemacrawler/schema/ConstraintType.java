@@ -1,9 +1,6 @@
 package schemacrawler.schema;
 
-
-public interface ConstraintType
-{
+public interface ConstraintType {
 
   String getValue();
-
 }

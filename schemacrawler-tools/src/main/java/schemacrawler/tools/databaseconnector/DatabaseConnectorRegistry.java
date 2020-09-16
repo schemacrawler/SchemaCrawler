@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.databaseconnector;
 
-
 import static java.util.Comparator.naturalOrder;
 import static us.fatehi.utility.DatabaseUtility.checkConnection;
 import static us.fatehi.utility.Utility.isBlank;
@@ -56,168 +55,123 @@ import us.fatehi.utility.string.StringFormat;
  *
  * @author Sualeh Fatehi
  */
-public final class DatabaseConnectorRegistry
-  implements Iterable<DatabaseServerType>
-{
+public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerType> {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(DatabaseConnectorRegistry.class.getName());
+      SchemaCrawlerLogger.getLogger(DatabaseConnectorRegistry.class.getName());
   private static DatabaseConnectorRegistry databaseConnectorRegistrySingleton;
 
-  public static DatabaseConnectorRegistry getDatabaseConnectorRegistry()
-  {
-    if (databaseConnectorRegistrySingleton == null)
-    {
+  public static DatabaseConnectorRegistry getDatabaseConnectorRegistry() {
+    if (databaseConnectorRegistrySingleton == null) {
       databaseConnectorRegistrySingleton = new DatabaseConnectorRegistry();
     }
     return databaseConnectorRegistrySingleton;
   }
 
-  private static Map<String, DatabaseConnector> loadDatabaseConnectorRegistry()
-  {
+  private static Map<String, DatabaseConnector> loadDatabaseConnectorRegistry() {
 
-    final Map<String, DatabaseConnector> databaseConnectorRegistry =
-      new HashMap<>();
+    final Map<String, DatabaseConnector> databaseConnectorRegistry = new HashMap<>();
 
-    try
-    {
+    try {
       final ServiceLoader<DatabaseConnector> serviceLoader =
-        ServiceLoader.load(DatabaseConnector.class);
-      for (final DatabaseConnector databaseConnector : serviceLoader)
-      {
-        final String databaseSystemIdentifier = databaseConnector
-          .getDatabaseServerType()
-          .getDatabaseSystemIdentifier();
-        try
-        {
-          LOGGER.log(Level.CONFIG,
-                     new StringFormat("Loading database connector, %s=%s",
-                                      databaseSystemIdentifier,
-                                      databaseConnector
-                                        .getClass()
-                                        .getName()));
+          ServiceLoader.load(DatabaseConnector.class);
+      for (final DatabaseConnector databaseConnector : serviceLoader) {
+        final String databaseSystemIdentifier =
+            databaseConnector.getDatabaseServerType().getDatabaseSystemIdentifier();
+        try {
+          LOGGER.log(
+              Level.CONFIG,
+              new StringFormat(
+                  "Loading database connector, %s=%s",
+                  databaseSystemIdentifier, databaseConnector.getClass().getName()));
           // Put in map
-          databaseConnectorRegistry.put(databaseSystemIdentifier,
-                                        databaseConnector);
-        }
-        catch (final Exception e)
-        {
-          LOGGER.log(Level.CONFIG,
-                     new StringFormat("Could not load database connector, %s=%s",
-                                      databaseSystemIdentifier,
-                                      databaseConnector
-                                        .getClass()
-                                        .getName()),
-                     e);
+          databaseConnectorRegistry.put(databaseSystemIdentifier, databaseConnector);
+        } catch (final Exception e) {
+          LOGGER.log(
+              Level.CONFIG,
+              new StringFormat(
+                  "Could not load database connector, %s=%s",
+                  databaseSystemIdentifier, databaseConnector.getClass().getName()),
+              e);
         }
       }
-    }
-    catch (final Exception e)
-    {
-      throw new SchemaCrawlerRuntimeException(
-        "Could not load database connector registry",
-        e);
+    } catch (final Exception e) {
+      throw new SchemaCrawlerRuntimeException("Could not load database connector registry", e);
     }
 
     return databaseConnectorRegistry;
   }
 
-  private static void logRegisteredJdbcDrivers()
-  {
-    if (!LOGGER.isLoggable(Level.CONFIG))
-    {
+  private static void logRegisteredJdbcDrivers() {
+    if (!LOGGER.isLoggable(Level.CONFIG)) {
       return;
     }
 
-    try
-    {
+    try {
       final StringBuilder buffer = new StringBuilder(1024);
       buffer.append("Registered JDBC drivers:");
-      for (final Driver driver : Collections.list(DriverManager.getDrivers()))
-      {
-        buffer.append(String.format("%n%s %d.%d",
-                                    driver
-                                      .getClass()
-                                      .getName(),
-                                    driver.getMajorVersion(),
-                                    driver.getMinorVersion()));
+      for (final Driver driver : Collections.list(DriverManager.getDrivers())) {
+        buffer.append(
+            String.format(
+                "%n%s %d.%d",
+                driver.getClass().getName(), driver.getMajorVersion(), driver.getMinorVersion()));
       }
       LOGGER.log(Level.CONFIG, buffer.toString());
-    }
-    catch (final Exception e)
-    {
+    } catch (final Exception e) {
       LOGGER.log(Level.FINE, "Could not log registered JDBC drivers", e);
     }
   }
+
   private final Map<String, DatabaseConnector> databaseConnectorRegistry;
 
-  private DatabaseConnectorRegistry()
-  {
+  private DatabaseConnectorRegistry() {
     databaseConnectorRegistry = loadDatabaseConnectorRegistry();
     logRegisteredJdbcDrivers();
   }
 
-  public boolean hasDatabaseSystemIdentifier(final String databaseSystemIdentifier)
-  {
+  public boolean hasDatabaseSystemIdentifier(final String databaseSystemIdentifier) {
     return databaseConnectorRegistry.containsKey(databaseSystemIdentifier);
   }
 
   @Override
-  public Iterator<DatabaseServerType> iterator()
-  {
+  public Iterator<DatabaseServerType> iterator() {
     final List<DatabaseServerType> databaseServerTypes = new ArrayList<>();
-    for (final DatabaseConnector databaseConnector : databaseConnectorRegistry.values())
-    {
+    for (final DatabaseConnector databaseConnector : databaseConnectorRegistry.values()) {
       databaseServerTypes.add(databaseConnector.getDatabaseServerType());
     }
     databaseServerTypes.sort(naturalOrder());
     return databaseServerTypes.iterator();
   }
 
-  public DatabaseConnector lookupDatabaseConnector(final Connection connection)
-  {
-    try
-    {
+  public DatabaseConnector lookupDatabaseConnector(final Connection connection) {
+    try {
       checkConnection(connection);
-      final String url = connection
-        .getMetaData()
-        .getURL();
+      final String url = connection.getMetaData().getURL();
       return lookupDatabaseConnectorFromUrl(url);
-    }
-    catch (final SQLException e)
-    {
+    } catch (final SQLException e) {
       return DatabaseConnector.UNKNOWN;
     }
   }
 
-  public DatabaseConnector lookupDatabaseConnector(final String databaseSystemIdentifier)
-  {
-    if (hasDatabaseSystemIdentifier(databaseSystemIdentifier))
-    {
+  public DatabaseConnector lookupDatabaseConnector(final String databaseSystemIdentifier) {
+    if (hasDatabaseSystemIdentifier(databaseSystemIdentifier)) {
       return databaseConnectorRegistry.get(databaseSystemIdentifier);
-    }
-    else
-    {
+    } else {
       return DatabaseConnector.UNKNOWN;
     }
   }
 
-  public DatabaseConnector lookupDatabaseConnectorFromUrl(final String url)
-  {
-    if (isBlank(url))
-    {
+  public DatabaseConnector lookupDatabaseConnectorFromUrl(final String url) {
+    if (isBlank(url)) {
       return DatabaseConnector.UNKNOWN;
     }
 
-    for (final DatabaseConnector databaseConnector : databaseConnectorRegistry.values())
-    {
-      if (databaseConnector.supportsUrl(url))
-      {
+    for (final DatabaseConnector databaseConnector : databaseConnectorRegistry.values()) {
+      if (databaseConnector.supportsUrl(url)) {
         return databaseConnector;
       }
     }
 
     return DatabaseConnector.UNKNOWN;
   }
-
 }

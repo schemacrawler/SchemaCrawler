@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.utility;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.util.EnumSet;
@@ -37,62 +36,44 @@ import schemacrawler.schema.IdentifiedEnum;
 import us.fatehi.utility.UtilityMarker;
 
 @UtilityMarker
-public class EnumUtility
-{
+public class EnumUtility {
 
-  public static <E extends Enum<E>> E enumValue(final String value,
-                                                final E defaultValue)
-  {
+  public static <E extends Enum<E>> E enumValue(final String value, final E defaultValue) {
     requireNonNull(defaultValue, "No default value provided");
     E enumValue;
-    if (value == null)
-    {
+    if (value == null) {
       enumValue = defaultValue;
-    }
-    else
-    {
-      try
-      {
+    } else {
+      try {
         Class<?> enumClass = defaultValue.getClass();
-        if (enumClass.getEnclosingClass() != null)
-        {
+        if (enumClass.getEnclosingClass() != null) {
           enumClass = enumClass.getEnclosingClass();
         }
         enumValue = Enum.valueOf((Class<E>) enumClass, value);
-      }
-      catch (final Exception e)
-      {
+      } catch (final Exception e) {
         enumValue = defaultValue;
       }
     }
     return enumValue;
   }
 
-  public static <E extends Enum<E> & IdentifiedEnum> E enumValueFromId(final int value,
-                                                                       final E defaultValue)
-  {
+  public static <E extends Enum<E> & IdentifiedEnum> E enumValueFromId(
+      final int value, final E defaultValue) {
     requireNonNull(defaultValue, "No default value provided");
-    try
-    {
+    try {
       final Class<E> enumClass = (Class<E>) defaultValue.getClass();
-      for (final E enumValue : EnumSet.allOf(enumClass))
-      {
-        if (enumValue.id() == value)
-        {
+      for (final E enumValue : EnumSet.allOf(enumClass)) {
+        if (enumValue.id() == value) {
           return enumValue;
         }
       }
-    }
-    catch (final Exception e)
-    {
+    } catch (final Exception e) {
       // Ignore
     }
     return defaultValue;
   }
 
-  private EnumUtility()
-  {
+  private EnumUtility() {
     // Prevent instantiation
   }
-
 }

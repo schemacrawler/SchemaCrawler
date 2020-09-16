@@ -28,16 +28,11 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.integration.script;
 
-
 import schemacrawler.tools.integration.BaseLanguage;
 
-public final class ScriptLanguage
-  extends BaseLanguage
-{
+public final class ScriptLanguage extends BaseLanguage {
 
-  public ScriptLanguage()
-  {
+  public ScriptLanguage() {
     super("script-language", "script", "javascript");
   }
-
 }

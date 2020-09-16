@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.analysis.associations;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
@@ -43,17 +42,15 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import us.fatehi.utility.string.StringFormat;
 
-public final class WeakAssociationsAnalyzer
-{
+public final class WeakAssociationsAnalyzer {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(WeakAssociationsAnalyzer.class.getName());
+      SchemaCrawlerLogger.getLogger(WeakAssociationsAnalyzer.class.getName());
 
   private final List<Table> tables;
   private final Collection<ProposedWeakAssociation> weakAssociations;
 
-  public WeakAssociationsAnalyzer(final Collection<Table> tables)
-  {
+  public WeakAssociationsAnalyzer(final Collection<Table> tables) {
     requireNonNull(tables, "No tables provided");
     this.tables = new ArrayList<>(tables);
     Collections.sort(this.tables);
@@ -61,10 +58,8 @@ public final class WeakAssociationsAnalyzer
     weakAssociations = new ArrayList<>();
   }
 
-  public Collection<ProposedWeakAssociation> analyzeTables()
-  {
-    if (tables.size() < 2)
-    {
+  public Collection<ProposedWeakAssociation> analyzeTables() {
+    if (tables.size() < 2) {
       return Collections.emptySet();
     }
 
@@ -73,72 +68,52 @@ public final class WeakAssociationsAnalyzer
     return weakAssociations;
   }
 
-  private void findWeakAssociations(final List<Table> tables)
-  {
+  private void findWeakAssociations(final List<Table> tables) {
     LOGGER.log(Level.INFO, "Finding weak associations");
     final ForeignKeys foreignKeys = new ForeignKeys(tables);
-    final ColumnMatchKeysMap columnMatchKeysMap =
-      new ColumnMatchKeysMap(tables);
+    final ColumnMatchKeysMap columnMatchKeysMap = new ColumnMatchKeysMap(tables);
     final TableMatchKeys tableMatchKeys = new TableMatchKeys(tables);
 
-    if (LOGGER.isLoggable(Level.FINER))
-    {
-      LOGGER.log(Level.FINER,
-                 new StringFormat("Column match keys <%s>",
-                                  columnMatchKeysMap));
-      LOGGER.log(Level.FINER,
-                 new StringFormat("Column match keys <%s>", tableMatchKeys));
+    if (LOGGER.isLoggable(Level.FINER)) {
+      LOGGER.log(Level.FINER, new StringFormat("Column match keys <%s>", columnMatchKeysMap));
+      LOGGER.log(Level.FINER, new StringFormat("Column match keys <%s>", tableMatchKeys));
     }
-    for (final Table table : tables)
-    {
-      final TableCandidateKeys tableCandidateKeys =
-        new TableCandidateKeys(table);
-      LOGGER.log(Level.FINER,
-                 new StringFormat("Table candidate keys <%s>",
-                                  tableCandidateKeys));
-      for (final Column pkColumn : tableCandidateKeys)
-      {
+    for (final Table table : tables) {
+      final TableCandidateKeys tableCandidateKeys = new TableCandidateKeys(table);
+      LOGGER.log(Level.FINER, new StringFormat("Table candidate keys <%s>", tableCandidateKeys));
+      for (final Column pkColumn : tableCandidateKeys) {
         final Set<String> fkColumnMatchKeys = new HashSet<>();
         // Look for all columns matching this table match key
-        if (pkColumn.isPartOfPrimaryKey())
-        {
+        if (pkColumn.isPartOfPrimaryKey()) {
           fkColumnMatchKeys.addAll(tableMatchKeys.get(table));
         }
         // Look for all columns matching this column match key
-        if (columnMatchKeysMap.containsKey(pkColumn))
-        {
+        if (columnMatchKeysMap.containsKey(pkColumn)) {
           fkColumnMatchKeys.addAll(columnMatchKeysMap.get(pkColumn));
         }
 
         final Set<Column> fkColumns = new HashSet<>();
-        for (final String fkColumnMatchKey : fkColumnMatchKeys)
-        {
-          if (columnMatchKeysMap.containsKey(fkColumnMatchKey))
-          {
+        for (final String fkColumnMatchKey : fkColumnMatchKeys) {
+          if (columnMatchKeysMap.containsKey(fkColumnMatchKey)) {
             fkColumns.addAll(columnMatchKeysMap.get(fkColumnMatchKey));
           }
         }
 
-        for (final Column fkColumn : fkColumns)
-        {
-          if (pkColumn.equals(fkColumn))
-          {
+        for (final Column fkColumn : fkColumns) {
+          if (pkColumn.equals(fkColumn)) {
             continue;
           }
 
           final ProposedWeakAssociation proposedWeakAssociation =
-            new ProposedWeakAssociation(pkColumn, fkColumn);
-          if (proposedWeakAssociation.isValid() && !foreignKeys.contains(
-            proposedWeakAssociation))
-          {
-            LOGGER.log(Level.FINE,
-                       new StringFormat("Found weak association <%s>",
-                                        proposedWeakAssociation));
+              new ProposedWeakAssociation(pkColumn, fkColumn);
+          if (proposedWeakAssociation.isValid() && !foreignKeys.contains(proposedWeakAssociation)) {
+            LOGGER.log(
+                Level.FINE,
+                new StringFormat("Found weak association <%s>", proposedWeakAssociation));
             weakAssociations.add(proposedWeakAssociation);
           }
         }
       }
     }
   }
-
 }

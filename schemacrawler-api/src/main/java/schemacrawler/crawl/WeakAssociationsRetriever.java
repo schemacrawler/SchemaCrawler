@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.crawl;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
@@ -45,67 +44,53 @@ import schemacrawler.utility.MetaDataUtility;
 import us.fatehi.utility.string.StringFormat;
 
 @Retriever
-final class WeakAssociationsRetriever
-{
+final class WeakAssociationsRetriever {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(WeakAssociationsRetriever.class.getName());
+      SchemaCrawlerLogger.getLogger(WeakAssociationsRetriever.class.getName());
 
   private final MutableCatalog catalog;
 
-  public WeakAssociationsRetriever(final MutableCatalog catalog)
-  {
+  public WeakAssociationsRetriever(final MutableCatalog catalog) {
     this.catalog = requireNonNull(catalog, "No catalog provided");
   }
 
-  public void retrieveWeakAssociations()
-  {
+  public void retrieveWeakAssociations() {
     final List<Table> allTables = new ArrayList<>(catalog.getTables());
     final WeakAssociationsAnalyzer weakAssociationsAnalyzer =
-      new WeakAssociationsAnalyzer(allTables);
+        new WeakAssociationsAnalyzer(allTables);
     final Collection<ProposedWeakAssociation> proposedWeakAssociations =
-      weakAssociationsAnalyzer.analyzeTables();
+        weakAssociationsAnalyzer.analyzeTables();
 
-    for (final ProposedWeakAssociation proposedWeakAssociation : proposedWeakAssociations)
-    {
+    for (final ProposedWeakAssociation proposedWeakAssociation : proposedWeakAssociations) {
       createWeakAssociation(proposedWeakAssociation);
     }
   }
 
-  private void createWeakAssociation(final ProposedWeakAssociation proposedWeakAssociation)
-  {
-    LOGGER.log(Level.INFO,
-               new StringFormat("Adding weak association <%s> ",
-                                proposedWeakAssociation));
+  private void createWeakAssociation(final ProposedWeakAssociation proposedWeakAssociation) {
+    LOGGER.log(
+        Level.INFO, new StringFormat("Adding weak association <%s> ", proposedWeakAssociation));
 
     final Column pkColumn = proposedWeakAssociation.getKey();
     final Column fkColumn = proposedWeakAssociation.getValue();
     final boolean isPkColumnPartial = pkColumn instanceof ColumnPartial;
     final boolean isFkColumnPartial = fkColumn instanceof ColumnPartial;
 
-    if (pkColumn == null
-        || fkColumn == null
-        || isFkColumnPartial && isPkColumnPartial)
-    {
+    if (pkColumn == null || fkColumn == null || isFkColumnPartial && isPkColumnPartial) {
       return;
     }
 
-    final String foreignKeyName =
-      MetaDataUtility.constructForeignKeyName(pkColumn, fkColumn);
+    final String foreignKeyName = MetaDataUtility.constructForeignKeyName(pkColumn, fkColumn);
 
     final WeakAssociation weakAssociation = new WeakAssociation(foreignKeyName);
     weakAssociation.addColumnReference(pkColumn, fkColumn);
 
-    if (fkColumn instanceof MutableColumn)
-    {
+    if (fkColumn instanceof MutableColumn) {
       ((MutableTable) fkColumn.getParent()).addWeakAssociation(weakAssociation);
     }
 
-    if (pkColumn instanceof MutableColumn)
-    {
+    if (pkColumn instanceof MutableColumn) {
       ((MutableTable) pkColumn.getParent()).addWeakAssociation(weakAssociation);
     }
-
   }
-
 }

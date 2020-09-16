@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schemacrawler;
 
-
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.DatabaseUtility.executeSql;
 import static us.fatehi.utility.DatabaseUtility.executeSqlForLong;
@@ -57,128 +56,106 @@ import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.string.StringFormat;
 
 @UtilityMarker
-public final class QueryUtility
-{
+public final class QueryUtility {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(QueryUtility.class.getName());
+      SchemaCrawlerLogger.getLogger(QueryUtility.class.getName());
 
-  public static ResultSet executeAgainstSchema(final Query query,
-                                               final Statement statement,
-                                               final InclusionRule schemaInclusionRule)
-    throws SQLException
-  {
+  public static ResultSet executeAgainstSchema(
+      final Query query, final Statement statement, final InclusionRule schemaInclusionRule)
+      throws SQLException {
     requireNonNull(query, "No query provided");
     final String sql = getQuery(query, schemaInclusionRule);
-    LOGGER.log(Level.FINE,
-               new StringFormat("Executing %s: %n%s", query.getName(), sql));
+    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.getName(), sql));
     return executeSql(statement, sql);
   }
 
-  public static ResultSet executeAgainstTable(final Query query,
-                                              final Statement statement,
-                                              final Table table,
-                                              final boolean isAlphabeticalSortForTableColumns,
-                                              final Identifiers identifiers)
-    throws SQLException
-  {
+  public static ResultSet executeAgainstTable(
+      final Query query,
+      final Statement statement,
+      final Table table,
+      final boolean isAlphabeticalSortForTableColumns,
+      final Identifiers identifiers)
+      throws SQLException {
     requireNonNull(query, "No query provided");
     requireNonNull(identifiers, "No identifiers provided");
 
-    final String sql =
-      getQuery(query, table, isAlphabeticalSortForTableColumns, identifiers);
-    LOGGER.log(Level.FINE,
-               new StringFormat("Executing %s: %n%s", query.getName(), sql));
+    final String sql = getQuery(query, table, isAlphabeticalSortForTableColumns, identifiers);
+    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.getName(), sql));
     return executeSql(statement, sql);
   }
 
-  public static long executeForLong(final Query query,
-                                    final Connection connection,
-                                    final Table table,
-                                    final Identifiers identifiers)
-    throws SQLException
-  {
+  public static long executeForLong(
+      final Query query,
+      final Connection connection,
+      final Table table,
+      final Identifiers identifiers)
+      throws SQLException {
     requireNonNull(query, "No query provided");
     final String sql = getQuery(query, table, true, identifiers);
-    LOGGER.log(Level.FINE,
-               new StringFormat("Executing %s: %n%s", query.getName(), sql));
+    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.getName(), sql));
     return executeSqlForLong(connection, sql);
   }
 
-  public static Object executeForScalar(final Query query,
-                                        final Connection connection)
-    throws SQLException
-  {
+  public static Object executeForScalar(final Query query, final Connection connection)
+      throws SQLException {
     requireNonNull(query, "No query provided");
     final String sql = getQuery(query);
-    LOGGER.log(Level.FINE,
-               new StringFormat("Executing %s: %n%s", query.getName(), sql));
+    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.getName(), sql));
     return executeSqlForScalar(connection, sql);
   }
 
-  public static Object executeForScalar(final Query query,
-                                        final Connection connection,
-                                        final Table table,
-                                        final Identifiers identifiers)
-    throws SQLException
-  {
+  public static Object executeForScalar(
+      final Query query,
+      final Connection connection,
+      final Table table,
+      final Identifiers identifiers)
+      throws SQLException {
     requireNonNull(query, "No query provided");
     final String sql = getQuery(query, table, true, identifiers);
-    LOGGER.log(Level.FINE,
-               new StringFormat("Executing %s: %n%s", query.getName(), sql));
+    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", query.getName(), sql));
     return executeSqlForScalar(connection, sql);
   }
 
-  private static String getColumnsListAsString(final List<Column> columns,
-                                               final boolean omitLargeObjectColumns,
-                                               final Identifiers identifiers)
-  {
+  private static String getColumnsListAsString(
+      final List<Column> columns,
+      final boolean omitLargeObjectColumns,
+      final Identifiers identifiers) {
     final List<String> columnsList = new ArrayList<>();
-    for (int i = 0; i < columns.size(); i++)
-    {
+    for (int i = 0; i < columns.size(); i++) {
       final Column column = columns.get(i);
-      final JavaSqlTypeGroup javaSqlTypeGroup = column
-        .getColumnDataType()
-        .getJavaSqlType()
-        .getJavaSqlTypeGroup();
-      if (!(omitLargeObjectColumns && (javaSqlTypeGroup
-                                       == JavaSqlTypeGroup.large_object
-                                       || javaSqlTypeGroup
-                                          == JavaSqlTypeGroup.object)))
-      {
+      final JavaSqlTypeGroup javaSqlTypeGroup =
+          column.getColumnDataType().getJavaSqlType().getJavaSqlTypeGroup();
+      if (!(omitLargeObjectColumns
+          && (javaSqlTypeGroup == JavaSqlTypeGroup.large_object
+              || javaSqlTypeGroup == JavaSqlTypeGroup.object))) {
         columnsList.add(identifiers.quoteName(column.getName()));
       }
     }
     return String.join(", ", columnsList);
   }
 
-  private static String getQuery(final Query query)
-  {
+  private static String getQuery(final Query query) {
     return expandTemplate(query.getQuery());
   }
 
   /**
    * Gets the query with parameters substituted.
    *
-   * @param schemaInclusionRule
-   *   Schema inclusion rule
+   * @param schemaInclusionRule Schema inclusion rule
    * @return Ready-to-execute query
    */
-  private static String getQuery(final Query query,
-                                 final InclusionRule schemaInclusionRule)
-  {
+  private static String getQuery(final Query query, final InclusionRule schemaInclusionRule) {
     final Map<String, String> properties = new HashMap<>();
 
     properties.put("schemas", ".*");
     if (schemaInclusionRule != null
-        && schemaInclusionRule instanceof InclusionRuleWithRegularExpression)
-    {
+        && schemaInclusionRule instanceof InclusionRuleWithRegularExpression) {
       final String schemaInclusionPattern =
-        ((InclusionRuleWithRegularExpression) schemaInclusionRule)
-          .getInclusionPattern()
-          .pattern();
-      if (!isBlank(schemaInclusionPattern))
-      {
+          ((InclusionRuleWithRegularExpression) schemaInclusionRule)
+              .getInclusionPattern()
+              .pattern();
+      if (!isBlank(schemaInclusionPattern)) {
         properties.put("schemas", schemaInclusionPattern);
       }
     }
@@ -190,35 +167,28 @@ public final class QueryUtility
     return sql;
   }
 
-  private static String getQuery(final Query query,
-                                 final Table table,
-                                 final boolean isAlphabeticalSortForTableColumns,
-                                 final Identifiers identifiers)
-  {
+  private static String getQuery(
+      final Query query,
+      final Table table,
+      final boolean isAlphabeticalSortForTableColumns,
+      final Identifiers identifiers) {
     final Map<String, String> tableProperties = new HashMap<>();
-    if (table != null)
-    {
+    if (table != null) {
       final NamedObjectSort columnsSort =
-        NamedObjectSort.getNamedObjectSort(isAlphabeticalSortForTableColumns);
+          NamedObjectSort.getNamedObjectSort(isAlphabeticalSortForTableColumns);
       final List<Column> columns = table.getColumns();
       columns.sort(columnsSort);
 
       final Schema schema = table.getSchema();
-      if (schema != null)
-      {
+      if (schema != null) {
         final String schemaName = identifiers.quoteFullName(schema);
         tableProperties.put("schema", schemaName);
       }
       tableProperties.put("table", identifiers.quoteFullName(table));
       tableProperties.put("tablename", table.getName());
-      tableProperties.put("columns",
-                          getColumnsListAsString(columns, false, identifiers));
-      tableProperties.put("orderbycolumns",
-                          getColumnsListAsString(columns, true, identifiers));
-      tableProperties.put("tabletype",
-                          table
-                            .getTableType()
-                            .toString());
+      tableProperties.put("columns", getColumnsListAsString(columns, false, identifiers));
+      tableProperties.put("orderbycolumns", getColumnsListAsString(columns, true, identifiers));
+      tableProperties.put("tabletype", table.getTableType().toString());
     }
 
     String sql = query.getQuery();
@@ -228,9 +198,7 @@ public final class QueryUtility
     return sql;
   }
 
-  private QueryUtility()
-  {
+  private QueryUtility() {
     // Prevent instantiation
   }
-
 }

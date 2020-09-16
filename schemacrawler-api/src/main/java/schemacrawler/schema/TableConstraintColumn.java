@@ -27,10 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schema;
 
-
-public interface TableConstraintColumn
-  extends Column
-{
+public interface TableConstraintColumn extends Column {
 
   /**
    * Gets the table constraint this column belongs to.
@@ -45,5 +42,4 @@ public interface TableConstraintColumn
    * @return Ordinal position
    */
   int getTableConstraintOrdinalPosition();
-
 }

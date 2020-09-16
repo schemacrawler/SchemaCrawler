@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.commandline.command;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -46,6 +45,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import picocli.CommandLine;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -57,69 +57,19 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.options.Config;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public class ConnectionShellCommandsTest
-{
+public class ConnectionShellCommandsTest {
 
   private TestOutputStream err;
   private TestOutputStream out;
 
   @AfterEach
-  public void cleanUpStreams()
-  {
+  public void cleanUpStreams() {
     System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
     System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
   }
 
-  @BeforeEach
-  public void setUpStreams()
-    throws Exception
-  {
-    out = new TestOutputStream();
-    System.setOut(new PrintStream(out));
-
-    err = new TestOutputStream();
-    System.setErr(new PrintStream(err));
-  }
-
   @Test
-  public void isConnected(final Connection connection)
-  {
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    state.setDataSource(() -> connection); // is-connected
-
-    final String[] args = new String[] {
-      "--is-connected"
-    };
-
-    final SystemCommand optionsParser = new SystemCommand(state);
-    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
-    commandLine.execute(args);
-
-    assertThat(outputOf(err), hasNoContent());
-    assertThat(out.getFileContents(), startsWith("Connected to the database"));
-  }
-
-  @Test
-  public void isNotConnected(final DatabaseConnectionInfo connectionInfo)
-  {
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-
-    final String[] args = new String[] {
-      "--is-connected"
-    };
-
-    final SystemCommand optionsParser = new SystemCommand(state);
-    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
-    commandLine.execute(args);
-
-    assertThat(outputOf(err), hasNoContent());
-    assertThat(out.getFileContents(),
-               startsWith("Not connected to the database"));
-  }
-
-  @Test
-  public void disconnect(final Connection connection)
-  {
+  public void disconnect(final Connection connection) {
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setDataSource(() -> connection); // is-connected
 
@@ -135,8 +85,7 @@ public class ConnectionShellCommandsTest
   }
 
   @Test
-  public void disconnectWhenNotConnected()
-  {
+  public void disconnectWhenNotConnected() {
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
 
     final String[] args = new String[0];
@@ -151,8 +100,45 @@ public class ConnectionShellCommandsTest
   }
 
   @Test
-  public void sweep()
-  {
+  public void isConnected(final Connection connection) {
+    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    state.setDataSource(() -> connection); // is-connected
+
+    final String[] args = new String[] {"--is-connected"};
+
+    final SystemCommand optionsParser = new SystemCommand(state);
+    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    commandLine.execute(args);
+
+    assertThat(outputOf(err), hasNoContent());
+    assertThat(out.getFileContents(), startsWith("Connected to the database"));
+  }
+
+  @Test
+  public void isNotConnected(final DatabaseConnectionInfo connectionInfo) {
+    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+
+    final String[] args = new String[] {"--is-connected"};
+
+    final SystemCommand optionsParser = new SystemCommand(state);
+    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    commandLine.execute(args);
+
+    assertThat(outputOf(err), hasNoContent());
+    assertThat(out.getFileContents(), startsWith("Not connected to the database"));
+  }
+
+  @BeforeEach
+  public void setUpStreams() throws Exception {
+    out = new TestOutputStream();
+    System.setOut(new PrintStream(out));
+
+    err = new TestOutputStream();
+    System.setErr(new PrintStream(err));
+  }
+
+  @Test
+  public void sweep() {
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.addAdditionalConfiguration(new Config());
 
@@ -168,8 +154,7 @@ public class ConnectionShellCommandsTest
   }
 
   @Test
-  public void sweepWithNoState()
-  {
+  public void sweepWithNoState() {
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
 
     final String[] args = new String[0];
@@ -182,5 +167,4 @@ public class ConnectionShellCommandsTest
 
     assertThat(state.getAdditionalConfiguration(), is(nullValue()));
   }
-
 }

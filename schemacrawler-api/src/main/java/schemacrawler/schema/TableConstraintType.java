@@ -28,19 +28,13 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * Table constraint type.
- */
-public enum TableConstraintType
-  implements ConstraintType
-{
-
+/** Table constraint type. */
+public enum TableConstraintType implements ConstraintType {
   unknown("unknown"),
   primary_key("PRIMARY KEY"),
   foreign_key("FOREIGN KEY"),
@@ -49,23 +43,17 @@ public enum TableConstraintType
   ;
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(TableConstraintType.class.getName());
+      SchemaCrawlerLogger.getLogger(TableConstraintType.class.getName());
 
   /**
    * Find the enumeration value corresponding to the string.
    *
-   * @param value
-   *   Sort sequence code.
+   * @param value Sort sequence code.
    * @return Enumeration value
    */
-  public static TableConstraintType valueOfFromValue(final String value)
-  {
-    for (final TableConstraintType type : TableConstraintType.values())
-    {
-      if (type
-        .getValue()
-        .equalsIgnoreCase(value))
-      {
+  public static TableConstraintType valueOfFromValue(final String value) {
+    for (final TableConstraintType type : TableConstraintType.values()) {
+      if (type.getValue().equalsIgnoreCase(value)) {
         return type;
       }
     }
@@ -75,8 +63,7 @@ public enum TableConstraintType
 
   private final String value;
 
-  TableConstraintType(final String value)
-  {
+  TableConstraintType(final String value) {
     this.value = value;
   }
 
@@ -86,9 +73,7 @@ public enum TableConstraintType
    * @return Value
    */
   @Override
-  public final String getValue()
-  {
+  public final String getValue() {
     return value;
   }
-
 }

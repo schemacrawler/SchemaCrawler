@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.text.operation;
 
-
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
 
@@ -38,45 +37,34 @@ import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
  * @author Sualeh Fatehi
  */
 public final class OperationOptionsBuilder
-  extends BaseTextOptionsBuilder<OperationOptionsBuilder, OperationOptions>
-{
-  private static final String SHOW_LOBS =
-    SCHEMACRAWLER_FORMAT_PREFIX + "data.show_lobs";
+    extends BaseTextOptionsBuilder<OperationOptionsBuilder, OperationOptions> {
+  private static final String SHOW_LOBS = SCHEMACRAWLER_FORMAT_PREFIX + "data.show_lobs";
 
-  public static OperationOptionsBuilder builder()
-  {
+  public static OperationOptionsBuilder builder() {
     return new OperationOptionsBuilder();
   }
 
-  public static OperationOptionsBuilder builder(final OperationOptions options)
-  {
+  public static OperationOptionsBuilder builder(final OperationOptions options) {
     return new OperationOptionsBuilder().fromOptions(options);
   }
 
-  public static OperationOptions newOperationOptions()
-  {
+  public static OperationOptions newOperationOptions() {
     return new OperationOptionsBuilder().toOptions();
   }
 
-  public static OperationOptions newOperationOptions(final Config config)
-  {
-    return new OperationOptionsBuilder()
-      .fromConfig(config)
-      .toOptions();
+  public static OperationOptions newOperationOptions(final Config config) {
+    return new OperationOptionsBuilder().fromConfig(config).toOptions();
   }
 
   protected boolean isShowLobs;
 
-  private OperationOptionsBuilder()
-  {
+  private OperationOptionsBuilder() {
     // Set default values, if any
   }
 
   @Override
-  public OperationOptionsBuilder fromConfig(final Config map)
-  {
-    if (map == null)
-    {
+  public OperationOptionsBuilder fromConfig(final Config map) {
+    if (map == null) {
       return this;
     }
     super.fromConfig(map);
@@ -88,10 +76,8 @@ public final class OperationOptionsBuilder
   }
 
   @Override
-  public OperationOptionsBuilder fromOptions(final OperationOptions options)
-  {
-    if (options == null)
-    {
+  public OperationOptionsBuilder fromOptions(final OperationOptions options) {
+    if (options == null) {
       return this;
     }
     super.fromOptions(options);
@@ -101,36 +87,30 @@ public final class OperationOptionsBuilder
     return this;
   }
 
-  @Override
-  public Config toConfig()
-  {
-    final Config config = super.toConfig();
-    config.setBooleanValue(SHOW_LOBS, isShowLobs);
-    return config;
-  }
-
-  public OperationOptionsBuilder showLobs()
-  {
+  public OperationOptionsBuilder showLobs() {
     return showLobs(true);
   }
 
   /**
    * Show LOB data, or not.
    *
-   * @param value
-   *   Whether to show LOB data.
+   * @param value Whether to show LOB data.
    * @return Builder
    */
-  public OperationOptionsBuilder showLobs(final boolean value)
-  {
+  public OperationOptionsBuilder showLobs(final boolean value) {
     isShowLobs = value;
     return this;
   }
 
   @Override
-  public OperationOptions toOptions()
-  {
-    return new OperationOptions(this);
+  public Config toConfig() {
+    final Config config = super.toConfig();
+    config.setBooleanValue(SHOW_LOBS, isShowLobs);
+    return config;
   }
 
+  @Override
+  public OperationOptions toOptions() {
+    return new OperationOptions(this);
+  }
 }

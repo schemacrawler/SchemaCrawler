@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.executable;
 
-
 import static java.util.Comparator.naturalOrder;
 
 import java.util.ArrayList;
@@ -53,49 +52,36 @@ import us.fatehi.utility.string.StringFormat;
  *
  * @author Sualeh Fatehi
  */
-public final class CommandRegistry
-{
+public final class CommandRegistry {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(CommandRegistry.class.getName());
+      SchemaCrawlerLogger.getLogger(CommandRegistry.class.getName());
   private static CommandRegistry commandRegistrySingleton;
 
-  public static CommandRegistry getCommandRegistry()
-    throws SchemaCrawlerException
-  {
-    if (commandRegistrySingleton == null)
-    {
+  public static CommandRegistry getCommandRegistry() throws SchemaCrawlerException {
+    if (commandRegistrySingleton == null) {
       commandRegistrySingleton = new CommandRegistry();
     }
     return commandRegistrySingleton;
   }
 
-  private static List<CommandProvider> loadCommandRegistry()
-    throws SchemaCrawlerException
-  {
+  private static List<CommandProvider> loadCommandRegistry() throws SchemaCrawlerException {
 
     final List<CommandProvider> commandProviders = new ArrayList<>();
 
-    try
-    {
+    try {
       final ServiceLoader<CommandProvider> serviceLoader =
-        ServiceLoader.load(CommandProvider.class);
-      for (final CommandProvider commandProvider : serviceLoader)
-      {
-        LOGGER.log(Level.CONFIG,
-                   new StringFormat("Loading command %s, provided by %s",
-                                    commandProvider.getSupportedCommands(),
-                                    commandProvider
-                                      .getClass()
-                                      .getName()));
+          ServiceLoader.load(CommandProvider.class);
+      for (final CommandProvider commandProvider : serviceLoader) {
+        LOGGER.log(
+            Level.CONFIG,
+            new StringFormat(
+                "Loading command %s, provided by %s",
+                commandProvider.getSupportedCommands(), commandProvider.getClass().getName()));
         commandProviders.add(commandProvider);
       }
-    }
-    catch (final Exception e)
-    {
-      throw new SchemaCrawlerException(
-        "Could not load extended command registry",
-        e);
+    } catch (final Exception e) {
+      throw new SchemaCrawlerException("Could not load extended command registry", e);
     }
 
     commandProviders.add(new SchemaTextCommandProvider());
@@ -106,123 +92,97 @@ public final class CommandRegistry
 
   private final List<CommandProvider> commandRegistry;
 
-  private CommandRegistry()
-    throws SchemaCrawlerException
-  {
+  private CommandRegistry() throws SchemaCrawlerException {
     commandRegistry = loadCommandRegistry();
   }
 
-  public Collection<PluginCommand> getCommandLineCommands()
-  {
+  public Collection<PluginCommand> getCommandLineCommands() {
     final Collection<PluginCommand> commandLineCommands = new HashSet<>();
-    for (final CommandProvider commandProvider : commandRegistry)
-    {
+    for (final CommandProvider commandProvider : commandRegistry) {
       commandLineCommands.add(commandProvider.getCommandLineCommand());
     }
     return commandLineCommands;
   }
 
-  public Collection<CommandDescription> getSupportedCommands()
-  {
-    final Collection<CommandDescription> supportedCommandDescriptions =
-      new HashSet<>();
-    for (final CommandProvider commandProvider : commandRegistry)
-    {
+  public Collection<CommandDescription> getSupportedCommands() {
+    final Collection<CommandDescription> supportedCommandDescriptions = new HashSet<>();
+    for (final CommandProvider commandProvider : commandRegistry) {
       supportedCommandDescriptions.addAll(commandProvider.getSupportedCommands());
     }
 
     final List<CommandDescription> supportedCommandsOrdered =
-      new ArrayList<>(supportedCommandDescriptions);
+        new ArrayList<>(supportedCommandDescriptions);
     supportedCommandsOrdered.sort(naturalOrder());
     return supportedCommandsOrdered;
   }
 
-  SchemaCrawlerCommand configureNewCommand(final String command,
-                                           final SchemaCrawlerOptions schemaCrawlerOptions,
-                                           final Config additionalConfiguration,
-                                           final OutputOptions outputOptions)
-    throws SchemaCrawlerException
-  {
+  SchemaCrawlerCommand configureNewCommand(
+      final String command,
+      final SchemaCrawlerOptions schemaCrawlerOptions,
+      final Config additionalConfiguration,
+      final OutputOptions outputOptions)
+      throws SchemaCrawlerException {
     final List<CommandProvider> executableCommandProviders = new ArrayList<>();
-    findSupportedCommands(command,
-                          schemaCrawlerOptions,
-                          additionalConfiguration,
-                          outputOptions,
-                          executableCommandProviders);
-    findSupportedOutputFormats(command,
-                               outputOptions,
-                               executableCommandProviders);
+    findSupportedCommands(
+        command,
+        schemaCrawlerOptions,
+        additionalConfiguration,
+        outputOptions,
+        executableCommandProviders);
+    findSupportedOutputFormats(command, outputOptions, executableCommandProviders);
 
-    final CommandProvider executableCommandProvider =
-      executableCommandProviders.get(0);
+    final CommandProvider executableCommandProvider = executableCommandProviders.get(0);
 
     final SchemaCrawlerCommand scCommand;
-    try
-    {
+    try {
       scCommand = executableCommandProvider.newSchemaCrawlerCommand(command);
       scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
       scCommand.setOutputOptions(outputOptions);
-    }
-    catch (final Throwable e)
-    {
+    } catch (final Throwable e) {
       // Mainly catch NoClassDefFoundError, which is a Throwable, for
       // missing third-party jars
       LOGGER.log(Level.CONFIG, e.getMessage(), e);
-      throw new SchemaCrawlerRuntimeException(String.format(
-        "Cannot run command <%s>",
-        command));
+      throw new SchemaCrawlerRuntimeException(String.format("Cannot run command <%s>", command));
     }
 
     return scCommand;
   }
 
-  private void findSupportedOutputFormats(final String command,
-                                          final OutputOptions outputOptions,
-                                          final List<CommandProvider> executableCommandProviders)
-    throws SchemaCrawlerException
-  {
-    final Iterator<CommandProvider> iterator =
-      executableCommandProviders.iterator();
-    while (iterator.hasNext())
-    {
-      final CommandProvider executableCommandProvider = iterator.next();
-      if (!executableCommandProvider.supportsOutputFormat(command,
-                                                          outputOptions))
-      {
-        iterator.remove();
-      }
-    }
-    if (executableCommandProviders.isEmpty())
-    {
-      throw new SchemaCrawlerException(String.format(
-        "Output format <%s> not supported for command <%s>",
-        outputOptions.getOutputFormatValue(),
-        command));
-    }
-  }
-
-  private void findSupportedCommands(final String command,
-                                     final SchemaCrawlerOptions schemaCrawlerOptions,
-                                     final Config additionalConfiguration,
-                                     final OutputOptions outputOptions,
-                                     final List<CommandProvider> executableCommandProviders)
-    throws SchemaCrawlerException
-  {
-    for (final CommandProvider commandProvider : commandRegistry)
-    {
-      if (commandProvider.supportsSchemaCrawlerCommand(command,
-                                                       schemaCrawlerOptions,
-                                                       additionalConfiguration,
-                                                       outputOptions))
-      {
+  private void findSupportedCommands(
+      final String command,
+      final SchemaCrawlerOptions schemaCrawlerOptions,
+      final Config additionalConfiguration,
+      final OutputOptions outputOptions,
+      final List<CommandProvider> executableCommandProviders)
+      throws SchemaCrawlerException {
+    for (final CommandProvider commandProvider : commandRegistry) {
+      if (commandProvider.supportsSchemaCrawlerCommand(
+          command, schemaCrawlerOptions, additionalConfiguration, outputOptions)) {
         executableCommandProviders.add(commandProvider);
       }
     }
-    if (executableCommandProviders.isEmpty())
-    {
-      throw new SchemaCrawlerException(String.format("Unknown command <%s>",
-                                                     command));
+    if (executableCommandProviders.isEmpty()) {
+      throw new SchemaCrawlerException(String.format("Unknown command <%s>", command));
     }
   }
 
+  private void findSupportedOutputFormats(
+      final String command,
+      final OutputOptions outputOptions,
+      final List<CommandProvider> executableCommandProviders)
+      throws SchemaCrawlerException {
+    final Iterator<CommandProvider> iterator = executableCommandProviders.iterator();
+    while (iterator.hasNext()) {
+      final CommandProvider executableCommandProvider = iterator.next();
+      if (!executableCommandProvider.supportsOutputFormat(command, outputOptions)) {
+        iterator.remove();
+      }
+    }
+    if (executableCommandProviders.isEmpty()) {
+      throw new SchemaCrawlerException(
+          String.format(
+              "Output format <%s> not supported for command <%s>",
+              outputOptions.getOutputFormatValue(), command));
+    }
+  }
 }

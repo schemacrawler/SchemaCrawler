@@ -27,24 +27,17 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.executable.commandline;
 
-
 import static us.fatehi.utility.Utility.isBlank;
 
-public enum PluginCommandType
-{
+public enum PluginCommandType {
   command,
   server;
 
-  public String toPluginCommandName(final String command)
-  {
-    if (isBlank(command))
-    {
+  public String toPluginCommandName(final String command) {
+    if (isBlank(command)) {
       return null;
-    }
-    else
-    {
+    } else {
       return toString() + ":" + command;
     }
   }
-
 }

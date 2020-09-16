@@ -27,49 +27,39 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.commandline.state;
 
-
 import schemacrawler.tools.databaseconnector.UserCredentials;
 
-public class MultiUseUserCredentials
-  implements UserCredentials
-{
+public class MultiUseUserCredentials implements UserCredentials {
   private final String password;
   private final String user;
 
-  public MultiUseUserCredentials(final String user, final String password)
-  {
+  public MultiUseUserCredentials(final String user, final String password) {
     this.password = password;
     this.user = user;
   }
 
   @Override
-  public void clearPassword()
-  {
+  public void clearPassword() {
     // No action
   }
 
   @Override
-  public String getPassword()
-  {
+  public String getPassword() {
     return password;
   }
 
   @Override
-  public String getUser()
-  {
+  public String getUser() {
     return user;
   }
 
   @Override
-  public boolean hasPassword()
-  {
+  public boolean hasPassword() {
     return password != null;
   }
 
   @Override
-  public boolean hasUser()
-  {
+  public boolean hasUser() {
     return user != null;
   }
-
 }

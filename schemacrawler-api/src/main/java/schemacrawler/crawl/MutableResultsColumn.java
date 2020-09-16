@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,10 +39,7 @@ import schemacrawler.schema.Table;
  *
  * @author Sualeh Fatehi
  */
-final class MutableResultsColumn
-  extends AbstractColumn<Table>
-  implements ResultsColumn
-{
+final class MutableResultsColumn extends AbstractColumn<Table> implements ResultsColumn {
 
   private static final long serialVersionUID = -6983013302549352559L;
   private boolean autoIncrement;
@@ -57,158 +53,115 @@ final class MutableResultsColumn
   private boolean signed;
   private boolean writable;
 
-  MutableResultsColumn(final Table parent, final String name)
-  {
+  MutableResultsColumn(final Table parent, final String name) {
     super(new TableReference(parent), name);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public int getDisplaySize()
-  {
+  public int getDisplaySize() {
     return displaySize;
   }
 
-  void setDisplaySize(final int displaySize)
-  {
-    this.displaySize = displaySize;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String getLabel()
-  {
+  public String getLabel() {
     return label;
   }
 
-  void setLabel(final String label)
-  {
-    this.label = label;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public boolean isAutoIncrement()
-  {
+  public boolean isAutoIncrement() {
     return autoIncrement;
   }
 
-  void setAutoIncrement(final boolean isAutoIncrement)
-  {
-    autoIncrement = isAutoIncrement;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public boolean isCaseSensitive()
-  {
+  public boolean isCaseSensitive() {
     return caseSensitive;
   }
 
-  void setCaseSensitive(final boolean isCaseSensitive)
-  {
-    caseSensitive = isCaseSensitive;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public boolean isCurrency()
-  {
+  public boolean isCurrency() {
     return currency;
   }
 
-  void setCurrency(final boolean isCurrency)
-  {
-    currency = isCurrency;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public boolean isDefinitelyWritable()
-  {
+  public boolean isDefinitelyWritable() {
     return definitelyWritable;
   }
 
-  void setDefinitelyWritable(final boolean isDefinitelyWritable)
-  {
-    definitelyWritable = isDefinitelyWritable;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public boolean isReadOnly()
-  {
+  public boolean isReadOnly() {
     return readOnly;
   }
 
-  void setReadOnly(final boolean isReadOnly)
-  {
-    readOnly = isReadOnly;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public boolean isSearchable()
-  {
+  public boolean isSearchable() {
     return searchable;
   }
 
-  void setSearchable(final boolean isSearchable)
-  {
-    searchable = isSearchable;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public boolean isSigned()
-  {
+  public boolean isSigned() {
     return signed;
   }
 
-  void setSigned(final boolean isSigned)
-  {
-    signed = isSigned;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public boolean isWritable()
-  {
+  public boolean isWritable() {
     return writable;
   }
 
-  void setWritable(final boolean isWritable)
-  {
-    writable = isWritable;
-  }
-
   @Override
-  public final List<String> toUniqueLookupKey()
-  {
+  public List<String> toUniqueLookupKey() {
     // Make a defensive copy
     final List<String> lookupKey = new ArrayList<>(super.toUniqueLookupKey());
     lookupKey.add(label);
     return lookupKey;
   }
 
+  void setAutoIncrement(final boolean isAutoIncrement) {
+    autoIncrement = isAutoIncrement;
+  }
+
+  void setCaseSensitive(final boolean isCaseSensitive) {
+    caseSensitive = isCaseSensitive;
+  }
+
+  void setCurrency(final boolean isCurrency) {
+    currency = isCurrency;
+  }
+
+  void setDefinitelyWritable(final boolean isDefinitelyWritable) {
+    definitelyWritable = isDefinitelyWritable;
+  }
+
+  void setDisplaySize(final int displaySize) {
+    this.displaySize = displaySize;
+  }
+
+  void setLabel(final String label) {
+    this.label = label;
+  }
+
+  void setReadOnly(final boolean isReadOnly) {
+    readOnly = isReadOnly;
+  }
+
+  void setSearchable(final boolean isSearchable) {
+    searchable = isSearchable;
+  }
+
+  void setSigned(final boolean isSigned) {
+    signed = isSigned;
+  }
+
+  void setWritable(final boolean isWritable) {
+    writable = isWritable;
+  }
 }

@@ -28,27 +28,20 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-
 import schemacrawler.schema.Constraint;
 import schemacrawler.schema.PartialDatabaseObject;
 
-public class NotLoadedException
-  extends UnsupportedOperationException
-{
+public class NotLoadedException extends UnsupportedOperationException {
 
   private static final long serialVersionUID = -1745422469189598709L;
 
-  public NotLoadedException(final Constraint constraint)
-  {
-    super(String.format(
-      "Complete metadata has not been loaded for table constraint <%s>",
-      constraint));
+  public NotLoadedException(final Constraint constraint) {
+    super(
+        String.format(
+            "Complete metadata has not been loaded for table constraint <%s>", constraint));
   }
 
-  public NotLoadedException(final PartialDatabaseObject databaseObject)
-  {
-    super(String.format("Complete metadata has not been loaded for <%s>",
-                        databaseObject));
+  public NotLoadedException(final PartialDatabaseObject databaseObject) {
+    super(String.format("Complete metadata has not been loaded for <%s>", databaseObject));
   }
-
 }

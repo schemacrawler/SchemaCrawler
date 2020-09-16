@@ -27,31 +27,29 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.utility;
 
-
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.sql.DataSource;
+
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.testdb.SqlScript;
 import schemacrawler.testdb.TestSchemaCreator;
 
 @ExtendWith(TestLoggingExtension.class)
-public abstract class BaseAdditionalDatabaseTest
-{
+public abstract class BaseAdditionalDatabaseTest {
 
-  protected final static Logger LOGGER =
-    Logger.getLogger(ExecutableTestUtility.class.getName());
+  protected static final Logger LOGGER = Logger.getLogger(ExecutableTestUtility.class.getName());
 
   @BeforeAll
-  public static final void startLogging()
-  {
+  public static final void startLogging() {
     final ConsoleHandler ch = new ConsoleHandler();
     ch.setLevel(Level.INFO);
     LOGGER.addHandler(ch);
@@ -61,49 +59,30 @@ public abstract class BaseAdditionalDatabaseTest
   private DataSource dataSource;
 
   protected void createDatabase(final String scriptsResource)
-    throws SchemaCrawlerException, SQLException
-  {
-    try (final Connection connection = getConnection())
-    {
-      final TestSchemaCreator schemaCreator =
-        new TestSchemaCreator(connection, scriptsResource);
+      throws SchemaCrawlerException, SQLException {
+    try (final Connection connection = getConnection()) {
+      final TestSchemaCreator schemaCreator = new TestSchemaCreator(connection, scriptsResource);
       schemaCreator.run();
     }
   }
 
-  protected void runScript(final String databaseSqlResource)
-    throws Exception
-  {
-    try (final Connection connection = getConnection())
-    {
-      connection.setAutoCommit(false);
-
-      final SqlScript sqlScript =
-        new SqlScript(databaseSqlResource, connection);
-      sqlScript.run();
-    }
-  }
-
-  protected void createDataSource(final String connectionUrl,
-                                  final String user,
-                                  final String password)
-  {
+  protected void createDataSource(
+      final String connectionUrl, final String user, final String password) {
     createDataSource(connectionUrl, user, password, null);
   }
 
-  protected void createDataSource(final String connectionUrl,
-                                  final String user,
-                                  final String password,
-                                  final String connectionProperties)
-  {
+  protected void createDataSource(
+      final String connectionUrl,
+      final String user,
+      final String password,
+      final String connectionProperties) {
     LOGGER.log(Level.CONFIG, "Database connection URL: " + connectionUrl);
 
     final BasicDataSource ds = new BasicDataSource();
     ds.setUrl(connectionUrl);
     ds.setUsername(user);
     ds.setPassword(password);
-    if (connectionProperties != null)
-    {
+    if (connectionProperties != null) {
       ds.setConnectionProperties(connectionProperties);
     }
     ds.setDefaultAutoCommit(false);
@@ -111,17 +90,20 @@ public abstract class BaseAdditionalDatabaseTest
     dataSource = ds;
   }
 
-  protected final Connection getConnection()
-    throws SchemaCrawlerException
-  {
-    try
-    {
+  protected final Connection getConnection() throws SchemaCrawlerException {
+    try {
       return dataSource.getConnection();
-    }
-    catch (final SQLException e)
-    {
+    } catch (final SQLException e) {
       throw new SchemaCrawlerException(e.getMessage(), e);
     }
   }
 
+  protected void runScript(final String databaseSqlResource) throws Exception {
+    try (final Connection connection = getConnection()) {
+      connection.setAutoCommit(false);
+
+      final SqlScript sqlScript = new SqlScript(databaseSqlResource, connection);
+      sqlScript.run();
+    }
+  }
 }

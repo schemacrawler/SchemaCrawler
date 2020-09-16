@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -40,6 +39,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestContext;
@@ -50,17 +50,13 @@ import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
-public class NoEmptyTablesCommandLineTest
-{
+public class NoEmptyTablesCommandLineTest {
 
-  private static final String HIDE_EMPTY_TABLES_OUTPUT =
-    "no_empty_tables_output/";
+  private static final String HIDE_EMPTY_TABLES_OUTPUT = "no_empty_tables_output/";
 
   @Test
-  public void noEmptyTables(final TestContext testContext,
-                            final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
+  public void noEmptyTables(
+      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     clean(HIDE_EMPTY_TABLES_OUTPUT);
 
     final String referenceFile = testContext.testMethodName() + ".txt";
@@ -71,12 +67,13 @@ public class NoEmptyTablesCommandLineTest
     argsMap.put("-load-row-counts", "true");
     argsMap.put("-no-empty-tables", "true");
 
-    assertThat(outputOf(commandlineExecution(connectionInfo,
-                                             SchemaTextDetailType.schema.name(),
-                                             argsMap,
-                                             TextOutputFormat.text)),
-               hasSameContentAs(classpathResource(HIDE_EMPTY_TABLES_OUTPUT
-                                                  + referenceFile)));
+    assertThat(
+        outputOf(
+            commandlineExecution(
+                connectionInfo,
+                SchemaTextDetailType.schema.name(),
+                argsMap,
+                TextOutputFormat.text)),
+        hasSameContentAs(classpathResource(HIDE_EMPTY_TABLES_OUTPUT + referenceFile)));
   }
-
 }

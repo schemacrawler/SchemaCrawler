@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schemacrawler;
 
-
 import static us.fatehi.utility.TemplatingUtility.extractTemplateVariables;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
@@ -39,9 +38,7 @@ import java.util.Set;
  *
  * @author sfatehi
  */
-public final class Query
-  implements Serializable
-{
+public final class Query implements Serializable {
 
   private static final long serialVersionUID = 2820769346069413473L;
 
@@ -51,13 +48,10 @@ public final class Query
   /**
    * Definition of a query, including a name, and parameterized or regular SQL.
    *
-   * @param name
-   *   Query name.
-   * @param query
-   *   Query SQL.
+   * @param name Query name.
+   * @param query Query SQL.
    */
-  public Query(final String name, final String query)
-  {
+  public Query(final String name, final String query) {
     this.name = requireNotBlank(name, "No query name provided");
     this.query = requireNotBlank(query, "No query SQL provided");
   }
@@ -67,8 +61,7 @@ public final class Query
    *
    * @return Query name
    */
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
@@ -77,30 +70,24 @@ public final class Query
    *
    * @return Query SQL
    */
-  public String getQuery()
-  {
+  public String getQuery() {
     return query;
   }
 
   /**
-   * Determines if this query has substitutable parameters, and whether it
-   * should be run once for each table.
+   * Determines if this query has substitutable parameters, and whether it should be run once for
+   * each table.
    *
    * @return If the query is to be run over each table
    */
-  public boolean isQueryOver()
-  {
+  public boolean isQueryOver() {
     final Set<String> keys = extractTemplateVariables(query);
     return keys.contains("table");
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public String toString()
-  {
+  public String toString() {
     return String.format("-- \"%s\"%n%s", name, query);
   }
-
 }
