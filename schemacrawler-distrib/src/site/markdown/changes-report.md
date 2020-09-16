@@ -4,6 +4,7 @@
 ## Release 16.10.1 - 2020-09-20
 
 - Set defaults programatically from database plugins
+- Remove support for daisy chained commands (comma-separated)
 
 
 <a name="a16.9.5"></a>
