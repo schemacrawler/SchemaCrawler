@@ -118,7 +118,7 @@ public class SiteSnapshotVariationsTest
       }
 
       run(connectionInfo,
-          "details,count,dump",
+          "details",
           new HashMap<>(),
           outputFormat,
           snapshotsDirectory.resolve("snapshot." + extension));
@@ -135,7 +135,7 @@ public class SiteSnapshotVariationsTest
     {
       final String extension = outputFormat.getFormat();
       run(connectionInfo,
-          "count,serialize",
+          "serialize",
           null,
           outputFormat,
           snapshotsDirectory.resolve("snapshot." + extension));
