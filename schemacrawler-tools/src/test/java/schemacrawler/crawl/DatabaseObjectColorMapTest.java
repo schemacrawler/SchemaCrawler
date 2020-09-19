@@ -34,14 +34,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.schemacrawler.SchemaReference;
-import schemacrawler.tools.text.utility.DatabaseObjectColorMap;
+import schemacrawler.tools.text.base.DatabaseObjectColorMap;
+import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import us.fatehi.utility.Color;
 
 public class DatabaseObjectColorMapTest {
 
   @Test
   public void generateColors() {
-    final DatabaseObjectColorMap colorMap = DatabaseObjectColorMap.initialize(false);
+    final DatabaseObjectColorMap colorMap =
+        SchemaTextOptionsBuilder.builder().toOptions().getColorMap();
 
     Color color;
 
