@@ -48,9 +48,9 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
-import schemacrawler.tools.text.base.CommonTextOptionsBuilder;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
+import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class SchemaCrawlerTextCommandsOutputTest {
@@ -116,7 +116,7 @@ public class SchemaCrawlerTextCommandsOutputTest {
         SchemaCrawlerOptionsBuilder.builder().withLimitOptionsBuilder(limitOptionsBuilder);
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
-    final CommonTextOptionsBuilder commonTextOptions = CommonTextOptionsBuilder.builder();
+    final SchemaTextOptionsBuilder commonTextOptions = SchemaTextOptionsBuilder.builder();
     commonTextOptions.fromConfig(config);
     commonTextOptions.noInfo();
     commonTextOptions.sortTables(true);
