@@ -43,7 +43,6 @@ import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
-import schemacrawler.tools.text.utility.DatabaseObjectColorMap;
 import schemacrawler.tools.text.utility.HtmlFormattingHelper;
 import schemacrawler.tools.text.utility.PlainTextFormattingHelper;
 import schemacrawler.tools.text.utility.TextFormattingHelper;
@@ -69,7 +68,7 @@ public abstract class BaseFormatter<O extends BaseTextOptions> implements Traver
 
     this.outputOptions = requireNonNull(outputOptions, "Output options not provided");
 
-    colorMap = DatabaseObjectColorMap.initialize(options.isNoSchemaColors());
+    colorMap = options.getColorMap();
 
     this.printVerboseDatabaseInfo = !options.isNoInfo() && printVerboseDatabaseInfo;
 

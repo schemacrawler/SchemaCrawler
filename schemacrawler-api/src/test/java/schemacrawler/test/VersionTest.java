@@ -65,7 +65,7 @@ public class VersionTest {
   @Test
   public void version() throws Exception {
     Version.main(new String[0]);
-    MatcherAssert.assertThat(out.getFileContents(), startsWith("SchemaCrawler 16.9.5"));
+    MatcherAssert.assertThat(out.getFileContents(), startsWith("SchemaCrawler 16.10.1"));
     MatcherAssert.assertThat(outputOf(err), hasNoContent());
   }
 }

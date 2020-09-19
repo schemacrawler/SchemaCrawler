@@ -21,7 +21,7 @@
 
 
 <a name="a16.9.3"></a>
-## Release 16.9.5 - 2020-07-19
+## Release 16.9.3 - 2020-07-19
 
 - Change option to get help on SchemaCrawler commands, by using `--help command:lint` or
   `--help server:db2` for example
@@ -32,8 +32,8 @@
 - Address issues with failure of JSON serialization
 
 
-<a name="a16.9.5"></a>
-## Release 16.9.5 - 2020-06-25
+<a name="a16.9.2"></a>
+## Release 16.9.2 - 2020-06-25
 
 - Fix distribution image to download the correct dependencies, and remove duplicated jars
 - Fix issue with the limit options builder

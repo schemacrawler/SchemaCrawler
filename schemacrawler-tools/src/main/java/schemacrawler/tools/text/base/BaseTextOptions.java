@@ -45,6 +45,7 @@ public abstract class BaseTextOptions implements Options {
   private final boolean isShowUnqualifiedNames;
   private final boolean isNoSchemaColors;
   private final IdentifierQuotingStrategy identifierQuotingStrategy;
+  private final DatabaseObjectColorMap colorMap;
 
   protected BaseTextOptions(final BaseTextOptionsBuilder<?, ? extends BaseTextOptions> builder) {
     requireNonNull(builder, "No builder provided");
@@ -59,6 +60,11 @@ public abstract class BaseTextOptions implements Options {
     isShowUnqualifiedNames = builder.isShowUnqualifiedNames;
     isNoSchemaColors = builder.isNoSchemaColors;
     identifierQuotingStrategy = builder.identifierQuotingStrategy;
+    colorMap = DatabaseObjectColorMap.initialize(isNoSchemaColors);
+  }
+
+  public DatabaseObjectColorMap getColorMap() {
+    return colorMap;
   }
 
   public IdentifierQuotingStrategy getIdentifierQuotingStrategy() {

@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.text.utility;
+package schemacrawler.tools.text.base;
 
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.utility.PropertiesUtility.loadProperties;
@@ -52,7 +52,7 @@ public class DatabaseObjectColorMap {
   private static final String SCHEMACRAWLER_COLORMAP_PROPERTIES =
       "schemacrawler.colormap.properties";
 
-  public static DatabaseObjectColorMap initialize(final boolean noColors) {
+  static DatabaseObjectColorMap initialize(final boolean noColors) {
     final Properties properties = new Properties();
     if (noColors) {
       return new DatabaseObjectColorMap(properties, noColors);

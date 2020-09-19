@@ -70,8 +70,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create-release.outputs.upload_url }}
-        asset_path: ./schemacrawler-distrib/target/schemacrawler-16.9.5-distribution.zip
-        asset_name: schemacrawler-16.9.5-distribution.zip
+        asset_path: ./schemacrawler-distrib/target/schemacrawler-16.10.1-distribution.zip
+        asset_name: schemacrawler-16.10.1-distribution.zip
         asset_content_type: application/zip
     - id: upload-release-sha
       name: Upload SchemaCrawler distribution zip SHA
@@ -80,8 +80,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create-release.outputs.upload_url }}
-        asset_path: ./schemacrawler-distrib/target/schemacrawler-16.9.5-distribution.zip.SHA-512
-        asset_name: schemacrawler-16.9.5-distribution.zip.SHA-512
+        asset_path: ./schemacrawler-distrib/target/schemacrawler-16.10.1-distribution.zip.SHA-512
+        asset_name: schemacrawler-16.10.1-distribution.zip.SHA-512
         asset_content_type: text/plain
 
 # PUBLISH WEBSITE TO GITHUB PAGES
