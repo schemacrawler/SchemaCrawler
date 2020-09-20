@@ -24,15 +24,15 @@ public class FilterCommandTest {
       "--parents", "2", "--children", "2", "--no-empty-tables=true", "additional", "-extra"
     };
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    state.setSchemaCrawlerOptionsBuilder(builder);
+    state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     final CommandLine commandLine =
         newCommandLine(FilterCommand.class, new StateFactory(state), true);
     commandLine.execute(args);
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
-    final FilterOptions filterOptions = schemaCrawlerOptions.getFilterOptions();
+    final FilterOptions filterOptions = state.getSchemaCrawlerOptions().getFilterOptions();
 
     assertThat(filterOptions.getParentTableFilterDepth(), is(2));
     assertThat(filterOptions.getChildTableFilterDepth(), is(2));
@@ -43,9 +43,10 @@ public class FilterCommandTest {
   public void childrenBadValue() {
     final String[] args = {"--children", "-1"};
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    state.setSchemaCrawlerOptionsBuilder(builder);
+    state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     assertThrows(
         CommandLine.ParameterException.class,
         () -> runCommandInTest(new FilterCommand(state), args));
@@ -55,9 +56,10 @@ public class FilterCommandTest {
   public void childrenNoValue() {
     final String[] args = {"--children"};
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    state.setSchemaCrawlerOptionsBuilder(builder);
+    state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     assertThrows(
         CommandLine.ParameterException.class,
         () -> runCommandInTest(new FilterCommand(state), args));
@@ -67,13 +69,13 @@ public class FilterCommandTest {
   public void noArgs() {
     final String[] args = new String[0];
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    state.setSchemaCrawlerOptionsBuilder(builder);
+    state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     final CommandLine commandLine =
         newCommandLine(FilterCommand.class, new StateFactory(state), true);
     commandLine.parseArgs(args);
-    final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
     final FilterOptions filterOptions = schemaCrawlerOptions.getFilterOptions();
 
     assertThat(filterOptions.getParentTableFilterDepth(), is(0));
@@ -85,11 +87,11 @@ public class FilterCommandTest {
   public void noValidArgs() {
     final String[] args = {"--some-option"};
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    state.setSchemaCrawlerOptionsBuilder(builder);
+    state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     runCommandInTest(new FilterCommand(state), args);
-    final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
     final FilterOptions filterOptions = schemaCrawlerOptions.getFilterOptions();
 
     assertThat(filterOptions.getParentTableFilterDepth(), is(0));
@@ -101,9 +103,10 @@ public class FilterCommandTest {
   public void parentsBadValue() {
     final String[] args = {"--parents", "-1"};
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    state.setSchemaCrawlerOptionsBuilder(builder);
+    state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     assertThrows(
         CommandLine.ParameterException.class,
         () -> runCommandInTest(new FilterCommand(state), args));
@@ -113,9 +116,10 @@ public class FilterCommandTest {
   public void parentsNoValue() {
     final String[] args = {"--parents"};
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    state.setSchemaCrawlerOptionsBuilder(builder);
+    state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     assertThrows(
         CommandLine.ParameterException.class,
         () -> runCommandInTest(new FilterCommand(state), args));

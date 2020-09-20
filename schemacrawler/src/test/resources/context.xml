@@ -19,12 +19,9 @@
     </property>
   </bean>
 
-  <bean id="schemaCrawlerOptionsBuilder"
-        class="schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder"
-        factory-method="builder" />
   <bean id="schemaCrawlerOptions"
-        factory-bean="schemaCrawlerOptionsBuilder"
-        factory-method="toOptions" />
+        class="schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder"
+        factory-method="newSchemaCrawlerOptions" />
 
   <bean id="outputOptions"
         class="schemacrawler.tools.options.OutputOptionsBuilder"

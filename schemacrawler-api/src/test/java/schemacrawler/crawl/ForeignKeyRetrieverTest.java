@@ -157,10 +157,9 @@ public class ForeignKeyRetrieverTest {
                     .setRetrieveForeignKeys(false)
                     .toOptions());
     final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.builder()
-            .withLimitOptionsBuilder(limitOptionsBuilder)
-            .withLoadOptionsBuilder(loadOptionsBuilder)
-            .toOptions();
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
     catalog =
         (MutableCatalog)
             getCatalog(

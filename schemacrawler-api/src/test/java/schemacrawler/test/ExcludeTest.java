@@ -73,9 +73,9 @@ public class ExcludeTest {
           LimitOptionsBuilder.builder()
               .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
               .includeColumns(new RegularExpressionExclusionRule(".*\\..*\\.ID"));
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-          SchemaCrawlerOptionsBuilder.builder().withLimitOptionsBuilder(limitOptionsBuilder);
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+              .withLimitOptions(limitOptionsBuilder.toOptions());
 
       final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);

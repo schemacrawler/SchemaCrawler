@@ -77,9 +77,8 @@ public class SchemaCrawlerGrepTest {
           GrepOptionsBuilder.builder()
               .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\..*\\.BOOKID"));
       final SchemaCrawlerOptions schemaCrawlerOptions =
-          SchemaCrawlerOptionsBuilder.builder()
-              .withGrepOptions(grepOptionsBuilder.toOptions())
-              .toOptions();
+          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+              .withGrepOptions(grepOptionsBuilder.toOptions());
 
       final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
@@ -109,9 +108,8 @@ public class SchemaCrawlerGrepTest {
     final FilterOptionsBuilder filterOptionsBuilder =
         FilterOptionsBuilder.builder().parentTableFilterDepth(1);
     SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.builder()
-            .withGrepOptions(grepOptionsBuilder.toOptions())
-            .toOptions();
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withGrepOptions(grepOptionsBuilder.toOptions());
 
     Catalog catalog;
     Schema schema;
@@ -124,11 +122,7 @@ public class SchemaCrawlerGrepTest {
     table = catalog.lookupTable(schema, "BOOKAUTHORS").get();
     assertThat("Table BOOKAUTHORS not found", table, notNullValue());
 
-    schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.builder()
-            .fromOptions(schemaCrawlerOptions)
-            .withFilterOptionsBuilder(filterOptionsBuilder)
-            .toOptions();
+    schemaCrawlerOptions = schemaCrawlerOptions.withFilterOptions(filterOptionsBuilder.toOptions());
     catalog = getCatalog(connection, schemaCrawlerOptions);
     schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
     assertThat("Schema PUBLIC.BOOKS not found", schema, notNullValue());
@@ -151,9 +145,8 @@ public class SchemaCrawlerGrepTest {
               .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\..*\\.BOOKID"))
               .includeGreppedDefinitions(new RegularExpressionInclusionRule(".*book author.*"));
       final SchemaCrawlerOptions schemaCrawlerOptions =
-          SchemaCrawlerOptionsBuilder.builder()
-              .withGrepOptions(grepOptionsBuilder.toOptions())
-              .toOptions();
+          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+              .withGrepOptions(grepOptionsBuilder.toOptions());
 
       final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
@@ -184,9 +177,8 @@ public class SchemaCrawlerGrepTest {
           GrepOptionsBuilder.builder()
               .includeGreppedDefinitions(new RegularExpressionInclusionRule(".*book author.*"));
       final SchemaCrawlerOptions schemaCrawlerOptions =
-          SchemaCrawlerOptionsBuilder.builder()
-              .withGrepOptions(grepOptionsBuilder.toOptions())
-              .toOptions();
+          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+              .withGrepOptions(grepOptionsBuilder.toOptions());
 
       final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
@@ -219,10 +211,9 @@ public class SchemaCrawlerGrepTest {
           GrepOptionsBuilder.builder()
               .includeGreppedRoutineParameters(new RegularExpressionInclusionRule(".*\\.B_COUNT"));
       final SchemaCrawlerOptions schemaCrawlerOptions =
-          SchemaCrawlerOptionsBuilder.builder()
-              .withLimitOptionsBuilder(limitOptionsBuilder)
-              .withGrepOptions(grepOptionsBuilder.toOptions())
-              .toOptions();
+          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+              .withLimitOptions(limitOptionsBuilder.toOptions())
+              .withGrepOptions(grepOptionsBuilder.toOptions());
 
       final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
@@ -253,10 +244,9 @@ public class SchemaCrawlerGrepTest {
           FilterOptionsBuilder.builder().noEmptyTables();
       final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder().loadRowCounts();
       final SchemaCrawlerOptions schemaCrawlerOptions =
-          SchemaCrawlerOptionsBuilder.builder()
-              .withFilterOptionsBuilder(filterOptionsBuilder)
-              .withLoadOptionsBuilder(loadOptionsBuilder)
-              .toOptions();
+          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+              .withFilterOptions(filterOptionsBuilder.toOptions())
+              .withLoadOptions(loadOptionsBuilder.toOptions());
 
       final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);

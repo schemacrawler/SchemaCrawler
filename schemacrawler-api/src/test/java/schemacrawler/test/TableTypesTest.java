@@ -47,6 +47,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
@@ -113,10 +114,11 @@ public class TableTypesTest {
       if (!"default".equals(tableTypes)) {
         limitOptionsBuilder.tableTypes(tableTypes);
       }
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-          SchemaCrawlerOptionsBuilder.builder().withLimitOptionsBuilder(limitOptionsBuilder);
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+              .withLimitOptions(limitOptionsBuilder.toOptions());
 
-      final Catalog catalog = getCatalog(connection, schemaCrawlerOptionsBuilder.toOptions());
+      final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(5));
       for (final Schema schema : schemas) {

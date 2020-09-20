@@ -34,9 +34,10 @@ import schemacrawler.tools.commandline.state.StateFactory;
 public class LimitCommandTest {
 
   private static void runBadCommand(final String[] args) {
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    state.setSchemaCrawlerOptionsBuilder(builder);
+    state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     assertThrows(
         CommandLine.ParameterException.class,
         () -> runCommandInTest(new LimitCommand(state), args));
@@ -67,14 +68,15 @@ public class LimitCommandTest {
       "-extra"
     };
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    state.setSchemaCrawlerOptionsBuilder(builder);
+    state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     final CommandLine commandLine =
         newCommandLine(LimitCommand.class, new StateFactory(state), true);
     commandLine.execute(args);
-    final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
-    final LimitOptions limitOptions = schemaCrawlerOptions.getLimitOptions();
+
+    final LimitOptions limitOptions = state.getSchemaCrawlerOptions().getLimitOptions();
 
     assertThat(
         limitOptions.get(ruleForSchemaInclusion),
@@ -127,11 +129,11 @@ public class LimitCommandTest {
   public void noArgs() {
     final String[] args = new String[0];
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    state.setSchemaCrawlerOptionsBuilder(builder);
+    state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     newCommandLine(LimitCommand.class, new StateFactory(state), true).parseArgs(args);
-    final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
     final LimitOptions limitOptions = schemaCrawlerOptions.getLimitOptions();
 
     assertThat(limitOptions.get(ruleForSchemaInclusion), is(new IncludeAll()));
@@ -154,11 +156,11 @@ public class LimitCommandTest {
   public void noValidArgs() {
     final String[] args = {"--some-option"};
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    state.setSchemaCrawlerOptionsBuilder(builder);
+    state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     runCommandInTest(new LimitCommand(state), args);
-    final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
     final FilterOptions filterOptions = schemaCrawlerOptions.getFilterOptions();
 
     assertThat(filterOptions.getParentTableFilterDepth(), is(0));

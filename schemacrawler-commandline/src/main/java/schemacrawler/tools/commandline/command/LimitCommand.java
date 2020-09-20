@@ -40,7 +40,7 @@ import picocli.CommandLine.Option;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
@@ -180,11 +180,10 @@ public final class LimitCommand extends BaseStateHolder implements Runnable {
 
   @Override
   public void run() {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-        state.getSchemaCrawlerOptionsBuilder();
+    final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptions();
 
     final LimitOptionsBuilder optionsBuilder =
-        LimitOptionsBuilder.builder().fromOptions(schemaCrawlerOptionsBuilder.getLimitOptions());
+        LimitOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.getLimitOptions());
 
     if (schemas != null) {
       optionsBuilder.includeSchemas(schemas);
@@ -217,7 +216,7 @@ public final class LimitCommand extends BaseStateHolder implements Runnable {
       optionsBuilder.routineTypes(routineTypes());
     }
 
-    schemaCrawlerOptionsBuilder.withLimitOptionsBuilder(optionsBuilder);
+    state.withLimitOptions(optionsBuilder.toOptions());
   }
 
   /** Sets routine types from a comma-separated list of routine types. */

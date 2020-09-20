@@ -70,9 +70,9 @@ public class TableNamePatternTest {
 
       final LimitOptionsBuilder limitOptionsBuilder =
           LimitOptionsBuilder.builder().tableNamePattern(tableNamePattern);
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-          SchemaCrawlerOptionsBuilder.builder().withLimitOptionsBuilder(limitOptionsBuilder);
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+              .withLimitOptions(limitOptionsBuilder.toOptions());
 
       final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);

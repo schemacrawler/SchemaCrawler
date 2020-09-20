@@ -110,9 +110,9 @@ public class PrimaryKeyRetrieverTest {
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.minimum());
     final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.builder()
-            .withLoadOptionsBuilder(loadOptionsBuilder)
-            .toOptions();
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLoadOptions(loadOptionsBuilder.toOptions());
+
     catalog =
         (MutableCatalog)
             getCatalog(

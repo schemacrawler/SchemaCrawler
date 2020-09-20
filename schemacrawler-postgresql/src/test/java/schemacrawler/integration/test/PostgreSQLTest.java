@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
@@ -51,6 +50,7 @@ import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.DatabaseUser;
@@ -68,104 +68,74 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 @Testcontainers(disabledWithoutDocker = true)
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
-public class PostgreSQLTest
-  extends BaseAdditionalDatabaseTest
-{
+public class PostgreSQLTest extends BaseAdditionalDatabaseTest {
 
-  @Container
-  private JdbcDatabaseContainer dbContainer = new PostgreSQLContainer<>();
+  @Container private JdbcDatabaseContainer dbContainer = new PostgreSQLContainer<>();
 
   @BeforeEach
-  public void createDatabase()
-    throws SQLException, SchemaCrawlerException
-  {
-    createDataSource(dbContainer.getJdbcUrl(),
-                     dbContainer.getUsername(),
-                     dbContainer.getPassword());
+  public void createDatabase() throws SQLException, SchemaCrawlerException {
+    createDataSource(
+        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
 
     createDatabase("/postgresql.scripts.txt");
   }
 
   @Test
-  public void testPostgreSQLWithConnection()
-    throws Exception
-  {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-      .builder()
-      .includeSchemas(new RegularExpressionInclusionRule("books"))
-      .includeAllSequences()
-      .includeAllSynonyms()
-      .includeAllRoutines()
-      .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
-      .builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withLimitOptionsBuilder(limitOptionsBuilder)
-        .withLoadOptionsBuilder(loadOptionsBuilder);
-    final SchemaCrawlerOptions options =
-      schemaCrawlerOptionsBuilder.toOptions();
+  public void testPostgreSQLWithConnection() throws Exception {
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule("books"))
+            .includeAllSequences()
+            .includeAllSynonyms()
+            .includeAllRoutines()
+            .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
 
-    final SchemaTextOptionsBuilder textOptionsBuilder =
-      SchemaTextOptionsBuilder.builder();
-    textOptionsBuilder
-      .showDatabaseInfo()
-      .showJdbcDriverInfo();
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder.showDatabaseInfo().showJdbcDriverInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    final SchemaCrawlerExecutable executable =
-      new SchemaCrawlerExecutable("details");
-    executable.setSchemaCrawlerOptions(options);
-    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
-                                            .builder(textOptions)
-                                            .toConfig());
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
     // -- Schema output tests
     final String expectedResultsResource =
-      String.format("testPostgreSQLWithConnection.%s.txt", javaVersion());
-    assertThat(outputOf(executableExecution(getConnection(), executable)),
-               hasSameContentAs(classpathResource(expectedResultsResource)));
+        String.format("testPostgreSQLWithConnection.%s.txt", javaVersion());
+    assertThat(
+        outputOf(executableExecution(getConnection(), executable)),
+        hasSameContentAs(classpathResource(expectedResultsResource)));
 
     // -- Additional catalog tests
     final Catalog catalog = executable.getCatalog();
-    final List<Property> serverInfo = new ArrayList<>(catalog
-                                                        .getDatabaseInfo()
-                                                        .getServerInfo());
+    final List<Property> serverInfo = new ArrayList<>(catalog.getDatabaseInfo().getServerInfo());
 
     assertThat(serverInfo.size(), equalTo(1));
-    assertThat(serverInfo
-                 .get(0)
-                 .getName(), equalTo("current_database"));
-    assertThat(serverInfo
-                 .get(0)
-                 .getValue(), equalTo("test"));
+    assertThat(serverInfo.get(0).getName(), equalTo("current_database"));
+    assertThat(serverInfo.get(0).getValue(), equalTo("test"));
 
-    final List<DatabaseUser> databaseUsers =
-      (List<DatabaseUser>) catalog.getDatabaseUsers();
+    final List<DatabaseUser> databaseUsers = (List<DatabaseUser>) catalog.getDatabaseUsers();
     assertThat(databaseUsers, hasSize(2));
-    assertThat(databaseUsers
-                 .stream()
-                 .map(DatabaseUser::getName)
-                 .collect(Collectors.toList()), hasItems("otheruser", "test"));
-    assertThat(databaseUsers
-                 .stream()
-                 .map(databaseUser -> databaseUser
-                   .getAttributes()
-                   .size())
-                 .collect(Collectors.toList()), hasItems(4));
-    assertThat(databaseUsers
-                 .stream()
-                 .map(databaseUser -> databaseUser
-                   .getAttributes()
-                   .keySet())
-                 .flatMap(Collection::stream)
-                 .collect(Collectors.toSet()),
-               hasItems("USESYSID",
-                        "USESUPER",
-                        "PASSWD",
-                        "VALUNTIL"));
+    assertThat(
+        databaseUsers.stream().map(DatabaseUser::getName).collect(Collectors.toList()),
+        hasItems("otheruser", "test"));
+    assertThat(
+        databaseUsers
+            .stream()
+            .map(databaseUser -> databaseUser.getAttributes().size())
+            .collect(Collectors.toList()),
+        hasItems(4));
+    assertThat(
+        databaseUsers
+            .stream()
+            .map(databaseUser -> databaseUser.getAttributes().keySet())
+            .flatMap(Collection::stream)
+            .collect(Collectors.toSet()),
+        hasItems("USESYSID", "USESUPER", "PASSWD", "VALUNTIL"));
   }
-
 }

@@ -36,6 +36,7 @@ import schemacrawler.schemacrawler.GrepOptions;
 import schemacrawler.schemacrawler.GrepOptionsBuilder;
 import schemacrawler.schemacrawler.LimitOptions;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.options.Config;
 
@@ -116,34 +117,34 @@ public final class SchemaCrawlerOptionsConfig {
     return builder;
   }
 
-  public static SchemaCrawlerOptionsBuilder fromConfig(
-      final SchemaCrawlerOptionsBuilder providedBuilder, final Config config) {
-    final SchemaCrawlerOptionsBuilder builder;
-    if (providedBuilder == null) {
-      builder = SchemaCrawlerOptionsBuilder.builder();
+  public static SchemaCrawlerOptions fromConfig(
+      final SchemaCrawlerOptions providedOptions, final Config config) {
+    SchemaCrawlerOptions schemaCrawlerOptions;
+    if (providedOptions == null) {
+      schemaCrawlerOptions = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     } else {
-      builder = providedBuilder;
+      schemaCrawlerOptions = providedOptions;
     }
 
     if (config == null) {
-      return builder;
+      return schemaCrawlerOptions;
     }
 
     // Load only inclusion rules for limit options
     final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder().fromOptions(builder.getLimitOptions());
+        LimitOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.getLimitOptions());
     final LimitOptions limitOptions =
         SchemaCrawlerOptionsConfig.fromConfig(limitOptionsBuilder, config).toOptions();
-    builder.withLimitOptions(limitOptions);
+    schemaCrawlerOptions = schemaCrawlerOptions.withLimitOptions(limitOptions);
 
     // Load only inclusion rules for grep options
     final GrepOptionsBuilder grepOptionsBuilder =
-        GrepOptionsBuilder.builder().fromOptions(builder.getGrepOptions());
+        GrepOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.getGrepOptions());
     final GrepOptions grepOptions =
         SchemaCrawlerOptionsConfig.fromConfig(grepOptionsBuilder, config).toOptions();
-    builder.withGrepOptions(grepOptions);
+    schemaCrawlerOptions = schemaCrawlerOptions.withGrepOptions(grepOptions);
 
-    return builder;
+    return schemaCrawlerOptions;
   }
 
   private static String getExcludePatternProperty(

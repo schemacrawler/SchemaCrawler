@@ -1,6 +1,5 @@
 package com.example;
 
-
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.nio.file.Path;
@@ -20,63 +19,48 @@ import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.options.TextOutputFormat;
 
-public final class ExecutableExample
-{
+public final class ExecutableExample {
 
-  private static Connection getConnection()
-  {
-    final String connectionUrl =
-      "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
-    final DatabaseConnectionSource dataSource =
-      new DatabaseConnectionSource(connectionUrl);
+  private static Connection getConnection() {
+    final String connectionUrl = "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
+    final DatabaseConnectionSource dataSource = new DatabaseConnectionSource(connectionUrl);
     dataSource.setUserCredentials(new SingleUseUserCredentials("sa", ""));
     return dataSource.get();
   }
 
-  private static Path getOutputFile(final String[] args)
-  {
+  private static Path getOutputFile(final String[] args) {
     final String outputfile;
-    if (args != null && args.length > 0 && !isBlank(args[0]))
-    {
+    if (args != null && args.length > 0 && !isBlank(args[0])) {
       outputfile = args[0];
-    }
-    else
-    {
+    } else {
       outputfile = "./schemacrawler_output.html";
     }
-    final Path outputFile = Paths
-      .get(outputfile)
-      .toAbsolutePath()
-      .normalize();
+    final Path outputFile = Paths.get(outputfile).toAbsolutePath().normalize();
     return outputFile;
   }
 
-  public static void main(final String[] args)
-    throws Exception
-  {
+  public static void main(final String[] args) throws Exception {
 
     // Create the options
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-      .builder()
-      .includeSchemas(new RegularExpressionInclusionRule("PUBLIC.BOOKS"));
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
-      // Set what details are required in the schema - this affects the
-      // time taken to crawl the schema
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
-    final SchemaCrawlerOptionsBuilder optionsBuilder =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withLimitOptionsBuilder(limitOptionsBuilder)
-        .withLoadOptionsBuilder(loadOptionsBuilder);
-    final SchemaCrawlerOptions options = optionsBuilder.toOptions();
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule("PUBLIC.BOOKS"));
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder()
+            // Set what details are required in the schema - this affects the
+            // time taken to crawl the schema
+            .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
+    final SchemaCrawlerOptions options =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
 
     final Path outputFile = getOutputFile(args);
     final OutputOptions outputOptions =
-      OutputOptionsBuilder.newOutputOptions(TextOutputFormat.html, outputFile);
+        OutputOptionsBuilder.newOutputOptions(TextOutputFormat.html, outputFile);
     final String command = "schema";
 
-    final SchemaCrawlerExecutable executable =
-      new SchemaCrawlerExecutable(command);
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(options);
     executable.setOutputOptions(outputOptions);
     executable.setConnection(getConnection());
@@ -84,5 +68,4 @@ public final class ExecutableExample
 
     System.out.println("Created output file, " + outputFile);
   }
-
 }

@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
@@ -46,6 +45,7 @@ import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.DatabaseUser;
@@ -62,77 +62,57 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 @Testcontainers(disabledWithoutDocker = true)
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
-public class MySQLTest
-  extends BaseAdditionalDatabaseTest
-{
+public class MySQLTest extends BaseAdditionalDatabaseTest {
 
   @Container
   private JdbcDatabaseContainer dbContainer =
-    new MySQLContainer<>("mysql:8.0.19")
-      .withCommand("mysqld",
-                   "--lower_case_table_names=1",
-                   "--log_bin_trust_function_creators=1")
-      .withUsername("schemacrawler")
-      .withDatabaseName("books");
+      new MySQLContainer<>("mysql:8.0.19")
+          .withCommand(
+              "mysqld", "--lower_case_table_names=1", "--log_bin_trust_function_creators=1")
+          .withUsername("schemacrawler")
+          .withDatabaseName("books");
 
   @BeforeEach
-  public void createDatabase()
-    throws SQLException, SchemaCrawlerException
-  {
-    createDataSource(dbContainer.getJdbcUrl(),
-                     dbContainer.getUsername(),
-                     dbContainer.getPassword());
+  public void createDatabase() throws SQLException, SchemaCrawlerException {
+    createDataSource(
+        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
 
     createDatabase("/mysql.scripts.txt");
   }
 
   @Test
-  public void testMySQLWithConnection()
-    throws Exception
-  {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-      .builder()
-      .includeSchemas(new RegularExpressionInclusionRule("books"))
-      .includeAllSequences()
-      .includeAllSynonyms()
-      .includeAllRoutines();
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
-      .builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withLimitOptionsBuilder(limitOptionsBuilder)
-        .withLoadOptionsBuilder(loadOptionsBuilder);
-    final SchemaCrawlerOptions options =
-      schemaCrawlerOptionsBuilder.toOptions();
+  public void testMySQLWithConnection() throws Exception {
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule("books"))
+            .includeAllSequences()
+            .includeAllSynonyms()
+            .includeAllRoutines();
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
 
-    final SchemaTextOptionsBuilder textOptionsBuilder =
-      SchemaTextOptionsBuilder.builder();
-    textOptionsBuilder
-      .showDatabaseInfo()
-      .showJdbcDriverInfo();
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder.showDatabaseInfo().showJdbcDriverInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    final SchemaCrawlerExecutable executable =
-      new SchemaCrawlerExecutable("details");
-    executable.setSchemaCrawlerOptions(options);
-    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
-                                            .builder(textOptions)
-                                            .toConfig());
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
-    final String expectedResource =
-      String.format("testMySQLWithConnection.%s.txt", javaVersion());
-    assertThat(outputOf(executableExecution(getConnection(), executable)),
-               hasSameContentAs(classpathResource(expectedResource)));
+    final String expectedResource = String.format("testMySQLWithConnection.%s.txt", javaVersion());
+    assertThat(
+        outputOf(executableExecution(getConnection(), executable)),
+        hasSameContentAs(classpathResource(expectedResource)));
 
     // Additional catalog tests
     final Catalog catalog = executable.getCatalog();
 
     // INFO: Current user has no access to MYSQL.USER
-    final List<DatabaseUser> databaseUsers =
-      (List<DatabaseUser>) catalog.getDatabaseUsers();
+    final List<DatabaseUser> databaseUsers = (List<DatabaseUser>) catalog.getDatabaseUsers();
     assertThat(databaseUsers, hasSize(0));
   }
-
 }
