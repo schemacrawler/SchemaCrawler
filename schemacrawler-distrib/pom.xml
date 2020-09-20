@@ -70,25 +70,25 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
-      <version>2.11.1</version>
+      <version>2.11.2</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>2.11.1</version>
+      <version>2.11.2</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.dataformat</groupId>
       <artifactId>jackson-dataformat-yaml</artifactId>
-      <version>2.11.1</version>
+      <version>2.11.2</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
       <artifactId>jackson-datatype-jsr310</artifactId>
-      <version>2.11.1</version>
+      <version>2.11.2</version>
       <scope>provided</scope>
     </dependency>
 
@@ -280,7 +280,7 @@
                 <artifactItem>
                   <groupId>org.postgresql</groupId>
                   <artifactId>postgresql</artifactId>
-                  <version>42.2.14</version>
+                  <version>42.2.16</version>
                   <type>jar</type>
                 </artifactItem>
                 <artifactItem>
@@ -292,13 +292,13 @@
                 <artifactItem>
                   <groupId>com.microsoft.sqlserver</groupId>
                   <artifactId>mssql-jdbc</artifactId>
-                  <version>8.2.2.jre8</version>
+                  <version>8.4.1.jre8</version>
                   <type>jar</type>
                 </artifactItem>
                 <artifactItem>
                   <groupId>com.microsoft.sqlserver</groupId>
                   <artifactId>mssql-jdbc_auth</artifactId>
-                  <version>8.2.2.x64</version>
+                  <version>8.4.1.x64</version>
                   <type>dll</type>
                 </artifactItem>
                 <artifactItem>
@@ -334,7 +334,7 @@
                 <artifactItem>
                   <groupId>org.xerial</groupId>
                   <artifactId>sqlite-jdbc</artifactId>
-                  <version>3.32.3.1</version>
+                  <version>3.32.3.2</version>
                   <type>jar</type>
                 </artifactItem>
                 <artifactItem>
