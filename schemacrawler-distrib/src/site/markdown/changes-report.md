@@ -5,6 +5,7 @@
 
 - Set defaults programatically from database plugins
 - Remove support for daisy chained commands (comma-separated)
+- Reduce need for SchemaCrawler options builder
 
 
 <a name="a16.9.5"></a>
