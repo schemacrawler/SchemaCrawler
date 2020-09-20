@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.integration.test;
 
-
 import static java.nio.file.Files.createDirectories;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -49,6 +48,7 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.GrepOptionsBuilder;
@@ -72,66 +72,48 @@ import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
-public class DiagramRendererOptionsTest
-{
+public class DiagramRendererOptionsTest {
 
-  private static final String DIAGRAM_OPTIONS_OUTPUT =
-    "diagram_options_output/";
+  private static final String DIAGRAM_OPTIONS_OUTPUT = "diagram_options_output/";
   private static Path directory;
 
   @BeforeAll
-  public static void removeOutputDir()
-    throws Exception
-  {
+  public static void removeOutputDir() throws Exception {
     clean(DIAGRAM_OPTIONS_OUTPUT);
   }
 
   @BeforeAll
-  public static void setupDirectory(final TestContext testContext)
-    throws Exception
-  {
-    directory = testContext.resolveTargetFromRootPath("test-output-diagrams/"
-                                                      + DiagramRendererOptionsTest.class.getSimpleName());
+  public static void setupDirectory(final TestContext testContext) throws Exception {
+    directory =
+        testContext.resolveTargetFromRootPath(
+            "test-output-diagrams/" + DiagramRendererOptionsTest.class.getSimpleName());
     deleteDirectory(directory.toFile());
     createDirectories(directory);
   }
 
-  private static void executableDiagram(final String command,
-                                        final Connection connection,
-                                        final SchemaCrawlerOptions options,
-                                        final DiagramOptions diagramOptions,
-                                        final String testMethodName)
-    throws Exception
-  {
+  private static void executableDiagram(
+      final String command,
+      final Connection connection,
+      final SchemaCrawlerOptions options,
+      final DiagramOptions diagramOptions,
+      final String testMethodName)
+      throws Exception {
     SchemaCrawlerOptions schemaCrawlerOptions = options;
-    if (options
-      .getLimitOptions()
-      .isIncludeAll(ruleForSchemaInclusion))
-    {
-      final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-        .builder()
-        .fromOptions(options.getLimitOptions())
-        .includeSchemas(new RegularExpressionExclusionRule(
-          ".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
-      schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-        .builder()
-        .fromOptions(options)
-        .withLimitOptionsBuilder(limitOptionsBuilder)
-        .toOptions();
+    if (options.getLimitOptions().isIncludeAll(ruleForSchemaInclusion)) {
+      final LimitOptionsBuilder limitOptionsBuilder =
+          LimitOptionsBuilder.builder()
+              .fromOptions(options.getLimitOptions())
+              .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
+      schemaCrawlerOptions = options.withLimitOptions(limitOptionsBuilder.toOptions());
     }
 
-    final SchemaCrawlerExecutable executable =
-      new SchemaCrawlerExecutable(command);
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
     final DiagramOptionsBuilder diagramOptionsBuilder = builder(diagramOptions);
     diagramOptionsBuilder.sortTables(true);
     diagramOptionsBuilder.noInfo(diagramOptions.isNoInfo());
-    if (!"maximum".equals(options
-                            .getLoadOptions()
-                            .getSchemaInfoLevel()
-                            .getTag()))
-    {
+    if (!"maximum".equals(options.getLoadOptions().getSchemaInfoLevel().getTag())) {
       diagramOptionsBuilder.weakAssociations(true);
     }
     executable.setAdditionalConfiguration(diagramOptionsBuilder.toConfig());
@@ -144,28 +126,24 @@ public class DiagramRendererOptionsTest
 
     // Check DOT file
     final String referenceFileName = testMethodName;
-    assertThat(outputOf(executableExecution(connection,
-                                            executable,
-                                            DiagramOutputFormat.scdot)),
-               hasSameContentAndTypeAs(classpathResource(DIAGRAM_OPTIONS_OUTPUT
-                                                         + referenceFileName
-                                                         + ".dot"),
-                                       DiagramOutputFormat.scdot));
+    assertThat(
+        outputOf(executableExecution(connection, executable, DiagramOutputFormat.scdot)),
+        hasSameContentAndTypeAs(
+            classpathResource(DIAGRAM_OPTIONS_OUTPUT + referenceFileName + ".dot"),
+            DiagramOutputFormat.scdot));
   }
 
-  private static void saveDiagram(final SchemaCrawlerExecutable executable,
-                                  final String testMethodName)
-    throws Exception
-  {
+  private static void saveDiagram(
+      final SchemaCrawlerExecutable executable, final String testMethodName) throws Exception {
     final Path testDiagramFile = directory.resolve(testMethodName + ".png");
 
     final OutputOptions oldOutputOptions = executable.getOutputOptions();
-    final OutputOptions outputOptions = OutputOptionsBuilder
-      .builder()
-      .fromOptions(oldOutputOptions)
-      .withOutputFile(testDiagramFile)
-      .withOutputFormat(DiagramOutputFormat.png)
-      .toOptions();
+    final OutputOptions outputOptions =
+        OutputOptionsBuilder.builder()
+            .fromOptions(oldOutputOptions)
+            .withOutputFile(testDiagramFile)
+            .withOutputFormat(DiagramOutputFormat.png)
+            .toOptions();
 
     executable.setOutputOptions(outputOptions);
 
@@ -173,289 +151,250 @@ public class DiagramRendererOptionsTest
   }
 
   @Test
-  public void executableForDiagram_00(final TestContext testContext,
-                                      final Connection connection)
-    throws Exception
-  {
+  public void executableForDiagram_00(final TestContext testContext, final Connection connection)
+      throws Exception {
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+        DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
     final DiagramOptions diagramOptions = newDiagramOptions();
 
-    executableDiagram(SchemaTextDetailType.schema.name(),
-                      connection,
-                      schemaCrawlerOptions,
-                      diagramOptions,
-                      testContext.testMethodName());
+    executableDiagram(
+        SchemaTextDetailType.schema.name(),
+        connection,
+        schemaCrawlerOptions,
+        diagramOptions,
+        testContext.testMethodName());
   }
 
   @Test
-  public void executableForDiagram_01(final TestContext testContext,
-                                      final Connection connection)
-    throws Exception
-  {
-    final DiagramOptionsBuilder diagramOptionsBuilder = builder()
-      .sortTableColumns()
-      .showOrdinalNumbers()
-      .showForeignKeyCardinality()
-      .showPrimaryKeyCardinality();
+  public void executableForDiagram_01(final TestContext testContext, final Connection connection)
+      throws Exception {
+    final DiagramOptionsBuilder diagramOptionsBuilder =
+        builder()
+            .sortTableColumns()
+            .showOrdinalNumbers()
+            .showForeignKeyCardinality()
+            .showPrimaryKeyCardinality();
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
-    executableDiagram(SchemaTextDetailType.schema.name(),
-                      connection,
-                      optionsWithWeakAssociations(),
-                      diagramOptions,
-                      testContext.testMethodName());
+    executableDiagram(
+        SchemaTextDetailType.schema.name(),
+        connection,
+        optionsWithWeakAssociations(),
+        diagramOptions,
+        testContext.testMethodName());
   }
 
   @Test
-  public void executableForDiagram_02(final TestContext testContext,
-                                      final Connection connection)
-    throws Exception
-  {
-    final DiagramOptionsBuilder diagramOptionsBuilder = builder()
-      .noForeignKeyNames()
-      .showForeignKeyCardinality(true)
-      .showPrimaryKeyCardinality(true);
+  public void executableForDiagram_02(final TestContext testContext, final Connection connection)
+      throws Exception {
+    final DiagramOptionsBuilder diagramOptionsBuilder =
+        builder()
+            .noForeignKeyNames()
+            .showForeignKeyCardinality(true)
+            .showPrimaryKeyCardinality(true);
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
-    executableDiagram(SchemaTextDetailType.schema.name(),
-                      connection,
-                      optionsWithWeakAssociations(),
-                      diagramOptions,
-                      testContext.testMethodName());
+    executableDiagram(
+        SchemaTextDetailType.schema.name(),
+        connection,
+        optionsWithWeakAssociations(),
+        diagramOptions,
+        testContext.testMethodName());
   }
 
   @Test
-  public void executableForDiagram_03(final TestContext testContext,
-                                      final Connection connection)
-    throws Exception
-  {
+  public void executableForDiagram_03(final TestContext testContext, final Connection connection)
+      throws Exception {
     final DiagramOptionsBuilder diagramOptionsBuilder = builder();
     diagramOptionsBuilder
-      .noSchemaCrawlerInfo(true)
-      .showDatabaseInfo(false)
-      .showJdbcDriverInfo(false);
+        .noSchemaCrawlerInfo(true)
+        .showDatabaseInfo(false)
+        .showJdbcDriverInfo(false);
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
-    executableDiagram(SchemaTextDetailType.schema.name(),
-                      connection,
-                      optionsWithWeakAssociations(),
-                      diagramOptions,
-                      testContext.testMethodName());
+    executableDiagram(
+        SchemaTextDetailType.schema.name(),
+        connection,
+        optionsWithWeakAssociations(),
+        diagramOptions,
+        testContext.testMethodName());
   }
 
   @Test
-  public void executableForDiagram_04(final TestContext testContext,
-                                      final Connection connection)
-    throws Exception
-  {
+  public void executableForDiagram_04(final TestContext testContext, final Connection connection)
+      throws Exception {
     final DiagramOptionsBuilder diagramOptionsBuilder = builder();
     diagramOptionsBuilder.showUnqualifiedNames();
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
-    executableDiagram(SchemaTextDetailType.schema.name(),
-                      connection,
-                      optionsWithWeakAssociations(),
-                      diagramOptions,
-                      testContext.testMethodName());
+    executableDiagram(
+        SchemaTextDetailType.schema.name(),
+        connection,
+        optionsWithWeakAssociations(),
+        diagramOptions,
+        testContext.testMethodName());
   }
 
   @Test
-  public void executableForDiagram_05(final TestContext testContext,
-                                      final Connection connection)
-    throws Exception
-  {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-      .builder()
-      .includeTables(new RegularExpressionInclusionRule(".*BOOKS"));
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withLimitOptionsBuilder(limitOptionsBuilder);
+  public void executableForDiagram_05(final TestContext testContext, final Connection connection)
+      throws Exception {
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder().includeTables(new RegularExpressionInclusionRule(".*BOOKS"));
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      schemaCrawlerOptionsBuilder.toOptions();
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions());
 
     final DiagramOptions diagramOptions = builder().toOptions();
 
-    executableDiagram(SchemaTextDetailType.schema.name(),
-                      connection,
-                      schemaCrawlerOptions,
-                      diagramOptions,
-                      testContext.testMethodName());
+    executableDiagram(
+        SchemaTextDetailType.schema.name(),
+        connection,
+        schemaCrawlerOptions,
+        diagramOptions,
+        testContext.testMethodName());
   }
 
   @Test
-  public void executableForDiagram_06(final TestContext testContext,
-                                      final Connection connection)
-    throws Exception
-  {
+  public void executableForDiagram_06(final TestContext testContext, final Connection connection)
+      throws Exception {
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+        DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
     final DiagramOptions diagramOptions = builder().toOptions();
 
-    executableDiagram(SchemaTextDetailType.brief.name(),
-                      connection,
-                      schemaCrawlerOptions,
-                      diagramOptions,
-                      testContext.testMethodName());
+    executableDiagram(
+        SchemaTextDetailType.brief.name(),
+        connection,
+        schemaCrawlerOptions,
+        diagramOptions,
+        testContext.testMethodName());
   }
 
   @Test
-  public void executableForDiagram_07(final TestContext testContext,
-                                      final Connection connection)
-    throws Exception
-  {
+  public void executableForDiagram_07(final TestContext testContext, final Connection connection)
+      throws Exception {
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+        DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
     final DiagramOptions diagramOptions = builder().toOptions();
 
-    executableDiagram(SchemaTextDetailType.schema.name(),
-                      connection,
-                      schemaCrawlerOptions,
-                      diagramOptions,
-                      testContext.testMethodName());
+    executableDiagram(
+        SchemaTextDetailType.schema.name(),
+        connection,
+        schemaCrawlerOptions,
+        diagramOptions,
+        testContext.testMethodName());
   }
 
   @Test
-  public void executableForDiagram_08(final TestContext testContext,
-                                      final Connection connection)
-    throws Exception
-  {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-      .builder()
-      .includeTables(new RegularExpressionInclusionRule(".*BOOKS"));
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withLimitOptionsBuilder(limitOptionsBuilder);
+  public void executableForDiagram_08(final TestContext testContext, final Connection connection)
+      throws Exception {
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder().includeTables(new RegularExpressionInclusionRule(".*BOOKS"));
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      schemaCrawlerOptionsBuilder.toOptions();
-
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions());
     final DiagramOptionsBuilder diagramOptionsBuilder = builder();
-    diagramOptionsBuilder
-      .noForeignKeyNames()
-      .showUnqualifiedNames();
+    diagramOptionsBuilder.noForeignKeyNames().showUnqualifiedNames();
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
-    executableDiagram(SchemaTextDetailType.schema.name(),
-                      connection,
-                      schemaCrawlerOptions,
-                      diagramOptions,
-                      testContext.testMethodName());
+    executableDiagram(
+        SchemaTextDetailType.schema.name(),
+        connection,
+        schemaCrawlerOptions,
+        diagramOptions,
+        testContext.testMethodName());
   }
 
   @Test
-  public void executableForDiagram_09(final TestContext testContext,
-                                      final Connection connection)
-    throws Exception
-  {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-      .builder()
-      .includeTables(new RegularExpressionInclusionRule(".*BOOKS"));
-    final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder
-      .builder()
-      .grepOnlyMatching(true);
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withLimitOptionsBuilder(limitOptionsBuilder)
-        .withGrepOptions(grepOptionsBuilder.toOptions());
+  public void executableForDiagram_09(final TestContext testContext, final Connection connection)
+      throws Exception {
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder().includeTables(new RegularExpressionInclusionRule(".*BOOKS"));
+    final GrepOptionsBuilder grepOptionsBuilder =
+        GrepOptionsBuilder.builder().grepOnlyMatching(true);
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      schemaCrawlerOptionsBuilder.toOptions();
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withGrepOptions(grepOptionsBuilder.toOptions());
 
     final DiagramOptionsBuilder diagramOptionsBuilder = builder();
-    diagramOptionsBuilder
-      .noForeignKeyNames()
-      .showUnqualifiedNames();
+    diagramOptionsBuilder.noForeignKeyNames().showUnqualifiedNames();
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
-    executableDiagram(SchemaTextDetailType.schema.name(),
-                      connection,
-                      schemaCrawlerOptions,
-                      diagramOptions,
-                      testContext.testMethodName());
+    executableDiagram(
+        SchemaTextDetailType.schema.name(),
+        connection,
+        schemaCrawlerOptions,
+        diagramOptions,
+        testContext.testMethodName());
   }
 
   @Test
-  public void executableForDiagram_10(final TestContext testContext,
-                                      final Connection connection)
-    throws Exception
-  {
-    final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder
-      .builder()
-      .includeGreppedColumns(new RegularExpressionInclusionRule(
-        ".*\\.REGIONS\\..*"));
+  public void executableForDiagram_10(final TestContext testContext, final Connection connection)
+      throws Exception {
+    final GrepOptionsBuilder grepOptionsBuilder =
+        GrepOptionsBuilder.builder()
+            .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.REGIONS\\..*"));
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withGrepOptions(grepOptionsBuilder.toOptions())
-        .toOptions();
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withGrepOptions(grepOptionsBuilder.toOptions());
 
     final DiagramOptions diagramOptions = builder().toOptions();
 
-    executableDiagram(SchemaTextDetailType.schema.name(),
-                      connection,
-                      schemaCrawlerOptions,
-                      diagramOptions,
-                      testContext.testMethodName());
+    executableDiagram(
+        SchemaTextDetailType.schema.name(),
+        connection,
+        schemaCrawlerOptions,
+        diagramOptions,
+        testContext.testMethodName());
   }
 
   @Test
-  public void executableForDiagram_11(final TestContext testContext,
-                                      final Connection connection)
-    throws Exception
-  {
-    final GrepOptionsBuilder grepOptionsBuilder = GrepOptionsBuilder
-      .builder()
-      .includeGreppedColumns(new RegularExpressionInclusionRule(
-        ".*\\.REGIONS\\..*"))
-      .grepOnlyMatching(true);
+  public void executableForDiagram_11(final TestContext testContext, final Connection connection)
+      throws Exception {
+    final GrepOptionsBuilder grepOptionsBuilder =
+        GrepOptionsBuilder.builder()
+            .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.REGIONS\\..*"))
+            .grepOnlyMatching(true);
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withGrepOptions(grepOptionsBuilder.toOptions())
-        .toOptions();
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withGrepOptions(grepOptionsBuilder.toOptions());
 
     final DiagramOptions diagramOptions = builder().toOptions();
 
-    executableDiagram(SchemaTextDetailType.schema.name(),
-                      connection,
-                      schemaCrawlerOptions,
-                      diagramOptions,
-                      testContext.testMethodName());
+    executableDiagram(
+        SchemaTextDetailType.schema.name(),
+        connection,
+        schemaCrawlerOptions,
+        diagramOptions,
+        testContext.testMethodName());
   }
 
   @Test
-  public void executableForDiagram_12(final TestContext testContext,
-                                      final Connection connection)
-    throws Exception
-  {
+  public void executableForDiagram_12(final TestContext testContext, final Connection connection)
+      throws Exception {
     final DiagramOptionsBuilder diagramOptionsBuilder = builder();
     diagramOptionsBuilder.showRowCounts();
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
-      .builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-      .loadRowCounts();
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder()
+            .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+            .loadRowCounts();
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withLoadOptionsBuilder(loadOptionsBuilder)
-        .toOptions();
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLoadOptions(loadOptionsBuilder.toOptions());
 
-    executableDiagram(SchemaTextDetailType.schema.name(),
-                      connection,
-                      schemaCrawlerOptions,
-                      diagramOptions,
-                      testContext.testMethodName());
+    executableDiagram(
+        SchemaTextDetailType.schema.name(),
+        connection,
+        schemaCrawlerOptions,
+        diagramOptions,
+        testContext.testMethodName());
   }
 
   @Test
-  public void executableForDiagram_13(final TestContext testContext,
-                                      final Connection connection)
-    throws Exception
-  {
+  public void executableForDiagram_13(final TestContext testContext, final Connection connection)
+      throws Exception {
     final Map<String, String> graphvizAttributes = new HashMap<>();
 
     final String GRAPH = "graph.";
@@ -465,60 +404,53 @@ public class DiagramRendererOptionsTest
     graphvizAttributes.put(NODE + "shape", "none");
 
     final DiagramOptionsBuilder diagramOptionsBuilder =
-      builder().withGraphvizAttributes(graphvizAttributes);
+        builder().withGraphvizAttributes(graphvizAttributes);
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+        DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
-    executableDiagram(SchemaTextDetailType.schema.name(),
-                      connection,
-                      schemaCrawlerOptions,
-                      diagramOptions,
-                      testContext.testMethodName());
+    executableDiagram(
+        SchemaTextDetailType.schema.name(),
+        connection,
+        schemaCrawlerOptions,
+        diagramOptions,
+        testContext.testMethodName());
   }
 
   @Test
-  public void executableForDiagram_lintschema(final TestContext testContext,
-                                              final Connection connection)
-    throws Exception
-  {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-      .builder()
-      .includeSchemas(new RegularExpressionInclusionRule(".*\\.FOR_LINT"));
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
-      .builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withLimitOptionsBuilder(limitOptionsBuilder)
-        .withLoadOptionsBuilder(loadOptionsBuilder);
+  public void executableForDiagram_lintschema(
+      final TestContext testContext, final Connection connection) throws Exception {
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule(".*\\.FOR_LINT"));
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      schemaCrawlerOptionsBuilder.toOptions();
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
 
     final DiagramOptions diagramOptions = builder().toOptions();
 
-    executableDiagram(SchemaTextDetailType.schema.name(),
-                      connection,
-                      schemaCrawlerOptions,
-                      diagramOptions,
-                      testContext.testMethodName());
+    executableDiagram(
+        SchemaTextDetailType.schema.name(),
+        connection,
+        schemaCrawlerOptions,
+        diagramOptions,
+        testContext.testMethodName());
   }
 
-  private SchemaCrawlerOptions optionsWithWeakAssociations()
-  {
-    final SchemaInfoLevelBuilder infoLevelBuilder = SchemaInfoLevelBuilder
-      .builder()
-      .withInfoLevel(InfoLevel.standard)
-      .setRetrieveWeakAssociations(true);
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
-      .builder()
-      .withSchemaInfoLevel(infoLevelBuilder.toOptions());
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
-      .builder()
-      .withLoadOptionsBuilder(loadOptionsBuilder);
-    return builder.toOptions();
+  private SchemaCrawlerOptions optionsWithWeakAssociations() {
+    final SchemaInfoLevelBuilder infoLevelBuilder =
+        SchemaInfoLevelBuilder.builder()
+            .withInfoLevel(InfoLevel.standard)
+            .setRetrieveWeakAssociations(true);
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(infoLevelBuilder.toOptions());
+    final SchemaCrawlerOptions options =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLoadOptions(loadOptionsBuilder.toOptions());
+    return options;
   }
-
 }

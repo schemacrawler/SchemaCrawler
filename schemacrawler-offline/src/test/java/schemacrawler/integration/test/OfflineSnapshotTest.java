@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
-
 import static java.nio.file.Files.size;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
@@ -57,6 +56,7 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.Main;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
@@ -78,21 +78,16 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public class OfflineSnapshotTest
-{
+public class OfflineSnapshotTest {
 
-  private static final String OFFLINE_EXECUTABLE_OUTPUT =
-    "offline_executable_output/";
+  private static final String OFFLINE_EXECUTABLE_OUTPUT = "offline_executable_output/";
 
   private Path serializedCatalogFile;
 
   @Test
-  public void offlineSnapshotCommandLine()
-    throws Exception
-  {
+  public void offlineSnapshotCommandLine() throws Exception {
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout)
-    {
+    try (final TestWriter out = testout) {
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("-server", "offline");
       argsMap.put("-database", serializedCatalogFile.toString());
@@ -107,21 +102,16 @@ public class OfflineSnapshotTest
       Main.main(flattenCommandlineArgs(argsMap));
     }
 
-    final String expectedResource =
-      String.format("details.%s.txt", javaVersion());
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(OFFLINE_EXECUTABLE_OUTPUT
-                                                  + expectedResource)));
-
+    final String expectedResource = String.format("details.%s.txt", javaVersion());
+    assertThat(
+        outputOf(testout),
+        hasSameContentAs(classpathResource(OFFLINE_EXECUTABLE_OUTPUT + expectedResource)));
   }
 
   @Test
-  public void offlineSnapshotCommandLineWithFilters()
-    throws Exception
-  {
+  public void offlineSnapshotCommandLineWithFilters() throws Exception {
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout)
-    {
+    try (final TestWriter out = testout) {
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("-server", "offline");
       argsMap.put("-database", serializedCatalogFile.toString());
@@ -136,18 +126,15 @@ public class OfflineSnapshotTest
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(OFFLINE_EXECUTABLE_OUTPUT
-                                                  + "offlineWithFilters.txt")));
+    assertThat(
+        outputOf(testout),
+        hasSameContentAs(classpathResource(OFFLINE_EXECUTABLE_OUTPUT + "offlineWithFilters.txt")));
   }
 
   @Test
-  public void offlineSnapshotCommandLineWithSchemaFilters()
-    throws Exception
-  {
+  public void offlineSnapshotCommandLineWithSchemaFilters() throws Exception {
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout)
-    {
+    try (final TestWriter out = testout) {
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("-server", "offline");
       argsMap.put("-database", serializedCatalogFile.toString());
@@ -161,113 +148,82 @@ public class OfflineSnapshotTest
       argsMap.put("-output-file", out.toString());
 
       final List<String> argsList = new ArrayList<>();
-      for (final Map.Entry<String, String> arg : argsMap.entrySet())
-      {
+      for (final Map.Entry<String, String> arg : argsMap.entrySet()) {
         argsList.add(String.format("-%s=%s", arg.getKey(), arg.getValue()));
       }
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(OFFLINE_EXECUTABLE_OUTPUT
-                                                  + "offlineWithSchemaFilters.txt")));
+    assertThat(
+        outputOf(testout),
+        hasSameContentAs(
+            classpathResource(OFFLINE_EXECUTABLE_OUTPUT + "offlineWithSchemaFilters.txt")));
   }
 
   @Test
-  public void offlineSnapshotExecutable()
-    throws Exception
-  {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-      .builder()
-      .includeAllRoutines();
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
-      .builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withLimitOptionsBuilder(limitOptionsBuilder)
-        .withLoadOptionsBuilder(loadOptionsBuilder);
+  public void offlineSnapshotExecutable() throws Exception {
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder().includeAllRoutines();
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      schemaCrawlerOptionsBuilder.toOptions();
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
 
-    final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
-      SchemaTextOptionsBuilder.builder();
+    final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder.builder();
     schemaTextOptionsBuilder.noInfo(false);
 
     final Connection connection = newOfflineConnection(serializedCatalogFile);
 
-    final SchemaCrawlerExecutable executable =
-      new SchemaCrawlerExecutable("details");
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
     executable.setConnection(connection);
 
-    final String expectedResource =
-      String.format("details.%s.txt", javaVersion());
+    final String expectedResource = String.format("details.%s.txt", javaVersion());
     executeExecutable(executable, OFFLINE_EXECUTABLE_OUTPUT + expectedResource);
   }
 
   @BeforeEach
   public void serializeCatalog(final Connection connection)
-    throws SchemaCrawlerException, IOException
-  {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-      .builder()
-      .includeAllRoutines();
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
-      .builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withLimitOptionsBuilder(limitOptionsBuilder)
-        .withLoadOptionsBuilder(loadOptionsBuilder);
+      throws SchemaCrawlerException, IOException {
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder().includeAllRoutines();
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      schemaCrawlerOptionsBuilder.toOptions();
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
 
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     assertThat("Could not obtain catalog", catalog, notNullValue());
-    assertThat("Could not find any schemas",
-               catalog.getSchemas(),
-               not(empty()));
+    assertThat("Could not find any schemas", catalog.getSchemas(), not(empty()));
 
-    final Schema schema = catalog
-      .lookupSchema("PUBLIC.BOOKS")
-      .orElse(null);
+    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
     assertThat("Could not obtain schema", schema, notNullValue());
-    assertThat("Unexpected number of tables in the schema",
-               catalog.getTables(schema),
-               hasSize(10));
+    assertThat("Unexpected number of tables in the schema", catalog.getTables(schema), hasSize(10));
 
-    serializedCatalogFile =
-      IOUtility.createTempFilePath("schemacrawler", "ser");
-    final JavaSerializedCatalog serializedCatalog =
-      new JavaSerializedCatalog(catalog);
+    serializedCatalogFile = IOUtility.createTempFilePath("schemacrawler", "ser");
+    final JavaSerializedCatalog serializedCatalog = new JavaSerializedCatalog(catalog);
     serializedCatalog.save(new FileOutputStream(serializedCatalogFile.toFile()));
-    assertThat("Database was not serialized",
-               size(serializedCatalogFile),
-               greaterThan(0L));
-
+    assertThat("Database was not serialized", size(serializedCatalogFile), greaterThan(0L));
   }
 
-  private void executeExecutable(final SchemaCrawlerExecutable executable,
-                                 final String referenceFileName)
-    throws Exception
-  {
-    final OfflineConnection connection =
-      newOfflineConnection(serializedCatalogFile);
+  private void executeExecutable(
+      final SchemaCrawlerExecutable executable, final String referenceFileName) throws Exception {
+    final OfflineConnection connection = newOfflineConnection(serializedCatalogFile);
 
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-      SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder.withDatabaseServerType(
-      OfflineDatabaseConnector.DB_SERVER_TYPE);
+        SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder.withDatabaseServerType(OfflineDatabaseConnector.DB_SERVER_TYPE);
 
     executable.setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
 
-    assertThat(outputOf(executableExecution(connection, executable)),
-               hasSameContentAndTypeAs(classpathResource(referenceFileName),
-                                       TextOutputFormat.text.getFormat()));
+    assertThat(
+        outputOf(executableExecution(connection, executable)),
+        hasSameContentAndTypeAs(
+            classpathResource(referenceFileName), TextOutputFormat.text.getFormat()));
   }
-
 }

@@ -127,15 +127,13 @@ public class SpinThroughOperationsExecutableTest {
                                                   LoadOptionsBuilder.builder()
                                                       .withSchemaInfoLevel(
                                                           infoLevel.toSchemaInfoLevel());
-                                              final SchemaCrawlerOptionsBuilder
-                                                  schemaCrawlerOptionsBuilder =
-                                                      SchemaCrawlerOptionsBuilder.builder()
-                                                          .withLimitOptionsBuilder(
-                                                              limitOptionsBuilder)
-                                                          .withLoadOptionsBuilder(
-                                                              loadOptionsBuilder);
                                               final SchemaCrawlerOptions schemaCrawlerOptions =
-                                                  schemaCrawlerOptionsBuilder.toOptions();
+                                                  SchemaCrawlerOptionsBuilder
+                                                      .newSchemaCrawlerOptions()
+                                                      .withLimitOptions(
+                                                          limitOptionsBuilder.toOptions())
+                                                      .withLoadOptions(
+                                                          loadOptionsBuilder.toOptions());
 
                                               final SchemaTextOptionsBuilder
                                                   schemaTextOptionsBuilder =

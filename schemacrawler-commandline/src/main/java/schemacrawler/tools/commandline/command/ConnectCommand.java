@@ -42,6 +42,7 @@ import picocli.CommandLine.ParameterException;
 import picocli.CommandLine.Spec;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
@@ -164,15 +165,15 @@ public class ConnectCommand extends BaseStateHolder implements Runnable {
   private void loadSchemaCrawlerOptionsBuilder(final DatabaseConnector databaseConnector) {
     LOGGER.log(Level.FINE, "Creating SchemaCrawler options builder");
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-        SchemaCrawlerOptionsBuilder.builder();
+    SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     // Set defaults from database plugin, such as default schema excludes
-    databaseConnector.setDefaultsForSchemaCrawlerOptionsBuilder(schemaCrawlerOptionsBuilder);
+    schemaCrawlerOptions = databaseConnector.setSchemaCrawlerOptionsDefaults(schemaCrawlerOptions);
     // Override with options from config file
     final Config config = state.getAdditionalConfiguration();
-    SchemaCrawlerOptionsConfig.fromConfig(schemaCrawlerOptionsBuilder, config);
+    schemaCrawlerOptions = SchemaCrawlerOptionsConfig.fromConfig(schemaCrawlerOptions, config);
 
-    state.setSchemaCrawlerOptionsBuilder(schemaCrawlerOptionsBuilder);
+    state.setSchemaCrawlerOptions(schemaCrawlerOptions);
   }
 
   private void loadSchemaRetrievalOptionsBuilder(final DatabaseConnector databaseConnector)

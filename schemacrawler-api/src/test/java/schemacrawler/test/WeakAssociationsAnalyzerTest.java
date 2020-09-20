@@ -74,9 +74,9 @@ public class WeakAssociationsAnalyzerTest {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
             .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-        SchemaCrawlerOptionsBuilder.builder().withLimitOptionsBuilder(limitOptionsBuilder);
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions());
 
     catalog =
         DatabaseTestUtility.getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);

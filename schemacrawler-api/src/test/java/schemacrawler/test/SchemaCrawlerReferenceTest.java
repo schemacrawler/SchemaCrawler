@@ -92,10 +92,9 @@ public class SchemaCrawlerReferenceTest {
         GrepOptionsBuilder.builder()
             .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.BOOKAUTHORS\\..*"));
     final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.builder()
-            .withLimitOptionsBuilder(limitOptionsBuilder)
-            .withGrepOptions(grepOptionsBuilder.toOptions())
-            .toOptions();
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withGrepOptions(grepOptionsBuilder.toOptions());
 
     int fkReferenceCount = 0;
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
@@ -125,10 +124,9 @@ public class SchemaCrawlerReferenceTest {
         GrepOptionsBuilder.builder()
             .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.AUTHORS\\..*"));
     final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.builder()
-            .withLimitOptionsBuilder(limitOptionsBuilder)
-            .withGrepOptions(grepOptionsBuilder.toOptions())
-            .toOptions();
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withGrepOptions(grepOptionsBuilder.toOptions());
 
     int fkReferenceCount = 0;
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
@@ -154,9 +152,8 @@ public class SchemaCrawlerReferenceTest {
         GrepOptionsBuilder.builder()
             .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.BOOKAUTHORS\\..*"));
     final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.builder()
-            .withGrepOptions(grepOptionsBuilder.toOptions())
-            .toOptions();
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withGrepOptions(grepOptionsBuilder.toOptions());
 
     int fkReferenceCount = 0;
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
@@ -182,9 +179,8 @@ public class SchemaCrawlerReferenceTest {
         GrepOptionsBuilder.builder()
             .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.AUTHORS\\..*"));
     final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.builder()
-            .withGrepOptions(grepOptionsBuilder.toOptions())
-            .toOptions();
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withGrepOptions(grepOptionsBuilder.toOptions());
 
     int fkReferenceCount = 0;
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);

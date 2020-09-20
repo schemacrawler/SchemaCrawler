@@ -43,7 +43,6 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
@@ -105,11 +104,10 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
       throw new ExecutionException(spec.commandLine(), "Not connected to the database");
     }
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-        state.getSchemaCrawlerOptionsBuilder();
+    final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptions();
 
     final LoadOptionsBuilder loadOptionsBuilder =
-        LoadOptionsBuilder.builder().fromOptions(schemaCrawlerOptionsBuilder.getLoadOptions());
+        LoadOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.getLoadOptions());
 
     if (infolevel != null) {
       loadOptionsBuilder.withSchemaInfoLevel(infolevel.toSchemaInfoLevel());
@@ -117,7 +115,7 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
 
     loadOptionsBuilder.loadRowCounts(isLoadRowCounts);
 
-    schemaCrawlerOptionsBuilder.withLoadOptionsBuilder(loadOptionsBuilder);
+    state.withLoadOptions(loadOptionsBuilder.toOptions());
 
     final Catalog catalog = loadCatalog();
     state.setCatalog(catalog);
@@ -131,8 +129,7 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
       final Config additionalConfiguration = state.getAdditionalConfiguration();
       final SchemaRetrievalOptions schemaRetrievalOptions =
           state.getSchemaRetrievalOptionsBuilder().toOptions();
-      final SchemaCrawlerOptions schemaCrawlerOptions =
-          state.getSchemaCrawlerOptionsBuilder().toOptions();
+      final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptions();
 
       final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
       final CatalogLoader catalogLoader =

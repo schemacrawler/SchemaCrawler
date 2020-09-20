@@ -29,122 +29,17 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 /** SchemaCrawler options builder, to build the immutable options to crawl a schema. */
-public final class SchemaCrawlerOptionsBuilder
-    implements OptionsBuilder<SchemaCrawlerOptionsBuilder, SchemaCrawlerOptions> {
-
-  public static SchemaCrawlerOptionsBuilder builder() {
-    return new SchemaCrawlerOptionsBuilder();
-  }
+public final class SchemaCrawlerOptionsBuilder {
 
   public static SchemaCrawlerOptions newSchemaCrawlerOptions() {
-    return builder().toOptions();
-  }
-
-  private LimitOptions limitOptions;
-  private FilterOptions filterOptions;
-  private GrepOptions grepOptions;
-  private LoadOptions loadOptions;
-
-  /** Default options. */
-  private SchemaCrawlerOptionsBuilder() {
-    limitOptions = LimitOptionsBuilder.newLimitOptions();
-    filterOptions = FilterOptionsBuilder.newFilterOptions();
-    grepOptions = GrepOptionsBuilder.newGrepOptions();
-    loadOptions = LoadOptionsBuilder.newLoadOptions();
-  }
-
-  @Override
-  public SchemaCrawlerOptionsBuilder fromOptions(final SchemaCrawlerOptions options) {
-    if (options == null) {
-      return this;
-    }
-
-    limitOptions = options.getLimitOptions();
-    filterOptions = options.getFilterOptions();
-    grepOptions = options.getGrepOptions();
-    loadOptions = options.getLoadOptions();
-
-    return this;
-  }
-
-  public FilterOptions getFilterOptions() {
-    return filterOptions;
-  }
-
-  public GrepOptions getGrepOptions() {
-    return grepOptions;
-  }
-
-  public LimitOptions getLimitOptions() {
-    return limitOptions;
-  }
-
-  public LoadOptions getLoadOptions() {
-    return loadOptions;
-  }
-
-  @Override
-  public SchemaCrawlerOptions toOptions() {
+    final LimitOptions limitOptions = LimitOptionsBuilder.newLimitOptions();
+    final FilterOptions filterOptions = FilterOptionsBuilder.newFilterOptions();
+    final GrepOptions grepOptions = GrepOptionsBuilder.newGrepOptions();
+    final LoadOptions loadOptions = LoadOptionsBuilder.newLoadOptions();
     return new SchemaCrawlerOptions(limitOptions, filterOptions, grepOptions, loadOptions);
   }
 
-  public SchemaCrawlerOptionsBuilder withFilterOptions(final FilterOptions filterOptions) {
-    if (filterOptions != null) {
-      this.filterOptions = filterOptions;
-    }
-    return this;
-  }
-
-  public SchemaCrawlerOptionsBuilder withFilterOptionsBuilder(
-      final FilterOptionsBuilder filterOptionsBuilder) {
-    if (filterOptionsBuilder != null) {
-      this.filterOptions = filterOptionsBuilder.toOptions();
-    }
-    return this;
-  }
-
-  public SchemaCrawlerOptionsBuilder withGrepOptions(final GrepOptions grepOptions) {
-    if (grepOptions != null) {
-      this.grepOptions = grepOptions;
-    }
-    return this;
-  }
-
-  public SchemaCrawlerOptionsBuilder withGrepOptionsBuilder(
-      final GrepOptionsBuilder grepOptionsBuilder) {
-    if (grepOptionsBuilder != null) {
-      this.grepOptions = grepOptionsBuilder.toOptions();
-    }
-    return this;
-  }
-
-  public SchemaCrawlerOptionsBuilder withLimitOptions(final LimitOptions limitOptions) {
-    if (limitOptions != null) {
-      this.limitOptions = limitOptions;
-    }
-    return this;
-  }
-
-  public SchemaCrawlerOptionsBuilder withLimitOptionsBuilder(
-      final LimitOptionsBuilder limitOptionsBuilder) {
-    if (limitOptionsBuilder != null) {
-      this.limitOptions = limitOptionsBuilder.toOptions();
-    }
-    return this;
-  }
-
-  public SchemaCrawlerOptionsBuilder withLoadOptions(final LoadOptions loadOptions) {
-    if (loadOptions != null) {
-      this.loadOptions = loadOptions;
-    }
-    return this;
-  }
-
-  public SchemaCrawlerOptionsBuilder withLoadOptionsBuilder(
-      final LoadOptionsBuilder loadOptionsBuilder) {
-    if (loadOptionsBuilder != null) {
-      this.loadOptions = loadOptionsBuilder.toOptions();
-    }
-    return this;
+  private SchemaCrawlerOptionsBuilder() {
+    throw new UnsupportedOperationException();
   }
 }

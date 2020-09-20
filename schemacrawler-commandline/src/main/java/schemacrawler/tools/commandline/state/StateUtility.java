@@ -49,11 +49,12 @@ public final class StateUtility {
     if (!state.isConnected()) {
       log(Level.CONFIG, () -> "No database connection available", showlog);
     }
-    if (state.getSchemaCrawlerOptionsBuilder() != null) {
-      final SchemaCrawlerOptions schemaCrawlerOptions =
-          state.getSchemaCrawlerOptionsBuilder().toOptions();
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptions();
+    if (schemaCrawlerOptions != null) {
       log(Level.CONFIG, new ObjectToStringFormat(schemaCrawlerOptions), showlog);
     }
+
     if (state.getSchemaRetrievalOptionsBuilder() != null) {
       final SchemaRetrievalOptions schemaRetrievalOptions =
           state.getSchemaRetrievalOptionsBuilder().toOptions();

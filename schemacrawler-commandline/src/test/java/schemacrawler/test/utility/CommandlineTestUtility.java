@@ -50,7 +50,6 @@ import schemacrawler.Main;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.options.OutputFormat;
@@ -136,8 +135,7 @@ public final class CommandlineTestUtility {
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    state.setSchemaCrawlerOptionsBuilder(
-        SchemaCrawlerOptionsBuilder.builder().fromOptions(schemaCrawlerOptions));
+    state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     state.setSchemaRetrievalOptionsBuilder(SchemaRetrievalOptionsBuilder.builder());
     state.setDataSource(() -> connection); // is-connected
     state.setCatalog(catalog); // is-loaded

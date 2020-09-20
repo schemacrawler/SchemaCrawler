@@ -35,7 +35,11 @@ import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.FilterOptions;
+import schemacrawler.schemacrawler.GrepOptions;
+import schemacrawler.schemacrawler.LimitOptions;
+import schemacrawler.schemacrawler.LoadOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.options.Config;
 
@@ -49,7 +53,7 @@ public class SchemaCrawlerShellState {
   private Catalog catalog;
   private Supplier<Connection> dataSource;
   private Throwable lastException;
-  private SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder;
+  private SchemaCrawlerOptions schemaCrawlerOptions;
   private SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder;
 
   public void addAdditionalConfiguration(final Config additionalConfiguration) {
@@ -90,8 +94,8 @@ public class SchemaCrawlerShellState {
     return lastException;
   }
 
-  public SchemaCrawlerOptionsBuilder getSchemaCrawlerOptionsBuilder() {
-    return schemaCrawlerOptionsBuilder;
+  public SchemaCrawlerOptions getSchemaCrawlerOptions() {
+    return schemaCrawlerOptions;
   }
 
   public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder() {
@@ -138,9 +142,8 @@ public class SchemaCrawlerShellState {
     this.lastException = lastException;
   }
 
-  public void setSchemaCrawlerOptionsBuilder(
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder) {
-    this.schemaCrawlerOptionsBuilder = schemaCrawlerOptionsBuilder;
+  public void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions) {
+    this.schemaCrawlerOptions = schemaCrawlerOptions;
   }
 
   public void setSchemaRetrievalOptionsBuilder(
@@ -151,10 +154,30 @@ public class SchemaCrawlerShellState {
   public void sweep() {
     catalog = null;
     additionalConfiguration = null;
-    schemaCrawlerOptionsBuilder = null;
+    schemaCrawlerOptions = null;
     schemaRetrievalOptionsBuilder = null;
     lastException = null;
 
     disconnect();
+  }
+
+  /** Update SchemaCrawler options by reassignment. */
+  public void withFilterOptions(final FilterOptions filterOptions) {
+    schemaCrawlerOptions = schemaCrawlerOptions.withFilterOptions(filterOptions);
+  }
+
+  /** Update SchemaCrawler options by reassignment. */
+  public void withGrepOptions(final GrepOptions grepOptions) {
+    schemaCrawlerOptions = schemaCrawlerOptions.withGrepOptions(grepOptions);
+  }
+
+  /** Update SchemaCrawler options by reassignment. */
+  public void withLimitOptions(final LimitOptions limitOptions) {
+    schemaCrawlerOptions = schemaCrawlerOptions.withLimitOptions(limitOptions);
+  }
+
+  /** Update SchemaCrawler options by reassignment. */
+  public void withLoadOptions(final LoadOptions loadOptions) {
+    schemaCrawlerOptions = schemaCrawlerOptions.withLoadOptions(loadOptions);
   }
 }

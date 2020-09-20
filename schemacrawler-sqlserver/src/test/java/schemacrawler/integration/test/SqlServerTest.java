@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
@@ -55,6 +54,7 @@ import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.MSSQLServerContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
@@ -76,135 +76,97 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 @Testcontainers(disabledWithoutDocker = true)
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
-public class SqlServerTest
-  extends BaseAdditionalDatabaseTest
-{
+public class SqlServerTest extends BaseAdditionalDatabaseTest {
 
-  @Container
-  private JdbcDatabaseContainer dbContainer = new MSSQLServerContainer<>();
+  @Container private JdbcDatabaseContainer dbContainer = new MSSQLServerContainer<>();
 
   @BeforeEach
-  public void createDatabase()
-    throws SQLException, SchemaCrawlerException
-  {
-    createDataSource(dbContainer.getJdbcUrl(),
-                     dbContainer.getUsername(),
-                     dbContainer.getPassword());
+  public void createDatabase() throws SQLException, SchemaCrawlerException {
+    createDataSource(
+        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
 
     createDatabase("/sqlserver.scripts.txt");
   }
 
   @Test
-  public void testSQLServerCatalog()
-    throws Exception
-  {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-      .builder()
-      .includeSchemas(new RegularExpressionInclusionRule("BOOKS\\.dbo"))
-      .includeAllSequences()
-      .includeAllSynonyms()
-      .includeAllRoutines()
-      .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
-      .builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withLimitOptionsBuilder(limitOptionsBuilder)
-        .withLoadOptionsBuilder(loadOptionsBuilder);
-    final SchemaCrawlerOptions options =
-      schemaCrawlerOptionsBuilder.toOptions();
+  public void testSQLServerCatalog() throws Exception {
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule("BOOKS\\.dbo"))
+            .includeAllSequences()
+            .includeAllSynonyms()
+            .includeAllRoutines()
+            .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
 
     final Connection connection = checkConnection(getConnection());
-    final DatabaseConnector databaseConnector =
-      new SqlServerDatabaseConnector();
+    final DatabaseConnector databaseConnector = new SqlServerDatabaseConnector();
 
-    final SchemaRetrievalOptions schemaRetrievalOptions = databaseConnector
-      .getSchemaRetrievalOptionsBuilder(connection)
-      .toOptions();
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        databaseConnector.getSchemaRetrievalOptionsBuilder(connection).toOptions();
 
     final SchemaCrawler schemaCrawler =
-      new SchemaCrawler(getConnection(), schemaRetrievalOptions, options);
+        new SchemaCrawler(getConnection(), schemaRetrievalOptions, schemaCrawlerOptions);
     final Catalog catalog = schemaCrawler.crawl();
-    final List<Property> serverInfo = new ArrayList<>(catalog
-                                                        .getDatabaseInfo()
-                                                        .getServerInfo());
+    final List<Property> serverInfo = new ArrayList<>(catalog.getDatabaseInfo().getServerInfo());
 
     assertThat(serverInfo.size(), equalTo(3));
-    assertThat(serverInfo
-                 .get(0)
-                 .getName(), equalTo("InstanceName"));
-    assertThat(serverInfo
-                 .get(0)
-                 .getValue(), is(nullValue()));
+    assertThat(serverInfo.get(0).getName(), equalTo("InstanceName"));
+    assertThat(serverInfo.get(0).getValue(), is(nullValue()));
 
-    final List<DatabaseUser> databaseUsers =
-      (List<DatabaseUser>) catalog.getDatabaseUsers();
+    final List<DatabaseUser> databaseUsers = (List<DatabaseUser>) catalog.getDatabaseUsers();
     assertThat(databaseUsers, hasSize(13));
-    assertThat(databaseUsers
-                 .stream()
-                 .map(DatabaseUser::getName)
-                 .collect(Collectors.toList()), hasItems("dbo", "public", "db_datareader"));
-    assertThat(databaseUsers
-                 .stream()
-                 .map(databaseUser -> databaseUser
-                   .getAttributes()
-                   .size())
-                 .collect(Collectors.toList()), hasItems(4));
-    assertThat(databaseUsers
-                 .stream()
-                 .map(databaseUser -> databaseUser
-                   .getAttributes()
-                   .keySet())
-                 .flatMap(Collection::stream)
-                 .collect(Collectors.toSet()),
-               hasItems("CREATE_DATE",
-                        "TYPE",
-                        "MODIFY_DATE",
-                        "AUTHENTICATION_TYPE"));
+    assertThat(
+        databaseUsers.stream().map(DatabaseUser::getName).collect(Collectors.toList()),
+        hasItems("dbo", "public", "db_datareader"));
+    assertThat(
+        databaseUsers
+            .stream()
+            .map(databaseUser -> databaseUser.getAttributes().size())
+            .collect(Collectors.toList()),
+        hasItems(4));
+    assertThat(
+        databaseUsers
+            .stream()
+            .map(databaseUser -> databaseUser.getAttributes().keySet())
+            .flatMap(Collection::stream)
+            .collect(Collectors.toSet()),
+        hasItems("CREATE_DATE", "TYPE", "MODIFY_DATE", "AUTHENTICATION_TYPE"));
   }
 
   @Test
-  public void testSQLServerWithConnection()
-    throws Exception
-  {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-      .builder()
-      .includeSchemas(new RegularExpressionInclusionRule("BOOKS\\.dbo"))
-      .includeAllSequences()
-      .includeAllSynonyms()
-      .includeAllRoutines()
-      .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
-      .builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withLimitOptionsBuilder(limitOptionsBuilder)
-        .withLoadOptionsBuilder(loadOptionsBuilder);
-    final SchemaCrawlerOptions options =
-      schemaCrawlerOptionsBuilder.toOptions();
+  public void testSQLServerWithConnection() throws Exception {
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule("BOOKS\\.dbo"))
+            .includeAllSequences()
+            .includeAllSynonyms()
+            .includeAllRoutines()
+            .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
 
-    final SchemaTextOptionsBuilder textOptionsBuilder =
-      SchemaTextOptionsBuilder.builder();
-    textOptionsBuilder
-      .showDatabaseInfo()
-      .showJdbcDriverInfo();
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder.showDatabaseInfo().showJdbcDriverInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    final SchemaCrawlerExecutable executable =
-      new SchemaCrawlerExecutable("details");
-    executable.setSchemaCrawlerOptions(options);
-    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
-                                            .builder(textOptions)
-                                            .toConfig());
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
     final String expectedResource =
-      String.format("testSQLServerWithConnection.%s.txt", javaVersion());
-    assertThat(outputOf(executableExecution(getConnection(), executable)),
-               hasSameContentAs(classpathResource(expectedResource)));
+        String.format("testSQLServerWithConnection.%s.txt", javaVersion());
+    assertThat(
+        outputOf(executableExecution(getConnection(), executable)),
+        hasSameContentAs(classpathResource(expectedResource)));
   }
-
 }

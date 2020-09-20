@@ -68,9 +68,9 @@ public class SchemaCrawlerExecutableChainTest {
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder().includeAllRoutines();
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-        SchemaCrawlerOptionsBuilder.builder().withLimitOptionsBuilder(limitOptionsBuilder);
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions());
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo().showJdbcDriverInfo();

@@ -34,7 +34,7 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.ParameterException;
 import picocli.CommandLine.Spec;
 import schemacrawler.schemacrawler.FilterOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
@@ -92,11 +92,10 @@ public final class FilterCommand extends BaseStateHolder implements Runnable {
   @Override
   public void run() {
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-        state.getSchemaCrawlerOptionsBuilder();
+    final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptions();
 
     final FilterOptionsBuilder optionsBuilder =
-        FilterOptionsBuilder.builder().fromOptions(schemaCrawlerOptionsBuilder.getFilterOptions());
+        FilterOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.getFilterOptions());
 
     if (parents != null) {
       if (parents >= 0) {
@@ -120,6 +119,6 @@ public final class FilterCommand extends BaseStateHolder implements Runnable {
       optionsBuilder.noEmptyTables(noemptytables);
     }
 
-    state.getSchemaCrawlerOptionsBuilder().withFilterOptionsBuilder(optionsBuilder);
+    state.withFilterOptions(optionsBuilder.toOptions());
   }
 }

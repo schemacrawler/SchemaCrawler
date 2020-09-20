@@ -44,7 +44,7 @@ import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 
@@ -169,13 +169,13 @@ public abstract class DatabaseConnector implements Options {
     return databaseConnectionSource;
   }
 
-  public final void setDefaultsForSchemaCrawlerOptionsBuilder(
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder) {
+  public final SchemaCrawlerOptions setSchemaCrawlerOptionsDefaults(
+      final SchemaCrawlerOptions schemaCrawlerOptions) {
     final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder().fromOptions(schemaCrawlerOptionsBuilder.getLimitOptions());
+        LimitOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.getLimitOptions());
     limitOptionsBuildProcess.accept(limitOptionsBuilder);
 
-    schemaCrawlerOptionsBuilder.withLimitOptionsBuilder(limitOptionsBuilder);
+    return schemaCrawlerOptions.withLimitOptions(limitOptionsBuilder.toOptions());
   }
 
   public final boolean supportsUrl(final String url) {

@@ -179,11 +179,10 @@ public class SchemaCrawlerCoverageTest {
         LoadOptionsBuilder.builder()
             .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
             .loadRowCounts();
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-        SchemaCrawlerOptionsBuilder.builder()
-            .withLimitOptionsBuilder(limitOptionsBuilder)
-            .withLoadOptionsBuilder(loadOptionsBuilder);
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
 
     catalog = getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
   }

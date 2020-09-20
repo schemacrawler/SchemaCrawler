@@ -43,7 +43,7 @@ public final class SchemaCrawlerOptions implements Options {
   private final GrepOptions grepOptions;
   private final LoadOptions loadOptions;
 
-  SchemaCrawlerOptions(
+  public SchemaCrawlerOptions(
       final LimitOptions limitOptions,
       final FilterOptions filterOptions,
       final GrepOptions grepOptions,
@@ -74,5 +74,37 @@ public final class SchemaCrawlerOptions implements Options {
   @Override
   public String toString() {
     return ObjectToString.toString(this);
+  }
+
+  public SchemaCrawlerOptions withFilterOptions(final FilterOptions filterOptions) {
+    if (filterOptions == null) {
+      return this;
+    } else {
+      return new SchemaCrawlerOptions(limitOptions, filterOptions, grepOptions, loadOptions);
+    }
+  }
+
+  public SchemaCrawlerOptions withGrepOptions(final GrepOptions grepOptions) {
+    if (grepOptions == null) {
+      return this;
+    } else {
+      return new SchemaCrawlerOptions(limitOptions, filterOptions, grepOptions, loadOptions);
+    }
+  }
+
+  public SchemaCrawlerOptions withLimitOptions(final LimitOptions limitOptions) {
+    if (limitOptions == null) {
+      return this;
+    } else {
+      return new SchemaCrawlerOptions(limitOptions, filterOptions, grepOptions, loadOptions);
+    }
+  }
+
+  public SchemaCrawlerOptions withLoadOptions(final LoadOptions loadOptions) {
+    if (loadOptions == null) {
+      return this;
+    } else {
+      return new SchemaCrawlerOptions(limitOptions, filterOptions, grepOptions, loadOptions);
+    }
   }
 }

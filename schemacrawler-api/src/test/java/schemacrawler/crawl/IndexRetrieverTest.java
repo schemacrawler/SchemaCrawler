@@ -138,10 +138,9 @@ public class IndexRetrieverTest {
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.minimum());
     final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.builder()
-            .withLimitOptionsBuilder(limitOptionsBuilder)
-            .withLoadOptionsBuilder(loadOptionsBuilder)
-            .toOptions();
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
     catalog =
         (MutableCatalog)
             getCatalog(

@@ -110,9 +110,8 @@ public final class DatabaseTestUtility {
   private static SchemaCrawlerOptions getMaximumSchemaCrawlerOptions() {
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    return SchemaCrawlerOptionsBuilder.builder()
-        .withLoadOptionsBuilder(loadOptionsBuilder)
-        .toOptions();
+    return SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+        .withLoadOptions(loadOptionsBuilder.toOptions());
   }
 
   private DatabaseTestUtility() {

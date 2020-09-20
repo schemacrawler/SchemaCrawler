@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -40,6 +39,7 @@ import java.sql.SQLException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -53,56 +53,36 @@ import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 @EnabledIfSystemProperty(named = "lightdb", matches = "^((?!(false|no)).)*$")
-public class DerbyTest
-  extends BaseAdditionalDatabaseTest
-{
+public class DerbyTest extends BaseAdditionalDatabaseTest {
 
   @BeforeEach
-  public void createDatabase()
-    throws SchemaCrawlerException, ClassNotFoundException, SQLException
-  {
+  public void createDatabase() throws SchemaCrawlerException, ClassNotFoundException, SQLException {
     Class.forName("org.apache.derby.impl.jdbc.EmbedConnection");
     createDataSource("jdbc:derby:memory:schemacrawler;create=true", null, null);
     createDatabase("/derby.scripts.txt");
   }
 
   @Test
-  public void testDerbyWithConnection()
-    throws Exception
-  {
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-      .builder()
-      .includeSchemas(new RegularExpressionInclusionRule("BOOKS"));
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder
-      .builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withLimitOptionsBuilder(limitOptionsBuilder)
-        .withLoadOptionsBuilder(loadOptionsBuilder);
+  public void testDerbyWithConnection() throws Exception {
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder().includeSchemas(new RegularExpressionInclusionRule("BOOKS"));
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      schemaCrawlerOptionsBuilder.toOptions();
-
-    final SchemaTextOptionsBuilder textOptionsBuilder =
-      SchemaTextOptionsBuilder.builder();
-    textOptionsBuilder
-      .noIndexNames()
-      .showDatabaseInfo()
-      .showJdbcDriverInfo();
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder.noIndexNames().showDatabaseInfo().showJdbcDriverInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    final SchemaCrawlerExecutable executable =
-      new SchemaCrawlerExecutable("details");
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
-                                            .builder(textOptions)
-                                            .toConfig());
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
-    final String expectedResource =
-      String.format("testDerbyWithConnection.%s.txt", javaVersion());
-    assertThat(outputOf(executableExecution(getConnection(), executable)),
-               hasSameContentAs(classpathResource(expectedResource)));
+    final String expectedResource = String.format("testDerbyWithConnection.%s.txt", javaVersion());
+    assertThat(
+        outputOf(executableExecution(getConnection(), executable)),
+        hasSameContentAs(classpathResource(expectedResource)));
   }
-
 }

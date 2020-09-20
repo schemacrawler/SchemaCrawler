@@ -120,12 +120,10 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                       final LoadOptionsBuilder loadOptionsBuilder =
                           LoadOptionsBuilder.builder()
                               .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-                      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-                          SchemaCrawlerOptionsBuilder.builder()
-                              .withLimitOptionsBuilder(limitOptionsBuilder)
-                              .withLoadOptionsBuilder(loadOptionsBuilder);
                       final SchemaCrawlerOptions schemaCrawlerOptions =
-                          schemaCrawlerOptionsBuilder.toOptions();
+                          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+                              .withLimitOptions(limitOptionsBuilder.toOptions())
+                              .withLoadOptions(loadOptionsBuilder.toOptions());
 
                       final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
                           SchemaTextOptionsBuilder.builder(textOptions);
@@ -175,11 +173,9 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                           LimitOptionsBuilder.builder()
                               .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
                               .includeAllRoutines();
-                      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-                          SchemaCrawlerOptionsBuilder.builder()
-                              .withLimitOptionsBuilder(limitOptionsBuilder);
                       final SchemaCrawlerOptions schemaCrawlerOptions =
-                          schemaCrawlerOptionsBuilder.toOptions();
+                          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+                              .withLimitOptions(limitOptionsBuilder.toOptions());
 
                       final SchemaCrawlerExecutable executable =
                           new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
@@ -221,12 +217,10 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                       final LoadOptionsBuilder loadOptionsBuilder =
                           LoadOptionsBuilder.builder()
                               .withSchemaInfoLevel(SchemaInfoLevelBuilder.detailed());
-                      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-                          SchemaCrawlerOptionsBuilder.builder()
-                              .withLimitOptionsBuilder(limitOptionsBuilder)
-                              .withLoadOptionsBuilder(loadOptionsBuilder);
                       final SchemaCrawlerOptions schemaCrawlerOptions =
-                          schemaCrawlerOptionsBuilder.toOptions();
+                          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+                              .withLimitOptions(limitOptionsBuilder.toOptions())
+                              .withLoadOptions(loadOptionsBuilder.toOptions());
 
                       final SchemaCrawlerExecutable executable =
                           new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
@@ -265,11 +259,9 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                           LimitOptionsBuilder.builder()
                               .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
                               .includeAllRoutines();
-                      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-                          SchemaCrawlerOptionsBuilder.builder()
-                              .withLimitOptionsBuilder(limitOptionsBuilder);
                       final SchemaCrawlerOptions schemaCrawlerOptions =
-                          schemaCrawlerOptionsBuilder.toOptions();
+                          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+                              .withLimitOptions(limitOptionsBuilder.toOptions());
 
                       final SchemaCrawlerExecutable executable =
                           new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
@@ -312,12 +304,10 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                       final LoadOptionsBuilder loadOptionsBuilder =
                           LoadOptionsBuilder.builder()
                               .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-                      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-                          SchemaCrawlerOptionsBuilder.builder()
-                              .withLimitOptionsBuilder(limitOptionsBuilder)
-                              .withLoadOptionsBuilder(loadOptionsBuilder);
                       final SchemaCrawlerOptions schemaCrawlerOptions =
-                          schemaCrawlerOptionsBuilder.toOptions();
+                          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+                              .withLimitOptions(limitOptionsBuilder.toOptions())
+                              .withLoadOptions(loadOptionsBuilder.toOptions());
 
                       final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
                           SchemaTextOptionsBuilder.builder(textOptions);
@@ -365,12 +355,10 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                       final LoadOptionsBuilder loadOptionsBuilder =
                           LoadOptionsBuilder.builder()
                               .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-                      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-                          SchemaCrawlerOptionsBuilder.builder()
-                              .withLimitOptionsBuilder(limitOptionsBuilder)
-                              .withLoadOptionsBuilder(loadOptionsBuilder);
                       final SchemaCrawlerOptions schemaCrawlerOptions =
-                          schemaCrawlerOptionsBuilder.toOptions();
+                          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+                              .withLimitOptions(limitOptionsBuilder.toOptions())
+                              .withLoadOptions(loadOptionsBuilder.toOptions());
 
                       final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
                           SchemaTextOptionsBuilder.builder(textOptions);
@@ -419,12 +407,10 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                       final LoadOptionsBuilder loadOptionsBuilder =
                           LoadOptionsBuilder.builder()
                               .withSchemaInfoLevel(schemaInfoLevelBuilder.toOptions());
-                      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-                          SchemaCrawlerOptionsBuilder.builder()
-                              .withLimitOptionsBuilder(limitOptionsBuilder)
-                              .withLoadOptionsBuilder(loadOptionsBuilder);
                       final SchemaCrawlerOptions schemaCrawlerOptions =
-                          schemaCrawlerOptionsBuilder.toOptions();
+                          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+                              .withLimitOptions(limitOptionsBuilder.toOptions())
+                              .withLoadOptions(loadOptionsBuilder.toOptions());
 
                       final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
                           SchemaTextOptionsBuilder.builder(textOptions);
@@ -469,12 +455,10 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                           LoadOptionsBuilder.builder()
                               .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
                               .loadRowCounts();
-                      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-                          SchemaCrawlerOptionsBuilder.builder()
-                              .withLimitOptionsBuilder(limitOptionsBuilder)
-                              .withLoadOptionsBuilder(loadOptionsBuilder);
                       final SchemaCrawlerOptions schemaCrawlerOptions =
-                          schemaCrawlerOptionsBuilder.toOptions();
+                          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+                              .withLimitOptions(limitOptionsBuilder.toOptions())
+                              .withLoadOptions(loadOptionsBuilder.toOptions());
 
                       final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
                           SchemaTextOptionsBuilder.builder(textOptions);
@@ -523,12 +507,10 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                       final LoadOptionsBuilder loadOptionsBuilder =
                           LoadOptionsBuilder.builder()
                               .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-                      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-                          SchemaCrawlerOptionsBuilder.builder()
-                              .withLimitOptionsBuilder(limitOptionsBuilder)
-                              .withLoadOptionsBuilder(loadOptionsBuilder);
                       final SchemaCrawlerOptions schemaCrawlerOptions =
-                          schemaCrawlerOptionsBuilder.toOptions();
+                          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+                              .withLimitOptions(limitOptionsBuilder.toOptions())
+                              .withLoadOptions(loadOptionsBuilder.toOptions());
 
                       final SchemaTextOptionsBuilder schemaTextOptionsBuilder =
                           SchemaTextOptionsBuilder.builder(textOptions);
@@ -582,11 +564,9 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                                       LimitOptionsBuilder.builder()
                                           .includeSchemas(
                                               new RegularExpressionInclusionRule(".*\\.BOOKS"));
-                                  final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder =
-                                      SchemaCrawlerOptionsBuilder.builder()
-                                          .withLimitOptionsBuilder(limitOptionsBuilder);
                                   final SchemaCrawlerOptions schemaCrawlerOptions =
-                                      schemaCrawlerOptionsBuilder.toOptions();
+                                      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+                                          .withLimitOptions(limitOptionsBuilder.toOptions());
 
                                   final OutputOptionsBuilder outputOptionsBuilder =
                                       OutputOptionsBuilder.builder()

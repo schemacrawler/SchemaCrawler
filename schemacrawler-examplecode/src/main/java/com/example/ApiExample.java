@@ -1,6 +1,5 @@
 package com.example;
 
-
 import java.sql.Connection;
 
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
@@ -18,69 +17,49 @@ import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
 import schemacrawler.utility.SchemaCrawlerUtility;
 
-public final class ApiExample
-{
+public final class ApiExample {
 
-  private static Connection getConnection()
-  {
-    final String connectionUrl =
-      "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
-    final DatabaseConnectionSource dataSource =
-      new DatabaseConnectionSource(connectionUrl);
+  private static Connection getConnection() {
+    final String connectionUrl = "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
+    final DatabaseConnectionSource dataSource = new DatabaseConnectionSource(connectionUrl);
     dataSource.setUserCredentials(new SingleUseUserCredentials("sa", ""));
     return dataSource.get();
   }
 
-  public static void main(final String[] args)
-    throws Exception
-  {
+  public static void main(final String[] args) throws Exception {
 
     // Create the options
-    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder
-      .builder()
-      .includeSchemas(new RegularExpressionInclusionRule("PUBLIC.BOOKS"))
-      .includeTables(tableFullName -> !tableFullName.contains("ΒΙΒΛΊΑ"));
-    final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder()
-      // Set what details are required in the schema - this affects the
-      // time taken to crawl the schema
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
-    final SchemaCrawlerOptionsBuilder optionsBuilder =
-      SchemaCrawlerOptionsBuilder
-        .builder()
-        .withLimitOptionsBuilder(limitOptionsBuilder)
-        .withLoadOptionsBuilder(loadOptionsBuilder);
-    final SchemaCrawlerOptions options = optionsBuilder.toOptions();
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule("PUBLIC.BOOKS"))
+            .includeTables(tableFullName -> !tableFullName.contains("ΒΙΒΛΊΑ"));
+    final LoadOptionsBuilder loadOptionsBuilder =
+        LoadOptionsBuilder.builder()
+            // Set what details are required in the schema - this affects the
+            // time taken to crawl the schema
+            .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
+    final SchemaCrawlerOptions options =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions())
+            .withLoadOptions(loadOptionsBuilder.toOptions());
 
     // Get the schema definition
-    final Catalog catalog =
-      SchemaCrawlerUtility.getCatalog(getConnection(), options);
+    final Catalog catalog = SchemaCrawlerUtility.getCatalog(getConnection(), options);
 
-    for (final Schema schema : catalog.getSchemas())
-    {
+    for (final Schema schema : catalog.getSchemas()) {
       System.out.println(schema);
-      for (final Table table : catalog.getTables(schema))
-      {
+      for (final Table table : catalog.getTables(schema)) {
         System.out.print("o--> " + table);
-        if (table instanceof View)
-        {
+        if (table instanceof View) {
           System.out.println(" (VIEW)");
-        }
-        else
-        {
+        } else {
           System.out.println();
         }
 
-        for (final Column column : table.getColumns())
-        {
-          System.out.println("     o--> "
-                             + column
-                             + " ("
-                             + column.getColumnDataType()
-                             + ")");
+        for (final Column column : table.getColumns()) {
+          System.out.println("     o--> " + column + " (" + column.getColumnDataType() + ")");
         }
       }
     }
-
   }
-
 }
