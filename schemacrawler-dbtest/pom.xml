@@ -47,7 +47,7 @@
       <artifactId>schemacrawler-mysql</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
-    </dependency>
+    </dependency> 
 
     <dependency>
       <groupId>com.h2database</groupId>
@@ -70,7 +70,7 @@
     <dependency>
       <groupId>monetdb</groupId>
       <artifactId>monetdb-java-lite</artifactId>
-      <version>2.37</version>
+      <version>2.39</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -79,6 +79,7 @@
       <version>2.6.2</version>
       <scope>test</scope>
     </dependency>
+    <!--  Old version of PostgreSQL driver for  CockroachDB -->
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
@@ -88,7 +89,7 @@
     <dependency>
       <groupId>org.firebirdsql.jdbc</groupId>
       <artifactId>jaybird</artifactId>
-      <version>4.0.0.java8</version>
+      <version>4.0.1.java8</version>
     </dependency>
 
     <dependency>
@@ -112,7 +113,7 @@
     <dependency>
       <groupId>org.firebirdsql</groupId>
       <artifactId>firebird-testcontainers-java</artifactId>
-      <version>1.0.3</version>
+      <version>1.0.4</version>
       <scope>test</scope>
     </dependency>
 
