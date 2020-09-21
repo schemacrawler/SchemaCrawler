@@ -47,7 +47,7 @@
       <artifactId>schemacrawler-mysql</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
-    </dependency>
+    </dependency> 
 
     <dependency>
       <groupId>com.h2database</groupId>
@@ -79,10 +79,11 @@
       <version>2.6.2</version>
       <scope>test</scope>
     </dependency>
+    <!--  Old version of PostgreSQL driver for  CockroachDB -->
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
-      <version>42.2.16</version>
+      <version>42.2.14</version>
       <scope>test</scope>
     </dependency>
     <dependency>
