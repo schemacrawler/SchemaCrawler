@@ -92,6 +92,17 @@ public class CommandLineDiagramTest {
   }
 
   @Test
+  public void commandLineWithGraphvizAttributesConfig(
+      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
+    final Map<String, String> args = new HashMap<>();
+
+    final Map<String, String> config = new HashMap<>();
+    config.put("schemacrawler.graph.graphviz.graph.ranksep", String.valueOf(3));
+
+    run(testContext, connectionInfo, args, config, "brief");
+  }
+
+  @Test
   public void commandLineWithDefaults(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> args = new HashMap<>();
