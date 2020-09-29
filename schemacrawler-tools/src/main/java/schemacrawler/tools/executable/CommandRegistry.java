@@ -137,6 +137,7 @@ public final class CommandRegistry {
     try {
       scCommand = executableCommandProvider.newSchemaCrawlerCommand(command);
       scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
+      scCommand.setAdditionalConfiguration(additionalConfiguration);
       scCommand.setOutputOptions(outputOptions);
     } catch (final Throwable e) {
       // Mainly catch NoClassDefFoundError, which is a Throwable, for

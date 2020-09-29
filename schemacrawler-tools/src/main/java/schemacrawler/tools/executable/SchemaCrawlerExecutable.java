@@ -89,9 +89,6 @@ public final class SchemaCrawlerExecutable {
     final SchemaCrawlerCommand scCommand = loadCommand();
 
     // Set options
-    scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    scCommand.setOutputOptions(outputOptions);
-    scCommand.setAdditionalConfiguration(additionalConfiguration);
     scCommand.setIdentifiers(schemaRetrievalOptions.getIdentifiers());
 
     // Initialize, and check if the command is available
