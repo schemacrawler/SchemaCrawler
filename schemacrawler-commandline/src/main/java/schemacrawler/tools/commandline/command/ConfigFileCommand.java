@@ -31,6 +31,7 @@ package schemacrawler.tools.commandline.command;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Properties;
 import java.util.logging.Level;
 
 import picocli.CommandLine.Command;
@@ -94,9 +95,10 @@ public class ConfigFileCommand extends BaseStateHolder implements Runnable {
 
     // 1. Load state from CLASSPATH, in place
     try {
-      final Config classpathConfig =
-          PropertiesUtility.loadConfig(
+      final Properties properties =
+          PropertiesUtility.loadProperties(
               new ClasspathInputResource("/schemacrawler.config.properties"));
+      final Config classpathConfig = new Config(properties);
       config.putAll(classpathConfig);
     } catch (final IOException e) {
       LOGGER.log(Level.CONFIG, "schemacrawler.config.properties not found on CLASSPATH");
@@ -116,7 +118,9 @@ public class ConfigFileCommand extends BaseStateHolder implements Runnable {
     configfile = configfile.normalize().toAbsolutePath();
 
     try {
-      final Config config = PropertiesUtility.loadConfig(new FileInputResource(configfile));
+      final Properties properties =
+          PropertiesUtility.loadProperties(new FileInputResource(configfile));
+      final Config config = new Config(properties);
       return config;
     } catch (final IOException e) {
       LOGGER.log(

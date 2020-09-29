@@ -48,17 +48,6 @@ public class PropertiesUtility {
   /**
    * Loads a properties file.
    *
-   * @param inputResource Config resource.
-   * @return Config
-   */
-  public static Config loadConfig(final InputResource inputResource) {
-    final Properties properties = loadProperties(inputResource);
-    return new Config(properties);
-  }
-
-  /**
-   * Loads a properties file.
-   *
    * @param inputResource Properties resource.
    * @return Properties
    */
