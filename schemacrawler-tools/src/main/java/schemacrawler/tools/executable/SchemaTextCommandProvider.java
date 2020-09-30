@@ -30,6 +30,8 @@ package schemacrawler.tools.executable;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
+import schemacrawler.tools.text.schema.SchemaTextOptions;
+import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import schemacrawler.tools.text.schema.SchemaTextRenderer;
 
 public final class SchemaTextCommandProvider extends BaseCommandProvider {
@@ -40,8 +42,11 @@ public final class SchemaTextCommandProvider extends BaseCommandProvider {
 
   @Override
   public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command, final Config config) {
+    final SchemaTextOptions schemaTextOptions =
+        SchemaTextOptionsBuilder.builder().fromConfig(config).toOptions();
+
     final SchemaTextRenderer scCommand = new SchemaTextRenderer(command);
-    scCommand.setAdditionalConfiguration(config);
+    scCommand.setSchemaTextOptions(schemaTextOptions);
     return scCommand;
   }
 

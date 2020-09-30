@@ -72,7 +72,7 @@ public abstract class BaseSchemaCrawlerCommand implements SchemaCrawlerCommand {
   }
 
   @Override
-  public final Config getAdditionalConfiguration() {
+  public Config getAdditionalConfiguration() {
     return additionalConfiguration;
   }
 
@@ -115,7 +115,7 @@ public abstract class BaseSchemaCrawlerCommand implements SchemaCrawlerCommand {
   }
 
   @Override
-  public final void setAdditionalConfiguration(final Config additionalConfiguration) {
+  public void setAdditionalConfiguration(final Config additionalConfiguration) {
     this.additionalConfiguration =
         requireNonNull(additionalConfiguration, "No additional configuration provided");
   }

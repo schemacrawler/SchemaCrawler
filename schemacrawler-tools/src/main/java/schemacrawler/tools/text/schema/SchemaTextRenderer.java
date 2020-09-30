@@ -32,7 +32,7 @@ import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
-import schemacrawler.tools.options.TextOutputFormat;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
 import schemacrawler.utility.NamedObjectSort;
@@ -72,14 +72,18 @@ public final class SchemaTextRenderer extends BaseSchemaCrawlerCommand {
     traverser.traverse();
   }
 
+  @Override
+  public Config getAdditionalConfiguration() {
+    throw new UnsupportedOperationException();
+  }
+
   public SchemaTextOptions getSchemaTextOptions() {
     return schemaTextOptions;
   }
 
   @Override
-  public void initialize() throws Exception {
-    super.initialize();
-    loadSchemaTextOptions();
+  public void setAdditionalConfiguration(Config additionalConfiguration) {
+    throw new UnsupportedOperationException();
   }
 
   public void setSchemaTextOptions(final SchemaTextOptions schemaTextOptions) {
@@ -106,8 +110,6 @@ public final class SchemaTextRenderer extends BaseSchemaCrawlerCommand {
     final SchemaTraversalHandler formatter;
 
     final String identifierQuoteString = identifiers.getIdentifierQuoteString();
-    final TextOutputFormat outputFormat =
-        TextOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
     if (schemaTextDetailType == SchemaTextDetailType.list) {
       formatter =
           new SchemaListFormatter(
@@ -119,12 +121,5 @@ public final class SchemaTextRenderer extends BaseSchemaCrawlerCommand {
     }
 
     return formatter;
-  }
-
-  private void loadSchemaTextOptions() {
-    if (schemaTextOptions == null) {
-      schemaTextOptions =
-          SchemaTextOptionsBuilder.builder().fromConfig(additionalConfiguration).toOptions();
-    }
   }
 }
