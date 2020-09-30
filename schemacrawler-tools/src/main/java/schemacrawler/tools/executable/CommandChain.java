@@ -75,9 +75,9 @@ public final class CommandChain extends BaseSchemaCrawlerCommand {
     setAdditionalConfiguration(scCommand.getAdditionalConfiguration());
     setOutputOptions(scCommand.getOutputOptions());
 
+    setIdentifiers(scCommand.getIdentifiers());
     setCatalog(scCommand.getCatalog());
     setConnection(scCommand.getConnection());
-    setIdentifiers(scCommand.getIdentifiers());
   }
 
   public SchemaCrawlerCommand addNext(
@@ -145,9 +145,9 @@ public final class CommandChain extends BaseSchemaCrawlerCommand {
         return null;
       }
 
+      scCommand.setIdentifiers(identifiers);
       scCommand.setCatalog(catalog);
       scCommand.setConnection(connection);
-      scCommand.setIdentifiers(identifiers);
 
       scCommands.add(scCommand);
 
