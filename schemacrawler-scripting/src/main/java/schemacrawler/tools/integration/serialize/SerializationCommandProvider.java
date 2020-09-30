@@ -58,7 +58,6 @@ public class SerializationCommandProvider extends BaseCommandProvider {
   @Override
   public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command, final Config config) {
     final SerializationCommand scCommand = new SerializationCommand();
-    scCommand.setAdditionalConfiguration(config);
     return scCommand;
   }
 

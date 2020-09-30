@@ -36,6 +36,7 @@ import java.nio.file.Path;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 
 /**
@@ -86,6 +87,16 @@ public final class SerializationCommand extends BaseSchemaCrawlerCommand {
       serializableCatalog.save(out);
       // NOTE: Jackson closes the output writer, so no need for a try-with-resources block
     }
+  }
+
+  @Override
+  public Config getAdditionalConfiguration() {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public void setAdditionalConfiguration(Config additionalConfiguration) {
+    throw new UnsupportedOperationException();
   }
 
   @Override
