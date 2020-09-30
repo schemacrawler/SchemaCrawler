@@ -26,26 +26,33 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.integration.template;
+package schemacrawler.tools.integration;
 
-import schemacrawler.tools.integration.BaseLanguage;
+import static us.fatehi.utility.Utility.requireNotBlank;
+import static us.fatehi.utility.ioresource.InputResourceUtility.createInputResource;
 
-public final class TemplateLanguage extends BaseLanguage {
+import schemacrawler.schemacrawler.Options;
+import us.fatehi.utility.ioresource.InputResource;
 
-  public TemplateLanguage() {
-    super("templating-language", "template", TemplateLanguageType.unknown.name());
+public final class LanguageOptions implements Options {
+
+  private final String language;
+  private final String script;
+
+  public LanguageOptions(final String language, final String script) {
+    this.language = requireNotBlank(language, "No language provided");
+    this.script = requireNotBlank(script, "No script provided");
   }
 
-  public TemplateLanguageType getTemplateLanguageType() {
-    final String language = getLanguage();
+  public String getLanguage() {
+    return language;
+  }
 
-    try {
-      final TemplateLanguageType templateLanguageType = TemplateLanguageType.valueOf(language);
-      return templateLanguageType;
-    } catch (final IllegalArgumentException e) {
-      // Ignore
-    }
+  public final InputResource getResource() {
+    return createInputResource(script);
+  }
 
-    return TemplateLanguageType.unknown;
+  public String getScript() {
+    return script;
   }
 }

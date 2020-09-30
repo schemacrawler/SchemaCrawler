@@ -33,15 +33,15 @@ import static java.util.Objects.requireNonNull;
 import java.util.HashMap;
 import java.util.Map;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import schemacrawler.tools.integration.LanguageOptions;
 import schemacrawler.tools.options.Config;
 
 public final class TemplateCommand extends BaseSchemaCrawlerCommand {
 
   static final String COMMAND = "template";
 
-  private TemplateLanguage templateLanguage;
+  private LanguageOptions languageOptions;
 
   public TemplateCommand() {
     super(COMMAND);
@@ -56,13 +56,13 @@ public final class TemplateCommand extends BaseSchemaCrawlerCommand {
   /** {@inheritDoc} */
   @Override
   public void execute() throws Exception {
-    requireNonNull(templateLanguage, "No template language provided");
+    requireNonNull(languageOptions, "No template language provided");
     checkCatalog();
 
-    final TemplateLanguageType languageType = templateLanguage.getTemplateLanguageType();
-    if (languageType == TemplateLanguageType.unknown) {
-      throw new SchemaCrawlerException("No template language provided");
-    }
+    // Find if the language type is valid, or throw an exception
+    final TemplateLanguageType languageType =
+        TemplateLanguageType.valueOf(languageOptions.getLanguage());
+
     final String templateRendererClassName = languageType.getTemplateRendererClassName();
     final Class<TemplateRenderer> templateRendererClass =
         (Class<TemplateRenderer>) Class.forName(templateRendererClassName);
@@ -72,7 +72,7 @@ public final class TemplateCommand extends BaseSchemaCrawlerCommand {
     context.put("catalog", catalog);
     context.put("identifiers", identifiers);
 
-    templateRenderer.setResourceFilename(templateLanguage.getResourceFilename());
+    templateRenderer.setResourceFilename(languageOptions.getScript());
     templateRenderer.setContext(context);
     templateRenderer.setOutputOptions(outputOptions);
 
@@ -89,8 +89,8 @@ public final class TemplateCommand extends BaseSchemaCrawlerCommand {
     throw new UnsupportedOperationException();
   }
 
-  public void setTemplateLanguage(final TemplateLanguage templateLanguage) {
-    this.templateLanguage = templateLanguage;
+  public void setLanguageOptions(final LanguageOptions languageOptions) {
+    this.languageOptions = languageOptions;
   }
 
   @Override

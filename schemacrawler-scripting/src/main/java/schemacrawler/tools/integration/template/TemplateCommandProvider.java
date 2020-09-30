@@ -33,6 +33,7 @@ import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import schemacrawler.tools.integration.LanguageOptions;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 
@@ -59,11 +60,11 @@ public class TemplateCommandProvider extends BaseCommandProvider {
   @Override
   public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command, final Config config) {
 
-    final TemplateLanguage templateLanguage = new TemplateLanguage();
-    templateLanguage.addConfig(config);
+    final LanguageOptions toOptions =
+        TemplateLanguageOptionsBuilder.builder().fromConfig(config).toOptions();
 
     final TemplateCommand scCommand = new TemplateCommand();
-    scCommand.setTemplateLanguage(templateLanguage);
+    scCommand.setLanguageOptions(toOptions);
     return scCommand;
   }
 

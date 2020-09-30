@@ -28,11 +28,15 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.integration.script;
 
-import schemacrawler.tools.integration.BaseLanguage;
+import schemacrawler.tools.integration.LanguageOptionsBuilder;
 
-public final class ScriptLanguage extends BaseLanguage {
+public final class ScriptLanguageOptionsBuilder extends LanguageOptionsBuilder {
 
-  public ScriptLanguage() {
+  public static ScriptLanguageOptionsBuilder builder() {
+    return new ScriptLanguageOptionsBuilder();
+  }
+
+  private ScriptLanguageOptionsBuilder() {
     super("script-language", "script", "javascript");
   }
 }

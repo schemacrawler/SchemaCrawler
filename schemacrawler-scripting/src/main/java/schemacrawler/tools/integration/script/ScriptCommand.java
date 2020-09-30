@@ -44,6 +44,7 @@ import javax.script.ScriptEngineManager;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import schemacrawler.tools.integration.LanguageOptions;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.ObjectToString;
 import us.fatehi.utility.ioresource.InputResource;
@@ -79,7 +80,7 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand {
             ObjectToString.toString(scriptEngineFactory.getExtensions())));
   }
 
-  private ScriptLanguage scriptLanguage;
+  private LanguageOptions scriptOptions;
 
   public ScriptCommand() {
     super(COMMAND);
@@ -93,13 +94,13 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand {
   /** {@inheritDoc} */
   @Override
   public void execute() throws Exception {
-    requireNonNull(scriptLanguage, "No script language provided");
+    requireNonNull(scriptOptions, "No script language provided");
     checkCatalog();
 
     final Charset inputCharset = outputOptions.getInputCharset();
 
     final ScriptEngine scriptEngine = getScriptEngine();
-    final InputResource inputResource = scriptLanguage.getResource();
+    final InputResource inputResource = scriptOptions.getResource();
     try (final Reader reader = inputResource.openNewInputReader(inputCharset);
         final Writer writer = outputOptions.openNewOutputWriter()) {
 
@@ -128,8 +129,8 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand {
     throw new UnsupportedOperationException();
   }
 
-  public void setScriptLanguage(final ScriptLanguage scriptLanguage) {
-    this.scriptLanguage = scriptLanguage;
+  public void setLanguageOptions(final LanguageOptions scriptOptions) {
+    this.scriptOptions = scriptOptions;
   }
 
   @Override
@@ -140,7 +141,7 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand {
   private ScriptEngine getScriptEngine() throws SchemaCrawlerException {
     final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
     ScriptEngine scriptEngine = null;
-    final String scriptingLanguage = scriptLanguage.getLanguage();
+    final String scriptingLanguage = scriptOptions.getLanguage();
     LOGGER.log(Level.CONFIG, new StringFormat("Using script language <%s>", scriptingLanguage));
     try {
       scriptEngine = scriptEngineManager.getEngineByName(scriptingLanguage);
