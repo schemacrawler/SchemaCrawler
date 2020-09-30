@@ -57,8 +57,12 @@ public class ScriptCommandProvider extends BaseCommandProvider {
 
   @Override
   public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command, final Config config) {
+
+    final ScriptLanguage scriptLanguage = new ScriptLanguage();
+    scriptLanguage.addConfig(config);
+
     final ScriptCommand scCommand = new ScriptCommand();
-    scCommand.setAdditionalConfiguration(config);
+    scCommand.setScriptLanguage(scriptLanguage);
     return scCommand;
   }
 

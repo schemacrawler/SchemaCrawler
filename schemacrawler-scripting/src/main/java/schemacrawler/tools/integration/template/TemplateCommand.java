@@ -28,21 +28,23 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.integration.template;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import schemacrawler.tools.options.Config;
 
 public final class TemplateCommand extends BaseSchemaCrawlerCommand {
 
   static final String COMMAND = "template";
 
-  private final TemplateLanguage templateLanguage;
+  private TemplateLanguage templateLanguage;
 
   public TemplateCommand() {
     super(COMMAND);
-    templateLanguage = new TemplateLanguage();
   }
 
   @Override
@@ -54,9 +56,8 @@ public final class TemplateCommand extends BaseSchemaCrawlerCommand {
   /** {@inheritDoc} */
   @Override
   public void execute() throws Exception {
+    requireNonNull(templateLanguage, "No template language provided");
     checkCatalog();
-
-    templateLanguage.addConfig(additionalConfiguration);
 
     final TemplateLanguageType languageType = templateLanguage.getTemplateLanguageType();
     if (languageType == TemplateLanguageType.unknown) {
@@ -76,6 +77,20 @@ public final class TemplateCommand extends BaseSchemaCrawlerCommand {
     templateRenderer.setOutputOptions(outputOptions);
 
     templateRenderer.execute();
+  }
+
+  @Override
+  public Config getAdditionalConfiguration() {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public void setAdditionalConfiguration(Config additionalConfiguration) {
+    throw new UnsupportedOperationException();
+  }
+
+  public void setTemplateLanguage(final TemplateLanguage templateLanguage) {
+    this.templateLanguage = templateLanguage;
   }
 
   @Override

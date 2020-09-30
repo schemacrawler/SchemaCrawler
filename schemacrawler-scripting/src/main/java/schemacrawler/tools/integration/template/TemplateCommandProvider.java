@@ -57,9 +57,13 @@ public class TemplateCommandProvider extends BaseCommandProvider {
   }
 
   @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command, Config config) {
+  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command, final Config config) {
+
+    final TemplateLanguage templateLanguage = new TemplateLanguage();
+    templateLanguage.addConfig(config);
+
     final TemplateCommand scCommand = new TemplateCommand();
-    scCommand.setAdditionalConfiguration(config);
+    scCommand.setTemplateLanguage(templateLanguage);
     return scCommand;
   }
 
