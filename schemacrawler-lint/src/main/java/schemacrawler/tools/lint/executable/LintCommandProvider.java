@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.lint.executable;
 
-
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
 
 import java.nio.file.Path;
@@ -38,60 +37,54 @@ import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.lint.LinterHelp;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 
-public class LintCommandProvider
-  extends BaseCommandProvider
-{
+public class LintCommandProvider extends BaseCommandProvider {
 
   public static final String DESCRIPTION_HEADER =
-    "Find lints (non-adherence to coding standards and conventions) "
-    + "in the database schema";
+      "Find lints (non-adherence to coding standards and conventions) " + "in the database schema";
 
-  public LintCommandProvider()
-  {
+  public LintCommandProvider() {
     super(new CommandDescription(LintCommand.COMMAND, DESCRIPTION_HEADER));
   }
 
   @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
-  {
-    return new LintCommand();
+  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command, final Config config) {
+    final LintCommand scCommand = new LintCommand();
+    scCommand.setAdditionalConfiguration(config);
+    return scCommand;
   }
 
   @Override
-  public boolean supportsOutputFormat(final String command,
-                                      final OutputOptions outputOptions)
-  {
-    return supportsOutputFormat(command,
-                                outputOptions,
-                                LintReportOutputFormat::isSupportedFormat);
+  public boolean supportsOutputFormat(final String command, final OutputOptions outputOptions) {
+    return supportsOutputFormat(command, outputOptions, LintReportOutputFormat::isSupportedFormat);
   }
 
   @Override
-  public PluginCommand getCommandLineCommand()
-  {
-    final PluginCommand pluginCommand = newPluginCommand("lint",
-                                                         "** "
-                                                         + DESCRIPTION_HEADER,
-                                                         "For more information, see https://www.schemacrawler.com/lint.html %n",
-                                                         new LinterHelp());
+  public PluginCommand getCommandLineCommand() {
+    final PluginCommand pluginCommand =
+        newPluginCommand(
+            "lint",
+            "** " + DESCRIPTION_HEADER,
+            "For more information, see https://www.schemacrawler.com/lint.html %n",
+            new LinterHelp());
     pluginCommand
-      .addOption("linter-configs",
-                 "Path to the SchemaCrawler lint XML configuration file",
-                 Path.class)
-      .addOption("lint-dispatch",
-                 "Specifies how to fail if a linter threshold is exceeded%n"
-                 + "Optional, defaults to none%n"
-                 + "Corresponds to the configuration file setting: schemacrawler.lint.lintdispatch",
-                 LintDispatch.class)
-      .addOption("run-all-linters",
-                 "Whether to run all linters, including running the ones "
-                 + "that are not explicitly configured with their default settings%n"
-                 + "Optional, defaults to true%n"
-                 + "Corresponds to the configuration file setting: schemacrawler.lint.runalllinters",
-                 boolean.class);
+        .addOption(
+            "linter-configs", "Path to the SchemaCrawler lint XML configuration file", Path.class)
+        .addOption(
+            "lint-dispatch",
+            "Specifies how to fail if a linter threshold is exceeded%n"
+                + "Optional, defaults to none%n"
+                + "Corresponds to the configuration file setting: schemacrawler.lint.lintdispatch",
+            LintDispatch.class)
+        .addOption(
+            "run-all-linters",
+            "Whether to run all linters, including running the ones "
+                + "that are not explicitly configured with their default settings%n"
+                + "Optional, defaults to true%n"
+                + "Corresponds to the configuration file setting: schemacrawler.lint.runalllinters",
+            boolean.class);
     return pluginCommand;
   }
-
 }

@@ -33,6 +33,7 @@ import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 
 public class ScriptCommandProvider extends BaseCommandProvider {
@@ -55,8 +56,10 @@ public class ScriptCommandProvider extends BaseCommandProvider {
   }
 
   @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command) {
-    return new ScriptCommand();
+  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command, final Config config) {
+    final ScriptCommand scCommand = new ScriptCommand();
+    scCommand.setAdditionalConfiguration(config);
+    return scCommand;
   }
 
   @Override

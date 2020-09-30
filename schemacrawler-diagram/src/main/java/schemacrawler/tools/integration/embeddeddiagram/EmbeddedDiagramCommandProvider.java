@@ -27,39 +27,35 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.integration.embeddeddiagram;
 
-
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandProviderUtility;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 
-public final class EmbeddedDiagramCommandProvider
-  extends BaseCommandProvider
-{
+public final class EmbeddedDiagramCommandProvider extends BaseCommandProvider {
 
-  public EmbeddedDiagramCommandProvider()
-  {
+  public EmbeddedDiagramCommandProvider() {
     super(CommandProviderUtility.schemaTextCommands());
   }
 
   @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
-  {
-    return new EmbeddedDiagramRenderer(command);
+  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command, final Config config) {
+    final EmbeddedDiagramRenderer scCommand = new EmbeddedDiagramRenderer(command);
+    scCommand.setAdditionalConfiguration(config);
+    return scCommand;
   }
 
   @Override
-  public boolean supportsOutputFormat(final String command,
-                                      final OutputOptions outputOptions)
-  {
-    return supportsOutputFormat(command, outputOptions, format -> {
-      final DiagramOutputFormat diagramOutputFormat =
-        DiagramOutputFormat.fromFormat(format);
-      final boolean supportsOutputFormat =
-        diagramOutputFormat == DiagramOutputFormat.htmlx;
-      return supportsOutputFormat;
-    });
+  public boolean supportsOutputFormat(final String command, final OutputOptions outputOptions) {
+    return supportsOutputFormat(
+        command,
+        outputOptions,
+        format -> {
+          final DiagramOutputFormat diagramOutputFormat = DiagramOutputFormat.fromFormat(format);
+          final boolean supportsOutputFormat = diagramOutputFormat == DiagramOutputFormat.htmlx;
+          return supportsOutputFormat;
+        });
   }
-
 }

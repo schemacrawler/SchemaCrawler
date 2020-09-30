@@ -39,8 +39,10 @@ final class OperationCommandProvider extends BaseCommandProvider {
   }
 
   @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command) {
-    return new OperationCommand(command);
+  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command, final Config config) {
+    final OperationCommand scCommand = new OperationCommand(command);
+    scCommand.setAdditionalConfiguration(config);
+    return scCommand;
   }
 
   @Override
