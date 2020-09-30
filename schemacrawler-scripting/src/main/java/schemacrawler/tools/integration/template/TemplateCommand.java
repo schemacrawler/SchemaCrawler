@@ -56,7 +56,7 @@ public final class TemplateCommand extends BaseSchemaCrawlerCommand {
   public void execute() throws Exception {
     checkCatalog();
 
-    templateLanguage.addConfig(getAdditionalConfiguration());
+    templateLanguage.addConfig(additionalConfiguration);
 
     final TemplateLanguageType languageType = templateLanguage.getTemplateLanguageType();
     if (languageType == TemplateLanguageType.unknown) {

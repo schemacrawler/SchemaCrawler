@@ -93,7 +93,7 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand {
   public void execute() throws Exception {
     checkCatalog();
 
-    scriptLanguage.addConfig(getAdditionalConfiguration());
+    scriptLanguage.addConfig(additionalConfiguration);
 
     final Charset inputCharset = outputOptions.getInputCharset();
 
