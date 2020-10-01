@@ -31,7 +31,7 @@ package schemacrawler.tools.text.operation;
 import schemacrawler.schemacrawler.Query;
 
 /** Database operations. */
-public enum Operation {
+public enum Operation implements OperationType {
 
   /** Count operation */
   count("Row Count", "Shows counts of rows in the tables", "SELECT COUNT(*) FROM ${table}"),
@@ -62,7 +62,8 @@ public enum Operation {
     this.queryString = queryString;
   }
 
-  public String getDescription() {
+  @Override
+public String getDescription() {
     return description;
   }
 
@@ -71,7 +72,8 @@ public enum Operation {
    *
    * @return Query
    */
-  public Query getQuery() {
+  @Override
+public Query getQuery() {
     return new Query(name(), queryString);
   }
 
@@ -80,7 +82,8 @@ public enum Operation {
    *
    * @return Operation title
    */
-  public String getTitle() {
+  @Override
+public String getTitle() {
     return title;
   }
 }

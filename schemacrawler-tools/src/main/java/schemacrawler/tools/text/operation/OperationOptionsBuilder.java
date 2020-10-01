@@ -46,7 +46,7 @@ public final class OperationOptionsBuilder
   }
 
   private String command;
-  protected Operation operation;
+  protected OperationType operation;
   protected Query query;
   protected boolean isShowLobs;
 
@@ -117,8 +117,8 @@ public final class OperationOptionsBuilder
   }
 
   /** Determine the operation, or whether this command is a query. */
-  private Operation getOperation() {
-    Operation operation = null;
+  private OperationType getOperation() {
+    OperationType operation = null;
     try {
       operation = Operation.valueOf(command);
     } catch (final IllegalArgumentException | NullPointerException e) {

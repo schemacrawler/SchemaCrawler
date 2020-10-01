@@ -28,49 +28,23 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.text.operation;
 
-import static java.util.Objects.requireNonNull;
-
 import schemacrawler.schemacrawler.Query;
-import schemacrawler.tools.text.base.BaseTextOptions;
 
-/**
- * Operator options.
- *
- * @author Sualeh Fatehi
- */
-public final class OperationOptions extends BaseTextOptions {
+public interface OperationType {
 
-  private final OperationType operation;
-  private final Query query;
-  private final boolean isShowLobs;
-
-  protected OperationOptions(final OperationOptionsBuilder builder) {
-    super(builder);
-
-    operation = builder.operation;
-    if (builder.operation == null) {
-      query = requireNonNull(builder.query, "No query provided");
-    } else {
-      query = operation.getQuery();
-    }
-
-    isShowLobs = builder.isShowLobs;
-  }
-
-  public OperationType getOperation() {
-    return operation;
-  }
-
-  public Query getQuery() {
-    return query;
-  }
+  String getDescription();
 
   /**
-   * Whether to show LOBs.
+   * Query.
    *
-   * @return Whether to show LOBs.
+   * @return Query
    */
-  public boolean isShowLobs() {
-    return isShowLobs;
-  }
+  Query getQuery();
+
+  /**
+   * Operation title.
+   *
+   * @return Operation title
+   */
+  String getTitle();
 }

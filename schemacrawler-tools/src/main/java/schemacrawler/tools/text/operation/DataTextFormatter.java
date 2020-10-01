@@ -64,7 +64,7 @@ final class DataTextFormatter extends BaseTabularFormatter<OperationOptions>
     return message;
   }
 
-  private final Operation operation;
+  private final OperationType operation;
   private int dataBlockCount;
 
   /**
@@ -76,7 +76,7 @@ final class DataTextFormatter extends BaseTabularFormatter<OperationOptions>
    * @param identifierQuoteString Quote character for identifier
    */
   DataTextFormatter(
-      final Operation operation,
+      final OperationType operation,
       final OperationOptions options,
       final OutputOptions outputOptions,
       final String identifierQuoteString)
