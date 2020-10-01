@@ -32,7 +32,7 @@ import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schemacrawler.Query;
 
-public class QueryOperation implements OperationType {
+public class QueryOperation implements Operation {
 
   public final Query query;
 

@@ -46,7 +46,7 @@ public final class OperationOptionsBuilder
   }
 
   private String command;
-  protected OperationType operation;
+  protected Operation operation;
   protected boolean isShowLobs;
 
   private OperationOptionsBuilder() {
@@ -112,18 +112,18 @@ public final class OperationOptionsBuilder
     return this;
   }
 
-  private OperationType getOperationFromCommand() {
-    OperationType operation = null;
+  private Operation getOperationFromCommand() {
+    Operation operation = null;
     try {
-      operation = Operation.valueOf(command);
+      operation = OperationType.valueOf(command);
     } catch (final IllegalArgumentException | NullPointerException e) {
       operation = this.operation;
     }
     return operation;
   }
 
-  private OperationType getQueryFromCommand(final Config config) {
-    final OperationType operation;
+  private Operation getQueryFromCommand(final Config config) {
+    final Operation operation;
     if (config.containsKey(command)) {
       final String queryName = command;
       final String queryString = config.get(queryName);

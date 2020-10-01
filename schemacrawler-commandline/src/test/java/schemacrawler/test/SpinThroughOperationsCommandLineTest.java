@@ -51,7 +51,7 @@ import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
-import schemacrawler.tools.text.operation.Operation;
+import schemacrawler.tools.text.operation.OperationType;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
@@ -69,8 +69,8 @@ public class SpinThroughOperationsCommandLineTest {
     return Arrays.stream(InfoLevel.values()).filter(infoLevel -> infoLevel != InfoLevel.unknown);
   }
 
-  private static Stream<Operation> operations() {
-    return Arrays.stream(Operation.values());
+  private static Stream<OperationType> operations() {
+    return Arrays.stream(OperationType.values());
   }
 
   private static Stream<TextOutputFormat> outputFormats() {
@@ -78,7 +78,7 @@ public class SpinThroughOperationsCommandLineTest {
   }
 
   private static String referenceFile(
-      final Operation operation, final InfoLevel infoLevel, final OutputFormat outputFormat) {
+      final OperationType operation, final InfoLevel infoLevel, final OutputFormat outputFormat) {
     final String referenceFile =
         String.format(
             "%d%d.%s_%s.%s",
@@ -106,7 +106,7 @@ public class SpinThroughOperationsCommandLineTest {
 
                                               // Special case where no output is generated
                                               if (infoLevel == InfoLevel.minimum
-                                                  && operation == Operation.dump) {
+                                                  && operation == OperationType.dump) {
                                                 return;
                                               }
 

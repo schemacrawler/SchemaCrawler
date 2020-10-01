@@ -40,7 +40,7 @@ import schemacrawler.tools.text.base.BaseTextOptions;
  */
 public final class OperationOptions extends BaseTextOptions {
 
-  private final OperationType operation;
+  private final Operation operation;
   private final boolean isShowLobs;
 
   protected OperationOptions(final OperationOptionsBuilder builder) {
@@ -50,7 +50,7 @@ public final class OperationOptions extends BaseTextOptions {
     isShowLobs = builder.isShowLobs;
   }
 
-  public OperationType getOperation() {
+  public Operation getOperation() {
     return operation;
   }
 

@@ -65,7 +65,7 @@ final class DataTextFormatter extends BaseTabularFormatter<OperationOptions>
     return message;
   }
 
-  private final OperationType operation;
+  private final Operation operation;
   private int dataBlockCount;
 
   /**
@@ -77,7 +77,7 @@ final class DataTextFormatter extends BaseTabularFormatter<OperationOptions>
    * @param identifierQuoteString Quote character for identifier
    */
   DataTextFormatter(
-      final OperationType operation,
+      final Operation operation,
       final OperationOptions options,
       final OutputOptions outputOptions,
       final String identifierQuoteString)
@@ -94,7 +94,7 @@ final class DataTextFormatter extends BaseTabularFormatter<OperationOptions>
   /** {@inheritDoc} */
   @Override
   public void end() throws SchemaCrawlerException {
-    if (operation == Operation.count) {
+    if (operation == OperationType.count) {
       formattingHelper.writeObjectEnd();
     }
 
@@ -161,7 +161,7 @@ final class DataTextFormatter extends BaseTabularFormatter<OperationOptions>
       printHeader();
     }
 
-    if (operation == Operation.count) {
+    if (operation == OperationType.count) {
       handleAggregateOperationForTable(title, rows);
     } else {
       formattingHelper.println();
@@ -195,7 +195,7 @@ final class DataTextFormatter extends BaseTabularFormatter<OperationOptions>
   private void printHeader() {
     formattingHelper.writeHeader(DocumentHeaderType.subTitle, operation.getTitle());
 
-    if (operation == Operation.count) {
+    if (operation == OperationType.count) {
       formattingHelper.writeObjectStart();
       formattingHelper.writeObjectNameRow("", operation.getTitle(), "", Color.white);
     }

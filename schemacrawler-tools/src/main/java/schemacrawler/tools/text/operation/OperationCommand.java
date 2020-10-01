@@ -150,7 +150,7 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand {
   }
 
   private DataTraversalHandler getDataTraversalHandler() throws SchemaCrawlerException {
-    final OperationType operation = operationOptions.getOperation();
+    final Operation operation = operationOptions.getOperation();
     final String identifierQuoteString = identifiers.getIdentifierQuoteString();
 
     final DataTraversalHandler formatter =
