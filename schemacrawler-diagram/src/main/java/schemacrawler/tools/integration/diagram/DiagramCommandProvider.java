@@ -41,8 +41,10 @@ public final class DiagramCommandProvider extends BaseCommandProvider {
 
   @Override
   public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command, final Config config) {
+    final DiagramOptions diagramOptions =
+        DiagramOptionsBuilder.builder().fromConfig(config).toOptions();
     final DiagramRenderer scCommand = new DiagramRenderer(command);
-    scCommand.setAdditionalConfiguration(config);
+    scCommand.setDiagramOptions(diagramOptions);
     return scCommand;
   }
 
