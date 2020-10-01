@@ -31,39 +31,32 @@ package schemacrawler.tools.text.operation;
 import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schemacrawler.Query;
-import schemacrawler.tools.text.base.BaseTextOptions;
 
-/**
- * Operator options.
- *
- * @author Sualeh Fatehi
- */
-public final class OperationOptions extends BaseTextOptions {
+public class QueryOperation implements OperationType {
 
-  private final OperationType operation;
-  private final boolean isShowLobs;
+  public final Query query;
 
-  protected OperationOptions(final OperationOptionsBuilder builder) {
-    super(builder);
-
-    operation = requireNonNull(builder.operation, "No operation provided");
-    isShowLobs = builder.isShowLobs;
+  public QueryOperation(Query query) {
+    this.query = requireNonNull(query, "No query provided");
   }
 
-  public OperationType getOperation() {
-    return operation;
+  @Override
+  public String getDescription() {
+    return "User defined query";
   }
 
+  @Override
   public Query getQuery() {
-    return operation.getQuery();
+    return query;
   }
 
   /**
-   * Whether to show LOBs.
+   * Operation title.
    *
-   * @return Whether to show LOBs.
+   * @return Operation title
    */
-  public boolean isShowLobs() {
-    return isShowLobs;
+  @Override
+  public String getTitle() {
+    return "Query";
   }
 }

@@ -47,7 +47,6 @@ public final class OperationOptionsBuilder
 
   private String command;
   protected OperationType operation;
-  protected Query query;
   protected boolean isShowLobs;
 
   private OperationOptionsBuilder() {
@@ -63,7 +62,7 @@ public final class OperationOptionsBuilder
 
     final Config config = new Config(map);
     isShowLobs = config.getBooleanValue(SHOW_LOBS, false);
-    query = getQuery(config);
+    operation = getQueryFromCommand(config);
 
     return this;
   }
@@ -109,34 +108,30 @@ public final class OperationOptionsBuilder
 
   public OperationOptionsBuilder withCommand(String command) {
     this.command = command;
-    operation = getOperation();
-    if (operation != null) {
-      query = operation.getQuery();
-    }
+    operation = getOperationFromCommand();
     return this;
   }
 
-  /** Determine the operation, or whether this command is a query. */
-  private OperationType getOperation() {
+  private OperationType getOperationFromCommand() {
     OperationType operation = null;
     try {
       operation = Operation.valueOf(command);
     } catch (final IllegalArgumentException | NullPointerException e) {
-      operation = null;
+      operation = this.operation;
     }
     return operation;
   }
 
-  private Query getQuery(final Config config) {
-    final Query query;
-    if (operation == null) {
+  private OperationType getQueryFromCommand(final Config config) {
+    final OperationType operation;
+    if (config.containsKey(command)) {
       final String queryName = command;
       final String queryString = config.get(queryName);
-      query = new Query(queryName, queryString);
+      operation = new QueryOperation(new Query(queryName, queryString));
     } else {
-      query = operation.getQuery();
+      operation = this.operation;
     }
 
-    return query;
+    return operation;
   }
 }
