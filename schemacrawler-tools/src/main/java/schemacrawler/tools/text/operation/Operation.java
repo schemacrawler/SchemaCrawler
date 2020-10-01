@@ -63,7 +63,7 @@ public enum Operation implements OperationType {
   }
 
   @Override
-public String getDescription() {
+  public String getDescription() {
     return description;
   }
 
@@ -73,7 +73,7 @@ public String getDescription() {
    * @return Query
    */
   @Override
-public Query getQuery() {
+  public Query getQuery() {
     return new Query(name(), queryString);
   }
 
@@ -83,7 +83,7 @@ public Query getQuery() {
    * @return Operation title
    */
   @Override
-public String getTitle() {
+  public String getTitle() {
     return title;
   }
 }

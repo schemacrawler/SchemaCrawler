@@ -32,6 +32,11 @@ import schemacrawler.schemacrawler.Query;
 
 public interface OperationType {
 
+  /**
+   * Operation description.
+   *
+   * @return Operation description
+   */
   String getDescription();
 
   /**
