@@ -47,6 +47,7 @@ import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.traversal.DataTraversalHandler;
 import schemacrawler.utility.NamedObjectSort;
@@ -86,7 +87,7 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand {
     }
 
     final DataTraversalHandler handler = getDataTraversalHandler();
-    final Query query = getQuery();
+    final Query query = operationOptions.getQuery();
 
     handler.begin();
 
@@ -129,14 +130,14 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand {
     handler.end();
   }
 
-  public OperationOptions getOperationOptions() {
-    return operationOptions;
+  @Override
+  public Config getAdditionalConfiguration() {
+    throw new UnsupportedOperationException();
   }
 
   @Override
-  public void initialize() throws Exception {
-    super.initialize();
-    loadOperationOptions();
+  public void setAdditionalConfiguration(Config additionalConfiguration) {
+    throw new UnsupportedOperationException();
   }
 
   public void setOperationOptions(final OperationOptions operationOptions) {
@@ -149,40 +150,12 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand {
   }
 
   private DataTraversalHandler getDataTraversalHandler() throws SchemaCrawlerException {
-    final Operation operation = getOperation();
-
-    final TextOutputFormat outputFormat =
-        TextOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
+    final Operation operation = operationOptions.getOperation();
     final String identifierQuoteString = identifiers.getIdentifierQuoteString();
 
     final DataTraversalHandler formatter =
         new DataTextFormatter(operation, operationOptions, outputOptions, identifierQuoteString);
     return formatter;
-  }
-
-  /** Determine the operation, or whether this command is a query. */
-  private Operation getOperation() {
-    Operation operation = null;
-    try {
-      operation = Operation.valueOf(command);
-    } catch (final IllegalArgumentException | NullPointerException e) {
-      operation = null;
-    }
-    return operation;
-  }
-
-  private Query getQuery() {
-    final Operation operation = getOperation();
-    final Query query;
-    if (operation == null) {
-      final String queryName = command;
-      final String queryString = additionalConfiguration.get(queryName);
-      query = new Query(queryName, queryString);
-    } else {
-      query = operation.getQuery();
-    }
-
-    return query;
   }
 
   private List<? extends Table> getSortedTables(final Catalog catalog) {
@@ -195,12 +168,5 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand {
     final String outputFormatValue = outputOptions.getOutputFormatValue();
     final boolean isOutputFormatSupported = TextOutputFormat.isSupportedFormat(outputFormatValue);
     return isOutputFormatSupported;
-  }
-
-  private void loadOperationOptions() {
-    if (operationOptions == null) {
-      operationOptions =
-          OperationOptionsBuilder.builder().fromConfig(additionalConfiguration).toOptions();
-    }
   }
 }

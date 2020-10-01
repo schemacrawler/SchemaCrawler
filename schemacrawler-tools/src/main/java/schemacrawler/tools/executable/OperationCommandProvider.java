@@ -31,6 +31,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.operation.OperationCommand;
+import schemacrawler.tools.text.operation.OperationOptions;
+import schemacrawler.tools.text.operation.OperationOptionsBuilder;
 
 final class OperationCommandProvider extends BaseCommandProvider {
 
@@ -40,8 +42,11 @@ final class OperationCommandProvider extends BaseCommandProvider {
 
   @Override
   public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command, final Config config) {
+    final OperationOptions operationOptions =
+        OperationOptionsBuilder.builder().withCommand(command).fromConfig(config).toOptions();
+
     final OperationCommand scCommand = new OperationCommand(command);
-    scCommand.setAdditionalConfiguration(config);
+    scCommand.setOperationOptions(operationOptions);
     return scCommand;
   }
 

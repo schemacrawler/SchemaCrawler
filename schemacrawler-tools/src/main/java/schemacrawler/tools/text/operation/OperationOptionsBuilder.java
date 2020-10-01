@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.text.operation;
 
+import schemacrawler.schemacrawler.Query;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
 
@@ -44,18 +45,9 @@ public final class OperationOptionsBuilder
     return new OperationOptionsBuilder();
   }
 
-  public static OperationOptionsBuilder builder(final OperationOptions options) {
-    return new OperationOptionsBuilder().fromOptions(options);
-  }
-
-  public static OperationOptions newOperationOptions() {
-    return new OperationOptionsBuilder().toOptions();
-  }
-
-  public static OperationOptions newOperationOptions(final Config config) {
-    return new OperationOptionsBuilder().fromConfig(config).toOptions();
-  }
-
+  private String command;
+  protected Operation operation;
+  protected Query query;
   protected boolean isShowLobs;
 
   private OperationOptionsBuilder() {
@@ -71,6 +63,7 @@ public final class OperationOptionsBuilder
 
     final Config config = new Config(map);
     isShowLobs = config.getBooleanValue(SHOW_LOBS, false);
+    query = getQuery(config);
 
     return this;
   }
@@ -112,5 +105,38 @@ public final class OperationOptionsBuilder
   @Override
   public OperationOptions toOptions() {
     return new OperationOptions(this);
+  }
+
+  public OperationOptionsBuilder withCommand(String command) {
+    this.command = command;
+    operation = getOperation();
+    if (operation != null) {
+      query = operation.getQuery();
+    }
+    return this;
+  }
+
+  /** Determine the operation, or whether this command is a query. */
+  private Operation getOperation() {
+    Operation operation = null;
+    try {
+      operation = Operation.valueOf(command);
+    } catch (final IllegalArgumentException | NullPointerException e) {
+      operation = null;
+    }
+    return operation;
+  }
+
+  private Query getQuery(final Config config) {
+    final Query query;
+    if (operation == null) {
+      final String queryName = command;
+      final String queryString = config.get(queryName);
+      query = new Query(queryName, queryString);
+    } else {
+      query = operation.getQuery();
+    }
+
+    return query;
   }
 }
