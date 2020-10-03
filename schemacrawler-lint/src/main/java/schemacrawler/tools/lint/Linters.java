@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.lint;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
@@ -43,20 +42,17 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import us.fatehi.utility.string.StringFormat;
 
-public final class Linters
-  implements Iterable<Linter>
-{
+public final class Linters implements Iterable<Linter> {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(Linters.class.getName());
+      SchemaCrawlerLogger.getLogger(Linters.class.getName());
 
   private final List<Linter> linters;
   private final LintCollector collector;
   private final LinterRegistry registry;
 
   public Linters(final LinterConfigs linterConfigs, final boolean runAllLinters)
-    throws SchemaCrawlerException
-  {
+      throws SchemaCrawlerException {
     requireNonNull(linterConfigs, "No linter configs provided");
 
     linters = new ArrayList<>();
@@ -67,10 +63,8 @@ public final class Linters
 
     // Add all configured linters, with as many instances as were
     // configured
-    for (final LinterConfig linterConfig : linterConfigs)
-    {
-      if (linterConfig == null)
-      {
+    for (final LinterConfig linterConfig : linterConfigs) {
+      if (linterConfig == null) {
         continue;
       }
 
@@ -79,17 +73,14 @@ public final class Linters
       final String linterId = linterConfig.getLinterId();
       registeredLinters.remove(linterId);
 
-      if (!linterConfig.isRunLinter())
-      {
-        LOGGER.log(Level.FINE,
-                   new StringFormat("Not running configured linter <%s>",
-                                    linterConfig));
+      if (!linterConfig.isRunLinter()) {
+        LOGGER.log(
+            Level.FINE, new StringFormat("Not running configured linter <%s>", linterConfig));
         continue;
       }
 
       final Linter linter = newLinter(linterId);
-      if (linter != null)
-      {
+      if (linter != null) {
         // Configure linter
         linter.configure(linterConfig);
 
@@ -97,72 +88,52 @@ public final class Linters
       }
     }
 
-    if (runAllLinters)
-    {
+    if (runAllLinters) {
       // Add in all remaining linters that were not configured
-      for (final String linterId : registeredLinters)
-      {
+      for (final String linterId : registeredLinters) {
         final Linter linter = newLinter(linterId);
         linters.add(linter);
       }
     }
-
   }
 
-  public final boolean exceedsThreshold()
-  {
-    for (final Linter linter : linters)
-    {
-      if (linter.exceedsThreshold())
-      {
+  public boolean exceedsThreshold() {
+    for (final Linter linter : linters) {
+      if (linter.exceedsThreshold()) {
         return true;
       }
     }
     return false;
   }
 
-  public LintCollector getCollector()
-  {
+  public LintCollector getCollector() {
     return collector;
   }
 
-  public String getLintSummary()
-  {
-    final class LinterComparator
-      implements Comparator<Linter>
-    {
+  public String getLintSummary() {
+    final class LinterComparator implements Comparator<Linter> {
       @Override
-      public int compare(final Linter linter1, final Linter linter2)
-      {
-        if (linter1 == null)
-        {
+      public int compare(final Linter linter1, final Linter linter2) {
+        if (linter1 == null) {
           return -1;
         }
 
-        if (linter2 == null)
-        {
+        if (linter2 == null) {
           return 1;
         }
 
         int comparison = 0;
 
-        if (comparison == 0)
-        {
-          comparison = linter1
-            .getSeverity()
-            .compareTo(linter2.getSeverity());
+        if (comparison == 0) {
+          comparison = linter1.getSeverity().compareTo(linter2.getSeverity());
         }
 
-        if (comparison == 0)
-        {
+        if (comparison == 0) {
           comparison = linter1.getLintCount() - linter2.getLintCount();
         }
 
-        if (comparison == 0)
-        {
-          comparison = linter1
-            .getLinterId()
-            .compareTo(linter2.getLinterId());
+        if (comparison == 0) {
+          comparison = linter1.getLinterId().compareTo(linter2.getLinterId());
         }
 
         return comparison;
@@ -173,20 +144,19 @@ public final class Linters
     linters.sort(new LinterComparator());
 
     final StringBuilder buffer = new StringBuilder(1024);
-    for (final Linter linter : linters)
-    {
-      if (linter.getLintCount() > 0)
-      {
-        buffer.append(String.format("%8s%s %5d- %s%n",
-                                    "[" + linter.getSeverity() + "]",
-                                    linter.exceedsThreshold()? "*": " ",
-                                    linter.getLintCount(),
-                                    linter.getSummary()));
+    for (final Linter linter : linters) {
+      if (linter.getLintCount() > 0) {
+        buffer.append(
+            String.format(
+                "%8s%s %5d- %s%n",
+                "[" + linter.getSeverity() + "]",
+                linter.exceedsThreshold() ? "*" : " ",
+                linter.getLintCount(),
+                linter.getSummary()));
       }
     }
 
-    if (buffer.length() > 0)
-    {
+    if (buffer.length() > 0) {
       buffer.insert(0, "Summary of schema lints:\n");
     }
 
@@ -194,19 +164,14 @@ public final class Linters
   }
 
   @Override
-  public Iterator<Linter> iterator()
-  {
+  public Iterator<Linter> iterator() {
     return linters.iterator();
   }
 
   public void lint(final Catalog catalog, final Connection connection)
-    throws SchemaCrawlerException
-  {
-    for (final Linter linter : linters)
-    {
-      LOGGER.log(Level.FINE,
-                 new StringFormat("Linting with <%s>",
-                                  linter.getLinterInstanceId()));
+      throws SchemaCrawlerException {
+    for (final Linter linter : linters) {
+      LOGGER.log(Level.FINE, new StringFormat("Linting with <%s>", linter.getLinterInstanceId()));
       linter.lint(catalog, connection);
     }
   }
@@ -216,30 +181,22 @@ public final class Linters
    *
    * @return Number of linters configured to run
    */
-  public int size()
-  {
+  public int size() {
     return linters.size();
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return linters.toString();
   }
 
-  private Linter newLinter(final String linterId)
-  {
+  private Linter newLinter(final String linterId) {
     final Linter linter = registry.newLinter(linterId);
-    if (linter != null)
-    {
+    if (linter != null) {
       linter.setLintCollector(collector);
-    }
-    else
-    {
-      LOGGER.log(Level.FINE,
-                 new StringFormat("Cannot find linter <%s>", linterId));
+    } else {
+      LOGGER.log(Level.FINE, new StringFormat("Cannot find linter <%s>", linterId));
     }
     return linter;
   }
-
 }

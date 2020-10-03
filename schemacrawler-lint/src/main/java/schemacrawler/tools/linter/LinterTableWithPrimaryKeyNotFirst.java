@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.linter;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
@@ -39,42 +38,32 @@ import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
 
-public class LinterTableWithPrimaryKeyNotFirst
-  extends BaseLinter
-{
+public class LinterTableWithPrimaryKeyNotFirst extends BaseLinter {
 
-  public LinterTableWithPrimaryKeyNotFirst()
-  {
+  public LinterTableWithPrimaryKeyNotFirst() {
     setSeverity(LintSeverity.low);
     setTableTypesFilter(new TableTypesFilter("TABLE"));
   }
 
   @Override
-  public String getSummary()
-  {
+  public String getSummary() {
     return "primary key not first";
   }
 
   @Override
-  protected void lint(final Table table, final Connection connection)
-  {
+  protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
 
     final PrimaryKey primaryKey = table.getPrimaryKey();
-    if (primaryKey == null)
-    {
+    if (primaryKey == null) {
       return;
     }
 
-    for (final TableConstraintColumn pkColumn : primaryKey.getColumns())
-    {
-      if (pkColumn.getTableConstraintOrdinalPosition()
-          != pkColumn.getOrdinalPosition())
-      {
+    for (final TableConstraintColumn pkColumn : primaryKey.getColumns()) {
+      if (pkColumn.getTableConstraintOrdinalPosition() != pkColumn.getOrdinalPosition()) {
         addTableLint(table, getSummary());
         break;
       }
     }
   }
-
 }

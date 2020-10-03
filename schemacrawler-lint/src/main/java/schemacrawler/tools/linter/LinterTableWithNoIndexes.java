@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.linter;
 
-
 import java.sql.Connection;
 import java.util.Collection;
 
@@ -36,32 +35,24 @@ import schemacrawler.schema.Index;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 
-public class LinterTableWithNoIndexes
-  extends BaseLinter
-{
+public class LinterTableWithNoIndexes extends BaseLinter {
 
-  public LinterTableWithNoIndexes()
-  {
+  public LinterTableWithNoIndexes() {
     setTableTypesFilter(new TableTypesFilter("TABLE"));
   }
 
   @Override
-  public String getSummary()
-  {
+  public String getSummary() {
     return "no indexes";
   }
 
   @Override
-  protected void lint(final Table table, final Connection connection)
-  {
-    if (table != null)
-    {
+  protected void lint(final Table table, final Connection connection) {
+    if (table != null) {
       final Collection<Index> indexes = table.getIndexes();
-      if (table.getPrimaryKey() == null && indexes.isEmpty())
-      {
+      if (table.getPrimaryKey() == null && indexes.isEmpty()) {
         addTableLint(table, getSummary());
       }
     }
   }
-
 }

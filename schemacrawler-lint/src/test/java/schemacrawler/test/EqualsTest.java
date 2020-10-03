@@ -27,21 +27,15 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test;
 
+import org.junit.jupiter.api.Test;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
-import org.junit.jupiter.api.Test;
 import schemacrawler.tools.lint.Lint;
 
-public class EqualsTest
-{
+public class EqualsTest {
 
   @Test
-  public void lint()
-  {
-    EqualsVerifier
-      .forClass(Lint.class)
-      .withIgnoredFields("lintId", "linterInstanceId")
-      .verify();
+  public void lint() {
+    EqualsVerifier.forClass(Lint.class).withIgnoredFields("lintId", "linterInstanceId").verify();
   }
-
 }

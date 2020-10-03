@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.lint;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.io.Serializable;
@@ -50,37 +49,95 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import us.fatehi.utility.string.StringFormat;
 
 /**
- * Evaluates a catalog and creates lints. This base class has core for visiting
- * a catalog, and creating states.Also contains utility methods for subclasses.
- * Needs to be overridden by custom linters.
+ * Evaluates a catalog and creates lints. This base class has core for visiting a catalog, and
+ * creating states.Also contains utility methods for subclasses. Needs to be overridden by custom
+ * linters.
  *
  * @author Sualeh Fatehi
  */
-public abstract class BaseLinter
-  extends Linter
-{
+public abstract class BaseLinter extends Linter {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(BaseLinter.class.getName());
+      SchemaCrawlerLogger.getLogger(BaseLinter.class.getName());
 
   private Catalog catalog;
   private InclusionRule tableInclusionRule;
   private InclusionRule columnInclusionRule;
   private TableTypesFilter tableTypesFilter;
 
-  protected BaseLinter()
-  {
+  protected BaseLinter() {
     setTableTypesFilter(null);
     setTableInclusionRule(null);
     setColumnInclusionRule(null);
   }
 
+  protected final void addCatalogLint(final String message) {
+    addLint(LintObjectType.catalog, catalog, message, null);
+  }
+
+  protected final <V extends Serializable> void addCatalogLint(
+      final String message, final V value) {
+    addLint(LintObjectType.catalog, catalog, message, value);
+  }
+
+  protected final void addTableLint(final Table table, final String message) {
+    addLint(LintObjectType.table, table, message, null);
+  }
+
+  protected final <V extends Serializable> void addTableLint(
+      final Table table, final String message, final V value) {
+    addLint(LintObjectType.table, table, message, value);
+  }
+
+  protected void end(final Connection connection) throws SchemaCrawlerException {}
+
+  protected final List<Column> getColumns(final Table table) {
+    if (table == null) {
+      return Collections.emptyList();
+    }
+
+    final List<Column> columns = new ArrayList<>(table.getColumns());
+    for (final Iterator<Column> iterator = columns.iterator(); iterator.hasNext(); ) {
+      final Column column = iterator.next();
+      if (!includeColumn(column)) {
+        iterator.remove();
+      }
+    }
+    return columns;
+  }
+
+  protected final CrawlInfo getCrawlInfo() {
+    return catalog.getCrawlInfo();
+  }
+
+  protected final TableTypesFilter getTableTypesFilter() {
+    return tableTypesFilter;
+  }
+
+  protected final boolean includeColumn(final Column column) {
+    return column != null && columnInclusionRule.test(column.getFullName());
+  }
+
+  protected final boolean includeTable(final Table table) {
+    return table != null && tableInclusionRule.test(table.getFullName());
+  }
+
+  protected abstract void lint(Table table, Connection connection) throws SchemaCrawlerException;
+
+  protected final void setTableTypesFilter(final TableTypesFilter tableTypesFilter) {
+    if (tableTypesFilter == null) {
+      this.tableTypesFilter = new TableTypesFilter();
+    } else {
+      this.tableTypesFilter = tableTypesFilter;
+    }
+  }
+
+  protected void start(final Connection connection) throws SchemaCrawlerException {}
+
   @Override
-  final void configure(final LinterConfig linterConfig)
-  {
+  final void configure(final LinterConfig linterConfig) {
     super.configure(linterConfig);
-    if (linterConfig != null)
-    {
+    if (linterConfig != null) {
       setTableInclusionRule(linterConfig.getTableInclusionRule());
       setColumnInclusionRule(linterConfig.getColumnInclusionRule());
     }
@@ -88,140 +145,36 @@ public abstract class BaseLinter
 
   @Override
   final void lint(final Catalog catalog, final Connection connection)
-    throws SchemaCrawlerException
-  {
+      throws SchemaCrawlerException {
     this.catalog = requireNonNull(catalog, "No catalog provided");
 
     start(connection);
-    for (final Table table : catalog.getTables())
-    {
-      if (tableInclusionRule.test(table.getFullName()) && tableTypesFilter.test(
-        table))
-      {
+    for (final Table table : catalog.getTables()) {
+      if (tableInclusionRule.test(table.getFullName()) && tableTypesFilter.test(table)) {
         lint(table, connection);
-      }
-      else
-      {
-        LOGGER.log(Level.FINE,
-                   new StringFormat("Excluding table <%s> for lint <%s>",
-                                    table,
-                                    getLinterId()));
+      } else {
+        LOGGER.log(
+            Level.FINE,
+            new StringFormat("Excluding table <%s> for lint <%s>", table, getLinterId()));
       }
     }
     end(connection);
     this.catalog = null;
   }
 
-  protected final void addCatalogLint(final String message)
-  {
-    addLint(LintObjectType.catalog, catalog, message, null);
-  }
-
-  protected final <V extends Serializable> void addCatalogLint(final String message,
-                                                               final V value)
-  {
-    addLint(LintObjectType.catalog, catalog, message, value);
-  }
-
-  protected final void addTableLint(final Table table, final String message)
-  {
-    addLint(LintObjectType.table, table, message, null);
-  }
-
-  protected final <V extends Serializable> void addTableLint(final Table table,
-                                                             final String message,
-                                                             final V value)
-  {
-    addLint(LintObjectType.table, table, message, value);
-  }
-
-  protected void end(final Connection connection)
-    throws SchemaCrawlerException
-  {
-  }
-
-  protected final List<Column> getColumns(final Table table)
-  {
-    if (table == null)
-    {
-      return Collections.emptyList();
-    }
-
-    final List<Column> columns = new ArrayList<>(table.getColumns());
-    for (final Iterator<Column> iterator =
-         columns.iterator(); iterator.hasNext(); )
-    {
-      final Column column = iterator.next();
-      if (!includeColumn(column))
-      {
-        iterator.remove();
-      }
-    }
-    return columns;
-  }
-
-  protected final CrawlInfo getCrawlInfo()
-  {
-    return catalog.getCrawlInfo();
-  }
-
-  protected final TableTypesFilter getTableTypesFilter()
-  {
-    return tableTypesFilter;
-  }
-
-  protected final void setTableTypesFilter(final TableTypesFilter tableTypesFilter)
-  {
-    if (tableTypesFilter == null)
-    {
-      this.tableTypesFilter = new TableTypesFilter();
-    }
-    else
-    {
-      this.tableTypesFilter = tableTypesFilter;
-    }
-  }
-
-  protected final boolean includeColumn(final Column column)
-  {
-    return column != null && columnInclusionRule.test(column.getFullName());
-  }
-
-  protected final boolean includeTable(final Table table)
-  {
-    return table != null && tableInclusionRule.test(table.getFullName());
-  }
-
-  protected abstract void lint(Table table, Connection connection)
-    throws SchemaCrawlerException;
-
-  protected void start(final Connection connection)
-    throws SchemaCrawlerException
-  {
-  }
-
-  private final void setColumnInclusionRule(final InclusionRule columnInclusionRule)
-  {
-    if (columnInclusionRule == null)
-    {
+  private final void setColumnInclusionRule(final InclusionRule columnInclusionRule) {
+    if (columnInclusionRule == null) {
       this.columnInclusionRule = new IncludeAll();
-    }
-    else
-    {
+    } else {
       this.columnInclusionRule = columnInclusionRule;
     }
   }
 
-  private final void setTableInclusionRule(final InclusionRule tableInclusionRule)
-  {
-    if (tableInclusionRule == null)
-    {
+  private final void setTableInclusionRule(final InclusionRule tableInclusionRule) {
+    if (tableInclusionRule == null) {
       this.tableInclusionRule = new IncludeAll();
-    }
-    else
-    {
+    } else {
       this.tableInclusionRule = tableInclusionRule;
     }
   }
-
 }

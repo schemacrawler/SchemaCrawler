@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.linter;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
@@ -41,62 +40,46 @@ import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
 
-public class LinterTableWithQuotedNames
-  extends BaseLinter
-{
+public class LinterTableWithQuotedNames extends BaseLinter {
 
   @Override
-  public String getSummary()
-  {
+  public String getSummary() {
     return "spaces in name, or reserved word";
   }
 
   @Override
   protected void lint(final Table table, final Connection connection)
-    throws SchemaCrawlerException
-  {
+      throws SchemaCrawlerException {
     requireNonNull(table, "No table provided");
 
     Identifiers identifiers;
-    try
-    {
-      identifiers = Identifiers
-        .identifiers()
-        .withConnection(connection)
-        .build();
-    }
-    catch (final SQLException e)
-    {
+    try {
+      identifiers = Identifiers.identifiers().withConnection(connection).build();
+    } catch (final SQLException e) {
       throw new SchemaCrawlerException(e.getMessage(), e);
     }
 
     final String tableName = table.getName();
-    if (identifiers.isToBeQuoted(tableName))
-    {
+    if (identifiers.isToBeQuoted(tableName)) {
       addTableLint(table, getSummary());
     }
 
     final List<String> spacesInNamesList =
-      findColumnsWithQuotedNames(getColumns(table), identifiers);
-    for (final String spacesInName : spacesInNamesList)
-    {
+        findColumnsWithQuotedNames(getColumns(table), identifiers);
+    for (final String spacesInName : spacesInNamesList) {
       addTableLint(table, getSummary(), spacesInName);
     }
   }
 
-  private List<String> findColumnsWithQuotedNames(final List<Column> columns,
-                                                  final Identifiers identifiers)
-  {
+  private List<String> findColumnsWithQuotedNames(
+      final List<Column> columns, final Identifiers identifiers) {
     final List<String> columnsWithQuotedNames = new ArrayList<>();
-    for (final Column column : columns)
-    {
+    for (final Column column : columns) {
       final String columnName = column.getName();
-      if (identifiers.isToBeQuoted(columnName))
-      {
+      if (identifiers.isToBeQuoted(columnName)) {
         columnsWithQuotedNames.add(columnName);
       }
     }
     return columnsWithQuotedNames;
   }
-
 }

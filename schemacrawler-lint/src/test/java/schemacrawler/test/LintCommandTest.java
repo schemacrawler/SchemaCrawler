@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test;
 
-
 import static schemacrawler.test.utility.LintTestUtility.executableLint;
 import static schemacrawler.test.utility.LintTestUtility.executeLintCommandLine;
 
@@ -36,6 +35,7 @@ import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
@@ -45,46 +45,33 @@ import schemacrawler.tools.options.TextOutputFormat;
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
-public class LintCommandTest
-{
+public class LintCommandTest {
 
   @Test
-  public void commandlineLintReport(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
-    executeLintCommandLine(connectionInfo,
-                           TextOutputFormat.text,
-                           null,
-                           null,
-                           "executableForLint.txt");
+  public void commandlineLintReport(final DatabaseConnectionInfo connectionInfo) throws Exception {
+    executeLintCommandLine(
+        connectionInfo, TextOutputFormat.text, null, null, "executableForLint.txt");
   }
 
   @Test
   public void commandlineLintReportWithConfig(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
-    executeLintCommandLine(connectionInfo,
-                           TextOutputFormat.text,
-                           "/schemacrawler-linter-configs-test.xml",
-                           null,
-                           "executableForLintWithConfig.txt");
+      throws Exception {
+    executeLintCommandLine(
+        connectionInfo,
+        TextOutputFormat.text,
+        "/schemacrawler-linter-configs-test.xml",
+        null,
+        "executableForLintWithConfig.txt");
   }
 
   @Test
-  public void executableLintReport(final Connection connection)
-    throws Exception
-  {
+  public void executableLintReport(final Connection connection) throws Exception {
     executableLint(connection, null, null, "executableForLint");
   }
 
   @Test
-  public void executableLintReportWithConfig(final Connection connection)
-    throws Exception
-  {
-    executableLint(connection,
-                   "/schemacrawler-linter-configs-test.xml",
-                   null,
-                   "executableForLintWithConfig");
+  public void executableLintReportWithConfig(final Connection connection) throws Exception {
+    executableLint(
+        connection, "/schemacrawler-linter-configs-test.xml", null, "executableForLintWithConfig");
   }
-
 }

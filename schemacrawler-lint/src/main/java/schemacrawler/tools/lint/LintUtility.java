@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.lint;
 
-
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.newBufferedReader;
 import static us.fatehi.utility.IOUtility.isFileReadable;
@@ -43,85 +42,55 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.executable.LintOptions;
 import schemacrawler.tools.options.Config;
 
-public final class LintUtility
-{
+public final class LintUtility {
 
   public static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(LintUtility.class.getName());
+      SchemaCrawlerLogger.getLogger(LintUtility.class.getName());
 
-  public static final <E> boolean listStartsWith(final List<E> main,
-                                                 final List<E> sub)
-  {
-    if (main == null || sub == null)
-    {
+  public static <E> boolean listStartsWith(final List<E> main, final List<E> sub) {
+    if (main == null || sub == null) {
       return false;
     }
-    if (main.size() < sub.size())
-    {
+    if (main.size() < sub.size()) {
       return false;
     }
-    if (main.isEmpty())
-    {
+    if (main.isEmpty()) {
       return true;
     }
 
-    return main
-      .subList(0, sub.size())
-      .equals(sub);
-
+    return main.subList(0, sub.size()).equals(sub);
   }
 
   /**
    * Obtain linter configuration from a system property
    *
-   * @param config
-   *   SchemaCrawler configuration
+   * @param config SchemaCrawler configuration
    * @return LinterConfigs
    * @throws SchemaCrawlerException
    */
-  public static LinterConfigs readLinterConfigs(final LintOptions lintOptions,
-                                                final Config config)
-  {
+  public static LinterConfigs readLinterConfigs(
+      final LintOptions lintOptions, final Config config) {
     final LinterConfigs linterConfigs = new LinterConfigs(config);
     String linterConfigsFile = null;
-    try
-    {
+    try {
       linterConfigsFile = lintOptions.getLinterConfigs();
-      if (!isBlank(linterConfigsFile))
-      {
-        final Path linterConfigsFilePath = Paths
-          .get(linterConfigsFile)
-          .toAbsolutePath();
-        if (isFileReadable(linterConfigsFilePath))
-        {
+      if (!isBlank(linterConfigsFile)) {
+        final Path linterConfigsFilePath = Paths.get(linterConfigsFile).toAbsolutePath();
+        if (isFileReadable(linterConfigsFilePath)) {
           linterConfigs.parse(newBufferedReader(linterConfigsFilePath, UTF_8));
+        } else {
+          LOGGER.log(Level.WARNING, "Could not read linter configs file, " + linterConfigsFile);
         }
-        else
-        {
-          LOGGER.log(Level.WARNING,
-                     "Could not read linter configs file, "
-                     + linterConfigsFile);
-        }
-      }
-      else
-      {
+      } else {
         LOGGER.log(Level.CONFIG, "Using default linter configs");
       }
 
       return linterConfigs;
-    }
-    catch (final Exception e)
-    {
-      LOGGER.log(Level.WARNING,
-                 "Could not load linter configs from file, "
-                 + linterConfigsFile,
-                 e);
+    } catch (final Exception e) {
+      LOGGER.log(Level.WARNING, "Could not load linter configs from file, " + linterConfigsFile, e);
       return linterConfigs;
     }
   }
 
-  private LintUtility()
-  {
-  }
-
+  private LintUtility() {}
 }

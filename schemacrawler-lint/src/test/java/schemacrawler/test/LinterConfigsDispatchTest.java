@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test;
 
-
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -49,11 +48,13 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
+
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
@@ -73,23 +74,19 @@ import schemacrawler.tools.options.TextOutputFormat;
 @ExtendWith(TestContextParameterResolver.class)
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
-public class LinterConfigsDispatchTest
-{
+public class LinterConfigsDispatchTest {
 
   private TestOutputStream err;
   private TestOutputStream out;
 
   @AfterEach
-  public void cleanUpStreams()
-  {
+  public void cleanUpStreams() {
     System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
     System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
   }
 
   @BeforeEach
-  public void setUpStreams()
-    throws Exception
-  {
+  public void setUpStreams() throws Exception {
     out = new TestOutputStream();
     System.setOut(new PrintStream(out));
 
@@ -98,87 +95,74 @@ public class LinterConfigsDispatchTest
   }
 
   @Test
-  public void testLinterConfigs()
-  {
+  public void testLinterConfigs() {
 
     LinterConfigs linterConfigs = null;
-    try
-    {
-      final Reader reader = readerForResource(
-        "schemacrawler-linter-configs-with-dispatch.xml",
-        UTF_8);
+    try {
+      final Reader reader =
+          readerForResource("schemacrawler-linter-configs-with-dispatch.xml", UTF_8);
       linterConfigs = new LinterConfigs(new Config());
       linterConfigs.parse(reader);
-    }
-    catch (final IOException | SchemaCrawlerException e)
-    {
+    } catch (final IOException | SchemaCrawlerException e) {
       fail(e.getMessage());
     }
 
     assertThat(linterConfigs.size(), is(1));
     boolean asserted = false;
-    for (final LinterConfig linterConfig : linterConfigs)
-    {
+    for (final LinterConfig linterConfig : linterConfigs) {
       if (linterConfig
-        .getLinterId()
-        .equals("schemacrawler.tools.linter.LinterTableWithNoIndexes"))
-      {
+          .getLinterId()
+          .equals("schemacrawler.tools.linter.LinterTableWithNoIndexes")) {
         assertThat(linterConfig.getSeverity(), is(LintSeverity.critical));
         assertThat(linterConfig.getThreshold(), is(1));
         assertThat(linterConfig.isRunLinter(), is(true));
         asserted = true;
       }
     }
-    if (!asserted)
-    {
+    if (!asserted) {
       fail();
     }
   }
 
   @Test
   @ExpectSystemExitWithStatus(1)
-  public void testSystemExitLinterConfigCommandLine(final TestContext testContext,
-                                                    final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
+  public void testSystemExitLinterConfigCommandLine(
+      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
 
     final Map<String, String> additionalArgs = new HashMap<>();
     additionalArgs.put("-lint-dispatch", LintDispatch.terminate_system.name());
 
-    executeLintCommandLine(connectionInfo,
-                           TextOutputFormat.text,
-                           "/schemacrawler-linter-configs-with-dispatch.xml",
-                           additionalArgs,
-                           "schemacrawler-linter-configs-with-dispatch.txt");
+    executeLintCommandLine(
+        connectionInfo,
+        TextOutputFormat.text,
+        "/schemacrawler-linter-configs-with-dispatch.xml",
+        additionalArgs,
+        "schemacrawler-linter-configs-with-dispatch.txt");
 
     checkSystemErrLog(testContext);
   }
 
   @Test
   @ExpectSystemExitWithStatus(1)
-  public void testSystemExitLinterConfigExecutable(final TestContext testContext,
-                                                   final Connection connection)
-    throws Exception
-  {
+  public void testSystemExitLinterConfigExecutable(
+      final TestContext testContext, final Connection connection) throws Exception {
 
     final Config additionalConfig = new Config();
     additionalConfig.put("lint-dispatch", "terminate_system");
 
-    executableLint(connection,
-                   "/schemacrawler-linter-configs-with-dispatch.xml",
-                   additionalConfig,
-                   "schemacrawler-linter-configs-with-dispatch");
+    executableLint(
+        connection,
+        "/schemacrawler-linter-configs-with-dispatch.xml",
+        additionalConfig,
+        "schemacrawler-linter-configs-with-dispatch");
 
     checkSystemErrLog(testContext);
   }
 
-  private void checkSystemErrLog(final TestContext testContext)
-    throws Exception
-  {
+  private void checkSystemErrLog(final TestContext testContext) throws Exception {
     assertThat(outputOf(out), hasNoContent());
-    assertThat(outputOf(err),
-               hasSameContentAs(classpathResource(testContext.testMethodName()
-                                                  + ".stderr.txt")));
+    assertThat(
+        outputOf(err),
+        hasSameContentAs(classpathResource(testContext.testMethodName() + ".stderr.txt")));
   }
-
 }

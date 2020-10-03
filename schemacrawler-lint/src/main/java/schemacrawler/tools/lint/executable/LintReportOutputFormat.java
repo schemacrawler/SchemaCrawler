@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.lint.executable;
 
-
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.List;
@@ -39,40 +38,28 @@ import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputFormatState;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * Enumeration for text format type.
- */
-public enum LintReportOutputFormat
-  implements OutputFormat
-{
-
+/** Enumeration for text format type. */
+public enum LintReportOutputFormat implements OutputFormat {
   text("Plain text format", "txt"),
   html("HyperText Markup Language (HTML) format"),
   json("JavaScript Object Notation (JSON) format"),
   yaml("YAML Ain't Markup Language (YAML) format");
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(LintReportOutputFormat.class.getName());
+      SchemaCrawlerLogger.getLogger(LintReportOutputFormat.class.getName());
 
   /**
    * Gets the value from the format.
    *
-   * @param format
-   *   Text output format.
+   * @param format Text output format.
    * @return TextOutputFormat
    */
-  public static LintReportOutputFormat fromFormat(final String format)
-  {
+  public static LintReportOutputFormat fromFormat(final String format) {
     final LintReportOutputFormat outputFormat = fromFormatOrNull(format);
-    if (outputFormat == null)
-    {
-      LOGGER.log(Level.CONFIG,
-                 new StringFormat("Unknown format <%s>, using default",
-                                  format));
+    if (outputFormat == null) {
+      LOGGER.log(Level.CONFIG, new StringFormat("Unknown format <%s>, using default", format));
       return text;
-    }
-    else
-    {
+    } else {
       return outputFormat;
     }
   }
@@ -82,62 +69,50 @@ public enum LintReportOutputFormat
    *
    * @return True if the format is a text output format
    */
-  public static boolean isSupportedFormat(final String format)
-  {
+  public static boolean isSupportedFormat(final String format) {
     return fromFormatOrNull(format) != null;
   }
 
-  private static LintReportOutputFormat fromFormatOrNull(final String format)
-  {
-    if (isBlank(format))
-    {
+  private static LintReportOutputFormat fromFormatOrNull(final String format) {
+    if (isBlank(format)) {
       return null;
     }
-    for (final LintReportOutputFormat outputFormat : LintReportOutputFormat.values())
-    {
-      if (outputFormat.outputFormatState.isSupportedFormat(format))
-      {
+    for (final LintReportOutputFormat outputFormat : LintReportOutputFormat.values()) {
+      if (outputFormat.outputFormatState.isSupportedFormat(format)) {
         return outputFormat;
       }
     }
     return null;
   }
+
   private final OutputFormatState outputFormatState;
 
-  private LintReportOutputFormat(final String description)
-  {
+  private LintReportOutputFormat(final String description) {
     outputFormatState = new OutputFormatState(name(), description);
   }
 
-  private LintReportOutputFormat(final String description,
-                                 final String... additionalFormatSpecifiers)
-  {
-    outputFormatState =
-      new OutputFormatState(name(), description, additionalFormatSpecifiers);
+  private LintReportOutputFormat(
+      final String description, final String... additionalFormatSpecifiers) {
+    outputFormatState = new OutputFormatState(name(), description, additionalFormatSpecifiers);
   }
 
   @Override
-  public String getDescription()
-  {
+  public String getDescription() {
     return outputFormatState.getDescription();
   }
 
   @Override
-  public String getFormat()
-  {
+  public String getFormat() {
     return outputFormatState.getFormat();
   }
 
   @Override
-  public List<String> getFormats()
-  {
+  public List<String> getFormats() {
     return outputFormatState.getFormats();
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return outputFormatState.toString();
   }
-
 }

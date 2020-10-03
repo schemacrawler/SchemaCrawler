@@ -27,65 +27,52 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.lint.executable;
 
-
 import static us.fatehi.utility.Utility.isBlank;
+
 import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
 
 public final class LintOptionsBuilder
-  extends BaseTextOptionsBuilder<LintOptionsBuilder, LintOptions>
-{
+    extends BaseTextOptionsBuilder<LintOptionsBuilder, LintOptions> {
 
   private static final String CLI_LINTER_CONFIGS = "linter-configs";
   private static final String CLI_LINT_DISPATCH = "lint-dispatch";
   private static final String CLI_RUN_ALL_LINTERS = "run-all-linters";
   private static final String SCHEMACRAWLER_LINT_PREFIX = "schemacrawler.lint.";
-  private static final String LINTER_CONFIGS =
-    SCHEMACRAWLER_LINT_PREFIX + CLI_LINTER_CONFIGS;
-  private static final String LINT_DISPATCH =
-    SCHEMACRAWLER_LINT_PREFIX + CLI_LINT_DISPATCH;
-  private static final String RUN_ALL_LINTERS =
-    SCHEMACRAWLER_LINT_PREFIX + CLI_RUN_ALL_LINTERS;
+  private static final String LINTER_CONFIGS = SCHEMACRAWLER_LINT_PREFIX + CLI_LINTER_CONFIGS;
+  private static final String LINT_DISPATCH = SCHEMACRAWLER_LINT_PREFIX + CLI_LINT_DISPATCH;
+  private static final String RUN_ALL_LINTERS = SCHEMACRAWLER_LINT_PREFIX + CLI_RUN_ALL_LINTERS;
 
-  public static LintOptionsBuilder builder()
-  {
+  public static LintOptionsBuilder builder() {
     return new LintOptionsBuilder();
   }
 
-  public static LintOptionsBuilder builder(final LintOptions options)
-  {
+  public static LintOptionsBuilder builder(final LintOptions options) {
     return new LintOptionsBuilder().fromOptions(options);
   }
 
-  public static LintOptions newLintOptions()
-  {
+  public static LintOptions newLintOptions() {
     return new LintOptionsBuilder().toOptions();
   }
 
-  public static LintOptions newLintOptions(final Config config)
-  {
-    return new LintOptionsBuilder()
-      .fromConfig(config)
-      .toOptions();
+  public static LintOptions newLintOptions(final Config config) {
+    return new LintOptionsBuilder().fromConfig(config).toOptions();
   }
 
   LintDispatch lintDispatch;
   String linterConfigs;
   boolean runAllLinters;
 
-  private LintOptionsBuilder()
-  {
+  private LintOptionsBuilder() {
     linterConfigs = "";
     lintDispatch = LintDispatch.none;
     runAllLinters = true;
   }
 
   @Override
-  public LintOptionsBuilder fromConfig(final Config map)
-  {
-    if (map == null)
-    {
+  public LintOptionsBuilder fromConfig(final Config map) {
+    if (map == null) {
       return this;
     }
     super.fromConfig(map);
@@ -93,39 +80,30 @@ public final class LintOptionsBuilder
     final Config config = new Config(map);
 
     final String linterConfigsKey;
-    if (config.containsKey(CLI_LINTER_CONFIGS))
-    {
+    if (config.containsKey(CLI_LINTER_CONFIGS)) {
       // Honor command-line option first
       linterConfigsKey = CLI_LINTER_CONFIGS;
-    }
-    else
-    {
+    } else {
       // Otherwise, take option from SchemaCrawler configuration file
       linterConfigsKey = LINTER_CONFIGS;
     }
     linterConfigs = config.getStringValue(linterConfigsKey, "");
 
     final String lintDispatchKey;
-    if (config.containsKey(CLI_LINT_DISPATCH))
-    {
+    if (config.containsKey(CLI_LINT_DISPATCH)) {
       // Honor command-line option first
       lintDispatchKey = CLI_LINT_DISPATCH;
-    }
-    else
-    {
+    } else {
       // Otherwise, take option from SchemaCrawler configuration file
       lintDispatchKey = LINT_DISPATCH;
     }
     lintDispatch = config.getEnumValue(lintDispatchKey, LintDispatch.none);
 
     final String runAllLintersKey;
-    if (config.containsKey(CLI_RUN_ALL_LINTERS))
-    {
+    if (config.containsKey(CLI_RUN_ALL_LINTERS)) {
       // Honor command-line option first
       runAllLintersKey = CLI_RUN_ALL_LINTERS;
-    }
-    else
-    {
+    } else {
       // Otherwise, take option from SchemaCrawler configuration file
       runAllLintersKey = RUN_ALL_LINTERS;
     }
@@ -135,10 +113,8 @@ public final class LintOptionsBuilder
   }
 
   @Override
-  public LintOptionsBuilder fromOptions(final LintOptions options)
-  {
-    if (options == null)
-    {
+  public LintOptionsBuilder fromOptions(final LintOptions options) {
+    if (options == null) {
       return this;
     }
     super.fromOptions(options);
@@ -150,9 +126,15 @@ public final class LintOptionsBuilder
     return this;
   }
 
+  /** With value for running all linters. */
+  public LintOptionsBuilder runAllLinters(final boolean runAllLinters) {
+    this.runAllLinters = runAllLinters;
+
+    return this;
+  }
+
   @Override
-  public Config toConfig()
-  {
+  public Config toConfig() {
     final Config config = super.toConfig();
     config.setStringValue(LINTER_CONFIGS, linterConfigs);
     config.setEnumValue(LINT_DISPATCH, lintDispatch);
@@ -162,51 +144,27 @@ public final class LintOptionsBuilder
   }
 
   @Override
-  public LintOptions toOptions()
-  {
+  public LintOptions toOptions() {
     return new LintOptions(this);
   }
 
-  /**
-   * With the name of a linter configs file.
-   */
-  public LintOptionsBuilder withLinterConfigs(final String linterConfigs)
-  {
-    if (isBlank(linterConfigs))
-    {
-      this.linterConfigs = "";
-    }
-    else
-    {
-      this.linterConfigs = linterConfigs;
-    }
-    return this;
-  }
-
-  /**
-   * With a lint dispatch strategy.
-   */
-  public LintOptionsBuilder withLintDispatch(final LintDispatch lintDispatch)
-  {
-    if (lintDispatch == null)
-    {
+  /** With a lint dispatch strategy. */
+  public LintOptionsBuilder withLintDispatch(final LintDispatch lintDispatch) {
+    if (lintDispatch == null) {
       this.lintDispatch = LintDispatch.none;
-    }
-    else
-    {
+    } else {
       this.lintDispatch = lintDispatch;
     }
     return this;
   }
 
-  /**
-   * With value for running all linters.
-   */
-  public LintOptionsBuilder runAllLinters(final boolean runAllLinters)
-  {
-    this.runAllLinters = runAllLinters;
-
+  /** With the name of a linter configs file. */
+  public LintOptionsBuilder withLinterConfigs(final String linterConfigs) {
+    if (isBlank(linterConfigs)) {
+      this.linterConfigs = "";
+    } else {
+      this.linterConfigs = linterConfigs;
+    }
     return this;
   }
-
 }

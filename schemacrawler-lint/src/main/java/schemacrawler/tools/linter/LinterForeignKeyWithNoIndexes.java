@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.linter;
 
-
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.lint.LintUtility.listStartsWith;
 import static schemacrawler.utility.MetaDataUtility.allIndexCoumnNames;
@@ -44,60 +43,45 @@ import schemacrawler.schema.View;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
 
-public class LinterForeignKeyWithNoIndexes
-  extends BaseLinter
-{
+public class LinterForeignKeyWithNoIndexes extends BaseLinter {
 
-  public LinterForeignKeyWithNoIndexes()
-  {
+  public LinterForeignKeyWithNoIndexes() {
     setSeverity(LintSeverity.low);
   }
 
   @Override
-  public String getSummary()
-  {
+  public String getSummary() {
     return "foreign key with no index";
   }
 
   @Override
-  protected void lint(final Table table, final Connection connection)
-  {
+  protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
 
-    final List<ForeignKey> foreignKeysWithoutIndexes =
-      findForeignKeysWithoutIndexes(table);
-    for (final ForeignKey foreignKey : foreignKeysWithoutIndexes)
-    {
+    final List<ForeignKey> foreignKeysWithoutIndexes = findForeignKeysWithoutIndexes(table);
+    for (final ForeignKey foreignKey : foreignKeysWithoutIndexes) {
       addTableLint(table, getSummary(), foreignKey);
     }
   }
 
-  private List<ForeignKey> findForeignKeysWithoutIndexes(final Table table)
-  {
+  private List<ForeignKey> findForeignKeysWithoutIndexes(final Table table) {
     final List<ForeignKey> foreignKeysWithoutIndexes = new ArrayList<>();
-    if (!(table instanceof View))
-    {
+    if (!(table instanceof View)) {
       final Collection<List<String>> allIndexCoumns = allIndexCoumnNames(table);
-      for (final ForeignKey foreignKey : table.getImportedForeignKeys())
-      {
-        final List<String> foreignKeyColumns =
-          foreignKeyColumnNames(foreignKey);
+      for (final ForeignKey foreignKey : table.getImportedForeignKeys()) {
+        final List<String> foreignKeyColumns = foreignKeyColumnNames(foreignKey);
         boolean hasIndex = false;
-        for (final List<String> indexColumns : allIndexCoumns)
-        {
-          if (listStartsWith(indexColumns, foreignKeyColumns))
-          {
+        for (final List<String> indexColumns : allIndexCoumns) {
+          if (listStartsWith(indexColumns, foreignKeyColumns)) {
             hasIndex = true;
             break;
           }
         }
-        if (!hasIndex)
-        {
+        if (!hasIndex) {
           foreignKeysWithoutIndexes.add(foreignKey);
         }
       }
     }
     return foreignKeysWithoutIndexes;
   }
-
 }

@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.linter;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
@@ -38,39 +37,30 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.tools.lint.BaseLinter;
 
-public class LinterTableAllNullableColumns
-  extends BaseLinter
-{
+public class LinterTableAllNullableColumns extends BaseLinter {
 
   @Override
-  public String getSummary()
-  {
+  public String getSummary() {
     return "no non-nullable data columns";
   }
 
   @Override
-  protected void lint(final Table table, final Connection connection)
-  {
+  protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
 
-    if (!(table instanceof View) && hasAllNullableColumns(getColumns(table)))
-    {
+    if (!(table instanceof View) && hasAllNullableColumns(getColumns(table))) {
       addTableLint(table, getSummary());
     }
   }
 
-  private boolean hasAllNullableColumns(final Collection<Column> columns)
-  {
+  private boolean hasAllNullableColumns(final Collection<Column> columns) {
     boolean hasAllNullableColumns = true;
-    for (final Column column : columns)
-    {
-      if (!column.isPartOfPrimaryKey() && !column.isNullable())
-      {
+    for (final Column column : columns) {
+      if (!column.isPartOfPrimaryKey() && !column.isNullable()) {
         hasAllNullableColumns = false;
         break;
       }
     }
     return hasAllNullableColumns;
   }
-
 }

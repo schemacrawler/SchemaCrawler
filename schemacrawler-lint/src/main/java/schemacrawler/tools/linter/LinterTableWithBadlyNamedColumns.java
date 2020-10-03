@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.linter;
 
-
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 
@@ -44,65 +43,49 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.options.Config;
 
-public class LinterTableWithBadlyNamedColumns
-  extends BaseLinter
-{
+public class LinterTableWithBadlyNamedColumns extends BaseLinter {
 
   private InclusionRule columnNames;
 
   @Override
-  public String getSummary()
-  {
+  public String getSummary() {
     return "badly named column";
   }
 
   @Override
-  protected void configure(final Config config)
-  {
+  protected void configure(final Config config) {
     requireNonNull(config, "No configuration provided");
 
-    final String badColumnNames =
-      config.getStringValue("bad-column-names", null);
-    if (isBlank(badColumnNames))
-    {
+    final String badColumnNames = config.getStringValue("bad-column-names", null);
+    if (isBlank(badColumnNames)) {
       columnNames = new IncludeAll();
-    }
-    else
-    {
+    } else {
       columnNames = new RegularExpressionInclusionRule(badColumnNames);
     }
   }
 
   @Override
   protected void lint(final Table table, final Connection connection)
-    throws SchemaCrawlerException
-  {
+      throws SchemaCrawlerException {
     requireNonNull(table, "No table provided");
 
-    final List<Column> badlyNamedColumns =
-      findBadlyNamedColumns(getColumns(table));
-    for (final Column column : badlyNamedColumns)
-    {
+    final List<Column> badlyNamedColumns = findBadlyNamedColumns(getColumns(table));
+    for (final Column column : badlyNamedColumns) {
       addTableLint(table, getSummary(), column);
     }
   }
 
-  private List<Column> findBadlyNamedColumns(final List<Column> columns)
-  {
+  private List<Column> findBadlyNamedColumns(final List<Column> columns) {
     final List<Column> badlyNamedColumns = new ArrayList<>();
-    if (columnNames == null)
-    {
+    if (columnNames == null) {
       return badlyNamedColumns;
     }
 
-    for (final Column column : columns)
-    {
-      if (columnNames.test(column.getFullName()))
-      {
+    for (final Column column : columns) {
+      if (columnNames.test(column.getFullName())) {
         badlyNamedColumns.add(column);
       }
     }
     return badlyNamedColumns;
   }
-
 }

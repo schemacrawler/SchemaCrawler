@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.linter;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
@@ -38,45 +37,34 @@ import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
 
-public class LinterTableWithNoSurrogatePrimaryKey
-  extends BaseLinter
-{
+public class LinterTableWithNoSurrogatePrimaryKey extends BaseLinter {
 
-  public LinterTableWithNoSurrogatePrimaryKey()
-  {
+  public LinterTableWithNoSurrogatePrimaryKey() {
     setSeverity(LintSeverity.high);
     setTableTypesFilter(new TableTypesFilter("TABLE"));
   }
 
   @Override
-  public String getSummary()
-  {
+  public String getSummary() {
     return "primary key may not be a surrogate";
   }
 
   @Override
-  protected void lint(final Table table, final Connection connection)
-  {
+  protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
 
-    if (hasNoSurrogatePrimaryKey(table))
-    {
+    if (hasNoSurrogatePrimaryKey(table)) {
       addTableLint(table, getSummary());
     }
   }
 
-  private boolean hasNoSurrogatePrimaryKey(final Table table)
-  {
+  private boolean hasNoSurrogatePrimaryKey(final Table table) {
     final PrimaryKey primaryKey = table.getPrimaryKey();
-    if (primaryKey != null)
-    {
-      final int pkColumnCount = primaryKey
-        .getColumns()
-        .size();
+    if (primaryKey != null) {
+      final int pkColumnCount = primaryKey.getColumns().size();
       return pkColumnCount > 1;
     }
 
     return true;
   }
-
 }

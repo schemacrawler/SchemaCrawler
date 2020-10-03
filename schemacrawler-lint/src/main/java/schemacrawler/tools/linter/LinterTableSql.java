@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.linter;
 
-
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.QueryUtility.executeForScalar;
 import static us.fatehi.utility.Utility.isBlank;
@@ -45,33 +44,26 @@ import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.string.StringFormat;
 
-public class LinterTableSql
-  extends BaseLinter
-{
+public class LinterTableSql extends BaseLinter {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(LinterTableSql.class.getName());
+      SchemaCrawlerLogger.getLogger(LinterTableSql.class.getName());
 
   private String message;
   private String sql;
 
   @Override
-  public String getSummary()
-  {
-    if (isBlank(message))
-    {
+  public String getSummary() {
+    if (isBlank(message)) {
       // Linter is not configured
       return "SQL statement based table linter";
-    }
-    else
-    {
+    } else {
       return message;
     }
   }
 
   @Override
-  protected void configure(final Config config)
-  {
+  protected void configure(final Config config) {
     requireNonNull(config, "No configuration provided");
 
     message = config.getStringValue("message", null);
@@ -82,10 +74,8 @@ public class LinterTableSql
   }
 
   @Override
-  protected void lint(final Table table, final Connection connection)
-  {
-    if (isBlank(sql))
-    {
+  protected void lint(final Table table, final Connection connection) {
+    if (isBlank(sql)) {
       return;
     }
 
@@ -93,27 +83,17 @@ public class LinterTableSql
     requireNonNull(connection, "No connection provided");
 
     final Query query = new Query(message, sql);
-    try
-    {
-      final Identifiers identifiers = Identifiers
-        .identifiers()
-        .withConnection(connection)
-        .build();
-      final Object queryResult =
-        executeForScalar(query, connection, table, identifiers);
-      if (queryResult != null)
-      {
+    try {
+      final Identifiers identifiers = Identifiers.identifiers().withConnection(connection).build();
+      final Object queryResult = executeForScalar(query, connection, table, identifiers);
+      if (queryResult != null) {
         addTableLint(table, getSummary() + " " + queryResult);
       }
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING,
-                 new StringFormat(
-                   "Could not execute SQL for table lints, for table",
-                   table),
-                 e);
+    } catch (final SQLException e) {
+      LOGGER.log(
+          Level.WARNING,
+          new StringFormat("Could not execute SQL for table lints, for table", table),
+          e);
     }
   }
-
 }

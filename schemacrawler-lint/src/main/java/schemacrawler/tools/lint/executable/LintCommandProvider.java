@@ -50,18 +50,6 @@ public class LintCommandProvider extends BaseCommandProvider {
   }
 
   @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command, final Config config) {
-    final LintCommand scCommand = new LintCommand();
-    scCommand.setAdditionalConfiguration(config);
-    return scCommand;
-  }
-
-  @Override
-  public boolean supportsOutputFormat(final String command, final OutputOptions outputOptions) {
-    return supportsOutputFormat(command, outputOptions, LintReportOutputFormat::isSupportedFormat);
-  }
-
-  @Override
   public PluginCommand getCommandLineCommand() {
     final PluginCommand pluginCommand =
         newPluginCommand(
@@ -86,5 +74,17 @@ public class LintCommandProvider extends BaseCommandProvider {
                 + "Corresponds to the configuration file setting: schemacrawler.lint.runalllinters",
             boolean.class);
     return pluginCommand;
+  }
+
+  @Override
+  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command, final Config config) {
+    final LintCommand scCommand = new LintCommand();
+    scCommand.setAdditionalConfiguration(config);
+    return scCommand;
+  }
+
+  @Override
+  public boolean supportsOutputFormat(final String command, final OutputOptions outputOptions) {
+    return supportsOutputFormat(command, outputOptions, LintReportOutputFormat::isSupportedFormat);
   }
 }

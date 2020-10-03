@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.lint;
 
-
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.io.Serializable;
@@ -37,9 +36,7 @@ import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.ObjectToString;
 
-public class LinterConfig
-  implements Serializable, Comparable<LinterConfig>
-{
+public class LinterConfig implements Serializable, Comparable<LinterConfig> {
 
   private static final long serialVersionUID = 83079182550531365L;
 
@@ -53,8 +50,7 @@ public class LinterConfig
   private String columnInclusionPattern;
   private String columnExclusionPattern;
 
-  public LinterConfig(final String linterId)
-  {
+  public LinterConfig(final String linterId) {
     this.linterId = requireNotBlank(linterId, "No linter id provided");
     runLinter = true; // default value
     threshold = Integer.MAX_VALUE; // default value
@@ -62,162 +58,126 @@ public class LinterConfig
   }
 
   @Override
-  public int compareTo(final LinterConfig other)
-  {
-    if (other == null)
-    {
+  public int compareTo(final LinterConfig other) {
+    if (other == null) {
       return -1;
     }
 
     int comparison = 0;
 
-    if (comparison == 0)
-    {
+    if (comparison == 0) {
       comparison =
-        (severity == null? LintSeverity.low: severity).compareTo(other.severity
-                                                                 == null?
-                                                                 LintSeverity.low:
-                                                                 other.severity);
+          (severity == null ? LintSeverity.low : severity)
+              .compareTo(other.severity == null ? LintSeverity.low : other.severity);
     }
 
-    if (comparison == 0)
-    {
+    if (comparison == 0) {
       comparison = linterId.compareTo(other.linterId);
     }
 
     return comparison;
   }
 
-  public InclusionRule getColumnInclusionRule()
-  {
-    return new RegularExpressionRule(columnInclusionPattern,
-                                     columnExclusionPattern);
-  }
-
-  public Config getConfig()
-  {
-    return config;
-  }
-
-  public String getLinterId()
-  {
-    return linterId;
-  }
-
-  public LintSeverity getSeverity()
-  {
-    return severity;
-  }
-
-  public void setSeverity(final LintSeverity severity)
-  {
-    this.severity = severity;
-  }
-
-  public InclusionRule getTableInclusionRule()
-  {
-    return new RegularExpressionRule(tableInclusionPattern,
-                                     tableExclusionPattern);
-  }
-
-  public int getThreshold()
-  {
-    return threshold;
-  }
-
-  public void setThreshold(final int threshold)
-  {
-    this.threshold = threshold;
-  }
-
   @Override
-  public int hashCode()
-  {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (linterId == null? 0: linterId.hashCode());
-    result = prime * result + (severity == null? 0: severity.hashCode());
-    return result;
-  }
-
-  @Override
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
+  public boolean equals(final Object obj) {
+    if (this == obj) {
       return true;
     }
-    if (obj == null)
-    {
+    if (obj == null) {
       return false;
     }
-    if (!(obj instanceof LinterConfig))
-    {
+    if (!(obj instanceof LinterConfig)) {
       return false;
     }
     final LinterConfig other = (LinterConfig) obj;
-    if (linterId == null)
-    {
-      if (other.linterId != null)
-      {
+    if (linterId == null) {
+      if (other.linterId != null) {
         return false;
       }
-    }
-    else if (!linterId.equals(other.linterId))
-    {
+    } else if (!linterId.equals(other.linterId)) {
       return false;
     }
-    if (severity != other.severity)
-    {
+    if (severity != other.severity) {
       return false;
     }
     return true;
   }
 
-  @Override
-  public String toString()
-  {
-    return ObjectToString.toString(this);
+  public InclusionRule getColumnInclusionRule() {
+    return new RegularExpressionRule(columnInclusionPattern, columnExclusionPattern);
   }
 
-  public boolean isRunLinter()
-  {
+  public Config getConfig() {
+    return config;
+  }
+
+  public String getLinterId() {
+    return linterId;
+  }
+
+  public LintSeverity getSeverity() {
+    return severity;
+  }
+
+  public InclusionRule getTableInclusionRule() {
+    return new RegularExpressionRule(tableInclusionPattern, tableExclusionPattern);
+  }
+
+  public int getThreshold() {
+    return threshold;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (linterId == null ? 0 : linterId.hashCode());
+    result = prime * result + (severity == null ? 0 : severity.hashCode());
+    return result;
+  }
+
+  public boolean isRunLinter() {
     return runLinter;
   }
 
-  public void setRunLinter(final boolean runLinter)
-  {
-    this.runLinter = runLinter;
-  }
-
-  public void put(final String key, final String value)
-  {
+  public void put(final String key, final String value) {
     config.put(key, value);
   }
 
-  public void putAll(final Config config)
-  {
+  public void putAll(final Config config) {
     this.config.putAll(config);
   }
 
-  public void setColumnExclusionPattern(final String columnExclusionPattern)
-  {
+  public void setColumnExclusionPattern(final String columnExclusionPattern) {
     this.columnExclusionPattern = columnExclusionPattern;
   }
 
-  public void setColumnInclusionPattern(final String columnInclusionPattern)
-  {
+  public void setColumnInclusionPattern(final String columnInclusionPattern) {
     this.columnInclusionPattern = columnInclusionPattern;
   }
 
-  public void setTableExclusionPattern(final String tableExclusionPattern)
-  {
+  public void setRunLinter(final boolean runLinter) {
+    this.runLinter = runLinter;
+  }
+
+  public void setSeverity(final LintSeverity severity) {
+    this.severity = severity;
+  }
+
+  public void setTableExclusionPattern(final String tableExclusionPattern) {
     this.tableExclusionPattern = tableExclusionPattern;
   }
 
-  public void setTableInclusionPattern(final String tableInclusionPattern)
-  {
+  public void setTableInclusionPattern(final String tableInclusionPattern) {
     this.tableInclusionPattern = tableInclusionPattern;
   }
 
+  public void setThreshold(final int threshold) {
+    this.threshold = threshold;
+  }
+
+  @Override
+  public String toString() {
+    return ObjectToString.toString(this);
+  }
 }

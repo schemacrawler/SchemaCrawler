@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.linter;
 
-
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.lint.LintUtility.listStartsWith;
 
@@ -47,59 +46,44 @@ import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.utility.MetaDataUtility;
 
-public class LinterRedundantIndexes
-  extends BaseLinter
-{
+public class LinterRedundantIndexes extends BaseLinter {
 
-  public LinterRedundantIndexes()
-  {
+  public LinterRedundantIndexes() {
     setSeverity(LintSeverity.high);
     setTableTypesFilter(new TableTypesFilter("TABLE"));
   }
 
   @Override
-  public String getSummary()
-  {
+  public String getSummary() {
     return "redundant index";
   }
 
   @Override
-  protected void lint(final Table table, final Connection connection)
-  {
+  protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
 
-    final Set<Index> redundantIndexes =
-      findRedundantIndexes(table.getIndexes());
-    for (final Index index : redundantIndexes)
-    {
+    final Set<Index> redundantIndexes = findRedundantIndexes(table.getIndexes());
+    for (final Index index : redundantIndexes) {
       addTableLint(table, getSummary(), index);
     }
   }
 
-  private Set<Index> findRedundantIndexes(final Collection<Index> indexes)
-  {
+  private Set<Index> findRedundantIndexes(final Collection<Index> indexes) {
     final Set<Index> redundantIndexes = new HashSet<>();
 
-    if (indexes == null || indexes.isEmpty())
-    {
+    if (indexes == null || indexes.isEmpty()) {
       return redundantIndexes;
     }
 
     final Map<Index, List<String>> indexColumns = new HashMap<>(indexes.size());
-    for (final Index index : indexes)
-    {
+    for (final Index index : indexes) {
       indexColumns.put(index, MetaDataUtility.columnNames(index));
     }
 
-    for (final Entry<Index, List<String>> indexColumnEntry1 : indexColumns.entrySet())
-    {
-      for (final Entry<Index, List<String>> indexColumnEntry2 : indexColumns.entrySet())
-      {
-        if (!indexColumnEntry1.equals(indexColumnEntry2))
-        {
-          if (listStartsWith(indexColumnEntry1.getValue(),
-                             indexColumnEntry2.getValue()))
-          {
+    for (final Entry<Index, List<String>> indexColumnEntry1 : indexColumns.entrySet()) {
+      for (final Entry<Index, List<String>> indexColumnEntry2 : indexColumns.entrySet()) {
+        if (!indexColumnEntry1.equals(indexColumnEntry2)) {
+          if (listStartsWith(indexColumnEntry1.getValue(), indexColumnEntry2.getValue())) {
             redundantIndexes.add(indexColumnEntry2.getKey());
           }
         }
@@ -107,5 +91,4 @@ public class LinterRedundantIndexes
     }
     return redundantIndexes;
   }
-
 }

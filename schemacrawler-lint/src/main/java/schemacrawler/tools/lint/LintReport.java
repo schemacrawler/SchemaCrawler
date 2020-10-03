@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.lint;
 
-
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 
@@ -38,24 +37,19 @@ import java.util.Iterator;
 
 import schemacrawler.schema.CrawlInfo;
 
-public final class LintReport
-  implements Iterable<Lint<? extends Serializable>>
-{
+public final class LintReport implements Iterable<Lint<? extends Serializable>> {
 
   private final CrawlInfo crawlInfo;
   private final Collection<Lint<? extends Serializable>> lints;
   private final String title;
 
-  public LintReport(final String title,
-                    final CrawlInfo crawlInfo,
-                    final Collection<Lint<? extends Serializable>> lints)
-  {
-    if (isBlank(title))
-    {
+  public LintReport(
+      final String title,
+      final CrawlInfo crawlInfo,
+      final Collection<Lint<? extends Serializable>> lints) {
+    if (isBlank(title)) {
       this.title = "";
-    }
-    else
-    {
+    } else {
       this.title = title;
     }
     requireNonNull(crawlInfo, "No crawl information provided");
@@ -64,30 +58,24 @@ public final class LintReport
     this.lints = lints;
   }
 
-  public String getTitle()
-  {
-    return title;
-  }
-
-  public CrawlInfo getCrawlInfo()
-  {
+  public CrawlInfo getCrawlInfo() {
     return crawlInfo;
   }
 
-  @Override
-  public Iterator<Lint<? extends Serializable>> iterator()
-  {
-    return getLints().iterator();
-  }
-
-  public Collection<Lint<? extends Serializable>> getLints()
-  {
+  public Collection<Lint<? extends Serializable>> getLints() {
     return new ArrayList<>(lints);
   }
 
-  public int size()
-  {
-    return lints.size();
+  public String getTitle() {
+    return title;
   }
 
+  @Override
+  public Iterator<Lint<? extends Serializable>> iterator() {
+    return getLints().iterator();
+  }
+
+  public int size() {
+    return lints.size();
+  }
 }

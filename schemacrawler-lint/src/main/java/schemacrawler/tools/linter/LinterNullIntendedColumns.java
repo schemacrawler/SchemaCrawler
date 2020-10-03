@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.linter;
 
-
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 
@@ -40,48 +39,36 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 
-public class LinterNullIntendedColumns
-  extends BaseLinter
-{
+public class LinterNullIntendedColumns extends BaseLinter {
 
-  public LinterNullIntendedColumns()
-  {
+  public LinterNullIntendedColumns() {
     setTableTypesFilter(new TableTypesFilter("TABLE"));
   }
 
   @Override
-  public String getSummary()
-  {
+  public String getSummary() {
     return "column where NULL may be intended";
   }
 
   @Override
-  protected void lint(final Table table, final Connection connection)
-  {
+  protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
 
     final List<Column> nullDefaultValueMayBeIntendedColumns =
-      findNullDefaultValueMayBeIntendedColumns(getColumns(table));
-    for (final Column column : nullDefaultValueMayBeIntendedColumns)
-    {
+        findNullDefaultValueMayBeIntendedColumns(getColumns(table));
+    for (final Column column : nullDefaultValueMayBeIntendedColumns) {
       addTableLint(table, getSummary(), column);
     }
   }
 
-  private List<Column> findNullDefaultValueMayBeIntendedColumns(final List<Column> columns)
-  {
+  private List<Column> findNullDefaultValueMayBeIntendedColumns(final List<Column> columns) {
     final List<Column> nullDefaultValueMayBeIntendedColumns = new ArrayList<>();
-    for (final Column column : columns)
-    {
+    for (final Column column : columns) {
       final String columnDefaultValue = column.getDefaultValue();
-      if (!isBlank(columnDefaultValue) && columnDefaultValue
-        .trim()
-        .equalsIgnoreCase("NULL"))
-      {
+      if (!isBlank(columnDefaultValue) && columnDefaultValue.trim().equalsIgnoreCase("NULL")) {
         nullDefaultValueMayBeIntendedColumns.add(column);
       }
     }
     return nullDefaultValueMayBeIntendedColumns;
   }
-
 }

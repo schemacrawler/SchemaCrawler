@@ -27,33 +27,28 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import org.junit.jupiter.api.Test;
+
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.lint.executable.LintCommandProvider;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 
-public class TestCommandProvider
-{
+public class TestCommandProvider {
 
   @Test
-  public void testCommandProvider()
-    throws Exception
-  {
+  public void testCommandProvider() throws Exception {
     final LintCommandProvider lintCommandProvider = new LintCommandProvider();
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     final OutputOptions outputOptions = OutputOptionsBuilder.newOutputOptions();
-    assertThat(lintCommandProvider.supportsSchemaCrawlerCommand("lint",
-                                                                schemaCrawlerOptions,
-                                                                null,
-                                                                outputOptions),
-               is(true));
+    assertThat(
+        lintCommandProvider.supportsSchemaCrawlerCommand(
+            "lint", schemaCrawlerOptions, null, outputOptions),
+        is(true));
   }
-
 }

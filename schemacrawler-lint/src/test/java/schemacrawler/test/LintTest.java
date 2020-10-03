@@ -152,34 +152,6 @@ public class LintTest {
   }
 
   @Test
-  public void runNoLinters(final Connection connection) throws Exception {
-    final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder()
-            .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-            .withLimitOptions(limitOptionsBuilder.toOptions());
-
-    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
-    assertThat(catalog, notNullValue());
-    assertThat(catalog.getSchemas().size(), is(1));
-    final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
-    assertThat("FOR_LINT schema not found", schema, notNullValue());
-    assertThat("FOR_LINT tables not found", catalog.getTables(schema), hasSize(6));
-
-    final LinterConfigs linterConfigs = new LinterConfigs(new Config());
-    final Linters linters = new Linters(linterConfigs, false);
-    assertThat("All linters should be turned off", linters.size(), is(0));
-
-    linters.lint(catalog, connection);
-    final LintCollector lintCollector = linters.getCollector();
-    assertThat(
-        "All linters should be turned off, so there should be no lints",
-        lintCollector.size(),
-        is(0));
-  }
-
-  @Test
   public void runLintersWithConfig(final Connection connection) throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder()
@@ -218,5 +190,33 @@ public class LintTest {
             .map(lint -> lint.getMessage())
             .orElse("No value found"),
         startsWith(message));
+  }
+
+  @Test
+  public void runNoLinters(final Connection connection) throws Exception {
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions());
+
+    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
+    assertThat(catalog, notNullValue());
+    assertThat(catalog.getSchemas().size(), is(1));
+    final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
+    assertThat("FOR_LINT schema not found", schema, notNullValue());
+    assertThat("FOR_LINT tables not found", catalog.getTables(schema), hasSize(6));
+
+    final LinterConfigs linterConfigs = new LinterConfigs(new Config());
+    final Linters linters = new Linters(linterConfigs, false);
+    assertThat("All linters should be turned off", linters.size(), is(0));
+
+    linters.lint(catalog, connection);
+    final LintCollector lintCollector = linters.getCollector();
+    assertThat(
+        "All linters should be turned off, so there should be no lints",
+        lintCollector.size(),
+        is(0));
   }
 }

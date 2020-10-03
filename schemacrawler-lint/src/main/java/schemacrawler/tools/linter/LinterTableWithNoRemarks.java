@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.linter;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
@@ -44,50 +43,38 @@ import schemacrawler.tools.lint.LintSeverity;
  *
  * @author Michèle Barré, Sualeh Fatehi
  */
-public class LinterTableWithNoRemarks
-  extends BaseLinter
-{
+public class LinterTableWithNoRemarks extends BaseLinter {
 
-  public LinterTableWithNoRemarks()
-  {
+  public LinterTableWithNoRemarks() {
     setSeverity(LintSeverity.low);
   }
 
   @Override
-  public String getSummary()
-  {
+  public String getSummary() {
     return "should have remarks";
   }
 
   @Override
-  protected void lint(final Table table, final Connection connection)
-  {
+  protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
 
-    if (!table.hasRemarks())
-    {
+    if (!table.hasRemarks()) {
       addTableLint(table, getSummary());
     }
 
-    final ArrayList<String> columnsWithNoRemarks =
-      findColumnsWithNoRemarks(getColumns(table));
-    if (!columnsWithNoRemarks.isEmpty())
-    {
+    final ArrayList<String> columnsWithNoRemarks = findColumnsWithNoRemarks(getColumns(table));
+    if (!columnsWithNoRemarks.isEmpty()) {
       addTableLint(table, getSummary(), columnsWithNoRemarks);
     }
   }
 
-  private ArrayList<String> findColumnsWithNoRemarks(final List<Column> columns)
-  {
+  private ArrayList<String> findColumnsWithNoRemarks(final List<Column> columns) {
     final ArrayList<String> names = new ArrayList<>();
-    for (final Column column : columns)
-    {
-      if (!column.hasRemarks())
-      {
+    for (final Column column : columns) {
+      if (!column.hasRemarks()) {
         names.add(column.getName());
       }
     }
     return names;
   }
-
 }
