@@ -34,6 +34,7 @@ import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
@@ -41,7 +42,6 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.tools.lint.BaseLinter;
-import schemacrawler.tools.options.Config;
 import us.fatehi.utility.string.StringFormat;
 
 public class LinterTableSql extends BaseLinter {
@@ -63,13 +63,13 @@ public class LinterTableSql extends BaseLinter {
   }
 
   @Override
-  protected void configure(final Config config) {
+  protected void configure(final Map<String, String> config) {
     requireNonNull(config, "No configuration provided");
 
-    message = config.getStringValue("message", null);
+    message = config.get("message");
     requireNotBlank(message, "No message provided");
 
-    sql = config.getStringValue("sql", null);
+    sql = config.get("sql");
     requireNotBlank(sql, "No SQL provided");
   }
 

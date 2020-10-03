@@ -30,10 +30,11 @@ package schemacrawler.tools.lint;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionRule;
-import schemacrawler.tools.options.Config;
 import us.fatehi.utility.ObjectToString;
 
 public class LinterConfig implements Serializable, Comparable<LinterConfig> {
@@ -41,7 +42,7 @@ public class LinterConfig implements Serializable, Comparable<LinterConfig> {
   private static final long serialVersionUID = 83079182550531365L;
 
   private final String linterId;
-  private final Config config;
+  private final Map<String, String> properties;
   private boolean runLinter;
   private LintSeverity severity;
   private int threshold;
@@ -54,7 +55,7 @@ public class LinterConfig implements Serializable, Comparable<LinterConfig> {
     this.linterId = requireNotBlank(linterId, "No linter id provided");
     runLinter = true; // default value
     threshold = Integer.MAX_VALUE; // default value
-    config = new Config();
+    properties = new HashMap<>();
   }
 
   @Override
@@ -107,8 +108,8 @@ public class LinterConfig implements Serializable, Comparable<LinterConfig> {
     return new RegularExpressionRule(columnInclusionPattern, columnExclusionPattern);
   }
 
-  public Config getConfig() {
-    return config;
+  public Map<String, String> getProperties() {
+    return properties;
   }
 
   public String getLinterId() {
@@ -141,11 +142,11 @@ public class LinterConfig implements Serializable, Comparable<LinterConfig> {
   }
 
   public void put(final String key, final String value) {
-    config.put(key, value);
+    properties.put(key, value);
   }
 
-  public void putAll(final Config config) {
-    this.config.putAll(config);
+  public void putAll(final Map<String, String> properties) {
+    this.properties.putAll(properties);
   }
 
   public void setColumnExclusionPattern(final String columnExclusionPattern) {

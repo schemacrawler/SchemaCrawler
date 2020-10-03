@@ -34,6 +34,7 @@ import static us.fatehi.utility.Utility.requireNotBlank;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -127,8 +128,8 @@ public class LinterConfigs implements Iterable<LinterConfig> {
     return ObjectToString.toString(this);
   }
 
-  private Config parseConfig(final Element configElement) {
-    final Config config = new Config();
+  private Map<String, String> parseConfig(final Element configElement) {
+    final Map<String, String> config = new HashMap<>();
     config.putAll(properties);
 
     if (configElement == null) {
@@ -198,7 +199,7 @@ public class LinterConfigs implements Iterable<LinterConfig> {
           linterConfig.setColumnExclusionPattern(columnExclusionPattern);
 
           // Linter-specific config
-          final Config config = parseConfig(getSubElement(linterElement, "config"));
+          final Map<String, String> config = parseConfig(getSubElement(linterElement, "config"));
           linterConfig.putAll(config);
 
           linterConfigs.add(linterConfig);

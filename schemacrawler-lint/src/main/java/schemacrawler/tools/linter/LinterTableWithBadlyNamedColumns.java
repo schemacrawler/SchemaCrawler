@@ -33,6 +33,7 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
@@ -41,7 +42,6 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
-import schemacrawler.tools.options.Config;
 
 public class LinterTableWithBadlyNamedColumns extends BaseLinter {
 
@@ -53,10 +53,10 @@ public class LinterTableWithBadlyNamedColumns extends BaseLinter {
   }
 
   @Override
-  protected void configure(final Config config) {
+  protected void configure(final Map<String, String> config) {
     requireNonNull(config, "No configuration provided");
 
-    final String badColumnNames = config.getStringValue("bad-column-names", null);
+    final String badColumnNames = config.get("bad-column-names");
     if (isBlank(badColumnNames)) {
       columnNames = new IncludeAll();
     } else {

@@ -110,6 +110,9 @@ public class LinterConfigsDispatchTest {
     assertThat(linterConfigs.size(), is(1));
     boolean asserted = false;
     for (final LinterConfig linterConfig : linterConfigs) {
+      if (linterConfig == null) {
+        fail("Null linter config");
+      }
       if (linterConfig
           .getLinterId()
           .equals("schemacrawler.tools.linter.LinterTableWithNoIndexes")) {
