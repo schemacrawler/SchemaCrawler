@@ -78,8 +78,10 @@ public class LintCommandProvider extends BaseCommandProvider {
 
   @Override
   public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command, final Config config) {
+    final LintOptions lintOptions =
+        LintOptionsBuilder.builder().fromConfig(config).withProperties(config).toOptions();
     final LintCommand scCommand = new LintCommand();
-    scCommand.setAdditionalConfiguration(config);
+    scCommand.setLintOptions(lintOptions);
     return scCommand;
   }
 
