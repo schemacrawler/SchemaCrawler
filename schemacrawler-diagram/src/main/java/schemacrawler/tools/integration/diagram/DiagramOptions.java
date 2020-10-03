@@ -31,10 +31,10 @@ package schemacrawler.tools.integration.diagram;
 import java.util.List;
 import java.util.Map;
 
-import schemacrawler.tools.text.schema.BaseSchemaTextOptions;
+import schemacrawler.tools.text.schema.SchemaTextOptions;
 
 public class DiagramOptions
-  extends BaseSchemaTextOptions
+  extends SchemaTextOptions
 {
 
   private final List<String> graphvizOpts;

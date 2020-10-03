@@ -32,7 +32,7 @@ import schemacrawler.tools.options.Config;
 import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
 
 public abstract class BaseSchemaTextOptionsBuilder<
-        B extends BaseSchemaTextOptionsBuilder<B, O>, O extends BaseSchemaTextOptions>
+        B extends BaseSchemaTextOptionsBuilder<B, O>, O extends SchemaTextOptions>
     extends BaseTextOptionsBuilder<BaseSchemaTextOptionsBuilder<B, O>, O> {
 
   private static final String SHOW_ORDINAL_NUMBERS =
