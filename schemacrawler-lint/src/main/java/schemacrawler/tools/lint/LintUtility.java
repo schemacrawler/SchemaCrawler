@@ -40,7 +40,6 @@ import java.util.logging.Level;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.executable.LintOptions;
-import schemacrawler.tools.options.Config;
 
 public final class LintUtility {
 
@@ -64,13 +63,11 @@ public final class LintUtility {
   /**
    * Obtain linter configuration from a system property
    *
-   * @param config SchemaCrawler configuration
    * @return LinterConfigs
    * @throws SchemaCrawlerException
    */
-  public static LinterConfigs readLinterConfigs(
-      final LintOptions lintOptions, final Config config) {
-    final LinterConfigs linterConfigs = new LinterConfigs(config);
+  public static LinterConfigs readLinterConfigs(final LintOptions lintOptions) {
+    final LinterConfigs linterConfigs = new LinterConfigs(lintOptions.getProperties());
     String linterConfigsFile = null;
     try {
       linterConfigsFile = lintOptions.getLinterConfigs();

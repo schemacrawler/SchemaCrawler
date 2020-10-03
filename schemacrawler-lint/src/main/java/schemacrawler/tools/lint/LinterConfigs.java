@@ -36,6 +36,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -83,11 +84,11 @@ public class LinterConfigs implements Iterable<LinterConfig> {
   }
 
   private final List<LinterConfig> linterConfigs;
-  private final Config additionalConfig;
+  private final Map<String, String> properties;
 
-  public LinterConfigs(final Config additionalConfig) {
+  public LinterConfigs(final Map<String, String> properties) {
     linterConfigs = new ArrayList<>();
-    this.additionalConfig = requireNonNull(additionalConfig, "No config provided");
+    this.properties = requireNonNull(properties, "No properties provided");
   }
 
   public void add(final LinterConfig linterConfig) {
@@ -128,7 +129,7 @@ public class LinterConfigs implements Iterable<LinterConfig> {
 
   private Config parseConfig(final Element configElement) {
     final Config config = new Config();
-    config.putAll(additionalConfig);
+    config.putAll(properties);
 
     if (configElement == null) {
       return config;

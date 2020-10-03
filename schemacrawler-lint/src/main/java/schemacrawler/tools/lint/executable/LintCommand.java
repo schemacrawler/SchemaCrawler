@@ -57,7 +57,7 @@ public class LintCommand extends BaseSchemaCrawlerCommand {
     checkCatalog();
 
     // Lint the catalog
-    final LinterConfigs linterConfigs = readLinterConfigs(lintOptions, additionalConfiguration);
+    final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
     final Linters linters = new Linters(linterConfigs, lintOptions.isRunAllLinters());
     linters.lint(catalog, connection);
 
@@ -124,7 +124,11 @@ public class LintCommand extends BaseSchemaCrawlerCommand {
 
   private void loadLintOptions() {
     if (lintOptions == null) {
-      lintOptions = LintOptionsBuilder.builder().fromConfig(additionalConfiguration).toOptions();
+      lintOptions =
+          LintOptionsBuilder.builder()
+              .fromConfig(additionalConfiguration)
+              .withProperties(additionalConfiguration)
+              .toOptions();
     }
   }
 }

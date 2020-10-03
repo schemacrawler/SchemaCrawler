@@ -27,6 +27,11 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.lint.executable;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.text.base.BaseTextOptions;
 
@@ -35,12 +40,15 @@ public class LintOptions extends BaseTextOptions {
   private final String linterConfigs;
   private final LintDispatch lintDispatch;
   private final boolean runAllLinters;
+  private final Map<String, String> properties;
 
   public LintOptions(final LintOptionsBuilder builder) {
     super(builder);
     linterConfigs = builder.linterConfigs;
-    lintDispatch = builder.lintDispatch;
+    lintDispatch = requireNonNull(builder.lintDispatch, "No dispatch provided");
     runAllLinters = builder.runAllLinters;
+    requireNonNull(builder.properties, "No properties provided");
+    properties = new HashMap<>(builder.properties);
   }
 
   /**
@@ -59,6 +67,15 @@ public class LintOptions extends BaseTextOptions {
    */
   public String getLinterConfigs() {
     return linterConfigs;
+  }
+
+  /**
+   * Get properties.
+   *
+   * @return Properties
+   */
+  public Map<String, String> getProperties() {
+    return new HashMap<>(properties);
   }
 
   /**
