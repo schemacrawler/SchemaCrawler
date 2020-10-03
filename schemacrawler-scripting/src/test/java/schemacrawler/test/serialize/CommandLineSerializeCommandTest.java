@@ -62,7 +62,6 @@ import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.integration.serialize.SerializationFormat;
-import schemacrawler.tools.options.OutputFormat;
 import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -134,18 +133,19 @@ public class CommandLineSerializeCommandTest {
     final Map<String, String> argsMap = new HashMap<>();
     argsMap.put("-info-level", InfoLevel.standard.name());
 
-    final OutputFormat outputFormat = serializationFormat;
     final Path testOutputFile = IOUtility.createTempFilePath("test", "");
 
     commandlineExecution(
-        connectionInfo, "serialize", argsMap, null, outputFormat.getFormat(), testOutputFile);
+        connectionInfo,
+        "serialize",
+        argsMap,
+        null,
+        serializationFormat.getFormat(),
+        testOutputFile);
     if (DEBUG) {
-      if (serializationFormat != null) {
-        final Path copied =
-            directory.resolve("serialize." + serializationFormat.getFileExtension());
-        Files.copy(testOutputFile, copied, StandardCopyOption.REPLACE_EXISTING);
-        // System.out.println(copied.toAbsolutePath());
-      }
+      final Path copied = directory.resolve("serialize." + serializationFormat.getFileExtension());
+      Files.copy(testOutputFile, copied, StandardCopyOption.REPLACE_EXISTING);
+      // System.out.println(copied.toAbsolutePath());
     }
 
     return testOutputFile;
