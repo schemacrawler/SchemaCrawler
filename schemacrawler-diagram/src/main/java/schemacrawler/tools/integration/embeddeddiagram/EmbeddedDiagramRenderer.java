@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.integration.embeddeddiagram;
 
-
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.newBufferedReader;
 import static java.nio.file.Files.newBufferedWriter;
@@ -37,7 +36,6 @@ import static java.nio.file.StandardOpenOption.WRITE;
 import static schemacrawler.tools.integration.diagram.DiagramOutputFormat.svg;
 import static schemacrawler.tools.integration.diagram.GraphvizUtility.isGraphvizAvailable;
 import static schemacrawler.tools.integration.diagram.GraphvizUtility.isGraphvizJavaAvailable;
-import static schemacrawler.tools.options.TextOutputFormat.html;
 import static us.fatehi.utility.IOUtility.copy;
 import static us.fatehi.utility.IOUtility.createTempFilePath;
 
@@ -50,75 +48,96 @@ import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
-import schemacrawler.tools.executable.CommandChain;
+import schemacrawler.tools.executable.SchemaCrawlerCommand;
+import schemacrawler.tools.integration.diagram.DiagramOptions;
+import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
+import schemacrawler.tools.integration.diagram.DiagramRenderer;
+import schemacrawler.tools.options.Config;
+import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
+import schemacrawler.tools.options.TextOutputFormat;
+import schemacrawler.tools.text.schema.SchemaTextRenderer;
 
-public class EmbeddedDiagramRenderer
-  extends BaseSchemaCrawlerCommand
-{
+public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand {
 
-  private static final Pattern svgInsertionPoint =
-    Pattern.compile("<h2.*Tables.*h2>");
+  private static final Pattern svgInsertionPoint = Pattern.compile("<h2.*Tables.*h2>");
   private static final Pattern svgStart = Pattern.compile("<svg.*");
 
-  private static void insertSvg(final BufferedWriter finalHtmlFileWriter,
-                                final BufferedReader baseSvgFileReader)
-    throws IOException
-  {
+  private static void insertSvg(
+      final BufferedWriter finalHtmlFileWriter, final BufferedReader baseSvgFileReader)
+      throws IOException {
     finalHtmlFileWriter.append(System.lineSeparator());
     boolean skipLines = true;
     boolean isSvgStart = false;
     String line;
-    while ((line = baseSvgFileReader.readLine()) != null)
-    {
-      if (skipLines)
-      {
-        isSvgStart = svgStart
-          .matcher(line)
-          .matches();
+    while ((line = baseSvgFileReader.readLine()) != null) {
+      if (skipLines) {
+        isSvgStart = svgStart.matcher(line).matches();
         skipLines = !isSvgStart;
       }
-      if (!skipLines)
-      {
-        if (isSvgStart)
-        {
+      if (!skipLines) {
+        if (isSvgStart) {
           line = "<svg";
           isSvgStart = false;
         }
-        finalHtmlFileWriter
-          .append(line)
-          .append(System.lineSeparator());
+        finalHtmlFileWriter.append(line).append(System.lineSeparator());
       }
     }
     finalHtmlFileWriter.append(System.lineSeparator());
   }
 
-  public EmbeddedDiagramRenderer(final String command)
-  {
+  private DiagramOptions diagramOptions;
+
+  public EmbeddedDiagramRenderer(final String command) {
     super(command);
   }
 
   @Override
-  public void checkAvailability()
-    throws Exception
-  {
-    if (isGraphvizAvailable())
-    {
+  public void checkAvailability() throws Exception {
+    if (isGraphvizAvailable()) {
       return;
-    }
-    else if (isGraphvizJavaAvailable(svg))
-    {
+    } else if (isGraphvizJavaAvailable(svg)) {
       return;
-    }
-    else
-    {
+    } else {
       throw new SchemaCrawlerException("Cannot generate diagram in SVG format");
     }
   }
 
   @Override
-  public void execute()
-    throws Exception
-  {
+  public Config getAdditionalConfiguration() {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public void setAdditionalConfiguration(Config additionalConfiguration) {
+    throw new UnsupportedOperationException();
+  }
+
+  private void configureCommand(final SchemaCrawlerCommand scCommand)
+      throws SchemaCrawlerException {
+    scCommand.setSchemaCrawlerOptions(getSchemaCrawlerOptions());
+
+    scCommand.setIdentifiers(getIdentifiers());
+    scCommand.setCatalog(getCatalog());
+    scCommand.setConnection(getConnection());
+  }
+
+  private void setOutputOptions(
+      final SchemaCrawlerCommand scCommand,
+      final Path outputFile,
+      final OutputFormat outputFormat) {
+    final OutputOptions outputOptions =
+        OutputOptionsBuilder.builder(getOutputOptions())
+            .withOutputFormat(outputFormat)
+            .withOutputFormatValue(outputFormat.getFormat())
+            .withOutputFile(outputFile)
+            .toOptions();
+    scCommand.setOutputOptions(outputOptions);
+  }
+
+  @Override
+  public void execute() throws Exception {
     checkCatalog();
 
     final Path finalHtmlFile = createTempFilePath("schemacrawler", "html");
@@ -126,49 +145,47 @@ public class EmbeddedDiagramRenderer
     final Path baseSvgFile = createTempFilePath("schemacrawler", "svg");
 
     // Execute chain, after setting all options from the current command
-    final CommandChain chain = new CommandChain(this);
-    chain.addNext(command, html, baseHtmlFile);
-    chain.addNext(command, svg, baseSvgFile);
-    chain.execute();
+    final SchemaTextRenderer htmlCommand = new SchemaTextRenderer(command);
+    configureCommand(htmlCommand);
+    htmlCommand.setSchemaTextOptions(diagramOptions);
+    setOutputOptions(htmlCommand, baseHtmlFile, TextOutputFormat.html);
+    htmlCommand.checkAvailability();
+    htmlCommand.initialize();
+    htmlCommand.execute();
+
+    final DiagramRenderer svgCommand = new DiagramRenderer(command);
+    configureCommand(svgCommand);
+    svgCommand.setDiagramOptions(diagramOptions);
+    setOutputOptions(svgCommand, baseSvgFile, DiagramOutputFormat.svg);
+    svgCommand.checkAvailability();
+    svgCommand.initialize();
+    svgCommand.execute();
 
     // Interleave HTML and SVG
-    try (
-      final BufferedWriter finalHtmlFileWriter = newBufferedWriter(finalHtmlFile,
-                                                                   UTF_8,
-                                                                   WRITE,
-                                                                   CREATE,
-                                                                   TRUNCATE_EXISTING);
-      final BufferedReader baseHtmlFileReader = newBufferedReader(baseHtmlFile,
-                                                                  UTF_8);
-      final BufferedReader baseSvgFileReader = newBufferedReader(baseSvgFile,
-                                                                 UTF_8)
-    )
-    {
+    try (final BufferedWriter finalHtmlFileWriter =
+            newBufferedWriter(finalHtmlFile, UTF_8, WRITE, CREATE, TRUNCATE_EXISTING);
+        final BufferedReader baseHtmlFileReader = newBufferedReader(baseHtmlFile, UTF_8);
+        final BufferedReader baseSvgFileReader = newBufferedReader(baseSvgFile, UTF_8)) {
       String line;
-      while ((line = baseHtmlFileReader.readLine()) != null)
-      {
-        if (svgInsertionPoint
-          .matcher(line)
-          .matches())
-        {
+      while ((line = baseHtmlFileReader.readLine()) != null) {
+        if (svgInsertionPoint.matcher(line).matches()) {
           insertSvg(finalHtmlFileWriter, baseSvgFileReader);
         }
-        finalHtmlFileWriter
-          .append(line)
-          .append(System.lineSeparator());
+        finalHtmlFileWriter.append(line).append(System.lineSeparator());
       }
     }
 
-    try (final Writer writer = outputOptions.openNewOutputWriter())
-    {
+    try (final Writer writer = outputOptions.openNewOutputWriter()) {
       copy(newBufferedReader(finalHtmlFile, UTF_8), writer);
     }
   }
 
-  @Override
-  public boolean usesConnection()
-  {
-    return false;
+  public void setDiagramOptions(DiagramOptions diagramOptions) {
+    this.diagramOptions = diagramOptions;
   }
 
+  @Override
+  public boolean usesConnection() {
+    return false;
+  }
 }
