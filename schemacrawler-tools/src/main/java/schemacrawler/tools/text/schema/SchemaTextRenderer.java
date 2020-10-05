@@ -28,11 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.text.schema;
 
-import static java.util.Objects.requireNonNull;
-
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
-import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
 import schemacrawler.utility.NamedObjectSort;
@@ -42,9 +39,7 @@ import schemacrawler.utility.NamedObjectSort;
  *
  * @author Sualeh Fatehi
  */
-public final class SchemaTextRenderer extends BaseSchemaCrawlerCommand {
-
-  private SchemaTextOptions schemaTextOptions;
+public final class SchemaTextRenderer extends BaseSchemaCrawlerCommand<SchemaTextOptions> {
 
   public SchemaTextRenderer(final String command) {
     super(command);
@@ -65,25 +60,11 @@ public final class SchemaTextRenderer extends BaseSchemaCrawlerCommand {
     traverser.setCatalog(catalog);
     traverser.setHandler(formatter);
     traverser.setTablesComparator(
-        NamedObjectSort.getNamedObjectSort(schemaTextOptions.isAlphabeticalSortForTables()));
+        NamedObjectSort.getNamedObjectSort(commandOptions.isAlphabeticalSortForTables()));
     traverser.setRoutinesComparator(
-        NamedObjectSort.getNamedObjectSort(schemaTextOptions.isAlphabeticalSortForRoutines()));
+        NamedObjectSort.getNamedObjectSort(commandOptions.isAlphabeticalSortForRoutines()));
 
     traverser.traverse();
-  }
-
-  public SchemaTextOptions getSchemaTextOptions() {
-    return schemaTextOptions;
-  }
-
-  @Override
-  public void initialize() throws Exception {
-    super.initialize();
-    loadSchemaTextOptions();
-  }
-
-  public void setSchemaTextOptions(final SchemaTextOptions schemaTextOptions) {
-    this.schemaTextOptions = requireNonNull(schemaTextOptions, "No schema text options provided");
   }
 
   @Override
@@ -106,25 +87,16 @@ public final class SchemaTextRenderer extends BaseSchemaCrawlerCommand {
     final SchemaTraversalHandler formatter;
 
     final String identifierQuoteString = identifiers.getIdentifierQuoteString();
-    final TextOutputFormat outputFormat =
-        TextOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
     if (schemaTextDetailType == SchemaTextDetailType.list) {
       formatter =
           new SchemaListFormatter(
-              schemaTextDetailType, schemaTextOptions, outputOptions, identifierQuoteString);
+              schemaTextDetailType, commandOptions, outputOptions, identifierQuoteString);
     } else {
       formatter =
           new SchemaTextFormatter(
-              schemaTextDetailType, schemaTextOptions, outputOptions, identifierQuoteString);
+              schemaTextDetailType, commandOptions, outputOptions, identifierQuoteString);
     }
 
     return formatter;
-  }
-
-  private void loadSchemaTextOptions() {
-    if (schemaTextOptions == null) {
-      schemaTextOptions =
-          SchemaTextOptionsBuilder.builder().fromConfig(additionalConfiguration).toOptions();
-    }
   }
 }

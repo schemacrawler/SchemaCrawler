@@ -30,14 +30,14 @@ package schemacrawler.tools.executable;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import schemacrawler.tools.text.operation.Operation;
+import schemacrawler.tools.text.operation.OperationType;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
 public class CommandProviderUtility {
 
   public static Collection<CommandDescription> operationCommands() {
     final Collection<CommandDescription> supportedCommands = new ArrayList<>();
-    for (final Operation operation : Operation.values()) {
+    for (final OperationType operation : OperationType.values()) {
       supportedCommands.add(new CommandDescription(operation.name(), operation.getDescription()));
     }
     return supportedCommands;

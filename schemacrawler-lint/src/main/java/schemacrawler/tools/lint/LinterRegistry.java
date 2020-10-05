@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.lint;
 
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -46,35 +45,25 @@ import us.fatehi.utility.string.StringFormat;
  *
  * @author Sualeh Fatehi
  */
-public final class LinterRegistry
-  implements Iterable<String>
-{
+public final class LinterRegistry implements Iterable<String> {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(LinterRegistry.class.getName());
+      SchemaCrawlerLogger.getLogger(LinterRegistry.class.getName());
 
-  private static Map<String, Class<Linter>> loadLinterRegistry()
-    throws SchemaCrawlerException
-  {
+  private static Map<String, Class<Linter>> loadLinterRegistry() throws SchemaCrawlerException {
 
     final Map<String, Class<Linter>> linterRegistry = new HashMap<>();
-    try
-    {
-      final ServiceLoader<Linter> serviceLoader =
-        ServiceLoader.load(Linter.class);
-      for (final Linter linter : serviceLoader)
-      {
+    try {
+      final ServiceLoader<Linter> serviceLoader = ServiceLoader.load(Linter.class);
+      for (final Linter linter : serviceLoader) {
         final String linterId = linter.getLinterId();
         final Class<Linter> linterClass = (Class<Linter>) linter.getClass();
-        LOGGER.log(Level.FINER,
-                   new StringFormat("Loading linter, %s=%s",
-                                    linterId,
-                                    linterClass.getName()));
+        LOGGER.log(
+            Level.FINER,
+            new StringFormat("Loading linter, %s=%s", linterId, linterClass.getName()));
         linterRegistry.put(linterId, linterClass);
       }
-    }
-    catch (final Exception e)
-    {
+    } catch (final Exception e) {
       throw new SchemaCrawlerException("Could not load linter registry", e);
     }
 
@@ -83,51 +72,38 @@ public final class LinterRegistry
 
   private final Map<String, Class<Linter>> linterRegistry;
 
-  public LinterRegistry()
-    throws SchemaCrawlerException
-  {
+  public LinterRegistry() throws SchemaCrawlerException {
     linterRegistry = loadLinterRegistry();
   }
 
-  public Set<String> allRegisteredLinters()
-  {
+  public Set<String> allRegisteredLinters() {
     return new TreeSet<>(linterRegistry.keySet());
   }
 
-  public boolean hasLinter(final String linterId)
-  {
+  public boolean hasLinter(final String linterId) {
     return linterRegistry.containsKey(linterId);
   }
 
   @Override
-  public Iterator<String> iterator()
-  {
+  public Iterator<String> iterator() {
     return allRegisteredLinters().iterator();
   }
 
-  public Linter newLinter(final String linterId)
-  {
-    if (hasLinter(linterId))
-    {
+  public Linter newLinter(final String linterId) {
+    if (hasLinter(linterId)) {
       final Class<Linter> linterClass = linterRegistry.get(linterId);
-      try
-      {
+      try {
         final Linter linter = linterClass.newInstance();
         return linter;
-      }
-      catch (final Exception e)
-      {
-        LOGGER.log(Level.WARNING,
-                   new StringFormat("Could not instantiate linter <%s>",
-                                    linterClass.getName()),
-                   e);
+      } catch (final Exception e) {
+        LOGGER.log(
+            Level.WARNING,
+            new StringFormat("Could not instantiate linter <%s>", linterClass.getName()),
+            e);
         return null;
       }
-    }
-    else
-    {
+    } else {
       return null;
     }
   }
-
 }

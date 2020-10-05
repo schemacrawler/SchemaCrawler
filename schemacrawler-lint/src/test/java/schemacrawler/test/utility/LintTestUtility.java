@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.utility;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
@@ -43,72 +42,61 @@ import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
+
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.lint.executable.LintOptionsBuilder;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputFormat;
 
-public final class LintTestUtility
-{
+public final class LintTestUtility {
 
-  public static void executableLint(final Connection connection,
-                                    final String linterConfigsResource,
-                                    final Config additionalConfig,
-                                    final String referenceFileName)
-    throws Exception
-  {
-    final SchemaCrawlerExecutable lintExecutable =
-      new SchemaCrawlerExecutable("lint");
-    if (!isBlank(linterConfigsResource))
-    {
-      final Path linterConfigsFile =
-        copyResourceToTempFile(linterConfigsResource);
+  public static void executableLint(
+      final Connection connection,
+      final String linterConfigsResource,
+      final Config additionalConfig,
+      final String referenceFileName)
+      throws Exception {
+    final SchemaCrawlerExecutable lintExecutable = new SchemaCrawlerExecutable("lint");
+    if (!isBlank(linterConfigsResource)) {
+      final Path linterConfigsFile = copyResourceToTempFile(linterConfigsResource);
       final LintOptionsBuilder optionsBuilder = LintOptionsBuilder.builder();
       optionsBuilder.withLinterConfigs(linterConfigsFile.toString());
 
       final Config config = optionsBuilder.toConfig();
-      if (additionalConfig != null)
-      {
+      if (additionalConfig != null) {
         config.putAll(additionalConfig);
       }
       lintExecutable.setAdditionalConfiguration(config);
     }
 
-    assertThat(outputOf(executableExecution(connection, lintExecutable)),
-               hasSameContentAs(classpathResource(referenceFileName + ".txt")));
+    assertThat(
+        outputOf(executableExecution(connection, lintExecutable)),
+        hasSameContentAs(classpathResource(referenceFileName + ".txt")));
   }
 
-  public static void executeLintCommandLine(final DatabaseConnectionInfo connectionInfo,
-                                            final OutputFormat outputFormat,
-                                            final String linterConfigsResource,
-                                            final Map<String, String> additionalArgs,
-                                            final String referenceFileName)
-    throws Exception
-  {
+  public static void executeLintCommandLine(
+      final DatabaseConnectionInfo connectionInfo,
+      final OutputFormat outputFormat,
+      final String linterConfigsResource,
+      final Map<String, String> additionalArgs,
+      final String referenceFileName)
+      throws Exception {
     final Map<String, String> argsMap = new HashMap<>();
 
     argsMap.put("-info-level", "standard");
     argsMap.put("-sort-columns", "true");
 
-    if (!isBlank(linterConfigsResource))
-    {
-      final Path linterConfigsFile =
-        copyResourceToTempFile(linterConfigsResource);
+    if (!isBlank(linterConfigsResource)) {
+      final Path linterConfigsFile = copyResourceToTempFile(linterConfigsResource);
       argsMap.put("-linter-configs", linterConfigsFile.toString());
     }
 
-    if (additionalArgs != null)
-    {
+    if (additionalArgs != null) {
       argsMap.putAll(additionalArgs);
     }
 
-    assertThat(outputOf(commandlineExecution(connectionInfo,
-                                             "lint",
-                                             argsMap,
-                                             new Config(),
-                                             outputFormat)),
-               hasSameContentAndTypeAs(classpathResource(referenceFileName),
-                                       outputFormat));
+    assertThat(
+        outputOf(commandlineExecution(connectionInfo, "lint", argsMap, new Config(), outputFormat)),
+        hasSameContentAndTypeAs(classpathResource(referenceFileName), outputFormat));
   }
-
 }

@@ -33,6 +33,7 @@ import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 
 public class TestCommandProvider extends BaseCommandProvider {
@@ -53,7 +54,7 @@ public class TestCommandProvider extends BaseCommandProvider {
   }
 
   @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command) {
+  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command, Config config) {
     throw new UnsupportedOperationException(DESCRIPTION_HEADER);
   }
 

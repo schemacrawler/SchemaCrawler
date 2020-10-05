@@ -133,9 +133,10 @@ public final class CommandRegistry {
 
     final CommandProvider executableCommandProvider = executableCommandProviders.get(0);
 
-    final SchemaCrawlerCommand scCommand;
+    final SchemaCrawlerCommand<?> scCommand;
     try {
-      scCommand = executableCommandProvider.newSchemaCrawlerCommand(command);
+      scCommand =
+          executableCommandProvider.newSchemaCrawlerCommand(command, additionalConfiguration);
       scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
       scCommand.setOutputOptions(outputOptions);
     } catch (final Throwable e) {

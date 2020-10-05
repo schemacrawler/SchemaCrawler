@@ -38,7 +38,6 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.tools.integration.diagram.DiagramOptionsBuilder.builder;
-import static schemacrawler.tools.integration.diagram.DiagramOptionsBuilder.newDiagramOptions;
 
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -155,7 +154,7 @@ public class DiagramRendererOptionsTest {
       throws Exception {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
-    final DiagramOptions diagramOptions = newDiagramOptions();
+    final DiagramOptions diagramOptions = DiagramOptionsBuilder.builder().toOptions();
 
     executableDiagram(
         SchemaTextDetailType.schema.name(),

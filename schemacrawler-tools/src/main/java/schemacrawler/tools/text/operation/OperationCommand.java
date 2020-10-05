@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.text.operation;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.QueryUtility.executeAgainstTable;
 import static us.fatehi.utility.DatabaseUtility.createStatement;
 import static us.fatehi.utility.DatabaseUtility.executeSql;
@@ -57,11 +56,9 @@ import us.fatehi.utility.string.StringFormat;
  *
  * @author Sualeh Fatehi
  */
-public final class OperationCommand extends BaseSchemaCrawlerCommand {
+public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOptions> {
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(OperationCommand.class.getName());
-
-  private OperationOptions operationOptions;
 
   public OperationCommand(final String command) {
     super(command);
@@ -86,7 +83,7 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand {
     }
 
     final DataTraversalHandler handler = getDataTraversalHandler();
-    final Query query = getQuery();
+    final Query query = commandOptions.getQuery();
 
     handler.begin();
 
@@ -108,7 +105,7 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand {
       try (final Statement statement = createStatement(connection)) {
         for (final Table table : getSortedTables(catalog)) {
           final boolean isAlphabeticalSortForTableColumns =
-              operationOptions.isAlphabeticalSortForTableColumns();
+              commandOptions.isAlphabeticalSortForTableColumns();
           try (final ResultSet results =
               executeAgainstTable(
                   query, statement, table, isAlphabeticalSortForTableColumns, identifiers)) {
@@ -129,65 +126,23 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand {
     handler.end();
   }
 
-  public OperationOptions getOperationOptions() {
-    return operationOptions;
-  }
-
-  @Override
-  public void initialize() throws Exception {
-    super.initialize();
-    loadOperationOptions();
-  }
-
-  public void setOperationOptions(final OperationOptions operationOptions) {
-    this.operationOptions = requireNonNull(operationOptions, "No operation options provided");
-  }
-
   @Override
   public boolean usesConnection() {
     return true;
   }
 
   private DataTraversalHandler getDataTraversalHandler() throws SchemaCrawlerException {
-    final Operation operation = getOperation();
-
-    final TextOutputFormat outputFormat =
-        TextOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
+    final Operation operation = commandOptions.getOperation();
     final String identifierQuoteString = identifiers.getIdentifierQuoteString();
 
     final DataTraversalHandler formatter =
-        new DataTextFormatter(operation, operationOptions, outputOptions, identifierQuoteString);
+        new DataTextFormatter(operation, commandOptions, outputOptions, identifierQuoteString);
     return formatter;
-  }
-
-  /** Determine the operation, or whether this command is a query. */
-  private Operation getOperation() {
-    Operation operation = null;
-    try {
-      operation = Operation.valueOf(command);
-    } catch (final IllegalArgumentException | NullPointerException e) {
-      operation = null;
-    }
-    return operation;
-  }
-
-  private Query getQuery() {
-    final Operation operation = getOperation();
-    final Query query;
-    if (operation == null) {
-      final String queryName = command;
-      final String queryString = additionalConfiguration.get(queryName);
-      query = new Query(queryName, queryString);
-    } else {
-      query = operation.getQuery();
-    }
-
-    return query;
   }
 
   private List<? extends Table> getSortedTables(final Catalog catalog) {
     final List<? extends Table> tables = new ArrayList<>(catalog.getTables());
-    tables.sort(NamedObjectSort.getNamedObjectSort(operationOptions.isAlphabeticalSortForTables()));
+    tables.sort(NamedObjectSort.getNamedObjectSort(commandOptions.isAlphabeticalSortForTables()));
     return tables;
   }
 
@@ -195,12 +150,5 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand {
     final String outputFormatValue = outputOptions.getOutputFormatValue();
     final boolean isOutputFormatSupported = TextOutputFormat.isSupportedFormat(outputFormatValue);
     return isOutputFormatSupported;
-  }
-
-  private void loadOperationOptions() {
-    if (operationOptions == null) {
-      operationOptions =
-          OperationOptionsBuilder.builder().fromConfig(additionalConfiguration).toOptions();
-    }
   }
 }

@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.text.operation;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.analysis.counts.TableRowCountsUtility.getRowCountMessage;
 
 import java.sql.ResultSet;
@@ -87,13 +88,13 @@ final class DataTextFormatter extends BaseTabularFormatter<OperationOptions>
         false,
         outputOptions,
         identifierQuoteString);
-    this.operation = operation;
+    this.operation = requireNonNull(operation, "No operation provided");
   }
 
   /** {@inheritDoc} */
   @Override
   public void end() throws SchemaCrawlerException {
-    if (operation == Operation.count) {
+    if (operation == OperationType.count) {
       formattingHelper.writeObjectEnd();
     }
 
@@ -160,7 +161,7 @@ final class DataTextFormatter extends BaseTabularFormatter<OperationOptions>
       printHeader();
     }
 
-    if (operation == Operation.count) {
+    if (operation == OperationType.count) {
       handleAggregateOperationForTable(title, rows);
     } else {
       formattingHelper.println();
@@ -192,15 +193,9 @@ final class DataTextFormatter extends BaseTabularFormatter<OperationOptions>
   }
 
   private void printHeader() {
-    if (operation == null) {
-      // If there is no operation, assume that the command is a query
-      formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Query");
-      return;
-    }
-
     formattingHelper.writeHeader(DocumentHeaderType.subTitle, operation.getTitle());
 
-    if (operation == Operation.count) {
+    if (operation == OperationType.count) {
       formattingHelper.writeObjectStart();
       formattingHelper.writeObjectNameRow("", operation.getTitle(), "", Color.white);
     }

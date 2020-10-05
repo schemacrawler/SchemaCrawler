@@ -27,39 +27,37 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.integration.diagram;
 
-
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandProviderUtility;
-import schemacrawler.tools.executable.SchemaCrawlerCommand;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 
-public final class DiagramCommandProvider
-  extends BaseCommandProvider
-{
+public final class DiagramCommandProvider extends BaseCommandProvider {
 
-  public DiagramCommandProvider()
-  {
+  public DiagramCommandProvider() {
     super(CommandProviderUtility.schemaTextCommands());
   }
 
   @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
-  {
-    return new DiagramRenderer(command);
+  public DiagramRenderer newSchemaCrawlerCommand(final String command, final Config config) {
+    final DiagramOptions diagramOptions =
+        DiagramOptionsBuilder.builder().fromConfig(config).toOptions();
+    final DiagramRenderer scCommand = new DiagramRenderer(command);
+    scCommand.setCommandOptions(diagramOptions);
+    return scCommand;
   }
 
   @Override
-  public boolean supportsOutputFormat(final String command,
-                                      final OutputOptions outputOptions)
-  {
-    return supportsOutputFormat(command, outputOptions, format -> {
-      final DiagramOutputFormat diagramOutputFormat =
-        DiagramOutputFormat.fromFormat(format);
-      final boolean supportsOutputFormat =
-        DiagramOutputFormat.isSupportedFormat(format)
-        && diagramOutputFormat != DiagramOutputFormat.htmlx;
-      return supportsOutputFormat;
-    });
+  public boolean supportsOutputFormat(final String command, final OutputOptions outputOptions) {
+    return supportsOutputFormat(
+        command,
+        outputOptions,
+        format -> {
+          final DiagramOutputFormat diagramOutputFormat = DiagramOutputFormat.fromFormat(format);
+          final boolean supportsOutputFormat =
+              DiagramOutputFormat.isSupportedFormat(format)
+                  && diagramOutputFormat != DiagramOutputFormat.htmlx;
+          return supportsOutputFormat;
+        });
   }
-
 }

@@ -28,21 +28,20 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.integration.template;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import schemacrawler.tools.integration.LanguageOptions;
 
-public final class TemplateCommand extends BaseSchemaCrawlerCommand {
+public final class TemplateCommand extends BaseSchemaCrawlerCommand<LanguageOptions> {
 
   static final String COMMAND = "template";
 
-  private final TemplateLanguage templateLanguage;
-
   public TemplateCommand() {
     super(COMMAND);
-    templateLanguage = new TemplateLanguage();
   }
 
   @Override
@@ -54,14 +53,13 @@ public final class TemplateCommand extends BaseSchemaCrawlerCommand {
   /** {@inheritDoc} */
   @Override
   public void execute() throws Exception {
+    requireNonNull(commandOptions, "No template language provided");
     checkCatalog();
 
-    templateLanguage.addConfig(getAdditionalConfiguration());
+    // Find if the language type is valid, or throw an exception
+    final TemplateLanguageType languageType =
+        TemplateLanguageType.valueOf(commandOptions.getLanguage());
 
-    final TemplateLanguageType languageType = templateLanguage.getTemplateLanguageType();
-    if (languageType == TemplateLanguageType.unknown) {
-      throw new SchemaCrawlerException("No template language provided");
-    }
     final String templateRendererClassName = languageType.getTemplateRendererClassName();
     final Class<TemplateRenderer> templateRendererClass =
         (Class<TemplateRenderer>) Class.forName(templateRendererClassName);
@@ -71,7 +69,7 @@ public final class TemplateCommand extends BaseSchemaCrawlerCommand {
     context.put("catalog", catalog);
     context.put("identifiers", identifiers);
 
-    templateRenderer.setResourceFilename(templateLanguage.getResourceFilename());
+    templateRenderer.setResourceFilename(commandOptions.getScript());
     templateRenderer.setContext(context);
     templateRenderer.setOutputOptions(outputOptions);
 

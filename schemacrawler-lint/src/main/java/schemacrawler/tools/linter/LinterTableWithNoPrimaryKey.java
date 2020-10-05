@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.linter;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
@@ -38,42 +37,32 @@ import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
 
-public class LinterTableWithNoPrimaryKey
-  extends BaseLinter
-{
+public class LinterTableWithNoPrimaryKey extends BaseLinter {
 
-  public LinterTableWithNoPrimaryKey()
-  {
+  public LinterTableWithNoPrimaryKey() {
     setSeverity(LintSeverity.high);
     setTableTypesFilter(new TableTypesFilter("TABLE"));
   }
 
   @Override
-  public String getSummary()
-  {
+  public String getSummary() {
     return "no primary key";
   }
 
   @Override
-  protected void lint(final Table table, final Connection connection)
-  {
+  protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
 
-    if (hasNoPrimaryKey(table))
-    {
+    if (hasNoPrimaryKey(table)) {
       addTableLint(table, getSummary());
     }
   }
 
-  private boolean hasNoPrimaryKey(final Table table)
-  {
-    if (table.getPrimaryKey() == null)
-    {
+  private boolean hasNoPrimaryKey(final Table table) {
+    if (table.getPrimaryKey() == null) {
       boolean hasDataColumn = false;
-      for (final Column column : getColumns(table))
-      {
-        if (!column.isPartOfForeignKey())
-        {
+      for (final Column column : getColumns(table)) {
+        if (!column.isPartOfForeignKey()) {
           hasDataColumn = true;
           break;
         }
@@ -83,5 +72,4 @@ public class LinterTableWithNoPrimaryKey
 
     return false;
   }
-
 }

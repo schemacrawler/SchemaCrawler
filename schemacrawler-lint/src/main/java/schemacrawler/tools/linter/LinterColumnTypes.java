@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.linter;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
@@ -43,30 +42,22 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
 import us.fatehi.utility.Multimap;
 
-public class LinterColumnTypes
-  extends BaseLinter
-{
+public class LinterColumnTypes extends BaseLinter {
 
   private Multimap<String, ColumnDataType> columnTypes;
 
   @Override
-  public String getSummary()
-  {
+  public String getSummary() {
     return "column with same name but different data types";
   }
 
   @Override
-  protected void end(final Connection connection)
-    throws SchemaCrawlerException
-  {
+  protected void end(final Connection connection) throws SchemaCrawlerException {
     requireNonNull(columnTypes, "Not initialized");
 
-    for (final Entry<String, List<ColumnDataType>> entry : columnTypes.entrySet())
-    {
-      final SortedSet<ColumnDataType> currentColumnTypes =
-        new TreeSet<>(entry.getValue());
-      if (currentColumnTypes.size() > 1)
-      {
+    for (final Entry<String, List<ColumnDataType>> entry : columnTypes.entrySet()) {
+      final SortedSet<ColumnDataType> currentColumnTypes = new TreeSet<>(entry.getValue());
+      if (currentColumnTypes.size() > 1) {
         addCatalogLint(getSummary(), entry.getKey() + " " + currentColumnTypes);
       }
     }
@@ -77,24 +68,19 @@ public class LinterColumnTypes
   }
 
   @Override
-  protected void lint(final Table table, final Connection connection)
-  {
+  protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
     requireNonNull(columnTypes, "Not initialized");
 
-    for (final Column column : getColumns(table))
-    {
+    for (final Column column : getColumns(table)) {
       columnTypes.add(column.getName(), column.getColumnDataType());
     }
   }
 
   @Override
-  protected void start(final Connection connection)
-    throws SchemaCrawlerException
-  {
+  protected void start(final Connection connection) throws SchemaCrawlerException {
     super.start(connection);
 
     columnTypes = new Multimap<>();
   }
-
 }

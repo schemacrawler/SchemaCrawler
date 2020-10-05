@@ -25,31 +25,8 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.linter;
+package schemacrawler.tools.executable;
 
-import static java.util.Objects.requireNonNull;
+import schemacrawler.schemacrawler.Options;
 
-import java.sql.Connection;
-import java.util.List;
-
-import schemacrawler.schema.Column;
-import schemacrawler.schema.Table;
-import schemacrawler.tools.lint.BaseLinter;
-
-public class LinterTableWithSingleColumn extends BaseLinter {
-
-  @Override
-  public String getSummary() {
-    return "single column";
-  }
-
-  @Override
-  protected void lint(final Table table, final Connection connection) {
-    requireNonNull(table, "No table provided");
-
-    final List<Column> columns = getColumns(table);
-    if (columns.size() <= 1) {
-      addTableLint(table, getSummary());
-    }
-  }
-}
+public interface CommandOptions extends Options {}

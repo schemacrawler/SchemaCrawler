@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.integration.script;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.Charset;
@@ -42,7 +44,7 @@ import javax.script.ScriptEngineManager;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
-import schemacrawler.tools.executable.CommandChain;
+import schemacrawler.tools.integration.LanguageOptions;
 import us.fatehi.utility.ObjectToString;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.string.StringFormat;
@@ -52,11 +54,12 @@ import us.fatehi.utility.string.StringFormat;
  *
  * @author Sualeh Fatehi
  */
-public final class ScriptCommand extends BaseSchemaCrawlerCommand {
+public final class ScriptCommand extends BaseSchemaCrawlerCommand<LanguageOptions> {
 
-  static final String COMMAND = "script";
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(ScriptCommand.class.getName());
+
+  static final String COMMAND = "script";
 
   private static void logScriptEngineDetails(
       final Level level, final ScriptEngineFactory scriptEngineFactory) {
@@ -76,11 +79,8 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand {
             ObjectToString.toString(scriptEngineFactory.getExtensions())));
   }
 
-  private final ScriptLanguage scriptLanguage;
-
   public ScriptCommand() {
     super(COMMAND);
-    scriptLanguage = new ScriptLanguage();
   }
 
   @Override
@@ -91,23 +91,20 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand {
   /** {@inheritDoc} */
   @Override
   public void execute() throws Exception {
+    requireNonNull(commandOptions, "No script language provided");
     checkCatalog();
-
-    scriptLanguage.addConfig(getAdditionalConfiguration());
 
     final Charset inputCharset = outputOptions.getInputCharset();
 
     final ScriptEngine scriptEngine = getScriptEngine();
-    final InputResource inputResource = scriptLanguage.getResource();
+    final InputResource inputResource = commandOptions.getResource();
     try (final Reader reader = inputResource.openNewInputReader(inputCharset);
         final Writer writer = outputOptions.openNewOutputWriter()) {
-      final CommandChain chain = new CommandChain(this);
 
       // Set up the context
       scriptEngine.getContext().setWriter(writer);
       scriptEngine.put("catalog", catalog);
       scriptEngine.put("connection", connection);
-      scriptEngine.put("chain", chain);
 
       // Evaluate the script
       if (scriptEngine instanceof Compilable) {
@@ -127,7 +124,7 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand {
   private ScriptEngine getScriptEngine() throws SchemaCrawlerException {
     final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
     ScriptEngine scriptEngine = null;
-    final String scriptingLanguage = scriptLanguage.getLanguage();
+    final String scriptingLanguage = commandOptions.getLanguage();
     LOGGER.log(Level.CONFIG, new StringFormat("Using script language <%s>", scriptingLanguage));
     try {
       scriptEngine = scriptEngineManager.getEngineByName(scriptingLanguage);

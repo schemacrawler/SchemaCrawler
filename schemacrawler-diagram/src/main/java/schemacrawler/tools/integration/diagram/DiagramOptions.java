@@ -27,51 +27,40 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.integration.diagram;
 
-
 import java.util.List;
 import java.util.Map;
 
-import schemacrawler.tools.text.schema.BaseSchemaTextOptions;
+import schemacrawler.tools.text.schema.SchemaTextOptions;
 
-public class DiagramOptions
-  extends BaseSchemaTextOptions
-{
+public class DiagramOptions extends SchemaTextOptions {
 
   private final List<String> graphvizOpts;
   private final Map<String, String> graphvizAttributes;
   private final boolean isShowForeignKeyCardinality;
   private final boolean isShowPrimaryKeyCardinality;
 
-  protected DiagramOptions(final DiagramOptionsBuilder diagramOptionsBuilder)
-  {
+  protected DiagramOptions(final DiagramOptionsBuilder diagramOptionsBuilder) {
     super(diagramOptionsBuilder);
 
     graphvizOpts = diagramOptionsBuilder.graphvizOpts;
     graphvizAttributes = diagramOptionsBuilder.graphvizAttributes;
-    isShowForeignKeyCardinality =
-      diagramOptionsBuilder.isShowForeignKeyCardinality;
-    isShowPrimaryKeyCardinality =
-      diagramOptionsBuilder.isShowPrimaryKeyCardinality;
+    isShowForeignKeyCardinality = diagramOptionsBuilder.isShowForeignKeyCardinality;
+    isShowPrimaryKeyCardinality = diagramOptionsBuilder.isShowPrimaryKeyCardinality;
   }
 
-  public Map<String, String> getGraphvizAttributes()
-  {
+  public Map<String, String> getGraphvizAttributes() {
     return graphvizAttributes;
   }
 
-  public List<String> getGraphvizOpts()
-  {
+  public List<String> getGraphvizOpts() {
     return graphvizOpts;
   }
 
-  public boolean isShowForeignKeyCardinality()
-  {
+  public boolean isShowForeignKeyCardinality() {
     return isShowForeignKeyCardinality;
   }
 
-  public boolean isShowPrimaryKeyCardinality()
-  {
+  public boolean isShowPrimaryKeyCardinality() {
     return isShowPrimaryKeyCardinality;
   }
-
 }

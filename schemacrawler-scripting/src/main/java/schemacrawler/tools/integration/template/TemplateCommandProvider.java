@@ -31,8 +31,9 @@ import static schemacrawler.tools.executable.commandline.PluginCommand.newPlugin
 
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandDescription;
-import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import schemacrawler.tools.integration.LanguageOptions;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 
 public class TemplateCommandProvider extends BaseCommandProvider {
@@ -56,8 +57,13 @@ public class TemplateCommandProvider extends BaseCommandProvider {
   }
 
   @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command) {
-    return new TemplateCommand();
+  public TemplateCommand newSchemaCrawlerCommand(final String command, final Config config) {
+    final LanguageOptions toOptions =
+        TemplateLanguageOptionsBuilder.builder().fromConfig(config).toOptions();
+
+    final TemplateCommand scCommand = new TemplateCommand();
+    scCommand.setCommandOptions(toOptions);
+    return scCommand;
   }
 
   @Override

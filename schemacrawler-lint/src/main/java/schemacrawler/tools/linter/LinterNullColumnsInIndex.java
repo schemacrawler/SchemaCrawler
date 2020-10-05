@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.linter;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
@@ -41,48 +40,35 @@ import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 
-public class LinterNullColumnsInIndex
-  extends BaseLinter
-{
+public class LinterNullColumnsInIndex extends BaseLinter {
 
   @Override
-  public String getSummary()
-  {
+  public String getSummary() {
     return "unique index with nullable columns";
   }
 
   @Override
-  protected void lint(final Table table, final Connection connection)
-  {
+  protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
 
     final List<Index> nullableColumnsInUniqueIndex =
-      findNullableColumnsInUniqueIndex(table.getIndexes());
-    for (final Index index : nullableColumnsInUniqueIndex)
-    {
+        findNullableColumnsInUniqueIndex(table.getIndexes());
+    for (final Index index : nullableColumnsInUniqueIndex) {
       addTableLint(table, getSummary(), index);
     }
   }
 
-  private List<Index> findNullableColumnsInUniqueIndex(final Collection<Index> indexes)
-  {
+  private List<Index> findNullableColumnsInUniqueIndex(final Collection<Index> indexes) {
     final List<Index> nullableColumnsInUniqueIndex = new ArrayList<>();
-    for (final Index index : indexes)
-    {
-      if (index.isUnique())
-      {
-        for (final IndexColumn indexColumn : index)
-        {
-          try
-          {
-            if (indexColumn.isNullable() && !indexColumn.isGenerated())
-            {
+    for (final Index index : indexes) {
+      if (index.isUnique()) {
+        for (final IndexColumn indexColumn : index) {
+          try {
+            if (indexColumn.isNullable() && !indexColumn.isGenerated()) {
               nullableColumnsInUniqueIndex.add(index);
               break;
             }
-          }
-          catch (final NotLoadedException e)
-          {
+          } catch (final NotLoadedException e) {
             // The column may be partial for index pseudo-columns
             continue;
           }
@@ -91,5 +77,4 @@ public class LinterNullColumnsInIndex
     }
     return nullableColumnsInUniqueIndex;
   }
-
 }

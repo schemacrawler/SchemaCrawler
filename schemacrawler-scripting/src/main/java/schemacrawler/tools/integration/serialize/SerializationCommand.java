@@ -43,7 +43,7 @@ import schemacrawler.tools.options.OutputOptionsBuilder;
  *
  * @author Sualeh Fatehi
  */
-public final class SerializationCommand extends BaseSchemaCrawlerCommand {
+public final class SerializationCommand extends BaseSchemaCrawlerCommand<SerializationOptions> {
 
   static final String COMMAND = "serialize";
 

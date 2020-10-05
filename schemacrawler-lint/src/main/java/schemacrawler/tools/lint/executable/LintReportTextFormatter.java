@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.lint.executable;
 
-
 import static java.util.Comparator.naturalOrder;
 
 import java.io.Serializable;
@@ -51,22 +50,18 @@ import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.Color;
 import us.fatehi.utility.Multimap;
 
-final class LintReportTextFormatter
-  extends BaseTabularFormatter<LintOptions>
-  implements LintReportBuilder
-{
+final class LintReportTextFormatter extends BaseTabularFormatter<LintOptions>
+    implements LintReportBuilder {
 
   private static final String LINT_KEY = "schemacrawler.lint";
 
-  private static Collection<Lint<?>> getLint(final AttributedObject namedObject)
-  {
-    if (namedObject == null)
-    {
+  private static Collection<Lint<?>> getLint(final AttributedObject namedObject) {
+    if (namedObject == null) {
       return null;
     }
 
     final List<Lint<? extends Serializable>> lints =
-      new ArrayList<>(namedObject.getAttribute(LINT_KEY, new ArrayList<>()));
+        new ArrayList<>(namedObject.getAttribute(LINT_KEY, new ArrayList<>()));
     lints.sort(naturalOrder());
     return lints;
   }
@@ -74,20 +69,19 @@ final class LintReportTextFormatter
   private final Catalog catalog;
   private final LintOptions lintOptions;
 
-  LintReportTextFormatter(final Catalog catalog,
-                          final LintOptions lintOptions,
-                          final OutputOptions outputOptions,
-                          final String identifierQuoteString)
-    throws SchemaCrawlerException
-  {
+  LintReportTextFormatter(
+      final Catalog catalog,
+      final LintOptions lintOptions,
+      final OutputOptions outputOptions,
+      final String identifierQuoteString)
+      throws SchemaCrawlerException {
     super(lintOptions, false, outputOptions, identifierQuoteString);
     this.catalog = catalog;
     this.lintOptions = lintOptions;
   }
 
-  public void generateLintReport(final LintReport report)
-    throws SchemaCrawlerException
-  {
+  @Override
+  public void generateLintReport(final LintReport report) throws SchemaCrawlerException {
 
     this.begin();
 
@@ -99,12 +93,10 @@ final class LintReportTextFormatter
     this.handleStart();
     this.handle(catalog);
 
-    final List<? extends Table> tablesList =
-      new ArrayList<>(catalog.getTables());
-    Collections.sort(tablesList,
-                     NamedObjectSort.getNamedObjectSort(lintOptions.isAlphabeticalSortForTables()));
-    for (final Table table : tablesList)
-    {
+    final List<? extends Table> tablesList = new ArrayList<>(catalog.getTables());
+    Collections.sort(
+        tablesList, NamedObjectSort.getNamedObjectSort(lintOptions.isAlphabeticalSortForTables()));
+    for (final Table table : tablesList) {
       this.handle(table);
     }
 
@@ -113,88 +105,66 @@ final class LintReportTextFormatter
     this.end();
   }
 
-  private void handle(final Catalog catalog)
-  {
+  private void handle(final Catalog catalog) {
     final Collection<Lint<?>> lints = getLint(catalog);
-    if (lints != null && !lints.isEmpty())
-    {
+    if (lints != null && !lints.isEmpty()) {
       formattingHelper.writeObjectStart();
 
-      formattingHelper.writeObjectNameRow("",
-                                          "Database",
-                                          "[database]",
-                                          Color.white);
+      formattingHelper.writeObjectNameRow("", "Database", "[database]", Color.white);
 
       printLints(lints);
       formattingHelper.writeObjectEnd();
     }
   }
 
-  private void handle(final Table table)
-  {
+  private void handle(final Table table) {
     final Collection<Lint<?>> lints = getLint(table);
-    if (lints != null && !lints.isEmpty())
-    {
+    if (lints != null && !lints.isEmpty()) {
       formattingHelper.writeObjectStart();
 
       formattingHelper.println();
       formattingHelper.println();
 
       final String tableType = "[" + table.getTableType() + "]";
-      formattingHelper.writeObjectNameRow(nodeId(table),
-                                          identifiers.quoteFullName(table),
-                                          tableType,
-                                          colorMap.getColor(table));
+      formattingHelper.writeObjectNameRow(
+          nodeId(table), identifiers.quoteFullName(table), tableType, colorMap.getColor(table));
       printLints(lints);
       formattingHelper.writeObjectEnd();
     }
   }
 
-  private void handleEnd()
-  {
+  private void handleEnd() {
     // No output required
   }
 
-  private void handleStart()
-  {
+  private void handleStart() {
     formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Lints");
   }
 
-  private void printLints(final Collection<Lint<?>> lints)
-  {
+  private void printLints(final Collection<Lint<?>> lints) {
     formattingHelper.writeEmptyRow();
 
     final Multimap<LintSeverity, Lint<?>> multiMap = new Multimap<>();
-    for (final Lint<?> lint : lints)
-    {
+    for (final Lint<?> lint : lints) {
       multiMap.add(lint.getSeverity(), lint);
     }
     final List<LintSeverity> severities = Arrays.asList(LintSeverity.values());
     Collections.reverse(severities);
-    for (final LintSeverity severity : severities)
-    {
-      if (!multiMap.containsKey(severity))
-      {
+    for (final LintSeverity severity : severities) {
+      if (!multiMap.containsKey(severity)) {
         continue;
       }
 
       formattingHelper.writeNameRow("", String.format("[lint, %s]", severity));
       final List<Lint<?>> lintsById = new ArrayList<>(multiMap.get(severity));
-      for (final Lint<?> lint : lintsById)
-      {
+      for (final Lint<?> lint : lintsById) {
         final Object lintValue = lint.getValue();
-        if (lintValue instanceof Boolean)
-        {
-          if ((Boolean) lintValue)
-          {
+        if (lintValue instanceof Boolean) {
+          if ((Boolean) lintValue) {
             formattingHelper.writeRow("", lint.getMessage(), "");
           }
-        }
-        else
-        {
-          formattingHelper.writeRow("",
-                                    lint.getMessage(),
-                                    lint.getValueAsString());
+        } else {
+          formattingHelper.writeRow("", lint.getMessage(), lint.getValueAsString());
         }
       }
     }

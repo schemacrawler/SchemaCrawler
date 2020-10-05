@@ -75,18 +75,6 @@ public final class DiagramOptionsBuilder
     return new DiagramOptionsBuilder().fromOptions(options);
   }
 
-  public static DiagramOptions newDiagramOptions(final Config config)
-  {
-    return new DiagramOptionsBuilder()
-      .fromConfig(config)
-      .toOptions();
-  }
-
-  public static DiagramOptions newDiagramOptions()
-  {
-    return new DiagramOptionsBuilder().toOptions();
-  }
-
   private static Map<String, String> makeDefaultGraphvizAttributes()
   {
     final Map<String, String> graphvizAttributes = new HashMap<>();

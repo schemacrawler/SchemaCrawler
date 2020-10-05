@@ -25,31 +25,34 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.linter;
 
-import static java.util.Objects.requireNonNull;
+package schemacrawler.tools.integration;
 
-import java.sql.Connection;
-import java.util.List;
+import static us.fatehi.utility.Utility.requireNotBlank;
+import static us.fatehi.utility.ioresource.InputResourceUtility.createInputResource;
 
-import schemacrawler.schema.Column;
-import schemacrawler.schema.Table;
-import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.executable.CommandOptions;
+import us.fatehi.utility.ioresource.InputResource;
 
-public class LinterTableWithSingleColumn extends BaseLinter {
+public final class LanguageOptions implements CommandOptions {
 
-  @Override
-  public String getSummary() {
-    return "single column";
+  private final String language;
+  private final String script;
+
+  public LanguageOptions(final String language, final String script) {
+    this.language = requireNotBlank(language, "No language provided");
+    this.script = requireNotBlank(script, "No script provided");
   }
 
-  @Override
-  protected void lint(final Table table, final Connection connection) {
-    requireNonNull(table, "No table provided");
+  public String getLanguage() {
+    return language;
+  }
 
-    final List<Column> columns = getColumns(table);
-    if (columns.size() <= 1) {
-      addTableLint(table, getSummary());
-    }
+  public final InputResource getResource() {
+    return createInputResource(script);
+  }
+
+  public String getScript() {
+    return script;
   }
 }

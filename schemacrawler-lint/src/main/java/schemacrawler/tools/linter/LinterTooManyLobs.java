@@ -27,74 +27,60 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.linter;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.JavaSqlTypeGroup;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
-import schemacrawler.tools.options.Config;
 
-public class LinterTooManyLobs
-  extends BaseLinter
-{
+public class LinterTooManyLobs extends BaseLinter {
 
   private int maxLargeObjectsInTable;
 
-  public LinterTooManyLobs()
-  {
+  public LinterTooManyLobs() {
     setSeverity(LintSeverity.low);
 
     maxLargeObjectsInTable = 1;
   }
 
   @Override
-  public String getSummary()
-  {
+  public String getSummary() {
     return "too many binary objects";
   }
 
   @Override
-  protected void configure(final Config config)
-  {
+  protected void configure(final Map<String, String> config) {
     requireNonNull(config, "No configuration provided");
 
-    maxLargeObjectsInTable = config.getIntegerValue("max-large-objects", 1);
+    maxLargeObjectsInTable = Integer.valueOf(config.get("max-large-objects"));
   }
 
   @Override
-  protected void lint(final Table table, final Connection connection)
-  {
+  protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
 
     final ArrayList<Column> lobColumns = findLobColumns(getColumns(table));
-    if (lobColumns.size() > maxLargeObjectsInTable)
-    {
+    if (lobColumns.size() > maxLargeObjectsInTable) {
       addTableLint(table, getSummary(), lobColumns);
     }
   }
 
-  private ArrayList<Column> findLobColumns(final List<Column> columns)
-  {
+  private ArrayList<Column> findLobColumns(final List<Column> columns) {
     final ArrayList<Column> lobColumns = new ArrayList<>();
-    for (final Column column : columns)
-    {
-      final JavaSqlTypeGroup javaSqlTypeGroup = column
-        .getColumnDataType()
-        .getJavaSqlType()
-        .getJavaSqlTypeGroup();
-      if (javaSqlTypeGroup == JavaSqlTypeGroup.large_object)
-      {
+    for (final Column column : columns) {
+      final JavaSqlTypeGroup javaSqlTypeGroup =
+          column.getColumnDataType().getJavaSqlType().getJavaSqlTypeGroup();
+      if (javaSqlTypeGroup == JavaSqlTypeGroup.large_object) {
         lobColumns.add(column);
       }
     }
     return lobColumns;
   }
-
 }

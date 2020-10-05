@@ -25,14 +25,8 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+package schemacrawler.tools.integration.serialize;
 
-package schemacrawler.tools.integration.script;
+import schemacrawler.tools.executable.CommandOptions;
 
-import schemacrawler.tools.integration.BaseLanguage;
-
-public final class ScriptLanguage extends BaseLanguage {
-
-  public ScriptLanguage() {
-    super("script-language", "script", "javascript");
-  }
-}
+public class SerializationOptions implements CommandOptions {}

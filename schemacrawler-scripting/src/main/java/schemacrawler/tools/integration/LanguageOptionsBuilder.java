@@ -31,33 +31,56 @@ package schemacrawler.tools.integration;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.IOUtility.getFileExtension;
 import static us.fatehi.utility.Utility.isBlank;
-import static us.fatehi.utility.ioresource.InputResourceUtility.createInputResource;
 
+import schemacrawler.schemacrawler.OptionsBuilder;
 import schemacrawler.tools.options.Config;
-import us.fatehi.utility.ioresource.InputResource;
+import schemacrawler.tools.options.ConfigOptionsBuilder;
 
-public abstract class BaseLanguage {
+public abstract class LanguageOptionsBuilder
+    implements OptionsBuilder<LanguageOptionsBuilder, LanguageOptions>,
+        ConfigOptionsBuilder<LanguageOptionsBuilder, LanguageOptions> {
 
-  private final Config config;
   private final String defaultLanguage;
   private final String languageKey;
   private final String resourceKey;
+  private String language;
+  private String script;
 
-  protected BaseLanguage(
+  protected LanguageOptionsBuilder(
       final String languageKey, final String resourceKey, final String defaultLanguage) {
     this.languageKey = requireNonNull(languageKey, "No language key provided");
     this.resourceKey = requireNonNull(resourceKey, "No resource key provided");
     this.defaultLanguage = requireNonNull(defaultLanguage, "No default language provided");
-    config = new Config();
   }
 
-  public void addConfig(final Config additionalConfig) {
-    if (additionalConfig != null && !additionalConfig.isEmpty()) {
-      config.putAll(additionalConfig);
+  @Override
+  public LanguageOptionsBuilder fromConfig(final Config config) {
+    script = getScript(config);
+    // Language may be inferred from script extension, so set it afterwards
+    language = getLanguage(config);
+    return this;
+  }
+
+  @Override
+  public LanguageOptionsBuilder fromOptions(final LanguageOptions options) {
+    if (options != null) {
+      language = options.getLanguage();
+      script = options.getScript();
     }
+    return this;
   }
 
-  public final String getLanguage() {
+  @Override
+  public Config toConfig() {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public LanguageOptions toOptions() {
+    return new LanguageOptions(language, script);
+  }
+
+  private final String getLanguage(final Config config) {
     // Check if language is specified
     final String language = config.getStringValue(languageKey, null);
     if (!isBlank(language)) {
@@ -65,7 +88,7 @@ public abstract class BaseLanguage {
     }
 
     // Use the script file extension if the language is not specified
-    final String fileExtension = getFileExtension(getResourceFilename());
+    final String fileExtension = getFileExtension(script);
     if (!isBlank(fileExtension)) {
       return fileExtension;
     }
@@ -73,11 +96,7 @@ public abstract class BaseLanguage {
     return defaultLanguage;
   }
 
-  public final InputResource getResource() {
-    return createInputResource(getResourceFilename());
-  }
-
-  public String getResourceFilename() {
+  private String getScript(final Config config) {
     return config.getStringValue(resourceKey, null);
   }
 }

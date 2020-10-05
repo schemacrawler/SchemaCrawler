@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.linter;
 
-
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.QueryUtility.executeForLong;
 
@@ -44,50 +43,35 @@ import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
 import us.fatehi.utility.string.StringFormat;
 
-public class LinterTableEmpty
-  extends BaseLinter
-{
+public class LinterTableEmpty extends BaseLinter {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(LinterTableEmpty.class.getName());
+      SchemaCrawlerLogger.getLogger(LinterTableEmpty.class.getName());
 
-  public LinterTableEmpty()
-  {
+  public LinterTableEmpty() {
     setSeverity(LintSeverity.low);
     setTableTypesFilter(new TableTypesFilter("TABLE"));
   }
 
   @Override
-  public String getSummary()
-  {
+  public String getSummary() {
     return "empty table";
   }
 
   @Override
-  protected void lint(final Table table, final Connection connection)
-  {
+  protected void lint(final Table table, final Connection connection) {
     requireNonNull(table, "No table provided");
     requireNonNull(connection, "No connection provided");
 
     final Query query = new Query("Count", "SELECT COUNT(*) FROM ${table}");
-    try
-    {
-      final Identifiers identifiers = Identifiers
-        .identifiers()
-        .withConnection(connection)
-        .build();
+    try {
+      final Identifiers identifiers = Identifiers.identifiers().withConnection(connection).build();
       final long count = executeForLong(query, connection, table, identifiers);
-      if (count == 0)
-      {
+      if (count == 0) {
         addTableLint(table, getSummary());
       }
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING,
-                 new StringFormat("Could not get count for table, ", table),
-                 e);
+    } catch (final SQLException e) {
+      LOGGER.log(Level.WARNING, new StringFormat("Could not get count for table, ", table), e);
     }
   }
-
 }

@@ -27,20 +27,22 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.lint;
 
-
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -48,33 +50,26 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.ObjectToString;
 
-public class LinterConfigs
-  implements Iterable<LinterConfig>
-{
+public class LinterConfigs implements Iterable<LinterConfig> {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(LinterConfig.class.getName());
+      SchemaCrawlerLogger.getLogger(LinterConfig.class.getName());
 
-  private static Element getSubElement(final Element element,
-                                       final String tagName)
-  {
-    requireNotBlank(tagName,
-                    "Cannot get sub-element, since no name is provided");
+  private static Element getSubElement(final Element element, final String tagName) {
+    requireNotBlank(tagName, "Cannot get sub-element, since no name is provided");
     requireNonNull(element, "Cannot get sub-element for tag " + tagName);
 
     final Element subElement;
     final NodeList nodeList = element.getElementsByTagName(tagName);
-    if (nodeList != null && nodeList.getLength() > 0)
-    {
+    if (nodeList != null && nodeList.getLength() > 0) {
       subElement = (Element) nodeList.item(0);
-    }
-    else
-    {
+    } else {
       subElement = null;
     }
 
@@ -82,8 +77,7 @@ public class LinterConfigs
   }
 
   private static Document parseXml(final InputSource xmlStream)
-    throws ParserConfigurationException, SAXException, IOException
-  {
+      throws ParserConfigurationException, SAXException, IOException {
     final DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
     final DocumentBuilder db = dbf.newDocumentBuilder();
     final Document dom = db.parse(xmlStream);
@@ -91,85 +85,64 @@ public class LinterConfigs
   }
 
   private final List<LinterConfig> linterConfigs;
-  private final Config additionalConfig;
+  private final Map<String, String> properties;
 
-  public LinterConfigs(final Config additionalConfig)
-  {
+  public LinterConfigs(final Map<String, String> properties) {
     linterConfigs = new ArrayList<>();
-    this.additionalConfig =
-      requireNonNull(additionalConfig, "No config provided");
+    this.properties = requireNonNull(properties, "No properties provided");
   }
 
-  public void add(final LinterConfig linterConfig)
-  {
-    if (linterConfig != null)
-    {
+  public void add(final LinterConfig linterConfig) {
+    if (linterConfig != null) {
       linterConfigs.add(linterConfig);
     }
   }
 
   @Override
-  public Iterator<LinterConfig> iterator()
-  {
+  public Iterator<LinterConfig> iterator() {
     return linterConfigs.iterator();
   }
 
-  public void parse(final Reader reader)
-    throws SchemaCrawlerException
-  {
+  public void parse(final Reader reader) throws SchemaCrawlerException {
     requireNonNull(reader, "No input provided");
 
     final Document document;
-    try
-    {
+    try {
       document = parseXml(new InputSource(reader));
-    }
-    catch (final Exception e)
-    {
+    } catch (final Exception e) {
       throw new SchemaCrawlerException("Could not parse XML", e);
     }
 
     final List<LinterConfig> linterConfigs = parseDocument(document);
-    for (final LinterConfig linterConfig : linterConfigs)
-    {
+    for (final LinterConfig linterConfig : linterConfigs) {
       this.linterConfigs.add(linterConfig);
     }
   }
 
-  public int size()
-  {
+  public int size() {
     return linterConfigs.size();
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return ObjectToString.toString(this);
   }
 
-  private Config parseConfig(final Element configElement)
-  {
-    final Config config = new Config();
-    config.putAll(additionalConfig);
+  private Map<String, String> parseConfig(final Element configElement) {
+    final Map<String, String> config = new HashMap<>();
+    config.putAll(properties);
 
-    if (configElement == null)
-    {
+    if (configElement == null) {
       return config;
     }
 
-    final NodeList propertiesList =
-      configElement.getElementsByTagName("property");
-    if (propertiesList != null && propertiesList.getLength() > 0)
-    {
-      for (int i = 0; i < propertiesList.getLength(); i++)
-      {
+    final NodeList propertiesList = configElement.getElementsByTagName("property");
+    if (propertiesList != null && propertiesList.getLength() > 0) {
+      for (int i = 0; i < propertiesList.getLength(); i++) {
         final Element propertyElement = (Element) propertiesList.item(i);
         final String name = propertyElement.getAttribute("name");
-        final String value = propertyElement
-          .getFirstChild()
-          .getNodeValue();
-        if (!isBlank(name))
-        {
+        final String value = propertyElement.getFirstChild().getNodeValue();
+        if (!isBlank(name)) {
           config.put(name, value);
         }
       }
@@ -178,67 +151,55 @@ public class LinterConfigs
     return config;
   }
 
-  private List<LinterConfig> parseDocument(final Document document)
-  {
+  private List<LinterConfig> parseDocument(final Document document) {
     requireNonNull(document, "No document provided");
 
     final List<LinterConfig> linterConfigs = new ArrayList<>();
 
     final Element root = document.getDocumentElement();
     final NodeList linterNodesList = root.getElementsByTagName("linter");
-    if (linterNodesList != null && linterNodesList.getLength() > 0)
-    {
-      for (int i = 0; i < linterNodesList.getLength(); i++)
-      {
+    if (linterNodesList != null && linterNodesList.getLength() > 0) {
+      for (int i = 0; i < linterNodesList.getLength(); i++) {
         final Node node = linterNodesList.item(i);
-        if (node instanceof Element)
-        {
+        if (node instanceof Element) {
           final Element linterElement = (Element) node;
           final String linterId = parseLinterId(linterElement);
-          if (isBlank(linterId))
-          {
-            LOGGER.log(Level.CONFIG,
-                       "Not running linter, since linter id is not provided");
+          if (isBlank(linterId)) {
+            LOGGER.log(Level.CONFIG, "Not running linter, since linter id is not provided");
             continue;
           }
           final LinterConfig linterConfig = new LinterConfig(linterId);
 
           final Config cfg = parseLinterConfig(linterElement);
 
-          if (cfg.hasValue("run"))
-          {
+          if (cfg.hasValue("run")) {
             linterConfig.setRunLinter(cfg.getBooleanValue("run"));
           }
-          if (cfg.hasValue("severity"))
-          {
-            linterConfig.setSeverity(cfg.getEnumValue("severity",
-                                                      LintSeverity.medium));
+          if (cfg.hasValue("severity")) {
+            linterConfig.setSeverity(cfg.getEnumValue("severity", LintSeverity.medium));
           }
-          if (cfg.hasValue("threshold"))
-          {
-            linterConfig.setThreshold(cfg.getIntegerValue("threshold",
-                                                          Integer.MAX_VALUE));
+          if (cfg.hasValue("threshold")) {
+            linterConfig.setThreshold(cfg.getIntegerValue("threshold", Integer.MAX_VALUE));
           }
 
           final String tableInclusionPattern =
-            parseRegularExpressionPattern(cfg, "table-inclusion-pattern");
+              parseRegularExpressionPattern(cfg, "table-inclusion-pattern");
           linterConfig.setTableInclusionPattern(tableInclusionPattern);
 
           final String tableExclusionPattern =
-            parseRegularExpressionPattern(cfg, "table-exclusion-pattern");
+              parseRegularExpressionPattern(cfg, "table-exclusion-pattern");
           linterConfig.setTableExclusionPattern(tableExclusionPattern);
 
           final String columnInclusionPattern =
-            parseRegularExpressionPattern(cfg, "column-inclusion-pattern");
+              parseRegularExpressionPattern(cfg, "column-inclusion-pattern");
           linterConfig.setColumnInclusionPattern(columnInclusionPattern);
 
           final String columnExclusionPattern =
-            parseRegularExpressionPattern(cfg, "column-exclusion-pattern");
+              parseRegularExpressionPattern(cfg, "column-exclusion-pattern");
           linterConfig.setColumnExclusionPattern(columnExclusionPattern);
 
           // Linter-specific config
-          final Config config =
-            parseConfig(getSubElement(linterElement, "config"));
+          final Map<String, String> config = parseConfig(getSubElement(linterElement, "config"));
           linterConfig.putAll(config);
 
           linterConfigs.add(linterConfig);
@@ -249,28 +210,21 @@ public class LinterConfigs
     return linterConfigs;
   }
 
-  private Config parseLinterConfig(final Element linterElement)
-  {
+  private Config parseLinterConfig(final Element linterElement) {
     requireNonNull(linterElement, "No linter configuration provided");
 
     final Config cfg = new Config();
     final NodeList childNodes = linterElement.getChildNodes();
-    if (childNodes != null && childNodes.getLength() > 0)
-    {
-      for (int i = 0; i < childNodes.getLength(); i++)
-      {
+    if (childNodes != null && childNodes.getLength() > 0) {
+      for (int i = 0; i < childNodes.getLength(); i++) {
         final Node childNode = childNodes.item(i);
-        if (childNode != null && childNode.getNodeType() == Node.ELEMENT_NODE)
-        {
+        if (childNode != null && childNode.getNodeType() == Node.ELEMENT_NODE) {
           final String elementName = childNode.getNodeName();
           final Node firstChild = childNode.getFirstChild();
           final String text;
-          if (firstChild != null)
-          {
+          if (firstChild != null) {
             text = firstChild.getNodeValue();
-          }
-          else
-          {
+          } else {
             text = null;
           }
           cfg.put(elementName, text);
@@ -281,32 +235,22 @@ public class LinterConfigs
     return cfg;
   }
 
-  private String parseLinterId(final Element linterElement)
-  {
+  private String parseLinterId(final Element linterElement) {
     final String linterId;
-    if (linterElement.hasAttribute("id"))
-    {
+    if (linterElement.hasAttribute("id")) {
       linterId = linterElement.getAttribute("id");
-    }
-    else
-    {
+    } else {
       linterId = null;
     }
     return linterId;
   }
 
-  private String parseRegularExpressionPattern(final Config cfg,
-                                               final String elementName)
-  {
+  private String parseRegularExpressionPattern(final Config cfg, final String elementName) {
     final String patternValue = cfg.getStringValue(elementName, null);
-    if (isBlank(patternValue))
-    {
+    if (isBlank(patternValue)) {
       return null;
-    }
-    else
-    {
+    } else {
       return patternValue;
     }
   }
-
 }

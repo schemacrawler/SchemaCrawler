@@ -25,31 +25,18 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.linter;
 
-import static java.util.Objects.requireNonNull;
+package schemacrawler.tools.integration.template;
 
-import java.sql.Connection;
-import java.util.List;
+import schemacrawler.tools.integration.LanguageOptionsBuilder;
 
-import schemacrawler.schema.Column;
-import schemacrawler.schema.Table;
-import schemacrawler.tools.lint.BaseLinter;
+public final class TemplateLanguageOptionsBuilder extends LanguageOptionsBuilder {
 
-public class LinterTableWithSingleColumn extends BaseLinter {
-
-  @Override
-  public String getSummary() {
-    return "single column";
+  public static TemplateLanguageOptionsBuilder builder() {
+    return new TemplateLanguageOptionsBuilder();
   }
 
-  @Override
-  protected void lint(final Table table, final Connection connection) {
-    requireNonNull(table, "No table provided");
-
-    final List<Column> columns = getColumns(table);
-    if (columns.size() <= 1) {
-      addTableLint(table, getSummary());
-    }
+  private TemplateLanguageOptionsBuilder() {
+    super("templating-language", "template", TemplateLanguageType.unknown.name());
   }
 }

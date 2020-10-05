@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.text.operation;
 
+import schemacrawler.schemacrawler.Query;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
 
@@ -44,18 +45,8 @@ public final class OperationOptionsBuilder
     return new OperationOptionsBuilder();
   }
 
-  public static OperationOptionsBuilder builder(final OperationOptions options) {
-    return new OperationOptionsBuilder().fromOptions(options);
-  }
-
-  public static OperationOptions newOperationOptions() {
-    return new OperationOptionsBuilder().toOptions();
-  }
-
-  public static OperationOptions newOperationOptions(final Config config) {
-    return new OperationOptionsBuilder().fromConfig(config).toOptions();
-  }
-
+  private String command;
+  protected Operation operation;
   protected boolean isShowLobs;
 
   private OperationOptionsBuilder() {
@@ -71,6 +62,7 @@ public final class OperationOptionsBuilder
 
     final Config config = new Config(map);
     isShowLobs = config.getBooleanValue(SHOW_LOBS, false);
+    operation = getQueryFromCommand(config);
 
     return this;
   }
@@ -112,5 +104,34 @@ public final class OperationOptionsBuilder
   @Override
   public OperationOptions toOptions() {
     return new OperationOptions(this);
+  }
+
+  public OperationOptionsBuilder withCommand(String command) {
+    this.command = command;
+    operation = getOperationFromCommand();
+    return this;
+  }
+
+  private Operation getOperationFromCommand() {
+    Operation operation = null;
+    try {
+      operation = OperationType.valueOf(command);
+    } catch (final IllegalArgumentException | NullPointerException e) {
+      operation = this.operation;
+    }
+    return operation;
+  }
+
+  private Operation getQueryFromCommand(final Config config) {
+    final Operation operation;
+    if (config.containsKey(command)) {
+      final String queryName = command;
+      final String queryString = config.get(queryName);
+      operation = new QueryOperation(new Query(queryName, queryString));
+    } else {
+      operation = this.operation;
+    }
+
+    return operation;
   }
 }

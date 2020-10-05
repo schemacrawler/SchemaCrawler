@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.lint;
 
-
 import static java.util.Comparator.naturalOrder;
 
 import java.io.Serializable;
@@ -38,42 +37,35 @@ import java.util.List;
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.NamedObject;
 
-public final class LintCollector
-{
+public final class LintCollector {
 
   private static final String LINT_KEY = "schemacrawler.lint";
 
   private final List<Lint<? extends Serializable>> lints;
 
-  public LintCollector()
-  {
+  public LintCollector() {
     lints = new ArrayList<>();
   }
 
-  public <N extends NamedObject & AttributedObject> void addLint(final N namedObject,
-                                                                 final Lint<?> lint)
-  {
-    if (namedObject != null && lint != null && namedObject
-      .getFullName()
-      .equals(lint.getObjectName()))
-    {
+  public <N extends NamedObject & AttributedObject> void addLint(
+      final N namedObject, final Lint<?> lint) {
+    if (namedObject != null
+        && lint != null
+        && namedObject.getFullName().equals(lint.getObjectName())) {
       lints.add(lint);
 
-      final Collection<Lint<?>> columnLints =
-        namedObject.getAttribute(LINT_KEY, new ArrayList<>());
+      final Collection<Lint<?>> columnLints = namedObject.getAttribute(LINT_KEY, new ArrayList<>());
       columnLints.add(lint);
       namedObject.setAttribute(LINT_KEY, columnLints);
     }
   }
 
-  public Collection<Lint<? extends Serializable>> getLints()
-  {
+  public Collection<Lint<? extends Serializable>> getLints() {
     lints.sort(naturalOrder());
     return new ArrayList<>(lints);
   }
 
-  public int size()
-  {
+  public int size() {
     return lints.size();
   }
 }

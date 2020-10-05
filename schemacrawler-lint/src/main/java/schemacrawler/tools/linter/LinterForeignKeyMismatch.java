@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.linter;
 
-
 import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
@@ -42,53 +41,39 @@ import schemacrawler.schema.View;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
 
-public class LinterForeignKeyMismatch
-  extends BaseLinter
-{
+public class LinterForeignKeyMismatch extends BaseLinter {
 
-  public LinterForeignKeyMismatch()
-  {
+  public LinterForeignKeyMismatch() {
     setSeverity(LintSeverity.high);
   }
 
   @Override
-  public String getSummary()
-  {
+  public String getSummary() {
     return "foreign key data type different from primary key";
   }
 
   @Override
-  protected void lint(final Table table, final Connection connections)
-  {
+  protected void lint(final Table table, final Connection connections) {
     requireNonNull(table, "No table provided");
 
-    final List<ForeignKey> mismatchedForeignKeys =
-      findMismatchedForeignKeys(table);
-    for (final ForeignKey foreignKey : mismatchedForeignKeys)
-    {
+    final List<ForeignKey> mismatchedForeignKeys = findMismatchedForeignKeys(table);
+    for (final ForeignKey foreignKey : mismatchedForeignKeys) {
       addTableLint(table, getSummary(), foreignKey);
     }
   }
 
-  private List<ForeignKey> findMismatchedForeignKeys(final Table table)
-  {
+  private List<ForeignKey> findMismatchedForeignKeys(final Table table) {
     final List<ForeignKey> mismatchedForeignKeys = new ArrayList<>();
-    if (table != null && !(table instanceof View))
-    {
-      for (final ForeignKey foreignKey : table.getImportedForeignKeys())
-      {
-        for (final ForeignKeyColumnReference columnReference : foreignKey)
-        {
+    if (table != null && !(table instanceof View)) {
+      for (final ForeignKey foreignKey : table.getImportedForeignKeys()) {
+        for (final ForeignKeyColumnReference columnReference : foreignKey) {
           final Column pkColumn = columnReference.getPrimaryKeyColumn();
           final Column fkColumn = columnReference.getForeignKeyColumn();
           if (!pkColumn
-            .getColumnDataType()
-            .getJavaSqlType()
-            .equals(fkColumn
-                      .getColumnDataType()
-                      .getJavaSqlType())
-              || pkColumn.getSize() != fkColumn.getSize())
-          {
+                  .getColumnDataType()
+                  .getJavaSqlType()
+                  .equals(fkColumn.getColumnDataType().getJavaSqlType())
+              || pkColumn.getSize() != fkColumn.getSize()) {
             mismatchedForeignKeys.add(foreignKey);
             break;
           }

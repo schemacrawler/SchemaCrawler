@@ -28,8 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.integration.diagram;
 
-
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.integration.diagram.DiagramOutputFormat.scdot;
 import static schemacrawler.tools.integration.diagram.GraphvizUtility.isGraphvizAvailable;
 import static schemacrawler.tools.integration.diagram.GraphvizUtility.isGraphvizJavaAvailable;
@@ -50,204 +48,143 @@ import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
 import schemacrawler.utility.NamedObjectSort;
 
-public final class DiagramRenderer
-  extends BaseSchemaCrawlerCommand
-{
+public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptions> {
 
-  private DiagramOptions diagramOptions;
   private DiagramOutputFormat diagramOutputFormat;
 
-  public DiagramRenderer(final String command)
-  {
+  public DiagramRenderer(final String command) {
     super(command);
   }
 
   @Override
-  public void checkAvailability()
-    throws Exception
-  {
-    if (diagramOutputFormat == scdot)
-    {
+  public void checkAvailability() throws Exception {
+    if (diagramOutputFormat == scdot) {
       return;
-    }
-    else if (isGraphvizAvailable())
-    {
+    } else if (isGraphvizAvailable()) {
       return;
-    }
-    else if (isGraphvizJavaAvailable(diagramOutputFormat))
-    {
+    } else if (isGraphvizJavaAvailable(diagramOutputFormat)) {
       return;
-    }
-    else
-    {
-      throw new SchemaCrawlerException(String.format(
-        "Cannot generate diagram in %s output format",
-        diagramOutputFormat));
+    } else {
+      throw new SchemaCrawlerException(
+          String.format("Cannot generate diagram in %s output format", diagramOutputFormat));
     }
   }
 
+  /** {@inheritDoc} */
   @Override
-  public void initialize()
-    throws Exception
-  {
-    super.initialize();
-    loadDiagramOptions();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void execute()
-    throws Exception
-  {
+  public void execute() throws Exception {
     checkCatalog();
 
     // Set the format, in case we are using the default
-    outputOptions = OutputOptionsBuilder
-      .builder(outputOptions)
-      .withOutputFormat(diagramOutputFormat)
-      .withOutputFormatValue(diagramOutputFormat.getFormat())
-      .toOptions();
+    outputOptions =
+        OutputOptionsBuilder.builder(outputOptions)
+            .withOutputFormat(diagramOutputFormat)
+            .withOutputFormatValue(diagramOutputFormat.getFormat())
+            .toOptions();
 
     // Create dot file
     final Path dotFile = createTempFilePath("schemacrawler.", "dot");
     final OutputOptions dotFileOutputOptions;
-    if (diagramOutputFormat == scdot)
-    {
+    if (diagramOutputFormat == scdot) {
       dotFileOutputOptions = outputOptions;
-    }
-    else
-    {
-      dotFileOutputOptions = OutputOptionsBuilder
-        .builder(outputOptions)
-        .withOutputFormat(scdot)
-        .withOutputFile(dotFile)
-        .toOptions();
+    } else {
+      dotFileOutputOptions =
+          OutputOptionsBuilder.builder(outputOptions)
+              .withOutputFormat(scdot)
+              .withOutputFile(dotFile)
+              .toOptions();
     }
 
-    final SchemaTraversalHandler formatter =
-      getSchemaTraversalHandler(dotFileOutputOptions);
+    final SchemaTraversalHandler formatter = getSchemaTraversalHandler(dotFileOutputOptions);
 
     final SchemaTraverser traverser = new SchemaTraverser();
     traverser.setCatalog(catalog);
     traverser.setHandler(formatter);
-    traverser.setTablesComparator(NamedObjectSort.getNamedObjectSort(
-      diagramOptions.isAlphabeticalSortForTables()));
-    traverser.setRoutinesComparator(NamedObjectSort.getNamedObjectSort(
-      diagramOptions.isAlphabeticalSortForRoutines()));
+    traverser.setTablesComparator(
+        NamedObjectSort.getNamedObjectSort(commandOptions.isAlphabeticalSortForTables()));
+    traverser.setRoutinesComparator(
+        NamedObjectSort.getNamedObjectSort(commandOptions.isAlphabeticalSortForRoutines()));
 
     traverser.traverse();
 
     final GraphExecutor graphExecutor = getGraphExecutor(dotFile);
     final boolean successful = graphExecutor.call();
-    if (!successful)
-    {
+    if (!successful) {
       final String message = readResourceFully("/dot.error.txt");
       throw new SchemaCrawlerRuntimeException(message);
     }
   }
 
   @Override
-  public boolean usesConnection()
-  {
+  public void initialize() throws Exception {
+    super.initialize();
+    diagramOutputFormat = DiagramOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
+  }
+
+  @Override
+  public boolean usesConnection() {
     return false;
   }
 
-  public final void setDiagramOptions(final DiagramOptions diagramOptions)
-  {
-    this.diagramOptions =
-      requireNonNull(diagramOptions, "No diagram options provided");
-  }
-
-  private GraphExecutor getGraphExecutor(final Path dotFile)
-    throws SchemaCrawlerException
-  {
-    final Path outputFile =
-      outputOptions.getOutputFile(outputOptions.getOutputFormatValue());
+  private GraphExecutor getGraphExecutor(final Path dotFile) throws SchemaCrawlerException {
+    final Path outputFile = outputOptions.getOutputFile(outputOptions.getOutputFormatValue());
 
     // Set the format, in case we are using the default
-    outputOptions = OutputOptionsBuilder
-      .builder(outputOptions)
-      .withOutputFormat(diagramOutputFormat)
-      .withOutputFormatValue(diagramOutputFormat.getFormat())
-      .withOutputFile(outputFile)
-      .toOptions();
+    outputOptions =
+        OutputOptionsBuilder.builder(outputOptions)
+            .withOutputFormat(diagramOutputFormat)
+            .withOutputFormatValue(diagramOutputFormat.getFormat())
+            .withOutputFile(outputFile)
+            .toOptions();
 
     GraphExecutor graphExecutor;
-    if (diagramOutputFormat != scdot)
-    {
-      final List<String> graphvizOpts = diagramOptions.getGraphvizOpts();
+    if (diagramOutputFormat != scdot) {
+      final List<String> graphvizOpts = commandOptions.getGraphvizOpts();
       boolean graphExecutorAvailable = false;
 
       // Try 1: Use Graphviz
-      graphExecutor = new GraphvizProcessExecutor(dotFile,
-                                                  outputFile,
-                                                  diagramOutputFormat,
-                                                  graphvizOpts);
+      graphExecutor =
+          new GraphvizProcessExecutor(dotFile, outputFile, diagramOutputFormat, graphvizOpts);
       graphExecutorAvailable = graphExecutor.canGenerate();
 
       // Try 2: Use Java library for Graphviz
-      if (!graphExecutorAvailable)
-      {
-        graphExecutor =
-          new GraphvizJavaExecutor(dotFile, outputFile, diagramOutputFormat);
+      if (!graphExecutorAvailable) {
+        graphExecutor = new GraphvizJavaExecutor(dotFile, outputFile, diagramOutputFormat);
         graphExecutorAvailable = graphExecutor.canGenerate();
       }
 
-      if (!graphExecutorAvailable)
-      {
+      if (!graphExecutorAvailable) {
         final String message = readResourceFully("/dot.error.txt");
         throw new SchemaCrawlerRuntimeException(message);
       }
 
-    }
-    else
-    {
+    } else {
       graphExecutor = new GraphNoOpExecutor(diagramOutputFormat);
     }
 
     return graphExecutor;
   }
 
-  private SchemaTextDetailType getSchemaTextDetailType()
-  {
+  private SchemaTextDetailType getSchemaTextDetailType() {
     SchemaTextDetailType schemaTextDetailType;
-    try
-    {
+    try {
       schemaTextDetailType = SchemaTextDetailType.valueOf(command);
-    }
-    catch (final IllegalArgumentException e)
-    {
+    } catch (final IllegalArgumentException e) {
       schemaTextDetailType = null;
     }
     return schemaTextDetailType;
   }
 
   private SchemaTraversalHandler getSchemaTraversalHandler(final OutputOptions outputOptions)
-    throws SchemaCrawlerException
-  {
+      throws SchemaCrawlerException {
     final SchemaTraversalHandler formatter;
     final SchemaTextDetailType schemaTextDetailType = getSchemaTextDetailType();
 
     final String identifierQuoteString = identifiers.getIdentifierQuoteString();
-    formatter = new SchemaDotFormatter(schemaTextDetailType,
-                                       diagramOptions,
-                                       outputOptions,
-                                       identifierQuoteString);
+    formatter =
+        new SchemaDotFormatter(
+            schemaTextDetailType, commandOptions, outputOptions, identifierQuoteString);
 
     return formatter;
   }
-
-  private void loadDiagramOptions()
-  {
-    if (diagramOptions == null)
-    {
-      diagramOptions =
-        DiagramOptionsBuilder.newDiagramOptions(additionalConfiguration);
-    }
-    diagramOutputFormat =
-      DiagramOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
-  }
-
 }

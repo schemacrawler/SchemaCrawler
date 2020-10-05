@@ -31,8 +31,8 @@ import static schemacrawler.tools.executable.commandline.PluginCommand.newPlugin
 
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandDescription;
-import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.executable.commandline.PluginCommand;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 
 public class SerializationCommandProvider extends BaseCommandProvider {
@@ -55,8 +55,10 @@ public class SerializationCommandProvider extends BaseCommandProvider {
   }
 
   @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command) {
-    return new SerializationCommand();
+  public SerializationCommand newSchemaCrawlerCommand(final String command, final Config config) {
+    final SerializationCommand scCommand = new SerializationCommand();
+    scCommand.setCommandOptions(new SerializationOptions());
+    return scCommand;
   }
 
   @Override

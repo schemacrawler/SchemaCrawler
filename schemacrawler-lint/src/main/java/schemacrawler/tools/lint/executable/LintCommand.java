@@ -27,8 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.lint.executable;
 
-
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.lint.LintUtility.readLinterConfigs;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -38,53 +36,32 @@ import schemacrawler.tools.lint.LintReport;
 import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.lint.Linters;
 
-public class LintCommand
-  extends BaseSchemaCrawlerCommand
-{
+public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
 
   public static final String COMMAND = "lint";
 
-  private LintOptions lintOptions;
-
-  public LintCommand()
-  {
+  public LintCommand() {
     super(COMMAND);
   }
 
   @Override
-  public void checkAvailability()
-    throws Exception
-  {
+  public void checkAvailability() throws Exception {
     // Lint is always available
   }
 
   @Override
-  public void initialize()
-    throws Exception
-  {
-    super.initialize();
-    loadLintOptions();
-  }
-
-  @Override
-  public void execute()
-    throws Exception
-  {
+  public void execute() throws Exception {
     checkCatalog();
 
     // Lint the catalog
-    final LinterConfigs linterConfigs =
-      readLinterConfigs(lintOptions, additionalConfiguration);
-    final Linters linters =
-      new Linters(linterConfigs, lintOptions.isRunAllLinters());
+    final LinterConfigs linterConfigs = readLinterConfigs(commandOptions);
+    final Linters linters = new Linters(linterConfigs, commandOptions.isRunAllLinters());
     linters.lint(catalog, connection);
 
     // Produce the lint report
-    final LintReport lintReport = new LintReport(outputOptions.getTitle(),
-                                                 catalog.getCrawlInfo(),
-                                                 linters
-                                                   .getCollector()
-                                                   .getLints());
+    final LintReport lintReport =
+        new LintReport(
+            outputOptions.getTitle(), catalog.getCrawlInfo(), linters.getCollector().getLints());
 
     // Write out the lint report
     getLintReportBuilder().generateLintReport(lintReport);
@@ -93,42 +70,30 @@ public class LintCommand
   }
 
   @Override
-  public boolean usesConnection()
-  {
+  public boolean usesConnection() {
     return false;
   }
 
-  public final void setLintOptions(final LintOptions lintOptions)
-  {
-    this.lintOptions = requireNonNull(lintOptions, "No lint options provided");
-  }
-
-  private void dispatch(final Linters linters)
-  {
-    if (!linters.exceedsThreshold())
-    {
+  private void dispatch(final Linters linters) {
+    if (!linters.exceedsThreshold()) {
       return;
     }
 
     final String lintSummary = linters.getLintSummary();
-    if (!lintSummary.isEmpty())
-    {
+    if (!lintSummary.isEmpty()) {
       System.err.println(lintSummary);
     }
 
-    final LintDispatch lintDispatch = lintOptions.getLintDispatch();
+    final LintDispatch lintDispatch = commandOptions.getLintDispatch();
     lintDispatch.dispatch();
   }
 
-  private LintReportBuilder getLintReportBuilder()
-    throws SchemaCrawlerException
-  {
+  private LintReportBuilder getLintReportBuilder() throws SchemaCrawlerException {
     final LintReportOutputFormat outputFormat =
-      LintReportOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
+        LintReportOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
 
     final LintReportBuilder lintReportBuilder;
-    switch (outputFormat)
-    {
+    switch (outputFormat) {
       case json:
         lintReportBuilder = new LintReportJsonBuilder(outputOptions);
         break;
@@ -136,24 +101,11 @@ public class LintCommand
         lintReportBuilder = new LintReportYamlBuilder(outputOptions);
         break;
       default:
-        lintReportBuilder = new LintReportTextFormatter(catalog,
-                                                        lintOptions,
-                                                        outputOptions,
-                                                        identifiers.getIdentifierQuoteString());
+        lintReportBuilder =
+            new LintReportTextFormatter(
+                catalog, commandOptions, outputOptions, identifiers.getIdentifierQuoteString());
     }
 
     return lintReportBuilder;
   }
-
-  private void loadLintOptions()
-  {
-    if (lintOptions == null)
-    {
-      lintOptions = LintOptionsBuilder
-        .builder()
-        .fromConfig(additionalConfiguration)
-        .toOptions();
-    }
-  }
-
 }

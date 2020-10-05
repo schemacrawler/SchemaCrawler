@@ -27,11 +27,11 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.lint;
 
-
 import static us.fatehi.utility.IOUtility.readResourceFully;
 
 import java.io.Serializable;
 import java.sql.Connection;
+import java.util.Map;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
@@ -39,57 +39,46 @@ import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.options.Config;
 import us.fatehi.utility.string.StringFormat;
 
 /**
- * Evaluates a catalog and creates lints. This base class has core functionality
- * for maintaining state, but not for visiting a catalog. Includes code for
- * dispatching a linter.
+ * Evaluates a catalog and creates lints. This base class has core functionality for maintaining
+ * state, but not for visiting a catalog. Includes code for dispatching a linter.
  *
  * @author Sualeh Fatehi
  */
-public abstract class Linter
-{
+public abstract class Linter {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(Linter.class.getName());
+      SchemaCrawlerLogger.getLogger(Linter.class.getName());
 
   private LintCollector collector;
   private LintSeverity severity;
   private int threshold;
   private int lintCount;
 
-  protected Linter()
-  {
+  protected Linter() {
     severity = LintSeverity.medium; // default value
     threshold = Integer.MAX_VALUE; // default value
   }
 
-  public final boolean exceedsThreshold()
-  {
+  public final boolean exceedsThreshold() {
     return lintCount > threshold;
   }
 
   /**
-   * Gets a lengthy description of the linter. By default, reads a resource file
-   * called /help/<linter-id>.txt and if that is not present, returns the
-   * summary. Can be overridden.
+   * Gets a lengthy description of the linter. By default, reads a resource file called
+   * /help/<linter-id>.txt and if that is not present, returns the summary. Can be overridden.
    *
    * @return Lengthy description of the linter
    */
-  public String getDescription()
-  {
-    final String descriptionResource =
-      String.format("/help/%s.txt", getLinterId());
+  public String getDescription() {
+    final String descriptionResource = String.format("/help/%s.txt", getLinterId());
 
     final String descriptionText;
-    if (Linter.class.getResource(descriptionResource) == null)
-    {
+    if (Linter.class.getResource(descriptionResource) == null) {
       return getSummary();
-    }
-    else
-    {
+    } else {
       descriptionText = readResourceFully(descriptionResource);
     }
     return descriptionText;
@@ -100,8 +89,7 @@ public abstract class Linter
    *
    * @return Lint counts
    */
-  public final int getLintCount()
-  {
+  public final int getLintCount() {
     return lintCount;
   }
 
@@ -110,8 +98,7 @@ public abstract class Linter
    *
    * @return Identification of this linter
    */
-  public String getLinterId()
-  {
+  public String getLinterId() {
     return getClass().getName();
   }
 
@@ -120,8 +107,7 @@ public abstract class Linter
    *
    * @return Identification of this linter instance
    */
-  public final String getLinterInstanceId()
-  {
+  public final String getLinterInstanceId() {
     return super.toString();
   }
 
@@ -130,23 +116,8 @@ public abstract class Linter
    *
    * @return Severity of the lints produced by this linter
    */
-  public final LintSeverity getSeverity()
-  {
+  public final LintSeverity getSeverity() {
     return severity;
-  }
-
-  /**
-   * Set the severity of the lints created by this linter.
-   *
-   * @param severity
-   *   Severity to set. No changes are made if the parameter is null.
-   */
-  protected final void setSeverity(final LintSeverity severity)
-  {
-    if (severity != null)
-    {
-      this.severity = severity;
-    }
   }
 
   /**
@@ -157,72 +128,62 @@ public abstract class Linter
   public abstract String getSummary();
 
   @Override
-  public String toString()
-  {
-    return String.format("%s [%s] - %s",
-                         getLinterInstanceId(),
-                         getSeverity(),
-                         getSummary());
-  }
-
-  void configure(final LinterConfig linterConfig)
-  {
-    if (linterConfig != null)
-    {
-      setSeverity(linterConfig.getSeverity());
-      setThreshold(linterConfig.getThreshold());
-      configure(linterConfig.getConfig());
-    }
-  }
-
-  abstract void lint(Catalog catalog, Connection connection)
-    throws SchemaCrawlerException;
-
-  final void setLintCollector(final LintCollector lintCollector)
-  {
-    collector = lintCollector;
+  public String toString() {
+    return String.format("%s [%s] - %s", getLinterInstanceId(), getSeverity(), getSummary());
   }
 
   protected final <N extends NamedObject & AttributedObject, V extends Serializable> void addLint(
-    final LintObjectType objectType,
-    final N namedObject,
-    final String message,
-    final V value)
-  {
-    LOGGER.log(Level.FINE,
-               new StringFormat("Found lint for %s: %s --> %s",
-                                namedObject,
-                                message,
-                                value));
-    if (collector != null)
-    {
-      final Lint<V> lint = new Lint<>(getLinterId(),
-                                      getLinterInstanceId(),
-                                      objectType,
-                                      namedObject,
-                                      getSeverity(),
-                                      message,
-                                      value);
+      final LintObjectType objectType, final N namedObject, final String message, final V value) {
+    LOGGER.log(
+        Level.FINE, new StringFormat("Found lint for %s: %s --> %s", namedObject, message, value));
+    if (collector != null) {
+      final Lint<V> lint =
+          new Lint<>(
+              getLinterId(),
+              getLinterInstanceId(),
+              objectType,
+              namedObject,
+              getSeverity(),
+              message,
+              value);
       collector.addLint(namedObject, lint);
       lintCount = lintCount + 1;
     }
   }
 
   /**
-   * Allows subclasses to configure themselves with custom parameters. Can be
-   * overridden.
+   * Allows subclasses to configure themselves with custom parameters. Can be overridden.
    *
-   * @param config
-   *   Custom configuration
+   * @param config Custom configuration
    */
-  protected void configure(final Config config)
-  {
+  protected void configure(final Map<String, String> config) {}
 
+  /**
+   * Set the severity of the lints created by this linter.
+   *
+   * @param severity Severity to set. No changes are made if the parameter is null.
+   */
+  protected final void setSeverity(final LintSeverity severity) {
+    if (severity != null) {
+      this.severity = severity;
+    }
   }
 
-  private void setThreshold(final int threshold)
-  {
+  void configure(final LinterConfig linterConfig) {
+    if (linterConfig != null) {
+      setSeverity(linterConfig.getSeverity());
+      setThreshold(linterConfig.getThreshold());
+      configure(linterConfig.getProperties());
+    }
+  }
+
+  abstract void lint(Catalog catalog, Connection connection) throws SchemaCrawlerException;
+
+  final void setLintCollector(final LintCollector lintCollector) {
+    collector = lintCollector;
+  }
+
+  private void setThreshold(final int threshold) {
     this.threshold = threshold;
   }
-
 }

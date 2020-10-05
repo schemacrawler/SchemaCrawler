@@ -31,9 +31,9 @@ package schemacrawler.tools.text.base;
 import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
-import schemacrawler.schemacrawler.Options;
+import schemacrawler.tools.executable.CommandOptions;
 
-public abstract class BaseTextOptions implements Options {
+public abstract class BaseTextOptions implements CommandOptions {
 
   private final boolean isAlphabeticalSortForTables;
   private final boolean isAlphabeticalSortForTableColumns;

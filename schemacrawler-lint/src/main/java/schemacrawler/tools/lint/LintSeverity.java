@@ -27,9 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.lint;
 
-
-public enum LintSeverity
-{
+public enum LintSeverity {
   low,
   medium,
   high,

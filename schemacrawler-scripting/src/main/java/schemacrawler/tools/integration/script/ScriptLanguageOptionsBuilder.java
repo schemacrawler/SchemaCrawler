@@ -26,26 +26,17 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.integration.template;
+package schemacrawler.tools.integration.script;
 
-import schemacrawler.tools.integration.BaseLanguage;
+import schemacrawler.tools.integration.LanguageOptionsBuilder;
 
-public final class TemplateLanguage extends BaseLanguage {
+public final class ScriptLanguageOptionsBuilder extends LanguageOptionsBuilder {
 
-  public TemplateLanguage() {
-    super("templating-language", "template", TemplateLanguageType.unknown.name());
+  public static ScriptLanguageOptionsBuilder builder() {
+    return new ScriptLanguageOptionsBuilder();
   }
 
-  public TemplateLanguageType getTemplateLanguageType() {
-    final String language = getLanguage();
-
-    try {
-      final TemplateLanguageType templateLanguageType = TemplateLanguageType.valueOf(language);
-      return templateLanguageType;
-    } catch (final IllegalArgumentException e) {
-      // Ignore
-    }
-
-    return TemplateLanguageType.unknown;
+  private ScriptLanguageOptionsBuilder() {
+    super("script-language", "script", "javascript");
   }
 }

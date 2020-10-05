@@ -33,7 +33,6 @@ import java.sql.Connection;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 
 /**
@@ -41,7 +40,7 @@ import schemacrawler.tools.options.OutputOptions;
  *
  * @author Sualeh Fatehi
  */
-public interface SchemaCrawlerCommand {
+public interface SchemaCrawlerCommand<C extends CommandOptions> {
 
   /**
    * Checks whether a command is available, and throws an exception if it is not available.
@@ -57,11 +56,11 @@ public interface SchemaCrawlerCommand {
    */
   void execute() throws Exception;
 
-  Config getAdditionalConfiguration();
-
   Catalog getCatalog();
 
   String getCommand();
+
+  C getCommandOptions();
 
   Connection getConnection();
 
@@ -78,9 +77,9 @@ public interface SchemaCrawlerCommand {
    */
   void initialize() throws Exception;
 
-  void setAdditionalConfiguration(Config config);
-
   void setCatalog(Catalog catalog);
+
+  void setCommandOptions(C commandOptions);
 
   void setConnection(Connection connection);
 

@@ -25,31 +25,38 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.linter;
+
+package schemacrawler.tools.text.operation;
 
 import static java.util.Objects.requireNonNull;
 
-import java.sql.Connection;
-import java.util.List;
+import schemacrawler.schemacrawler.Query;
 
-import schemacrawler.schema.Column;
-import schemacrawler.schema.Table;
-import schemacrawler.tools.lint.BaseLinter;
+public class QueryOperation implements Operation {
 
-public class LinterTableWithSingleColumn extends BaseLinter {
+  public final Query query;
 
-  @Override
-  public String getSummary() {
-    return "single column";
+  public QueryOperation(Query query) {
+    this.query = requireNonNull(query, "No query provided");
   }
 
   @Override
-  protected void lint(final Table table, final Connection connection) {
-    requireNonNull(table, "No table provided");
+  public String getDescription() {
+    return "User defined query";
+  }
 
-    final List<Column> columns = getColumns(table);
-    if (columns.size() <= 1) {
-      addTableLint(table, getSummary());
-    }
+  @Override
+  public Query getQuery() {
+    return query;
+  }
+
+  /**
+   * Operation title.
+   *
+   * @return Operation title
+   */
+  @Override
+  public String getTitle() {
+    return "Query";
   }
 }

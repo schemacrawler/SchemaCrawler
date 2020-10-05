@@ -48,7 +48,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
-import schemacrawler.tools.text.operation.Operation;
+import schemacrawler.tools.text.operation.OperationType;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
@@ -64,7 +64,7 @@ public class SchemaCrawlerTextCommandsOutputTest {
 
   @Test
   public void operationOutput(final Connection connection) throws Exception {
-    for (final Operation operation : Operation.values()) {
+    for (final OperationType operation : OperationType.values()) {
       textOutputTest(operation.name(), connection, new Config());
     }
   }
