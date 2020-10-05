@@ -116,11 +116,6 @@ public class CommandLineUtility {
       }
     }
 
-    final CommandLineArgumentsParser commandLineArgumentsParser =
-        new CommandLineArgumentsParser(parseResult.originalArgs());
-    commandLineArgumentsParser.parse();
-    additionalConfig.putAll(commandLineArgumentsParser.getFilteredOptionsMap(pluginOptionNames));
-
     return additionalConfig;
   }
 

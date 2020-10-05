@@ -29,7 +29,6 @@ package schemacrawler.test.commandline.command;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.collection.IsMapContaining.hasEntry;
 import static org.hamcrest.collection.IsMapContaining.hasKey;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -86,15 +85,7 @@ public class ExecuteCommandTest {
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
 
-    final String[] args =
-        new String[] {
-          "-c",
-          "test",
-          "--test-command-parameter",
-          "parameter-value",
-          "--unknown-parameter",
-          "some-value"
-        };
+    final String[] args = new String[] {"-c", "test", "--unknown-parameter", "some-value"};
 
     final ExecuteCommand executeTestCommand = new ExecuteCommand(state);
     final CommandLine commandLine = newCommandLine(executeTestCommand, null, false);
@@ -102,7 +93,7 @@ public class ExecuteCommandTest {
     final CommandLine.ParseResult parseResult = commandLine.parseArgs(args);
     final Config additionalConfig = retrievePluginOptions(parseResult);
 
-    assertThat(additionalConfig, hasEntry(is("test-command-parameter"), is("parameter-value")));
+    assertThat(additionalConfig.size(), is(0));
     assertThat(additionalConfig, not(hasKey(is("unknown-parameter"))));
 
     assertThrows(CommandLine.ExecutionException.class, () -> executeTestCommand.run());
