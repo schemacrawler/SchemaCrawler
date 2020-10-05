@@ -35,9 +35,8 @@ import java.util.Map;
 
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.integration.LanguageOptions;
-import schemacrawler.tools.options.Config;
 
-public final class TemplateCommand extends BaseSchemaCrawlerCommand {
+public final class TemplateCommand extends BaseSchemaCrawlerCommand<LanguageOptions> {
 
   static final String COMMAND = "template";
 
@@ -80,16 +79,12 @@ public final class TemplateCommand extends BaseSchemaCrawlerCommand {
   }
 
   @Override
-  public Config getAdditionalConfiguration() {
-    throw new UnsupportedOperationException();
+  public LanguageOptions getCommandOptions() {
+    return languageOptions;
   }
 
   @Override
-  public void setAdditionalConfiguration(Config additionalConfiguration) {
-    throw new UnsupportedOperationException();
-  }
-
-  public void setLanguageOptions(final LanguageOptions languageOptions) {
+  public void setCommandOptions(final LanguageOptions languageOptions) {
     this.languageOptions = languageOptions;
   }
 

@@ -33,7 +33,6 @@ import java.nio.file.Path;
 
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandDescription;
-import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.lint.LinterHelp;
@@ -77,11 +76,11 @@ public class LintCommandProvider extends BaseCommandProvider {
   }
 
   @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command, final Config config) {
+  public LintCommand newSchemaCrawlerCommand(final String command, final Config config) {
     final LintOptions lintOptions =
         LintOptionsBuilder.builder().fromConfig(config).withProperties(config).toOptions();
     final LintCommand scCommand = new LintCommand();
-    scCommand.setLintOptions(lintOptions);
+    scCommand.setCommandOptions(lintOptions);
     return scCommand;
   }
 

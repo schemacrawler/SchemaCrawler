@@ -25,34 +25,8 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+package schemacrawler.tools.executable;
 
-package schemacrawler.tools.integration;
+import schemacrawler.schemacrawler.Options;
 
-import static us.fatehi.utility.Utility.requireNotBlank;
-import static us.fatehi.utility.ioresource.InputResourceUtility.createInputResource;
-
-import schemacrawler.tools.executable.CommandOptions;
-import us.fatehi.utility.ioresource.InputResource;
-
-public final class LanguageOptions implements CommandOptions {
-
-  private final String language;
-  private final String script;
-
-  public LanguageOptions(final String language, final String script) {
-    this.language = requireNotBlank(language, "No language provided");
-    this.script = requireNotBlank(script, "No script provided");
-  }
-
-  public String getLanguage() {
-    return language;
-  }
-
-  public final InputResource getResource() {
-    return createInputResource(script);
-  }
-
-  public String getScript() {
-    return script;
-  }
-}
+public interface CommandOptions extends Options {}

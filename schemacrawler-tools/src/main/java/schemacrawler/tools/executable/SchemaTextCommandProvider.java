@@ -41,12 +41,12 @@ public final class SchemaTextCommandProvider extends BaseCommandProvider {
   }
 
   @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command, final Config config) {
+  public SchemaTextRenderer newSchemaCrawlerCommand(final String command, final Config config) {
     final SchemaTextOptions schemaTextOptions =
         SchemaTextOptionsBuilder.builder().fromConfig(config).toOptions();
 
     final SchemaTextRenderer scCommand = new SchemaTextRenderer(command);
-    scCommand.setSchemaTextOptions(schemaTextOptions);
+    scCommand.setCommandOptions(schemaTextOptions);
     return scCommand;
   }
 

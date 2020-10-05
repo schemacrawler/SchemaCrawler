@@ -37,7 +37,6 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 
@@ -46,10 +45,10 @@ import schemacrawler.tools.options.OutputOptionsBuilder;
  *
  * @author Sualeh Fatehi
  */
-public abstract class BaseSchemaCrawlerCommand implements SchemaCrawlerCommand {
+public abstract class BaseSchemaCrawlerCommand<C extends CommandOptions>
+    implements SchemaCrawlerCommand<C> {
 
   protected final String command;
-  protected Config additionalConfiguration;
   protected Catalog catalog;
   protected Connection connection;
   protected Identifiers identifiers;
@@ -61,7 +60,6 @@ public abstract class BaseSchemaCrawlerCommand implements SchemaCrawlerCommand {
 
     schemaCrawlerOptions = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     outputOptions = OutputOptionsBuilder.newOutputOptions();
-    additionalConfiguration = new Config();
   }
 
   @Override
@@ -69,11 +67,6 @@ public abstract class BaseSchemaCrawlerCommand implements SchemaCrawlerCommand {
     // Nothing additional to check at this point.
     // Most command should be available after their class is loaded,
     // and imports are resolved.
-  }
-
-  @Override
-  public Config getAdditionalConfiguration() {
-    return additionalConfiguration;
   }
 
   @Override
@@ -112,12 +105,6 @@ public abstract class BaseSchemaCrawlerCommand implements SchemaCrawlerCommand {
   @Override
   public void initialize() throws Exception {
     checkOptions();
-  }
-
-  @Override
-  public void setAdditionalConfiguration(final Config additionalConfiguration) {
-    this.additionalConfiguration =
-        requireNonNull(additionalConfiguration, "No additional configuration provided");
   }
 
   @Override
@@ -170,7 +157,7 @@ public abstract class BaseSchemaCrawlerCommand implements SchemaCrawlerCommand {
 
   private void checkOptions() {
     requireNonNull(schemaCrawlerOptions, "No SchemaCrawler options provided");
-    requireNonNull(additionalConfiguration, "No additional configuration provided");
+    requireNonNull(getCommandOptions(), "No command options provided");
     requireNonNull(outputOptions, "No output options provided");
     requireNonNull(identifiers, "No database identifiers provided");
   }

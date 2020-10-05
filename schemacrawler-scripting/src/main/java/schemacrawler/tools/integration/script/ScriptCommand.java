@@ -45,7 +45,6 @@ import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.integration.LanguageOptions;
-import schemacrawler.tools.options.Config;
 import us.fatehi.utility.ObjectToString;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.string.StringFormat;
@@ -55,7 +54,7 @@ import us.fatehi.utility.string.StringFormat;
  *
  * @author Sualeh Fatehi
  */
-public final class ScriptCommand extends BaseSchemaCrawlerCommand {
+public final class ScriptCommand extends BaseSchemaCrawlerCommand<LanguageOptions> {
 
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(ScriptCommand.class.getName());
@@ -120,16 +119,12 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand {
   }
 
   @Override
-  public Config getAdditionalConfiguration() {
-    throw new UnsupportedOperationException();
+  public LanguageOptions getCommandOptions() {
+    return scriptOptions;
   }
 
   @Override
-  public void setAdditionalConfiguration(Config additionalConfiguration) {
-    throw new UnsupportedOperationException();
-  }
-
-  public void setLanguageOptions(final LanguageOptions scriptOptions) {
+  public void setCommandOptions(final LanguageOptions scriptOptions) {
     this.scriptOptions = scriptOptions;
   }
 

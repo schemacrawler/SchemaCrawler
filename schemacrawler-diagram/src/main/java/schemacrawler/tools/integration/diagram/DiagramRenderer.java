@@ -41,7 +41,6 @@ import java.util.List;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
-import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.text.schema.SchemaDotFormatter;
@@ -50,7 +49,7 @@ import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
 import schemacrawler.utility.NamedObjectSort;
 
-public final class DiagramRenderer extends BaseSchemaCrawlerCommand {
+public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptions> {
 
   private DiagramOptions diagramOptions;
   private DiagramOutputFormat diagramOutputFormat;
@@ -71,12 +70,6 @@ public final class DiagramRenderer extends BaseSchemaCrawlerCommand {
       throw new SchemaCrawlerException(
           String.format("Cannot generate diagram in %s output format", diagramOutputFormat));
     }
-  }
-
-  @Override
-  public void initialize() throws Exception {
-    super.initialize();
-    diagramOutputFormat = DiagramOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
   }
 
   /** {@inheritDoc} */
@@ -125,12 +118,24 @@ public final class DiagramRenderer extends BaseSchemaCrawlerCommand {
   }
 
   @Override
-  public boolean usesConnection() {
-    return false;
+  public DiagramOptions getCommandOptions() {
+    return diagramOptions;
   }
 
-  public final void setDiagramOptions(final DiagramOptions diagramOptions) {
+  @Override
+  public void initialize() throws Exception {
+    super.initialize();
+    diagramOutputFormat = DiagramOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
+  }
+
+  @Override
+  public final void setCommandOptions(final DiagramOptions diagramOptions) {
     this.diagramOptions = requireNonNull(diagramOptions, "No diagram options provided");
+  }
+
+  @Override
+  public boolean usesConnection() {
+    return false;
   }
 
   private GraphExecutor getGraphExecutor(final Path dotFile) throws SchemaCrawlerException {
@@ -170,16 +175,6 @@ public final class DiagramRenderer extends BaseSchemaCrawlerCommand {
     }
 
     return graphExecutor;
-  }
-
-  @Override
-  public Config getAdditionalConfiguration() {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public void setAdditionalConfiguration(Config additionalConfiguration) {
-    throw new UnsupportedOperationException();
   }
 
   private SchemaTextDetailType getSchemaTextDetailType() {

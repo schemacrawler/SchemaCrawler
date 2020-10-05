@@ -29,7 +29,6 @@ package schemacrawler.tools.integration.diagram;
 
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandProviderUtility;
-import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 
@@ -40,11 +39,11 @@ public final class DiagramCommandProvider extends BaseCommandProvider {
   }
 
   @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command, final Config config) {
+  public DiagramRenderer newSchemaCrawlerCommand(final String command, final Config config) {
     final DiagramOptions diagramOptions =
         DiagramOptionsBuilder.builder().fromConfig(config).toOptions();
     final DiagramRenderer scCommand = new DiagramRenderer(command);
-    scCommand.setDiagramOptions(diagramOptions);
+    scCommand.setCommandOptions(diagramOptions);
     return scCommand;
   }
 

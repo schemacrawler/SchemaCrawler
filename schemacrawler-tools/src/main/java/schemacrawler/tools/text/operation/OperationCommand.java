@@ -47,7 +47,6 @@ import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
-import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.traversal.DataTraversalHandler;
 import schemacrawler.utility.NamedObjectSort;
@@ -58,7 +57,7 @@ import us.fatehi.utility.string.StringFormat;
  *
  * @author Sualeh Fatehi
  */
-public final class OperationCommand extends BaseSchemaCrawlerCommand {
+public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOptions> {
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(OperationCommand.class.getName());
 
@@ -131,16 +130,12 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand {
   }
 
   @Override
-  public Config getAdditionalConfiguration() {
-    throw new UnsupportedOperationException();
+  public OperationOptions getCommandOptions() {
+    return operationOptions;
   }
 
   @Override
-  public void setAdditionalConfiguration(Config additionalConfiguration) {
-    throw new UnsupportedOperationException();
-  }
-
-  public void setOperationOptions(final OperationOptions operationOptions) {
+  public void setCommandOptions(final OperationOptions operationOptions) {
     this.operationOptions = requireNonNull(operationOptions, "No operation options provided");
   }
 

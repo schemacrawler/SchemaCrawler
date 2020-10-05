@@ -86,7 +86,7 @@ public final class SchemaCrawlerExecutable {
     // Load the command to see if it is available
     // Fail early (before loading the catalog) if the command is not
     // available
-    final SchemaCrawlerCommand scCommand = loadCommand();
+    final SchemaCrawlerCommand<?> scCommand = loadCommand();
 
     // Set options
     scCommand.setIdentifiers(schemaRetrievalOptions.getIdentifiers());
@@ -187,9 +187,9 @@ public final class SchemaCrawlerExecutable {
     requireNonNull(catalog, "Catalog could not be retrieved");
   }
 
-  private SchemaCrawlerCommand loadCommand() throws SchemaCrawlerException {
+  private SchemaCrawlerCommand<?> loadCommand() throws SchemaCrawlerException {
     final CommandRegistry commandRegistry = CommandRegistry.getCommandRegistry();
-    final SchemaCrawlerCommand scCommand =
+    final SchemaCrawlerCommand<?> scCommand =
         commandRegistry.configureNewCommand(
             command, schemaCrawlerOptions, additionalConfiguration, outputOptions);
     if (scCommand == null) {

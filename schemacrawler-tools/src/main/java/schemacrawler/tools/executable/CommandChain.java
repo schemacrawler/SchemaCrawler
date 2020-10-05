@@ -37,6 +37,7 @@ import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
@@ -72,7 +73,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand {
 
     // Copy all configuration
     setSchemaCrawlerOptions(scCommand.getSchemaCrawlerOptions());
-    setAdditionalConfiguration(scCommand.getAdditionalConfiguration());
+    // Set command options also
     setOutputOptions(scCommand.getOutputOptions());
 
     setIdentifiers(scCommand.getIdentifiers());
@@ -131,16 +132,27 @@ public final class CommandChain extends BaseSchemaCrawlerCommand {
   }
 
   @Override
+  public CommandOptions getCommandOptions() {
+    // No-op
+    return null;
+  }
+
+  @Override
+  public void setCommandOptions(CommandOptions commandOptions) {
+    // No-op
+  }
+
+  @Override
   public boolean usesConnection() {
     return false;
   }
 
-  private SchemaCrawlerCommand addNextAndConfigureForExecution(
+  private SchemaCrawlerCommand<?> addNextAndConfigureForExecution(
       final String command, final OutputOptions outputOptions) throws SchemaCrawlerException {
     try {
-      final SchemaCrawlerCommand scCommand =
+      final SchemaCrawlerCommand<?> scCommand =
           commandRegistry.configureNewCommand(
-              command, schemaCrawlerOptions, additionalConfiguration, outputOptions);
+              command, schemaCrawlerOptions, new Config(), outputOptions);
       if (scCommand == null) {
         return null;
       }
@@ -161,19 +173,19 @@ public final class CommandChain extends BaseSchemaCrawlerCommand {
   }
 
   private void checkAvailabilityChain() throws Exception {
-    for (final SchemaCrawlerCommand scCommand : scCommands) {
+    for (final SchemaCrawlerCommand<?> scCommand : scCommands) {
       scCommand.checkAvailability();
     }
   }
 
   private void executeChain() throws Exception {
-    for (final SchemaCrawlerCommand scCommand : scCommands) {
+    for (final SchemaCrawlerCommand<?> scCommand : scCommands) {
       scCommand.execute();
     }
   }
 
   private void initializeChain() throws Exception {
-    for (final SchemaCrawlerCommand scCommand : scCommands) {
+    for (final SchemaCrawlerCommand<?> scCommand : scCommands) {
       scCommand.initialize();
     }
   }

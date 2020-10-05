@@ -36,9 +36,8 @@ import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.lint.LintReport;
 import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.lint.Linters;
-import schemacrawler.tools.options.Config;
 
-public class LintCommand extends BaseSchemaCrawlerCommand {
+public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
 
   public static final String COMMAND = "lint";
 
@@ -74,16 +73,12 @@ public class LintCommand extends BaseSchemaCrawlerCommand {
   }
 
   @Override
-  public Config getAdditionalConfiguration() {
-    throw new UnsupportedOperationException();
+  public LintOptions getCommandOptions() {
+    return lintOptions;
   }
 
   @Override
-  public void setAdditionalConfiguration(Config additionalConfiguration) {
-    throw new UnsupportedOperationException();
-  }
-
-  public final void setLintOptions(final LintOptions lintOptions) {
+  public final void setCommandOptions(final LintOptions lintOptions) {
     this.lintOptions = requireNonNull(lintOptions, "No lint options provided");
   }
 

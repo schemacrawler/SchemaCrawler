@@ -41,12 +41,12 @@ final class OperationCommandProvider extends BaseCommandProvider {
   }
 
   @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command, final Config config) {
+  public OperationCommand newSchemaCrawlerCommand(final String command, final Config config) {
     final OperationOptions operationOptions =
         OperationOptionsBuilder.builder().withCommand(command).fromConfig(config).toOptions();
 
     final OperationCommand scCommand = new OperationCommand(command);
-    scCommand.setOperationOptions(operationOptions);
+    scCommand.setCommandOptions(operationOptions);
     return scCommand;
   }
 

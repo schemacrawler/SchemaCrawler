@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.serialize;
 
 import static java.nio.file.Files.newOutputStream;
+import static java.util.Objects.requireNonNull;
 
 import java.io.OutputStream;
 import java.io.Writer;
@@ -36,7 +37,6 @@ import java.nio.file.Path;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
-import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 
 /**
@@ -44,9 +44,11 @@ import schemacrawler.tools.options.OutputOptionsBuilder;
  *
  * @author Sualeh Fatehi
  */
-public final class SerializationCommand extends BaseSchemaCrawlerCommand {
+public final class SerializationCommand extends BaseSchemaCrawlerCommand<SerializationOptions> {
 
   static final String COMMAND = "serialize";
+
+  private SerializationOptions serializationOptions;
 
   public SerializationCommand() {
     super(COMMAND);
@@ -90,13 +92,13 @@ public final class SerializationCommand extends BaseSchemaCrawlerCommand {
   }
 
   @Override
-  public Config getAdditionalConfiguration() {
-    throw new UnsupportedOperationException();
+  public SerializationOptions getCommandOptions() {
+    return serializationOptions;
   }
 
   @Override
-  public void setAdditionalConfiguration(Config additionalConfiguration) {
-    throw new UnsupportedOperationException();
+  public void setCommandOptions(final SerializationOptions serializationOptions) {
+    this.serializationOptions = requireNonNull(serializationOptions);
   }
 
   @Override

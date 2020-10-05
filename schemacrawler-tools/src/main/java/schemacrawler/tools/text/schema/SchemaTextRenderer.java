@@ -32,7 +32,6 @@ import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
-import schemacrawler.tools.options.Config;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
 import schemacrawler.utility.NamedObjectSort;
@@ -42,7 +41,7 @@ import schemacrawler.utility.NamedObjectSort;
  *
  * @author Sualeh Fatehi
  */
-public final class SchemaTextRenderer extends BaseSchemaCrawlerCommand {
+public final class SchemaTextRenderer extends BaseSchemaCrawlerCommand<SchemaTextOptions> {
 
   private SchemaTextOptions schemaTextOptions;
 
@@ -73,20 +72,12 @@ public final class SchemaTextRenderer extends BaseSchemaCrawlerCommand {
   }
 
   @Override
-  public Config getAdditionalConfiguration() {
-    throw new UnsupportedOperationException();
-  }
-
-  public SchemaTextOptions getSchemaTextOptions() {
+  public SchemaTextOptions getCommandOptions() {
     return schemaTextOptions;
   }
 
   @Override
-  public void setAdditionalConfiguration(Config additionalConfiguration) {
-    throw new UnsupportedOperationException();
-  }
-
-  public void setSchemaTextOptions(final SchemaTextOptions schemaTextOptions) {
+  public void setCommandOptions(final SchemaTextOptions schemaTextOptions) {
     this.schemaTextOptions = requireNonNull(schemaTextOptions, "No schema text options provided");
   }
 

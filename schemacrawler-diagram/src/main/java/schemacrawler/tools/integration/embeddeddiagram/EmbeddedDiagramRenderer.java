@@ -33,6 +33,7 @@ import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.integration.diagram.DiagramOutputFormat.svg;
 import static schemacrawler.tools.integration.diagram.GraphvizUtility.isGraphvizAvailable;
 import static schemacrawler.tools.integration.diagram.GraphvizUtility.isGraphvizJavaAvailable;
@@ -52,14 +53,13 @@ import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.integration.diagram.DiagramOptions;
 import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
 import schemacrawler.tools.integration.diagram.DiagramRenderer;
-import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextRenderer;
 
-public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand {
+public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptions> {
 
   private static final Pattern svgInsertionPoint = Pattern.compile("<h2.*Tables.*h2>");
   private static final Pattern svgStart = Pattern.compile("<svg.*");
@@ -105,38 +105,6 @@ public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand {
   }
 
   @Override
-  public Config getAdditionalConfiguration() {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public void setAdditionalConfiguration(Config additionalConfiguration) {
-    throw new UnsupportedOperationException();
-  }
-
-  private void configureCommand(final SchemaCrawlerCommand scCommand)
-      throws SchemaCrawlerException {
-    scCommand.setSchemaCrawlerOptions(getSchemaCrawlerOptions());
-
-    scCommand.setIdentifiers(getIdentifiers());
-    scCommand.setCatalog(getCatalog());
-    scCommand.setConnection(getConnection());
-  }
-
-  private void setOutputOptions(
-      final SchemaCrawlerCommand scCommand,
-      final Path outputFile,
-      final OutputFormat outputFormat) {
-    final OutputOptions outputOptions =
-        OutputOptionsBuilder.builder(getOutputOptions())
-            .withOutputFormat(outputFormat)
-            .withOutputFormatValue(outputFormat.getFormat())
-            .withOutputFile(outputFile)
-            .toOptions();
-    scCommand.setOutputOptions(outputOptions);
-  }
-
-  @Override
   public void execute() throws Exception {
     checkCatalog();
 
@@ -145,21 +113,8 @@ public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand {
     final Path baseSvgFile = createTempFilePath("schemacrawler", "svg");
 
     // Execute chain, after setting all options from the current command
-    final SchemaTextRenderer htmlCommand = new SchemaTextRenderer(command);
-    configureCommand(htmlCommand);
-    htmlCommand.setSchemaTextOptions(diagramOptions);
-    setOutputOptions(htmlCommand, baseHtmlFile, TextOutputFormat.html);
-    htmlCommand.checkAvailability();
-    htmlCommand.initialize();
-    htmlCommand.execute();
-
-    final DiagramRenderer svgCommand = new DiagramRenderer(command);
-    configureCommand(svgCommand);
-    svgCommand.setDiagramOptions(diagramOptions);
-    setOutputOptions(svgCommand, baseSvgFile, DiagramOutputFormat.svg);
-    svgCommand.checkAvailability();
-    svgCommand.initialize();
-    svgCommand.execute();
+    executeCommand(new SchemaTextRenderer(command), baseHtmlFile, TextOutputFormat.html);
+    executeCommand(new DiagramRenderer(command), baseSvgFile, DiagramOutputFormat.svg);
 
     // Interleave HTML and SVG
     try (final BufferedWriter finalHtmlFileWriter =
@@ -180,12 +135,42 @@ public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand {
     }
   }
 
-  public void setDiagramOptions(DiagramOptions diagramOptions) {
-    this.diagramOptions = diagramOptions;
+  @Override
+  public DiagramOptions getCommandOptions() {
+    return diagramOptions;
+  }
+
+  @Override
+  public void setCommandOptions(final DiagramOptions diagramOptions) {
+    this.diagramOptions = requireNonNull(diagramOptions, "No diagram options provided");
   }
 
   @Override
   public boolean usesConnection() {
     return false;
+  }
+
+  private void executeCommand(
+      final SchemaCrawlerCommand<? super DiagramOptions> scCommand,
+      final Path outputFile,
+      final OutputFormat outputFormat)
+      throws Exception {
+    scCommand.setSchemaCrawlerOptions(getSchemaCrawlerOptions());
+    scCommand.setCommandOptions(diagramOptions);
+
+    scCommand.setIdentifiers(getIdentifiers());
+    scCommand.setCatalog(getCatalog());
+    scCommand.setConnection(getConnection());
+
+    final OutputOptions outputOptions =
+        OutputOptionsBuilder.builder(getOutputOptions())
+            .withOutputFormat(outputFormat)
+            .withOutputFile(outputFile)
+            .toOptions();
+    scCommand.setOutputOptions(outputOptions);
+
+    scCommand.checkAvailability();
+    scCommand.initialize();
+    scCommand.execute();
   }
 }
