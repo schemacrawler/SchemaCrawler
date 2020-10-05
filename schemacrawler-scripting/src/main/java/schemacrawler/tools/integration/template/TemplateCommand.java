@@ -40,8 +40,6 @@ public final class TemplateCommand extends BaseSchemaCrawlerCommand<LanguageOpti
 
   static final String COMMAND = "template";
 
-  private LanguageOptions languageOptions;
-
   public TemplateCommand() {
     super(COMMAND);
   }
@@ -55,12 +53,12 @@ public final class TemplateCommand extends BaseSchemaCrawlerCommand<LanguageOpti
   /** {@inheritDoc} */
   @Override
   public void execute() throws Exception {
-    requireNonNull(languageOptions, "No template language provided");
+    requireNonNull(commandOptions, "No template language provided");
     checkCatalog();
 
     // Find if the language type is valid, or throw an exception
     final TemplateLanguageType languageType =
-        TemplateLanguageType.valueOf(languageOptions.getLanguage());
+        TemplateLanguageType.valueOf(commandOptions.getLanguage());
 
     final String templateRendererClassName = languageType.getTemplateRendererClassName();
     final Class<TemplateRenderer> templateRendererClass =
@@ -71,21 +69,11 @@ public final class TemplateCommand extends BaseSchemaCrawlerCommand<LanguageOpti
     context.put("catalog", catalog);
     context.put("identifiers", identifiers);
 
-    templateRenderer.setResourceFilename(languageOptions.getScript());
+    templateRenderer.setResourceFilename(commandOptions.getScript());
     templateRenderer.setContext(context);
     templateRenderer.setOutputOptions(outputOptions);
 
     templateRenderer.execute();
-  }
-
-  @Override
-  public LanguageOptions getCommandOptions() {
-    return languageOptions;
-  }
-
-  @Override
-  public void setCommandOptions(final LanguageOptions languageOptions) {
-    this.languageOptions = languageOptions;
   }
 
   @Override

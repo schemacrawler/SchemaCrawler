@@ -49,6 +49,7 @@ public abstract class BaseSchemaCrawlerCommand<C extends CommandOptions>
     implements SchemaCrawlerCommand<C> {
 
   protected final String command;
+  protected C commandOptions;
   protected Catalog catalog;
   protected Connection connection;
   protected Identifiers identifiers;
@@ -81,6 +82,11 @@ public abstract class BaseSchemaCrawlerCommand<C extends CommandOptions>
   }
 
   @Override
+  public final C getCommandOptions() {
+    return commandOptions;
+  }
+
+  @Override
   public Connection getConnection() {
     return connection;
   }
@@ -110,6 +116,11 @@ public abstract class BaseSchemaCrawlerCommand<C extends CommandOptions>
   @Override
   public void setCatalog(final Catalog catalog) {
     this.catalog = catalog;
+  }
+
+  @Override
+  public final void setCommandOptions(final C commandOptions) {
+    this.commandOptions = requireNonNull(commandOptions, "No command options provided");
   }
 
   @Override
@@ -157,7 +168,7 @@ public abstract class BaseSchemaCrawlerCommand<C extends CommandOptions>
 
   private void checkOptions() {
     requireNonNull(schemaCrawlerOptions, "No SchemaCrawler options provided");
-    requireNonNull(getCommandOptions(), "No command options provided");
+    requireNonNull(commandOptions, "No command options provided");
     requireNonNull(outputOptions, "No output options provided");
     requireNonNull(identifiers, "No database identifiers provided");
   }

@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.lint.executable;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.lint.LintUtility.readLinterConfigs;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -40,8 +39,6 @@ import schemacrawler.tools.lint.Linters;
 public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
 
   public static final String COMMAND = "lint";
-
-  private LintOptions lintOptions;
 
   public LintCommand() {
     super(COMMAND);
@@ -57,8 +54,8 @@ public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
     checkCatalog();
 
     // Lint the catalog
-    final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
-    final Linters linters = new Linters(linterConfigs, lintOptions.isRunAllLinters());
+    final LinterConfigs linterConfigs = readLinterConfigs(commandOptions);
+    final Linters linters = new Linters(linterConfigs, commandOptions.isRunAllLinters());
     linters.lint(catalog, connection);
 
     // Produce the lint report
@@ -70,16 +67,6 @@ public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
     getLintReportBuilder().generateLintReport(lintReport);
 
     dispatch(linters);
-  }
-
-  @Override
-  public LintOptions getCommandOptions() {
-    return lintOptions;
-  }
-
-  @Override
-  public final void setCommandOptions(final LintOptions lintOptions) {
-    this.lintOptions = requireNonNull(lintOptions, "No lint options provided");
   }
 
   @Override
@@ -97,7 +84,7 @@ public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
       System.err.println(lintSummary);
     }
 
-    final LintDispatch lintDispatch = lintOptions.getLintDispatch();
+    final LintDispatch lintDispatch = commandOptions.getLintDispatch();
     lintDispatch.dispatch();
   }
 
@@ -116,7 +103,7 @@ public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
       default:
         lintReportBuilder =
             new LintReportTextFormatter(
-                catalog, lintOptions, outputOptions, identifiers.getIdentifierQuoteString());
+                catalog, commandOptions, outputOptions, identifiers.getIdentifierQuoteString());
     }
 
     return lintReportBuilder;

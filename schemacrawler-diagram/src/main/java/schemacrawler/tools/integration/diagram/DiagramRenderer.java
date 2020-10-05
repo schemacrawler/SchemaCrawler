@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.integration.diagram;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.integration.diagram.DiagramOutputFormat.scdot;
 import static schemacrawler.tools.integration.diagram.GraphvizUtility.isGraphvizAvailable;
 import static schemacrawler.tools.integration.diagram.GraphvizUtility.isGraphvizJavaAvailable;
@@ -51,7 +50,6 @@ import schemacrawler.utility.NamedObjectSort;
 
 public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptions> {
 
-  private DiagramOptions diagramOptions;
   private DiagramOutputFormat diagramOutputFormat;
 
   public DiagramRenderer(final String command) {
@@ -103,9 +101,9 @@ public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptio
     traverser.setCatalog(catalog);
     traverser.setHandler(formatter);
     traverser.setTablesComparator(
-        NamedObjectSort.getNamedObjectSort(diagramOptions.isAlphabeticalSortForTables()));
+        NamedObjectSort.getNamedObjectSort(commandOptions.isAlphabeticalSortForTables()));
     traverser.setRoutinesComparator(
-        NamedObjectSort.getNamedObjectSort(diagramOptions.isAlphabeticalSortForRoutines()));
+        NamedObjectSort.getNamedObjectSort(commandOptions.isAlphabeticalSortForRoutines()));
 
     traverser.traverse();
 
@@ -118,19 +116,9 @@ public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptio
   }
 
   @Override
-  public DiagramOptions getCommandOptions() {
-    return diagramOptions;
-  }
-
-  @Override
   public void initialize() throws Exception {
     super.initialize();
     diagramOutputFormat = DiagramOutputFormat.fromFormat(outputOptions.getOutputFormatValue());
-  }
-
-  @Override
-  public final void setCommandOptions(final DiagramOptions diagramOptions) {
-    this.diagramOptions = requireNonNull(diagramOptions, "No diagram options provided");
   }
 
   @Override
@@ -151,7 +139,7 @@ public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptio
 
     GraphExecutor graphExecutor;
     if (diagramOutputFormat != scdot) {
-      final List<String> graphvizOpts = diagramOptions.getGraphvizOpts();
+      final List<String> graphvizOpts = commandOptions.getGraphvizOpts();
       boolean graphExecutorAvailable = false;
 
       // Try 1: Use Graphviz
@@ -195,7 +183,7 @@ public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptio
     final String identifierQuoteString = identifiers.getIdentifierQuoteString();
     formatter =
         new SchemaDotFormatter(
-            schemaTextDetailType, diagramOptions, outputOptions, identifierQuoteString);
+            schemaTextDetailType, commandOptions, outputOptions, identifierQuoteString);
 
     return formatter;
   }

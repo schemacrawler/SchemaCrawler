@@ -28,8 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.text.schema;
 
-import static java.util.Objects.requireNonNull;
-
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
@@ -42,8 +40,6 @@ import schemacrawler.utility.NamedObjectSort;
  * @author Sualeh Fatehi
  */
 public final class SchemaTextRenderer extends BaseSchemaCrawlerCommand<SchemaTextOptions> {
-
-  private SchemaTextOptions schemaTextOptions;
 
   public SchemaTextRenderer(final String command) {
     super(command);
@@ -64,21 +60,11 @@ public final class SchemaTextRenderer extends BaseSchemaCrawlerCommand<SchemaTex
     traverser.setCatalog(catalog);
     traverser.setHandler(formatter);
     traverser.setTablesComparator(
-        NamedObjectSort.getNamedObjectSort(schemaTextOptions.isAlphabeticalSortForTables()));
+        NamedObjectSort.getNamedObjectSort(commandOptions.isAlphabeticalSortForTables()));
     traverser.setRoutinesComparator(
-        NamedObjectSort.getNamedObjectSort(schemaTextOptions.isAlphabeticalSortForRoutines()));
+        NamedObjectSort.getNamedObjectSort(commandOptions.isAlphabeticalSortForRoutines()));
 
     traverser.traverse();
-  }
-
-  @Override
-  public SchemaTextOptions getCommandOptions() {
-    return schemaTextOptions;
-  }
-
-  @Override
-  public void setCommandOptions(final SchemaTextOptions schemaTextOptions) {
-    this.schemaTextOptions = requireNonNull(schemaTextOptions, "No schema text options provided");
   }
 
   @Override
@@ -104,11 +90,11 @@ public final class SchemaTextRenderer extends BaseSchemaCrawlerCommand<SchemaTex
     if (schemaTextDetailType == SchemaTextDetailType.list) {
       formatter =
           new SchemaListFormatter(
-              schemaTextDetailType, schemaTextOptions, outputOptions, identifierQuoteString);
+              schemaTextDetailType, commandOptions, outputOptions, identifierQuoteString);
     } else {
       formatter =
           new SchemaTextFormatter(
-              schemaTextDetailType, schemaTextOptions, outputOptions, identifierQuoteString);
+              schemaTextDetailType, commandOptions, outputOptions, identifierQuoteString);
     }
 
     return formatter;

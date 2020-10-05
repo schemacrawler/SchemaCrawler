@@ -33,7 +33,6 @@ import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.integration.diagram.DiagramOutputFormat.svg;
 import static schemacrawler.tools.integration.diagram.GraphvizUtility.isGraphvizAvailable;
 import static schemacrawler.tools.integration.diagram.GraphvizUtility.isGraphvizJavaAvailable;
@@ -87,8 +86,6 @@ public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOpt
     finalHtmlFileWriter.append(System.lineSeparator());
   }
 
-  private DiagramOptions diagramOptions;
-
   public EmbeddedDiagramRenderer(final String command) {
     super(command);
   }
@@ -136,16 +133,6 @@ public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOpt
   }
 
   @Override
-  public DiagramOptions getCommandOptions() {
-    return diagramOptions;
-  }
-
-  @Override
-  public void setCommandOptions(final DiagramOptions diagramOptions) {
-    this.diagramOptions = requireNonNull(diagramOptions, "No diagram options provided");
-  }
-
-  @Override
   public boolean usesConnection() {
     return false;
   }
@@ -156,7 +143,7 @@ public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOpt
       final OutputFormat outputFormat)
       throws Exception {
     scCommand.setSchemaCrawlerOptions(getSchemaCrawlerOptions());
-    scCommand.setCommandOptions(diagramOptions);
+    scCommand.setCommandOptions(commandOptions);
 
     scCommand.setIdentifiers(getIdentifiers());
     scCommand.setCatalog(getCatalog());

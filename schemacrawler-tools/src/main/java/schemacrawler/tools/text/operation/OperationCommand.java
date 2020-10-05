@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.text.operation;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.QueryUtility.executeAgainstTable;
 import static us.fatehi.utility.DatabaseUtility.createStatement;
 import static us.fatehi.utility.DatabaseUtility.executeSql;
@@ -61,8 +60,6 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOp
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(OperationCommand.class.getName());
 
-  private OperationOptions operationOptions;
-
   public OperationCommand(final String command) {
     super(command);
   }
@@ -86,7 +83,7 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOp
     }
 
     final DataTraversalHandler handler = getDataTraversalHandler();
-    final Query query = operationOptions.getQuery();
+    final Query query = commandOptions.getQuery();
 
     handler.begin();
 
@@ -108,7 +105,7 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOp
       try (final Statement statement = createStatement(connection)) {
         for (final Table table : getSortedTables(catalog)) {
           final boolean isAlphabeticalSortForTableColumns =
-              operationOptions.isAlphabeticalSortForTableColumns();
+              commandOptions.isAlphabeticalSortForTableColumns();
           try (final ResultSet results =
               executeAgainstTable(
                   query, statement, table, isAlphabeticalSortForTableColumns, identifiers)) {
@@ -130,32 +127,22 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOp
   }
 
   @Override
-  public OperationOptions getCommandOptions() {
-    return operationOptions;
-  }
-
-  @Override
-  public void setCommandOptions(final OperationOptions operationOptions) {
-    this.operationOptions = requireNonNull(operationOptions, "No operation options provided");
-  }
-
-  @Override
   public boolean usesConnection() {
     return true;
   }
 
   private DataTraversalHandler getDataTraversalHandler() throws SchemaCrawlerException {
-    final Operation operation = operationOptions.getOperation();
+    final Operation operation = commandOptions.getOperation();
     final String identifierQuoteString = identifiers.getIdentifierQuoteString();
 
     final DataTraversalHandler formatter =
-        new DataTextFormatter(operation, operationOptions, outputOptions, identifierQuoteString);
+        new DataTextFormatter(operation, commandOptions, outputOptions, identifierQuoteString);
     return formatter;
   }
 
   private List<? extends Table> getSortedTables(final Catalog catalog) {
     final List<? extends Table> tables = new ArrayList<>(catalog.getTables());
-    tables.sort(NamedObjectSort.getNamedObjectSort(operationOptions.isAlphabeticalSortForTables()));
+    tables.sort(NamedObjectSort.getNamedObjectSort(commandOptions.isAlphabeticalSortForTables()));
     return tables;
   }
 

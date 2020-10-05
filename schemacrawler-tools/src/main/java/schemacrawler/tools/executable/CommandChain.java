@@ -132,17 +132,6 @@ public final class CommandChain extends BaseSchemaCrawlerCommand {
   }
 
   @Override
-  public CommandOptions getCommandOptions() {
-    // No-op
-    return null;
-  }
-
-  @Override
-  public void setCommandOptions(CommandOptions commandOptions) {
-    // No-op
-  }
-
-  @Override
   public boolean usesConnection() {
     return false;
   }

@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.serialize;
 
 import static java.nio.file.Files.newOutputStream;
-import static java.util.Objects.requireNonNull;
 
 import java.io.OutputStream;
 import java.io.Writer;
@@ -47,8 +46,6 @@ import schemacrawler.tools.options.OutputOptionsBuilder;
 public final class SerializationCommand extends BaseSchemaCrawlerCommand<SerializationOptions> {
 
   static final String COMMAND = "serialize";
-
-  private SerializationOptions serializationOptions;
 
   public SerializationCommand() {
     super(COMMAND);
@@ -89,16 +86,6 @@ public final class SerializationCommand extends BaseSchemaCrawlerCommand<Seriali
       serializableCatalog.save(out);
       // NOTE: Jackson closes the output writer, so no need for a try-with-resources block
     }
-  }
-
-  @Override
-  public SerializationOptions getCommandOptions() {
-    return serializationOptions;
-  }
-
-  @Override
-  public void setCommandOptions(final SerializationOptions serializationOptions) {
-    this.serializationOptions = requireNonNull(serializationOptions);
   }
 
   @Override

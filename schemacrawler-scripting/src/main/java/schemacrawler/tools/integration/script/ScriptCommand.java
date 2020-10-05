@@ -79,8 +79,6 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<LanguageOption
             ObjectToString.toString(scriptEngineFactory.getExtensions())));
   }
 
-  private LanguageOptions scriptOptions;
-
   public ScriptCommand() {
     super(COMMAND);
   }
@@ -93,13 +91,13 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<LanguageOption
   /** {@inheritDoc} */
   @Override
   public void execute() throws Exception {
-    requireNonNull(scriptOptions, "No script language provided");
+    requireNonNull(commandOptions, "No script language provided");
     checkCatalog();
 
     final Charset inputCharset = outputOptions.getInputCharset();
 
     final ScriptEngine scriptEngine = getScriptEngine();
-    final InputResource inputResource = scriptOptions.getResource();
+    final InputResource inputResource = commandOptions.getResource();
     try (final Reader reader = inputResource.openNewInputReader(inputCharset);
         final Writer writer = outputOptions.openNewOutputWriter()) {
 
@@ -119,16 +117,6 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<LanguageOption
   }
 
   @Override
-  public LanguageOptions getCommandOptions() {
-    return scriptOptions;
-  }
-
-  @Override
-  public void setCommandOptions(final LanguageOptions scriptOptions) {
-    this.scriptOptions = scriptOptions;
-  }
-
-  @Override
   public boolean usesConnection() {
     return true;
   }
@@ -136,7 +124,7 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<LanguageOption
   private ScriptEngine getScriptEngine() throws SchemaCrawlerException {
     final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
     ScriptEngine scriptEngine = null;
-    final String scriptingLanguage = scriptOptions.getLanguage();
+    final String scriptingLanguage = commandOptions.getLanguage();
     LOGGER.log(Level.CONFIG, new StringFormat("Using script language <%s>", scriptingLanguage));
     try {
       scriptEngine = scriptEngineManager.getEngineByName(scriptingLanguage);
