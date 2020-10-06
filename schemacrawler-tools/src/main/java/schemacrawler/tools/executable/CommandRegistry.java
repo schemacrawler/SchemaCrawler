@@ -116,7 +116,7 @@ public final class CommandRegistry {
     return supportedCommandsOrdered;
   }
 
-  SchemaCrawlerCommand configureNewCommand(
+  SchemaCrawlerCommand<?> configureNewCommand(
       final String command,
       final SchemaCrawlerOptions schemaCrawlerOptions,
       final Config additionalConfiguration,
