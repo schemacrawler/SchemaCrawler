@@ -109,7 +109,6 @@ public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOpt
     final Path baseHtmlFile = createTempFilePath("schemacrawler", "html");
     final Path baseSvgFile = createTempFilePath("schemacrawler", "svg");
 
-    // Execute chain, after setting all options from the current command
     executeCommand(new SchemaTextRenderer(command), baseHtmlFile, TextOutputFormat.html);
     executeCommand(new DiagramRenderer(command), baseSvgFile, DiagramOutputFormat.svg);
 
