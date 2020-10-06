@@ -27,6 +27,9 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.executable.commandline;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import org.junit.jupiter.api.Test;
 
 import com.openpojo.reflection.impl.PojoClassFactory;
@@ -50,6 +53,13 @@ public class PluginCommandPojoTest {
     final Validator validator =
         ValidatorBuilder.create().with(new GetterMustExistRule()).with(new GetterTester()).build();
     validator.validate(PojoClassFactory.getPojoClass(PluginCommandOption.class));
+
+    final PluginCommandOption pluginCommandOption =
+        new PluginCommandOption("name", "helpText", this.getClass());
+    assertThat(
+        pluginCommandOption.toString(),
+        is(
+            "PluginCommandOption[name='name', valueClass=schemacrawler.tools.executable.commandline.PluginCommandPojoTest]"));
   }
 
   @Test
@@ -59,8 +69,7 @@ public class PluginCommandPojoTest {
         .withOnlyTheseFields("name")
         .verify();
 
-    final Validator validator =
-        ValidatorBuilder.create().with(new GetterMustExistRule()).with(new GetterTester()).build();
-    validator.validate(PojoClassFactory.getPojoClass(PluginCommand.class));
+    final PluginCommand pluginCommand = PluginCommand.newDatabasePluginCommand("name", "helpText");
+    assertThat(pluginCommand.toString(), is("PluginCommand[name='name', options=[]]"));
   }
 }
