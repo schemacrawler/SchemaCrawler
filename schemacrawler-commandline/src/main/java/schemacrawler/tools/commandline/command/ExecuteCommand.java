@@ -100,8 +100,7 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
       commandOutputOptions.getTitle().ifPresent(outputOptionsBuilder::title);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptions();
-      final SchemaRetrievalOptions schemaRetrievalOptions =
-          state.getSchemaRetrievalOptionsBuilder().toOptions();
+      final SchemaRetrievalOptions schemaRetrievalOptions = state.getSchemaRetrievalOptions();
       final OutputOptions outputOptions = outputOptionsBuilder.toOptions();
       final Config additionalConfiguration = state.getAdditionalConfiguration();
 

@@ -55,9 +55,8 @@ public final class StateUtility {
       log(Level.CONFIG, new ObjectToStringFormat(schemaCrawlerOptions), showlog);
     }
 
-    if (state.getSchemaRetrievalOptionsBuilder() != null) {
-      final SchemaRetrievalOptions schemaRetrievalOptions =
-          state.getSchemaRetrievalOptionsBuilder().toOptions();
+    if (state.getSchemaRetrievalOptions() != null) {
+      final SchemaRetrievalOptions schemaRetrievalOptions = state.getSchemaRetrievalOptions();
       log(Level.CONFIG, new ObjectToStringFormat(schemaRetrievalOptions), showlog);
     }
 

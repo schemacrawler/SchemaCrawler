@@ -40,7 +40,7 @@ import schemacrawler.schemacrawler.GrepOptions;
 import schemacrawler.schemacrawler.LimitOptions;
 import schemacrawler.schemacrawler.LoadOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.options.Config;
 
 public class SchemaCrawlerShellState {
@@ -54,7 +54,7 @@ public class SchemaCrawlerShellState {
   private Supplier<Connection> dataSource;
   private Throwable lastException;
   private SchemaCrawlerOptions schemaCrawlerOptions;
-  private SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder;
+  private SchemaRetrievalOptions schemaRetrievalOptions;
 
   public void addAdditionalConfiguration(final Config additionalConfiguration) {
     if (additionalConfiguration == null) {
@@ -98,8 +98,8 @@ public class SchemaCrawlerShellState {
     return schemaCrawlerOptions;
   }
 
-  public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder() {
-    return schemaRetrievalOptionsBuilder;
+  public SchemaRetrievalOptions getSchemaRetrievalOptions() {
+    return schemaRetrievalOptions;
   }
 
   public boolean isConnected() {
@@ -146,16 +146,15 @@ public class SchemaCrawlerShellState {
     this.schemaCrawlerOptions = schemaCrawlerOptions;
   }
 
-  public void setSchemaRetrievalOptionsBuilder(
-      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder) {
-    this.schemaRetrievalOptionsBuilder = schemaRetrievalOptionsBuilder;
+  public void setSchemaRetrievalOptions(final SchemaRetrievalOptions schemaRetrievalOptions) {
+    this.schemaRetrievalOptions = schemaRetrievalOptions;
   }
 
   public void sweep() {
     catalog = null;
     additionalConfiguration = null;
     schemaCrawlerOptions = null;
-    schemaRetrievalOptionsBuilder = null;
+    schemaRetrievalOptions = null;
     lastException = null;
 
     disconnect();

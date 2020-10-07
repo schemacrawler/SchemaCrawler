@@ -179,8 +179,9 @@ public class ConnectCommand extends BaseStateHolder implements Runnable {
     try (final Connection connection = state.getDataSource().get()) {
       final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
           databaseConnector.getSchemaRetrievalOptionsBuilder(connection);
-      state.setSchemaRetrievalOptionsBuilder(
-          SchemaRetrievalOptionsConfig.fromConfig(schemaRetrievalOptionsBuilder, config));
+      state.setSchemaRetrievalOptions(
+          SchemaRetrievalOptionsConfig.fromConfig(schemaRetrievalOptionsBuilder, config)
+              .toOptions());
     }
   }
 }

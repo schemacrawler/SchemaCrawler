@@ -127,8 +127,7 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
       LOGGER.log(Level.INFO, new StringFormat("infolevel=%s", infolevel));
 
       final Config additionalConfiguration = state.getAdditionalConfiguration();
-      final SchemaRetrievalOptions schemaRetrievalOptions =
-          state.getSchemaRetrievalOptionsBuilder().toOptions();
+      final SchemaRetrievalOptions schemaRetrievalOptions = state.getSchemaRetrievalOptions();
       final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptions();
 
       final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();

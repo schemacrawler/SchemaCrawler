@@ -136,7 +136,7 @@ public final class CommandlineTestUtility {
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    state.setSchemaRetrievalOptionsBuilder(SchemaRetrievalOptionsBuilder.builder());
+    state.setSchemaRetrievalOptions(SchemaRetrievalOptionsBuilder.builder().toOptions());
     state.setDataSource(() -> connection); // is-connected
     state.setCatalog(catalog); // is-loaded
     return state;
