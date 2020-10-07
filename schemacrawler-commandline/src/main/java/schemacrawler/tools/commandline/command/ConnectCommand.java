@@ -114,13 +114,6 @@ public class ConnectCommand extends BaseStateHolder implements Runnable {
           new StringFormat(
               "Using database plugin <%s>", databaseConnector.getDatabaseServerType()));
 
-      final Config config = new Config();
-      config.putAll(state.getAdditionalConfiguration());
-      config.putAll(state.getBaseConfiguration());
-
-      state.sweep();
-
-      state.addAdditionalConfiguration(config);
       loadSchemaCrawlerOptionsBuilder(databaseConnector);
       createDataSource(databaseConnector, databaseConnectionOptions, getUserCredentials());
       loadSchemaRetrievalOptionsBuilder(databaseConnector);
