@@ -1,4 +1,4 @@
-package schemacrawler.tools.offline;/*
+/*
 ========================================================================
 SchemaCrawler
 http://www.schemacrawler.com
@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-
+package schemacrawler.tools.offline;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -35,6 +35,7 @@ import static org.hamcrest.Matchers.nullValue;
 import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
+
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
@@ -43,89 +44,73 @@ import schemacrawler.test.utility.TestDatabaseDriver;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.options.Config;
 
-public class OfflineCatalogLoaderTest
-{
+public class OfflineCatalogLoaderTest {
 
   @Test
-  public void additionalConfiguration()
-  {
+  public void additionalConfiguration() {
     final CatalogLoader catalogLoader = new OfflineCatalogLoader();
 
-    assertThat(catalogLoader.getAdditionalConfiguration(),
-               is(not(nullValue())));
-    assertThat(catalogLoader
-                 .getAdditionalConfiguration()
-                 .size(), is(0));
+    assertThat(catalogLoader.getAdditionalConfiguration(), is(not(nullValue())));
+    assertThat(catalogLoader.getAdditionalConfiguration().size(), is(0));
 
     final Config config = new Config();
     config.put("hello", "world");
     catalogLoader.setAdditionalConfiguration(config);
 
-    assertThat(catalogLoader.getAdditionalConfiguration(),
-               is(not(nullValue())));
-    assertThat(catalogLoader
-                 .getAdditionalConfiguration()
-                 .containsKey("hello"), is(true));
+    // Assert that additional config is not preserved, since it is not used
+    assertThat(catalogLoader.getAdditionalConfiguration(), is(not(nullValue())));
+    assertThat(catalogLoader.getAdditionalConfiguration().size(), is(0));
   }
 
   @Test
-  public void connection()
-  {
+  public void connection() {
     final CatalogLoader catalogLoader = new OfflineCatalogLoader();
 
     assertThat(catalogLoader.getConnection(), is(nullValue()));
 
-    final Connection connection =
-      new TestDatabaseDriver().connect("jdbc:test-db:test", null);
+    final Connection connection = new TestDatabaseDriver().connect("jdbc:test-db:test", null);
     catalogLoader.setConnection(connection);
 
     assertThat(catalogLoader.getConnection(), is(not(nullValue())));
   }
 
   @Test
-  public void databaseSystemIdentifier()
-  {
-    assertThat(new OfflineCatalogLoader().getDatabaseSystemIdentifier(),
-               is("offline"));
+  public void databaseSystemIdentifier() {
+    assertThat(new OfflineCatalogLoader().getDatabaseSystemIdentifier(), is("offline"));
   }
 
   @Test
-  public void schemaCrawlerOptions()
-  {
+  public void schemaCrawlerOptions() {
     final CatalogLoader catalogLoader = new OfflineCatalogLoader();
 
     assertThat(catalogLoader.getSchemaCrawlerOptions(), is(not(nullValue())));
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     catalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
     assertThat(catalogLoader.getSchemaCrawlerOptions(), is(not(nullValue())));
-    assertThat(catalogLoader
-                 .getSchemaCrawlerOptions()
-                 .equals(schemaCrawlerOptions), is(true));
+    assertThat(catalogLoader.getSchemaCrawlerOptions().equals(schemaCrawlerOptions), is(true));
   }
 
   @Test
-  public void schemaRetrievalOptions()
-  {
+  public void schemaRetrievalOptions() {
     final CatalogLoader catalogLoader = new OfflineCatalogLoader();
 
     assertThat(catalogLoader.getSchemaRetrievalOptions(), is(not(nullValue())));
-    assertThat(catalogLoader
-                 .getSchemaRetrievalOptions()
-                 .getDatabaseServerType()
-                 .getDatabaseSystemIdentifier(), is("offline"));
+    assertThat(
+        catalogLoader
+            .getSchemaRetrievalOptions()
+            .getDatabaseServerType()
+            .getDatabaseSystemIdentifier(),
+        is("offline"));
 
     final SchemaRetrievalOptions schemaRetrievalOptions =
-      SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
     // Set is a no-op operation, so it should not have any effect
     catalogLoader.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
     assertThat(catalogLoader.getSchemaRetrievalOptions(), is(not(nullValue())));
-    assertThat(catalogLoader
-                 .getSchemaRetrievalOptions()
-                 .equals(schemaRetrievalOptions), is(false));
+    assertThat(catalogLoader.getSchemaRetrievalOptions().equals(schemaRetrievalOptions), is(false));
   }
-
 }
