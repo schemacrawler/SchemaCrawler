@@ -5,6 +5,7 @@
 
 - Remove support for chain in scripts
 - Make schema text commands a plugin into SchemaCrawler
+- show and sort commands are folded into schema text command options
 
 
 <a name="a16.10.1"></a>

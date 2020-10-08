@@ -33,11 +33,8 @@ import java.sql.Connection;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.tools.options.Config;
 
 public interface CatalogLoader {
-
-  Config getAdditionalConfiguration();
 
   Connection getConnection();
 
@@ -48,8 +45,6 @@ public interface CatalogLoader {
   SchemaRetrievalOptions getSchemaRetrievalOptions();
 
   Catalog loadCatalog() throws Exception;
-
-  void setAdditionalConfiguration(Config config);
 
   void setConnection(Connection connection);
 

@@ -42,25 +42,8 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseDriver;
 import schemacrawler.tools.catalogloader.CatalogLoader;
-import schemacrawler.tools.options.Config;
 
 public class OfflineCatalogLoaderTest {
-
-  @Test
-  public void additionalConfiguration() {
-    final CatalogLoader catalogLoader = new OfflineCatalogLoader();
-
-    assertThat(catalogLoader.getAdditionalConfiguration(), is(not(nullValue())));
-    assertThat(catalogLoader.getAdditionalConfiguration().size(), is(0));
-
-    final Config config = new Config();
-    config.put("hello", "world");
-    catalogLoader.setAdditionalConfiguration(config);
-
-    // Assert that additional config is not preserved, since it is not used
-    assertThat(catalogLoader.getAdditionalConfiguration(), is(not(nullValue())));
-    assertThat(catalogLoader.getAdditionalConfiguration().size(), is(0));
-  }
 
   @Test
   public void connection() {

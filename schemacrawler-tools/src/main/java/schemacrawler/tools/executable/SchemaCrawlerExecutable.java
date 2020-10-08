@@ -178,7 +178,6 @@ public final class SchemaCrawlerExecutable {
             schemaRetrievalOptions.getDatabaseServerType().getDatabaseSystemIdentifier());
     LOGGER.log(Level.CONFIG, new StringFormat("Catalog loader: %s", getClass().getName()));
 
-    catalogLoader.setAdditionalConfiguration(additionalConfiguration);
     catalogLoader.setConnection(connection);
     catalogLoader.setSchemaRetrievalOptions(schemaRetrievalOptions);
     catalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);

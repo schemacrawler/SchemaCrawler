@@ -38,14 +38,12 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.tools.options.Config;
 
 public class SchemaCrawlerCatalogLoader implements CatalogLoader {
 
   private final String databaseSystemIdentifier;
   private SchemaRetrievalOptions schemaRetrievalOptions;
   private SchemaCrawlerOptions schemaCrawlerOptions;
-  private Config additionalConfiguration;
   private Connection connection;
 
   public SchemaCrawlerCatalogLoader() {
@@ -55,15 +53,6 @@ public class SchemaCrawlerCatalogLoader implements CatalogLoader {
   protected SchemaCrawlerCatalogLoader(final String databaseSystemIdentifier) {
     this.databaseSystemIdentifier =
         requireNonNull(databaseSystemIdentifier, "No database system identifier provided");
-  }
-
-  @Override
-  public Config getAdditionalConfiguration() {
-    if (additionalConfiguration == null) {
-      return new Config();
-    } else {
-      return additionalConfiguration;
-    }
   }
 
   @Override
@@ -104,11 +93,6 @@ public class SchemaCrawlerCatalogLoader implements CatalogLoader {
     final Catalog catalog = schemaCrawler.crawl();
 
     return catalog;
-  }
-
-  @Override
-  public void setAdditionalConfiguration(final Config additionalConfiguration) {
-    this.additionalConfiguration = additionalConfiguration;
   }
 
   @Override
