@@ -10,8 +10,6 @@ import schemacrawler.tools.commandline.command.GrepCommand;
 import schemacrawler.tools.commandline.command.LimitCommand;
 import schemacrawler.tools.commandline.command.LoadCommand;
 import schemacrawler.tools.commandline.command.LogCommand;
-import schemacrawler.tools.commandline.command.ShowCommand;
-import schemacrawler.tools.commandline.command.SortCommand;
 import schemacrawler.tools.commandline.shell.AvailableCommandsCommand;
 import schemacrawler.tools.commandline.shell.AvailableServersCommand;
 import schemacrawler.tools.commandline.shell.DisconnectCommand;
@@ -28,8 +26,6 @@ import schemacrawler.tools.commandline.shell.SystemCommand;
       FilterCommand.class,
       GrepCommand.class,
       LimitCommand.class,
-      ShowCommand.class,
-      SortCommand.class,
       LoadCommand.class,
       ExecuteCommand.class,
       AvailableCommandsCommand.class,

@@ -90,17 +90,7 @@ public final class SchemaCrawlerCommandLine {
 
     for (final String commandName :
         new String[] {
-          "log",
-          "configfile",
-          "connect",
-          "filter",
-          "limit",
-          "grep",
-          "show",
-          "sort",
-          "showstate",
-          "load",
-          "execute"
+          "log", "configfile", "connect", "filter", "limit", "grep", "showstate", "load", "execute"
         }) {
       final Runnable command = (Runnable) subcommands.get(commandName);
       LOGGER.log(Level.INFO, "Running command " + command.getClass().getSimpleName());

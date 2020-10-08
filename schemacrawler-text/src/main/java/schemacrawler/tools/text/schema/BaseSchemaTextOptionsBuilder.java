@@ -103,7 +103,28 @@ public abstract class BaseSchemaTextOptionsBuilder<
         config.getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS);
     isAlphabeticalSortForIndexes = config.getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_INDEXES);
 
+    // Override values from command line
+    fromConfigCommandLineOverride(config);
+
     return (B) this;
+  }
+
+  private void fromConfigCommandLineOverride(final Config config) {
+
+    final String noremarksKey = "no-remarks";
+    if (config.containsKey(noremarksKey)) {
+      noRemarks(config.getBooleanValue(noremarksKey));
+    }
+
+    final String weakassociationsKey = "weak-associations";
+    if (config.containsKey(weakassociationsKey)) {
+      weakAssociations(config.getBooleanValue(weakassociationsKey));
+    }
+
+    final String portablenamesKey = "portable-names";
+    if (config.containsKey(portablenamesKey)) {
+      portableNames(config.getBooleanValue(portablenamesKey));
+    }
   }
 
   @Override

@@ -27,13 +27,19 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.text.schema;
 
+import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
+
 import schemacrawler.tools.executable.BaseCommandProvider;
+import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.base.CommandProviderUtility;
 
 public final class SchemaTextCommandProvider extends BaseCommandProvider {
+
+  private static final String DESCRIPTION_HEADER =
+      "Generate text output to show details of a schema";
 
   public SchemaTextCommandProvider() {
     super(CommandProviderUtility.schemaTextCommands());
@@ -47,6 +53,68 @@ public final class SchemaTextCommandProvider extends BaseCommandProvider {
     final SchemaTextRenderer scCommand = new SchemaTextRenderer(command);
     scCommand.setCommandOptions(schemaTextOptions);
     return scCommand;
+  }
+
+  @Override
+  public PluginCommand getCommandLineCommand() {
+    final PluginCommand pluginCommand = newPluginCommand("display", "** " + DESCRIPTION_HEADER);
+    pluginCommand
+        .addOption(
+            "no-info",
+            Boolean.class,
+            "Hide or show database information",
+            "--no-info=<boolean>",
+            "<boolean> can be true or false",
+            "Optional, defaults to false")
+        .addOption(
+            "no-remarks",
+            Boolean.class,
+            "Hide or show table and column remarks",
+            "--no-remarks=<boolean>",
+            "<boolean> can be true or false",
+            "Optional, defaults to false")
+        .addOption(
+            "portable-names",
+            Boolean.class,
+            "Allow for easy comparison between databases, "
+                + "by hiding or showing foreign key names, constraint names, "
+                + "trigger names, specific names for routines, "
+                + "or index and primary key names, "
+                + "and fully-qualified table names",
+            "--portable-names=<boolean>",
+            "<boolean> can be true or false",
+            "Optional, defaults to false")
+        .addOption(
+            "weak-associations",
+            Boolean.class,
+            "Hide or show inferred relationships between tables, "
+                + "based on common table and column naming conventions",
+            "--weak-associations=<boolean>",
+            "<boolean> can be true or false",
+            "Optional, defaults to false")
+        //
+        .addOption(
+            "sort-columns",
+            Boolean.class,
+            "Sort columns in a table alphabetically",
+            "--sort-columns=<sortcolumns>",
+            "<sortcolumns> can be true or false",
+            "Optional, defaults to false")
+        .addOption(
+            "sort-tables",
+            Boolean.class,
+            "Sort tables alphabetically",
+            "--sort-tables=<sorttables>",
+            "<sorttables> can be true or false",
+            "Optional, defaults to true")
+        .addOption(
+            "sort-routines",
+            Boolean.class,
+            "Sort routines alphabetically",
+            "--sort-routines=<sortroutines>",
+            "<sortroutines> can be true or false",
+            "Optional, defaults to true");
+    return pluginCommand;
   }
 
   @Override
