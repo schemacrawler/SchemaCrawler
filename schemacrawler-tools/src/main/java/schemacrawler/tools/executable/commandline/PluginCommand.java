@@ -34,7 +34,6 @@ import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -43,50 +42,40 @@ import java.util.function.Supplier;
 public class PluginCommand implements Iterable<PluginCommandOption> {
 
   public static PluginCommand empty() {
-    return new PluginCommand(command, null, null, null, null, null);
+    return new PluginCommand(command, null, null, null, null);
   }
 
   public static PluginCommand newDatabasePluginCommand(final String name, final String helpHeader) {
-    return new PluginCommand(server, name, helpHeader, null, null, null);
+    return new PluginCommand(server, name, helpHeader, null, null);
   }
 
   public static PluginCommand newPluginCommand(final String name, final String helpHeader) {
-    return new PluginCommand(command, name, helpHeader, null, null, null);
-  }
-
-  public static PluginCommand newPluginCommand(
-      final String name, final String helpHeader, final String helpDescription) {
-    return new PluginCommand(command, name, helpHeader, helpDescription, null, null);
+    return new PluginCommand(command, name, helpHeader, null, null);
   }
 
   public static PluginCommand newPluginCommand(
       final String name,
       final String helpHeader,
-      final String helpDescription,
-      final Supplier<String> helpFooter) {
-    return new PluginCommand(command, name, helpHeader, helpDescription, helpFooter, null);
+      final Supplier<String[]> helpDescription,
+      final Supplier<String[]> helpFooter) {
+    return new PluginCommand(command, name, helpHeader, helpDescription, helpFooter);
   }
 
   private final PluginCommandType type;
-  private final String helpDescription;
+  private final Supplier<String[]> helpDescription;
   private final String helpHeader;
   private final String name;
-  private final Supplier<String> helpFooter;
+  private final Supplier<String[]> helpFooter;
   private final Collection<PluginCommandOption> options;
 
   private PluginCommand(
       final PluginCommandType type,
       final String name,
       final String helpHeader,
-      final String helpDescription,
-      final Supplier<String> helpFooter,
-      final Collection<PluginCommandOption> options) {
+      final Supplier<String[]> helpDescription,
+      final Supplier<String[]> helpFooter) {
     this.type = requireNonNull(type, "No plugin command type provided");
-    if (options == null) {
-      this.options = new ArrayList<>();
-    } else {
-      this.options = new HashSet<>(options);
-    }
+    this.options = new ArrayList<>();
 
     if (isBlank(name) && !this.options.isEmpty()) {
       throw new IllegalArgumentException("No command name provided");
@@ -99,18 +88,13 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
       this.helpHeader = helpHeader;
     }
 
-    if (isBlank(helpDescription)) {
-      this.helpDescription = null;
-    } else {
-      this.helpDescription = helpDescription;
-    }
-
+    this.helpDescription = helpDescription;
     this.helpFooter = helpFooter;
   }
 
   public PluginCommand addOption(
-      final String name, final String helpText, final Class<?> valueClass) {
-    final PluginCommandOption option = new PluginCommandOption(name, helpText, valueClass);
+      final String name, final Class<?> valueClass, final String... helpText) {
+    final PluginCommandOption option = new PluginCommandOption(name, valueClass, helpText);
     if (option != null) {
       options.add(option);
     }
@@ -129,11 +113,11 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
     return Objects.equals(name, that.name);
   }
 
-  public String getHelpDescription() {
+  public Supplier<String[]> getHelpDescription() {
     return helpDescription;
   }
 
-  public Supplier<String> getHelpFooter() {
+  public Supplier<String[]> getHelpFooter() {
     return helpFooter;
   }
 
@@ -152,6 +136,10 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
 
   public boolean hasHelpFooter() {
     return helpFooter != null;
+  }
+
+  public boolean hasHelpDescription() {
+    return helpDescription != null;
   }
 
   public boolean isEmpty() {

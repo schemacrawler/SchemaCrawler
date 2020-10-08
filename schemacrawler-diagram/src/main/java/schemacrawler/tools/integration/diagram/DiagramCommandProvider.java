@@ -28,9 +28,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.diagram;
 
 import schemacrawler.tools.executable.BaseCommandProvider;
-import schemacrawler.tools.executable.CommandProviderUtility;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.text.base.CommandProviderUtility;
 
 public final class DiagramCommandProvider extends BaseCommandProvider {
 

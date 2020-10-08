@@ -18,4 +18,4 @@ The command example demonstrates the use of the SchemaCrawler Interactive Shell.
     7. Type `quit` to quit the SchemaCrawler Interactive Shell
 
 ## How to Experiment
-1. Try using different SchemaCrawler Interactive Shell commands, such as "show" and "limit", and see how they affect the output.
+1. Try using different SchemaCrawler Interactive Shell commands, such as "limit", and see how they affect the output.

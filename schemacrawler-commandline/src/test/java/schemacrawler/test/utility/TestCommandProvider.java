@@ -49,7 +49,7 @@ public class TestCommandProvider extends BaseCommandProvider {
   @Override
   public PluginCommand getCommandLineCommand() {
     final PluginCommand pluginCommand = newPluginCommand(COMMAND, "** " + DESCRIPTION_HEADER);
-    pluginCommand.addOption("test-command-parameter", "Parameter for test command", String.class);
+    pluginCommand.addOption("test-command-parameter", String.class, "Parameter for test command");
     return pluginCommand;
   }
 

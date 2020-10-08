@@ -26,7 +26,6 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.integration.serialize.JavaSerializedCatalog;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
-import schemacrawler.tools.options.Config;
 
 public final class OfflineCatalogLoader implements CatalogLoader {
 
@@ -45,16 +44,6 @@ public final class OfflineCatalogLoader implements CatalogLoader {
 
   public OfflineCatalogLoader() {
     databaseSystemIdentifier = "offline";
-  }
-
-  @Override
-  public Config getAdditionalConfiguration() {
-    return new Config();
-  }
-
-  @Override
-  public void setAdditionalConfiguration(final Config additionalConfiguration) {
-    // No-op
   }
 
   @Override

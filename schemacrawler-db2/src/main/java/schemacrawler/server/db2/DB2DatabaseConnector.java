@@ -61,15 +61,15 @@ public final class DB2DatabaseConnector
     final PluginCommand pluginCommand = super.getHelpCommand();
     pluginCommand
       .addOption("server",
-                 "--server=db2%n" + "Loads SchemaCrawler plug-in for IBM DB2",
-                 String.class)
+                 String.class,
+                 "--server=db2%n" + "Loads SchemaCrawler plug-in for IBM DB2")
       .addOption("host",
-                 "Host name%n" + "Optional, defaults to localhost",
-                 String.class)
+                 String.class,
+                 "Host name%n" + "Optional, defaults to localhost")
       .addOption("port",
-                 "Port number%n" + "Optional, defaults to 50000",
-                 Integer.class)
-      .addOption("database", "Database name", String.class);
+                 Integer.class,
+                 "Port number%n" + "Optional, defaults to 50000")
+      .addOption("database", String.class, "Database name");
     return pluginCommand;
   }
   

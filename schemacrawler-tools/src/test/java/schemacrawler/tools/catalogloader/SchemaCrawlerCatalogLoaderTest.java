@@ -42,24 +42,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseDriver;
-import schemacrawler.tools.options.Config;
 
 public class SchemaCrawlerCatalogLoaderTest {
-
-  @Test
-  public void additionalConfiguration() {
-    final CatalogLoader catalogLoader = new SchemaCrawlerCatalogLoader();
-
-    assertThat(catalogLoader.getAdditionalConfiguration(), is(not(nullValue())));
-    assertThat(catalogLoader.getAdditionalConfiguration().size(), is(0));
-
-    final Config config = new Config();
-    config.put("hello", "world");
-    catalogLoader.setAdditionalConfiguration(config);
-
-    assertThat(catalogLoader.getAdditionalConfiguration(), is(not(nullValue())));
-    assertThat(catalogLoader.getAdditionalConfiguration().containsKey("hello"), is(true));
-  }
 
   @Test
   public void connection() {

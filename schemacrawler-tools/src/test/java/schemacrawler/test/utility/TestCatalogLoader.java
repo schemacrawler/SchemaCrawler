@@ -8,19 +8,12 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.catalogloader.CatalogLoader;
-import schemacrawler.tools.options.Config;
 
 public class TestCatalogLoader implements CatalogLoader {
 
-  private Config additionalConfiguration;
   private Connection connection;
   private SchemaCrawlerOptions schemaCrawlerOptions;
   private SchemaRetrievalOptions schemaRetrievalOptions;
-
-  @Override
-  public Config getAdditionalConfiguration() {
-    return additionalConfiguration;
-  }
 
   @Override
   public Connection getConnection() {
@@ -45,11 +38,6 @@ public class TestCatalogLoader implements CatalogLoader {
   @Override
   public Catalog loadCatalog() throws Exception {
     return mock(Catalog.class);
-  }
-
-  @Override
-  public void setAdditionalConfiguration(final Config additionalConfiguration) {
-    this.additionalConfiguration = additionalConfiguration;
   }
 
   @Override

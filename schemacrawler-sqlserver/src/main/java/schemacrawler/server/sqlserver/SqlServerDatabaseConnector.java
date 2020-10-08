@@ -62,24 +62,24 @@ public final class SqlServerDatabaseConnector
     final PluginCommand pluginCommand = super.getHelpCommand();
     pluginCommand
       .addOption("server",
+                 String.class,
                  "--server=mysql%n"
-                 + "Loads SchemaCrawler plug-in for Microsoft SQL Server%n"
-                 + "If you are using named pipes, or Windows authentication, "
-                 + "you will need to provide a database connection URL on "
-                 + "the SchemaCrawler command-line",
-                 String.class)
+         + "Loads SchemaCrawler plug-in for Microsoft SQL Server%n"
+         + "If you are using named pipes, or Windows authentication, "
+         + "you will need to provide a database connection URL on "
+         + "the SchemaCrawler command-line")
       .addOption("host",
-                 "Host name%n" + "Optional, defaults to localhost",
-                 String.class)
+                 String.class,
+                 "Host name%n" + "Optional, defaults to localhost")
       .addOption("port",
-                 "Port number%n" + "Optional, defaults to 1433",
-                 Integer.class)
+                 Integer.class,
+                 "Port number%n" + "Optional, defaults to 1433")
       .addOption("database",
+                 String.class,
                  "Database name%n"
-                 + "Be sure to also restrict your schemas to this database, "
-                 + "by using an additional option,%n"
-                 + "--schemas=<database>.dbo",
-                 String.class);
+         + "Be sure to also restrict your schemas to this database, "
+         + "by using an additional option,%n"
+         + "--schemas=<database>.dbo");
     return pluginCommand;
   }
   

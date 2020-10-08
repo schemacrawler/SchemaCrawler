@@ -113,7 +113,33 @@ public abstract class BaseTextOptionsBuilder<
             IDENTIFIER_QUOTING_STRATEGY,
             IdentifierQuotingStrategy.quote_if_special_characters_and_reserved_words);
 
+    // Override values from command line
+    fromConfigCommandLineOverride(map);
+
     return (B) this;
+  }
+
+  private void fromConfigCommandLineOverride(final Config config) {
+
+    final String noinfoKey = "no-info";
+    if (config.containsKey(noinfoKey)) {
+      noInfo(config.getBooleanValue(noinfoKey));
+    }
+
+    final String sorttablesKey = "sort-tables";
+    if (config.containsKey(sorttablesKey)) {
+      sortTables(config.getBooleanValue(sorttablesKey));
+    }
+
+    final String sortcolumnsKey = "sort-columns";
+    if (config.containsKey(sortcolumnsKey)) {
+      sortTableColumns(config.getBooleanValue(sortcolumnsKey));
+    }
+
+    final String sortroutinesKey = "sort-routines";
+    if (config.containsKey(sortroutinesKey)) {
+      sortRoutines(config.getBooleanValue(sortroutinesKey));
+    }
   }
 
   @Override

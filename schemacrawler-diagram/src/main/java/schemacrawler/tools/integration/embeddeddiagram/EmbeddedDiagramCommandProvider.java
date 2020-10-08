@@ -28,12 +28,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.embeddeddiagram;
 
 import schemacrawler.tools.executable.BaseCommandProvider;
-import schemacrawler.tools.executable.CommandProviderUtility;
 import schemacrawler.tools.integration.diagram.DiagramOptions;
 import schemacrawler.tools.integration.diagram.DiagramOptionsBuilder;
 import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.text.base.CommandProviderUtility;
 
 public final class EmbeddedDiagramCommandProvider extends BaseCommandProvider {
 

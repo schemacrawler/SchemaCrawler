@@ -40,13 +40,12 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptionsBuilder;
-import schemacrawler.tools.options.TextOutputFormat;
 
 public final class ExecutableTestUtility {
 
   public static Path executableExecution(
       final Connection connection, final SchemaCrawlerExecutable executable) throws Exception {
-    return executableExecution(connection, executable, TextOutputFormat.text.getFormat());
+    return executableExecution(connection, executable, "text");
   }
 
   public static Path executableExecution(

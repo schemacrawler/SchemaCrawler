@@ -1,9 +1,11 @@
 # SchemaCrawler Change History
 
-<a name="a16.10.2"></a>
-## Release 16.10.2 - 2020-10-10
+<a name="a16.11.1"></a>
+## Release 16.11.1 - 2020-10-10
 
 - Remove support for chain in scripts
+- Make schema text commands a plugin into SchemaCrawler
+- show and sort commands are folded into schema text command options
 
 
 <a name="a16.10.1"></a>

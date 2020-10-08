@@ -49,7 +49,14 @@ public class SerializationCommandProvider extends BaseCommandProvider {
         newPluginCommand(
             SerializationCommand.COMMAND,
             "** " + DESCRIPTION_HEADER,
-            "For more information, see https://www.schemacrawler.com/serialize.html %n");
+            () ->
+                new String[] {
+                  "For more information, see https://www.schemacrawler.com/serialize.html %n"
+                },
+            () ->
+                new String[] {
+                  "Deserialization is possible with the \"offline\" command for Java serialization"
+                });
 
     return pluginCommand;
   }

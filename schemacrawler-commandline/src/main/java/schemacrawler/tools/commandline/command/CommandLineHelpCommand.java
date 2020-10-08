@@ -165,7 +165,7 @@ public final class CommandLineHelpCommand implements Runnable {
             Stream.of("log", "config-file", "connect", "limit", "grep", "filter", "load"),
             StreamSupport.stream(new AvailableCommands().spliterator(), false)
                 .map(PluginCommandType.command::toPluginCommandName),
-            Stream.of("show", "sort", "execute"))
+            Stream.of("execute"))
         .flatMap(i -> i)
         .forEach(command -> showHelpForSubcommand(parent, command));
   }

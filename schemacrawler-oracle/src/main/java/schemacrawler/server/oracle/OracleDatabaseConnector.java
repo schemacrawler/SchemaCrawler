@@ -84,19 +84,19 @@ public final class OracleDatabaseConnector
     final PluginCommand pluginCommand = super.getHelpCommand();
     pluginCommand
       .addOption("server",
-                 "--server=oracle%n" + "Loads SchemaCrawler plug-in for Oracle",
-                 String.class)
+                 String.class,
+                 "--server=oracle%n" + "Loads SchemaCrawler plug-in for Oracle")
       .addOption("host",
-                 "Host name%n" + "Optional, defaults to localhost",
-                 String.class)
+                 String.class,
+                 "Host name%n" + "Optional, defaults to localhost")
       .addOption("port",
-                 "Port number%n" + "Optional, defaults to 1521",
-                 Integer.class)
+                 Integer.class,
+                 "Port number%n" + "Optional, defaults to 1521")
       .addOption("database",
+                 String.class,
                  "Oracle Service Name%n"
-                 + "You can use a query similar to the one below to find it.%n"
-                 + "SELECT GLOBAL_NAME FROM GLOBAL_NAME",
-                 String.class);
+         + "You can use a query similar to the one below to find it.%n"
+         + "SELECT GLOBAL_NAME FROM GLOBAL_NAME");
     return pluginCommand;
   }
 

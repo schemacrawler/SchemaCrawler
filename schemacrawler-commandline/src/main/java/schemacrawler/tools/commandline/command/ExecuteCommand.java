@@ -87,7 +87,7 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
 
     try {
       final OutputOptionsBuilder outputOptionsBuilder =
-          OutputOptionsConfig.fromConfig(null, state.getAdditionalConfiguration());
+          OutputOptionsConfig.fromConfig(null, state.getBaseConfiguration());
 
       if (commandOutputOptions.getOutputFile().isPresent()) {
         outputOptionsBuilder.withOutputFile(commandOutputOptions.getOutputFile().get());

@@ -10,9 +10,7 @@ import schemacrawler.tools.commandline.command.GrepCommand;
 import schemacrawler.tools.commandline.command.LimitCommand;
 import schemacrawler.tools.commandline.command.LoadCommand;
 import schemacrawler.tools.commandline.command.LogCommand;
-import schemacrawler.tools.commandline.command.ShowCommand;
 import schemacrawler.tools.commandline.command.ShowStateCommand;
-import schemacrawler.tools.commandline.command.SortCommand;
 
 @Command
 class SchemaCrawlerCommandLineCommands {
@@ -25,7 +23,5 @@ class SchemaCrawlerCommandLineCommands {
   @Mixin private LimitCommand limit;
   @Mixin private LoadCommand load;
   @Mixin private LogCommand log;
-  @Mixin private ShowCommand show;
   @Mixin private ShowStateCommand showstate;
-  @Mixin private SortCommand sort;
 }

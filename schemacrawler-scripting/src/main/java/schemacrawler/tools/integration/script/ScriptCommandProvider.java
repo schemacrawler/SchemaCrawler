@@ -50,8 +50,8 @@ public class ScriptCommandProvider extends BaseCommandProvider {
     final PluginCommand pluginCommand =
         newPluginCommand(ScriptCommand.COMMAND, "** " + DESCRIPTION_HEADER);
     pluginCommand
-        .addOption("script", "Path to the script file or to the CLASSPATH resource", String.class)
-        .addOption("script-language", "Scripting language", String.class);
+        .addOption("script", String.class, "Path to the script file or to the CLASSPATH resource")
+        .addOption("script-language", String.class, "Scripting language");
     return pluginCommand;
   }
 

@@ -33,6 +33,11 @@
     </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-text</artifactId>
+      <version>${project.version}</version>
+    </dependency>	
+    <dependency>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-diagram</artifactId>
       <version>${project.version}</version>
     </dependency>
@@ -118,11 +123,13 @@
                   <include>us.fatehi:schemacrawler-utility</include>
                   <include>us.fatehi:schemacrawler-api</include>
                   <include>us.fatehi:schemacrawler-tools</include>
+                  <include>us.fatehi:schemacrawler-text</include>
                   <include>us.fatehi:schemacrawler-diagram</include>
                 </includes>
               </artifactSet>
               <createSourcesJar>true</createSourcesJar>
-              <transformers>
+              <transformers>              
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                 <transformer
                     implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                   <manifestEntries>

@@ -48,7 +48,6 @@ import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
-import schemacrawler.tools.options.Config;
 import us.fatehi.utility.string.StringFormat;
 
 @Command(
@@ -126,7 +125,6 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
     try (final Connection connection = state.getDataSource().get()) {
       LOGGER.log(Level.INFO, new StringFormat("infolevel=%s", infolevel));
 
-      final Config additionalConfiguration = state.getAdditionalConfiguration();
       final SchemaRetrievalOptions schemaRetrievalOptions = state.getSchemaRetrievalOptions();
       final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptions();
 
@@ -136,7 +134,6 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
               schemaRetrievalOptions.getDatabaseServerType().getDatabaseSystemIdentifier());
       LOGGER.log(Level.CONFIG, new StringFormat("Catalog loader: %s", getClass().getName()));
 
-      catalogLoader.setAdditionalConfiguration(additionalConfiguration);
       catalogLoader.setConnection(connection);
       catalogLoader.setSchemaRetrievalOptions(schemaRetrievalOptions);
       catalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);

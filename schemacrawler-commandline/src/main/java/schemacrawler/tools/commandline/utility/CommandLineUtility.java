@@ -111,7 +111,9 @@ public class CommandLineUtility {
         pluginOptionNames.add(optionName);
         if (parseResult.hasMatchedOption(optionName)) {
           final Object value = parseResult.matchedOptionValue(optionName, null);
-          additionalConfig.put(optionName, value == null ? null : String.valueOf(value));
+          if (value != null) {
+            additionalConfig.put(optionName, value.toString());
+          }
         }
       }
     }
@@ -129,7 +131,11 @@ public class CommandLineUtility {
 
     final UsageMessageSpec usageMessageSpec = new UsageMessageSpec();
     usageMessageSpec.header(pluginCommand.getHelpHeader());
-    usageMessageSpec.description(pluginCommand.getHelpDescription());
+    if (pluginCommand.hasHelpDescription()) {
+      usageMessageSpec.description(pluginCommand.getHelpDescription().get());
+    } else {
+      usageMessageSpec.description("");
+    }
     usageMessageSpec.synopsisHeading("Command:%n");
     usageMessageSpec.customSynopsis(pluginCommandName);
     usageMessageSpec.optionListHeading("Options:%n");
@@ -142,9 +148,11 @@ public class CommandLineUtility {
     for (final PluginCommandOption option : pluginCommand) {
       final String optionName = option.getName();
       final String paramName = String.format("<%s>", optionName);
-      final String helpText;
+      final String[] helpText;
       if (option.getValueClass().isEnum()) {
-        helpText = String.format("%s%nUse one of ${COMPLETION-CANDIDATES}", option.getHelpText());
+        helpText = new String[1];
+        helpText[0] =
+            String.format("%s%nUse one of ${COMPLETION-CANDIDATES}", option.getHelpText()[0]);
       } else {
         helpText = option.getHelpText();
       }

@@ -58,16 +58,16 @@ public final class HyperSQLDatabaseConnector
     final PluginCommand pluginCommand = super.getHelpCommand();
     pluginCommand
       .addOption("server",
+                 String.class,
                  "--server=hsqldb%n"
-                 + "Loads SchemaCrawler plug-in for HyperSQL",
-                 String.class)
+         + "Loads SchemaCrawler plug-in for HyperSQL")
       .addOption("host",
-                 "Host name%n" + "Optional, defaults to localhost",
-                 String.class)
+                 String.class,
+                 "Host name%n" + "Optional, defaults to localhost")
       .addOption("port",
-                 "Port number%n" + "Optional, defaults to 9001",
-                 Integer.class)
-      .addOption("database", "Database name", String.class);
+                 Integer.class,
+                 "Port number%n" + "Optional, defaults to 9001")
+      .addOption("database", String.class, "Database name");
     return pluginCommand;
   }
 

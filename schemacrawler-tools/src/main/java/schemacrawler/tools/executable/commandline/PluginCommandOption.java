@@ -28,22 +28,21 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable.commandline;
 
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.Objects;
 import java.util.StringJoiner;
 
 public class PluginCommandOption {
 
-  private final String helpText;
+  private final String[] helpText;
   private final String name;
   private final Class<?> valueClass;
 
-  PluginCommandOption(final String name, final String helpText, final Class<?> valueClass) {
+  PluginCommandOption(final String name, final Class<?> valueClass, final String... helpText) {
     this.name = requireNonNull(name, "No option name provided");
 
-    if (isBlank(helpText)) {
-      this.helpText = null;
+    if (helpText == null) {
+      this.helpText = new String[0];
     } else {
       this.helpText = helpText;
     }
@@ -67,7 +66,7 @@ public class PluginCommandOption {
     return Objects.equals(getName(), that.getName());
   }
 
-  public String getHelpText() {
+  public String[] getHelpText() {
     return helpText;
   }
 

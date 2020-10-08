@@ -51,8 +51,8 @@ public class TemplateCommandProvider extends BaseCommandProvider {
         newPluginCommand(TemplateCommand.COMMAND, "** " + DESCRIPTION_HEADER);
     pluginCommand
         .addOption(
-            "template", "Path to the template file or to the CLASSPATH resource", String.class)
-        .addOption("templating-language", "Templating language", TemplateLanguageType.class);
+            "template", String.class, "Path to the template file or to the CLASSPATH resource")
+        .addOption("templating-language", TemplateLanguageType.class, "Templating language");
     return pluginCommand;
   }
 
