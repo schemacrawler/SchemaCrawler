@@ -111,7 +111,9 @@ public class CommandLineUtility {
         pluginOptionNames.add(optionName);
         if (parseResult.hasMatchedOption(optionName)) {
           final Object value = parseResult.matchedOptionValue(optionName, null);
-          additionalConfig.put(optionName, value == null ? null : String.valueOf(value));
+          if (value != null) {
+            additionalConfig.put(optionName, value.toString());
+          }
         }
       }
     }
