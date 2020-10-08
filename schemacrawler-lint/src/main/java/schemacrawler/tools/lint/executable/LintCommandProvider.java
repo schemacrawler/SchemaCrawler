@@ -54,7 +54,10 @@ public class LintCommandProvider extends BaseCommandProvider {
         newPluginCommand(
             "lint",
             "** " + DESCRIPTION_HEADER,
-            "For more information, see https://www.schemacrawler.com/lint.html %n",
+            () ->
+                new String[] {
+                  "For more information, see https://www.schemacrawler.com/lint.html %n"
+                },
             new LinterHelp());
     pluginCommand
         .addOption(
@@ -63,15 +66,15 @@ public class LintCommandProvider extends BaseCommandProvider {
             "lint-dispatch",
             LintDispatch.class,
             "Specifies how to fail if a linter threshold is exceeded%n"
-          + "Optional, defaults to none%n"
-          + "Corresponds to the configuration file setting: schemacrawler.lint.lintdispatch")
+                + "Optional, defaults to none%n"
+                + "Corresponds to the configuration file setting: schemacrawler.lint.lintdispatch")
         .addOption(
             "run-all-linters",
             boolean.class,
             "Whether to run all linters, including running the ones "
-          + "that are not explicitly configured with their default settings%n"
-          + "Optional, defaults to true%n"
-          + "Corresponds to the configuration file setting: schemacrawler.lint.runalllinters");
+                + "that are not explicitly configured with their default settings%n"
+                + "Optional, defaults to true%n"
+                + "Corresponds to the configuration file setting: schemacrawler.lint.runalllinters");
     return pluginCommand;
   }
 

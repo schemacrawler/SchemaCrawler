@@ -131,7 +131,11 @@ public class CommandLineUtility {
 
     final UsageMessageSpec usageMessageSpec = new UsageMessageSpec();
     usageMessageSpec.header(pluginCommand.getHelpHeader());
-    usageMessageSpec.description(pluginCommand.getHelpDescription());
+    if (pluginCommand.hasHelpDescription()) {
+      usageMessageSpec.description(pluginCommand.getHelpDescription().get());
+    } else {
+      usageMessageSpec.description("");
+    }
     usageMessageSpec.synopsisHeading("Command:%n");
     usageMessageSpec.customSynopsis(pluginCommandName);
     usageMessageSpec.optionListHeading("Options:%n");

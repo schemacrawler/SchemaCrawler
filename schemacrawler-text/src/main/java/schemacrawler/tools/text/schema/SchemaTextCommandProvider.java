@@ -57,8 +57,16 @@ public final class SchemaTextCommandProvider extends BaseCommandProvider {
 
   @Override
   public PluginCommand getCommandLineCommand() {
-    final PluginCommand pluginCommand = newPluginCommand("display", "** " + DESCRIPTION_HEADER);
+
+    final PluginCommand pluginCommand =
+        newPluginCommand(
+            "schema",
+            "** " + DESCRIPTION_HEADER,
+            () -> new String[] {"Applies to all commands that show schema information"},
+            () -> new String[0]);
+
     pluginCommand
+        // Show options
         .addOption(
             "no-info",
             Boolean.class,
@@ -92,7 +100,7 @@ public final class SchemaTextCommandProvider extends BaseCommandProvider {
             "--weak-associations=<boolean>",
             "<boolean> can be true or false",
             "Optional, defaults to false")
-        //
+        // Sort options
         .addOption(
             "sort-columns",
             Boolean.class,
@@ -114,6 +122,7 @@ public final class SchemaTextCommandProvider extends BaseCommandProvider {
             "--sort-routines=<sortroutines>",
             "<sortroutines> can be true or false",
             "Optional, defaults to true");
+
     return pluginCommand;
   }
 

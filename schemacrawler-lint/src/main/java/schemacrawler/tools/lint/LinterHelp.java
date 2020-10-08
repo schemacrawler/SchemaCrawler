@@ -37,11 +37,11 @@ import java.util.function.Supplier;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
-public final class LinterHelp implements Supplier<String> {
+public final class LinterHelp implements Supplier<String[]> {
 
   public static void main(final String[] args) throws IOException {
     if (args.length == 1) {
-      Files.write(Paths.get(args[0]), new LinterHelp(true).get().getBytes(UTF_8), APPEND);
+      Files.write(Paths.get(args[0]), new LinterHelp(true).get()[0].getBytes(UTF_8), APPEND);
     } else {
       System.out.println(new LinterHelp(true).get());
     }
@@ -58,7 +58,7 @@ public final class LinterHelp implements Supplier<String> {
   }
 
   @Override
-  public String get() {
+  public String[] get() {
     try {
       final StringBuilder buffer = new StringBuilder(1024);
 
@@ -82,9 +82,9 @@ public final class LinterHelp implements Supplier<String> {
             .append(System.lineSeparator());
       }
 
-      return buffer.toString();
+      return new String[] {buffer.toString()};
     } catch (final SchemaCrawlerException e) {
-      return "";
+      return new String[0];
     }
   }
 
