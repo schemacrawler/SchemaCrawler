@@ -142,9 +142,11 @@ public class CommandLineUtility {
     for (final PluginCommandOption option : pluginCommand) {
       final String optionName = option.getName();
       final String paramName = String.format("<%s>", optionName);
-      final String helpText;
+      final String[] helpText;
       if (option.getValueClass().isEnum()) {
-        helpText = String.format("%s%nUse one of ${COMPLETION-CANDIDATES}", option.getHelpText());
+        helpText = new String[1];
+        helpText[0] =
+            String.format("%s%nUse one of ${COMPLETION-CANDIDATES}", option.getHelpText()[0]);
       } else {
         helpText = option.getHelpText();
       }

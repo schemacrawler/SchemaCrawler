@@ -63,14 +63,14 @@ public final class OfflineDatabaseConnector
     final PluginCommand pluginCommand = super.getHelpCommand();
     pluginCommand
       .addOption("server",
+                 String.class,
                  "--server=offline%n"
-                 + "Loads SchemaCrawler plug-in for offline snapshots",
-                 String.class)
-      .addOption("host", "Should be omitted", String.class)
-      .addOption("port", "Should be omitted", Integer.class)
+         + "Loads SchemaCrawler plug-in for offline snapshots")
+      .addOption("host", String.class, "Should be omitted")
+      .addOption("port", Integer.class, "Should be omitted")
       .addOption("database",
-                 "File name and location of the database metadata snapshot",
-                 String.class);
+                 String.class,
+                 "File name and location of the database metadata snapshot");
     return pluginCommand;
   }
   

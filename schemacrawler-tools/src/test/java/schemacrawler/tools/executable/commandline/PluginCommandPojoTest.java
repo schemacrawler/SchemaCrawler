@@ -55,7 +55,7 @@ public class PluginCommandPojoTest {
     validator.validate(PojoClassFactory.getPojoClass(PluginCommandOption.class));
 
     final PluginCommandOption pluginCommandOption =
-        new PluginCommandOption("name", "helpText", this.getClass());
+        new PluginCommandOption("name", this.getClass(), "helpText");
     assertThat(
         pluginCommandOption.toString(),
         is(

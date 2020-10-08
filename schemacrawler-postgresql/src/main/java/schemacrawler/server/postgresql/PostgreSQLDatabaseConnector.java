@@ -62,23 +62,23 @@ public final class PostgreSQLDatabaseConnector
     final PluginCommand pluginCommand = super.getHelpCommand();
     pluginCommand
       .addOption("server",
+                 String.class,
                  "--server=postgresql%n"
-                 + "Loads SchemaCrawler plug-in for PostgreSQL",
-                 String.class)
+         + "Loads SchemaCrawler plug-in for PostgreSQL")
       .addOption("host",
+                 String.class,
                  "Host name%n"
-                 + "Optional, uses the PGHOSTADDR and PGHOST environmental variables "
-                 + "if available, or defaults to localhost",
-                 String.class)
+         + "Optional, uses the PGHOSTADDR and PGHOST environmental variables "
+         + "if available, or defaults to localhost")
       .addOption("port",
+                 Integer.class,
                  "Port number%n"
-                 + "Optional, uses the PGPORT environmental variable "
-                 + "if available, or defaults to 5432",
-                 Integer.class)
+         + "Optional, uses the PGPORT environmental variable "
+         + "if available, or defaults to 5432")
       .addOption("database",
+                 String.class,
                  "Database name%n"
-                 + "Optional, uses the PGDATABASE environmental variable if available",
-                 String.class);
+         + "Optional, uses the PGDATABASE environmental variable if available");
     return pluginCommand;
   }
   

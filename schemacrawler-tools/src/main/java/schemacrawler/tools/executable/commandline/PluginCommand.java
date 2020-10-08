@@ -109,8 +109,8 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
   }
 
   public PluginCommand addOption(
-      final String name, final String helpText, final Class<?> valueClass) {
-    final PluginCommandOption option = new PluginCommandOption(name, helpText, valueClass);
+      final String name, final Class<?> valueClass, final String... helpText) {
+    final PluginCommandOption option = new PluginCommandOption(name, valueClass, helpText);
     if (option != null) {
       options.add(option);
     }

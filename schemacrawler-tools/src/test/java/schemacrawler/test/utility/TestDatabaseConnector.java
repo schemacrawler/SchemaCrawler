@@ -32,8 +32,8 @@ public final class TestDatabaseConnector extends DatabaseConnector {
     final PluginCommand pluginCommand = super.getHelpCommand();
     pluginCommand.addOption(
         "server",
-        "--server=test-db%n" + "Loads SchemaCrawler plug-in for Test Database",
-        String.class);
+        String.class,
+        "--server=test-db%n" + "Loads SchemaCrawler plug-in for Test Database");
     return pluginCommand;
   }
 }

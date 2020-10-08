@@ -57,11 +57,11 @@ public final class SQLiteDatabaseConnector
     final PluginCommand pluginCommand = super.getHelpCommand();
     pluginCommand
       .addOption("server",
-                 "--server=sqlite%n" + "Loads SchemaCrawler plug-in for SQLite",
-                 String.class)
-      .addOption("host", "Should be omitted", String.class)
-      .addOption("port", "Should be omitted", Integer.class)
-      .addOption("database", "SQLite database file path", String.class);
+                 String.class,
+                 "--server=sqlite%n" + "Loads SchemaCrawler plug-in for SQLite")
+      .addOption("host", String.class, "Should be omitted")
+      .addOption("port", Integer.class, "Should be omitted")
+      .addOption("database", String.class, "SQLite database file path");
     return pluginCommand;
   }
   

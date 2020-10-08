@@ -60,15 +60,15 @@ public final class MySQLDatabaseConnector
     final PluginCommand pluginCommand = super.getHelpCommand();
     pluginCommand
       .addOption("server",
-                 "--server=mysql%n" + "Loads SchemaCrawler plug-in for MySQL",
-                 String.class)
+                 String.class,
+                 "--server=mysql%n" + "Loads SchemaCrawler plug-in for MySQL")
       .addOption("host",
-                 "Host name%n" + "Optional, defaults to localhost",
-                 String.class)
+                 String.class,
+                 "Host name%n" + "Optional, defaults to localhost")
       .addOption("port",
-                 "Port number%n" + "Optional, defaults to 3306",
-                 Integer.class)
-      .addOption("database", "Database name", String.class);
+                 Integer.class,
+                 "Port number%n" + "Optional, defaults to 3306")
+      .addOption("database", String.class, "Database name");
     return pluginCommand;
   }
   
