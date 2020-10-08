@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -9,18 +9,15 @@
     <version>16.10.1</version>
     <relativePath>../schemacrawler-parent/pom.xml</relativePath>
   </parent>
-  <artifactId>schemacrawler-diagram</artifactId>
+  <artifactId>schemacrawler-text</artifactId>
   <packaging>jar</packaging>
-  <name>SchemaCrawler Diagram</name>
-
+  <name>SchemaCrawler Text</name>
   <dependencies>
-
     <dependency>
       <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-text</artifactId>
+      <artifactId>schemacrawler-tools</artifactId>
       <version>${project.version}</version>
     </dependency>
-
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-testdb</artifactId>
@@ -40,20 +37,6 @@
       <version>${project.version}</version>
       <type>test-jar</type>
       <scope>test</scope>
-    </dependency>    
-    <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-text</artifactId>
-      <version>${project.version}</version>
-      <type>test-jar</type>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>guru.nidi</groupId>
-      <artifactId>graphviz-java</artifactId>
-      <version>${graphviz.java.version}</version>
-      <scope>provided</scope>
     </dependency>
 
   </dependencies>

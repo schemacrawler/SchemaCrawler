@@ -84,9 +84,6 @@ public final class CommandRegistry {
       throw new SchemaCrawlerException("Could not load extended command registry", e);
     }
 
-    commandProviders.add(new SchemaTextCommandProvider());
-    commandProviders.add(new OperationCommandProvider());
-
     return commandProviders;
   }
 

@@ -25,11 +25,12 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.executable;
+package schemacrawler.tools.text.base;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
+import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.text.operation.OperationType;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 

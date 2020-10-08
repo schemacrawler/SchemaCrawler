@@ -101,8 +101,7 @@ public final class OutputOptionsBuilder
         fileExtension = null;
       }
 
-      outputFormatValue =
-          isBlank(fileExtension) ? TextOutputFormat.text.getFormat() : fileExtension;
+      outputFormatValue = isBlank(fileExtension) ? "text" : fileExtension;
     }
 
     if (isBlank(title)) {
@@ -203,7 +202,7 @@ public final class OutputOptionsBuilder
 
   public OutputOptionsBuilder withOutputResource(final OutputResource outputResource) {
     if (outputResource == null) {
-      if (outputFormatValue == null || TextOutputFormat.text.name().equals(outputFormatValue)) {
+      if (outputFormatValue == null || "text".equals(outputFormatValue)) {
         this.outputResource = new ConsoleOutputResource();
       } else {
         final String extension;

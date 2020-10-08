@@ -64,7 +64,7 @@
     </copy>
     <copy todir="${main-distribution.staging.dir}">
       <fileset
-        dir="${SchemaCrawler.home}/schemacrawler-tools/src/main/resources">
+        dir="${SchemaCrawler.home}/schemacrawler-text/src/main/resources">
         <include name="**/sc.css" />
       </fileset>
     </copy>

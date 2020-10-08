@@ -25,18 +25,17 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.executable;
+package schemacrawler.tools.text.schema;
 
+import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
-import schemacrawler.tools.text.schema.SchemaTextOptions;
-import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
-import schemacrawler.tools.text.schema.SchemaTextRenderer;
+import schemacrawler.tools.text.base.CommandProviderUtility;
 
 public final class SchemaTextCommandProvider extends BaseCommandProvider {
 
-  SchemaTextCommandProvider() {
+  public SchemaTextCommandProvider() {
     super(CommandProviderUtility.schemaTextCommands());
   }
 
