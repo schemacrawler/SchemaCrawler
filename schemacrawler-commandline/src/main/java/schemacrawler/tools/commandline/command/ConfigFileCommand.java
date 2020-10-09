@@ -109,7 +109,6 @@ public class ConfigFileCommand extends BaseStateHolder implements Runnable {
     config.putAll(configFileConfig);
 
     state.setBaseConfiguration(config);
-    state.addAdditionalConfiguration(config);
   }
 
   private Config loadConfig() {
