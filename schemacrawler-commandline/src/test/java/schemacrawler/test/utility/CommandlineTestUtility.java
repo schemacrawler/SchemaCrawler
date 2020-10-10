@@ -32,18 +32,22 @@ import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
-import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringReader;
 import java.io.Writer;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+
+import com.typesafe.config.ConfigFactory;
 
 import picocli.CommandLine;
 import schemacrawler.Main;
@@ -90,9 +94,13 @@ public final class CommandlineTestUtility {
     commandlineArgsMap.put("-url", connectionInfo.getConnectionUrl());
     commandlineArgsMap.put("-user", "sa");
     commandlineArgsMap.put("-password", "");
+
+    System.clearProperty("config.file");
     if (propertiesFile != null) {
-      commandlineArgsMap.put("g", propertiesFile.toString());
+      System.setProperty("config.file", propertiesFile.toString());
     }
+    ConfigFactory.invalidateCaches();
+
     commandlineArgsMap.put("c", command);
     commandlineArgsMap.put("-output-format", outputFormatValue);
     commandlineArgsMap.put("-output-file", out.toString());
@@ -123,7 +131,11 @@ public final class CommandlineTestUtility {
       final String propertiesFileResource,
       final OutputFormat outputFormat)
       throws Exception {
-    final Path propertiesFile = copyResourceToTempFile(propertiesFileResource);
+    final Path propertiesFile = Files.createTempFile("schemacrawler", ".properties");
+    final Properties properties = new Properties();
+    properties.load(new StringReader(IOUtility.readResourceFully(propertiesFileResource)));
+    properties.store(new FileWriter(propertiesFile.toFile()), "Temporary properties");
+
     return commandlineExecution(
         connectionInfo, command, argsMap, propertiesFile, outputFormat.getFormat());
   }

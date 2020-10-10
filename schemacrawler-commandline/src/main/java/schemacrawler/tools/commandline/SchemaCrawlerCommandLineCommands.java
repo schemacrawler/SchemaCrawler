@@ -2,7 +2,6 @@ package schemacrawler.tools.commandline;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Mixin;
-import schemacrawler.tools.commandline.command.ConfigFileCommand;
 import schemacrawler.tools.commandline.command.ConnectCommand;
 import schemacrawler.tools.commandline.command.ExecuteCommand;
 import schemacrawler.tools.commandline.command.FilterCommand;
@@ -15,7 +14,6 @@ import schemacrawler.tools.commandline.command.ShowStateCommand;
 @Command
 class SchemaCrawlerCommandLineCommands {
 
-  @Mixin private ConfigFileCommand configfile;
   @Mixin private ConnectCommand connect;
   @Mixin private ExecuteCommand execute;
   @Mixin private FilterCommand filter;
