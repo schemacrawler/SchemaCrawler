@@ -27,8 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Files.newBufferedWriter;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -39,12 +37,10 @@ import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,13 +48,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
+import schemacrawler.test.utility.CommandlineTestUtility;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.test.utility.TestWriter;
-import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
@@ -66,15 +62,6 @@ public class CommandLineSpecialCasesTest {
 
   private static final String COMMAND_LINE_SPECIAL_CASES_OUTPUT =
       "command_line_special_cases_output/";
-
-  private static Path createConfig(final Map<String, String> config) throws IOException {
-    final String prefix = "SchemaCrawler.TestCommandLineConfig";
-    final Path configFile = IOUtility.createTempFilePath(prefix, "properties");
-    final Properties configProperties = new Properties();
-    configProperties.putAll(config);
-    configProperties.store(newBufferedWriter(configFile, UTF_8), prefix);
-    return configFile;
-  }
 
   private TestOutputStream err;
   private TestOutputStream out;
@@ -127,7 +114,7 @@ public class CommandLineSpecialCasesTest {
         runConfig.putAll(config);
       }
 
-      final Path configFile = createConfig(runConfig);
+      final Path configFile = CommandlineTestUtility.createConfig(runConfig);
       argsMap.put("g", configFile.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));

@@ -36,7 +36,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
 
@@ -78,23 +77,6 @@ public final class Config implements Options, Map<String, String> {
     return defaultValue;
   }
 
-  /**
-   * Copies properties into a map.
-   *
-   * @param properties Properties to copy
-   * @return Map of properties and values
-   */
-  private static Map<String, String> propertiesMap(final Properties properties) {
-    final Map<String, String> propertiesMap = new HashMap<>();
-    if (properties != null) {
-      final Set<Map.Entry<Object, Object>> entries = properties.entrySet();
-      for (final Map.Entry<Object, Object> entry : entries) {
-        propertiesMap.put((String) entry.getKey(), (String) entry.getValue());
-      }
-    }
-    return propertiesMap;
-  }
-
   private final Map<String, String> config;
 
   /** Creates an empty config. */
@@ -112,15 +94,6 @@ public final class Config implements Options, Map<String, String> {
     if (config != null) {
       putAll(config);
     }
-  }
-
-  /**
-   * Copies properties into a map.
-   *
-   * @param properties Properties to copy
-   */
-  public Config(final Properties properties) {
-    this(propertiesMap(properties));
   }
 
   @Override
@@ -287,10 +260,6 @@ public final class Config implements Options, Map<String, String> {
     config.putAll(m);
   }
 
-  public void putAll(final Properties properties) {
-    config.putAll(propertiesMap(properties));
-  }
-
   @Override
   public String remove(final Object key) {
     return config.remove(key);
@@ -319,19 +288,6 @@ public final class Config implements Options, Map<String, String> {
   @Override
   public int size() {
     return config.size();
-  }
-
-  /**
-   * Convert config to Properties
-   *
-   * @return Properties
-   */
-  public Properties toProperties() {
-    final Properties properties = new Properties();
-    for (final Entry<String, String> entry : config.entrySet()) {
-      properties.put(entry.getKey(), entry.getValue());
-    }
-    return properties;
   }
 
   @Override

@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.utility;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
@@ -238,5 +239,14 @@ public final class CommandlineTestUtility {
 
   private CommandlineTestUtility() {
     // Prevent instantiation
+  }
+
+public static Path createConfig(final Map<String, String> config) throws IOException {
+    final String prefix = "SchemaCrawler.TestCommandLineConfig";
+    final Path configFile = IOUtility.createTempFilePath(prefix, "properties");
+    final Properties configProperties = new Properties();
+    configProperties.putAll(config);
+    configProperties.store(newBufferedWriter(configFile, UTF_8), prefix);
+    return configFile;
   }
 }

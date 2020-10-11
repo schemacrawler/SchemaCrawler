@@ -61,7 +61,7 @@ public class SchemaCrawlerStateTest {
 
   private Map<String, String> getBaseConfiguration(final SchemaCrawlerShellState state)
       throws NoSuchFieldException, IllegalAccessException {
-    final Field f = state.getClass().getDeclaredField("baseConfiguration");
+    final Field f = state.getClass().getDeclaredField("config");
     f.setAccessible(true);
     return (Map<String, String>) f.get(state);
   }
