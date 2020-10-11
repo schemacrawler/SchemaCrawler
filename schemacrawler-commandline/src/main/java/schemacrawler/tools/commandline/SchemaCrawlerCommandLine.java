@@ -88,11 +88,10 @@ public final class SchemaCrawlerCommandLine {
       final ParseResult parseResult = commandLine.parseArgs(args);
       final Config commandConfig = retrievePluginOptions(parseResult);
 
-      state.setBaseConfiguration(new Config(configMap));
       final Config configMain = new Config();
       configMain.putAll(configMap);
       configMain.putAll(commandConfig);
-      state.addAdditionalConfiguration(configMain);
+      state.setBaseConfiguration(new Config(configMain));
 
       executeCommandLine(commandLine);
     } catch (final Throwable throwable) {

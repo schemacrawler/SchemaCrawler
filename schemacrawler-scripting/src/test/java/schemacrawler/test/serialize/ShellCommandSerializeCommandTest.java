@@ -101,7 +101,7 @@ public class ShellCommandSerializeCommandTest {
 
     final CommandLine.ParseResult parseResult = commandLine.parseArgs(args);
     final Config additionalConfig = retrievePluginOptions(parseResult);
-    state.addAdditionalConfiguration(additionalConfig);
+    state.setBaseConfiguration(additionalConfig);
 
     serializeCommand.run();
 

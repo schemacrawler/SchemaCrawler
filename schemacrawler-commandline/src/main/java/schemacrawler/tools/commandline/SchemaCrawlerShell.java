@@ -107,7 +107,7 @@ public final class SchemaCrawlerShell {
     }
 
     final Config additionalConfig = retrievePluginOptions(parseResult);
-    state.addAdditionalConfiguration(additionalConfig);
+    state.setBaseConfiguration(additionalConfig);
 
     if (parseResult.hasSubcommand()) {
       for (final CommandLine subcommandLine : parseResult.subcommand().asCommandLineList()) {

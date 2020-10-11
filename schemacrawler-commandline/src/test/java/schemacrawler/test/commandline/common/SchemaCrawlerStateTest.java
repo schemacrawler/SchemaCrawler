@@ -45,7 +45,7 @@ public class SchemaCrawlerStateTest {
   public void baseConfigNull() throws Exception {
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
 
-    assertThat(state.getBaseConfiguration(), is(anEmptyMap()));
+    assertThat(state.getBaseConfiguration(), is(nullValue()));
     // Assert internal field
     final Map<String, String> baseConfigurationBefore = getBaseConfiguration(state);
     assertThat(baseConfigurationBefore, is(nullValue()));

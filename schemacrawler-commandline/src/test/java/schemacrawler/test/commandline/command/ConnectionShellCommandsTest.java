@@ -140,17 +140,17 @@ public class ConnectionShellCommandsTest {
   @Test
   public void sweep() {
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    state.addAdditionalConfiguration(new Config());
+    state.setBaseConfiguration(new Config());
 
     final String[] args = new String[0];
 
-    assertThat(state.getAdditionalConfiguration(), is(not(nullValue())));
+    assertThat(state.getBaseConfiguration(), is(not(nullValue())));
 
     final SweepCommand optionsParser = new SweepCommand(state);
     final CommandLine commandLine = newCommandLine(optionsParser, null, false);
     commandLine.execute(args);
 
-    assertThat(state.getAdditionalConfiguration(), is(nullValue()));
+    assertThat(state.getBaseConfiguration(), is(nullValue()));
   }
 
   @Test
@@ -159,12 +159,12 @@ public class ConnectionShellCommandsTest {
 
     final String[] args = new String[0];
 
-    assertThat(state.getAdditionalConfiguration(), is(nullValue()));
+    assertThat(state.getBaseConfiguration(), is(nullValue()));
 
     final SweepCommand optionsParser = new SweepCommand(state);
     final CommandLine commandLine = newCommandLine(optionsParser, null, false);
     commandLine.execute(args);
 
-    assertThat(state.getAdditionalConfiguration(), is(nullValue()));
+    assertThat(state.getBaseConfiguration(), is(nullValue()));
   }
 }

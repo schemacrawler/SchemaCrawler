@@ -60,7 +60,7 @@ public final class StateUtility {
       log(Level.CONFIG, new ObjectToStringFormat(schemaRetrievalOptions), showlog);
     }
 
-    log(Level.FINE, new ObjectToStringFormat(state.getAdditionalConfiguration()), showlog);
+    log(Level.FINE, new ObjectToStringFormat(state.getBaseConfiguration()), showlog);
   }
 
   private static void log(final Level level, final Supplier<String> toLog, final boolean showlog) {

@@ -102,9 +102,7 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
       final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptions();
       final SchemaRetrievalOptions schemaRetrievalOptions = state.getSchemaRetrievalOptions();
       final OutputOptions outputOptions = outputOptionsBuilder.toOptions();
-      final Config additionalConfiguration = new Config();
-      additionalConfiguration.putAll(state.getBaseConfiguration());
-      additionalConfiguration.putAll(state.getAdditionalConfiguration());
+      final Config additionalConfiguration = state.getBaseConfiguration();
 
       // Output file name has to be specified for diagrams
       // (Check after output options have been built)

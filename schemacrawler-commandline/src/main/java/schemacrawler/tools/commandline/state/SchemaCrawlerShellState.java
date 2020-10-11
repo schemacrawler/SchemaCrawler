@@ -48,7 +48,6 @@ public class SchemaCrawlerShellState {
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(SchemaCrawlerShellState.class.getName());
 
-  private Config additionalConfiguration;
   private Config baseConfiguration;
   private Catalog catalog;
   private Supplier<Connection> dataSource;
@@ -56,30 +55,12 @@ public class SchemaCrawlerShellState {
   private SchemaCrawlerOptions schemaCrawlerOptions;
   private SchemaRetrievalOptions schemaRetrievalOptions;
 
-  public void addAdditionalConfiguration(final Config additionalConfiguration) {
-    if (additionalConfiguration == null) {
-      return;
-    }
-    if (this.additionalConfiguration == null) {
-      this.additionalConfiguration = new Config();
-    }
-    this.additionalConfiguration.putAll(additionalConfiguration);
-  }
-
   public void disconnect() {
     dataSource = null;
   }
 
-  public Config getAdditionalConfiguration() {
-    return additionalConfiguration;
-  }
-
   public Config getBaseConfiguration() {
-    if (baseConfiguration != null) {
-      return baseConfiguration;
-    } else {
-      return new Config();
-    }
+    return baseConfiguration;
   }
 
   public Catalog getCatalog() {
@@ -152,7 +133,7 @@ public class SchemaCrawlerShellState {
 
   public void sweep() {
     catalog = null;
-    additionalConfiguration = null;
+    baseConfiguration = null;
     schemaCrawlerOptions = null;
     schemaRetrievalOptions = null;
     lastException = null;
