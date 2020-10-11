@@ -91,7 +91,7 @@ public final class SchemaCrawlerCommandLine {
       final Config configMain = new Config();
       configMain.putAll(configMap);
       configMain.putAll(commandConfig);
-      state.setBaseConfiguration(new Config(configMain));
+      state.setConfig(new Config(configMain));
 
       executeCommandLine(commandLine);
     } catch (final Throwable throwable) {
