@@ -89,7 +89,7 @@ public final class Config implements Options, Map<String, Object> {
    *
    * @param config Config to copy
    */
-  public Config(final Map<String, String> config) {
+  public Config(final Map<String, Object> config) {
     this();
     if (config != null) {
       putAll(config);

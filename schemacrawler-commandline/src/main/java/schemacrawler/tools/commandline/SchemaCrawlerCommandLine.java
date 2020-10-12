@@ -36,6 +36,7 @@ import static us.fatehi.utility.IOUtility.readResourceFully;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.File;
+import java.util.AbstractMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
@@ -64,34 +65,15 @@ public final class SchemaCrawlerCommandLine {
       final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
       final StateFactory stateFactory = new StateFactory(state);
 
-      // Load config
-      final ConfigParseOptions configParseOptions =
-          ConfigParseOptions.defaults().setAllowMissing(true);
-      com.typesafe.config.Config config =
-          ConfigFactory.parseFile(new File("schemacrawler.config.properties"), configParseOptions)
-              .withFallback(
-                  ConfigFactory.load(
-                      "schemacrawler.config",
-                      configParseOptions,
-                      ConfigResolveOptions.defaults().setUseSystemEnvironment(true)))
-              .withFallback(ConfigFactory.load());
-
-      final Map<String, String> configMap =
-          config
-              .entrySet()
-              .stream()
-              .map(entry -> new String[] {entry.getKey(), entry.getValue().unwrapped().toString()})
-              .collect(Collectors.toMap(s -> s[0], s -> s[1]));
+      final Config config = loadConfig();
 
       final SchemaCrawlerCommandLineCommands commands = new SchemaCrawlerCommandLineCommands();
       final CommandLine commandLine = newCommandLine(commands, stateFactory, true);
       final ParseResult parseResult = commandLine.parseArgs(args);
       final Config commandConfig = retrievePluginOptions(parseResult);
 
-      final Config configMain = new Config();
-      configMain.putAll(configMap);
-      configMain.putAll(commandConfig);
-      state.setConfig(new Config(configMain));
+      config.putAll(commandConfig);
+      state.setConfig(new Config(config));
 
       executeCommandLine(commandLine);
     } catch (final Throwable throwable) {
@@ -125,6 +107,33 @@ public final class SchemaCrawlerCommandLine {
       LOGGER.log(Level.INFO, "Running command " + command.getClass().getSimpleName());
       command.run();
     }
+  }
+
+  private static Config loadConfig() {
+    final ConfigParseOptions configParseOptions =
+        ConfigParseOptions.defaults().setAllowMissing(true);
+
+    com.typesafe.config.Config config =
+        ConfigFactory.parseFile(new File("schemacrawler.config.properties"), configParseOptions)
+            .withFallback(
+                ConfigFactory.load(
+                    "schemacrawler.config",
+                    configParseOptions,
+                    ConfigResolveOptions.defaults().setUseSystemEnvironment(true)))
+            .withFallback(ConfigFactory.load());
+    LOGGER.log(Level.CONFIG, () -> config.root().render());
+
+    final Map<String, Object> configMap =
+        config
+            .entrySet()
+            .stream()
+            .map(
+                entry ->
+                    new AbstractMap.SimpleEntry<String, Object>(
+                        entry.getKey(), entry.getValue().unwrapped()))
+            .collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue()));
+
+    return new Config(configMap);
   }
 
   private static void printCommandLineErrorMessage(final String errorMessage) {
