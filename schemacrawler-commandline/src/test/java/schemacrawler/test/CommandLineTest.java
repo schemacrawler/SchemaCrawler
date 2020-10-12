@@ -63,7 +63,7 @@ public class CommandLineTest {
     argsMap.put("-schemas", ".*\\.(?!FOR_LINT).*");
     argsMap.put("-info-level", "maximum");
 
-    final Map<String, String> runConfig = new HashMap<>();
+    final Map<String, Object> runConfig = new HashMap<>();
     final Map<String, String> informationSchema = loadHsqldbConfig();
     runConfig.putAll(informationSchema);
     if (config != null) {

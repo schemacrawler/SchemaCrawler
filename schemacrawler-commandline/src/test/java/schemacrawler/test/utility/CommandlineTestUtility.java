@@ -66,7 +66,7 @@ public final class CommandlineTestUtility {
       final DatabaseConnectionInfo connectionInfo,
       final String command,
       final Map<String, String> argsMap,
-      final Map<String, String> config,
+      final Map<String, Object> config,
       final OutputFormat outputFormat)
       throws Exception {
     return commandlineExecution(
@@ -218,7 +218,7 @@ public final class CommandlineTestUtility {
     return testout.getFilePath();
   }
 
-  private static Path writeConfigToTempFile(final Map<String, String> config) throws IOException {
+  private static Path writeConfigToTempFile(final Map<String, Object> config) throws IOException {
     if (config == null) {
       return null;
     }
@@ -241,7 +241,7 @@ public final class CommandlineTestUtility {
     // Prevent instantiation
   }
 
-public static Path createConfig(final Map<String, String> config) throws IOException {
+  public static Path createConfig(final Map<String, String> config) throws IOException {
     final String prefix = "SchemaCrawler.TestCommandLineConfig";
     final Path configFile = IOUtility.createTempFilePath(prefix, "properties");
     final Properties configProperties = new Properties();

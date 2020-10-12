@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.sitegen;
 
-
 import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.move;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
@@ -43,13 +42,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
-import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.TextOutputFormat;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
@@ -57,32 +56,27 @@ import schemacrawler.tools.options.TextOutputFormat;
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
 @EnabledIfSystemProperty(named = "distrib", matches = "^((?!(false|no)).)*$")
-public class SiteHTMLVariationsTest
-{
+public class SiteHTMLVariationsTest {
 
-  private static void run(final DatabaseConnectionInfo connectionInfo,
-                          final Map<String, String> argsMap,
-                          final Map<String, String> config,
-                          final Path outputFile)
-    throws Exception
-  {
+  private static void run(
+      final DatabaseConnectionInfo connectionInfo,
+      final Map<String, String> argsMap,
+      final Map<String, String> config,
+      final Path outputFile)
+      throws Exception {
     deleteIfExists(outputFile);
 
     argsMap.put("-title", "Details of Example Database");
 
-    final Map<String, String> runConfig = new HashMap<>();
+    final Map<String, Object> runConfig = new HashMap<>();
     final Map<String, String> informationSchema = loadHsqldbConfig();
     runConfig.putAll(informationSchema);
-    if (config != null)
-    {
+    if (config != null) {
       runConfig.putAll(config);
     }
 
-    final Path htmlFile = commandlineExecution(connectionInfo,
-                                               "schema",
-                                               argsMap,
-                                               runConfig,
-                                               TextOutputFormat.html);
+    final Path htmlFile =
+        commandlineExecution(connectionInfo, "schema", argsMap, runConfig, TextOutputFormat.html);
     move(htmlFile, outputFile);
   }
 
@@ -90,53 +84,39 @@ public class SiteHTMLVariationsTest
 
   @BeforeEach
   public void _setupDirectory(final TestContext testContext)
-    throws IOException, URISyntaxException
-  {
-    if (directory != null)
-    {
+      throws IOException, URISyntaxException {
+    if (directory != null) {
       return;
     }
     directory = testContext.resolveTargetFromRootPath("_website/html-examples");
   }
 
   @Test
-  public void html(final TestContext testContext,
-                   final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
+  public void html(final TestContext testContext, final DatabaseConnectionInfo connectionInfo)
+      throws Exception {
     final Map<String, String> args = new HashMap<>();
     args.put("-info-level", "maximum");
 
     final Map<String, String> config = new HashMap<>();
 
-    run(connectionInfo,
-        args,
-        config,
-        directory.resolve(testContext.testMethodName() + ".html"));
+    run(connectionInfo, args, config, directory.resolve(testContext.testMethodName() + ".html"));
   }
 
   @Test
-  public void html_2_portablenames(final TestContext testContext,
-                                   final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
+  public void html_2_portablenames(
+      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> args = new HashMap<>();
     args.put("-info-level", "maximum");
     args.put("-portable-names", "true");
 
     final Map<String, String> config = new HashMap<>();
 
-    run(connectionInfo,
-        args,
-        config,
-        directory.resolve(testContext.testMethodName() + ".html"));
+    run(connectionInfo, args, config, directory.resolve(testContext.testMethodName() + ".html"));
   }
 
   @Test
-  public void html_3_important_columns(final TestContext testContext,
-                                       final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
+  public void html_3_important_columns(
+      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> args = new HashMap<>();
     args.put("-info-level", "standard");
     args.put("c", "brief");
@@ -144,17 +124,12 @@ public class SiteHTMLVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(connectionInfo,
-        args,
-        config,
-        directory.resolve(testContext.testMethodName() + ".html"));
+    run(connectionInfo, args, config, directory.resolve(testContext.testMethodName() + ".html"));
   }
 
   @Test
-  public void html_4_ordinals(final TestContext testContext,
-                              final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
+  public void html_4_ordinals(
+      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> args = new HashMap<>();
     args.put("-info-level", "standard");
     args.put("-portable-names", "true");
@@ -162,17 +137,12 @@ public class SiteHTMLVariationsTest
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.show_ordinal_numbers", "true");
 
-    run(connectionInfo,
-        args,
-        config,
-        directory.resolve(testContext.testMethodName() + ".html"));
+    run(connectionInfo, args, config, directory.resolve(testContext.testMethodName() + ".html"));
   }
 
   @Test
-  public void html_5_alphabetical(final TestContext testContext,
-                                  final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
+  public void html_5_alphabetical(
+      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> args = new HashMap<>();
     args.put("-info-level", "standard");
     args.put("-portable-names", "true");
@@ -180,17 +150,12 @@ public class SiteHTMLVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(connectionInfo,
-        args,
-        config,
-        directory.resolve(testContext.testMethodName() + ".html"));
+    run(connectionInfo, args, config, directory.resolve(testContext.testMethodName() + ".html"));
   }
 
   @Test
-  public void html_6_grep(final TestContext testContext,
-                          final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
+  public void html_6_grep(
+      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> args = new HashMap<>();
     args.put("-info-level", "maximum");
     args.put("-portable-names", "true");
@@ -199,17 +164,12 @@ public class SiteHTMLVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(connectionInfo,
-        args,
-        config,
-        directory.resolve(testContext.testMethodName() + ".html"));
+    run(connectionInfo, args, config, directory.resolve(testContext.testMethodName() + ".html"));
   }
 
   @Test
-  public void html_7_grep_onlymatching(final TestContext testContext,
-                                       final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
+  public void html_7_grep_onlymatching(
+      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> args = new HashMap<>();
     args.put("-info-level", "maximum");
     args.put("-portable-names", "true");
@@ -219,10 +179,6 @@ public class SiteHTMLVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(connectionInfo,
-        args,
-        config,
-        directory.resolve(testContext.testMethodName() + ".html"));
+    run(connectionInfo, args, config, directory.resolve(testContext.testMethodName() + ".html"));
   }
-
 }

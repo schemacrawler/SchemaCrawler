@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.integration.diagram;
 
-
 import static schemacrawler.tools.options.Config.getSystemConfigurationProperty;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.join;
@@ -46,37 +45,30 @@ import schemacrawler.tools.text.schema.BaseSchemaTextOptionsBuilder;
 import us.fatehi.utility.string.StringFormat;
 
 public final class DiagramOptionsBuilder
-  extends BaseSchemaTextOptionsBuilder<DiagramOptionsBuilder, DiagramOptions>
-{
+    extends BaseSchemaTextOptionsBuilder<DiagramOptionsBuilder, DiagramOptions> {
 
-  protected static final String SCHEMACRAWLER_GRAPH_PREFIX =
-    "schemacrawler.graph.";
+  protected static final String SCHEMACRAWLER_GRAPH_PREFIX = "schemacrawler.graph.";
 
   private static final String GRAPH_SHOW_PRIMARY_KEY_CARDINALITY =
-    SCHEMACRAWLER_GRAPH_PREFIX + "show.primarykey.cardinality";
+      SCHEMACRAWLER_GRAPH_PREFIX + "show.primarykey.cardinality";
   private static final String GRAPH_SHOW_FOREIGN_KEY_CARDINALITY =
-    SCHEMACRAWLER_GRAPH_PREFIX + "show.foreignkey.cardinality";
-  private static final String GRAPH_GRAPHVIZ_OPTS =
-    SCHEMACRAWLER_GRAPH_PREFIX + "graphviz_opts";
+      SCHEMACRAWLER_GRAPH_PREFIX + "show.foreignkey.cardinality";
+  private static final String GRAPH_GRAPHVIZ_OPTS = SCHEMACRAWLER_GRAPH_PREFIX + "graphviz_opts";
   private static final String SC_GRAPHVIZ_OPTS = "SC_GRAPHVIZ_OPTS";
-  private static final String GRAPH_GRAPHVIZ_ATTRIBUTES =
-    SCHEMACRAWLER_GRAPH_PREFIX + "graphviz";
+  private static final String GRAPH_GRAPHVIZ_ATTRIBUTES = SCHEMACRAWLER_GRAPH_PREFIX + "graphviz";
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(DiagramOptions.class.getName());
+      SchemaCrawlerLogger.getLogger(DiagramOptions.class.getName());
 
-  public static DiagramOptionsBuilder builder()
-  {
+  public static DiagramOptionsBuilder builder() {
     return new DiagramOptionsBuilder();
   }
 
-  public static DiagramOptionsBuilder builder(final DiagramOptions options)
-  {
+  public static DiagramOptionsBuilder builder(final DiagramOptions options) {
     return new DiagramOptionsBuilder().fromOptions(options);
   }
 
-  private static Map<String, String> makeDefaultGraphvizAttributes()
-  {
+  private static Map<String, String> makeDefaultGraphvizAttributes() {
     final Map<String, String> graphvizAttributes = new HashMap<>();
 
     final String GRAPH = "graph.";
@@ -93,13 +85,13 @@ public final class DiagramOptionsBuilder
 
     return graphvizAttributes;
   }
+
   protected List<String> graphvizOpts;
   protected Map<String, String> graphvizAttributes;
   protected boolean isShowForeignKeyCardinality;
   protected boolean isShowPrimaryKeyCardinality;
 
-  private DiagramOptionsBuilder()
-  {
+  private DiagramOptionsBuilder() {
     // Default values
     graphvizOpts = new ArrayList<>();
     graphvizAttributes = makeDefaultGraphvizAttributes();
@@ -108,25 +100,19 @@ public final class DiagramOptionsBuilder
   }
 
   @Override
-  public DiagramOptionsBuilder fromConfig(final Config config)
-  {
-    if (config == null)
-    {
+  public DiagramOptionsBuilder fromConfig(final Config config) {
+    if (config == null) {
       return this;
     }
     super.fromConfig(config);
 
-    isShowPrimaryKeyCardinality =
-      config.getBooleanValue(GRAPH_SHOW_PRIMARY_KEY_CARDINALITY, true);
-    isShowForeignKeyCardinality =
-      config.getBooleanValue(GRAPH_SHOW_FOREIGN_KEY_CARDINALITY, true);
+    isShowPrimaryKeyCardinality = config.getBooleanValue(GRAPH_SHOW_PRIMARY_KEY_CARDINALITY, true);
+    isShowForeignKeyCardinality = config.getBooleanValue(GRAPH_SHOW_FOREIGN_KEY_CARDINALITY, true);
 
     graphvizOpts = listGraphvizOpts(readGraphvizOpts(config));
 
-    final Map<String, String> graphvizAttributes =
-      readGraphvizAttributes(config);
-    if (graphvizAttributes != null)
-    {
+    final Map<String, String> graphvizAttributes = readGraphvizAttributes(config);
+    if (graphvizAttributes != null) {
       this.graphvizAttributes = graphvizAttributes;
     }
 
@@ -134,10 +120,8 @@ public final class DiagramOptionsBuilder
   }
 
   @Override
-  public DiagramOptionsBuilder fromOptions(final DiagramOptions options)
-  {
-    if (options == null)
-    {
+  public DiagramOptionsBuilder fromOptions(final DiagramOptions options) {
+    if (options == null) {
       return this;
     }
     super.fromOptions(options);
@@ -152,14 +136,11 @@ public final class DiagramOptionsBuilder
   }
 
   @Override
-  public Config toConfig()
-  {
+  public Config toConfig() {
     final Config config = super.toConfig();
 
-    config.setBooleanValue(GRAPH_SHOW_PRIMARY_KEY_CARDINALITY,
-                           isShowPrimaryKeyCardinality);
-    config.setBooleanValue(GRAPH_SHOW_FOREIGN_KEY_CARDINALITY,
-                           isShowForeignKeyCardinality);
+    config.setBooleanValue(GRAPH_SHOW_PRIMARY_KEY_CARDINALITY, isShowPrimaryKeyCardinality);
+    config.setBooleanValue(GRAPH_SHOW_FOREIGN_KEY_CARDINALITY, isShowForeignKeyCardinality);
 
     config.setStringValue(GRAPH_GRAPHVIZ_OPTS, join(graphvizOpts, " "));
 
@@ -168,129 +149,102 @@ public final class DiagramOptionsBuilder
     return config;
   }
 
-  public DiagramOptionsBuilder showForeignKeyCardinality()
-  {
+  public DiagramOptionsBuilder showForeignKeyCardinality() {
     return showForeignKeyCardinality(true);
   }
 
-  public DiagramOptionsBuilder showForeignKeyCardinality(final boolean value)
-  {
+  public DiagramOptionsBuilder showForeignKeyCardinality(final boolean value) {
     isShowForeignKeyCardinality = value;
     return this;
   }
 
-  public DiagramOptionsBuilder showPrimaryKeyCardinality()
-  {
+  public DiagramOptionsBuilder showPrimaryKeyCardinality() {
     return showPrimaryKeyCardinality(true);
   }
 
-  public DiagramOptionsBuilder showPrimaryKeyCardinality(final boolean value)
-  {
+  public DiagramOptionsBuilder showPrimaryKeyCardinality(final boolean value) {
     isShowPrimaryKeyCardinality = value;
     return this;
   }
 
   @Override
-  public DiagramOptions toOptions()
-  {
+  public DiagramOptions toOptions() {
     return new DiagramOptions(this);
   }
 
-  public DiagramOptionsBuilder withGraphvizAttributes(final Map<String, String> graphvizAttributes)
-  {
-    if (graphvizAttributes == null)
-    {
+  public DiagramOptionsBuilder withGraphvizAttributes(
+      final Map<String, String> graphvizAttributes) {
+    if (graphvizAttributes == null) {
       this.graphvizAttributes = makeDefaultGraphvizAttributes();
-    }
-    else
-    {
+    } else {
       this.graphvizAttributes = graphvizAttributes;
     }
     return this;
   }
 
-  public DiagramOptionsBuilder withGraphvizOpts(final List<String> graphvizOpts)
-  {
-    if (graphvizOpts == null)
-    {
+  public DiagramOptionsBuilder withGraphvizOpts(final List<String> graphvizOpts) {
+    if (graphvizOpts == null) {
       this.graphvizOpts = new ArrayList<>();
-    }
-    else
-    {
+    } else {
       this.graphvizOpts = graphvizOpts;
     }
     return this;
   }
 
-  private void graphvizAttributesToConfig(final Map<String, String> graphvizAttributes,
-                                          final Config config)
-  {
-    for (final Entry<String, String> graphvizAttribute : graphvizAttributes.entrySet())
-    {
-      final String fullKey = String.format("%s.%s",
-                                           GRAPH_GRAPHVIZ_ATTRIBUTES,
-                                           graphvizAttribute.getKey());
+  private void graphvizAttributesToConfig(
+      final Map<String, String> graphvizAttributes, final Config config) {
+    for (final Entry<String, String> graphvizAttribute : graphvizAttributes.entrySet()) {
+      final String fullKey =
+          String.format("%s.%s", GRAPH_GRAPHVIZ_ATTRIBUTES, graphvizAttribute.getKey());
       final String value = graphvizAttribute.getValue();
       config.put(fullKey, value);
     }
   }
 
-  private List<String> listGraphvizOpts(final String graphVizOptions)
-  {
-    if (isBlank(graphVizOptions))
-    {
+  private List<String> listGraphvizOpts(final String graphVizOptions) {
+    if (isBlank(graphVizOptions)) {
       return new ArrayList<>();
     }
 
-    final List<String> graphVizOptionsList =
-      Arrays.asList(graphVizOptions.split("\\s+"));
+    final List<String> graphVizOptionsList = Arrays.asList(graphVizOptions.split("\\s+"));
     return graphVizOptionsList;
   }
 
-  private Map<String, String> readGraphvizAttributes(final Config config)
-  {
-    if (config == null)
-    {
+  private Map<String, String> readGraphvizAttributes(final Config config) {
+    if (config == null) {
       return null;
     }
 
     final Map<String, String> graphvizAttributes = new HashMap<>();
-    for (final Entry<String, String> configEntry : config.entrySet())
-    {
+    for (final Entry<String, Object> configEntry : config.entrySet()) {
       final String fullKey = configEntry.getKey();
-      if (fullKey == null || !fullKey.startsWith(GRAPH_GRAPHVIZ_ATTRIBUTES))
-      {
+      if (fullKey == null || !fullKey.startsWith(GRAPH_GRAPHVIZ_ATTRIBUTES)) {
         continue;
       }
 
-      final String key =
-        fullKey.substring(GRAPH_GRAPHVIZ_ATTRIBUTES.length() + 1);
-      final String value = configEntry.getValue();
+      final String key = fullKey.substring(GRAPH_GRAPHVIZ_ATTRIBUTES.length() + 1);
+      final String value = String.valueOf(configEntry.getValue());
       graphvizAttributes.put(key, value);
     }
 
-    if (graphvizAttributes.isEmpty())
-    {
+    if (graphvizAttributes.isEmpty()) {
       return null;
     }
 
     return graphvizAttributes;
   }
 
-  private String readGraphvizOpts(final Config config)
-  {
-    final String scGraphvizOptsCfg =
-      config.getStringValue(GRAPH_GRAPHVIZ_OPTS, "");
-    if (!isBlank(scGraphvizOptsCfg))
-    {
-      LOGGER.log(Level.CONFIG,
-                 new StringFormat(
-                   "Using additional Graphviz command-line options from config <%s>",
-                   scGraphvizOptsCfg));
+  private String readGraphvizOpts(final Config config) {
+    final String scGraphvizOptsCfg = config.getStringValue(GRAPH_GRAPHVIZ_OPTS, "");
+    if (!isBlank(scGraphvizOptsCfg)) {
+      LOGGER.log(
+          Level.CONFIG,
+          new StringFormat(
+              "Using additional Graphviz command-line options from config <%s>",
+              scGraphvizOptsCfg));
       return scGraphvizOptsCfg;
     }
 
     return getSystemConfigurationProperty(SC_GRAPHVIZ_OPTS, "");
   }
-
 }

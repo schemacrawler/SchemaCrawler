@@ -51,7 +51,7 @@ import us.fatehi.utility.string.StringFormat;
  *
  * @author Sualeh Fatehi
  */
-public final class Config implements Options, Map<String, String> {
+public final class Config implements Options, Map<String, Object> {
 
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(Config.class.getName());
@@ -77,7 +77,7 @@ public final class Config implements Options, Map<String, String> {
     return defaultValue;
   }
 
-  private final Map<String, String> config;
+  private final Map<String, Object> config;
 
   /** Creates an empty config. */
   public Config() {
@@ -90,6 +90,13 @@ public final class Config implements Options, Map<String, String> {
    * @param config Config to copy
    */
   public Config(final Map<String, String> config) {
+    this();
+    if (config != null) {
+      putAll(config);
+    }
+  }
+
+  public Config(final Config config) {
     this();
     if (config != null) {
       putAll(config);
@@ -112,12 +119,12 @@ public final class Config implements Options, Map<String, String> {
   }
 
   @Override
-  public Set<java.util.Map.Entry<String, String>> entrySet() {
+  public Set<java.util.Map.Entry<String, Object>> entrySet() {
     return config.entrySet();
   }
 
   @Override
-  public String get(final Object key) {
+  public Object get(final Object key) {
     return config.get(key);
   }
 
@@ -220,11 +227,12 @@ public final class Config implements Options, Map<String, String> {
    * @return String value
    */
   public String getStringValue(final String propertyName, final String defaultValue) {
-    String value = get(propertyName);
+    final Object value = get(propertyName);
     if (value == null) {
-      value = defaultValue;
+      return defaultValue;
+    } else {
+      return value.toString();
     }
-    return value;
   }
 
   /**
@@ -248,12 +256,12 @@ public final class Config implements Options, Map<String, String> {
   }
 
   @Override
-  public String put(final String key, final String value) {
+  public Object put(final String key, final Object value) {
     return config.put(key, value);
   }
 
   @Override
-  public void putAll(final Map<? extends String, ? extends String> m) {
+  public void putAll(final Map<? extends String, ? extends Object> m) {
     if (m == null) {
       return;
     }
@@ -261,7 +269,7 @@ public final class Config implements Options, Map<String, String> {
   }
 
   @Override
-  public String remove(final Object key) {
+  public Object remove(final Object key) {
     return config.remove(key);
   }
 
@@ -296,7 +304,7 @@ public final class Config implements Options, Map<String, String> {
   }
 
   @Override
-  public Collection<String> values() {
+  public Collection<Object> values() {
     return config.values();
   }
 }
