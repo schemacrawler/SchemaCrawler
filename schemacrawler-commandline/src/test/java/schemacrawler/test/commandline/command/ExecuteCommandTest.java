@@ -42,6 +42,7 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.retriev
 import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.Connection;
+import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -53,7 +54,6 @@ import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.commandline.command.ExecuteCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
-import schemacrawler.tools.options.Config;
 import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -91,10 +91,10 @@ public class ExecuteCommandTest {
     final CommandLine commandLine = newCommandLine(executeTestCommand, null, false);
 
     final CommandLine.ParseResult parseResult = commandLine.parseArgs(args);
-    final Config additionalConfig = retrievePluginOptions(parseResult);
+    final Map<String, Object> commandConfig = retrievePluginOptions(parseResult);
 
-    assertThat(additionalConfig.size(), is(0));
-    assertThat(additionalConfig, not(hasKey(is("unknown-parameter"))));
+    assertThat(commandConfig.size(), is(0));
+    assertThat(commandConfig, not(hasKey(is("unknown-parameter"))));
 
     assertThrows(CommandLine.ExecutionException.class, () -> executeTestCommand.run());
   }

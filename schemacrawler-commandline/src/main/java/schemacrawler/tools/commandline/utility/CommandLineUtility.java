@@ -29,8 +29,16 @@ package schemacrawler.tools.commandline.utility;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.io.File;
+import java.util.AbstractMap;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.stream.Collectors;
+
+import com.typesafe.config.ConfigFactory;
+import com.typesafe.config.ConfigParseOptions;
+import com.typesafe.config.ConfigResolveOptions;
 
 import picocli.CommandLine;
 import picocli.CommandLine.IFactory;
@@ -38,6 +46,7 @@ import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Model.OptionSpec;
 import picocli.CommandLine.Model.UsageMessageSpec;
 import picocli.CommandLine.ParseResult;
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
@@ -45,9 +54,11 @@ import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.executable.commandline.PluginCommandOption;
-import schemacrawler.tools.options.Config;
 
 public class CommandLineUtility {
+
+  private static final SchemaCrawlerLogger LOGGER =
+      SchemaCrawlerLogger.getLogger(CommandLineUtility.class.getName());
 
   public static void addPluginCommand(
       final CommandLine commandLine, final PluginCommand pluginCommand, final boolean addAsMixins) {
@@ -95,30 +106,28 @@ public class CommandLineUtility {
    * @return Config with additional plugin-specific command-line options
    * @throws SchemaCrawlerException On an exception
    */
-  public static Config retrievePluginOptions(final ParseResult parseResult)
+  public static Map<String, Object> retrievePluginOptions(final ParseResult parseResult)
       throws SchemaCrawlerException {
     requireNonNull(parseResult, "No parse result provided");
 
     final CommandRegistry commandRegistry = CommandRegistry.getCommandRegistry();
-    final Config additionalConfig = new Config();
-    final Set<String> pluginOptionNames = new HashSet<>();
+    final Map<String, Object> commandConfig = new HashMap<>();
     for (final PluginCommand pluginCommand : commandRegistry.getCommandLineCommands()) {
       if (pluginCommand == null || pluginCommand.isEmpty()) {
         continue;
       }
       for (final PluginCommandOption option : pluginCommand) {
         final String optionName = option.getName();
-        pluginOptionNames.add(optionName);
         if (parseResult.hasMatchedOption(optionName)) {
           final Object value = parseResult.matchedOptionValue(optionName, null);
           if (value != null) {
-            additionalConfig.put(optionName, value.toString());
+            commandConfig.put(optionName, value);
           }
         }
       }
     }
 
-    return additionalConfig;
+    return commandConfig;
   }
 
   public static CommandSpec toCommandSpec(final PluginCommand pluginCommand) {
@@ -203,5 +212,32 @@ public class CommandLineUtility {
 
   private CommandLineUtility() {
     // Prevent instantiation
+  }
+
+  public static Map<String, Object> loadConfig() {
+    final ConfigParseOptions configParseOptions =
+        ConfigParseOptions.defaults().setAllowMissing(true);
+
+    com.typesafe.config.Config config =
+        ConfigFactory.parseFile(new File("schemacrawler.config.properties"), configParseOptions)
+            .withFallback(
+                ConfigFactory.load(
+                    "schemacrawler.config",
+                    configParseOptions,
+                    ConfigResolveOptions.defaults().setUseSystemEnvironment(true)))
+            .withFallback(ConfigFactory.load());
+    LOGGER.log(Level.CONFIG, () -> config.root().render());
+
+    final Map<String, Object> configMap =
+        config
+            .entrySet()
+            .stream()
+            .map(
+                entry ->
+                    new AbstractMap.SimpleEntry<String, Object>(
+                        entry.getKey(), entry.getValue().unwrapped()))
+            .collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue()));
+
+    return configMap;
   }
 }

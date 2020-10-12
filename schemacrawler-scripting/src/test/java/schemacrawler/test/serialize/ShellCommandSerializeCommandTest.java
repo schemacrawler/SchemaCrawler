@@ -45,6 +45,7 @@ import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
+import java.util.Map;
 
 import org.hamcrest.Matcher;
 import org.junit.jupiter.api.AfterEach;
@@ -100,8 +101,8 @@ public class ShellCommandSerializeCommandTest {
     final CommandLine commandLine = newCommandLine(serializeCommand, null, false);
 
     final CommandLine.ParseResult parseResult = commandLine.parseArgs(args);
-    final Config additionalConfig = retrievePluginOptions(parseResult);
-    state.setConfig(additionalConfig);
+    final Map<String, Object> commandConfig = retrievePluginOptions(parseResult);
+    state.setConfig(new Config(commandConfig));
 
     serializeCommand.run();
 
