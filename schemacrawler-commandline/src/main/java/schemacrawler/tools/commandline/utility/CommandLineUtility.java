@@ -236,7 +236,7 @@ public class CommandLineUtility {
             .filter(entry -> entry.getValue() != null)
             .map(
                 entry ->
-                    new AbstractMap.SimpleEntry<String, Object>(
+                    new AbstractMap.SimpleImmutableEntry<String, Object>(
                         entry.getKey(), entry.getValue().unwrapped()))
             .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 

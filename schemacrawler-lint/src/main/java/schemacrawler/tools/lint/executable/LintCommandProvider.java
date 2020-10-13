@@ -90,7 +90,7 @@ public class LintCommandProvider extends BaseCommandProvider {
             .stream()
             .map(
                 entry ->
-                    new AbstractMap.SimpleEntry<String, String>(
+                    new AbstractMap.SimpleImmutableEntry<String, String>(
                         entry.getKey(), String.valueOf(entry.getValue())))
             .filter(entry -> entry.getValue() != null)
             .collect(Collectors.toMap(Entry::getKey, Entry::getValue));

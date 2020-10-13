@@ -55,14 +55,6 @@ public final class LintOptionsBuilder
     return new LintOptionsBuilder().fromOptions(options);
   }
 
-  public static LintOptions newLintOptions() {
-    return new LintOptionsBuilder().toOptions();
-  }
-
-  public static LintOptions newLintOptions(final Config config) {
-    return new LintOptionsBuilder().fromConfig(config).toOptions();
-  }
-
   LintDispatch lintDispatch;
   String linterConfigs;
   boolean runAllLinters;
