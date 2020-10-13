@@ -28,23 +28,26 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 import static org.junit.jupiter.api.Assertions.fail;
+import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.Main;
+import com.tngtech.archunit.thirdparty.com.google.common.collect.ImmutableMap;
+
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
-import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import us.fatehi.utility.IOUtility;
@@ -60,59 +63,35 @@ public class GrepCommandLineTest {
 
     final List<String> failures = new ArrayList<>();
 
-    final String[][] grepArgs =
-        new String[][] {
-          new String[] {
-            "--grep-columns=.*\\.STREET|.*\\.PRICE",
-          },
-          new String[] {
-            "--grep-columns=.*\\..*NAME",
-          },
-          new String[] {
-            "--grep-def=.*book authors.*",
-          },
-          new String[] {
-            "--tables=", "--routines=.*", "--grep-parameters=.*\\.B_COUNT",
-          },
-          new String[] {
-            "--tables=", "--routines=.*", "--grep-parameters=.*\\.B_OFFSET",
-          },
-          new String[] {
-            "--grep-columns=.*\\.STREET|.*\\.PRICE", "--grep-def=.*book authors.*",
-          },
-        };
-    for (int i = 0; i < grepArgs.length; i++) {
-      final String[] grepArgsForRun = grepArgs[i];
-
-      final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType.details;
-      final InfoLevel infoLevel = InfoLevel.detailed;
-
-      final Path additionalProperties = DatabaseTestUtility.tempHsqldbConfig();
+    final List<Map<String, String>> grepArgs =
+        Arrays.asList(
+            ImmutableMap.of("-grep-columns", ".*\\.STREET|.*\\.PRICE"),
+            ImmutableMap.of("-grep-columns", ".*\\..*NAME"),
+            ImmutableMap.of("-grep-def", ".*book authors.*"),
+            ImmutableMap.of("-tables", "", "-routines", ".*", "-grep-parameters", ".*\\.B_COUNT"),
+            ImmutableMap.of("-tables", "", "-routines", ".*", "-grep-parameters", ".*\\.B_OFFSET"),
+            ImmutableMap.of(
+                "-grep-columns", ".*\\.STREET|.*\\.PRICE", "-grep-def", ".*book authors.*"));
+    for (int i = 0; i < grepArgs.size(); i++) {
 
       final String referenceFile = String.format("grep%02d.txt", i + 1);
-
       final Path testOutputFile = IOUtility.createTempFilePath(referenceFile, "data");
 
-      final OutputFormat outputFormat = TextOutputFormat.text;
+      final Map<String, String> args = new HashMap<>(grepArgs.get(i));
+      args.put("-info-level", InfoLevel.detailed.name());
+      args.put("-no-info", Boolean.TRUE.toString());
 
-      final List<String> args =
-          new ArrayList<>(
-              Arrays.asList(
-                  "--url=" + connectionInfo.getConnectionUrl(),
-                  "--user=sa",
-                  "--password=",
-                  "-g=" + additionalProperties.toString(),
-                  "--info-level=" + infoLevel,
-                  "--command=" + schemaTextDetailType,
-                  "--output-format=" + outputFormat.getFormat(),
-                  "--output-file=" + testOutputFile.toString(),
-                  "--no-info"));
-      args.addAll(Arrays.asList(grepArgsForRun));
-
-      Main.main(args.toArray(new String[args.size()]));
+      commandlineExecution(
+          connectionInfo,
+          SchemaTextDetailType.details.name(),
+          args,
+          DatabaseTestUtility.tempHsqldbConfig(),
+          TextOutputFormat.text.getFormat(),
+          testOutputFile);
 
       failures.addAll(
-          compareOutput(GREP_OUTPUT + referenceFile, testOutputFile, outputFormat.getFormat()));
+          compareOutput(
+              GREP_OUTPUT + referenceFile, testOutputFile, TextOutputFormat.text.getFormat()));
     }
 
     if (failures.size() > 0) {
