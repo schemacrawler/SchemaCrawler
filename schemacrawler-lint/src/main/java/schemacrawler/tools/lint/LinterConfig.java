@@ -109,7 +109,7 @@ public class LinterConfig implements Serializable, Comparable<LinterConfig> {
   }
 
   public Map<String, String> getProperties() {
-    return properties;
+    return new HashMap<>(properties);
   }
 
   public String getLinterId() {

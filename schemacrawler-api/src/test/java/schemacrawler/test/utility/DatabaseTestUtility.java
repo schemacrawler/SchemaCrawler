@@ -28,14 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.utility;
 
-import static java.util.Objects.requireNonNull;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,6 +44,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import us.fatehi.utility.PropertiesUtility;
+import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 public final class DatabaseTestUtility {
 
@@ -81,6 +77,13 @@ public final class DatabaseTestUtility {
     return loadConfigFromClasspathResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
   }
 
+  public static Path tempHsqldbConfig() throws IOException {
+    final Properties properties =
+        PropertiesUtility.loadProperties(
+            new ClasspathInputResource("/hsqldb.INFORMATION_SCHEMA.config.properties"));
+    return PropertiesUtility.savePropertiesToTempFile(properties);
+  }
+
   /**
    * Loads a properties file from a CLASSPATH resource.
    *
@@ -90,13 +93,8 @@ public final class DatabaseTestUtility {
    */
   protected static Map<String, String> loadConfigFromClasspathResource(final String resource)
       throws IOException {
-    final InputStream stream = DatabaseTestUtility.class.getResourceAsStream(resource);
-    requireNonNull(stream, "Could not load config from resource, " + resource);
-    final Reader reader = new InputStreamReader(stream, StandardCharsets.UTF_8);
-    final Properties properties = new Properties();
-    try (final BufferedReader bufferedReader = new BufferedReader(reader)) {
-      properties.load(bufferedReader);
-    }
+    final Properties properties =
+        PropertiesUtility.loadProperties(new ClasspathInputResource(resource));
 
     final Map<String, String> config = new HashMap<>();
     for (final String key : properties.stringPropertyNames()) {

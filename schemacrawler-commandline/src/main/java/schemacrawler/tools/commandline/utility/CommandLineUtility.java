@@ -33,6 +33,7 @@ import java.io.File;
 import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
@@ -232,11 +233,12 @@ public class CommandLineUtility {
         config
             .entrySet()
             .stream()
+            .filter(entry -> entry.getValue() != null)
             .map(
                 entry ->
                     new AbstractMap.SimpleEntry<String, Object>(
                         entry.getKey(), entry.getValue().unwrapped()))
-            .collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue()));
+            .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 
     return configMap;
   }

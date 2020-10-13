@@ -128,7 +128,7 @@ public class SpinThroughOperationsCommandLineTest {
                                                           connectionInfo,
                                                           command,
                                                           argsMap,
-                                                          "/hsqldb.INFORMATION_SCHEMA.config.properties",
+                                                          true,
                                                           outputFormat)),
                                                   hasSameContentAndTypeAs(
                                                       classpathResource(

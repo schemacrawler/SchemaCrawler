@@ -337,15 +337,15 @@
                   <version>3.32.3.2</version>
                   <type>jar</type>
                 </artifactItem>
+
+                <!-- Command-line processing -->
+
                 <artifactItem>
                   <groupId>info.picocli</groupId>
                   <artifactId>picocli</artifactId>
                   <version>4.5.1</version>
                   <type>jar</type>
                 </artifactItem>
-
-                <!-- Command-line processing -->
-
                 <artifactItem>
                   <groupId>info.picocli</groupId>
                   <artifactId>picocli-shell-jline3</artifactId>
@@ -357,6 +357,14 @@
                   <artifactId>jline</artifactId>
                   <version>3.11.0</version>
                   <type>jar</type>
+                </artifactItem>
+
+                <!-- Processing configuration -->
+
+                <artifactItem>
+                  <groupId>com.typesafe</groupId>
+                  <artifactId>config</artifactId>
+                  <version>1.4.0</version>
                 </artifactItem>
 
               </artifactItems>

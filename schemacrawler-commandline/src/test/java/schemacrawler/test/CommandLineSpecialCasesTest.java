@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -38,7 +37,6 @@ import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,7 +46,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
-import schemacrawler.test.utility.CommandlineTestUtility;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
@@ -80,7 +77,7 @@ public class CommandLineSpecialCasesTest {
     argsMap.put("-output-format", "htmlx");
     argsMap.put("-info-level", "standard");
 
-    run(testContext, argsMap, null, connectionInfo);
+    run(testContext, argsMap, connectionInfo);
   }
 
   @BeforeEach
@@ -95,7 +92,6 @@ public class CommandLineSpecialCasesTest {
   private void run(
       final TestContext testContext,
       final Map<String, String> argsMapOverride,
-      final Map<String, String> config,
       final DatabaseConnectionInfo connectionInfo)
       throws Exception {
     final TestWriter outputFile = new TestWriter();
@@ -106,16 +102,6 @@ public class CommandLineSpecialCasesTest {
       argsMap.put("-password", "");
 
       argsMap.putAll(argsMapOverride);
-
-      final Map<String, String> runConfig = new HashMap<>();
-      final Map<String, String> informationSchema = loadHsqldbConfig();
-      runConfig.putAll(informationSchema);
-      if (config != null) {
-        runConfig.putAll(config);
-      }
-
-      final Path configFile = CommandlineTestUtility.createConfig(runConfig);
-      argsMap.put("g", configFile.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));
     }

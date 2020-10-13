@@ -32,6 +32,7 @@ import static schemacrawler.tools.executable.commandline.PluginCommand.newPlugin
 import java.nio.file.Path;
 import java.util.AbstractMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import schemacrawler.tools.executable.BaseCommandProvider;
@@ -91,7 +92,8 @@ public class LintCommandProvider extends BaseCommandProvider {
                 entry ->
                     new AbstractMap.SimpleEntry<String, String>(
                         entry.getKey(), String.valueOf(entry.getValue())))
-            .collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue()));
+            .filter(entry -> entry.getValue() != null)
+            .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 
     final LintOptions lintOptions =
         LintOptionsBuilder.builder().fromConfig(config).withProperties(properties).toOptions();
