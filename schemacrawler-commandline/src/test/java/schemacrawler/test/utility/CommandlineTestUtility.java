@@ -28,22 +28,18 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.utility;
 
-import static java.nio.file.Files.newBufferedWriter;
-import static java.nio.file.StandardOpenOption.CREATE;
-import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
-import static java.nio.file.StandardOpenOption.WRITE;
-import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.io.IOException;
-import java.io.Writer;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+
+import com.typesafe.config.ConfigFactory;
 
 import picocli.CommandLine;
 import schemacrawler.Main;
@@ -53,7 +49,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.options.OutputFormat;
-import us.fatehi.utility.IOUtility;
+import us.fatehi.utility.PropertiesUtility;
 
 public final class CommandlineTestUtility {
 
@@ -61,7 +57,7 @@ public final class CommandlineTestUtility {
       final DatabaseConnectionInfo connectionInfo,
       final String command,
       final Map<String, String> argsMap,
-      final Map<String, String> config,
+      final Map<String, Object> config,
       final OutputFormat outputFormat)
       throws Exception {
     return commandlineExecution(
@@ -90,9 +86,13 @@ public final class CommandlineTestUtility {
     commandlineArgsMap.put("-url", connectionInfo.getConnectionUrl());
     commandlineArgsMap.put("-user", "sa");
     commandlineArgsMap.put("-password", "");
+
+    System.clearProperty("config.file");
     if (propertiesFile != null) {
-      commandlineArgsMap.put("g", propertiesFile.toString());
+      System.setProperty("config.file", propertiesFile.toString());
     }
+    ConfigFactory.invalidateCaches();
+
     commandlineArgsMap.put("c", command);
     commandlineArgsMap.put("-output-format", outputFormatValue);
     commandlineArgsMap.put("-output-file", out.toString());
@@ -120,10 +120,16 @@ public final class CommandlineTestUtility {
       final DatabaseConnectionInfo connectionInfo,
       final String command,
       final Map<String, String> argsMap,
-      final String propertiesFileResource,
+      final boolean loadHsqlDbInformationSchemaViews,
       final OutputFormat outputFormat)
       throws Exception {
-    final Path propertiesFile = copyResourceToTempFile(propertiesFileResource);
+    final Path propertiesFile;
+    if (loadHsqlDbInformationSchemaViews) {
+      propertiesFile = DatabaseTestUtility.tempHsqldbConfig();
+    } else {
+      propertiesFile = PropertiesUtility.savePropertiesToTempFile(new Properties());
+    }
+
     return commandlineExecution(
         connectionInfo, command, argsMap, propertiesFile, outputFormat.getFormat());
   }
@@ -190,6 +196,12 @@ public final class CommandlineTestUtility {
     }
   }
 
+  public static Path writeConfigToTempFile(final Map<String, ?> config) throws IOException {
+    final Properties configProperties = new Properties();
+    configProperties.putAll(config);
+    return PropertiesUtility.savePropertiesToTempFile(configProperties);
+  }
+
   private static Path commandlineExecution(
       final DatabaseConnectionInfo connectionInfo,
       final String command,
@@ -203,25 +215,6 @@ public final class CommandlineTestUtility {
           connectionInfo, command, argsMap, propertiesFile, outputFormatValue, out.getFilePath());
     }
     return testout.getFilePath();
-  }
-
-  private static Path writeConfigToTempFile(final Map<String, String> config) throws IOException {
-    if (config == null) {
-      return null;
-    }
-
-    final Path tempFile =
-        IOUtility.createTempFilePath("test", ".properties").normalize().toAbsolutePath();
-
-    final Properties properties = new Properties();
-    properties.putAll(config);
-
-    try (final Writer tempFileWriter =
-        newBufferedWriter(tempFile, WRITE, TRUNCATE_EXISTING, CREATE); ) {
-      properties.store(tempFileWriter, "Store config to temporary file for testing");
-    }
-
-    return tempFile;
   }
 
   private CommandlineTestUtility() {

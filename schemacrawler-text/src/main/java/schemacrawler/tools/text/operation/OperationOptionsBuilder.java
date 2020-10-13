@@ -126,7 +126,7 @@ public final class OperationOptionsBuilder
     final Operation operation;
     if (config.containsKey(command)) {
       final String queryName = command;
-      final String queryString = config.get(queryName);
+      final String queryString = config.getStringValue(queryName, null);
       operation = new QueryOperation(new Query(queryName, queryString));
     } else {
       operation = this.operation;

@@ -40,6 +40,8 @@ import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -59,7 +61,6 @@ import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.LinterConfig;
 import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.lint.Linters;
-import schemacrawler.tools.options.Config;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -84,7 +85,7 @@ public class LintTest {
     assertThat("FOR_LINT schema not found", schema, notNullValue());
     assertThat("FOR_LINT tables not found", catalog.getTables(schema), hasSize(7));
 
-    final LinterConfigs linterConfigs = new LinterConfigs(new Config());
+    final LinterConfigs linterConfigs = new LinterConfigs(new HashMap<>());
     final LinterConfig linterConfig =
         new LinterConfig("schemacrawler.tools.linter.LinterTableWithBadlyNamedColumns");
     linterConfig.setThreshold(0);
@@ -133,7 +134,7 @@ public class LintTest {
     assertThat("FOR_LINT schema not found", schema, notNullValue());
     assertThat("FOR_LINT tables not found", catalog.getTables(schema), hasSize(7));
 
-    final LinterConfigs linterConfigs = new LinterConfigs(new Config());
+    final LinterConfigs linterConfigs = new LinterConfigs(new HashMap<>());
     final Linters linters = new Linters(linterConfigs, true);
     linters.lint(catalog, connection);
     final LintCollector lintCollector = linters.getCollector();
@@ -167,7 +168,7 @@ public class LintTest {
     assertThat("FOR_LINT schema not found", schema, notNullValue());
     assertThat("FOR_LINT tables not found", catalog.getTables(schema), hasSize(6));
 
-    final Config additionalConfig = new Config();
+    final Map<String, String> additionalConfig = new HashMap<>();
     final String message = UUID.randomUUID().toString();
     additionalConfig.put("message", message);
     additionalConfig.put("sql", "SELECT TOP 1 1 FROM INFORMATION_SCHEMA.TABLES");
@@ -208,7 +209,7 @@ public class LintTest {
     assertThat("FOR_LINT schema not found", schema, notNullValue());
     assertThat("FOR_LINT tables not found", catalog.getTables(schema), hasSize(6));
 
-    final LinterConfigs linterConfigs = new LinterConfigs(new Config());
+    final LinterConfigs linterConfigs = new LinterConfigs(new HashMap<>());
     final Linters linters = new Linters(linterConfigs, false);
     assertThat("All linters should be turned off", linters.size(), is(0));
 

@@ -27,21 +27,14 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Files.newBufferedWriter;
-import static java.nio.file.StandardOpenOption.CREATE;
-import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
-import static java.nio.file.StandardOpenOption.WRITE;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 
-import java.io.Writer;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -49,6 +42,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -92,14 +86,8 @@ public class GrepCommandLineTest {
 
       final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType.details;
       final InfoLevel infoLevel = InfoLevel.detailed;
-      final Path additionalProperties =
-          IOUtility.createTempFilePath("hsqldb.INFORMATION_SCHEMA.config", "properties");
-      final Writer writer =
-          newBufferedWriter(additionalProperties, UTF_8, WRITE, CREATE, TRUNCATE_EXISTING);
-      final Properties properties = new Properties();
-      properties.load(
-          getClass().getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
-      properties.store(writer, getClass().getName());
+
+      final Path additionalProperties = DatabaseTestUtility.tempHsqldbConfig();
 
       final String referenceFile = String.format("grep%02d.txt", i + 1);
 

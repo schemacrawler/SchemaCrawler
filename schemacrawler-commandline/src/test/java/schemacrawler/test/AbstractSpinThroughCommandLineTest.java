@@ -133,7 +133,7 @@ public abstract class AbstractSpinThroughCommandLineTest {
                                                           connectionInfo,
                                                           command,
                                                           argsMap,
-                                                          "/hsqldb.INFORMATION_SCHEMA.config.properties",
+                                                          true,
                                                           outputFormat)),
                                                   hasSameContentAndTypeAs(
                                                       classpathResource(

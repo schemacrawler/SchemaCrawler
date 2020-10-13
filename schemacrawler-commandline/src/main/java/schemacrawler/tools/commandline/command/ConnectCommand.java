@@ -163,7 +163,7 @@ public class ConnectCommand extends BaseStateHolder implements Runnable {
     // Set defaults from database plugin, such as default schema excludes
     schemaCrawlerOptions = databaseConnector.setSchemaCrawlerOptionsDefaults(schemaCrawlerOptions);
     // Override with options from config file
-    final Config config = state.getBaseConfiguration();
+    final Config config = state.getConfig();
     schemaCrawlerOptions = SchemaCrawlerOptionsConfig.fromConfig(schemaCrawlerOptions, config);
 
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
@@ -175,7 +175,7 @@ public class ConnectCommand extends BaseStateHolder implements Runnable {
 
     LOGGER.log(Level.FINE, "Creating SchemaCrawler retrieval options builder");
 
-    final Config config = state.getBaseConfiguration();
+    final Config config = state.getConfig();
     try (final Connection connection = state.getDataSource().get()) {
       final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
           databaseConnector.getSchemaRetrievalOptionsBuilder(connection);

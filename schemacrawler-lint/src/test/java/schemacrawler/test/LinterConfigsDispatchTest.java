@@ -101,7 +101,7 @@ public class LinterConfigsDispatchTest {
     try {
       final Reader reader =
           readerForResource("schemacrawler-linter-configs-with-dispatch.xml", UTF_8);
-      linterConfigs = new LinterConfigs(new Config());
+      linterConfigs = new LinterConfigs(new HashMap<>());
       linterConfigs.parse(reader);
     } catch (final IOException | SchemaCrawlerException e) {
       fail(e.getMessage());

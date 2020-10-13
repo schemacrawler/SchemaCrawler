@@ -36,7 +36,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
 
@@ -52,7 +51,7 @@ import us.fatehi.utility.string.StringFormat;
  *
  * @author Sualeh Fatehi
  */
-public final class Config implements Options, Map<String, String> {
+public final class Config implements Options, Map<String, Object> {
 
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(Config.class.getName());
@@ -78,24 +77,7 @@ public final class Config implements Options, Map<String, String> {
     return defaultValue;
   }
 
-  /**
-   * Copies properties into a map.
-   *
-   * @param properties Properties to copy
-   * @return Map of properties and values
-   */
-  private static Map<String, String> propertiesMap(final Properties properties) {
-    final Map<String, String> propertiesMap = new HashMap<>();
-    if (properties != null) {
-      final Set<Map.Entry<Object, Object>> entries = properties.entrySet();
-      for (final Map.Entry<Object, Object> entry : entries) {
-        propertiesMap.put((String) entry.getKey(), (String) entry.getValue());
-      }
-    }
-    return propertiesMap;
-  }
-
-  private final Map<String, String> config;
+  private final Map<String, Object> config;
 
   /** Creates an empty config. */
   public Config() {
@@ -107,20 +89,18 @@ public final class Config implements Options, Map<String, String> {
    *
    * @param config Config to copy
    */
-  public Config(final Map<String, String> config) {
+  public Config(final Map<String, Object> config) {
     this();
     if (config != null) {
       putAll(config);
     }
   }
 
-  /**
-   * Copies properties into a map.
-   *
-   * @param properties Properties to copy
-   */
-  public Config(final Properties properties) {
-    this(propertiesMap(properties));
+  public Config(final Config config) {
+    this();
+    if (config != null) {
+      putAll(config);
+    }
   }
 
   @Override
@@ -139,12 +119,12 @@ public final class Config implements Options, Map<String, String> {
   }
 
   @Override
-  public Set<java.util.Map.Entry<String, String>> entrySet() {
+  public Set<java.util.Map.Entry<String, Object>> entrySet() {
     return config.entrySet();
   }
 
   @Override
-  public String get(final Object key) {
+  public Object get(final Object key) {
     return config.get(key);
   }
 
@@ -247,11 +227,12 @@ public final class Config implements Options, Map<String, String> {
    * @return String value
    */
   public String getStringValue(final String propertyName, final String defaultValue) {
-    String value = get(propertyName);
+    final Object value = get(propertyName);
     if (value == null) {
-      value = defaultValue;
+      return defaultValue;
+    } else {
+      return value.toString();
     }
-    return value;
   }
 
   /**
@@ -275,24 +256,20 @@ public final class Config implements Options, Map<String, String> {
   }
 
   @Override
-  public String put(final String key, final String value) {
+  public Object put(final String key, final Object value) {
     return config.put(key, value);
   }
 
   @Override
-  public void putAll(final Map<? extends String, ? extends String> m) {
+  public void putAll(final Map<? extends String, ? extends Object> m) {
     if (m == null) {
       return;
     }
     config.putAll(m);
   }
 
-  public void putAll(final Properties properties) {
-    config.putAll(propertiesMap(properties));
-  }
-
   @Override
-  public String remove(final Object key) {
+  public Object remove(final Object key) {
     return config.remove(key);
   }
 
@@ -321,26 +298,13 @@ public final class Config implements Options, Map<String, String> {
     return config.size();
   }
 
-  /**
-   * Convert config to Properties
-   *
-   * @return Properties
-   */
-  public Properties toProperties() {
-    final Properties properties = new Properties();
-    for (final Entry<String, String> entry : config.entrySet()) {
-      properties.put(entry.getKey(), entry.getValue());
-    }
-    return properties;
-  }
-
   @Override
   public String toString() {
     return ObjectToString.toString(this);
   }
 
   @Override
-  public Collection<String> values() {
+  public Collection<Object> values() {
     return config.values();
   }
 }

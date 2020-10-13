@@ -33,6 +33,7 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.newComm
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.retrievePluginOptions;
 
 import java.io.PrintWriter;
+import java.util.Map;
 import java.util.logging.Level;
 
 import org.jline.reader.EndOfFileException;
@@ -53,6 +54,7 @@ import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
+import schemacrawler.tools.commandline.utility.CommandLineUtility;
 import schemacrawler.tools.options.Config;
 
 public final class SchemaCrawlerShell {
@@ -63,8 +65,12 @@ public final class SchemaCrawlerShell {
   public static void execute(final String[] args) throws Exception {
     requireNonNull(args, "No arguments provided");
 
+    final Map<String, Object> appConfig = CommandLineUtility.loadConfig();
+
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     final StateFactory stateFactory = new StateFactory(state);
+
+    state.setConfig(new Config(appConfig));
 
     final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
     final CommandLine commandLine = newCommandLine(commands, stateFactory, false);
@@ -106,8 +112,12 @@ public final class SchemaCrawlerShell {
       return;
     }
 
-    final Config additionalConfig = retrievePluginOptions(parseResult);
-    state.addAdditionalConfiguration(additionalConfig);
+    final Map<String, Object> commandConfig = retrievePluginOptions(parseResult);
+
+    final Config config = new Config();
+    config.putAll(state.getConfig());
+    config.putAll(commandConfig);
+    state.setConfig(new Config(config));
 
     if (parseResult.hasSubcommand()) {
       for (final CommandLine subcommandLine : parseResult.subcommand().asCommandLineList()) {

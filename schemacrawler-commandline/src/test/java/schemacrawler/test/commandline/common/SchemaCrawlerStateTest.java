@@ -45,15 +45,15 @@ public class SchemaCrawlerStateTest {
   public void baseConfigNull() throws Exception {
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
 
-    assertThat(state.getBaseConfiguration(), is(anEmptyMap()));
+    assertThat(state.getConfig(), is(nullValue()));
     // Assert internal field
     final Map<String, String> baseConfigurationBefore = getBaseConfiguration(state);
     assertThat(baseConfigurationBefore, is(nullValue()));
 
     // TEST
-    state.setBaseConfiguration(null);
+    state.setConfig(null);
 
-    assertThat(state.getBaseConfiguration(), is(anEmptyMap()));
+    assertThat(state.getConfig(), is(anEmptyMap()));
     // Assert internal field
     final Map<String, String> baseConfigurationAfter = getBaseConfiguration(state);
     assertThat(baseConfigurationAfter, is(anEmptyMap()));
@@ -61,7 +61,7 @@ public class SchemaCrawlerStateTest {
 
   private Map<String, String> getBaseConfiguration(final SchemaCrawlerShellState state)
       throws NoSuchFieldException, IllegalAccessException {
-    final Field f = state.getClass().getDeclaredField("baseConfiguration");
+    final Field f = state.getClass().getDeclaredField("config");
     f.setAccessible(true);
     return (Map<String, String>) f.get(state);
   }

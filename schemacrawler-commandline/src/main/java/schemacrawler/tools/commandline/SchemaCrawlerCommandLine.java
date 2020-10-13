@@ -44,6 +44,7 @@ import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.Version;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
+import schemacrawler.tools.commandline.utility.CommandLineUtility;
 import schemacrawler.tools.options.Config;
 
 public final class SchemaCrawlerCommandLine {
@@ -55,14 +56,20 @@ public final class SchemaCrawlerCommandLine {
     try {
       requireNonNull(args, "No arguments provided");
 
+      final Map<String, Object> appConfig = CommandLineUtility.loadConfig();
+
       final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
       final StateFactory stateFactory = new StateFactory(state);
 
       final SchemaCrawlerCommandLineCommands commands = new SchemaCrawlerCommandLineCommands();
       final CommandLine commandLine = newCommandLine(commands, stateFactory, true);
       final ParseResult parseResult = commandLine.parseArgs(args);
-      final Config additionalConfig = retrievePluginOptions(parseResult);
-      state.addAdditionalConfiguration(additionalConfig);
+      final Map<String, Object> commandConfig = retrievePluginOptions(parseResult);
+
+      final Config config = new Config();
+      config.putAll(appConfig);
+      config.putAll(commandConfig);
+      state.setConfig(new Config(config));
 
       executeCommandLine(commandLine);
     } catch (final Throwable throwable) {
@@ -90,7 +97,7 @@ public final class SchemaCrawlerCommandLine {
 
     for (final String commandName :
         new String[] {
-          "log", "configfile", "connect", "filter", "limit", "grep", "showstate", "load", "execute"
+          "log", "connect", "filter", "limit", "grep", "showstate", "load", "execute"
         }) {
       final Runnable command = (Runnable) subcommands.get(commandName);
       LOGGER.log(Level.INFO, "Running command " + command.getClass().getSimpleName());

@@ -27,10 +27,8 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.sitegen;
 
-
 import static java.nio.file.Files.deleteIfExists;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
-import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -42,7 +40,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestContext;
@@ -59,25 +59,18 @@ import schemacrawler.tools.options.TextOutputFormat;
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
 @EnabledIfSystemProperty(named = "distrib", matches = "^((?!(false|no)).)*$")
-public class SiteSnapshotVariationsTest
-{
+public class SiteSnapshotVariationsTest {
 
   @BeforeAll
-  public static void _saveConfigProperties()
-    throws IOException
-  {
-    propertiesFile =
-      copyResourceToTempFile("/hsqldb.INFORMATION_SCHEMA.config.properties");
+  public static void _saveConfigProperties() throws IOException {
+    propertiesFile = DatabaseTestUtility.tempHsqldbConfig();
   }
 
   @BeforeAll
   public static void _setupDirectory(final TestContext testContext)
-    throws IOException, URISyntaxException
-  {
-    snapshotsDirectory =
-      testContext.resolveTargetFromRootPath("_website/snapshot-examples");
-    lintReportsDirectory =
-      testContext.resolveTargetFromRootPath("_website/lint-report-examples");
+      throws IOException, URISyntaxException {
+    snapshotsDirectory = testContext.resolveTargetFromRootPath("_website/snapshot-examples");
+    lintReportsDirectory = testContext.resolveTargetFromRootPath("_website/lint-report-examples");
   }
 
   private static Path lintReportsDirectory;
@@ -85,13 +78,11 @@ public class SiteSnapshotVariationsTest
   private static Path snapshotsDirectory;
 
   @Test
-  public void lintReportExamples(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
-    for (final OutputFormat outputFormat : LintReportOutputFormat.values())
-    {
+  public void lintReportExamples(final DatabaseConnectionInfo connectionInfo) throws Exception {
+    for (final OutputFormat outputFormat : LintReportOutputFormat.values()) {
       final String extension = outputFormat.getFormat();
-      run(connectionInfo,
+      run(
+          connectionInfo,
           "lint",
           null,
           outputFormat,
@@ -100,24 +91,20 @@ public class SiteSnapshotVariationsTest
   }
 
   @Test
-  public void snapshotsExamples(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
-    for (final OutputFormat outputFormat : new OutputFormat[] {
-      TextOutputFormat.html, TextOutputFormat.text, DiagramOutputFormat.htmlx
-    })
-    {
+  public void snapshotsExamples(final DatabaseConnectionInfo connectionInfo) throws Exception {
+    for (final OutputFormat outputFormat :
+        new OutputFormat[] {
+          TextOutputFormat.html, TextOutputFormat.text, DiagramOutputFormat.htmlx
+        }) {
       final String extension;
-      if ("htmlx".equals(outputFormat.getFormat()))
-      {
+      if ("htmlx".equals(outputFormat.getFormat())) {
         extension = "svg.html";
-      }
-      else
-      {
+      } else {
         extension = outputFormat.getFormat();
       }
 
-      run(connectionInfo,
+      run(
+          connectionInfo,
           "details",
           new HashMap<>(),
           outputFormat,
@@ -126,15 +113,12 @@ public class SiteSnapshotVariationsTest
   }
 
   @Test
-  public void serializeExamples(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
-    for (final OutputFormat outputFormat : new OutputFormat[] {
-      SerializationFormat.json, SerializationFormat.yaml
-    })
-    {
+  public void serializeExamples(final DatabaseConnectionInfo connectionInfo) throws Exception {
+    for (final OutputFormat outputFormat :
+        new OutputFormat[] {SerializationFormat.json, SerializationFormat.yaml}) {
       final String extension = outputFormat.getFormat();
-      run(connectionInfo,
+      run(
+          connectionInfo,
           "serialize",
           null,
           outputFormat,
@@ -142,29 +126,23 @@ public class SiteSnapshotVariationsTest
     }
   }
 
-  private void run(final DatabaseConnectionInfo connectionInfo,
-                   final String command,
-                   final Map<String, String> additionalArgsMap,
-                   final OutputFormat outputFormat,
-                   final Path outputFile)
-    throws Exception
-  {
+  private void run(
+      final DatabaseConnectionInfo connectionInfo,
+      final String command,
+      final Map<String, String> additionalArgsMap,
+      final OutputFormat outputFormat,
+      final Path outputFile)
+      throws Exception {
     deleteIfExists(outputFile);
 
     final Map<String, String> argsMap = new HashMap<>();
-    if (additionalArgsMap != null)
-    {
+    if (additionalArgsMap != null) {
       argsMap.putAll(additionalArgsMap);
     }
     argsMap.put("-info-level", "maximum");
     argsMap.put("-title", "Details of Example Database");
 
-    commandlineExecution(connectionInfo,
-                         command,
-                         argsMap,
-                         propertiesFile,
-                         outputFormat.getFormat(),
-                         outputFile);
+    commandlineExecution(
+        connectionInfo, command, argsMap, propertiesFile, outputFormat.getFormat(), outputFile);
   }
-
 }

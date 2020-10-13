@@ -25,25 +25,30 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.utility;
+package us.fatehi.utility;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.file.Files.newBufferedWriter;
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.nio.file.StandardOpenOption.WRITE;
 import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Properties;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import schemacrawler.SchemaCrawlerLogger;
-import schemacrawler.tools.options.Config;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.string.StringFormat;
 
 public class PropertiesUtility {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(PropertiesUtility.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(PropertiesUtility.class.getName());
 
   /**
    * Loads a properties file.
@@ -61,9 +66,18 @@ public class PropertiesUtility {
       return properties;
     } catch (final IOException e) {
       LOGGER.log(
-          Level.WARNING, new StringFormat("Cannot load properties from <%s>", inputResource), e);
+          Level.WARNING, String.format("Cannot load properties from <%s>", inputResource), e);
       return new Properties();
     }
+  }
+
+  public static Path savePropertiesToTempFile(final Properties properties) throws IOException {
+    requireNonNull(properties, "No properties provided");
+    final Path propertiesFile = Files.createTempFile("schemacrawler", ".properties");
+    final Writer writer =
+        newBufferedWriter(propertiesFile, UTF_8, WRITE, CREATE, TRUNCATE_EXISTING);
+    properties.store(writer, "Temporary file to hold properties");
+    return propertiesFile;
   }
 
   private PropertiesUtility() {
