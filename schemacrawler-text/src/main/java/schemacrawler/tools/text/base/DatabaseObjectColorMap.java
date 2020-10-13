@@ -33,6 +33,8 @@ import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -40,6 +42,7 @@ import java.util.logging.Level;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.DatabaseObject;
 import us.fatehi.utility.Color;
+import us.fatehi.utility.PropertiesUtility;
 import us.fatehi.utility.RegularExpressionColorMap;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
 import us.fatehi.utility.ioresource.FileInputResource;
@@ -53,10 +56,11 @@ public class DatabaseObjectColorMap {
       "schemacrawler.colormap.properties";
 
   static DatabaseObjectColorMap initialize(final boolean noColors) {
-    final Properties properties = new Properties();
     if (noColors) {
-      return new DatabaseObjectColorMap(properties, noColors);
+      return new DatabaseObjectColorMap(new HashMap<>(), noColors);
     }
+
+    final Properties properties = new Properties();
 
     // Load from classpath and also current directory, in that order
     try {
@@ -76,13 +80,13 @@ public class DatabaseObjectColorMap {
       LOGGER.log(Level.CONFIG, "Could not load color map from file");
     }
 
-    return new DatabaseObjectColorMap(properties, noColors);
+    return new DatabaseObjectColorMap(PropertiesUtility.propertiesMap(properties), noColors);
   }
 
   private final RegularExpressionColorMap colorMap;
   private final boolean noColors;
 
-  private DatabaseObjectColorMap(final Properties properties, final boolean noColors) {
+  private DatabaseObjectColorMap(final Map<String, String> properties, final boolean noColors) {
     this.noColors = noColors;
     colorMap = new RegularExpressionColorMap(properties);
   }

@@ -32,7 +32,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 
-import java.util.Properties;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
@@ -68,7 +69,7 @@ public class RegularExpressionColorMapTest {
 
   @Test
   public void fromProperties() {
-    final Properties properties = new Properties();
+    final Map<String, String> properties = new HashMap<>();
     properties.put(test_color.toString().substring(1), "SC.*");
     properties.put(test_color.toString().substring(1) + "A", "SC.*");
     properties.put("000000", "QW.*");
