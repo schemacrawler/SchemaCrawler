@@ -97,9 +97,7 @@ public class SiteHTMLVariationsTest {
     final Map<String, String> args = new HashMap<>();
     args.put("-info-level", "maximum");
 
-    final Map<String, String> config = new HashMap<>();
-
-    run(connectionInfo, args, config, directory.resolve(testContext.testMethodName() + ".html"));
+    run(connectionInfo, args, null, directory.resolve(testContext.testMethodName() + ".html"));
   }
 
   @Test
@@ -109,9 +107,7 @@ public class SiteHTMLVariationsTest {
     args.put("-info-level", "maximum");
     args.put("-portable-names", "true");
 
-    final Map<String, String> config = new HashMap<>();
-
-    run(connectionInfo, args, config, directory.resolve(testContext.testMethodName() + ".html"));
+    run(connectionInfo, args, null, directory.resolve(testContext.testMethodName() + ".html"));
   }
 
   @Test
@@ -122,9 +118,7 @@ public class SiteHTMLVariationsTest {
     args.put("c", "brief");
     args.put("-portable-names", "true");
 
-    final Map<String, String> config = new HashMap<>();
-
-    run(connectionInfo, args, config, directory.resolve(testContext.testMethodName() + ".html"));
+    run(connectionInfo, args, null, directory.resolve(testContext.testMethodName() + ".html"));
   }
 
   @Test
@@ -148,9 +142,7 @@ public class SiteHTMLVariationsTest {
     args.put("-portable-names", "true");
     args.put("-sort-columns", "true");
 
-    final Map<String, String> config = new HashMap<>();
-
-    run(connectionInfo, args, config, directory.resolve(testContext.testMethodName() + ".html"));
+    run(connectionInfo, args, null, directory.resolve(testContext.testMethodName() + ".html"));
   }
 
   @Test
@@ -162,9 +154,7 @@ public class SiteHTMLVariationsTest {
     args.put("-grep-columns", ".*\\.BOOKS\\..*\\.ID");
     args.put("-table-types", "TABLE");
 
-    final Map<String, String> config = new HashMap<>();
-
-    run(connectionInfo, args, config, directory.resolve(testContext.testMethodName() + ".html"));
+    run(connectionInfo, args, null, directory.resolve(testContext.testMethodName() + ".html"));
   }
 
   @Test
@@ -177,8 +167,6 @@ public class SiteHTMLVariationsTest {
     args.put("-only-matching", "true");
     args.put("-table-types", "TABLE");
 
-    final Map<String, String> config = new HashMap<>();
-
-    run(connectionInfo, args, config, directory.resolve(testContext.testMethodName() + ".html"));
+    run(connectionInfo, args, null, directory.resolve(testContext.testMethodName() + ".html"));
   }
 }

@@ -31,7 +31,6 @@ package schemacrawler.test.utility;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.Connection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -74,7 +73,10 @@ public final class DatabaseTestUtility {
   }
 
   public static Map<String, String> loadHsqldbConfig() throws IOException {
-    return loadConfigFromClasspathResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+    final Properties properties =
+        PropertiesUtility.loadProperties(
+            new ClasspathInputResource("/hsqldb.INFORMATION_SCHEMA.config.properties"));
+    return PropertiesUtility.propertiesMap(properties);
   }
 
   public static Path tempHsqldbConfig() throws IOException {
@@ -82,27 +84,6 @@ public final class DatabaseTestUtility {
         PropertiesUtility.loadProperties(
             new ClasspathInputResource("/hsqldb.INFORMATION_SCHEMA.config.properties"));
     return PropertiesUtility.savePropertiesToTempFile(properties);
-  }
-
-  /**
-   * Loads a properties file from a CLASSPATH resource.
-   *
-   * @param resource A CLASSPATH resource.
-   * @return Config loaded from classpath resource
-   * @throws IOException On an exception
-   */
-  protected static Map<String, String> loadConfigFromClasspathResource(final String resource)
-      throws IOException {
-    final Properties properties =
-        PropertiesUtility.loadProperties(new ClasspathInputResource(resource));
-
-    final Map<String, String> config = new HashMap<>();
-    for (final String key : properties.stringPropertyNames()) {
-      final String value = properties.getProperty(key);
-      config.put(key, value);
-    }
-
-    return config;
   }
 
   private static SchemaCrawlerOptions getMaximumSchemaCrawlerOptions() {

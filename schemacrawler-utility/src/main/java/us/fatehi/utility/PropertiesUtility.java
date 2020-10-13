@@ -39,7 +39,11 @@ import java.io.Reader;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -69,6 +73,23 @@ public class PropertiesUtility {
           Level.WARNING, String.format("Cannot load properties from <%s>", inputResource), e);
       return new Properties();
     }
+  }
+
+  /**
+   * Copies properties into a map.
+   *
+   * @param properties Properties to copy
+   * @return Map of properties and values
+   */
+  public static Map<String, String> propertiesMap(final Properties properties) {
+    final Map<String, String> propertiesMap = new HashMap<>();
+    if (properties != null) {
+      final Set<Entry<Object, Object>> entries = properties.entrySet();
+      for (final Entry<Object, Object> entry : entries) {
+        propertiesMap.put((String) entry.getKey(), (String) entry.getValue());
+      }
+    }
+    return propertiesMap;
   }
 
   public static Path savePropertiesToTempFile(final Properties properties) throws IOException {

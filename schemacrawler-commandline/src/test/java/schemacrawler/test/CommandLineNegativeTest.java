@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -76,7 +75,7 @@ public class CommandLineNegativeTest {
     final Map<String, String> argsMapOverride = new HashMap<>();
     argsMapOverride.put("-command", "badcommand");
 
-    run(testContext, argsMapOverride, null, connectionInfo);
+    run(testContext, argsMapOverride, connectionInfo);
   }
 
   @BeforeEach
@@ -91,7 +90,6 @@ public class CommandLineNegativeTest {
   private void run(
       final TestContext testContext,
       final Map<String, String> argsMapOverride,
-      final Map<String, String> config,
       final DatabaseConnectionInfo connectionInfo)
       throws Exception {
     final TestWriter outputFile = new TestWriter();
@@ -110,13 +108,6 @@ public class CommandLineNegativeTest {
       argsMap.put("-output-file", outFile.toString());
 
       argsMap.putAll(argsMapOverride);
-
-      final Map<String, String> runConfig = new HashMap<>();
-      final Map<String, String> informationSchema = loadHsqldbConfig();
-      runConfig.putAll(informationSchema);
-      if (config != null) {
-        runConfig.putAll(config);
-      }
 
       Main.main(flattenCommandlineArgs(argsMap));
     }

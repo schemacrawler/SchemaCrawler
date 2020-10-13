@@ -28,11 +28,8 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Properties;
 import java.util.Set;
 
 /**
@@ -54,7 +51,7 @@ public final class TemplatingUtility {
    * @return Expanded template
    */
   public static String expandTemplate(final String template) {
-    return expandTemplate(template, propertiesMap(System.getProperties()));
+    return expandTemplate(template, PropertiesUtility.propertiesMap(System.getProperties()));
   }
 
   /**
@@ -153,23 +150,6 @@ public final class TemplatingUtility {
         variablesMap.put(entry.getKey(), expandTemplate(entry.getValue(), variablesMap));
       }
     }
-  }
-
-  /**
-   * Copies properties into a map.
-   *
-   * @param properties Properties to copy
-   * @return Map of properties and values
-   */
-  private static Map<String, String> propertiesMap(final Properties properties) {
-    final Map<String, String> propertiesMap = new HashMap<>();
-    if (properties != null) {
-      final Set<Entry<Object, Object>> entries = properties.entrySet();
-      for (final Entry<Object, Object> entry : entries) {
-        propertiesMap.put((String) entry.getKey(), (String) entry.getValue());
-      }
-    }
-    return propertiesMap;
   }
 
   private TemplatingUtility() {}
