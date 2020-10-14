@@ -54,12 +54,7 @@ public class DatabaseObjectColorMap {
   private static final String SCHEMACRAWLER_COLORMAP_PROPERTIES =
       "schemacrawler.colormap.properties";
 
-  static DatabaseObjectColorMap initialize(final boolean noColors) {
-    if (noColors) {
-      final Map<String, String> properties = new HashMap<>();
-      properties.put(default_object_color.toString().substring(1), ".*");
-      return new DatabaseObjectColorMap(properties);
-    }
+  static Map<String, String> load() {
 
     final Properties properties = new Properties();
 
@@ -81,12 +76,19 @@ public class DatabaseObjectColorMap {
       LOGGER.log(Level.CONFIG, "Could not load color map from file");
     }
 
-    return new DatabaseObjectColorMap(PropertiesUtility.propertiesMap(properties));
+    return PropertiesUtility.propertiesMap(properties);
   }
 
   private final RegularExpressionColorMap colorMap;
 
-  private DatabaseObjectColorMap(final Map<String, String> properties) {
+  public DatabaseObjectColorMap(final Map<String, String> properties) {
+    requireNonNull(properties, "No properties provided");
+    colorMap = new RegularExpressionColorMap(properties);
+  }
+
+  public DatabaseObjectColorMap() {
+    final Map<String, String> properties = new HashMap<>();
+    properties.put(default_object_color.toString().substring(1), ".*");
     colorMap = new RegularExpressionColorMap(properties);
   }
 
