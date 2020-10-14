@@ -35,7 +35,6 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Properties;
 import java.util.logging.Level;
 
@@ -57,7 +56,9 @@ public class DatabaseObjectColorMap {
 
   static DatabaseObjectColorMap initialize(final boolean noColors) {
     if (noColors) {
-      return new DatabaseObjectColorMap(new HashMap<>(), noColors);
+      final Map<String, String> properties = new HashMap<>();
+      properties.put(default_object_color.toString().substring(1), ".*");
+      return new DatabaseObjectColorMap(properties);
     }
 
     final Properties properties = new Properties();
@@ -80,33 +81,29 @@ public class DatabaseObjectColorMap {
       LOGGER.log(Level.CONFIG, "Could not load color map from file");
     }
 
-    return new DatabaseObjectColorMap(PropertiesUtility.propertiesMap(properties), noColors);
+    return new DatabaseObjectColorMap(PropertiesUtility.propertiesMap(properties));
   }
 
   private final RegularExpressionColorMap colorMap;
-  private final boolean noColors;
 
-  private DatabaseObjectColorMap(final Map<String, String> properties, final boolean noColors) {
-    this.noColors = noColors;
+  private DatabaseObjectColorMap(final Map<String, String> properties) {
     colorMap = new RegularExpressionColorMap(properties);
   }
 
   public Color getColor(final DatabaseObject dbObject) {
     requireNonNull(dbObject, "No database object provided");
-    if (noColors) {
-      return default_object_color;
-    }
 
-    final Color tableColor;
     final String schemaName = dbObject.getSchema().getFullName();
-    final Optional<Color> colorMatch = colorMap.match(schemaName);
-    if (!colorMatch.isPresent()) {
-      tableColor = generatePastelColor(schemaName);
-      colorMap.putLiteral(schemaName, tableColor);
-    } else {
-      tableColor = colorMatch.get();
-    }
-    return tableColor;
+    final Color dbObjectColor =
+        colorMap
+            .match(schemaName)
+            .orElseGet(
+                () -> {
+                  final Color color = generatePastelColor(schemaName);
+                  colorMap.putLiteral(schemaName, color);
+                  return color;
+                });
+    return dbObjectColor;
   }
 
   private Color generatePastelColor(final String text) {
