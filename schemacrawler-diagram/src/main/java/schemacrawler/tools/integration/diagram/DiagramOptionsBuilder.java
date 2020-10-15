@@ -215,15 +215,12 @@ public final class DiagramOptionsBuilder
       return null;
     }
 
-    final Map<String, String> graphvizAttributes = new HashMap<>();
-    for (final Entry<String, Object> configEntry : config.entrySet()) {
-      final String fullKey = configEntry.getKey();
-      if (fullKey == null || !fullKey.startsWith(GRAPH_GRAPHVIZ_ATTRIBUTES)) {
-        continue;
-      }
+    final Map<String, Object> subMap = config.getSubMap(GRAPH_GRAPHVIZ_ATTRIBUTES);
 
-      final String key = fullKey.substring(GRAPH_GRAPHVIZ_ATTRIBUTES.length() + 1);
-      final String value = String.valueOf(configEntry.getValue());
+    final Map<String, String> graphvizAttributes = new HashMap<>();
+    for (final Entry<String, Object> subMapEntry : subMap.entrySet()) {
+      final String key = subMapEntry.getKey();
+      final String value = String.valueOf(subMapEntry.getValue());
       graphvizAttributes.put(key, value);
     }
 

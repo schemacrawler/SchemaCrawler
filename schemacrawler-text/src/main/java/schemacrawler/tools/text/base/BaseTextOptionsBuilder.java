@@ -31,7 +31,6 @@ package schemacrawler.tools.text.base;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.Collectors;
 
 import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
 import schemacrawler.schemacrawler.OptionsBuilder;
@@ -126,14 +125,14 @@ public abstract class BaseTextOptionsBuilder<
     if (isNoSchemaColors) {
       colorMap = new DatabaseObjectColorMap();
     } else {
-      final Map<String, Object> colors = config.getSubMap(SCHEMA_COLOR_MAP);
-      if (colors != null && !colors.isEmpty()) {
-        final Map<String, String> properties =
-            colors
-                .entrySet()
-                .stream()
-                .collect(
-                    Collectors.toMap(Entry::getKey, entry -> String.valueOf(entry.getValue())));
+      final Map<String, Object> subMap = config.getSubMap(SCHEMA_COLOR_MAP);
+      if (subMap != null && !subMap.isEmpty()) {
+        final Map<String, String> properties = new HashMap<>();
+        for (final Entry<String, Object> subMapEntry : subMap.entrySet()) {
+          final String key = subMapEntry.getKey();
+          final String value = String.valueOf(subMapEntry.getValue());
+          properties.put(key, value);
+        }
         colorMap = new DatabaseObjectColorMap(properties);
       }
     }
