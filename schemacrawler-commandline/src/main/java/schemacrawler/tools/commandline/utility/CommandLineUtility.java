@@ -85,6 +85,26 @@ public class CommandLineUtility {
     return commandLine;
   }
 
+  public static Map<String, Object> loadConfig() {
+
+    final Config config = loadConfig("schemacrawler.config");
+    final Config colormapConfig = loadConfig("schemacrawler.colormap");
+
+    final Config totalConfig =
+        config.withValue(
+            "schemacrawler.format.color_map",
+            ConfigValueFactory.fromMap(colormapConfig.root().unwrapped()));
+
+    final Map<String, Object> configMap =
+        totalConfig
+            .entrySet()
+            .stream()
+            .filter(entry -> entry.getValue() != null)
+            .collect(Collectors.toMap(Entry::getKey, entry -> entry.getValue().unwrapped()));
+
+    return configMap;
+  }
+
   public static CommandLine newCommandLine(
       final Object object, final IFactory factory, final boolean addPluginsAsMixins) {
     final CommandLine commandLine = newCommandLine(object, factory);
@@ -200,6 +220,17 @@ public class CommandLineUtility {
     }
   }
 
+  private static Config loadConfig(final String baseName) {
+    final ConfigParseOptions configParseOptions =
+        ConfigParseOptions.defaults().setAllowMissing(true);
+    final Config config =
+        ConfigFactory.parseFileAnySyntax(new File(baseName), configParseOptions)
+            .withFallback(ConfigFactory.parseResources(baseName, configParseOptions))
+            .withFallback(ConfigFactory.load());
+    LOGGER.log(Level.CONFIG, () -> config.root().render());
+    return config;
+  }
+
   private static CommandLine newCommandLine(final Object object, final IFactory factory) {
     final CommandLine commandLine;
     if (factory == null) {
@@ -213,36 +244,5 @@ public class CommandLineUtility {
 
   private CommandLineUtility() {
     // Prevent instantiation
-  }
-
-  public static Map<String, Object> loadConfig() {
-
-    final Config config = loadConfig("schemacrawler.config");
-    final Config colormapConfig = loadConfig("schemacrawler.colormap");
-
-    final Config totalConfig =
-        config.withValue(
-            "schemacrawler.format.color_map",
-            ConfigValueFactory.fromMap(colormapConfig.root().unwrapped()));
-
-    final Map<String, Object> configMap =
-        totalConfig
-            .entrySet()
-            .stream()
-            .filter(entry -> entry.getValue() != null)
-            .collect(Collectors.toMap(Entry::getKey, entry -> entry.getValue().unwrapped()));
-
-    return configMap;
-  }
-
-  private static Config loadConfig(final String baseName) {
-    final ConfigParseOptions configParseOptions =
-        ConfigParseOptions.defaults().setAllowMissing(true);
-    final Config config =
-        ConfigFactory.parseFileAnySyntax(new File(baseName), configParseOptions)
-            .withFallback(ConfigFactory.parseResources(baseName, configParseOptions))
-            .withFallback(ConfigFactory.load());
-    LOGGER.log(Level.CONFIG, () -> config.root().render());
-    return config;
   }
 }
