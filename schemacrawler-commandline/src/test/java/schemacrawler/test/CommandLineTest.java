@@ -56,8 +56,28 @@ public class CommandLineTest {
       final TestContext testContext,
       final DatabaseConnectionInfo connectionInfo,
       final Map<String, String> argsMap,
+      final String command)
+      throws Exception {
+    run(testContext, connectionInfo, argsMap, null, command, TextOutputFormat.text);
+  }
+
+  private static void run(
+      final TestContext testContext,
+      final DatabaseConnectionInfo connectionInfo,
+      final Map<String, String> argsMap,
       final Map<String, String> config,
       final String command)
+      throws Exception {
+    run(testContext, connectionInfo, argsMap, config, command, TextOutputFormat.text);
+  }
+
+  private static void run(
+      final TestContext testContext,
+      final DatabaseConnectionInfo connectionInfo,
+      final Map<String, String> argsMap,
+      final Map<String, String> config,
+      final String command,
+      final TextOutputFormat outputFormat)
       throws Exception {
     argsMap.put("-no-info", Boolean.TRUE.toString());
     argsMap.put("-schemas", ".*\\.(?!FOR_LINT).*");
@@ -70,12 +90,33 @@ public class CommandLineTest {
       runConfig.putAll(config);
     }
 
+    final String extension;
+    switch (outputFormat) {
+      case text:
+        extension = ".txt";
+        break;
+      default:
+        extension = "." + outputFormat.getFormat();
+        break;
+    }
+
     assertThat(
-        outputOf(
-            commandlineExecution(
-                connectionInfo, command, argsMap, runConfig, TextOutputFormat.text)),
+        outputOf(commandlineExecution(connectionInfo, command, argsMap, runConfig, outputFormat)),
         hasSameContentAs(
-            classpathResource(COMMAND_LINE_OUTPUT + testContext.testMethodName() + ".txt")));
+            classpathResource(COMMAND_LINE_OUTPUT + testContext.testMethodName() + extension)));
+  }
+
+  @Test
+  public void commandLineColorOverrides(
+      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
+    final Map<String, String> args = new HashMap<>();
+    args.put("-tables", ".*");
+
+    final Map<String, String> config = new HashMap<>();
+    config.put("schemacrawler.format.color_map.9900CC", ".*\\..*PUBLISHER.*");
+    config.put("schemacrawler.format.color_map.FFFF00", ".*\\.BOOKS");
+
+    run(testContext, connectionInfo, args, config, "brief", TextOutputFormat.html);
   }
 
   @Test
@@ -152,7 +193,7 @@ public class CommandLineTest {
     // Testing no tables, all routines
     // Testing no sequences, synonyms
 
-    run(testContext, connectionInfo, args, null, "brief");
+    run(testContext, connectionInfo, args, "brief");
   }
 
   @Test
@@ -165,7 +206,7 @@ public class CommandLineTest {
     // Testing no tables, all routines
     // Testing no sequences, synonyms
 
-    run(testContext, connectionInfo, args, null, "brief");
+    run(testContext, connectionInfo, args, "brief");
   }
 
   @Test
@@ -178,7 +219,7 @@ public class CommandLineTest {
     // Testing no tables, all routines
     // Testing no sequences, synonyms
 
-    run(testContext, connectionInfo, args, null, "brief");
+    run(testContext, connectionInfo, args, "brief");
   }
 
   @Test
@@ -191,7 +232,7 @@ public class CommandLineTest {
     // Testing no tables, all routines
     // Testing no sequences, synonyms
 
-    run(testContext, connectionInfo, args, null, "brief");
+    run(testContext, connectionInfo, args, "brief");
   }
 
   @Test
@@ -215,7 +256,7 @@ public class CommandLineTest {
     // Testing all tables, no routines
     // Testing no sequences, synonyms
 
-    run(testContext, connectionInfo, args, null, "brief");
+    run(testContext, connectionInfo, args, "brief");
   }
 
   @Test
@@ -227,7 +268,7 @@ public class CommandLineTest {
     // Testing all tables, no routines
     // Testing no sequences, synonyms
 
-    run(testContext, connectionInfo, args, null, "brief");
+    run(testContext, connectionInfo, args, "brief");
   }
 
   @Test
@@ -269,7 +310,7 @@ public class CommandLineTest {
     // Testing all tables, routines
     // Testing no sequences, synonyms
 
-    run(testContext, connectionInfo, args, null, "brief");
+    run(testContext, connectionInfo, args, "brief");
   }
 
   @Test
@@ -294,7 +335,7 @@ public class CommandLineTest {
     args.put("-sequences", ".*");
     args.put("-synonyms", ".*");
 
-    run(testContext, connectionInfo, args, null, "brief");
+    run(testContext, connectionInfo, args, "brief");
   }
 
   @Test

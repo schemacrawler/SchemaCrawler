@@ -126,8 +126,8 @@ public abstract class BaseTextOptionsBuilder<
     if (isNoSchemaColors) {
       colorMap = new DatabaseObjectColorMap();
     } else {
-      if (config.containsKey(SCHEMA_COLOR_MAP)) {
-        final Map<String, Object> colors = config.getMap(SCHEMA_COLOR_MAP, new HashMap<>());
+      final Map<String, Object> colors = config.getSubMap(SCHEMA_COLOR_MAP);
+      if (colors != null && !colors.isEmpty()) {
         final Map<String, String> properties =
             colors
                 .entrySet()

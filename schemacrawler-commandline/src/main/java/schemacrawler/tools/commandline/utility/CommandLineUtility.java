@@ -91,9 +91,12 @@ public class CommandLineUtility {
     final Config colormapConfig = loadConfig("schemacrawler.colormap");
 
     final Config totalConfig =
-        config.withValue(
-            "schemacrawler.format.color_map",
-            ConfigValueFactory.fromMap(colormapConfig.root().unwrapped()));
+        config
+            .withValue(
+                "schemacrawler.format.color_map",
+                ConfigValueFactory.fromMap(colormapConfig.root().unwrapped()))
+            .withFallback(ConfigFactory.load())
+            .resolve();
 
     final Map<String, Object> configMap =
         totalConfig
@@ -225,9 +228,7 @@ public class CommandLineUtility {
         ConfigParseOptions.defaults().setAllowMissing(true);
     final Config config =
         ConfigFactory.parseFileAnySyntax(new File(baseName), configParseOptions)
-            .withFallback(ConfigFactory.parseResources(baseName, configParseOptions))
-            .withFallback(ConfigFactory.load())
-            .resolve();
+            .withFallback(ConfigFactory.parseResources(baseName, configParseOptions));
     LOGGER.log(Level.CONFIG, () -> config.root().render());
     return config;
   }
