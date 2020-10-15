@@ -226,7 +226,8 @@ public class CommandLineUtility {
     final Config config =
         ConfigFactory.parseFileAnySyntax(new File(baseName), configParseOptions)
             .withFallback(ConfigFactory.parseResources(baseName, configParseOptions))
-            .withFallback(ConfigFactory.load());
+            .withFallback(ConfigFactory.load())
+            .resolve();
     LOGGER.log(Level.CONFIG, () -> config.root().render());
     return config;
   }
