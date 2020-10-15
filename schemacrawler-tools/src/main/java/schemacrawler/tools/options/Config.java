@@ -38,6 +38,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.inclusionrule.InclusionRule;
@@ -84,19 +85,19 @@ public final class Config implements Options, Map<String, Object> {
     config = new HashMap<>();
   }
 
-  /**
-   * Copies config into a map.
-   *
-   * @param config Config to copy
-   */
-  public Config(final Map<String, Object> config) {
+  public Config(final Config config) {
     this();
     if (config != null) {
       putAll(config);
     }
   }
 
-  public Config(final Config config) {
+  /**
+   * Copies config into a map.
+   *
+   * @param config Config to copy
+   */
+  public Config(final Map<String, Object> config) {
     this();
     if (config != null) {
       putAll(config);
@@ -205,6 +206,19 @@ public final class Config implements Options, Map<String, Object> {
           new StringFormat("Could not parse long value for property <%s>", propertyName),
           e);
       return defaultValue;
+    }
+  }
+
+  public Map<String, Object> getMap(
+      final String propertyName, final Map<String, Object> defaultValue) {
+    final Object value = config.get(propertyName);
+    if (value instanceof Map) {
+      return ((Map<?, ?>) value)
+          .entrySet()
+          .stream()
+          .collect(Collectors.toMap(entry -> String.valueOf(entry.getKey()), Entry::getValue));
+    } else {
+      return null;
     }
   }
 

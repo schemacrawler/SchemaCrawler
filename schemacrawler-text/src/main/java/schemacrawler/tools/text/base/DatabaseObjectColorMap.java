@@ -28,67 +28,34 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.base;
 
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.PropertiesUtility.loadProperties;
 import static us.fatehi.utility.Utility.isBlank;
 
-import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
-import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.DatabaseObject;
 import us.fatehi.utility.Color;
-import us.fatehi.utility.PropertiesUtility;
 import us.fatehi.utility.RegularExpressionColorMap;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
-import us.fatehi.utility.ioresource.FileInputResource;
 
 public class DatabaseObjectColorMap {
 
-  public static final Color default_object_color = Color.fromHSV(0, 0, 0.95f);
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(DatabaseObjectColorMap.class.getName());
-  private static final String SCHEMACRAWLER_COLORMAP_PROPERTIES =
-      "schemacrawler.colormap.properties";
-
-  static Map<String, String> load() {
-
-    final Properties properties = new Properties();
-
-    // Load from classpath and also current directory, in that order
-    try {
-      final ClasspathInputResource classpathColorMap =
-          new ClasspathInputResource("/" + SCHEMACRAWLER_COLORMAP_PROPERTIES);
-      properties.putAll(loadProperties(classpathColorMap));
-    } catch (final IOException e) {
-      LOGGER.log(Level.CONFIG, "Could not load color map from CLASSPATH");
-    }
-
-    try {
-      final FileInputResource fileColorMap =
-          new FileInputResource(Paths.get("./" + SCHEMACRAWLER_COLORMAP_PROPERTIES));
-
-      properties.putAll(loadProperties(fileColorMap));
-    } catch (final IOException e) {
-      LOGGER.log(Level.CONFIG, "Could not load color map from file");
-    }
-
-    return PropertiesUtility.propertiesMap(properties);
-  }
-
   private final RegularExpressionColorMap colorMap;
 
+  /**
+   * Color map with provided properties. Properties are loaded using key of the HTML color without
+   * #, and the regular expression as the value.
+   *
+   * @param properties Color map
+   */
   public DatabaseObjectColorMap(final Map<String, String> properties) {
     requireNonNull(properties, "No properties provided");
     colorMap = new RegularExpressionColorMap(properties);
   }
 
+  /** Color map where all test maps to a grey color. */
   public DatabaseObjectColorMap() {
     final Map<String, String> properties = new HashMap<>();
-    properties.put(default_object_color.toString().substring(1), ".*");
+    properties.put(Color.fromHSV(0, 0, 0.95f).toString().substring(1), ".*");
     colorMap = new RegularExpressionColorMap(properties);
   }
 

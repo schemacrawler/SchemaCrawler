@@ -30,8 +30,6 @@ package schemacrawler.tools.text.base;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Map;
-
 import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
 import schemacrawler.tools.executable.CommandOptions;
 
@@ -62,13 +60,7 @@ public abstract class BaseTextOptions implements CommandOptions {
     isShowUnqualifiedNames = builder.isShowUnqualifiedNames;
     isNoSchemaColors = builder.isNoSchemaColors;
     identifierQuotingStrategy = builder.identifierQuotingStrategy;
-
-    if (isNoSchemaColors) {
-      colorMap = new DatabaseObjectColorMap();
-    } else {
-      final Map<String, String> properties = DatabaseObjectColorMap.load();
-      colorMap = new DatabaseObjectColorMap(properties);
-    }
+    colorMap = builder.colorMap;
   }
 
   public DatabaseObjectColorMap getColorMap() {

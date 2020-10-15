@@ -28,6 +28,11 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.text.base;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
+
 import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
 import schemacrawler.schemacrawler.OptionsBuilder;
 import schemacrawler.tools.options.Config;
@@ -61,6 +66,7 @@ public abstract class BaseTextOptionsBuilder<
       SCHEMACRAWLER_FORMAT_PREFIX + "sort_alphabetically.routine_columns";
 
   private static final String NO_SCHEMA_COLORS = SCHEMACRAWLER_FORMAT_PREFIX + "no_schema_colors";
+  private static final String SCHEMA_COLOR_MAP = SCHEMACRAWLER_FORMAT_PREFIX + "color_map";
 
   private static final String IDENTIFIER_QUOTING_STRATEGY =
       SCHEMACRAWLER_FORMAT_PREFIX + "identifier_quoting_strategy";
@@ -75,9 +81,13 @@ public abstract class BaseTextOptionsBuilder<
   protected boolean isShowUnqualifiedNames;
   protected boolean isNoSchemaColors;
   protected IdentifierQuotingStrategy identifierQuotingStrategy;
+  protected DatabaseObjectColorMap colorMap;
 
   protected BaseTextOptionsBuilder() {
     // All fields are set to the defaults
+    this.identifierQuotingStrategy =
+        IdentifierQuotingStrategy.quote_if_special_characters_and_reserved_words;
+    this.colorMap = new DatabaseObjectColorMap(new HashMap<>());
   }
 
   @Override
@@ -113,33 +123,25 @@ public abstract class BaseTextOptionsBuilder<
             IDENTIFIER_QUOTING_STRATEGY,
             IdentifierQuotingStrategy.quote_if_special_characters_and_reserved_words);
 
+    if (isNoSchemaColors) {
+      colorMap = new DatabaseObjectColorMap();
+    } else {
+      if (config.containsKey(SCHEMA_COLOR_MAP)) {
+        final Map<String, Object> colors = config.getMap(SCHEMA_COLOR_MAP, new HashMap<>());
+        final Map<String, String> properties =
+            colors
+                .entrySet()
+                .stream()
+                .collect(
+                    Collectors.toMap(Entry::getKey, entry -> String.valueOf(entry.getValue())));
+        colorMap = new DatabaseObjectColorMap(properties);
+      }
+    }
+
     // Override values from command line
     fromConfigCommandLineOverride(map);
 
     return (B) this;
-  }
-
-  private void fromConfigCommandLineOverride(final Config config) {
-
-    final String noinfoKey = "no-info";
-    if (config.containsKey(noinfoKey)) {
-      noInfo(config.getBooleanValue(noinfoKey));
-    }
-
-    final String sorttablesKey = "sort-tables";
-    if (config.containsKey(sorttablesKey)) {
-      sortTables(config.getBooleanValue(sorttablesKey));
-    }
-
-    final String sortcolumnsKey = "sort-columns";
-    if (config.containsKey(sortcolumnsKey)) {
-      sortTableColumns(config.getBooleanValue(sortcolumnsKey));
-    }
-
-    final String sortroutinesKey = "sort-routines";
-    if (config.containsKey(sortroutinesKey)) {
-      sortRoutines(config.getBooleanValue(sortroutinesKey));
-    }
   }
 
   @Override
@@ -163,6 +165,8 @@ public abstract class BaseTextOptionsBuilder<
     isNoSchemaColors = options.isNoSchemaColors();
 
     identifierQuotingStrategy = options.getIdentifierQuotingStrategy();
+
+    colorMap = options.getColorMap();
 
     return (B) this;
   }
@@ -292,13 +296,46 @@ public abstract class BaseTextOptionsBuilder<
     return config;
   }
 
+  public B withColorMap(final DatabaseObjectColorMap colorMap) {
+    if (colorMap == null) {
+      this.colorMap = new DatabaseObjectColorMap();
+    } else {
+      this.colorMap = colorMap;
+    }
+    return (B) this;
+  }
+
   public final B withIdentifierQuotingStrategy(
       final IdentifierQuotingStrategy identifierQuotingStrategy) {
     if (identifierQuotingStrategy == null) {
-      this.identifierQuotingStrategy = IdentifierQuotingStrategy.quote_none;
+      this.identifierQuotingStrategy =
+          IdentifierQuotingStrategy.quote_if_special_characters_and_reserved_words;
     } else {
       this.identifierQuotingStrategy = identifierQuotingStrategy;
     }
     return (B) this;
+  }
+
+  private void fromConfigCommandLineOverride(final Config config) {
+
+    final String noinfoKey = "no-info";
+    if (config.containsKey(noinfoKey)) {
+      noInfo(config.getBooleanValue(noinfoKey));
+    }
+
+    final String sorttablesKey = "sort-tables";
+    if (config.containsKey(sorttablesKey)) {
+      sortTables(config.getBooleanValue(sorttablesKey));
+    }
+
+    final String sortcolumnsKey = "sort-columns";
+    if (config.containsKey(sortcolumnsKey)) {
+      sortTableColumns(config.getBooleanValue(sortcolumnsKey));
+    }
+
+    final String sortroutinesKey = "sort-routines";
+    if (config.containsKey(sortroutinesKey)) {
+      sortRoutines(config.getBooleanValue(sortroutinesKey));
+    }
   }
 }

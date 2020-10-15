@@ -30,16 +30,16 @@ package schemacrawler.tools.commandline.utility;
 import static java.util.Objects.requireNonNull;
 
 import java.io.File;
-import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
+import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import com.typesafe.config.ConfigParseOptions;
-import com.typesafe.config.ConfigResolveOptions;
+import com.typesafe.config.ConfigValueFactory;
 
 import picocli.CommandLine;
 import picocli.CommandLine.IFactory;
@@ -216,30 +216,33 @@ public class CommandLineUtility {
   }
 
   public static Map<String, Object> loadConfig() {
-    final ConfigParseOptions configParseOptions =
-        ConfigParseOptions.defaults().setAllowMissing(true);
 
-    com.typesafe.config.Config config =
-        ConfigFactory.parseFile(new File("schemacrawler.config.properties"), configParseOptions)
-            .withFallback(
-                ConfigFactory.load(
-                    "schemacrawler.config",
-                    configParseOptions,
-                    ConfigResolveOptions.defaults().setUseSystemEnvironment(true)))
-            .withFallback(ConfigFactory.load());
-    LOGGER.log(Level.CONFIG, () -> config.root().render());
+    final Config config = loadConfig("schemacrawler.config");
+    final Config colormapConfig = loadConfig("schemacrawler.colormap");
+
+    final Config totalConfig =
+        config.withValue(
+            "schemacrawler.format.color_map",
+            ConfigValueFactory.fromMap(colormapConfig.root().unwrapped()));
 
     final Map<String, Object> configMap =
-        config
+        totalConfig
             .entrySet()
             .stream()
             .filter(entry -> entry.getValue() != null)
-            .map(
-                entry ->
-                    new AbstractMap.SimpleImmutableEntry<String, Object>(
-                        entry.getKey(), entry.getValue().unwrapped()))
-            .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+            .collect(Collectors.toMap(Entry::getKey, entry -> entry.getValue().unwrapped()));
 
     return configMap;
+  }
+
+  private static Config loadConfig(final String baseName) {
+    final ConfigParseOptions configParseOptions =
+        ConfigParseOptions.defaults().setAllowMissing(true);
+    final Config config =
+        ConfigFactory.parseFileAnySyntax(new File(baseName), configParseOptions)
+            .withFallback(ConfigFactory.parseResources(baseName, configParseOptions))
+            .withFallback(ConfigFactory.load());
+    LOGGER.log(Level.CONFIG, () -> config.root().render());
+    return config;
   }
 }
