@@ -28,9 +28,10 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.integration.template;
 
+import schemacrawler.tools.integration.LanguageOptions;
 import schemacrawler.tools.integration.LanguageOptionsBuilder;
 
-public final class TemplateLanguageOptionsBuilder extends LanguageOptionsBuilder {
+public final class TemplateLanguageOptionsBuilder extends LanguageOptionsBuilder<LanguageOptions> {
 
   public static TemplateLanguageOptionsBuilder builder() {
     return new TemplateLanguageOptionsBuilder();
@@ -38,5 +39,10 @@ public final class TemplateLanguageOptionsBuilder extends LanguageOptionsBuilder
 
   private TemplateLanguageOptionsBuilder() {
     super("templating-language", "template", TemplateLanguageType.unknown.name());
+  }
+
+  @Override
+  public LanguageOptions toOptions() {
+    return new LanguageOptions(getLanguage(), getScript());
   }
 }

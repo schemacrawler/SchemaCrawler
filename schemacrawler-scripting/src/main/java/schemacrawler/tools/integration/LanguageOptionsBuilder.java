@@ -36,9 +36,9 @@ import schemacrawler.schemacrawler.OptionsBuilder;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.ConfigOptionsBuilder;
 
-public abstract class LanguageOptionsBuilder
-    implements OptionsBuilder<LanguageOptionsBuilder, LanguageOptions>,
-        ConfigOptionsBuilder<LanguageOptionsBuilder, LanguageOptions> {
+public abstract class LanguageOptionsBuilder<O extends LanguageOptions>
+    implements OptionsBuilder<LanguageOptionsBuilder<O>, O>,
+        ConfigOptionsBuilder<LanguageOptionsBuilder<O>, O> {
 
   private final String defaultLanguage;
   private final String languageKey;
@@ -54,7 +54,7 @@ public abstract class LanguageOptionsBuilder
   }
 
   @Override
-  public LanguageOptionsBuilder fromConfig(final Config config) {
+  public LanguageOptionsBuilder<O> fromConfig(final Config config) {
     script = getScript(config);
     // Language may be inferred from script extension, so set it afterwards
     language = getLanguage(config);
@@ -62,7 +62,7 @@ public abstract class LanguageOptionsBuilder
   }
 
   @Override
-  public LanguageOptionsBuilder fromOptions(final LanguageOptions options) {
+  public LanguageOptionsBuilder<O> fromOptions(final LanguageOptions options) {
     if (options != null) {
       language = options.getLanguage();
       script = options.getScript();
@@ -73,11 +73,6 @@ public abstract class LanguageOptionsBuilder
   @Override
   public Config toConfig() {
     throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public LanguageOptions toOptions() {
-    return new LanguageOptions(language, script);
   }
 
   private final String getLanguage(final Config config) {
@@ -94,6 +89,22 @@ public abstract class LanguageOptionsBuilder
     }
 
     return defaultLanguage;
+  }
+
+  public String getLanguage() {
+    return language;
+  }
+
+  public void setLanguage(String language) {
+    this.language = language;
+  }
+
+  public String getScript() {
+    return script;
+  }
+
+  public void setScript(String script) {
+    this.script = script;
   }
 
   private String getScript(final Config config) {
