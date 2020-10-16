@@ -29,17 +29,8 @@ package schemacrawler.tools.commandline.utility;
 
 import static java.util.Objects.requireNonNull;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.logging.Level;
-import java.util.stream.Collectors;
-
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
-import com.typesafe.config.ConfigParseOptions;
-import com.typesafe.config.ConfigValueFactory;
 
 import picocli.CommandLine;
 import picocli.CommandLine.IFactory;
@@ -83,29 +74,6 @@ public class CommandLineUtility {
     commandLine.setToggleBooleanFlags(false);
 
     return commandLine;
-  }
-
-  public static Map<String, Object> loadConfig() {
-
-    final Config config = loadConfig("schemacrawler.config");
-    final Config colormapConfig = loadConfig("schemacrawler.colormap");
-
-    final Config totalConfig =
-        config
-            .withValue(
-                "schemacrawler.format.color_map",
-                ConfigValueFactory.fromMap(colormapConfig.root().unwrapped()))
-            .withFallback(ConfigFactory.load())
-            .resolve();
-
-    final Map<String, Object> configMap =
-        totalConfig
-            .entrySet()
-            .stream()
-            .filter(entry -> entry.getValue() != null)
-            .collect(Collectors.toMap(Entry::getKey, entry -> entry.getValue().unwrapped()));
-
-    return configMap;
   }
 
   public static CommandLine newCommandLine(
@@ -221,16 +189,6 @@ public class CommandLineUtility {
     for (final PluginCommand pluginCommand : commandRegistry.getCommandLineCommands()) {
       addPluginCommand(commandLine, pluginCommand, addAsMixins);
     }
-  }
-
-  private static Config loadConfig(final String baseName) {
-    final ConfigParseOptions configParseOptions =
-        ConfigParseOptions.defaults().setAllowMissing(true);
-    final Config config =
-        ConfigFactory.parseFileAnySyntax(new File(baseName), configParseOptions)
-            .withFallback(ConfigFactory.parseResources(baseName, configParseOptions));
-    LOGGER.log(Level.CONFIG, () -> config.root().render());
-    return config;
   }
 
   private static CommandLine newCommandLine(final Object object, final IFactory factory) {

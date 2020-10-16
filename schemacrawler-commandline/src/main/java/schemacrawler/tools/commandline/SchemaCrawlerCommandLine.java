@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.tools.commandline.utility.CommandLineConfigUtility.loadConfig;
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logFullStackTrace;
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSafeArguments;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
@@ -44,7 +45,6 @@ import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.Version;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
-import schemacrawler.tools.commandline.utility.CommandLineUtility;
 import schemacrawler.tools.options.Config;
 
 public final class SchemaCrawlerCommandLine {
@@ -56,7 +56,7 @@ public final class SchemaCrawlerCommandLine {
     try {
       requireNonNull(args, "No arguments provided");
 
-      final Map<String, Object> appConfig = CommandLineUtility.loadConfig();
+      final Map<String, Object> appConfig = loadConfig();
 
       final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
       final StateFactory stateFactory = new StateFactory(state);

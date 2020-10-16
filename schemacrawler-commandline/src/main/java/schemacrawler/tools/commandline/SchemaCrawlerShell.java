@@ -29,6 +29,7 @@ package schemacrawler.tools.commandline;
 
 import static java.util.Objects.requireNonNull;
 import static picocli.CommandLine.printHelpIfRequested;
+import static schemacrawler.tools.commandline.utility.CommandLineConfigUtility.loadConfig;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.retrievePluginOptions;
 
@@ -54,7 +55,6 @@ import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
-import schemacrawler.tools.commandline.utility.CommandLineUtility;
 import schemacrawler.tools.options.Config;
 
 public final class SchemaCrawlerShell {
@@ -65,7 +65,7 @@ public final class SchemaCrawlerShell {
   public static void execute(final String[] args) throws Exception {
     requireNonNull(args, "No arguments provided");
 
-    final Map<String, Object> appConfig = CommandLineUtility.loadConfig();
+    final Map<String, Object> appConfig = loadConfig();
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     final StateFactory stateFactory = new StateFactory(state);
