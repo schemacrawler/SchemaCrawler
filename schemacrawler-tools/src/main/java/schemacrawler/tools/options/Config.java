@@ -84,19 +84,19 @@ public final class Config implements Options, Map<String, Object> {
     config = new HashMap<>();
   }
 
-  /**
-   * Copies config into a map.
-   *
-   * @param config Config to copy
-   */
-  public Config(final Map<String, Object> config) {
+  public Config(final Config config) {
     this();
     if (config != null) {
       putAll(config);
     }
   }
 
-  public Config(final Config config) {
+  /**
+   * Copies config into a map.
+   *
+   * @param config Config to copy
+   */
+  public Config(final Map<String, Object> config) {
     this();
     if (config != null) {
       putAll(config);
@@ -206,6 +206,24 @@ public final class Config implements Options, Map<String, Object> {
           e);
       return defaultValue;
     }
+  }
+
+  public Map<String, Object> getSubMap(final String propertyName) {
+    if (isBlank(propertyName)) {
+      return new HashMap<>();
+    }
+    final Map<String, Object> subMap = new HashMap<>();
+    for (final Entry<String, Object> configEntry : config.entrySet()) {
+      final String fullKey = configEntry.getKey();
+      if (fullKey == null || !fullKey.startsWith(propertyName)) {
+        continue;
+      }
+
+      final String key = fullKey.substring(propertyName.length() + 1);
+      final Object value = configEntry.getValue();
+      subMap.put(key, value);
+    }
+    return subMap;
   }
 
   public Optional<InclusionRule> getOptionalInclusionRule(

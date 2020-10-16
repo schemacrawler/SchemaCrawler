@@ -236,7 +236,7 @@ public final class TypeMap implements Map<String, Class<?>> {
         sqlTypeMap
             .entrySet()
             .stream()
-            .collect(toMap(Map.Entry::getKey, e -> e.getValue().getCanonicalName()));
+            .collect(toMap(Entry::getKey, e -> e.getValue().getCanonicalName()));
     return typeClassNameMap.toString();
   }
 

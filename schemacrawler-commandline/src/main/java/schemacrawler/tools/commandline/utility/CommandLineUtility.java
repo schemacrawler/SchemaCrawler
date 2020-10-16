@@ -29,17 +29,8 @@ package schemacrawler.tools.commandline.utility;
 
 import static java.util.Objects.requireNonNull;
 
-import java.io.File;
-import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.logging.Level;
-import java.util.stream.Collectors;
-
-import com.typesafe.config.ConfigFactory;
-import com.typesafe.config.ConfigParseOptions;
-import com.typesafe.config.ConfigResolveOptions;
 
 import picocli.CommandLine;
 import picocli.CommandLine.IFactory;
@@ -213,33 +204,5 @@ public class CommandLineUtility {
 
   private CommandLineUtility() {
     // Prevent instantiation
-  }
-
-  public static Map<String, Object> loadConfig() {
-    final ConfigParseOptions configParseOptions =
-        ConfigParseOptions.defaults().setAllowMissing(true);
-
-    com.typesafe.config.Config config =
-        ConfigFactory.parseFile(new File("schemacrawler.config.properties"), configParseOptions)
-            .withFallback(
-                ConfigFactory.load(
-                    "schemacrawler.config",
-                    configParseOptions,
-                    ConfigResolveOptions.defaults().setUseSystemEnvironment(true)))
-            .withFallback(ConfigFactory.load());
-    LOGGER.log(Level.CONFIG, () -> config.root().render());
-
-    final Map<String, Object> configMap =
-        config
-            .entrySet()
-            .stream()
-            .filter(entry -> entry.getValue() != null)
-            .map(
-                entry ->
-                    new AbstractMap.SimpleImmutableEntry<String, Object>(
-                        entry.getKey(), entry.getValue().unwrapped()))
-            .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
-
-    return configMap;
   }
 }

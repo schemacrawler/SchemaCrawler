@@ -60,7 +60,7 @@ public abstract class BaseTextOptions implements CommandOptions {
     isShowUnqualifiedNames = builder.isShowUnqualifiedNames;
     isNoSchemaColors = builder.isNoSchemaColors;
     identifierQuotingStrategy = builder.identifierQuotingStrategy;
-    colorMap = DatabaseObjectColorMap.initialize(isNoSchemaColors);
+    colorMap = builder.colorMap;
   }
 
   public DatabaseObjectColorMap getColorMap() {

@@ -27,6 +27,7 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility;
 
+import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.util.HashMap;
@@ -34,7 +35,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -51,38 +51,32 @@ public class RegularExpressionColorMap {
     colorMap = new HashMap<>();
   }
 
-  public RegularExpressionColorMap(final Properties properties) {
+  public RegularExpressionColorMap(final Map<String, String> properties) {
     this();
     if (properties == null || properties.isEmpty()) {
       return;
     }
-    for (final Entry<Object, Object> match : properties.entrySet()) {
-      if (match != null) {
-        final Object key = match.getKey();
-        final Object value = match.getValue();
-        if (key != null && value != null) {
-          final String regExpPattern = value.toString();
-          final String htmlColor = key.toString();
-          if (!Utility.isBlank(regExpPattern)
-              && !Utility.isBlank(htmlColor)
-              && htmlColor.length() == 6) {
-            put(regExpPattern, "#" + htmlColor);
-          } else {
-            LOGGER.log(
-                Level.CONFIG,
-                new StringFormat(
-                    "Could not add color mapping for %s = %s", regExpPattern, htmlColor));
-          }
+    for (final Entry<String, String> map : properties.entrySet()) {
+      if (map != null) {
+        final String htmlColor = map.getKey();
+        final String regExpPattern = map.getValue();
+        if (!isBlank(regExpPattern) && !isBlank(htmlColor) && htmlColor.length() == 6) {
+          put(regExpPattern, "#" + htmlColor);
+        } else {
+          LOGGER.log(
+              Level.CONFIG,
+              new StringFormat(
+                  "Could not add color mapping for %s = %s", regExpPattern, htmlColor));
         }
       }
     }
   }
 
   public Optional<Color> match(final String value) {
-    for (final Entry<Pattern, Color> entry : colorMap.entrySet()) {
-      final Pattern pattern = entry.getKey();
+    for (final Entry<Pattern, Color> regualarExpressColor : colorMap.entrySet()) {
+      final Pattern pattern = regualarExpressColor.getKey();
       if (pattern.matcher(value).matches()) {
-        return Optional.of(entry.getValue());
+        return Optional.of(regualarExpressColor.getValue());
       }
     }
     return Optional.empty();

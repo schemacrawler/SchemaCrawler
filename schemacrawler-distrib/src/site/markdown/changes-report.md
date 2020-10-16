@@ -5,8 +5,9 @@
 
 - Remove support for chain in scripts
 - Make schema text commands a plugin into SchemaCrawler
-- show and sort commands are folded into schema text command options
-
+- `show` and `sort` commands are folded into schema text command options
+- Load configuration using [lightbend/config](https://github.com/lightbend/config)
+  
 
 <a name="a16.10.1"></a>
 ## Release 16.10.1 - 2020-09-20
