@@ -25,47 +25,28 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-
 package schemacrawler.tools.integration.script;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import schemacrawler.tools.integration.LanguageOptions;
-import schemacrawler.tools.integration.LanguageOptionsBuilder;
-import schemacrawler.tools.options.Config;
 
-public final class ScriptLanguageOptionsBuilder extends LanguageOptionsBuilder<ScriptOptions> {
+public class ScriptOptions extends LanguageOptions {
 
-  private Map<String, Object> config;
+  private final Map<String, Object> config;
 
-  public static ScriptLanguageOptionsBuilder builder() {
-    return new ScriptLanguageOptionsBuilder();
-  }
-
-  private ScriptLanguageOptionsBuilder() {
-    super("script-language", "script", "javascript");
-    config = new HashMap<>();
-  }
-
-  @Override
-  public ScriptLanguageOptionsBuilder fromOptions(final LanguageOptions options) {
-    super.fromOptions(options);
-    if (options != null) {
-      config = ((ScriptOptions) options).getConfig();
+  public ScriptOptions(
+      final String language, final String script, final Map<String, Object> config) {
+    super(language, script);
+    if (config == null) {
+      this.config = new HashMap<>();
+    } else {
+      this.config = config;
     }
-    return this;
   }
 
-  @Override
-  public ScriptLanguageOptionsBuilder fromConfig(final Config config) {
-    super.fromConfig(config);
-    this.config = new Config(config);
-    return this;
-  }
-
-  @Override
-  public ScriptOptions toOptions() {
-    return new ScriptOptions(getLanguage(), getScript(), config);
+  public Map<String, Object> getConfig() {
+    return new HashMap<>(config);
   }
 }

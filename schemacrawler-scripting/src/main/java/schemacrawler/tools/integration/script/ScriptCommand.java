@@ -44,8 +44,8 @@ import javax.script.ScriptEngineManager;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
-import schemacrawler.tools.integration.LanguageOptions;
 import us.fatehi.utility.ObjectToString;
+import us.fatehi.utility.ioresource.EmptyInputResource;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.string.StringFormat;
 
@@ -54,7 +54,7 @@ import us.fatehi.utility.string.StringFormat;
  *
  * @author Sualeh Fatehi
  */
-public final class ScriptCommand extends BaseSchemaCrawlerCommand<LanguageOptions> {
+public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions> {
 
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(ScriptCommand.class.getName());
@@ -86,6 +86,11 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<LanguageOption
   @Override
   public void checkAvailability() throws Exception {
     getScriptEngine();
+    // Check availability of script
+    final InputResource inputResource = commandOptions.getResource();
+    if (inputResource instanceof EmptyInputResource) {
+      throw new SchemaCrawlerException("No script found, " + commandOptions.getScript());
+    }
   }
 
   /** {@inheritDoc} */
@@ -98,6 +103,7 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<LanguageOption
 
     final ScriptEngine scriptEngine = getScriptEngine();
     final InputResource inputResource = commandOptions.getResource();
+    LOGGER.log(Level.CONFIG, new StringFormat("Evaluating script, ", inputResource));
     try (final Reader reader = inputResource.openNewInputReader(inputCharset);
         final Writer writer = outputOptions.openNewOutputWriter()) {
 
@@ -105,11 +111,13 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<LanguageOption
       scriptEngine.getContext().setWriter(writer);
       scriptEngine.put("catalog", catalog);
       scriptEngine.put("connection", connection);
+      scriptEngine.put("chain", new CommandChain(this));
 
       // Evaluate the script
       if (scriptEngine instanceof Compilable) {
         final CompiledScript script = ((Compilable) scriptEngine).compile(reader);
-        script.eval();
+        final Object result = script.eval();
+        LOGGER.log(Level.INFO, new StringFormat("Script execution result:%n%s", result));
       } else {
         scriptEngine.eval(reader);
       }

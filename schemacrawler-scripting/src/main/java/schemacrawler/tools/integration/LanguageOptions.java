@@ -34,7 +34,7 @@ import static us.fatehi.utility.ioresource.InputResourceUtility.createInputResou
 import schemacrawler.tools.executable.CommandOptions;
 import us.fatehi.utility.ioresource.InputResource;
 
-public final class LanguageOptions implements CommandOptions {
+public class LanguageOptions implements CommandOptions {
 
   private final String language;
   private final String script;
