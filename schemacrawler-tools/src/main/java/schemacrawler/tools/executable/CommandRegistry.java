@@ -129,6 +129,10 @@ public final class CommandRegistry {
     findSupportedOutputFormats(command, outputOptions, executableCommandProviders);
 
     final CommandProvider executableCommandProvider = executableCommandProviders.get(0);
+    LOGGER.log(
+        Level.INFO,
+        new StringFormat(
+            "Matched provider for, ", executableCommandProvider.getSupportedCommands()));
 
     final SchemaCrawlerCommand<?> scCommand;
     try {
