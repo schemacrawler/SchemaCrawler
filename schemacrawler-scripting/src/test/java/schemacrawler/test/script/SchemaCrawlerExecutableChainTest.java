@@ -31,6 +31,10 @@ package schemacrawler.test.script;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.fail;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.test.utility.ScriptTestUtility.commandLineScriptExecution;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.validateDiagram;
 import static us.fatehi.utility.IOUtility.readFully;
@@ -48,6 +52,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
@@ -62,7 +67,7 @@ import us.fatehi.utility.IOUtility;
 public class SchemaCrawlerExecutableChainTest {
 
   @Test
-  public void chainJavaScript(final Connection connection) throws Exception {
+  public void executableChain(final Connection connection) throws Exception {
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("script");
     final Path testOutputFile = IOUtility.createTempFilePath("sc", "data");
 
@@ -92,13 +97,34 @@ public class SchemaCrawlerExecutableChainTest {
         "Created files \"schema.txt\" and \"schema.png\"" + System.lineSeparator(),
         equalTo(readFully(new FileReader(testOutputFile.toFile()))));
 
+    final Path schemaFile = Paths.get("schema.txt");
     final List<String> failures =
-        compareOutput("schema.txt", Paths.get("schema.txt"), TextOutputFormat.text.name());
+        compareOutput("schema.txt", schemaFile, TextOutputFormat.text.name());
     if (failures.size() > 0) {
       fail(failures.toString());
     }
+    Files.deleteIfExists(schemaFile);
 
     final Path diagramFile = Paths.get("schema.png");
+    validateDiagram(diagramFile);
+    Files.deleteIfExists(diagramFile);
+  }
+
+  @Test
+  public void commandlineChain(final DatabaseConnectionInfo connectionInfo) throws Exception {
+    assertThat(
+        outputOf(commandLineScriptExecution(connectionInfo, "/chain_script.js")),
+        hasSameContentAs(classpathResource("chain_output.txt")));
+
+    final Path schemaFile = Paths.get("chain_schema.txt");
+    final List<String> failures =
+        compareOutput("chain_schema.txt", schemaFile, TextOutputFormat.text.name());
+    if (failures.size() > 0) {
+      fail(failures.toString());
+    }
+    Files.deleteIfExists(schemaFile);
+
+    final Path diagramFile = Paths.get("chain_schema.png");
     validateDiagram(diagramFile);
     Files.deleteIfExists(diagramFile);
   }

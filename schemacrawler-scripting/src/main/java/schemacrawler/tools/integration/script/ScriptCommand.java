@@ -45,6 +45,7 @@ import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import us.fatehi.utility.ObjectToString;
+import us.fatehi.utility.ioresource.EmptyInputResource;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.string.StringFormat;
 
@@ -85,6 +86,11 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions>
   @Override
   public void checkAvailability() throws Exception {
     getScriptEngine();
+    // Check availability of script
+    final InputResource inputResource = commandOptions.getResource();
+    if (inputResource instanceof EmptyInputResource) {
+      throw new SchemaCrawlerException("No script found, " + commandOptions.getScript());
+    }
   }
 
   /** {@inheritDoc} */
@@ -97,6 +103,7 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions>
 
     final ScriptEngine scriptEngine = getScriptEngine();
     final InputResource inputResource = commandOptions.getResource();
+    LOGGER.log(Level.CONFIG, new StringFormat("Evaluating script, ", inputResource));
     try (final Reader reader = inputResource.openNewInputReader(inputCharset);
         final Writer writer = outputOptions.openNewOutputWriter()) {
 
@@ -109,7 +116,8 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions>
       // Evaluate the script
       if (scriptEngine instanceof Compilable) {
         final CompiledScript script = ((Compilable) scriptEngine).compile(reader);
-        script.eval();
+        final Object result = script.eval();
+        LOGGER.log(Level.INFO, new StringFormat("Script execution result:%n%s", result));
       } else {
         scriptEngine.eval(reader);
       }
