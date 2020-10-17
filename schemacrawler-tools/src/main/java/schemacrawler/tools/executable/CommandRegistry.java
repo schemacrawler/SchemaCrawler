@@ -32,6 +32,8 @@ import static java.util.Comparator.naturalOrder;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -128,11 +130,31 @@ public final class CommandRegistry {
         executableCommandProviders);
     findSupportedOutputFormats(command, outputOptions, executableCommandProviders);
 
+    Collections.sort(
+        executableCommandProviders,
+        new Comparator<CommandProvider>() {
+
+          @Override
+          public int compare(final CommandProvider comparator1, final CommandProvider comparator2) {
+            if (comparator1 == null || comparator2 == null) {
+              throw new IllegalArgumentException("Null command provider found");
+            }
+            final String canonicalName1 = comparator1.getClass().getCanonicalName();
+            final String canonicalName2 = comparator2.getClass().getCanonicalName();
+            if (canonicalName1.equals(canonicalName2)) {
+              return 0;
+            } else if (canonicalName1.equals("OperationCommandProvider")) {
+              return -1;
+            } else if (canonicalName2.equals("OperationCommandProvider")) {
+              return 1;
+            } else {
+              return canonicalName1.compareTo(canonicalName2);
+            }
+          }
+        });
+
     final CommandProvider executableCommandProvider = executableCommandProviders.get(0);
-    LOGGER.log(
-        Level.INFO,
-        new StringFormat(
-            "Matched provider for, ", executableCommandProvider.getSupportedCommands()));
+    LOGGER.log(Level.INFO, new StringFormat("Matched provider <%s>", executableCommandProvider));
 
     final SchemaCrawlerCommand<?> scCommand;
     try {
@@ -161,6 +183,7 @@ public final class CommandRegistry {
       if (commandProvider.supportsSchemaCrawlerCommand(
           command, schemaCrawlerOptions, additionalConfiguration, outputOptions)) {
         executableCommandProviders.add(commandProvider);
+        LOGGER.log(Level.FINE, new StringFormat("Adding command-provider <%s>", commandProvider));
       }
     }
     if (executableCommandProviders.isEmpty()) {
@@ -177,6 +200,11 @@ public final class CommandRegistry {
     while (iterator.hasNext()) {
       final CommandProvider executableCommandProvider = iterator.next();
       if (!executableCommandProvider.supportsOutputFormat(command, outputOptions)) {
+        LOGGER.log(
+            Level.FINE,
+            new StringFormat(
+                "Removing command-provider, since output format is not supported <%s>",
+                executableCommandProvider));
         iterator.remove();
       }
     }
