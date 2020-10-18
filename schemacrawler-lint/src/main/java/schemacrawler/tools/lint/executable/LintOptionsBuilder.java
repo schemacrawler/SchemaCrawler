@@ -68,13 +68,11 @@ public final class LintOptionsBuilder
   }
 
   @Override
-  public LintOptionsBuilder fromConfig(final Config map) {
-    if (map == null) {
+  public LintOptionsBuilder fromConfig(final Config config) {
+    if (config == null) {
       return this;
     }
-    super.fromConfig(map);
-
-    final Config config = new Config(map);
+    super.fromConfig(config);
 
     final String linterConfigsKey;
     if (config.containsKey(CLI_LINTER_CONFIGS)) {

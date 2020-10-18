@@ -117,7 +117,7 @@ public final class SchemaCrawlerShell {
     final Config config = new Config();
     config.putAll(state.getConfig());
     config.putAll(commandConfig);
-    state.setConfig(new Config(config));
+    state.setConfig(config);
 
     if (parseResult.hasSubcommand()) {
       for (final CommandLine subcommandLine : parseResult.subcommand().asCommandLineList()) {

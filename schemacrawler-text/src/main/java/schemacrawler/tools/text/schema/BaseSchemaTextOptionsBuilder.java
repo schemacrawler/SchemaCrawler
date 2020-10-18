@@ -78,13 +78,11 @@ public abstract class BaseSchemaTextOptionsBuilder<
   public BaseSchemaTextOptionsBuilder() {}
 
   @Override
-  public B fromConfig(final Config map) {
-    if (map == null) {
+  public B fromConfig(final Config config) {
+    if (config == null) {
       return (B) this;
     }
-    super.fromConfig(map);
-
-    final Config config = new Config(map);
+    super.fromConfig(config);
 
     isShowStandardColumnTypeNames = config.getBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES);
     isShowOrdinalNumbers = config.getBooleanValue(SHOW_ORDINAL_NUMBERS);

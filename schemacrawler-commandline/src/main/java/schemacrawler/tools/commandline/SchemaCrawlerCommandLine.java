@@ -69,7 +69,7 @@ public final class SchemaCrawlerCommandLine {
       final Config config = new Config();
       config.putAll(appConfig);
       config.putAll(commandConfig);
-      state.setConfig(new Config(config));
+      state.setConfig(config);
 
       executeCommandLine(commandLine);
     } catch (final Throwable throwable) {

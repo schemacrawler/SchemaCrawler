@@ -54,13 +54,12 @@ public final class OperationOptionsBuilder
   }
 
   @Override
-  public OperationOptionsBuilder fromConfig(final Config map) {
-    if (map == null) {
+  public OperationOptionsBuilder fromConfig(final Config config) {
+    if (config == null) {
       return this;
     }
-    super.fromConfig(map);
+    super.fromConfig(config);
 
-    final Config config = new Config(map);
     isShowLobs = config.getBooleanValue(SHOW_LOBS, false);
     operation = getQueryFromCommand(config);
 
