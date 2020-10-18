@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.integration.diagram;
 
-
 import static schemacrawler.tools.integration.diagram.GraphvizUtility.isGraphvizJavaAvailable;
 
 import java.nio.file.Path;
@@ -37,48 +36,33 @@ import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import us.fatehi.utility.string.StringFormat;
 
-final class GraphvizJavaExecutor
-  extends AbstractGraphProcessExecutor
-{
+final class GraphvizJavaExecutor extends AbstractGraphProcessExecutor {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(GraphvizJavaExecutor.class.getName());
+      SchemaCrawlerLogger.getLogger(GraphvizJavaExecutor.class.getName());
 
-  GraphvizJavaExecutor(final Path dotFile,
-                       final Path outputFile,
-                       final DiagramOutputFormat diagramOutputFormat)
-    throws SchemaCrawlerException
-  {
+  GraphvizJavaExecutor(
+      final Path dotFile, final Path outputFile, final DiagramOutputFormat diagramOutputFormat)
+      throws SchemaCrawlerException {
     super(dotFile, outputFile, diagramOutputFormat);
   }
 
   @Override
-  public Boolean call()
-  {
-    try
-    {
-      GraphvizJavaExecutorUtility.generateGraph(dotFile,
-                                                outputFile,
-                                                diagramOutputFormat);
-    }
-    catch (final SchemaCrawlerException e)
-    {
-      LOGGER.log(Level.INFO,
-                 String.format("Could not generate diagram from:%n%s", dotFile),
-                 e);
+  public Boolean call() {
+    try {
+      GraphvizJavaExecutorUtility.generateGraph(dotFile, outputFile, diagramOutputFormat);
+    } catch (final SchemaCrawlerException e) {
+      LOGGER.log(Level.INFO, String.format("Could not generate diagram from:%n%s", dotFile), e);
       return false;
     }
 
-    LOGGER.log(Level.INFO,
-               new StringFormat("Generated diagram <%s>", outputFile));
+    LOGGER.log(Level.INFO, new StringFormat("Generated diagram <%s>", outputFile));
 
     return true;
   }
 
   @Override
-  public boolean canGenerate()
-  {
+  public boolean canGenerate() {
     return isGraphvizJavaAvailable(diagramOutputFormat);
   }
-
 }

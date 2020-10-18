@@ -37,15 +37,22 @@ import schemacrawler.tools.options.Config;
 
 public final class ScriptLanguageOptionsBuilder extends LanguageOptionsBuilder<ScriptOptions> {
 
-  private Map<String, Object> config;
-
   public static ScriptLanguageOptionsBuilder builder() {
     return new ScriptLanguageOptionsBuilder();
   }
 
+  private Map<String, Object> config;
+
   private ScriptLanguageOptionsBuilder() {
     super("script-language", "script", "javascript");
     config = new HashMap<>();
+  }
+
+  @Override
+  public ScriptLanguageOptionsBuilder fromConfig(final Config config) {
+    super.fromConfig(config);
+    this.config = new Config(config);
+    return this;
   }
 
   @Override
@@ -54,13 +61,6 @@ public final class ScriptLanguageOptionsBuilder extends LanguageOptionsBuilder<S
     if (options != null) {
       config = ((ScriptOptions) options).getConfig();
     }
-    return this;
-  }
-
-  @Override
-  public ScriptLanguageOptionsBuilder fromConfig(final Config config) {
-    super.fromConfig(config);
-    this.config = new Config(config);
     return this;
   }
 

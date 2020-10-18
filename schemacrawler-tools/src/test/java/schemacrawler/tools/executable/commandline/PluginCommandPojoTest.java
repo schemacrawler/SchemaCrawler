@@ -44,6 +44,17 @@ import nl.jqno.equalsverifier.Warning;
 public class PluginCommandPojoTest {
 
   @Test
+  public void pluginCommand() {
+    EqualsVerifier.forClass(PluginCommand.class)
+        .suppress(Warning.STRICT_INHERITANCE)
+        .withOnlyTheseFields("name")
+        .verify();
+
+    final PluginCommand pluginCommand = PluginCommand.newDatabasePluginCommand("name", "helpText");
+    assertThat(pluginCommand.toString(), is("PluginCommand[name='name', options=[]]"));
+  }
+
+  @Test
   public void pluginCommandOption() {
     EqualsVerifier.forClass(PluginCommandOption.class)
         .suppress(Warning.STRICT_INHERITANCE)
@@ -60,16 +71,5 @@ public class PluginCommandPojoTest {
         pluginCommandOption.toString(),
         is(
             "PluginCommandOption[name='name', valueClass=schemacrawler.tools.executable.commandline.PluginCommandPojoTest]"));
-  }
-
-  @Test
-  public void pluginCommand() {
-    EqualsVerifier.forClass(PluginCommand.class)
-        .suppress(Warning.STRICT_INHERITANCE)
-        .withOnlyTheseFields("name")
-        .verify();
-
-    final PluginCommand pluginCommand = PluginCommand.newDatabasePluginCommand("name", "helpText");
-    assertThat(pluginCommand.toString(), is("PluginCommand[name='name', options=[]]"));
   }
 }

@@ -108,12 +108,12 @@ public class LinterConfig implements Serializable, Comparable<LinterConfig> {
     return new RegularExpressionRule(columnInclusionPattern, columnExclusionPattern);
   }
 
-  public Map<String, String> getProperties() {
-    return new HashMap<>(properties);
-  }
-
   public String getLinterId() {
     return linterId;
+  }
+
+  public Map<String, String> getProperties() {
+    return new HashMap<>(properties);
   }
 
   public LintSeverity getSeverity() {

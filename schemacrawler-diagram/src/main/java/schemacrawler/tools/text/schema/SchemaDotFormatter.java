@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.text.schema;
 
-
 import static schemacrawler.analysis.counts.TableRowCountsUtility.getRowCountMessage;
 import static schemacrawler.analysis.counts.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
@@ -68,10 +67,7 @@ import us.fatehi.utility.html.Tag;
  *
  * @author Sualeh Fatehi
  */
-public final class SchemaDotFormatter
-  extends BaseDotFormatter
-  implements SchemaTraversalHandler
-{
+public final class SchemaDotFormatter extends BaseDotFormatter implements SchemaTraversalHandler {
 
   private final boolean isVerbose;
   private final boolean isBrief;
@@ -79,147 +75,120 @@ public final class SchemaDotFormatter
   /**
    * Text formatting of schema.
    *
-   * @param schemaTextDetailType
-   *   Types for text formatting of schema
-   * @param options
-   *   Options for text formatting of schema
-   * @param outputOptions
-   *   Options for text formatting of schema
-   * @param identifierQuoteString
-   *   Quote character for database objects
-   * @throws SchemaCrawlerException
-   *   On an exception
+   * @param schemaTextDetailType Types for text formatting of schema
+   * @param options Options for text formatting of schema
+   * @param outputOptions Options for text formatting of schema
+   * @param identifierQuoteString Quote character for database objects
+   * @throws SchemaCrawlerException On an exception
    */
-  public SchemaDotFormatter(final SchemaTextDetailType schemaTextDetailType,
-                            final DiagramOptions options,
-                            final OutputOptions outputOptions,
-                            final String identifierQuoteString)
-    throws SchemaCrawlerException
-  {
-    super(options,
-          schemaTextDetailType == SchemaTextDetailType.details,
-          outputOptions,
-          identifierQuoteString);
+  public SchemaDotFormatter(
+      final SchemaTextDetailType schemaTextDetailType,
+      final DiagramOptions options,
+      final OutputOptions outputOptions,
+      final String identifierQuoteString)
+      throws SchemaCrawlerException {
+    super(
+        options,
+        schemaTextDetailType == SchemaTextDetailType.details,
+        outputOptions,
+        identifierQuoteString);
     isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
     isBrief = schemaTextDetailType == SchemaTextDetailType.brief;
   }
 
   @Override
-  public void handle(final ColumnDataType columnDataType)
-    throws SchemaCrawlerException
-  {
+  public void handle(final ColumnDataType columnDataType) throws SchemaCrawlerException {
     // No output required
   }
 
   /**
    * Provides information on the database schema.
    *
-   * @param routine
-   *   Routine metadata.
+   * @param routine Routine metadata.
    */
   @Override
-  public void handle(final Routine routine)
-  {
+  public void handle(final Routine routine) {
     // No output required
   }
 
   /**
    * Provides information on the database schema.
    *
-   * @param sequence
-   *   Sequence metadata.
+   * @param sequence Sequence metadata.
    */
   @Override
-  public void handle(final Sequence sequence)
-  {
+  public void handle(final Sequence sequence) {
     // No output required
   }
 
   /**
    * Provides information on the database schema.
    *
-   * @param synonym
-   *   Synonym metadata.
+   * @param synonym Synonym metadata.
    */
   @Override
-  public void handle(final Synonym synonym)
-  {
+  public void handle(final Synonym synonym) {
     // No output required
   }
 
   @Override
-  public void handle(final Table table)
-  {
+  public void handle(final Table table) {
 
     final String tableName;
-    if (options.isShowUnqualifiedNames())
-    {
+    if (options.isShowUnqualifiedNames()) {
       tableName = identifiers.quoteName(table);
-    }
-    else
-    {
+    } else {
       tableName = identifiers.quoteFullName(table);
     }
     final String tableType = "[" + table.getTableType() + "]";
 
     final Color tableNameBgColor = colorMap.getColor(table);
-    final int colspan = options.isShowOrdinalNumbers()? 3: 2;
+    final int colspan = options.isShowOrdinalNumbers() ? 3 : 2;
 
     formattingHelper
-      .append("  /* ")
-      .append(table.getFullName())
-      .append(" -=-=-=-=-=-=-=-=-=-=-=-=-=- */")
-      .println();
+        .append("  /* ")
+        .append(table.getFullName())
+        .append(" -=-=-=-=-=-=-=-=-=-=-=-=-=- */")
+        .println();
+    formattingHelper.append("  \"").append(nodeId(table)).append("\" [").println();
+    formattingHelper.append("    label=<").println();
     formattingHelper
-      .append("  \"")
-      .append(nodeId(table))
-      .append("\" [")
-      .println();
-    formattingHelper
-      .append("    label=<")
-      .println();
-    formattingHelper
-      .append(
-        "      <table border=\"1\" cellborder=\"0\" cellspacing=\"0\" color=\"#888888\">")
-      .println();
+        .append("      <table border=\"1\" cellborder=\"0\" cellspacing=\"0\" color=\"#888888\">")
+        .println();
 
     formattingHelper
-      .append(tableRow()
+        .append(
+            tableRow()
                 .make()
-                .addInnerTag(tableCell()
-                               .withEscapedText(tableName)
-                               .withAlignment(Alignment.left)
-                               .withEmphasis(true)
-                               .withBackground(tableNameBgColor)
-                               .withColumnSpan(colspan)
-                               .make())
-                .addInnerTag(tableCell()
-                               .withEscapedText(tableType)
-                               .withAlignment(Alignment.right)
-                               .withBackground(tableNameBgColor)
-                               .make())
+                .addInnerTag(
+                    tableCell()
+                        .withEscapedText(tableName)
+                        .withAlignment(Alignment.left)
+                        .withEmphasis(true)
+                        .withBackground(tableNameBgColor)
+                        .withColumnSpan(colspan)
+                        .make())
+                .addInnerTag(
+                    tableCell()
+                        .withEscapedText(tableType)
+                        .withAlignment(Alignment.right)
+                        .withBackground(tableNameBgColor)
+                        .make())
                 .render(html))
-      .println();
+        .println();
 
     printTableRemarks(table);
 
     printTableColumns(table.getColumns());
-    if (isVerbose)
-    {
+    if (isVerbose) {
       printTableColumns(new ArrayList<>(table.getHiddenColumns()));
     }
 
     printTableRowCount(table);
 
-    formattingHelper
-      .append("      </table>")
-      .println();
-    formattingHelper
-      .append("    >")
-      .println();
-    formattingHelper
-      .append("  ];")
-      .println();
+    formattingHelper.append("      </table>").println();
+    formattingHelper.append("    >").println();
+    formattingHelper.append("  ];").println();
     formattingHelper.println();
 
     printForeignKeys(table);
@@ -230,77 +199,57 @@ public final class SchemaDotFormatter
   }
 
   @Override
-  public void handleColumnDataTypesEnd()
-  {
+  public void handleColumnDataTypesEnd() {
     // No output required
   }
 
   @Override
-  public void handleColumnDataTypesStart()
-  {
+  public void handleColumnDataTypesStart() {
     // No output required
   }
 
   @Override
-  public void handleRoutinesEnd()
-    throws SchemaCrawlerException
-  {
+  public void handleRoutinesEnd() throws SchemaCrawlerException {
     // No output required
   }
 
   @Override
-  public void handleRoutinesStart()
-    throws SchemaCrawlerException
-  {
+  public void handleRoutinesStart() throws SchemaCrawlerException {
     // No output required
   }
 
   @Override
-  public void handleSequencesEnd()
-    throws SchemaCrawlerException
-  {
+  public void handleSequencesEnd() throws SchemaCrawlerException {
     // No output required
   }
 
   @Override
-  public void handleSequencesStart()
-    throws SchemaCrawlerException
-  {
+  public void handleSequencesStart() throws SchemaCrawlerException {
     // No output required
   }
 
   @Override
-  public void handleSynonymsEnd()
-    throws SchemaCrawlerException
-  {
+  public void handleSynonymsEnd() throws SchemaCrawlerException {
     // No output required
   }
 
   @Override
-  public void handleSynonymsStart()
-    throws SchemaCrawlerException
-  {
+  public void handleSynonymsStart() throws SchemaCrawlerException {
     // No output required
   }
 
   @Override
-  public void handleTablesEnd()
-    throws SchemaCrawlerException
-  {
+  public void handleTablesEnd() throws SchemaCrawlerException {
     // No output required
   }
 
   @Override
-  public void handleTablesStart()
-    throws SchemaCrawlerException
-  {
+  public void handleTablesStart() throws SchemaCrawlerException {
     // No output required
   }
 
-  private String arrowhead(final ForeignKeyCardinality connectivity)
-  {
-    switch (connectivity)
-    {
+  private String arrowhead(final ForeignKeyCardinality connectivity) {
+    switch (connectivity) {
       case unknown:
         return "box";
       case zero_one:
@@ -314,21 +263,13 @@ public final class SchemaDotFormatter
     }
   }
 
-  private String[] getPortIds(final Column column, final boolean isNewNode)
-  {
+  private String[] getPortIds(final Column column, final boolean isNewNode) {
     final String[] portIds = new String[2];
 
-    if (!isNewNode)
-    {
-      portIds[0] = String.format("\"%s\":\"%s.start\"",
-                                 nodeId(column.getParent()),
-                                 nodeId(column));
-      portIds[1] = String.format("\"%s\":\"%s.end\"",
-                                 nodeId(column.getParent()),
-                                 nodeId(column));
-    }
-    else
-    {
+    if (!isNewNode) {
+      portIds[0] = String.format("\"%s\":\"%s.start\"", nodeId(column.getParent()), nodeId(column));
+      portIds[1] = String.format("\"%s\":\"%s.end\"", nodeId(column.getParent()), nodeId(column));
+    } else {
       // Create new node
       final String nodeId = printNewNode(column);
       //
@@ -338,11 +279,11 @@ public final class SchemaDotFormatter
     return portIds;
   }
 
-  private String printColumnReference(final String fkName,
-                                      final ColumnReference columnRef,
-                                      final ForeignKeyCardinality fkCardinality,
-                                      final boolean isFkColumnFiltered)
-  {
+  private String printColumnReference(
+      final String fkName,
+      final ColumnReference columnRef,
+      final ForeignKeyCardinality fkCardinality,
+      final boolean isFkColumnFiltered) {
     final boolean isForeignKey = columnRef instanceof ForeignKeyColumnReference;
 
     final Column primaryKeyColumn = columnRef.getPrimaryKeyColumn();
@@ -353,397 +294,237 @@ public final class SchemaDotFormatter
 
     final DiagramOptions diagramOptions = options;
     final String pkSymbol;
-    if (diagramOptions.isShowPrimaryKeyCardinality())
-    {
+    if (diagramOptions.isShowPrimaryKeyCardinality()) {
       pkSymbol = "teetee";
-    }
-    else
-    {
+    } else {
       pkSymbol = "none";
     }
 
     final String fkSymbol;
-    if (diagramOptions.isShowForeignKeyCardinality())
-    {
+    if (diagramOptions.isShowForeignKeyCardinality()) {
       fkSymbol = arrowhead(fkCardinality);
-    }
-    else
-    {
+    } else {
       fkSymbol = "none";
     }
 
     final String style;
-    if (isForeignKey)
-    {
+    if (isForeignKey) {
       style = "solid";
-    }
-    else
-    {
+    } else {
       style = "dashed";
     }
 
     final String associationName;
-    if (options.isHideForeignKeyNames() || !isForeignKey)
-    {
+    if (options.isHideForeignKeyNames() || !isForeignKey) {
       associationName = "";
-    }
-    else
-    {
+    } else {
       associationName = fkName;
     }
 
     return String.format(
-      "  %s:w -> %s:e [label=<%s> style=\"%s\" dir=\"both\" arrowhead=\"%s\" arrowtail=\"%s\"];%n",
-      fkPortIds[0],
-      pkPortIds[1],
-      associationName,
-      style,
-      pkSymbol,
-      fkSymbol);
-
+        "  %s:w -> %s:e [label=<%s> style=\"%s\" dir=\"both\" arrowhead=\"%s\" arrowtail=\"%s\"];%n",
+        fkPortIds[0], pkPortIds[1], associationName, style, pkSymbol, fkSymbol);
   }
 
-  private void printForeignKeys(final Table table)
-  {
+  private void printForeignKeys(final Table table) {
     printForeignKeys(table, table.getForeignKeys());
   }
 
-  private void printForeignKeys(final Table table,
-                                final Collection<? extends BaseForeignKey<?>> foreignKeys)
-  {
-    for (final BaseForeignKey<? extends ColumnReference> foreignKey : foreignKeys)
-    {
-      final ForeignKeyCardinality fkCardinality =
-        findForeignKeyCardinality(foreignKey);
-      for (final ColumnReference columnRef : foreignKey)
-      {
-        final Table referencedTable = columnRef
-          .getForeignKeyColumn()
-          .getParent();
-        final boolean isForeignKeyFiltered = referencedTable.getAttribute(
-          "schemacrawler.table.no_grep_match",
-          false);
-        if (isForeignKeyFiltered)
-        {
+  private void printForeignKeys(
+      final Table table, final Collection<? extends BaseForeignKey<?>> foreignKeys) {
+    for (final BaseForeignKey<? extends ColumnReference> foreignKey : foreignKeys) {
+      final ForeignKeyCardinality fkCardinality = findForeignKeyCardinality(foreignKey);
+      for (final ColumnReference columnRef : foreignKey) {
+        final Table referencedTable = columnRef.getForeignKeyColumn().getParent();
+        final boolean isForeignKeyFiltered =
+            referencedTable.getAttribute("schemacrawler.table.no_grep_match", false);
+        if (isForeignKeyFiltered) {
           continue;
         }
-        final boolean isFkColumnFiltered = referencedTable.getAttribute(
-          "schemacrawler.table.filtered_out",
-          false);
-        if (table.equals(columnRef
-                           .getPrimaryKeyColumn()
-                           .getParent()))
-        {
-          formattingHelper.append(printColumnReference(identifiers.quoteName(
-            foreignKey.getName()),
-                                                       columnRef,
-                                                       fkCardinality,
-                                                       isFkColumnFiltered));
+        final boolean isFkColumnFiltered =
+            referencedTable.getAttribute("schemacrawler.table.filtered_out", false);
+        if (table.equals(columnRef.getPrimaryKeyColumn().getParent())) {
+          formattingHelper.append(
+              printColumnReference(
+                  identifiers.quoteName(foreignKey.getName()),
+                  columnRef,
+                  fkCardinality,
+                  isFkColumnFiltered));
         }
       }
     }
   }
 
-  private String printNewNode(final Column column)
-  {
+  private String printNewNode(final Column column) {
     final String nodeId = "\"" + nodeId(column) + "\"";
     final String columnName;
-    if (options.isShowUnqualifiedNames())
-    {
+    if (options.isShowUnqualifiedNames()) {
       columnName = identifiers.quoteShortName(column);
-    }
-    else
-    {
+    } else {
       columnName = identifiers.quoteFullName(column);
     }
-    final String columnNode =
-      String.format("  %s [label=<%s>];%n", nodeId, columnName);
+    final String columnNode = String.format("  %s [label=<%s>];%n", nodeId, columnName);
 
     formattingHelper.append(columnNode);
 
     return nodeId;
   }
 
-  private void printTableColumnAutoIncremented(final Column column)
-  {
-    if (column == null)
-    {
+  private void printTableColumnAutoIncremented(final Column column) {
+    if (column == null) {
       return;
     }
-    try
-    {
-      if (!column.isAutoIncremented())
-      {
+    try {
+      if (!column.isAutoIncremented()) {
         return;
       }
-    }
-    catch (final NotLoadedException e)
-    {
+    } catch (final NotLoadedException e) {
       // The column may be partial for index pseudo-columns
       return;
     }
 
     final Tag row = tableRow().make();
-    if (options.isShowOrdinalNumbers())
-    {
-      row.addInnerTag(tableCell()
-                        .withAlignment(Alignment.right)
-                        .make());
+    if (options.isShowOrdinalNumbers()) {
+      row.addInnerTag(tableCell().withAlignment(Alignment.right).make());
     }
-    row
-      .addInnerTag(tableCell()
-                     .withAlignment(Alignment.left)
-                     .make())
-      .addInnerTag(tableCell()
-                     .withText(" ")
-                     .withAlignment(Alignment.left)
-                     .make())
-      .addInnerTag(tableCell()
-                     .withEscapedText("auto-incremented")
-                     .withAlignment(Alignment.left)
-                     .make());
-    formattingHelper
-      .append(row.render(html))
-      .println();
+    row.addInnerTag(tableCell().withAlignment(Alignment.left).make())
+        .addInnerTag(tableCell().withText(" ").withAlignment(Alignment.left).make())
+        .addInnerTag(
+            tableCell().withEscapedText("auto-incremented").withAlignment(Alignment.left).make());
+    formattingHelper.append(row.render(html)).println();
   }
 
-  private void printTableColumnGenerated(final Column column)
-  {
-    if (column == null)
-    {
+  private void printTableColumnEnumValues(final Column column) {
+    if (column == null) {
       return;
     }
-    try
-    {
-      if (!column.isGenerated())
-      {
+    try {
+      if (!column.getColumnDataType().isEnumerated()) {
         return;
       }
+    } catch (final NotLoadedException e) {
+      // The column may be partial for index pseudo-columns
+      return;
     }
-    catch (final NotLoadedException e)
-    {
+
+    final String enumValues =
+        String.format("'%s'", String.join("', ", column.getColumnDataType().getEnumValues()));
+
+    final Tag row = tableRow().make();
+    if (options.isShowOrdinalNumbers()) {
+      row.addInnerTag(tableCell().withAlignment(Alignment.right).make());
+    }
+    row.addInnerTag(tableCell().withAlignment(Alignment.left).make())
+        .addInnerTag(tableCell().withEscapedText(" ").withAlignment(Alignment.left).make())
+        .addInnerTag(tableCell().withEscapedText(enumValues).withAlignment(Alignment.left).make());
+    formattingHelper.append(row.render(html)).println();
+  }
+
+  private void printTableColumnGenerated(final Column column) {
+    if (column == null) {
+      return;
+    }
+    try {
+      if (!column.isGenerated()) {
+        return;
+      }
+    } catch (final NotLoadedException e) {
       // The column may be partial for index pseudo-columns
       return;
     }
 
     final Tag row = tableRow().make();
-    if (options.isShowOrdinalNumbers())
-    {
-      row.addInnerTag(tableCell()
-                        .withAlignment(Alignment.right)
-                        .make());
+    if (options.isShowOrdinalNumbers()) {
+      row.addInnerTag(tableCell().withAlignment(Alignment.right).make());
     }
-    row
-      .addInnerTag(tableCell()
-                     .withAlignment(Alignment.left)
-                     .make())
-      .addInnerTag(tableCell()
-                     .withAlignment(Alignment.left)
-                     .make())
-      .addInnerTag(tableCell()
-                     .withEscapedText("generated")
-                     .withAlignment(Alignment.left)
-                     .make());
-    formattingHelper
-      .append(row.render(html))
-      .println();
+    row.addInnerTag(tableCell().withAlignment(Alignment.left).make())
+        .addInnerTag(tableCell().withAlignment(Alignment.left).make())
+        .addInnerTag(tableCell().withEscapedText("generated").withAlignment(Alignment.left).make());
+    formattingHelper.append(row.render(html)).println();
   }
 
-  private void printTableColumnEnumValues(final Column column)
-  {
-    if (column == null)
-    {
+  private void printTableColumnHidden(final Column column) {
+    if (column == null) {
       return;
     }
-    try
-    {
-      if (!column
-        .getColumnDataType()
-        .isEnumerated())
-      {
+    try {
+      if (!column.isHidden()) {
         return;
       }
-    }
-    catch (final NotLoadedException e)
-    {
-      // The column may be partial for index pseudo-columns
-      return;
-    }
-
-    final String enumValues = String.format("'%s'",
-                                            String.join("', ",
-                                                        column
-                                                          .getColumnDataType()
-                                                          .getEnumValues()));
-
-    final Tag row = tableRow().make();
-    if (options.isShowOrdinalNumbers())
-    {
-      row.addInnerTag(tableCell()
-                        .withAlignment(Alignment.right)
-                        .make());
-    }
-    row
-      .addInnerTag(tableCell()
-                     .withAlignment(Alignment.left)
-                     .make())
-      .addInnerTag(tableCell()
-                     .withEscapedText(" ")
-                     .withAlignment(Alignment.left)
-                     .make())
-      .addInnerTag(tableCell()
-                     .withEscapedText(enumValues)
-                     .withAlignment(Alignment.left)
-                     .make());
-    formattingHelper
-      .append(row.render(html))
-      .println();
-  }
-
-  private void printTableColumnHidden(final Column column)
-  {
-    if (column == null)
-    {
-      return;
-    }
-    try
-    {
-      if (!column.isHidden())
-      {
-        return;
-      }
-    }
-    catch (final NotLoadedException e)
-    {
+    } catch (final NotLoadedException e) {
       // The column may be partial for index pseudo-columns
       return;
     }
 
     final Tag row = tableRow().make();
-    if (options.isShowOrdinalNumbers())
-    {
-      row.addInnerTag(tableCell()
-                        .withAlignment(Alignment.right)
-                        .make());
+    if (options.isShowOrdinalNumbers()) {
+      row.addInnerTag(tableCell().withAlignment(Alignment.right).make());
     }
-    row
-      .addInnerTag(tableCell()
-                     .withAlignment(Alignment.left)
-                     .make())
-      .addInnerTag(tableCell()
-                     .withEscapedText(" ")
-                     .withAlignment(Alignment.left)
-                     .make())
-      .addInnerTag(tableCell()
-                     .withEscapedText("hidden")
-                     .withAlignment(Alignment.left)
-                     .make());
-    formattingHelper
-      .append(row.render(html))
-      .println();
+    row.addInnerTag(tableCell().withAlignment(Alignment.left).make())
+        .addInnerTag(tableCell().withEscapedText(" ").withAlignment(Alignment.left).make())
+        .addInnerTag(tableCell().withEscapedText("hidden").withAlignment(Alignment.left).make());
+    formattingHelper.append(row.render(html)).println();
   }
 
-  private void printTableColumnRemarks(final Column column)
-  {
-    if (column == null || !column.hasRemarks() || options.isHideRemarks())
-    {
+  private void printTableColumnRemarks(final Column column) {
+    if (column == null || !column.hasRemarks() || options.isHideRemarks()) {
       return;
     }
     final Tag remarksRow = tableRow().make();
-    if (options.isShowOrdinalNumbers())
-    {
-      remarksRow.addInnerTag(tableCell()
-                               .withAlignment(Alignment.right)
-                               .make());
+    if (options.isShowOrdinalNumbers()) {
+      remarksRow.addInnerTag(tableCell().withAlignment(Alignment.right).make());
     }
     remarksRow
-      .addInnerTag(tableCell()
-                     .withAlignment(Alignment.left)
-                     .make())
-      .addInnerTag(tableCell()
-                     .withEscapedText(" ")
-                     .withAlignment(Alignment.left)
-                     .make())
-      .addInnerTag(tableCell()
-                     .withEscapedText(column.getRemarks())
-                     .withAlignment(Alignment.left)
-                     .make());
-    formattingHelper
-      .append(remarksRow.render(html))
-      .println();
+        .addInnerTag(tableCell().withAlignment(Alignment.left).make())
+        .addInnerTag(tableCell().withEscapedText(" ").withAlignment(Alignment.left).make())
+        .addInnerTag(
+            tableCell().withEscapedText(column.getRemarks()).withAlignment(Alignment.left).make());
+    formattingHelper.append(remarksRow.render(html)).println();
   }
 
-  private void printTableColumns(final List<Column> columns)
-  {
-    if (columns.isEmpty())
-    {
+  private void printTableColumns(final List<Column> columns) {
+    if (columns.isEmpty()) {
       return;
     }
 
-    Collections.sort(columns,
-                     NamedObjectSort.getNamedObjectSort(options.isAlphabeticalSortForTableColumns()));
+    Collections.sort(
+        columns, NamedObjectSort.getNamedObjectSort(options.isAlphabeticalSortForTableColumns()));
 
-    for (final Column column : columns)
-    {
-      if (isBrief && !isColumnSignificant(column))
-      {
+    for (final Column column : columns) {
+      if (isBrief && !isColumnSignificant(column)) {
         continue;
       }
 
       final String columnTypeName;
-      if (options.isShowStandardColumnTypeNames())
-      {
-        columnTypeName = column
-          .getColumnDataType()
-          .getJavaSqlType()
-          .getName();
-      }
-      else
-      {
-        columnTypeName = column
-          .getColumnDataType()
-          .getDatabaseSpecificTypeName();
+      if (options.isShowStandardColumnTypeNames()) {
+        columnTypeName = column.getColumnDataType().getJavaSqlType().getName();
+      } else {
+        columnTypeName = column.getColumnDataType().getDatabaseSpecificTypeName();
       }
       final String columnType = columnTypeName + column.getWidth();
-      final String nullable =
-        columnNullable(columnTypeName, column.isNullable());
+      final String nullable = columnNullable(columnTypeName, column.isNullable());
       final String columnDetails = columnType + nullable;
       final boolean emphasize = column.isPartOfPrimaryKey();
 
       final Tag row = tableRow().make();
-      if (options.isShowOrdinalNumbers())
-      {
-        final String ordinalNumberString =
-          String.valueOf(column.getOrdinalPosition());
-        row.addInnerTag(tableCell()
-                          .withEscapedText(ordinalNumberString)
-                          .withAlignment(Alignment.right)
-                          .make());
+      if (options.isShowOrdinalNumbers()) {
+        final String ordinalNumberString = String.valueOf(column.getOrdinalPosition());
+        row.addInnerTag(
+            tableCell().withEscapedText(ordinalNumberString).withAlignment(Alignment.right).make());
       }
-      row
-        .addInnerTag(tableCell()
-                       .withEscapedText(identifiers.quoteName(column.getName()))
-                       .withAlignment(Alignment.left)
-                       .withEmphasis(emphasize)
-                       .make())
-        .addInnerTag(tableCell()
-                       .withEscapedText(" ")
-                       .withAlignment(Alignment.left)
-                       .make())
-        .addInnerTag(tableCell()
-                       .withEscapedText(columnDetails)
-                       .withAlignment(Alignment.left)
-                       .make());
+      row.addInnerTag(
+              tableCell()
+                  .withEscapedText(identifiers.quoteName(column.getName()))
+                  .withAlignment(Alignment.left)
+                  .withEmphasis(emphasize)
+                  .make())
+          .addInnerTag(tableCell().withEscapedText(" ").withAlignment(Alignment.left).make())
+          .addInnerTag(
+              tableCell().withEscapedText(columnDetails).withAlignment(Alignment.left).make());
 
-      row
-        .firstInnerTag()
-        .addAttribute("port", nodeId(column) + ".start");
-      row
-        .lastInnerTag()
-        .addAttribute("port", nodeId(column) + ".end");
-      formattingHelper
-        .append(row.render(html))
-        .println();
+      row.firstInnerTag().addAttribute("port", nodeId(column) + ".start");
+      row.lastInnerTag().addAttribute("port", nodeId(column) + ".end");
+      formattingHelper.append(row.render(html)).println();
 
       printTableColumnEnumValues(column);
       printTableColumnHidden(column);
@@ -753,51 +534,48 @@ public final class SchemaDotFormatter
     }
   }
 
-  private void printTableRemarks(final Table table)
-  {
-    if (table == null || !table.hasRemarks() || options.isHideRemarks())
-    {
+  private void printTableRemarks(final Table table) {
+    if (table == null || !table.hasRemarks() || options.isHideRemarks()) {
       return;
     }
     formattingHelper
-      .append(tableRow()
+        .append(
+            tableRow()
                 .make()
-                .addInnerTag(tableCell()
-                               .withEscapedText(table.getRemarks())
-                               .withAlignment(Alignment.left)
-                               .withColumnSpan(3)
-                               .make())
+                .addInnerTag(
+                    tableCell()
+                        .withEscapedText(table.getRemarks())
+                        .withAlignment(Alignment.left)
+                        .withColumnSpan(3)
+                        .make())
                 .render(html))
-      .println();
+        .println();
   }
 
-  private void printTableRowCount(final Table table)
-  {
-    if (!options.isShowRowCounts() || table == null || !hasRowCount(table))
-    {
+  private void printTableRowCount(final Table table) {
+    if (!options.isShowRowCounts() || table == null || !hasRowCount(table)) {
       return;
     }
     formattingHelper
-      .append(tableRow()
+        .append(
+            tableRow()
                 .make()
-                .addInnerTag(tableCell()
-                               .withEscapedText(getRowCountMessage(table))
-                               .withAlignment(Alignment.right)
-                               .withColumnSpan(3)
-                               .make())
+                .addInnerTag(
+                    tableCell()
+                        .withEscapedText(getRowCountMessage(table))
+                        .withAlignment(Alignment.right)
+                        .withColumnSpan(3)
+                        .make())
                 .render(html))
-      .println();
+        .println();
   }
 
-  private void printWeakAssociations(final Table table)
-  {
-    if (!options.isShowWeakAssociations())
-    {
+  private void printWeakAssociations(final Table table) {
+    if (!options.isShowWeakAssociations()) {
       return;
     }
 
     final Collection<WeakAssociation> weakFks = table.getWeakAssociations();
     printForeignKeys(table, weakFks);
   }
-
 }

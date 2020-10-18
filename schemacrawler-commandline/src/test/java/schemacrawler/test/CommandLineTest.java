@@ -56,15 +56,6 @@ public class CommandLineTest {
       final TestContext testContext,
       final DatabaseConnectionInfo connectionInfo,
       final Map<String, String> argsMap,
-      final String command)
-      throws Exception {
-    run(testContext, connectionInfo, argsMap, null, command, TextOutputFormat.text);
-  }
-
-  private static void run(
-      final TestContext testContext,
-      final DatabaseConnectionInfo connectionInfo,
-      final Map<String, String> argsMap,
       final Map<String, String> config,
       final String command)
       throws Exception {
@@ -104,6 +95,15 @@ public class CommandLineTest {
         outputOf(commandlineExecution(connectionInfo, command, argsMap, runConfig, outputFormat)),
         hasSameContentAs(
             classpathResource(COMMAND_LINE_OUTPUT + testContext.testMethodName() + extension)));
+  }
+
+  private static void run(
+      final TestContext testContext,
+      final DatabaseConnectionInfo connectionInfo,
+      final Map<String, String> argsMap,
+      final String command)
+      throws Exception {
+    run(testContext, connectionInfo, argsMap, null, command, TextOutputFormat.text);
   }
 
   @Test

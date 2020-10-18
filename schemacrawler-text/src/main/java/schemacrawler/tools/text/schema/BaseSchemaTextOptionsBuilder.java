@@ -107,24 +107,6 @@ public abstract class BaseSchemaTextOptionsBuilder<
     return (B) this;
   }
 
-  private void fromConfigCommandLineOverride(final Config config) {
-
-    final String noremarksKey = "no-remarks";
-    if (config.containsKey(noremarksKey)) {
-      noRemarks(config.getBooleanValue(noremarksKey));
-    }
-
-    final String weakassociationsKey = "weak-associations";
-    if (config.containsKey(weakassociationsKey)) {
-      weakAssociations(config.getBooleanValue(weakassociationsKey));
-    }
-
-    final String portablenamesKey = "portable-names";
-    if (config.containsKey(portablenamesKey)) {
-      portableNames(config.getBooleanValue(portablenamesKey));
-    }
-  }
-
   @Override
   public B fromOptions(final O options) {
     if (options == null) {
@@ -312,5 +294,23 @@ public abstract class BaseSchemaTextOptionsBuilder<
   public final B weakAssociations(final boolean value) {
     isShowWeakAssociations = value;
     return (B) this;
+  }
+
+  private void fromConfigCommandLineOverride(final Config config) {
+
+    final String noremarksKey = "no-remarks";
+    if (config.containsKey(noremarksKey)) {
+      noRemarks(config.getBooleanValue(noremarksKey));
+    }
+
+    final String weakassociationsKey = "weak-associations";
+    if (config.containsKey(weakassociationsKey)) {
+      weakAssociations(config.getBooleanValue(weakassociationsKey));
+    }
+
+    final String portablenamesKey = "portable-names";
+    if (config.containsKey(portablenamesKey)) {
+      portableNames(config.getBooleanValue(portablenamesKey));
+    }
   }
 }

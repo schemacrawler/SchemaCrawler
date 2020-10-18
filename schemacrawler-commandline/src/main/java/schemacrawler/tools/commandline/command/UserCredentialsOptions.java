@@ -40,7 +40,6 @@ import picocli.CommandLine.Model;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.ParameterException;
 import picocli.CommandLine.Spec;
-import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.tools.commandline.state.MultiUseUserCredentials;
 import schemacrawler.tools.databaseconnector.UserCredentials;
 
