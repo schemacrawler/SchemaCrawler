@@ -27,36 +27,26 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.integration.diagram;
 
-
 import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
-final class GraphNoOpExecutor
-  implements GraphExecutor
-{
+final class GraphNoOpExecutor implements GraphExecutor {
 
-  GraphNoOpExecutor(final DiagramOutputFormat diagramOutputFormat)
-    throws SchemaCrawlerException
-  {
+  GraphNoOpExecutor(final DiagramOutputFormat diagramOutputFormat) throws SchemaCrawlerException {
     requireNonNull(diagramOutputFormat, "No diagram output format provided");
-    if (diagramOutputFormat != DiagramOutputFormat.scdot)
-    {
-      throw new SchemaCrawlerException("Format should be "
-                                       + DiagramOutputFormat.scdot);
+    if (diagramOutputFormat != DiagramOutputFormat.scdot) {
+      throw new SchemaCrawlerException("Format should be " + DiagramOutputFormat.scdot);
     }
   }
 
   @Override
-  public Boolean call()
-  {
+  public Boolean call() {
     return true;
   }
 
   @Override
-  public boolean canGenerate()
-  {
+  public boolean canGenerate() {
     return true;
   }
-
 }

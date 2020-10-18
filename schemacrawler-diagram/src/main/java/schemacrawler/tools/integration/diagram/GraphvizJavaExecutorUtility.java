@@ -1,12 +1,13 @@
 package schemacrawler.tools.integration.diagram;
 
-
 import static java.util.Objects.requireNonNull;
+
 import java.io.FileReader;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
+
 import guru.nidi.graphviz.engine.Format;
 import guru.nidi.graphviz.engine.Graphviz;
 import guru.nidi.graphviz.engine.GraphvizEngine;
@@ -16,35 +17,27 @@ import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import us.fatehi.utility.IOUtility;
 
-public final class GraphvizJavaExecutorUtility
-{
+public final class GraphvizJavaExecutorUtility {
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(GraphvizJavaExecutorUtility.class.getName());
+      SchemaCrawlerLogger.getLogger(GraphvizJavaExecutorUtility.class.getName());
 
   /**
    * Need a static method to account for imports of pure Java Graphviz library.
    *
-   * @param dotFile
-   *   Path to DOT file
-   * @param outputFile
-   *   Path to output file
-   * @param diagramOutputFormat
-   *   Output format
-   * @throws SchemaCrawlerException
-   *   Thrown on an exception
+   * @param dotFile Path to DOT file
+   * @param outputFile Path to output file
+   * @param diagramOutputFormat Output format
+   * @throws SchemaCrawlerException Thrown on an exception
    */
-  public static void generateGraph(final Path dotFile,
-                                   final Path outputFile,
-                                   final DiagramOutputFormat diagramOutputFormat)
-    throws SchemaCrawlerException
-  {
+  public static void generateGraph(
+      final Path dotFile, final Path outputFile, final DiagramOutputFormat diagramOutputFormat)
+      throws SchemaCrawlerException {
     requireNonNull(dotFile, "No DOT file provided");
     requireNonNull(outputFile, "No diagram output file provided");
     requireNonNull(diagramOutputFormat, "No diagram output format provided");
 
-    try
-    {
+    try {
       // Strip all line breaks, in order to use the pure Java engine for
       // Graphviz
       String dotSource = IOUtility.readFully(new FileReader(dotFile.toFile()));
@@ -54,59 +47,41 @@ public final class GraphvizJavaExecutorUtility
       Graphviz.useEngine(engines);
 
       final Format format = map(diagramOutputFormat);
-      if (format == null)
-      {
-        throw new IllegalArgumentException("Unsupported output format, "
-                                           + diagramOutputFormat);
+      if (format == null) {
+        throw new IllegalArgumentException("Unsupported output format, " + diagramOutputFormat);
       }
 
-      Graphviz
-        .fromString(dotSource)
-        .render(format)
-        .toFile(outputFile.toFile());
-    }
-    catch (final Throwable e)
-    {
-      throw new SchemaCrawlerException("Cannot generate diagram from "
-                                       + dotFile, e);
+      Graphviz.fromString(dotSource).render(format).toFile(outputFile.toFile());
+    } catch (final Throwable e) {
+      throw new SchemaCrawlerException("Cannot generate diagram from " + dotFile, e);
     }
   }
 
-  private static List<GraphvizEngine> loadGraphvizEngines()
-  {
+  private static List<GraphvizEngine> loadGraphvizEngines() {
     final List<GraphvizEngine> engines = new ArrayList<>();
-    try
-    {
+    try {
       final GraphvizEngine engine = new GraphvizV8Engine();
       engines.add(engine);
-    }
-    catch (final NoClassDefFoundError e)
-    {
+    } catch (final NoClassDefFoundError e) {
       LOGGER.log(Level.INFO, "Cannot load GraphvizV8Engine");
     }
 
-    try
-    {
+    try {
       final GraphvizEngine engine = new GraphvizJdkEngine();
       engines.add(engine);
-    }
-    catch (final NoClassDefFoundError e)
-    {
+    } catch (final NoClassDefFoundError e) {
       LOGGER.log(Level.INFO, "Cannot load GraphvizJdkEngine");
     }
 
     return engines;
   }
 
-  private static Format map(final DiagramOutputFormat diagramOutputFormat)
-  {
-    if (diagramOutputFormat == null)
-    {
+  private static Format map(final DiagramOutputFormat diagramOutputFormat) {
+    if (diagramOutputFormat == null) {
       return null;
     }
     final Format format;
-    switch (diagramOutputFormat)
-    {
+    switch (diagramOutputFormat) {
       case svg:
         format = Format.SVG;
         break;
@@ -129,9 +104,7 @@ public final class GraphvizJavaExecutorUtility
     return format;
   }
 
-  private GraphvizJavaExecutorUtility()
-  {
+  private GraphvizJavaExecutorUtility() {
     // Prevent instantiation
   }
-
 }

@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.integration.diagram;
 
-
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.IOUtility.isFileReadable;
 import static us.fatehi.utility.IOUtility.isFileWritable;
@@ -36,41 +35,29 @@ import java.nio.file.Path;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
-abstract class AbstractGraphProcessExecutor
-  implements GraphExecutor
-{
+abstract class AbstractGraphProcessExecutor implements GraphExecutor {
 
   protected final Path dotFile;
   protected final Path outputFile;
   protected final DiagramOutputFormat diagramOutputFormat;
 
-  protected AbstractGraphProcessExecutor(final Path dotFile,
-                                         final Path outputFile,
-                                         final DiagramOutputFormat diagramOutputFormat)
-    throws SchemaCrawlerException
-  {
+  protected AbstractGraphProcessExecutor(
+      final Path dotFile, final Path outputFile, final DiagramOutputFormat diagramOutputFormat)
+      throws SchemaCrawlerException {
     requireNonNull(dotFile, "No DOT file provided");
     requireNonNull(outputFile, "No diagram output file provided");
     requireNonNull(diagramOutputFormat, "No diagram output format provided");
 
-    this.dotFile = dotFile
-      .normalize()
-      .toAbsolutePath();
-    this.outputFile = outputFile
-      .normalize()
-      .toAbsolutePath();
+    this.dotFile = dotFile.normalize().toAbsolutePath();
+    this.outputFile = outputFile.normalize().toAbsolutePath();
     this.diagramOutputFormat = diagramOutputFormat;
 
-    if (!isFileReadable(this.dotFile))
-    {
+    if (!isFileReadable(this.dotFile)) {
       throw new SchemaCrawlerException("Cannot read DOT file, " + this.dotFile);
     }
 
-    if (!isFileWritable(this.outputFile))
-    {
-      throw new SchemaCrawlerException("Cannot write output file, "
-                                       + this.outputFile);
+    if (!isFileWritable(this.outputFile)) {
+      throw new SchemaCrawlerException("Cannot write output file, " + this.outputFile);
     }
   }
-
 }

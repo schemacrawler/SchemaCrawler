@@ -59,12 +59,12 @@ public class SchemaCrawlerShellState {
     dataSource = null;
   }
 
-  public Config getConfig() {
-    return config;
-  }
-
   public Catalog getCatalog() {
     return catalog;
+  }
+
+  public Config getConfig() {
+    return config;
   }
 
   public Supplier<Connection> getDataSource() {
@@ -103,16 +103,16 @@ public class SchemaCrawlerShellState {
     return catalog != null;
   }
 
+  public void setCatalog(final Catalog catalog) {
+    this.catalog = catalog;
+  }
+
   public void setConfig(final Config baseConfiguration) {
     if (baseConfiguration != null) {
       this.config = baseConfiguration;
     } else {
       this.config = new Config();
     }
-  }
-
-  public void setCatalog(final Catalog catalog) {
-    this.catalog = catalog;
   }
 
   public void setDataSource(final Supplier<Connection> dataSource) {

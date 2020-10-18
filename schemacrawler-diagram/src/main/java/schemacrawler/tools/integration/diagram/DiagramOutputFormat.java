@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.integration.diagram;
 
-
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.List;
@@ -38,10 +37,7 @@ import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputFormatState;
 import us.fatehi.utility.string.StringFormat;
 
-public enum DiagramOutputFormat
-  implements OutputFormat
-{
-
+public enum DiagramOutputFormat implements OutputFormat {
   htmlx("SchemaCrawler diagram embedded in HTML5"),
   scdot("SchemaCrawler generated format"),
   //
@@ -86,27 +82,20 @@ public enum DiagramOutputFormat
   ;
 
   private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(DiagramOutputFormat.class.getName());
+      SchemaCrawlerLogger.getLogger(DiagramOutputFormat.class.getName());
 
   /**
    * Gets the value from the format.
    *
-   * @param format
-   *   Diagram output format.
+   * @param format Diagram output format.
    * @return DiagramOutputFormat
    */
-  public static DiagramOutputFormat fromFormat(final String format)
-  {
+  public static DiagramOutputFormat fromFormat(final String format) {
     final DiagramOutputFormat outputFormat = fromFormatOrNull(format);
-    if (outputFormat == null)
-    {
-      LOGGER.log(Level.CONFIG,
-                 new StringFormat("Unknown format <%s>, using default",
-                                  format));
+    if (outputFormat == null) {
+      LOGGER.log(Level.CONFIG, new StringFormat("Unknown format <%s>, using default", format));
       return png;
-    }
-    else
-    {
+    } else {
       return outputFormat;
     }
   }
@@ -116,62 +105,50 @@ public enum DiagramOutputFormat
    *
    * @return True if the format is a diagram output format
    */
-  public static boolean isSupportedFormat(final String format)
-  {
+  public static boolean isSupportedFormat(final String format) {
     return fromFormatOrNull(format) != null;
   }
 
-  private static DiagramOutputFormat fromFormatOrNull(final String format)
-  {
-    if (isBlank(format))
-    {
+  private static DiagramOutputFormat fromFormatOrNull(final String format) {
+    if (isBlank(format)) {
       return null;
     }
-    for (final DiagramOutputFormat outputFormat : DiagramOutputFormat.values())
-    {
-      if (outputFormat.outputFormatState.isSupportedFormat(format))
-      {
+    for (final DiagramOutputFormat outputFormat : DiagramOutputFormat.values()) {
+      if (outputFormat.outputFormatState.isSupportedFormat(format)) {
         return outputFormat;
       }
     }
     return null;
   }
+
   private final OutputFormatState outputFormatState;
 
-  private DiagramOutputFormat(final String description)
-  {
+  private DiagramOutputFormat(final String description) {
     outputFormatState = new OutputFormatState(name(), description);
   }
 
-  private DiagramOutputFormat(final String description,
-                              final String... additionalFormatSpecifiers)
-  {
-    outputFormatState =
-      new OutputFormatState(name(), description, additionalFormatSpecifiers);
+  private DiagramOutputFormat(
+      final String description, final String... additionalFormatSpecifiers) {
+    outputFormatState = new OutputFormatState(name(), description, additionalFormatSpecifiers);
   }
 
   @Override
-  public String getDescription()
-  {
+  public String getDescription() {
     return outputFormatState.getDescription();
   }
 
   @Override
-  public String getFormat()
-  {
+  public String getFormat() {
     return outputFormatState.getFormat();
   }
 
   @Override
-  public List<String> getFormats()
-  {
+  public List<String> getFormats() {
     return outputFormatState.getFormats();
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return outputFormatState.toString();
   }
-
 }

@@ -57,6 +57,24 @@ public final class CommandlineTestUtility {
       final DatabaseConnectionInfo connectionInfo,
       final String command,
       final Map<String, String> argsMap,
+      final boolean loadHsqlDbInformationSchemaViews,
+      final OutputFormat outputFormat)
+      throws Exception {
+    final Path propertiesFile;
+    if (loadHsqlDbInformationSchemaViews) {
+      propertiesFile = DatabaseTestUtility.tempHsqldbConfig();
+    } else {
+      propertiesFile = PropertiesUtility.savePropertiesToTempFile(new Properties());
+    }
+
+    return commandlineExecution(
+        connectionInfo, command, argsMap, propertiesFile, outputFormat.getFormat());
+  }
+
+  public static Path commandlineExecution(
+      final DatabaseConnectionInfo connectionInfo,
+      final String command,
+      final Map<String, String> argsMap,
       final Map<String, Object> config,
       final OutputFormat outputFormat)
       throws Exception {
@@ -114,24 +132,6 @@ public final class CommandlineTestUtility {
       final String outputFormatValue)
       throws Exception {
     return commandlineExecution(connectionInfo, command, argsMap, (Path) null, outputFormatValue);
-  }
-
-  public static Path commandlineExecution(
-      final DatabaseConnectionInfo connectionInfo,
-      final String command,
-      final Map<String, String> argsMap,
-      final boolean loadHsqlDbInformationSchemaViews,
-      final OutputFormat outputFormat)
-      throws Exception {
-    final Path propertiesFile;
-    if (loadHsqlDbInformationSchemaViews) {
-      propertiesFile = DatabaseTestUtility.tempHsqldbConfig();
-    } else {
-      propertiesFile = PropertiesUtility.savePropertiesToTempFile(new Properties());
-    }
-
-    return commandlineExecution(
-        connectionInfo, command, argsMap, propertiesFile, outputFormat.getFormat());
   }
 
   public static SchemaCrawlerShellState createLoadedSchemaCrawlerShellState(

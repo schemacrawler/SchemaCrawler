@@ -67,6 +67,25 @@ import us.fatehi.utility.IOUtility;
 public class SchemaCrawlerExecutableChainTest {
 
   @Test
+  public void commandlineChain(final DatabaseConnectionInfo connectionInfo) throws Exception {
+    assertThat(
+        outputOf(commandLineScriptExecution(connectionInfo, "/chain_script.js")),
+        hasSameContentAs(classpathResource("chain_output.txt")));
+
+    final Path schemaFile = Paths.get("chain_schema.txt");
+    final List<String> failures =
+        compareOutput("chain_schema.txt", schemaFile, TextOutputFormat.text.name());
+    if (failures.size() > 0) {
+      fail(failures.toString());
+    }
+    Files.deleteIfExists(schemaFile);
+
+    final Path diagramFile = Paths.get("chain_schema.png");
+    validateDiagram(diagramFile);
+    Files.deleteIfExists(diagramFile);
+  }
+
+  @Test
   public void executableChain(final Connection connection) throws Exception {
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("script");
     final Path testOutputFile = IOUtility.createTempFilePath("sc", "data");
@@ -106,25 +125,6 @@ public class SchemaCrawlerExecutableChainTest {
     Files.deleteIfExists(schemaFile);
 
     final Path diagramFile = Paths.get("schema.png");
-    validateDiagram(diagramFile);
-    Files.deleteIfExists(diagramFile);
-  }
-
-  @Test
-  public void commandlineChain(final DatabaseConnectionInfo connectionInfo) throws Exception {
-    assertThat(
-        outputOf(commandLineScriptExecution(connectionInfo, "/chain_script.js")),
-        hasSameContentAs(classpathResource("chain_output.txt")));
-
-    final Path schemaFile = Paths.get("chain_schema.txt");
-    final List<String> failures =
-        compareOutput("chain_schema.txt", schemaFile, TextOutputFormat.text.name());
-    if (failures.size() > 0) {
-      fail(failures.toString());
-    }
-    Files.deleteIfExists(schemaFile);
-
-    final Path diagramFile = Paths.get("chain_schema.png");
     validateDiagram(diagramFile);
     Files.deleteIfExists(diagramFile);
   }

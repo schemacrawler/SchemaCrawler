@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.integration.test;
 
-
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -36,13 +35,9 @@ import schemacrawler.test.AbstractSchemaCrawlerOutputTest;
 import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
 
-public class SchemaCrawlerDiagramOutputTest
-  extends AbstractSchemaCrawlerOutputTest
-{
+public class SchemaCrawlerDiagramOutputTest extends AbstractSchemaCrawlerOutputTest {
 
-  public Stream<OutputFormat> outputFormats()
-  {
-    return Arrays.stream(new OutputFormat[] { DiagramOutputFormat.scdot });
+  public Stream<OutputFormat> outputFormats() {
+    return Arrays.stream(new OutputFormat[] {DiagramOutputFormat.scdot});
   }
-
 }

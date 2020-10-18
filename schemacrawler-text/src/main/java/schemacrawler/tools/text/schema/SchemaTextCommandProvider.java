@@ -46,16 +46,6 @@ public final class SchemaTextCommandProvider extends BaseCommandProvider {
   }
 
   @Override
-  public SchemaTextRenderer newSchemaCrawlerCommand(final String command, final Config config) {
-    final SchemaTextOptions schemaTextOptions =
-        SchemaTextOptionsBuilder.builder().fromConfig(config).toOptions();
-
-    final SchemaTextRenderer scCommand = new SchemaTextRenderer(command);
-    scCommand.setCommandOptions(schemaTextOptions);
-    return scCommand;
-  }
-
-  @Override
   public PluginCommand getCommandLineCommand() {
 
     final PluginCommand pluginCommand =
@@ -124,6 +114,16 @@ public final class SchemaTextCommandProvider extends BaseCommandProvider {
             "Optional, defaults to true");
 
     return pluginCommand;
+  }
+
+  @Override
+  public SchemaTextRenderer newSchemaCrawlerCommand(final String command, final Config config) {
+    final SchemaTextOptions schemaTextOptions =
+        SchemaTextOptionsBuilder.builder().fromConfig(config).toOptions();
+
+    final SchemaTextRenderer scCommand = new SchemaTextRenderer(command);
+    scCommand.setCommandOptions(schemaTextOptions);
+    return scCommand;
   }
 
   @Override

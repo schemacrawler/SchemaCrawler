@@ -95,26 +95,6 @@ public final class CommandRegistry {
     commandRegistry = loadCommandRegistry();
   }
 
-  public Collection<PluginCommand> getCommandLineCommands() {
-    final Collection<PluginCommand> commandLineCommands = new HashSet<>();
-    for (final CommandProvider commandProvider : commandRegistry) {
-      commandLineCommands.add(commandProvider.getCommandLineCommand());
-    }
-    return commandLineCommands;
-  }
-
-  public Collection<CommandDescription> getSupportedCommands() {
-    final Collection<CommandDescription> supportedCommandDescriptions = new HashSet<>();
-    for (final CommandProvider commandProvider : commandRegistry) {
-      supportedCommandDescriptions.addAll(commandProvider.getSupportedCommands());
-    }
-
-    final List<CommandDescription> supportedCommandsOrdered =
-        new ArrayList<>(supportedCommandDescriptions);
-    supportedCommandsOrdered.sort(naturalOrder());
-    return supportedCommandsOrdered;
-  }
-
   public SchemaCrawlerCommand<?> configureNewCommand(
       final String command,
       final SchemaCrawlerOptions schemaCrawlerOptions,
@@ -170,6 +150,26 @@ public final class CommandRegistry {
     }
 
     return scCommand;
+  }
+
+  public Collection<PluginCommand> getCommandLineCommands() {
+    final Collection<PluginCommand> commandLineCommands = new HashSet<>();
+    for (final CommandProvider commandProvider : commandRegistry) {
+      commandLineCommands.add(commandProvider.getCommandLineCommand());
+    }
+    return commandLineCommands;
+  }
+
+  public Collection<CommandDescription> getSupportedCommands() {
+    final Collection<CommandDescription> supportedCommandDescriptions = new HashSet<>();
+    for (final CommandProvider commandProvider : commandRegistry) {
+      supportedCommandDescriptions.addAll(commandProvider.getSupportedCommands());
+    }
+
+    final List<CommandDescription> supportedCommandsOrdered =
+        new ArrayList<>(supportedCommandDescriptions);
+    supportedCommandsOrdered.sort(naturalOrder());
+    return supportedCommandsOrdered;
   }
 
   private void findSupportedCommands(
