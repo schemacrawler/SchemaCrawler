@@ -41,7 +41,8 @@ public interface CommandProvider {
 
   Collection<CommandDescription> getSupportedCommands();
 
-  SchemaCrawlerCommand newSchemaCrawlerCommand(String command, Config config) throws SchemaCrawlerException;
+  SchemaCrawlerCommand newSchemaCrawlerCommand(String command, Config config)
+      throws SchemaCrawlerException;
 
   boolean supportsOutputFormat(String command, OutputOptions outputOptions);
 

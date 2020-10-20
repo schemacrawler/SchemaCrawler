@@ -1,7 +1,7 @@
 # SchemaCrawler Change History
 
 <a name="a16.11.1"></a>
-## Release 16.11.1 - 2020-10-10
+## Release 16.11.1 - 2020-10-18
 
 - Make schema text commands a plugin into SchemaCrawler
 - `show` and `sort` commands are folded into schema text command options

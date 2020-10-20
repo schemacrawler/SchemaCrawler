@@ -43,8 +43,7 @@ public final class TableRowCountsUtility {
       return UNKNOWN_TABLE_ROW_COUNT;
     }
 
-    final long tableCount =
-        table.getAttribute(TABLE_ROW_COUNT_KEY, (long) UNKNOWN_TABLE_ROW_COUNT);
+    final long tableCount = table.getAttribute(TABLE_ROW_COUNT_KEY, (long) UNKNOWN_TABLE_ROW_COUNT);
     return tableCount;
   }
 

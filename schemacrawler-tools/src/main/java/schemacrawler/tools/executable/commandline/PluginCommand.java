@@ -134,12 +134,12 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
     return Objects.hash(name);
   }
 
-  public boolean hasHelpFooter() {
-    return helpFooter != null;
-  }
-
   public boolean hasHelpDescription() {
     return helpDescription != null;
+  }
+
+  public boolean hasHelpFooter() {
+    return helpFooter != null;
   }
 
   public boolean isEmpty() {

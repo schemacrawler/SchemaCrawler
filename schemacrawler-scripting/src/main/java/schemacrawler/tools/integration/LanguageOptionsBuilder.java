@@ -70,6 +70,22 @@ public abstract class LanguageOptionsBuilder<O extends LanguageOptions>
     return this;
   }
 
+  public String getLanguage() {
+    return language;
+  }
+
+  public String getScript() {
+    return script;
+  }
+
+  public void setLanguage(String language) {
+    this.language = language;
+  }
+
+  public void setScript(String script) {
+    this.script = script;
+  }
+
   @Override
   public Config toConfig() {
     throw new UnsupportedOperationException();
@@ -89,22 +105,6 @@ public abstract class LanguageOptionsBuilder<O extends LanguageOptions>
     }
 
     return defaultLanguage;
-  }
-
-  public String getLanguage() {
-    return language;
-  }
-
-  public void setLanguage(String language) {
-    this.language = language;
-  }
-
-  public String getScript() {
-    return script;
-  }
-
-  public void setScript(String script) {
-    this.script = script;
   }
 
   private String getScript(final Config config) {

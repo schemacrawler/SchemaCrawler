@@ -41,6 +41,13 @@ public class DatabaseObjectColorMap {
 
   private final RegularExpressionColorMap colorMap;
 
+  /** Color map where all test maps to a grey color. */
+  public DatabaseObjectColorMap() {
+    final Map<String, String> properties = new HashMap<>();
+    properties.put(Color.fromHSV(0, 0, 0.95f).toString().substring(1), ".*");
+    colorMap = new RegularExpressionColorMap(properties);
+  }
+
   /**
    * Color map with provided properties. Properties are loaded using key of the HTML color without
    * #, and the regular expression as the value.
@@ -49,13 +56,6 @@ public class DatabaseObjectColorMap {
    */
   public DatabaseObjectColorMap(final Map<String, String> properties) {
     requireNonNull(properties, "No properties provided");
-    colorMap = new RegularExpressionColorMap(properties);
-  }
-
-  /** Color map where all test maps to a grey color. */
-  public DatabaseObjectColorMap() {
-    final Map<String, String> properties = new HashMap<>();
-    properties.put(Color.fromHSV(0, 0, 0.95f).toString().substring(1), ".*");
     colorMap = new RegularExpressionColorMap(properties);
   }
 

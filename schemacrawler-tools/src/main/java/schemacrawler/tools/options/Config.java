@@ -208,24 +208,6 @@ public final class Config implements Options, Map<String, Object> {
     }
   }
 
-  public Map<String, Object> getSubMap(final String propertyName) {
-    if (isBlank(propertyName)) {
-      return new HashMap<>();
-    }
-    final Map<String, Object> subMap = new HashMap<>();
-    for (final Entry<String, Object> configEntry : config.entrySet()) {
-      final String fullKey = configEntry.getKey();
-      if (fullKey == null || !fullKey.startsWith(propertyName)) {
-        continue;
-      }
-
-      final String key = fullKey.substring(propertyName.length() + 1);
-      final Object value = configEntry.getValue();
-      subMap.put(key, value);
-    }
-    return subMap;
-  }
-
   public Optional<InclusionRule> getOptionalInclusionRule(
       final String includePatternProperty, final String excludePatternProperty) {
     final String includePattern = getStringValue(includePatternProperty, null);
@@ -251,6 +233,24 @@ public final class Config implements Options, Map<String, Object> {
     } else {
       return value.toString();
     }
+  }
+
+  public Map<String, Object> getSubMap(final String propertyName) {
+    if (isBlank(propertyName)) {
+      return new HashMap<>();
+    }
+    final Map<String, Object> subMap = new HashMap<>();
+    for (final Entry<String, Object> configEntry : config.entrySet()) {
+      final String fullKey = configEntry.getKey();
+      if (fullKey == null || !fullKey.startsWith(propertyName)) {
+        continue;
+      }
+
+      final String key = fullKey.substring(propertyName.length() + 1);
+      final Object value = configEntry.getValue();
+      subMap.put(key, value);
+    }
+    return subMap;
   }
 
   /**

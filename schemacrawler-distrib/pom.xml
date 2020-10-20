@@ -6,7 +6,7 @@
   <parent>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
-    <version>16.10.1</version>
+    <version>16.11.1</version>
     <relativePath>../schemacrawler-parent/pom.xml</relativePath>
   </parent>
   <artifactId>schemacrawler-distrib</artifactId>
@@ -280,13 +280,13 @@
                 <artifactItem>
                   <groupId>org.postgresql</groupId>
                   <artifactId>postgresql</artifactId>
-                  <version>42.2.16</version>
+                  <version>42.2.18</version>
                   <type>jar</type>
                 </artifactItem>
                 <artifactItem>
                   <groupId>mysql</groupId>
                   <artifactId>mysql-connector-java</artifactId>
-                  <version>8.0.21</version>
+                  <version>8.0.22</version>
                   <type>jar</type>
                 </artifactItem>
                 <artifactItem>

@@ -27,29 +27,24 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.integration.diagram;
 
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
+
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
-public class GraphNoOpExecutorTest
-{
+public class GraphNoOpExecutorTest {
 
   @Test
-  public void constructor()
-  {
-    assertThrows(NullPointerException.class, () -> new GraphNoOpExecutor(null));
-    assertThrows(SchemaCrawlerException.class,
-                 () -> new GraphNoOpExecutor(DiagramOutputFormat.bmp));
-  }
-
-  @Test
-  public void canGenerate()
-    throws SchemaCrawlerException
-  {
+  public void canGenerate() throws SchemaCrawlerException {
     assertTrue(new GraphNoOpExecutor(DiagramOutputFormat.scdot).canGenerate());
   }
 
+  @Test
+  public void constructor() {
+    assertThrows(NullPointerException.class, () -> new GraphNoOpExecutor(null));
+    assertThrows(
+        SchemaCrawlerException.class, () -> new GraphNoOpExecutor(DiagramOutputFormat.bmp));
+  }
 }
