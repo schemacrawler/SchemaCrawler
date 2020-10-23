@@ -104,43 +104,53 @@ public class DatabaseConnectionUrlBuilder {
     return urlx;
   }
 
-  public DatabaseConnectionUrlBuilder withDatabase(String database) {
+  public DatabaseConnectionUrlBuilder withDatabase(final String database) {
     this.providedDatabase = database;
     return this;
   }
 
-  public DatabaseConnectionUrlBuilder withDefaultDatabase(String defaultDatabase) {
+  public DatabaseConnectionUrlBuilder withDefaultDatabase(final String defaultDatabase) {
     this.defaultDatabase = defaultDatabase;
     return this;
   }
 
-  public DatabaseConnectionUrlBuilder withDefaultHost(String defaultHost) {
+  public DatabaseConnectionUrlBuilder withDefaultHost(final String defaultHost) {
     this.defaultHost = defaultHost;
     return this;
   }
 
-  public DatabaseConnectionUrlBuilder withDefaultPort(int defaultPort) {
+  public DatabaseConnectionUrlBuilder withDefaultPort(final int defaultPort) {
     this.defaultPort = defaultPort;
     return this;
   }
 
-  public DatabaseConnectionUrlBuilder withDefaultUrlx(Map<String, String> defaultUrlx) {
+  public DatabaseConnectionUrlBuilder withDefaultUrlx(final Map<String, String> defaultUrlx) {
     this.defaultUrlx = defaultUrlx;
     return this;
   }
 
-  public DatabaseConnectionUrlBuilder withHost(String host) {
+  public DatabaseConnectionUrlBuilder withHost(final String host) {
     this.providedHost = host;
     return this;
   }
 
-  public DatabaseConnectionUrlBuilder withPort(Integer port) {
+  public DatabaseConnectionUrlBuilder withPort(final Integer port) {
     this.providedPort = port;
     return this;
   }
 
-  public DatabaseConnectionUrlBuilder withUrlx(Map<String, String> urlx) {
+  public DatabaseConnectionUrlBuilder withUrlx(final Map<String, String> urlx) {
     this.providedUrlx = urlx;
+    return this;
+  }
+
+  public DatabaseConnectionUrlBuilder withDefaultUrlx(final String property, final String value) {
+    if (!isBlank(property)) {
+      if (defaultUrlx == null) {
+        defaultUrlx = new HashMap<>();
+      }
+      defaultUrlx.put(property, value);
+    }
     return this;
   }
 }
