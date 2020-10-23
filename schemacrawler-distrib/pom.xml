@@ -337,6 +337,12 @@
                   <version>3.32.3.2</version>
                   <type>jar</type>
                 </artifactItem>
+                <artifactItem>
+				  <groupId>com.sap.cloud.db.jdbc</groupId>
+				  <artifactId>ngdbc</artifactId>
+				  <version>2.6.29</version>
+				  <type>jar</type>
+				</artifactItem>
 
                 <!-- Command-line processing -->
 

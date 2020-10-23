@@ -1,7 +1,13 @@
 # SchemaCrawler Change History
 
 <a name="a16.11.2"></a>
-## Release 16.11.2 - 2020-10-18
+## Release 16.11.2 - 2020-10-22
+
+- Release SAP HANA database plugin in https://github.com/schemacrawler/SchemaCrawler-Database-Plugins
+
+
+<a name="a16.11.1"></a>
+## Release 16.11.1 - 2020-10-18
 
 - Make schema text commands a plugin into SchemaCrawler
 - `show` and `sort` commands are folded into schema text command options
