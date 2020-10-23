@@ -3,7 +3,7 @@
 <a name="a16.11.2"></a>
 ## Release 16.11.2 - 2020-10-22
 
-- Release SAP HANA database plugin in https://github.com/schemacrawler/SchemaCrawler-Database-Plugins
+- Release SAP HANA database plugin in <https://github.com/schemacrawler/SchemaCrawler-Database-Plugins>
 
 
 <a name="a16.11.1"></a>
