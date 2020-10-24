@@ -1,5 +1,11 @@
 # SchemaCrawler Change History
 
+<a name="a16.11.3"></a>
+## Release 16.11.3 - 2020-10-23
+
+- Add additional views to SAP HANA database plugin
+
+
 <a name="a16.11.2"></a>
 ## Release 16.11.2 - 2020-10-22
 

@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.integration.test;
 
-
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Comparator.naturalOrder;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -62,28 +61,21 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.ResourcePatternUtils;
 
-public class DatabaseScriptsTest
-{
+public class DatabaseScriptsTest {
 
-  private final static Pattern fileNamePattern =
-    Pattern.compile(".*\\/(.*\\..*)");
+  private static final Pattern fileNamePattern = Pattern.compile(".*\\/(.*\\..*)");
 
+  private class DatabaseScriptSection {
 
-  private class DatabaseScriptSection
-  {
-
-    private final Pattern scriptNamePattern =
-      Pattern.compile("(\\d\\d)_(.*)_(\\d\\d)_[A-Z].sql");
+    private final Pattern scriptNamePattern = Pattern.compile("(\\d\\d)_(.*)_(\\d\\d)_[A-Z].sql");
 
     private final String name;
     private final int section;
     private final int subSection;
 
-    DatabaseScriptSection(final String script)
-    {
+    DatabaseScriptSection(final String script) {
       final Matcher matcher = scriptNamePattern.matcher(script);
-      if (!matcher.matches())
-      {
+      if (!matcher.matches()) {
         throw new IllegalArgumentException(script);
       }
       section = Integer.valueOf(matcher.group(1));
@@ -91,186 +83,136 @@ public class DatabaseScriptsTest
       subSection = Integer.valueOf(matcher.group(3));
     }
 
-    public String getName()
-    {
+    public String getName() {
       return name;
     }
 
-    public int getSection()
-    {
+    public int getSection() {
       return section;
     }
 
-    public int getSubSection()
-    {
+    public int getSubSection() {
       return subSection;
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
       return Objects.hash(name, section, subSection);
     }
 
     @Override
-    public boolean equals(final Object o)
-    {
-      if (this == o)
-      { return true; }
-      if (o == null || getClass() != o.getClass())
-      { return false; }
+    public boolean equals(final Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (o == null || getClass() != o.getClass()) {
+        return false;
+      }
       final DatabaseScriptSection that = (DatabaseScriptSection) o;
-      return section == that.section
-             && subSection == that.subSection
-             && name.equals(that.name);
+      return section == that.section && subSection == that.subSection && name.equals(that.name);
     }
 
-    public String toString()
-    {
+    @Override
+    public String toString() {
       return String.format("%02d_%s_%02d", section, name, subSection);
     }
 
-    public boolean matches(final String line)
-    {
-      if (line != null)
-      {
+    public boolean matches(final String line) {
+      if (line != null) {
         return line.contains(toString());
-      }
-      else
-      {
+      } else {
         return false;
       }
     }
-
   }
-
 
   private Collection<DatabaseScriptSection> booksDatabaseScriptSections;
 
-  @Autowired
-  private ResourceLoader resourceLoader;
+  @Autowired private ResourceLoader resourceLoader;
 
   @BeforeEach
-  public void setup()
-    throws IOException
-  {
-    booksDatabaseScriptSections =
-      makeScriptSections("classpath*:/**/db/books/*.sql");
+  public void setup() throws IOException {
+    booksDatabaseScriptSections = makeScriptSections("classpath*:/**/db/books/*.sql");
     assertThat(booksDatabaseScriptSections.size(), is(28));
   }
 
   @Test
-  public void booksDatabaseScripts()
-    throws Exception
-  {
+  public void booksDatabaseScripts() throws Exception {
     final List<String> scripts = loadResources("classpath*:/**/*.scripts.txt");
-    assertThat(scripts, hasSize(14));
+    assertThat(scripts, hasSize(15));
     final List<String> failedScripts = new ArrayList<>();
-    for (final String scriptName : scripts)
-    {
-      final Map<DatabaseScriptSection, Integer> scriptSectionsCounts =
-        makeScriptSectionsCounts();
+    for (final String scriptName : scripts) {
+      final Map<DatabaseScriptSection, Integer> scriptSectionsCounts = makeScriptSectionsCounts();
       final String scriptsResource = "/" + scriptName;
-      try (
-        final BufferedReader reader = new BufferedReader(new InputStreamReader(
-          DatabaseScriptsTest.class.getResourceAsStream(scriptsResource),
-          UTF_8))
-      )
-      {
-        final List<String> lines = reader
-          .lines()
-          .filter(line -> !isBlank(line))
-          .collect(Collectors.toList());
+      try (final BufferedReader reader =
+          new BufferedReader(
+              new InputStreamReader(
+                  DatabaseScriptsTest.class.getResourceAsStream(scriptsResource), UTF_8))) {
+        final List<String> lines =
+            reader.lines().filter(line -> !isBlank(line)).collect(Collectors.toList());
         assertThat(lines, is(not(empty())));
         int i = 0;
-        for (final String line : lines)
-        {
-          for (final DatabaseScriptSection databaseScriptSection : scriptSectionsCounts.keySet())
-          {
-            if (databaseScriptSection.matches(line))
-            {
-              scriptSectionsCounts.merge(databaseScriptSection,
-                                         1,
-                                         Integer::sum);
+        for (final String line : lines) {
+          for (final DatabaseScriptSection databaseScriptSection : scriptSectionsCounts.keySet()) {
+            if (databaseScriptSection.matches(line)) {
+              scriptSectionsCounts.merge(databaseScriptSection, 1, Integer::sum);
             }
           }
         }
-      }
-      catch (final IOException e)
-      {
+      } catch (final IOException e) {
         throw new RuntimeException(e.getMessage(), e);
       }
 
-      for (Map.Entry<DatabaseScriptSection, Integer> databaseScriptSectionIntegerEntry : scriptSectionsCounts.entrySet())
-      {
+      for (Map.Entry<DatabaseScriptSection, Integer> databaseScriptSectionIntegerEntry :
+          scriptSectionsCounts.entrySet()) {
         final int count = databaseScriptSectionIntegerEntry.getValue();
-        if (count != 1)
-        {
+        if (count != 1) {
           final String error;
-          if (count < 1)
-          {
+          if (count < 1) {
             error = "missing";
-          }
-          else
-          {
+          } else {
             error = "duplicate";
           }
-          final String message = String.format("%s: %s %s",
-                                               scriptName,
-                                               error,
-                                               databaseScriptSectionIntegerEntry
-                                                 .getKey()
-                                                 .toString());
+          final String message =
+              String.format(
+                  "%s: %s %s",
+                  scriptName, error, databaseScriptSectionIntegerEntry.getKey().toString());
           failedScripts.add(message);
         }
       }
     }
 
-    if (!failedScripts.isEmpty())
-    {
+    if (!failedScripts.isEmpty()) {
       Collections.sort(failedScripts);
       fail("\n" + String.join("\n", failedScripts));
     }
   }
 
-  private Map<DatabaseScriptSection, Integer> makeScriptSectionsCounts()
-  {
-    final Map<DatabaseScriptSection, Integer> scriptSectionsCounts =
-      new HashMap<>();
-    for (DatabaseScriptSection databaseScriptSection : booksDatabaseScriptSections)
-    {
+  private Map<DatabaseScriptSection, Integer> makeScriptSectionsCounts() {
+    final Map<DatabaseScriptSection, Integer> scriptSectionsCounts = new HashMap<>();
+    for (DatabaseScriptSection databaseScriptSection : booksDatabaseScriptSections) {
       scriptSectionsCounts.put(databaseScriptSection, 0);
     }
     return scriptSectionsCounts;
   }
 
-  private String getScriptName(final String path)
-  {
+  private String getScriptName(final String path) {
     final String scriptName;
     final Matcher matcher = fileNamePattern.matcher(path);
-    if (matcher.matches())
-    {
+    if (matcher.matches()) {
       scriptName = matcher.group(1);
-    }
-    else
-    {
+    } else {
       scriptName = null;
     }
     return scriptName;
   }
 
-  private List<String> loadResources(final String pattern)
-    throws IOException
-  {
-    final Resource[] resources = ResourcePatternUtils
-      .getResourcePatternResolver(resourceLoader)
-      .getResources(pattern);
+  private List<String> loadResources(final String pattern) throws IOException {
+    final Resource[] resources =
+        ResourcePatternUtils.getResourcePatternResolver(resourceLoader).getResources(pattern);
     final List<String> scripts = new ArrayList<>();
-    for (final Resource classpathResource : resources)
-    {
-      final String scriptName = getScriptName(classpathResource
-                                                .getURL()
-                                                .getPath());
+    for (final Resource classpathResource : resources) {
+      final String scriptName = getScriptName(classpathResource.getURL().getPath());
       scripts.add(scriptName);
     }
     scripts.sort(naturalOrder());
@@ -278,14 +220,11 @@ public class DatabaseScriptsTest
   }
 
   private Collection<DatabaseScriptSection> makeScriptSections(final String pattern)
-    throws IOException
-  {
+      throws IOException {
     final Set<DatabaseScriptSection> scripts = new HashSet<>();
-    for (final String scriptName : loadResources(pattern))
-    {
+    for (final String scriptName : loadResources(pattern)) {
       scripts.add(new DatabaseScriptSection(scriptName));
     }
     return scripts;
   }
-
 }
