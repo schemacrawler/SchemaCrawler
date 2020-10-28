@@ -6,6 +6,7 @@
 - Additional ways to provide the database username, for example by an environmental 
   variable
 - Publish [SchemaCrawler Action for GitHub Actions](https://github.com/schemacrawler/SchemaCrawler-Action)
+- Exit with exit code 1 on a command-line error  
 
 
 <a name="a16.11.3"></a>
