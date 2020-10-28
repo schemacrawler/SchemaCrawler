@@ -46,6 +46,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
+
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
@@ -75,6 +77,7 @@ public class MetadataRetrievalStrategyTest {
   }
 
   @Test
+  @ExpectSystemExitWithStatus(1)
   public void overrideMetadataRetrievalStrategy(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     clean(METADATA_RETRIEVAL_STRATEGY_OUTPUT);

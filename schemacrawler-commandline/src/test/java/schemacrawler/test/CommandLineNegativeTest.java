@@ -45,6 +45,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
+
 import schemacrawler.Main;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestContext;
@@ -70,6 +72,7 @@ public class CommandLineNegativeTest {
   }
 
   @Test
+  @ExpectSystemExitWithStatus(1)
   public void commandLine_BadCommand(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> argsMapOverride = new HashMap<>();
