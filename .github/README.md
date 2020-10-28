@@ -33,6 +33,8 @@ SchemaCrawler is available under a number of [licenses](https://www.schemacrawle
 
 Additional SchemaCrawler database plugins are available from the [schemacrawler/SchemaCrawler-Database-Plugins](https://github.com/schemacrawler/SchemaCrawler-Database-Plugins) project.
 
+SchemaCrawler reports can be incorporated into Apache Maven builds with the [SchemaCrawler Report Maven Plugin](https://github.com/schemacrawler/SchemaCrawler-Report-Maven-Plugin) and into the GitHub Actions workflow with the [SchemaCrawler Action](https://github.com/schemacrawler/SchemaCrawler-Action).
+
 
 ## Support
 
