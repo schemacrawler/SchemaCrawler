@@ -1,4 +1,4 @@
-SchemaCrawler 16.10.1
+SchemaCrawler 16.11.3
 Database schema discovery and comprehension tool
 https://www.schemacrawler.com/
 Copyright (c) 2000-2020, Sualeh Fatehi <sualeh@hotmail.com>.
@@ -73,7 +73,12 @@ Options:
       --password:file=<path to password file>
                           Database password, read from a file
       --password:prompt   Database password, prompted from the console
-      --user=<user>       Database user name
+      --user=<user>       Database user
+      --user:env=<environment variable name>
+                          Database user, from an environmental variable value
+      --user:file=<path to user file>
+                          Database user, read from a file
+      --user:prompt       Database user, prompted from the console
 
 For connecting to specific databases, use
       --database=<database>

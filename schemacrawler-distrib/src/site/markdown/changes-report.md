@@ -1,5 +1,12 @@
 # SchemaCrawler Change History
 
+<a name="a16.11.4"></a>
+## Release 16.11.4 - 2020-11-01
+
+- Additional ways to provide the database username, for example by an environmental 
+  variable
+
+
 <a name="a16.11.3"></a>
 ## Release 16.11.3 - 2020-10-23
 

@@ -30,7 +30,6 @@ package schemacrawler.tools.commandline.command;
 
 import picocli.CommandLine.ArgGroup;
 import picocli.CommandLine.Model;
-import picocli.CommandLine.Option;
 import picocli.CommandLine.ParameterException;
 import picocli.CommandLine.Spec;
 import schemacrawler.tools.commandline.state.MultiUseUserCredentials;
@@ -43,16 +42,12 @@ import schemacrawler.tools.databaseconnector.UserCredentials;
  */
 public final class UserCredentialsOptions {
 
+  @ArgGroup private UserOptions userOptions;
   @ArgGroup private PasswordOptions passwordOptions;
   @Spec private Model.CommandSpec spec;
 
-  @Option(
-      names = {"--user"},
-      description = "Database user name")
-  private String user;
-
   public UserCredentials getUserCredentials() {
-    return new MultiUseUserCredentials(user, getPassword());
+    return new MultiUseUserCredentials(getUser(), getPassword());
   }
 
   private String getPassword() {
@@ -64,6 +59,18 @@ public final class UserCredentialsOptions {
       return passwordOptions.getPassword();
     } catch (final Exception e) {
       throw new ParameterException(spec.commandLine(), "No password provided");
+    }
+  }
+
+  private String getUser() {
+    if (userOptions == null) {
+      return null;
+    }
+
+    try {
+      return userOptions.getUser();
+    } catch (final Exception e) {
+      throw new ParameterException(spec.commandLine(), "No user provided");
     }
   }
 }
