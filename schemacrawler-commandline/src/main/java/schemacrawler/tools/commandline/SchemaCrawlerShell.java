@@ -31,7 +31,6 @@ import static java.util.Objects.requireNonNull;
 import static picocli.CommandLine.printHelpIfRequested;
 import static schemacrawler.tools.commandline.utility.CommandLineConfigUtility.loadConfig;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.retrievePluginOptions;
 
 import java.io.PrintWriter;
 import java.util.Map;
@@ -112,11 +111,8 @@ public final class SchemaCrawlerShell {
       return;
     }
 
-    final Map<String, Object> commandConfig = retrievePluginOptions(parseResult);
-
     final Config config = new Config();
     config.putAll(state.getConfig());
-    config.putAll(commandConfig);
     state.setConfig(config);
 
     if (parseResult.hasSubcommand()) {

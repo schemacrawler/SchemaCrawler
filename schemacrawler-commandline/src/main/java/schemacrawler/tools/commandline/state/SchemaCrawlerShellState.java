@@ -30,6 +30,7 @@ package schemacrawler.tools.commandline.state;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 
@@ -109,9 +110,18 @@ public class SchemaCrawlerShellState {
 
   public void setConfig(final Config baseConfiguration) {
     if (baseConfiguration != null) {
-      this.config = baseConfiguration;
+      config = baseConfiguration;
     } else {
-      this.config = new Config();
+      config = new Config();
+    }
+  }
+
+  public void addConfig(final Map<String, Object> additionalConfiguration) {
+    if (config == null) {
+      config = new Config();
+    }
+    if (additionalConfiguration != null) {
+      config.putAll(additionalConfiguration);
     }
   }
 

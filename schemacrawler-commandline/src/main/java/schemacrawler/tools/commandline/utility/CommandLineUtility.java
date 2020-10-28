@@ -38,7 +38,6 @@ import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Model.OptionSpec;
 import picocli.CommandLine.Model.UsageMessageSpec;
 import picocli.CommandLine.ParseResult;
-import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
@@ -48,9 +47,6 @@ import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.executable.commandline.PluginCommandOption;
 
 public class CommandLineUtility {
-
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(CommandLineUtility.class.getName());
 
   public static void addPluginCommand(
       final CommandLine commandLine, final PluginCommand pluginCommand, final boolean addAsMixins) {

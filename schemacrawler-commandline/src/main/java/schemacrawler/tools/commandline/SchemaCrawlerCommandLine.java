@@ -32,7 +32,6 @@ import static schemacrawler.tools.commandline.utility.CommandLineConfigUtility.l
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logFullStackTrace;
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSafeArguments;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.retrievePluginOptions;
 import static us.fatehi.utility.IOUtility.readResourceFully;
 import static us.fatehi.utility.Utility.isBlank;
 
@@ -40,7 +39,6 @@ import java.util.Map;
 import java.util.logging.Level;
 
 import picocli.CommandLine;
-import picocli.CommandLine.ParseResult;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.Version;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
@@ -63,12 +61,10 @@ public final class SchemaCrawlerCommandLine {
 
       final SchemaCrawlerCommandLineCommands commands = new SchemaCrawlerCommandLineCommands();
       final CommandLine commandLine = newCommandLine(commands, stateFactory, true);
-      final ParseResult parseResult = commandLine.parseArgs(args);
-      final Map<String, Object> commandConfig = retrievePluginOptions(parseResult);
+      commandLine.parseArgs(args);
 
       final Config config = new Config();
       config.putAll(appConfig);
-      config.putAll(commandConfig);
       state.setConfig(config);
 
       executeCommandLine(commandLine);

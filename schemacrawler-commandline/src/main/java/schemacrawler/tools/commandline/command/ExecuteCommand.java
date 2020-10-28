@@ -28,14 +28,18 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.command;
 
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.retrievePluginOptions;
+
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.logging.Level;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.ExecutionException;
 import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Model;
+import picocli.CommandLine.ParseResult;
 import picocli.CommandLine.Spec;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.Catalog;
@@ -76,6 +80,7 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
 
   @Override
   public void run() {
+
     if (!state.isLoaded()) {
       throw new ExecutionException(spec.commandLine(), "No database metadata is loaded");
     }
@@ -86,6 +91,11 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
     }
 
     try {
+
+      final ParseResult parseResult = spec.commandLine().getParseResult();
+      final Map<String, Object> commandConfig = retrievePluginOptions(parseResult);
+      state.addConfig(commandConfig);
+
       final OutputOptionsBuilder outputOptionsBuilder =
           OutputOptionsConfig.fromConfig(null, state.getConfig());
 

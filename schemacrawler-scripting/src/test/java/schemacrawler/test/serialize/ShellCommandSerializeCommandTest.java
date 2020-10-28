@@ -36,7 +36,6 @@ import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.fileHeaderOf;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.retrievePluginOptions;
 
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
@@ -45,7 +44,6 @@ import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
-import java.util.Map;
 
 import org.hamcrest.Matcher;
 import org.junit.jupiter.api.AfterEach;
@@ -60,7 +58,6 @@ import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.commandline.command.ExecuteCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.integration.serialize.SerializationFormat;
-import schemacrawler.tools.options.Config;
 import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -99,10 +96,7 @@ public class ShellCommandSerializeCommandTest {
 
     final ExecuteCommand serializeCommand = new ExecuteCommand(state);
     final CommandLine commandLine = newCommandLine(serializeCommand, null, false);
-
-    final CommandLine.ParseResult parseResult = commandLine.parseArgs(args);
-    final Map<String, Object> commandConfig = retrievePluginOptions(parseResult);
-    state.setConfig(new Config(commandConfig));
+    commandLine.parseArgs(args);
 
     serializeCommand.run();
 
