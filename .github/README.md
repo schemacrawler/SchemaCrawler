@@ -29,7 +29,7 @@ SchemaCrawler is available under a number of [licenses](https://www.schemacrawle
 
 ## Distributions and Downloads
 
-[Download releases with tutorials from GitHub.](https://github.com/sualeh/SchemaCrawler/releases) All SchemaCrawler jars are in the [Central Repository](https://search.maven.org/search?q=g:us.fatehi%20a:schemacrawler*). They can be used as dependencies in [Gradle](https://gradle.org/) or [Apache Maven](https://maven.apache.org/) projects, or with any other build system that supports the Central Repository. [Pre-packaged Docker images](https://hub.docker.com/r/schemacrawler/schemacrawler/) are on Docker Hub. 
+Explore the SchemaCrawler command-line with a live tutorial on [Katacoda](https://www.katacoda.com/schemacrawler). [Download SchemaCrawler releases with tutorials from GitHub.](https://github.com/sualeh/SchemaCrawler/releases) All SchemaCrawler jars are in the [Central Repository](https://search.maven.org/search?q=g:us.fatehi%20a:schemacrawler*). They can be used as dependencies in [Gradle](https://gradle.org/) or [Apache Maven](https://maven.apache.org/) projects, or with any other build system that supports the Central Repository. [Pre-packaged Docker images](https://hub.docker.com/r/schemacrawler/schemacrawler/) are on Docker Hub. 
 
 Additional SchemaCrawler database plugins are available from the [schemacrawler/SchemaCrawler-Database-Plugins](https://github.com/schemacrawler/SchemaCrawler-Database-Plugins) project.
 
