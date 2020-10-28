@@ -5,6 +5,7 @@
 
 - Additional ways to provide the database username, for example by an environmental 
   variable
+- Publish [SchemaCrawler Action for GitHub Actions](https://github.com/schemacrawler/SchemaCrawler-Action)
 
 
 <a name="a16.11.3"></a>
