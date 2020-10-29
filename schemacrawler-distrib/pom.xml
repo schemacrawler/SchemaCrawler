@@ -304,7 +304,7 @@
                 <artifactItem>
                   <groupId>com.oracle.database.jdbc.debug</groupId>
                   <artifactId>ojdbc8_g</artifactId>
-                  <version>19.7.0.0</version>
+                  <version>19.8.0.0</version>
                   <type>jar</type>
                 </artifactItem>
                 <artifactItem>
@@ -338,11 +338,11 @@
                   <type>jar</type>
                 </artifactItem>
                 <artifactItem>
-				  <groupId>com.sap.cloud.db.jdbc</groupId>
-				  <artifactId>ngdbc</artifactId>
-				  <version>2.6.29</version>
-				  <type>jar</type>
-				</artifactItem>
+                  <groupId>com.sap.cloud.db.jdbc</groupId>
+                  <artifactId>ngdbc</artifactId>
+                  <version>2.6.29</version>
+                  <type>jar</type>
+                </artifactItem>
 
                 <!-- Command-line processing -->
 
@@ -370,7 +370,7 @@
                 <artifactItem>
                   <groupId>com.typesafe</groupId>
                   <artifactId>config</artifactId>
-                  <version>1.4.0</version>
+                  <version>1.4.1</version>
                 </artifactItem>
 
               </artifactItems>
