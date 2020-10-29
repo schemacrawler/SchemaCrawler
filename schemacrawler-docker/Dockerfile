@@ -26,7 +26,7 @@
 
 FROM openjdk:8-jdk-alpine
 
-ARG SCHEMACRAWLER_VERSION=16.11.3
+ARG SCHEMACRAWLER_VERSION=16.11.4
 
 LABEL \
   "us.fatehi.schemacrawler.product-version"="SchemaCrawler ${SCHEMACRAWLER_VERSION}" \

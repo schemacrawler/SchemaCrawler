@@ -3,7 +3,7 @@ set -e
 
 # ## DOCKER
 
-SCHEMACRAWLER_VERSION=16.11.3
+SCHEMACRAWLER_VERSION=16.11.4
 
 echo "** Creating SchemaCrawler v$SCHEMACRAWLER_VERSION Docker container"
 

@@ -1,12 +1,12 @@
 # SchemaCrawler Change History
 
 <a name="a16.11.4"></a>
-## Release 16.11.4 - 2020-11-01
+## Release 16.11.4 - 2020-10-29
 
-- Additional ways to provide the database username, for example by an environmental 
-  variable
+- Additional ways to provide the database username, for example by an environmental variable
 - Publish [SchemaCrawler Action for GitHub Actions](https://github.com/schemacrawler/SchemaCrawler-Action)
 - Exit with exit code 1 on a command-line error  
+- Fix issue with running plugins in interactive mode
 
 
 <a name="a16.11.3"></a>
