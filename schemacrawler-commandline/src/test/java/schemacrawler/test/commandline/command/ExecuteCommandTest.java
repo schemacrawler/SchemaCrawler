@@ -48,6 +48,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import picocli.CommandLine;
+import picocli.CommandLine.ExecutionException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
@@ -61,14 +62,35 @@ import us.fatehi.utility.IOUtility;
 public class ExecuteCommandTest {
 
   @Test
-  public void executeCommand(final Connection connection, final TestContext testContext)
+  public void executeBadCommand(final Connection connection) throws SchemaCrawlerException {
+
+    final SchemaCrawlerShellState state = createLoadedSchemaCrawlerShellState(connection);
+    final String[] args = new String[] {"-c", "test", "--unknown-parameter", "some-value"};
+
+    final ExecuteCommand executeTestCommand = new ExecuteCommand(state);
+    final CommandLine commandLine = newCommandLine(executeTestCommand, null, false);
+
+    final CommandLine.ParseResult parseResult = commandLine.parseArgs(args);
+    final Map<String, Object> commandConfig = retrievePluginOptions(parseResult);
+
+    assertThat(commandConfig.size(), is(0));
+    assertThat(commandConfig, not(hasKey(is("unknown-parameter"))));
+
+    final ExecutionException thrown =
+        assertThrows(CommandLine.ExecutionException.class, () -> executeTestCommand.run());
+    assertThat(thrown.getMessage(), is("Cannot execute SchemaCrawler command"));
+  }
+
+  @Test
+  public void executeSchemaCommand(final Connection connection, final TestContext testContext)
       throws SchemaCrawlerException, IOException {
 
     final SchemaCrawlerShellState state = createLoadedSchemaCrawlerShellState(connection);
 
     final Path testOutputFile = IOUtility.createTempFilePath("test", ".txt");
 
-    final String[] args = new String[] {"-c", "schema", "-o", testOutputFile.toString()};
+    final String[] args =
+        new String[] {"-c", "schema", "--no-info", "-o", testOutputFile.toString()};
 
     final ExecuteCommand serializeCommand = new ExecuteCommand(state);
     final CommandLine commandLine = newCommandLine(serializeCommand, null, false);
@@ -81,21 +103,32 @@ public class ExecuteCommandTest {
   }
 
   @Test
-  public void testPluginOptions() throws SchemaCrawlerException {
+  public void executeTestCommand(final Connection connection, final TestContext testContext)
+      throws Exception {
 
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final SchemaCrawlerShellState state = createLoadedSchemaCrawlerShellState(connection);
 
-    final String[] args = new String[] {"-c", "test", "--unknown-parameter", "some-value"};
+    final Path testOutputFile = IOUtility.createTempFilePath("test", ".txt");
+
+    final String[] args =
+        new String[] {
+          "-c",
+          "test-command",
+          "-o",
+          testOutputFile.toString(),
+          "--test-command-parameter",
+          "known-value",
+          "--unknown-parameter",
+          "some-value"
+        };
 
     final ExecuteCommand executeTestCommand = new ExecuteCommand(state);
     final CommandLine commandLine = newCommandLine(executeTestCommand, null, false);
 
-    final CommandLine.ParseResult parseResult = commandLine.parseArgs(args);
-    final Map<String, Object> commandConfig = retrievePluginOptions(parseResult);
+    commandLine.execute(args);
 
-    assertThat(commandConfig.size(), is(0));
-    assertThat(commandConfig, not(hasKey(is("unknown-parameter"))));
-
-    assertThrows(CommandLine.ExecutionException.class, () -> executeTestCommand.run());
+    assertThat(
+        outputOf(testOutputFile),
+        hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
   }
 }

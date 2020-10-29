@@ -25,41 +25,44 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.test.utility;
+package schemacrawler.test.utility.testcommand;
 
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
 
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandDescription;
-import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 
 public class TestCommandProvider extends BaseCommandProvider {
 
-  public static final String COMMAND = "test-command";
   public static final String DESCRIPTION_HEADER =
       "Test command which is not deployed with the release";
 
   public TestCommandProvider() {
-    super(new CommandDescription(COMMAND, DESCRIPTION_HEADER));
+    super(new CommandDescription(TestCommand.COMMAND, DESCRIPTION_HEADER));
   }
 
   @Override
   public PluginCommand getCommandLineCommand() {
-    final PluginCommand pluginCommand = newPluginCommand(COMMAND, "** " + DESCRIPTION_HEADER);
+    final PluginCommand pluginCommand =
+        newPluginCommand(TestCommand.COMMAND, "** " + DESCRIPTION_HEADER);
     pluginCommand.addOption("test-command-parameter", String.class, "Parameter for test command");
     return pluginCommand;
   }
 
   @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command, Config config) {
-    throw new UnsupportedOperationException(DESCRIPTION_HEADER);
+  public TestCommand newSchemaCrawlerCommand(final String command, final Config config) {
+    final String testCommandParameter = config.getStringValue("test-command-parameter", "");
+    final TestOptions commandOptions = new TestOptions(testCommandParameter);
+    final TestCommand testCommand = new TestCommand();
+    testCommand.setCommandOptions(commandOptions);
+    return testCommand;
   }
 
   @Override
   public boolean supportsOutputFormat(final String command, final OutputOptions outputOptions) {
-    return false;
+    return true;
   }
 }
