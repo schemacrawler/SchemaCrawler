@@ -47,7 +47,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.options.OutputFormat;
 import us.fatehi.utility.PropertiesUtility;
 
@@ -134,13 +134,13 @@ public final class CommandlineTestUtility {
     return commandlineExecution(connectionInfo, command, argsMap, (Path) null, outputFormatValue);
   }
 
-  public static SchemaCrawlerShellState createLoadedSchemaCrawlerShellState(
+  public static ShellState createLoadedSchemaCrawlerShellState(
       final Connection connection) throws SchemaCrawlerException {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
 
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     state.setSchemaRetrievalOptions(SchemaRetrievalOptionsBuilder.builder().toOptions());
     state.setDataSource(() -> connection); // is-connected

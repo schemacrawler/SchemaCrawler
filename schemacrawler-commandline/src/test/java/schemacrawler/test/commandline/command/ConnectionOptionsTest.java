@@ -38,7 +38,7 @@ import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.commandline.command.ConnectCommand;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
 import schemacrawler.tools.databaseconnector.DatabaseServerHostConnectionOptions;
 import schemacrawler.tools.databaseconnector.DatabaseUrlConnectionOptions;
@@ -63,7 +63,7 @@ public class ConnectionOptionsTest {
       "--extra"
     };
 
-    final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
+    final ConnectCommand optionsParser = new ConnectCommand(new ShellState());
 
     assertThrows(
         CommandLine.MutuallyExclusiveArgsException.class,
@@ -80,7 +80,7 @@ public class ConnectionOptionsTest {
     final Config config = new Config();
     config.put("url", "jdbc:test-db://some-url");
 
-    final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
+    final ConnectCommand optionsParser = new ConnectCommand(new ShellState());
 
     assertThrows(
         CommandLine.ParameterException.class,
@@ -94,7 +94,7 @@ public class ConnectionOptionsTest {
   public void blankConnectCommand() {
     final String[] args = {"--url", " "};
 
-    final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
+    final ConnectCommand optionsParser = new ConnectCommand(new ShellState());
     new CommandLine(optionsParser).parseArgs(args);
 
     final DatabaseConnectionOptions databaseConnectorOptions =
@@ -125,7 +125,7 @@ public class ConnectionOptionsTest {
     final Config config = new Config();
     config.put("url", "jdbc:test-db://${host}:${port}/${database}");
 
-    final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
+    final ConnectCommand optionsParser = new ConnectCommand(new ShellState());
     newCommandLine(optionsParser, null).parseArgs(args);
 
     final DatabaseConnectionOptions databaseConnectorOptions =
@@ -150,7 +150,7 @@ public class ConnectionOptionsTest {
     final Config config = new Config();
     config.put("url", "jdbc:test-db://some-url");
 
-    final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
+    final ConnectCommand optionsParser = new ConnectCommand(new ShellState());
 
     assertThrows(
         CommandLine.MissingParameterException.class,
@@ -164,7 +164,7 @@ public class ConnectionOptionsTest {
   public void noArgs() {
     final String[] args = new String[0];
 
-    final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
+    final ConnectCommand optionsParser = new ConnectCommand(new ShellState());
     new CommandLine(optionsParser).parseArgs(args);
     assertThrows(
         CommandLine.ParameterException.class, () -> optionsParser.getDatabaseConnectionOptions());
@@ -174,7 +174,7 @@ public class ConnectionOptionsTest {
   public void noUrlValueConnectCommand() {
     final String[] args = {"--url"};
 
-    final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
+    final ConnectCommand optionsParser = new ConnectCommand(new ShellState());
     assertThrows(
         CommandLine.ParameterException.class, () -> new CommandLine(optionsParser).parseArgs(args));
   }
@@ -183,7 +183,7 @@ public class ConnectionOptionsTest {
   public void noValidArgs() {
     final String[] args = {"--some-option"};
 
-    final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
+    final ConnectCommand optionsParser = new ConnectCommand(new ShellState());
     final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.parseArgs(args);
     assertThrows(
@@ -194,7 +194,7 @@ public class ConnectionOptionsTest {
   public void url() {
     final String[] args = {"--url", "jdbc:database_url", "additional", "--extra"};
 
-    final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
+    final ConnectCommand optionsParser = new ConnectCommand(new ShellState());
     newCommandLine(optionsParser, null).parseArgs(args);
 
     final DatabaseConnectionOptions databaseConnectorOptions =
@@ -217,7 +217,7 @@ public class ConnectionOptionsTest {
     final Config config = new Config();
     config.put("url", "jdbc:test-db://some-url");
 
-    final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
+    final ConnectCommand optionsParser = new ConnectCommand(new ShellState());
     newCommandLine(optionsParser, null).parseArgs(args);
 
     final DatabaseConnectionOptions databaseConnectorOptions =
@@ -236,7 +236,7 @@ public class ConnectionOptionsTest {
       "--url", "jdbc:database_url", "--urlx", "key1=value1;key2=value2", "additional", "--extra"
     };
 
-    final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
+    final ConnectCommand optionsParser = new ConnectCommand(new ShellState());
 
     assertThrows(
         CommandLine.MissingParameterException.class,

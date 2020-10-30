@@ -37,13 +37,13 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 
 public class SchemaCrawlerStateTest {
 
   @Test
   public void baseConfigNull() throws Exception {
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
 
     assertThat(state.getConfig(), is(nullValue()));
     // Assert internal field
@@ -59,7 +59,7 @@ public class SchemaCrawlerStateTest {
     assertThat(baseConfigurationAfter, is(anEmptyMap()));
   }
 
-  private Map<String, String> getBaseConfiguration(final SchemaCrawlerShellState state)
+  private Map<String, String> getBaseConfiguration(final ShellState state)
       throws NoSuchFieldException, IllegalAccessException {
     final Field f = state.getClass().getDeclaredField("config");
     f.setAccessible(true);

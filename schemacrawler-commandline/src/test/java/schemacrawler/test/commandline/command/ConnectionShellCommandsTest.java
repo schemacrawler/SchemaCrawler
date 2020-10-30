@@ -53,7 +53,7 @@ import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.commandline.shell.DisconnectCommand;
 import schemacrawler.tools.commandline.shell.SweepCommand;
 import schemacrawler.tools.commandline.shell.SystemCommand;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.options.Config;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -70,7 +70,7 @@ public class ConnectionShellCommandsTest {
 
   @Test
   public void disconnect(final Connection connection) {
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
     state.setDataSource(() -> connection); // is-connected
 
     final String[] args = new String[0];
@@ -86,7 +86,7 @@ public class ConnectionShellCommandsTest {
 
   @Test
   public void disconnectWhenNotConnected() {
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
 
     final String[] args = new String[0];
 
@@ -101,7 +101,7 @@ public class ConnectionShellCommandsTest {
 
   @Test
   public void isConnected(final Connection connection) {
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
     state.setDataSource(() -> connection); // is-connected
 
     final String[] args = new String[] {"--is-connected"};
@@ -116,7 +116,7 @@ public class ConnectionShellCommandsTest {
 
   @Test
   public void isNotConnected(final DatabaseConnectionInfo connectionInfo) {
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
 
     final String[] args = new String[] {"--is-connected"};
 
@@ -139,7 +139,7 @@ public class ConnectionShellCommandsTest {
 
   @Test
   public void sweep() {
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
     state.setConfig(new Config());
 
     final String[] args = new String[0];
@@ -155,7 +155,7 @@ public class ConnectionShellCommandsTest {
 
   @Test
   public void sweepWithNoState() {
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
 
     final String[] args = new String[0];
 

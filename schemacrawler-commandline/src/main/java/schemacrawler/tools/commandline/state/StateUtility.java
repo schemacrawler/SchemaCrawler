@@ -41,7 +41,7 @@ public final class StateUtility {
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(StateUtility.class.getName());
 
-  public static void logState(final SchemaCrawlerShellState state, final boolean showlog) {
+  public static void logState(final ShellState state, final boolean showlog) {
     if (state == null) {
       return;
     }

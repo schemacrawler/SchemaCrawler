@@ -43,11 +43,12 @@ import schemacrawler.schemacrawler.LoadOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.string.StringFormat;
 
-public class SchemaCrawlerShellState {
+public class ShellState implements AutoCloseable {
 
   private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(SchemaCrawlerShellState.class.getName());
+      SchemaCrawlerLogger.getLogger(ShellState.class.getName());
 
   private Config config;
   private Catalog catalog;
@@ -57,7 +58,12 @@ public class SchemaCrawlerShellState {
   private SchemaRetrievalOptions schemaRetrievalOptions;
 
   public void disconnect() {
-    dataSource = null;
+    try (final Connection connection = dataSource.get(); ) {
+      LOGGER.log(Level.INFO, new StringFormat("Closing connection <%s>", connection));
+      dataSource = null;
+    } catch (final SQLException e) {
+      LOGGER.log(Level.WARNING, "Cannot close connection");
+    }
   }
 
   public Catalog getCatalog() {
@@ -170,5 +176,10 @@ public class SchemaCrawlerShellState {
   /** Update SchemaCrawler options by reassignment. */
   public void withLoadOptions(final LoadOptions loadOptions) {
     schemaCrawlerOptions = schemaCrawlerOptions.withLoadOptions(loadOptions);
+  }
+
+  @Override
+  public void close() throws Exception {
+    sweep();
   }
 }

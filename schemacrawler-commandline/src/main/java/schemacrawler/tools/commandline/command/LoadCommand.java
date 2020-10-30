@@ -47,7 +47,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 import us.fatehi.utility.string.StringFormat;
 
 @Command(
@@ -85,7 +85,7 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
 
   @Spec private Model.CommandSpec spec;
 
-  public LoadCommand(final SchemaCrawlerShellState state) {
+  public LoadCommand(final ShellState state) {
     super(state);
   }
 

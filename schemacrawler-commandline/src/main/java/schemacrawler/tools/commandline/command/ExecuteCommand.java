@@ -49,7 +49,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.commandline.shell.AvailableCommandsCommand;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 import schemacrawler.tools.commandline.utility.OutputOptionsConfig;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -77,7 +77,7 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
   @Mixin private CommandOutputOptions commandOutputOptions;
   @Spec private Model.CommandSpec spec;
 
-  public ExecuteCommand(final SchemaCrawlerShellState state) {
+  public ExecuteCommand(final ShellState state) {
     super(state);
   }
 
@@ -155,17 +155,6 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
       executable.execute();
     } catch (final Exception e) {
       throw new ExecutionException(spec.commandLine(), "Cannot execute SchemaCrawler command", e);
-    } finally {
-      /*
-      if (connection != null) {
-        try {
-          connection.close();
-        } catch (final SQLException e) {
-          LOGGER.log(
-              Level.WARNING, "Could not close connection after executing SchemaCrawler command", e);
-        }
-      }
-      */
     }
   }
 }

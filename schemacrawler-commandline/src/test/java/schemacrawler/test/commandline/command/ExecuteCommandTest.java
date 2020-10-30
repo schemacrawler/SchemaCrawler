@@ -54,7 +54,7 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.commandline.command.ExecuteCommand;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -64,7 +64,7 @@ public class ExecuteCommandTest {
   @Test
   public void executeBadCommand(final Connection connection) throws SchemaCrawlerException {
 
-    final SchemaCrawlerShellState state = createLoadedSchemaCrawlerShellState(connection);
+    final ShellState state = createLoadedSchemaCrawlerShellState(connection);
     final ExecuteCommand executeTestCommand = new ExecuteCommand(state);
     final CommandLine commandLine = newCommandLine(executeTestCommand, null);
 
@@ -84,7 +84,7 @@ public class ExecuteCommandTest {
   public void executeSchemaCommand(final Connection connection, final TestContext testContext)
       throws SchemaCrawlerException, IOException {
 
-    final SchemaCrawlerShellState state = createLoadedSchemaCrawlerShellState(connection);
+    final ShellState state = createLoadedSchemaCrawlerShellState(connection);
     final ExecuteCommand serializeCommand = new ExecuteCommand(state);
     final CommandLine commandLine = newCommandLine(serializeCommand, null);
 
@@ -99,7 +99,7 @@ public class ExecuteCommandTest {
   public void executeTestCommand(final Connection connection, final TestContext testContext)
       throws Exception {
 
-    final SchemaCrawlerShellState state = createLoadedSchemaCrawlerShellState(connection);
+    final ShellState state = createLoadedSchemaCrawlerShellState(connection);
     final ExecuteCommand executeTestCommand = new ExecuteCommand(state);
     final CommandLine commandLine = newCommandLine(executeTestCommand, null);
 

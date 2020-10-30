@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.tools.commandline.command.LoadCommand;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 
 public class LoadCommandTest {
 
@@ -18,7 +18,7 @@ public class LoadCommandTest {
   public void infoLevelBadValue() {
     final String[] args = {"--info-level", "someinfolvl"};
 
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
     final LoadCommand optionsParser = new LoadCommand(state);
 
     assertThrows(
@@ -33,7 +33,7 @@ public class LoadCommandTest {
   public void infoLevelNoValue() {
     final String[] args = {"--info-level"};
 
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
     final LoadCommand optionsParser = new LoadCommand(state);
 
     assertThrows(
@@ -48,7 +48,7 @@ public class LoadCommandTest {
   public void infoLevelWithValue() {
     final String[] args = {"--info-level", "detailed", "additional", "-extra"};
 
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
     final LoadCommand optionsParser = new LoadCommand(state);
     final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.parseArgs(args);
@@ -63,7 +63,7 @@ public class LoadCommandTest {
   public void loadRowCountsWithoutValue() {
     final String[] args = {"--info-level", "detailed", "--load-row-counts", "additional", "-extra"};
 
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
     final LoadCommand optionsParser = new LoadCommand(state);
     final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.parseArgs(args);
@@ -80,7 +80,7 @@ public class LoadCommandTest {
       "--info-level", "detailed", "--load-row-counts", "true", "additional", "-extra"
     };
 
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
     final LoadCommand optionsParser = new LoadCommand(state);
     final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.parseArgs(args);
@@ -95,7 +95,7 @@ public class LoadCommandTest {
   public void noArgs() {
     final String[] args = new String[0];
 
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
     final LoadCommand optionsParser = new LoadCommand(state);
 
     assertThrows(
@@ -110,7 +110,7 @@ public class LoadCommandTest {
   public void noValidArgs() {
     final String[] args = {"--some-option"};
 
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
     final LoadCommand optionsParser = new LoadCommand(state);
 
     assertThrows(

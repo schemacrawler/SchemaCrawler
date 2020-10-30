@@ -53,7 +53,7 @@ import picocli.CommandLine.PicocliException;
 import picocli.shell.jline3.PicocliJLineCompleter;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 import schemacrawler.tools.options.Config;
 
@@ -65,45 +65,48 @@ public final class SchemaCrawlerShell {
   public static void execute(final String[] args) throws Exception {
     requireNonNull(args, "No arguments provided");
 
-    final Map<String, Object> appConfig = loadConfig();
+    try (final ShellState state = new ShellState(); ) {
 
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    final StateFactory stateFactory = new StateFactory(state);
+      final Map<String, Object> appConfig = loadConfig();
 
-    state.setConfig(new Config(appConfig));
+      final StateFactory stateFactory = new StateFactory(state);
 
-    final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
-    final CommandLine commandLine = newCommandLine(commands, stateFactory);
-    addPluginCommands(commandLine);
+      state.setConfig(new Config(appConfig));
 
-    final Terminal terminal = TerminalBuilder.builder().build();
-    final LineReader reader =
-        LineReaderBuilder.builder()
-            .terminal(terminal)
-            .completer(new PicocliJLineCompleter(commandLine.getCommandSpec()))
-            .parser(new DefaultParser())
-            .build();
+      final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
+      final CommandLine commandLine = newCommandLine(commands, stateFactory);
+      addPluginCommands(commandLine);
 
-    while (true) {
-      try {
-        final String line = reader.readLine("schemacrawler> ", null, (MaskingCallback) null, null);
-        final ParsedLine pl = reader.getParser().parse(line, 0);
-        final String[] arguments = pl.words().toArray(new String[0]);
+      final Terminal terminal = TerminalBuilder.builder().build();
+      final LineReader reader =
+          LineReaderBuilder.builder()
+              .terminal(terminal)
+              .completer(new PicocliJLineCompleter(commandLine.getCommandSpec()))
+              .parser(new DefaultParser())
+              .build();
 
-        parseAndRun(state, commandLine, arguments);
-      } catch (final UserInterruptException e) {
-        // Ignore
-      } catch (final EndOfFileException e) {
-        return;
-      } catch (final Exception e) {
-        System.err.println("ERROR: " + e.getMessage());
-        LOGGER.log(Level.WARNING, e.getMessage(), e);
+      while (true) {
+        try {
+          final String line =
+              reader.readLine("schemacrawler> ", null, (MaskingCallback) null, null);
+          final ParsedLine pl = reader.getParser().parse(line, 0);
+          final String[] arguments = pl.words().toArray(new String[0]);
+
+          parseAndRun(state, commandLine, arguments);
+        } catch (final UserInterruptException e) {
+          // Ignore
+        } catch (final EndOfFileException e) {
+          return;
+        } catch (final Exception e) {
+          System.err.println("ERROR: " + e.getMessage());
+          LOGGER.log(Level.WARNING, e.getMessage(), e);
+        }
       }
     }
   }
 
   private static void parseAndRun(
-      final SchemaCrawlerShellState state, final CommandLine commandLine, final String[] arguments)
+      final ShellState state, final CommandLine commandLine, final String[] arguments)
       throws SchemaCrawlerException {
 
     boolean badCommand = true;

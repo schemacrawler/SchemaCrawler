@@ -42,7 +42,7 @@ import schemacrawler.schema.RoutineType;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 
 /**
  * Parses the command-line.
@@ -174,7 +174,7 @@ public final class LimitCommand extends BaseStateHolder implements Runnable {
       })
   private String[] tabletypes;
 
-  public LimitCommand(final SchemaCrawlerShellState state) {
+  public LimitCommand(final ShellState state) {
     super(state);
   }
 

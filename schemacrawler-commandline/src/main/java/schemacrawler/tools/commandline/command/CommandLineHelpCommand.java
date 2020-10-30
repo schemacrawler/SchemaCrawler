@@ -54,7 +54,7 @@ import picocli.CommandLine.Parameters;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
 import schemacrawler.tools.commandline.shell.SystemCommand;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
@@ -87,7 +87,7 @@ public final class CommandLineHelpCommand implements Runnable {
   @Override
   public void run() {
     try {
-      final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+      final ShellState state = new ShellState();
       final CommandLine parent =
           newCommandLine(new SchemaCrawlerShellCommands(), new StateFactory(state));
       addPluginHelpCommands(parent);
@@ -166,7 +166,7 @@ public final class CommandLineHelpCommand implements Runnable {
   }
 
   private void showCompleteHelp(final CommandLine parent) {
-    new SystemCommand(new SchemaCrawlerShellState()).printVersion();
+    new SystemCommand(new ShellState()).printVersion();
 
     System.out.printf("%n%n");
 

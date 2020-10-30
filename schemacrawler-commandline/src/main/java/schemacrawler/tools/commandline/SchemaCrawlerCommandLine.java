@@ -42,7 +42,7 @@ import java.util.logging.Level;
 import picocli.CommandLine;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.Version;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 import schemacrawler.tools.options.Config;
 
@@ -52,12 +52,12 @@ public final class SchemaCrawlerCommandLine {
       SchemaCrawlerLogger.getLogger(SchemaCrawlerCommandLine.class.getName());
 
   public static void execute(final String[] args) {
-    try {
+
+    try (final ShellState state = new ShellState(); ) {
       requireNonNull(args, "No arguments provided");
 
       final Map<String, Object> appConfig = loadConfig();
 
-      final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
       final StateFactory stateFactory = new StateFactory(state);
 
       final SchemaCrawlerCommandLineCommands commands = new SchemaCrawlerCommandLineCommands();

@@ -35,7 +35,7 @@ import picocli.CommandLine.Option;
 import schemacrawler.schemacrawler.GrepOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 
 /**
  * Parses the command-line.
@@ -104,7 +104,7 @@ public final class GrepCommand extends BaseStateHolder implements Runnable {
       negatable = true)
   private Boolean onlyMatching;
 
-  public GrepCommand(final SchemaCrawlerShellState state) {
+  public GrepCommand(final ShellState state) {
     super(state);
   }
 

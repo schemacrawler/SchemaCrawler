@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
 
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 
 public class SchemaCrawlerShellCommandsTest {
@@ -43,7 +43,7 @@ public class SchemaCrawlerShellCommandsTest {
     final String[] args = new String[] {"bad-command"};
 
     final SchemaCrawlerShellCommands optionsParser = new SchemaCrawlerShellCommands();
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
     final CommandLine commandLine = new CommandLine(optionsParser, new StateFactory(state));
 
     assertThrows(CommandLine.UnmatchedArgumentException.class, () -> commandLine.parseArgs(args));

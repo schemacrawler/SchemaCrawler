@@ -56,7 +56,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.commandline.command.ExecuteCommand;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.integration.serialize.SerializationFormat;
 import us.fatehi.utility.IOUtility;
 
@@ -87,7 +87,7 @@ public class ShellCommandSerializeCommandTest {
 
     final SerializationFormat serializationFormat = SerializationFormat.json;
 
-    final SchemaCrawlerShellState state = createLoadedSchemaCrawlerShellState(connection);
+    final ShellState state = createLoadedSchemaCrawlerShellState(connection);
 
     final Path testOutputFile =
         IOUtility.createTempFilePath("test", "." + serializationFormat.name());

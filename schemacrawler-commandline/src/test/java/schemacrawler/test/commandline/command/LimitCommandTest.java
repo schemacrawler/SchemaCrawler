@@ -28,7 +28,7 @@ import schemacrawler.schemacrawler.LimitOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.commandline.command.LimitCommand;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 
 public class LimitCommandTest {
@@ -36,7 +36,7 @@ public class LimitCommandTest {
   private static void runBadCommand(final String[] args) {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     assertThrows(
         CommandLine.ParameterException.class,
@@ -70,7 +70,7 @@ public class LimitCommandTest {
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     final CommandLine commandLine =
         newCommandLine(LimitCommand.class, new StateFactory(state));
@@ -131,7 +131,7 @@ public class LimitCommandTest {
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     newCommandLine(LimitCommand.class, new StateFactory(state)).parseArgs(args);
     final LimitOptions limitOptions = schemaCrawlerOptions.getLimitOptions();
@@ -158,7 +158,7 @@ public class LimitCommandTest {
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     runCommandInTest(new LimitCommand(state), args);
     final FilterOptions filterOptions = schemaCrawlerOptions.getFilterOptions();
