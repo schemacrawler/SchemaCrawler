@@ -88,7 +88,8 @@ public class SchemaCrawlerShellState {
     if (dataSource == null) {
       return false;
     }
-    try (final Connection connection = dataSource.get()) {
+    try { // NOTE: Do not close connection in the process of checking it is valid
+      final Connection connection = dataSource.get();
       if (!connection.isValid(0)) {
         throw new SQLException("Connection is not valid");
       }
