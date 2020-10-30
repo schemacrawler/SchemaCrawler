@@ -28,15 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.command;
 
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.retrievePluginOptions;
 
 import java.sql.Connection;
 import java.util.Map;
 import java.util.logging.Level;
 
-import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.ExecutionException;
 import picocli.CommandLine.Mixin;
@@ -50,7 +47,6 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.commandline.shell.AvailableCommandsCommand;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.ShellState;
-import schemacrawler.tools.commandline.state.StateFactory;
 import schemacrawler.tools.commandline.utility.OutputOptionsConfig;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
@@ -95,20 +91,7 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
 
     try {
 
-      @Command
-      class CommandObject {};
-
-      // Parse the command-line again, this time just taking into account the "execute" command and
-      // plugins
-      // Plugins are treated as mixins even for the interactive shell (this is why we have to parse
-      // the args again)
-      final String[] args =
-          spec.commandLine().getParseResult().originalArgs().toArray(new String[0]);
-      final CommandLine executeCommandLine =
-          newCommandLine(new CommandObject() {}, new StateFactory(state));
-      executeCommandLine.addSubcommand(new ExecuteCommand(state));
-      addPluginCommands(executeCommandLine);
-      final ParseResult parseResult = executeCommandLine.parseArgs(args);
+      final ParseResult parseResult = spec.commandLine().getParseResult();
       final Map<String, Object> commandConfig = retrievePluginOptions(parseResult);
       state.addConfig(commandConfig);
 

@@ -75,7 +75,12 @@ public final class SchemaCrawlerShell {
 
       final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
       final CommandLine commandLine = newCommandLine(commands, stateFactory);
-      addPluginCommands(commandLine);
+      final CommandLine executeCommandLine =
+          commandLine.getSubcommands().getOrDefault("execute", null);
+      if (executeCommandLine != null) {
+        addPluginCommands(executeCommandLine);
+        commandLine.addSubcommand(executeCommandLine);
+      }
 
       final Terminal terminal = TerminalBuilder.builder().build();
       final LineReader reader =
