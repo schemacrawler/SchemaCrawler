@@ -115,7 +115,7 @@ public class ShellCommandsTest {
     final String[] args = new String[] {"--version"};
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    newCommandLine(SystemCommand.class, new StateFactory(state), false).execute(args);
+    newCommandLine(SystemCommand.class, new StateFactory(state)).execute(args);
 
     assertThat(outputOf(err), hasNoContent());
     assertThat(
@@ -135,7 +135,7 @@ public class ShellCommandsTest {
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setLastException(exception);
 
-    newCommandLine(SystemCommand.class, new StateFactory(state), false).execute(args);
+    newCommandLine(SystemCommand.class, new StateFactory(state)).execute(args);
 
     assertThat(outputOf(err), hasNoContent());
     assertThat(
@@ -151,7 +151,7 @@ public class ShellCommandsTest {
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
 
-    newCommandLine(SystemCommand.class, new StateFactory(state), false).execute(args);
+    newCommandLine(SystemCommand.class, new StateFactory(state)).execute(args);
 
     assertThat(outputOf(err), hasNoContent());
     assertThat(outputOf(out), hasNoContent());

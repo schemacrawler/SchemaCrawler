@@ -187,7 +187,7 @@ public final class CommandlineTestUtility {
     }
 
     final SaveExceptionHandler saveExceptionHandler = new SaveExceptionHandler();
-    final CommandLine commandLine = newCommandLine(object, null, true);
+    final CommandLine commandLine = newCommandLine(object, null);
     commandLine.setParameterExceptionHandler(saveExceptionHandler);
     commandLine.setExecutionExceptionHandler(saveExceptionHandler);
     commandLine.execute(args);

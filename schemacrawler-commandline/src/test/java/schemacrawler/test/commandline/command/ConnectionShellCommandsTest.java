@@ -78,7 +78,7 @@ public class ConnectionShellCommandsTest {
     assertThat(state.getDataSource(), is(not(nullValue())));
 
     final DisconnectCommand optionsParser = new DisconnectCommand(state);
-    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
     assertThat(state.getDataSource(), is(nullValue()));
@@ -93,7 +93,7 @@ public class ConnectionShellCommandsTest {
     assertThat(state.getDataSource(), is(nullValue()));
 
     final DisconnectCommand optionsParser = new DisconnectCommand(state);
-    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
     assertThat(state.getDataSource(), is(nullValue()));
@@ -107,7 +107,7 @@ public class ConnectionShellCommandsTest {
     final String[] args = new String[] {"--is-connected"};
 
     final SystemCommand optionsParser = new SystemCommand(state);
-    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
     assertThat(outputOf(err), hasNoContent());
@@ -121,7 +121,7 @@ public class ConnectionShellCommandsTest {
     final String[] args = new String[] {"--is-connected"};
 
     final SystemCommand optionsParser = new SystemCommand(state);
-    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
     assertThat(outputOf(err), hasNoContent());
@@ -147,7 +147,7 @@ public class ConnectionShellCommandsTest {
     assertThat(state.getConfig(), is(not(nullValue())));
 
     final SweepCommand optionsParser = new SweepCommand(state);
-    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
     assertThat(state.getConfig(), is(nullValue()));
@@ -162,7 +162,7 @@ public class ConnectionShellCommandsTest {
     assertThat(state.getConfig(), is(nullValue()));
 
     final SweepCommand optionsParser = new SweepCommand(state);
-    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
     assertThat(state.getConfig(), is(nullValue()));

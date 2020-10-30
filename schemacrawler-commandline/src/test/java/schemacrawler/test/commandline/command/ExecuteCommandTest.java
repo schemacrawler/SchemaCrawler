@@ -68,7 +68,7 @@ public class ExecuteCommandTest {
     final String[] args = new String[] {"-c", "test", "--unknown-parameter", "some-value"};
 
     final ExecuteCommand executeTestCommand = new ExecuteCommand(state);
-    final CommandLine commandLine = newCommandLine(executeTestCommand, null, false);
+    final CommandLine commandLine = newCommandLine(executeTestCommand, null);
 
     final CommandLine.ParseResult parseResult = commandLine.parseArgs(args);
     final Map<String, Object> commandConfig = retrievePluginOptions(parseResult);
@@ -93,7 +93,7 @@ public class ExecuteCommandTest {
         new String[] {"-c", "schema", "--no-info", "-o", testOutputFile.toString()};
 
     final ExecuteCommand serializeCommand = new ExecuteCommand(state);
-    final CommandLine commandLine = newCommandLine(serializeCommand, null, false);
+    final CommandLine commandLine = newCommandLine(serializeCommand, null);
 
     commandLine.execute(args);
 
@@ -123,7 +123,7 @@ public class ExecuteCommandTest {
         };
 
     final ExecuteCommand executeTestCommand = new ExecuteCommand(state);
-    final CommandLine commandLine = newCommandLine(executeTestCommand, null, false);
+    final CommandLine commandLine = newCommandLine(executeTestCommand, null);
 
     commandLine.execute(args);
 

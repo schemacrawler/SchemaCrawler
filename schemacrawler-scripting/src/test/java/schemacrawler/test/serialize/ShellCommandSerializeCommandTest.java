@@ -95,7 +95,7 @@ public class ShellCommandSerializeCommandTest {
     final String[] args = new String[] {"-c", "serialize", "-o", testOutputFile.toString()};
 
     final ExecuteCommand serializeCommand = new ExecuteCommand(state);
-    final CommandLine commandLine = newCommandLine(serializeCommand, null, false);
+    final CommandLine commandLine = newCommandLine(serializeCommand, null);
     commandLine.parseArgs(args);
 
     serializeCommand.run();

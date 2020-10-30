@@ -40,7 +40,6 @@ import picocli.CommandLine.Model.UsageMessageSpec;
 import picocli.CommandLine.ParseResult;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -72,16 +71,14 @@ public class CommandLineUtility {
     return commandLine;
   }
 
-  public static CommandLine newCommandLine(
-      final Object object, final IFactory factory, final boolean addPluginsAsMixins) {
-    final CommandLine commandLine = newCommandLine(object, factory);
-    try {
-      addPluginCommands(commandLine, addPluginsAsMixins);
-      addDatabasePluginHelpCommands(commandLine, addPluginsAsMixins);
-      configureCommandLine(commandLine);
-    } catch (final SchemaCrawlerException e) {
-      throw new SchemaCrawlerRuntimeException("Could not initialize command-line", e);
+  public static CommandLine newCommandLine(final Object object, final IFactory factory) {
+    final CommandLine commandLine;
+    if (factory == null) {
+      commandLine = new CommandLine(object);
+    } else {
+      commandLine = new CommandLine(object, factory);
     }
+    configureCommandLine(commandLine);
     return commandLine;
   }
 
@@ -163,19 +160,24 @@ public class CommandLineUtility {
     return pluginCommandSpec;
   }
 
-  private static void addDatabasePluginHelpCommands(
-      final CommandLine commandLine, final boolean addAsMixins) {
+  public static void addDatabasePluginHelpCommands(final CommandLine commandLine) {
     final DatabaseConnectorRegistry databaseConnectorRegistry =
         DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     for (final DatabaseServerType databaseServerType : databaseConnectorRegistry) {
       final String pluginCommandName = databaseServerType.getDatabaseSystemIdentifier();
       final CommandSpec pluginCommandSpec = CommandSpec.create().name(pluginCommandName);
-      if (addAsMixins) {
-        commandLine.addMixin(pluginCommandName, pluginCommandSpec);
-      } else {
-        commandLine.addSubcommand(pluginCommandName, pluginCommandSpec);
-      }
+      commandLine.addSubcommand(pluginCommandName, pluginCommandSpec);
     }
+  }
+
+  public static void addPluginCommands(final CommandLine commandLine)
+      throws SchemaCrawlerException {
+    addPluginCommands(commandLine, true);
+  }
+
+  public static void addPluginHelpCommands(final CommandLine commandLine)
+      throws SchemaCrawlerException {
+    addPluginCommands(commandLine, false);
   }
 
   private static void addPluginCommands(final CommandLine commandLine, final boolean addAsMixins)
@@ -185,17 +187,6 @@ public class CommandLineUtility {
     for (final PluginCommand pluginCommand : commandRegistry.getCommandLineCommands()) {
       addPluginCommand(commandLine, pluginCommand, addAsMixins);
     }
-  }
-
-  private static CommandLine newCommandLine(final Object object, final IFactory factory) {
-    final CommandLine commandLine;
-    if (factory == null) {
-      commandLine = new CommandLine(object);
-    } else {
-      commandLine = new CommandLine(object, factory);
-    }
-
-    return commandLine;
   }
 
   private CommandLineUtility() {

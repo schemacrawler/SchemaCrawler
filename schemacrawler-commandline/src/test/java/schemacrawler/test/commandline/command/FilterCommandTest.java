@@ -29,7 +29,7 @@ public class FilterCommandTest {
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     final CommandLine commandLine =
-        newCommandLine(FilterCommand.class, new StateFactory(state), true);
+        newCommandLine(FilterCommand.class, new StateFactory(state));
     commandLine.execute(args);
 
     final FilterOptions filterOptions = state.getSchemaCrawlerOptions().getFilterOptions();
@@ -74,7 +74,7 @@ public class FilterCommandTest {
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     final CommandLine commandLine =
-        newCommandLine(FilterCommand.class, new StateFactory(state), true);
+        newCommandLine(FilterCommand.class, new StateFactory(state));
     commandLine.parseArgs(args);
     final FilterOptions filterOptions = schemaCrawlerOptions.getFilterOptions();
 

@@ -74,7 +74,7 @@ public class LoadedShellCommandsTest {
     final String[] args = new String[] {"--is-loaded"};
 
     final SystemCommand optionsParser = new SystemCommand(state);
-    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
     assertThat(outputOf(err), hasNoContent());
@@ -89,7 +89,7 @@ public class LoadedShellCommandsTest {
     final String[] args = new String[] {"--is-loaded"};
 
     final SystemCommand optionsParser = new SystemCommand(state);
-    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
     assertThat(outputOf(err), hasNoContent());
@@ -114,7 +114,7 @@ public class LoadedShellCommandsTest {
     assertThat(state.getCatalog(), is(not(nullValue())));
 
     final SweepCommand optionsParser = new SweepCommand(state);
-    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
     assertThat(state.getCatalog(), is(nullValue()));
@@ -129,7 +129,7 @@ public class LoadedShellCommandsTest {
     assertThat(state.getCatalog(), is(nullValue()));
 
     final SweepCommand optionsParser = new SweepCommand(state);
-    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
     assertThat(state.getCatalog(), is(nullValue()));

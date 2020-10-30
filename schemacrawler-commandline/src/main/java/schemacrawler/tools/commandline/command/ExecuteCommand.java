@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.command;
 
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.retrievePluginOptions;
 
@@ -101,7 +102,8 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
       // the args again)
       final String[] args =
           spec.commandLine().getParseResult().originalArgs().toArray(new String[0]);
-      final CommandLine executeCommandLine = newCommandLine(this, new StateFactory(state), true);
+      final CommandLine executeCommandLine = newCommandLine(this, new StateFactory(state));
+      addPluginCommands(executeCommandLine);
       final ParseResult parseResult = executeCommandLine.parseArgs(args);
       final Map<String, Object> commandConfig = retrievePluginOptions(parseResult);
       state.addConfig(commandConfig);

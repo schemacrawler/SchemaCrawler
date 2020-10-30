@@ -73,7 +73,7 @@ public class LimitCommandTest {
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     final CommandLine commandLine =
-        newCommandLine(LimitCommand.class, new StateFactory(state), true);
+        newCommandLine(LimitCommand.class, new StateFactory(state));
     commandLine.execute(args);
 
     final LimitOptions limitOptions = state.getSchemaCrawlerOptions().getLimitOptions();
@@ -133,7 +133,7 @@ public class LimitCommandTest {
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    newCommandLine(LimitCommand.class, new StateFactory(state), true).parseArgs(args);
+    newCommandLine(LimitCommand.class, new StateFactory(state)).parseArgs(args);
     final LimitOptions limitOptions = schemaCrawlerOptions.getLimitOptions();
 
     assertThat(limitOptions.get(ruleForSchemaInclusion), is(new IncludeAll()));

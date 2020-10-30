@@ -24,7 +24,7 @@ public class LoadCommandTest {
     assertThrows(
         CommandLine.ParameterException.class,
         () -> {
-          final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+          final CommandLine commandLine = newCommandLine(optionsParser, null);
           commandLine.parseArgs(args);
         });
   }
@@ -39,7 +39,7 @@ public class LoadCommandTest {
     assertThrows(
         CommandLine.ParameterException.class,
         () -> {
-          final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+          final CommandLine commandLine = newCommandLine(optionsParser, null);
           commandLine.parseArgs(args);
         });
   }
@@ -50,7 +50,7 @@ public class LoadCommandTest {
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     final LoadCommand optionsParser = new LoadCommand(state);
-    final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.parseArgs(args);
 
     final InfoLevel schemaInfoLevel = optionsParser.getInfoLevel();
@@ -65,7 +65,7 @@ public class LoadCommandTest {
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     final LoadCommand optionsParser = new LoadCommand(state);
-    final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.parseArgs(args);
 
     final InfoLevel schemaInfoLevel = optionsParser.getInfoLevel();
@@ -82,7 +82,7 @@ public class LoadCommandTest {
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     final LoadCommand optionsParser = new LoadCommand(state);
-    final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.parseArgs(args);
 
     final InfoLevel schemaInfoLevel = optionsParser.getInfoLevel();
@@ -101,7 +101,7 @@ public class LoadCommandTest {
     assertThrows(
         CommandLine.ParameterException.class,
         () -> {
-          final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+          final CommandLine commandLine = newCommandLine(optionsParser, null);
           commandLine.parseArgs(args);
         });
   }
@@ -116,7 +116,7 @@ public class LoadCommandTest {
     assertThrows(
         CommandLine.ParameterException.class,
         () -> {
-          final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+          final CommandLine commandLine = newCommandLine(optionsParser, null);
           commandLine.parseArgs(args);
         });
   }

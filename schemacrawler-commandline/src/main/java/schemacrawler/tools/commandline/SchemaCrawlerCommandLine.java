@@ -31,6 +31,7 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.commandline.utility.CommandLineConfigUtility.loadConfig;
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logFullStackTrace;
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSafeArguments;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static us.fatehi.utility.IOUtility.readResourceFully;
 import static us.fatehi.utility.Utility.isBlank;
@@ -60,7 +61,8 @@ public final class SchemaCrawlerCommandLine {
       final StateFactory stateFactory = new StateFactory(state);
 
       final SchemaCrawlerCommandLineCommands commands = new SchemaCrawlerCommandLineCommands();
-      final CommandLine commandLine = newCommandLine(commands, stateFactory, true);
+      final CommandLine commandLine = newCommandLine(commands, stateFactory);
+      addPluginCommands(commandLine);
       commandLine.parseArgs(args);
 
       final Config config = new Config();

@@ -68,7 +68,7 @@ public class ConnectionOptionsTest {
     assertThrows(
         CommandLine.MutuallyExclusiveArgsException.class,
         () -> {
-          final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+          final CommandLine commandLine = newCommandLine(optionsParser, null);
           commandLine.parseArgs(args);
         });
   }
@@ -85,7 +85,7 @@ public class ConnectionOptionsTest {
     assertThrows(
         CommandLine.ParameterException.class,
         () -> {
-          final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+          final CommandLine commandLine = newCommandLine(optionsParser, null);
           commandLine.parseArgs(args);
         });
   }
@@ -126,7 +126,7 @@ public class ConnectionOptionsTest {
     config.put("url", "jdbc:test-db://${host}:${port}/${database}");
 
     final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
-    newCommandLine(optionsParser, null, true).parseArgs(args);
+    newCommandLine(optionsParser, null).parseArgs(args);
 
     final DatabaseConnectionOptions databaseConnectorOptions =
         optionsParser.getDatabaseConnectionOptions();
@@ -155,7 +155,7 @@ public class ConnectionOptionsTest {
     assertThrows(
         CommandLine.MissingParameterException.class,
         () -> {
-          final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+          final CommandLine commandLine = newCommandLine(optionsParser, null);
           commandLine.parseArgs(args);
         });
   }
@@ -184,7 +184,7 @@ public class ConnectionOptionsTest {
     final String[] args = {"--some-option"};
 
     final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
-    final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.parseArgs(args);
     assertThrows(
         CommandLine.ParameterException.class, () -> optionsParser.getDatabaseConnectionOptions());
@@ -195,7 +195,7 @@ public class ConnectionOptionsTest {
     final String[] args = {"--url", "jdbc:database_url", "additional", "--extra"};
 
     final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
-    newCommandLine(optionsParser, null, true).parseArgs(args);
+    newCommandLine(optionsParser, null).parseArgs(args);
 
     final DatabaseConnectionOptions databaseConnectorOptions =
         optionsParser.getDatabaseConnectionOptions();
@@ -218,7 +218,7 @@ public class ConnectionOptionsTest {
     config.put("url", "jdbc:test-db://some-url");
 
     final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
-    newCommandLine(optionsParser, null, true).parseArgs(args);
+    newCommandLine(optionsParser, null).parseArgs(args);
 
     final DatabaseConnectionOptions databaseConnectorOptions =
         optionsParser.getDatabaseConnectionOptions();
@@ -241,7 +241,7 @@ public class ConnectionOptionsTest {
     assertThrows(
         CommandLine.MissingParameterException.class,
         () -> {
-          final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+          final CommandLine commandLine = newCommandLine(optionsParser, null);
           commandLine.parseArgs(args);
         });
   }

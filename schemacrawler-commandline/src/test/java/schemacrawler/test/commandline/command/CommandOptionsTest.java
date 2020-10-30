@@ -44,7 +44,7 @@ public class CommandOptionsTest {
     final String[] args = {"--command", "a_command", "additional", "--extra"};
 
     final CommandOptions optionsParser = new CommandOptions();
-    final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.parseArgs(args);
     final String options = optionsParser.getCommand();
 

@@ -34,7 +34,9 @@ import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_FOOTER;
 import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_HEADER;
 import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_OPTION_LIST;
 import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_PARAMETER_LIST;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.addDatabasePluginHelpCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommand;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginHelpCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.configureCommandLine;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static us.fatehi.utility.Utility.isBlank;
@@ -49,6 +51,7 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Help;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
@@ -83,15 +86,21 @@ public final class CommandLineHelpCommand implements Runnable {
 
   @Override
   public void run() {
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    final CommandLine parent =
-        newCommandLine(new SchemaCrawlerShellCommands(), new StateFactory(state), false);
+    try {
+      final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+      final CommandLine parent =
+          newCommandLine(new SchemaCrawlerShellCommands(), new StateFactory(state));
+      addPluginHelpCommands(parent);
+      addDatabasePluginHelpCommands(parent);
 
-    if (!isBlank(command)) {
-      configureHelpForSubcommand(parent);
-      showHelpForSubcommand(parent, command);
-    } else {
-      showCompleteHelp(parent);
+      if (!isBlank(command)) {
+        configureHelpForSubcommand(parent);
+        showHelpForSubcommand(parent, command);
+      } else {
+        showCompleteHelp(parent);
+      }
+    } catch (final Exception e) {
+      new SchemaCrawlerRuntimeException(e.getMessage(), e);
     }
   }
 

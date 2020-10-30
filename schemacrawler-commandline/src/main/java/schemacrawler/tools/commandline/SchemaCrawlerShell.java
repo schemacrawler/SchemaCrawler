@@ -30,6 +30,7 @@ package schemacrawler.tools.commandline;
 import static java.util.Objects.requireNonNull;
 import static picocli.CommandLine.printHelpIfRequested;
 import static schemacrawler.tools.commandline.utility.CommandLineConfigUtility.loadConfig;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 import java.io.PrintWriter;
@@ -72,7 +73,8 @@ public final class SchemaCrawlerShell {
     state.setConfig(new Config(appConfig));
 
     final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
-    final CommandLine commandLine = newCommandLine(commands, stateFactory, false);
+    final CommandLine commandLine = newCommandLine(commands, stateFactory);
+    addPluginCommands(commandLine);
 
     final Terminal terminal = TerminalBuilder.builder().build();
     final LineReader reader =
