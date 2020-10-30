@@ -33,7 +33,6 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.newComm
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.retrievePluginOptions;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -96,13 +95,18 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
 
     try {
 
+      @Command
+      class CommandObject {};
+
       // Parse the command-line again, this time just taking into account the "execute" command and
       // plugins
       // Plugins are treated as mixins even for the interactive shell (this is why we have to parse
       // the args again)
       final String[] args =
           spec.commandLine().getParseResult().originalArgs().toArray(new String[0]);
-      final CommandLine executeCommandLine = newCommandLine(this, new StateFactory(state));
+      final CommandLine executeCommandLine =
+          newCommandLine(new CommandObject() {}, new StateFactory(state));
+      executeCommandLine.addSubcommand(new ExecuteCommand(state));
       addPluginCommands(executeCommandLine);
       final ParseResult parseResult = executeCommandLine.parseArgs(args);
       final Map<String, Object> commandConfig = retrievePluginOptions(parseResult);
@@ -152,6 +156,7 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
     } catch (final Exception e) {
       throw new ExecutionException(spec.commandLine(), "Cannot execute SchemaCrawler command", e);
     } finally {
+      /*
       if (connection != null) {
         try {
           connection.close();
@@ -160,6 +165,7 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
               Level.WARNING, "Could not close connection after executing SchemaCrawler command", e);
         }
       }
+      */
     }
   }
 }
