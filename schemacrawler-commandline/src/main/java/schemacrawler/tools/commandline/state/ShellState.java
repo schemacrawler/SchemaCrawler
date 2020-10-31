@@ -58,6 +58,9 @@ public class ShellState implements AutoCloseable {
   private SchemaRetrievalOptions schemaRetrievalOptions;
 
   public void disconnect() {
+    if (dataSource == null) {
+      return;
+    }
     try (final Connection connection = dataSource.get(); ) {
       LOGGER.log(Level.INFO, new StringFormat("Closing connection <%s>", connection));
       dataSource = null;
