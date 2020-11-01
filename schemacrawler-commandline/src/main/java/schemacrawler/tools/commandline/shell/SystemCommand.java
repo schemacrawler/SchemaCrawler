@@ -34,7 +34,7 @@ import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
 import schemacrawler.Version;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateUtility;
 
 @Command(
@@ -68,7 +68,7 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
       description = "Display SchemaCrawler version and system information")
   private boolean versionRequested;
 
-  public SystemCommand(final SchemaCrawlerShellState state) {
+  public SystemCommand(final ShellState state) {
     super(state);
   }
 

@@ -53,7 +53,7 @@ import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.commandline.shell.DisconnectCommand;
 import schemacrawler.tools.commandline.shell.SweepCommand;
 import schemacrawler.tools.commandline.shell.SystemCommand;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.options.Config;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -70,7 +70,7 @@ public class ConnectionShellCommandsTest {
 
   @Test
   public void disconnect(final Connection connection) {
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
     state.setDataSource(() -> connection); // is-connected
 
     final String[] args = new String[0];
@@ -78,7 +78,7 @@ public class ConnectionShellCommandsTest {
     assertThat(state.getDataSource(), is(not(nullValue())));
 
     final DisconnectCommand optionsParser = new DisconnectCommand(state);
-    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
     assertThat(state.getDataSource(), is(nullValue()));
@@ -86,14 +86,14 @@ public class ConnectionShellCommandsTest {
 
   @Test
   public void disconnectWhenNotConnected() {
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
 
     final String[] args = new String[0];
 
     assertThat(state.getDataSource(), is(nullValue()));
 
     final DisconnectCommand optionsParser = new DisconnectCommand(state);
-    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
     assertThat(state.getDataSource(), is(nullValue()));
@@ -101,13 +101,13 @@ public class ConnectionShellCommandsTest {
 
   @Test
   public void isConnected(final Connection connection) {
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
     state.setDataSource(() -> connection); // is-connected
 
     final String[] args = new String[] {"--is-connected"};
 
     final SystemCommand optionsParser = new SystemCommand(state);
-    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
     assertThat(outputOf(err), hasNoContent());
@@ -116,12 +116,12 @@ public class ConnectionShellCommandsTest {
 
   @Test
   public void isNotConnected(final DatabaseConnectionInfo connectionInfo) {
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
 
     final String[] args = new String[] {"--is-connected"};
 
     final SystemCommand optionsParser = new SystemCommand(state);
-    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
     assertThat(outputOf(err), hasNoContent());
@@ -139,32 +139,35 @@ public class ConnectionShellCommandsTest {
 
   @Test
   public void sweep() {
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    state.setConfig(new Config());
+
+    final Config config = new Config();
+    config.put("key", 1);
+
+    final ShellState state = new ShellState();
+    state.setBaseConfig(config);
+
+    assertThat(state.getConfig().size(), is(1));
 
     final String[] args = new String[0];
-
-    assertThat(state.getConfig(), is(not(nullValue())));
-
     final SweepCommand optionsParser = new SweepCommand(state);
-    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
-    assertThat(state.getConfig(), is(nullValue()));
+    assertThat(state.getConfig().size(), is(0));
   }
 
   @Test
   public void sweepWithNoState() {
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+
+    final ShellState state = new ShellState();
+
+    assertThat(state.getConfig().size(), is(0));
 
     final String[] args = new String[0];
-
-    assertThat(state.getConfig(), is(nullValue()));
-
     final SweepCommand optionsParser = new SweepCommand(state);
-    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
-    assertThat(state.getConfig(), is(nullValue()));
+    assertThat(state.getConfig().size(), is(0));
   }
 }

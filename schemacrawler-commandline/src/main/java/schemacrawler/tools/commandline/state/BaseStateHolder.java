@@ -32,9 +32,9 @@ import static java.util.Objects.requireNonNull;
 
 public abstract class BaseStateHolder {
 
-  protected final SchemaCrawlerShellState state;
+  protected final ShellState state;
 
-  protected BaseStateHolder(final SchemaCrawlerShellState state) {
+  protected BaseStateHolder(final ShellState state) {
     this.state = requireNonNull(state, "No shell state provided");
   }
 }

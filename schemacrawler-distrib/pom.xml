@@ -361,7 +361,7 @@
                 <artifactItem>
                   <groupId>org.jline</groupId>
                   <artifactId>jline</artifactId>
-                  <version>3.11.0</version>
+                  <version>3.16.0</version>
                   <type>jar</type>
                 </artifactItem>
 

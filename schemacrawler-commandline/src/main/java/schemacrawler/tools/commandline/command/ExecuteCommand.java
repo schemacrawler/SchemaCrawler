@@ -28,29 +28,30 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.command;
 
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.retrievePluginOptions;
+import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
-import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
-import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.ExecutionException;
 import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Model;
+import picocli.CommandLine.Model.OptionSpec;
 import picocli.CommandLine.ParseResult;
 import picocli.CommandLine.Spec;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.commandline.shell.AvailableCommandsCommand;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
-import schemacrawler.tools.commandline.state.StateFactory;
+import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.utility.OutputOptionsConfig;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
@@ -77,7 +78,7 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
   @Mixin private CommandOutputOptions commandOutputOptions;
   @Spec private Model.CommandSpec spec;
 
-  public ExecuteCommand(final SchemaCrawlerShellState state) {
+  public ExecuteCommand(final ShellState state) {
     super(state);
   }
 
@@ -95,14 +96,7 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
 
     try {
 
-      // Parse the command-line again, this time just taking into account the "execute" command and
-      // plugins
-      // Plugins are treated as mixins even for the interactive shell (this is why we have to parse
-      // the args again)
-      final String[] args =
-          spec.commandLine().getParseResult().originalArgs().toArray(new String[0]);
-      final CommandLine executeCommandLine = newCommandLine(this, new StateFactory(state), true);
-      final ParseResult parseResult = executeCommandLine.parseArgs(args);
+      final ParseResult parseResult = spec.commandLine().getParseResult();
       final Map<String, Object> commandConfig = retrievePluginOptions(parseResult);
       state.addConfig(commandConfig);
 
@@ -128,7 +122,8 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
       // (Check after output options have been built)
       if (DiagramOutputFormat.isSupportedFormat(outputOptions.getOutputFormatValue())
           && !commandOutputOptions.getOutputFile().isPresent()) {
-        throw new RuntimeException("Output file has to be specified for schema diagrams");
+        throw new SchemaCrawlerRuntimeException(
+            "Output file has to be specified for schema diagrams");
       }
 
       final Catalog catalog = state.getCatalog();
@@ -149,15 +144,37 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
       executable.execute();
     } catch (final Exception e) {
       throw new ExecutionException(spec.commandLine(), "Cannot execute SchemaCrawler command", e);
-    } finally {
-      if (connection != null) {
-        try {
-          connection.close();
-        } catch (final SQLException e) {
-          LOGGER.log(
-              Level.WARNING, "Could not close connection after executing SchemaCrawler command", e);
-        }
-      }
     }
+  }
+
+  /**
+   * SchemaCrawler plugins are registered on-the-fly, by adding them to the classpath. Inspect the
+   * command-line to see if there are any additional plugin-specific options passed in from the
+   * command-line, and put them in the configuration.
+   *
+   * @param parseResult Result of parsing the command-line
+   * @return Config with additional plugin-specific command-line options
+   * @throws SchemaCrawlerException On an exception
+   */
+  private Map<String, Object> retrievePluginOptions(final ParseResult parseResult)
+      throws SchemaCrawlerException {
+    requireNonNull(parseResult, "No parse result provided");
+
+    final Map<String, Object> commandConfig = new HashMap<>();
+
+    final List<OptionSpec> matchedOptionSpecs = parseResult.matchedOptions();
+    for (final OptionSpec matchedOptionSpec : matchedOptionSpecs) {
+      if (matchedOptionSpec.userObject() != null) {
+        continue;
+      }
+      final Object optionValue = matchedOptionSpec.getValue();
+      if (optionValue == null) {
+        continue;
+      }
+      final String optionName = matchedOptionSpec.longestName().replaceFirst("^\\-{0,2}", "");
+      commandConfig.put(optionName, optionValue);
+    }
+
+    return commandConfig;
   }
 }

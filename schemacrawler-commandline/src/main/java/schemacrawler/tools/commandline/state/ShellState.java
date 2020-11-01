@@ -43,13 +43,15 @@ import schemacrawler.schemacrawler.LoadOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.options.Config;
+import us.fatehi.utility.string.StringFormat;
 
-public class SchemaCrawlerShellState {
+public class ShellState implements AutoCloseable {
 
   private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(SchemaCrawlerShellState.class.getName());
+      SchemaCrawlerLogger.getLogger(ShellState.class.getName());
 
-  private Config config;
+  private Config baseConfig;
+  private Config additionalConfig;
   private Catalog catalog;
   private Supplier<Connection> dataSource;
   private Throwable lastException;
@@ -57,7 +59,15 @@ public class SchemaCrawlerShellState {
   private SchemaRetrievalOptions schemaRetrievalOptions;
 
   public void disconnect() {
-    dataSource = null;
+    if (dataSource == null) {
+      return;
+    }
+    try (final Connection connection = dataSource.get(); ) {
+      LOGGER.log(Level.INFO, new StringFormat("Closing connection <%s>", connection));
+      dataSource = null;
+    } catch (final SQLException e) {
+      LOGGER.log(Level.WARNING, "Cannot close connection");
+    }
   }
 
   public Catalog getCatalog() {
@@ -65,6 +75,13 @@ public class SchemaCrawlerShellState {
   }
 
   public Config getConfig() {
+    final Config config = new Config();
+    if (baseConfig != null) {
+      config.putAll(baseConfig);
+    }
+    if (additionalConfig != null) {
+      config.putAll(additionalConfig);
+    }
     return config;
   }
 
@@ -88,7 +105,8 @@ public class SchemaCrawlerShellState {
     if (dataSource == null) {
       return false;
     }
-    try (final Connection connection = dataSource.get()) {
+    try { // NOTE: Do not close connection in the process of checking it is valid
+      final Connection connection = dataSource.get();
       if (!connection.isValid(0)) {
         throw new SQLException("Connection is not valid");
       }
@@ -108,20 +126,19 @@ public class SchemaCrawlerShellState {
     this.catalog = catalog;
   }
 
-  public void setConfig(final Config baseConfiguration) {
-    if (baseConfiguration != null) {
-      config = baseConfiguration;
+  public void setBaseConfig(final Config baseConfig) {
+    if (baseConfig != null) {
+      this.baseConfig = baseConfig;
     } else {
-      config = new Config();
+      this.baseConfig = new Config();
     }
   }
 
-  public void addConfig(final Map<String, Object> additionalConfiguration) {
-    if (config == null) {
-      config = new Config();
-    }
-    if (additionalConfiguration != null) {
-      config.putAll(additionalConfiguration);
+  public void addConfig(final Map<String, Object> additionalConfig) {
+    if (additionalConfig != null) {
+      this.additionalConfig = new Config(additionalConfig);
+    } else {
+      this.additionalConfig = new Config();
     }
   }
 
@@ -143,7 +160,8 @@ public class SchemaCrawlerShellState {
 
   public void sweep() {
     catalog = null;
-    config = null;
+    baseConfig = null;
+    additionalConfig = null;
     schemaCrawlerOptions = null;
     schemaRetrievalOptions = null;
     lastException = null;
@@ -169,5 +187,10 @@ public class SchemaCrawlerShellState {
   /** Update SchemaCrawler options by reassignment. */
   public void withLoadOptions(final LoadOptions loadOptions) {
     schemaCrawlerOptions = schemaCrawlerOptions.withLoadOptions(loadOptions);
+  }
+
+  @Override
+  public void close() throws Exception {
+    sweep();
   }
 }

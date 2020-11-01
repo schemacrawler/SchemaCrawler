@@ -44,9 +44,10 @@ import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.utility.SchemaCrawlerOptionsConfig;
 import schemacrawler.tools.commandline.utility.SchemaRetrievalOptionsConfig;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
@@ -81,7 +82,7 @@ public class ConnectCommand extends BaseStateHolder implements Runnable {
   @Spec private Model.CommandSpec spec;
   @Mixin private UserCredentialsOptions userCredentialsOptions;
 
-  public ConnectCommand(final SchemaCrawlerShellState state) {
+  public ConnectCommand(final ShellState state) {
     super(state);
   }
 
@@ -119,9 +120,9 @@ public class ConnectCommand extends BaseStateHolder implements Runnable {
       loadSchemaRetrievalOptionsBuilder(databaseConnector);
 
     } catch (final SchemaCrawlerException e) {
-      throw new RuntimeException(e.getMessage(), e);
+      throw new SchemaCrawlerRuntimeException(e.getMessage(), e);
     } catch (final SQLException e) {
-      throw new RuntimeException("Cannot connect to database", e);
+      throw new SchemaCrawlerRuntimeException("Cannot connect to database", e);
     }
   }
 

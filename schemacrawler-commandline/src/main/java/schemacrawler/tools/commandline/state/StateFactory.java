@@ -35,7 +35,7 @@ public class StateFactory extends BaseStateHolder implements IFactory {
 
   private static IFactory defaultPicocliFactory = defaultFactory();
 
-  public StateFactory(final SchemaCrawlerShellState state) {
+  public StateFactory(final ShellState state) {
     super(state);
   }
 
@@ -44,7 +44,7 @@ public class StateFactory extends BaseStateHolder implements IFactory {
     if (cls == null) {
       return null;
     } else if (BaseStateHolder.class.isAssignableFrom(cls)) {
-      return cls.getConstructor(SchemaCrawlerShellState.class).newInstance(state);
+      return cls.getConstructor(ShellState.class).newInstance(state);
     } else {
       return defaultPicocliFactory.create(cls);
     }

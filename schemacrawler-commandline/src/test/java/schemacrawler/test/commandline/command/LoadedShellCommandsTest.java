@@ -53,7 +53,7 @@ import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.commandline.shell.SweepCommand;
 import schemacrawler.tools.commandline.shell.SystemCommand;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class LoadedShellCommandsTest {
@@ -69,12 +69,12 @@ public class LoadedShellCommandsTest {
 
   @Test
   public void isLoaded(final Connection connection) throws SchemaCrawlerException {
-    final SchemaCrawlerShellState state = createLoadedSchemaCrawlerShellState(connection);
+    final ShellState state = createLoadedSchemaCrawlerShellState(connection);
 
     final String[] args = new String[] {"--is-loaded"};
 
     final SystemCommand optionsParser = new SystemCommand(state);
-    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
     assertThat(outputOf(err), hasNoContent());
@@ -83,13 +83,13 @@ public class LoadedShellCommandsTest {
 
   @Test
   public void isNotConnected(final Connection connection) {
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
     state.setDataSource(() -> connection); // is-connected
 
     final String[] args = new String[] {"--is-loaded"};
 
     final SystemCommand optionsParser = new SystemCommand(state);
-    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
     assertThat(outputOf(err), hasNoContent());
@@ -107,14 +107,14 @@ public class LoadedShellCommandsTest {
 
   @Test
   public void sweepCatalog(final Connection connection) throws SchemaCrawlerException {
-    final SchemaCrawlerShellState state = createLoadedSchemaCrawlerShellState(connection);
+    final ShellState state = createLoadedSchemaCrawlerShellState(connection);
 
     final String[] args = new String[0];
 
     assertThat(state.getCatalog(), is(not(nullValue())));
 
     final SweepCommand optionsParser = new SweepCommand(state);
-    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
     assertThat(state.getCatalog(), is(nullValue()));
@@ -122,14 +122,14 @@ public class LoadedShellCommandsTest {
 
   @Test
   public void sweepCatalogWithNoState() {
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
 
     final String[] args = new String[0];
 
     assertThat(state.getCatalog(), is(nullValue()));
 
     final SweepCommand optionsParser = new SweepCommand(state);
-    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
     assertThat(state.getCatalog(), is(nullValue()));

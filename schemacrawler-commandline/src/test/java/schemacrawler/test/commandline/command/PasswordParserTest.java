@@ -51,7 +51,7 @@ public class PasswordParserTest {
     final String[] args = new String[0];
 
     final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
-    final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.parseArgs(args);
     final UserCredentials options = optionsParser.getUserCredentials();
 
@@ -72,7 +72,7 @@ public class PasswordParserTest {
     final String[] args = {"--some-option"};
 
     final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
-    final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.parseArgs(args);
     final UserCredentials options = optionsParser.getUserCredentials();
 
@@ -87,7 +87,7 @@ public class PasswordParserTest {
     final String[] args = {"--password", "pwd123"};
 
     final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
-    final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.parseArgs(args);
     final UserCredentials options = optionsParser.getUserCredentials();
 
@@ -102,7 +102,7 @@ public class PasswordParserTest {
     final String[] args = {"--password:env", "NO_ENV"};
 
     final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
-    final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.parseArgs(args);
     final UserCredentials options = optionsParser.getUserCredentials();
 
@@ -121,7 +121,7 @@ public class PasswordParserTest {
     final String[] args = {"--password:file", file.getAbsolutePath()};
 
     final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
-    final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.parseArgs(args);
     final UserCredentials options = optionsParser.getUserCredentials();
 
@@ -141,7 +141,7 @@ public class PasswordParserTest {
     final String[] args = {"--password:file", file.getAbsolutePath()};
 
     final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
-    final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.parseArgs(args);
     final UserCredentials options = optionsParser.getUserCredentials();
 
@@ -171,7 +171,7 @@ public class PasswordParserTest {
     assertThrows(
         CommandLine.MutuallyExclusiveArgsException.class,
         () -> {
-          final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+          final CommandLine commandLine = newCommandLine(optionsParser, null);
           commandLine.parseArgs(args);
         });
   }
@@ -181,7 +181,7 @@ public class PasswordParserTest {
     final String[] args = {"--password:file", "./no-file.txt"};
 
     final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
-    final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.parseArgs(args);
     assertThrows(CommandLine.ParameterException.class, () -> optionsParser.getUserCredentials());
   }

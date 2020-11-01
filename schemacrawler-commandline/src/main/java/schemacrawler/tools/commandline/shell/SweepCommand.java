@@ -33,7 +33,7 @@ import java.util.logging.Level;
 import picocli.CommandLine.Command;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 
 @Command(
     name = "sweep",
@@ -47,7 +47,7 @@ public class SweepCommand extends BaseStateHolder implements Runnable {
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(SweepCommand.class.getName());
 
-  public SweepCommand(final SchemaCrawlerShellState state) {
+  public SweepCommand(final ShellState state) {
     super(state);
   }
 

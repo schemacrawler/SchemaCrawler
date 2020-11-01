@@ -29,32 +29,29 @@ package schemacrawler.test.commandline.command;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.collection.IsMapContaining.hasKey;
-import static org.hamcrest.core.IsNot.not;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.CommandlineTestUtility.createLoadedSchemaCrawlerShellState;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.retrievePluginOptions;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.Connection;
-import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import picocli.CommandLine;
-import picocli.CommandLine.ExecutionException;
+import picocli.CommandLine.IExecutionExceptionHandler;
+import picocli.CommandLine.ParseResult;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
-import schemacrawler.tools.commandline.command.ExecuteCommand;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
+import schemacrawler.tools.commandline.state.ShellState;
+import schemacrawler.tools.commandline.state.StateFactory;
 import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -62,73 +59,125 @@ import us.fatehi.utility.IOUtility;
 public class ExecuteCommandTest {
 
   @Test
-  public void executeBadCommand(final Connection connection) throws SchemaCrawlerException {
+  public void executeBadCommand(final Connection connection, final TestContext testContext)
+      throws Exception {
 
-    final SchemaCrawlerShellState state = createLoadedSchemaCrawlerShellState(connection);
-    final String[] args = new String[] {"-c", "test", "--unknown-parameter", "some-value"};
+    class ExceptionHandler implements IExecutionExceptionHandler {
 
-    final ExecuteCommand executeTestCommand = new ExecuteCommand(state);
-    final CommandLine commandLine = newCommandLine(executeTestCommand, null, false);
+      private Exception exception;
 
-    final CommandLine.ParseResult parseResult = commandLine.parseArgs(args);
-    final Map<String, Object> commandConfig = retrievePluginOptions(parseResult);
+      @Override
+      public int handleExecutionException(
+          final Exception ex, final CommandLine commandLine, final ParseResult parseResult)
+          throws Exception {
+        exception = ex;
+        return 1;
+      }
 
-    assertThat(commandConfig.size(), is(0));
-    assertThat(commandConfig, not(hasKey(is("unknown-parameter"))));
+      public Exception getException() {
+        return exception;
+      }
+    }
+    final ExceptionHandler exceptionHandler = new ExceptionHandler();
 
-    final ExecutionException thrown =
-        assertThrows(CommandLine.ExecutionException.class, () -> executeTestCommand.run());
-    assertThat(thrown.getMessage(), is("Cannot execute SchemaCrawler command"));
+    final CommandLine commandLine = createShellCommandLine(connection);
+    commandLine.setExecutionExceptionHandler(exceptionHandler);
+
+    final Path testOutputFile = IOUtility.createTempFilePath("test", ".txt");
+    final String[] args =
+        new String[] {
+          "execute",
+          "-c",
+          "test",
+          "--unknown-parameter",
+          "some-value",
+          "-o",
+          testOutputFile.toString()
+        };
+
+    final int exitCode = commandLine.execute(args);
+    assertThat(exitCode, is(1));
+    assertThat(exceptionHandler.getException().getMessage(), is("Unknown command <test>"));
   }
 
   @Test
   public void executeSchemaCommand(final Connection connection, final TestContext testContext)
-      throws SchemaCrawlerException, IOException {
+      throws Exception {
 
-    final SchemaCrawlerShellState state = createLoadedSchemaCrawlerShellState(connection);
+    final CommandLine commandLine = createShellCommandLine(connection);
 
     final Path testOutputFile = IOUtility.createTempFilePath("test", ".txt");
-
     final String[] args =
-        new String[] {"-c", "schema", "--no-info", "-o", testOutputFile.toString()};
+        new String[] {"execute", "-c", "schema", "--no-info", "-o", testOutputFile.toString()};
 
-    final ExecuteCommand serializeCommand = new ExecuteCommand(state);
-    final CommandLine commandLine = newCommandLine(serializeCommand, null, false);
-
-    commandLine.execute(args);
-
+    final int exitCode = commandLine.execute(args);
+    assertThat(exitCode, is(0));
     assertThat(
         outputOf(testOutputFile),
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
+  }
+
+  private CommandLine createShellCommandLine(final Connection connection)
+      throws SchemaCrawlerException {
+    final ShellState state = createLoadedSchemaCrawlerShellState(connection);
+    final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
+    final CommandLine commandLine = newCommandLine(commands, new StateFactory(state));
+    final CommandLine executeCommandLine =
+        commandLine.getSubcommands().getOrDefault("execute", null);
+    if (executeCommandLine != null) {
+      addPluginCommands(executeCommandLine);
+      commandLine.addSubcommand(executeCommandLine);
+    }
+    return commandLine;
   }
 
   @Test
   public void executeTestCommand(final Connection connection, final TestContext testContext)
       throws Exception {
 
-    final SchemaCrawlerShellState state = createLoadedSchemaCrawlerShellState(connection);
+    int exitCode;
+    final CommandLine commandLine = createShellCommandLine(connection);
 
-    final Path testOutputFile = IOUtility.createTempFilePath("test", ".txt");
+    final Path testOutputFile1 = IOUtility.createTempFilePath("test", ".1.txt");
+    exitCode =
+        commandLine.execute("execute", "-c", "test-command", "-o", testOutputFile1.toString());
+    assertThat(exitCode, is(0));
+    assertThat(
+        outputOf(testOutputFile1),
+        hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".1.txt")));
 
-    final String[] args =
-        new String[] {
-          "-c",
-          "test-command",
-          "-o",
-          testOutputFile.toString(),
-          "--test-command-parameter",
-          "known-value",
-          "--unknown-parameter",
-          "some-value"
-        };
+    final Path testOutputFile2 = IOUtility.createTempFilePath("test", ".2.txt");
+    exitCode =
+        commandLine.execute(
+            "execute",
+            "-c",
+            "test-command",
+            "-o",
+            testOutputFile2.toString(),
+            "--test-command-parameter",
+            "known-value",
+            "--unknown-parameter",
+            "some-value");
+    assertThat(exitCode, is(0));
+    assertThat(
+        outputOf(testOutputFile2),
+        hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".2.txt")));
 
-    final ExecuteCommand executeTestCommand = new ExecuteCommand(state);
-    final CommandLine commandLine = newCommandLine(executeTestCommand, null, false);
-
-    commandLine.execute(args);
-
+    final Path testOutputFile = IOUtility.createTempFilePath("test", ".3.txt");
+    exitCode =
+        commandLine.execute(
+            "execute", "-c", "schema", "--no-info", "-o", testOutputFile.toString());
+    assertThat(exitCode, is(0));
     assertThat(
         outputOf(testOutputFile),
-        hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
+        hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".3.txt")));
+
+    final Path testOutputFile4 = IOUtility.createTempFilePath("test", ".4.txt");
+    exitCode =
+        commandLine.execute("execute", "-c", "test-command", "-o", testOutputFile4.toString());
+    assertThat(exitCode, is(0));
+    assertThat(
+        outputOf(testOutputFile4),
+        hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".4.txt")));
   }
 }

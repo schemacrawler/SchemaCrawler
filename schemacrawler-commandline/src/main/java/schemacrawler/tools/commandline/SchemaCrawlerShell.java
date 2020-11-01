@@ -28,31 +28,38 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 import static java.util.Objects.requireNonNull;
-import static picocli.CommandLine.printHelpIfRequested;
 import static schemacrawler.tools.commandline.utility.CommandLineConfigUtility.loadConfig;
+import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logFullStackTrace;
+import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSafeArguments;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.printCommandLineErrorMessage;
+import static us.fatehi.utility.Utility.isBlank;
 
-import java.io.PrintWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.logging.Level;
 
+import org.jline.console.SystemRegistry;
+import org.jline.console.impl.SystemRegistryImpl;
 import org.jline.reader.EndOfFileException;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.MaskingCallback;
 import org.jline.reader.ParsedLine;
+import org.jline.reader.Parser;
 import org.jline.reader.UserInterruptException;
 import org.jline.reader.impl.DefaultParser;
+import org.jline.reader.impl.LineReaderImpl;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 
 import picocli.CommandLine;
-import picocli.CommandLine.ParseResult;
-import picocli.CommandLine.PicocliException;
-import picocli.shell.jline3.PicocliJLineCompleter;
+import picocli.shell.jline3.PicocliCommands;
 import schemacrawler.SchemaCrawlerLogger;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 import schemacrawler.tools.options.Config;
 
@@ -61,94 +68,93 @@ public final class SchemaCrawlerShell {
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(SchemaCrawlerShell.class.getName());
 
-  public static void execute(final String[] args) throws Exception {
-    requireNonNull(args, "No arguments provided");
+  public static void execute(final String[] args) {
 
-    final Map<String, Object> appConfig = loadConfig();
+    try (final ShellState state = new ShellState();
+        final Terminal terminal = TerminalBuilder.builder().build()) {
 
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    final StateFactory stateFactory = new StateFactory(state);
+      requireNonNull(args, "No arguments provided");
 
-    state.setConfig(new Config(appConfig));
+      final Map<String, Object> appConfig = loadConfig();
+      state.setBaseConfig(new Config(appConfig));
+      final StateFactory stateFactory = new StateFactory(state);
 
-    final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
-    final CommandLine commandLine = newCommandLine(commands, stateFactory, false);
-
-    final Terminal terminal = TerminalBuilder.builder().build();
-    final LineReader reader =
-        LineReaderBuilder.builder()
-            .terminal(terminal)
-            .completer(new PicocliJLineCompleter(commandLine.getCommandSpec()))
-            .parser(new DefaultParser())
-            .build();
-
-    while (true) {
-      try {
-        final String line = reader.readLine("schemacrawler> ", null, (MaskingCallback) null, null);
-        final ParsedLine pl = reader.getParser().parse(line, 0);
-        final String[] arguments = pl.words().toArray(new String[0]);
-
-        parseAndRun(state, commandLine, arguments);
-      } catch (final UserInterruptException e) {
-        // Ignore
-      } catch (final EndOfFileException e) {
-        return;
-      } catch (final Exception e) {
-        System.err.println("ERROR: " + e.getMessage());
-        LOGGER.log(Level.WARNING, e.getMessage(), e);
+      final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
+      final CommandLine commandLine = newCommandLine(commands, stateFactory);
+      final CommandLine executeCommandLine =
+          commandLine.getSubcommands().getOrDefault("execute", null);
+      if (executeCommandLine != null) {
+        addPluginCommands(executeCommandLine);
+        commandLine.addSubcommand(executeCommandLine);
       }
-    }
-  }
+      commandLine.setExecutionExceptionHandler(
+          (ex, cmdLine, parseResult) -> {
+            if (ex != null && ex.getMessage() != null) {
+              cmdLine.getErr().printf("ERROR: %s%n", ex.getMessage());
+            }
+            return 0;
+          });
 
-  private static void parseAndRun(
-      final SchemaCrawlerShellState state, final CommandLine commandLine, final String[] arguments)
-      throws SchemaCrawlerException {
+      final Supplier<Path> workingDir = () -> Paths.get(".");
+      final PicocliCommands picocliCommands = new PicocliCommands(workingDir, commandLine);
+      final Parser parser = new DefaultParser();
 
-    boolean badCommand = true;
+      final SystemRegistry systemRegistry =
+          new SystemRegistryImpl(parser, terminal, workingDir, null);
+      systemRegistry.setCommandRegistries(picocliCommands);
 
-    final ParseResult parseResult = commandLine.parseArgs(arguments);
-    if (printHelpIfRequested(parseResult)) {
-      return;
-    }
+      final LineReader reader =
+          LineReaderBuilder.builder()
+              .terminal(terminal)
+              .completer(systemRegistry.completer())
+              .parser(parser)
+              .variable(LineReader.LIST_MAX, 10) // max tab completion candidates
+              .build();
 
-    final Config config = new Config();
-    config.putAll(state.getConfig());
-    state.setConfig(config);
-
-    if (parseResult.hasSubcommand()) {
-      for (final CommandLine subcommandLine : parseResult.subcommand().asCommandLineList()) {
+      while (true) {
         try {
-          final Runnable command = subcommandLine.getCommand();
-          if (command != null) {
-            LOGGER.log(Level.INFO, "Running command " + command.getClass().getSimpleName());
-            command.run();
-
-            badCommand = false;
-            break;
+          systemRegistry.cleanUp();
+          final String line =
+              reader.readLine("schemacrawler> ", null, (MaskingCallback) null, null);
+          if (line.startsWith("help")) {
+            final ParsedLine pl = reader.getParser().parse(line, 0);
+            final String[] arguments = pl.words().toArray(new String[0]);
+            commandLine.execute(arguments);
+          } else if (line.equals("cls") || line.equals("clear")) {
+            ((LineReaderImpl) reader).clearScreen();
+          } else {
+            systemRegistry.execute(line);
           }
-        } catch (final PicocliException e) {
-          Throwable cause = e.getCause();
-          if (cause == null) {
-            cause = e;
-          }
-          state.setLastException(cause);
-          // Print command help
-          final PrintWriter out = subcommandLine.getOut();
-          out.println("ERROR: " + cause.getMessage());
-          out.println();
-          out.println("Get help using:");
-          out.printf("help %s%n", subcommandLine.getCommandName());
 
+        } catch (final UserInterruptException e) {
+          // Ignore
+        } catch (final EndOfFileException e) {
           return;
+        } catch (final Exception e) {
+          System.err.println("ERROR: " + e.getMessage());
+          LOGGER.log(Level.WARNING, e.getMessage(), e);
+          systemRegistry.trace(e);
         }
       }
-    }
+    } catch (final Throwable throwable) {
+      logSafeArguments(args);
+      logFullStackTrace(Level.SEVERE, throwable);
 
-    if (badCommand) {
-      System.out.println("ERROR: Bad command");
-      System.out.println();
-      System.out.println("Get help using:");
-      System.out.println("help");
+      final String errorMessage;
+      if (throwable instanceof picocli.CommandLine.PicocliException) {
+        final Throwable cause = throwable.getCause();
+        if (cause != null && !isBlank(cause.getMessage())) {
+          errorMessage = cause.getMessage();
+        } else {
+          errorMessage = throwable.getMessage();
+        }
+      } else {
+        errorMessage = throwable.getMessage();
+      }
+
+      printCommandLineErrorMessage(errorMessage);
+
+      System.exit(1);
     }
   }
 

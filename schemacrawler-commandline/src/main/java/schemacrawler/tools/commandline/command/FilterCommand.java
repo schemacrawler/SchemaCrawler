@@ -36,7 +36,7 @@ import picocli.CommandLine.Spec;
 import schemacrawler.schemacrawler.FilterOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 
 /**
  * Parses the command-line.
@@ -85,7 +85,7 @@ public final class FilterCommand extends BaseStateHolder implements Runnable {
 
   @Spec private Model.CommandSpec spec;
 
-  public FilterCommand(final SchemaCrawlerShellState state) {
+  public FilterCommand(final ShellState state) {
     super(state);
   }
 

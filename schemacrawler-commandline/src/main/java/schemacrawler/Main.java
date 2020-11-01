@@ -41,7 +41,7 @@ import schemacrawler.tools.commandline.command.CommandLineHelpCommand;
 import schemacrawler.tools.commandline.command.LogCommand;
 import schemacrawler.tools.commandline.shell.InteractiveShellOptions;
 import schemacrawler.tools.commandline.shell.SystemCommand;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 
 /** Main class that takes arguments for a database for crawling a schema. */
 public final class Main {
@@ -87,7 +87,7 @@ public final class Main {
   }
 
   private static boolean showVersionIfRequested(final String[] args) {
-    final SystemCommand systemCommand = new SystemCommand(new SchemaCrawlerShellState());
+    final SystemCommand systemCommand = new SystemCommand(new ShellState());
     final CommandLine commandLine = new CommandLine(systemCommand);
     commandLine.setUnmatchedArgumentsAllowed(true);
     commandLine.parseArgs(args);

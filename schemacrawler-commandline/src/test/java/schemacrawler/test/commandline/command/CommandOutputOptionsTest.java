@@ -22,7 +22,7 @@ public class CommandOutputOptionsTest {
     };
 
     final CommandOutputOptions options = new CommandOutputOptions();
-    final CommandLine commandLine = newCommandLine(options, null, true);
+    final CommandLine commandLine = newCommandLine(options, null);
     commandLine.parseArgs(args);
 
     assertThat(
@@ -39,7 +39,7 @@ public class CommandOutputOptionsTest {
     final String[] args = new String[0];
 
     final CommandOutputOptions options = new CommandOutputOptions();
-    final CommandLine commandLine = newCommandLine(options, null, true);
+    final CommandLine commandLine = newCommandLine(options, null);
     commandLine.parseArgs(args);
 
     assertThat(options.getOutputFile().isPresent(), is(false));
@@ -51,7 +51,7 @@ public class CommandOutputOptionsTest {
     final String[] args = {"--some-option"};
 
     final CommandOutputOptions options = new CommandOutputOptions();
-    final CommandLine commandLine = newCommandLine(options, null, true);
+    final CommandLine commandLine = newCommandLine(options, null);
     commandLine.parseArgs(args);
 
     assertThat(options.getOutputFile().isPresent(), is(false));
@@ -65,7 +65,7 @@ public class CommandOutputOptionsTest {
     assertThrows(
         CommandLine.MissingParameterException.class,
         () -> {
-          final CommandLine commandLine = newCommandLine(new CommandOutputOptions(), null, true);
+          final CommandLine commandLine = newCommandLine(new CommandOutputOptions(), null);
           commandLine.parseArgs(args);
         });
   }
@@ -77,7 +77,7 @@ public class CommandOutputOptionsTest {
     assertThrows(
         CommandLine.MissingParameterException.class,
         () -> {
-          final CommandLine commandLine = newCommandLine(new CommandOutputOptions(), null, true);
+          final CommandLine commandLine = newCommandLine(new CommandOutputOptions(), null);
           commandLine.parseArgs(args);
         });
   }

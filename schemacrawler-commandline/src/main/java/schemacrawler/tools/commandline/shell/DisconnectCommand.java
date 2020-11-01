@@ -33,7 +33,7 @@ import java.util.logging.Level;
 import picocli.CommandLine.Command;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 
 @Command(
     name = "disconnect",
@@ -46,7 +46,7 @@ public class DisconnectCommand extends BaseStateHolder implements Runnable {
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(DisconnectCommand.class.getName());
 
-  public DisconnectCommand(final SchemaCrawlerShellState state) {
+  public DisconnectCommand(final ShellState state) {
     super(state);
   }
 

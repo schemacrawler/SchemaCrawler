@@ -31,8 +31,9 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.commandline.utility.CommandLineConfigUtility.loadConfig;
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logFullStackTrace;
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSafeArguments;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
-import static us.fatehi.utility.IOUtility.readResourceFully;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.printCommandLineErrorMessage;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.Map;
@@ -40,8 +41,7 @@ import java.util.logging.Level;
 
 import picocli.CommandLine;
 import schemacrawler.SchemaCrawlerLogger;
-import schemacrawler.Version;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 import schemacrawler.tools.options.Config;
 
@@ -51,21 +51,18 @@ public final class SchemaCrawlerCommandLine {
       SchemaCrawlerLogger.getLogger(SchemaCrawlerCommandLine.class.getName());
 
   public static void execute(final String[] args) {
-    try {
+
+    try (final ShellState state = new ShellState(); ) {
       requireNonNull(args, "No arguments provided");
 
       final Map<String, Object> appConfig = loadConfig();
-
-      final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+      state.setBaseConfig(new Config(appConfig));
       final StateFactory stateFactory = new StateFactory(state);
 
       final SchemaCrawlerCommandLineCommands commands = new SchemaCrawlerCommandLineCommands();
-      final CommandLine commandLine = newCommandLine(commands, stateFactory, true);
+      final CommandLine commandLine = newCommandLine(commands, stateFactory);
+      addPluginCommands(commandLine);
       commandLine.parseArgs(args);
-
-      final Config config = new Config();
-      config.putAll(appConfig);
-      state.setConfig(config);
 
       executeCommandLine(commandLine);
     } catch (final Throwable throwable) {
@@ -101,17 +98,6 @@ public final class SchemaCrawlerCommandLine {
       LOGGER.log(Level.INFO, "Running command " + command.getClass().getSimpleName());
       command.run();
     }
-  }
-
-  private static void printCommandLineErrorMessage(final String errorMessage) {
-    System.err.printf("%s %s%n%n", Version.getProductName(), Version.getVersion());
-    if (!isBlank(errorMessage)) {
-      System.err.printf("Error: %s%n%n", errorMessage);
-    } else {
-      System.err.printf("Error: Unknown error%n%n");
-    }
-
-    System.err.println(readResourceFully("/command-line-error.footer.txt"));
   }
 
   private SchemaCrawlerCommandLine() {

@@ -30,7 +30,7 @@ package schemacrawler.tools.commandline.command;
 
 import picocli.CommandLine.Command;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateUtility;
 
 @Command(
@@ -45,7 +45,7 @@ import schemacrawler.tools.commandline.state.StateUtility;
     optionListHeading = "Options:%n")
 public final class ShowStateCommand extends BaseStateHolder implements Runnable {
 
-  public ShowStateCommand(final SchemaCrawlerShellState state) {
+  public ShowStateCommand(final ShellState state) {
     super(state);
   }
 

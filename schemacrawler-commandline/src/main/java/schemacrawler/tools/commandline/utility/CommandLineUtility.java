@@ -28,19 +28,17 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.utility;
 
 import static java.util.Objects.requireNonNull;
-
-import java.util.HashMap;
-import java.util.Map;
+import static us.fatehi.utility.IOUtility.readResourceFully;
+import static us.fatehi.utility.Utility.isBlank;
 
 import picocli.CommandLine;
 import picocli.CommandLine.IFactory;
 import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Model.OptionSpec;
 import picocli.CommandLine.Model.UsageMessageSpec;
-import picocli.CommandLine.ParseResult;
+import schemacrawler.Version;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -63,6 +61,17 @@ public class CommandLineUtility {
     }
   }
 
+  public static void printCommandLineErrorMessage(final String errorMessage) {
+    System.err.printf("%s %s%n%n", Version.getProductName(), Version.getVersion());
+    if (!isBlank(errorMessage)) {
+      System.err.printf("Error: %s%n%n", errorMessage);
+    } else {
+      System.err.printf("Error: Unknown error%n%n");
+    }
+
+    System.err.println(readResourceFully("/command-line-error.footer.txt"));
+  }
+
   public static CommandLine configureCommandLine(final CommandLine commandLine) {
     commandLine.setUnmatchedArgumentsAllowed(true);
     commandLine.setCaseInsensitiveEnumValuesAllowed(true);
@@ -72,50 +81,15 @@ public class CommandLineUtility {
     return commandLine;
   }
 
-  public static CommandLine newCommandLine(
-      final Object object, final IFactory factory, final boolean addPluginsAsMixins) {
-    final CommandLine commandLine = newCommandLine(object, factory);
-    try {
-      addPluginCommands(commandLine, addPluginsAsMixins);
-      addDatabasePluginHelpCommands(commandLine, addPluginsAsMixins);
-      configureCommandLine(commandLine);
-    } catch (final SchemaCrawlerException e) {
-      throw new SchemaCrawlerRuntimeException("Could not initialize command-line", e);
+  public static CommandLine newCommandLine(final Object object, final IFactory factory) {
+    final CommandLine commandLine;
+    if (factory == null) {
+      commandLine = new CommandLine(object);
+    } else {
+      commandLine = new CommandLine(object, factory);
     }
+    configureCommandLine(commandLine);
     return commandLine;
-  }
-
-  /**
-   * SchemaCrawler plugins are registered on-the-fly, by adding them to the classpath. Inspect the
-   * command-line to see if there are any additional plugin-specific options passed in from the
-   * command-line, and put them in the configuration.
-   *
-   * @param parseResult Result of parsing the command-line
-   * @return Config with additional plugin-specific command-line options
-   * @throws SchemaCrawlerException On an exception
-   */
-  public static Map<String, Object> retrievePluginOptions(final ParseResult parseResult)
-      throws SchemaCrawlerException {
-    requireNonNull(parseResult, "No parse result provided");
-
-    final CommandRegistry commandRegistry = CommandRegistry.getCommandRegistry();
-    final Map<String, Object> commandConfig = new HashMap<>();
-    for (final PluginCommand pluginCommand : commandRegistry.getCommandLineCommands()) {
-      if (pluginCommand == null || pluginCommand.isEmpty()) {
-        continue;
-      }
-      for (final PluginCommandOption option : pluginCommand) {
-        final String optionName = option.getName();
-        if (parseResult.hasMatchedOption(optionName)) {
-          final Object value = parseResult.matchedOptionValue(optionName, null);
-          if (value != null) {
-            commandConfig.put(optionName, value);
-          }
-        }
-      }
-    }
-
-    return commandConfig;
   }
 
   public static CommandSpec toCommandSpec(final PluginCommand pluginCommand) {
@@ -163,19 +137,24 @@ public class CommandLineUtility {
     return pluginCommandSpec;
   }
 
-  private static void addDatabasePluginHelpCommands(
-      final CommandLine commandLine, final boolean addAsMixins) {
+  public static void addDatabasePluginHelpCommands(final CommandLine commandLine) {
     final DatabaseConnectorRegistry databaseConnectorRegistry =
         DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     for (final DatabaseServerType databaseServerType : databaseConnectorRegistry) {
       final String pluginCommandName = databaseServerType.getDatabaseSystemIdentifier();
       final CommandSpec pluginCommandSpec = CommandSpec.create().name(pluginCommandName);
-      if (addAsMixins) {
-        commandLine.addMixin(pluginCommandName, pluginCommandSpec);
-      } else {
-        commandLine.addSubcommand(pluginCommandName, pluginCommandSpec);
-      }
+      commandLine.addSubcommand(pluginCommandName, pluginCommandSpec);
     }
+  }
+
+  public static void addPluginCommands(final CommandLine commandLine)
+      throws SchemaCrawlerException {
+    addPluginCommands(commandLine, true);
+  }
+
+  public static void addPluginHelpCommands(final CommandLine commandLine)
+      throws SchemaCrawlerException {
+    addPluginCommands(commandLine, false);
   }
 
   private static void addPluginCommands(final CommandLine commandLine, final boolean addAsMixins)
@@ -185,17 +164,6 @@ public class CommandLineUtility {
     for (final PluginCommand pluginCommand : commandRegistry.getCommandLineCommands()) {
       addPluginCommand(commandLine, pluginCommand, addAsMixins);
     }
-  }
-
-  private static CommandLine newCommandLine(final Object object, final IFactory factory) {
-    final CommandLine commandLine;
-    if (factory == null) {
-      commandLine = new CommandLine(object);
-    } else {
-      commandLine = new CommandLine(object, factory);
-    }
-
-    return commandLine;
   }
 
   private CommandLineUtility() {

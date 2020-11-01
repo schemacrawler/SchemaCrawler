@@ -34,14 +34,14 @@ import static org.hamcrest.Matchers.nullValue;
 
 import org.junit.jupiter.api.Test;
 
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 
 public class StateFactoryTest {
 
   @Test
   public void stateFactory() throws Exception {
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
     final StateFactory stateFactory = new StateFactory(state);
     final String string = stateFactory.create(null);
 
@@ -50,7 +50,7 @@ public class StateFactoryTest {
 
   @Test
   public void stateFactoryString() throws Exception {
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final ShellState state = new ShellState();
     final StateFactory stateFactory = new StateFactory(state);
     final String string = stateFactory.create(String.class);
 
