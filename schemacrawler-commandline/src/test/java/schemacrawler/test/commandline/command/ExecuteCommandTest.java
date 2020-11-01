@@ -28,20 +28,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.commandline.command;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
 import static schemacrawler.test.utility.CommandlineTestUtility.createLoadedSchemaCrawlerShellState;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.retrievePluginOptions;
 
 import java.nio.file.Path;
 import java.sql.Connection;
-import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -98,11 +94,6 @@ public class ExecuteCommandTest {
           "-o",
           testOutputFile.toString()
         };
-
-    final CommandLine.ParseResult parseResult = commandLine.parseArgs(args);
-    final Map<String, Object> commandConfig = retrievePluginOptions(parseResult);
-    assertThat(commandConfig.size(), is(0));
-    assertThat(commandConfig, not(hasKey(is("unknown-parameter"))));
 
     final int exitCode = commandLine.execute(args);
     assertThat(exitCode, is(1));

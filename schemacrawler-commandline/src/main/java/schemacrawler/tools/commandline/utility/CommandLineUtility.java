@@ -29,15 +29,11 @@ package schemacrawler.tools.commandline.utility;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import picocli.CommandLine;
 import picocli.CommandLine.IFactory;
 import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Model.OptionSpec;
 import picocli.CommandLine.Model.UsageMessageSpec;
-import picocli.CommandLine.ParseResult;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
@@ -80,39 +76,6 @@ public class CommandLineUtility {
     }
     configureCommandLine(commandLine);
     return commandLine;
-  }
-
-  /**
-   * SchemaCrawler plugins are registered on-the-fly, by adding them to the classpath. Inspect the
-   * command-line to see if there are any additional plugin-specific options passed in from the
-   * command-line, and put them in the configuration.
-   *
-   * @param parseResult Result of parsing the command-line
-   * @return Config with additional plugin-specific command-line options
-   * @throws SchemaCrawlerException On an exception
-   */
-  public static Map<String, Object> retrievePluginOptions(final ParseResult parseResult)
-      throws SchemaCrawlerException {
-    requireNonNull(parseResult, "No parse result provided");
-
-    final CommandRegistry commandRegistry = CommandRegistry.getCommandRegistry();
-    final Map<String, Object> commandConfig = new HashMap<>();
-    for (final PluginCommand pluginCommand : commandRegistry.getCommandLineCommands()) {
-      if (pluginCommand == null || pluginCommand.isEmpty()) {
-        continue;
-      }
-      for (final PluginCommandOption option : pluginCommand) {
-        final String optionName = option.getName();
-        if (parseResult.hasMatchedOption(optionName)) {
-          final Object value = parseResult.matchedOptionValue(optionName, null);
-          if (value != null) {
-            commandConfig.put(optionName, value);
-          }
-        }
-      }
-    }
-
-    return commandConfig;
   }
 
   public static CommandSpec toCommandSpec(final PluginCommand pluginCommand) {

@@ -28,9 +28,11 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.command;
 
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.retrievePluginOptions;
+import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -38,10 +40,12 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.ExecutionException;
 import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Model;
+import picocli.CommandLine.Model.OptionSpec;
 import picocli.CommandLine.ParseResult;
 import picocli.CommandLine.Spec;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
@@ -141,5 +145,36 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
     } catch (final Exception e) {
       throw new ExecutionException(spec.commandLine(), "Cannot execute SchemaCrawler command", e);
     }
+  }
+
+  /**
+   * SchemaCrawler plugins are registered on-the-fly, by adding them to the classpath. Inspect the
+   * command-line to see if there are any additional plugin-specific options passed in from the
+   * command-line, and put them in the configuration.
+   *
+   * @param parseResult Result of parsing the command-line
+   * @return Config with additional plugin-specific command-line options
+   * @throws SchemaCrawlerException On an exception
+   */
+  private Map<String, Object> retrievePluginOptions(final ParseResult parseResult)
+      throws SchemaCrawlerException {
+    requireNonNull(parseResult, "No parse result provided");
+
+    final Map<String, Object> commandConfig = new HashMap<>();
+
+    final List<OptionSpec> matchedOptionSpecs = parseResult.matchedOptions();
+    for (final OptionSpec matchedOptionSpec : matchedOptionSpecs) {
+      if (matchedOptionSpec.userObject() != null) {
+        continue;
+      }
+      final Object optionValue = matchedOptionSpec.getValue();
+      if (optionValue == null) {
+        continue;
+      }
+      final String optionName = matchedOptionSpec.longestName().replaceFirst("^\\-{0,2}", "");
+      commandConfig.put(optionName, optionValue);
+    }
+
+    return commandConfig;
   }
 }
