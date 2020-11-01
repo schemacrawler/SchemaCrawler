@@ -33,7 +33,7 @@ import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSafeArguments;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
-import static us.fatehi.utility.IOUtility.readResourceFully;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.printCommandLineErrorMessage;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.Map;
@@ -41,7 +41,6 @@ import java.util.logging.Level;
 
 import picocli.CommandLine;
 import schemacrawler.SchemaCrawlerLogger;
-import schemacrawler.Version;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 import schemacrawler.tools.options.Config;
@@ -99,17 +98,6 @@ public final class SchemaCrawlerCommandLine {
       LOGGER.log(Level.INFO, "Running command " + command.getClass().getSimpleName());
       command.run();
     }
-  }
-
-  private static void printCommandLineErrorMessage(final String errorMessage) {
-    System.err.printf("%s %s%n%n", Version.getProductName(), Version.getVersion());
-    if (!isBlank(errorMessage)) {
-      System.err.printf("Error: %s%n%n", errorMessage);
-    } else {
-      System.err.printf("Error: Unknown error%n%n");
-    }
-
-    System.err.println(readResourceFully("/command-line-error.footer.txt"));
   }
 
   private SchemaCrawlerCommandLine() {

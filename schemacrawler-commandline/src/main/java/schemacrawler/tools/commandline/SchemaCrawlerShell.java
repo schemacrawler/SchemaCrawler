@@ -29,8 +29,12 @@ package schemacrawler.tools.commandline;
 
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.commandline.utility.CommandLineConfigUtility.loadConfig;
+import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logFullStackTrace;
+import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSafeArguments;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.printCommandLineErrorMessage;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -64,11 +68,12 @@ public final class SchemaCrawlerShell {
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(SchemaCrawlerShell.class.getName());
 
-  public static void execute(final String[] args) throws Exception {
-    requireNonNull(args, "No arguments provided");
+  public static void execute(final String[] args) {
 
     try (final ShellState state = new ShellState();
         final Terminal terminal = TerminalBuilder.builder().build()) {
+
+      requireNonNull(args, "No arguments provided");
 
       final Map<String, Object> appConfig = loadConfig();
       state.setBaseConfig(new Config(appConfig));
@@ -131,6 +136,25 @@ public final class SchemaCrawlerShell {
           systemRegistry.trace(e);
         }
       }
+    } catch (final Throwable throwable) {
+      logSafeArguments(args);
+      logFullStackTrace(Level.SEVERE, throwable);
+
+      final String errorMessage;
+      if (throwable instanceof picocli.CommandLine.PicocliException) {
+        final Throwable cause = throwable.getCause();
+        if (cause != null && !isBlank(cause.getMessage())) {
+          errorMessage = cause.getMessage();
+        } else {
+          errorMessage = throwable.getMessage();
+        }
+      } else {
+        errorMessage = throwable.getMessage();
+      }
+
+      printCommandLineErrorMessage(errorMessage);
+
+      System.exit(1);
     }
   }
 

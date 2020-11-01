@@ -28,12 +28,15 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.utility;
 
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.IOUtility.readResourceFully;
+import static us.fatehi.utility.Utility.isBlank;
 
 import picocli.CommandLine;
 import picocli.CommandLine.IFactory;
 import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Model.OptionSpec;
 import picocli.CommandLine.Model.UsageMessageSpec;
+import schemacrawler.Version;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
@@ -56,6 +59,17 @@ public class CommandLineUtility {
     } else {
       commandLine.addSubcommand(pluginCommandName, pluginCommandSpec);
     }
+  }
+
+  public static void printCommandLineErrorMessage(final String errorMessage) {
+    System.err.printf("%s %s%n%n", Version.getProductName(), Version.getVersion());
+    if (!isBlank(errorMessage)) {
+      System.err.printf("Error: %s%n%n", errorMessage);
+    } else {
+      System.err.printf("Error: Unknown error%n%n");
+    }
+
+    System.err.println(readResourceFully("/command-line-error.footer.txt"));
   }
 
   public static CommandLine configureCommandLine(final CommandLine commandLine) {
