@@ -50,7 +50,8 @@ public class ShellState implements AutoCloseable {
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(ShellState.class.getName());
 
-  private Config config;
+  private Config baseConfig;
+  private Config additionalConfig;
   private Catalog catalog;
   private Supplier<Connection> dataSource;
   private Throwable lastException;
@@ -74,6 +75,13 @@ public class ShellState implements AutoCloseable {
   }
 
   public Config getConfig() {
+    final Config config = new Config();
+    if (baseConfig != null) {
+      config.putAll(baseConfig);
+    }
+    if (additionalConfig != null) {
+      config.putAll(additionalConfig);
+    }
     return config;
   }
 
@@ -118,20 +126,19 @@ public class ShellState implements AutoCloseable {
     this.catalog = catalog;
   }
 
-  public void setConfig(final Config baseConfiguration) {
-    if (baseConfiguration != null) {
-      config = baseConfiguration;
+  public void setBaseConfig(final Config baseConfig) {
+    if (baseConfig != null) {
+      this.baseConfig = baseConfig;
     } else {
-      config = new Config();
+      this.baseConfig = new Config();
     }
   }
 
-  public void addConfig(final Map<String, Object> additionalConfiguration) {
-    if (config == null) {
-      config = new Config();
-    }
-    if (additionalConfiguration != null) {
-      config.putAll(additionalConfiguration);
+  public void addConfig(final Map<String, Object> additionalConfig) {
+    if (additionalConfig != null) {
+      this.additionalConfig = new Config(additionalConfig);
+    } else {
+      this.additionalConfig = new Config();
     }
   }
 
@@ -153,7 +160,8 @@ public class ShellState implements AutoCloseable {
 
   public void sweep() {
     catalog = null;
-    config = null;
+    baseConfig = null;
+    additionalConfig = null;
     schemaCrawlerOptions = null;
     schemaRetrievalOptions = null;
     lastException = null;

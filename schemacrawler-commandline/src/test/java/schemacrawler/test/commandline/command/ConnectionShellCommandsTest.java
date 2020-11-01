@@ -139,32 +139,35 @@ public class ConnectionShellCommandsTest {
 
   @Test
   public void sweep() {
+
+    final Config config = new Config();
+    config.put("key", 1);
+
     final ShellState state = new ShellState();
-    state.setConfig(new Config());
+    state.setBaseConfig(config);
+
+    assertThat(state.getConfig().size(), is(1));
 
     final String[] args = new String[0];
-
-    assertThat(state.getConfig(), is(not(nullValue())));
-
     final SweepCommand optionsParser = new SweepCommand(state);
     final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
-    assertThat(state.getConfig(), is(nullValue()));
+    assertThat(state.getConfig().size(), is(0));
   }
 
   @Test
   public void sweepWithNoState() {
+
     final ShellState state = new ShellState();
 
+    assertThat(state.getConfig().size(), is(0));
+
     final String[] args = new String[0];
-
-    assertThat(state.getConfig(), is(nullValue()));
-
     final SweepCommand optionsParser = new SweepCommand(state);
     final CommandLine commandLine = newCommandLine(optionsParser, null);
     commandLine.execute(args);
 
-    assertThat(state.getConfig(), is(nullValue()));
+    assertThat(state.getConfig().size(), is(0));
   }
 }

@@ -71,7 +71,7 @@ public final class SchemaCrawlerShell {
         final Terminal terminal = TerminalBuilder.builder().build()) {
 
       final Map<String, Object> appConfig = loadConfig();
-      state.setConfig(new Config(appConfig));
+      state.setBaseConfig(new Config(appConfig));
       final StateFactory stateFactory = new StateFactory(state);
 
       final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();

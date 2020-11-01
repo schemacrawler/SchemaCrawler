@@ -57,17 +57,13 @@ public final class SchemaCrawlerCommandLine {
       requireNonNull(args, "No arguments provided");
 
       final Map<String, Object> appConfig = loadConfig();
-
+      state.setBaseConfig(new Config(appConfig));
       final StateFactory stateFactory = new StateFactory(state);
 
       final SchemaCrawlerCommandLineCommands commands = new SchemaCrawlerCommandLineCommands();
       final CommandLine commandLine = newCommandLine(commands, stateFactory);
       addPluginCommands(commandLine);
       commandLine.parseArgs(args);
-
-      final Config config = new Config();
-      config.putAll(appConfig);
-      state.setConfig(config);
 
       executeCommandLine(commandLine);
     } catch (final Throwable throwable) {

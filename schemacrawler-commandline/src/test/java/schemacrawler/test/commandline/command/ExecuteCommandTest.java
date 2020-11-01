@@ -180,5 +180,13 @@ public class ExecuteCommandTest {
     assertThat(
         outputOf(testOutputFile),
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".3.txt")));
+
+    final Path testOutputFile4 = IOUtility.createTempFilePath("test", ".4.txt");
+    exitCode =
+        commandLine.execute("execute", "-c", "test-command", "-o", testOutputFile4.toString());
+    assertThat(exitCode, is(0));
+    assertThat(
+        outputOf(testOutputFile4),
+        hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".4.txt")));
   }
 }
