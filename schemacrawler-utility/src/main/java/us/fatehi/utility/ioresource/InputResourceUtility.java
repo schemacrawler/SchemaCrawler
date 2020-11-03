@@ -36,8 +36,14 @@ import java.io.Reader;
 import java.io.Writer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import us.fatehi.utility.string.StringFormat;
 
 public class InputResourceUtility {
+
+  private static final Logger LOGGER = Logger.getLogger(InputResourceUtility.class.getName());
 
   /**
    * Creates an input resource from the classpath, or from the file system. If neither are found,
@@ -49,6 +55,7 @@ public class InputResourceUtility {
   public static InputResource createInputResource(final String inputResourceName) {
     InputResource inputResource = null;
     try {
+      LOGGER.log(Level.FINE, new StringFormat("Attempting to read file <%s>", inputResourceName));
       final Path filePath = Paths.get(inputResourceName);
       inputResource = new FileInputResource(filePath);
     } catch (final Exception e) {
@@ -56,12 +63,17 @@ public class InputResourceUtility {
     }
     try {
       if (inputResource == null) {
+        LOGGER.log(
+            Level.FINE,
+            new StringFormat("Attempting to read classpath resource <%s>", inputResourceName));
         inputResource = new ClasspathInputResource(inputResourceName);
       }
     } catch (final Exception e) {
       // No-op
     }
     if (inputResource == null) {
+      LOGGER.log(
+          Level.INFO, new StringFormat("Could not locate input resource <%s>", inputResourceName));
       inputResource = new EmptyInputResource();
     }
     return inputResource;
