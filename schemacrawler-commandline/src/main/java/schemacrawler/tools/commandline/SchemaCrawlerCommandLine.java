@@ -52,8 +52,10 @@ public final class SchemaCrawlerCommandLine {
 
   public static void execute(final String[] args) {
 
-    try (final ShellState state = new ShellState(); ) {
+    try {
       requireNonNull(args, "No arguments provided");
+
+      final ShellState state = new ShellState();
 
       final Map<String, Object> appConfig = loadConfig();
       state.setBaseConfig(new Config(appConfig));

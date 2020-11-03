@@ -45,7 +45,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.string.StringFormat;
 
-public class ShellState implements AutoCloseable {
+public class ShellState {
 
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(ShellState.class.getName());
@@ -174,10 +174,5 @@ public class ShellState implements AutoCloseable {
   /** Update SchemaCrawler options by reassignment. */
   public void withLoadOptions(final LoadOptions loadOptions) {
     schemaCrawlerOptions = schemaCrawlerOptions.withLoadOptions(loadOptions);
-  }
-
-  @Override
-  public void close() throws Exception {
-    sweep();
   }
 }

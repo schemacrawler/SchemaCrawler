@@ -70,10 +70,11 @@ public final class SchemaCrawlerShell {
 
   public static void execute(final String[] args) {
 
-    try (final ShellState state = new ShellState();
-        final Terminal terminal = TerminalBuilder.builder().build()) {
+    try (final Terminal terminal = TerminalBuilder.builder().build()) {
 
       requireNonNull(args, "No arguments provided");
+
+      final ShellState state = new ShellState();
 
       final Map<String, Object> appConfig = loadConfig();
       state.setBaseConfig(new Config(appConfig));
