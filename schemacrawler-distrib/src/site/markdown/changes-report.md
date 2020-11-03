@@ -1,5 +1,11 @@
 # SchemaCrawler Change History
 
+<a name="a16.11.5"></a>
+## Release 16.11.5 - 2020-11-03
+
+- Better logging for traceability, and better management of database connections
+
+
 <a name="a16.11.4"></a>
 ## Release 16.11.4 - 2020-10-31
 
