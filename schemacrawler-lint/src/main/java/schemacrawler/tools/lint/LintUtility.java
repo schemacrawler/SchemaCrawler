@@ -28,19 +28,17 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Files.newBufferedReader;
-import static us.fatehi.utility.IOUtility.isFileReadable;
 import static us.fatehi.utility.Utility.isBlank;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.Reader;
 import java.util.List;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.executable.LintOptions;
-import us.fatehi.utility.string.StringFormat;
+import us.fatehi.utility.ioresource.InputResource;
+import us.fatehi.utility.ioresource.InputResourceUtility;
 
 public final class LintUtility {
 
@@ -69,29 +67,18 @@ public final class LintUtility {
    */
   public static LinterConfigs readLinterConfigs(final LintOptions lintOptions) {
     final LinterConfigs linterConfigs = new LinterConfigs(lintOptions.getProperties());
-    String linterConfigsFile = null;
-    try {
-      linterConfigsFile = lintOptions.getLinterConfigs();
-      if (!isBlank(linterConfigsFile)) {
-        final Path linterConfigsFilePath = Paths.get(linterConfigsFile).toAbsolutePath();
+    final String linterConfigsFile = lintOptions.getLinterConfigs();
+    if (!isBlank(linterConfigsFile)) {
+      final InputResource inputResource =
+          InputResourceUtility.createInputResource(linterConfigsFile);
+      try (final Reader reader = inputResource.openNewInputReader(UTF_8)) {
+        linterConfigs.parse(reader);
+      } catch (final Exception e) {
         LOGGER.log(
-            Level.CONFIG, new StringFormat("Reading linter configs file <%s>", linterConfigsFile));
-        if (isFileReadable(linterConfigsFilePath)) {
-          linterConfigs.parse(newBufferedReader(linterConfigsFilePath, UTF_8));
-        } else {
-          LOGGER.log(
-              Level.WARNING,
-              new StringFormat("Could not read linter configs file <%s>", linterConfigsFile));
-        }
-      } else {
-        LOGGER.log(Level.CONFIG, "Using default linter configs");
+            Level.WARNING, "Could not load linter configs from file, " + linterConfigsFile, e);
       }
-
-      return linterConfigs;
-    } catch (final Exception e) {
-      LOGGER.log(Level.WARNING, "Could not load linter configs from file, " + linterConfigsFile, e);
-      return linterConfigs;
     }
+    return linterConfigs;
   }
 
   private LintUtility() {}
