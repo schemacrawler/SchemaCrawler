@@ -40,6 +40,7 @@ import java.util.logging.Level;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.executable.LintOptions;
+import us.fatehi.utility.string.StringFormat;
 
 public final class LintUtility {
 
@@ -73,10 +74,14 @@ public final class LintUtility {
       linterConfigsFile = lintOptions.getLinterConfigs();
       if (!isBlank(linterConfigsFile)) {
         final Path linterConfigsFilePath = Paths.get(linterConfigsFile).toAbsolutePath();
+        LOGGER.log(
+            Level.CONFIG, new StringFormat("Reading linter configs file <%s>", linterConfigsFile));
         if (isFileReadable(linterConfigsFilePath)) {
           linterConfigs.parse(newBufferedReader(linterConfigsFilePath, UTF_8));
         } else {
-          LOGGER.log(Level.WARNING, "Could not read linter configs file, " + linterConfigsFile);
+          LOGGER.log(
+              Level.WARNING,
+              new StringFormat("Could not read linter configs file <%s>", linterConfigsFile));
         }
       } else {
         LOGGER.log(Level.CONFIG, "Using default linter configs");

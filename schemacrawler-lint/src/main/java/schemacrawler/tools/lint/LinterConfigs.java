@@ -55,6 +55,7 @@ import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.ObjectToString;
+import us.fatehi.utility.string.StringFormat;
 
 public class LinterConfigs implements Iterable<LinterConfig> {
 
@@ -117,6 +118,7 @@ public class LinterConfigs implements Iterable<LinterConfig> {
     for (final LinterConfig linterConfig : linterConfigs) {
       this.linterConfigs.add(linterConfig);
     }
+    LOGGER.log(Level.CONFIG, new StringFormat("Read <%d> linter configs", linterConfigs.size()));
   }
 
   public int size() {

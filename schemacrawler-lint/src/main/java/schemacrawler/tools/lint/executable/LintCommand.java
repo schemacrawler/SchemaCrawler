@@ -29,14 +29,21 @@ package schemacrawler.tools.lint.executable;
 
 import static schemacrawler.tools.lint.LintUtility.readLinterConfigs;
 
+import java.util.logging.Level;
+
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.lint.LintReport;
 import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.lint.Linters;
+import us.fatehi.utility.string.ObjectToStringFormat;
 
 public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
+
+  private static final SchemaCrawlerLogger LOGGER =
+      SchemaCrawlerLogger.getLogger(LintCommand.class.getName());
 
   public static final String COMMAND = "lint";
 
@@ -55,6 +62,7 @@ public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
 
     // Lint the catalog
     final LinterConfigs linterConfigs = readLinterConfigs(commandOptions);
+    LOGGER.log(Level.CONFIG, new ObjectToStringFormat(linterConfigs));
     final Linters linters = new Linters(linterConfigs, commandOptions.isRunAllLinters());
     linters.lint(catalog, connection);
 
@@ -64,8 +72,10 @@ public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
             outputOptions.getTitle(), catalog.getCrawlInfo(), linters.getCollector().getLints());
 
     // Write out the lint report
+    LOGGER.log(Level.INFO, "Generating lint report");
     getLintReportBuilder().generateLintReport(lintReport);
 
+    LOGGER.log(Level.INFO, "Dispatching lint results");
     dispatch(linters);
   }
 

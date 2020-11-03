@@ -46,6 +46,7 @@ import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.utility.SchemaCrawlerUtility;
+import us.fatehi.utility.string.ObjectToStringFormat;
 import us.fatehi.utility.string.StringFormat;
 
 /**
@@ -104,6 +105,9 @@ public final class SchemaCrawlerExecutable {
     scCommand.setConnection(connection);
 
     // Execute
+    LOGGER.log(Level.INFO, new StringFormat("Executing SchemaCrawler command <%s>", command));
+    LOGGER.log(Level.CONFIG, new ObjectToStringFormat(scCommand.getIdentifiers()));
+    LOGGER.log(Level.CONFIG, new ObjectToStringFormat(scCommand.getCommandOptions()));
     scCommand.execute();
   }
 

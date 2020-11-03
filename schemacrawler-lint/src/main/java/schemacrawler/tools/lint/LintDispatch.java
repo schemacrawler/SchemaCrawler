@@ -41,12 +41,14 @@ public enum LintDispatch {
   write_err {
     @Override
     public void dispatch() {
+      LOGGER.log(Level.CONFIG, dispatchMessage);
       System.err.println(dispatchMessage);
     }
   },
   throw_exception {
     @Override
     public void dispatch() {
+      LOGGER.log(Level.WARNING, dispatchMessage);
       throw new RuntimeException(dispatchMessage);
     }
   },

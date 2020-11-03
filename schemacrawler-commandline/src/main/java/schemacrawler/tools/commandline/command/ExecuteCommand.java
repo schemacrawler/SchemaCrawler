@@ -98,6 +98,8 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
 
       final ParseResult parseResult = spec.commandLine().getParseResult();
       final Map<String, Object> commandConfig = retrievePluginOptions(parseResult);
+      LOGGER.log(Level.INFO, "Loaded command config");
+      LOGGER.log(Level.CONFIG, new ObjectToStringFormat(commandConfig));
       state.addConfig(commandConfig);
 
       final OutputOptionsBuilder outputOptionsBuilder =
@@ -129,8 +131,8 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
       final Catalog catalog = state.getCatalog();
       final String command = commandOptions.getCommand();
 
-      LOGGER.log(Level.INFO, new StringFormat("Executing SchemaCrawler command <%s>", command));
-      LOGGER.log(Level.INFO, new ObjectToStringFormat(outputOptions));
+      LOGGER.log(Level.INFO, new StringFormat("Setting up SchemaCrawler command <%s>", command));
+      LOGGER.log(Level.CONFIG, new ObjectToStringFormat(outputOptions));
 
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);

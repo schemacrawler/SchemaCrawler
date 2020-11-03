@@ -88,6 +88,11 @@ public final class LoggingConfig {
    * @see <a href="https://picocli.info/#_tracing">picocli Tracing</a>
    */
   private void applyPicocliLogLevel(final Level logLevel) {
+
+    if (logLevel == null || System.getProperty("picocli.trace") == null) {
+      return;
+    }
+
     final String picocliLogLevel;
     final String logLevelName = logLevel.getName();
     switch (logLevelName) {
