@@ -103,6 +103,8 @@ public class RegularExpressionColorMap {
 
       final Pattern pattern = Pattern.compile(literal, Pattern.LITERAL);
       colorMap.put(pattern, color);
+    } catch (final IllegalArgumentException e) {
+      LOGGER.log(Level.FINE, e.getMessage());
     } catch (final Exception e) {
       LOGGER.log(
           Level.CONFIG,

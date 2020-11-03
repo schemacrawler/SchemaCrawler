@@ -39,6 +39,7 @@ import schemacrawler.tools.lint.LintReport;
 import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.lint.Linters;
 import us.fatehi.utility.string.ObjectToStringFormat;
+import us.fatehi.utility.string.StringFormat;
 
 public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
 
@@ -62,7 +63,7 @@ public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
 
     // Lint the catalog
     final LinterConfigs linterConfigs = readLinterConfigs(commandOptions);
-    LOGGER.log(Level.CONFIG, new ObjectToStringFormat(linterConfigs));
+    LOGGER.log(Level.FINEST, new ObjectToStringFormat(linterConfigs));
     final Linters linters = new Linters(linterConfigs, commandOptions.isRunAllLinters());
     linters.lint(catalog, connection);
 
@@ -85,13 +86,18 @@ public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
   }
 
   private void dispatch(final Linters linters) {
-    if (!linters.exceedsThreshold()) {
-      return;
-    }
+    final boolean exceedsThreshold = linters.exceedsThreshold();
 
     final String lintSummary = linters.getLintSummary();
     if (!lintSummary.isEmpty()) {
-      System.err.println(lintSummary);
+      LOGGER.log(Level.INFO, new StringFormat("Lint summary:%n%s", lintSummary));
+      if (exceedsThreshold) {
+        System.err.println(lintSummary);
+      }
+    }
+
+    if (!exceedsThreshold) {
+      return;
     }
 
     final LintDispatch lintDispatch = commandOptions.getLintDispatch();
