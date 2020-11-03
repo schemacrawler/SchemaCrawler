@@ -102,20 +102,7 @@ public class ShellState implements AutoCloseable {
   }
 
   public boolean isConnected() {
-    if (dataSource == null) {
-      return false;
-    }
-    try { // NOTE: Do not close connection in the process of checking it is valid
-      final Connection connection = dataSource.get();
-      if (!connection.isValid(0)) {
-        throw new SQLException("Connection is not valid");
-      }
-    } catch (final NullPointerException | SQLException e) {
-      LOGGER.log(Level.WARNING, e.getMessage(), e);
-      return false;
-    }
-
-    return true;
+    return dataSource != null;
   }
 
   public boolean isLoaded() {

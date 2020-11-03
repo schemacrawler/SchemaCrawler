@@ -88,13 +88,11 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
     if (!state.isLoaded()) {
       throw new ExecutionException(spec.commandLine(), "No database metadata is loaded");
     }
-
-    Connection connection = null;
-    if (state.isConnected()) {
-      connection = state.getDataSource().get();
+    if (!state.isConnected()) {
+      throw new ExecutionException(spec.commandLine(), "Not able to make database connection");
     }
 
-    try {
+    try (final Connection connection = state.getDataSource().get()) {
 
       final ParseResult parseResult = spec.commandLine().getParseResult();
       final Map<String, Object> commandConfig = retrievePluginOptions(parseResult);
