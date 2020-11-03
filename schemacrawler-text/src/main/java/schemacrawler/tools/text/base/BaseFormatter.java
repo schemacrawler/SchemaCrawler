@@ -35,7 +35,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.IndexColumn;
@@ -49,6 +51,9 @@ import schemacrawler.tools.text.utility.TextFormattingHelper;
 import schemacrawler.tools.traversal.TraversalHandler;
 
 public abstract class BaseFormatter<O extends BaseTextOptions> implements TraversalHandler {
+
+  private static final SchemaCrawlerLogger LOGGER =
+      SchemaCrawlerLogger.getLogger(BaseFormatter.class.getName());
 
   protected final O options;
   protected final OutputOptions outputOptions;
@@ -99,6 +104,7 @@ public abstract class BaseFormatter<O extends BaseTextOptions> implements Traver
 
   @Override
   public void end() throws SchemaCrawlerException {
+    LOGGER.log(Level.INFO, "Closing writer");
     out.flush();
     out.close();
   }
