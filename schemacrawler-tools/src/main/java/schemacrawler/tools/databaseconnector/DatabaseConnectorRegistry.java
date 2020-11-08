@@ -34,10 +34,8 @@ import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.Driver;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -102,31 +100,42 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
     return databaseConnectorRegistry;
   }
 
-  private static void logRegisteredJdbcDrivers() {
-    if (!LOGGER.isLoggable(Level.CONFIG)) {
-      return;
-    }
-
+  /**
+   * Load registered database drivers, and throw exception if any driver cannot be loaded. Cycling
+   * through the service loader and loading driver classes allows for dependencies to be vetted out.
+   */
+  private static void loadJdbcDrivers() {
+    final boolean log = LOGGER.isLoggable(Level.CONFIG);
+    int index = 0;
+    final StringBuilder buffer = new StringBuilder(1024);
     try {
-      final StringBuilder buffer = new StringBuilder(1024);
       buffer.append("Registered JDBC drivers:");
-      for (final Driver driver : Collections.list(DriverManager.getDrivers())) {
-        buffer.append(
-            String.format(
-                "%n%s %d.%d",
-                driver.getClass().getName(), driver.getMajorVersion(), driver.getMinorVersion()));
+      final ServiceLoader<Driver> serviceLoader = ServiceLoader.load(Driver.class);
+      for (final Driver driver : serviceLoader) {
+        index++;
+        if (log) {
+          buffer.append(
+              String.format(
+                  "%2d %50s %2d.%d%n",
+                  index,
+                  driver.getClass().getName(),
+                  driver.getMajorVersion(),
+                  driver.getMinorVersion()));
+        }
       }
-      LOGGER.log(Level.CONFIG, buffer.toString());
     } catch (final Exception e) {
-      LOGGER.log(Level.FINE, "Could not log registered JDBC drivers", e);
+      throw new SchemaCrawlerRuntimeException("Could not load database drivers", e);
+    }
+    if (log) {
+      LOGGER.log(Level.CONFIG, buffer.toString());
     }
   }
 
   private final Map<String, DatabaseConnector> databaseConnectorRegistry;
 
   private DatabaseConnectorRegistry() {
+    loadJdbcDrivers();
     databaseConnectorRegistry = loadDatabaseConnectorRegistry();
-    logRegisteredJdbcDrivers();
   }
 
   public boolean hasDatabaseSystemIdentifier(final String databaseSystemIdentifier) {
