@@ -1,8 +1,10 @@
 schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS.AUTHORS
     foreign key: Z_FK_AUTHOR
+      definition: 
       specific name: Z_FK_AUTHOR
       deferrability: not deferrable
+      initially deferred: false
       delete rule: no action
       update rule: no action
       column references: 
@@ -11,16 +13,20 @@ schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS.AUTHORSLIST
   table: PUBLIC.BOOKS.BOOKAUTHORS
     foreign key: Z_FK_AUTHOR
+      definition: 
       specific name: Z_FK_AUTHOR
       deferrability: not deferrable
+      initially deferred: false
       delete rule: no action
       update rule: no action
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.AUTHORS.ID <-- PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID
     foreign key: SYS_FK_10128
+      definition: 
       specific name: SYS_FK_10128
       deferrability: not deferrable
+      initially deferred: false
       delete rule: no action
       update rule: no action
       column references: 
@@ -28,16 +34,20 @@ schema: PUBLIC.BOOKS
           PUBLIC.BOOKS.BOOKS.ID <-- PUBLIC.BOOKS.BOOKAUTHORS.BOOKID
   table: PUBLIC.BOOKS.BOOKS
     foreign key: SYS_FK_10128
+      definition: 
       specific name: SYS_FK_10128
       deferrability: not deferrable
+      initially deferred: false
       delete rule: no action
       update rule: no action
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.ID <-- PUBLIC.BOOKS.BOOKAUTHORS.BOOKID
     foreign key: FK_PREVIOUSEDITION
+      definition: 
       specific name: FK_PREVIOUSEDITION
       deferrability: not deferrable
+      initially deferred: false
       delete rule: no action
       update rule: no action
       column references: 
@@ -49,8 +59,10 @@ schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS."Global Counts"
   table: PUBLIC.BOOKS.PUBLISHERS
     foreign key: FK_ΒΙΒΛΊΑ_PUBLISHERS
+      definition: 
       specific name: FK_ΒΙΒΛΊΑ_PUBLISHERS
       deferrability: not deferrable
+      initially deferred: false
       delete rule: no action
       update rule: no action
       column references: 
@@ -58,8 +70,10 @@ schema: PUBLIC.BOOKS
           PUBLIC.BOOKS.PUBLISHERS.ID <-- PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ
   table: PUBLIC.BOOKS.ΒΙΒΛΊΑ
     foreign key: FK_ΒΙΒΛΊΑ_PUBLISHERS
+      definition: 
       specific name: FK_ΒΙΒΛΊΑ_PUBLISHERS
       deferrability: not deferrable
+      initially deferred: false
       delete rule: no action
       update rule: no action
       column references: 
@@ -70,8 +84,10 @@ schema: PUBLIC.PUBLIC
 schema: PUBLIC."PUBLISHER SALES"
   table: PUBLIC."PUBLISHER SALES".REGIONS
     foreign key: FK_SALES_REGIONS
+      definition: 
       specific name: FK_SALES_REGIONS
       deferrability: not deferrable
+      initially deferred: false
       delete rule: no action
       update rule: no action
       column references: 
@@ -81,16 +97,20 @@ schema: PUBLIC."PUBLISHER SALES"
           PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY <-- PUBLIC."PUBLISHER SALES".SALES.COUNTRY
   table: PUBLIC."PUBLISHER SALES".SALES
     foreign key: FK_SALES_SALESDATA
+      definition: 
       specific name: FK_SALES_SALESDATA
       deferrability: not deferrable
+      initially deferred: false
       delete rule: no action
       update rule: no action
       column references: 
         key sequence: 1
           PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID <-- PUBLIC."PUBLISHER SALES".SALES.SALESDATAID
     foreign key: FK_SALES_REGIONS
+      definition: 
       specific name: FK_SALES_REGIONS
       deferrability: not deferrable
+      initially deferred: false
       delete rule: no action
       update rule: no action
       column references: 
@@ -100,8 +120,10 @@ schema: PUBLIC."PUBLISHER SALES"
           PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY <-- PUBLIC."PUBLISHER SALES".SALES.COUNTRY
   table: PUBLIC."PUBLISHER SALES".SALESDATA
     foreign key: FK_SALES_SALESDATA
+      definition: 
       specific name: FK_SALES_SALESDATA
       deferrability: not deferrable
+      initially deferred: false
       delete rule: no action
       update rule: no action
       column references: 

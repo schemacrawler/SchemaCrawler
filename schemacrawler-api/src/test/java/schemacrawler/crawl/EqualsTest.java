@@ -41,7 +41,6 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaReference;
-import us.fatehi.utility.Color;
 import us.fatehi.utility.graph.DirectedEdge;
 import us.fatehi.utility.graph.Vertex;
 
@@ -53,13 +52,13 @@ public class EqualsTest {
   }
 
   @Test
-  public void color() {
-    EqualsVerifier.forClass(Color.class).verify();
+  public void columnReference() {
+    EqualsVerifier.forClass(BaseColumnReference.class).verify();
   }
 
   @Test
-  public void columnReference() {
-    EqualsVerifier.forClass(BaseColumnReference.class).verify();
+  public void weakAssociation() {
+    EqualsVerifier.forClass(WeakAssociation.class).withIgnoredFields("name").verify();
   }
 
   @Test

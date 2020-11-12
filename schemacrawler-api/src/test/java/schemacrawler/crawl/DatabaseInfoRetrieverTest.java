@@ -121,6 +121,14 @@ public class DatabaseInfoRetrieverTest {
   }
 
   @Test
+  @DisplayName("Database info")
+  public void databaseInfo(final TestContext testContext, final Connection connection)
+      throws Exception {
+
+    assertThat(catalog.getDatabaseInfo().toString(), is("-- database:  " + System.lineSeparator()));
+  }
+
+  @Test
   @DisplayName("Retrieve server info")
   public void serverInfo(final TestContext testContext, final Connection connection)
       throws Exception {

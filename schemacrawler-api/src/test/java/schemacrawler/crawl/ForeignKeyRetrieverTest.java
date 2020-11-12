@@ -94,8 +94,10 @@ public class ForeignKeyRetrieverTest {
           final Collection<ForeignKey> foreignKeys = table.getForeignKeys();
           for (final ForeignKey foreignKey : foreignKeys) {
             out.println("    foreign key: " + foreignKey.getName());
+            out.println("      definition: " + foreignKey.getDefinition());
             out.println("      specific name: " + foreignKey.getSpecificName());
             out.println("      deferrability: " + foreignKey.getDeferrability());
+            out.println("      initially deferred: " + foreignKey.isInitiallyDeferred());
             out.println("      delete rule: " + foreignKey.getDeleteRule());
             out.println("      update rule: " + foreignKey.getUpdateRule());
 
@@ -106,6 +108,8 @@ public class ForeignKeyRetrieverTest {
               out.println("        key sequence: " + columnReference.getKeySequence());
               out.println("          " + columnReference);
             }
+
+            assertThat(foreignKey.isDeferrable(), is(foreignKey.isInitiallyDeferred()));
           }
         }
       }

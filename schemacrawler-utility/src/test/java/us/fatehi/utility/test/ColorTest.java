@@ -34,9 +34,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import us.fatehi.utility.Color;
 
 public class ColorTest {
+
+  @Test
+  public void color() {
+    EqualsVerifier.forClass(Color.class).verify();
+  }
+
   @Test
   public void fromHexTriplet() {
     assertThat(Color.fromHexTriplet("#010203").toString(), is("#010203"));

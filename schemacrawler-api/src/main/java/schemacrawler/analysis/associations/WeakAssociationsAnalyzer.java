@@ -76,7 +76,7 @@ public final class WeakAssociationsAnalyzer {
 
     if (LOGGER.isLoggable(Level.FINER)) {
       LOGGER.log(Level.FINER, new StringFormat("Column match keys <%s>", columnMatchKeysMap));
-      LOGGER.log(Level.FINER, new StringFormat("Column match keys <%s>", tableMatchKeys));
+      LOGGER.log(Level.FINER, new StringFormat("Table match keys <%s>", tableMatchKeys));
     }
     for (final Table table : tables) {
       final TableCandidateKeys tableCandidateKeys = new TableCandidateKeys(table);
