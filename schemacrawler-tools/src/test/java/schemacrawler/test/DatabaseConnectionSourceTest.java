@@ -31,6 +31,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.startsWith;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.sql.Connection;
@@ -38,11 +39,16 @@ import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestDatabaseDriver;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
+import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class DatabaseConnectionSourceTest {
 
   @Test
@@ -69,6 +75,24 @@ public class DatabaseConnectionSourceTest {
     assertThat(connection, is(not(nullValue())));
     assertThrows(SQLFeatureNotSupportedException.class, () -> connection.getMetaData());
     assertThat(connectionSource.getJdbcDriver().getClass(), is(TestDatabaseDriver.class));
+  }
+
+  @Test
+  public void hsqldbConnectionSource(final DatabaseConnectionInfo databaseConnectionInfo)
+      throws SQLException, ClassNotFoundException {
+
+    final DatabaseConnectionSource connectionSource =
+        new DatabaseConnectionSource(databaseConnectionInfo.getConnectionUrl());
+
+    assertThat(connectionSource.toString(), startsWith("driver=org.hsqldb.jdbc.JDBCDriver"));
+    assertThat(connectionSource.getUserCredentials(), is(not(nullValue())));
+    assertThat(connectionSource.getJdbcDriver().getClass().getSimpleName(), is("JDBCDriver"));
+
+    connectionSource.setUserCredentials(new SingleUseUserCredentials("sa", ""));
+
+    final Connection connection = connectionSource.get();
+
+    assertThat(connection, is(not(nullValue())));
   }
 
   @Test
