@@ -39,6 +39,7 @@ import java.sql.SQLFeatureNotSupportedException;
 
 import org.junit.jupiter.api.Test;
 
+import schemacrawler.test.utility.TestDatabaseDriver;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 
 public class DatabaseConnectionSourceTest {
@@ -62,5 +63,27 @@ public class DatabaseConnectionSourceTest {
 
     assertThat(connection, is(not(nullValue())));
     assertThrows(SQLFeatureNotSupportedException.class, () -> connection.getMetaData());
+
+    assertThat(
+        connectionSource.toString(),
+        is(
+            "driver=schemacrawler.test.utility.TestDatabaseDriver"
+                + System.lineSeparator()
+                + "url=jdbc:test-db:test"
+                + System.lineSeparator()));
+    assertThat(connectionSource.getJdbcDriver().getClass(), is(TestDatabaseDriver.class));
+  }
+
+  @Test
+  public void noDriver() throws SQLException, ClassNotFoundException {
+    final DatabaseConnectionSource connectionSource =
+        new DatabaseConnectionSource("jdbc:unknown-db:test");
+
+    final SQLException sqlException =
+        assertThrows(SQLException.class, () -> connectionSource.getJdbcDriver());
+    assertThat(
+        sqlException.getMessage(),
+        is(
+            "Could not find a suitable JDBC driver for database connection URL, jdbc:unknown-db:test"));
   }
 }
