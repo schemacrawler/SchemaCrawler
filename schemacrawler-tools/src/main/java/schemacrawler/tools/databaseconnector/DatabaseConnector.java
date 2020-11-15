@@ -160,7 +160,7 @@ public abstract class DatabaseConnector implements Options {
       databaseConnectionUrlBuilder.withUrlx(urlx);
 
       final String connectionUrl = databaseConnectionUrlBuilder.toURL();
-      final Map<String, String> connectionUrlx = databaseConnectionUrlBuilder.toURLx();
+      final Map<String, String> connectionUrlx = databaseConnectionUrlBuilder.toUrlx();
       databaseConnectionSource = new DatabaseConnectionSource(connectionUrl, connectionUrlx);
     } else {
       throw new SchemaCrawlerException("Could not create new database connection source");

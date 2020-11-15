@@ -93,7 +93,7 @@ public class DatabaseConnectionUrlBuilder {
     return url;
   }
 
-  public Map<String, String> toURLx() {
+  public Map<String, String> toUrlx() {
     final Map<String, String> urlx = new HashMap<>();
     if (defaultUrlx != null) {
       urlx.putAll(defaultUrlx);

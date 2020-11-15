@@ -43,7 +43,7 @@ public class UrlBuilderTest {
     urlBuilder.withDatabase("schemacrawler");
 
     assertThat(urlBuilder.toURL(), is("jdbc:oracle:thin:@//localhost:1521/schemacrawler"));
-    assertThat(urlBuilder.toURLx().size(), is(3));
+    assertThat(urlBuilder.toUrlx().size(), is(3));
   }
   
 }

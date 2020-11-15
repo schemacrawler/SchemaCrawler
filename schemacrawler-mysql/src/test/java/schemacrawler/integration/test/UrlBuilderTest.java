@@ -43,7 +43,7 @@ public class UrlBuilderTest {
     urlBuilder.withDatabase("schemacrawler");
 
     assertThat(urlBuilder.toURL(), is("jdbc:mysql://localhost:3306/schemacrawler"));
-    assertThat(urlBuilder.toURLx().size(), is(8));
+    assertThat(urlBuilder.toUrlx().size(), is(8));
   }
   
 }
