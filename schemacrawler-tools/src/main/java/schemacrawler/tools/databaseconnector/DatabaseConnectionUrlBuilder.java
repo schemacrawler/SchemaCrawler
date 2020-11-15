@@ -143,14 +143,4 @@ public class DatabaseConnectionUrlBuilder {
     this.providedUrlx = urlx;
     return this;
   }
-
-  public DatabaseConnectionUrlBuilder withDefaultUrlx(final String property, final String value) {
-    if (!isBlank(property)) {
-      if (defaultUrlx == null) {
-        defaultUrlx = new HashMap<>();
-      }
-      defaultUrlx.put(property, value);
-    }
-    return this;
-  }
 }
