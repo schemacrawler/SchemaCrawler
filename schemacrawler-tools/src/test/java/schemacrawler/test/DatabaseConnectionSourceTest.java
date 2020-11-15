@@ -39,6 +39,7 @@ import java.sql.SQLFeatureNotSupportedException;
 
 import org.junit.jupiter.api.Test;
 
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.test.utility.TestDatabaseDriver;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 
@@ -53,8 +54,12 @@ public class DatabaseConnectionSourceTest {
         new DatabaseConnectionSource("jdbc:test-db:test");
 
     assertThat(
-        connectionSource.toString().replaceAll("\\R", "~"),
-        is("driver=schemacrawler.test.utility.TestDatabaseDriver~url=jdbc:test-db:test~"));
+        connectionSource.toString(),
+        is(
+            "driver=schemacrawler.test.utility.TestDatabaseDriver"
+                + System.lineSeparator()
+                + "url=jdbc:test-db:test"
+                + System.lineSeparator()));
     assertThat(connectionSource.getUserCredentials(), is(not(nullValue())));
     assertThat(
         connectionSource.getJdbcDriver().getClass().getSimpleName(), is("TestDatabaseDriver"));
@@ -63,14 +68,6 @@ public class DatabaseConnectionSourceTest {
 
     assertThat(connection, is(not(nullValue())));
     assertThrows(SQLFeatureNotSupportedException.class, () -> connection.getMetaData());
-
-    assertThat(
-        connectionSource.toString(),
-        is(
-            "driver=schemacrawler.test.utility.TestDatabaseDriver"
-                + System.lineSeparator()
-                + "url=jdbc:test-db:test"
-                + System.lineSeparator()));
     assertThat(connectionSource.getJdbcDriver().getClass(), is(TestDatabaseDriver.class));
   }
 
@@ -79,11 +76,23 @@ public class DatabaseConnectionSourceTest {
     final DatabaseConnectionSource connectionSource =
         new DatabaseConnectionSource("jdbc:unknown-db:test");
 
-    final SQLException sqlException =
+    final Exception sqlException =
         assertThrows(SQLException.class, () -> connectionSource.getJdbcDriver());
     assertThat(
         sqlException.getMessage(),
         is(
             "Could not find a suitable JDBC driver for database connection URL, jdbc:unknown-db:test"));
+
+    assertThat(
+        connectionSource.toString(),
+        is(
+            "driver=<unknown>"
+                + System.lineSeparator()
+                + "url=jdbc:unknown-db:test"
+                + System.lineSeparator()));
+
+    final Exception connectionException =
+        assertThrows(SchemaCrawlerRuntimeException.class, () -> connectionSource.get());
+    connectionException.printStackTrace();
   }
 }
