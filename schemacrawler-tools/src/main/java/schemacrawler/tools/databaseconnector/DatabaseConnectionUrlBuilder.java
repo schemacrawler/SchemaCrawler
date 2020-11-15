@@ -37,11 +37,11 @@ import us.fatehi.utility.TemplatingUtility;
 
 public class DatabaseConnectionUrlBuilder {
 
-  public static DatabaseConnectionUrlBuilder builder(final String connectionUrlPattern) {
-    return new DatabaseConnectionUrlBuilder(connectionUrlPattern);
+  public static DatabaseConnectionUrlBuilder builder(final String connectionUrlTemplate) {
+    return new DatabaseConnectionUrlBuilder(connectionUrlTemplate);
   }
 
-  private final String connectionUrlPattern;
+  private final String connectionUrlTemplate;
   private String defaultDatabase;
   private String defaultHost;
   private int defaultPort;
@@ -52,9 +52,9 @@ public class DatabaseConnectionUrlBuilder {
   private Integer providedPort;
   private Map<String, String> providedUrlx;
 
-  private DatabaseConnectionUrlBuilder(final String connectionUrlPattern) {
-    this.connectionUrlPattern =
-        requireNonNull(connectionUrlPattern, "No database connection URL pattern provided");
+  private DatabaseConnectionUrlBuilder(final String connectionUrlTemplate) {
+    this.connectionUrlTemplate =
+        requireNonNull(connectionUrlTemplate, "No database connection URL template provided");
 
     this.defaultHost = "localhost";
     this.defaultDatabase = "";
@@ -88,7 +88,7 @@ public class DatabaseConnectionUrlBuilder {
     map.put("port", String.valueOf(port));
     map.put("database", database);
 
-    final String url = TemplatingUtility.expandTemplate(connectionUrlPattern, map);
+    final String url = TemplatingUtility.expandTemplate(connectionUrlTemplate, map);
 
     return url;
   }

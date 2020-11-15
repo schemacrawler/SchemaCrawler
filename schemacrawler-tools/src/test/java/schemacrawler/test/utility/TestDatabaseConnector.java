@@ -1,7 +1,5 @@
 package schemacrawler.test.utility;
 
-import java.io.IOException;
-
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -16,7 +14,7 @@ import schemacrawler.tools.executable.commandline.PluginCommand;
  */
 public final class TestDatabaseConnector extends DatabaseConnector {
 
-  public TestDatabaseConnector() throws IOException {
+  public TestDatabaseConnector() throws Exception {
     super(
         new DatabaseServerType("test-db", "Test Database"),
         url -> url != null && url.startsWith("jdbc:test-db:"),
@@ -24,7 +22,9 @@ public final class TestDatabaseConnector extends DatabaseConnector {
             informationSchemaViewsBuilder.fromResourceFolder("/test-db.information_schema"),
         (schemaRetrievalOptionsBuilder, connection) -> {},
         (limitOptionsBuilder) -> {},
-        () -> DatabaseConnectionUrlBuilder.builder(""));
+        () -> DatabaseConnectionUrlBuilder.builder("jdbc:test-db:${database}"));
+
+    Class.forName("schemacrawler.test.utility.TestDatabaseDriver");
   }
 
   @Override
