@@ -172,6 +172,48 @@ public class TableColumnRetrieverTest {
     verifyRetrieveTableColumns(catalog);
   }
 
+  @Test
+  @DisplayName("Retrieve hidden table columns from data dictionary")
+  public void hiddenTableColumns(final Connection connection) throws Exception {
+    final InformationSchemaViews informationSchemaViews =
+        InformationSchemaViewsBuilder.builder()
+            .withSql(
+                InformationSchemaKey.TABLE_COLUMNS,
+                IOUtility.readResourceFully("/TABLE_COLUMNS.sql"))
+            .withSql(
+                InformationSchemaKey.EXT_HIDDEN_TABLE_COLUMNS,
+                IOUtility.readResourceFully("/EXT_HIDDEN_TABLE_COLUMNS.sql"))
+            .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+        SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder
+        .with(tableColumnsRetrievalStrategy, data_dictionary_all)
+        .withInformationSchemaViews(informationSchemaViews);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection =
+        new RetrieverConnection(connection, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final TableColumnRetriever tableColumnRetriever =
+        new TableColumnRetriever(retrieverConnection, catalog, options);
+    tableColumnRetriever.retrieveTableColumns(catalog.getAllTables(), new IncludeAll());
+
+    int columnCount = 0;
+    int hiddenColumnCount = 0;
+    for (final Table table : catalog.getTables()) {
+      final Column[] columns = table.getColumns().toArray(new Column[0]);
+      for (final Column column : columns) {
+        columnCount = columnCount + 1;
+        if (column.isHidden()) {
+          hiddenColumnCount = hiddenColumnCount + 1;
+        }
+      }
+    }
+    assertThat(columnCount, is(52));
+    assertThat(hiddenColumnCount, is(1));
+  }
+
   @BeforeAll
   public void loadBaseCatalog(final Connection connection) throws SchemaCrawlerException {
     final LimitOptionsBuilder limitOptionsBuilder =

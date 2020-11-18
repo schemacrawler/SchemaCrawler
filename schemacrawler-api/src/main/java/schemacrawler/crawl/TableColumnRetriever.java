@@ -85,17 +85,17 @@ final class TableColumnRetriever extends AbstractRetriever {
       return;
     }
 
-    final Set<List<String>> hiddenColumns = retrieveHiddenTableColumns();
+    final Set<List<String>> hiddenTableColumnsLookupKeys = retrieveHiddenTableColumnsLookupKeys();
 
     switch (getRetrieverConnection().get(tableColumnsRetrievalStrategy)) {
       case data_dictionary_all:
         LOGGER.log(Level.INFO, "Retrieving table columns, using fast data dictionary retrieval");
-        retrieveTableColumnsFromDataDictionary(allTables, columnFilter, hiddenColumns);
+        retrieveTableColumnsFromDataDictionary(allTables, columnFilter, hiddenTableColumnsLookupKeys);
         break;
 
       case metadata:
         LOGGER.log(Level.INFO, "Retrieving table columns");
-        retrieveTableColumnsFromMetadata(allTables, columnFilter, hiddenColumns);
+        retrieveTableColumnsFromMetadata(allTables, columnFilter, hiddenTableColumnsLookupKeys);
         break;
 
       default:
@@ -107,7 +107,7 @@ final class TableColumnRetriever extends AbstractRetriever {
       final MetadataResultSet results,
       final NamedObjectList<MutableTable> allTables,
       final InclusionRuleFilter<Column> columnFilter,
-      final Set<List<String>> hiddenColumns) {
+      final Set<List<String>> hiddenTableColumnsLookupKeys) {
     // Get the "COLUMN_DEF" value first as it the Oracle drivers
     // don't handle it properly otherwise.
     // https://community.oracle.com/message/5940745#5940745
@@ -151,7 +151,7 @@ final class TableColumnRetriever extends AbstractRetriever {
 
       final List<String> lookupKey =
           Arrays.asList(columnCatalogName, schemaName, tableName, columnName);
-      final boolean isHidden = hiddenColumns.contains(lookupKey);
+      final boolean isHidden = hiddenTableColumnsLookupKeys.contains(lookupKey);
 
       String columnDataTypeName = null;
       if (!isBlank(typeName)) {
@@ -199,15 +199,15 @@ final class TableColumnRetriever extends AbstractRetriever {
     return column;
   }
 
-  private Set<List<String>> retrieveHiddenTableColumns() throws SQLException {
+  private Set<List<String>> retrieveHiddenTableColumnsLookupKeys() throws SQLException {
 
-    final Set<List<String>> hiddenColumns = new HashSet<>();
+    final Set<List<String>> hiddenTableColumnsLookupKeys = new HashSet<>();
 
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
     if (!informationSchemaViews.hasQuery(EXT_HIDDEN_TABLE_COLUMNS)) {
       LOGGER.log(Level.INFO, "No hidden table columns SQL provided");
-      return hiddenColumns;
+      return hiddenTableColumnsLookupKeys;
     }
     final Query hiddenColumnsSql = informationSchemaViews.getQuery(EXT_HIDDEN_TABLE_COLUMNS);
     final Connection connection = getDatabaseConnection();
@@ -231,17 +231,17 @@ final class TableColumnRetriever extends AbstractRetriever {
 
         final List<String> lookupKey =
             Arrays.asList(catalogName, schemaName, tableName, columnName);
-        hiddenColumns.add(lookupKey);
+        hiddenTableColumnsLookupKeys.add(lookupKey);
       }
     }
 
-    return hiddenColumns;
+    return hiddenTableColumnsLookupKeys;
   }
 
   private void retrieveTableColumnsFromDataDictionary(
       final NamedObjectList<MutableTable> allTables,
       final InclusionRuleFilter<Column> columnFilter,
-      final Set<List<String>> hiddenColumns)
+      final Set<List<String>> hiddenTableColumnsLookupKeys)
       throws SQLException {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
@@ -255,7 +255,7 @@ final class TableColumnRetriever extends AbstractRetriever {
             new MetadataResultSet(tableColumnsSql, statement, getSchemaInclusionRule())) {
       results.setDescription("retrieveTableColumnsFromDataDictionary");
       while (results.next()) {
-        createTableColumn(results, allTables, columnFilter, hiddenColumns);
+        createTableColumn(results, allTables, columnFilter, hiddenTableColumnsLookupKeys);
       }
     }
   }
@@ -263,7 +263,7 @@ final class TableColumnRetriever extends AbstractRetriever {
   private void retrieveTableColumnsFromMetadata(
       final NamedObjectList<MutableTable> allTables,
       final InclusionRuleFilter<Column> columnFilter,
-      final Set<List<String>> hiddenColumns)
+      final Set<List<String>> hiddenTableColumnsLookupKeys)
       throws SchemaCrawlerSQLException {
     for (final MutableTable table : allTables) {
       LOGGER.log(Level.FINE, "Retrieving table columns for " + table);
@@ -276,7 +276,7 @@ final class TableColumnRetriever extends AbstractRetriever {
                       table.getName(),
                       null))) {
         while (results.next()) {
-          createTableColumn(results, allTables, columnFilter, hiddenColumns);
+          createTableColumn(results, allTables, columnFilter, hiddenTableColumnsLookupKeys);
         }
       } catch (final SQLException e) {
         throw new SchemaCrawlerSQLException(
