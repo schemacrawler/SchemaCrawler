@@ -42,6 +42,7 @@ import static schemacrawler.analysis.counts.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.crawl.ForeignKeyRetrieverTest.verifyRetrieveForeignKeys;
 import static schemacrawler.crawl.IndexRetrieverTest.verifyRetrieveIndexes;
 import static schemacrawler.crawl.PrimaryKeyRetrieverTest.verifyRetrievePrimaryKeys;
+import static schemacrawler.crawl.TableColumnRetrieverTest.verifyRetrieveTableColumns;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -67,7 +68,6 @@ import schemacrawler.crawl.WeakAssociation;
 import schemacrawler.crawl.WeakAssociationColumnReference;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Constraint;
 import schemacrawler.schema.DatabaseInfo;
@@ -211,59 +211,6 @@ public class SchemaCrawlerTest {
     assertThat(table.lookupColumn(""), isEmpty());
     assertThat(table.lookupColumn("NO_COLUMN"), isEmpty());
     assertThat(table.lookupColumn("ID"), not(isEmpty()));
-  }
-
-  @Test
-  public void columns(final TestContext testContext) throws Exception {
-    final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout) {
-      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-      assertThat("Schema count does not match", schemas, arrayWithSize(5));
-      for (final Schema schema : schemas) {
-        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
-        Arrays.sort(tables, NamedObjectSort.alphabetical);
-        for (final Table table : tables) {
-          final Column[] columns = table.getColumns().toArray(new Column[0]);
-          Arrays.sort(columns);
-          for (final Column column : columns) {
-            out.println(String.format("%s", column.getFullName()));
-
-            out.println(String.format("  - %s=%s", "short name", column.getShortName()));
-            out.println(String.format("  - %s=%s", "data-type", column.getColumnDataType()));
-            out.println(String.format("  - %s=%s", "size", column.getSize()));
-            out.println(String.format("  - %s=%s", "decimal digits", column.getDecimalDigits()));
-            out.println(String.format("  - %s=%s", "width", column.getWidth()));
-            out.println(String.format("  - %s=%s", "default value", column.getDefaultValue()));
-            out.println(String.format("  - %s=%s", "auto-incremented", column.isAutoIncremented()));
-            out.println(String.format("  - %s=%s", "nullable", column.isNullable()));
-            out.println(String.format("  - %s=%s", "generated", column.isGenerated()));
-            out.println(String.format("  - %s=%s", "hidden", column.isHidden()));
-            out.println(
-                String.format("  - %s=%s", "part of primary key", column.isPartOfPrimaryKey()));
-            out.println(
-                String.format("  - %s=%s", "part of foreign key", column.isPartOfForeignKey()));
-            out.println(
-                String.format("  - %s=%s", "ordinal position", column.getOrdinalPosition()));
-            out.println(String.format("  - %s=%s", "remarks", column.getRemarks()));
-
-            out.println(String.format("  - %s=%s", "attibutes", ""));
-            final SortedMap<String, Object> columnAttributes =
-                new TreeMap<>(column.getAttributes());
-            for (final Entry<String, Object> columnAttribute : columnAttributes.entrySet()) {
-              out.println(
-                  String.format(
-                      "    ~ %s=%s", columnAttribute.getKey(), columnAttribute.getValue()));
-            }
-
-            assertThat(column.getType(), is(column.getColumnDataType()));
-          }
-
-          out.println();
-        }
-      }
-    }
-    assertThat(
-        outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
   }
 
   @Test
@@ -538,6 +485,11 @@ public class SchemaCrawlerTest {
     }
     assertThat(
         outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
+  }
+
+  @Test
+  public void tableColumns(final TestContext testContext) throws Exception {
+    verifyRetrieveTableColumns(catalog);
   }
 
   @Test
