@@ -27,48 +27,45 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
+import static java.util.Collections.emptyList;
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringJoiner;
 
-public class EnumDataTypeInfo {
+import schemacrawler.plugin.EnumDataTypeInfo.EnumDataTypeTypes;
+import schemacrawler.schema.TypedObject;
+
+public class EnumDataTypeInfo implements TypedObject<EnumDataTypeTypes> {
+
+  public enum EnumDataTypeTypes {
+    not_enumerated,
+    enumerated_data_type,
+    enumerated_column;
+  }
 
   public static final EnumDataTypeInfo EMPTY_ENUM_DATA_TYPE_INFO =
-      new EnumDataTypeInfo(false, false, new ArrayList<>());
+      new EnumDataTypeInfo(EnumDataTypeTypes.not_enumerated, emptyList());
 
-  private final boolean isColumnEnumerated;
-  private final boolean isColumnDataTypeEnumerated;
+  private final EnumDataTypeTypes type;
   private final List<String> enumValues;
 
-  public EnumDataTypeInfo(
-      final boolean isColumnEnumerated,
-      final boolean isColumnDataTypeEnumerated,
-      final List<String> enumValues) {
-    this.isColumnEnumerated = isColumnEnumerated;
-    this.isColumnDataTypeEnumerated = isColumnDataTypeEnumerated;
+  public EnumDataTypeInfo(final EnumDataTypeTypes type, final List<String> enumValues) {
+    this.type = requireNonNull(type, "No enumeration data-type type provided");
     this.enumValues = new ArrayList<>(requireNonNull(enumValues, "No enum values list provided"));
   }
 
   public List<String> getEnumValues() {
-    return enumValues;
+    return new ArrayList<>(enumValues);
   }
 
-  public boolean isColumnDataTypeEnumerated() {
-    return isColumnDataTypeEnumerated;
-  }
-
-  public boolean isColumnEnumerated() {
-    return isColumnEnumerated;
+  @Override
+  public EnumDataTypeTypes getType() {
+    return type;
   }
 
   @Override
   public String toString() {
-    return new StringJoiner(", ", EnumDataTypeInfo.class.getSimpleName() + "[", "]")
-        .add("isColumnEnumerated=" + isColumnEnumerated)
-        .add("isColumnDataTypeEnumerated=" + isColumnDataTypeEnumerated)
-        .add("enumValues=" + enumValues)
-        .toString();
+    return "EnumDataTypeInfo [" + type + ", " + enumValues + "]";
   }
 }
