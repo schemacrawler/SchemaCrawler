@@ -1,0 +1,178 @@
+/*
+========================================================================
+SchemaCrawler
+http://www.schemacrawler.com
+Copyright (c) 2000-2020, Sualeh Fatehi <sualeh@hotmail.com>.
+All rights reserved.
+------------------------------------------------------------------------
+
+SchemaCrawler is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+SchemaCrawler and the accompanying materials are made available under
+the terms of the Eclipse Public License v1.0, GNU General Public License
+v3 or GNU Lesser General Public License v3.
+
+You may elect to redistribute this code under any of these licenses.
+
+The Eclipse Public License is available at:
+http://www.eclipse.org/legal/epl-v10.html
+
+The GNU General Public License v3 and the GNU Lesser General Public
+License v3 are available at:
+http://www.gnu.org/licenses/
+
+========================================================================
+*/
+package schemacrawler.crawl;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.startsWith;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.arrayWithSize;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import java.math.BigInteger;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.DayOfWeek;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.BiConsumer;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.ResultsColumns;
+import schemacrawler.test.utility.TestContextParameterResolver;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import us.fatehi.utility.DatabaseUtility;
+
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@ExtendWith(TestContextParameterResolver.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+public class MetadataResultSetTest {
+
+  @Test
+  @DisplayName("Retrieve null values from results")
+  public void nullValues(final Connection connection) throws Exception {
+
+    final String columnName = "COLUMN1";
+
+    final BiConsumer<String, ResultSet> assertAll =
+        (dataType, resultSet) -> {
+          try {
+            final MetadataResultSet results = new MetadataResultSet(resultSet);
+
+            final int value1 = results.getInt(columnName, 0);
+            assertThat(value1, is(0));
+            final long value2 = results.getLong(columnName, 0L);
+            assertThat(value2, is(0L));
+            final short value3 = results.getShort(columnName, (short) 0);
+            assertThat(value3, is((short) 0));
+            final BigInteger value4 = results.getBigInteger(columnName);
+            assertThat(value4, is(nullValue()));
+            final String value5 = results.getString(columnName);
+            assertThat(value5, is(nullValue()));
+            final boolean value6 = results.getBoolean(columnName);
+            assertThat(value6, is(false));
+            final DayOfWeek value7 = results.getEnum(columnName, DayOfWeek.MONDAY);
+            assertThat(value7, is(DayOfWeek.MONDAY));
+
+            final List<Object> row = results.row();
+            assertThat(row, hasSize(1));
+            assertThat(row.get(0), is(nullValue()));
+
+            final String[] columnNames = results.getColumnNames();
+            assertThat(columnNames, arrayWithSize(1));
+            assertThat(columnNames[0], is(columnName));
+
+            final ResultsColumns resultsColumns = new ResultsCrawler(resultSet).crawl();
+            final ColumnDataType columnDataType =
+                resultsColumns.getColumns().get(0).getColumnDataType();
+            assertThat(dataType, startsWith(columnDataType.getName()));
+
+          } catch (SQLException e) {
+            fail(e);
+          }
+        };
+
+    try (final Statement statement = connection.createStatement(); ) {
+      for (final String dataType :
+          Arrays.asList(
+              "BIT(1)",
+              "DECIMAL",
+              "INTEGER",
+              "SMALLINT",
+              "BIGINT",
+              "DOUBLE",
+              "DATE",
+              "TIME",
+              "TIMESTAMP",
+              "CHARACTER(1) ",
+              "VARCHAR(1)",
+              "BINARY(1)",
+              "VARBINARY(1)")) {
+        final String sql =
+            String.format(
+                "SELECT CAST(NULL AS %s) AS " + columnName + " FROM (VALUES(0))", dataType);
+        try (final ResultSet results = DatabaseUtility.executeSql(statement, sql)) {
+          while (results.next()) {
+            assertAll.accept(dataType, results);
+          }
+        }
+      }
+    }
+  }
+
+  @Test
+  @DisplayName("Retrieve bad values from results")
+  public void badValues(final Connection connection) throws Exception {
+
+    final String columnName = "COLUMN1";
+
+    try (final Statement statement = connection.createStatement(); ) {
+
+      statement.execute("CREATE TABLE TABLE1(COLUMN1 VARCHAR(2))");
+      statement.execute("INSERT INTO TABLE1(COLUMN1) VALUES('A')");
+
+      try (final MetadataResultSet results =
+          new MetadataResultSet(DatabaseUtility.executeSql(statement, "SELECT * FROM TABLE1"))) {
+        while (results.next()) {
+          final int value1 = results.getInt(columnName, 0);
+          assertThat(value1, is(0));
+          final long value2 = results.getLong(columnName, 0L);
+          assertThat(value2, is(0L));
+          final short value3 = results.getShort(columnName, (short) 0);
+          assertThat(value3, is((short) 0));
+          final BigInteger value4 = results.getBigInteger(columnName);
+          assertThat(value4, is(nullValue()));
+          final String value5 = results.getString(columnName);
+          assertThat(value5, is("A"));
+          final boolean value6 = results.getBoolean(columnName);
+          assertThat(value6, is(false));
+          final DayOfWeek value7 = results.getEnum(columnName, DayOfWeek.MONDAY);
+          assertThat(value7, is(DayOfWeek.MONDAY));
+
+          final List<Object> row = results.row();
+          assertThat(row, hasSize(1));
+          assertThat(row.get(0), is("A"));
+
+          final String[] columnNames = results.getColumnNames();
+          assertThat(columnNames, arrayWithSize(1));
+          assertThat(columnNames[0], is(columnName));
+        }
+      }
+
+      statement.execute("DROP TABLE TABLE1");
+    }
+  }
+}
