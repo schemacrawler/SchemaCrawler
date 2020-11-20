@@ -131,9 +131,9 @@ public final class LintOptionsBuilder
   @Override
   public Config toConfig() {
     final Config config = super.toConfig();
-    config.setStringValue(LINTER_CONFIGS, linterConfigs);
-    config.setEnumValue(LINT_DISPATCH, lintDispatch);
-    config.setBooleanValue(RUN_ALL_LINTERS, runAllLinters);
+    config.putStringValue(LINTER_CONFIGS, linterConfigs);
+    config.putEnumValue(LINT_DISPATCH, lintDispatch);
+    config.putBooleanValue(RUN_ALL_LINTERS, runAllLinters);
     // Lint report output format is not written to the config
     return config;
   }

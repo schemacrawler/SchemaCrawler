@@ -266,11 +266,11 @@ public final class Config implements Options, Map<String, Object> {
     return config.remove(key);
   }
 
-  public void setBooleanValue(final String propertyName, final boolean value) {
+  public void putBooleanValue(final String propertyName, final boolean value) {
     put(propertyName, Boolean.toString(value));
   }
 
-  public <E extends Enum<E>> void setEnumValue(final String propertyName, final E value) {
+  public <E extends Enum<E>> void putEnumValue(final String propertyName, final E value) {
     if (value == null) {
       remove(propertyName);
     } else {
@@ -278,7 +278,7 @@ public final class Config implements Options, Map<String, Object> {
     }
   }
 
-  public void setStringValue(final String propertyName, final String value) {
+  public void putStringValue(final String propertyName, final String value) {
     if (value == null) {
       remove(propertyName);
     } else {

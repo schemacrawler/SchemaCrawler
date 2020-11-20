@@ -96,7 +96,7 @@ public final class OperationOptionsBuilder
   @Override
   public Config toConfig() {
     final Config config = super.toConfig();
-    config.setBooleanValue(SHOW_LOBS, isShowLobs);
+    config.putBooleanValue(SHOW_LOBS, isShowLobs);
     return config;
   }
 

@@ -265,22 +265,22 @@ public abstract class BaseSchemaTextOptionsBuilder<
   public Config toConfig() {
     final Config config = super.toConfig();
 
-    config.setBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES, isShowStandardColumnTypeNames);
-    config.setBooleanValue(SHOW_ORDINAL_NUMBERS, isShowOrdinalNumbers);
-    config.setBooleanValue(SHOW_ROW_COUNTS, isShowRowCounts);
+    config.putBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES, isShowStandardColumnTypeNames);
+    config.putBooleanValue(SHOW_ORDINAL_NUMBERS, isShowOrdinalNumbers);
+    config.putBooleanValue(SHOW_ROW_COUNTS, isShowRowCounts);
 
-    config.setBooleanValue(HIDE_FOREIGN_KEY_NAMES, isHideForeignKeyNames);
-    config.setBooleanValue(HIDE_PRIMARY_KEY_NAMES, isHidePrimaryKeyNames);
-    config.setBooleanValue(HIDE_INDEX_NAMES, isHideIndexNames);
-    config.setBooleanValue(HIDE_TRIGGER_NAMES, isHideTriggerNames);
-    config.setBooleanValue(HIDE_ROUTINE_SPECIFIC_NAMES, isHideRoutineSpecificNames);
-    config.setBooleanValue(HIDE_CONSTRAINT_NAMES, isHideTableConstraintNames);
-    config.setBooleanValue(HIDE_REMARKS, isHideRemarks);
-    config.setBooleanValue(SHOW_WEAK_ASSOCIATIONS, isShowWeakAssociations);
+    config.putBooleanValue(HIDE_FOREIGN_KEY_NAMES, isHideForeignKeyNames);
+    config.putBooleanValue(HIDE_PRIMARY_KEY_NAMES, isHidePrimaryKeyNames);
+    config.putBooleanValue(HIDE_INDEX_NAMES, isHideIndexNames);
+    config.putBooleanValue(HIDE_TRIGGER_NAMES, isHideTriggerNames);
+    config.putBooleanValue(HIDE_ROUTINE_SPECIFIC_NAMES, isHideRoutineSpecificNames);
+    config.putBooleanValue(HIDE_CONSTRAINT_NAMES, isHideTableConstraintNames);
+    config.putBooleanValue(HIDE_REMARKS, isHideRemarks);
+    config.putBooleanValue(SHOW_WEAK_ASSOCIATIONS, isShowWeakAssociations);
 
-    config.setBooleanValue(
+    config.putBooleanValue(
         SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS, isAlphabeticalSortForForeignKeys);
-    config.setBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_INDEXES, isAlphabeticalSortForIndexes);
+    config.putBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_INDEXES, isAlphabeticalSortForIndexes);
 
     return config;
   }

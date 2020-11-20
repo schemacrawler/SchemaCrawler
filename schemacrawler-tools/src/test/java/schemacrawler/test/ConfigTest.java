@@ -88,7 +88,7 @@ public class ConfigTest {
 
     assertThat(config.hasValue("key"), is(false));
 
-    config.setBooleanValue("key", false);
+    config.putBooleanValue("key", false);
 
     assertThat(config.get("key"), is(Boolean.FALSE.toString()));
   }
@@ -99,11 +99,11 @@ public class ConfigTest {
 
     assertThat(config.hasValue("key"), is(false));
 
-    config.setEnumValue("key", DayOfWeek.MONDAY);
+    config.putEnumValue("key", DayOfWeek.MONDAY);
 
     assertThat(config.get("key"), is("MONDAY"));
 
-    config.setEnumValue("key", null);
+    config.putEnumValue("key", null);
 
     assertThat(config.hasValue("key"), is(false));
   }
@@ -114,11 +114,11 @@ public class ConfigTest {
 
     assertThat(config.hasValue("key"), is(false));
 
-    config.setStringValue("key", "value");
+    config.putStringValue("key", "value");
 
     assertThat(config.get("key"), is("value"));
 
-    config.setStringValue("key", null);
+    config.putStringValue("key", null);
 
     assertThat(config.hasValue("key"), is(false));
   }
