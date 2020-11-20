@@ -1,5 +1,7 @@
 package schemacrawler.test;
 
+import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;
+import static com.github.npathai.hamcrestopt.OptionalMatchers.isPresentAndIs;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -13,6 +15,7 @@ import java.util.Map;
 import org.apache.commons.collections.keyvalue.DefaultMapEntry;
 import org.junit.jupiter.api.Test;
 
+import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.tools.options.Config;
 
 public class ConfigTest {
@@ -132,6 +135,34 @@ public class ConfigTest {
     config.put("key", "blah");
 
     assertThat(config.getLongValue("key", -1), is(-1L));
+  }
+
+  @Test
+  public void getOptionalInclusionRule() {
+    final Config config = new Config();
+
+    assertThat(config.getOptionalInclusionRule("in", "ex"), is(isEmpty()));
+
+    config.putStringValue("in", ".*");
+    config.putStringValue("ex", "exc");
+
+    assertThat(
+        config.getOptionalInclusionRule("in", "ex"),
+        is(isPresentAndIs(new RegularExpressionRule(".*", "exc"))));
+
+    config.putStringValue("in", ".*");
+    config.putStringValue("ex", null);
+
+    assertThat(
+        config.getOptionalInclusionRule("in", "ex"),
+        is(isPresentAndIs(new RegularExpressionRule(".*", null))));
+
+    config.putStringValue("in", null);
+    config.putStringValue("ex", "exc");
+
+    assertThat(
+        config.getOptionalInclusionRule("in", "ex"),
+        is(isPresentAndIs(new RegularExpressionRule(null, "exc"))));
   }
 
   @Test
