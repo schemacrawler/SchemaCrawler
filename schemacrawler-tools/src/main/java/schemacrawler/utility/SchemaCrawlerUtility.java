@@ -28,8 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.utility;
 
-import static schemacrawler.tools.options.Config.getSystemConfigurationProperty;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -48,6 +46,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import us.fatehi.utility.DatabaseUtility;
+import us.fatehi.utility.PropertiesUtility;
 import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.string.ObjectToStringFormat;
 
@@ -138,7 +137,7 @@ public final class SchemaCrawlerUtility {
     LOGGER.log(Level.INFO, "Using database plugin for " + databaseServerType);
 
     final String withoutDatabasePlugin =
-        getSystemConfigurationProperty("SC_WITHOUT_DATABASE_PLUGIN", "");
+        PropertiesUtility.getSystemConfigurationProperty("SC_WITHOUT_DATABASE_PLUGIN", "");
 
     if (!databaseServerType.isUnknownDatabaseSystem()
         && databaseServerType

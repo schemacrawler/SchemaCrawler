@@ -28,17 +28,11 @@ http://www.gnu.org/licenses/
 package us.fatehi.utility;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Files.newBufferedWriter;
-import static java.nio.file.StandardOpenOption.CREATE;
-import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
-import static java.nio.file.StandardOpenOption.WRITE;
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.io.Writer;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -53,6 +47,27 @@ import us.fatehi.utility.string.StringFormat;
 public class PropertiesUtility {
 
   private static final Logger LOGGER = Logger.getLogger(PropertiesUtility.class.getName());
+
+  public static String getSystemConfigurationProperty(final String key, final String defaultValue) {
+    final String systemPropertyValue = System.getProperty(key);
+    if (!isBlank(systemPropertyValue)) {
+      LOGGER.log(
+          Level.CONFIG,
+          new StringFormat("Using value from system property <%s=%s>", key, systemPropertyValue));
+      return systemPropertyValue;
+    }
+
+    final String envVariableValue = System.getenv(key);
+    if (!isBlank(envVariableValue)) {
+      LOGGER.log(
+          Level.CONFIG,
+          new StringFormat(
+              "Using value from enivronmental variable <%s=%s>", key, envVariableValue));
+      return envVariableValue;
+    }
+
+    return defaultValue;
+  }
 
   /**
    * Loads a properties file.
@@ -90,15 +105,6 @@ public class PropertiesUtility {
       }
     }
     return propertiesMap;
-  }
-
-  public static Path savePropertiesToTempFile(final Properties properties) throws IOException {
-    requireNonNull(properties, "No properties provided");
-    final Path propertiesFile = Files.createTempFile("schemacrawler", ".properties");
-    final Writer writer =
-        newBufferedWriter(propertiesFile, UTF_8, WRITE, CREATE, TRUNCATE_EXISTING);
-    properties.store(writer, "Temporary file to hold properties");
-    return propertiesFile;
   }
 
   private PropertiesUtility() {

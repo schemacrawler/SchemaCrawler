@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.integration.diagram;
 
-import static schemacrawler.tools.options.Config.getSystemConfigurationProperty;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.join;
 
@@ -42,6 +41,7 @@ import java.util.logging.Level;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.text.schema.BaseSchemaTextOptionsBuilder;
+import us.fatehi.utility.PropertiesUtility;
 import us.fatehi.utility.string.StringFormat;
 
 public final class DiagramOptionsBuilder
@@ -242,6 +242,6 @@ public final class DiagramOptionsBuilder
       return scGraphvizOptsCfg;
     }
 
-    return getSystemConfigurationProperty(SC_GRAPHVIZ_OPTS, "");
+    return PropertiesUtility.getSystemConfigurationProperty(SC_GRAPHVIZ_OPTS, "");
   }
 }

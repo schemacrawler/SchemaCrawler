@@ -83,7 +83,7 @@ public final class DatabaseTestUtility {
     final Properties properties =
         PropertiesUtility.loadProperties(
             new ClasspathInputResource("/hsqldb.INFORMATION_SCHEMA.config.properties"));
-    return PropertiesUtility.savePropertiesToTempFile(properties);
+    return TestUtility.savePropertiesToTempFile(properties);
   }
 
   private static SchemaCrawlerOptions getMaximumSchemaCrawlerOptions() {

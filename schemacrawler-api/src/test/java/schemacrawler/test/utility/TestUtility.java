@@ -34,6 +34,7 @@ import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.exists;
 import static java.nio.file.Files.move;
 import static java.nio.file.Files.newBufferedReader;
+import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.Files.newInputStream;
 import static java.nio.file.Files.newOutputStream;
 import static java.nio.file.Files.size;
@@ -59,6 +60,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Reader;
+import java.io.Writer;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
@@ -66,6 +68,7 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -74,6 +77,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
@@ -248,6 +252,15 @@ public final class TestUtility {
   public static Reader readerForResource(final String resource, final Charset encoding)
       throws IOException {
     return readerForResource(resource, encoding, false);
+  }
+
+  public static Path savePropertiesToTempFile(final Properties properties) throws IOException {
+    requireNonNull(properties, "No properties provided");
+    final Path propertiesFile = Files.createTempFile("schemacrawler", ".properties");
+    final Writer writer =
+        newBufferedWriter(propertiesFile, UTF_8, WRITE, CREATE, TRUNCATE_EXISTING);
+    properties.store(writer, "Temporary file to hold properties");
+    return propertiesFile;
   }
 
   public static void validateDiagram(final Path diagramFile) throws IOException {

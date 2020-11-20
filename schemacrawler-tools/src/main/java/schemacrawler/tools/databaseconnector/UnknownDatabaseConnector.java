@@ -27,12 +27,11 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.databaseconnector;
 
-import static schemacrawler.tools.options.Config.getSystemConfigurationProperty;
-
 import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import us.fatehi.utility.PropertiesUtility;
 
 final class UnknownDatabaseConnector extends DatabaseConnector {
 
@@ -53,7 +52,7 @@ final class UnknownDatabaseConnector extends DatabaseConnector {
         url -> false,
         (informationSchemaViewsBuilder, connection) -> {},
         (schemaRetrievalOptionsBuilder, connection) -> {},
-        (limitOptionsBuilder) -> {},
+        limitOptionsBuilder -> {},
         () -> DatabaseConnectionUrlBuilder.builder(""));
   }
 
@@ -64,7 +63,7 @@ final class UnknownDatabaseConnector extends DatabaseConnector {
         super.newDatabaseConnectionSource(connectionOptions);
 
     final String withoutDatabasePlugin =
-        getSystemConfigurationProperty(
+        PropertiesUtility.getSystemConfigurationProperty(
             "SC_IGNORE_MISSING_DATABASE_PLUGIN", Boolean.FALSE.toString());
     if (!Boolean.valueOf(withoutDatabasePlugin)) {
       // Check if SchemaCrawler database plugin is in use

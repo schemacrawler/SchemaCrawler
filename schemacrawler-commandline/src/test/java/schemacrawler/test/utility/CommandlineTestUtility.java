@@ -49,7 +49,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.options.OutputFormat;
-import us.fatehi.utility.PropertiesUtility;
 
 public final class CommandlineTestUtility {
 
@@ -64,7 +63,7 @@ public final class CommandlineTestUtility {
     if (loadHsqlDbInformationSchemaViews) {
       propertiesFile = DatabaseTestUtility.tempHsqldbConfig();
     } else {
-      propertiesFile = PropertiesUtility.savePropertiesToTempFile(new Properties());
+      propertiesFile = TestUtility.savePropertiesToTempFile(new Properties());
     }
 
     return commandlineExecution(
@@ -134,8 +133,8 @@ public final class CommandlineTestUtility {
     return commandlineExecution(connectionInfo, command, argsMap, (Path) null, outputFormatValue);
   }
 
-  public static ShellState createLoadedSchemaCrawlerShellState(
-      final Connection connection) throws SchemaCrawlerException {
+  public static ShellState createLoadedSchemaCrawlerShellState(final Connection connection)
+      throws SchemaCrawlerException {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
@@ -199,7 +198,7 @@ public final class CommandlineTestUtility {
   public static Path writeConfigToTempFile(final Map<String, ?> config) throws IOException {
     final Properties configProperties = new Properties();
     configProperties.putAll(config);
-    return PropertiesUtility.savePropertiesToTempFile(configProperties);
+    return TestUtility.savePropertiesToTempFile(configProperties);
   }
 
   private static Path commandlineExecution(
