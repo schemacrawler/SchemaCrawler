@@ -48,6 +48,93 @@ public class ConfigTest {
   }
 
   @Test
+  public void getBooleanValue() {
+    final Config config = new Config();
+
+    assertThat(config.getBooleanValue("key"), is(false));
+
+    config.putBooleanValue("key", false);
+
+    assertThat(config.getBooleanValue("key"), is(false));
+
+    config.putBooleanValue("key", true);
+
+    assertThat(config.getBooleanValue("key"), is(true));
+
+    config.put("key", "blah");
+
+    assertThat(config.getBooleanValue("key"), is(false));
+  }
+
+  @Test
+  public void getDoubleValue() {
+    final Config config = new Config();
+
+    assertThat(config.getDoubleValue("key", -1), is(-1d));
+
+    config.put("key", "1.1");
+
+    assertThat(config.getDoubleValue("key", -1), is(1.1));
+
+    config.put("key", "blah");
+
+    assertThat(config.getDoubleValue("key", -1), is(-1d));
+  }
+
+  @Test
+  public void getEnumValue() {
+    final Config config = new Config();
+
+    assertThat(config.getEnumValue("key", DayOfWeek.MONDAY), is(DayOfWeek.MONDAY));
+
+    config.put("key", DayOfWeek.FRIDAY.name());
+
+    assertThat(config.getEnumValue("key", DayOfWeek.MONDAY), is(DayOfWeek.FRIDAY));
+
+    config.put("key", "blah");
+
+    assertThat(config.getEnumValue("key", DayOfWeek.MONDAY), is(DayOfWeek.MONDAY));
+  }
+
+  @Test
+  public void getIntegerValue() {
+    final Config config = new Config();
+
+    assertThat(config.getIntegerValue("key", -1), is(-1));
+
+    config.put("key", "1");
+
+    assertThat(config.getIntegerValue("key", -1), is(1));
+
+    config.put("key", "1.1");
+
+    assertThat(config.getIntegerValue("key", -1), is(-1));
+
+    config.put("key", "blah");
+
+    assertThat(config.getIntegerValue("key", -1), is(-1));
+  }
+
+  @Test
+  public void getLongValue() {
+    final Config config = new Config();
+
+    assertThat(config.getLongValue("key", -1), is(-1L));
+
+    config.put("key", "1");
+
+    assertThat(config.getLongValue("key", -1), is(1L));
+
+    config.put("key", "1.1");
+
+    assertThat(config.getLongValue("key", -1), is(-1L));
+
+    config.put("key", "blah");
+
+    assertThat(config.getLongValue("key", -1), is(-1L));
+  }
+
+  @Test
   public void notEmptyConfig() {
     final Config config = new Config();
 
