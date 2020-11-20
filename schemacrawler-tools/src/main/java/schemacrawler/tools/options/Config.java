@@ -261,11 +261,6 @@ public final class Config implements Options, Map<String, Object> {
     config.putAll(m);
   }
 
-  @Override
-  public Object remove(final Object key) {
-    return config.remove(key);
-  }
-
   public void putBooleanValue(final String propertyName, final boolean value) {
     put(propertyName, Boolean.toString(value));
   }
@@ -284,6 +279,11 @@ public final class Config implements Options, Map<String, Object> {
     } else {
       put(propertyName, value);
     }
+  }
+
+  @Override
+  public Object remove(final Object key) {
+    return config.remove(key);
   }
 
   @Override
