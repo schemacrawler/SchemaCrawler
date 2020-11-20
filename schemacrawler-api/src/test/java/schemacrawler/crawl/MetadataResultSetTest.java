@@ -110,6 +110,42 @@ public class MetadataResultSetTest {
   }
 
   @Test
+  @DisplayName("Retrieve boolean values from results")
+  public void booleanValues(final Connection connection) throws Exception {
+
+    final String column1Name = "COLUMN1";
+
+    try (final Statement statement = connection.createStatement(); ) {
+      for (final String value : Arrays.asList("1", "TRUE", "True", "true", "YES", "Yes", "yes")) {
+        final String sql =
+            String.format("SELECT '%s' AS " + column1Name + " FROM (VALUES(0))", value);
+        try (final MetadataResultSet results =
+            new MetadataResultSet(DatabaseUtility.executeSql(statement, sql))) {
+          while (results.next()) {
+            final boolean booleanValue = results.getBoolean(column1Name);
+            assertThat(
+                String.format("Incorrect boolean value for '%s'", value), booleanValue, is(true));
+          }
+        }
+      }
+
+      for (final String value :
+          Arrays.asList("0", "FALSE", "False", "false", "NO", "No", "no", "", "unknown")) {
+        final String sql =
+            String.format("SELECT '%s' AS " + column1Name + " FROM (VALUES(0))", value);
+        try (final MetadataResultSet results =
+            new MetadataResultSet(DatabaseUtility.executeSql(statement, sql))) {
+          while (results.next()) {
+            final boolean booleanValue = results.getBoolean(column1Name);
+            assertThat(
+                String.format("Incorrect boolean value for '%s'", value), booleanValue, is(false));
+          }
+        }
+      }
+    }
+  }
+
+  @Test
   @DisplayName("Retrieve large object values from results")
   public void largeObjectValues(final Connection connection) throws Exception {
 
