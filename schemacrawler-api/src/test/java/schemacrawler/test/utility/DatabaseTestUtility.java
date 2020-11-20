@@ -74,14 +74,14 @@ public final class DatabaseTestUtility {
 
   public static Map<String, String> loadHsqldbConfig() throws IOException {
     final Properties properties =
-        PropertiesUtility.loadProperties(
+        TestUtility.loadProperties(
             new ClasspathInputResource("/hsqldb.INFORMATION_SCHEMA.config.properties"));
     return PropertiesUtility.propertiesMap(properties);
   }
 
   public static Path tempHsqldbConfig() throws IOException {
     final Properties properties =
-        PropertiesUtility.loadProperties(
+        TestUtility.loadProperties(
             new ClasspathInputResource("/hsqldb.INFORMATION_SCHEMA.config.properties"));
     return TestUtility.savePropertiesToTempFile(properties);
   }

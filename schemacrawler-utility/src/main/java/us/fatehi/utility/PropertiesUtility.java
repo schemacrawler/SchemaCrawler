@@ -27,12 +27,8 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 
-import java.io.IOException;
-import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -41,7 +37,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.string.StringFormat;
 
 public class PropertiesUtility {
@@ -67,27 +62,6 @@ public class PropertiesUtility {
     }
 
     return defaultValue;
-  }
-
-  /**
-   * Loads a properties file.
-   *
-   * @param inputResource Properties resource.
-   * @return Properties
-   */
-  public static Properties loadProperties(final InputResource inputResource) {
-    requireNonNull(inputResource, "No input resource provided");
-    LOGGER.log(Level.INFO, new StringFormat("Loading properties from <%s>", inputResource));
-
-    try (final Reader reader = inputResource.openNewInputReader(UTF_8); ) {
-      final Properties properties = new Properties();
-      properties.load(reader);
-      return properties;
-    } catch (final IOException e) {
-      LOGGER.log(
-          Level.WARNING, String.format("Cannot load properties from <%s>", inputResource), e);
-      return new Properties();
-    }
   }
 
   /**

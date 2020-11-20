@@ -99,6 +99,7 @@ import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import us.fatehi.utility.IOUtility;
+import us.fatehi.utility.ioresource.InputResource;
 
 public final class TestUtility {
 
@@ -224,6 +225,24 @@ public final class TestUtility {
       javaSpecificationVersionInt = (int) javaSpecificationVersionDouble;
     }
     return String.valueOf(javaSpecificationVersionInt);
+  }
+
+  /**
+   * Loads a properties file.
+   *
+   * @param inputResource Properties resource.
+   * @return Properties
+   */
+  public static Properties loadProperties(final InputResource inputResource) {
+    requireNonNull(inputResource, "No input resource provided");
+
+    try (final Reader reader = inputResource.openNewInputReader(UTF_8); ) {
+      final Properties properties = new Properties();
+      properties.load(reader);
+      return properties;
+    } catch (final IOException e) {
+      return new Properties();
+    }
   }
 
   public static SchemaRetrievalOptions newSchemaRetrievalOptions() throws IOException {
