@@ -30,7 +30,7 @@ public class ConfigTest {
 
   @Test
   public void emptyConfig1a() {
-    final Config config = new Config(null);
+    final Config config = new Config((Config) null);
     assertEmptyConfig(config);
   }
 
