@@ -30,6 +30,7 @@ package schemacrawler.inclusionrule;
 
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
@@ -88,25 +89,12 @@ public final class RegularExpressionRule implements InclusionRuleWithRegularExpr
     if (this == obj) {
       return true;
     }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
+    if (!(obj instanceof RegularExpressionRule)) {
       return false;
     }
     final RegularExpressionRule other = (RegularExpressionRule) obj;
-    if (patternExclude == null) {
-      if (other.patternExclude != null) {
-        return false;
-      }
-    } else if (!patternExclude.pattern().equals(other.patternExclude.pattern())) {
-      return false;
-    }
-    if (patternInclude == null) {
-      return other.patternInclude == null;
-    } else {
-      return patternInclude.pattern().equals(other.patternInclude.pattern());
-    }
+    return patternExclude.pattern().equals(other.patternExclude.pattern())
+        && patternInclude.pattern().equals(other.patternInclude.pattern());
   }
 
   @Override
@@ -121,11 +109,7 @@ public final class RegularExpressionRule implements InclusionRuleWithRegularExpr
 
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (patternExclude == null ? 0 : patternExclude.hashCode());
-    result = prime * result + (patternInclude == null ? 0 : patternInclude.hashCode());
-    return result;
+    return Objects.hash(patternExclude.pattern(), patternInclude.pattern());
   }
 
   /** {@inheritDoc} */
