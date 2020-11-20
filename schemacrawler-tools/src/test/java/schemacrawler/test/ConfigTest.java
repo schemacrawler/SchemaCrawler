@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.nullValue;
 
+import java.time.DayOfWeek;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,6 +80,47 @@ public class ConfigTest {
 
     final Config config = new Config(map);
     assertNotEmptyConfig(config);
+  }
+
+  @Test
+  public void setBooleanValue() {
+    final Config config = new Config();
+
+    assertThat(config.hasValue("key"), is(false));
+
+    config.setBooleanValue("key", false);
+
+    assertThat(config.get("key"), is(Boolean.FALSE.toString()));
+  }
+
+  @Test
+  public void setEnumValue() {
+    final Config config = new Config();
+
+    assertThat(config.hasValue("key"), is(false));
+
+    config.setEnumValue("key", DayOfWeek.MONDAY);
+
+    assertThat(config.get("key"), is("MONDAY"));
+
+    config.setEnumValue("key", null);
+
+    assertThat(config.hasValue("key"), is(false));
+  }
+
+  @Test
+  public void setStringValue() {
+    final Config config = new Config();
+
+    assertThat(config.hasValue("key"), is(false));
+
+    config.setStringValue("key", "value");
+
+    assertThat(config.get("key"), is("value"));
+
+    config.setStringValue("key", null);
+
+    assertThat(config.hasValue("key"), is(false));
   }
 
   private void assertEmptyConfig(final Config config) {
