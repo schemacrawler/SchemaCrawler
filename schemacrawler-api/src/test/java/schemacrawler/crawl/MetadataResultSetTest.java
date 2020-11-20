@@ -56,86 +56,13 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.utility.BinaryData;
 import us.fatehi.utility.DatabaseUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class MetadataResultSetTest {
-
-  @Test
-  @DisplayName("Retrieve null values from results")
-  public void nullValues(final Connection connection) throws Exception {
-
-    final String columnName = "COLUMN1";
-
-    final BiConsumer<String, ResultSet> assertAll =
-        (dataType, resultSet) -> {
-          try {
-            final MetadataResultSet results = new MetadataResultSet(resultSet);
-
-            final int value1 = results.getInt(columnName, 0);
-            assertThat(value1, is(0));
-            final long value2 = results.getLong(columnName, 0L);
-            assertThat(value2, is(0L));
-            final short value3 = results.getShort(columnName, (short) 0);
-            assertThat(value3, is((short) 0));
-            final BigInteger value4 = results.getBigInteger(columnName);
-            assertThat(value4, is(nullValue()));
-            final String value5 = results.getString(columnName);
-            assertThat(value5, is(nullValue()));
-            final boolean value6 = results.getBoolean(columnName);
-            assertThat(value6, is(false));
-            final DayOfWeek value7 = results.getEnum(columnName, DayOfWeek.MONDAY);
-            assertThat(value7, is(DayOfWeek.MONDAY));
-
-            final List<Object> row = results.row();
-            assertThat(row, hasSize(1));
-            assertThat(row.get(0), is(nullValue()));
-
-            final String[] columnNames = results.getColumnNames();
-            assertThat(columnNames, arrayWithSize(1));
-            assertThat(columnNames[0], is(columnName));
-
-            final ResultsColumns resultsColumns = new ResultsCrawler(resultSet).crawl();
-            final ColumnDataType columnDataType =
-                resultsColumns.getColumns().get(0).getColumnDataType();
-            assertThat(dataType, containsString(columnDataType.getName()));
-
-          } catch (SQLException e) {
-            fail(e);
-          }
-        };
-
-    try (final Statement statement = connection.createStatement(); ) {
-      for (final String dataType :
-          Arrays.asList(
-              "BIT(1)",
-              "DECIMAL",
-              "INTEGER",
-              "SMALLINT",
-              "BIGINT",
-              "DOUBLE",
-              "DATE",
-              "TIME",
-              "TIMESTAMP",
-              "CHARACTER(1) ",
-              "VARCHAR(1)",
-              "LONGVARCHAR",
-              "BINARY(1)",
-              "VARBINARY(1)",
-              "LONGVARBINARY")) {
-        final String sql =
-            String.format(
-                "SELECT CAST(NULL AS %s) AS " + columnName + " FROM (VALUES(0))", dataType);
-        try (final ResultSet results = DatabaseUtility.executeSql(statement, sql)) {
-          while (results.next()) {
-            assertAll.accept(dataType, results);
-          }
-        }
-      }
-    }
-  }
 
   @Test
   @DisplayName("Retrieve bad values from results")
@@ -193,18 +120,23 @@ public class MetadataResultSetTest {
           try {
             final MetadataResultSet results = new MetadataResultSet(resultSet);
 
-            final String value5 = results.getString(columnName);
-            if (dataType.contains("BINARY")) {
-              assertThat(value5, is("41"));
+            final String stringValue = results.getString(columnName);
+            if (dataType.equals("BLOB")) {
+              // BLOBs are not read
+              assertThat(stringValue, is(nullValue()));
+            } else if (dataType.contains("BINARY")) {
+              assertThat(stringValue, is("41"));
             } else {
-              assertThat(value5, is("A"));
+              assertThat(stringValue, is("A"));
             }
 
             final List<Object> row = results.row();
             assertThat(row, hasSize(1));
             final Object objectValue = row.get(0);
-            System.out.println("[object] " + dataType + " \"" + objectValue + "\"");
-            if (dataType.contains("BINARY")) {
+            if (dataType.equals("BLOB")) {
+              // BLOBs are not read
+              assertThat(String.valueOf(objectValue), is(new BinaryData().toString()));
+            } else if (dataType.contains("BINARY")) {
               assertThat(objectValue, is(new byte[] {65}));
             } else {
               assertThat(objectValue, is("A"));
@@ -219,7 +151,7 @@ public class MetadataResultSetTest {
                 resultsColumns.getColumns().get(0).getColumnDataType();
             assertThat(dataType, containsString(columnDataType.getName()));
 
-          } catch (SQLException e) {
+          } catch (final SQLException e) {
             fail(e);
           }
         };
@@ -227,17 +159,12 @@ public class MetadataResultSetTest {
     try (final Statement statement = connection.createStatement(); ) {
       for (final String dataType :
           Arrays.asList(
-              "CHARACTER(1) ",
-              "VARCHAR(1)",
-              "LONGVARCHAR",
-              "BINARY(1)",
-              "VARBINARY(1)",
-              "LONGVARBINARY")) {
+              "CHARACTER(1) ", "VARCHAR(1)", "CLOB", "BINARY(1)", "VARBINARY(1)", "BLOB")) {
 
         statement.execute("DROP TABLE IF EXISTS TABLE1");
         statement.execute(String.format("CREATE TABLE TABLE1(COLUMN1 %s)", dataType));
 
-        if (dataType.contains("BINARY")) {
+        if (dataType.contains("BINARY") || dataType.equals("BLOB")) {
           final PreparedStatement preparedStatement =
               connection.prepareStatement("INSERT INTO TABLE1(COLUMN1) VALUES(?)");
           preparedStatement.setBinaryStream(1, new ByteArrayInputStream("A".getBytes("UTF-8")));
@@ -255,6 +182,88 @@ public class MetadataResultSetTest {
       }
     } finally {
       DatabaseUtility.executeSql(connection.createStatement(), "DROP TABLE IF EXISTS TABLE1");
+    }
+  }
+
+  @Test
+  @DisplayName("Retrieve null values from results")
+  public void nullValues(final Connection connection) throws Exception {
+
+    final String column1Name = "COLUMN1";
+    final String column2Name = "COLUMN2";
+
+    final BiConsumer<String, MetadataResultSet> asserts =
+        (columnName, results) -> {
+          final int value1 = results.getInt(columnName, 0);
+          assertThat(value1, is(0));
+          final long value2 = results.getLong(columnName, 0L);
+          assertThat(value2, is(0L));
+          final short value3 = results.getShort(columnName, (short) 0);
+          assertThat(value3, is((short) 0));
+          final BigInteger value4 = results.getBigInteger(columnName);
+          assertThat(value4, is(nullValue()));
+          final String value5 = results.getString(columnName);
+          assertThat(value5, is(nullValue()));
+          final boolean value6 = results.getBoolean(columnName);
+          assertThat(value6, is(false));
+          final DayOfWeek value7 = results.getEnum(columnName, DayOfWeek.MONDAY);
+          assertThat(value7, is(DayOfWeek.MONDAY));
+        };
+
+    final BiConsumer<String, ResultSet> assertAll =
+        (dataType, resultSet) -> {
+          try {
+
+            final MetadataResultSet results = new MetadataResultSet(resultSet);
+
+            asserts.accept(column1Name, results);
+            asserts.accept(column2Name, results);
+
+            final List<Object> row = results.row();
+            assertThat(row, hasSize(1));
+            assertThat(row.get(0), is(nullValue()));
+
+            final String[] columnNames = results.getColumnNames();
+            assertThat(columnNames, arrayWithSize(1));
+            assertThat(columnNames[0], is(column1Name));
+
+            final ResultsColumns resultsColumns = new ResultsCrawler(resultSet).crawl();
+            final ColumnDataType columnDataType =
+                resultsColumns.getColumns().get(0).getColumnDataType();
+            assertThat(dataType, containsString(columnDataType.getName()));
+
+          } catch (final SQLException e) {
+            fail(e);
+          }
+        };
+
+    try (final Statement statement = connection.createStatement(); ) {
+      for (final String dataType :
+          Arrays.asList(
+              "BIT(1)",
+              "DECIMAL",
+              "INTEGER",
+              "SMALLINT",
+              "BIGINT",
+              "DOUBLE",
+              "DATE",
+              "TIME",
+              "TIMESTAMP",
+              "CHARACTER(1) ",
+              "VARCHAR(1)",
+              "LONGVARCHAR",
+              "BINARY(1)",
+              "VARBINARY(1)",
+              "LONGVARBINARY")) {
+        final String sql =
+            String.format(
+                "SELECT CAST(NULL AS %s) AS " + column1Name + " FROM (VALUES(0))", dataType);
+        try (final ResultSet results = DatabaseUtility.executeSql(statement, sql)) {
+          while (results.next()) {
+            assertAll.accept(dataType, results);
+          }
+        }
+      }
     }
   }
 }
