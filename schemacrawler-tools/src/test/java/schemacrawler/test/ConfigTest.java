@@ -83,7 +83,7 @@ public class ConfigTest {
   }
 
   @Test
-  public void setBooleanValue() {
+  public void putBooleanValue() {
     final Config config = new Config();
 
     assertThat(config.hasValue("key"), is(false));
@@ -94,7 +94,7 @@ public class ConfigTest {
   }
 
   @Test
-  public void setEnumValue() {
+  public void putEnumValue() {
     final Config config = new Config();
 
     assertThat(config.hasValue("key"), is(false));
@@ -109,7 +109,7 @@ public class ConfigTest {
   }
 
   @Test
-  public void setStringValue() {
+  public void putStringValue() {
     final Config config = new Config();
 
     assertThat(config.hasValue("key"), is(false));
