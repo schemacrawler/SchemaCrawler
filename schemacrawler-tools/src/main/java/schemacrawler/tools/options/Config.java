@@ -86,9 +86,7 @@ public final class Config implements Options, Map<String, Object> {
 
   public Config(final Config config) {
     this();
-    if (config != null) {
-      putAll(config);
-    }
+    putAll(config);
   }
 
   /**
@@ -98,9 +96,7 @@ public final class Config implements Options, Map<String, Object> {
    */
   public Config(final Map<String, Object> config) {
     this();
-    if (config != null) {
-      putAll(config);
-    }
+    putAll(config);
   }
 
   @Override

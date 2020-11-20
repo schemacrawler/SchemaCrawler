@@ -6,6 +6,9 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.nullValue;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.commons.collections.keyvalue.DefaultMapEntry;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +19,69 @@ public class ConfigTest {
   @Test
   public void emptyConfig() {
     final Config config = new Config();
+    assertEmptyConfig(config);
+  }
 
+  @Test
+  public void emptyConfig1() {
+    final Config config = new Config(new HashMap<>());
+    assertEmptyConfig(config);
+  }
+
+  @Test
+  public void emptyConfig1a() {
+    final Config config = new Config(null);
+    assertEmptyConfig(config);
+  }
+
+  @Test
+  public void emptyConfig2() {
+    final Config config = new Config(new Config());
+    assertEmptyConfig(config);
+  }
+
+  @Test
+  public void emptyConfig2b() {
+    final Config config = new Config((Map) null);
+    assertEmptyConfig(config);
+  }
+
+  @Test
+  public void notEmptyConfig() {
+    final Config config = new Config();
+
+    config.put("key", "value");
+    assertNotEmptyConfig(config);
+
+    config.remove("key");
+    assertEmptyConfig(config);
+
+    config.put("key", "value");
+    assertNotEmptyConfig(config);
+
+    config.clear();
+    assertEmptyConfig(config);
+  }
+
+  @Test
+  public void notEmptyConfig1() {
+    final Map<String, Object> map = new HashMap<>();
+    map.put("key", "value");
+
+    final Config config = new Config(map);
+    assertNotEmptyConfig(config);
+  }
+
+  @Test
+  public void notEmptyConfig2() {
+    final Config map = new Config();
+    map.put("key", "value");
+
+    final Config config = new Config(map);
+    assertNotEmptyConfig(config);
+  }
+
+  private void assertEmptyConfig(final Config config) {
     assertThat(config.size(), is(0));
     assertThat(config.isEmpty(), is(true));
     assertThat(config.toString(), is(""));
@@ -31,11 +96,7 @@ public class ConfigTest {
     assertThat(config.entrySet(), empty());
   }
 
-  @Test
-  public void notEmptyConfig() {
-    final Config config = new Config();
-    config.put("key", "value");
-
+  private void assertNotEmptyConfig(final Config config) {
     assertThat(config.size(), is(1));
     assertThat(config.isEmpty(), is(false));
     assertThat(config.toString(), is(System.lineSeparator() + "key: value"));
