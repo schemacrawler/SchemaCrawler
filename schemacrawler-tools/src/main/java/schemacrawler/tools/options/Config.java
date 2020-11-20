@@ -119,7 +119,7 @@ public final class Config implements Options, Map<String, Object> {
   }
 
   @Override
-  public Set<java.util.Map.Entry<String, Object>> entrySet() {
+  public Set<Entry<String, Object>> entrySet() {
     return config.entrySet();
   }
 
