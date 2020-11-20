@@ -28,15 +28,17 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.io.ByteArrayInputStream;
 import java.math.BigInteger;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -98,7 +100,7 @@ public class MetadataResultSetTest {
             final ResultsColumns resultsColumns = new ResultsCrawler(resultSet).crawl();
             final ColumnDataType columnDataType =
                 resultsColumns.getColumns().get(0).getColumnDataType();
-            assertThat(dataType, startsWith(columnDataType.getName()));
+            assertThat(dataType, containsString(columnDataType.getName()));
 
           } catch (SQLException e) {
             fail(e);
@@ -119,8 +121,10 @@ public class MetadataResultSetTest {
               "TIMESTAMP",
               "CHARACTER(1) ",
               "VARCHAR(1)",
+              "LONGVARCHAR",
               "BINARY(1)",
-              "VARBINARY(1)")) {
+              "VARBINARY(1)",
+              "LONGVARBINARY")) {
         final String sql =
             String.format(
                 "SELECT CAST(NULL AS %s) AS " + columnName + " FROM (VALUES(0))", dataType);
@@ -141,6 +145,7 @@ public class MetadataResultSetTest {
 
     try (final Statement statement = connection.createStatement(); ) {
 
+      statement.execute("DROP TABLE IF EXISTS TABLE1");
       statement.execute("CREATE TABLE TABLE1(COLUMN1 VARCHAR(2))");
       statement.execute("INSERT INTO TABLE1(COLUMN1) VALUES('A')");
 
@@ -172,7 +177,84 @@ public class MetadataResultSetTest {
         }
       }
 
-      statement.execute("DROP TABLE TABLE1");
+    } finally {
+      DatabaseUtility.executeSql(connection.createStatement(), "DROP TABLE IF EXISTS TABLE1");
+    }
+  }
+
+  @Test
+  @DisplayName("Retrieve large object values from results")
+  public void largeObjectValues(final Connection connection) throws Exception {
+
+    final String columnName = "COLUMN1";
+
+    final BiConsumer<String, ResultSet> assertAll =
+        (dataType, resultSet) -> {
+          try {
+            final MetadataResultSet results = new MetadataResultSet(resultSet);
+
+            final String value5 = results.getString(columnName);
+            if (dataType.contains("BINARY")) {
+              assertThat(value5, is("41"));
+            } else {
+              assertThat(value5, is("A"));
+            }
+
+            final List<Object> row = results.row();
+            assertThat(row, hasSize(1));
+            final Object objectValue = row.get(0);
+            System.out.println("[object] " + dataType + " \"" + objectValue + "\"");
+            if (dataType.contains("BINARY")) {
+              assertThat(objectValue, is(new byte[] {65}));
+            } else {
+              assertThat(objectValue, is("A"));
+            }
+
+            final String[] columnNames = results.getColumnNames();
+            assertThat(columnNames, arrayWithSize(1));
+            assertThat(columnNames[0], is(columnName));
+
+            final ResultsColumns resultsColumns = new ResultsCrawler(resultSet).crawl();
+            final ColumnDataType columnDataType =
+                resultsColumns.getColumns().get(0).getColumnDataType();
+            assertThat(dataType, containsString(columnDataType.getName()));
+
+          } catch (SQLException e) {
+            fail(e);
+          }
+        };
+
+    try (final Statement statement = connection.createStatement(); ) {
+      for (final String dataType :
+          Arrays.asList(
+              "CHARACTER(1) ",
+              "VARCHAR(1)",
+              "LONGVARCHAR",
+              "BINARY(1)",
+              "VARBINARY(1)",
+              "LONGVARBINARY")) {
+
+        statement.execute("DROP TABLE IF EXISTS TABLE1");
+        statement.execute(String.format("CREATE TABLE TABLE1(COLUMN1 %s)", dataType));
+
+        if (dataType.contains("BINARY")) {
+          final PreparedStatement preparedStatement =
+              connection.prepareStatement("INSERT INTO TABLE1(COLUMN1) VALUES(?)");
+          preparedStatement.setBinaryStream(1, new ByteArrayInputStream("A".getBytes("UTF-8")));
+          preparedStatement.execute();
+        } else {
+          statement.execute("INSERT INTO TABLE1(COLUMN1) VALUES('A')");
+        }
+
+        final String sql = "SELECT * FROM TABLE1";
+        try (final ResultSet results = DatabaseUtility.executeSql(statement, sql)) {
+          while (results.next()) {
+            assertAll.accept(dataType, results);
+          }
+        }
+      }
+    } finally {
+      DatabaseUtility.executeSql(connection.createStatement(), "DROP TABLE IF EXISTS TABLE1");
     }
   }
 }
