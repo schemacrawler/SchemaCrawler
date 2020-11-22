@@ -179,7 +179,13 @@ public final class Config implements Options {
    * @see java.util.Map#put(java.lang.Object, java.lang.Object)
    */
   public Object put(final String key, final Object value) {
-    return config.put(key, value);
+    if (value == null) {
+      return config.remove(key);
+    }
+    if (!isBlank(key)) {
+      return config.put(key, value);
+    }
+    return null;
   }
 
   public void putAll(final Config m) {
@@ -187,26 +193,6 @@ public final class Config implements Options {
       return;
     }
     config.putAll(m.config);
-  }
-
-  public void putBooleanValue(final String propertyName, final boolean value) {
-    config.put(propertyName, Boolean.toString(value));
-  }
-
-  public <E extends Enum<E>> void putEnumValue(final String propertyName, final E value) {
-    if (value == null) {
-      config.remove(propertyName);
-    } else {
-      config.put(propertyName, value.name());
-    }
-  }
-
-  public void putStringValue(final String propertyName, final String value) {
-    if (value == null) {
-      config.remove(propertyName);
-    } else {
-      config.put(propertyName, value);
-    }
   }
 
   public int size() {

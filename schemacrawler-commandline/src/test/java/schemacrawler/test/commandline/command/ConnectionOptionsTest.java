@@ -78,7 +78,7 @@ public class ConnectionOptionsTest {
     final String[] args = {"--server", "test-db", "--urlx", "key1", "additional", "--extra"};
 
     final Config config = new Config();
-    config.putStringValue("url", "jdbc:test-db://some-url");
+    config.put("url", "jdbc:test-db://some-url");
 
     final ConnectCommand optionsParser = new ConnectCommand(new ShellState());
 
@@ -123,7 +123,7 @@ public class ConnectionOptionsTest {
     };
 
     final Config config = new Config();
-    config.putStringValue("url", "jdbc:test-db://${host}:${port}/${database}");
+    config.put("url", "jdbc:test-db://${host}:${port}/${database}");
 
     final ConnectCommand optionsParser = new ConnectCommand(new ShellState());
     newCommandLine(optionsParser, null).parseArgs(args);
@@ -148,7 +148,7 @@ public class ConnectionOptionsTest {
     final String[] args = {"--server", "test-db", "--urlx"};
 
     final Config config = new Config();
-    config.putStringValue("url", "jdbc:test-db://some-url");
+    config.put("url", "jdbc:test-db://some-url");
 
     final ConnectCommand optionsParser = new ConnectCommand(new ShellState());
 
@@ -215,7 +215,7 @@ public class ConnectionOptionsTest {
     };
 
     final Config config = new Config();
-    config.putStringValue("url", "jdbc:test-db://some-url");
+    config.put("url", "jdbc:test-db://some-url");
 
     final ConnectCommand optionsParser = new ConnectCommand(new ShellState());
     newCommandLine(optionsParser, null).parseArgs(args);

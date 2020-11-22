@@ -157,10 +157,10 @@ public final class DiagramOptionsBuilder
   public Config toConfig() {
     final Config config = super.toConfig();
 
-    config.putBooleanValue(GRAPH_SHOW_PRIMARY_KEY_CARDINALITY, isShowPrimaryKeyCardinality);
-    config.putBooleanValue(GRAPH_SHOW_FOREIGN_KEY_CARDINALITY, isShowForeignKeyCardinality);
+    config.put(GRAPH_SHOW_PRIMARY_KEY_CARDINALITY, isShowPrimaryKeyCardinality);
+    config.put(GRAPH_SHOW_FOREIGN_KEY_CARDINALITY, isShowForeignKeyCardinality);
 
-    config.putStringValue(GRAPH_GRAPHVIZ_OPTS, join(graphvizOpts, " "));
+    config.put(GRAPH_GRAPHVIZ_OPTS, join(graphvizOpts, " "));
 
     graphvizAttributesToConfig(graphvizAttributes, config);
 

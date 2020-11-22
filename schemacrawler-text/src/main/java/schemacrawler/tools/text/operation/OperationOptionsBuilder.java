@@ -96,7 +96,7 @@ public final class OperationOptionsBuilder
   @Override
   public Config toConfig() {
     final Config config = super.toConfig();
-    config.putBooleanValue(SHOW_LOBS, isShowLobs);
+    config.put(SHOW_LOBS, isShowLobs);
     return config;
   }
 
@@ -105,7 +105,7 @@ public final class OperationOptionsBuilder
     return new OperationOptions(this);
   }
 
-  public OperationOptionsBuilder withCommand(String command) {
+  public OperationOptionsBuilder withCommand(final String command) {
     this.command = command;
     operation = getOperationFromCommand();
     return this;

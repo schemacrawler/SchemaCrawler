@@ -274,23 +274,22 @@ public abstract class BaseTextOptionsBuilder<
   public Config toConfig() {
     final Config config = new Config();
 
-    config.putBooleanValue(NO_SCHEMACRAWLER_INFO, isNoSchemaCrawlerInfo);
-    config.putBooleanValue(SHOW_DATABASE_INFO, isShowDatabaseInfo);
-    config.putBooleanValue(SHOW_JDBC_DRIVER_INFO, isShowJdbcDriverInfo);
+    config.put(NO_SCHEMACRAWLER_INFO, isNoSchemaCrawlerInfo);
+    config.put(SHOW_DATABASE_INFO, isShowDatabaseInfo);
+    config.put(SHOW_JDBC_DRIVER_INFO, isShowJdbcDriverInfo);
 
-    config.putBooleanValue(SHOW_UNQUALIFIED_NAMES, isShowUnqualifiedNames);
+    config.put(SHOW_UNQUALIFIED_NAMES, isShowUnqualifiedNames);
 
-    config.putBooleanValue(SORT_ALPHABETICALLY_TABLES, isAlphabeticalSortForTables);
-    config.putBooleanValue(SORT_ALPHABETICALLY_TABLE_COLUMNS, isAlphabeticalSortForTableColumns);
+    config.put(SORT_ALPHABETICALLY_TABLES, isAlphabeticalSortForTables);
+    config.put(SORT_ALPHABETICALLY_TABLE_COLUMNS, isAlphabeticalSortForTableColumns);
 
-    config.putBooleanValue(SORT_ALPHABETICALLY_ROUTINES, isAlphabeticalSortForRoutines);
+    config.put(SORT_ALPHABETICALLY_ROUTINES, isAlphabeticalSortForRoutines);
 
-    config.putBooleanValue(
-        SORT_ALPHABETICALLY_ROUTINE_PARAMETERS, isAlphabeticalSortForRoutineParameters);
+    config.put(SORT_ALPHABETICALLY_ROUTINE_PARAMETERS, isAlphabeticalSortForRoutineParameters);
 
-    config.putBooleanValue(NO_SCHEMA_COLORS, isNoSchemaColors);
+    config.put(NO_SCHEMA_COLORS, isNoSchemaColors);
 
-    config.putEnumValue(IDENTIFIER_QUOTING_STRATEGY, identifierQuotingStrategy);
+    config.put(IDENTIFIER_QUOTING_STRATEGY, identifierQuotingStrategy);
 
     return config;
   }

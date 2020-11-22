@@ -54,11 +54,11 @@ public class ConfigTest {
 
     assertThat(config.getBooleanValue("key"), is(false));
 
-    config.putBooleanValue("key", false);
+    config.put("key", false);
 
     assertThat(config.getBooleanValue("key"), is(false));
 
-    config.putBooleanValue("key", true);
+    config.put("key", true);
 
     assertThat(config.getBooleanValue("key"), is(true));
 
@@ -107,22 +107,22 @@ public class ConfigTest {
 
     assertThat(config.getOptionalInclusionRule("in", "ex"), is(isEmpty()));
 
-    config.putStringValue("in", ".*");
-    config.putStringValue("ex", "exc");
+    config.put("in", ".*");
+    config.put("ex", "exc");
 
     assertThat(
         config.getOptionalInclusionRule("in", "ex"),
         is(isPresentAndIs(new RegularExpressionRule(".*", "exc"))));
 
-    config.putStringValue("in", ".*");
-    config.putStringValue("ex", null);
+    config.put("in", ".*");
+    config.put("ex", null);
 
     assertThat(
         config.getOptionalInclusionRule("in", "ex"),
         is(isPresentAndIs(new RegularExpressionRule(".*", null))));
 
-    config.putStringValue("in", null);
-    config.putStringValue("ex", "exc");
+    config.put("in", null);
+    config.put("ex", "exc");
 
     assertThat(
         config.getOptionalInclusionRule("in", "ex"),
@@ -156,27 +156,16 @@ public class ConfigTest {
   }
 
   @Test
-  public void putBooleanValue() {
-    final Config config = new Config();
-
-    assertThat(config.containsKey("key"), is(false));
-
-    config.putBooleanValue("key", false);
-
-    assertThat(config.getStringValue("key", "<unknown>"), is(Boolean.FALSE.toString()));
-  }
-
-  @Test
   public void putEnumValue() {
     final Config config = new Config();
 
     assertThat(config.containsKey("key"), is(false));
 
-    config.putEnumValue("key", DayOfWeek.MONDAY);
+    config.put("key", DayOfWeek.MONDAY);
 
     assertThat(config.getStringValue("key", "<unknown>"), is("MONDAY"));
 
-    config.putEnumValue("key", null);
+    config.put("key", null);
 
     assertThat(config.containsKey("key"), is(false));
   }
@@ -187,11 +176,11 @@ public class ConfigTest {
 
     assertThat(config.containsKey("key"), is(false));
 
-    config.putStringValue("key", "value");
+    config.put("key", "value");
 
     assertThat(config.getStringValue("key", "<unknown>"), is("value"));
 
-    config.putStringValue("key", null);
+    config.put("key", null);
 
     assertThat(config.containsKey("key"), is(false));
   }
