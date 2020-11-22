@@ -2,6 +2,7 @@ package schemacrawler.test;
 
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isPresentAndIs;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -244,7 +245,7 @@ public class ConfigTest {
   private void assertEmptyConfig(final Config config) {
     assertThat(config.size(), is(0));
     assertThat(config.isEmpty(), is(true));
-    assertThat(config.toString(), is(""));
+    assertThat(config.toString(), containsString("{}"));
 
     assertThat(config.hasValue("key"), is(false));
     assertThat(config.get("key"), is(nullValue()));
@@ -259,7 +260,7 @@ public class ConfigTest {
   private void assertNotEmptyConfig(final Config config) {
     assertThat(config.size(), is(1));
     assertThat(config.isEmpty(), is(false));
-    assertThat(config.toString(), is(System.lineSeparator() + "key: value"));
+    assertThat(config.toString(), containsString("{key=value}" + System.lineSeparator()));
 
     assertThat(config.hasValue("key"), is(true));
     assertThat(config.get("key"), is("value"));

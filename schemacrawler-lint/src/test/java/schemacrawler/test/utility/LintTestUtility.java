@@ -96,7 +96,7 @@ public final class LintTestUtility {
     }
 
     assertThat(
-        outputOf(commandlineExecution(connectionInfo, "lint", argsMap, new Config(), outputFormat)),
+        outputOf(commandlineExecution(connectionInfo, "lint", argsMap, null, outputFormat)),
         hasSameContentAndTypeAs(classpathResource(referenceFileName), outputFormat));
   }
 }

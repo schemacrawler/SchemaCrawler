@@ -35,6 +35,7 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
@@ -51,7 +52,7 @@ import us.fatehi.utility.string.StringFormat;
  *
  * @author Sualeh Fatehi
  */
-public final class Config implements Options, Map<String, Object> {
+public final class Config implements Options {
 
   public static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(Config.class.getName());
@@ -65,7 +66,9 @@ public final class Config implements Options, Map<String, Object> {
 
   public Config(final Config config) {
     this();
-    putAll(config);
+    if (config != null) {
+      this.config.putAll(config.config);
+    }
   }
 
   /**
@@ -78,27 +81,22 @@ public final class Config implements Options, Map<String, Object> {
     putAll(config);
   }
 
-  @Override
   public void clear() {
     config.clear();
   }
 
-  @Override
   public boolean containsKey(final Object key) {
     return config.containsKey(key);
   }
 
-  @Override
   public boolean containsValue(final Object value) {
     return config.containsValue(value);
   }
 
-  @Override
   public Set<Entry<String, Object>> entrySet() {
     return config.entrySet();
   }
 
-  @Override
   public Object get(final Object key) {
     return config.get(key);
   }
@@ -212,7 +210,7 @@ public final class Config implements Options, Map<String, Object> {
 
   public Map<String, Object> getSubMap(final String propertyName) {
     if (isBlank(propertyName)) {
-      return new HashMap<>();
+      return new HashMap<>(config);
     }
     final Map<String, Object> subMap = new HashMap<>();
     for (final Entry<String, Object> configEntry : config.entrySet()) {
@@ -238,22 +236,25 @@ public final class Config implements Options, Map<String, Object> {
     return config.containsKey(propertyName);
   }
 
-  @Override
   public boolean isEmpty() {
     return config.isEmpty();
   }
 
-  @Override
   public Set<String> keySet() {
     return config.keySet();
   }
 
-  @Override
   public Object put(final String key, final Object value) {
     return config.put(key, value);
   }
 
-  @Override
+  public void putAll(final Config m) {
+    if (m == null) {
+      return;
+    }
+    config.putAll(m.config);
+  }
+
   public void putAll(final Map<? extends String, ? extends Object> m) {
     if (m == null) {
       return;
@@ -281,12 +282,10 @@ public final class Config implements Options, Map<String, Object> {
     }
   }
 
-  @Override
   public Object remove(final Object key) {
     return config.remove(key);
   }
 
-  @Override
   public int size() {
     return config.size();
   }
@@ -296,7 +295,6 @@ public final class Config implements Options, Map<String, Object> {
     return ObjectToString.toString(this);
   }
 
-  @Override
   public Collection<Object> values() {
     return config.values();
   }

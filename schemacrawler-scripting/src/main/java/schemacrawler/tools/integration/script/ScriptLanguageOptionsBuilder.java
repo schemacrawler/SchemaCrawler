@@ -51,7 +51,7 @@ public final class ScriptLanguageOptionsBuilder extends LanguageOptionsBuilder<S
   @Override
   public ScriptLanguageOptionsBuilder fromConfig(final Config config) {
     super.fromConfig(config);
-    this.config = new Config(config);
+    this.config = config.getSubMap(null);
     return this;
   }
 

@@ -197,7 +197,9 @@ public final class CommandlineTestUtility {
 
   public static Path writeConfigToTempFile(final Map<String, ?> config) throws IOException {
     final Properties configProperties = new Properties();
-    configProperties.putAll(config);
+    if (config != null) {
+      configProperties.putAll(config);
+    }
     return TestUtility.savePropertiesToTempFile(configProperties);
   }
 
