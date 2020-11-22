@@ -32,12 +32,10 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.utility.EnumUtility.enumValue;
 import static us.fatehi.utility.Utility.isBlank;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
-import java.util.Set;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
@@ -81,24 +79,8 @@ public final class Config implements Options {
     putAll(config);
   }
 
-  public void clear() {
-    config.clear();
-  }
-
-  public boolean containsKey(final Object key) {
+  public boolean containsKey(final String key) {
     return config.containsKey(key);
-  }
-
-  public boolean containsValue(final Object value) {
-    return config.containsValue(value);
-  }
-
-  public Set<Entry<String, Object>> entrySet() {
-    return config.entrySet();
-  }
-
-  public Object get(final Object key) {
-    return config.get(key);
   }
 
   /**
@@ -113,24 +95,6 @@ public final class Config implements Options {
 
   public boolean getBooleanValue(final String propertyName, final boolean defaultValue) {
     return Boolean.parseBoolean(getStringValue(propertyName, Boolean.toString(defaultValue)));
-  }
-
-  /**
-   * Gets the value of a property as an double.
-   *
-   * @param propertyName Property name
-   * @return Double value
-   */
-  public double getDoubleValue(final String propertyName, final double defaultValue) {
-    try {
-      return Double.parseDouble(getStringValue(propertyName, String.valueOf(defaultValue)));
-    } catch (final NumberFormatException e) {
-      LOGGER.log(
-          Level.FINEST,
-          new StringFormat("Could not parse double value for property <%s>", propertyName),
-          e);
-      return defaultValue;
-    }
   }
 
   /**
@@ -163,24 +127,6 @@ public final class Config implements Options {
     }
   }
 
-  /**
-   * Gets the value of a property as an long.
-   *
-   * @param propertyName Property name
-   * @return Long value
-   */
-  public long getLongValue(final String propertyName, final long defaultValue) {
-    try {
-      return Long.parseLong(getStringValue(propertyName, String.valueOf(defaultValue)));
-    } catch (final NumberFormatException e) {
-      LOGGER.log(
-          Level.FINEST,
-          new StringFormat("Could not parse long value for property <%s>", propertyName),
-          e);
-      return defaultValue;
-    }
-  }
-
   public Optional<InclusionRule> getOptionalInclusionRule(
       final String includePatternProperty, final String excludePatternProperty) {
     final String includePattern = getStringValue(includePatternProperty, null);
@@ -200,7 +146,7 @@ public final class Config implements Options {
    * @return String value
    */
   public String getStringValue(final String propertyName, final String defaultValue) {
-    final Object value = get(propertyName);
+    final Object value = config.get(propertyName);
     if (value == null) {
       return defaultValue;
     } else {
@@ -227,23 +173,11 @@ public final class Config implements Options {
   }
 
   /**
-   * Checks if a value is available.
-   *
-   * @param propertyName Property name
-   * @return True if a value ia available.
+   * @param key
+   * @param value
+   * @return
+   * @see java.util.Map#put(java.lang.Object, java.lang.Object)
    */
-  public boolean hasValue(final String propertyName) {
-    return config.containsKey(propertyName);
-  }
-
-  public boolean isEmpty() {
-    return config.isEmpty();
-  }
-
-  public Set<String> keySet() {
-    return config.keySet();
-  }
-
   public Object put(final String key, final Object value) {
     return config.put(key, value);
   }
@@ -255,35 +189,24 @@ public final class Config implements Options {
     config.putAll(m.config);
   }
 
-  public void putAll(final Map<? extends String, ? extends Object> m) {
-    if (m == null) {
-      return;
-    }
-    config.putAll(m);
-  }
-
   public void putBooleanValue(final String propertyName, final boolean value) {
-    put(propertyName, Boolean.toString(value));
+    config.put(propertyName, Boolean.toString(value));
   }
 
   public <E extends Enum<E>> void putEnumValue(final String propertyName, final E value) {
     if (value == null) {
-      remove(propertyName);
+      config.remove(propertyName);
     } else {
-      put(propertyName, value.name());
+      config.put(propertyName, value.name());
     }
   }
 
   public void putStringValue(final String propertyName, final String value) {
     if (value == null) {
-      remove(propertyName);
+      config.remove(propertyName);
     } else {
-      put(propertyName, value);
+      config.put(propertyName, value);
     }
-  }
-
-  public Object remove(final Object key) {
-    return config.remove(key);
   }
 
   public int size() {
@@ -295,7 +218,10 @@ public final class Config implements Options {
     return ObjectToString.toString(this);
   }
 
-  public Collection<Object> values() {
-    return config.values();
+  private void putAll(final Map<? extends String, ? extends Object> m) {
+    if (m == null) {
+      return;
+    }
+    config.putAll(m);
   }
 }

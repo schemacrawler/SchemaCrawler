@@ -61,7 +61,7 @@ public final class SchemaRetrievalOptionsConfig {
         try {
           builder.withSql(
               informationSchemaKey,
-              String.valueOf(informationSchemaViewsSql.get(informationSchemaKeyConfigKey)));
+              informationSchemaViewsSql.getStringValue(informationSchemaKeyConfigKey, ""));
         } catch (final IllegalArgumentException e) {
           // Ignore
         }

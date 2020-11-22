@@ -168,7 +168,7 @@ public class LintTest {
     assertThat("FOR_LINT schema not found", schema, notNullValue());
     assertThat("FOR_LINT tables not found", catalog.getTables(schema), hasSize(6));
 
-    final Map<String, String> additionalConfig = new HashMap<>();
+    final Map<String, Object> additionalConfig = new HashMap<>();
     final String message = UUID.randomUUID().toString();
     additionalConfig.put("message", message);
     additionalConfig.put("sql", "SELECT TOP 1 1 FROM INFORMATION_SCHEMA.TABLES");
@@ -188,7 +188,7 @@ public class LintTest {
             .getLints()
             .stream()
             .findFirst()
-            .map(lint -> lint.getMessage())
+            .map(Lint::getMessage)
             .orElse("No value found"),
         startsWith(message));
   }

@@ -27,14 +27,17 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.lint;
 
+import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionRule;
+import schemacrawler.tools.options.Config;
 import us.fatehi.utility.ObjectToString;
 
 public class LinterConfig implements Serializable, Comparable<LinterConfig> {
@@ -42,7 +45,7 @@ public class LinterConfig implements Serializable, Comparable<LinterConfig> {
   private static final long serialVersionUID = 83079182550531365L;
 
   private final String linterId;
-  private final Map<String, String> properties;
+  private final Map<String, Object> config;
   private boolean runLinter;
   private LintSeverity severity;
   private int threshold;
@@ -55,7 +58,7 @@ public class LinterConfig implements Serializable, Comparable<LinterConfig> {
     this.linterId = requireNotBlank(linterId, "No linter id provided");
     runLinter = true; // default value
     threshold = Integer.MAX_VALUE; // default value
-    properties = new HashMap<>();
+    config = new HashMap<>();
   }
 
   @Override
@@ -91,11 +94,7 @@ public class LinterConfig implements Serializable, Comparable<LinterConfig> {
       return false;
     }
     final LinterConfig other = (LinterConfig) obj;
-    if (linterId == null) {
-      if (other.linterId != null) {
-        return false;
-      }
-    } else if (!linterId.equals(other.linterId)) {
+    if (!Objects.equals(linterId, other.linterId)) {
       return false;
     }
     if (severity != other.severity) {
@@ -108,12 +107,12 @@ public class LinterConfig implements Serializable, Comparable<LinterConfig> {
     return new RegularExpressionRule(columnInclusionPattern, columnExclusionPattern);
   }
 
-  public String getLinterId() {
-    return linterId;
+  public Config getConfig() {
+    return new Config(config);
   }
 
-  public Map<String, String> getProperties() {
-    return new HashMap<>(properties);
+  public String getLinterId() {
+    return linterId;
   }
 
   public LintSeverity getSeverity() {
@@ -142,11 +141,16 @@ public class LinterConfig implements Serializable, Comparable<LinterConfig> {
   }
 
   public void put(final String key, final String value) {
-    properties.put(key, value);
+    if (isBlank(key)) {
+      return;
+    }
+    config.put(key, value);
   }
 
-  public void putAll(final Map<String, String> properties) {
-    this.properties.putAll(properties);
+  public void putAll(final Map<String, Object> config) {
+    if (config != null) {
+      this.config.putAll(config);
+    }
   }
 
   public void setColumnExclusionPattern(final String columnExclusionPattern) {

@@ -40,15 +40,15 @@ public class LintOptions extends BaseTextOptions {
   private final String linterConfigs;
   private final LintDispatch lintDispatch;
   private final boolean runAllLinters;
-  private final Map<String, String> properties;
+  private final Map<String, Object> config;
 
   public LintOptions(final LintOptionsBuilder builder) {
     super(builder);
     linterConfigs = builder.linterConfigs;
     lintDispatch = requireNonNull(builder.lintDispatch, "No dispatch provided");
     runAllLinters = builder.runAllLinters;
-    requireNonNull(builder.properties, "No properties provided");
-    properties = new HashMap<>(builder.properties);
+    requireNonNull(builder.config, "No properties provided");
+    this.config = new HashMap<>(builder.config);
   }
 
   /**
@@ -74,8 +74,8 @@ public class LintOptions extends BaseTextOptions {
    *
    * @return Properties
    */
-  public Map<String, String> getProperties() {
-    return new HashMap<>(properties);
+  public Map<String, Object> getConfig() {
+    return new HashMap<>(config);
   }
 
   /**

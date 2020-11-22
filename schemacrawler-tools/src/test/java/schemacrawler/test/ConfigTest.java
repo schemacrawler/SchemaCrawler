@@ -5,15 +5,12 @@ import static com.github.npathai.hamcrestopt.OptionalMatchers.isPresentAndIs;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.nullValue;
 
 import java.time.DayOfWeek;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.collections.keyvalue.DefaultMapEntry;
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.inclusionrule.RegularExpressionRule;
@@ -47,7 +44,7 @@ public class ConfigTest {
 
   @Test
   public void emptyConfig2b() {
-    final Config config = new Config((Map) null);
+    final Config config = new Config((Map<String, Object>) null);
     assertEmptyConfig(config);
   }
 
@@ -68,21 +65,6 @@ public class ConfigTest {
     config.put("key", "blah");
 
     assertThat(config.getBooleanValue("key"), is(false));
-  }
-
-  @Test
-  public void getDoubleValue() {
-    final Config config = new Config();
-
-    assertThat(config.getDoubleValue("key", -1), is(-1d));
-
-    config.put("key", "1.1");
-
-    assertThat(config.getDoubleValue("key", -1), is(1.1));
-
-    config.put("key", "blah");
-
-    assertThat(config.getDoubleValue("key", -1), is(-1d));
   }
 
   @Test
@@ -120,25 +102,6 @@ public class ConfigTest {
   }
 
   @Test
-  public void getLongValue() {
-    final Config config = new Config();
-
-    assertThat(config.getLongValue("key", -1), is(-1L));
-
-    config.put("key", "1");
-
-    assertThat(config.getLongValue("key", -1), is(1L));
-
-    config.put("key", "1.1");
-
-    assertThat(config.getLongValue("key", -1), is(-1L));
-
-    config.put("key", "blah");
-
-    assertThat(config.getLongValue("key", -1), is(-1L));
-  }
-
-  @Test
   public void getOptionalInclusionRule() {
     final Config config = new Config();
 
@@ -172,15 +135,6 @@ public class ConfigTest {
 
     config.put("key", "value");
     assertNotEmptyConfig(config);
-
-    config.remove("key");
-    assertEmptyConfig(config);
-
-    config.put("key", "value");
-    assertNotEmptyConfig(config);
-
-    config.clear();
-    assertEmptyConfig(config);
   }
 
   @Test
@@ -205,75 +159,59 @@ public class ConfigTest {
   public void putBooleanValue() {
     final Config config = new Config();
 
-    assertThat(config.hasValue("key"), is(false));
+    assertThat(config.containsKey("key"), is(false));
 
     config.putBooleanValue("key", false);
 
-    assertThat(config.get("key"), is(Boolean.FALSE.toString()));
+    assertThat(config.getStringValue("key", "<unknown>"), is(Boolean.FALSE.toString()));
   }
 
   @Test
   public void putEnumValue() {
     final Config config = new Config();
 
-    assertThat(config.hasValue("key"), is(false));
+    assertThat(config.containsKey("key"), is(false));
 
     config.putEnumValue("key", DayOfWeek.MONDAY);
 
-    assertThat(config.get("key"), is("MONDAY"));
+    assertThat(config.getStringValue("key", "<unknown>"), is("MONDAY"));
 
     config.putEnumValue("key", null);
 
-    assertThat(config.hasValue("key"), is(false));
+    assertThat(config.containsKey("key"), is(false));
   }
 
   @Test
   public void putStringValue() {
     final Config config = new Config();
 
-    assertThat(config.hasValue("key"), is(false));
+    assertThat(config.containsKey("key"), is(false));
 
     config.putStringValue("key", "value");
 
-    assertThat(config.get("key"), is("value"));
+    assertThat(config.getStringValue("key", "<unknown>"), is("value"));
 
     config.putStringValue("key", null);
 
-    assertThat(config.hasValue("key"), is(false));
+    assertThat(config.containsKey("key"), is(false));
   }
 
   private void assertEmptyConfig(final Config config) {
     assertThat(config.size(), is(0));
-    assertThat(config.isEmpty(), is(true));
     assertThat(config.toString(), containsString("{}"));
 
-    assertThat(config.hasValue("key"), is(false));
-    assertThat(config.get("key"), is(nullValue()));
     assertThat(config.containsKey("key"), is(false));
-    assertThat(config.containsValue("value"), is(false));
-
-    assertThat(config.keySet(), empty());
-    assertThat(config.values(), empty());
-    assertThat(config.entrySet(), empty());
+    assertThat(config.getStringValue("key", null), is(nullValue()));
   }
 
   private void assertNotEmptyConfig(final Config config) {
     assertThat(config.size(), is(1));
-    assertThat(config.isEmpty(), is(false));
     assertThat(config.toString(), containsString("{key=value}" + System.lineSeparator()));
 
-    assertThat(config.hasValue("key"), is(true));
-    assertThat(config.get("key"), is("value"));
     assertThat(config.containsKey("key"), is(true));
-    assertThat(config.containsValue("value"), is(true));
+    assertThat(config.getStringValue("key", null), is("value"));
 
-    assertThat(config.hasValue("key1"), is(false));
-    assertThat(config.get("key1"), is(nullValue()));
     assertThat(config.containsKey("key1"), is(false));
-    assertThat(config.containsValue("value1"), is(false));
-
-    assertThat(config.keySet(), containsInAnyOrder("key"));
-    assertThat(config.values(), containsInAnyOrder("value"));
-    assertThat(config.entrySet(), containsInAnyOrder(new DefaultMapEntry("key", "value")));
+    assertThat(config.getStringValue("key1", null), is(nullValue()));
   }
 }

@@ -31,7 +31,6 @@ import static us.fatehi.utility.IOUtility.readResourceFully;
 
 import java.io.Serializable;
 import java.sql.Connection;
-import java.util.Map;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
@@ -39,6 +38,7 @@ import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.options.Config;
 import us.fatehi.utility.string.StringFormat;
 
 /**
@@ -156,7 +156,9 @@ public abstract class Linter {
    *
    * @param config Custom configuration
    */
-  protected void configure(final Map<String, String> config) {}
+  protected void configure(final Config config) {
+    // To be overridden by subclass if they need custom parameters
+  }
 
   /**
    * Set the severity of the lints created by this linter.
@@ -173,7 +175,7 @@ public abstract class Linter {
     if (linterConfig != null) {
       setSeverity(linterConfig.getSeverity());
       setThreshold(linterConfig.getThreshold());
-      configure(linterConfig.getProperties());
+      configure(linterConfig.getConfig());
     }
   }
 

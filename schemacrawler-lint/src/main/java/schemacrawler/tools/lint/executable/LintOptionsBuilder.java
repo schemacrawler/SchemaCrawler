@@ -58,13 +58,13 @@ public final class LintOptionsBuilder
   LintDispatch lintDispatch;
   String linterConfigs;
   boolean runAllLinters;
-  Map<String, String> properties;
+  Map<String, Object> config;
 
   private LintOptionsBuilder() {
     linterConfigs = "";
     lintDispatch = LintDispatch.none;
     runAllLinters = true;
-    properties = new HashMap<>();
+    config = new HashMap<>();
   }
 
   @Override
@@ -103,6 +103,9 @@ public final class LintOptionsBuilder
       runAllLintersKey = RUN_ALL_LINTERS;
     }
     runAllLinters = config.getBooleanValue(runAllLintersKey, true);
+
+    // Save config
+    this.config.putAll(config.getSubMap(""));
 
     return this;
   }
@@ -163,18 +166,10 @@ public final class LintOptionsBuilder
     return this;
   }
 
-  /** With properties. */
-  public LintOptionsBuilder withProperties(final Map<String, String> properties) {
-    if (properties != null) {
-      this.properties.putAll(properties);
-    }
-    return this;
-  }
-
-  /** With properties. */
+  /** With property. */
   public LintOptionsBuilder withProperty(final String name, final String value) {
     if (!isBlank(name)) {
-      this.properties.put(name, value);
+      this.config.put(name, value);
     }
     return this;
   }

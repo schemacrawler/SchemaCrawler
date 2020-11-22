@@ -66,7 +66,7 @@ public final class LintUtility {
    * @throws SchemaCrawlerException
    */
   public static LinterConfigs readLinterConfigs(final LintOptions lintOptions) {
-    final LinterConfigs linterConfigs = new LinterConfigs(lintOptions.getProperties());
+    final LinterConfigs linterConfigs = new LinterConfigs(lintOptions.getConfig());
     final String linterConfigsFile = lintOptions.getLinterConfigs();
     if (!isBlank(linterConfigsFile)) {
       final InputResource inputResource =
