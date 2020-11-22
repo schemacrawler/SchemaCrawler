@@ -59,6 +59,7 @@ public class GrepOptionsBuilderTest {
     builder.includeGreppedColumns(new ExcludeAll());
     // Check after setting the value
     assertThat(builder.toOptions().getGrepColumnInclusionRule(), isPresentAndIs(new ExcludeAll()));
+    assertThat(builder.toOptions().isGrepColumns(), is(true));
   }
 
   @Test
@@ -85,6 +86,7 @@ public class GrepOptionsBuilderTest {
     // Check after setting the value
     assertThat(
         builder.toOptions().getGrepDefinitionInclusionRule(), isPresentAndIs(new ExcludeAll()));
+    assertThat(builder.toOptions().isGrepDefinitions(), is(true));
   }
 
   @Test
@@ -112,6 +114,7 @@ public class GrepOptionsBuilderTest {
     assertThat(
         builder.toOptions().getGrepRoutineParameterInclusionRule(),
         isPresentAndIs(new ExcludeAll()));
+    assertThat(builder.toOptions().isGrepRoutineParameters(), is(true));
   }
 
   @Test
@@ -150,6 +153,13 @@ public class GrepOptionsBuilderTest {
     assertThat(grepOptionsNew.getGrepColumnInclusionRule(), isEmpty());
     assertThat(grepOptionsNew.getGrepDefinitionInclusionRule(), isEmpty());
     assertThat(grepOptionsNew.getGrepRoutineParameterInclusionRule(), isEmpty());
+    assertThat(grepOptionsNew.isGrepOnlyMatching(), is(false));
+
+    // Additional tests for synthetic methods
+    assertThat(grepOptionsNew.isGrepColumns(), is(false));
+    assertThat(grepOptionsNew.isGrepDefinitions(), is(false));
+    assertThat(grepOptionsNew.isGrepRoutineParameters(), is(false));
+    assertThat(grepOptionsNew.isGrepInvertMatch(), is(false));
     assertThat(grepOptionsNew.isGrepOnlyMatching(), is(false));
   }
 }
