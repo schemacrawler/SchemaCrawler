@@ -38,7 +38,6 @@ import static schemacrawler.test.utility.TestUtility.readerForResource;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
 
@@ -46,13 +45,14 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.LinterConfig;
 import schemacrawler.tools.lint.LinterConfigs;
+import schemacrawler.tools.options.Config;
 
 public class LinterConfigsTest {
 
   @Test
   public void testParseBadLinterConfigs1() throws SchemaCrawlerException, IOException {
     final Reader reader = readerForResource("bad-schemacrawler-linter-configs-a.xml", UTF_8);
-    final LinterConfigs linterConfigs = new LinterConfigs(new HashMap<>());
+    final LinterConfigs linterConfigs = new LinterConfigs(new Config());
     linterConfigs.parse(reader);
     assertThat(linterConfigs.size(), is(3));
 
@@ -77,7 +77,7 @@ public class LinterConfigsTest {
     assertThrows(
         NullPointerException.class,
         () -> {
-          final LinterConfigs linterConfigs = new LinterConfigs(new HashMap<>());
+          final LinterConfigs linterConfigs = new LinterConfigs(new Config());
           linterConfigs.parse(null);
         });
   }
@@ -88,7 +88,7 @@ public class LinterConfigsTest {
         SchemaCrawlerException.class,
         () -> {
           final Reader reader = new StringReader("some random string that is not XML");
-          final LinterConfigs linterConfigs = new LinterConfigs(new HashMap<>());
+          final LinterConfigs linterConfigs = new LinterConfigs(new Config());
           linterConfigs.parse(reader);
         });
   }
@@ -96,14 +96,14 @@ public class LinterConfigsTest {
   @Test
   public void testParseBadXml2() throws SchemaCrawlerException, IOException {
     final Reader reader = readerForResource("bad-schemacrawler-linter-configs-2.xml", UTF_8);
-    final LinterConfigs linterConfigs = new LinterConfigs(new HashMap<>());
+    final LinterConfigs linterConfigs = new LinterConfigs(new Config());
     linterConfigs.parse(reader);
   }
 
   @Test
   public void testParseGoodLinterConfigs() throws SchemaCrawlerException, IOException {
     final Reader reader = readerForResource("schemacrawler-linter-configs-1.xml", UTF_8);
-    final LinterConfigs linterConfigs = new LinterConfigs(new HashMap<>());
+    final LinterConfigs linterConfigs = new LinterConfigs(new Config());
     linterConfigs.parse(reader);
 
     assertThat(linterConfigs.size(), is(3));

@@ -31,8 +31,6 @@ import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 import schemacrawler.inclusionrule.InclusionRule;
@@ -45,7 +43,7 @@ public class LinterConfig implements Serializable, Comparable<LinterConfig> {
   private static final long serialVersionUID = 83079182550531365L;
 
   private final String linterId;
-  private final Map<String, Object> config;
+  private final Config config;
   private boolean runLinter;
   private LintSeverity severity;
   private int threshold;
@@ -58,7 +56,7 @@ public class LinterConfig implements Serializable, Comparable<LinterConfig> {
     this.linterId = requireNotBlank(linterId, "No linter id provided");
     runLinter = true; // default value
     threshold = Integer.MAX_VALUE; // default value
-    config = new HashMap<>();
+    config = new Config();
   }
 
   @Override
@@ -147,7 +145,7 @@ public class LinterConfig implements Serializable, Comparable<LinterConfig> {
     config.put(key, value);
   }
 
-  public void putAll(final Map<String, Object> config) {
+  public void putAll(final Config config) {
     if (config != null) {
       this.config.putAll(config);
     }

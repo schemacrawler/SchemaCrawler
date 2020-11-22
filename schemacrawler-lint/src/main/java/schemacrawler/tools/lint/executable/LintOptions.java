@@ -29,10 +29,8 @@ package schemacrawler.tools.lint.executable;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import schemacrawler.tools.lint.LintDispatch;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.text.base.BaseTextOptions;
 
 public class LintOptions extends BaseTextOptions {
@@ -40,7 +38,7 @@ public class LintOptions extends BaseTextOptions {
   private final String linterConfigs;
   private final LintDispatch lintDispatch;
   private final boolean runAllLinters;
-  private final Map<String, Object> config;
+  private final Config config;
 
   public LintOptions(final LintOptionsBuilder builder) {
     super(builder);
@@ -48,7 +46,16 @@ public class LintOptions extends BaseTextOptions {
     lintDispatch = requireNonNull(builder.lintDispatch, "No dispatch provided");
     runAllLinters = builder.runAllLinters;
     requireNonNull(builder.config, "No properties provided");
-    this.config = new HashMap<>(builder.config);
+    this.config = new Config(builder.config);
+  }
+
+  /**
+   * Get properties.
+   *
+   * @return Properties
+   */
+  public Config getConfig() {
+    return new Config(config);
   }
 
   /**
@@ -67,15 +74,6 @@ public class LintOptions extends BaseTextOptions {
    */
   public String getLinterConfigs() {
     return linterConfigs;
-  }
-
-  /**
-   * Get properties.
-   *
-   * @return Properties
-   */
-  public Map<String, Object> getConfig() {
-    return new HashMap<>(config);
   }
 
   /**

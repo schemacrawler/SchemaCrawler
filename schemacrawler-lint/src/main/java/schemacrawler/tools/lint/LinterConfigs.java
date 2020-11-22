@@ -34,10 +34,8 @@ import static us.fatehi.utility.Utility.requireNotBlank;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -86,9 +84,9 @@ public class LinterConfigs implements Iterable<LinterConfig> {
   }
 
   private final List<LinterConfig> linterConfigs;
-  private final Map<String, Object> config;
+  private final Config config;
 
-  public LinterConfigs(final Map<String, Object> config) {
+  public LinterConfigs(final Config config) {
     linterConfigs = new ArrayList<>();
     this.config = requireNonNull(config, "No configuration provided");
   }
@@ -130,8 +128,8 @@ public class LinterConfigs implements Iterable<LinterConfig> {
     return ObjectToString.toString(this);
   }
 
-  private Map<String, Object> parseConfig(final Element configElement) {
-    final Map<String, Object> parsedConfig = new HashMap<>(config);
+  private Config parseConfig(final Element configElement) {
+    final Config parsedConfig = new Config(config);
 
     if (configElement == null) {
       return parsedConfig;
@@ -200,7 +198,7 @@ public class LinterConfigs implements Iterable<LinterConfig> {
           linterConfig.setColumnExclusionPattern(columnExclusionPattern);
 
           // Linter-specific config
-          final Map<String, Object> config = parseConfig(getSubElement(linterElement, "config"));
+          final Config config = parseConfig(getSubElement(linterElement, "config"));
           linterConfig.putAll(config);
 
           linterConfigs.add(linterConfig);
