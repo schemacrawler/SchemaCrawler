@@ -58,11 +58,12 @@ public class LinterConfigsTest {
 
     for (final LinterConfig linterConfig : linterConfigs) {
       if (linterConfig.getLinterId().equals("linter.Linter1")) {
-        assertThat(linterConfig.getProperties().get("exclude"), nullValue());
+        assertThat(
+            linterConfig.getConfig().getStringValue("exclude", "<unknown>"), is("<unknown>"));
       }
 
       if (linterConfig.getLinterId().equals("linter.Linter2")) {
-        assertThat(linterConfig.getProperties().get("exclude"), is(".*"));
+        assertThat(linterConfig.getConfig().getStringValue("exclude", "<unknown>"), is(".*"));
       }
 
       if (linterConfig.getLinterId().equals("linter.Linter3")) {
@@ -115,7 +116,7 @@ public class LinterConfigsTest {
       if (linterConfig.getLinterId().equals("linter.Linter2")) {
         assertThat(linterConfig.getSeverity(), nullValue());
         assertThat(linterConfig.isRunLinter(), is(false));
-        assertThat(linterConfig.getProperties().get("exclude"), is(".*"));
+        assertThat(linterConfig.getConfig().getStringValue("exclude", "<unknown>"), is(".*"));
       }
 
       if (linterConfig.getLinterId().equals("linter.Linter3")) {

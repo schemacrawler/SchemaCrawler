@@ -265,22 +265,21 @@ public abstract class BaseSchemaTextOptionsBuilder<
   public Config toConfig() {
     final Config config = super.toConfig();
 
-    config.putBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES, isShowStandardColumnTypeNames);
-    config.putBooleanValue(SHOW_ORDINAL_NUMBERS, isShowOrdinalNumbers);
-    config.putBooleanValue(SHOW_ROW_COUNTS, isShowRowCounts);
+    config.put(SHOW_STANDARD_COLUMN_TYPE_NAMES, isShowStandardColumnTypeNames);
+    config.put(SHOW_ORDINAL_NUMBERS, isShowOrdinalNumbers);
+    config.put(SHOW_ROW_COUNTS, isShowRowCounts);
 
-    config.putBooleanValue(HIDE_FOREIGN_KEY_NAMES, isHideForeignKeyNames);
-    config.putBooleanValue(HIDE_PRIMARY_KEY_NAMES, isHidePrimaryKeyNames);
-    config.putBooleanValue(HIDE_INDEX_NAMES, isHideIndexNames);
-    config.putBooleanValue(HIDE_TRIGGER_NAMES, isHideTriggerNames);
-    config.putBooleanValue(HIDE_ROUTINE_SPECIFIC_NAMES, isHideRoutineSpecificNames);
-    config.putBooleanValue(HIDE_CONSTRAINT_NAMES, isHideTableConstraintNames);
-    config.putBooleanValue(HIDE_REMARKS, isHideRemarks);
-    config.putBooleanValue(SHOW_WEAK_ASSOCIATIONS, isShowWeakAssociations);
+    config.put(HIDE_FOREIGN_KEY_NAMES, isHideForeignKeyNames);
+    config.put(HIDE_PRIMARY_KEY_NAMES, isHidePrimaryKeyNames);
+    config.put(HIDE_INDEX_NAMES, isHideIndexNames);
+    config.put(HIDE_TRIGGER_NAMES, isHideTriggerNames);
+    config.put(HIDE_ROUTINE_SPECIFIC_NAMES, isHideRoutineSpecificNames);
+    config.put(HIDE_CONSTRAINT_NAMES, isHideTableConstraintNames);
+    config.put(HIDE_REMARKS, isHideRemarks);
+    config.put(SHOW_WEAK_ASSOCIATIONS, isShowWeakAssociations);
 
-    config.putBooleanValue(
-        SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS, isAlphabeticalSortForForeignKeys);
-    config.putBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_INDEXES, isAlphabeticalSortForIndexes);
+    config.put(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS, isAlphabeticalSortForForeignKeys);
+    config.put(SC_SORT_ALPHABETICALLY_TABLE_INDEXES, isAlphabeticalSortForIndexes);
 
     return config;
   }

@@ -32,11 +32,10 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.utility.EnumUtility.enumValue;
 import static us.fatehi.utility.Utility.isBlank;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
-import java.util.Set;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
@@ -51,7 +50,7 @@ import us.fatehi.utility.string.StringFormat;
  *
  * @author Sualeh Fatehi
  */
-public final class Config implements Options, Map<String, Object> {
+public final class Config implements Options {
 
   public static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(Config.class.getName());
@@ -65,7 +64,9 @@ public final class Config implements Options, Map<String, Object> {
 
   public Config(final Config config) {
     this();
-    putAll(config);
+    if (config != null) {
+      this.config.putAll(config.config);
+    }
   }
 
   /**
@@ -78,29 +79,8 @@ public final class Config implements Options, Map<String, Object> {
     putAll(config);
   }
 
-  @Override
-  public void clear() {
-    config.clear();
-  }
-
-  @Override
-  public boolean containsKey(final Object key) {
+  public boolean containsKey(final String key) {
     return config.containsKey(key);
-  }
-
-  @Override
-  public boolean containsValue(final Object value) {
-    return config.containsValue(value);
-  }
-
-  @Override
-  public Set<Entry<String, Object>> entrySet() {
-    return config.entrySet();
-  }
-
-  @Override
-  public Object get(final Object key) {
-    return config.get(key);
   }
 
   /**
@@ -115,24 +95,6 @@ public final class Config implements Options, Map<String, Object> {
 
   public boolean getBooleanValue(final String propertyName, final boolean defaultValue) {
     return Boolean.parseBoolean(getStringValue(propertyName, Boolean.toString(defaultValue)));
-  }
-
-  /**
-   * Gets the value of a property as an double.
-   *
-   * @param propertyName Property name
-   * @return Double value
-   */
-  public double getDoubleValue(final String propertyName, final double defaultValue) {
-    try {
-      return Double.parseDouble(getStringValue(propertyName, String.valueOf(defaultValue)));
-    } catch (final NumberFormatException e) {
-      LOGGER.log(
-          Level.FINEST,
-          new StringFormat("Could not parse double value for property <%s>", propertyName),
-          e);
-      return defaultValue;
-    }
   }
 
   /**
@@ -165,24 +127,6 @@ public final class Config implements Options, Map<String, Object> {
     }
   }
 
-  /**
-   * Gets the value of a property as an long.
-   *
-   * @param propertyName Property name
-   * @return Long value
-   */
-  public long getLongValue(final String propertyName, final long defaultValue) {
-    try {
-      return Long.parseLong(getStringValue(propertyName, String.valueOf(defaultValue)));
-    } catch (final NumberFormatException e) {
-      LOGGER.log(
-          Level.FINEST,
-          new StringFormat("Could not parse long value for property <%s>", propertyName),
-          e);
-      return defaultValue;
-    }
-  }
-
   public Optional<InclusionRule> getOptionalInclusionRule(
       final String includePatternProperty, final String excludePatternProperty) {
     final String includePattern = getStringValue(includePatternProperty, null);
@@ -202,7 +146,7 @@ public final class Config implements Options, Map<String, Object> {
    * @return String value
    */
   public String getStringValue(final String propertyName, final String defaultValue) {
-    final Object value = get(propertyName);
+    final Object value = config.get(propertyName);
     if (value == null) {
       return defaultValue;
     } else {
@@ -212,7 +156,7 @@ public final class Config implements Options, Map<String, Object> {
 
   public Map<String, Object> getSubMap(final String propertyName) {
     if (isBlank(propertyName)) {
-      return new HashMap<>();
+      return new HashMap<>(config);
     }
     final Map<String, Object> subMap = new HashMap<>();
     for (final Entry<String, Object> configEntry : config.entrySet()) {
@@ -229,64 +173,28 @@ public final class Config implements Options, Map<String, Object> {
   }
 
   /**
-   * Checks if a value is available.
-   *
-   * @param propertyName Property name
-   * @return True if a value ia available.
+   * @param key
+   * @param value
+   * @return
+   * @see java.util.Map#put(java.lang.Object, java.lang.Object)
    */
-  public boolean hasValue(final String propertyName) {
-    return config.containsKey(propertyName);
-  }
-
-  @Override
-  public boolean isEmpty() {
-    return config.isEmpty();
-  }
-
-  @Override
-  public Set<String> keySet() {
-    return config.keySet();
-  }
-
-  @Override
   public Object put(final String key, final Object value) {
-    return config.put(key, value);
+    if (value == null) {
+      return config.remove(key);
+    }
+    if (!isBlank(key)) {
+      return config.put(key, value);
+    }
+    return null;
   }
 
-  @Override
-  public void putAll(final Map<? extends String, ? extends Object> m) {
+  public void putAll(final Config m) {
     if (m == null) {
       return;
     }
-    config.putAll(m);
+    config.putAll(m.config);
   }
 
-  public void putBooleanValue(final String propertyName, final boolean value) {
-    put(propertyName, Boolean.toString(value));
-  }
-
-  public <E extends Enum<E>> void putEnumValue(final String propertyName, final E value) {
-    if (value == null) {
-      remove(propertyName);
-    } else {
-      put(propertyName, value.name());
-    }
-  }
-
-  public void putStringValue(final String propertyName, final String value) {
-    if (value == null) {
-      remove(propertyName);
-    } else {
-      put(propertyName, value);
-    }
-  }
-
-  @Override
-  public Object remove(final Object key) {
-    return config.remove(key);
-  }
-
-  @Override
   public int size() {
     return config.size();
   }
@@ -296,8 +204,10 @@ public final class Config implements Options, Map<String, Object> {
     return ObjectToString.toString(this);
   }
 
-  @Override
-  public Collection<Object> values() {
-    return config.values();
+  private void putAll(final Map<? extends String, ? extends Object> m) {
+    if (m == null) {
+      return;
+    }
+    config.putAll(m);
   }
 }

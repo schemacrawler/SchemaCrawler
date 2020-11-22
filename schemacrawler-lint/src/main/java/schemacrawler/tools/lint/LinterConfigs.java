@@ -86,11 +86,11 @@ public class LinterConfigs implements Iterable<LinterConfig> {
   }
 
   private final List<LinterConfig> linterConfigs;
-  private final Map<String, String> properties;
+  private final Map<String, Object> config;
 
-  public LinterConfigs(final Map<String, String> properties) {
+  public LinterConfigs(final Map<String, Object> config) {
     linterConfigs = new ArrayList<>();
-    this.properties = requireNonNull(properties, "No properties provided");
+    this.config = requireNonNull(config, "No configuration provided");
   }
 
   public void add(final LinterConfig linterConfig) {
@@ -130,12 +130,11 @@ public class LinterConfigs implements Iterable<LinterConfig> {
     return ObjectToString.toString(this);
   }
 
-  private Map<String, String> parseConfig(final Element configElement) {
-    final Map<String, String> config = new HashMap<>();
-    config.putAll(properties);
+  private Map<String, Object> parseConfig(final Element configElement) {
+    final Map<String, Object> parsedConfig = new HashMap<>(config);
 
     if (configElement == null) {
-      return config;
+      return parsedConfig;
     }
 
     final NodeList propertiesList = configElement.getElementsByTagName("property");
@@ -145,12 +144,12 @@ public class LinterConfigs implements Iterable<LinterConfig> {
         final String name = propertyElement.getAttribute("name");
         final String value = propertyElement.getFirstChild().getNodeValue();
         if (!isBlank(name)) {
-          config.put(name, value);
+          parsedConfig.put(name, value);
         }
       }
     }
 
-    return config;
+    return parsedConfig;
   }
 
   private List<LinterConfig> parseDocument(final Document document) {
@@ -174,13 +173,13 @@ public class LinterConfigs implements Iterable<LinterConfig> {
 
           final Config cfg = parseLinterConfig(linterElement);
 
-          if (cfg.hasValue("run")) {
+          if (cfg.containsKey("run")) {
             linterConfig.setRunLinter(cfg.getBooleanValue("run"));
           }
-          if (cfg.hasValue("severity")) {
+          if (cfg.containsKey("severity")) {
             linterConfig.setSeverity(cfg.getEnumValue("severity", LintSeverity.medium));
           }
-          if (cfg.hasValue("threshold")) {
+          if (cfg.containsKey("threshold")) {
             linterConfig.setThreshold(cfg.getIntegerValue("threshold", Integer.MAX_VALUE));
           }
 
@@ -201,7 +200,7 @@ public class LinterConfigs implements Iterable<LinterConfig> {
           linterConfig.setColumnExclusionPattern(columnExclusionPattern);
 
           // Linter-specific config
-          final Map<String, String> config = parseConfig(getSubElement(linterElement, "config"));
+          final Map<String, Object> config = parseConfig(getSubElement(linterElement, "config"));
           linterConfig.putAll(config);
 
           linterConfigs.add(linterConfig);

@@ -28,20 +28,19 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.linter;
 
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
-import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.options.Config;
 
 public class LinterTableWithBadlyNamedColumns extends BaseLinter {
 
@@ -53,15 +52,12 @@ public class LinterTableWithBadlyNamedColumns extends BaseLinter {
   }
 
   @Override
-  protected void configure(final Map<String, String> config) {
+  protected void configure(final Config config) {
     requireNonNull(config, "No configuration provided");
 
-    final String badColumnNames = config.get("bad-column-names");
-    if (isBlank(badColumnNames)) {
-      columnNames = new IncludeAll();
-    } else {
-      columnNames = new RegularExpressionInclusionRule(badColumnNames);
-    }
+    final Optional<InclusionRule> inclusionRuleLookup =
+        config.getOptionalInclusionRule("bad-column-names", "");
+    columnNames = inclusionRuleLookup.orElse(new IncludeAll());
   }
 
   @Override

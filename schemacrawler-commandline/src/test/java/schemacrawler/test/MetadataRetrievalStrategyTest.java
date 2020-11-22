@@ -55,7 +55,6 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
-import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
@@ -86,7 +85,7 @@ public class MetadataRetrievalStrategyTest {
     final InfoLevel infoLevel = InfoLevel.minimum;
     final OutputFormat outputFormat = TextOutputFormat.text;
 
-    final Config config = new Config();
+    final Map<String, Object> config = new HashMap<>();
     config.put(
         "schemacrawler.schema.retrieval.strategy.tables",
         MetadataRetrievalStrategy.data_dictionary_all.name());

@@ -30,10 +30,6 @@ package schemacrawler.tools.lint.executable;
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
 
 import java.nio.file.Path;
-import java.util.AbstractMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
 
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandDescription;
@@ -84,19 +80,7 @@ public class LintCommandProvider extends BaseCommandProvider {
 
   @Override
   public LintCommand newSchemaCrawlerCommand(final String command, final Config config) {
-    final Map<String, String> properties =
-        config
-            .entrySet()
-            .stream()
-            .map(
-                entry ->
-                    new AbstractMap.SimpleImmutableEntry<String, String>(
-                        entry.getKey(), String.valueOf(entry.getValue())))
-            .filter(entry -> entry.getValue() != null)
-            .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
-
-    final LintOptions lintOptions =
-        LintOptionsBuilder.builder().fromConfig(config).withProperties(properties).toOptions();
+    final LintOptions lintOptions = LintOptionsBuilder.builder().fromConfig(config).toOptions();
     final LintCommand scCommand = new LintCommand();
     scCommand.setCommandOptions(lintOptions);
     return scCommand;

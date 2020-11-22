@@ -32,13 +32,13 @@ import static java.util.Objects.requireNonNull;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.JavaSqlTypeGroup;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
+import schemacrawler.tools.options.Config;
 
 public class LinterTooManyLobs extends BaseLinter {
 
@@ -56,10 +56,10 @@ public class LinterTooManyLobs extends BaseLinter {
   }
 
   @Override
-  protected void configure(final Map<String, String> config) {
+  protected void configure(final Config config) {
     requireNonNull(config, "No configuration provided");
 
-    maxLargeObjectsInTable = Integer.valueOf(config.get("max-large-objects"));
+    maxLargeObjectsInTable = config.getIntegerValue("max-large-objects", 1);
   }
 
   @Override
