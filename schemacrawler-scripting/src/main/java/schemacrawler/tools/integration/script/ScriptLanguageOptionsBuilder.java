@@ -28,9 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.integration.script;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import schemacrawler.tools.integration.LanguageOptions;
 import schemacrawler.tools.integration.LanguageOptionsBuilder;
 import schemacrawler.tools.options.Config;
@@ -41,17 +38,17 @@ public final class ScriptLanguageOptionsBuilder extends LanguageOptionsBuilder<S
     return new ScriptLanguageOptionsBuilder();
   }
 
-  private Map<String, Object> config;
+  private Config config;
 
   private ScriptLanguageOptionsBuilder() {
     super("script-language", "script", "javascript");
-    config = new HashMap<>();
+    config = new Config();
   }
 
   @Override
   public ScriptLanguageOptionsBuilder fromConfig(final Config config) {
     super.fromConfig(config);
-    this.config = config.getSubMap(null);
+    this.config = new Config(config);
     return this;
   }
 

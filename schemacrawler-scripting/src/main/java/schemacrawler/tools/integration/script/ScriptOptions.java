@@ -27,26 +27,23 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.integration.script;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import schemacrawler.tools.integration.LanguageOptions;
+import schemacrawler.tools.options.Config;
 
 public class ScriptOptions extends LanguageOptions {
 
-  private final Map<String, Object> config;
+  private final Config config;
 
-  public ScriptOptions(
-      final String language, final String script, final Map<String, Object> config) {
+  public ScriptOptions(final String language, final String script, final Config config) {
     super(language, script);
     if (config == null) {
-      this.config = new HashMap<>();
+      this.config = new Config();
     } else {
-      this.config = config;
+      this.config = new Config(config);
     }
   }
 
-  public Map<String, Object> getConfig() {
-    return new HashMap<>(config);
+  public Config getConfig() {
+    return new Config(config);
   }
 }

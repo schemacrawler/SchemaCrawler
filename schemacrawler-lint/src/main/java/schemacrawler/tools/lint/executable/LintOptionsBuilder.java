@@ -29,9 +29,6 @@ package schemacrawler.tools.lint.executable;
 
 import static us.fatehi.utility.Utility.isBlank;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
@@ -58,13 +55,13 @@ public final class LintOptionsBuilder
   LintDispatch lintDispatch;
   String linterConfigs;
   boolean runAllLinters;
-  Map<String, Object> config;
+  Config config;
 
   private LintOptionsBuilder() {
     linterConfigs = "";
     lintDispatch = LintDispatch.none;
     runAllLinters = true;
-    config = new HashMap<>();
+    config = new Config();
   }
 
   @Override
@@ -105,7 +102,7 @@ public final class LintOptionsBuilder
     runAllLinters = config.getBooleanValue(runAllLintersKey, true);
 
     // Save config
-    this.config.putAll(config.getSubMap(""));
+    this.config.putAll(config);
 
     return this;
   }
