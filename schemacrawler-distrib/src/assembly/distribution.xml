@@ -19,6 +19,7 @@
     depends="
             download-tools,
             make-base-distribution,
+            make-distribution,
             make-distribution-zip,
             make-website-distribution,
             cleanup-distribution
@@ -38,15 +39,13 @@
       dest="ivy-2.5.0.jar" usetimestamp="true" />
   </target>
 
-  <target name="make-distribution-zip">
+  <target name="make-distribution">
 
     <property name="main-distribution.staging.dir" location="${distribution.target}/_distribution" />
     <property name="main-distribution.stem"
       value="schemacrawler-${SchemaCrawler.version}-distribution" />
     <property name="distribution.examples.resources"
       location="${SchemaCrawler.home}/schemacrawler-distrib/src/examples/resources" />
-
-    <!-- 1. STAGE FOR EXAMPLES -->
 
     <mkdir dir="${main-distribution.staging.dir}"/>
 
@@ -115,7 +114,16 @@
       </classpath>
     </java>
 
-    <!-- 2. CREATE BINARY DISTRIBUTION FROM THE STAGED EXAMPLES -->
+  </target>
+
+
+  <target name="make-distribution-zip">
+
+    <property name="main-distribution.staging.dir" location="${distribution.target}/_distribution" />
+    <property name="main-distribution.stem"
+      value="schemacrawler-${SchemaCrawler.version}-distribution" />
+    <property name="distribution.examples.resources"
+      location="${SchemaCrawler.home}/schemacrawler-distrib/src/examples/resources" />
 
     <echo>Create zip file for distribution</echo>
 
@@ -143,6 +151,7 @@
 
   </target>
 
+	
   <target name="make-website-distribution">
 
     <property name="website.staging.dir" location="${distribution.target}/_website" />
