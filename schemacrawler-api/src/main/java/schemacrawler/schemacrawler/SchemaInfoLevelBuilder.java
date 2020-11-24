@@ -292,6 +292,12 @@ public final class SchemaInfoLevelBuilder
     return this;
   }
 
+  public SchemaInfoLevelBuilder setRetrieveViewViewTableUsage(
+      final boolean retrieveViewTableUsage) {
+    schemaInfoRetrievals.put(SchemaInfoRetrieval.retrieveViewTableUsage, retrieveViewTableUsage);
+    return this;
+  }
+
   public SchemaInfoLevelBuilder setRetrieveWeakAssociations(
       final boolean retrieveWeakAssociations) {
     schemaInfoRetrievals.put(

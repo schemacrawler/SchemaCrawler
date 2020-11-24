@@ -28,15 +28,119 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.BiConsumer;
 
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.SchemaInfoRetrieval;
 
 public class SchemaInfoLevelBuilderTest {
+
+  @Test
+  public void setRetrieveAdditionalColumnMetadata() {
+
+    final Map<SchemaInfoRetrieval, BiConsumer<SchemaInfoLevelBuilder, Boolean>> testMap =
+        new HashMap<>();
+
+    testMap.put(
+        SchemaInfoRetrieval.retrieveAdditionalColumnAttributes,
+        SchemaInfoLevelBuilder::setRetrieveAdditionalColumnAttributes);
+    testMap.put(
+        SchemaInfoRetrieval.retrieveAdditionalColumnMetadata,
+        SchemaInfoLevelBuilder::setRetrieveAdditionalColumnMetadata);
+    testMap.put(
+        SchemaInfoRetrieval.retrieveAdditionalDatabaseInfo,
+        SchemaInfoLevelBuilder::setRetrieveAdditionalDatabaseInfo);
+    testMap.put(
+        SchemaInfoRetrieval.retrieveAdditionalJdbcDriverInfo,
+        SchemaInfoLevelBuilder::setRetrieveAdditionalJdbcDriverInfo);
+    testMap.put(
+        SchemaInfoRetrieval.retrieveAdditionalTableAttributes,
+        SchemaInfoLevelBuilder::setRetrieveAdditionalTableAttributes);
+    testMap.put(
+        SchemaInfoRetrieval.retrieveColumnDataTypes,
+        SchemaInfoLevelBuilder::setRetrieveColumnDataTypes);
+    testMap.put(
+        SchemaInfoRetrieval.retrieveDatabaseInfo, SchemaInfoLevelBuilder::setRetrieveDatabaseInfo);
+    testMap.put(
+        SchemaInfoRetrieval.retrieveDatabaseUsers,
+        SchemaInfoLevelBuilder::setRetrieveDatabaseUsers);
+    testMap.put(
+        SchemaInfoRetrieval.retrieveForeignKeys, SchemaInfoLevelBuilder::setRetrieveForeignKeys);
+    testMap.put(SchemaInfoRetrieval.retrieveIndexes, SchemaInfoLevelBuilder::setRetrieveIndexes);
+    testMap.put(
+        SchemaInfoRetrieval.retrieveIndexInformation,
+        SchemaInfoLevelBuilder::setRetrieveIndexInformation);
+    testMap.put(
+        SchemaInfoRetrieval.retrieveRoutineInformation,
+        SchemaInfoLevelBuilder::setRetrieveRoutineInformation);
+    testMap.put(
+        SchemaInfoRetrieval.retrieveRoutineParameters,
+        SchemaInfoLevelBuilder::setRetrieveRoutineParameters);
+    testMap.put(SchemaInfoRetrieval.retrieveRoutines, SchemaInfoLevelBuilder::setRetrieveRoutines);
+    testMap.put(
+        SchemaInfoRetrieval.retrieveSequenceInformation,
+        SchemaInfoLevelBuilder::setRetrieveSequenceInformation);
+    testMap.put(
+        SchemaInfoRetrieval.retrieveServerInfo, SchemaInfoLevelBuilder::setRetrieveServerInfo);
+    testMap.put(
+        SchemaInfoRetrieval.retrieveSynonymInformation,
+        SchemaInfoLevelBuilder::setRetrieveSynonymInformation);
+    testMap.put(
+        SchemaInfoRetrieval.retrieveTableColumnPrivileges,
+        SchemaInfoLevelBuilder::setRetrieveTableColumnPrivileges);
+    testMap.put(
+        SchemaInfoRetrieval.retrieveTableColumns, SchemaInfoLevelBuilder::setRetrieveTableColumns);
+    testMap.put(
+        SchemaInfoRetrieval.retrieveTableConstraintDefinitions,
+        SchemaInfoLevelBuilder::setRetrieveTableConstraintDefinitions);
+    testMap.put(
+        SchemaInfoRetrieval.retrieveTableConstraintInformation,
+        SchemaInfoLevelBuilder::setRetrieveTableConstraintInformation);
+    testMap.put(
+        SchemaInfoRetrieval.retrieveTableDefinitionsInformation,
+        SchemaInfoLevelBuilder::setRetrieveTableDefinitionsInformation);
+    testMap.put(
+        SchemaInfoRetrieval.retrieveTablePrivileges,
+        SchemaInfoLevelBuilder::setRetrieveTablePrivileges);
+    testMap.put(SchemaInfoRetrieval.retrieveTables, SchemaInfoLevelBuilder::setRetrieveTables);
+    testMap.put(
+        SchemaInfoRetrieval.retrieveTriggerInformation,
+        SchemaInfoLevelBuilder::setRetrieveTriggerInformation);
+    testMap.put(
+        SchemaInfoRetrieval.retrieveUserDefinedColumnDataTypes,
+        SchemaInfoLevelBuilder::setRetrieveUserDefinedColumnDataTypes);
+    testMap.put(
+        SchemaInfoRetrieval.retrieveViewInformation,
+        SchemaInfoLevelBuilder::setRetrieveViewInformation);
+    testMap.put(
+        SchemaInfoRetrieval.retrieveViewTableUsage,
+        SchemaInfoLevelBuilder::setRetrieveViewViewTableUsage);
+    testMap.put(
+        SchemaInfoRetrieval.retrieveWeakAssociations,
+        SchemaInfoLevelBuilder::setRetrieveWeakAssociations);
+
+    final SchemaInfoLevelBuilder builder = SchemaInfoLevelBuilder.builder();
+
+    testMap.forEach(
+        (infoRetrieval, consumer) -> {
+          consumer.accept(builder, true);
+          assertThat(
+              "Failed for " + infoRetrieval, builder.toOptions().is(infoRetrieval), is(true));
+
+          consumer.accept(builder, false);
+          assertThat(
+              "Failed for " + infoRetrieval, builder.toOptions().is(infoRetrieval), is(false));
+        });
+  }
 
   @Test
   public void testFromOptions() {
