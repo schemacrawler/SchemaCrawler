@@ -13,11 +13,10 @@
     value="${distribution.target}/schemacrawler-${SchemaCrawler.version}-javadoc.jar" />
 
   <available file="lgpl-3.0.txt" property="available.lgpl-3.0.txt" />
-  <available file="ivy-2.5.0.jar" property="available.ivy.jar" />
 
   <target name="make"
     depends="
-            download-tools,
+            download-lgpl,
             make-base-distribution,
             make-distribution,
             make-distribution-zip,
@@ -25,17 +24,9 @@
           "
     description="Package all sub-project jars into the distributable jar" />
 
-  <target name="download-tools" depends="download-lgpl,download-ivy" />
-
   <target name="download-lgpl" unless="available.lgpl-3.0.txt">
     <get src="http://www.gnu.org/licenses/lgpl-3.0.txt" dest="lgpl-3.0.txt"
       usetimestamp="true" />
-  </target>
-
-  <target name="download-ivy" unless="available.ivy.jar">
-    <get
-      src="https://repo1.maven.org/maven2/org/apache/ivy/ivy/2.5.0/ivy-2.5.0.jar"
-      dest="ivy-2.5.0.jar" usetimestamp="true" />
   </target>
 
   <target name="make-distribution">
@@ -52,7 +43,7 @@
     <copy file="lgpl-3.0.txt" tofile="${main-distribution.staging.dir}/LICENSE.txt" />
 
     <!-- Copy Apache Ant Ivy -->
-    <copy file="ivy-2.5.0.jar" todir="${main-distribution.staging.dir}/_downloader" />
+    <copy file="${user.home}/.ant/lib/ivy-2.5.0.jar" todir="${main-distribution.staging.dir}/_downloader" />
 
     <!-- Stage examples -->
     <copy todir="${main-distribution.staging.dir}">
@@ -150,7 +141,7 @@
 
   </target>
 
-	
+
   <target name="make-base-distribution">
 
     <copy todir="${schemacrawler.base-distribution}">

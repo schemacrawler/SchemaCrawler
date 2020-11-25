@@ -8,7 +8,7 @@
 
   <target name="make"
     depends="
-  	        stage-site-markdown,
+            stage-site-markdown,
             make-base-website-distribution
             "
     description="Package all sub-project jars into the distributable jar" />

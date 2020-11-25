@@ -126,6 +126,21 @@
         <artifactId>maven-antrun-plugin</artifactId>
         <executions>
           <execution>
+            <id>download-ivy-for-ant</id>
+            <phase>initialize</phase>
+            <configuration>
+              <target name="download-ivy-for-ant"
+                      description="Download Apache ivy, and make it available to Apache ant">
+                <get src="https://repo1.maven.org/maven2/org/apache/ivy/ivy/2.5.0/ivy-2.5.0.jar"
+                     dest="${user.home}/.ant/lib/ivy-2.5.0.jar"
+                     usetimestamp="true" />
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+          <execution>
             <id>make-base-website</id>
             <phase>process-test-resources</phase>
             <configuration>
@@ -155,7 +170,7 @@
             <goals>
               <goal>run</goal>
             </goals>
-          </execution>          
+          </execution>
           <execution>
             <id>make-distribution</id>
             <phase>package</phase>
