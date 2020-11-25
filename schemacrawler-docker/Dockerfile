@@ -26,13 +26,6 @@
 
 FROM openjdk:8-jdk-alpine
 
-ARG SCHEMACRAWLER_VERSION=16.11.5
-
-LABEL \
-  "us.fatehi.schemacrawler.product-version"="SchemaCrawler ${SCHEMACRAWLER_VERSION}" \
-  "us.fatehi.schemacrawler.website"="http://www.schemacrawler.com" \
-  "us.fatehi.schemacrawler.docker-hub"="https://hub.docker.com/r/schemacrawler/schemacrawler"
-
 LABEL "maintainer"="Sualeh Fatehi <sualeh@hotmail.com>"
 
 # Install Graphviz
@@ -45,7 +38,7 @@ RUN \
 
 # Copy SchemaCrawler distribution from the build directory
 COPY \
-    ./schemacrawler-${SCHEMACRAWLER_VERSION}-distribution/_schemacrawler /opt/schemacrawler
+    . /opt/schemacrawler/
 # Ensure that the SchemaCrawler script is executable
 RUN \
     chmod +rx /opt/schemacrawler/schemacrawler.sh
@@ -59,12 +52,10 @@ WORKDIR /home/schcrwlr
 # Copy configuration files for the current user
 COPY \
     --chown=schcrwlr:users \
-    ./schemacrawler-${SCHEMACRAWLER_VERSION}-distribution/_testdb/sc.db \
-    /home/schcrwlr/sc.db
+    ./sc.db /home/schcrwlr/sc.db
 COPY \
     --chown=schcrwlr:users \
-    ./schemacrawler-${SCHEMACRAWLER_VERSION}-distribution/_schemacrawler/config/* \
-    /home/schcrwlr/
+    ./config/* /home/schcrwlr/
 
 # Create aliases for SchemaCrawler
 RUN \

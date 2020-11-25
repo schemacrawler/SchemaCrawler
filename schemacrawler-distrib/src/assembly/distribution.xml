@@ -11,7 +11,7 @@
     value="${distribution.target}/_base-distribution" />
   <property
     name="schemacrawler.expanded-distribution"
-    location="${distribution.target}/_expanded_distribution" />
+    location="${distribution.target}/_expanded-distribution" />
 
 
   <target name="make"
