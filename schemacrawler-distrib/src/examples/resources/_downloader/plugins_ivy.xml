@@ -2,17 +2,17 @@
 <ivy-module version="2.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:noNamespaceSchemaLocation="https://ant.apache.org/ivy/schemas/ivy.xsd">
-  <info organisation="us.fatehi" module="schemacrawler"/>
+  <info organisation="us.fatehi.schemacrawler" module="plugins"/>
   <configurations>
     <conf name="binaries" visibility="public" />
   </configurations>
   <dependencies>
     <dependency org="us.fatehi" name="schemacrawler-timesten"
-      rev="16.11.5" conf="binaries->default" />
+      rev="16.11.4" conf="binaries->default" />
     <dependency org="us.fatehi" name="schemacrawler-sapiq"
-      rev="16.11.5" conf="binaries->default" />
+      rev="16.11.4" conf="binaries->default" />
     <dependency org="us.fatehi" name="schemacrawler-hana"
-      rev="16.11.5" conf="binaries->default" />
+      rev="16.11.4" conf="binaries->default" />
 
     <dependency org="com.sap.cloud.db.jdbc" name="ngdbc"
       rev="2.6.29" conf="binaries->default" />

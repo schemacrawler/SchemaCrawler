@@ -1,4 +1,6 @@
-<project name="schemacrawler" default="make"
+<project xmlns:ivy="antlib:org.apache.ivy.ant"
+    name="schemacrawler"
+    default="make"
   basedir=".">
 
   <property name="distribution.assembly"
@@ -20,6 +22,7 @@
             make-base-distribution,
             make-distribution,
             make-distribution-zip,
+            expand-distribution,
             cleanup-distribution
           "
     description="Package all sub-project jars into the distributable jar" />
@@ -141,6 +144,59 @@
 
   </target>
 
+
+  <target name="expand-distribution">
+
+    <property name="expanded-distribution.staging.dir" location="${distribution.target}/_expanded_distribution" />
+    <property name="main-distribution.staging.dir" location="${distribution.target}/_distribution" />
+
+    <echo>Create expanded distribution, with downloaded directories</echo>
+
+    <copy todir="${expanded-distribution.staging.dir}">
+      <fileset dir="${main-distribution.staging.dir}">
+        <include name="_schemacrawler/**/*.*" />
+      </fileset>
+    </copy>
+
+    <ivy:configure file="${main-distribution.staging.dir}/_downloader/ivysettings.xml"/>
+    <copy verbose="true" todir="${expanded-distribution.staging.dir}/_schemacrawler/lib">
+      <ivy:resources resolveId="graphviz-java"
+        file="${main-distribution.staging.dir}/_downloader/graphviz-java_ivy.xml"/>
+    </copy>  	
+    <copy verbose="true" todir="${expanded-distribution.staging.dir}/_schemacrawler/lib">
+      <ivy:resources resolveId="groovy"
+        file="${main-distribution.staging.dir}/_downloader/groovy_ivy.xml"/>
+    </copy>
+    <copy verbose="true" todir="${expanded-distribution.staging.dir}/_schemacrawler/lib">
+      <ivy:resources resolveId="jackson"
+        file="${main-distribution.staging.dir}/_downloader/jackson_ivy.xml"/>
+    </copy>
+    <copy todir="${expanded-distribution.staging.dir}/_schemacrawler/lib">
+      <ivy:resources resolveId="mustache"
+        file="${main-distribution.staging.dir}/_downloader/mustache_ivy.xml"/>
+    </copy>
+    <copy todir="${expanded-distribution.staging.dir}/_schemacrawler/lib">
+      <ivy:resources resolveId="plugins"
+        file="${main-distribution.staging.dir}/_downloader/plugins_ivy.xml"/>
+    </copy>
+    <copy todir="${expanded-distribution.staging.dir}/_schemacrawler/lib">
+      <ivy:resources resolveId="python"
+        file="${main-distribution.staging.dir}/_downloader/python_ivy.xml"/>
+    </copy>
+    <copy todir="${expanded-distribution.staging.dir}/_schemacrawler/lib">
+      <ivy:resources resolveId="ruby"
+        file="${main-distribution.staging.dir}/_downloader/ruby_ivy.xml"/>
+    </copy>
+    <copy todir="${expanded-distribution.staging.dir}/_schemacrawler/lib">
+      <ivy:resources resolveId="thymeleaf"
+        file="${main-distribution.staging.dir}/_downloader/thymeleaf_ivy.xml"/>
+    </copy>
+    <copy todir="${expanded-distribution.staging.dir}/_schemacrawler/lib">
+      <ivy:resources resolveId="velocity"
+        file="${main-distribution.staging.dir}/_downloader/velocity_ivy.xml"/>
+    </copy>
+
+  </target>
 
   <target name="make-base-distribution">
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>us.fatehi</groupId>
@@ -104,7 +104,12 @@
             <dependency>
               <groupId>org.apache.ant</groupId>
               <artifactId>ant</artifactId>
-              <version>1.10.8</version>
+              <version>1.10.9</version>
+            </dependency>
+            <dependency>
+              <groupId>org.apache.ivy</groupId>
+              <artifactId>ivy</artifactId>
+              <version>2.5.0</version>
             </dependency>
           </dependencies>
         </plugin>
@@ -130,10 +135,10 @@
             <phase>initialize</phase>
             <configuration>
               <target name="download-ivy-for-ant"
-                      description="Download Apache ivy, and make it available to Apache ant">
-                <get src="https://repo1.maven.org/maven2/org/apache/ivy/ivy/2.5.0/ivy-2.5.0.jar"
-                     dest="${user.home}/.ant/lib/ivy-2.5.0.jar"
-                     usetimestamp="true" />
+                description="Download Apache ivy, and make it available to Apache ant">
+                <get
+                  src="https://repo1.maven.org/maven2/org/apache/ivy/ivy/2.5.0/ivy-2.5.0.jar"
+                  dest="${user.home}/.ant/lib/ivy-2.5.0.jar" usetimestamp="true" />
               </target>
             </configuration>
             <goals>
@@ -145,11 +150,11 @@
             <phase>process-test-resources</phase>
             <configuration>
               <target name="make-base-website-distribution"
-                      description="Stage sources for website">
-                <property name="SchemaCrawler.home" location=".."/>
+                description="Stage sources for website">
+                <property name="SchemaCrawler.home" location=".." />
                 <property name="SchemaCrawler.version"
-                          value="${project.version}"/>
-                <ant antfile="src\assembly\website.xml" target="make"/>
+                  value="${project.version}" />
+                <ant antfile="src\assembly\website.xml" target="make" />
               </target>
             </configuration>
             <goals>
@@ -161,9 +166,9 @@
             <phase>process-test-resources</phase>
             <configuration>
               <target name="stage-site"
-                      description="Stage website sources">
+                description="Stage website sources">
                 <copy todir="${project.basedir}/target/_website">
-                  <fileset dir="${project.basedir}/target/_base-website"/>
+                  <fileset dir="${project.basedir}/target/_base-website" />
                 </copy>
               </target>
             </configuration>
@@ -176,11 +181,11 @@
             <phase>package</phase>
             <configuration>
               <target name="make-distribution"
-                      description="Package all sub-project jars into the distributable zip">
-                <property name="SchemaCrawler.home" location=".."/>
+                description="Package all sub-project jars into the distributable zip">
+                <property name="SchemaCrawler.home" location=".." />
                 <property name="SchemaCrawler.version"
-                          value="${project.version}"/>
-                <ant antfile="src\assembly\distribution.xml" target="make"/>
+                  value="${project.version}" />
+                <ant antfile="src\assembly\distribution.xml" target="make" />
               </target>
             </configuration>
             <goals>
