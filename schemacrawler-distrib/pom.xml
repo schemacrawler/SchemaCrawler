@@ -126,24 +126,36 @@
         <artifactId>maven-antrun-plugin</artifactId>
         <executions>
           <execution>
-            <id>stage-site-markdown</id>
-            <phase>test</phase>
+            <id>make-base-website</id>
+            <phase>process-test-resources</phase>
             <configuration>
-              <target name="stage-site-markdown"
-                      description="Stage site Markdown, and generate Markdown content">
-                <copy todir="${project.basedir}/target/site-markdown">
-                  <fileset dir="${project.basedir}/src/site/markdown"/>
-                </copy>
-                <java classname="schemacrawler.tools.lint.LinterHelp">
-                  <classpath refid="maven.test.classpath" />
-                  <arg file="${project.basedir}/target/site-markdown/lint.md"/>
-                </java>
+              <target name="make-base-website-distribution"
+                      description="Stage sources for website">
+                <property name="SchemaCrawler.home" location=".."/>
+                <property name="SchemaCrawler.version"
+                          value="${project.version}"/>
+                <ant antfile="src\assembly\website.xml" target="make"/>
               </target>
             </configuration>
             <goals>
               <goal>run</goal>
             </goals>
           </execution>
+          <execution>
+            <id>stage-site</id>
+            <phase>process-test-resources</phase>
+            <configuration>
+              <target name="stage-site"
+                      description="Stage website sources">
+                <copy todir="${project.basedir}/target/_website">
+                  <fileset dir="${project.basedir}/target/_base-website"/>
+                </copy>
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>          
           <execution>
             <id>make-distribution</id>
             <phase>package</phase>

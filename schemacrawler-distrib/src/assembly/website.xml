@@ -1,0 +1,64 @@
+<project name="schemacrawler" default="make"
+  basedir=".">
+
+  <property name="distribution.src"
+    location="${SchemaCrawler.home}/schemacrawler-distrib/src" />
+  <property name="distribution.target"
+    location="${SchemaCrawler.home}/schemacrawler-distrib/target" />
+
+  <target name="make"
+    depends="
+  	        stage-site-markdown,
+            make-base-website-distribution
+            "
+    description="Package all sub-project jars into the distributable jar" />
+
+
+  <target name="stage-site-markdown"
+          description="Stage site Markdown, and generate Markdown content">
+    <copy todir="${distribution.target}/site-markdown">
+      <fileset dir="${distribution.src}/site/markdown"/>
+    </copy>
+  </target>
+
+
+  <target name="make-base-website-distribution">
+
+    <property name="website.staging.dir" location="${distribution.target}/_base-website" />
+
+    <property name="website.source.resources.location"
+      location="${SchemaCrawler.home}/schemacrawler-distrib/src/site/resources" />
+    <property name="website.source.javadoc.location"
+      location="${SchemaCrawler.home}/schemacrawler/target/apidocs" />
+    <property name="website.source.config.location"
+      location="${SchemaCrawler.home}/schemacrawler-docs/config" />
+
+    <!-- No-op if the directories already exist, but do this so that downstream
+      steps do not fail -->
+    <mkdir dir="${website.staging.dir}" />
+    <mkdir dir="${website.source.javadoc.location}" />
+
+    <copy todir="${website.staging.dir}/apidocs">
+      <fileset dir="${website.source.javadoc.location}">
+        <include name="**/*.*" />
+      </fileset>
+    </copy>
+
+    <copy todir="${website.staging.dir}/config">
+      <fileset dir="${website.source.config.location}">
+        <include name="**/*.*" />
+      </fileset>
+    </copy>
+
+    <copy todir="${website.staging.dir}">
+      <fileset dir="${website.source.resources.location}">
+        <include name="**/*" />
+      </fileset>
+    </copy>
+
+    <copy file="${distribution.src}/assembly/Website-README.md"
+          tofile="${website.staging.dir}/README.md" />
+
+  </target>
+
+</project>
