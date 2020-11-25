@@ -20,8 +20,8 @@
     depends="
             download-lgpl,
             make-base-distribution,
-            make-distribution,
-            make-distribution-zip,
+            make-main-distribution,
+            make-main-distribution-zip,
             make-expanded-distribution,
             cleanup-distribution
           "
@@ -32,9 +32,9 @@
       usetimestamp="true" />
   </target>
 
-  <target name="make-distribution">
+  <target name="make-main-distribution">
 
-    <property name="main-distribution.staging.dir" location="${distribution.target}/_distribution" />
+    <property name="main-distribution.staging.dir" location="${distribution.target}/_main-distribution" />
     <property name="main-distribution.stem"
       value="schemacrawler-${SchemaCrawler.version}-distribution" />
     <property name="distribution.examples.resources"
@@ -110,9 +110,9 @@
   </target>
 
 
-  <target name="make-distribution-zip">
+  <target name="make-main-distribution-zip">
 
-    <property name="main-distribution.staging.dir" location="${distribution.target}/_distribution" />
+    <property name="main-distribution.staging.dir" location="${distribution.target}/_main-distribution" />
     <property name="main-distribution.stem"
       value="schemacrawler-${SchemaCrawler.version}-distribution" />
     <property name="distribution.examples.resources"
