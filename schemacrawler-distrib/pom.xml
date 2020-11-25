@@ -136,6 +136,7 @@
             <configuration>
               <target name="download-ivy-for-ant"
                 description="Download Apache ivy, and make it available to Apache ant">
+                <mkdir dir="${user.home}/.ant/lib" />
                 <get
                   src="https://repo1.maven.org/maven2/org/apache/ivy/ivy/2.5.0/ivy-2.5.0.jar"
                   dest="${user.home}/.ant/lib/ivy-2.5.0.jar" usetimestamp="true" />
@@ -181,7 +182,23 @@
             <phase>package</phase>
             <configuration>
               <target name="make-distribution"
-                description="Package all sub-project jars into the distributable zip">
+                description="Package SchemaCrawler distributable">
+                <property name="SchemaCrawler.home" location=".." />
+                <property name="SchemaCrawler.version"
+                  value="${project.version}" />
+                <ant antfile="src\assembly\distribution.xml" target="make" />
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>          
+          <execution>
+            <id>make-main-distribution</id>
+            <phase>package</phase>
+            <configuration>
+              <target name="make-main-distribution"
+                description="Package SchemaCrawler, test database, and examples into the main distributable zip">
                 <property name="SchemaCrawler.home" location=".." />
                 <property name="SchemaCrawler.version"
                   value="${project.version}" />

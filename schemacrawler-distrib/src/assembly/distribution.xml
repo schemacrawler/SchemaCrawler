@@ -1,0 +1,132 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant"
+    name="schemacrawler"
+    default="make"
+  basedir=".">
+
+
+  <property name="distribution.target"
+    location="${SchemaCrawler.home}/schemacrawler-distrib/target" />
+  <property 
+  	name="schemacrawler.base-distribution"
+    value="${distribution.target}/_base-distribution" />
+  <property
+    name="schemacrawler.expanded-distribution"
+    location="${distribution.target}/_expanded_distribution" />
+
+
+  <target name="make"
+    depends="
+            make-base-distribution,
+            make-expanded-distribution
+          "
+    description="Package SchemaCrawler distributable" />
+            	
+            	
+  <target name="make-base-distribution">
+
+    <property 
+    	name="distribution.assembly"
+      location="${SchemaCrawler.home}/schemacrawler-distrib/src/assembly" />
+  	
+    <copy todir="${schemacrawler.base-distribution}">
+      <fileset dir="${distribution.assembly}">
+        <include name="schemacrawler.cmd" />
+        <include name="schemacrawler-shell.cmd" />
+        <include name="schemacrawler.sh" />
+        <include name="schemacrawler-shell.sh" />
+      </fileset>
+    </copy>
+
+    <copy file="${SchemaCrawler.home}/schemacrawler/target/schemacrawler-${SchemaCrawler.version}.jar"
+        todir="${schemacrawler.base-distribution}/lib" />
+    <copy
+      file="${SchemaCrawler.home}/schemacrawler-docs/config/schemacrawler.config.properties"
+      todir="${schemacrawler.base-distribution}/config" />
+    <copy
+      file="${SchemaCrawler.home}/schemacrawler-docs/config/schemacrawler.colormap.properties"
+      todir="${schemacrawler.base-distribution}/config" />
+
+    <create-dbserver-distribution database="offline" />
+    <create-dbserver-distribution database="db2" />
+    <create-dbserver-distribution database="hsqldb" />
+    <create-dbserver-distribution database="mysql" />
+    <create-dbserver-distribution database="oracle" />
+    <create-dbserver-distribution database="postgresql" />
+    <create-dbserver-distribution database="sqlite" />
+    <create-dbserver-distribution database="sqlserver" />
+
+  </target>
+    	
+	
+  <target name="make-expanded-distribution">
+
+    <property
+        name="distribution.downloader"
+        location="${SchemaCrawler.home}/schemacrawler-distrib/src/examples/resources/_downloader" />
+
+    <echo>Create expanded distribution, with downloaded directories</echo>
+
+    <copy todir="${schemacrawler.expanded-distribution}">
+      <fileset dir="${schemacrawler.base-distribution}">
+        <include name="**/*.*" />
+      </fileset>
+    </copy>
+
+    <ivy:configure file="${distribution.downloader}/ivysettings.xml"/>
+
+    <copy verbose="true" todir="${schemacrawler.expanded-distribution}/lib">
+      <ivy:resources resolveId="graphviz-java"
+        file="${distribution.downloader}/graphviz-java_ivy.xml"/>
+    </copy>
+    <copy verbose="true" todir="${schemacrawler.expanded-distribution}/lib">
+      <ivy:resources resolveId="groovy"
+        file="${distribution.downloader}/groovy_ivy.xml"/>
+    </copy>
+    <copy verbose="true" todir="${schemacrawler.expanded-distribution}/lib">
+      <ivy:resources resolveId="jackson"
+        file="${distribution.downloader}/jackson_ivy.xml"/>
+    </copy>
+    <copy todir="${schemacrawler.expanded-distribution}/lib">
+      <ivy:resources resolveId="mustache"
+        file="${distribution.downloader}/mustache_ivy.xml"/>
+    </copy>
+    <copy todir="${schemacrawler.expanded-distribution}/lib">
+      <ivy:resources resolveId="plugins"
+        file="${distribution.downloader}/plugins_ivy.xml"/>
+    </copy>
+    <copy todir="${schemacrawler.expanded-distribution}/lib">
+      <ivy:resources resolveId="python"
+        file="${distribution.downloader}/python_ivy.xml"/>
+    </copy>
+    <copy todir="${schemacrawler.expanded-distribution}/lib">
+      <ivy:resources resolveId="ruby"
+        file="${distribution.downloader}/ruby_ivy.xml"/>
+    </copy>
+    <copy todir="${schemacrawler.expanded-distribution}/lib">
+      <ivy:resources resolveId="thymeleaf"
+        file="${distribution.downloader}/thymeleaf_ivy.xml"/>
+    </copy>
+    <copy todir="${schemacrawler.expanded-distribution}/lib">
+      <ivy:resources resolveId="velocity"
+        file="${distribution.downloader}/velocity_ivy.xml"/>
+    </copy>
+
+  </target>
+
+
+  <macrodef name="create-dbserver-distribution">
+
+    <attribute name="database" />
+
+    <sequential>
+
+      <copy
+        file="${SchemaCrawler.home}/schemacrawler-@{database}/DRIVER.LICENSE.txt"
+        tofile="${schemacrawler.base-distribution}/DRIVER.LICENSE-@{database}.txt"
+        failonerror="false" />
+
+    </sequential>
+
+  </macrodef>
+
+</project>
