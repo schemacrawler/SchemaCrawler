@@ -89,19 +89,9 @@
         <exclude name="**/schemacrawler-*.jar" />
       </fileset>
     </copy>
-    <java classname="schemacrawler.testdb.TestSchemaCreatorMain"
-      failonerror="true">
-      <arg value="--url" />
-      <arg value="jdbc:sqlite:${main-distribution.staging.dir}/_testdb/sc.db" />
-      <classpath>
-        <fileset dir="${main-distribution.staging.dir}/_testdb/lib">
-          <include name="**/*.jar" />
-        </fileset>
-        <fileset dir="${main-distribution.staging.dir}/_schemacrawler/lib">
-          <include name="**/*.jar" />
-        </fileset>
-      </classpath>
-    </java>
+    <copy
+      file="${schemacrawler.base-distribution}/sc.db"
+      todir="${main-distribution.staging.dir}/_testdb" />
 
   </target>
 

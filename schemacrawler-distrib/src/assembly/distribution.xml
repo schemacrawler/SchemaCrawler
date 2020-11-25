@@ -54,6 +54,21 @@
     <create-dbserver-distribution database="postgresql" />
     <create-dbserver-distribution database="sqlite" />
     <create-dbserver-distribution database="sqlserver" />
+  	
+  	<!-- Create SQLite test database -->
+    <java classname="schemacrawler.testdb.TestSchemaCreatorMain"
+      failonerror="true">
+      <arg value="--url" />
+      <arg value="jdbc:sqlite:${schemacrawler.base-distribution}/sc.db" />
+      <classpath>
+        <fileset dir="${SchemaCrawler.home}/schemacrawler-testdb/target">
+          <include name="schemacrawler-testdb-${SchemaCrawler.version}.jar" />
+        </fileset>
+        <fileset dir="${schemacrawler.base-distribution}/lib">
+          <include name="**/*.jar" />
+        </fileset>
+      </classpath>
+    </java>
 
   </target>
     	
