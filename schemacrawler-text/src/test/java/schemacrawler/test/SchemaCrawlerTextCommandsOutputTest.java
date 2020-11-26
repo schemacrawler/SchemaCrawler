@@ -120,7 +120,7 @@ public class SchemaCrawlerTextCommandsOutputTest {
     commonTextOptions.fromConfig(config);
     commonTextOptions.noInfo();
     commonTextOptions.sortTables(true);
-    config.putAll(commonTextOptions.toConfig());
+    config.merge(commonTextOptions.toConfig());
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);

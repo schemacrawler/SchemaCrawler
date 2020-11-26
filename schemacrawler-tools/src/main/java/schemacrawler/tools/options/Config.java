@@ -55,32 +55,32 @@ public final class Config implements Options {
   public static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(Config.class.getName());
 
-  private final Map<String, Object> config;
+  private final Map<String, Object> configMap;
 
   /** Creates an empty config. */
   public Config() {
-    config = new HashMap<>();
+    configMap = new HashMap<>();
   }
 
   public Config(final Config config) {
     this();
-    if (config != null) {
-      this.config.putAll(config.config);
-    }
+    merge(config);
   }
 
   /**
    * Copies config into a map.
    *
-   * @param config Config to copy
+   * @param configMap Config to copy
    */
-  public Config(final Map<String, Object> config) {
+  public Config(final Map<String, Object> map) {
     this();
-    putAll(config);
+    if (map != null) {
+      configMap.putAll(map);
+    }
   }
 
   public boolean containsKey(final String key) {
-    return config.containsKey(key);
+    return configMap.containsKey(key);
   }
 
   /**
@@ -146,7 +146,7 @@ public final class Config implements Options {
    * @return String value
    */
   public String getStringValue(final String propertyName, final String defaultValue) {
-    final Object value = config.get(propertyName);
+    final Object value = configMap.get(propertyName);
     if (value == null) {
       return defaultValue;
     } else {
@@ -156,10 +156,10 @@ public final class Config implements Options {
 
   public Map<String, Object> getSubMap(final String propertyName) {
     if (isBlank(propertyName)) {
-      return new HashMap<>(config);
+      return new HashMap<>(configMap);
     }
     final Map<String, Object> subMap = new HashMap<>();
-    for (final Entry<String, Object> configEntry : config.entrySet()) {
+    for (final Entry<String, Object> configEntry : configMap.entrySet()) {
       final String fullKey = configEntry.getKey();
       if (fullKey == null || !fullKey.startsWith(propertyName)) {
         continue;
@@ -180,34 +180,27 @@ public final class Config implements Options {
    */
   public Object put(final String key, final Object value) {
     if (value == null) {
-      return config.remove(key);
+      return configMap.remove(key);
     }
     if (!isBlank(key)) {
-      return config.put(key, value);
+      return configMap.put(key, value);
     }
     return null;
   }
 
-  public void putAll(final Config m) {
-    if (m == null) {
+  public void merge(final Config config) {
+    if (config == null) {
       return;
     }
-    config.putAll(m.config);
+    this.configMap.putAll(config.configMap);
   }
 
   public int size() {
-    return config.size();
+    return configMap.size();
   }
 
   @Override
   public String toString() {
     return ObjectToString.toString(this);
-  }
-
-  private void putAll(final Map<? extends String, ? extends Object> m) {
-    if (m == null) {
-      return;
-    }
-    config.putAll(m);
   }
 }

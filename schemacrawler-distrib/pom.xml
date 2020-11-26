@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>us.fatehi</groupId>
@@ -104,7 +104,12 @@
             <dependency>
               <groupId>org.apache.ant</groupId>
               <artifactId>ant</artifactId>
-              <version>1.10.8</version>
+              <version>1.10.9</version>
+            </dependency>
+            <dependency>
+              <groupId>org.apache.ivy</groupId>
+              <artifactId>ivy</artifactId>
+              <version>2.5.0</version>
             </dependency>
           </dependencies>
         </plugin>
@@ -126,18 +131,46 @@
         <artifactId>maven-antrun-plugin</artifactId>
         <executions>
           <execution>
-            <id>stage-site-markdown</id>
-            <phase>test</phase>
+            <id>download-ivy-for-ant</id>
+            <phase>initialize</phase>
             <configuration>
-              <target name="stage-site-markdown"
-                      description="Stage site Markdown, and generate Markdown content">
-                <copy todir="${project.basedir}/target/site-markdown">
-                  <fileset dir="${project.basedir}/src/site/markdown"/>
+              <target name="download-ivy-for-ant"
+                description="Download Apache ivy, and make it available to Apache ant">
+                <mkdir dir="${user.home}/.ant/lib" />
+                <get
+                  src="https://repo1.maven.org/maven2/org/apache/ivy/ivy/2.5.0/ivy-2.5.0.jar"
+                  dest="${user.home}/.ant/lib/ivy-2.5.0.jar" usetimestamp="true" />
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>make-base-website</id>
+            <phase>process-test-resources</phase>
+            <configuration>
+              <target name="make-base-website-distribution"
+                description="Stage sources for website">
+                <property name="SchemaCrawler.home" location=".." />
+                <property name="SchemaCrawler.version"
+                  value="${project.version}" />
+                <ant antfile="src\assembly\website.xml" target="make" />
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>stage-site</id>
+            <phase>process-test-resources</phase>
+            <configuration>
+              <target name="stage-site"
+                description="Stage website sources">
+                <copy todir="${project.basedir}/target/_website">
+                  <fileset dir="${project.basedir}/target/_base-website" />
                 </copy>
-                <java classname="schemacrawler.tools.lint.LinterHelp">
-                  <classpath refid="maven.test.classpath" />
-                  <arg file="${project.basedir}/target/site-markdown/lint.md"/>
-                </java>
               </target>
             </configuration>
             <goals>
@@ -149,11 +182,27 @@
             <phase>package</phase>
             <configuration>
               <target name="make-distribution"
-                      description="Package all sub-project jars into the distributable zip">
-                <property name="SchemaCrawler.home" location=".."/>
+                description="Package SchemaCrawler distributable">
+                <property name="SchemaCrawler.home" location=".." />
                 <property name="SchemaCrawler.version"
-                          value="${project.version}"/>
-                <ant antfile="src\assembly\distribution.xml" target="make"/>
+                  value="${project.version}" />
+                <ant antfile="src\assembly\distribution.xml" target="make" />
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>          
+          <execution>
+            <id>make-main-distribution</id>
+            <phase>package</phase>
+            <configuration>
+              <target name="make-main-distribution"
+                description="Package SchemaCrawler, test database, and examples into the main distributable zip">
+                <property name="SchemaCrawler.home" location=".." />
+                <property name="SchemaCrawler.version"
+                  value="${project.version}" />
+                <ant antfile="src\assembly\main-distribution.xml" target="make" />
               </target>
             </configuration>
             <goals>
@@ -179,7 +228,7 @@
               <defaultTitle>SchemaCrawler Examples</defaultTitle>
               <recursiveInput>true</recursiveInput>
               <inputDirectory>${project.basedir}/src/examples/markdown</inputDirectory>
-              <outputDirectory>${project.basedir}/target/_distribution</outputDirectory>
+              <outputDirectory>${project.basedir}/target/_main-distribution</outputDirectory>
             </configuration>
           </execution>
           <execution>

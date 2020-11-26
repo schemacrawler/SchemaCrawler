@@ -26,14 +26,15 @@
 
 FROM openjdk:8-jdk-alpine
 
-ARG SCHEMACRAWLER_VERSION=16.11.5
+LABEL "maintainer"="Sualeh Fatehi <sualeh@hotmail.com>" \
+      "org.opencontainers.image.authors"="Sualeh Fatehi <sualeh@hotmail.com>" \
+      "org.opencontainers.image.title"="SchemaCrawler" \
+      "org.opencontainers.image.description"="Free database schema discovery and comprehension tool" \
+      "org.opencontainers.image.url"="https://www.schemacrawler.com/" \
+      "org.opencontainers.image.source"="https://github.com/schemacrawler/SchemaCrawler" \
+      "org.opencontainers.image.vendor"="SchemaCrawler" \
+	  "org.opencontainers.image.license"="(GPL-3.0 OR OR LGPL-3.0+ EPL-1.0)"
 
-LABEL \
-  "us.fatehi.schemacrawler.product-version"="SchemaCrawler ${SCHEMACRAWLER_VERSION}" \
-  "us.fatehi.schemacrawler.website"="http://www.schemacrawler.com" \
-  "us.fatehi.schemacrawler.docker-hub"="https://hub.docker.com/r/schemacrawler/schemacrawler"
-
-LABEL "maintainer"="Sualeh Fatehi <sualeh@hotmail.com>"
 
 # Install Graphviz
 RUN \
@@ -45,7 +46,7 @@ RUN \
 
 # Copy SchemaCrawler distribution from the build directory
 COPY \
-    ./schemacrawler-${SCHEMACRAWLER_VERSION}-distribution/_schemacrawler /opt/schemacrawler
+    . /opt/schemacrawler/
 # Ensure that the SchemaCrawler script is executable
 RUN \
     chmod +rx /opt/schemacrawler/schemacrawler.sh
@@ -59,12 +60,10 @@ WORKDIR /home/schcrwlr
 # Copy configuration files for the current user
 COPY \
     --chown=schcrwlr:users \
-    ./schemacrawler-${SCHEMACRAWLER_VERSION}-distribution/_testdb/sc.db \
-    /home/schcrwlr/sc.db
+    ./sc.db /home/schcrwlr/sc.db
 COPY \
     --chown=schcrwlr:users \
-    ./schemacrawler-${SCHEMACRAWLER_VERSION}-distribution/_schemacrawler/config/* \
-    /home/schcrwlr/
+    ./config/* /home/schcrwlr/
 
 # Create aliases for SchemaCrawler
 RUN \

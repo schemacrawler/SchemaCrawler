@@ -1,0 +1,162 @@
+<project
+    name="schemacrawler"
+    default="make"
+  basedir=".">
+
+  <property name="distribution.target"
+    location="${SchemaCrawler.home}/schemacrawler-distrib/target" />
+  <property name="schemacrawler.base-distribution"
+    value="${distribution.target}/_base-distribution" />
+  <property name="schemacrawler.distribution.sources.jar"
+    value="${distribution.target}/schemacrawler-${SchemaCrawler.version}-sources.jar" />
+  <property name="schemacrawler.distribution.javadoc.jar"
+    value="${distribution.target}/schemacrawler-${SchemaCrawler.version}-javadoc.jar" />
+
+  <available file="lgpl-3.0.txt" property="available.lgpl-3.0.txt" />
+
+  <target name="make"
+    depends="
+            download-lgpl,
+            make-main-distribution,
+            make-main-distribution-zip,
+            cleanup-distribution
+          "
+    description="Package SchemaCrawler, test database, and examples into the main distributable zip" />
+
+  <target name="download-lgpl" unless="available.lgpl-3.0.txt">
+    <get src="http://www.gnu.org/licenses/lgpl-3.0.txt" dest="lgpl-3.0.txt"
+      usetimestamp="true" />
+  </target>
+
+  <target name="make-main-distribution">
+
+    <property name="main-distribution.staging.dir" location="${distribution.target}/_main-distribution" />
+    <property name="main-distribution.stem"
+      value="schemacrawler-${SchemaCrawler.version}-distribution" />
+    <property name="distribution.examples.resources"
+      location="${SchemaCrawler.home}/schemacrawler-distrib/src/examples/resources" />
+
+    <mkdir dir="${main-distribution.staging.dir}"/>
+
+    <!-- Copy licenses -->
+    <copy file="lgpl-3.0.txt" tofile="${main-distribution.staging.dir}/LICENSE.txt" />
+
+    <!-- Copy Apache Ant Ivy -->
+    <copy file="${user.home}/.ant/lib/ivy-2.5.0.jar" todir="${main-distribution.staging.dir}/_downloader" />
+
+    <!-- Stage examples -->
+    <copy todir="${main-distribution.staging.dir}">
+      <fileset dir="${distribution.examples.resources}">
+        <include name="**/*" />
+      </fileset>
+    </copy>
+    <copy todir="${main-distribution.staging.dir}">
+      <fileset
+        dir="${SchemaCrawler.home}/schemacrawler-text/src/main/resources">
+        <include name="**/sc.css" />
+      </fileset>
+    </copy>
+
+    <copy todir="${main-distribution.staging.dir}/examples/api">
+      <fileset
+        dir="${SchemaCrawler.home}/schemacrawler-examplecode/src/main/java">
+        <include name="**/*.java" />
+      </fileset>
+    </copy>
+
+    <!-- Copy config files -->
+    <copy todir="${main-distribution.staging.dir}/examples/lint">
+      <fileset dir="${SchemaCrawler.home}/schemacrawler-docs/config">
+        <include name="schemacrawler-linter-configs.xml" />
+      </fileset>
+    </copy>
+
+    <copy todir="${main-distribution.staging.dir}/_schemacrawler">
+      <fileset dir="${schemacrawler.base-distribution}" />
+    </copy>
+
+    <fixcrlf srcdir="${main-distribution.staging.dir}" includes="**/*.sh"
+      eol="unix" eof="remove" tab="remove" tablength="2" outputencoding="UTF-8" />
+
+    <echo>Create test database</echo>
+
+    <copy
+      file="${SchemaCrawler.home}/schemacrawler-testdb/target/schemacrawler-testdb-${SchemaCrawler.version}.jar"
+      todir="${main-distribution.staging.dir}/_testdb/lib" />
+    <copy todir="${main-distribution.staging.dir}/_testdb/lib">
+      <fileset dir="${main-distribution.staging.dir}/_schemacrawler/lib">
+        <include name="**/*.jar" />
+        <exclude name="**/schemacrawler-*.jar" />
+      </fileset>
+    </copy>
+    <copy
+      file="${schemacrawler.base-distribution}/sc.db"
+      todir="${main-distribution.staging.dir}/_testdb" />
+
+  </target>
+
+
+  <target name="make-main-distribution-zip">
+
+    <property name="main-distribution.staging.dir" location="${distribution.target}/_main-distribution" />
+    <property name="main-distribution.stem"
+      value="schemacrawler-${SchemaCrawler.version}-distribution" />
+    <property name="distribution.examples.resources"
+      location="${SchemaCrawler.home}/schemacrawler-distrib/src/examples/resources" />
+
+    <echo>Create zip file for distribution</echo>
+
+    <chmod perm="+x" type="file">
+      <dirset dir="${main-distribution.staging.dir}">
+        <include name="**/*.sh"/>
+      </dirset>
+    </chmod>
+
+    <delete file="${distribution.target}/${main-distribution.stem}.zip" />
+    <zip destfile="${distribution.target}/${main-distribution.stem}.zip">
+      <zipfileset dir="${main-distribution.staging.dir}"
+        prefix="${main-distribution.stem}" defaultexcludes="yes">
+        <exclude name="**/*.sh" />
+      </zipfileset>
+      <zipfileset dir="${main-distribution.staging.dir}"
+        prefix="${main-distribution.stem}" defaultexcludes="yes"
+        filemode="771">
+        <include name="**/*.sh" />
+      </zipfileset>
+    </zip>
+
+    <checksum algorithm="SHA-512"
+      file="${distribution.target}/${main-distribution.stem}.zip" todir="${distribution.target}" />
+
+  </target>
+
+	
+  <target name="cleanup-distribution">
+
+    <delete>
+      <fileset dir="${distribution.target}">
+        <include name="*.*" />
+        <exclude name="schemacrawler*.zip" />
+        <exclude name="schemacrawler*.zip.*" />
+        <exclude name="schemacrawler*.jar" />
+      </fileset>
+    </delete>
+
+  </target>
+
+  <macrodef name="create-dbserver-distribution">
+
+    <attribute name="database" />
+
+    <sequential>
+
+      <copy
+        file="${SchemaCrawler.home}/schemacrawler-@{database}/DRIVER.LICENSE.txt"
+        tofile="${schemacrawler.base-distribution}/DRIVER.LICENSE-@{database}.txt"
+        failonerror="false" />
+
+    </sequential>
+
+  </macrodef>
+
+</project>

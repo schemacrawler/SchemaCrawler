@@ -1,189 +1,33 @@
-<project name="schemacrawler" default="make"
+<project xmlns:ivy="antlib:org.apache.ivy.ant"
+    name="schemacrawler"
+    default="make"
   basedir=".">
 
-  <property name="distribution.assembly"
-    location="${SchemaCrawler.home}/schemacrawler-distrib/src/assembly" />
+
   <property name="distribution.target"
     location="${SchemaCrawler.home}/schemacrawler-distrib/target" />
-  <property name="schemacrawler.base-distribution"
+  <property 
+  	name="schemacrawler.base-distribution"
     value="${distribution.target}/_base-distribution" />
-  <property name="schemacrawler.distribution.sources.jar"
-    value="${distribution.target}/schemacrawler-${SchemaCrawler.version}-sources.jar" />
-  <property name="schemacrawler.distribution.javadoc.jar"
-    value="${distribution.target}/schemacrawler-${SchemaCrawler.version}-javadoc.jar" />
+  <property
+    name="schemacrawler.expanded-distribution"
+    location="${distribution.target}/_expanded-distribution" />
 
-  <available file="lgpl-3.0.txt" property="available.lgpl-3.0.txt" />
-  <available file="ivy-2.5.0.jar" property="available.ivy.jar" />
 
   <target name="make"
     depends="
-            download-tools,
             make-base-distribution,
-            make-distribution-zip,
-            make-website-distribution,
-            cleanup-distribution
+            make-expanded-distribution
           "
-    description="Package all sub-project jars into the distributable jar" />
-
-  <target name="download-tools" depends="download-lgpl,download-ivy" />
-
-  <target name="download-lgpl" unless="available.lgpl-3.0.txt">
-    <get src="http://www.gnu.org/licenses/lgpl-3.0.txt" dest="lgpl-3.0.txt"
-      usetimestamp="true" />
-  </target>
-
-  <target name="download-ivy" unless="available.ivy.jar">
-    <get
-      src="https://repo1.maven.org/maven2/org/apache/ivy/ivy/2.5.0/ivy-2.5.0.jar"
-      dest="ivy-2.5.0.jar" usetimestamp="true" />
-  </target>
-
-  <target name="make-distribution-zip">
-
-    <property name="main-distribution.staging.dir" location="${distribution.target}/_distribution" />
-    <property name="main-distribution.stem"
-      value="schemacrawler-${SchemaCrawler.version}-distribution" />
-    <property name="distribution.examples.resources"
-      location="${SchemaCrawler.home}/schemacrawler-distrib/src/examples/resources" />
-
-    <!-- 1. STAGE FOR EXAMPLES -->
-
-    <mkdir dir="${main-distribution.staging.dir}"/>
-
-    <!-- Copy licenses -->
-    <copy file="lgpl-3.0.txt" tofile="${main-distribution.staging.dir}/LICENSE.txt" />
-
-    <!-- Copy Apache Ant Ivy -->
-    <copy file="ivy-2.5.0.jar" todir="${main-distribution.staging.dir}/_downloader" />
-
-    <!-- Stage examples -->
-    <copy todir="${main-distribution.staging.dir}">
-      <fileset dir="${distribution.examples.resources}">
-        <include name="**/*" />
-      </fileset>
-    </copy>
-    <copy todir="${main-distribution.staging.dir}">
-      <fileset
-        dir="${SchemaCrawler.home}/schemacrawler-text/src/main/resources">
-        <include name="**/sc.css" />
-      </fileset>
-    </copy>
-
-    <copy todir="${main-distribution.staging.dir}/examples/api">
-      <fileset
-        dir="${SchemaCrawler.home}/schemacrawler-examplecode/src/main/java">
-        <include name="**/*.java" />
-      </fileset>
-    </copy>
-
-    <!-- Copy config files -->
-    <copy todir="${main-distribution.staging.dir}/examples/lint">
-      <fileset dir="${SchemaCrawler.home}/schemacrawler-docs/config">
-        <include name="schemacrawler-linter-configs.xml" />
-      </fileset>
-    </copy>
-
-    <copy todir="${main-distribution.staging.dir}/_schemacrawler">
-      <fileset dir="${schemacrawler.base-distribution}" />
-    </copy>
-
-    <fixcrlf srcdir="${main-distribution.staging.dir}" includes="**/*.sh"
-      eol="unix" eof="remove" tab="remove" tablength="2" outputencoding="UTF-8" />
-
-    <echo>Create test database</echo>
-
-    <copy
-      file="${SchemaCrawler.home}/schemacrawler-testdb/target/schemacrawler-testdb-${SchemaCrawler.version}.jar"
-      todir="${main-distribution.staging.dir}/_testdb/lib" />
-    <copy todir="${main-distribution.staging.dir}/_testdb/lib">
-      <fileset dir="${main-distribution.staging.dir}/_schemacrawler/lib">
-        <include name="**/*.jar" />
-        <exclude name="**/schemacrawler-*.jar" />
-      </fileset>
-    </copy>
-    <java classname="schemacrawler.testdb.TestSchemaCreatorMain"
-      failonerror="true">
-      <arg value="--url" />
-      <arg value="jdbc:sqlite:${main-distribution.staging.dir}/_testdb/sc.db" />
-      <classpath>
-        <fileset dir="${main-distribution.staging.dir}/_testdb/lib">
-          <include name="**/*.jar" />
-        </fileset>
-        <fileset dir="${main-distribution.staging.dir}/_schemacrawler/lib">
-          <include name="**/*.jar" />
-        </fileset>
-      </classpath>
-    </java>
-
-    <!-- 2. CREATE BINARY DISTRIBUTION FROM THE STAGED EXAMPLES -->
-
-    <echo>Create zip file for distribution</echo>
-
-    <chmod perm="+x" type="file">
-      <dirset dir="${main-distribution.staging.dir}">
-        <include name="**/*.sh"/>
-      </dirset>
-    </chmod>
-
-    <delete file="${distribution.target}/${main-distribution.stem}.zip" />
-    <zip destfile="${distribution.target}/${main-distribution.stem}.zip">
-      <zipfileset dir="${main-distribution.staging.dir}"
-        prefix="${main-distribution.stem}" defaultexcludes="yes">
-        <exclude name="**/*.sh" />
-      </zipfileset>
-      <zipfileset dir="${main-distribution.staging.dir}"
-        prefix="${main-distribution.stem}" defaultexcludes="yes"
-        filemode="771">
-        <include name="**/*.sh" />
-      </zipfileset>
-    </zip>
-
-    <checksum algorithm="SHA-512"
-      file="${distribution.target}/${main-distribution.stem}.zip" todir="${distribution.target}" />
-
-  </target>
-
-  <target name="make-website-distribution">
-
-    <property name="website.staging.dir" location="${distribution.target}/_website" />
-
-    <property name="website.source.resources.location"
-      location="${SchemaCrawler.home}/schemacrawler-distrib/src/site/resources" />
-    <property name="website.source.javadoc.location"
-      location="${SchemaCrawler.home}/schemacrawler/target/apidocs" />
-    <property name="website.source.config.location"
-      location="${SchemaCrawler.home}/schemacrawler-docs/config" />
-
-    <!-- No-op if the directories already exist, but do this so that downstream
-      steps do not fail -->
-    <mkdir dir="${website.staging.dir}" />
-    <mkdir dir="${website.source.javadoc.location}" />
-
-    <move todir="${website.staging.dir}/apidocs">
-      <fileset dir="${website.source.javadoc.location}">
-        <include name="**/*.*" />
-      </fileset>
-    </move>
-
-    <copy todir="${website.staging.dir}/config">
-      <fileset dir="${website.source.config.location}">
-        <include name="**/*.*" />
-      </fileset>
-    </copy>
-
-    <copy todir="${website.staging.dir}">
-      <fileset dir="${website.source.resources.location}">
-        <include name="**/*" />
-      </fileset>
-    </copy>
-
-    <copy file="${distribution.assembly}/Website-README.md"
-          tofile="${website.staging.dir}/README.md" />
-
-  </target>
-
+    description="Package SchemaCrawler distributable" />
+            	
+            	
   <target name="make-base-distribution">
 
+    <property 
+    	name="distribution.assembly"
+      location="${SchemaCrawler.home}/schemacrawler-distrib/src/assembly" />
+  	
     <copy todir="${schemacrawler.base-distribution}">
       <fileset dir="${distribution.assembly}">
         <include name="schemacrawler.cmd" />
@@ -193,7 +37,6 @@
       </fileset>
     </copy>
 
-    <!-- Move SchemaCrawler distribution, for use in the examples -->
     <copy file="${SchemaCrawler.home}/schemacrawler/target/schemacrawler-${SchemaCrawler.version}.jar"
         todir="${schemacrawler.base-distribution}/lib" />
     <copy
@@ -211,21 +54,80 @@
     <create-dbserver-distribution database="postgresql" />
     <create-dbserver-distribution database="sqlite" />
     <create-dbserver-distribution database="sqlserver" />
+  	
+  	<!-- Create SQLite test database -->
+    <java classname="schemacrawler.testdb.TestSchemaCreatorMain"
+      failonerror="true">
+      <arg value="--url" />
+      <arg value="jdbc:sqlite:${schemacrawler.base-distribution}/sc.db" />
+      <classpath>
+        <fileset dir="${SchemaCrawler.home}/schemacrawler-testdb/target">
+          <include name="schemacrawler-testdb-${SchemaCrawler.version}.jar" />
+        </fileset>
+        <fileset dir="${schemacrawler.base-distribution}/lib">
+          <include name="**/*.jar" />
+        </fileset>
+      </classpath>
+    </java>
 
   </target>
+    	
+	
+  <target name="make-expanded-distribution">
 
-  <target name="cleanup-distribution">
+    <property
+        name="distribution.downloader"
+        location="${SchemaCrawler.home}/schemacrawler-distrib/src/examples/resources/_downloader" />
 
-    <delete>
-      <fileset dir="${distribution.target}">
-        <include name="*.*" />
-        <exclude name="schemacrawler*.zip" />
-        <exclude name="schemacrawler*.zip.*" />
-        <exclude name="schemacrawler*.jar" />
+    <echo>Create expanded distribution, with downloaded directories</echo>
+
+    <copy todir="${schemacrawler.expanded-distribution}">
+      <fileset dir="${schemacrawler.base-distribution}">
+        <include name="**/*.*" />
       </fileset>
-    </delete>
+    </copy>
+
+    <ivy:configure file="${distribution.downloader}/ivysettings.xml"/>
+
+    <copy verbose="true" todir="${schemacrawler.expanded-distribution}/lib">
+      <ivy:resources resolveId="graphviz-java"
+        file="${distribution.downloader}/graphviz-java_ivy.xml"/>
+    </copy>
+    <copy verbose="true" todir="${schemacrawler.expanded-distribution}/lib">
+      <ivy:resources resolveId="groovy"
+        file="${distribution.downloader}/groovy_ivy.xml"/>
+    </copy>
+    <copy verbose="true" todir="${schemacrawler.expanded-distribution}/lib">
+      <ivy:resources resolveId="jackson"
+        file="${distribution.downloader}/jackson_ivy.xml"/>
+    </copy>
+    <copy todir="${schemacrawler.expanded-distribution}/lib">
+      <ivy:resources resolveId="mustache"
+        file="${distribution.downloader}/mustache_ivy.xml"/>
+    </copy>
+    <copy todir="${schemacrawler.expanded-distribution}/lib">
+      <ivy:resources resolveId="plugins"
+        file="${distribution.downloader}/plugins_ivy.xml"/>
+    </copy>
+    <copy todir="${schemacrawler.expanded-distribution}/lib">
+      <ivy:resources resolveId="python"
+        file="${distribution.downloader}/python_ivy.xml"/>
+    </copy>
+    <copy todir="${schemacrawler.expanded-distribution}/lib">
+      <ivy:resources resolveId="ruby"
+        file="${distribution.downloader}/ruby_ivy.xml"/>
+    </copy>
+    <copy todir="${schemacrawler.expanded-distribution}/lib">
+      <ivy:resources resolveId="thymeleaf"
+        file="${distribution.downloader}/thymeleaf_ivy.xml"/>
+    </copy>
+    <copy todir="${schemacrawler.expanded-distribution}/lib">
+      <ivy:resources resolveId="velocity"
+        file="${distribution.downloader}/velocity_ivy.xml"/>
+    </copy>
 
   </target>
+
 
   <macrodef name="create-dbserver-distribution">
 
