@@ -26,7 +26,15 @@
 
 FROM openjdk:8-jdk-alpine
 
-LABEL "maintainer"="Sualeh Fatehi <sualeh@hotmail.com>"
+LABEL "maintainer"="Sualeh Fatehi <sualeh@hotmail.com>" \
+      "org.opencontainers.image.authors"="Sualeh Fatehi <sualeh@hotmail.com>" \
+      "org.opencontainers.image.title"="SchemaCrawler" \
+      "org.opencontainers.image.description"="Free database schema discovery and comprehension tool" \
+      "org.opencontainers.image.url"="https://www.schemacrawler.com/" \
+      "org.opencontainers.image.source"="https://github.com/schemacrawler/SchemaCrawler" \
+      "org.opencontainers.image.vendor"="SchemaCrawler" \
+	  "org.opencontainers.image.license"="(GPL-3.0 OR OR LGPL-3.0+ EPL-1.0)"
+
 
 # Install Graphviz
 RUN \
