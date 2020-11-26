@@ -58,6 +58,14 @@ public class ShellState {
   private SchemaCrawlerOptions schemaCrawlerOptions;
   private SchemaRetrievalOptions schemaRetrievalOptions;
 
+  public void addConfig(final Map<String, Object> additionalConfig) {
+    if (additionalConfig != null) {
+      this.additionalConfig = new Config(additionalConfig);
+    } else {
+      this.additionalConfig = new Config();
+    }
+  }
+
   public void disconnect() {
     if (dataSource == null) {
       return;
@@ -76,12 +84,9 @@ public class ShellState {
 
   public Config getConfig() {
     final Config config = new Config();
-    if (baseConfig != null) {
-      config.putAll(baseConfig);
-    }
-    if (additionalConfig != null) {
-      config.putAll(additionalConfig);
-    }
+    config.merge(baseConfig);
+    config.merge(additionalConfig);
+
     return config;
   }
 
@@ -109,10 +114,6 @@ public class ShellState {
     return catalog != null;
   }
 
-  public void setCatalog(final Catalog catalog) {
-    this.catalog = catalog;
-  }
-
   public void setBaseConfig(final Config baseConfig) {
     if (baseConfig != null) {
       this.baseConfig = baseConfig;
@@ -121,12 +122,8 @@ public class ShellState {
     }
   }
 
-  public void addConfig(final Map<String, Object> additionalConfig) {
-    if (additionalConfig != null) {
-      this.additionalConfig = new Config(additionalConfig);
-    } else {
-      this.additionalConfig = new Config();
-    }
+  public void setCatalog(final Catalog catalog) {
+    this.catalog = catalog;
   }
 
   public void setDataSource(final Supplier<Connection> dataSource) {
@@ -137,7 +134,7 @@ public class ShellState {
     this.lastException = lastException;
   }
 
-  public void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions) {
+  public void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions) {
     this.schemaCrawlerOptions = schemaCrawlerOptions;
   }
 

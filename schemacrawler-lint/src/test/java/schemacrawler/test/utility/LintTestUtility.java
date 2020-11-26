@@ -63,9 +63,7 @@ public final class LintTestUtility {
       optionsBuilder.withLinterConfigs(linterConfigsFile.toString());
 
       final Config config = optionsBuilder.toConfig();
-      if (additionalConfig != null) {
-        config.putAll(additionalConfig);
-      }
+      config.merge(additionalConfig);
       lintExecutable.setAdditionalConfiguration(config);
     }
 

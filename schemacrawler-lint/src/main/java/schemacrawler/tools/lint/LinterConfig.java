@@ -146,9 +146,7 @@ public class LinterConfig implements Serializable, Comparable<LinterConfig> {
   }
 
   public void putAll(final Config config) {
-    if (config != null) {
-      this.config.putAll(config);
-    }
+    this.config.merge(config);
   }
 
   public void setColumnExclusionPattern(final String columnExclusionPattern) {

@@ -102,7 +102,7 @@ public final class LintOptionsBuilder
     runAllLinters = config.getBooleanValue(runAllLintersKey, true);
 
     // Save config
-    this.config.putAll(config);
+    this.config.merge(config);
 
     return this;
   }
