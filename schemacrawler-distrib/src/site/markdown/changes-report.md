@@ -1,5 +1,12 @@
 # SchemaCrawler Change History
 
+<a name="a16.11.6"></a>
+## Release 16.11.6 - 2020-11-28
+
+- Fix broken examples
+- Download dependencies once, to create an expanded distribution for Docker and jpackage
+
+
 <a name="a16.11.5"></a>
 ## Release 16.11.5 - 2020-11-03
 

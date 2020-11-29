@@ -105,10 +105,12 @@
       <ivy:resources resolveId="mustache"
         file="${distribution.downloader}/mustache_ivy.xml"/>
     </copy>
+  	<!-- 
     <copy todir="${schemacrawler.expanded-distribution}/lib">
       <ivy:resources resolveId="plugins"
         file="${distribution.downloader}/plugins_ivy.xml"/>
     </copy>
+    -->
     <copy todir="${schemacrawler.expanded-distribution}/lib">
       <ivy:resources resolveId="python"
         file="${distribution.downloader}/python_ivy.xml"/>
