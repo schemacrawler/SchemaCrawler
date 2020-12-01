@@ -1,10 +1,10 @@
 <project name="schemacrawler" default="make"
   basedir=".">
 
-  <property name="distribution.src"
-    location="${SchemaCrawler.home}/schemacrawler-distrib/src" />
-  <property name="distribution.target"
-    location="${SchemaCrawler.home}/schemacrawler-distrib/target" />
+  <property name="schemacrawler-website.src"
+    location="${SchemaCrawler.home}/schemacrawler-website/src" />
+  <property name="schemacrawler-website.target"
+    location="${SchemaCrawler.home}/schemacrawler-website/target" />
 
   <target name="make"
     depends="
@@ -16,18 +16,18 @@
 
   <target name="stage-site-markdown"
           description="Stage site Markdown, and generate Markdown content">
-    <copy todir="${distribution.target}/site-markdown">
-      <fileset dir="${distribution.src}/site/markdown"/>
+    <copy todir="${schemacrawler-website.target}/site-markdown">
+      <fileset dir="${schemacrawler-website.src}/site/markdown"/>
     </copy>
   </target>
 
 
   <target name="make-base-website-distribution">
 
-    <property name="website.staging.dir" location="${distribution.target}/_base-website" />
+    <property name="website.staging.dir" location="${schemacrawler-website.target}/_base-website" />
 
     <property name="website.source.resources.location"
-      location="${SchemaCrawler.home}/schemacrawler-distrib/src/site/resources" />
+      location="${SchemaCrawler.home}/schemacrawler-website/src/site/resources" />
     <property name="website.source.javadoc.location"
       location="${SchemaCrawler.home}/schemacrawler/target/apidocs" />
     <property name="website.source.config.location"
@@ -56,7 +56,7 @@
       </fileset>
     </copy>
 
-    <copy file="${distribution.src}/assembly/Website-README.md"
+    <copy file="${schemacrawler-website.src}/assembly/Website-README.md"
           tofile="${website.staging.dir}/README.md" />
 
   </target>

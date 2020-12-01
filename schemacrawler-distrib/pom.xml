@@ -147,37 +147,6 @@
             </goals>
           </execution>
           <execution>
-            <id>make-base-website</id>
-            <phase>process-test-resources</phase>
-            <configuration>
-              <target name="make-base-website-distribution"
-                description="Stage sources for website">
-                <property name="SchemaCrawler.home" location=".." />
-                <property name="SchemaCrawler.version"
-                  value="${project.version}" />
-                <ant antfile="src\assembly\website.xml" target="make" />
-              </target>
-            </configuration>
-            <goals>
-              <goal>run</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>stage-site</id>
-            <phase>process-test-resources</phase>
-            <configuration>
-              <target name="stage-site"
-                description="Stage website sources">
-                <copy todir="${project.basedir}/target/_website">
-                  <fileset dir="${project.basedir}/target/_base-website" />
-                </copy>
-              </target>
-            </configuration>
-            <goals>
-              <goal>run</goal>
-            </goals>
-          </execution>
-          <execution>
             <id>make-distribution</id>
             <phase>package</phase>
             <configuration>
@@ -229,21 +198,6 @@
               <recursiveInput>true</recursiveInput>
               <inputDirectory>${project.basedir}/src/examples/markdown</inputDirectory>
               <outputDirectory>${project.basedir}/target/_main-distribution</outputDirectory>
-            </configuration>
-          </execution>
-          <execution>
-            <id>website</id>
-            <phase>test</phase>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-            <configuration>
-              <headerHtmlFile>${project.basedir}/src/site/header.include</headerHtmlFile>
-              <footerHtmlFile>${project.basedir}/src/site/footer.include</footerHtmlFile>
-              <pegdownExtensions>SMARTYPANTS,FENCED_CODE_BLOCKS,AUTOLINKS,TABLES</pegdownExtensions>
-              <recursiveInput>true</recursiveInput>
-              <inputDirectory>${project.basedir}/target/site-markdown</inputDirectory>
-              <outputDirectory>${project.basedir}/target/_website</outputDirectory>
             </configuration>
           </execution>
         </executions>
