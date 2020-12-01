@@ -50,7 +50,7 @@ SchemaCrawler jar, and can also create the project web-site.
 - Open a command console in the SchemaCrawler directory
 - Run `mvn package`
 
-You can create the  SchemaCrawler distribution by running `mvn -Dcomplete package`. The SchemaCrawler distribution will be created in the `target` of the `schemacrawler-distrib` module.
+You can create the  SchemaCrawler distribution by running `mvn -Ddistrib package`. The SchemaCrawler distribution will be created in the `target` of the `schemacrawler-distrib` module.
 
 ## Eclipse and IntelliJ IDEA
 Before importing the various SchemaCrawler projects into [Eclipse] or [IntelliJ IDEA], make sure that you have a successful [Apache Maven] build. [Apache Maven] will download all the dependencies needed to build SchemaCrawler.
