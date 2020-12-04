@@ -52,9 +52,9 @@ import org.jline.reader.ParsedLine;
 import org.jline.reader.Parser;
 import org.jline.reader.UserInterruptException;
 import org.jline.reader.impl.DefaultParser;
-import org.jline.reader.impl.LineReaderImpl;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
+import org.jline.utils.InfoCmp.Capability;
 
 import picocli.CommandLine;
 import picocli.shell.jline3.PicocliCommands;
@@ -122,7 +122,7 @@ public final class SchemaCrawlerShell {
             final String[] arguments = pl.words().toArray(new String[0]);
             commandLine.execute(arguments);
           } else if (line.equals("cls") || line.equals("clear")) {
-            ((LineReaderImpl) reader).clearScreen();
+            terminal.puts(Capability.clear_screen);
           } else {
             systemRegistry.execute(line);
           }
