@@ -1,37 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="150" height="150">
-  <defs>
-    <path id="cylinder" d="m10,31.67c0,8.66 0,78 0,86.66c0,11.96 29.13,21.67 65,21.67c35.87,0 65,-9.71 65,-21.67c0,-5.77 0,-34.66 0,-86.66c-0.02,0 -0.04,0 -0.04,0c0,-11.96 -29.09,-21.67 -64.96,-21.67c-35.87,0 -65,9.71 -65,21.67z" />
-    <path id="top" d="m75,45.3c-34.64,0 -62.73,-7.9 -62.73,-17.65c0,-9.75 28.09,-17.65 62.73,-17.65c34.64,0 62.73,7.9 62.73,17.65c0,9.75 -28.09,17.65 -62.73,17.65z" />
-    <path id="d1UjwLgAN" d="m51.03,103.63c-5.19,12.37 -38.95,12.87 -35.25,-13.52c4.59,19.96 25.51,18.5 35.25,13.52z" />
-    <path id="a37p6S2z8X" d="m83.41,50.58c49.92,1.14 37.61,53.13 -3.77,42.84c27.31,-1.13 38.38,-34.14 3.77,-42.84z" />
-    <path id="b6eQmYXOdn" d="m47.5,110.07c1.01,11.91 -23.84,14.49 -27.24,-0.16c9.72,9.25 21.43,6.75 27.24,0.16z" />
-    <path id="a5czXR7ye5" d="m118.88,62.96c30.05,20.41 -1.47,52.28 -29.83,32.82c18.2,8.03 47.66,-9.51 29.83,-32.82z" />
-    <path id="aBpqLzCfg" d="m46.65,117.3c3.43,11.63 -10.97,12.33 -16.87,4.68c9.84,4.6 15.44,0.16 16.87,-4.68z" />
-    <path id="b8QaD8LiC" d="m110.86,127.95c-4.21,5.17 -14.41,2.55 -10.32,-4.59c0.39,3.67 4.91,6.83 10.32,4.59z" />
-    <path id="a9zWdgunQ" d="m49.46,123.8c4.09,7.14 -6.11,9.76 -10.32,4.59c5.41,2.24 9.93,-0.91 10.32,-4.59z" />
-    <path id="a6tZXthQTR" d="m120.22,121.54c-5.9,7.65 -20.3,6.94 -16.87,-4.69c1.43,4.84 7.03,9.28 16.87,4.69z" />
-    <path id="jrRdbEQyt" d="m60.95,96.22c-28.36,19.46 -59.88,-12.41 -29.83,-32.82c-17.83,23.32 11.63,40.85 29.83,32.82z" />
-    <path id="c15bXT4mAo" d="m129.74,109.46c-3.4,14.66 -28.25,12.08 -27.24,0.16c5.81,6.6 17.52,9.1 27.24,-0.16z" />
-    <path id="e4RWMTPqoe" d="m70.28,93.42c-41.37,10.29 -53.69,-41.7 -3.77,-42.84c-34.6,8.7 -23.54,41.71 3.77,42.84z" />
-    <path id="aHVWsSIsU" d="m134.22,89.66c3.7,26.39 -30.06,25.9 -35.25,13.53c9.74,4.98 30.66,6.43 35.25,-13.53z" />
-  </defs>
-  <g>
-  <!--
-    <use id="svg_6" stroke-width="2" stroke="#000000" fill="#7b2a90" xlink:href="#cylinder" />
-    <use id="svg_10" stroke-width="2" stroke="#000000" fill="#9331ad" xlink:href="#top" />
-  -->
-    <use id="svg_14" stroke="#2a2a2a" fill="#dddd00" xlink:href="#d1UjwLgAN" />
-    <use id="svg_18" stroke="#2a2a2a" fill="#dddd00" xlink:href="#a37p6S2z8X" />
-    <use id="svg_22" stroke="#2a2a2a" fill="#dddd00" xlink:href="#b6eQmYXOdn" />
-    <use id="svg_26" stroke="#2a2a2a" fill="#dddd00" xlink:href="#a5czXR7ye5" />
-    <use id="svg_30" stroke="#2a2a2a" fill="#dddd00" xlink:href="#aBpqLzCfg" />
-    <use id="svg_34" stroke="#2a2a2a" fill="#dddd00" xlink:href="#b8QaD8LiC" />
-    <use id="svg_38" stroke="#2a2a2a" fill="#dddd00" xlink:href="#a9zWdgunQ" />
-    <use id="svg_42" stroke="#2a2a2a" fill="#dddd00" xlink:href="#a6tZXthQTR" />
-    <use id="svg_46" stroke="#2a2a2a" fill="#dddd00" xlink:href="#jrRdbEQyt" />
-    <use id="svg_50" stroke="#2a2a2a" fill="#dddd00" xlink:href="#c15bXT4mAo" />
-    <use id="svg_54" stroke="#2a2a2a" fill="#dddd00" xlink:href="#e4RWMTPqoe" />
-    <use id="svg_58" stroke="#2a2a2a" fill="#dddd00" xlink:href="#aHVWsSIsU" />
-  </g>
+    <path id="cylinder" stroke-width="2" stroke="#000000" fill="#7b2a90" d="m10,31.67c0,8.66 0,78 0,86.66c0,11.96 29.13,21.67 65,21.67c35.87,0 65,-9.71 65,-21.67c0,-5.77 0,-34.66 0,-86.66c-0.02,0 -0.04,0 -0.04,0c0,-11.96 -29.09,-21.67 -64.96,-21.67c-35.87,0 -65,9.71 -65,21.67z" />
+    <path id="top" stroke-width="2" stroke="#000000" fill="#7b2a90" d="m75,45.3c-34.64,0 -62.73,-7.9 -62.73,-17.65c0,-9.75 28.09,-17.65 62.73,-17.65c34.64,0 62.73,7.9 62.73,17.65c0,9.75 -28.09,17.65 -62.73,17.65z" />
+    <path id="d1UjwLgAN" stroke="#2a2a2a" fill="#ffffff" d="m51.03,103.63c-5.19,12.37 -38.95,12.87 -35.25,-13.52c4.59,19.96 25.51,18.5 35.25,13.52z" />
+    <path id="a37p6S2z8X" stroke="#2a2a2a" fill="#ffffff" d="m83.41,50.58c49.92,1.14 37.61,53.13 -3.77,42.84c27.31,-1.13 38.38,-34.14 3.77,-42.84z" />
+    <path id="b6eQmYXOdn" stroke="#2a2a2a" fill="#ffffff" d="m47.5,110.07c1.01,11.91 -23.84,14.49 -27.24,-0.16c9.72,9.25 21.43,6.75 27.24,0.16z" />
+    <path id="a5czXR7ye5" stroke="#2a2a2a" fill="#ffffff" d="m118.88,62.96c30.05,20.41 -1.47,52.28 -29.83,32.82c18.2,8.03 47.66,-9.51 29.83,-32.82z" />
+    <path id="aBpqLzCfg" stroke="#2a2a2a" fill="#ffffff" d="m46.65,117.3c3.43,11.63 -10.97,12.33 -16.87,4.68c9.84,4.6 15.44,0.16 16.87,-4.68z" />
+    <path id="b8QaD8LiC" stroke="#2a2a2a" fill="#ffffff" d="m110.86,127.95c-4.21,5.17 -14.41,2.55 -10.32,-4.59c0.39,3.67 4.91,6.83 10.32,4.59z" />
+    <path id="a9zWdgunQ" stroke="#2a2a2a" fill="#ffffff" d="m49.46,123.8c4.09,7.14 -6.11,9.76 -10.32,4.59c5.41,2.24 9.93,-0.91 10.32,-4.59z" />
+    <path id="a6tZXthQTR" stroke="#2a2a2a" fill="#ffffff" d="m120.22,121.54c-5.9,7.65 -20.3,6.94 -16.87,-4.69c1.43,4.84 7.03,9.28 16.87,4.69z" />
+    <path id="jrRdbEQyt" stroke="#2a2a2a" fill="#ffffff" d="m60.95,96.22c-28.36,19.46 -59.88,-12.41 -29.83,-32.82c-17.83,23.32 11.63,40.85 29.83,32.82z" />
+    <path id="c15bXT4mAo" stroke="#2a2a2a" fill="#ffffff" d="m129.74,109.46c-3.4,14.66 -28.25,12.08 -27.24,0.16c5.81,6.6 17.52,9.1 27.24,-0.16z" />
+    <path id="e4RWMTPqoe" stroke="#2a2a2a" fill="#ffffff" d="m70.28,93.42c-41.37,10.29 -53.69,-41.7 -3.77,-42.84c-34.6,8.7 -23.54,41.71 3.77,42.84z" />
+    <path id="aHVWsSIsU" stroke="#2a2a2a" fill="#ffffff" d="m134.22,89.66c3.7,26.39 -30.06,25.9 -35.25,13.53c9.74,4.98 30.66,6.43 35.25,-13.53z" />
 </svg>
