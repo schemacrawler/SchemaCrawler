@@ -1,6 +1,7 @@
 name: Mutation Tests
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '10 0 1,11,21 * *'
 

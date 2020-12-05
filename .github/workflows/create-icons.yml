@@ -1,0 +1,51 @@
+name: Create Icons
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '**/schemacrawler_logo.svg'
+
+jobs:
+  build:
+    name: Create Icons
+    runs-on: ubuntu-latest
+    steps:
+
+# CHECKOUT CODE
+    - id: checkout-code
+      name: Checkout code
+      uses: actions/checkout@v2
+
+# CREATE ICONS
+    - id: create-icons
+      name: Create icons for different platforms
+      run: |
+        # Create icons for different platforms
+        convert -version
+        convert -background transparent -density 1000 \
+        -resize 150x150 \
+        ./schemacrawler-website/src/site/resources/images/schemacrawler_logo.svg \
+        ./schemacrawler-website/src/site/resources/images/schemacrawler_logo.png
+        convert -background transparent -density 1000 \
+        -define icon:auto-resize -colors 256 \
+        ./schemacrawler-website/src/site/resources/images/schemacrawler_logo.svg \
+        ./schemacrawler-website/src/site/resources/images/schemacrawler_logo.ico
+
+# UPLOAD ICONS
+    - id: upload-icons
+      name: Upload generated icons
+      uses: actions/upload-artifact@v2
+      with:
+        name: icons
+        path: ./schemacrawler-website/src/site/resources/images/schemacrawler_logo.*
+
+    - id: push-icons
+      name: Commit icons to repository
+      run: |
+        # Commit icons to repository
+        git config --global user.name "Sualeh Fatehi"
+        git config --global user.email "sualeh@hotmail.com"
+        git add ./schemacrawler_logo.*
+        git commit -m "Create icons for different platforms"
+        git push
