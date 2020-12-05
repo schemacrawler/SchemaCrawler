@@ -23,11 +23,11 @@ jobs:
       run: |
         # Create icons for different platforms
         convert -version
-        convert -density 1000 \
+        convert -background transparent -density 1000 \
         -resize 150x150 \
         ./schemacrawler-website/src/site/resources/images/schemacrawler_logo.svg \
         ./schemacrawler-website/src/site/resources/images/schemacrawler_logo.png
-        convert -density 256x256 \
+        convert -background transparent -density 256x256 \
         -define icon:auto-resize -colors 256 \
         ./schemacrawler-website/src/site/resources/images/schemacrawler_logo.svg \
         ./schemacrawler-website/src/site/resources/images/schemacrawler_logo.ico

@@ -17,19 +17,21 @@
     <path id="aHVWsSIsU" d="m134.22,89.66c3.7,26.39 -30.06,25.9 -35.25,13.53c9.74,4.98 30.66,6.43 35.25,-13.53z" />
   </defs>
   <g>
+  <!--
     <use id="svg_6" stroke-width="2" stroke="#000000" fill="#7b2a90" xlink:href="#cylinder" />
     <use id="svg_10" stroke-width="2" stroke="#000000" fill="#9331ad" xlink:href="#top" />
-    <use id="svg_14" stroke="#2a2a2a" fill="#ffffff" xlink:href="#d1UjwLgAN" />
-    <use id="svg_18" stroke="#2a2a2a" fill="#ffffff" xlink:href="#a37p6S2z8X" />
-    <use id="svg_22" stroke="#2a2a2a" fill="#ffffff" xlink:href="#b6eQmYXOdn" />
-    <use id="svg_26" stroke="#2a2a2a" fill="#ffffff" xlink:href="#a5czXR7ye5" />
-    <use id="svg_30" stroke="#2a2a2a" fill="#ffffff" xlink:href="#aBpqLzCfg" />
-    <use id="svg_34" stroke="#2a2a2a" fill="#ffffff" xlink:href="#b8QaD8LiC" />
-    <use id="svg_38" stroke="#2a2a2a" fill="#ffffff" xlink:href="#a9zWdgunQ" />
-    <use id="svg_42" stroke="#2a2a2a" fill="#ffffff" xlink:href="#a6tZXthQTR" />
-    <use id="svg_46" stroke="#2a2a2a" fill="#ffffff" xlink:href="#jrRdbEQyt" />
-    <use id="svg_50" stroke="#2a2a2a" fill="#ffffff" xlink:href="#c15bXT4mAo" />
-    <use id="svg_54" stroke="#2a2a2a" fill="#ffffff" xlink:href="#e4RWMTPqoe" />
-    <use id="svg_58" stroke="#2a2a2a" fill="#ffffff" xlink:href="#aHVWsSIsU" />
+  -->
+    <use id="svg_14" stroke="#2a2a2a" fill="#dddd00" xlink:href="#d1UjwLgAN" />
+    <use id="svg_18" stroke="#2a2a2a" fill="#dddd00" xlink:href="#a37p6S2z8X" />
+    <use id="svg_22" stroke="#2a2a2a" fill="#dddd00" xlink:href="#b6eQmYXOdn" />
+    <use id="svg_26" stroke="#2a2a2a" fill="#dddd00" xlink:href="#a5czXR7ye5" />
+    <use id="svg_30" stroke="#2a2a2a" fill="#dddd00" xlink:href="#aBpqLzCfg" />
+    <use id="svg_34" stroke="#2a2a2a" fill="#dddd00" xlink:href="#b8QaD8LiC" />
+    <use id="svg_38" stroke="#2a2a2a" fill="#dddd00" xlink:href="#a9zWdgunQ" />
+    <use id="svg_42" stroke="#2a2a2a" fill="#dddd00" xlink:href="#a6tZXthQTR" />
+    <use id="svg_46" stroke="#2a2a2a" fill="#dddd00" xlink:href="#jrRdbEQyt" />
+    <use id="svg_50" stroke="#2a2a2a" fill="#dddd00" xlink:href="#c15bXT4mAo" />
+    <use id="svg_54" stroke="#2a2a2a" fill="#dddd00" xlink:href="#e4RWMTPqoe" />
+    <use id="svg_58" stroke="#2a2a2a" fill="#dddd00" xlink:href="#aHVWsSIsU" />
   </g>
 </svg>
