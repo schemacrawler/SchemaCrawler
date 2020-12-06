@@ -34,7 +34,6 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
-import org.junitpioneer.jupiter.SetSystemProperty;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.TestDatabaseConnector;
@@ -66,23 +65,6 @@ public class TestDatabaseConnectorTest {
         () ->
             databaseConnector.newDatabaseConnectionSource(
                 new DatabaseUrlConnectionOptions("jdbc:mysql://localhost:9001/schemacrawler")));
-  }
-
-  @Test
-  @SetSystemProperty(key = "SC_IGNORE_MISSING_DATABASE_PLUGIN", value = "true")
-  public void newMajorDatabaseConnectionWithUnknownConnectorWithOverride()
-      throws SchemaCrawlerException {
-    final DatabaseConnector databaseConnector = DatabaseConnector.UNKNOWN;
-
-    final DatabaseConnectionSource expectedDatabaseConnectionSource =
-        expectedDatabaseConnectionSource("jdbc:mysql://localhost:9001/schemacrawler");
-
-    final DatabaseConnectionSource databaseConnectionSource =
-        databaseConnector.newDatabaseConnectionSource(
-            new DatabaseUrlConnectionOptions("jdbc:mysql://localhost:9001/schemacrawler"));
-    assertThat(
-        databaseConnectionSource.getConnectionUrl(),
-        is(expectedDatabaseConnectionSource.getConnectionUrl()));
   }
 
   /**
