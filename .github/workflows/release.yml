@@ -52,6 +52,7 @@ jobs:
           --no-transfer-progress \
           --batch-mode \
           -Ddistrib \
+          -Ddocker.skip=false \
           clean install
 
 # CREATE GITHUB RELEASE AND ADD ASSETS

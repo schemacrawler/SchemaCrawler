@@ -12,6 +12,9 @@
   <artifactId>schemacrawler-docker</artifactId>
   <packaging>pom</packaging>
   <name>SchemaCrawler - Docker Image</name>
+  <properties>
+    <docker.skip>true</docker.skip>
+  </properties>
   <build>
     <plugins>
       <plugin>
@@ -25,6 +28,7 @@
               <goal>exec</goal>
             </goals>
             <configuration>
+              <skip>${docker.skip}</skip>
               <executable>docker</executable>
               <workingDirectory>${project.basedir}</workingDirectory>
               <arguments>
