@@ -36,11 +36,13 @@ jobs:
     - id: install-packages
       name: Install packages
       run: |
+        # Install Graphviz
         sudo apt-get -qq update
         sudo apt-get -q install graphviz
     - id: show-environment
       name: Show environment
       run: |
+        # Show environment
         echo github.repository: ${{ github.repository }}
         echo github.ref: ${{ github.head_ref || github.ref }}
         echo github.sha: ${{ github.sha }}
@@ -71,6 +73,7 @@ jobs:
       env:
         TZ: GMT
       run: |
+        # Build
         mvn \
           --no-transfer-progress \
           --batch-mode \
