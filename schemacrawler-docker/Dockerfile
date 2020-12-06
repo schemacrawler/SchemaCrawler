@@ -33,7 +33,7 @@ LABEL "maintainer"="Sualeh Fatehi <sualeh@hotmail.com>" \
       "org.opencontainers.image.url"="https://www.schemacrawler.com/" \
       "org.opencontainers.image.source"="https://github.com/schemacrawler/SchemaCrawler" \
       "org.opencontainers.image.vendor"="SchemaCrawler" \
-	  "org.opencontainers.image.license"="(GPL-3.0 OR OR LGPL-3.0+ EPL-1.0)"
+      "org.opencontainers.image.license"="(GPL-3.0 OR OR LGPL-3.0+ EPL-1.0)"
 
 
 # Install Graphviz
