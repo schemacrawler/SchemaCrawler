@@ -60,7 +60,7 @@
         <module>schemacrawler-docs</module>
         <module>schemacrawler-distrib</module>
         <module>schemacrawler-docker</module>
-		<module>schemacrawler-website</module>
+            <module>schemacrawler-website</module>
 
       </modules>
     </profile>
