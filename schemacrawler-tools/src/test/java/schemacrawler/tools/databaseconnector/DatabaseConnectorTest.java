@@ -30,16 +30,53 @@ package schemacrawler.tools.databaseconnector;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 
-public class TestDatabaseConnectorTest {
+public class DatabaseConnectorTest {
+
+  @Test
+  public void databaseConnector() throws Exception {
+
+    final DatabaseConnector databaseConnector = new TestDatabaseConnector();
+    assertThat(
+        databaseConnector.getDatabaseServerType().getDatabaseSystemIdentifier(), is("test-db"));
+    assertThat(databaseConnector.getHelpCommand().getName(), is("server:test-db"));
+
+    DatabaseConnectionOptions connectionOptions;
+    DatabaseConnectionSource connectionSource;
+
+    connectionOptions = new DatabaseUrlConnectionOptions("jdbc:test-db:some-database");
+    connectionSource = databaseConnector.newDatabaseConnectionSource(connectionOptions);
+    assertThat(connectionSource.getConnectionUrl(), is("jdbc:test-db:some-database"));
+
+    connectionOptions =
+        new DatabaseServerHostConnectionOptions(
+            "test-db", "some-host", 2121, "some-database", null);
+    connectionSource = databaseConnector.newDatabaseConnectionSource(connectionOptions);
+    assertThat(connectionSource.getConnectionUrl(), is("jdbc:test-db:some-database"));
+
+    assertThat(
+        databaseConnector.getSchemaRetrievalOptionsBuilder(connectionSource.get()),
+        is(not(nullValue())));
+
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    assertThat(
+        databaseConnector.setSchemaCrawlerOptionsDefaults(schemaCrawlerOptions),
+        is(not(nullValue())));
+
+    assertThat(databaseConnector.supportsUrl("jdbc:test-db:some-database"), is(true));
+  }
 
   @Test
   public void newConnectionWithUnknownConnector() throws SchemaCrawlerException {
