@@ -27,14 +27,10 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.utility;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.emptyString;
-import static org.hamcrest.Matchers.is;
+import static org.junit.platform.commons.support.AnnotationSupport.findAnnotation;
 
-import java.io.FileDescriptor;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
 import java.util.AbstractMap.SimpleImmutableEntry;
+import java.util.Optional;
 
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
@@ -42,18 +38,23 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 
 public class TestWithSystemProperty implements BeforeEachCallback, AfterEachCallback {
 
-  private SimpleImmutableEntry<String, String> err;
+  private SimpleImmutableEntry<String, String> systemProperty;
 
   @Override
   public void afterEach(final ExtensionContext context) throws Exception {
-    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
-
-    assertThat("Expected no System.err output", err.getFileContents(), is(emptyString()));
+    System.setProperty(systemProperty.getKey(), systemProperty.getValue());
+    systemProperty = null;
   }
 
   @Override
   public void beforeEach(final ExtensionContext context) throws Exception {
-    err = new TestOutputStream();
-    System.setErr(new PrintStream(err));
+    final Optional<WithSystemProperty> optionalAnnotation =
+        findAnnotation(context.getTestMethod(), WithSystemProperty.class);
+    optionalAnnotation.ifPresent(
+        withSystemProperty -> {
+          systemProperty =
+              new SimpleImmutableEntry<>(withSystemProperty.key(), withSystemProperty.value());
+          System.setProperty(systemProperty.getKey(), systemProperty.getValue());
+        });
   }
 }

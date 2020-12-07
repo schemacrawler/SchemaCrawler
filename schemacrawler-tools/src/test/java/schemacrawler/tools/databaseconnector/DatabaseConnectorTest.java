@@ -40,6 +40,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseConnector;
+import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 
 public class DatabaseConnectorTest {
@@ -102,6 +103,23 @@ public class DatabaseConnectorTest {
         () ->
             databaseConnector.newDatabaseConnectionSource(
                 new DatabaseUrlConnectionOptions("jdbc:mysql://localhost:9001/schemacrawler")));
+  }
+
+  @Test
+  @WithSystemProperty(key = "SC_IGNORE_MISSING_DATABASE_PLUGIN", value = "true")
+  public void newMajorDatabaseConnectionWithUnknownConnectorWithOverride()
+      throws SchemaCrawlerException {
+    final DatabaseConnector databaseConnector = DatabaseConnector.UNKNOWN;
+
+    final DatabaseConnectionSource expectedDatabaseConnectionSource =
+        expectedDatabaseConnectionSource("jdbc:mysql://localhost:9001/schemacrawler");
+
+    final DatabaseConnectionSource databaseConnectionSource =
+        databaseConnector.newDatabaseConnectionSource(
+            new DatabaseUrlConnectionOptions("jdbc:mysql://localhost:9001/schemacrawler"));
+    assertThat(
+        databaseConnectionSource.getConnectionUrl(),
+        is(expectedDatabaseConnectionSource.getConnectionUrl()));
   }
 
   /**
