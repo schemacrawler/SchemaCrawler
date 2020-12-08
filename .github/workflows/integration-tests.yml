@@ -63,8 +63,17 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         VALIDATE_ALL_CODEBASE: true
+        VALIDATE_YAML: true
+        VALIDATE_JSON: true
+        VALIDATE_XML: true
+        VALIDATE_MD: true
+        VALIDATE_BASH: true
         # VALIDATE_PYTHON: false
         # VALIDATE_RUBY: false
+        VALIDATE_JAVASCRIPT_ES: true
+        VALIDATE_DOCKER: true
+        VALIDATE_CSS: true
+        VALIDATE_ENV: true
 
 # BUILD AND TEST
     - id: build-test
