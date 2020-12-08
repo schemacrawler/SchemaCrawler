@@ -87,6 +87,8 @@ jobs:
           -Dtestcoverage \
           -Dlightdb \
           -Dheavydb \
+          -Ddistrib \
+          -Ddocker.skip=false \
           clean install \
           org.jacoco:jacoco-maven-plugin:0.8.5:report-aggregate
 

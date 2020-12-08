@@ -55,5 +55,4 @@ jobs:
         mvn \
           --no-transfer-progress \
           --batch-mode \
-          -Ddistrib \
           package
