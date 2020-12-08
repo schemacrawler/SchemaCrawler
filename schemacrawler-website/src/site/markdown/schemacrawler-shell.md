@@ -7,7 +7,8 @@ The easiest way to learn how to use the SchemaCrawler Interactive Shell is by do
 You can connect to a database, load the schema metadata catalog, and then execute commands against the metadata.
 
 In order to use SchemaCrawler Interactive Shell, download the [latest SchemaCrawler distribution](http://github.com/schemacrawler/SchemaCrawler/releases/).
-Unzip it, and follow instructions in the `shell` example included with the distribution. You can start the SchemaCrawler Interactive Shell from the command-line with a `--shell` argument.
+Unzip it, and follow instructions in the `shell` example included with the distribution. 
+You can start the SchemaCrawler Interactive Shell from the command-line with a `--shell` argument. You can also download [platform-specific SchemaCrawler installers](https://github.com/schemacrawler/SchemaCrawler-Installers/releases/) to use the SchemaCrawler Interactive Shell.
 
 Once the SchemaCrawler Interactive Shell starts up, you will get the `schemacrawler>` command-prompt, and you can interact with SchemaCrawler using shell commands.
 

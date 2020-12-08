@@ -1,5 +1,10 @@
 # SchemaCrawler Resources
 
+## SchemaCrawler Tutorials
+
+The easiest way to learn how to use the SchemaCrawler command-line is by doing the [online tutorial on Katacoda](https://www.katacoda.com/schemacrawler/scenarios/).
+
+
 ## SchemaCrawler Whitepapers and Documentation
 
 To read more about SchemaCrawler, you can read:
@@ -14,6 +19,7 @@ To read more about SchemaCrawler, you can read:
  POJOs](http://www.devx.com/Java/Article/32443) for an introduction
  to the SchemaCrawler API. (This article may refer to an older
  release of the SchemaCrawler API, but the concepts are the same.)
+
 
 ## SchemaCrawler Slides
 

@@ -19,9 +19,12 @@ Java SE 8, Compact Profile 2 or better.
 [![Quick Build](https://github.com/schemacrawler/SchemaCrawler/workflows/Quick%20Build/badge.svg)](https://github.com/schemacrawler/SchemaCrawler/actions?query=workflow%3A%22Quick+Build%22)
 [![Integration Tests](https://github.com/schemacrawler/SchemaCrawler/workflows/Integration%20Tests/badge.svg)](https://github.com/schemacrawler/SchemaCrawler/actions?query=workflow%3A%22Integration+Tests%22)
 [![codecov](https://codecov.io/gh/schemacrawler/SchemaCrawler/branch/master/graph/badge.svg)](https://codecov.io/gh/schemacrawler/SchemaCrawler)
+
 [![The Central Repository](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler.svg)](https://search.maven.org/search?q=g:us.fatehi%20schemacrawler*)
 [![Main distribution](https://img.shields.io/github/downloads/schemacrawler/schemacrawler/total)](https://github.com/schemacrawler/SchemaCrawler/releases/latest)
 [![Docker Pulls](https://img.shields.io/docker/pulls/schemacrawler/schemacrawler.svg)](https://hub.docker.com/r/schemacrawler/schemacrawler/)
+[![Chocolatey](https://img.shields.io/chocolatey/v/schemacrawler.svg)](https://chocolatey.org/packages/schemacrawler)
+
 
 -----
 
@@ -52,9 +55,9 @@ Examples are provided for all of these with the
 
 SchemaCrawler is integrated with templating engines, such
 as [Apache Velocity](https://velocity.apache.org/), [Thymeleaf](https://www.thymeleaf.org/),
-[&lt;FreeMarker&gt;](https://freemarker.org/) and [Mustache](https://mustache.github.io/). 
-You can write templates to generate SQL scripts or any other text output. 
-However, you will need to download the templating engine separately, since these are 
+[Apache &lt;#FreeMarker&gt;](https://freemarker.apache.org/) and [Mustache](https://mustache.github.io/).
+You can write templates to generate SQL scripts or any other text output.
+However, you will need to download the templating engine separately, since these are
 not part of the SchemaCrawler download.
 
 Explore the SchemaCrawler command-line on [Katacoda](https://www.katacoda.com/schemacrawler).
@@ -123,7 +126,7 @@ SchemaCrawler provides metadata for the following database objects:
 * Synonyms
 * Privileges and grants
 
-The sample code below demonstrates just how easy it is to use SchemaCrawler. 
+The sample code below demonstrates just how easy it is to use SchemaCrawler.
 For more example code, take a look at the [examples project](https://github.com/schemacrawler/SchemaCrawler/tree/master/schemacrawler-examplecode).
 For more details, please refer to the [javadocs](apidocs/index.html).
 
@@ -132,7 +135,7 @@ More code examples are at [Code Examples Using the SchemaCrawler API](code-examp
 
 ## Acknowledgements
 
-SchemaCrawler is grateful to 
+SchemaCrawler is grateful to
 
 - [Adrien Sales](https://www.linkedin.com/in/adrien-sales) for developing the [SchemaCrawler ecosystem](ecosystem.html)
 - [Atlassian](https://www.atlassian.com/) for providing a license for [Clover](https://www.atlassian.com/software/clover)
