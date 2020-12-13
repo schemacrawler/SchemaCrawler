@@ -68,4 +68,7 @@ COPY \
 # Create aliases for SchemaCrawler
 RUN \
     echo 'alias schemacrawler="/opt/schemacrawler/schemacrawler.sh"' \
+    >> /home/schcrwlr/.profile
+RUN \
+    echo 'alias schemacrawler="/opt/schemacrawler/schemacrawler.sh"' \
     >> /home/schcrwlr/.bashrc
