@@ -109,7 +109,7 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
     int index = 0;
     final StringBuilder buffer = new StringBuilder(1024);
     try {
-      buffer.append("Registered JDBC drivers:");
+      buffer.append("Registered JDBC drivers:").append(System.lineSeparator());
       final ServiceLoader<Driver> serviceLoader = ServiceLoader.load(Driver.class);
       for (final Driver driver : serviceLoader) {
         index++;
