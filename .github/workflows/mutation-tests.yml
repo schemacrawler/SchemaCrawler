@@ -10,14 +10,6 @@ jobs:
     steps:
 
 # SETUP BUILD ENVIRONMENT
-    - id: checkout-code
-      name: Checkout code
-      uses: actions/checkout@v2
-    - id: setup-jdk
-      name: Set up JDK
-      uses: actions/setup-java@v1
-      with:
-        java-version: 8
     - id: cache-m2
       name: Cache Maven packages
       uses: actions/cache@v2
@@ -32,6 +24,14 @@ jobs:
         path: ~/.ivy2
         key: ${{ runner.os }}-ivy2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-ivy2
+    - id: checkout-code
+      name: Checkout code
+      uses: actions/checkout@v2
+    - id: setup-jdk
+      name: Set up JDK
+      uses: actions/setup-java@v1
+      with:
+        java-version: 8
     - id: install-packages
       name: Install packages
       run: |

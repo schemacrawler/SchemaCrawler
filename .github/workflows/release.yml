@@ -16,17 +16,6 @@ jobs:
     steps:
 
 # SETUP BUILD ENVIRONMENT
-    - id: checkout-code
-      name: Checkout code
-      uses: actions/checkout@v2
-    - id: setup-jdk
-      name: Setup JDK
-      uses: actions/setup-java@v1
-      with:
-        java-version: 8
-        server-id: sonatype-nexus
-        server-username: MAVEN_USERNAME
-        server-password: MAVEN_PASSWORD
     - id: cache-m2
       name: Cache Maven packages
       uses: actions/cache@v2
@@ -41,6 +30,17 @@ jobs:
         path: ~/.ivy2
         key: ${{ runner.os }}-ivy2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-ivy2
+    - id: checkout-code
+      name: Checkout code
+      uses: actions/checkout@v2
+    - id: setup-jdk
+      name: Setup JDK
+      uses: actions/setup-java@v1
+      with:
+        java-version: 8
+        server-id: sonatype-nexus
+        server-username: MAVEN_USERNAME
+        server-password: MAVEN_PASSWORD
     - id: install-packages
       name: Install packages
       run: |
@@ -152,6 +152,7 @@ jobs:
         MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
       run: |
         # Publish to Central Repository
+        export GPG_TTY=$(tty)
         mvn \
           --no-transfer-progress \
           --batch-mode \
