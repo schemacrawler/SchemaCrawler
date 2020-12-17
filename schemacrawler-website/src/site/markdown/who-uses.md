@@ -1,8 +1,10 @@
 # Who Uses SchemaCrawler
 
+
 ## Ecosystem
 
 See details on the [SchemaCrawler Ecosystem](ecosystem.html).
+
 
 ## Question from Users
 
@@ -12,6 +14,7 @@ SchemaCrawler questions from users.
 - How [database administrators](http://dba.stackexchange.com/search?q=schemacrawler) use SchemaCrawler.
 - How [system administrators](http://serverfault.com/search?q=schemacrawler) use SchemaCrawler.
 - How [software testers](http://sqa.stackexchange.com/search?q=schemacrawler) use SchemaCrawler.
+
 
 ## Companies and Projects
 
@@ -24,27 +27,11 @@ SchemaCrawler questions from users.
 - [RedG test data generation library](https://btc-ag.github.io/redg/)
 - [Data Platform at Zoomcar](https://medium.com/@shanker.sneh/https-medium-com-shanker-sneh-data-platform-at-zoomcar-a-narrative-part-i-f2455e3e2ae5)
 - [Relational to Neo4j Importer](https://github.com/jexp/neo4j-rdbms-import)
-- Architect at Nestlé Nespresso SA:
-"I run a daily cron to export the content (metadata and data) of a
-schema, and I compare it to another reference schema to check which
-changes have been made to the data. The schema contains configuration
-values for our system (domains, ports, datasources, database connection
-strings, usernames...) and it's paramount to allow all architects to
-change those data without losing control of what is being done.
-SchemaCrawler is the only tool that I found that could export both
-metadata and data in a predictable way, so that I can compare (diff) 2
-schemas without getting false alerts."
-- SchemaCrawler database diagrams in use at the Scrum meeting at the Software
-Development Departement of [La Ville de Noumea.](http://www.noumea.nc/)
-Photograph courtesy of [Adrien Sales](https://www.linkedin.com/in/adrien-sales).
-
-<a href="images/SchemaCrawler_Noumea.jpg" data-lightbox="sc-in-use" data-title="Schemacrawler database diagrams in use">
-<img class="img-fluid img-thumbnail" style="width: 200px" src="images/SchemaCrawler_Noumea.jpg" alt="Schemacrawler database diagrams in use" />
-</a>
-
+- [Continuous integration gates for schema design issues](https://github.com/HakumenNC/docker-schemacrawler-reporting)
 - [A large number of projects on GitHub](https://github.com/search?q=schemacrawler+-user%3Asualeh+-user%3Aschemacrawler&type=Code)
 
-## Tweeted testimonials
+
+## Testimonials
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">TIL about a project called SchemaCrawler that generates graphviz charts of a db schema by introspecting on foreign keys. 💯 would recommend</p>&mdash; virtual dom pérignon 🧙‍♂️ (@jacobrothstein) <a href="https://twitter.com/jacobrothstein/status/912806745663139840?ref_src=twsrc%5Etfw">September 26, 2017</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -56,6 +43,27 @@ Photograph courtesy of [Adrien Sales](https://www.linkedin.com/in/adrien-sales).
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">SchemaCrawler is an excelent tool to explore a database schema. It&#39;s a layer on top of JDBC: http://bit.ly/aVqIVZ. Give it a try.</p>&mdash; William Chinelato (@willchinelato) <a href="https://twitter.com/willchinelato/status/12117092941?ref_src=twsrc%5Etfw">April 13, 2010</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+> Architect at Nestlé Nespresso SA:
+"I run a daily cron to export the content (metadata and data) of a
+schema, and I compare it to another reference schema to check which
+changes have been made to the data. The schema contains configuration
+values for our system (domains, ports, datasources, database connection
+strings, usernames...) and it's paramount to allow all architects to
+change those data without losing control of what is being done.
+SchemaCrawler is the only tool that I found that could export both
+metadata and data in a predictable way, so that I can compare (diff) 2
+schemas without getting false alerts."
+
+> SchemaCrawler database diagrams in use at the Scrum meeting at the Software
+Development Departement of [La Ville de Noumea.](http://www.noumea.nc/)
+Photograph courtesy of [Adrien Sales](https://www.linkedin.com/in/adrien-sales).
+
+<a href="images/SchemaCrawler_Noumea.jpg" data-lightbox="sc-in-use" data-title="Schemacrawler database diagrams in use">
+<img class="img-fluid img-thumbnail" style="width: 200px" src="images/SchemaCrawler_Noumea.jpg" alt="Schemacrawler database diagrams in use" />
+</a>
+
+
 ## Press
 
 SchemaCrawler in the press, and in online articles and blogs.
