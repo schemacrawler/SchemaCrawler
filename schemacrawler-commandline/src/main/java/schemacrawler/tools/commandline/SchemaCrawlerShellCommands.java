@@ -2,6 +2,7 @@ package schemacrawler.tools.commandline;
 
 import picocli.CommandLine.Command;
 import schemacrawler.tools.commandline.command.CommandLineHelpCommand;
+import schemacrawler.tools.commandline.command.ConfigFileCommand;
 import schemacrawler.tools.commandline.command.ConnectCommand;
 import schemacrawler.tools.commandline.command.ExecuteCommand;
 import schemacrawler.tools.commandline.command.FilterCommand;
@@ -20,6 +21,7 @@ import schemacrawler.tools.commandline.shell.SystemCommand;
     subcommands = {
       CommandLineHelpCommand.class,
       LogCommand.class,
+      ConfigFileCommand.class,
       ConnectCommand.class,
       FilterCommand.class,
       GrepCommand.class,

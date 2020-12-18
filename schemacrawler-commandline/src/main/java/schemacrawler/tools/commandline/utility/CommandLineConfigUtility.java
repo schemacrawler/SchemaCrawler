@@ -39,6 +39,7 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 
 import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 import com.typesafe.config.ConfigParseOptions;
 
 import schemacrawler.SchemaCrawlerLogger;
@@ -49,6 +50,9 @@ public class CommandLineConfigUtility {
       SchemaCrawlerLogger.getLogger(CommandLineConfigUtility.class.getName());
 
   public static Map<String, Object> loadConfig() {
+
+    // Invalidate config caches, so config can be loaded multiple times in the shell
+    ConfigFactory.invalidateCaches();
 
     final Config config = loadConfig("schemacrawler.config");
     final Config colormapConfig = loadConfig("schemacrawler.colormap");

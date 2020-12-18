@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.tools.commandline.utility.CommandLineConfigUtility.loadConfig;
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logFullStackTrace;
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSafeArguments;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
@@ -43,7 +42,6 @@ import picocli.CommandLine;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
-import schemacrawler.tools.options.Config;
 
 public final class SchemaCrawlerCommandLine {
 
@@ -56,9 +54,6 @@ public final class SchemaCrawlerCommandLine {
       requireNonNull(args, "No arguments provided");
 
       final ShellState state = new ShellState();
-
-      final Map<String, Object> appConfig = loadConfig();
-      state.setBaseConfig(new Config(appConfig));
       final StateFactory stateFactory = new StateFactory(state);
 
       final SchemaCrawlerCommandLineCommands commands = new SchemaCrawlerCommandLineCommands();
@@ -94,7 +89,7 @@ public final class SchemaCrawlerCommandLine {
 
     for (final String commandName :
         new String[] {
-          "log", "connect", "filter", "limit", "grep", "showstate", "load", "execute"
+          "log", "configfile", "connect", "limit", "grep", "filter", "showstate", "load", "execute"
         }) {
       final Runnable command = (Runnable) subcommands.get(commandName);
       LOGGER.log(Level.INFO, "Running command " + command.getClass().getSimpleName());
