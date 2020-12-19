@@ -27,6 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.startsWith;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
@@ -35,7 +36,6 @@ import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -66,7 +66,7 @@ public class VersionTest {
   public void version() throws Exception {
     Version.main(new String[0]);
 
-    MatcherAssert.assertThat(out.getFileContents(), startsWith("SchemaCrawler 16.11.6"));
-    MatcherAssert.assertThat(outputOf(err), hasNoContent());
+    assertThat(out.getFileContents(), startsWith("SchemaCrawler 16.11.6"));
+    assertThat(outputOf(err), hasNoContent());
   }
 }
