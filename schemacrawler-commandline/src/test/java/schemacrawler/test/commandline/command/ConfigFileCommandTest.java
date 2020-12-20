@@ -26,8 +26,6 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import com.typesafe.config.ConfigFactory;
-
 import picocli.CommandLine;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
@@ -65,11 +63,6 @@ public class ConfigFileCommandTest {
   public void cleanUpStreams() {
     System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
     System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
-  }
-
-  @BeforeEach
-  public void clearConfigCaches() {
-    ConfigFactory.invalidateCaches();
   }
 
   @Test
@@ -145,8 +138,7 @@ public class ConfigFileCommandTest {
     final Config config = state.getConfig();
 
     assertThat("Config is not empty", config.size(), is(greaterThan(0)));
-    System.out.println(config);
-    assertThat(config.containsKey(key), is(true));
-    assertThat(config.getStringValue(key, ""), is("value"));
+    assertThat("Test key not found in config", config.containsKey(key), is(true));
+    assertThat("Test value not found in config", config.getStringValue(key, ""), is("value"));
   }
 }
