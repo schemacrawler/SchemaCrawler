@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.tools.commandline.utility.CommandLineConfigUtility.loadConfig;
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logFullStackTrace;
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSafeArguments;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
@@ -38,7 +37,6 @@ import static us.fatehi.utility.Utility.isBlank;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Map;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 
@@ -61,7 +59,6 @@ import picocli.shell.jline3.PicocliCommands;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
-import schemacrawler.tools.options.Config;
 
 public final class SchemaCrawlerShell {
 
@@ -75,9 +72,6 @@ public final class SchemaCrawlerShell {
       requireNonNull(args, "No arguments provided");
 
       final ShellState state = new ShellState();
-
-      final Map<String, Object> appConfig = loadConfig();
-      state.setBaseConfig(new Config(appConfig));
       final StateFactory stateFactory = new StateFactory(state);
 
       final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
