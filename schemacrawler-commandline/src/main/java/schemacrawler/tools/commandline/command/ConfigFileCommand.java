@@ -34,8 +34,6 @@ import static us.fatehi.utility.IOUtility.isFileReadable;
 import java.nio.file.Path;
 import java.util.Map;
 
-import com.typesafe.config.ConfigFactory;
-
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
@@ -84,8 +82,6 @@ public class ConfigFileCommand extends BaseStateHolder implements Runnable {
 
   @Override
   public void run() {
-    ConfigFactory.invalidateCaches();
-
     if (isFileReadable(configfile)) {
       System.setProperty("config.file", configfile.toString());
     }
