@@ -40,28 +40,10 @@ import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.options.Config;
 
-/**
- * Parses the command-line.
- *
- * @author Sualeh Fatehi
- */
 @Command(
     name = "config-file",
     header = "** Load SchemaCrawler configuration from the classpath and file",
-    description = {
-      "",
-      "SchemaCrawler configuration reads a resource called schemacrawler.config.properties "
-          + "from the CLASSPATH, which includes the lib/ folder. "
-          + "You can modify the default settings in this file.",
-      "",
-      "The order of loading configuration settings is:",
-      "1. From a CLASSPATH resource called schemacrawler.config.properties",
-      "2. Which can be overridden by settings in a configuration file (see below)",
-      "3. Which can be overridden by other command-line options",
-      "",
-      "Command-line options will override configuration file options.",
-      ""
-    },
+    description = {"", "For more information, see https://www.schemacrawler.com/config.html", ""},
     headerHeading = "",
     synopsisHeading = "Shell Command:%n",
     customSynopsis = {"config-file"},
@@ -73,7 +55,7 @@ public class ConfigFileCommand extends BaseStateHolder implements Runnable {
       description =
           "Read SchemaCrawler configuration properties from <configfile>%n"
               + "<configfile> is the full path to the configuration file%n"
-              + "Optional, uses the default schemacrawler.config.properties file in the current directory, or in-built default options")
+              + "Optional")
   private Path configfile;
 
   public ConfigFileCommand(final ShellState state) {

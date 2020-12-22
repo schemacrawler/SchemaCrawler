@@ -119,6 +119,7 @@
                  Features
                  </a>
                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="config.html">Configuration</a>
                     <a class="dropdown-item" href="output.html">Text Output</a>
                     <a class="dropdown-item" href="diff.html">Diff</a>
                     <a class="dropdown-item" href="schemacrawler-grep.html">Grep</a>
