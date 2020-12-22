@@ -1,0 +1,12 @@
+Missing required parameter for option '--config-file' (<configfile>)
+** Load SchemaCrawler configuration from the classpath and file
+Shell Command:
+config-file
+
+For more information, see https://www.schemacrawler.com/config.html
+
+Options:
+  -g, --config-file=<configfile>
+         Read SchemaCrawler configuration properties from <configfile>
+         <configfile> is the full path to the configuration file
+         Optional

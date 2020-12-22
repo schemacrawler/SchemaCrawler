@@ -1,4 +1,4 @@
-SchemaCrawler 16.11.3
+SchemaCrawler 16.11.6
 Database schema discovery and comprehension tool
 https://www.schemacrawler.com/
 Copyright (c) 2000-2020, Sualeh Fatehi <sualeh@hotmail.com>.
@@ -54,6 +54,19 @@ Options:
          Set log level using one of OFF, SEVERE, WARNING, INFO, CONFIG, FINE,
            FINER, FINEST, ALL
          Optional, defaults to OFF
+
+
+** Load SchemaCrawler configuration from the classpath and file
+Shell Command:
+config-file
+
+For more information, see https://www.schemacrawler.com/config.html
+
+Options:
+  -g, --config-file=<configfile>
+         Read SchemaCrawler configuration properties from <configfile>
+         <configfile> is the full path to the configuration file
+         Optional
 
 
 ** Connect to the database
