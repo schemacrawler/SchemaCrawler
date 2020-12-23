@@ -103,8 +103,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create-release.outputs.upload_url }}
-        asset_path: ./schemacrawler-distrib/target/schemacrawler-16.11.6-distribution.zip
-        asset_name: schemacrawler-16.11.6-distribution.zip
+        asset_path: ./schemacrawler-distrib/target/schemacrawler-16.11.7-distribution.zip
+        asset_name: schemacrawler-16.11.7-distribution.zip
         asset_content_type: application/zip
     - id: upload-release-sha
       name: Upload SchemaCrawler distribution zip SHA
@@ -114,8 +114,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create-release.outputs.upload_url }}
-        asset_path: ./schemacrawler-distrib/target/schemacrawler-16.11.6-distribution.zip.SHA-512
-        asset_name: schemacrawler-16.11.6-distribution.zip.SHA-512
+        asset_path: ./schemacrawler-distrib/target/schemacrawler-16.11.7-distribution.zip.SHA-512
+        asset_name: schemacrawler-16.11.7-distribution.zip.SHA-512
         asset_content_type: text/plain
 
 # PUBLISH DOCKER IMAGE
@@ -128,7 +128,7 @@ jobs:
       run: |
         # Publish Docker image
         docker version
-        docker tag schemacrawler/schemacrawler schemacrawler/schemacrawler:v16.11.6
+        docker tag schemacrawler/schemacrawler schemacrawler/schemacrawler:v16.11.7
         docker tag schemacrawler/schemacrawler schemacrawler/schemacrawler:latest
         echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         docker push schemacrawler/schemacrawler

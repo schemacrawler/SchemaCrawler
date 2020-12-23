@@ -1,5 +1,12 @@
 # SchemaCrawler Change History
 
+
+<a name="a16.11.7"></a>
+## Release 16.11.7 - 2020-12-26
+
+- Add `--config-file` command back in, with more documentation on configuration on the website
+
+
 <a name="a16.11.6"></a>
 ## Release 16.11.6 - 2020-11-28
 
