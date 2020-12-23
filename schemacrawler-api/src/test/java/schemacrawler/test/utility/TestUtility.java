@@ -140,7 +140,6 @@ public final class TestUtility {
     final boolean contentEquals;
     final Reader referenceReader = readerForResource(referenceFile, UTF_8, isCompressed);
     if (referenceReader == null) {
-
       failures.add("Reference file not available, " + referenceFile);
       contentEquals = false;
     } else if ("png".equals(outputFormat)) {
@@ -171,8 +170,7 @@ public final class TestUtility {
       System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
       System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
 
-      System.err.println("Output does not match - actual output in ");
-      System.err.println(testOutputTargetFilePath);
+      System.err.printf("Output does not match - actual output in%n" + testOutputTargetFilePath);
     } else {
       delete(testOutputTempFile);
     }
@@ -332,22 +330,20 @@ public final class TestUtility {
         final String actualLine = actualLinesIterator.next();
 
         if (!expectedline.equals(actualLine)) {
-          final StringBuilder buffer = new StringBuilder();
-          buffer.append(">> expected followed by actual:").append("\n");
-          buffer.append(expectedline).append("\n");
-          buffer.append(actualLine).append("\n");
-
-          final String lineMiscompare = buffer.toString();
-          failures.add(lineMiscompare);
-
+          failures.add(lineMiscompare(expectedline, actualLine));
           return false;
         }
       }
 
       if (actualLinesIterator.hasNext()) {
+        failures.add(lineMiscompare("<<end of stream>>", actualLinesIterator.next()));
         return false;
+      } else if (expectedLinesIterator.hasNext()) {
+        failures.add(lineMiscompare(expectedLinesIterator.next(), "<<end of stream>>"));
+        return false;
+      } else {
+        return true;
       }
-      return !expectedLinesIterator.hasNext();
     }
   }
 
@@ -385,6 +381,16 @@ public final class TestUtility {
     while (buffer.hasRemaining()) {
       dest.write(buffer);
     }
+  }
+
+  private static String lineMiscompare(final String expectedline, final String actualLine) {
+    final StringBuilder buffer = new StringBuilder();
+    buffer.append(">> expected followed by actual:").append("\n");
+    buffer.append(expectedline).append("\n");
+    buffer.append(actualLine).append("\n");
+
+    final String lineMiscompare = buffer.toString();
+    return lineMiscompare;
   }
 
   private static Reader openNewCompressedInputReader(

@@ -41,7 +41,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -57,7 +56,6 @@ import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import us.fatehi.utility.IOUtility;
 
-@Disabled
 @ExtendWith(TestLoggingExtension.class)
 public class SqliteDistributionTest {
 
