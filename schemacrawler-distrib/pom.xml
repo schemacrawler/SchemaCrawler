@@ -337,7 +337,7 @@
                 <artifactItem>
                   <groupId>org.xerial</groupId>
                   <artifactId>sqlite-jdbc</artifactId>
-                  <version>3.32.3.2</version>
+                  <version>3.34.0</version>
                   <type>jar</type>
                 </artifactItem>
                 <artifactItem>
