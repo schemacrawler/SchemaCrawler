@@ -13,6 +13,7 @@
       <meta name="description" content="Free database schema discovery and comprehension tool" />
       <meta property="og:description" content="Free database schema discovery and comprehension tool" />
       <link rel="canonical" href="https://www.schemacrawler.com/" />
+      <link rel="icon" href="images/schemacrawler_logo.png" sizes="any" type="image/svg+xml">   
       <meta property="og:url" content="https://www.schemacrawler.com/" />
       <meta property="og:image" content="https://www.schemacrawler.com/images/schemacrawler_logo.svg" />
       <meta property="og:image:type" content="image/svg+xml" />
