@@ -43,8 +43,8 @@ final class NeuteredLinesFilter implements Predicate<String> {
     Pattern.compile("\\s+\"runId\": .*"),
     Pattern.compile("\\s+<product(Name|Version)>.*"),
     Pattern.compile(".*[A-Za-z]+ \\d+, 201[456] \\d+:\\d+ [AP]M.*"),
-    Pattern.compile(".*20[12][890]-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.*"),
-    Pattern.compile(".*20[12][890]-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d.*"),
+    Pattern.compile(".*20[12][019]-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.*"),
+    Pattern.compile(".*20[12][019]-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d.*"),
     // JSON and YAML output
     Pattern.compile("- column @uuid: .*"),
     Pattern.compile("\\s+\"?run-id\"?\\s?: .*"),
