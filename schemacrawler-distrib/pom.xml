@@ -352,13 +352,13 @@
                 <artifactItem>
                   <groupId>info.picocli</groupId>
                   <artifactId>picocli</artifactId>
-                  <version>4.5.2</version>
+                  <version>4.6.0</version>
                   <type>jar</type>
                 </artifactItem>
                 <artifactItem>
                   <groupId>info.picocli</groupId>
                   <artifactId>picocli-shell-jline3</artifactId>
-                  <version>4.5.2</version>
+                  <version>4.6.0</version>
                   <type>jar</type>
                 </artifactItem>
                 <artifactItem>

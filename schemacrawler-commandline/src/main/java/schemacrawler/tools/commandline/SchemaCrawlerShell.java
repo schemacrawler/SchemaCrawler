@@ -46,16 +46,15 @@ import org.jline.reader.EndOfFileException;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.MaskingCallback;
-import org.jline.reader.ParsedLine;
 import org.jline.reader.Parser;
 import org.jline.reader.UserInterruptException;
 import org.jline.reader.impl.DefaultParser;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
-import org.jline.utils.InfoCmp.Capability;
 
 import picocli.CommandLine;
 import picocli.shell.jline3.PicocliCommands;
+import picocli.shell.jline3.PicocliCommands.PicocliCommandsFactory;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
@@ -73,9 +72,10 @@ public final class SchemaCrawlerShell {
 
       final ShellState state = new ShellState();
       final StateFactory stateFactory = new StateFactory(state);
+      final PicocliCommandsFactory factory = new PicocliCommandsFactory(stateFactory);
 
       final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
-      final CommandLine commandLine = newCommandLine(commands, stateFactory);
+      final CommandLine commandLine = newCommandLine(commands, factory);
       final CommandLine executeCommandLine =
           commandLine.getSubcommands().getOrDefault("execute", null);
       if (executeCommandLine != null) {
@@ -91,12 +91,13 @@ public final class SchemaCrawlerShell {
           });
 
       final Supplier<Path> workingDir = () -> Paths.get(".");
-      final PicocliCommands picocliCommands = new PicocliCommands(workingDir, commandLine);
+      final PicocliCommands picocliCommands = new PicocliCommands(commandLine);
       final Parser parser = new DefaultParser();
 
       final SystemRegistry systemRegistry =
           new SystemRegistryImpl(parser, terminal, workingDir, null);
       systemRegistry.setCommandRegistries(picocliCommands);
+      systemRegistry.register("help", picocliCommands);
 
       final LineReader reader =
           LineReaderBuilder.builder()
@@ -105,21 +106,14 @@ public final class SchemaCrawlerShell {
               .parser(parser)
               .variable(LineReader.LIST_MAX, 10) // max tab completion candidates
               .build();
+      factory.setTerminal(terminal);
 
       while (true) {
         try {
           systemRegistry.cleanUp();
           final String line =
               reader.readLine("schemacrawler> ", null, (MaskingCallback) null, null);
-          if (line.startsWith("help")) {
-            final ParsedLine pl = reader.getParser().parse(line, 0);
-            final String[] arguments = pl.words().toArray(new String[0]);
-            commandLine.execute(arguments);
-          } else if (line.equals("cls") || line.equals("clear")) {
-            terminal.puts(Capability.clear_screen);
-          } else {
-            systemRegistry.execute(line);
-          }
+          systemRegistry.execute(line);
 
         } catch (final UserInterruptException e) {
           // Ignore
