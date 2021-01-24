@@ -50,11 +50,13 @@ public class ArchitectureTest {
         .domainModels("schemacrawler.schema..")
         .domainServices("schemacrawler.crawl..")
         .applicationServices("schemacrawler.analysis.(*)..")
-        /*
-        .adapter("cli", "com.myapp.adapter.cli..")
-        .adapter("persistence", "com.myapp.adapter.persistence..")
-        .adapter("rest", "com.myapp.adapter.rest..")
-         */
+        .applicationServices(
+            "schemacrawler.schemacrawler..",
+            "schemacrawler.filter..",
+            "schemacrawler.inclusionrule..",
+            "schemacrawler.plugin..")
+        .adapter("tools", "schemacrawler.tools.(*)..")
+        .because("an onion architecture model should be followed")
         .check(classes);
   }
 
