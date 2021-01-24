@@ -28,12 +28,16 @@ public class ArchitectureTest {
       new ClassFileImporter()
           .withImportOption(DO_NOT_INCLUDE_ARCHIVES)
           .withImportOption(DO_NOT_INCLUDE_TESTS)
-          .importPackages("schemacrawler..");
+          .importPackages("schemacrawler..")
+          .as("SchemaCrawler core");
 
   @Test
   public void accessStandardStreams() {
     noClasses()
-        .that(resideOutsideOfPackages("schemacrawler.testdb").and(are(not(simpleName("Version")))))
+        .that(
+            resideOutsideOfPackages("schemacrawler.testdb")
+                .and(are(not(simpleName("Version"))))
+                .and(are(not(simpleName("GraphvizProcessExecutor")))))
         .should(ACCESS_STANDARD_STREAMS)
         .because("production code should not write to standard streams")
         .check(classes);
@@ -51,7 +55,6 @@ public class ArchitectureTest {
         .adapter("persistence", "com.myapp.adapter.persistence..")
         .adapter("rest", "com.myapp.adapter.rest..")
          */
-
         .check(classes);
   }
 
@@ -59,6 +62,7 @@ public class ArchitectureTest {
   public void architectureCycles() {
     slices()
         .matching("schemacrawler.(*)..")
+        .as("SchemaCrawler core")
         .should()
         .beFreeOfCycles()
         .because("code should be well-structured in packages")

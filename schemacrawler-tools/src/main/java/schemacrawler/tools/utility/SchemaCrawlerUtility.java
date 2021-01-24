@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.utility;
+package schemacrawler.tools.utility;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

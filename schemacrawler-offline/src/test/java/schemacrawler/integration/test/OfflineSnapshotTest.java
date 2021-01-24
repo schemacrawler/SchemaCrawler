@@ -42,7 +42,7 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 import static schemacrawler.tools.offline.jdbc.OfflineConnectionUtility.newOfflineConnection;
-import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
+import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

@@ -39,7 +39,7 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.fileHeaderOf;
-import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
+import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

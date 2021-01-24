@@ -42,7 +42,7 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
+import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.nio.file.Path;
 import java.sql.Connection;

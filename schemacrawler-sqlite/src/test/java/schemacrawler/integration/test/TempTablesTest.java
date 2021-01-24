@@ -52,7 +52,7 @@ import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.testdb.SqlScript;
 import schemacrawler.testdb.TestSchemaCreatorMain;
-import schemacrawler.utility.SchemaCrawlerUtility;
+import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestLoggingExtension.class)
