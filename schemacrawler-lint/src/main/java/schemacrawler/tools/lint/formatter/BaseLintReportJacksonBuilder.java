@@ -1,4 +1,4 @@
-package schemacrawler.tools.lint.executable;
+package schemacrawler.tools.lint.formatter;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;
 import static com.fasterxml.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS;

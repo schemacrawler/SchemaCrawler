@@ -25,12 +25,15 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.lint.executable;
+package schemacrawler.tools.command.lint;
 
 import static schemacrawler.tools.executable.commandline.PluginCommand.newPluginCommand;
 
 import java.nio.file.Path;
 
+import schemacrawler.tools.command.lint.options.LintOptions;
+import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
+import schemacrawler.tools.command.lint.options.LintReportOutputFormat;
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;

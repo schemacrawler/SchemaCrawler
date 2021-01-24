@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.lint.executable;
+package schemacrawler.tools.lint.formatter;
 
 import static java.util.Comparator.naturalOrder;
 
@@ -40,6 +40,7 @@ import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintReport;
 import schemacrawler.tools.lint.LintSeverity;
@@ -50,7 +51,7 @@ import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.Color;
 import us.fatehi.utility.Multimap;
 
-final class LintReportTextFormatter extends BaseTabularFormatter<LintOptions>
+public final class LintReportTextFormatter extends BaseTabularFormatter<LintOptions>
     implements LintReportBuilder {
 
   private static final String LINT_KEY = "schemacrawler.lint";
@@ -69,7 +70,7 @@ final class LintReportTextFormatter extends BaseTabularFormatter<LintOptions>
   private final Catalog catalog;
   private final LintOptions lintOptions;
 
-  LintReportTextFormatter(
+  public LintReportTextFormatter(
       final Catalog catalog,
       final LintOptions lintOptions,
       final OutputOptions outputOptions,

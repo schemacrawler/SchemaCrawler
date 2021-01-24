@@ -1,9 +1,9 @@
-package schemacrawler.tools.lint.executable;
+package schemacrawler.tools.lint.formatter;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.LintReport;
 
-interface LintReportBuilder {
+public interface LintReportBuilder {
 
   void generateLintReport(LintReport report) throws SchemaCrawlerException;
 }

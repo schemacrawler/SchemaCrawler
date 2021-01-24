@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.lint.executable;
+package schemacrawler.tools.command.lint;
 
 import static schemacrawler.tools.lint.LintUtility.readLinterConfigs;
 
@@ -33,11 +33,17 @@ import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.command.lint.options.LintOptions;
+import schemacrawler.tools.command.lint.options.LintReportOutputFormat;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.lint.LintReport;
 import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.lint.Linters;
+import schemacrawler.tools.lint.formatter.LintReportBuilder;
+import schemacrawler.tools.lint.formatter.LintReportJsonBuilder;
+import schemacrawler.tools.lint.formatter.LintReportTextFormatter;
+import schemacrawler.tools.lint.formatter.LintReportYamlBuilder;
 import us.fatehi.utility.string.ObjectToStringFormat;
 import us.fatehi.utility.string.StringFormat;
 

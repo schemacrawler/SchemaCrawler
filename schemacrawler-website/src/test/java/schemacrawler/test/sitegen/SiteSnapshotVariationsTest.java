@@ -48,10 +48,10 @@ import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.tools.command.lint.options.LintReportOutputFormat;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.integration.serialize.SerializationFormat;
-import schemacrawler.tools.lint.executable.LintReportOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)

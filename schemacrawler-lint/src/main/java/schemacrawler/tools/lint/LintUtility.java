@@ -36,7 +36,7 @@ import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.lint.executable.LintOptions;
+import schemacrawler.tools.command.lint.options.LintOptions;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.ioresource.InputResourceUtility;
 

@@ -55,9 +55,9 @@ import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.tools.command.lint.options.LintReportOutputFormat;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.lint.executable.LintReportOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
