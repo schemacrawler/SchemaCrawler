@@ -31,18 +31,6 @@ public class ArchitectureTest {
           .importPackages("schemacrawler..")
           .as("SchemaCrawler core");
 
-  @Test
-  public void accessStandardStreams() {
-    noClasses()
-        .that(
-            resideOutsideOfPackages("schemacrawler.testdb")
-                .and(are(not(simpleName("Version"))))
-                .and(are(not(simpleName("GraphvizProcessExecutor")))))
-        .should(ACCESS_STANDARD_STREAMS)
-        .because("production code should not write to standard streams")
-        .check(classes);
-  }
-
   @Disabled
   @Test
   public void architecture() {
@@ -81,6 +69,18 @@ public class ArchitectureTest {
         .should()
         .haveRawReturnType(Optional.class)
         .because("lookups may not return a value")
+        .check(classes);
+  }
+
+  @Test
+  public void notAccessStandardStreams() {
+    noClasses()
+        .that(
+            resideOutsideOfPackages("schemacrawler.testdb")
+                .and(are(not(simpleName("Version"))))
+                .and(are(not(simpleName("GraphvizProcessExecutor")))))
+        .should(ACCESS_STANDARD_STREAMS)
+        .because("production code should not write to standard streams")
         .check(classes);
   }
 
