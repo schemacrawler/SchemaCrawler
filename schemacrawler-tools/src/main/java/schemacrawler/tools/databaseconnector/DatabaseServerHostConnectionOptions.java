@@ -59,7 +59,7 @@ public class DatabaseServerHostConnectionOptions implements DatabaseConnectionOp
   public DatabaseConnector getDatabaseConnector() {
     final DatabaseConnectorRegistry databaseConnectorRegistry =
         DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    return databaseConnectorRegistry.lookupDatabaseConnector(databaseSystemIdentifier);
+    return databaseConnectorRegistry.findDatabaseConnectorFromDatabaseSystemIdentifier(databaseSystemIdentifier);
   }
 
   public String getHost() {

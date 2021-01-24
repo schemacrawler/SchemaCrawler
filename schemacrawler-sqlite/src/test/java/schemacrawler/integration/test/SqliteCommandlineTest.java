@@ -67,7 +67,7 @@ public class SqliteCommandlineTest
   {
     final DatabaseConnectorRegistry registry =
       DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    dbConnector = registry.lookupDatabaseConnector("sqlite");
+    dbConnector = registry.findDatabaseConnectorFromDatabaseSystemIdentifier("sqlite");
   }
 
   @Test

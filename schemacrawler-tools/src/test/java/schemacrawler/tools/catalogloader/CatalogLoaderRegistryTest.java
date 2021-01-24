@@ -45,20 +45,20 @@ public class CatalogLoaderRegistryTest {
 
     // Look up test catalog loader
     assertThat(registry.hasDatabaseSystemIdentifier("test-db"), is(true));
-    assertThat(registry.lookupCatalogLoader("test-db"), is(not(nullValue())));
+    assertThat(registry.findCatalogLoader("test-db"), is(not(nullValue())));
     assertThat(
-        registry.lookupCatalogLoader("test-db").getClass().getSimpleName(),
+        registry.findCatalogLoader("test-db").getClass().getSimpleName(),
         is("TestCatalogLoader"));
     assertThat(
-        registry.lookupCatalogLoader("test-db").getDatabaseSystemIdentifier(), is("test-db"));
+        registry.findCatalogLoader("test-db").getDatabaseSystemIdentifier(), is("test-db"));
 
     // Look up unknown catalog loader
     assertThat(registry.hasDatabaseSystemIdentifier("some-db"), is(false));
-    assertThat(registry.lookupCatalogLoader("some-db"), is(not(nullValue())));
+    assertThat(registry.findCatalogLoader("some-db"), is(not(nullValue())));
     assertThat(
-        registry.lookupCatalogLoader("some-db").getClass().getSimpleName(),
+        registry.findCatalogLoader("some-db").getClass().getSimpleName(),
         is("SchemaCrawlerCatalogLoader"));
     assertThat(
-        registry.lookupCatalogLoader("some-db").getDatabaseSystemIdentifier(), is(nullValue()));
+        registry.findCatalogLoader("some-db").getDatabaseSystemIdentifier(), is(nullValue()));
   }
 }

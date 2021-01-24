@@ -47,7 +47,7 @@ public class BundledDistributionTest
     final DatabaseConnectorRegistry registry =
       DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     final DatabaseConnector databaseSystemIdentifier =
-      registry.lookupDatabaseConnector("hsqldb");
+      registry.findDatabaseConnectorFromDatabaseSystemIdentifier("hsqldb");
     final Connection connection = null;
     assertThat(databaseSystemIdentifier
                  .getSchemaRetrievalOptionsBuilder(connection)

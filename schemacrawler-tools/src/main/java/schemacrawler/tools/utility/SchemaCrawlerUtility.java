@@ -132,7 +132,7 @@ public final class SchemaCrawlerUtility {
     checkConnection(connection);
     final DatabaseConnectorRegistry registry =
         DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    DatabaseConnector dbConnector = registry.lookupDatabaseConnector(connection);
+    DatabaseConnector dbConnector = registry.findDatabaseConnector(connection);
     final DatabaseServerType databaseServerType = dbConnector.getDatabaseServerType();
     LOGGER.log(Level.INFO, "Using database plugin for " + databaseServerType);
 
