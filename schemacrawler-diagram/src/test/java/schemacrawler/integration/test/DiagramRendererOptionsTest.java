@@ -37,7 +37,7 @@ import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAnd
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.clean;
-import static schemacrawler.tools.integration.diagram.DiagramOptionsBuilder.builder;
+import static schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder.builder;
 
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -61,13 +61,13 @@ import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
+import schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder;
+import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
+import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.integration.diagram.DiagramOptions;
-import schemacrawler.tools.integration.diagram.DiagramOptionsBuilder;
-import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
-import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)

@@ -34,8 +34,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.schemacrawler.SchemaReference;
-import schemacrawler.tools.text.base.DatabaseObjectColorMap;
-import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
+import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
+import schemacrawler.tools.text.options.DatabaseObjectColorMap;
 import us.fatehi.utility.Color;
 
 public class DatabaseObjectColorMapTest {

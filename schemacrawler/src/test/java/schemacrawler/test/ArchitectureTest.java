@@ -31,19 +31,30 @@ public class ArchitectureTest {
           .importPackages("schemacrawler..")
           .as("SchemaCrawler core");
 
-  @Disabled
+  @Disabled("Need more organization of packages")
   @Test
   public void architecture() {
     onionArchitecture()
         .domainModels("schemacrawler.schema..")
-        .domainServices("schemacrawler.crawl..")
-        .applicationServices("schemacrawler.analysis.(*)..")
-        .applicationServices(
+        .domainServices(
+            "schemacrawler.crawl..",
             "schemacrawler.schemacrawler..",
             "schemacrawler.filter..",
+            "schemacrawler.plugin..",
+            "schemacrawler.analysis..",
             "schemacrawler.inclusionrule..",
-            "schemacrawler.plugin..")
-        .adapter("tools", "schemacrawler.tools.(*)..")
+            "schemacrawler.utility..")
+        .applicationServices(
+            "schemacrawler.tools.catalogloader..",
+            "schemacrawler.tools.databaseconnector..",
+            "schemacrawler.tools.executable..",
+            "schemacrawler.tools.options..",
+            "schemacrawler.tools.utility..",
+            "schemacrawler.tools.traversal..")
+        .adapter(
+            "Text output for schema, operations and diagram",
+            "schemacrawler.tools.command.text..",
+            "schemacrawler.tools.text.formatter..")
         .because("an onion architecture model should be followed")
         .check(classes);
   }
@@ -51,7 +62,7 @@ public class ArchitectureTest {
   @Test
   public void architectureCycles() {
     slices()
-        .matching("schemacrawler.(*)..")
+        .matching("schemacrawler.(**)..")
         .as("SchemaCrawler core")
         .should()
         .beFreeOfCycles()

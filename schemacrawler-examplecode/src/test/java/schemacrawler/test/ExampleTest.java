@@ -52,7 +52,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.testdb.TestDatabase;
-import schemacrawler.tools.options.TextOutputFormat;
+import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 
 public class ExampleTest
 {

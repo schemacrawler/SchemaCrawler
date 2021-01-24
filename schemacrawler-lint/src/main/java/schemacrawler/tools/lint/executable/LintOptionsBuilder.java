@@ -31,7 +31,7 @@ import static us.fatehi.utility.Utility.isBlank;
 
 import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.options.Config;
-import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
+import schemacrawler.tools.text.options.BaseTextOptionsBuilder;
 
 public final class LintOptionsBuilder
     extends BaseTextOptionsBuilder<LintOptionsBuilder, LintOptions> {

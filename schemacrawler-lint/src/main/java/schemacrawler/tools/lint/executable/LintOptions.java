@@ -31,7 +31,7 @@ import static java.util.Objects.requireNonNull;
 
 import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.options.Config;
-import schemacrawler.tools.text.base.BaseTextOptions;
+import schemacrawler.tools.text.options.BaseTextOptions;
 
 public class LintOptions extends BaseTextOptions {
 
