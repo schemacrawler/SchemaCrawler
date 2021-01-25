@@ -152,17 +152,17 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
     return databaseServerTypes.iterator();
   }
 
-  public DatabaseConnector lookupDatabaseConnector(final Connection connection) {
+  public DatabaseConnector findDatabaseConnector(final Connection connection) {
     try {
       checkConnection(connection);
       final String url = connection.getMetaData().getURL();
-      return lookupDatabaseConnectorFromUrl(url);
+      return findDatabaseConnectorFromUrl(url);
     } catch (final SQLException e) {
       return DatabaseConnector.UNKNOWN;
     }
   }
 
-  public DatabaseConnector lookupDatabaseConnector(final String databaseSystemIdentifier) {
+  public DatabaseConnector findDatabaseConnectorFromDatabaseSystemIdentifier(final String databaseSystemIdentifier) {
     if (hasDatabaseSystemIdentifier(databaseSystemIdentifier)) {
       return databaseConnectorRegistry.get(databaseSystemIdentifier);
     } else {
@@ -170,7 +170,7 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
     }
   }
 
-  public DatabaseConnector lookupDatabaseConnectorFromUrl(final String url) {
+  public DatabaseConnector findDatabaseConnectorFromUrl(final String url) {
     if (isBlank(url)) {
       return DatabaseConnector.UNKNOWN;
     }

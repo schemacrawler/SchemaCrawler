@@ -42,7 +42,7 @@ import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 import static schemacrawler.tools.offline.jdbc.OfflineConnectionUtility.newOfflineConnection;
-import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
+import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -69,12 +69,12 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
+import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
+import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.integration.serialize.JavaSerializedCatalog;
+import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
 import schemacrawler.tools.offline.OfflineDatabaseConnector;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
-import schemacrawler.tools.options.TextOutputFormat;
-import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)

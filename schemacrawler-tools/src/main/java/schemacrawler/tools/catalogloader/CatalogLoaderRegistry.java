@@ -90,7 +90,7 @@ public final class CatalogLoaderRegistry {
     return catalogLoaderRegistry.containsKey(databaseSystemIdentifier);
   }
 
-  public CatalogLoader lookupCatalogLoader(final String databaseSystemIdentifier) {
+  public CatalogLoader findCatalogLoader(final String databaseSystemIdentifier) {
     if (hasDatabaseSystemIdentifier(databaseSystemIdentifier)) {
       return catalogLoaderRegistry.get(databaseSystemIdentifier);
     } else {

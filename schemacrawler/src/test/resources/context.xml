@@ -38,7 +38,7 @@
   </bean>
 
   <bean id="schemaTextOptionsBuilder"
-        class="schemacrawler.tools.text.schema.SchemaTextOptionsBuilder"
+        class="schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder"
         factory-method="builder" />
   <bean
     class="org.springframework.beans.factory.config.MethodInvokingBean">

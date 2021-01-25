@@ -69,10 +69,10 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.server.sqlserver.SqlServerDatabaseConnector;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
+import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
+import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.text.schema.SchemaTextOptions;
-import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 @Testcontainers(disabledWithoutDocker = true)
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")

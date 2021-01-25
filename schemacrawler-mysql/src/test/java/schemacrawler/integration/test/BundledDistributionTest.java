@@ -49,7 +49,7 @@ public class BundledDistributionTest
     final DatabaseConnectorRegistry registry =
       DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     final DatabaseConnector databaseSystemIdentifier =
-      registry.lookupDatabaseConnector("mysql");
+      registry.findDatabaseConnectorFromDatabaseSystemIdentifier("mysql");
     assertThat(databaseSystemIdentifier
                  .getSchemaRetrievalOptionsBuilder(connection)
                  .toOptions()

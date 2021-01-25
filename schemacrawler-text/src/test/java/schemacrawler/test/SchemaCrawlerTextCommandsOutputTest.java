@@ -46,11 +46,11 @@ import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.tools.command.text.operation.options.OperationType;
+import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
+import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
-import schemacrawler.tools.text.operation.OperationType;
-import schemacrawler.tools.text.schema.SchemaTextDetailType;
-import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class SchemaCrawlerTextCommandsOutputTest {

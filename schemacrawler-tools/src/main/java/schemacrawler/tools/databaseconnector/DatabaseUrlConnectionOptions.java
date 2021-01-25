@@ -44,6 +44,6 @@ public class DatabaseUrlConnectionOptions implements DatabaseConnectionOptions {
   public DatabaseConnector getDatabaseConnector() {
     final DatabaseConnectorRegistry databaseConnectorRegistry =
         DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    return databaseConnectorRegistry.lookupDatabaseConnectorFromUrl(connectionUrl);
+    return databaseConnectorRegistry.findDatabaseConnectorFromUrl(connectionUrl);
   }
 }

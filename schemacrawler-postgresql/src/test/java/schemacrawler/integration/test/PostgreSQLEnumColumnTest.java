@@ -42,7 +42,7 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
+import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -64,11 +64,11 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
+import schemacrawler.tools.command.serialize.options.SerializationFormat;
+import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
+import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.integration.diagram.DiagramOutputFormat;
-import schemacrawler.tools.integration.serialize.SerializationFormat;
 import schemacrawler.tools.options.OutputFormat;
-import schemacrawler.tools.options.TextOutputFormat;
 
 @Testcontainers(disabledWithoutDocker = true)
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")

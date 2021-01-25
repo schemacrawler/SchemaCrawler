@@ -50,10 +50,10 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.testdb.TestSchemaCreatorMain;
+import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.options.OutputFormat;
-import schemacrawler.tools.options.TextOutputFormat;
 import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestLoggingExtension.class)
@@ -65,7 +65,7 @@ public class SqliteDistributionTest {
   public void setup() throws SchemaCrawlerException {
     final DatabaseConnectorRegistry registry =
         DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    dbConnector = registry.lookupDatabaseConnector("sqlite");
+    dbConnector = registry.findDatabaseConnectorFromDatabaseSystemIdentifier("sqlite");
   }
 
   @Test

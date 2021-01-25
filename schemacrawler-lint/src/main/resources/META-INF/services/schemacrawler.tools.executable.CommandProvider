@@ -1,1 +1,1 @@
-schemacrawler.tools.lint.executable.LintCommandProvider
+schemacrawler.tools.command.lint.LintCommandProvider

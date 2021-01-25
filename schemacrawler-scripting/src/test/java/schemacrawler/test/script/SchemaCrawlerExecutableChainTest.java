@@ -54,13 +54,13 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
+import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
+import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
-import schemacrawler.tools.options.TextOutputFormat;
-import schemacrawler.tools.text.schema.SchemaTextOptions;
-import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)

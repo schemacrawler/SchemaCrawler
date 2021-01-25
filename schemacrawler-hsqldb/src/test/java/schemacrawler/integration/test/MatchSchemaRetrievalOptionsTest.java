@@ -30,7 +30,7 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static schemacrawler.utility.SchemaCrawlerUtility.matchSchemaRetrievalOptions;
+import static schemacrawler.tools.utility.SchemaCrawlerUtility.matchSchemaRetrievalOptions;
 
 import java.sql.Connection;
 

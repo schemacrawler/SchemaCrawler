@@ -130,7 +130,7 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
 
       final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
       final CatalogLoader catalogLoader =
-          catalogLoaderRegistry.lookupCatalogLoader(
+          catalogLoaderRegistry.findCatalogLoader(
               schemaRetrievalOptions.getDatabaseServerType().getDatabaseSystemIdentifier());
       LOGGER.log(Level.CONFIG, new StringFormat("Catalog loader: %s", getClass().getName()));
 

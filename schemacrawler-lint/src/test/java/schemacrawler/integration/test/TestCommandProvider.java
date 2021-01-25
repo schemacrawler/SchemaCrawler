@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.tools.lint.executable.LintCommandProvider;
+import schemacrawler.tools.command.lint.LintCommandProvider;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 

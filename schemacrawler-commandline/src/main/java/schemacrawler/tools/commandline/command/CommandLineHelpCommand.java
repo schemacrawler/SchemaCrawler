@@ -145,7 +145,7 @@ public final class CommandLineHelpCommand implements Runnable {
     }
 
     final DatabaseConnector databaseConnector =
-        databaseConnectorRegistry.lookupDatabaseConnector(databaseSystemIdentifier);
+        databaseConnectorRegistry.findDatabaseConnectorFromDatabaseSystemIdentifier(databaseSystemIdentifier);
     final PluginCommand helpCommand = databaseConnector.getHelpCommand();
 
     @Command

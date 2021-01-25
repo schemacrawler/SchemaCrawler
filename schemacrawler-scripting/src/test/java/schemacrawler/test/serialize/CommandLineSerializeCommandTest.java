@@ -61,7 +61,7 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
-import schemacrawler.tools.integration.serialize.SerializationFormat;
+import schemacrawler.tools.command.serialize.options.SerializationFormat;
 import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)

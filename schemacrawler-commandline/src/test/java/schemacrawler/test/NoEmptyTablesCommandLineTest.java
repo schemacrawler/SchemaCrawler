@@ -45,8 +45,8 @@ import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
-import schemacrawler.tools.options.TextOutputFormat;
-import schemacrawler.tools.text.schema.SchemaTextDetailType;
+import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
+import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)

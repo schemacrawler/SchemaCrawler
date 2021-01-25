@@ -33,9 +33,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.*;
+import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
+import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.text.schema.SchemaTextOptions;
-import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 import java.nio.file.Path;
 

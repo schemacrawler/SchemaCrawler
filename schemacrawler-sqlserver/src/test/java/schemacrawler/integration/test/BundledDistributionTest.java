@@ -49,7 +49,7 @@ public class BundledDistributionTest
     final DatabaseConnectorRegistry registry =
       DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     final DatabaseConnector databaseSystemIdentifier =
-      registry.lookupDatabaseConnector("sqlserver");
+      registry.findDatabaseConnectorFromDatabaseSystemIdentifier("sqlserver");
     assertThat(databaseSystemIdentifier
                  .getSchemaRetrievalOptionsBuilder(connection)
                  .toOptions()

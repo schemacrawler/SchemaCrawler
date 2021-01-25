@@ -30,8 +30,8 @@ package schemacrawler.test;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
+import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
-import schemacrawler.tools.options.TextOutputFormat;
 
 public class TitleTest extends AbstractTitleTest {
 

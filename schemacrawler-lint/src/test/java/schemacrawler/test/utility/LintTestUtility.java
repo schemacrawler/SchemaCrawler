@@ -43,8 +43,8 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
+import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.lint.executable.LintOptionsBuilder;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputFormat;
 

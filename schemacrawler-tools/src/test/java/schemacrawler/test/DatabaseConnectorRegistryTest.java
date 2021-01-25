@@ -56,13 +56,13 @@ public class DatabaseConnectorRegistryTest {
     assertThat(databaseConnectorRegistry.hasDatabaseSystemIdentifier("test-db"), is(true));
 
     final DatabaseConnector testDbConnector =
-        databaseConnectorRegistry.lookupDatabaseConnector("test-db");
+        databaseConnectorRegistry.findDatabaseConnectorFromDatabaseSystemIdentifier("test-db");
     assertThat(testDbConnector, is(notNullValue()));
     assertThat(
         testDbConnector.getDatabaseServerType().getDatabaseSystemIdentifier(), is("test-db"));
 
     final DatabaseConnector unknownConnector =
-        databaseConnectorRegistry.lookupDatabaseConnector("newdb");
+        databaseConnectorRegistry.findDatabaseConnectorFromDatabaseSystemIdentifier("newdb");
     assertThat(unknownConnector, is(notNullValue()));
     assertThat(
         unknownConnector.getDatabaseServerType().getDatabaseSystemIdentifier(), is(nullValue()));

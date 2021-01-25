@@ -45,7 +45,7 @@ import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
-import schemacrawler.utility.SchemaCrawlerUtility;
+import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import us.fatehi.utility.string.ObjectToStringFormat;
 import us.fatehi.utility.string.StringFormat;
 
@@ -178,7 +178,7 @@ public final class SchemaCrawlerExecutable {
   private void loadCatalog() throws Exception {
     final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
     final CatalogLoader catalogLoader =
-        catalogLoaderRegistry.lookupCatalogLoader(
+        catalogLoaderRegistry.findCatalogLoader(
             schemaRetrievalOptions.getDatabaseServerType().getDatabaseSystemIdentifier());
     LOGGER.log(Level.CONFIG, new StringFormat("Catalog loader: %s", getClass().getName()));
 

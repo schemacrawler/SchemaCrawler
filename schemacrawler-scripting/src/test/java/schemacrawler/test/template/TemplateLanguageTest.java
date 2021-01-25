@@ -34,8 +34,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import schemacrawler.tools.integration.template.TemplateLanguageOptionsBuilder;
-import schemacrawler.tools.integration.template.TemplateLanguageType;
+import schemacrawler.tools.command.template.options.TemplateLanguageOptionsBuilder;
+import schemacrawler.tools.command.template.options.TemplateLanguageType;
 import schemacrawler.tools.options.Config;
 
 public class TemplateLanguageTest {
