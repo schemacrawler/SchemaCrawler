@@ -18,7 +18,7 @@ column: PUBLIC.BOOKS.BOOKS.TITLE
   parent: PUBLIC.BOOKS.BOOKS
   parentPartial: false
   readOnly: false
-  remarks: null
+  remarks: 
   schema: PUBLIC.BOOKS
   searchable: true
   shortName: BOOKS.TITLE
@@ -46,7 +46,7 @@ column: C2
   parent: 
   parentPartial: false
   readOnly: true
-  remarks: null
+  remarks: 
   schema: 
   searchable: false
   shortName: C2
@@ -74,7 +74,7 @@ column: PUBLIC.BOOKS.BOOKS.PRICE
   parent: PUBLIC.BOOKS.BOOKS
   parentPartial: false
   readOnly: false
-  remarks: null
+  remarks: 
   schema: PUBLIC.BOOKS
   searchable: true
   shortName: BOOKS.PRICE

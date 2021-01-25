@@ -1,5 +1,6 @@
 PUBLIC.BOOKS.AUTHORS [table]
   ~ COMMIT_ACTION=null
+  ~ schemacrawler.database_object.remarks=Contact details for book authors
   ~ schemacrawler.table.row_count=20
 PUBLIC.BOOKS.AUTHORSLIST [view]
   ~ COMMIT_ACTION=null
@@ -10,9 +11,12 @@ PUBLIC.BOOKS.AUTHORSLIST [view]
   ~ schemacrawler.table.row_count=20
 PUBLIC.BOOKS.BOOKAUTHORS [table]
   ~ COMMIT_ACTION=null
+  ~ schemacrawler.database_object.remarks=Relationship between books and their authors, 
+along with the latest updated information
   ~ schemacrawler.table.row_count=20
 PUBLIC.BOOKS.BOOKS [table]
   ~ COMMIT_ACTION=null
+  ~ schemacrawler.database_object.remarks=Details for published books
   ~ schemacrawler.table.row_count=20
 PUBLIC.BOOKS.COUPONS [table]
   ~ COMMIT_ACTION=null
@@ -28,6 +32,7 @@ PUBLIC.BOOKS."Global Counts" [table]
   ~ schemacrawler.table.row_count=10
 PUBLIC.BOOKS.PUBLISHERS [table]
   ~ COMMIT_ACTION=null
+  ~ schemacrawler.database_object.remarks=List of book publishers
   ~ schemacrawler.table.row_count=20
 PUBLIC.BOOKS.ΒΙΒΛΊΑ [table]
   ~ COMMIT_ACTION=null

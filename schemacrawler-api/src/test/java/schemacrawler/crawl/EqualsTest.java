@@ -57,11 +57,6 @@ public class EqualsTest {
   }
 
   @Test
-  public void weakAssociation() {
-    EqualsVerifier.forClass(WeakAssociation.class).withIgnoredFields("name").verify();
-  }
-
-  @Test
   public void databaseObject() {
     class TestDatabaseObject extends AbstractDatabaseObject {
 
@@ -75,7 +70,7 @@ public class EqualsTest {
 
     EqualsVerifier.forClass(TestDatabaseObject.class)
         .suppress(Warning.STRICT_INHERITANCE)
-        .withIgnoredFields("attributeMap", "remarks")
+        .withIgnoredFields("attributeMap")
         .verify();
   }
 
@@ -102,7 +97,7 @@ public class EqualsTest {
   @Test
   public void namedObjectWithAttributes() {
     EqualsVerifier.forClass(AbstractNamedObjectWithAttributes.class)
-        .withIgnoredFields("remarks", "attributeMap")
+        .withIgnoredFields("attributeMap")
         .suppress(Warning.STRICT_INHERITANCE)
         .verify();
   }
@@ -113,7 +108,7 @@ public class EqualsTest {
     final Table table2 = new MutableTable(new SchemaReference("catalog", "schema"), "table2");
 
     EqualsVerifier.forClass(MutablePrivilege.class)
-        .withIgnoredFields("remarks", "grants", "parent", "attributeMap")
+        .withIgnoredFields("grants", "parent", "attributeMap")
         .withPrefabValues(
             DatabaseObjectReference.class, new TableReference(table1), new TableReference(table2))
         .suppress(Warning.STRICT_INHERITANCE)
@@ -143,5 +138,10 @@ public class EqualsTest {
   @Test
   public void vertex() {
     EqualsVerifier.forClass(Vertex.class).withIgnoredFields("attributes").verify();
+  }
+
+  @Test
+  public void weakAssociation() {
+    EqualsVerifier.forClass(WeakAssociation.class).withIgnoredFields("name").verify();
   }
 }

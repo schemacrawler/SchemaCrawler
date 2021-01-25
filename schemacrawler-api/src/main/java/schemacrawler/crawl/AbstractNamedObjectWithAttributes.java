@@ -47,8 +47,10 @@ abstract class AbstractNamedObjectWithAttributes extends AbstractNamedObject
     implements AttributedObject, DescribedObject {
 
   private static final long serialVersionUID = -1486322887991472729L;
+
+  private static final String REMARKS_KEY = "schemacrawler.database_object.remarks";
+
   private final Map<String, Object> attributeMap;
-  private String remarks;
 
   /**
    * Effective Java - Item 17 - Minimize Mutability - Package-private constructors make a class
@@ -88,7 +90,11 @@ abstract class AbstractNamedObjectWithAttributes extends AbstractNamedObject
   /** {@inheritDoc} */
   @Override
   public final String getRemarks() {
-    return remarks;
+    if (hasRemarks()) {
+      return (String) attributeMap.get(REMARKS_KEY);
+    } else {
+      return "";
+    }
   }
 
   /** {@inheritDoc} */
@@ -100,6 +106,11 @@ abstract class AbstractNamedObjectWithAttributes extends AbstractNamedObject
   /** {@inheritDoc} */
   @Override
   public final boolean hasRemarks() {
+    final Object remarksObject = attributeMap.get(REMARKS_KEY);
+    if (remarksObject == null || !(remarksObject instanceof String)) {
+      return false;
+    }
+    final String remarks = (String) remarksObject;
     return remarks != null && !remarks.isEmpty();
   }
 
@@ -137,9 +148,9 @@ abstract class AbstractNamedObjectWithAttributes extends AbstractNamedObject
 
   protected final void setRemarks(final String remarks) {
     if (remarks == null) {
-      this.remarks = "";
+      attributeMap.remove(REMARKS_KEY);
     } else {
-      this.remarks = remarks;
+      attributeMap.put(REMARKS_KEY, remarks);
     }
   }
 }
