@@ -42,7 +42,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
-import schemacrawler.tools.integration.template.TemplateLanguageType;
+import schemacrawler.tools.command.template.options.TemplateLanguageType;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
