@@ -58,14 +58,6 @@ public class SchemaCrawlerCatalogLoaderTest {
   }
 
   @Test
-  public void databaseSystemIdentifier() {
-    assertThat(new SchemaCrawlerCatalogLoader().getDatabaseSystemIdentifier(), is(nullValue()));
-
-    assertThat(
-        new SchemaCrawlerCatalogLoader("test-db").getDatabaseSystemIdentifier(), is("test-db"));
-  }
-
-  @Test
   public void schemaCrawlerOptions() {
     final CatalogLoader catalogLoader = new SchemaCrawlerCatalogLoader();
 

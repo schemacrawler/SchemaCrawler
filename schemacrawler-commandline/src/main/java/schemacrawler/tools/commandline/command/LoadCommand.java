@@ -138,7 +138,8 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
       catalogLoader.setSchemaRetrievalOptions(schemaRetrievalOptions);
       catalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
-      final Catalog catalog = catalogLoader.loadCatalog();
+      catalogLoader.loadCatalog();
+      final Catalog catalog = catalogLoader.getCatalog();
       requireNonNull(catalog, "Catalog could not be retrieved");
 
       return catalog;

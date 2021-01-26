@@ -34,17 +34,21 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 
-public interface CatalogLoader {
+public interface CatalogLoader extends Comparable<CatalogLoader> {
+
+  Catalog getCatalog();
 
   Connection getConnection();
 
-  String getDatabaseSystemIdentifier();
+  int getPriority();
 
   SchemaCrawlerOptions getSchemaCrawlerOptions();
 
   SchemaRetrievalOptions getSchemaRetrievalOptions();
 
-  Catalog loadCatalog() throws Exception;
+  void loadCatalog() throws Exception;
+
+  void setCatalog(Catalog catalog);
 
   void setConnection(Connection connection);
 

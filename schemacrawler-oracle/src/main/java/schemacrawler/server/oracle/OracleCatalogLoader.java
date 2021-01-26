@@ -32,22 +32,27 @@ import static us.fatehi.utility.DatabaseUtility.executeScriptFromResource;
 
 import java.sql.Connection;
 
-import schemacrawler.schema.Catalog;
-import schemacrawler.tools.catalogloader.SchemaCrawlerCatalogLoader;
+import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 
-public final class OracleCatalogLoader extends SchemaCrawlerCatalogLoader {
+public final class OracleCatalogLoader extends BaseCatalogLoader {
 
   public OracleCatalogLoader() {
-    super(OracleDatabaseConnector.DB_SERVER_TYPE.getDatabaseSystemIdentifier());
+    super(-1);
   }
 
   @Override
-  public Catalog loadCatalog() throws Exception {
+  public void loadCatalog() throws Exception {
+
+    if (!getSchemaRetrievalOptions()
+        .getDatabaseServerType()
+        .getDatabaseSystemIdentifier()
+        .equals("oracle")) {
+      return;
+    }
+
     final Connection connection = getConnection();
     requireNonNull(connection, "No connection provided");
 
     executeScriptFromResource(connection, "/schemacrawler-oracle.before.sql");
-
-    return super.loadCatalog();
   }
 }

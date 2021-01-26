@@ -9,9 +9,7 @@ import static schemacrawler.filter.ReducerFactory.getTableReducer;
 import java.io.FileInputStream;
 import java.nio.file.Path;
 import java.sql.Connection;
-import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Reducible;
 import schemacrawler.schema.Routine;
@@ -20,76 +18,34 @@ import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.tools.catalogloader.CatalogLoader;
+import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
 
-public final class OfflineCatalogLoader implements CatalogLoader {
-
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(OfflineCatalogLoader.class.getName());
-
-  private static void checkConnection(final Connection connection) {
-    if (connection == null || !(connection instanceof OfflineConnection)) {
-      LOGGER.log(Level.SEVERE, "Offline database connection not provided for the offline snapshot");
-    }
-  }
-
-  private final String databaseSystemIdentifier;
-  private SchemaCrawlerOptions schemaCrawlerOptions;
-  private Connection connection;
+public final class OfflineCatalogLoader extends BaseCatalogLoader {
 
   public OfflineCatalogLoader() {
-    databaseSystemIdentifier = "offline";
+    super(-1);
   }
 
   @Override
-  public Connection getConnection() {
-    return connection;
-  }
+  public void loadCatalog() throws Exception {
 
-  @Override
-  public void setConnection(final Connection connection) {
-    this.connection = connection;
-  }
-
-  @Override
-  public String getDatabaseSystemIdentifier() {
-    return databaseSystemIdentifier;
-  }
-
-  @Override
-  public SchemaCrawlerOptions getSchemaCrawlerOptions() {
-    if (schemaCrawlerOptions == null) {
-      return SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-    } else {
-      return schemaCrawlerOptions;
+    if (isLoaded()) {
+      return;
     }
-  }
 
-  @Override
-  public void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions) {
-    this.schemaCrawlerOptions = schemaCrawlerOptions;
-  }
+    if (!getSchemaRetrievalOptions()
+        .getDatabaseServerType()
+        .getDatabaseSystemIdentifier()
+        .equals("offline")) {
+      return;
+    }
 
-  @Override
-  public SchemaRetrievalOptions getSchemaRetrievalOptions() {
-    return SchemaRetrievalOptionsBuilder.builder()
-        .withDatabaseServerType(OfflineDatabaseConnector.DB_SERVER_TYPE)
-        .toOptions();
-  }
-
-  @Override
-  public void setSchemaRetrievalOptions(final SchemaRetrievalOptions schemaRetrievalOptions) {
-    // No-op
-  }
-
-  @Override
-  public Catalog loadCatalog() throws Exception {
-    checkConnection(connection);
+    final Connection connection = getConnection();
+    if (connection == null || !(connection instanceof OfflineConnection)) {
+      return;
+    }
 
     final OfflineConnection dbConnection;
     if (connection.isWrapperFor(OfflineConnection.class)) {
@@ -106,10 +62,11 @@ public final class OfflineCatalogLoader implements CatalogLoader {
     final Catalog catalog = deserializedCatalog.getCatalog();
     reduceCatalog(catalog);
 
-    return catalog;
+    setCatalog(catalog);
   }
 
   private void reduceCatalog(final Catalog catalog) {
+    final SchemaCrawlerOptions schemaCrawlerOptions = getSchemaCrawlerOptions();
     ((Reducible) catalog).reduce(Schema.class, getSchemaReducer(schemaCrawlerOptions));
     ((Reducible) catalog).reduce(Table.class, getTableReducer(schemaCrawlerOptions));
     ((Reducible) catalog).reduce(Routine.class, getRoutineReducer(schemaCrawlerOptions));

@@ -28,8 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.catalogloader;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
 
@@ -47,54 +48,34 @@ public final class CatalogLoaderRegistry {
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(CatalogLoaderRegistry.class.getName());
 
-  private static Map<String, CatalogLoader> loadCatalogLoaderRegistry()
-      throws SchemaCrawlerException {
+  private static List<CatalogLoader> loadCatalogLoaderRegistry() throws SchemaCrawlerException {
 
-    final Map<String, CatalogLoader> catalogLoaderRegistry = new HashMap<>();
+    final List<CatalogLoader> catalogLoaderRegistry = new ArrayList<>();
 
     try {
       final ServiceLoader<CatalogLoader> serviceLoader = ServiceLoader.load(CatalogLoader.class);
       for (final CatalogLoader catalogLoader : serviceLoader) {
-        final String databaseSystemIdentifier = catalogLoader.getDatabaseSystemIdentifier();
-        try {
-          LOGGER.log(
-              Level.CONFIG,
-              new StringFormat(
-                  "Loading catalog loader, %s=%s",
-                  databaseSystemIdentifier, catalogLoader.getClass().getName()));
+        LOGGER.log(
+            Level.CONFIG,
+            new StringFormat("Loading catalog loader, %s", catalogLoader.getClass().getName()));
 
-          catalogLoaderRegistry.put(databaseSystemIdentifier, catalogLoader);
-        } catch (final Exception e) {
-          LOGGER.log(
-              Level.CONFIG,
-              new StringFormat(
-                  "Could not load catalog loader, %s=%s",
-                  databaseSystemIdentifier, catalogLoader.getClass().getName()),
-              e);
-        }
+        catalogLoaderRegistry.add(catalogLoader);
       }
     } catch (final Exception e) {
       throw new SchemaCrawlerException("Could not load catalog loader registry", e);
     }
 
+    Collections.sort(catalogLoaderRegistry);
     return catalogLoaderRegistry;
   }
 
-  private final Map<String, CatalogLoader> catalogLoaderRegistry;
-
-  public CatalogLoaderRegistry() throws SchemaCrawlerException {
-    catalogLoaderRegistry = loadCatalogLoaderRegistry();
-  }
-
-  public boolean hasDatabaseSystemIdentifier(final String databaseSystemIdentifier) {
-    return catalogLoaderRegistry.containsKey(databaseSystemIdentifier);
-  }
-
-  public CatalogLoader findCatalogLoader(final String databaseSystemIdentifier) {
-    if (hasDatabaseSystemIdentifier(databaseSystemIdentifier)) {
-      return catalogLoaderRegistry.get(databaseSystemIdentifier);
-    } else {
-      return new SchemaCrawlerCatalogLoader();
+  public CatalogLoader findCatalogLoader(final String databaseSystemIdentifier)
+      throws SchemaCrawlerException {
+    final List<CatalogLoader> catalogLoaderRegistry = loadCatalogLoaderRegistry();
+    final ChainedCatalogLoader rootCatalogLoader = new ChainedCatalogLoader();
+    for (final CatalogLoader catalogLoader : catalogLoaderRegistry) {
+      rootCatalogLoader.chain(catalogLoader);
     }
+    return rootCatalogLoader;
   }
 }

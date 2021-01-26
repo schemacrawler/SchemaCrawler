@@ -186,7 +186,8 @@ public final class SchemaCrawlerExecutable {
     catalogLoader.setSchemaRetrievalOptions(schemaRetrievalOptions);
     catalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
-    catalog = catalogLoader.loadCatalog();
+    catalogLoader.loadCatalog();
+    catalog = catalogLoader.getCatalog();
     requireNonNull(catalog, "Catalog could not be retrieved");
   }
 
