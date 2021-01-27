@@ -33,8 +33,6 @@ import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static schemacrawler.analysis.counts.TableRowCountsUtility.getRowCountMessage;
-import static schemacrawler.analysis.counts.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -56,7 +54,6 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.FilterOptionsBuilder;
 import schemacrawler.schemacrawler.GrepOptionsBuilder;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
-import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.TestContext;
@@ -228,34 +225,6 @@ public class SchemaCrawlerGrepTest {
           for (final RoutineParameter column : parameters) {
             out.println("    parameter: " + column.getFullName());
           }
-        }
-      }
-    }
-    assertThat(
-        outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
-  }
-
-  @Test
-  public void noEmptyTables(final TestContext testContext, final Connection connection)
-      throws Exception {
-    final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout) {
-      final FilterOptionsBuilder filterOptionsBuilder =
-          FilterOptionsBuilder.builder().noEmptyTables();
-      final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder().loadRowCounts();
-      final SchemaCrawlerOptions schemaCrawlerOptions =
-          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-              .withFilterOptions(filterOptionsBuilder.toOptions())
-              .withLoadOptions(loadOptionsBuilder.toOptions());
-
-      final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
-      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-      assertThat("Schema count does not match", schemas, arrayWithSize(6));
-      for (final Schema schema : schemas) {
-        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
-        for (final Table table : tables) {
-          assertThat(hasRowCount(table), is(true));
-          out.println(String.format("%s [%s]", table.getFullName(), getRowCountMessage(table)));
         }
       }
     }

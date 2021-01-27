@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.catalogloader;
 
+import static us.fatehi.utility.Utility.isBlank;
+
 import java.sql.Connection;
 
 import schemacrawler.schema.Catalog;
@@ -109,6 +111,18 @@ public abstract class BaseCatalogLoader implements CatalogLoader {
   @Override
   public void setSchemaRetrievalOptions(final SchemaRetrievalOptions schemaRetrievalOptions) {
     this.schemaRetrievalOptions = schemaRetrievalOptions;
+  }
+
+  protected boolean isDatabaseSystemIdentifier(final String databaseSystemIdentifier) {
+    final String actualDatabaseSystemIdentifier =
+        getSchemaRetrievalOptions().getDatabaseServerType().getDatabaseSystemIdentifier();
+    if (actualDatabaseSystemIdentifier == databaseSystemIdentifier) {
+      return true;
+    } else if (!isBlank(actualDatabaseSystemIdentifier)) {
+      return actualDatabaseSystemIdentifier.equals(databaseSystemIdentifier);
+    } else {
+      return false;
+    }
   }
 
   protected boolean isLoaded() {

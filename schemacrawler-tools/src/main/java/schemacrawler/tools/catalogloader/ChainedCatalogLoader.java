@@ -28,11 +28,14 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.catalogloader;
 
+import static java.util.Objects.requireNonNull;
+
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
 import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 
@@ -40,9 +43,10 @@ public class ChainedCatalogLoader extends BaseCatalogLoader {
 
   private final List<CatalogLoader> chainedCatalogLoaders;
 
-  public ChainedCatalogLoader() {
+  public ChainedCatalogLoader(final List<CatalogLoader> chainedCatalogLoaders) {
     super(Integer.MIN_VALUE);
-    chainedCatalogLoaders = new ArrayList<>();
+    requireNonNull(chainedCatalogLoaders);
+    this.chainedCatalogLoaders = new ArrayList<>(chainedCatalogLoaders);
   }
 
   public void chain(final CatalogLoader catalogLoader) {
@@ -52,7 +56,7 @@ public class ChainedCatalogLoader extends BaseCatalogLoader {
   }
 
   @Override
-  public void loadCatalog() throws Exception {
+  public void loadCatalog() throws SchemaCrawlerException {
     Catalog catalog = null;
     final Connection connection = getConnection();
     final SchemaCrawlerOptions schemaCrawlerOptions = getSchemaCrawlerOptions();

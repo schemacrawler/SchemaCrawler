@@ -48,7 +48,12 @@ public final class CatalogLoaderRegistry {
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(CatalogLoaderRegistry.class.getName());
 
-  private static List<CatalogLoader> loadCatalogLoaderRegistry() throws SchemaCrawlerException {
+  public CatalogLoader findCatalogLoader() throws SchemaCrawlerException {
+    final List<CatalogLoader> chainedCatalogLoaders = loadCatalogLoaderRegistry();
+    return new ChainedCatalogLoader(chainedCatalogLoaders);
+  }
+
+  private List<CatalogLoader> loadCatalogLoaderRegistry() throws SchemaCrawlerException {
 
     final List<CatalogLoader> catalogLoaderRegistry = new ArrayList<>();
 
@@ -67,15 +72,5 @@ public final class CatalogLoaderRegistry {
 
     Collections.sort(catalogLoaderRegistry);
     return catalogLoaderRegistry;
-  }
-
-  public CatalogLoader findCatalogLoader(final String databaseSystemIdentifier)
-      throws SchemaCrawlerException {
-    final List<CatalogLoader> catalogLoaderRegistry = loadCatalogLoaderRegistry();
-    final ChainedCatalogLoader rootCatalogLoader = new ChainedCatalogLoader();
-    for (final CatalogLoader catalogLoader : catalogLoaderRegistry) {
-      rootCatalogLoader.chain(catalogLoader);
-    }
-    return rootCatalogLoader;
   }
 }

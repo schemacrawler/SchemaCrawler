@@ -31,6 +31,7 @@ package schemacrawler.tools.catalogloader;
 import java.sql.Connection;
 
 import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 
@@ -46,7 +47,7 @@ public interface CatalogLoader extends Comparable<CatalogLoader> {
 
   SchemaRetrievalOptions getSchemaRetrievalOptions();
 
-  void loadCatalog() throws Exception;
+  void loadCatalog() throws SchemaCrawlerException;
 
   void setCatalog(Catalog catalog);
 

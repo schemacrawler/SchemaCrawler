@@ -23,6 +23,7 @@
     <module>schemacrawler-utility</module>
     <module>schemacrawler-api</module>
     <module>schemacrawler-tools</module>
+    <module>schemacrawler-loader</module>
     <module>schemacrawler-text</module>
     <module>schemacrawler-diagram</module>
     <module>schemacrawler</module>

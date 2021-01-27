@@ -9,13 +9,13 @@
     <version>16.11.7</version>
     <relativePath>../schemacrawler-parent/pom.xml</relativePath>
   </parent>
-  <artifactId>schemacrawler-text</artifactId>
+  <artifactId>schemacrawler-loader</artifactId>
   <packaging>jar</packaging>
-  <name>SchemaCrawler Text</name>
+  <name>SchemaCrawler Catalog Loaders</name>
   <dependencies>
     <dependency>
       <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-loader</artifactId>
+      <artifactId>schemacrawler-tools</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>

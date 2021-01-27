@@ -33,7 +33,6 @@ import static com.github.npathai.hamcrestopt.OptionalMatchers.isPresentAndIs;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.matchesPattern;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.ObjectPropertyTestUtility.checkBooleanProperties;
 import static schemacrawler.test.utility.ObjectPropertyTestUtility.checkIntegerProperties;
@@ -220,17 +219,9 @@ public class SchemaCrawlerCoverageTest {
 
     assertThat(table.hasAttribute("unknown"), is(false));
     assertThat(table.lookupAttribute("unknown"), isEmpty());
-    assertThat(table.hasAttribute("schemacrawler.table.row_count"), is(true));
-    assertThat(table.lookupAttribute("schemacrawler.table.row_count"), isPresentAndIs(20L));
 
     assertThat(table.getAttribute("unknown", "no value"), is("no value"));
     assertThat(table.getAttribute("unknown", 10.5f), is(10.5f));
-    assertThat(table.getAttribute("schemacrawler.table.row_count", 10L), is(20L));
-    assertThrows(
-        ClassCastException.class,
-        () -> {
-          final String string = table.getAttribute("schemacrawler.table.row_count", "no value");
-        });
 
     assertThat(table.hasAttribute("new_one"), is(false));
     table.setAttribute("new_one", "some_value");

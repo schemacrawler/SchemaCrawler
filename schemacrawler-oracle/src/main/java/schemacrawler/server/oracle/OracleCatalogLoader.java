@@ -32,6 +32,7 @@ import static us.fatehi.utility.DatabaseUtility.executeScriptFromResource;
 
 import java.sql.Connection;
 
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 
 public final class OracleCatalogLoader extends BaseCatalogLoader {
@@ -41,12 +42,9 @@ public final class OracleCatalogLoader extends BaseCatalogLoader {
   }
 
   @Override
-  public void loadCatalog() throws Exception {
+  public void loadCatalog() throws SchemaCrawlerException {
 
-    if (!getSchemaRetrievalOptions()
-        .getDatabaseServerType()
-        .getDatabaseSystemIdentifier()
-        .equals("oracle")) {
+    if (!isDatabaseSystemIdentifier("oracle")) {
       return;
     }
 

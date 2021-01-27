@@ -40,8 +40,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.tools.catalogloader.CatalogLoader;
-import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
@@ -176,18 +174,8 @@ public final class SchemaCrawlerExecutable {
   }
 
   private void loadCatalog() throws Exception {
-    final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
-    final CatalogLoader catalogLoader =
-        catalogLoaderRegistry.findCatalogLoader(
-            schemaRetrievalOptions.getDatabaseServerType().getDatabaseSystemIdentifier());
-    LOGGER.log(Level.CONFIG, new StringFormat("Catalog loader: %s", getClass().getName()));
-
-    catalogLoader.setConnection(connection);
-    catalogLoader.setSchemaRetrievalOptions(schemaRetrievalOptions);
-    catalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);
-
-    catalogLoader.loadCatalog();
-    catalog = catalogLoader.getCatalog();
+    catalog =
+        SchemaCrawlerUtility.getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
     requireNonNull(catalog, "Catalog could not be retrieved");
   }
 

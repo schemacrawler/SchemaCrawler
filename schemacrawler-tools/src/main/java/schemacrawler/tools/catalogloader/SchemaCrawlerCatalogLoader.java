@@ -34,6 +34,7 @@ import java.sql.Connection;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 public class SchemaCrawlerCatalogLoader extends BaseCatalogLoader {
 
@@ -42,7 +43,7 @@ public class SchemaCrawlerCatalogLoader extends BaseCatalogLoader {
   }
 
   @Override
-  public void loadCatalog() throws Exception {
+  public void loadCatalog() throws SchemaCrawlerException {
     if (isLoaded()) {
       return;
     }

@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.offline.jdbc;
 
-
 import static java.lang.reflect.Proxy.newProxyInstance;
 import static java.util.Objects.requireNonNull;
 
@@ -37,38 +36,21 @@ import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.sql.SQLFeatureNotSupportedException;
 
-public class OfflineConnectionUtility
-{
+public class OfflineConnectionUtility {
 
-  public static OfflineConnection newOfflineConnection(final Path offlineDatabasePath)
-  {
-    requireNonNull(offlineDatabasePath, "No offline database path provided");
-
-    return (OfflineConnection) newProxyInstance(OfflineConnectionUtility.class.getClassLoader(),
-                                                new Class[] {
-                                                  OfflineConnection.class
-                                                },
-                                                new OfflineConnectionInvocationHandler(
-                                                  offlineDatabasePath));
-  }
-
-  private static class OfflineConnectionInvocationHandler
-    implements InvocationHandler
-  {
+  private static class OfflineConnectionInvocationHandler implements InvocationHandler {
 
     private final Path offlineDatabasePath;
 
-    public OfflineConnectionInvocationHandler(final Path offlineDatabasePath)
-    {
+    public OfflineConnectionInvocationHandler(final Path offlineDatabasePath) {
       this.offlineDatabasePath = offlineDatabasePath;
     }
 
-    public Object invoke(Object proxy, Method method, Object[] args)
-      throws SQLFeatureNotSupportedException
-    {
+    @Override
+    public Object invoke(final Object proxy, final Method method, final Object[] args)
+        throws SQLFeatureNotSupportedException {
       final String methodName = method.getName();
-      switch (methodName)
-      {
+      switch (methodName) {
         case "close":
         case "setAutoCommit":
           // Do nothing
@@ -76,20 +58,28 @@ public class OfflineConnectionUtility
         case "getOfflineDatabasePath":
           return offlineDatabasePath;
         case "isWrapperFor":
+        case "isClosed":
           return false;
         case "isValid":
           return true;
         default:
           throw new SQLFeatureNotSupportedException(
-            "Offline connection does not support method, " + methodName,
-            "HYC00");
+              "Offline connection does not support method, " + methodName, "HYC00");
       }
     }
   }
 
-  private OfflineConnectionUtility()
-  {
-    // Prevent instantiation
+  public static OfflineConnection newOfflineConnection(final Path offlineDatabasePath) {
+    requireNonNull(offlineDatabasePath, "No offline database path provided");
+
+    return (OfflineConnection)
+        newProxyInstance(
+            OfflineConnectionUtility.class.getClassLoader(),
+            new Class[] {OfflineConnection.class},
+            new OfflineConnectionInvocationHandler(offlineDatabasePath));
   }
 
+  private OfflineConnectionUtility() {
+    // Prevent instantiation
+  }
 }

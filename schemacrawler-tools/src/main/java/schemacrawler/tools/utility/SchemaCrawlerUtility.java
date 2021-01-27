@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.utility;
 
+import static java.util.Objects.requireNonNull;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,7 +37,6 @@ import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.crawl.ResultsCrawler;
-import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schemacrawler.DatabaseServerType;
@@ -43,12 +44,15 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.tools.catalogloader.CatalogLoader;
+import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import us.fatehi.utility.DatabaseUtility;
 import us.fatehi.utility.PropertiesUtility;
 import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.string.ObjectToStringFormat;
+import us.fatehi.utility.string.StringFormat;
 
 /**
  * SchemaCrawler utility methods.
@@ -76,11 +80,8 @@ public final class SchemaCrawlerUtility {
     LOGGER.log(Level.CONFIG, new ObjectToStringFormat(schemaCrawlerOptions));
 
     final SchemaRetrievalOptions schemaRetrievalOptions = matchSchemaRetrievalOptions(connection);
-    final SchemaCrawler schemaCrawler =
-        new SchemaCrawler(connection, schemaRetrievalOptions, schemaCrawlerOptions);
-    final Catalog catalog = schemaCrawler.crawl();
 
-    return catalog;
+    return getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
   }
 
   /**
@@ -102,6 +103,25 @@ public final class SchemaCrawlerUtility {
     } catch (final SQLException e) {
       throw new SchemaCrawlerException("Could not retrieve result-set metadata", e);
     }
+  }
+
+  public static Catalog getCatalog(
+      final Connection connection,
+      final SchemaRetrievalOptions schemaRetrievalOptions,
+      final SchemaCrawlerOptions schemaCrawlerOptions)
+      throws SchemaCrawlerException {
+    final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
+    final CatalogLoader catalogLoader = catalogLoaderRegistry.findCatalogLoader();
+    LOGGER.log(Level.CONFIG, new StringFormat("Catalog loader: %s", catalogLoader));
+
+    catalogLoader.setConnection(connection);
+    catalogLoader.setSchemaRetrievalOptions(schemaRetrievalOptions);
+    catalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);
+
+    catalogLoader.loadCatalog();
+    final Catalog catalog = catalogLoader.getCatalog();
+    requireNonNull(catalog, "Catalog could not be retrieved");
+    return catalog;
   }
 
   /**

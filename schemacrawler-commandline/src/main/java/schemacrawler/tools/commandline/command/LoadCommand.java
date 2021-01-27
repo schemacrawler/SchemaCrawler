@@ -28,8 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.command;
 
-import static java.util.Objects.requireNonNull;
-
 import java.sql.Connection;
 import java.util.logging.Level;
 
@@ -44,10 +42,9 @@ import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.tools.catalogloader.CatalogLoader;
-import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.ShellState;
+import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import us.fatehi.utility.string.StringFormat;
 
 @Command(
@@ -128,21 +125,8 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
       final SchemaRetrievalOptions schemaRetrievalOptions = state.getSchemaRetrievalOptions();
       final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptions();
 
-      final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
-      final CatalogLoader catalogLoader =
-          catalogLoaderRegistry.findCatalogLoader(
-              schemaRetrievalOptions.getDatabaseServerType().getDatabaseSystemIdentifier());
-      LOGGER.log(Level.CONFIG, new StringFormat("Catalog loader: %s", getClass().getName()));
-
-      catalogLoader.setConnection(connection);
-      catalogLoader.setSchemaRetrievalOptions(schemaRetrievalOptions);
-      catalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);
-
-      catalogLoader.loadCatalog();
-      final Catalog catalog = catalogLoader.getCatalog();
-      requireNonNull(catalog, "Catalog could not be retrieved");
-
-      return catalog;
+      return SchemaCrawlerUtility.getCatalog(
+          connection, schemaRetrievalOptions, schemaCrawlerOptions);
 
     } catch (final Exception e) {
       throw new ExecutionException(spec.commandLine(), "Cannot load catalog", e);

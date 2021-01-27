@@ -7,8 +7,10 @@ import static schemacrawler.filter.ReducerFactory.getSynonymReducer;
 import static schemacrawler.filter.ReducerFactory.getTableReducer;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.nio.file.Path;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Reducible;
@@ -17,6 +19,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
@@ -29,16 +32,13 @@ public final class OfflineCatalogLoader extends BaseCatalogLoader {
   }
 
   @Override
-  public void loadCatalog() throws Exception {
+  public void loadCatalog() throws SchemaCrawlerException {
 
     if (isLoaded()) {
       return;
     }
 
-    if (!getSchemaRetrievalOptions()
-        .getDatabaseServerType()
-        .getDatabaseSystemIdentifier()
-        .equals("offline")) {
+    if (!isDatabaseSystemIdentifier("offline")) {
       return;
     }
 
@@ -47,20 +47,25 @@ public final class OfflineCatalogLoader extends BaseCatalogLoader {
       return;
     }
 
-    final OfflineConnection dbConnection;
-    if (connection.isWrapperFor(OfflineConnection.class)) {
-      dbConnection = connection.unwrap(OfflineConnection.class);
-    } else {
-      dbConnection = (OfflineConnection) connection;
+    final Catalog catalog;
+    try {
+      final OfflineConnection dbConnection;
+      if (connection.isWrapperFor(OfflineConnection.class)) {
+        dbConnection = connection.unwrap(OfflineConnection.class);
+      } else {
+        dbConnection = (OfflineConnection) connection;
+      }
+
+      final Path offlineDatabasePath = dbConnection.getOfflineDatabasePath();
+      final FileInputStream inputFileStream = new FileInputStream(offlineDatabasePath.toFile());
+
+      final JavaSerializedCatalog deserializedCatalog = new JavaSerializedCatalog(inputFileStream);
+
+      catalog = deserializedCatalog.getCatalog();
+      reduceCatalog(catalog);
+    } catch (final FileNotFoundException | SQLException e) {
+      throw new SchemaCrawlerException("Could not load offline database", e);
     }
-
-    final Path offlineDatabasePath = dbConnection.getOfflineDatabasePath();
-    final FileInputStream inputFileStream = new FileInputStream(offlineDatabasePath.toFile());
-
-    final JavaSerializedCatalog deserializedCatalog = new JavaSerializedCatalog(inputFileStream);
-
-    final Catalog catalog = deserializedCatalog.getCatalog();
-    reduceCatalog(catalog);
 
     setCatalog(catalog);
   }
