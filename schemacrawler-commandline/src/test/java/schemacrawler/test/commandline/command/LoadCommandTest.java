@@ -3,16 +3,50 @@ package schemacrawler.test.commandline.command;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.test.utility.TestUtility.writeStringToTempFile;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import picocli.CommandLine;
+import picocli.CommandLine.Command;
 import schemacrawler.schemacrawler.InfoLevel;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.tools.commandline.command.LoadCommand;
 import schemacrawler.tools.commandline.state.ShellState;
+import schemacrawler.tools.commandline.utility.CommandLineUtility;
 
+@ExtendWith(TestContextParameterResolver.class)
 public class LoadCommandTest {
+
+  private final String COMMAND_HELP = "command_help/";
+
+  @Test
+  public void help(final TestContext testContext) throws Exception {
+    final ShellState state = new ShellState();
+    final LoadCommand optionsParser = new LoadCommand(state);
+
+    @Command(name = "base-command")
+    class SomeClass {}
+
+    final CommandLine commandLine = newCommandLine(optionsParser, null);
+    final CommandLine baseCommandLine =
+        newCommandLine(new SomeClass(), null).addSubcommand(commandLine);
+
+    CommandLineUtility.addLoadCommandOptions(baseCommandLine);
+
+    final String helpMessage = commandLine.getUsageMessage();
+
+    assertThat(
+        outputOf(writeStringToTempFile(helpMessage)),
+        hasSameContentAs(
+            classpathResource(COMMAND_HELP + testContext.testMethodFullName() + ".txt")));
+  }
 
   @Test
   public void infoLevelBadValue() {

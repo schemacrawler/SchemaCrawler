@@ -48,7 +48,7 @@ public final class CatalogLoaderRegistry {
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(CatalogLoaderRegistry.class.getName());
 
-  public CatalogLoader findCatalogLoader() throws SchemaCrawlerException {
+  public ChainedCatalogLoader loadCatalogLoaders() throws SchemaCrawlerException {
     final List<CatalogLoader> chainedCatalogLoaders = loadCatalogLoaderRegistry();
     return new ChainedCatalogLoader(chainedCatalogLoaders);
   }

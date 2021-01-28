@@ -32,6 +32,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import schemacrawler.schema.Catalog;
@@ -39,7 +40,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 
-public class ChainedCatalogLoader extends BaseCatalogLoader {
+public class ChainedCatalogLoader extends BaseCatalogLoader implements Iterable<CatalogLoader> {
 
   private final List<CatalogLoader> chainedCatalogLoaders;
 
@@ -49,10 +50,9 @@ public class ChainedCatalogLoader extends BaseCatalogLoader {
     this.chainedCatalogLoaders = new ArrayList<>(chainedCatalogLoaders);
   }
 
-  public void chain(final CatalogLoader catalogLoader) {
-    if (catalogLoader != null) {
-      chainedCatalogLoaders.add(catalogLoader);
-    }
+  @Override
+  public Iterator<CatalogLoader> iterator() {
+    return chainedCatalogLoaders.iterator();
   }
 
   @Override

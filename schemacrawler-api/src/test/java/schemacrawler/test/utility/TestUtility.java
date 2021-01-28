@@ -68,6 +68,7 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -283,6 +284,17 @@ public final class TestUtility {
   public static void validateDiagram(final Path diagramFile) throws IOException {
     assertThat("Diagram file not created", exists(diagramFile), is(true));
     assertThat("Diagram file has 0 bytes size", size(diagramFile), greaterThan(0L));
+  }
+
+  public static Path writeStringToTempFile(final String data) throws IOException {
+    final Path tempFile =
+        IOUtility.createTempFilePath("resource", "data").normalize().toAbsolutePath();
+    if (data == null) {
+      return tempFile;
+    }
+    Files.write(tempFile, data.getBytes(StandardCharsets.UTF_8));
+
+    return tempFile;
   }
 
   private static Path buildDirectory() throws Exception {

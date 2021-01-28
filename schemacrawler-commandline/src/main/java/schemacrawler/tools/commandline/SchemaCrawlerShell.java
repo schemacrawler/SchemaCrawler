@@ -30,6 +30,7 @@ package schemacrawler.tools.commandline;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logFullStackTrace;
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSafeArguments;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.addLoadCommandOptions;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.printCommandLineErrorMessage;
@@ -82,6 +83,7 @@ public final class SchemaCrawlerShell {
         addPluginCommands(executeCommandLine);
         commandLine.addSubcommand(executeCommandLine);
       }
+      addLoadCommandOptions(commandLine);
       commandLine.setExecutionExceptionHandler(
           (ex, cmdLine, parseResult) -> {
             if (ex != null && ex.getMessage() != null) {

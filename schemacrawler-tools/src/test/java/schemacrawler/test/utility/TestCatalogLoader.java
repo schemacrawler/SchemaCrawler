@@ -26,38 +26,34 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.catalogloader;
+package schemacrawler.test.utility;
 
-import java.sql.Connection;
 import java.util.Collection;
 
-import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.tools.catalogloader.BaseCatalogLoader;
+import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.executable.commandline.PluginCommandOption;
 
-public interface CatalogLoader extends Comparable<CatalogLoader> {
+public class TestCatalogLoader extends BaseCatalogLoader {
 
-  Catalog getCatalog();
+  public TestCatalogLoader() {
+    super(3);
+  }
 
-  Connection getConnection();
+  @Override
+  public Collection<PluginCommandOption> getLoadCommandLineOptions() {
+    final PluginCommand pluginCommand =
+        PluginCommand.newPluginCommand(this.getClass().getName(), "Catalog load options");
+    pluginCommand.addOption(
+        "test-load-option",
+        Boolean.class,
+        "Check that the test option is added to the load command");
+    return pluginCommand.getOptions();
+  }
 
-  Collection<PluginCommandOption> getLoadCommandLineOptions();
-
-  int getPriority();
-
-  SchemaCrawlerOptions getSchemaCrawlerOptions();
-
-  SchemaRetrievalOptions getSchemaRetrievalOptions();
-
-  void loadCatalog() throws SchemaCrawlerException;
-
-  void setCatalog(Catalog catalog);
-
-  void setConnection(Connection connection);
-
-  void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
-
-  void setSchemaRetrievalOptions(SchemaRetrievalOptions schemaRetrievalOptions);
+  @Override
+  public void loadCatalog() throws SchemaCrawlerException {
+    // Do nothing
+  }
 }

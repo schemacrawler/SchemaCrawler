@@ -31,6 +31,9 @@ import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.IOUtility.readResourceFully;
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import picocli.CommandLine;
 import picocli.CommandLine.IFactory;
 import picocli.CommandLine.Model.CommandSpec;
@@ -39,6 +42,9 @@ import picocli.CommandLine.Model.UsageMessageSpec;
 import schemacrawler.Version;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.catalogloader.CatalogLoader;
+import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
+import schemacrawler.tools.catalogloader.ChainedCatalogLoader;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -46,8 +52,65 @@ import schemacrawler.tools.executable.commandline.PluginCommandOption;
 
 public class CommandLineUtility {
 
+  public static void addDatabasePluginHelpCommands(final CommandLine commandLine) {
+    final DatabaseConnectorRegistry databaseConnectorRegistry =
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    for (final DatabaseServerType databaseServerType : databaseConnectorRegistry) {
+      final String pluginCommandName = databaseServerType.getDatabaseSystemIdentifier();
+      final CommandSpec pluginCommandSpec = CommandSpec.create().name(pluginCommandName);
+      commandLine.addSubcommand(pluginCommandName, pluginCommandSpec);
+    }
+  }
+
+  public static void addLoadCommandOptions(final CommandLine commandLine)
+      throws SchemaCrawlerException {
+    requireNonNull(commandLine, "No command-line provided");
+
+    final Collection<PluginCommandOption> loadCommandOptions = new ArrayList<>();
+    final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
+    final ChainedCatalogLoader catalogLoaders = catalogLoaderRegistry.loadCatalogLoaders();
+    for (final CatalogLoader catalogLoader : catalogLoaders) {
+      loadCommandOptions.addAll(catalogLoader.getLoadCommandLineOptions());
+    }
+
+    if (loadCommandOptions.isEmpty()) {
+      return;
+    }
+
+    final CommandSpec commandSpec = commandLine.getCommandSpec();
+    final CommandSpec loadCommandSpec;
+    if (commandSpec.subcommands().containsKey("load")) {
+      loadCommandSpec = commandSpec.subcommands().get("load").getCommandSpec();
+    } else {
+      loadCommandSpec = commandSpec.mixins().get("load");
+    }
+    if (loadCommandSpec == null) {
+      return;
+    }
+
+    for (final PluginCommandOption option : loadCommandOptions) {
+      final String optionName = option.getName();
+      final String paramName = String.format("<%s>", optionName);
+      final String[] helpText;
+      if (option.getValueClass().isEnum()) {
+        helpText = new String[1];
+        helpText[0] =
+            String.format("%s%nUse one of ${COMPLETION-CANDIDATES}", option.getHelpText()[0]);
+      } else {
+        helpText = option.getHelpText();
+      }
+      loadCommandSpec.addOption(
+          OptionSpec.builder("--" + optionName)
+              .description(helpText)
+              .paramLabel(paramName)
+              .type(option.getValueClass())
+              .build());
+    }
+  }
+
   public static void addPluginCommand(
       final CommandLine commandLine, final PluginCommand pluginCommand, final boolean addAsMixins) {
+    requireNonNull(commandLine, "No command-line provided");
     if (pluginCommand == null || pluginCommand.isEmpty()) {
       return;
     }
@@ -61,15 +124,14 @@ public class CommandLineUtility {
     }
   }
 
-  public static void printCommandLineErrorMessage(final String errorMessage) {
-    System.err.printf("%s %s%n%n", Version.getProductName(), Version.getVersion());
-    if (!isBlank(errorMessage)) {
-      System.err.printf("Error: %s%n%n", errorMessage);
-    } else {
-      System.err.printf("Error: Unknown error%n%n");
-    }
+  public static void addPluginCommands(final CommandLine commandLine)
+      throws SchemaCrawlerException {
+    addPluginCommands(commandLine, true);
+  }
 
-    System.err.println(readResourceFully("/command-line-error.footer.txt"));
+  public static void addPluginHelpCommands(final CommandLine commandLine)
+      throws SchemaCrawlerException {
+    addPluginCommands(commandLine, false);
   }
 
   public static CommandLine configureCommandLine(final CommandLine commandLine) {
@@ -90,6 +152,17 @@ public class CommandLineUtility {
     }
     configureCommandLine(commandLine);
     return commandLine;
+  }
+
+  public static void printCommandLineErrorMessage(final String errorMessage) {
+    System.err.printf("%s %s%n%n", Version.getProductName(), Version.getVersion());
+    if (!isBlank(errorMessage)) {
+      System.err.printf("Error: %s%n%n", errorMessage);
+    } else {
+      System.err.printf("Error: Unknown error%n%n");
+    }
+
+    System.err.println(readResourceFully("/command-line-error.footer.txt"));
   }
 
   public static CommandSpec toCommandSpec(final PluginCommand pluginCommand) {
@@ -135,26 +208,6 @@ public class CommandLineUtility {
               .build());
     }
     return pluginCommandSpec;
-  }
-
-  public static void addDatabasePluginHelpCommands(final CommandLine commandLine) {
-    final DatabaseConnectorRegistry databaseConnectorRegistry =
-        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    for (final DatabaseServerType databaseServerType : databaseConnectorRegistry) {
-      final String pluginCommandName = databaseServerType.getDatabaseSystemIdentifier();
-      final CommandSpec pluginCommandSpec = CommandSpec.create().name(pluginCommandName);
-      commandLine.addSubcommand(pluginCommandName, pluginCommandSpec);
-    }
-  }
-
-  public static void addPluginCommands(final CommandLine commandLine)
-      throws SchemaCrawlerException {
-    addPluginCommands(commandLine, true);
-  }
-
-  public static void addPluginHelpCommands(final CommandLine commandLine)
-      throws SchemaCrawlerException {
-    addPluginCommands(commandLine, false);
   }
 
   private static void addPluginCommands(final CommandLine commandLine, final boolean addAsMixins)

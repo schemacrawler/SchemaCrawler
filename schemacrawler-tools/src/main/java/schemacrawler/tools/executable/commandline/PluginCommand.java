@@ -129,6 +129,10 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
     return type.toPluginCommandName(name);
   }
 
+  public Collection<PluginCommandOption> getOptions() {
+    return new ArrayList<>(options);
+  }
+
   @Override
   public int hashCode() {
     return Objects.hash(name);

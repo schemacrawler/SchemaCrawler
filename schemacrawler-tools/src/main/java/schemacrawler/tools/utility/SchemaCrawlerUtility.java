@@ -111,7 +111,7 @@ public final class SchemaCrawlerUtility {
       final SchemaCrawlerOptions schemaCrawlerOptions)
       throws SchemaCrawlerException {
     final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
-    final CatalogLoader catalogLoader = catalogLoaderRegistry.findCatalogLoader();
+    final CatalogLoader catalogLoader = catalogLoaderRegistry.loadCatalogLoaders();
     LOGGER.log(Level.CONFIG, new StringFormat("Catalog loader: %s", catalogLoader));
 
     catalogLoader.setConnection(connection);
