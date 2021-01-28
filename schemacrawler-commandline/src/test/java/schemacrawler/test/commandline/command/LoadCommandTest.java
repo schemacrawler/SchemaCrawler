@@ -3,11 +3,14 @@ package schemacrawler.test.commandline.command;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static schemacrawler.test.utility.CommandlineTestUtility.createLoadedSchemaCrawlerShellState;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.writeStringToTempFile;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
+
+import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,14 +20,39 @@ import picocli.CommandLine.Command;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
 import schemacrawler.tools.commandline.command.LoadCommand;
 import schemacrawler.tools.commandline.state.ShellState;
+import schemacrawler.tools.commandline.state.StateFactory;
 import schemacrawler.tools.commandline.utility.CommandLineUtility;
+import schemacrawler.tools.options.Config;
 
 @ExtendWith(TestContextParameterResolver.class)
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class LoadCommandTest {
 
   private final String COMMAND_HELP = "command_help/";
+
+  @Test
+  public void dynamicOptionValue(final Connection connection) throws Exception {
+    final String[] args = {
+      "load", "--info-level", "detailed", "--test-load-option", "true", "additional", "-extra"
+    };
+
+    final ShellState state = createLoadedSchemaCrawlerShellState(connection);
+    final CommandLine commandLine =
+        newCommandLine(new SchemaCrawlerShellCommands(), new StateFactory(state));
+    CommandLineUtility.addLoadCommandOptions(commandLine);
+
+    commandLine.execute(args);
+
+    final Config config = state.getConfig();
+    assertThat(config.containsKey("info-level"), is(true));
+    assertThat(config.getStringValue("info-level", null), is("detailed"));
+    assertThat(config.containsKey("test-load-option"), is(true));
+    assertThat(config.getStringValue("test-load-option", null), is("true"));
+  }
 
   @Test
   public void help(final TestContext testContext) throws Exception {

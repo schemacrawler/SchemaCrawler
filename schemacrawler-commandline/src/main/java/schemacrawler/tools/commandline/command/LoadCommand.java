@@ -29,12 +29,17 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 import java.sql.Connection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.ExecutionException;
 import picocli.CommandLine.Model;
+import picocli.CommandLine.Model.OptionSpec;
 import picocli.CommandLine.Option;
+import picocli.CommandLine.ParseResult;
 import picocli.CommandLine.Spec;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.Catalog;
@@ -110,6 +115,16 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
     }
 
     loadOptionsBuilder.loadRowCounts(isLoadRowCounts);
+
+    final ParseResult parseResult = spec.commandLine().getParseResult();
+    final List<OptionSpec> matchedOptions = parseResult.matchedOptions();
+    final Map<String, Object> options = new HashMap<>();
+    for (final OptionSpec optionSpec : matchedOptions) {
+      final String name = optionSpec.longestName();
+      final Object value = parseResult.matchedOptionValue(name, null);
+      options.put(name.replace("--", ""), value);
+    }
+    state.addConfig(options);
 
     state.withLoadOptions(loadOptionsBuilder.toOptions());
 
