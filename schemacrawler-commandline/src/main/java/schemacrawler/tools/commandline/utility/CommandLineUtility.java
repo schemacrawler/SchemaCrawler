@@ -33,12 +33,16 @@ import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import picocli.CommandLine;
 import picocli.CommandLine.IFactory;
 import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Model.OptionSpec;
 import picocli.CommandLine.Model.UsageMessageSpec;
+import picocli.CommandLine.ParseResult;
 import schemacrawler.Version;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -141,6 +145,37 @@ public class CommandLineUtility {
     commandLine.setToggleBooleanFlags(false);
 
     return commandLine;
+  }
+
+  /**
+   * SchemaCrawler plugins are registered on-the-fly, by adding them to the classpath. Inspect the
+   * command-line to see if there are any additional plugin-specific options passed in from the
+   * command-line, and put them in the configuration.
+   *
+   * @param parseResult Result of parsing the command-line
+   * @return Config with additional plugin-specific command-line options
+   * @throws SchemaCrawlerException On an exception
+   */
+  public static Map<String, Object> matchedOptionValues(final ParseResult parseResult)
+      throws SchemaCrawlerException {
+    requireNonNull(parseResult, "No parse result provided");
+
+    final Map<String, Object> options = new HashMap<>();
+
+    final List<OptionSpec> matchedOptionSpecs = parseResult.matchedOptions();
+    for (final OptionSpec matchedOptionSpec : matchedOptionSpecs) {
+      if (matchedOptionSpec.userObject() != null) {
+        continue;
+      }
+      final Object optionValue = matchedOptionSpec.getValue();
+      if (optionValue == null) {
+        continue;
+      }
+      final String optionName = matchedOptionSpec.longestName().replaceFirst("^\\-{0,2}", "");
+      options.put(optionName, optionValue);
+    }
+
+    return options;
   }
 
   public static CommandLine newCommandLine(final Object object, final IFactory factory) {

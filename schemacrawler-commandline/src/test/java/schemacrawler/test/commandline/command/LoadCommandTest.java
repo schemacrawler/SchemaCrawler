@@ -3,7 +3,6 @@ package schemacrawler.test.commandline.command;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static schemacrawler.test.utility.CommandlineTestUtility.createLoadedSchemaCrawlerShellState;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
@@ -18,6 +17,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import schemacrawler.schemacrawler.InfoLevel;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -40,7 +40,10 @@ public class LoadCommandTest {
       "load", "--info-level", "detailed", "--test-load-option", "true", "additional", "-extra"
     };
 
-    final ShellState state = createLoadedSchemaCrawlerShellState(connection);
+    final ShellState state = new ShellState();
+    state.setSchemaCrawlerOptions(SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
+    state.setDataSource(() -> connection);
+
     final CommandLine commandLine =
         newCommandLine(new SchemaCrawlerShellCommands(), new StateFactory(state));
     CommandLineUtility.addLoadCommandOptions(commandLine);
@@ -48,8 +51,6 @@ public class LoadCommandTest {
     commandLine.execute(args);
 
     final Config config = state.getConfig();
-    assertThat(config.containsKey("info-level"), is(true));
-    assertThat(config.getStringValue("info-level", null), is("detailed"));
     assertThat(config.containsKey("test-load-option"), is(true));
     assertThat(config.getStringValue("test-load-option", null), is("true"));
   }

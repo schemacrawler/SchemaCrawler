@@ -28,16 +28,15 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.command;
 
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.matchedOptionValues;
+
 import java.sql.Connection;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.ExecutionException;
 import picocli.CommandLine.Model;
-import picocli.CommandLine.Model.OptionSpec;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.ParseResult;
 import picocli.CommandLine.Spec;
@@ -50,6 +49,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
+import us.fatehi.utility.string.ObjectToStringFormat;
 import us.fatehi.utility.string.StringFormat;
 
 @Command(
@@ -105,32 +105,33 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
       throw new ExecutionException(spec.commandLine(), "Not connected to the database");
     }
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptions();
+    try {
+      final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptions();
 
-    final LoadOptionsBuilder loadOptionsBuilder =
-        LoadOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.getLoadOptions());
+      final LoadOptionsBuilder loadOptionsBuilder =
+          LoadOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.getLoadOptions());
 
-    if (infolevel != null) {
-      loadOptionsBuilder.withSchemaInfoLevel(infolevel.toSchemaInfoLevel());
+      if (infolevel != null) {
+        loadOptionsBuilder.withSchemaInfoLevel(infolevel.toSchemaInfoLevel());
+      }
+
+      loadOptionsBuilder.loadRowCounts(isLoadRowCounts);
+
+      final ParseResult parseResult = spec.commandLine().getParseResult();
+      final Map<String, Object> catalogLoaderOptions = matchedOptionValues(parseResult);
+      LOGGER.log(Level.INFO, "Loaded command loader options");
+      LOGGER.log(Level.CONFIG, new ObjectToStringFormat(catalogLoaderOptions));
+      state.setCatalogLoaderOptions(catalogLoaderOptions);
+
+      state.withLoadOptions(loadOptionsBuilder.toOptions());
+
+      final Catalog catalog = loadCatalog();
+      state.setCatalog(catalog);
+      LOGGER.log(Level.INFO, "Loaded catalog");
+
+    } catch (final Exception e) {
+      throw new ExecutionException(spec.commandLine(), "Cannot load catalog", e);
     }
-
-    loadOptionsBuilder.loadRowCounts(isLoadRowCounts);
-
-    final ParseResult parseResult = spec.commandLine().getParseResult();
-    final List<OptionSpec> matchedOptions = parseResult.matchedOptions();
-    final Map<String, Object> options = new HashMap<>();
-    for (final OptionSpec optionSpec : matchedOptions) {
-      final String name = optionSpec.longestName();
-      final Object value = parseResult.matchedOptionValue(name, null);
-      options.put(name.replace("--", ""), value);
-    }
-    state.addConfig(options);
-
-    state.withLoadOptions(loadOptionsBuilder.toOptions());
-
-    final Catalog catalog = loadCatalog();
-    state.setCatalog(catalog);
-    LOGGER.log(Level.INFO, "Loaded catalog");
   }
 
   private Catalog loadCatalog() {
