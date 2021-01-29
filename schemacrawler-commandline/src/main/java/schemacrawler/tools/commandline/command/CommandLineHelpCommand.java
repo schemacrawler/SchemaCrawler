@@ -34,11 +34,10 @@ import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_FOOTER;
 import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_HEADER;
 import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_OPTION_LIST;
 import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_PARAMETER_LIST;
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.addDatabasePluginHelpCommands;
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommand;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginHelpCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.configureCommandLine;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.toCommandSpec;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.Arrays;
@@ -49,8 +48,10 @@ import java.util.stream.StreamSupport;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Help;
+import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
+import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
 import schemacrawler.tools.commandline.shell.SystemCommand;
@@ -104,6 +105,16 @@ public final class CommandLineHelpCommand implements Runnable {
     }
   }
 
+  private void addDatabasePluginHelpCommands(final CommandLine commandLine) {
+    final DatabaseConnectorRegistry databaseConnectorRegistry =
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    for (final DatabaseServerType databaseServerType : databaseConnectorRegistry) {
+      final String pluginCommandName = databaseServerType.getDatabaseSystemIdentifier();
+      final CommandSpec pluginCommandSpec = CommandSpec.create().name(pluginCommandName);
+      commandLine.addSubcommand(pluginCommandName, pluginCommandSpec);
+    }
+  }
+
   private void configureHelpForSubcommand(final CommandLine commandLine) {
     if (commandLine == null) {
       return;
@@ -145,14 +156,15 @@ public final class CommandLineHelpCommand implements Runnable {
     }
 
     final DatabaseConnector databaseConnector =
-        databaseConnectorRegistry.findDatabaseConnectorFromDatabaseSystemIdentifier(databaseSystemIdentifier);
+        databaseConnectorRegistry.findDatabaseConnectorFromDatabaseSystemIdentifier(
+            databaseSystemIdentifier);
     final PluginCommand helpCommand = databaseConnector.getHelpCommand();
 
     @Command
     class EmptyCommand {}
 
     final CommandLine commandLine = new CommandLine(new EmptyCommand());
-    addPluginCommand(commandLine, helpCommand, false);
+    commandLine.addSubcommand(toCommandSpec(helpCommand));
 
     final CommandLine subcommandLine =
         lookupCommand(commandLine, helpCommand.getName()).orElse(null);

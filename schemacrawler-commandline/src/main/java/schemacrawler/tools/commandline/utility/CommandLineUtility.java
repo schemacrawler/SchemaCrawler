@@ -44,27 +44,15 @@ import picocli.CommandLine.Model.OptionSpec;
 import picocli.CommandLine.Model.UsageMessageSpec;
 import picocli.CommandLine.ParseResult;
 import schemacrawler.Version;
-import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.catalogloader.ChainedCatalogLoader;
-import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.executable.commandline.PluginCommandOption;
 
 public class CommandLineUtility {
-
-  public static void addDatabasePluginHelpCommands(final CommandLine commandLine) {
-    final DatabaseConnectorRegistry databaseConnectorRegistry =
-        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    for (final DatabaseServerType databaseServerType : databaseConnectorRegistry) {
-      final String pluginCommandName = databaseServerType.getDatabaseSystemIdentifier();
-      final CommandSpec pluginCommandSpec = CommandSpec.create().name(pluginCommandName);
-      commandLine.addSubcommand(pluginCommandName, pluginCommandSpec);
-    }
-  }
 
   public static void addLoadCommandOptions(final CommandLine commandLine)
       throws SchemaCrawlerException {
@@ -109,22 +97,6 @@ public class CommandLineUtility {
               .paramLabel(paramName)
               .type(option.getValueClass())
               .build());
-    }
-  }
-
-  public static void addPluginCommand(
-      final CommandLine commandLine, final PluginCommand pluginCommand, final boolean addAsMixins) {
-    requireNonNull(commandLine, "No command-line provided");
-    if (pluginCommand == null || pluginCommand.isEmpty()) {
-      return;
-    }
-
-    final CommandSpec pluginCommandSpec = toCommandSpec(pluginCommand);
-    final String pluginCommandName = pluginCommandSpec.name();
-    if (addAsMixins) {
-      commandLine.addMixin(pluginCommandName, pluginCommandSpec);
-    } else {
-      commandLine.addSubcommand(pluginCommandName, pluginCommandSpec);
     }
   }
 
@@ -243,6 +215,22 @@ public class CommandLineUtility {
               .build());
     }
     return pluginCommandSpec;
+  }
+
+  private static void addPluginCommand(
+      final CommandLine commandLine, final PluginCommand pluginCommand, final boolean addAsMixins) {
+    requireNonNull(commandLine, "No command-line provided");
+    if (pluginCommand == null || pluginCommand.isEmpty()) {
+      return;
+    }
+
+    final CommandSpec pluginCommandSpec = toCommandSpec(pluginCommand);
+    final String pluginCommandName = pluginCommandSpec.name();
+    if (addAsMixins) {
+      commandLine.addMixin(pluginCommandName, pluginCommandSpec);
+    } else {
+      commandLine.addSubcommand(pluginCommandName, pluginCommandSpec);
+    }
   }
 
   private static void addPluginCommands(final CommandLine commandLine, final boolean addAsMixins)
