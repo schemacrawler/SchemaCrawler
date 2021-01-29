@@ -48,6 +48,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.ShellState;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import us.fatehi.utility.string.ObjectToStringFormat;
 import us.fatehi.utility.string.StringFormat;
@@ -76,15 +77,6 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
       })
   private InfoLevel infolevel;
 
-  @Option(
-      names = {"--load-row-counts"},
-      description = {
-        "Loads row counts for each table",
-        "This can be a time consuming operation",
-        "Optional, defaults to false\n"
-      })
-  private boolean isLoadRowCounts;
-
   @Spec private Model.CommandSpec spec;
 
   public LoadCommand(final ShellState state) {
@@ -93,10 +85,6 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
 
   public InfoLevel getInfoLevel() {
     return infolevel;
-  }
-
-  public boolean isLoadRowCounts() {
-    return isLoadRowCounts;
   }
 
   @Override
@@ -114,8 +102,6 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
       if (infolevel != null) {
         loadOptionsBuilder.withSchemaInfoLevel(infolevel.toSchemaInfoLevel());
       }
-
-      loadOptionsBuilder.loadRowCounts(isLoadRowCounts);
 
       final ParseResult parseResult = spec.commandLine().getParseResult();
       final Map<String, Object> catalogLoaderOptions = matchedOptionValues(parseResult);
@@ -140,9 +126,10 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
 
       final SchemaRetrievalOptions schemaRetrievalOptions = state.getSchemaRetrievalOptions();
       final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptions();
+      final Config additionalConfig = state.getConfig();
 
       return SchemaCrawlerUtility.getCatalog(
-          connection, schemaRetrievalOptions, schemaCrawlerOptions);
+          connection, schemaRetrievalOptions, schemaCrawlerOptions, additionalConfig);
 
     } catch (final Exception e) {
       throw new ExecutionException(spec.commandLine(), "Cannot load catalog", e);

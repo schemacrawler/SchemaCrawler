@@ -54,10 +54,10 @@ public class ScriptingLanguageTest {
   private static Path executableScriptFromFile(
       final Connection connection, final String language, final Path scriptFile) throws Exception {
     final SchemaCrawlerExecutable executable = executableOf("script");
-    final Config additionalConfiguration = new Config();
-    additionalConfiguration.put("script", scriptFile.toString());
-    additionalConfiguration.put("script-language", language);
-    executable.setAdditionalConfiguration(additionalConfiguration);
+    final Config additionalConfig = new Config();
+    additionalConfig.put("script", scriptFile.toString());
+    additionalConfig.put("script-language", language);
+    executable.setAdditionalConfiguration(additionalConfig);
 
     return executableExecution(connection, executable, "text");
   }

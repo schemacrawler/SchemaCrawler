@@ -56,10 +56,10 @@ public class ExecutableTemplatingLanguageTest {
   private static Path executableTemplateFromFile(
       final Connection connection, final String language, final Path scriptFile) throws Exception {
     final SchemaCrawlerExecutable executable = executableOf("template");
-    final Config additionalConfiguration = new Config();
-    additionalConfiguration.put("template", scriptFile.toString());
-    additionalConfiguration.put("templating-language", language);
-    executable.setAdditionalConfiguration(additionalConfiguration);
+    final Config additionalConfig = new Config();
+    additionalConfig.put("template", scriptFile.toString());
+    additionalConfig.put("templating-language", language);
+    executable.setAdditionalConfiguration(additionalConfig);
 
     return executableExecution(connection, executable, "text");
   }

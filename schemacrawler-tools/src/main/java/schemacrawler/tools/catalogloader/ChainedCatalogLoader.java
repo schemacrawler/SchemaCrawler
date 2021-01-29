@@ -39,6 +39,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.tools.options.Config;
 
 public class ChainedCatalogLoader extends BaseCatalogLoader implements Iterable<CatalogLoader> {
 
@@ -61,11 +62,13 @@ public class ChainedCatalogLoader extends BaseCatalogLoader implements Iterable<
     final Connection connection = getConnection();
     final SchemaCrawlerOptions schemaCrawlerOptions = getSchemaCrawlerOptions();
     final SchemaRetrievalOptions schemaRetrievalOptions = getSchemaRetrievalOptions();
+    final Config additionalConfig = getAdditionalConfiguration();
     for (final CatalogLoader nextCatalogLoader : chainedCatalogLoaders) {
       nextCatalogLoader.setCatalog(catalog);
       nextCatalogLoader.setConnection(connection);
       nextCatalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);
       nextCatalogLoader.setSchemaRetrievalOptions(schemaRetrievalOptions);
+      nextCatalogLoader.setAdditionalConfiguration(additionalConfig);
 
       nextCatalogLoader.loadCatalog();
 

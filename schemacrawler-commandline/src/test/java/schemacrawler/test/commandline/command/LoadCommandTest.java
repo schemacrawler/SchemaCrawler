@@ -119,7 +119,6 @@ public class LoadCommandTest {
     final InfoLevel schemaInfoLevel = optionsParser.getInfoLevel();
 
     assertThat(schemaInfoLevel, is(InfoLevel.detailed));
-    assertThat(optionsParser.isLoadRowCounts(), is(false));
   }
 
   @Test
@@ -134,7 +133,6 @@ public class LoadCommandTest {
     final InfoLevel schemaInfoLevel = optionsParser.getInfoLevel();
 
     assertThat(schemaInfoLevel, is(InfoLevel.detailed));
-    assertThat(optionsParser.isLoadRowCounts(), is(true));
   }
 
   @Test
@@ -151,7 +149,6 @@ public class LoadCommandTest {
     final InfoLevel schemaInfoLevel = optionsParser.getInfoLevel();
 
     assertThat(schemaInfoLevel, is(InfoLevel.detailed));
-    assertThat(optionsParser.isLoadRowCounts(), is(true));
   }
 
   @Test

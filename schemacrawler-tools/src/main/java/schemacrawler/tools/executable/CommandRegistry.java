@@ -97,14 +97,14 @@ public final class CommandRegistry {
   public SchemaCrawlerCommand<?> configureNewCommand(
       final String command,
       final SchemaCrawlerOptions schemaCrawlerOptions,
-      final Config additionalConfiguration,
+      final Config additionalConfig,
       final OutputOptions outputOptions)
       throws SchemaCrawlerException {
     final List<CommandProvider> executableCommandProviders = new ArrayList<>();
     findSupportedCommands(
         command,
         schemaCrawlerOptions,
-        additionalConfiguration,
+        additionalConfig,
         outputOptions,
         executableCommandProviders);
     findSupportedOutputFormats(command, outputOptions, executableCommandProviders);
@@ -134,7 +134,7 @@ public final class CommandRegistry {
     final SchemaCrawlerCommand<?> scCommand;
     try {
       scCommand =
-          executableCommandProvider.newSchemaCrawlerCommand(command, additionalConfiguration);
+          executableCommandProvider.newSchemaCrawlerCommand(command, additionalConfig);
       scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
       scCommand.setOutputOptions(outputOptions);
     } catch (final Throwable e) {
@@ -170,13 +170,13 @@ public final class CommandRegistry {
   private void findSupportedCommands(
       final String command,
       final SchemaCrawlerOptions schemaCrawlerOptions,
-      final Config additionalConfiguration,
+      final Config additionalConfig,
       final OutputOptions outputOptions,
       final List<CommandProvider> executableCommandProviders)
       throws SchemaCrawlerException {
     for (final CommandProvider commandProvider : commandRegistry) {
       if (commandProvider.supportsSchemaCrawlerCommand(
-          command, schemaCrawlerOptions, additionalConfiguration, outputOptions)) {
+          command, schemaCrawlerOptions, additionalConfig, outputOptions)) {
         executableCommandProviders.add(commandProvider);
         LOGGER.log(Level.FINE, new StringFormat("Adding command-provider <%s>", commandProvider));
       }

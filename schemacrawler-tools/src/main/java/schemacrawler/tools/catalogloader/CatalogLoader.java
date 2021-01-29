@@ -36,6 +36,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.executable.commandline.PluginCommandOption;
+import schemacrawler.tools.options.Config;
 
 public interface CatalogLoader extends Comparable<CatalogLoader> {
 
@@ -52,6 +53,8 @@ public interface CatalogLoader extends Comparable<CatalogLoader> {
   SchemaRetrievalOptions getSchemaRetrievalOptions();
 
   void loadCatalog() throws SchemaCrawlerException;
+
+  void setAdditionalConfiguration(Config additionalConfig);
 
   void setCatalog(Catalog catalog);
 

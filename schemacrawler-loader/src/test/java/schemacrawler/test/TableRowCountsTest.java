@@ -48,7 +48,6 @@ import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.FilterOptionsBuilder;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -60,6 +59,7 @@ import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.TestWriter;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 import schemacrawler.utility.NamedObjectSort;
 
@@ -82,16 +82,18 @@ public class TableRowCountsTest {
             .includeAllSequences()
             .includeAllRoutines();
     final LoadOptionsBuilder loadOptionsBuilder =
-        LoadOptionsBuilder.builder()
-            .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-            .loadRowCounts();
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
             .withLimitOptions(limitOptionsBuilder.toOptions())
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
+    final Config additionalConfig = new Config();
+    additionalConfig.put("load-row-counts", true);
+
     catalog =
-        SchemaCrawlerUtility.getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
+        SchemaCrawlerUtility.getCatalog(
+            connection, schemaRetrievalOptions, schemaCrawlerOptions, additionalConfig);
   }
 
   @Test
@@ -99,15 +101,19 @@ public class TableRowCountsTest {
       throws Exception {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
-      final FilterOptionsBuilder filterOptionsBuilder =
-          FilterOptionsBuilder.builder().noEmptyTables();
-      final LoadOptionsBuilder loadOptionsBuilder = LoadOptionsBuilder.builder().loadRowCounts();
-      final SchemaCrawlerOptions schemaCrawlerOptions =
-          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-              .withFilterOptions(filterOptionsBuilder.toOptions())
-              .withLoadOptions(loadOptionsBuilder.toOptions());
 
-      final Catalog catalog = SchemaCrawlerUtility.getCatalog(connection, schemaCrawlerOptions);
+      final SchemaRetrievalOptions schemaRetrievalOptions = TestUtility.newSchemaRetrievalOptions();
+
+      final SchemaCrawlerOptions schemaCrawlerOptions =
+          SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+      final Config additionalConfig = new Config();
+      additionalConfig.put("load-row-counts", true);
+      additionalConfig.put("no-empty-tables", true);
+
+      final Catalog catalog =
+          SchemaCrawlerUtility.getCatalog(
+              connection, schemaRetrievalOptions, schemaCrawlerOptions, additionalConfig);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(6));
       for (final Schema schema : schemas) {

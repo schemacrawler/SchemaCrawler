@@ -30,14 +30,17 @@ package schemacrawler.analysis.counts;
 
 import static schemacrawler.filter.ReducerFactory.getTableReducer;
 
+import java.util.Collection;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
+import schemacrawler.tools.executable.commandline.PluginCommand;
+import schemacrawler.tools.executable.commandline.PluginCommandOption;
+import schemacrawler.tools.options.Config;
 import us.fatehi.utility.StopWatch;
 
 public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
@@ -45,8 +48,31 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(TableRowCountsCatalogLoader.class.getName());
 
+  private static final String OPTION_NO_EMPTY_TABLES = "no-empty-tables";
+  private static final String OPTION_LOAD_ROW_COUNTS = "load-row-counts";
+
   public TableRowCountsCatalogLoader() {
     super(2);
+  }
+
+  @Override
+  public Collection<PluginCommandOption> getLoadCommandLineOptions() {
+    final PluginCommand pluginCommand =
+        PluginCommand.newPluginCommand(this.getClass().getName(), "Catalog load options");
+    pluginCommand
+        .addOption(
+            OPTION_LOAD_ROW_COUNTS,
+            Boolean.class,
+            "Loads row counts for each table",
+            "This can be a time consuming operation",
+            "Optional, defaults to false")
+        .addOption(
+            OPTION_NO_EMPTY_TABLES,
+            Boolean.class,
+            "Includes only tables that have rows of data",
+            "Requires table row counts to be loaded",
+            "Optional, default is false");
+    return pluginCommand.getOptions();
   }
 
   @Override
@@ -61,11 +87,11 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
       final Catalog catalog = getCatalog();
       final TableRowCountsRetriever rowCountsRetriever =
           new TableRowCountsRetriever(getConnection(), catalog);
-      final SchemaCrawlerOptions options = getSchemaCrawlerOptions();
+      final Config config = getAdditionalConfiguration();
       stopWatch.time(
           "retrieveTableRowCounts",
           () -> {
-            final boolean loadRowCounts = options.getLoadOptions().isLoadRowCounts();
+            final boolean loadRowCounts = config.getBooleanValue(OPTION_LOAD_ROW_COUNTS, false);
             if (loadRowCounts) {
               rowCountsRetriever.retrieveTableRowCounts();
             } else {
@@ -78,8 +104,8 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
       stopWatch.time(
           "filterEmptyTables",
           () -> {
-            catalog.reduce(
-                Table.class, getTableReducer(new TableRowCountsFilter(options.getFilterOptions())));
+            final boolean noEmptyTables = config.getBooleanValue(OPTION_NO_EMPTY_TABLES, false);
+            catalog.reduce(Table.class, getTableReducer(new TableRowCountsFilter(noEmptyTables)));
             return null;
           });
 

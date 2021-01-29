@@ -14,6 +14,8 @@ Options:
       --load-row-counts    Loads row counts for each table
                            This can be a time consuming operation
                            Optional, defaults to false
-
+      --no-empty-tables    Includes only tables that have rows of data
+                           Requires table row counts to be loaded
+                           Optional, default is false
       --test-load-option   Check that the test option is added to the load
                              command

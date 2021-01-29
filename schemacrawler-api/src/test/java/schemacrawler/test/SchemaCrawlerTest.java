@@ -294,9 +294,7 @@ public class SchemaCrawlerTest {
             .includeAllSequences()
             .includeAllRoutines();
     final LoadOptionsBuilder loadOptionsBuilder =
-        LoadOptionsBuilder.builder()
-            .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-            .loadRowCounts();
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
             .withLimitOptions(limitOptionsBuilder.toOptions())

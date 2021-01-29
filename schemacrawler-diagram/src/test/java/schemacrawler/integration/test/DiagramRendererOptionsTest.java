@@ -66,6 +66,7 @@ import schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 
@@ -94,9 +95,11 @@ public class DiagramRendererOptionsTest {
       final String command,
       final Connection connection,
       final SchemaCrawlerOptions options,
+      final Config config,
       final DiagramOptions diagramOptions,
       final String testMethodName)
       throws Exception {
+
     SchemaCrawlerOptions schemaCrawlerOptions = options;
     if (options.getLimitOptions().isIncludeAll(ruleForSchemaInclusion)) {
       final LimitOptionsBuilder limitOptionsBuilder =
@@ -106,17 +109,20 @@ public class DiagramRendererOptionsTest {
       schemaCrawlerOptions = options.withLimitOptions(limitOptionsBuilder.toOptions());
     }
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-
     final DiagramOptionsBuilder diagramOptionsBuilder = builder(diagramOptions);
     diagramOptionsBuilder.sortTables(true);
     diagramOptionsBuilder.noInfo(diagramOptions.isNoInfo());
     if (!"maximum".equals(options.getLoadOptions().getSchemaInfoLevel().getTag())) {
       diagramOptionsBuilder.weakAssociations(true);
     }
-    executable.setAdditionalConfiguration(diagramOptionsBuilder.toConfig());
 
+    final Config additionalConfig = new Config();
+    additionalConfig.merge(config);
+    additionalConfig.merge(diagramOptionsBuilder.toConfig());
+
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(additionalConfig);
     executable.setConnection(connection);
 
     // Generate diagram, so that we have something to look at, even if
@@ -160,6 +166,7 @@ public class DiagramRendererOptionsTest {
         SchemaTextDetailType.schema.name(),
         connection,
         schemaCrawlerOptions,
+        null,
         diagramOptions,
         testContext.testMethodName());
   }
@@ -179,6 +186,7 @@ public class DiagramRendererOptionsTest {
         SchemaTextDetailType.schema.name(),
         connection,
         optionsWithWeakAssociations(),
+        null,
         diagramOptions,
         testContext.testMethodName());
   }
@@ -197,6 +205,7 @@ public class DiagramRendererOptionsTest {
         SchemaTextDetailType.schema.name(),
         connection,
         optionsWithWeakAssociations(),
+        null,
         diagramOptions,
         testContext.testMethodName());
   }
@@ -215,6 +224,7 @@ public class DiagramRendererOptionsTest {
         SchemaTextDetailType.schema.name(),
         connection,
         optionsWithWeakAssociations(),
+        null,
         diagramOptions,
         testContext.testMethodName());
   }
@@ -230,6 +240,7 @@ public class DiagramRendererOptionsTest {
         SchemaTextDetailType.schema.name(),
         connection,
         optionsWithWeakAssociations(),
+        null,
         diagramOptions,
         testContext.testMethodName());
   }
@@ -249,6 +260,7 @@ public class DiagramRendererOptionsTest {
         SchemaTextDetailType.schema.name(),
         connection,
         schemaCrawlerOptions,
+        null,
         diagramOptions,
         testContext.testMethodName());
   }
@@ -264,6 +276,7 @@ public class DiagramRendererOptionsTest {
         SchemaTextDetailType.brief.name(),
         connection,
         schemaCrawlerOptions,
+        null,
         diagramOptions,
         testContext.testMethodName());
   }
@@ -279,6 +292,7 @@ public class DiagramRendererOptionsTest {
         SchemaTextDetailType.schema.name(),
         connection,
         schemaCrawlerOptions,
+        null,
         diagramOptions,
         testContext.testMethodName());
   }
@@ -299,6 +313,7 @@ public class DiagramRendererOptionsTest {
         SchemaTextDetailType.schema.name(),
         connection,
         schemaCrawlerOptions,
+        null,
         diagramOptions,
         testContext.testMethodName());
   }
@@ -323,6 +338,7 @@ public class DiagramRendererOptionsTest {
         SchemaTextDetailType.schema.name(),
         connection,
         schemaCrawlerOptions,
+        null,
         diagramOptions,
         testContext.testMethodName());
   }
@@ -343,6 +359,7 @@ public class DiagramRendererOptionsTest {
         SchemaTextDetailType.schema.name(),
         connection,
         schemaCrawlerOptions,
+        null,
         diagramOptions,
         testContext.testMethodName());
   }
@@ -364,6 +381,7 @@ public class DiagramRendererOptionsTest {
         SchemaTextDetailType.schema.name(),
         connection,
         schemaCrawlerOptions,
+        null,
         diagramOptions,
         testContext.testMethodName());
   }
@@ -376,17 +394,19 @@ public class DiagramRendererOptionsTest {
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
     final LoadOptionsBuilder loadOptionsBuilder =
-        LoadOptionsBuilder.builder()
-            .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-            .loadRowCounts();
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
             .withLoadOptions(loadOptionsBuilder.toOptions());
+
+    final Config additionalConfig = new Config();
+    additionalConfig.put("load-row-counts", true);
 
     executableDiagram(
         SchemaTextDetailType.schema.name(),
         connection,
         schemaCrawlerOptions,
+        additionalConfig,
         diagramOptions,
         testContext.testMethodName());
   }
@@ -413,6 +433,7 @@ public class DiagramRendererOptionsTest {
         SchemaTextDetailType.schema.name(),
         connection,
         schemaCrawlerOptions,
+        null,
         diagramOptions,
         testContext.testMethodName());
   }
@@ -436,6 +457,7 @@ public class DiagramRendererOptionsTest {
         SchemaTextDetailType.schema.name(),
         connection,
         schemaCrawlerOptions,
+        null,
         diagramOptions,
         testContext.testMethodName());
   }

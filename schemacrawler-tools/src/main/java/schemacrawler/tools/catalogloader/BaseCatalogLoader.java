@@ -40,12 +40,14 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.executable.commandline.PluginCommandOption;
+import schemacrawler.tools.options.Config;
 
 public abstract class BaseCatalogLoader implements CatalogLoader {
 
   private final int priority;
   private SchemaRetrievalOptions schemaRetrievalOptions;
   private SchemaCrawlerOptions schemaCrawlerOptions;
+  private Config additionalConfig;
   private Connection connection;
 
   private Catalog catalog;
@@ -101,6 +103,12 @@ public abstract class BaseCatalogLoader implements CatalogLoader {
     }
   }
 
+  /** @param additionalConfig the additionalConfig to set */
+  @Override
+  public void setAdditionalConfiguration(final Config additionalConfig) {
+    this.additionalConfig = additionalConfig;
+  }
+
   @Override
   public void setCatalog(final Catalog catalog) {
     this.catalog = catalog;
@@ -119,6 +127,10 @@ public abstract class BaseCatalogLoader implements CatalogLoader {
   @Override
   public void setSchemaRetrievalOptions(final SchemaRetrievalOptions schemaRetrievalOptions) {
     this.schemaRetrievalOptions = schemaRetrievalOptions;
+  }
+
+  protected Config getAdditionalConfiguration() {
+    return additionalConfig;
   }
 
   protected boolean isDatabaseSystemIdentifier(final String databaseSystemIdentifier) {

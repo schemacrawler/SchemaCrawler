@@ -112,7 +112,7 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
       final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptions();
       final SchemaRetrievalOptions schemaRetrievalOptions = state.getSchemaRetrievalOptions();
       final OutputOptions outputOptions = outputOptionsBuilder.toOptions();
-      final Config additionalConfiguration = state.getConfig();
+      final Config additionalConfig = state.getConfig();
 
       // Output file name has to be specified for diagrams
       // (Check after output options have been built)
@@ -131,7 +131,7 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
-      executable.setAdditionalConfiguration(additionalConfiguration);
+      executable.setAdditionalConfiguration(additionalConfig);
       executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
       executable.setConnection(connection);

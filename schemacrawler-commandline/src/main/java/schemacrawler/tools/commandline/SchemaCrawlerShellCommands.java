@@ -18,6 +18,7 @@ import schemacrawler.tools.commandline.shell.SweepCommand;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 
 @Command(
+    name = "schemacrawler-shell",
     subcommands = {
       CommandLineHelpCommand.class,
       LogCommand.class,

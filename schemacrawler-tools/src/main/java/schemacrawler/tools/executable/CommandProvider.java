@@ -49,6 +49,6 @@ public interface CommandProvider {
   boolean supportsSchemaCrawlerCommand(
       String command,
       SchemaCrawlerOptions schemaCrawlerOptions,
-      Config additionalConfiguration,
+      Config additionalConfig,
       OutputOptions outputOptions);
 }

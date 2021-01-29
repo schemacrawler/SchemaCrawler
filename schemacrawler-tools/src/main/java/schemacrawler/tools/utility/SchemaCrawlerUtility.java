@@ -48,6 +48,7 @@ import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import schemacrawler.tools.options.Config;
 import us.fatehi.utility.DatabaseUtility;
 import us.fatehi.utility.PropertiesUtility;
 import us.fatehi.utility.UtilityMarker;
@@ -81,7 +82,28 @@ public final class SchemaCrawlerUtility {
 
     final SchemaRetrievalOptions schemaRetrievalOptions = matchSchemaRetrievalOptions(connection);
 
-    return getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions);
+    return getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions, new Config());
+  }
+
+  public static Catalog getCatalog(
+      final Connection connection,
+      final SchemaRetrievalOptions schemaRetrievalOptions,
+      final SchemaCrawlerOptions schemaCrawlerOptions,
+      final Config additionalConfig)
+      throws SchemaCrawlerException {
+    final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
+    final CatalogLoader catalogLoader = catalogLoaderRegistry.loadCatalogLoaders();
+    LOGGER.log(Level.CONFIG, new StringFormat("Catalog loader: %s", catalogLoader));
+
+    catalogLoader.setConnection(connection);
+    catalogLoader.setSchemaRetrievalOptions(schemaRetrievalOptions);
+    catalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    catalogLoader.setAdditionalConfiguration(additionalConfig);
+
+    catalogLoader.loadCatalog();
+    final Catalog catalog = catalogLoader.getCatalog();
+    requireNonNull(catalog, "Catalog could not be retrieved");
+    return catalog;
   }
 
   /**
@@ -103,25 +125,6 @@ public final class SchemaCrawlerUtility {
     } catch (final SQLException e) {
       throw new SchemaCrawlerException("Could not retrieve result-set metadata", e);
     }
-  }
-
-  public static Catalog getCatalog(
-      final Connection connection,
-      final SchemaRetrievalOptions schemaRetrievalOptions,
-      final SchemaCrawlerOptions schemaCrawlerOptions)
-      throws SchemaCrawlerException {
-    final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
-    final CatalogLoader catalogLoader = catalogLoaderRegistry.loadCatalogLoaders();
-    LOGGER.log(Level.CONFIG, new StringFormat("Catalog loader: %s", catalogLoader));
-
-    catalogLoader.setConnection(connection);
-    catalogLoader.setSchemaRetrievalOptions(schemaRetrievalOptions);
-    catalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);
-
-    catalogLoader.loadCatalog();
-    final Catalog catalog = catalogLoader.getCatalog();
-    requireNonNull(catalog, "Catalog could not be retrieved");
-    return catalog;
   }
 
   /**

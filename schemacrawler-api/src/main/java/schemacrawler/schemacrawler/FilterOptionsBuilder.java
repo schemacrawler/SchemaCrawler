@@ -41,7 +41,6 @@ public final class FilterOptionsBuilder
   }
 
   private int childTableFilterDepth;
-  private boolean isNoEmptyTables;
   private int parentTableFilterDepth;
 
   /** Default options. */
@@ -58,22 +57,9 @@ public final class FilterOptionsBuilder
       return this;
     }
 
-    isNoEmptyTables = options.isNoEmptyTables();
-
     childTableFilterDepth = options.getChildTableFilterDepth();
     parentTableFilterDepth = options.getParentTableFilterDepth();
 
-    return this;
-  }
-
-  /** Corresponds to the --no-empty-tables command-line argument. */
-  public FilterOptionsBuilder noEmptyTables() {
-    return noEmptyTables(true);
-  }
-
-  /** Corresponds to the --no-empty-tables=&lt;boolean&gt; command-line argument. */
-  public FilterOptionsBuilder noEmptyTables(final boolean value) {
-    isNoEmptyTables = value;
     return this;
   }
 
@@ -84,6 +70,6 @@ public final class FilterOptionsBuilder
 
   @Override
   public FilterOptions toOptions() {
-    return new FilterOptions(isNoEmptyTables, childTableFilterDepth, parentTableFilterDepth);
+    return new FilterOptions(childTableFilterDepth, parentTableFilterDepth);
   }
 }

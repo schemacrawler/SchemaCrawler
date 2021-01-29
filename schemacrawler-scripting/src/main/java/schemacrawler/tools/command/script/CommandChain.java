@@ -58,7 +58,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
 
   private final CommandRegistry commandRegistry;
   private final List<SchemaCrawlerCommand<?>> scCommands;
-  private final Config additionalConfiguration;
+  private final Config additionalConfig;
 
   /**
    * Copy configuration settings from another command.
@@ -75,7 +75,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
     scCommands = new ArrayList<>();
 
     // Copy all configuration
-    additionalConfiguration = new Config(scCommand.getCommandOptions().getConfig());
+    additionalConfig = new Config(scCommand.getCommandOptions().getConfig());
     setSchemaCrawlerOptions(scCommand.getSchemaCrawlerOptions());
     setOutputOptions(scCommand.getOutputOptions());
 
@@ -127,7 +127,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
     try {
       final SchemaCrawlerCommand<?> scCommand =
           commandRegistry.configureNewCommand(
-              command, schemaCrawlerOptions, additionalConfiguration, outputOptions);
+              command, schemaCrawlerOptions, additionalConfig, outputOptions);
       if (scCommand == null) {
         return null;
       }

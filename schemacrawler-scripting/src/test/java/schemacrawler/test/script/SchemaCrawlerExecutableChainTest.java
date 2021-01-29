@@ -100,15 +100,15 @@ public class SchemaCrawlerExecutableChainTest {
     textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo().showJdbcDriverInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    final Config additionalConfiguration = SchemaTextOptionsBuilder.builder(textOptions).toConfig();
-    additionalConfiguration.put("script", "/chain.js");
+    final Config additionalConfig = SchemaTextOptionsBuilder.builder(textOptions).toConfig();
+    additionalConfig.put("script", "/chain.js");
 
     final OutputOptions outputOptions =
         OutputOptionsBuilder.newOutputOptions("text", testOutputFile);
 
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setOutputOptions(outputOptions);
-    executable.setAdditionalConfiguration(additionalConfiguration);
+    executable.setAdditionalConfiguration(additionalConfig);
     executable.setConnection(connection);
     executable.execute();
 

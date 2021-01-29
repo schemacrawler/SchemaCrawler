@@ -65,6 +65,7 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
@@ -453,8 +454,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                               .includeAllRoutines();
                       final LoadOptionsBuilder loadOptionsBuilder =
                           LoadOptionsBuilder.builder()
-                              .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-                              .loadRowCounts();
+                              .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
                       final SchemaCrawlerOptions schemaCrawlerOptions =
                           SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
                               .withLimitOptions(limitOptionsBuilder.toOptions())
@@ -464,10 +464,14 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                           SchemaTextOptionsBuilder.builder(textOptions);
                       schemaTextOptionsBuilder.sortTables(true);
 
+                      final Config additionalConfig = new Config();
+                      additionalConfig.put("load-row-counts", true);
+                      additionalConfig.merge(schemaTextOptionsBuilder.toConfig());
+
                       final SchemaCrawlerExecutable executable =
                           new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
                       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-                      executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
+                      executable.setAdditionalConfiguration(additionalConfig);
 
                       assertThat(
                           outputOf(executableExecution(connection, executable, outputFormat)),

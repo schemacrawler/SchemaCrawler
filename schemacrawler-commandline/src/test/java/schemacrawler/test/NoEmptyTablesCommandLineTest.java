@@ -37,6 +37,7 @@ import static schemacrawler.test.utility.TestUtility.clean;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -54,6 +55,7 @@ public class NoEmptyTablesCommandLineTest {
 
   private static final String HIDE_EMPTY_TABLES_OUTPUT = "no_empty_tables_output/";
 
+  @Disabled
   @Test
   public void noEmptyTables(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {

@@ -64,9 +64,9 @@ public class ScriptTestUtility {
   public static Path scriptExecution(final Connection connection, final String script)
       throws Exception {
     final SchemaCrawlerExecutable executable = executableOf("script");
-    final Config additionalConfiguration = new Config();
-    additionalConfiguration.put("script", script);
-    executable.setAdditionalConfiguration(additionalConfiguration);
+    final Config additionalConfig = new Config();
+    additionalConfig.put("script", script);
+    executable.setAdditionalConfiguration(additionalConfig);
 
     return executableExecution(connection, executable, "text");
   }
@@ -77,10 +77,10 @@ public class ScriptTestUtility {
       final String templateResource)
       throws Exception {
     final SchemaCrawlerExecutable executable = executableOf("template");
-    final Config additionalConfiguration = new Config();
-    additionalConfiguration.put("template", templateResource);
-    additionalConfiguration.put("templating-language", templateLanguage.name());
-    executable.setAdditionalConfiguration(additionalConfiguration);
+    final Config additionalConfig = new Config();
+    additionalConfig.put("template", templateResource);
+    additionalConfig.put("templating-language", templateLanguage.name());
+    executable.setAdditionalConfiguration(additionalConfig);
 
     return executableExecution(connection, executable, "text");
   }
