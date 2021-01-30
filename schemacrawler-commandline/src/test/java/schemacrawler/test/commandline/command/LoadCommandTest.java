@@ -25,7 +25,6 @@ import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
 import schemacrawler.tools.commandline.command.LoadCommand;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
-import schemacrawler.tools.commandline.utility.CommandLineUtility;
 import schemacrawler.tools.options.Config;
 
 @ExtendWith(TestContextParameterResolver.class)
@@ -33,27 +32,6 @@ import schemacrawler.tools.options.Config;
 public class LoadCommandTest {
 
   private final String COMMAND_HELP = "command_help/";
-
-  @Test
-  public void dynamicOptionValue(final Connection connection) throws Exception {
-    final String[] args = {
-      "load", "--info-level", "detailed", "--test-load-option", "true", "additional", "-extra"
-    };
-
-    final ShellState state = new ShellState();
-    state.setSchemaCrawlerOptions(SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions());
-    state.setDataSource(() -> connection);
-
-    final CommandLine commandLine =
-        newCommandLine(new SchemaCrawlerShellCommands(), new StateFactory(state));
-    CommandLineUtility.addLoadCommandOptions(commandLine);
-
-    commandLine.execute(args);
-
-    final Config config = state.getConfig();
-    assertThat(config.containsKey("test-load-option"), is(true));
-    assertThat(config.getStringValue("test-load-option", null), is("true"));
-  }
 
   @Test
   public void help(final TestContext testContext) throws Exception {
@@ -67,7 +45,7 @@ public class LoadCommandTest {
     final CommandLine baseCommandLine =
         newCommandLine(new SomeClass(), null).addSubcommand(commandLine);
 
-    CommandLineUtility.addLoadCommandOptions(baseCommandLine);
+    //  CommandLineUtility.addLoadCommandOptions(baseCommandLine);
 
     final String helpMessage = commandLine.getUsageMessage();
 

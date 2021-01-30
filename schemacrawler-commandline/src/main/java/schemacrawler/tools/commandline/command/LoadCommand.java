@@ -103,13 +103,13 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
         loadOptionsBuilder.withSchemaInfoLevel(infolevel.toSchemaInfoLevel());
       }
 
+      state.withLoadOptions(loadOptionsBuilder.toOptions());
+
       final ParseResult parseResult = spec.commandLine().getParseResult();
       final Map<String, Object> catalogLoaderOptions = matchedOptionValues(parseResult);
       LOGGER.log(Level.INFO, "Loaded command loader options");
       LOGGER.log(Level.CONFIG, new ObjectToStringFormat(catalogLoaderOptions));
       state.setCatalogLoaderOptions(catalogLoaderOptions);
-
-      state.withLoadOptions(loadOptionsBuilder.toOptions());
 
       final Catalog catalog = loadCatalog();
       state.setCatalog(catalog);

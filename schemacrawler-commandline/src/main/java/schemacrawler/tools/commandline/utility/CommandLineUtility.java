@@ -31,7 +31,6 @@ import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.IOUtility.readResourceFully;
 import static us.fatehi.utility.Utility.isBlank;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -48,42 +47,13 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.catalogloader.ChainedCatalogLoader;
+import schemacrawler.tools.commandline.command.LoaderOptionsCommand;
+import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.executable.commandline.PluginCommandOption;
 
 public class CommandLineUtility {
-
-  public static void addLoadCommandOptions(final CommandLine commandLine)
-      throws SchemaCrawlerException {
-    requireNonNull(commandLine, "No command-line provided");
-
-    final Collection<PluginCommandOption> loadCommandOptions = new ArrayList<>();
-    final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
-    final ChainedCatalogLoader catalogLoaders = catalogLoaderRegistry.loadCatalogLoaders();
-    for (final CatalogLoader catalogLoader : catalogLoaders) {
-      loadCommandOptions.addAll(catalogLoader.getLoadCommandLineOptions());
-    }
-
-    if (loadCommandOptions.isEmpty()) {
-      return;
-    }
-
-    final CommandSpec commandSpec = commandLine.getCommandSpec();
-    final CommandSpec loadCommandSpec;
-    if (commandSpec.subcommands().containsKey("load")) {
-      loadCommandSpec = commandSpec.subcommands().get("load").getCommandSpec();
-    } else {
-      loadCommandSpec = commandSpec.mixins().get("load");
-    }
-    if (loadCommandSpec == null) {
-      return;
-    }
-
-    for (final PluginCommandOption option : loadCommandOptions) {
-      loadCommandSpec.addOption(toOptionSpec(option));
-    }
-  }
 
   public static void addPluginCommands(final CommandLine commandLine)
       throws SchemaCrawlerException {
@@ -102,6 +72,26 @@ public class CommandLineUtility {
     commandLine.setToggleBooleanFlags(false);
 
     return commandLine;
+  }
+
+  public static CommandSpec loaderOptionsCommandSpec(final ShellState state)
+      throws SchemaCrawlerException {
+    requireNonNull(state, "No state provided");
+
+    final CommandSpec loaderOptionsCommandSpec =
+        CommandSpec.forAnnotatedObject(new LoaderOptionsCommand(state)).name("loaderoptions");
+
+    final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
+    final ChainedCatalogLoader catalogLoaders = catalogLoaderRegistry.loadCatalogLoaders();
+    for (final CatalogLoader catalogLoader : catalogLoaders) {
+      final Collection<PluginCommandOption> loadCommandOptions =
+          catalogLoader.getLoadCommandLineOptions();
+      for (final PluginCommandOption option : loadCommandOptions) {
+        loaderOptionsCommandSpec.addOption(toOptionSpec(option));
+      }
+    }
+
+    return loaderOptionsCommandSpec;
   }
 
   /**
