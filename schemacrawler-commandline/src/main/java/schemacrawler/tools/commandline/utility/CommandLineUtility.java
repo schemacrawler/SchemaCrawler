@@ -81,22 +81,7 @@ public class CommandLineUtility {
     }
 
     for (final PluginCommandOption option : loadCommandOptions) {
-      final String optionName = option.getName();
-      final String paramName = String.format("<%s>", optionName);
-      final String[] helpText;
-      if (option.getValueClass().isEnum()) {
-        helpText = new String[1];
-        helpText[0] =
-            String.format("%s%nUse one of ${COMPLETION-CANDIDATES}", option.getHelpText()[0]);
-      } else {
-        helpText = option.getHelpText();
-      }
-      loadCommandSpec.addOption(
-          OptionSpec.builder("--" + optionName)
-              .description(helpText)
-              .paramLabel(paramName)
-              .type(option.getValueClass())
-              .build());
+      loadCommandSpec.addOption(toOptionSpec(option));
     }
   }
 
@@ -197,22 +182,7 @@ public class CommandLineUtility {
     final CommandSpec pluginCommandSpec =
         CommandSpec.create().name(pluginCommandName).usageMessage(usageMessageSpec);
     for (final PluginCommandOption option : pluginCommand) {
-      final String optionName = option.getName();
-      final String paramName = String.format("<%s>", optionName);
-      final String[] helpText;
-      if (option.getValueClass().isEnum()) {
-        helpText = new String[1];
-        helpText[0] =
-            String.format("%s%nUse one of ${COMPLETION-CANDIDATES}", option.getHelpText()[0]);
-      } else {
-        helpText = option.getHelpText();
-      }
-      pluginCommandSpec.addOption(
-          OptionSpec.builder("--" + optionName)
-              .description(helpText)
-              .paramLabel(paramName)
-              .type(option.getValueClass())
-              .build());
+      pluginCommandSpec.addOption(toOptionSpec(option));
     }
     return pluginCommandSpec;
   }
@@ -240,6 +210,26 @@ public class CommandLineUtility {
     for (final PluginCommand pluginCommand : commandRegistry.getCommandLineCommands()) {
       addPluginCommand(commandLine, pluginCommand, addAsMixins);
     }
+  }
+
+  private static OptionSpec toOptionSpec(final PluginCommandOption option) {
+    final String optionName = option.getName();
+    final String paramName = String.format("<%s>", optionName);
+    final String[] helpText;
+    if (option.getValueClass().isEnum()) {
+      helpText = new String[1];
+      helpText[0] =
+          String.format("%s%nUse one of ${COMPLETION-CANDIDATES}", option.getHelpText()[0]);
+    } else {
+      helpText = option.getHelpText();
+    }
+    final OptionSpec optionSpec =
+        OptionSpec.builder("--" + optionName)
+            .description(helpText)
+            .paramLabel(paramName)
+            .type(option.getValueClass())
+            .build();
+    return optionSpec;
   }
 
   private CommandLineUtility() {
