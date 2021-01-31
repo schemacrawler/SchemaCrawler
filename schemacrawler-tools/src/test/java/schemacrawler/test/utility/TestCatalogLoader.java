@@ -28,12 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.utility;
 
-import java.util.Collection;
-
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import schemacrawler.tools.executable.commandline.PluginCommandOption;
 
 public class TestCatalogLoader extends BaseCatalogLoader {
 
@@ -42,14 +39,14 @@ public class TestCatalogLoader extends BaseCatalogLoader {
   }
 
   @Override
-  public Collection<PluginCommandOption> getLoadCommandLineOptions() {
+  public PluginCommand getCommandLineCommand() {
     final PluginCommand pluginCommand =
         PluginCommand.newPluginCommand(this.getClass().getName(), "Catalog load options");
     pluginCommand.addOption(
         "test-load-option",
         Boolean.class,
         "Check that the test option is added to the load command");
-    return pluginCommand.getOptions();
+    return pluginCommand;
   }
 
   @Override

@@ -31,15 +31,13 @@ package schemacrawler.tools.catalogloader;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
-import java.util.Collection;
-import java.util.Collections;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.tools.executable.commandline.PluginCommandOption;
+import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 
 public abstract class BaseCatalogLoader implements CatalogLoader {
@@ -71,13 +69,13 @@ public abstract class BaseCatalogLoader implements CatalogLoader {
   }
 
   @Override
-  public Connection getConnection() {
-    return connection;
+  public PluginCommand getCommandLineCommand() {
+    return PluginCommand.empty();
   }
 
   @Override
-  public Collection<PluginCommandOption> getLoadCommandLineOptions() {
-    return Collections.emptySet();
+  public Connection getConnection() {
+    return connection;
   }
 
   @Override

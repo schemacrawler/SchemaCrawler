@@ -73,7 +73,7 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
         "<infolevel> is one of ${COMPLETION-CANDIDATES}",
         "The info level determines the amount of database metadata retrieved, "
             + "and also determines the time taken to crawl the schema",
-        "Optional, defaults to standard\n"
+        "Optional, defaults to standard"
       })
   private InfoLevel infolevel;
 

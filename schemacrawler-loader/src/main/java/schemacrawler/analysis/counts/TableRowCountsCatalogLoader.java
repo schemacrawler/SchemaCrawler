@@ -30,7 +30,6 @@ package schemacrawler.analysis.counts;
 
 import static schemacrawler.filter.ReducerFactory.getTableReducer;
 
-import java.util.Collection;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
@@ -39,7 +38,6 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.commandline.PluginCommand;
-import schemacrawler.tools.executable.commandline.PluginCommandOption;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.StopWatch;
 
@@ -56,7 +54,7 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
   }
 
   @Override
-  public Collection<PluginCommandOption> getLoadCommandLineOptions() {
+  public PluginCommand getCommandLineCommand() {
     final PluginCommand pluginCommand =
         PluginCommand.newPluginCommand(this.getClass().getName(), "Catalog load options");
     pluginCommand
@@ -72,7 +70,7 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
             "Includes only tables that have rows of data",
             "Requires table row counts to be loaded",
             "Optional, default is false");
-    return pluginCommand.getOptions();
+    return pluginCommand;
   }
 
   @Override

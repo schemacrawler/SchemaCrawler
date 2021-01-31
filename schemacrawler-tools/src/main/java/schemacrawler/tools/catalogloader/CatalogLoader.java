@@ -29,22 +29,21 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.catalogloader;
 
 import java.sql.Connection;
-import java.util.Collection;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.tools.executable.commandline.PluginCommandOption;
+import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 
 public interface CatalogLoader extends Comparable<CatalogLoader> {
 
   Catalog getCatalog();
 
-  Connection getConnection();
+  PluginCommand getCommandLineCommand();
 
-  Collection<PluginCommandOption> getLoadCommandLineOptions();
+  Connection getConnection();
 
   int getPriority();
 

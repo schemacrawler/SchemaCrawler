@@ -52,13 +52,16 @@ import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 import schemacrawler.schemacrawler.DatabaseServerType;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.executable.commandline.PluginCommandType;
 
@@ -91,7 +94,24 @@ public final class CommandLineHelpCommand implements Runnable {
       final ShellState state = new ShellState();
       final CommandLine parent =
           newCommandLine(new SchemaCrawlerShellCommands(), new StateFactory(state));
-      addPluginHelpCommands(parent);
+      addPluginHelpCommands(
+          parent,
+          () -> {
+            try {
+              return new CatalogLoaderRegistry().getCommandLineCommands();
+            } catch (final SchemaCrawlerException e) {
+              throw new SchemaCrawlerRuntimeException("Could not load catalog loaders", e);
+            }
+          });
+      addPluginHelpCommands(
+          parent,
+          () -> {
+            try {
+              return CommandRegistry.getCommandRegistry().getCommandLineCommands();
+            } catch (final SchemaCrawlerException e) {
+              throw new SchemaCrawlerRuntimeException("Could not load plugin commands", e);
+            }
+          });
       addDatabasePluginHelpCommands(parent);
 
       if (!isBlank(command)) {

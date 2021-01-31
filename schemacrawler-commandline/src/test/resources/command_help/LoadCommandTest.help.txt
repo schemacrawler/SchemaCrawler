@@ -8,4 +8,3 @@ Options:
          The info level determines the amount of database metadata retrieved,
            and also determines the time taken to crawl the schema
          Optional, defaults to standard
-

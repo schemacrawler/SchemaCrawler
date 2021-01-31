@@ -46,12 +46,14 @@ import picocli.CommandLine;
 import picocli.CommandLine.IExecutionExceptionHandler;
 import picocli.CommandLine.ParseResult;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
+import schemacrawler.tools.executable.CommandRegistry;
 import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -66,16 +68,16 @@ public class ExecuteCommandTest {
 
       private Exception exception;
 
+      public Exception getException() {
+        return exception;
+      }
+
       @Override
       public int handleExecutionException(
           final Exception ex, final CommandLine commandLine, final ParseResult parseResult)
           throws Exception {
         exception = ex;
         return 1;
-      }
-
-      public Exception getException() {
-        return exception;
       }
     }
     final ExceptionHandler exceptionHandler = new ExceptionHandler();
@@ -115,20 +117,6 @@ public class ExecuteCommandTest {
     assertThat(
         outputOf(testOutputFile),
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
-  }
-
-  private CommandLine createShellCommandLine(final Connection connection)
-      throws SchemaCrawlerException {
-    final ShellState state = createLoadedSchemaCrawlerShellState(connection);
-    final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
-    final CommandLine commandLine = newCommandLine(commands, new StateFactory(state));
-    final CommandLine executeCommandLine =
-        commandLine.getSubcommands().getOrDefault("execute", null);
-    if (executeCommandLine != null) {
-      addPluginCommands(executeCommandLine);
-      commandLine.addSubcommand(executeCommandLine);
-    }
-    return commandLine;
   }
 
   @Test
@@ -179,5 +167,27 @@ public class ExecuteCommandTest {
     assertThat(
         outputOf(testOutputFile4),
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".4.txt")));
+  }
+
+  private CommandLine createShellCommandLine(final Connection connection)
+      throws SchemaCrawlerException {
+    final ShellState state = createLoadedSchemaCrawlerShellState(connection);
+    final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
+    final CommandLine commandLine = newCommandLine(commands, new StateFactory(state));
+    final CommandLine executeCommandLine =
+        commandLine.getSubcommands().getOrDefault("execute", null);
+    if (executeCommandLine != null) {
+      addPluginCommands(
+          executeCommandLine,
+          () -> {
+            try {
+              return CommandRegistry.getCommandRegistry().getCommandLineCommands();
+            } catch (final SchemaCrawlerException e) {
+              throw new SchemaCrawlerRuntimeException("Could not load plugin commands", e);
+            }
+          });
+      commandLine.addSubcommand(executeCommandLine);
+    }
+    return commandLine;
   }
 }

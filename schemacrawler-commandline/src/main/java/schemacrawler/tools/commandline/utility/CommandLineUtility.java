@@ -35,6 +35,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import picocli.CommandLine;
 import picocli.CommandLine.IFactory;
@@ -44,25 +45,21 @@ import picocli.CommandLine.Model.UsageMessageSpec;
 import picocli.CommandLine.ParseResult;
 import schemacrawler.Version;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.catalogloader.CatalogLoader;
-import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
-import schemacrawler.tools.catalogloader.ChainedCatalogLoader;
-import schemacrawler.tools.commandline.command.LoaderOptionsCommand;
-import schemacrawler.tools.commandline.state.ShellState;
-import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.executable.commandline.PluginCommandOption;
 
 public class CommandLineUtility {
 
-  public static void addPluginCommands(final CommandLine commandLine)
+  public static void addPluginCommands(
+      final CommandLine commandLine, final Supplier<Collection<PluginCommand>> pluginCommands)
       throws SchemaCrawlerException {
-    addPluginCommands(commandLine, true);
+    addPluginCommands(commandLine, pluginCommands, true);
   }
 
-  public static void addPluginHelpCommands(final CommandLine commandLine)
+  public static void addPluginHelpCommands(
+      final CommandLine commandLine, final Supplier<Collection<PluginCommand>> pluginCommands)
       throws SchemaCrawlerException {
-    addPluginCommands(commandLine, false);
+    addPluginCommands(commandLine, pluginCommands, false);
   }
 
   public static CommandLine configureCommandLine(final CommandLine commandLine) {
@@ -72,26 +69,6 @@ public class CommandLineUtility {
     commandLine.setToggleBooleanFlags(false);
 
     return commandLine;
-  }
-
-  public static CommandSpec loaderOptionsCommandSpec(final ShellState state)
-      throws SchemaCrawlerException {
-    requireNonNull(state, "No state provided");
-
-    final CommandSpec loaderOptionsCommandSpec =
-        CommandSpec.forAnnotatedObject(new LoaderOptionsCommand(state)).name("loaderoptions");
-
-    final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
-    final ChainedCatalogLoader catalogLoaders = catalogLoaderRegistry.loadCatalogLoaders();
-    for (final CatalogLoader catalogLoader : catalogLoaders) {
-      final Collection<PluginCommandOption> loadCommandOptions =
-          catalogLoader.getLoadCommandLineOptions();
-      for (final PluginCommandOption option : loadCommandOptions) {
-        loaderOptionsCommandSpec.addOption(toOptionSpec(option));
-      }
-    }
-
-    return loaderOptionsCommandSpec;
   }
 
   /**
@@ -193,11 +170,14 @@ public class CommandLineUtility {
     }
   }
 
-  private static void addPluginCommands(final CommandLine commandLine, final boolean addAsMixins)
+  private static void addPluginCommands(
+      final CommandLine commandLine,
+      final Supplier<Collection<PluginCommand>> pluginCommands,
+      final boolean addAsMixins)
       throws SchemaCrawlerException {
-    // Add commands for plugins
-    final CommandRegistry commandRegistry = CommandRegistry.getCommandRegistry();
-    for (final PluginCommand pluginCommand : commandRegistry.getCommandLineCommands()) {
+    requireNonNull(commandLine, "No command-line provided");
+    requireNonNull(pluginCommands, "No plugin commands supplier provided");
+    for (final PluginCommand pluginCommand : pluginCommands.get()) {
       addPluginCommand(commandLine, pluginCommand, addAsMixins);
     }
   }

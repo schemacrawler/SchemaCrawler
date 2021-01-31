@@ -1,28 +1,29 @@
 package schemacrawler.test.commandline.command;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static schemacrawler.test.utility.CommandlineTestUtility.createConnectedSchemaCrawlerShellState;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.writeStringToTempFile;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 import java.sql.Connection;
-import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import picocli.CommandLine;
-import picocli.CommandLine.Command;
-import picocli.CommandLine.Model.CommandSpec;
-import picocli.CommandLine.ParseResult;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
+import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
 import schemacrawler.tools.commandline.state.ShellState;
-import schemacrawler.tools.commandline.utility.CommandLineUtility;
+import schemacrawler.tools.commandline.state.StateFactory;
 
 @ExtendWith(TestContextParameterResolver.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -36,45 +37,44 @@ public class LoaderOptionsCommandTest {
       "--test-load-option", "true",
     };
 
-    final ShellState state = new ShellState();
+    final ShellState state = createConnectedSchemaCrawlerShellState(connection);
+    final CommandLine commandLine = createShellCommandLine(connection, state);
 
-    @Command(name = "base-command")
-    class SomeClass {}
-
-    final CommandSpec loaderOptionsCommandSpec = CommandLineUtility.loaderOptionsCommandSpec(state);
-
-    final CommandLine baseCommandLine = newCommandLine(new SomeClass(), null);
-    baseCommandLine.addMixin("loaderoptions", loaderOptionsCommandSpec);
-
-    final ParseResult parseResult = baseCommandLine.parseArgs(args);
-
-    final Map<String, Object> matchedOptionValues =
-        CommandLineUtility.matchedOptionValues(parseResult);
-    System.out.println(matchedOptionValues);
-
-    assertThat(matchedOptionValues.containsKey("test-load-option"), is(true));
-    assertThat(matchedOptionValues.get("test-load-option"), is(true));
+    commandLine.parseArgs(args);
   }
 
   @Test
-  public void help(final TestContext testContext) throws Exception {
+  public void help(final TestContext testContext, final Connection connection) throws Exception {
 
-    final ShellState state = new ShellState();
+    final ShellState state = createConnectedSchemaCrawlerShellState(connection);
+    final CommandLine commandLine = createShellCommandLine(connection, state);
 
-    @Command(name = "base-command")
-    class SomeClass {}
-
-    final CommandSpec loaderOptionsCommandSpec = CommandLineUtility.loaderOptionsCommandSpec(state);
-
-    final CommandLine baseCommandLine =
-        newCommandLine(new SomeClass(), null).addSubcommand(loaderOptionsCommandSpec);
-
-    final String helpMessage =
-        baseCommandLine.getSubcommands().get("loaderoptions").getUsageMessage();
+    final String helpMessage = commandLine.getSubcommands().get("load").getUsageMessage();
 
     assertThat(
         outputOf(writeStringToTempFile(helpMessage)),
         hasSameContentAs(
             classpathResource(COMMAND_HELP + testContext.testMethodFullName() + ".txt")));
+  }
+
+  private CommandLine createShellCommandLine(final Connection connection, final ShellState state)
+      throws SchemaCrawlerException {
+
+    final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
+    final CommandLine commandLine = newCommandLine(commands, new StateFactory(state));
+    final CommandLine loadCommandLine = commandLine.getSubcommands().getOrDefault("load", null);
+    if (loadCommandLine != null) {
+      addPluginCommands(
+          loadCommandLine,
+          () -> {
+            try {
+              return new CatalogLoaderRegistry().getCommandLineCommands();
+            } catch (final SchemaCrawlerException e) {
+              throw new SchemaCrawlerRuntimeException("Could not load catalog loader", e);
+            }
+          });
+      commandLine.addSubcommand(loadCommandLine);
+    }
+    return commandLine;
   }
 }

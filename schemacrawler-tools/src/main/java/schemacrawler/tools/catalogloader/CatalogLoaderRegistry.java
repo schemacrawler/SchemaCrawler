@@ -29,13 +29,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.catalogloader;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.string.StringFormat;
 
 /**
@@ -47,6 +50,14 @@ public final class CatalogLoaderRegistry {
 
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(CatalogLoaderRegistry.class.getName());
+
+  public Collection<PluginCommand> getCommandLineCommands() throws SchemaCrawlerException {
+    final Collection<PluginCommand> commandLineCommands = new HashSet<>();
+    for (final CatalogLoader catalogLoader : loadCatalogLoaderRegistry()) {
+      commandLineCommands.add(catalogLoader.getCommandLineCommand());
+    }
+    return commandLineCommands;
+  }
 
   public ChainedCatalogLoader loadCatalogLoaders() throws SchemaCrawlerException {
     final List<CatalogLoader> chainedCatalogLoaders = loadCatalogLoaderRegistry();

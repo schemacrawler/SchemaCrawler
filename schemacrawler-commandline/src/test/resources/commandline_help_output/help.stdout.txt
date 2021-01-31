@@ -258,7 +258,6 @@ Options:
          Optional, defaults to standard
 
 
-
 ** Generate text output to show details of a schema
 Command:
 command:schema
