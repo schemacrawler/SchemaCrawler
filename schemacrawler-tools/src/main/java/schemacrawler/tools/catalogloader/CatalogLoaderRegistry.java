@@ -38,23 +38,24 @@ import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * Registry for mapping database connectors from DatabaseConnector-line switch.
- *
- * @author Sualeh Fatehi
- */
+/** Registry for mapping database connectors from DatabaseConnector-line switch. */
 public final class CatalogLoaderRegistry {
 
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(CatalogLoaderRegistry.class.getName());
 
-  public Collection<PluginCommand> getCommandLineCommands() throws SchemaCrawlerException {
+  public Collection<PluginCommand> getCommandLineCommands() {
     final Collection<PluginCommand> commandLineCommands = new HashSet<>();
-    for (final CatalogLoader catalogLoader : loadCatalogLoaderRegistry()) {
-      commandLineCommands.add(catalogLoader.getCommandLineCommand());
+    try {
+      for (final CatalogLoader catalogLoader : loadCatalogLoaderRegistry()) {
+        commandLineCommands.add(catalogLoader.getCommandLineCommand());
+      }
+    } catch (final SchemaCrawlerException e) {
+      throw new SchemaCrawlerRuntimeException("Could not load catalog loaders", e);
     }
     return commandLineCommands;
   }

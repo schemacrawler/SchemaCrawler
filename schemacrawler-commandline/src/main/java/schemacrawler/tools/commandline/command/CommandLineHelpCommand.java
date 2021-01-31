@@ -186,7 +186,10 @@ public final class CommandLineHelpCommand implements Runnable {
     System.out.printf("%n%n");
 
     Stream.of(
-            Stream.of("log", "config-file", "connect", "limit", "grep", "filter", "load"),
+            Stream.of("log", "config-file", "connect", "limit", "grep", "filter"),
+            StreamSupport.stream(new AvailableCatalogLoaders().spliterator(), false)
+                .map(PluginCommandType.loader::toPluginCommandName),
+            Stream.of("load"),
             StreamSupport.stream(new AvailableCommands().spliterator(), false)
                 .map(PluginCommandType.command::toPluginCommandName),
             Stream.of("execute"))

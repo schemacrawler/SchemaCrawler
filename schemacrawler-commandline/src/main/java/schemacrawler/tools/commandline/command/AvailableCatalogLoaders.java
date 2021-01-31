@@ -28,37 +28,38 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
+import schemacrawler.tools.executable.commandline.PluginCommand;
 
-public class AvailableServers implements Iterable<String> {
+public class AvailableCatalogLoaders implements Iterable<String> {
 
-  private static List<String> availableServers() {
-    final List<String> availableServers = new ArrayList<>();
-    final DatabaseConnectorRegistry databaseConnectorRegistry =
-        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    for (final DatabaseServerType serverType : databaseConnectorRegistry) {
-      final String name = serverType.getDatabaseSystemIdentifier();
-      availableServers.add(name);
+  private static List<String> availableCatalogLoaders() {
+    final List<String> availableCatalogLoaders = new ArrayList<>();
+    final Collection<PluginCommand> catalogLoaderCommands =
+        new CatalogLoaderRegistry().getCommandLineCommands();
+    for (final PluginCommand pluginCommand : catalogLoaderCommands) {
+      final String name = pluginCommand.getName();
+      availableCatalogLoaders.add(name);
     }
-    return availableServers;
+    return availableCatalogLoaders;
   }
 
-  private final List<String> availableServers;
+  private final List<String> availableCatalogLoaders;
 
-  public AvailableServers() {
-    availableServers = availableServers();
+  public AvailableCatalogLoaders() {
+    availableCatalogLoaders = availableCatalogLoaders();
   }
 
   @Override
   public Iterator<String> iterator() {
-    return availableServers.iterator();
+    return availableCatalogLoaders.iterator();
   }
 
   public int size() {
-    return availableServers.size();
+    return availableCatalogLoaders.size();
   }
 }

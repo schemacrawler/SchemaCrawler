@@ -39,8 +39,6 @@ import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Help.Column;
 import picocli.CommandLine.Help.TextTable;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.CommandRegistry;
 
@@ -59,31 +57,27 @@ public class AvailableCommandsCommand implements Runnable {
     colorSchemaBuilder.ansi(CommandLine.Help.Ansi.OFF);
     final TextTable textTable =
         forColumns(colorSchemaBuilder.build(), new Column(15, 1, SPAN), new Column(65, 1, WRAP));
-    try {
-      final Collection<CommandDescription> commandDescriptions =
-          CommandRegistry.getCommandRegistry().getSupportedCommands();
-      commandDescriptions.add(
-          new CommandDescription(
-              "<query_name>",
-              "Shows results of query <query_name>, "
-                  + "as specified in the configuration properties file"));
-      commandDescriptions.add(
-          new CommandDescription(
-              "<query>",
-              String.join(
-                  "\n",
-                  "Shows results of SQL <query>",
-                  "The query itself can contain the variables ${table}, ${columns} "
-                      + "and ${tabletype}, or system properties referenced as ${<system-property-name>}",
-                  "Queries without any variables are executed exactly once",
-                  "Queries with variables are executed once for each table, "
-                      + "with the variables substituted")));
+    final Collection<CommandDescription> commandDescriptions =
+        CommandRegistry.getCommandRegistry().getSupportedCommands();
+    commandDescriptions.add(
+        new CommandDescription(
+            "<query_name>",
+            "Shows results of query <query_name>, "
+                + "as specified in the configuration properties file"));
+    commandDescriptions.add(
+        new CommandDescription(
+            "<query>",
+            String.join(
+                "\n",
+                "Shows results of SQL <query>",
+                "The query itself can contain the variables ${table}, ${columns} "
+                    + "and ${tabletype}, or system properties referenced as ${<system-property-name>}",
+                "Queries without any variables are executed exactly once",
+                "Queries with variables are executed once for each table, "
+                    + "with the variables substituted")));
 
-      for (final CommandDescription commandDescription : commandDescriptions) {
-        textTable.addRowValues(commandDescription.getName(), commandDescription.getDescription());
-      }
-    } catch (final SchemaCrawlerException e) {
-      throw new SchemaCrawlerRuntimeException("Could not initialize command registry", e);
+    for (final CommandDescription commandDescription : commandDescriptions) {
+      textTable.addRowValues(commandDescription.getName(), commandDescription.getDescription());
     }
     return textTable.toString();
   }
