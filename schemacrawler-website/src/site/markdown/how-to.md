@@ -161,11 +161,20 @@ procedures, and index and primary key names, and not showing the fully-qualified
 
 ---------
 
-### <a name="table-row-counts">How to show table row counts in output and diagrams</a>
+### <a name="table-row-counts">How to hide table row counts in output and diagrams</a>
 
-Show table row counts in output, and diagrams. Change the configuration for the SchemaCrawler
-`schemacrawler.format.show_row_counts=true` in the `schemacrawler.config.properties` file.
-Then run SchemaCrawler with the `--load-row-counts` command-line option.
+Hide table row counts in output, and diagrams. Change the configuration for the SchemaCrawler
+`schemacrawler.format.hide_table_row_counts=true` in the `schemacrawler.config.properties` file.
+Then even if you run SchemaCrawler with the `--load-row-counts` command-line option, table row counts
+will not be shown in the output.
+
+---------
+
+### <a name="hide-empty-tables">How to hide empty tables in output and diagrams</a>
+
+Hide tables with no data in output, and diagrams. Run SchemaCrawler with the 
+`--load-row-counts --no-empty-tables` command-line options, while table row counts
+will be shown in the output, empty tables will be omitted.
 
 ---------
 

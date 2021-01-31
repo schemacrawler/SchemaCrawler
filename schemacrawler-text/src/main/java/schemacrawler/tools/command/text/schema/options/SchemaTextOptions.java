@@ -46,7 +46,7 @@ public class SchemaTextOptions extends BaseTextOptions {
   private final boolean isShowWeakAssociations;
   private final boolean isShowOrdinalNumbers;
   private final boolean isShowStandardColumnTypeNames;
-  private final boolean isShowRowCounts;
+  private final boolean isHideTableRowCounts;
 
   protected SchemaTextOptions(
       final BaseSchemaTextOptionsBuilder<?, ? extends SchemaTextOptions> builder) {
@@ -64,7 +64,7 @@ public class SchemaTextOptions extends BaseTextOptions {
     isShowWeakAssociations = builder.isShowWeakAssociations;
     isShowOrdinalNumbers = builder.isShowOrdinalNumbers;
     isShowStandardColumnTypeNames = builder.isShowStandardColumnTypeNames;
-    isShowRowCounts = builder.isShowRowCounts;
+    isHideTableRowCounts = builder.isHideTableRowCounts;
   }
 
   @Override
@@ -88,7 +88,7 @@ public class SchemaTextOptions extends BaseTextOptions {
         && isShowWeakAssociations == that.isShowWeakAssociations
         && isShowOrdinalNumbers == that.isShowOrdinalNumbers
         && isShowStandardColumnTypeNames == that.isShowStandardColumnTypeNames
-        && isShowRowCounts == that.isShowRowCounts;
+        && isHideTableRowCounts == that.isHideTableRowCounts;
   }
 
   @Override
@@ -106,7 +106,7 @@ public class SchemaTextOptions extends BaseTextOptions {
         isShowWeakAssociations,
         isShowOrdinalNumbers,
         isShowStandardColumnTypeNames,
-        isShowRowCounts);
+        isHideTableRowCounts);
   }
 
   public boolean isAlphabeticalSortForForeignKeys() {
@@ -149,8 +149,8 @@ public class SchemaTextOptions extends BaseTextOptions {
     return isShowOrdinalNumbers;
   }
 
-  public boolean isShowRowCounts() {
-    return isShowRowCounts;
+  public boolean isHideTableRowCounts() {
+    return isHideTableRowCounts;
   }
 
   public boolean isShowStandardColumnTypeNames() {

@@ -390,7 +390,7 @@ public class DiagramRendererOptionsTest {
   public void executableForDiagram_12(final TestContext testContext, final Connection connection)
       throws Exception {
     final DiagramOptionsBuilder diagramOptionsBuilder = builder();
-    diagramOptionsBuilder.showRowCounts();
+    diagramOptionsBuilder.hideRowCounts();
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
     final LoadOptionsBuilder loadOptionsBuilder =

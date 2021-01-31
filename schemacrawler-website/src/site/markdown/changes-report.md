@@ -1,5 +1,11 @@
 # SchemaCrawler Change History
 
+<a name="a16.12.1"></a>
+## Release 16.12.1 - 2021-02-10
+
+- Allow catalog loaders to be chained, and plugged in
+- Show table row counts by default, if they are loaded
+- Replace `schemacrawler.format.show_row_counts` configuration option with `schemacrawler.format.hide_table_row_counts` with the opposite meaning
 
 <a name="a16.11.7"></a>
 ## Release 16.11.7 - 2020-12-26
