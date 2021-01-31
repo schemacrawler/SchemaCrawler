@@ -31,6 +31,8 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logFullStackTrace;
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSafeArguments;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.catalogLoaderPluginCommands;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.commandPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.printCommandLineErrorMessage;
 import static us.fatehi.utility.Utility.isBlank;
@@ -40,12 +42,8 @@ import java.util.logging.Level;
 
 import picocli.CommandLine;
 import schemacrawler.SchemaCrawlerLogger;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
-import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
-import schemacrawler.tools.executable.CommandRegistry;
 
 public final class SchemaCrawlerCommandLine {
 
@@ -62,24 +60,8 @@ public final class SchemaCrawlerCommandLine {
 
       final SchemaCrawlerCommandLineCommands commands = new SchemaCrawlerCommandLineCommands();
       final CommandLine commandLine = newCommandLine(commands, stateFactory);
-      addPluginCommands(
-          commandLine,
-          () -> {
-            try {
-              return new CatalogLoaderRegistry().getCommandLineCommands();
-            } catch (final SchemaCrawlerException e) {
-              throw new SchemaCrawlerRuntimeException("Could not load catalog loaders", e);
-            }
-          });
-      addPluginCommands(
-          commandLine,
-          () -> {
-            try {
-              return CommandRegistry.getCommandRegistry().getCommandLineCommands();
-            } catch (final SchemaCrawlerException e) {
-              throw new SchemaCrawlerRuntimeException("Could not load plugin commands", e);
-            }
-          });
+      addPluginCommands(commandLine, catalogLoaderPluginCommands);
+      addPluginCommands(commandLine, commandPluginCommands);
       commandLine.parseArgs(args);
 
       executeCommandLine(commandLine);

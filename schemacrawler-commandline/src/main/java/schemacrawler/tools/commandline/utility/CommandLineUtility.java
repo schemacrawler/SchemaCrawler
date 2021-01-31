@@ -45,10 +45,31 @@ import picocli.CommandLine.Model.UsageMessageSpec;
 import picocli.CommandLine.ParseResult;
 import schemacrawler.Version;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
+import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.executable.commandline.PluginCommandOption;
 
 public class CommandLineUtility {
+
+  public static final Supplier<Collection<PluginCommand>> catalogLoaderPluginCommands =
+      () -> {
+        try {
+          return new CatalogLoaderRegistry().getCommandLineCommands();
+        } catch (final SchemaCrawlerException e) {
+          throw new SchemaCrawlerRuntimeException("Could not load catalog loaders", e);
+        }
+      };
+
+  public static final Supplier<Collection<PluginCommand>> commandPluginCommands =
+      () -> {
+        try {
+          return CommandRegistry.getCommandRegistry().getCommandLineCommands();
+        } catch (final SchemaCrawlerException e) {
+          throw new SchemaCrawlerRuntimeException("Could not load plugin commands", e);
+        }
+      };
 
   public static void addPluginCommands(
       final CommandLine commandLine, final Supplier<Collection<PluginCommand>> pluginCommands)

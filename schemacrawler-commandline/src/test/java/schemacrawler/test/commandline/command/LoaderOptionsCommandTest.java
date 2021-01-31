@@ -7,6 +7,7 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.writeStringToTempFile;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.catalogLoaderPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 import java.sql.Connection;
@@ -16,11 +17,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
-import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
@@ -64,15 +63,7 @@ public class LoaderOptionsCommandTest {
     final CommandLine commandLine = newCommandLine(commands, new StateFactory(state));
     final CommandLine loadCommandLine = commandLine.getSubcommands().getOrDefault("load", null);
     if (loadCommandLine != null) {
-      addPluginCommands(
-          loadCommandLine,
-          () -> {
-            try {
-              return new CatalogLoaderRegistry().getCommandLineCommands();
-            } catch (final SchemaCrawlerException e) {
-              throw new SchemaCrawlerRuntimeException("Could not load catalog loader", e);
-            }
-          });
+      addPluginCommands(loadCommandLine, catalogLoaderPluginCommands);
       commandLine.addSubcommand(loadCommandLine);
     }
     return commandLine;

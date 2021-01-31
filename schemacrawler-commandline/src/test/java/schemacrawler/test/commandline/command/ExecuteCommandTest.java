@@ -34,6 +34,7 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.commandPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 import java.nio.file.Path;
@@ -46,14 +47,12 @@ import picocli.CommandLine;
 import picocli.CommandLine.IExecutionExceptionHandler;
 import picocli.CommandLine.ParseResult;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
-import schemacrawler.tools.executable.CommandRegistry;
 import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -177,15 +176,7 @@ public class ExecuteCommandTest {
     final CommandLine executeCommandLine =
         commandLine.getSubcommands().getOrDefault("execute", null);
     if (executeCommandLine != null) {
-      addPluginCommands(
-          executeCommandLine,
-          () -> {
-            try {
-              return CommandRegistry.getCommandRegistry().getCommandLineCommands();
-            } catch (final SchemaCrawlerException e) {
-              throw new SchemaCrawlerRuntimeException("Could not load plugin commands", e);
-            }
-          });
+      addPluginCommands(executeCommandLine, commandPluginCommands);
       commandLine.addSubcommand(executeCommandLine);
     }
     return commandLine;
