@@ -82,13 +82,13 @@ public final class SchemaCrawlerShell {
       final CommandLine commandLine = newCommandLine(commands, factory);
       final CommandLine loadCommandLine = commandLine.getSubcommands().getOrDefault("load", null);
       if (loadCommandLine != null) {
-        addPluginCommands(commandLine, catalogLoaderPluginCommands);
+        addPluginCommands(loadCommandLine, catalogLoaderPluginCommands);
         commandLine.addSubcommand(loadCommandLine);
       }
       final CommandLine executeCommandLine =
           commandLine.getSubcommands().getOrDefault("execute", null);
       if (executeCommandLine != null) {
-        addPluginCommands(commandLine, commandPluginCommands);
+        addPluginCommands(executeCommandLine, commandPluginCommands);
         commandLine.addSubcommand(executeCommandLine);
       }
       commandLine.setExecutionExceptionHandler(
