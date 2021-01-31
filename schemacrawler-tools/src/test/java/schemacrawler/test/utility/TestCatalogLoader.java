@@ -41,13 +41,22 @@ public class TestCatalogLoader extends BaseCatalogLoader {
   @Override
   public PluginCommand getCommandLineCommand() {
     final PluginCommand pluginCommand =
-        PluginCommand.newCatalogLoaderCommand(
-            "testloader", "Catalog load options to enable testing");
+        PluginCommand.newCatalogLoaderCommand(getName(), getDescription());
     pluginCommand.addOption(
         "test-load-option",
         Boolean.class,
         "Check that the test option is added to the load command");
     return pluginCommand;
+  }
+
+  @Override
+  public String getDescription() {
+    return "Loader for testing";
+  }
+
+  @Override
+  public String getName() {
+    return "testloader";
   }
 
   @Override

@@ -39,6 +39,7 @@ import java.util.logging.Level;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.string.StringFormat;
 
@@ -53,6 +54,19 @@ public final class CatalogLoaderRegistry {
     try {
       for (final CatalogLoader catalogLoader : loadCatalogLoaderRegistry()) {
         commandLineCommands.add(catalogLoader.getCommandLineCommand());
+      }
+    } catch (final SchemaCrawlerException e) {
+      throw new SchemaCrawlerRuntimeException("Could not load catalog loaders", e);
+    }
+    return commandLineCommands;
+  }
+
+  public Collection<CommandDescription> getSupportedCatalogLoaders() {
+    final Collection<CommandDescription> commandLineCommands = new HashSet<>();
+    try {
+      for (final CatalogLoader catalogLoader : loadCatalogLoaderRegistry()) {
+        commandLineCommands.add(
+            new CommandDescription(catalogLoader.getName(), catalogLoader.getDescription()));
       }
     } catch (final SchemaCrawlerException e) {
       throw new SchemaCrawlerRuntimeException("Could not load catalog loaders", e);

@@ -52,6 +52,16 @@ public class ChainedCatalogLoader extends BaseCatalogLoader implements Iterable<
   }
 
   @Override
+  public String getDescription() {
+    return "Chain of all catalog loaders, called in turn by priority";
+  }
+
+  @Override
+  public String getName() {
+    return "chainloader";
+  }
+
+  @Override
   public Iterator<CatalogLoader> iterator() {
     return chainedCatalogLoaders.iterator();
   }

@@ -42,6 +42,16 @@ public final class OracleCatalogLoader extends BaseCatalogLoader {
   }
 
   @Override
+  public String getDescription() {
+    return "Loader for Oracle databases";
+  }
+
+  @Override
+  public String getName() {
+    return "oracleloader";
+  }
+
+  @Override
   public void loadCatalog() throws SchemaCrawlerException {
 
     if (!isDatabaseSystemIdentifier("oracle")) {

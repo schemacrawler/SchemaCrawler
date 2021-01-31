@@ -85,9 +85,9 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
     final JvmSystemInfo jvmInfo = new JvmSystemInfo();
     System.out.println(jvmInfo);
 
-    new AvailableCommandsCommand().run();
-
     new AvailableServersCommand().run();
+    new AvailableCatalogLoadersCommand().run();
+    new AvailableCommandsCommand().run();
   }
 
   @Override

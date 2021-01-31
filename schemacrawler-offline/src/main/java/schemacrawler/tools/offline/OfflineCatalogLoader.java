@@ -32,6 +32,16 @@ public final class OfflineCatalogLoader extends BaseCatalogLoader {
   }
 
   @Override
+  public String getDescription() {
+    return "Loader for offline databases";
+  }
+
+  @Override
+  public String getName() {
+    return "offlineloader";
+  }
+
+  @Override
   public void loadCatalog() throws SchemaCrawlerException {
 
     if (isLoaded()) {

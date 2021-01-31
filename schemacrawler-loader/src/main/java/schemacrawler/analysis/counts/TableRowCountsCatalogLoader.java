@@ -56,8 +56,7 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
   @Override
   public PluginCommand getCommandLineCommand() {
     final PluginCommand pluginCommand =
-        PluginCommand.newCatalogLoaderCommand(
-            "countsloader", "Catalog load options to load table row counts");
+        PluginCommand.newCatalogLoaderCommand(getName(), getDescription());
     pluginCommand
         .addOption(
             OPTION_LOAD_ROW_COUNTS,
@@ -72,6 +71,16 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
             "Requires table row counts to be loaded",
             "Optional, default is false");
     return pluginCommand;
+  }
+
+  @Override
+  public String getDescription() {
+    return "Loader for table row counts";
+  }
+
+  @Override
+  public String getName() {
+    return "countsloader";
   }
 
   @Override

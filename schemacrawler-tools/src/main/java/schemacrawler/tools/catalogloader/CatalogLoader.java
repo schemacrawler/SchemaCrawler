@@ -45,6 +45,10 @@ public interface CatalogLoader extends Comparable<CatalogLoader> {
 
   Connection getConnection();
 
+  String getDescription();
+
+  String getName();
+
   int getPriority();
 
   SchemaCrawlerOptions getSchemaCrawlerOptions();

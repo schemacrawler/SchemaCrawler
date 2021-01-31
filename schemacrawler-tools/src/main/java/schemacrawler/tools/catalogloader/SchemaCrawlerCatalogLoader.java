@@ -43,6 +43,16 @@ public class SchemaCrawlerCatalogLoader extends BaseCatalogLoader {
   }
 
   @Override
+  public String getDescription() {
+    return "Loader for SchemaCrawler metadata catalog";
+  }
+
+  @Override
+  public String getName() {
+    return "schemacrawlerloader";
+  }
+
+  @Override
   public void loadCatalog() throws SchemaCrawlerException {
     if (isLoaded()) {
       return;

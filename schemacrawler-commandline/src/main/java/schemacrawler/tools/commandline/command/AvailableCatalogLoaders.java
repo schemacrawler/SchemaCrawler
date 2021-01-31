@@ -33,16 +33,16 @@ import java.util.Iterator;
 import java.util.List;
 
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
-import schemacrawler.tools.executable.commandline.PluginCommand;
+import schemacrawler.tools.executable.CommandDescription;
 
 public class AvailableCatalogLoaders implements Iterable<String> {
 
   private static List<String> availableCatalogLoaders() {
     final List<String> availableCatalogLoaders = new ArrayList<>();
-    final Collection<PluginCommand> catalogLoaderCommands =
-        new CatalogLoaderRegistry().getCommandLineCommands();
-    for (final PluginCommand pluginCommand : catalogLoaderCommands) {
-      final String name = pluginCommand.getName();
+    final Collection<CommandDescription> supportedCatalogLoaders =
+        new CatalogLoaderRegistry().getSupportedCatalogLoaders();
+    for (final CommandDescription catalogLoader : supportedCatalogLoaders) {
+      final String name = catalogLoader.getName();
       availableCatalogLoaders.add(name);
     }
     return availableCatalogLoaders;
