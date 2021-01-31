@@ -42,7 +42,7 @@ public class TestCatalogLoader extends BaseCatalogLoader {
   public PluginCommand getCommandLineCommand() {
     final PluginCommand pluginCommand =
         PluginCommand.newCatalogLoaderCommand(
-            "countsloader", "Catalog load options to load table row counts");
+            "testloader", "Catalog load options to enable testing");
     pluginCommand.addOption(
         "test-load-option",
         Boolean.class,
