@@ -30,33 +30,26 @@ package schemacrawler.test.utility;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
+import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 
 public class TestCatalogLoader extends BaseCatalogLoader {
 
   public TestCatalogLoader() {
-    super(3);
+    super(new CommandDescription("testloader", "Loader for testing"), 3);
   }
 
   @Override
   public PluginCommand getCommandLineCommand() {
+    final CommandDescription commandDescription = getCommandDescription();
     final PluginCommand pluginCommand =
-        PluginCommand.newCatalogLoaderCommand(getName(), getDescription());
+        PluginCommand.newCatalogLoaderCommand(
+            commandDescription.getName(), commandDescription.getDescription());
     pluginCommand.addOption(
         "test-load-option",
         Boolean.class,
         "Check that the test option is added to the load command");
     return pluginCommand;
-  }
-
-  @Override
-  public String getDescription() {
-    return "Loader for testing";
-  }
-
-  @Override
-  public String getName() {
-    return "testloader";
   }
 
   @Override

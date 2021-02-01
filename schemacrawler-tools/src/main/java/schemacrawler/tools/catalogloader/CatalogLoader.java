@@ -34,6 +34,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 
@@ -41,13 +42,11 @@ public interface CatalogLoader extends Comparable<CatalogLoader> {
 
   Catalog getCatalog();
 
+  CommandDescription getCommandDescription();
+
   PluginCommand getCommandLineCommand();
 
   Connection getConnection();
-
-  String getDescription();
-
-  String getName();
 
   int getPriority();
 

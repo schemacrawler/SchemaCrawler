@@ -22,23 +22,14 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
+import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
 
 public final class OfflineCatalogLoader extends BaseCatalogLoader {
 
   public OfflineCatalogLoader() {
-    super(-1);
-  }
-
-  @Override
-  public String getDescription() {
-    return "Loader for offline databases";
-  }
-
-  @Override
-  public String getName() {
-    return "offlineloader";
+    super(new CommandDescription("offlineloader", "Loader for offline databases"), -1);
   }
 
   @Override

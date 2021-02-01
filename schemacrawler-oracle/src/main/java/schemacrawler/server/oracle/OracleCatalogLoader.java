@@ -34,21 +34,12 @@ import java.sql.Connection;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
+import schemacrawler.tools.executable.CommandDescription;
 
 public final class OracleCatalogLoader extends BaseCatalogLoader {
 
   public OracleCatalogLoader() {
-    super(-1);
-  }
-
-  @Override
-  public String getDescription() {
-    return "Loader for Oracle databases";
-  }
-
-  @Override
-  public String getName() {
-    return "oracleloader";
+    super(new CommandDescription("oracleloader", "Loader for Oracle databases"), -1);
   }
 
   @Override

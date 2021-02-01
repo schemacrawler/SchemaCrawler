@@ -35,21 +35,14 @@ import java.sql.Connection;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.executable.CommandDescription;
 
 public class SchemaCrawlerCatalogLoader extends BaseCatalogLoader {
 
   public SchemaCrawlerCatalogLoader() {
-    super(0);
-  }
-
-  @Override
-  public String getDescription() {
-    return "Loader for SchemaCrawler metadata catalog";
-  }
-
-  @Override
-  public String getName() {
-    return "schemacrawlerloader";
+    super(
+        new CommandDescription("schemacrawlerloader", "Loader for SchemaCrawler metadata catalog"),
+        0);
   }
 
   @Override

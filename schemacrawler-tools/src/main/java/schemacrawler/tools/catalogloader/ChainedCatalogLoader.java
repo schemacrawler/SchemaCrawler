@@ -39,6 +39,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.options.Config;
 
 public class ChainedCatalogLoader extends BaseCatalogLoader implements Iterable<CatalogLoader> {
@@ -46,19 +47,12 @@ public class ChainedCatalogLoader extends BaseCatalogLoader implements Iterable<
   private final List<CatalogLoader> chainedCatalogLoaders;
 
   public ChainedCatalogLoader(final List<CatalogLoader> chainedCatalogLoaders) {
-    super(Integer.MIN_VALUE);
+    super(
+        new CommandDescription(
+            "chainloader", "Chain of all catalog loaders, called in turn by priority"),
+        Integer.MIN_VALUE);
     requireNonNull(chainedCatalogLoaders);
     this.chainedCatalogLoaders = new ArrayList<>(chainedCatalogLoaders);
-  }
-
-  @Override
-  public String getDescription() {
-    return "Chain of all catalog loaders, called in turn by priority";
-  }
-
-  @Override
-  public String getName() {
-    return "chainloader";
   }
 
   @Override

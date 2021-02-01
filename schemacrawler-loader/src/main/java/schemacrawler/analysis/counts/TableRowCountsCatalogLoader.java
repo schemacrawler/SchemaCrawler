@@ -37,6 +37,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
+import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.StopWatch;
@@ -50,13 +51,15 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
   private static final String OPTION_LOAD_ROW_COUNTS = "load-row-counts";
 
   public TableRowCountsCatalogLoader() {
-    super(2);
+    super(new CommandDescription("countsloader", "Loader for table row counts"), 2);
   }
 
   @Override
   public PluginCommand getCommandLineCommand() {
+    final CommandDescription commandDescription = getCommandDescription();
     final PluginCommand pluginCommand =
-        PluginCommand.newCatalogLoaderCommand(getName(), getDescription());
+        PluginCommand.newCatalogLoaderCommand(
+            commandDescription.getName(), commandDescription.getDescription());
     pluginCommand
         .addOption(
             OPTION_LOAD_ROW_COUNTS,
@@ -71,16 +74,6 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
             "Requires table row counts to be loaded",
             "Optional, default is false");
     return pluginCommand;
-  }
-
-  @Override
-  public String getDescription() {
-    return "Loader for table row counts";
-  }
-
-  @Override
-  public String getName() {
-    return "countsloader";
   }
 
   @Override

@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.catalogloader;
 
+import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
@@ -37,20 +38,22 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 
 public abstract class BaseCatalogLoader implements CatalogLoader {
 
   private final int priority;
+  private final CommandDescription commandDescription;
   private SchemaRetrievalOptions schemaRetrievalOptions;
   private SchemaCrawlerOptions schemaCrawlerOptions;
   private Config additionalConfig;
   private Connection connection;
-
   private Catalog catalog;
 
-  protected BaseCatalogLoader(final int priority) {
+  protected BaseCatalogLoader(final CommandDescription commandDescription, final int priority) {
+    this.commandDescription = requireNonNull(commandDescription, "No command description provided");
     this.priority = priority;
   }
 
@@ -66,6 +69,11 @@ public abstract class BaseCatalogLoader implements CatalogLoader {
   @Override
   public Catalog getCatalog() {
     return catalog;
+  }
+
+  @Override
+  public CommandDescription getCommandDescription() {
+    return commandDescription;
   }
 
   @Override

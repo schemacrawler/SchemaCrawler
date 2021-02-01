@@ -65,8 +65,10 @@ public final class CatalogLoaderRegistry {
     final Collection<CommandDescription> commandLineCommands = new HashSet<>();
     try {
       for (final CatalogLoader catalogLoader : loadCatalogLoaderRegistry()) {
+        final CommandDescription commandDescription = catalogLoader.getCommandDescription();
         commandLineCommands.add(
-            new CommandDescription(catalogLoader.getName(), catalogLoader.getDescription()));
+            new CommandDescription(
+                commandDescription.getName(), commandDescription.getDescription()));
       }
     } catch (final SchemaCrawlerException e) {
       throw new SchemaCrawlerRuntimeException("Could not load catalog loaders", e);
