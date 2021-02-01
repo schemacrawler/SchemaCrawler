@@ -28,15 +28,13 @@ public class FilterCommandTest {
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    final CommandLine commandLine =
-        newCommandLine(FilterCommand.class, new StateFactory(state));
+    final CommandLine commandLine = newCommandLine(FilterCommand.class, new StateFactory(state));
     commandLine.execute(args);
 
     final FilterOptions filterOptions = state.getSchemaCrawlerOptions().getFilterOptions();
 
     assertThat(filterOptions.getParentTableFilterDepth(), is(2));
     assertThat(filterOptions.getChildTableFilterDepth(), is(2));
-    assertThat(filterOptions.isNoEmptyTables(), is(true));
   }
 
   @Test
@@ -73,14 +71,12 @@ public class FilterCommandTest {
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    final CommandLine commandLine =
-        newCommandLine(FilterCommand.class, new StateFactory(state));
+    final CommandLine commandLine = newCommandLine(FilterCommand.class, new StateFactory(state));
     commandLine.parseArgs(args);
     final FilterOptions filterOptions = schemaCrawlerOptions.getFilterOptions();
 
     assertThat(filterOptions.getParentTableFilterDepth(), is(0));
     assertThat(filterOptions.getChildTableFilterDepth(), is(0));
-    assertThat(filterOptions.isNoEmptyTables(), is(false));
   }
 
   @Test
@@ -96,7 +92,6 @@ public class FilterCommandTest {
 
     assertThat(filterOptions.getParentTableFilterDepth(), is(0));
     assertThat(filterOptions.getChildTableFilterDepth(), is(0));
-    assertThat(filterOptions.isNoEmptyTables(), is(false));
   }
 
   @Test

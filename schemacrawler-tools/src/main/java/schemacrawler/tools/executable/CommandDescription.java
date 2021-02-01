@@ -31,9 +31,10 @@ package schemacrawler.tools.executable;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
-import schemacrawler.schema.Property;
+import java.io.Serializable;
+import java.util.Objects;
 
-public final class CommandDescription implements Property {
+public final class CommandDescription implements Serializable, Comparable<CommandDescription> {
 
   private static final long serialVersionUID = 2444083929278551904L;
 
@@ -51,7 +52,7 @@ public final class CommandDescription implements Property {
   }
 
   @Override
-  public int compareTo(final Property otherProperty) {
+  public int compareTo(final CommandDescription otherProperty) {
     if (otherProperty == null) {
       return -1;
     } else {
@@ -71,29 +72,18 @@ public final class CommandDescription implements Property {
       return false;
     }
     final CommandDescription other = (CommandDescription) obj;
-    if (name == null) {
-      if (other.name != null) {
-        return false;
-      }
-    } else if (!name.equals(other.name)) {
+    if (!Objects.equals(name, other.name)) {
       return false;
     }
     return true;
   }
 
-  @Override
   public String getDescription() {
     return description == null ? "" : description;
   }
 
-  @Override
   public String getName() {
     return name;
-  }
-
-  @Override
-  public Object getValue() {
-    return getDescription();
   }
 
   @Override

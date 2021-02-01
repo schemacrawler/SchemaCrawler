@@ -39,7 +39,8 @@ public abstract class BaseSchemaTextOptionsBuilder<
       SCHEMACRAWLER_FORMAT_PREFIX + "show_ordinal_numbers";
   private static final String SHOW_STANDARD_COLUMN_TYPE_NAMES =
       SCHEMACRAWLER_FORMAT_PREFIX + "show_standard_column_type_names";
-  private static final String SHOW_ROW_COUNTS = SCHEMACRAWLER_FORMAT_PREFIX + "show_row_counts";
+  private static final String HIDE_TABLE_ROW_COUNTS =
+      SCHEMACRAWLER_FORMAT_PREFIX + "hide_table_row_counts";
 
   private static final String HIDE_PRIMARY_KEY_NAMES =
       SCHEMACRAWLER_FORMAT_PREFIX + "hide_primarykey_names";
@@ -73,7 +74,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
   protected boolean isShowWeakAssociations;
   protected boolean isShowOrdinalNumbers;
   protected boolean isShowStandardColumnTypeNames;
-  protected boolean isShowRowCounts;
+  protected boolean isHideTableRowCounts;
 
   public BaseSchemaTextOptionsBuilder() {}
 
@@ -86,7 +87,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
 
     isShowStandardColumnTypeNames = config.getBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES);
     isShowOrdinalNumbers = config.getBooleanValue(SHOW_ORDINAL_NUMBERS);
-    isShowRowCounts = config.getBooleanValue(SHOW_ROW_COUNTS);
+    isHideTableRowCounts = config.getBooleanValue(HIDE_TABLE_ROW_COUNTS);
 
     isHideForeignKeyNames = config.getBooleanValue(HIDE_FOREIGN_KEY_NAMES);
     isHidePrimaryKeyNames = config.getBooleanValue(HIDE_PRIMARY_KEY_NAMES);
@@ -116,7 +117,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
 
     isShowStandardColumnTypeNames = options.isShowStandardColumnTypeNames();
     isShowOrdinalNumbers = options.isShowOrdinalNumbers();
-    isShowRowCounts = options.isShowRowCounts();
+    isHideTableRowCounts = options.isHideTableRowCounts();
 
     isHideForeignKeyNames = options.isHideForeignKeyNames();
     isHidePrimaryKeyNames = options.isHidePrimaryKeyNames();
@@ -130,6 +131,15 @@ public abstract class BaseSchemaTextOptionsBuilder<
     isAlphabeticalSortForForeignKeys = options.isAlphabeticalSortForForeignKeys();
     isAlphabeticalSortForIndexes = options.isAlphabeticalSortForIndexes();
 
+    return (B) this;
+  }
+
+  public final B hideRowCounts() {
+    return hideRowCounts(true);
+  }
+
+  public final B hideRowCounts(final boolean value) {
+    isHideTableRowCounts = value;
     return (B) this;
   }
 
@@ -225,15 +235,6 @@ public abstract class BaseSchemaTextOptionsBuilder<
     return (B) this;
   }
 
-  public final B showRowCounts() {
-    return showRowCounts(true);
-  }
-
-  public final B showRowCounts(final boolean value) {
-    isShowRowCounts = value;
-    return (B) this;
-  }
-
   public final B showStandardColumnTypeNames() {
     return showStandardColumnTypeNames(true);
   }
@@ -267,7 +268,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
 
     config.put(SHOW_STANDARD_COLUMN_TYPE_NAMES, isShowStandardColumnTypeNames);
     config.put(SHOW_ORDINAL_NUMBERS, isShowOrdinalNumbers);
-    config.put(SHOW_ROW_COUNTS, isShowRowCounts);
+    config.put(HIDE_TABLE_ROW_COUNTS, isHideTableRowCounts);
 
     config.put(HIDE_FOREIGN_KEY_NAMES, isHideForeignKeyNames);
     config.put(HIDE_PRIMARY_KEY_NAMES, isHidePrimaryKeyNames);

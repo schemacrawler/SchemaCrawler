@@ -10,6 +10,7 @@ import schemacrawler.tools.commandline.command.GrepCommand;
 import schemacrawler.tools.commandline.command.LimitCommand;
 import schemacrawler.tools.commandline.command.LoadCommand;
 import schemacrawler.tools.commandline.command.LogCommand;
+import schemacrawler.tools.commandline.shell.AvailableCatalogLoadersCommand;
 import schemacrawler.tools.commandline.shell.AvailableCommandsCommand;
 import schemacrawler.tools.commandline.shell.AvailableServersCommand;
 import schemacrawler.tools.commandline.shell.DisconnectCommand;
@@ -18,6 +19,7 @@ import schemacrawler.tools.commandline.shell.SweepCommand;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 
 @Command(
+    name = "schemacrawler-shell",
     subcommands = {
       CommandLineHelpCommand.class,
       LogCommand.class,
@@ -28,8 +30,9 @@ import schemacrawler.tools.commandline.shell.SystemCommand;
       LimitCommand.class,
       LoadCommand.class,
       ExecuteCommand.class,
-      AvailableCommandsCommand.class,
       AvailableServersCommand.class,
+      AvailableCatalogLoadersCommand.class,
+      AvailableCommandsCommand.class,
       DisconnectCommand.class,
       SweepCommand.class,
       SystemCommand.class,

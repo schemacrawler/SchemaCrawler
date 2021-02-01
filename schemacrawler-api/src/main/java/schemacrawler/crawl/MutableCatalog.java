@@ -43,7 +43,6 @@ import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DatabaseUser;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Reducer;
-import schemacrawler.schema.Reducible;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Sequence;
@@ -57,7 +56,7 @@ import schemacrawler.schemacrawler.SchemaReference;
  *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
-final class MutableCatalog extends AbstractNamedObjectWithAttributes implements Catalog, Reducible {
+final class MutableCatalog extends AbstractNamedObjectWithAttributes implements Catalog {
 
   private static final class FilterBySchema implements Predicate<DatabaseObject> {
 

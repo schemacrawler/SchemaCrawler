@@ -40,8 +40,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.tools.catalogloader.CatalogLoader;
-import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
@@ -63,7 +61,7 @@ public final class SchemaCrawlerExecutable {
       SchemaCrawlerLogger.getLogger(SchemaCrawlerExecutable.class.getName());
 
   private final String command;
-  private Config additionalConfiguration;
+  private Config additionalConfig;
   private Catalog catalog;
   private Connection connection;
   private OutputOptions outputOptions;
@@ -75,7 +73,7 @@ public final class SchemaCrawlerExecutable {
 
     schemaCrawlerOptions = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     outputOptions = OutputOptionsBuilder.newOutputOptions();
-    additionalConfiguration = new Config();
+    additionalConfig = new Config();
   }
 
   public void execute() throws Exception {
@@ -136,9 +134,9 @@ public final class SchemaCrawlerExecutable {
     }
   }
 
-  public void setAdditionalConfiguration(final Config additionalConfiguration) {
+  public void setAdditionalConfiguration(final Config additionalConfig) {
     // Make a defensive copy
-    this.additionalConfiguration = new Config(additionalConfiguration);
+    this.additionalConfig = new Config(additionalConfig);
   }
 
   public void setCatalog(final Catalog catalog) {
@@ -176,17 +174,9 @@ public final class SchemaCrawlerExecutable {
   }
 
   private void loadCatalog() throws Exception {
-    final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
-    final CatalogLoader catalogLoader =
-        catalogLoaderRegistry.findCatalogLoader(
-            schemaRetrievalOptions.getDatabaseServerType().getDatabaseSystemIdentifier());
-    LOGGER.log(Level.CONFIG, new StringFormat("Catalog loader: %s", getClass().getName()));
-
-    catalogLoader.setConnection(connection);
-    catalogLoader.setSchemaRetrievalOptions(schemaRetrievalOptions);
-    catalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);
-
-    catalog = catalogLoader.loadCatalog();
+    catalog =
+        SchemaCrawlerUtility.getCatalog(
+            connection, schemaRetrievalOptions, schemaCrawlerOptions, additionalConfig);
     requireNonNull(catalog, "Catalog could not be retrieved");
   }
 
@@ -194,7 +184,7 @@ public final class SchemaCrawlerExecutable {
     final CommandRegistry commandRegistry = CommandRegistry.getCommandRegistry();
     final SchemaCrawlerCommand<?> scCommand =
         commandRegistry.configureNewCommand(
-            command, schemaCrawlerOptions, additionalConfiguration, outputOptions);
+            command, schemaCrawlerOptions, additionalConfig, outputOptions);
     if (scCommand == null) {
       throw new SchemaCrawlerException("Could not configure command, " + command);
     }

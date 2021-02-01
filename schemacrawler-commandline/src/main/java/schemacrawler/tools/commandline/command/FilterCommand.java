@@ -65,16 +65,6 @@ public final class FilterCommand extends BaseStateHolder implements Runnable {
   private Integer children;
 
   @Option(
-      names = "--no-empty-tables",
-      description = {
-        "Includes only tables that have rows of data",
-        "Requires table row counts to be loaded",
-        "Optional, default is false"
-      },
-      negatable = true)
-  private Boolean noemptytables;
-
-  @Option(
       names = "--parents",
       description = {
         "<parents> is the number of generations of ancestors for the tables "
@@ -113,10 +103,6 @@ public final class FilterCommand extends BaseStateHolder implements Runnable {
         throw new ParameterException(
             spec.commandLine(), "Please provide a valid value for --children");
       }
-    }
-
-    if (noemptytables != null) {
-      optionsBuilder.noEmptyTables(noemptytables);
     }
 
     state.withFilterOptions(optionsBuilder.toOptions());

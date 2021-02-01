@@ -31,6 +31,8 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logFullStackTrace;
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSafeArguments;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.catalogLoaderPluginCommands;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.commandPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.printCommandLineErrorMessage;
 import static us.fatehi.utility.Utility.isBlank;
@@ -46,9 +48,11 @@ import org.jline.reader.EndOfFileException;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.MaskingCallback;
+import org.jline.reader.ParsedLine;
 import org.jline.reader.Parser;
 import org.jline.reader.UserInterruptException;
 import org.jline.reader.impl.DefaultParser;
+import org.jline.reader.impl.LineReaderImpl;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 
@@ -76,10 +80,15 @@ public final class SchemaCrawlerShell {
 
       final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
       final CommandLine commandLine = newCommandLine(commands, factory);
+      final CommandLine loadCommandLine = commandLine.getSubcommands().getOrDefault("load", null);
+      if (loadCommandLine != null) {
+        addPluginCommands(loadCommandLine, catalogLoaderPluginCommands);
+        commandLine.addSubcommand(loadCommandLine);
+      }
       final CommandLine executeCommandLine =
           commandLine.getSubcommands().getOrDefault("execute", null);
       if (executeCommandLine != null) {
-        addPluginCommands(executeCommandLine);
+        addPluginCommands(executeCommandLine, commandPluginCommands);
         commandLine.addSubcommand(executeCommandLine);
       }
       commandLine.setExecutionExceptionHandler(
@@ -113,7 +122,15 @@ public final class SchemaCrawlerShell {
           systemRegistry.cleanUp();
           final String line =
               reader.readLine("schemacrawler> ", null, (MaskingCallback) null, null);
-          systemRegistry.execute(line);
+          if (line.startsWith("help")) {
+            final ParsedLine pl = reader.getParser().parse(line, 0);
+            final String[] arguments = pl.words().toArray(new String[0]);
+            commandLine.execute(arguments);
+          } else if (line.equals("cls") || line.equals("clear")) {
+            ((LineReaderImpl) reader).clearScreen();
+          } else {
+            systemRegistry.execute(line);
+          }
 
         } catch (final UserInterruptException e) {
           // Ignore

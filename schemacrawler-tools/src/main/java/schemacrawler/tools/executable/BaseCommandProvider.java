@@ -65,7 +65,7 @@ public abstract class BaseCommandProvider implements CommandProvider {
   public boolean supportsSchemaCrawlerCommand(
       final String command,
       final SchemaCrawlerOptions schemaCrawlerOptions,
-      final Config additionalConfiguration,
+      final Config additionalConfig,
       final OutputOptions outputOptions) {
     return supportsCommand(command);
   }

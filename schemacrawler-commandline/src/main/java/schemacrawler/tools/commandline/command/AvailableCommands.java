@@ -32,8 +32,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.CommandRegistry;
 
@@ -41,16 +39,12 @@ public class AvailableCommands implements Iterable<String> {
 
   private static List<String> availableCommands() {
     final List<String> availableCommands = new ArrayList<>();
-    try {
-      final Collection<CommandDescription> commandDescriptions =
-          CommandRegistry.getCommandRegistry().getSupportedCommands();
+    final Collection<CommandDescription> commandDescriptions =
+        CommandRegistry.getCommandRegistry().getSupportedCommands();
 
-      for (final CommandDescription commandDescription : commandDescriptions) {
-        final String description = commandDescription.getName();
-        availableCommands.add(description);
-      }
-    } catch (final SchemaCrawlerException e) {
-      throw new SchemaCrawlerRuntimeException("Could not initialize command registry", e);
+    for (final CommandDescription commandDescription : commandDescriptions) {
+      final String name = commandDescription.getName();
+      availableCommands.add(name);
     }
     return availableCommands;
   }

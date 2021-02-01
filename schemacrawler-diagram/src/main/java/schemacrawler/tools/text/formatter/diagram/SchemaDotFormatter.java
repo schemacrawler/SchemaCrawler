@@ -553,7 +553,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   }
 
   private void printTableRowCount(final Table table) {
-    if (!options.isShowRowCounts() || table == null || !hasRowCount(table)) {
+    if (options.isHideTableRowCounts() || table == null || !hasRowCount(table)) {
       return;
     }
     formattingHelper

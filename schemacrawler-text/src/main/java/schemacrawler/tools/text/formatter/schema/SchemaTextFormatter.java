@@ -832,7 +832,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   private void printTableRowCount(final Table table) {
-    if (!options.isShowRowCounts() || table == null || !hasRowCount(table)) {
+    if (options.isHideTableRowCounts() || table == null || !hasRowCount(table)) {
       return;
     }
 

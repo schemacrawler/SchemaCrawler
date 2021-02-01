@@ -48,20 +48,21 @@ import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * Command registry for mapping command to executable.
- *
- * @author Sualeh Fatehi
- */
+/** Command registry for mapping command to executable. */
 public final class CommandRegistry {
 
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(CommandRegistry.class.getName());
+
   private static CommandRegistry commandRegistrySingleton;
 
-  public static CommandRegistry getCommandRegistry() throws SchemaCrawlerException {
-    if (commandRegistrySingleton == null) {
-      commandRegistrySingleton = new CommandRegistry();
+  public static CommandRegistry getCommandRegistry() {
+    try {
+      if (commandRegistrySingleton == null) {
+        commandRegistrySingleton = new CommandRegistry();
+      }
+    } catch (final SchemaCrawlerException e) {
+      throw new SchemaCrawlerRuntimeException("Cannot load SchemaCrawler commands", e);
     }
     return commandRegistrySingleton;
   }
@@ -97,16 +98,12 @@ public final class CommandRegistry {
   public SchemaCrawlerCommand<?> configureNewCommand(
       final String command,
       final SchemaCrawlerOptions schemaCrawlerOptions,
-      final Config additionalConfiguration,
+      final Config additionalConfig,
       final OutputOptions outputOptions)
       throws SchemaCrawlerException {
     final List<CommandProvider> executableCommandProviders = new ArrayList<>();
     findSupportedCommands(
-        command,
-        schemaCrawlerOptions,
-        additionalConfiguration,
-        outputOptions,
-        executableCommandProviders);
+        command, schemaCrawlerOptions, additionalConfig, outputOptions, executableCommandProviders);
     findSupportedOutputFormats(command, outputOptions, executableCommandProviders);
 
     Collections.sort(
@@ -133,8 +130,7 @@ public final class CommandRegistry {
 
     final SchemaCrawlerCommand<?> scCommand;
     try {
-      scCommand =
-          executableCommandProvider.newSchemaCrawlerCommand(command, additionalConfiguration);
+      scCommand = executableCommandProvider.newSchemaCrawlerCommand(command, additionalConfig);
       scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
       scCommand.setOutputOptions(outputOptions);
     } catch (final Throwable e) {
@@ -170,13 +166,13 @@ public final class CommandRegistry {
   private void findSupportedCommands(
       final String command,
       final SchemaCrawlerOptions schemaCrawlerOptions,
-      final Config additionalConfiguration,
+      final Config additionalConfig,
       final OutputOptions outputOptions,
       final List<CommandProvider> executableCommandProviders)
       throws SchemaCrawlerException {
     for (final CommandProvider commandProvider : commandRegistry) {
       if (commandProvider.supportsSchemaCrawlerCommand(
-          command, schemaCrawlerOptions, additionalConfiguration, outputOptions)) {
+          command, schemaCrawlerOptions, additionalConfig, outputOptions)) {
         executableCommandProviders.add(commandProvider);
         LOGGER.log(Level.FINE, new StringFormat("Adding command-provider <%s>", commandProvider));
       }

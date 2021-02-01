@@ -36,10 +36,6 @@ import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
 
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseDriver;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 
@@ -55,45 +51,5 @@ public class OfflineCatalogLoaderTest {
     catalogLoader.setConnection(connection);
 
     assertThat(catalogLoader.getConnection(), is(not(nullValue())));
-  }
-
-  @Test
-  public void databaseSystemIdentifier() {
-    assertThat(new OfflineCatalogLoader().getDatabaseSystemIdentifier(), is("offline"));
-  }
-
-  @Test
-  public void schemaCrawlerOptions() {
-    final CatalogLoader catalogLoader = new OfflineCatalogLoader();
-
-    assertThat(catalogLoader.getSchemaCrawlerOptions(), is(not(nullValue())));
-
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-    catalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);
-
-    assertThat(catalogLoader.getSchemaCrawlerOptions(), is(not(nullValue())));
-    assertThat(catalogLoader.getSchemaCrawlerOptions().equals(schemaCrawlerOptions), is(true));
-  }
-
-  @Test
-  public void schemaRetrievalOptions() {
-    final CatalogLoader catalogLoader = new OfflineCatalogLoader();
-
-    assertThat(catalogLoader.getSchemaRetrievalOptions(), is(not(nullValue())));
-    assertThat(
-        catalogLoader
-            .getSchemaRetrievalOptions()
-            .getDatabaseServerType()
-            .getDatabaseSystemIdentifier(),
-        is("offline"));
-
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
-    // Set is a no-op operation, so it should not have any effect
-    catalogLoader.setSchemaRetrievalOptions(schemaRetrievalOptions);
-
-    assertThat(catalogLoader.getSchemaRetrievalOptions(), is(not(nullValue())));
-    assertThat(catalogLoader.getSchemaRetrievalOptions().equals(schemaRetrievalOptions), is(false));
   }
 }

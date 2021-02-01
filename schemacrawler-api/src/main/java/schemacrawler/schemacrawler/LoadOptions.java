@@ -33,12 +33,10 @@ import us.fatehi.utility.ObjectToString;
 
 public final class LoadOptions implements Options {
 
-  private final boolean isLoadRowCounts;
   private final SchemaInfoLevel schemaInfoLevel;
 
-  LoadOptions(final SchemaInfoLevel schemaInfoLevel, final boolean isLoadRowCounts) {
+  LoadOptions(final SchemaInfoLevel schemaInfoLevel) {
     this.schemaInfoLevel = requireNonNull(schemaInfoLevel, "No schema info level provided");
-    this.isLoadRowCounts = isLoadRowCounts;
   }
 
   /**
@@ -48,15 +46,6 @@ public final class LoadOptions implements Options {
    */
   public SchemaInfoLevel getSchemaInfoLevel() {
     return schemaInfoLevel;
-  }
-
-  /**
-   * If infolevel=maximum, this option will load row counts.
-   *
-   * @return Whether to load row counts
-   */
-  public boolean isLoadRowCounts() {
-    return isLoadRowCounts;
   }
 
   /** {@inheritDoc} */

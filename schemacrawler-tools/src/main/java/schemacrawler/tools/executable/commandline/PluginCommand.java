@@ -29,7 +29,9 @@ package schemacrawler.tools.executable.commandline;
 
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.executable.commandline.PluginCommandType.command;
+import static schemacrawler.tools.executable.commandline.PluginCommandType.loader;
 import static schemacrawler.tools.executable.commandline.PluginCommandType.server;
+import static schemacrawler.tools.executable.commandline.PluginCommandType.unknown;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.ArrayList;
@@ -42,15 +44,19 @@ import java.util.function.Supplier;
 public class PluginCommand implements Iterable<PluginCommandOption> {
 
   public static PluginCommand empty() {
-    return new PluginCommand(command, null, null, null, null);
+    return new PluginCommand(unknown, null, null, null, null);
+  }
+
+  public static PluginCommand newCatalogLoaderCommand(final String name, final String helpHeader) {
+    return newPluginCommand(loader, name, helpHeader);
   }
 
   public static PluginCommand newDatabasePluginCommand(final String name, final String helpHeader) {
-    return new PluginCommand(server, name, helpHeader, null, null);
+    return newPluginCommand(server, name, helpHeader);
   }
 
   public static PluginCommand newPluginCommand(final String name, final String helpHeader) {
-    return new PluginCommand(command, name, helpHeader, null, null);
+    return newPluginCommand(command, name, helpHeader);
   }
 
   public static PluginCommand newPluginCommand(
@@ -59,6 +65,11 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
       final Supplier<String[]> helpDescription,
       final Supplier<String[]> helpFooter) {
     return new PluginCommand(command, name, helpHeader, helpDescription, helpFooter);
+  }
+
+  private static PluginCommand newPluginCommand(
+      final PluginCommandType pluginType, final String name, final String helpHeader) {
+    return new PluginCommand(pluginType, name, helpHeader, null, null);
   }
 
   private final PluginCommandType type;
@@ -127,6 +138,10 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
 
   public String getName() {
     return type.toPluginCommandName(name);
+  }
+
+  public Collection<PluginCommandOption> getOptions() {
+    return new ArrayList<>(options);
   }
 
   @Override

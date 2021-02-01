@@ -12,8 +12,8 @@ import schemacrawler.tools.commandline.command.LoadCommand;
 import schemacrawler.tools.commandline.command.LogCommand;
 import schemacrawler.tools.commandline.command.ShowStateCommand;
 
-@Command
-class SchemaCrawlerCommandLineCommands {
+@Command(name = "schemacrawler-command-line")
+public class SchemaCrawlerCommandLineCommands {
   @Mixin private ConfigFileCommand configfile;
   @Mixin private ConnectCommand connect;
   @Mixin private ExecuteCommand execute;

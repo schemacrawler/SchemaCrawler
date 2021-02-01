@@ -33,6 +33,11 @@
     </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-loader</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-text</artifactId>
       <version>${project.version}</version>
     </dependency>	
@@ -123,6 +128,7 @@
                   <include>us.fatehi:schemacrawler-utility</include>
                   <include>us.fatehi:schemacrawler-api</include>
                   <include>us.fatehi:schemacrawler-tools</include>
+                  <include>us.fatehi:schemacrawler-loader</include>
                   <include>us.fatehi:schemacrawler-text</include>
                   <include>us.fatehi:schemacrawler-diagram</include>
                 </includes>
