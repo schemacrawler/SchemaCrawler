@@ -295,13 +295,13 @@
                 <artifactItem>
                   <groupId>com.microsoft.sqlserver</groupId>
                   <artifactId>mssql-jdbc</artifactId>
-                  <version>8.4.1.jre8</version>
+                  <version>9.2.0.jre8</version>
                   <type>jar</type>
                 </artifactItem>
                 <artifactItem>
                   <groupId>com.microsoft.sqlserver</groupId>
                   <artifactId>mssql-jdbc_auth</artifactId>
-                  <version>8.4.1.x64</version>
+                  <version>9.2.0.x64</version>
                   <type>dll</type>
                 </artifactItem>
                 <artifactItem>
