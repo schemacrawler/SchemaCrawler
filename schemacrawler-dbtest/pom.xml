@@ -79,6 +79,11 @@
       <version>2.7.1</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>net.sf.ucanaccess</groupId>
+      <artifactId>ucanaccess</artifactId>
+      <version>5.0.1</version>
+    </dependency>    
     <!--  Old version of PostgreSQL driver for  CockroachDB -->
     <dependency>
       <groupId>org.postgresql</groupId>

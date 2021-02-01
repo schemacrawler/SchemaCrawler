@@ -114,13 +114,14 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
       for (final Driver driver : serviceLoader) {
         index++;
         if (log) {
-          buffer.append(
-              String.format(
-                  "%2d %50s %2d.%d%n",
-                  index,
-                  driver.getClass().getName(),
-                  driver.getMajorVersion(),
-                  driver.getMinorVersion()));
+          buffer.append(String.format("%2d %50s", index, driver.getClass().getName()));
+          try {
+            buffer.append(
+                String.format(" %2d.%d", driver.getMajorVersion(), driver.getMinorVersion()));
+          } catch (final Exception e) {
+            // Ignore exceptions from badly behaved drivers
+          }
+          buffer.append(System.lineSeparator());
         }
       }
     } catch (final Exception e) {
@@ -138,20 +139,6 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
     databaseConnectorRegistry = loadDatabaseConnectorRegistry();
   }
 
-  public boolean hasDatabaseSystemIdentifier(final String databaseSystemIdentifier) {
-    return databaseConnectorRegistry.containsKey(databaseSystemIdentifier);
-  }
-
-  @Override
-  public Iterator<DatabaseServerType> iterator() {
-    final List<DatabaseServerType> databaseServerTypes = new ArrayList<>();
-    for (final DatabaseConnector databaseConnector : databaseConnectorRegistry.values()) {
-      databaseServerTypes.add(databaseConnector.getDatabaseServerType());
-    }
-    databaseServerTypes.sort(naturalOrder());
-    return databaseServerTypes.iterator();
-  }
-
   public DatabaseConnector findDatabaseConnector(final Connection connection) {
     try {
       checkConnection(connection);
@@ -162,7 +149,8 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
     }
   }
 
-  public DatabaseConnector findDatabaseConnectorFromDatabaseSystemIdentifier(final String databaseSystemIdentifier) {
+  public DatabaseConnector findDatabaseConnectorFromDatabaseSystemIdentifier(
+      final String databaseSystemIdentifier) {
     if (hasDatabaseSystemIdentifier(databaseSystemIdentifier)) {
       return databaseConnectorRegistry.get(databaseSystemIdentifier);
     } else {
@@ -182,5 +170,19 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
     }
 
     return DatabaseConnector.UNKNOWN;
+  }
+
+  public boolean hasDatabaseSystemIdentifier(final String databaseSystemIdentifier) {
+    return databaseConnectorRegistry.containsKey(databaseSystemIdentifier);
+  }
+
+  @Override
+  public Iterator<DatabaseServerType> iterator() {
+    final List<DatabaseServerType> databaseServerTypes = new ArrayList<>();
+    for (final DatabaseConnector databaseConnector : databaseConnectorRegistry.values()) {
+      databaseServerTypes.add(databaseConnector.getDatabaseServerType());
+    }
+    databaseServerTypes.sort(naturalOrder());
+    return databaseServerTypes.iterator();
   }
 }
