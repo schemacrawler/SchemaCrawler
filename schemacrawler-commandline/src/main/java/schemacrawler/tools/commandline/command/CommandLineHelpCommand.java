@@ -34,11 +34,12 @@ import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_FOOTER;
 import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_HEADER;
 import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_OPTION_LIST;
 import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_PARAMETER_LIST;
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.addDatabasePluginHelpCommands;
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommand;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginHelpCommands;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.catalogLoaderPluginCommands;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.commandPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.configureCommandLine;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.toCommandSpec;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.Arrays;
@@ -49,8 +50,10 @@ import java.util.stream.StreamSupport;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Help;
+import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
+import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
 import schemacrawler.tools.commandline.shell.SystemCommand;
@@ -90,7 +93,8 @@ public final class CommandLineHelpCommand implements Runnable {
       final ShellState state = new ShellState();
       final CommandLine parent =
           newCommandLine(new SchemaCrawlerShellCommands(), new StateFactory(state));
-      addPluginHelpCommands(parent);
+      addPluginHelpCommands(parent, catalogLoaderPluginCommands);
+      addPluginHelpCommands(parent, commandPluginCommands);
       addDatabasePluginHelpCommands(parent);
 
       if (!isBlank(command)) {
@@ -101,6 +105,16 @@ public final class CommandLineHelpCommand implements Runnable {
       }
     } catch (final Exception e) {
       new SchemaCrawlerRuntimeException(e.getMessage(), e);
+    }
+  }
+
+  private void addDatabasePluginHelpCommands(final CommandLine commandLine) {
+    final DatabaseConnectorRegistry databaseConnectorRegistry =
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+    for (final DatabaseServerType databaseServerType : databaseConnectorRegistry) {
+      final String pluginCommandName = databaseServerType.getDatabaseSystemIdentifier();
+      final CommandSpec pluginCommandSpec = CommandSpec.create().name(pluginCommandName);
+      commandLine.addSubcommand(pluginCommandName, pluginCommandSpec);
     }
   }
 
@@ -145,14 +159,15 @@ public final class CommandLineHelpCommand implements Runnable {
     }
 
     final DatabaseConnector databaseConnector =
-        databaseConnectorRegistry.findDatabaseConnectorFromDatabaseSystemIdentifier(databaseSystemIdentifier);
+        databaseConnectorRegistry.findDatabaseConnectorFromDatabaseSystemIdentifier(
+            databaseSystemIdentifier);
     final PluginCommand helpCommand = databaseConnector.getHelpCommand();
 
     @Command
     class EmptyCommand {}
 
     final CommandLine commandLine = new CommandLine(new EmptyCommand());
-    addPluginCommand(commandLine, helpCommand, false);
+    commandLine.addSubcommand(toCommandSpec(helpCommand));
 
     final CommandLine subcommandLine =
         lookupCommand(commandLine, helpCommand.getName()).orElse(null);
@@ -171,7 +186,10 @@ public final class CommandLineHelpCommand implements Runnable {
     System.out.printf("%n%n");
 
     Stream.of(
-            Stream.of("log", "config-file", "connect", "limit", "grep", "filter", "load"),
+            Stream.of("log", "config-file", "connect", "limit", "grep", "filter"),
+            StreamSupport.stream(new AvailableCatalogLoaders().spliterator(), false)
+                .map(PluginCommandType.loader::toPluginCommandName),
+            Stream.of("load"),
             StreamSupport.stream(new AvailableCommands().spliterator(), false)
                 .map(PluginCommandType.command::toPluginCommandName),
             Stream.of("execute"))

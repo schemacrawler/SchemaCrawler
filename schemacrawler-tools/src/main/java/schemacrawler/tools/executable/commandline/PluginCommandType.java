@@ -30,6 +30,8 @@ package schemacrawler.tools.executable.commandline;
 import static us.fatehi.utility.Utility.isBlank;
 
 public enum PluginCommandType {
+  unknown,
+  loader,
   command,
   server;
 

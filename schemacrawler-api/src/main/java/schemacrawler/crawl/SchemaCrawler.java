@@ -77,8 +77,6 @@ import java.util.Collection;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
-import schemacrawler.analysis.counts.TableRowCountsFilter;
-import schemacrawler.analysis.counts.TableRowCountsRetriever;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineType;
@@ -184,36 +182,6 @@ public final class SchemaCrawler {
       LOGGER.log(Level.INFO, stopWatch.stringify());
     } catch (final Exception e) {
       throw new SchemaCrawlerException("Exception retrieving weak association information", e);
-    }
-
-    LOGGER.log(Level.INFO, "Crawling table row counts");
-    try {
-      final TableRowCountsRetriever rowCountsRetriever =
-          new TableRowCountsRetriever(retrieverConnection.getConnection(), catalog);
-      stopWatch.time(
-          "retrieveTableRowCounts",
-          () -> {
-            final boolean loadRowCounts = options.getLoadOptions().isLoadRowCounts();
-            if (loadRowCounts) {
-              rowCountsRetriever.retrieveTableRowCounts();
-            } else {
-              LOGGER.log(
-                  Level.INFO, "Not retrieving table row counts, since this was not requested");
-            }
-            return null;
-          });
-
-      stopWatch.time(
-          "filterEmptyTables",
-          () -> {
-            catalog.reduce(
-                Table.class, getTableReducer(new TableRowCountsFilter(options.getFilterOptions())));
-            return null;
-          });
-
-      LOGGER.log(Level.INFO, stopWatch.stringify());
-    } catch (final Exception e) {
-      throw new SchemaCrawlerException("Exception retrieving table row counts", e);
     }
   }
 

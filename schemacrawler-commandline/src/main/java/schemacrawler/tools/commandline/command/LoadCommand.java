@@ -28,15 +28,17 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.command;
 
-import static java.util.Objects.requireNonNull;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.matchedOptionValues;
 
 import java.sql.Connection;
+import java.util.Map;
 import java.util.logging.Level;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.ExecutionException;
 import picocli.CommandLine.Model;
 import picocli.CommandLine.Option;
+import picocli.CommandLine.ParseResult;
 import picocli.CommandLine.Spec;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.Catalog;
@@ -44,10 +46,11 @@ import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.tools.catalogloader.CatalogLoader;
-import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.ShellState;
+import schemacrawler.tools.options.Config;
+import schemacrawler.tools.utility.SchemaCrawlerUtility;
+import us.fatehi.utility.string.ObjectToStringFormat;
 import us.fatehi.utility.string.StringFormat;
 
 @Command(
@@ -70,18 +73,9 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
         "<infolevel> is one of ${COMPLETION-CANDIDATES}",
         "The info level determines the amount of database metadata retrieved, "
             + "and also determines the time taken to crawl the schema",
-        "Optional, defaults to standard\n"
+        "Optional, defaults to standard"
       })
   private InfoLevel infolevel;
-
-  @Option(
-      names = {"--load-row-counts"},
-      description = {
-        "Loads row counts for each table",
-        "This can be a time consuming operation",
-        "Optional, defaults to false\n"
-      })
-  private boolean isLoadRowCounts;
 
   @Spec private Model.CommandSpec spec;
 
@@ -93,32 +87,37 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
     return infolevel;
   }
 
-  public boolean isLoadRowCounts() {
-    return isLoadRowCounts;
-  }
-
   @Override
   public void run() {
     if (!state.isConnected()) {
       throw new ExecutionException(spec.commandLine(), "Not connected to the database");
     }
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptions();
+    try {
+      final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptions();
 
-    final LoadOptionsBuilder loadOptionsBuilder =
-        LoadOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.getLoadOptions());
+      final LoadOptionsBuilder loadOptionsBuilder =
+          LoadOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.getLoadOptions());
 
-    if (infolevel != null) {
-      loadOptionsBuilder.withSchemaInfoLevel(infolevel.toSchemaInfoLevel());
+      if (infolevel != null) {
+        loadOptionsBuilder.withSchemaInfoLevel(infolevel.toSchemaInfoLevel());
+      }
+
+      state.withLoadOptions(loadOptionsBuilder.toOptions());
+
+      final ParseResult parseResult = spec.commandLine().getParseResult();
+      final Map<String, Object> catalogLoaderOptions = matchedOptionValues(parseResult);
+      LOGGER.log(Level.INFO, "Loaded command loader options");
+      LOGGER.log(Level.CONFIG, new ObjectToStringFormat(catalogLoaderOptions));
+      state.setCatalogLoaderOptions(catalogLoaderOptions);
+
+      final Catalog catalog = loadCatalog();
+      state.setCatalog(catalog);
+      LOGGER.log(Level.INFO, "Loaded catalog");
+
+    } catch (final Exception e) {
+      throw new ExecutionException(spec.commandLine(), "Cannot load catalog", e);
     }
-
-    loadOptionsBuilder.loadRowCounts(isLoadRowCounts);
-
-    state.withLoadOptions(loadOptionsBuilder.toOptions());
-
-    final Catalog catalog = loadCatalog();
-    state.setCatalog(catalog);
-    LOGGER.log(Level.INFO, "Loaded catalog");
   }
 
   private Catalog loadCatalog() {
@@ -127,21 +126,10 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
 
       final SchemaRetrievalOptions schemaRetrievalOptions = state.getSchemaRetrievalOptions();
       final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptions();
+      final Config additionalConfig = state.getConfig();
 
-      final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
-      final CatalogLoader catalogLoader =
-          catalogLoaderRegistry.findCatalogLoader(
-              schemaRetrievalOptions.getDatabaseServerType().getDatabaseSystemIdentifier());
-      LOGGER.log(Level.CONFIG, new StringFormat("Catalog loader: %s", getClass().getName()));
-
-      catalogLoader.setConnection(connection);
-      catalogLoader.setSchemaRetrievalOptions(schemaRetrievalOptions);
-      catalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);
-
-      final Catalog catalog = catalogLoader.loadCatalog();
-      requireNonNull(catalog, "Catalog could not be retrieved");
-
-      return catalog;
+      return SchemaCrawlerUtility.getCatalog(
+          connection, schemaRetrievalOptions, schemaCrawlerOptions, additionalConfig);
 
     } catch (final Exception e) {
       throw new ExecutionException(spec.commandLine(), "Cannot load catalog", e);

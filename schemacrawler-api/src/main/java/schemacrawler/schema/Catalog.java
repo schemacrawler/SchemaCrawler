@@ -36,7 +36,7 @@ import java.util.Optional;
  *
  * @author Sualeh Fatehi
  */
-public interface Catalog extends NamedObject, AttributedObject, DescribedObject {
+public interface Catalog extends NamedObject, AttributedObject, DescribedObject, Reducible {
 
   /**
    * Gets the column data types

@@ -31,20 +31,34 @@ package schemacrawler.tools.catalogloader;
 import java.sql.Connection;
 
 import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.tools.executable.CommandDescription;
+import schemacrawler.tools.executable.commandline.PluginCommand;
+import schemacrawler.tools.options.Config;
 
-public interface CatalogLoader {
+public interface CatalogLoader extends Comparable<CatalogLoader> {
+
+  Catalog getCatalog();
+
+  CommandDescription getCommandDescription();
+
+  PluginCommand getCommandLineCommand();
 
   Connection getConnection();
 
-  String getDatabaseSystemIdentifier();
+  int getPriority();
 
   SchemaCrawlerOptions getSchemaCrawlerOptions();
 
   SchemaRetrievalOptions getSchemaRetrievalOptions();
 
-  Catalog loadCatalog() throws Exception;
+  void loadCatalog() throws SchemaCrawlerException;
+
+  void setAdditionalConfiguration(Config additionalConfig);
+
+  void setCatalog(Catalog catalog);
 
   void setConnection(Connection connection);
 

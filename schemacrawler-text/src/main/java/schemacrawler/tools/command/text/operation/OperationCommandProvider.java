@@ -72,15 +72,15 @@ public final class OperationCommandProvider extends BaseCommandProvider {
   public boolean supportsSchemaCrawlerCommand(
       final String command,
       final SchemaCrawlerOptions schemaCrawlerOptions,
-      final Config additionalConfiguration,
+      final Config additionalConfig,
       final OutputOptions outputOptions) {
     // Check if the command is an operation
     final boolean isOperation = supportsCommand(command);
 
     /// Check if the command is a named query
     final boolean isNamedQuery;
-    if (additionalConfiguration != null) {
-      isNamedQuery = additionalConfiguration.containsKey(command);
+    if (additionalConfig != null) {
+      isNamedQuery = additionalConfig.containsKey(command);
     } else {
       isNamedQuery = false;
     }

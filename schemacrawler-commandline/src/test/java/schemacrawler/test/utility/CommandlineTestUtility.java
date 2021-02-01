@@ -52,6 +52,9 @@ import schemacrawler.tools.options.OutputFormat;
 
 public final class CommandlineTestUtility {
 
+  private static final SchemaCrawlerOptions schemaCrawlerOptions =
+      DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+
   public static Path commandlineExecution(
       final DatabaseConnectionInfo connectionInfo,
       final String command,
@@ -133,16 +136,21 @@ public final class CommandlineTestUtility {
     return commandlineExecution(connectionInfo, command, argsMap, (Path) null, outputFormatValue);
   }
 
-  public static ShellState createLoadedSchemaCrawlerShellState(final Connection connection)
+  public static ShellState createConnectedSchemaCrawlerShellState(final Connection connection)
       throws SchemaCrawlerException {
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-        DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
-    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
 
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
     state.setSchemaRetrievalOptions(SchemaRetrievalOptionsBuilder.builder().toOptions());
     state.setDataSource(() -> connection); // is-connected
+    return state;
+  }
+
+  public static ShellState createLoadedSchemaCrawlerShellState(final Connection connection)
+      throws SchemaCrawlerException {
+    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
+
+    final ShellState state = createConnectedSchemaCrawlerShellState(connection);
     state.setCatalog(catalog); // is-loaded
     return state;
   }

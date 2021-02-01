@@ -41,8 +41,8 @@ public class AvailableServers implements Iterable<String> {
     final DatabaseConnectorRegistry databaseConnectorRegistry =
         DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     for (final DatabaseServerType serverType : databaseConnectorRegistry) {
-      final String description = serverType.getDatabaseSystemIdentifier();
-      availableServers.add(description);
+      final String name = serverType.getDatabaseSystemIdentifier();
+      availableServers.add(name);
     }
     return availableServers;
   }

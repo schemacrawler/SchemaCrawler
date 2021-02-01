@@ -34,6 +34,7 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.commandPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 import java.nio.file.Path;
@@ -66,16 +67,16 @@ public class ExecuteCommandTest {
 
       private Exception exception;
 
+      public Exception getException() {
+        return exception;
+      }
+
       @Override
       public int handleExecutionException(
           final Exception ex, final CommandLine commandLine, final ParseResult parseResult)
           throws Exception {
         exception = ex;
         return 1;
-      }
-
-      public Exception getException() {
-        return exception;
       }
     }
     final ExceptionHandler exceptionHandler = new ExceptionHandler();
@@ -115,20 +116,6 @@ public class ExecuteCommandTest {
     assertThat(
         outputOf(testOutputFile),
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".txt")));
-  }
-
-  private CommandLine createShellCommandLine(final Connection connection)
-      throws SchemaCrawlerException {
-    final ShellState state = createLoadedSchemaCrawlerShellState(connection);
-    final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
-    final CommandLine commandLine = newCommandLine(commands, new StateFactory(state));
-    final CommandLine executeCommandLine =
-        commandLine.getSubcommands().getOrDefault("execute", null);
-    if (executeCommandLine != null) {
-      addPluginCommands(executeCommandLine);
-      commandLine.addSubcommand(executeCommandLine);
-    }
-    return commandLine;
   }
 
   @Test
@@ -179,5 +166,19 @@ public class ExecuteCommandTest {
     assertThat(
         outputOf(testOutputFile4),
         hasSameContentAs(classpathResource(testContext.testMethodFullName() + ".4.txt")));
+  }
+
+  private CommandLine createShellCommandLine(final Connection connection)
+      throws SchemaCrawlerException {
+    final ShellState state = createLoadedSchemaCrawlerShellState(connection);
+    final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
+    final CommandLine commandLine = newCommandLine(commands, new StateFactory(state));
+    final CommandLine executeCommandLine =
+        commandLine.getSubcommands().getOrDefault("execute", null);
+    if (executeCommandLine != null) {
+      addPluginCommands(executeCommandLine, commandPluginCommands);
+      commandLine.addSubcommand(executeCommandLine);
+    }
+    return commandLine;
   }
 }

@@ -51,20 +51,13 @@ public class ShellState {
       SchemaCrawlerLogger.getLogger(ShellState.class.getName());
 
   private Config baseConfig;
-  private Config additionalConfig;
+  private Config commandOptions;
+  private Config catalogLoaderOptions;
   private Catalog catalog;
   private Supplier<Connection> dataSource;
   private Throwable lastException;
   private SchemaCrawlerOptions schemaCrawlerOptions;
   private SchemaRetrievalOptions schemaRetrievalOptions;
-
-  public void addConfig(final Map<String, Object> additionalConfig) {
-    if (additionalConfig != null) {
-      this.additionalConfig = new Config(additionalConfig);
-    } else {
-      this.additionalConfig = new Config();
-    }
-  }
 
   public void disconnect() {
     if (dataSource == null) {
@@ -85,7 +78,8 @@ public class ShellState {
   public Config getConfig() {
     final Config config = new Config();
     config.merge(baseConfig);
-    config.merge(additionalConfig);
+    config.merge(commandOptions);
+    config.merge(catalogLoaderOptions);
 
     return config;
   }
@@ -126,6 +120,22 @@ public class ShellState {
     this.catalog = catalog;
   }
 
+  public void setCatalogLoaderOptions(final Map<String, Object> catalogLoaderOptions) {
+    if (catalogLoaderOptions != null) {
+      this.catalogLoaderOptions = new Config(catalogLoaderOptions);
+    } else {
+      this.catalogLoaderOptions = null;
+    }
+  }
+
+  public void setCommandOptions(final Map<String, Object> commandOptions) {
+    if (commandOptions != null) {
+      this.commandOptions = new Config(commandOptions);
+    } else {
+      this.commandOptions = null;
+    }
+  }
+
   public void setDataSource(final Supplier<Connection> dataSource) {
     this.dataSource = dataSource;
   }
@@ -145,7 +155,7 @@ public class ShellState {
   public void sweep() {
     catalog = null;
     baseConfig = null;
-    additionalConfig = null;
+    commandOptions = null;
     schemaCrawlerOptions = null;
     schemaRetrievalOptions = null;
     lastException = null;

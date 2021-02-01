@@ -72,8 +72,7 @@ public class LimitCommandTest {
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     final ShellState state = new ShellState();
     state.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    final CommandLine commandLine =
-        newCommandLine(LimitCommand.class, new StateFactory(state));
+    final CommandLine commandLine = newCommandLine(LimitCommand.class, new StateFactory(state));
     commandLine.execute(args);
 
     final LimitOptions limitOptions = state.getSchemaCrawlerOptions().getLimitOptions();
@@ -165,7 +164,6 @@ public class LimitCommandTest {
 
     assertThat(filterOptions.getParentTableFilterDepth(), is(0));
     assertThat(filterOptions.getChildTableFilterDepth(), is(0));
-    assertThat(filterOptions.isNoEmptyTables(), is(false));
   }
 
   @Test

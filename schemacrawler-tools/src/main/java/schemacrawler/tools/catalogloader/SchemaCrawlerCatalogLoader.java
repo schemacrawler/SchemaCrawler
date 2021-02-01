@@ -34,79 +34,29 @@ import java.sql.Connection;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.executable.CommandDescription;
 
-public class SchemaCrawlerCatalogLoader implements CatalogLoader {
-
-  private final String databaseSystemIdentifier;
-  private SchemaRetrievalOptions schemaRetrievalOptions;
-  private SchemaCrawlerOptions schemaCrawlerOptions;
-  private Connection connection;
+public class SchemaCrawlerCatalogLoader extends BaseCatalogLoader {
 
   public SchemaCrawlerCatalogLoader() {
-    databaseSystemIdentifier = null;
-  }
-
-  protected SchemaCrawlerCatalogLoader(final String databaseSystemIdentifier) {
-    this.databaseSystemIdentifier =
-        requireNonNull(databaseSystemIdentifier, "No database system identifier provided");
+    super(
+        new CommandDescription("schemacrawlerloader", "Loader for SchemaCrawler metadata catalog"),
+        0);
   }
 
   @Override
-  public Connection getConnection() {
-    return connection;
-  }
-
-  @Override
-  public String getDatabaseSystemIdentifier() {
-    return databaseSystemIdentifier;
-  }
-
-  @Override
-  public SchemaCrawlerOptions getSchemaCrawlerOptions() {
-    if (schemaCrawlerOptions == null) {
-      return SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-    } else {
-      return schemaCrawlerOptions;
+  public void loadCatalog() throws SchemaCrawlerException {
+    if (isLoaded()) {
+      return;
     }
-  }
 
-  @Override
-  public SchemaRetrievalOptions getSchemaRetrievalOptions() {
-    if (schemaRetrievalOptions == null) {
-      return SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
-    } else {
-      return schemaRetrievalOptions;
-    }
-  }
-
-  @Override
-  public Catalog loadCatalog() throws Exception {
+    final Connection connection = getConnection();
     requireNonNull(connection, "No connection provided");
-    requireNonNull(schemaRetrievalOptions, "No database specific overrides provided");
 
     final SchemaCrawler schemaCrawler =
-        new SchemaCrawler(connection, schemaRetrievalOptions, schemaCrawlerOptions);
+        new SchemaCrawler(connection, getSchemaRetrievalOptions(), getSchemaCrawlerOptions());
     final Catalog catalog = schemaCrawler.crawl();
-
-    return catalog;
-  }
-
-  @Override
-  public void setConnection(final Connection connection) {
-    this.connection = connection;
-  }
-
-  @Override
-  public void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions) {
-    this.schemaCrawlerOptions = schemaCrawlerOptions;
-  }
-
-  @Override
-  public void setSchemaRetrievalOptions(final SchemaRetrievalOptions schemaRetrievalOptions) {
-    this.schemaRetrievalOptions = schemaRetrievalOptions;
+    setCatalog(catalog);
   }
 }

@@ -37,8 +37,6 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
-import static schemacrawler.analysis.counts.TableRowCountsUtility.getRowCountMessage;
-import static schemacrawler.analysis.counts.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.crawl.ForeignKeyRetrieverTest.verifyRetrieveForeignKeys;
 import static schemacrawler.crawl.IndexRetrieverTest.verifyRetrieveIndexes;
 import static schemacrawler.crawl.PrimaryKeyRetrieverTest.verifyRetrievePrimaryKeys;
@@ -296,9 +294,7 @@ public class SchemaCrawlerTest {
             .includeAllSequences()
             .includeAllRoutines();
     final LoadOptionsBuilder loadOptionsBuilder =
-        LoadOptionsBuilder.builder()
-            .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-            .loadRowCounts();
+        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
             .withLimitOptions(limitOptionsBuilder.toOptions())
@@ -399,25 +395,6 @@ public class SchemaCrawlerTest {
         out.println("  body type: " + routine.getRoutineBodyType());
         out.println("  definition:\n" + routine.getDefinition());
         out.println();
-      }
-    }
-    assertThat(
-        outputOf(testout), hasSameContentAs(classpathResource(testContext.testMethodFullName())));
-  }
-
-  @Test
-  public void rowCounts(final TestContext testContext) throws Exception {
-    final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout) {
-      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-      assertThat("Schema count does not match", schemas, arrayWithSize(5));
-      for (final Schema schema : schemas) {
-        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
-        Arrays.sort(tables, NamedObjectSort.alphabetical);
-        for (final Table table : tables) {
-          assertThat(hasRowCount(table), is(true));
-          out.println(String.format("%s [%s]", table.getFullName(), getRowCountMessage(table)));
-        }
       }
     }
     assertThat(
@@ -632,7 +609,7 @@ public class SchemaCrawlerTest {
           out.println(String.format("  - updatable?: %b", view.isUpdatable()));
           out.println(String.format("  - definition: %s", view.getDefinition()));
           out.println("  - table usage");
-          for (Table usedTable : view.getTableUsage()) {
+          for (final Table usedTable : view.getTableUsage()) {
             out.println(String.format("    - table: %s", usedTable));
           }
         }

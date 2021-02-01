@@ -1,0 +1,10 @@
+** Load database metadata into memory
+Shell Command:
+load
+
+Options:
+  -i, --info-level=<infolevel>
+         <infolevel> is one of unknown, minimum, standard, detailed, maximum
+         The info level determines the amount of database metadata retrieved,
+           and also determines the time taken to crawl the schema
+         Optional, defaults to standard

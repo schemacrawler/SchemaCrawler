@@ -32,14 +32,9 @@ import us.fatehi.utility.ObjectToString;
 public final class FilterOptions implements Options {
 
   private final int childTableFilterDepth;
-  private final boolean isNoEmptyTables;
   private final int parentTableFilterDepth;
 
-  FilterOptions(
-      final boolean isNoEmptyTables,
-      final int childTableFilterDepth,
-      final int parentTableFilterDepth) {
-    this.isNoEmptyTables = isNoEmptyTables;
+  FilterOptions(final int childTableFilterDepth, final int parentTableFilterDepth) {
 
     if (childTableFilterDepth < 0) {
       throw new IllegalArgumentException(
@@ -60,16 +55,6 @@ public final class FilterOptions implements Options {
 
   public int getParentTableFilterDepth() {
     return parentTableFilterDepth;
-  }
-
-  /**
-   * If infolevel=maximum, this option will remove empty tables (that is, tables with no rows of
-   * data) from the catalog.
-   *
-   * @return Whether to hide empty tables
-   */
-  public boolean isNoEmptyTables() {
-    return isNoEmptyTables;
   }
 
   /** {@inheritDoc} */

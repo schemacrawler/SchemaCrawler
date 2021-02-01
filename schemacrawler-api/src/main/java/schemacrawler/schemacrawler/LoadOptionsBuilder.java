@@ -38,7 +38,6 @@ public final class LoadOptionsBuilder implements OptionsBuilder<LoadOptionsBuild
     return builder().toOptions();
   }
 
-  private boolean isLoadRowCounts;
   private SchemaInfoLevel schemaInfoLevel;
 
   /** Default options. */
@@ -53,25 +52,13 @@ public final class LoadOptionsBuilder implements OptionsBuilder<LoadOptionsBuild
     }
 
     schemaInfoLevel = options.getSchemaInfoLevel();
-    isLoadRowCounts = options.isLoadRowCounts();
 
-    return this;
-  }
-
-  /** Corresponds to the --load-row-counts command-line argument. */
-  public LoadOptionsBuilder loadRowCounts() {
-    return loadRowCounts(true);
-  }
-
-  /** Corresponds to the --load-row-counts=&lt;boolean&gt; command-line argument. */
-  public LoadOptionsBuilder loadRowCounts(final boolean value) {
-    isLoadRowCounts = value;
     return this;
   }
 
   @Override
   public LoadOptions toOptions() {
-    return new LoadOptions(schemaInfoLevel, isLoadRowCounts);
+    return new LoadOptions(schemaInfoLevel);
   }
 
   public LoadOptionsBuilder withInfoLevel(final InfoLevel infoLevel) {

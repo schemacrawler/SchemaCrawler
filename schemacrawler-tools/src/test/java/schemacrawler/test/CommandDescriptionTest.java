@@ -57,13 +57,11 @@ public class CommandDescriptionTest {
     final CommandDescription commandDescription1 = new CommandDescription("hello", "world");
     assertThat(commandDescription1.getName(), is(equalTo("hello")));
     assertThat(commandDescription1.getDescription(), is(equalTo("world")));
-    assertThat(commandDescription1.getValue(), is(equalTo("world")));
     assertThat(commandDescription1.toString(), is(equalTo("hello - world")));
 
     final CommandDescription commandDescription2 = new CommandDescription("hello", "  ");
     assertThat(commandDescription2.getName(), is(equalTo("hello")));
     assertThat(commandDescription2.getDescription(), is(equalTo("")));
-    assertThat(commandDescription2.getValue(), is(equalTo("")));
     assertThat(commandDescription2.toString(), is(equalTo("hello")));
   }
 }

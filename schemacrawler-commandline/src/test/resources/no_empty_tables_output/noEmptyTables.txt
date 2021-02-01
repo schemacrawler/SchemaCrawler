@@ -43,6 +43,10 @@ IDX_A_AUTHORS                                         [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
+Additional Information
+
+20 rows                                                      [row count]
+
 
 
 PUBLIC.BOOKS.AUTHORSLIST                                          [view]
@@ -50,6 +54,10 @@ PUBLIC.BOOKS.AUTHORSLIST                                          [view]
   ID                                INTEGER                     
   FIRSTNAME                         VARCHAR(20)                 
   LASTNAME                          VARCHAR(20)                 
+
+Additional Information
+
+20 rows                                                      [row count]
 
 
 
@@ -80,6 +88,10 @@ SYS_IDX_SYS_FK_10128_10132                            [non-unique index]
 UIDX_BOOKAUTHORS                                          [unique index]
   BOOKID                            ascending                   
   AUTHORID                          ascending                   
+
+Additional Information
+
+20 rows                                                      [row count]
 
 
 
@@ -125,6 +137,10 @@ SYS_IDX_U_PREVIOUSEDITION_10125                           [unique index]
 SYS_IDX_FK_PREVIOUSEDITION_10123                      [non-unique index]
   PREVIOUSEDITIONID                 ascending                   
 
+Additional Information
+
+20 rows                                                      [row count]
+
 
 
 PUBLIC.BOOKS.COUPONS                                             [table]
@@ -144,12 +160,20 @@ Indexes
 SYS_IDX_PK_COUPONS_10093                                  [unique index]
   ID                                ascending                   
 
+Additional Information
+
+10 rows                                                      [row count]
+
 
 
 PUBLIC.BOOKS."Global Counts"                                     [table]
 ------------------------------------------------------------------------
   "Global Count"                    INTEGER                     
   "UPDATE"                          VARCHAR(20)                 
+
+Additional Information
+
+10 rows                                                      [row count]
 
 
 
@@ -177,6 +201,10 @@ Indexes
 SYS_IDX_SYS_PK_10106_10107                                [unique index]
   ID                                ascending                   
 
+Additional Information
+
+20 rows                                                      [row count]
+
 
 
 PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
@@ -203,6 +231,10 @@ Indexes
 SYS_IDX_PK_CUSTOMERS_10227                                [unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
+
+Additional Information
+
+20 rows                                                      [row count]
 
 
 
@@ -232,4 +264,8 @@ SYS_IDX_FK_SALES_SALESDATA_10241                      [non-unique index]
 SYS_IDX_FK_SALES_REGIONS_10239                        [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
+
+Additional Information
+
+20 rows                                                      [row count]
 

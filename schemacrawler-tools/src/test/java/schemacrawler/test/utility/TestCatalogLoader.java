@@ -1,57 +1,59 @@
+/*
+========================================================================
+SchemaCrawler
+http://www.schemacrawler.com
+Copyright (c) 2000-2021, Sualeh Fatehi <sualeh@hotmail.com>.
+All rights reserved.
+------------------------------------------------------------------------
+
+SchemaCrawler is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+SchemaCrawler and the accompanying materials are made available under
+the terms of the Eclipse Public License v1.0, GNU General Public License
+v3 or GNU Lesser General Public License v3.
+
+You may elect to redistribute this code under any of these licenses.
+
+The Eclipse Public License is available at:
+http://www.eclipse.org/legal/epl-v10.html
+
+The GNU General Public License v3 and the GNU Lesser General Public
+License v3 are available at:
+http://www.gnu.org/licenses/
+
+========================================================================
+*/
+
 package schemacrawler.test.utility;
 
-import static org.mockito.Mockito.mock;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.catalogloader.BaseCatalogLoader;
+import schemacrawler.tools.executable.CommandDescription;
+import schemacrawler.tools.executable.commandline.PluginCommand;
 
-import java.sql.Connection;
+public class TestCatalogLoader extends BaseCatalogLoader {
 
-import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.tools.catalogloader.CatalogLoader;
-
-public class TestCatalogLoader implements CatalogLoader {
-
-  private Connection connection;
-  private SchemaCrawlerOptions schemaCrawlerOptions;
-  private SchemaRetrievalOptions schemaRetrievalOptions;
-
-  @Override
-  public Connection getConnection() {
-    return connection;
+  public TestCatalogLoader() {
+    super(new CommandDescription("testloader", "Loader for testing"), 3);
   }
 
   @Override
-  public String getDatabaseSystemIdentifier() {
-    return "test-db";
+  public PluginCommand getCommandLineCommand() {
+    final CommandDescription commandDescription = getCommandDescription();
+    final PluginCommand pluginCommand =
+        PluginCommand.newCatalogLoaderCommand(
+            commandDescription.getName(), commandDescription.getDescription());
+    pluginCommand.addOption(
+        "test-load-option",
+        Boolean.class,
+        "Check that the test option is added to the load command");
+    return pluginCommand;
   }
 
   @Override
-  public SchemaCrawlerOptions getSchemaCrawlerOptions() {
-    return schemaCrawlerOptions;
-  }
-
-  @Override
-  public SchemaRetrievalOptions getSchemaRetrievalOptions() {
-    return schemaRetrievalOptions;
-  }
-
-  @Override
-  public Catalog loadCatalog() throws Exception {
-    return mock(Catalog.class);
-  }
-
-  @Override
-  public void setConnection(final Connection connection) {
-    this.connection = connection;
-  }
-
-  @Override
-  public void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions) {
-    this.schemaCrawlerOptions = schemaCrawlerOptions;
-  }
-
-  @Override
-  public void setSchemaRetrievalOptions(final SchemaRetrievalOptions schemaRetrievalOptions) {
-    this.schemaRetrievalOptions = schemaRetrievalOptions;
+  public void loadCatalog() throws SchemaCrawlerException {
+    // Do nothing
   }
 }

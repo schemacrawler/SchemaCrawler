@@ -72,7 +72,7 @@ SchemaCrawler offers several options to change what you see on the database diag
 <a href="diagram-examples/diagram_8_no_cardinality.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
 <img class="img-fluid img-thumbnail" src="diagram-examples/diagram_8_no_cardinality.png" style="width: 200px;" />
 </a>
-- Show table row counts on the diagrams, set configuration option `schemacrawler.format.show_row_counts=true` in the configuration file, and use `--info-level=maximum` on the command-line. Then run SchemaCrawler with the `--load-row-counts` command-line option.
+- Show table row counts on the diagrams, run SchemaCrawler with the `--load-row-counts` command-line option.
 <br />
 <a href="diagram-examples/diagram_9_row_counts.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
 <img class="img-fluid img-thumbnail" src="diagram-examples/diagram_9_row_counts.png" style="width: 200px;" />
@@ -111,13 +111,10 @@ schemacrawler.format.show_unqualified_names=true
 
 ### Table Row Counts
 
-You can how table row counts on the database diagram,
-by setting the following properties in the SchemaCrawler configuration file,
-`schemacrawler.config.properties`, and using `-infolevel=maximum`
+You can how table row counts on the database diagram by running SchemaCrawler with the
+`--load-row-counts` option. You can hide empty tables with an additional `--no-empty-tables`
+option.
 
-```
-schemacrawler.format.show_row_counts=true
-```
 
 ### Graphviz Command-line Options
 
