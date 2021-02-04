@@ -1,0 +1,26 @@
+name: catalog
+tables:
+- name: TABLE1
+  remarks:
+  - "Remarks line1"
+  - Remarks line 2
+  attributes:
+    "some tag": tagvalue1
+    tag2: tagvalue2
+  columns:
+  - name: COLUMN1
+    remarks:
+    - Remarks line1
+    - Remarks line 2
+    attributes:
+      tag1: tagvalue1
+      tag2: tagvalue2
+  - name: COLUMN2
+    remarks:
+    - Remarks line1
+    - Remarks line 2
+- name: TABLE2
+  attributes:
+    tag1: tagvalue1
+    tag2: tagvalue2
+- name: TABLE3

@@ -26,32 +26,35 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.analysis.counts;
+package schemacrawler.loader.attributes;
 
-import static schemacrawler.filter.ReducerFactory.getTableReducer;
+import static us.fatehi.utility.IOUtility.isFileReadable;
 
+import java.nio.file.Path;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.Catalog;
-import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.StopWatch;
+import us.fatehi.utility.string.StringFormat;
 
-public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
+public class AttributesCatalogLoader extends BaseCatalogLoader {
 
   private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(TableRowCountsCatalogLoader.class.getName());
+      SchemaCrawlerLogger.getLogger(AttributesCatalogLoader.class.getName());
 
-  private static final String OPTION_NO_EMPTY_TABLES = "no-empty-tables";
-  private static final String OPTION_LOAD_ROW_COUNTS = "load-row-counts";
+  private static final String OPTION_ATTRIBUTES_FILE = "attributes-file";
 
-  public TableRowCountsCatalogLoader() {
-    super(new CommandDescription("countsloader", "Loader for table row counts"), 2);
+  public AttributesCatalogLoader() {
+    super(
+        new CommandDescription(
+            "attributesloader", "Loader for catalog attributes, such as remarks or tags"),
+        2);
   }
 
   @Override
@@ -60,19 +63,10 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
     final PluginCommand pluginCommand =
         PluginCommand.newCatalogLoaderCommand(
             commandDescription.getName(), commandDescription.getDescription());
-    pluginCommand
-        .addOption(
-            OPTION_LOAD_ROW_COUNTS,
-            Boolean.class,
-            "Loads row counts for each table",
-            "This can be a time consuming operation",
-            "Optional, defaults to false")
-        .addOption(
-            OPTION_NO_EMPTY_TABLES,
-            Boolean.class,
-            "Includes only tables that have rows of data",
-            "Requires table row counts to be loaded",
-            "Optional, default is false");
+    pluginCommand.addOption(
+        OPTION_ATTRIBUTES_FILE,
+        Path.class,
+        "Path to a YAML file with table and column attributes to add to the schema");
     return pluginCommand;
   }
 
@@ -86,33 +80,25 @@ public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
     final StopWatch stopWatch = new StopWatch("loadTableRowCounts");
     try {
       final Catalog catalog = getCatalog();
-      final TableRowCountsRetriever rowCountsRetriever =
-          new TableRowCountsRetriever(getConnection(), catalog);
       final Config config = getAdditionalConfiguration();
       stopWatch.time(
           "retrieveTableRowCounts",
           () -> {
-            final boolean loadRowCounts = config.getBooleanValue(OPTION_LOAD_ROW_COUNTS, false);
-            if (loadRowCounts) {
-              rowCountsRetriever.retrieveTableRowCounts();
-            } else {
+            final Path attributesFile = config.getObject(OPTION_ATTRIBUTES_FILE, null);
+            if (!isFileReadable(attributesFile)) {
               LOGGER.log(
-                  Level.INFO, "Not retrieving table row counts, since this was not requested");
+                  Level.CONFIG,
+                  new StringFormat(
+                      "Not loading catalog attributes, since attributes file <%s> is not readable",
+                      attributesFile));
             }
-            return null;
-          });
-
-      stopWatch.time(
-          "filterEmptyTables",
-          () -> {
-            final boolean noEmptyTables = config.getBooleanValue(OPTION_NO_EMPTY_TABLES, false);
-            catalog.reduce(Table.class, getTableReducer(new TableRowCountsFilter(noEmptyTables)));
+            // TODO: Load attributes file
             return null;
           });
 
       LOGGER.log(Level.INFO, stopWatch.stringify());
     } catch (final Exception e) {
-      throw new SchemaCrawlerException("Exception retrieving table row counts", e);
+      throw new SchemaCrawlerException("Exception loading catalog attributes", e);
     }
   }
 }
