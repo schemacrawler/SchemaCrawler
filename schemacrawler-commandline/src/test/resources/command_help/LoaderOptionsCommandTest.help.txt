@@ -3,6 +3,9 @@ Shell Command:
 load
 
 Options:
+      --attributes-file=<attributes-file>
+                           Path to a YAML file with table and column attributes
+                             to add to the schema
   -i, --info-level=<infolevel>
                            <infolevel> is one of unknown, minimum, standard,
                              detailed, maximum

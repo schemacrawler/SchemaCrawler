@@ -3,26 +3,29 @@
   "remarks" : [ ],
   "attributes" : { },
   "tables" : [ {
-    "name" : "TABLE1",
-    "remarks" : [ "Remarks line1", "Remarks line 2" ],
+    "catalogName" : "PUBLIC",
+    "schemaName" : "BOOKS",
+    "name" : "AUTHORS",
+    "remarks" : [ "Overwritten remarks line 1" ],
     "attributes" : {
-      "some tag" : "tagvalue1",
-      "tag2" : "tagvalue2"
+      "some tag 1" : "tagvalue1",
+      "tag2" : "tag value 2"
     },
     "columns" : [ {
-      "name" : "COLUMN1",
-      "remarks" : [ "Remarks line1", "Remarks line 2" ],
+      "name" : "FIRSTNAME",
+      "remarks" : [ "Overwritten remarks line 1", "Overwritten remarks line 2" ],
       "attributes" : {
-        "tag1" : "tagvalue1",
-        "tag2" : "tagvalue2"
+        "tag1" : "tagvalue1"
       }
     }, {
-      "name" : "COLUMN2",
-      "remarks" : [ "Remarks line1", "Remarks line 2" ],
+      "name" : "LASTNAME",
+      "remarks" : [ "Overwritten remarks line1", "Overwritten remarks line 2" ],
       "attributes" : { }
     } ]
   }, {
-    "name" : "TABLE2",
+    "catalogName" : "PUBLIC",
+    "schemaName" : "BOOKS",
+    "name" : "BOOKS",
     "remarks" : [ ],
     "attributes" : {
       "tag1" : "tagvalue1",
@@ -30,6 +33,8 @@
     },
     "columns" : [ ]
   }, {
+    "catalogName" : "PUBLIC",
+    "schemaName" : "BOOKS",
     "name" : "TABLE3",
     "remarks" : [ ],
     "attributes" : { },

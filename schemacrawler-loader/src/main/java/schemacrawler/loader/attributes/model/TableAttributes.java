@@ -37,27 +37,39 @@ import java.util.TreeSet;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaReference;
 
 public class TableAttributes extends ObjectAttributes implements Iterable<ColumnAttributes> {
 
   private static final long serialVersionUID = -3510286847668145323L;
 
+  private final String schemaName;
+  private final String catalogName;
   private final Set<ColumnAttributes> columns;
 
   @JsonCreator
   public TableAttributes(
+      @JsonProperty("schema") final String schemaName,
+      @JsonProperty("catalog") final String catalogName,
       @JsonProperty("name") final String name,
       @JsonProperty("remarks") final List<String> remarks,
       @JsonProperty("attributes") final Map<String, String> attributes,
       @JsonProperty("columns") final Set<ColumnAttributes> columns)
       throws SchemaCrawlerException {
     super(name, remarks, attributes);
+    this.catalogName = catalogName;
+    this.schemaName = schemaName;
     if (columns == null) {
       this.columns = Collections.emptySet();
     } else {
       this.columns = new TreeSet<>(columns);
     }
+  }
+
+  public Schema getSchema() {
+    return new SchemaReference(catalogName, schemaName);
   }
 
   @Override

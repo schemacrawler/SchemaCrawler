@@ -65,7 +65,7 @@ public class AttributesModelTest {
   private Path serialized(final CatalogAttributes catalogAttributes) throws Exception {
 
     @JsonPropertyOrder(
-        value = {"name", "remarks", "attributes"},
+        value = {"catalogName", "schemaName", "name", "remarks", "attributes"},
         alphabetic = true)
     class JacksonMixin {}
 

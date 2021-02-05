@@ -87,4 +87,16 @@ public abstract class ObjectAttributes implements Serializable, Comparable<Objec
   public String getRemarks() {
     return String.join(System.lineSeparator(), remarks);
   }
+
+  public boolean hasAttributes() {
+    return !attributes.isEmpty();
+  }
+
+  public boolean hasRemarks() {
+    if (remarks.isEmpty()) {
+      return false;
+    } else {
+      return !isBlank(getRemarks());
+    }
+  }
 }

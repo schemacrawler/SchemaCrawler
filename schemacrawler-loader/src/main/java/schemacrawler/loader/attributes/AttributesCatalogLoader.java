@@ -28,13 +28,21 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.loader.attributes;
 
+import static java.nio.file.Files.newBufferedReader;
+import static schemacrawler.loader.attributes.model.CatalogAttributesLoader.loadCatalogAttributes;
 import static us.fatehi.utility.IOUtility.isFileReadable;
 
+import java.io.Reader;
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
+import schemacrawler.loader.attributes.model.CatalogAttributes;
+import schemacrawler.loader.attributes.model.ColumnAttributes;
+import schemacrawler.loader.attributes.model.TableAttributes;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.CommandDescription;
@@ -49,6 +57,8 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
       SchemaCrawlerLogger.getLogger(AttributesCatalogLoader.class.getName());
 
   private static final String OPTION_ATTRIBUTES_FILE = "attributes-file";
+
+  private static final String REMARKS_KEY = "schemacrawler.database_object.remarks";
 
   public AttributesCatalogLoader() {
     super(
@@ -76,13 +86,13 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
       return;
     }
 
-    LOGGER.log(Level.INFO, "Retrieving table row counts");
+    LOGGER.log(Level.INFO, "Retrieving catalog attributes");
     final StopWatch stopWatch = new StopWatch("loadTableRowCounts");
     try {
       final Catalog catalog = getCatalog();
       final Config config = getAdditionalConfiguration();
       stopWatch.time(
-          "retrieveTableRowCounts",
+          "retrieveCatalogAttributes",
           () -> {
             final Path attributesFile = config.getObject(OPTION_ATTRIBUTES_FILE, null);
             if (!isFileReadable(attributesFile)) {
@@ -91,8 +101,37 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
                   new StringFormat(
                       "Not loading catalog attributes, since attributes file <%s> is not readable",
                       attributesFile));
+              return null;
             }
-            // TODO: Load attributes file
+
+            try (final Reader reader = newBufferedReader(attributesFile)) {
+              final CatalogAttributes catalogAttributes = loadCatalogAttributes(reader);
+              for (final TableAttributes tableAttributes : catalogAttributes) {
+                final Optional<Table> lookupTable =
+                    catalog.lookupTable(tableAttributes.getSchema(), tableAttributes.getName());
+                final Table table;
+                if (lookupTable.isPresent()) {
+                  table = lookupTable.get();
+                } else {
+                  continue;
+                }
+
+                if (tableAttributes.hasRemarks()) {
+                  table.setAttribute(REMARKS_KEY, tableAttributes.getRemarks());
+                }
+
+                for (final ColumnAttributes columnAttributes : tableAttributes) {
+                  if (columnAttributes.hasRemarks()) {
+                    table
+                        .lookupColumn(columnAttributes.getName())
+                        .ifPresent(
+                            column ->
+                                column.setAttribute(REMARKS_KEY, columnAttributes.getRemarks()));
+                  }
+                }
+              }
+            }
+
             return null;
           });
 

@@ -15,7 +15,7 @@ public class TestAvailablePlugins {
   public void availableCatalogLoaders() {
     assertThat(
         new AvailableCatalogLoaders(),
-        contains("testloader", "countsloader", "schemacrawlerloader"));
+        contains("testloader", "attributesloader", "countsloader", "schemacrawlerloader"));
   }
 
   @Test
