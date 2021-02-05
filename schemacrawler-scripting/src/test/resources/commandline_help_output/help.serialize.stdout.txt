@@ -1,5 +1,7 @@
 ** Create an offline catalog snapshot
 For more information, see https://www.schemacrawler.com/serialize.html
 
+Deserialization is possible with the "offline" command for Java serialization
+Add command switches to the execute command in the SchemaCrawler Shell
 
 

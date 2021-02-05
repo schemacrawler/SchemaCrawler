@@ -21,3 +21,4 @@ Options:
                            Optional, default is false
       --test-load-option   Check that the test option is added to the load
                              command
+Add loader switches to the load command in the SchemaCrawler Shell

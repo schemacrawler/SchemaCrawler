@@ -262,6 +262,7 @@ loader:testloader
 Options:
       --test-load-option   Check that the test option is added to the load
                              command
+Add loader switches to the load command in the SchemaCrawler Shell
 
 
 Loader for catalog attributes, such as remarks or tags
@@ -272,6 +273,7 @@ Options:
       --attributes-file=<attributes-file>
          Path to a YAML file with table and column attributes to add to the
            schema
+Add loader switches to the load command in the SchemaCrawler Shell
 
 
 Loader for table row counts
@@ -285,6 +287,7 @@ Options:
       --no-empty-tables   Includes only tables that have rows of data
                           Requires table row counts to be loaded
                           Optional, default is false
+Add loader switches to the load command in the SchemaCrawler Shell
 
 
 ** Load database metadata into memory
@@ -338,6 +341,7 @@ Options:
                             --weak-associations=<boolean>
                             <boolean> can be true or false
                             Optional, defaults to false
+Add command switches to the execute command in the SchemaCrawler Shell
 
 
 ** Test command which is not deployed with the release
@@ -347,6 +351,7 @@ command:test-command
 Options:
       --test-command-parameter=<test-command-parameter>
          Parameter for test command
+Add command switches to the execute command in the SchemaCrawler Shell
 
 
 ** Execute a SchemaCrawler command

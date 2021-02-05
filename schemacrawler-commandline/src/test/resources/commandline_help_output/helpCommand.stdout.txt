@@ -2,5 +2,6 @@
 
       --test-command-parameter=<test-command-parameter>
          Parameter for test command
+Add command switches to the execute command in the SchemaCrawler Shell
 
 

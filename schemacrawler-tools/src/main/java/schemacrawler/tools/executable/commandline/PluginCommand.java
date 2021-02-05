@@ -35,8 +35,10 @@ import static schemacrawler.tools.executable.commandline.PluginCommandType.unkno
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.function.Supplier;
@@ -85,6 +87,7 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
       final String helpHeader,
       final Supplier<String[]> helpDescription,
       final Supplier<String[]> helpFooter) {
+
     this.type = requireNonNull(type, "No plugin command type provided");
     this.options = new ArrayList<>();
 
@@ -100,7 +103,8 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
     }
 
     this.helpDescription = helpDescription;
-    this.helpFooter = helpFooter;
+
+    this.helpFooter = addStandardFooter(helpFooter);
   }
 
   public PluginCommand addOption(
@@ -172,5 +176,29 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
         .add("name='" + name + "'")
         .add("options=" + options)
         .toString();
+  }
+
+  private Supplier<String[]> addStandardFooter(final Supplier<String[]> helpFooter) {
+
+    final String[] helpFooterArray = helpFooter == null ? null : helpFooter.get();
+    final List<String> newFooter = new ArrayList<>();
+    if (helpFooterArray != null && helpFooterArray.length > 0) {
+      newFooter.addAll(Arrays.asList(helpFooterArray));
+    }
+    switch (type) {
+      case command:
+        newFooter.add("Add command switches to the execute command in the SchemaCrawler Shell");
+        break;
+      case loader:
+        newFooter.add("Add loader switches to the load command in the SchemaCrawler Shell");
+        break;
+
+      default:
+        break;
+    }
+
+    final String[] newFooterArray = newFooter.toArray(new String[0]);
+
+    return () -> newFooterArray;
   }
 }
