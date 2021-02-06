@@ -76,9 +76,10 @@ public abstract class AbstractTitleTest {
                                   final String referenceFile = referenceFile(command, outputFormat);
 
                                   final Map<String, String> argsMap = new HashMap<>();
-                                  argsMap.put("-schemas", ".*\\.(?!FOR_LINT).*");
-                                  argsMap.put("-info-level", InfoLevel.standard.name());
-                                  argsMap.put("-title", "Database Design for Books and Publishers");
+                                  argsMap.put("--schemas", ".*\\.(?!FOR_LINT).*");
+                                  argsMap.put("--info-level", InfoLevel.standard.name());
+                                  argsMap.put(
+                                      "--title", "Database Design for Books and Publishers");
 
                                   assertThat(
                                       outputOf(

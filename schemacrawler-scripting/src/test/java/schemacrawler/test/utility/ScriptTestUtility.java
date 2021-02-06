@@ -46,7 +46,7 @@ public class ScriptTestUtility {
   public static Path commandLineScriptExecution(
       final DatabaseConnectionInfo connectionInfo, final String script) throws Exception {
     final Map<String, String> argsMap = additionalArgsMap();
-    argsMap.put("-" + "script", script);
+    argsMap.put("--script", script);
     return commandlineExecution(connectionInfo, "script", argsMap, "text");
   }
 
@@ -56,8 +56,8 @@ public class ScriptTestUtility {
       final String template)
       throws Exception {
     final Map<String, String> argsMap = additionalArgsMap();
-    argsMap.put("-template", template);
-    argsMap.put("-templating-language", templateLanguage.name());
+    argsMap.put("--template", template);
+    argsMap.put("--templating-language", templateLanguage.name());
     return commandlineExecution(connectionInfo, "template", argsMap, "text");
   }
 
@@ -87,8 +87,8 @@ public class ScriptTestUtility {
 
   private static Map<String, String> additionalArgsMap() {
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("-schemas", "((?!FOR_LINT).)*");
-    argsMap.put("-info-level", "standard");
+    argsMap.put("--schemas", "((?!FOR_LINT).)*");
+    argsMap.put("--info-level", "standard");
     return argsMap;
   }
 }

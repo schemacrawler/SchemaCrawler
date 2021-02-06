@@ -70,9 +70,9 @@ public class CommandLineTest {
       final String command,
       final TextOutputFormat outputFormat)
       throws Exception {
-    argsMap.put("-no-info", Boolean.TRUE.toString());
-    argsMap.put("-schemas", ".*\\.(?!FOR_LINT).*");
-    argsMap.put("-info-level", "maximum");
+    argsMap.put("--no-info", Boolean.TRUE.toString());
+    argsMap.put("--schemas", ".*\\.(?!FOR_LINT).*");
+    argsMap.put("--info-level", "maximum");
 
     final Map<String, Object> runConfig = new HashMap<>();
     final Map<String, String> informationSchema = loadHsqldbConfig();
@@ -109,24 +109,24 @@ public class CommandLineTest {
   @Test
   public void commandLineColorOverrides(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-tables", ".*");
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--tables", ".*");
 
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.color_map.9900CC", ".*\\..*PUBLISHER.*");
     config.put("schemacrawler.format.color_map.FFFF00", ".*\\.BOOKS");
 
-    run(testContext, connectionInfo, args, config, "brief", TextOutputFormat.html);
+    run(testContext, connectionInfo, argsMap, config, "brief", TextOutputFormat.html);
   }
 
   @Test
   public void commandLineOverridesWithConfig(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-tables", ".*");
-    args.put("-routines", ".*");
-    args.put("-sequences", ".*");
-    args.put("-synonyms", ".*");
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--tables", ".*");
+    argsMap.put("--routines", ".*");
+    argsMap.put("--sequences", ".*");
+    argsMap.put("--synonyms", ".*");
 
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.table.pattern.include", ".*");
@@ -138,41 +138,41 @@ public class CommandLineTest {
     config.put("schemacrawler.synonym.pattern.include", ".*");
     config.put("schemacrawler.synonym.pattern.exclude", "");
 
-    run(testContext, connectionInfo, args, config, "brief");
+    run(testContext, connectionInfo, argsMap, config, "brief");
   }
 
   @Test
   public void commandLineOverridesWithGrepConfig(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-grep-columns", ".*BOOKS.ID");
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--grep-columns", ".*BOOKS.ID");
 
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.grep.column.pattern.include", ".*AUTHORS.ID");
     config.put("schemacrawler.grep.column.pattern.exclude", "");
 
-    run(testContext, connectionInfo, args, config, "brief");
+    run(testContext, connectionInfo, argsMap, config, "brief");
   }
 
   @Test
   public void commandLineOverridesWithSomePortableNames(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-portable-names", Boolean.FALSE.toString());
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--portable-names", Boolean.FALSE.toString());
 
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.hide_primarykey_names", Boolean.TRUE.toString());
     config.put("schemacrawler.format.hide_foreignkey_names", Boolean.TRUE.toString());
 
-    run(testContext, connectionInfo, args, config, "brief");
+    run(testContext, connectionInfo, argsMap, config, "brief");
   }
 
   @Test
   public void commandLineOverridesWithTextShowOptionsConfig(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-no-remarks", Boolean.FALSE.toString());
-    args.put("-portable-names", Boolean.FALSE.toString());
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--no-remarks", Boolean.FALSE.toString());
+    argsMap.put("--portable-names", Boolean.FALSE.toString());
 
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.no_remarks", Boolean.TRUE.toString());
@@ -180,113 +180,113 @@ public class CommandLineTest {
     config.put("schemacrawler.format.show_standard_column_type_names", Boolean.TRUE.toString());
     config.put("schemacrawler.format.show_ordinal_numbers", Boolean.TRUE.toString());
 
-    run(testContext, connectionInfo, args, config, "brief");
+    run(testContext, connectionInfo, argsMap, config, "brief");
   }
 
   @Test
   public void commandLineRoutinesWithColumnsSorting(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-tables", "");
-    args.put("-routines", ".*");
-    args.put("-sort-columns", Boolean.TRUE.toString());
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--tables", "");
+    argsMap.put("--routines", ".*");
+    argsMap.put("--sort-columns", Boolean.TRUE.toString());
     // Testing no tables, all routines
     // Testing no sequences, synonyms
 
-    run(testContext, connectionInfo, args, "brief");
+    run(testContext, connectionInfo, argsMap, "brief");
   }
 
   @Test
   public void commandLineRoutinesWithoutColumnsSorting(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-tables", "");
-    args.put("-routines", ".*");
-    args.put("-sort-columns", Boolean.FALSE.toString());
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--tables", "");
+    argsMap.put("--routines", ".*");
+    argsMap.put("--sort-columns", Boolean.FALSE.toString());
     // Testing no tables, all routines
     // Testing no sequences, synonyms
 
-    run(testContext, connectionInfo, args, "brief");
+    run(testContext, connectionInfo, argsMap, "brief");
   }
 
   @Test
   public void commandLineRoutinesWithoutSorting(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-tables", "");
-    args.put("-routines", ".*");
-    args.put("-sort-routines", Boolean.FALSE.toString());
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--tables", "");
+    argsMap.put("--routines", ".*");
+    argsMap.put("--sort-routines", Boolean.FALSE.toString());
     // Testing no tables, all routines
     // Testing no sequences, synonyms
 
-    run(testContext, connectionInfo, args, "brief");
+    run(testContext, connectionInfo, argsMap, "brief");
   }
 
   @Test
   public void commandLineRoutinesWithSorting(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-tables", "");
-    args.put("-routines", ".*");
-    args.put("-sort-routines", Boolean.TRUE.toString());
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--tables", "");
+    argsMap.put("--routines", ".*");
+    argsMap.put("--sort-routines", Boolean.TRUE.toString());
     // Testing no tables, all routines
     // Testing no sequences, synonyms
 
-    run(testContext, connectionInfo, args, "brief");
+    run(testContext, connectionInfo, argsMap, "brief");
   }
 
   @Test
   public void commandLineTablesWithColumnsSorting(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-routines", "");
-    args.put("-sort-columns", Boolean.TRUE.toString());
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--routines", "");
+    argsMap.put("--sort-columns", Boolean.TRUE.toString());
     // Testing all tables, no routines
     // Testing no sequences, synonyms
 
-    run(testContext, connectionInfo, args, null, "brief");
+    run(testContext, connectionInfo, argsMap, null, "brief");
   }
 
   @Test
   public void commandLineTablesWithoutColumnsSorting(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-routines", "");
-    args.put("-sort-columns", Boolean.FALSE.toString());
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--routines", "");
+    argsMap.put("--sort-columns", Boolean.FALSE.toString());
     // Testing all tables, no routines
     // Testing no sequences, synonyms
 
-    run(testContext, connectionInfo, args, "brief");
+    run(testContext, connectionInfo, argsMap, "brief");
   }
 
   @Test
   public void commandLineTablesWithoutSorting(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-routines", "");
-    args.put("-sort-tables", Boolean.FALSE.toString());
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--routines", "");
+    argsMap.put("--sort-tables", Boolean.FALSE.toString());
     // Testing all tables, no routines
     // Testing no sequences, synonyms
 
-    run(testContext, connectionInfo, args, "brief");
+    run(testContext, connectionInfo, argsMap, "brief");
   }
 
   @Test
   public void commandLineTablesWithSorting(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-routines", "");
-    args.put("-sort-tables", Boolean.TRUE.toString());
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--routines", "");
+    argsMap.put("--sort-tables", Boolean.TRUE.toString());
     // Testing all tables, no routines
     // Testing no sequences, synonyms
 
-    run(testContext, connectionInfo, args, null, "brief");
+    run(testContext, connectionInfo, argsMap, null, "brief");
   }
 
   @Test
   public void commandLineWithConfig(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
+    final Map<String, String> argsMap = new HashMap<>();
 
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.show_unqualified_names", Boolean.TRUE.toString());
@@ -299,43 +299,43 @@ public class CommandLineTest {
     config.put("schemacrawler.synonym.pattern.include", ".*");
     config.put("schemacrawler.synonym.pattern.exclude", "");
 
-    run(testContext, connectionInfo, args, config, "brief");
+    run(testContext, connectionInfo, argsMap, config, "brief");
   }
 
   @Test
   public void commandLineWithDefaults(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-portable-names", Boolean.TRUE.toString());
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--portable-names", Boolean.TRUE.toString());
     // Testing all tables, routines
     // Testing no sequences, synonyms
 
-    run(testContext, connectionInfo, args, "brief");
+    run(testContext, connectionInfo, argsMap, "brief");
   }
 
   @Test
   public void commandLineWithGrepConfig(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
+    final Map<String, String> argsMap = new HashMap<>();
 
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.grep.column.pattern.include", ".*AUTHORS.ID");
     config.put("schemacrawler.grep.column.pattern.exclude", "");
 
-    run(testContext, connectionInfo, args, config, "brief");
+    run(testContext, connectionInfo, argsMap, config, "brief");
   }
 
   @Test
   public void commandLineWithNonDefaults(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-portable-names", Boolean.TRUE.toString());
-    args.put("-tables", "");
-    args.put("-routines", ".*");
-    args.put("-sequences", ".*");
-    args.put("-synonyms", ".*");
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--portable-names", Boolean.TRUE.toString());
+    argsMap.put("--tables", "");
+    argsMap.put("--routines", ".*");
+    argsMap.put("--sequences", ".*");
+    argsMap.put("--synonyms", ".*");
 
-    run(testContext, connectionInfo, args, "brief");
+    run(testContext, connectionInfo, argsMap, "brief");
   }
 
   @Test
@@ -343,12 +343,12 @@ public class CommandLineTest {
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final String command = "query1";
 
-    final Map<String, String> args = new HashMap<>();
+    final Map<String, String> argsMap = new HashMap<>();
 
     final Map<String, String> config = new HashMap<>();
     config.put(command, "SELECT * FROM BOOKS.Books");
 
-    run(testContext, connectionInfo, args, config, command);
+    run(testContext, connectionInfo, argsMap, config, command);
   }
 
   @Test
@@ -356,53 +356,53 @@ public class CommandLineTest {
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final String command = "query2";
 
-    final Map<String, String> args = new HashMap<>();
+    final Map<String, String> argsMap = new HashMap<>();
 
     final Map<String, String> config = new HashMap<>();
     config.put(command, "SELECT ${columns} FROM ${table} ORDER BY ${columns}");
 
-    run(testContext, connectionInfo, args, config, command);
+    run(testContext, connectionInfo, argsMap, config, command);
   }
 
   @Test
   public void commandLineWithQuoteOptionsConfig(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
+    final Map<String, String> argsMap = new HashMap<>();
 
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.identifier_quoting_strategy", "quote_all");
 
-    run(testContext, connectionInfo, args, config, "brief");
+    run(testContext, connectionInfo, argsMap, config, "brief");
   }
 
   @Test
   public void commandLineWithSomePortableNames1(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    // args.put("-portable-names", Boolean.TRUE.toString());
+    final Map<String, String> argsMap = new HashMap<>();
+    // argsMap.put("--portable-names", Boolean.TRUE.toString());
 
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.hide_primarykey_names", Boolean.TRUE.toString());
 
-    run(testContext, connectionInfo, args, config, "brief");
+    run(testContext, connectionInfo, argsMap, config, "brief");
   }
 
   @Test
   public void commandLineWithSomePortableNames2(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    // args.put("-portable-names", Boolean.TRUE.toString());
+    final Map<String, String> argsMap = new HashMap<>();
+    // argsMap.put("--portable-names", Boolean.TRUE.toString());
 
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.hide_foreignkey_names", Boolean.TRUE.toString());
 
-    run(testContext, connectionInfo, args, config, "brief");
+    run(testContext, connectionInfo, argsMap, config, "brief");
   }
 
   @Test
   public void commandLineWithSortConfig(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
+    final Map<String, String> argsMap = new HashMap<>();
 
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.sort_alphabetically.tables", Boolean.TRUE.toString());
@@ -413,13 +413,13 @@ public class CommandLineTest {
     config.put("schemacrawler.format.sort_alphabetically.routines", Boolean.TRUE.toString());
     config.put("schemacrawler.format.sort_alphabetically.routine_columns", Boolean.TRUE.toString());
 
-    run(testContext, connectionInfo, args, config, "brief");
+    run(testContext, connectionInfo, argsMap, config, "brief");
   }
 
   @Test
   public void commandLineWithTextShowOptionsConfig(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
+    final Map<String, String> argsMap = new HashMap<>();
 
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.hide_remarks", Boolean.TRUE.toString());
@@ -427,6 +427,6 @@ public class CommandLineTest {
     config.put("schemacrawler.format.show_standard_column_type_names", Boolean.TRUE.toString());
     config.put("schemacrawler.format.show_ordinal_numbers", Boolean.TRUE.toString());
 
-    run(testContext, connectionInfo, args, config, "brief");
+    run(testContext, connectionInfo, argsMap, config, "brief");
   }
 }

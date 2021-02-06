@@ -76,7 +76,7 @@ public class CommandLineNegativeTest {
   public void commandLine_BadCommand(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> argsMapOverride = new HashMap<>();
-    argsMapOverride.put("-command", "badcommand");
+    argsMapOverride.put("--command", "badcommand");
 
     run(testContext, argsMapOverride, connectionInfo);
   }
@@ -98,17 +98,17 @@ public class CommandLineNegativeTest {
     final TestWriter outputFile = new TestWriter();
     try (final TestWriter outFile = outputFile) {
       final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("-url", connectionInfo.getConnectionUrl());
-      argsMap.put("-user", "sa");
-      argsMap.put("-password", "");
-      argsMap.put("-no-info", Boolean.TRUE.toString());
-      argsMap.put("-schemas", ".*\\.(?!FOR_LINT).*");
-      argsMap.put("-info-level", "standard");
-      argsMap.put("-command", "brief");
-      argsMap.put("-tables", "");
-      argsMap.put("-routines", "");
-      argsMap.put("-output-format", TextOutputFormat.text.getFormat());
-      argsMap.put("-output-file", outFile.toString());
+      argsMap.put("--url", connectionInfo.getConnectionUrl());
+      argsMap.put("--user", "sa");
+      argsMap.put("--password", "");
+      argsMap.put("--no-info", Boolean.TRUE.toString());
+      argsMap.put("--schemas", ".*\\.(?!FOR_LINT).*");
+      argsMap.put("--info-level", "standard");
+      argsMap.put("--command", "brief");
+      argsMap.put("--tables", "");
+      argsMap.put("--routines", "");
+      argsMap.put("--output-format", TextOutputFormat.text.getFormat());
+      argsMap.put("--output-file", outFile.toString());
 
       argsMap.putAll(argsMapOverride);
 

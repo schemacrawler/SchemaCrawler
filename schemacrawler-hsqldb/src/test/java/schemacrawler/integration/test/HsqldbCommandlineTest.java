@@ -77,17 +77,17 @@ public class HsqldbCommandlineTest {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
       final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("-server", "hsqldb");
-      argsMap.put("-port", String.valueOf(connectionInfo.getPort()));
-      argsMap.put("-database", connectionInfo.getDatabase());
-      argsMap.put("-user", "sa");
-      argsMap.put("-password", "");
-      argsMap.put("-no-info", Boolean.FALSE.toString());
-      argsMap.put("-command", "details");
-      argsMap.put("-info-level", "maximum");
-      argsMap.put("-synonyms", ".*");
-      argsMap.put("-routines", ".*");
-      argsMap.put("-output-file", out.toString());
+      argsMap.put("--server", "hsqldb");
+      argsMap.put("--port", String.valueOf(connectionInfo.getPort()));
+      argsMap.put("--database", connectionInfo.getDatabase());
+      argsMap.put("--user", "sa");
+      argsMap.put("--password", "");
+      argsMap.put("--no-info", Boolean.FALSE.toString());
+      argsMap.put("--command", "details");
+      argsMap.put("--info-level", "maximum");
+      argsMap.put("--synonyms", ".*");
+      argsMap.put("--routines", ".*");
+      argsMap.put("--output-file", out.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));
     }

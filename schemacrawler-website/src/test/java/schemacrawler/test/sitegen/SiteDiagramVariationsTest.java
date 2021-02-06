@@ -97,41 +97,41 @@ public class SiteDiagramVariationsTest {
   @Test
   public void diagram(final TestContext testContext, final DatabaseConnectionInfo connectionInfo)
       throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-info-level", "maximum");
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--info-level", "maximum");
 
-    run(connectionInfo, args, null, diagramPath(testContext));
+    run(connectionInfo, argsMap, null, diagramPath(testContext));
   }
 
   @Test
   public void diagram_10_no_schema_colors(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-info-level", "standard");
-    args.put("-portable-names", "true");
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--info-level", "standard");
+    argsMap.put("--portable-names", "true");
 
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.no_schema_colors", "true");
 
-    run(connectionInfo, args, config, diagramPath(testContext));
+    run(connectionInfo, argsMap, config, diagramPath(testContext));
   }
 
   @Test
   public void diagram_11_title(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-info-level", "standard");
-    args.put("-title", "Books and Publishers Schema");
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--info-level", "standard");
+    argsMap.put("--title", "Books and Publishers Schema");
 
-    run(connectionInfo, args, null, diagramPath(testContext));
+    run(connectionInfo, argsMap, null, diagramPath(testContext));
   }
 
   @Test
   public void diagram_12_graphviz_attributes(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-info-level", "standard");
-    args.put("-portable-names", "true");
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--info-level", "standard");
+    argsMap.put("--portable-names", "true");
 
     final Map<String, String> config = new HashMap<>();
     final String GRAPH = "schemacrawler.graph.graphviz.graph.";
@@ -148,102 +148,102 @@ public class SiteDiagramVariationsTest {
     // Test
     config.put("schemacrawler.graph.graphviz.graph.splines", "ortho");
 
-    run(connectionInfo, args, config, diagramPath(testContext));
+    run(connectionInfo, argsMap, config, diagramPath(testContext));
   }
 
   @Test
   public void diagram_2_portablenames(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-info-level", "maximum");
-    args.put("-portable-names", "true");
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--info-level", "maximum");
+    argsMap.put("--portable-names", "true");
 
-    run(connectionInfo, args, null, diagramPath(testContext));
+    run(connectionInfo, argsMap, null, diagramPath(testContext));
   }
 
   @Test
   public void diagram_3_important_columns(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-info-level", "standard");
-    args.put("c", "brief");
-    args.put("-portable-names", "true");
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--info-level", "standard");
+    argsMap.put("c", "brief");
+    argsMap.put("--portable-names", "true");
 
-    run(connectionInfo, args, null, diagramPath(testContext));
+    run(connectionInfo, argsMap, null, diagramPath(testContext));
   }
 
   @Test
   public void diagram_4_ordinals(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-info-level", "standard");
-    args.put("-portable-names", "true");
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--info-level", "standard");
+    argsMap.put("--portable-names", "true");
 
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.show_ordinal_numbers", "true");
 
-    run(connectionInfo, args, config, diagramPath(testContext));
+    run(connectionInfo, argsMap, config, diagramPath(testContext));
   }
 
   @Test
   public void diagram_5_alphabetical(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-info-level", "standard");
-    args.put("-portable-names", "true");
-    args.put("-sort-columns", "true");
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--info-level", "standard");
+    argsMap.put("--portable-names", "true");
+    argsMap.put("--sort-columns", "true");
 
-    run(connectionInfo, args, null, diagramPath(testContext));
+    run(connectionInfo, argsMap, null, diagramPath(testContext));
   }
 
   @Test
   public void diagram_6_grep(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-info-level", "maximum");
-    args.put("-portable-names", "true");
-    args.put("-grep-columns", ".*\\.BOOKS\\..*\\.ID");
-    args.put("-table-types", "TABLE");
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--info-level", "maximum");
+    argsMap.put("--portable-names", "true");
+    argsMap.put("--grep-columns", ".*\\.BOOKS\\..*\\.ID");
+    argsMap.put("--table-types", "TABLE");
 
-    run(connectionInfo, args, null, diagramPath(testContext));
+    run(connectionInfo, argsMap, null, diagramPath(testContext));
   }
 
   @Test
   public void diagram_7_grep_onlymatching(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-info-level", "maximum");
-    args.put("-portable-names", "true");
-    args.put("-grep-columns", ".*\\.BOOKS\\..*\\.ID");
-    args.put("-only-matching", "true");
-    args.put("-table-types", "TABLE");
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--info-level", "maximum");
+    argsMap.put("--portable-names", "true");
+    argsMap.put("--grep-columns", ".*\\.BOOKS\\..*\\.ID");
+    argsMap.put("--only-matching", "true");
+    argsMap.put("--table-types", "TABLE");
 
-    run(connectionInfo, args, null, diagramPath(testContext));
+    run(connectionInfo, argsMap, null, diagramPath(testContext));
   }
 
   @Test
   public void diagram_8_no_cardinality(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-info-level", "standard");
-    args.put("-portable-names", "true");
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--info-level", "standard");
+    argsMap.put("--portable-names", "true");
 
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.graph.show.primarykey.cardinality", "false");
     config.put("schemacrawler.graph.show.foreignkey.cardinality", "false");
 
-    run(connectionInfo, args, config, diagramPath(testContext));
+    run(connectionInfo, argsMap, config, diagramPath(testContext));
   }
 
   @Test
   public void diagram_9_row_counts(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-info-level", "maximum");
-    args.put("-load-row-counts", "true");
-    args.put("-portable-names", "true");
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--info-level", "maximum");
+    argsMap.put("--load-row-counts", "true");
+    argsMap.put("--portable-names", "true");
 
-    run(connectionInfo, args, null, diagramPath(testContext));
+    run(connectionInfo, argsMap, null, diagramPath(testContext));
   }
 
   private Path diagramPath(final TestContext testContext) {

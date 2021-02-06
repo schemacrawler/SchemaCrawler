@@ -133,7 +133,7 @@ public class LinterConfigsDispatchTest {
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
 
     final Map<String, String> additionalArgs = new HashMap<>();
-    additionalArgs.put("-lint-dispatch", LintDispatch.terminate_system.name());
+    additionalArgs.put("--lint-dispatch", LintDispatch.terminate_system.name());
 
     executeLintCommandLine(
         connectionInfo,

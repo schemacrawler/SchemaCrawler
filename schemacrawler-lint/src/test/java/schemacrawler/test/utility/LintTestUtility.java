@@ -81,12 +81,12 @@ public final class LintTestUtility {
       throws Exception {
     final Map<String, String> argsMap = new HashMap<>();
 
-    argsMap.put("-info-level", "standard");
-    argsMap.put("-sort-columns", "true");
+    argsMap.put("--info-level", "standard");
+    argsMap.put("--sort-columns", "true");
 
     if (!isBlank(linterConfigsResource)) {
       final Path linterConfigsFile = copyResourceToTempFile(linterConfigsResource);
-      argsMap.put("-linter-configs", linterConfigsFile.toString());
+      argsMap.put("--linter-configs", linterConfigsFile.toString());
     }
 
     if (additionalArgs != null) {

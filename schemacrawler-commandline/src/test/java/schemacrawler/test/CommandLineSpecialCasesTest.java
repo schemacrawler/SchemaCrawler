@@ -76,9 +76,9 @@ public class CommandLineSpecialCasesTest {
   public void htmlxWithoutOutputFilename(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("-command", "schema");
-    argsMap.put("-output-format", "htmlx");
-    argsMap.put("-info-level", "standard");
+    argsMap.put("--command", "schema");
+    argsMap.put("--output-format", "htmlx");
+    argsMap.put("--info-level", "standard");
 
     run(testContext, argsMap, connectionInfo);
   }
@@ -100,9 +100,9 @@ public class CommandLineSpecialCasesTest {
     final TestWriter outputFile = new TestWriter();
     try (final TestWriter outFile = outputFile) {
       final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("-url", connectionInfo.getConnectionUrl());
-      argsMap.put("-user", "sa");
-      argsMap.put("-password", "");
+      argsMap.put("--url", connectionInfo.getConnectionUrl());
+      argsMap.put("--user", "sa");
+      argsMap.put("--password", "");
 
       argsMap.putAll(argsMapOverride);
 

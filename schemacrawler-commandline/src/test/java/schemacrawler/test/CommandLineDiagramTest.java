@@ -59,9 +59,9 @@ public class CommandLineDiagramTest {
       final Map<String, String> config,
       final String command)
       throws Exception {
-    argsMap.put("-no-info", Boolean.TRUE.toString());
-    argsMap.put("-schemas", ".*\\.(?!FOR_LINT).*");
-    argsMap.put("-info-level", "maximum");
+    argsMap.put("--no-info", Boolean.TRUE.toString());
+    argsMap.put("--schemas", ".*\\.(?!FOR_LINT).*");
+    argsMap.put("--info-level", "maximum");
 
     final Map<String, Object> runConfig = new HashMap<>();
     final Map<String, String> informationSchema = loadHsqldbConfig();

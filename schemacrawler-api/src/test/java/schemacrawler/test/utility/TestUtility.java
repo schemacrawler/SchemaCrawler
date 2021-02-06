@@ -205,9 +205,9 @@ public final class TestUtility {
       final String key = arg.getKey();
       final String value = arg.getValue();
       if (value != null) {
-        argsList.add(String.format("-%s=%s", key, value));
+        argsList.add(String.format("%s=%s", key, value));
       } else {
-        argsList.add(String.format("-%s", key));
+        argsList.add(String.format("%s", key));
       }
     }
     final String[] args = argsList.toArray(new String[0]);

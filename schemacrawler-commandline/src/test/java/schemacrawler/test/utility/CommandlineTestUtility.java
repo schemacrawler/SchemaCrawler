@@ -97,15 +97,16 @@ public final class CommandlineTestUtility {
   public static Path commandlineExecution(
       final DatabaseConnectionInfo connectionInfo,
       final String command,
-      final Map<String, String> argsMap,
+      final Map<String, String> extraArgsMap,
       final Path propertiesFile,
       final String outputFormatValue,
       final Path out)
       throws Exception {
-    final Map<String, String> commandlineArgsMap = new HashMap<>();
-    commandlineArgsMap.put("-url", connectionInfo.getConnectionUrl());
-    commandlineArgsMap.put("-user", "sa");
-    commandlineArgsMap.put("-password", "");
+
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--url", connectionInfo.getConnectionUrl());
+    argsMap.put("--user", "sa");
+    argsMap.put("--password", "");
 
     System.clearProperty("config.file");
     if (propertiesFile != null) {
@@ -113,16 +114,16 @@ public final class CommandlineTestUtility {
     }
     ConfigFactory.invalidateCaches();
 
-    commandlineArgsMap.put("c", command);
-    commandlineArgsMap.put("-output-format", outputFormatValue);
-    commandlineArgsMap.put("-output-file", out.toString());
+    argsMap.put("-c", command);
+    argsMap.put("--output-format", outputFormatValue);
+    argsMap.put("--output-file", out.toString());
 
     // Override and add to command-line arguments
-    if (argsMap != null) {
-      commandlineArgsMap.putAll(argsMap);
+    if (extraArgsMap != null) {
+      argsMap.putAll(extraArgsMap);
     }
 
-    Main.main(flattenCommandlineArgs(commandlineArgsMap));
+    Main.main(flattenCommandlineArgs(argsMap));
 
     return out;
   }

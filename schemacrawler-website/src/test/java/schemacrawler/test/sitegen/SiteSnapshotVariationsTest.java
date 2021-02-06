@@ -61,6 +61,12 @@ import schemacrawler.tools.options.OutputFormat;
 @EnabledIfSystemProperty(named = "distrib", matches = "^((?!(false|no)).)*$")
 public class SiteSnapshotVariationsTest {
 
+  private static Path lintReportsDirectory;
+
+  private static Path propertiesFile;
+
+  private static Path snapshotsDirectory;
+
   @BeforeAll
   public static void _saveConfigProperties() throws IOException {
     propertiesFile = DatabaseTestUtility.tempHsqldbConfig();
@@ -73,10 +79,6 @@ public class SiteSnapshotVariationsTest {
     lintReportsDirectory = testContext.resolveTargetFromRootPath("_website/lint-report-examples");
   }
 
-  private static Path lintReportsDirectory;
-  private static Path propertiesFile;
-  private static Path snapshotsDirectory;
-
   @Test
   public void lintReportExamples(final DatabaseConnectionInfo connectionInfo) throws Exception {
     for (final OutputFormat outputFormat : LintReportOutputFormat.values()) {
@@ -87,6 +89,20 @@ public class SiteSnapshotVariationsTest {
           null,
           outputFormat,
           lintReportsDirectory.resolve("lint_report." + extension));
+    }
+  }
+
+  @Test
+  public void serializeExamples(final DatabaseConnectionInfo connectionInfo) throws Exception {
+    for (final OutputFormat outputFormat :
+        new OutputFormat[] {SerializationFormat.json, SerializationFormat.yaml}) {
+      final String extension = outputFormat.getFormat();
+      run(
+          connectionInfo,
+          "serialize",
+          null,
+          outputFormat,
+          snapshotsDirectory.resolve("snapshot." + extension));
     }
   }
 
@@ -112,20 +128,6 @@ public class SiteSnapshotVariationsTest {
     }
   }
 
-  @Test
-  public void serializeExamples(final DatabaseConnectionInfo connectionInfo) throws Exception {
-    for (final OutputFormat outputFormat :
-        new OutputFormat[] {SerializationFormat.json, SerializationFormat.yaml}) {
-      final String extension = outputFormat.getFormat();
-      run(
-          connectionInfo,
-          "serialize",
-          null,
-          outputFormat,
-          snapshotsDirectory.resolve("snapshot." + extension));
-    }
-  }
-
   private void run(
       final DatabaseConnectionInfo connectionInfo,
       final String command,
@@ -139,8 +141,8 @@ public class SiteSnapshotVariationsTest {
     if (additionalArgsMap != null) {
       argsMap.putAll(additionalArgsMap);
     }
-    argsMap.put("-info-level", "maximum");
-    argsMap.put("-title", "Details of Example Database");
+    argsMap.put("--info-level", "maximum");
+    argsMap.put("--title", "Details of Example Database");
 
     commandlineExecution(
         connectionInfo, command, argsMap, propertiesFile, outputFormat.getFormat(), outputFile);

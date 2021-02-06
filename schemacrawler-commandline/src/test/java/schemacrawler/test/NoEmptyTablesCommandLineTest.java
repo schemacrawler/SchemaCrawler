@@ -62,10 +62,10 @@ public class NoEmptyTablesCommandLineTest {
     final String referenceFile = testContext.testMethodName() + ".txt";
 
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("-info-level", InfoLevel.maximum.name());
-    argsMap.put("-no-info", "true");
-    argsMap.put("-load-row-counts", "true");
-    argsMap.put("-no-empty-tables", "true");
+    argsMap.put("--info-level", InfoLevel.maximum.name());
+    argsMap.put("--no-info", "true");
+    argsMap.put("--load-row-counts", "true");
+    argsMap.put("--no-empty-tables", "true");
 
     assertThat(
         outputOf(

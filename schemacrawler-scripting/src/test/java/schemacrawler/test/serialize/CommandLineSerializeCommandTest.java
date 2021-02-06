@@ -131,7 +131,7 @@ public class CommandLineSerializeCommandTest {
       final DatabaseConnectionInfo connectionInfo, final SerializationFormat serializationFormat)
       throws Exception {
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("-info-level", InfoLevel.standard.name());
+    argsMap.put("--info-level", InfoLevel.standard.name());
 
     final Path testOutputFile = IOUtility.createTempFilePath("test", "");
 
