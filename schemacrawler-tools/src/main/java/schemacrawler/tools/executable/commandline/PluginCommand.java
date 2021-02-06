@@ -75,6 +75,7 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
   }
 
   private final PluginCommandType type;
+
   private final Supplier<String[]> helpDescription;
   private final String helpHeader;
   private final String name;
@@ -104,7 +105,7 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
 
     this.helpDescription = helpDescription;
 
-    this.helpFooter = addStandardFooter(helpFooter);
+    this.helpFooter = helpFooter;
   }
 
   public PluginCommand addOption(
@@ -133,7 +134,7 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
   }
 
   public Supplier<String[]> getHelpFooter() {
-    return helpFooter;
+    return addStandardFooter(type, helpFooter);
   }
 
   public String getHelpHeader() {
@@ -158,7 +159,7 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
   }
 
   public boolean hasHelpFooter() {
-    return helpFooter != null;
+    return !(helpFooter == null && type == server);
   }
 
   public boolean isEmpty() {
@@ -178,7 +179,8 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
         .toString();
   }
 
-  private Supplier<String[]> addStandardFooter(final Supplier<String[]> helpFooter) {
+  private Supplier<String[]> addStandardFooter(
+      final PluginCommandType type, final Supplier<String[]> helpFooter) {
 
     final String[] helpFooterArray = helpFooter == null ? null : helpFooter.get();
     final List<String> newFooter = new ArrayList<>();
