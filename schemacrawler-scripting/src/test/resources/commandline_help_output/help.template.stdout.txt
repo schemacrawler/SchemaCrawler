@@ -5,5 +5,6 @@
       --templating-language=<templating-language>
          Templating language
          Use one of unknown, velocity, freemarker, mustache, thymeleaf
+Add command switches to the execute command in the SchemaCrawler Shell
 
 

@@ -1,1 +1,2 @@
-schemacrawler.analysis.counts.TableRowCountsCatalogLoader
+schemacrawler.loader.counts.TableRowCountsCatalogLoader
+schemacrawler.loader.attributes.AttributesCatalogLoader

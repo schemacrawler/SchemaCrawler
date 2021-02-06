@@ -35,8 +35,10 @@ import static schemacrawler.tools.executable.commandline.PluginCommandType.unkno
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.function.Supplier;
@@ -73,6 +75,7 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
   }
 
   private final PluginCommandType type;
+
   private final Supplier<String[]> helpDescription;
   private final String helpHeader;
   private final String name;
@@ -85,6 +88,7 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
       final String helpHeader,
       final Supplier<String[]> helpDescription,
       final Supplier<String[]> helpFooter) {
+
     this.type = requireNonNull(type, "No plugin command type provided");
     this.options = new ArrayList<>();
 
@@ -100,6 +104,7 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
     }
 
     this.helpDescription = helpDescription;
+
     this.helpFooter = helpFooter;
   }
 
@@ -129,7 +134,7 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
   }
 
   public Supplier<String[]> getHelpFooter() {
-    return helpFooter;
+    return addStandardFooter(type, helpFooter);
   }
 
   public String getHelpHeader() {
@@ -154,7 +159,7 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
   }
 
   public boolean hasHelpFooter() {
-    return helpFooter != null;
+    return !(helpFooter == null && type == server);
   }
 
   public boolean isEmpty() {
@@ -172,5 +177,30 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
         .add("name='" + name + "'")
         .add("options=" + options)
         .toString();
+  }
+
+  private Supplier<String[]> addStandardFooter(
+      final PluginCommandType type, final Supplier<String[]> helpFooter) {
+
+    final String[] helpFooterArray = helpFooter == null ? null : helpFooter.get();
+    final List<String> newFooter = new ArrayList<>();
+    if (helpFooterArray != null && helpFooterArray.length > 0) {
+      newFooter.addAll(Arrays.asList(helpFooterArray));
+    }
+    switch (type) {
+      case command:
+        newFooter.add("Add command switches to the execute command in the SchemaCrawler Shell");
+        break;
+      case loader:
+        newFooter.add("Add loader switches to the load command in the SchemaCrawler Shell");
+        break;
+
+      default:
+        break;
+    }
+
+    final String[] newFooterArray = newFooter.toArray(new String[0]);
+
+    return () -> newFooterArray;
   }
 }

@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.formatter.operation;
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.analysis.counts.TableRowCountsUtility.getRowCountMessage;
+import static schemacrawler.loader.counts.TableRowCountsUtility.getRowCountMessage;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -29,8 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.formatter.schema;
 
 import static java.util.Comparator.naturalOrder;
-import static schemacrawler.analysis.counts.TableRowCountsUtility.getRowCountMessage;
-import static schemacrawler.analysis.counts.TableRowCountsUtility.hasRowCount;
+import static schemacrawler.loader.counts.TableRowCountsUtility.getRowCountMessage;
+import static schemacrawler.loader.counts.TableRowCountsUtility.hasRowCount;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.ArrayList;

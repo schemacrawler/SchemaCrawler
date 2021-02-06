@@ -28,8 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.text.formatter.diagram;
 
-import static schemacrawler.analysis.counts.TableRowCountsUtility.getRowCountMessage;
-import static schemacrawler.analysis.counts.TableRowCountsUtility.hasRowCount;
+import static schemacrawler.loader.counts.TableRowCountsUtility.getRowCountMessage;
+import static schemacrawler.loader.counts.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 import static us.fatehi.utility.html.TagBuilder.tableCell;
 import static us.fatehi.utility.html.TagBuilder.tableRow;

@@ -16,5 +16,5 @@ SchemaCrawler allows export of database schema to JSON and YAML, via the `serial
 4. Run `serialize.cmd json` (or `serialize.sh json` on Unix) 
 
 ## How to Experiment
-1. Run `serialize.cmd yaml` (or `javascript.sh yaml` on Unix). 
+1. Run `serialize.cmd yaml` (or `serialize.sh yaml` on Unix). 
    (In order to restore the database, restart the database server.) 

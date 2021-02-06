@@ -73,12 +73,7 @@ abstract class AbstractNamedObjectWithAttributes extends AbstractNamedObject
   @Override
   public final <T> T getAttribute(final String name, final T defaultValue)
       throws ClassCastException {
-    final Object attributeValue = attributeMap.get(name);
-    if (attributeValue == null) {
-      return defaultValue;
-    } else {
-      return (T) attributeValue;
-    }
+    return (T) attributeMap.getOrDefault(name, defaultValue);
   }
 
   /** {@inheritDoc} */

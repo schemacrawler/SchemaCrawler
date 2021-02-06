@@ -19,6 +19,8 @@ Available SchemaCrawler database plugins:
 
 Available SchemaCrawler catalog loader plugins:
  testloader     Loader for testing
+ attributesloader
+                Loader for catalog attributes, such as remarks or tags
  countsloader   Loader for table row counts
  schemacrawlerloader
                 Loader for SchemaCrawler metadata catalog

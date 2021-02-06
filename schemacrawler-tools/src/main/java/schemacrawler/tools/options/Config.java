@@ -127,6 +127,10 @@ public final class Config implements Options {
     }
   }
 
+  public <T> T getObject(final String key, final T defaultValue) throws ClassCastException {
+    return (T) configMap.getOrDefault(key, defaultValue);
+  }
+
   public Optional<InclusionRule> getOptionalInclusionRule(
       final String includePatternProperty, final String excludePatternProperty) {
     final String includePattern = getStringValue(includePatternProperty, null);
@@ -172,6 +176,13 @@ public final class Config implements Options {
     return subMap;
   }
 
+  public void merge(final Config config) {
+    if (config == null) {
+      return;
+    }
+    this.configMap.putAll(config.configMap);
+  }
+
   /**
    * @param key
    * @param value
@@ -186,13 +197,6 @@ public final class Config implements Options {
       return configMap.put(key, value);
     }
     return null;
-  }
-
-  public void merge(final Config config) {
-    if (config == null) {
-      return;
-    }
-    this.configMap.putAll(config.configMap);
   }
 
   public int size() {
