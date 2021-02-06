@@ -16,6 +16,7 @@ convenience is [bundled with drivers](database-support.html) for some commonly u
 RDBMS systems. SchemaCrawler works with any operating system that supports
 Java SE 8, Compact Profile 2 or better.
 
+![GitHub Repo stars](https://img.shields.io/github/stars/schemacrawler/schemacrawler?style=social)
 [![Quick Build](https://github.com/schemacrawler/SchemaCrawler/workflows/Quick%20Build/badge.svg)](https://github.com/schemacrawler/SchemaCrawler/actions?query=workflow%3A%22Quick+Build%22)
 [![Integration Tests](https://github.com/schemacrawler/SchemaCrawler/workflows/Integration%20Tests/badge.svg)](https://github.com/schemacrawler/SchemaCrawler/actions?query=workflow%3A%22Integration+Tests%22)
 [![codecov](https://codecov.io/gh/schemacrawler/SchemaCrawler/branch/master/graph/badge.svg)](https://codecov.io/gh/schemacrawler/SchemaCrawler)

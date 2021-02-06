@@ -10,6 +10,11 @@ session, in which case you do not need an active connection to the database.
 SchemaCrawler does not offer deserialization using formats other than Java
 serialization.
 
+SchemaCrawler needs [Jackson](https://github.com/FasterXML/jackson) jars on the 
+classpath to serialize to JSON and YAML, and these can be downloaded with the 
+download tool provided with the SchemaCrawler download.
+
+
 ## How to Serialize a Catalog
 
 SchemaCrawler serialization can be run using the 

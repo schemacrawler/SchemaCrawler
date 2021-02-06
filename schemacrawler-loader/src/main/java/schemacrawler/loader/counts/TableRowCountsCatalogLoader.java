@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.analysis.counts;
+package schemacrawler.loader.counts;
 
 import static schemacrawler.filter.ReducerFactory.getTableReducer;
 

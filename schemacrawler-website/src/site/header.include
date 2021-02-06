@@ -133,6 +133,7 @@
                     <a class="dropdown-item" href="offline.html">Offline Snapshots</a>
                     <a class="dropdown-item" href="plugins.html">Plugins</a>
                     <a class="dropdown-item" href="data-dictionary-extensions.html">Extensions Using the Data Dictionary</a>
+                    <a class="dropdown-item" href="attributes.html">Extensions Using Catalog Attributes</a>
                     <a class="dropdown-item" href="schemacrawler-shell.html">SchemaCrawler Interactive Shell</a>
                     <a class="dropdown-item" href="docker-image.html">Docker Image</a>
                     <a class="dropdown-item" href="https://github.com/schemacrawler/SchemaCrawler-Report-Maven-Plugin">SchemaCrawler Report Maven Plugin</a>

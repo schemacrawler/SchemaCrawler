@@ -3,6 +3,9 @@ Shell Command:
 load
 
 Options:
+      --attributes-file=<attributes-file>
+                           Path to a YAML file with table and column attributes
+                             to add to the schema
   -i, --info-level=<infolevel>
                            <infolevel> is one of unknown, minimum, standard,
                              detailed, maximum
@@ -18,3 +21,4 @@ Options:
                            Optional, default is false
       --test-load-option   Check that the test option is added to the load
                              command
+Add loader switches to the load command in the SchemaCrawler Shell

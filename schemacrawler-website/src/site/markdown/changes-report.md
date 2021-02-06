@@ -6,6 +6,7 @@
 - Allow catalog loaders to be chained, and plugged in
 - Show table row counts by default, if they are loaded
 - Replace `schemacrawler.format.show_row_counts` configuration option with `schemacrawler.format.hide_table_row_counts` with the opposite meaning
+- Allows table and column remarks to be read in from a YAML file, and incorporated into the SchemaCrawler model
 
 <a name="a16.11.7"></a>
 ## Release 16.11.7 - 2020-12-26

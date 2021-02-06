@@ -25,10 +25,10 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.analysis.counts;
+package schemacrawler.loader.counts;
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.analysis.counts.TableRowCountsUtility.addRowCountToTable;
+import static schemacrawler.loader.counts.TableRowCountsUtility.addRowCountToTable;
 import static schemacrawler.schemacrawler.QueryUtility.executeForLong;
 import static us.fatehi.utility.DatabaseUtility.checkConnection;
 
