@@ -89,15 +89,15 @@ public class OfflineSnapshotTest {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
       final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("-server", "offline");
-      argsMap.put("-database", serializedCatalogFile.toString());
+      argsMap.put("--server", "offline");
+      argsMap.put("--database", serializedCatalogFile.toString());
 
-      argsMap.put("-no-info", Boolean.FALSE.toString());
-      argsMap.put("-info-level", "maximum");
-      argsMap.put("-routines", ".*");
-      argsMap.put("-command", "details");
-      argsMap.put("-output-format", TextOutputFormat.text.getFormat());
-      argsMap.put("-output-file", out.toString());
+      argsMap.put("--no-info", Boolean.FALSE.toString());
+      argsMap.put("--info-level", "maximum");
+      argsMap.put("--routines", ".*");
+      argsMap.put("--command", "details");
+      argsMap.put("--output-format", TextOutputFormat.text.getFormat());
+      argsMap.put("--output-file", out.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
@@ -113,16 +113,16 @@ public class OfflineSnapshotTest {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
       final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("-server", "offline");
-      argsMap.put("-database", serializedCatalogFile.toString());
+      argsMap.put("--server", "offline");
+      argsMap.put("--database", serializedCatalogFile.toString());
 
-      argsMap.put("-no-info", "true");
-      argsMap.put("-info-level", "maximum");
-      argsMap.put("-command", "details");
-      argsMap.put("-output-format", TextOutputFormat.text.getFormat());
-      argsMap.put("-routines", "");
-      argsMap.put("-tables", ".*SALES");
-      argsMap.put("-output-file", out.toString());
+      argsMap.put("--no-info", "true");
+      argsMap.put("--info-level", "maximum");
+      argsMap.put("--command", "details");
+      argsMap.put("--output-format", TextOutputFormat.text.getFormat());
+      argsMap.put("--routines", "");
+      argsMap.put("--tables", ".*SALES");
+      argsMap.put("--output-file", out.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
@@ -136,16 +136,16 @@ public class OfflineSnapshotTest {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
       final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("-server", "offline");
-      argsMap.put("-database", serializedCatalogFile.toString());
+      argsMap.put("--server", "offline");
+      argsMap.put("--database", serializedCatalogFile.toString());
 
-      argsMap.put("-no-info", "true");
-      argsMap.put("-info-level", "maximum");
-      argsMap.put("-routines", ".*");
-      argsMap.put("-command", "list");
-      argsMap.put("-output-format", TextOutputFormat.text.getFormat());
-      argsMap.put("-schemas", "PUBLIC.BOOKS");
-      argsMap.put("-output-file", out.toString());
+      argsMap.put("--no-info", "true");
+      argsMap.put("--info-level", "maximum");
+      argsMap.put("--routines", ".*");
+      argsMap.put("--command", "list");
+      argsMap.put("--output-format", TextOutputFormat.text.getFormat());
+      argsMap.put("--schemas", "PUBLIC.BOOKS");
+      argsMap.put("--output-file", out.toString());
 
       final List<String> argsList = new ArrayList<>();
       for (final Map.Entry<String, String> arg : argsMap.entrySet()) {

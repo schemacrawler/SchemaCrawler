@@ -116,11 +116,11 @@ public class SpinThroughOperationsCommandLineTest {
                                               final String command = operation.name();
 
                                               final Map<String, String> argsMap = new HashMap<>();
-                                              argsMap.put("-sequences", ".*");
-                                              argsMap.put("-synonyms", ".*");
-                                              argsMap.put("-routines", ".*");
-                                              argsMap.put("-no-info", Boolean.FALSE.toString());
-                                              argsMap.put("-info-level", infoLevel.name());
+                                              argsMap.put("--sequences", ".*");
+                                              argsMap.put("--synonyms", ".*");
+                                              argsMap.put("--routines", ".*");
+                                              argsMap.put("--no-info", Boolean.FALSE.toString());
+                                              argsMap.put("--info-level", infoLevel.name());
 
                                               assertThat(
                                                   outputOf(

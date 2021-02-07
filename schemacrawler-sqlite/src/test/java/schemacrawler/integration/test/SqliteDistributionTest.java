@@ -91,12 +91,12 @@ public class SqliteDistributionTest {
       TestSchemaCreatorMain.call("--url", "jdbc:sqlite:" + sqliteDbFile);
 
       final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("-server", "sqlite");
-      argsMap.put("-database", sqliteDbFile.toString());
-      argsMap.put("-no-info", Boolean.FALSE.toString());
-      argsMap.put("-command", "details");
-      argsMap.put("-info-level", InfoLevel.maximum.name());
-      argsMap.put("-output-file", out.toString());
+      argsMap.put("--server", "sqlite");
+      argsMap.put("--database", sqliteDbFile.toString());
+      argsMap.put("--no-info", Boolean.FALSE.toString());
+      argsMap.put("--command", "details");
+      argsMap.put("--info-level", InfoLevel.maximum.name());
+      argsMap.put("--output-file", out.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));
     }

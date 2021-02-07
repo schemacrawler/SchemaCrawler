@@ -72,8 +72,8 @@ public class LintOutputTest {
       throws Exception {
     clean(TEXT_OUTPUT);
 
-    final Map<String, String> additionalArgs = new HashMap<>();
-    additionalArgs.put("-schemas", ".*FOR_LINT");
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--schemas", ".*FOR_LINT");
 
     assertAll(
         Arrays.stream(
@@ -92,7 +92,7 @@ public class LintOutputTest {
                           connectionInfo,
                           outputFormat,
                           null,
-                          additionalArgs,
+                          argsMap,
                           TEXT_OUTPUT + referenceFile);
                     }));
   }

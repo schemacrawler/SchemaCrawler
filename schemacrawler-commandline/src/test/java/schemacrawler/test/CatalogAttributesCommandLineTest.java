@@ -68,9 +68,9 @@ public class CatalogAttributesCommandLineTest {
     final String referenceFile = testContext.testMethodName() + ".txt";
 
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("-info-level", InfoLevel.standard.name());
-    argsMap.put("-no-info", "true");
-    argsMap.put("-attributes-file", attributesFile.toString());
+    argsMap.put("--info-level", InfoLevel.standard.name());
+    argsMap.put("--no-info", "true");
+    argsMap.put("--attributes-file", attributesFile.toString());
 
     assertThat(
         outputOf(

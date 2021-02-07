@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -43,6 +42,7 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -56,60 +56,51 @@ import schemacrawler.tools.options.OutputFormat;
 import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestLoggingExtension.class)
-public class SqliteCommandlineTest
-{
+public class SqliteCommandlineTest {
 
   private DatabaseConnector dbConnector;
 
   @BeforeEach
-  public void setup()
-    throws SchemaCrawlerException
-  {
+  public void setup() throws SchemaCrawlerException {
     final DatabaseConnectorRegistry registry =
-      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     dbConnector = registry.findDatabaseConnectorFromDatabaseSystemIdentifier("sqlite");
   }
 
   @Test
-  public void testIdentifierQuoteString()
-    throws Exception
-  {
+  public void testIdentifierQuoteString() throws Exception {
 
     final Connection connection = null;
-    assertThat(dbConnector
-                 .getSchemaRetrievalOptionsBuilder(connection)
-                 .toOptions()
-                 .getIdentifierQuoteString(), is("\""));
+    assertThat(
+        dbConnector
+            .getSchemaRetrievalOptionsBuilder(connection)
+            .toOptions()
+            .getIdentifierQuoteString(),
+        is("\""));
   }
 
   @Test
-  public void testSqliteMain()
-    throws Exception
-  {
+  public void testSqliteMain() throws Exception {
     final OutputFormat outputFormat = TextOutputFormat.text;
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout)
-    {
-      final Path sqliteDbFile = IOUtility
-        .createTempFilePath("sc", ".db")
-        .normalize()
-        .toAbsolutePath();
+    try (final TestWriter out = testout) {
+      final Path sqliteDbFile =
+          IOUtility.createTempFilePath("sc", ".db").normalize().toAbsolutePath();
 
       TestSchemaCreatorMain.call("--url", "jdbc:sqlite:" + sqliteDbFile);
 
       final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("-server", "sqlite");
-      argsMap.put("-database", sqliteDbFile.toString());
-      argsMap.put("-no-info", Boolean.TRUE.toString());
-      argsMap.put("-command", "list");
-      argsMap.put("-info-level", InfoLevel.minimum.name());
-      argsMap.put("-output-file", out.toString());
+      argsMap.put("--server", "sqlite");
+      argsMap.put("--database", sqliteDbFile.toString());
+      argsMap.put("--no-info", Boolean.TRUE.toString());
+      argsMap.put("--command", "list");
+      argsMap.put("--info-level", InfoLevel.minimum.name());
+      argsMap.put("--output-file", out.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
-    assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource("sqlite.main.list."
-                                                  + outputFormat.getFormat())));
+    assertThat(
+        outputOf(testout),
+        hasSameContentAs(classpathResource("sqlite.main.list." + outputFormat.getFormat())));
   }
-
 }

@@ -65,21 +65,23 @@ public class GrepCommandLineTest {
 
     final List<Map<String, String>> grepArgs =
         Arrays.asList(
-            ImmutableMap.of("-grep-columns", ".*\\.STREET|.*\\.PRICE"),
-            ImmutableMap.of("-grep-columns", ".*\\..*NAME"),
-            ImmutableMap.of("-grep-def", ".*book authors.*"),
-            ImmutableMap.of("-tables", "", "-routines", ".*", "-grep-parameters", ".*\\.B_COUNT"),
-            ImmutableMap.of("-tables", "", "-routines", ".*", "-grep-parameters", ".*\\.B_OFFSET"),
+            ImmutableMap.of("--grep-columns", ".*\\.STREET|.*\\.PRICE"),
+            ImmutableMap.of("--grep-columns", ".*\\..*NAME"),
+            ImmutableMap.of("--grep-def", ".*book authors.*"),
             ImmutableMap.of(
-                "-grep-columns", ".*\\.STREET|.*\\.PRICE", "-grep-def", ".*book authors.*"));
+                "--tables", "", "--routines", ".*", "--grep-parameters", ".*\\.B_COUNT"),
+            ImmutableMap.of(
+                "--tables", "", "--routines", ".*", "--grep-parameters", ".*\\.B_OFFSET"),
+            ImmutableMap.of(
+                "--grep-columns", ".*\\.STREET|.*\\.PRICE", "--grep-def", ".*book authors.*"));
     for (int i = 0; i < grepArgs.size(); i++) {
 
       final String referenceFile = String.format("grep%02d.txt", i + 1);
       final Path testOutputFile = IOUtility.createTempFilePath(referenceFile, "data");
 
       final Map<String, String> args = new HashMap<>(grepArgs.get(i));
-      args.put("-info-level", InfoLevel.detailed.name());
-      args.put("-no-info", Boolean.TRUE.toString());
+      args.put("--info-level", InfoLevel.detailed.name());
+      args.put("--no-info", Boolean.TRUE.toString());
 
       commandlineExecution(
           connectionInfo,
