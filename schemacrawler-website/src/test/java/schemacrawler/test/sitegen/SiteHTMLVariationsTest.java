@@ -60,13 +60,13 @@ public class SiteHTMLVariationsTest {
 
   private static void run(
       final DatabaseConnectionInfo connectionInfo,
-      final Map<String, String> argsMap,
+      final Map<String, String> argsMapMap,
       final Map<String, String> config,
       final Path outputFile)
       throws Exception {
     deleteIfExists(outputFile);
 
-    argsMap.put("-title", "Details of Example Database");
+    argsMapMap.put("-title", "Details of Example Database");
 
     final Map<String, Object> runConfig = new HashMap<>();
     final Map<String, String> informationSchema = loadHsqldbConfig();
@@ -76,7 +76,8 @@ public class SiteHTMLVariationsTest {
     }
 
     final Path htmlFile =
-        commandlineExecution(connectionInfo, "schema", argsMap, runConfig, TextOutputFormat.html);
+        commandlineExecution(
+            connectionInfo, "schema", argsMapMap, runConfig, TextOutputFormat.html);
     move(htmlFile, outputFile);
   }
 
@@ -94,79 +95,79 @@ public class SiteHTMLVariationsTest {
   @Test
   public void html(final TestContext testContext, final DatabaseConnectionInfo connectionInfo)
       throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-info-level", "maximum");
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--info-level", "maximum");
 
-    run(connectionInfo, args, null, directory.resolve(testContext.testMethodName() + ".html"));
+    run(connectionInfo, argsMap, null, directory.resolve(testContext.testMethodName() + ".html"));
   }
 
   @Test
   public void html_2_portablenames(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-info-level", "maximum");
-    args.put("-portable-names", "true");
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--info-level", "maximum");
+    argsMap.put("--portable-names", "true");
 
-    run(connectionInfo, args, null, directory.resolve(testContext.testMethodName() + ".html"));
+    run(connectionInfo, argsMap, null, directory.resolve(testContext.testMethodName() + ".html"));
   }
 
   @Test
   public void html_3_important_columns(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-info-level", "standard");
-    args.put("c", "brief");
-    args.put("-portable-names", "true");
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--info-level", "standard");
+    argsMap.put("c", "brief");
+    argsMap.put("--portable-names", "true");
 
-    run(connectionInfo, args, null, directory.resolve(testContext.testMethodName() + ".html"));
+    run(connectionInfo, argsMap, null, directory.resolve(testContext.testMethodName() + ".html"));
   }
 
   @Test
   public void html_4_ordinals(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-info-level", "standard");
-    args.put("-portable-names", "true");
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--info-level", "standard");
+    argsMap.put("--portable-names", "true");
 
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.show_ordinal_numbers", "true");
 
-    run(connectionInfo, args, config, directory.resolve(testContext.testMethodName() + ".html"));
+    run(connectionInfo, argsMap, config, directory.resolve(testContext.testMethodName() + ".html"));
   }
 
   @Test
   public void html_5_alphabetical(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-info-level", "standard");
-    args.put("-portable-names", "true");
-    args.put("-sort-columns", "true");
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--info-level", "standard");
+    argsMap.put("--portable-names", "true");
+    argsMap.put("--sort-columns", "true");
 
-    run(connectionInfo, args, null, directory.resolve(testContext.testMethodName() + ".html"));
+    run(connectionInfo, argsMap, null, directory.resolve(testContext.testMethodName() + ".html"));
   }
 
   @Test
   public void html_6_grep(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-info-level", "maximum");
-    args.put("-portable-names", "true");
-    args.put("-grep-columns", ".*\\.BOOKS\\..*\\.ID");
-    args.put("-table-types", "TABLE");
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--info-level", "maximum");
+    argsMap.put("--portable-names", "true");
+    argsMap.put("--grep-columns", ".*\\.BOOKS\\..*\\.ID");
+    argsMap.put("--table-types", "TABLE");
 
-    run(connectionInfo, args, null, directory.resolve(testContext.testMethodName() + ".html"));
+    run(connectionInfo, argsMap, null, directory.resolve(testContext.testMethodName() + ".html"));
   }
 
   @Test
   public void html_7_grep_onlymatching(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> args = new HashMap<>();
-    args.put("-info-level", "maximum");
-    args.put("-portable-names", "true");
-    args.put("-grep-columns", ".*\\.BOOKS\\..*\\.ID");
-    args.put("-only-matching", "true");
-    args.put("-table-types", "TABLE");
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--info-level", "maximum");
+    argsMap.put("--portable-names", "true");
+    argsMap.put("--grep-columns", ".*\\.BOOKS\\..*\\.ID");
+    argsMap.put("--only-matching", "true");
+    argsMap.put("--table-types", "TABLE");
 
-    run(connectionInfo, args, null, directory.resolve(testContext.testMethodName() + ".html"));
+    run(connectionInfo, argsMap, null, directory.resolve(testContext.testMethodName() + ".html"));
   }
 }
