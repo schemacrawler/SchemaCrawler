@@ -59,7 +59,7 @@ public class LintCommandTest {
     executeLintCommandLine(
         connectionInfo,
         TextOutputFormat.text,
-        "/schemacrawler-linter-configs-test.xml",
+        "/schemacrawler-linter-configs-test.yaml",
         null,
         "executableForLintWithConfig.txt");
   }
@@ -72,6 +72,6 @@ public class LintCommandTest {
   @Test
   public void executableLintReportWithConfig(final Connection connection) throws Exception {
     executableLint(
-        connection, "/schemacrawler-linter-configs-test.xml", null, "executableForLintWithConfig");
+        connection, "/schemacrawler-linter-configs-test.yaml", null, "executableForLintWithConfig");
   }
 }

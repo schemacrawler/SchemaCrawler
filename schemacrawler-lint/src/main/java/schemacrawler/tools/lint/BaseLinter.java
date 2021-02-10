@@ -46,6 +46,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.lint.config.LinterConfig;
 import us.fatehi.utility.string.StringFormat;
 
 /**

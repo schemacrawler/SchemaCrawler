@@ -27,6 +27,8 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.inclusionrule;
 
+import java.util.Objects;
+
 /**
  * Include all names, definitions, and other attributes of named objects.
  *
@@ -38,12 +40,20 @@ public final class IncludeAll implements InclusionRuleWithRegularExpression {
 
   @Override
   public boolean equals(final Object obj) {
-    return obj instanceof IncludeAll;
+    if (this == obj) {
+      return true;
+    }
+    if (!(obj instanceof InclusionRuleWithRegularExpression)) {
+      return false;
+    }
+    final InclusionRuleWithRegularExpression other = (InclusionRuleWithRegularExpression) obj;
+    return getExclusionPattern().pattern().equals(other.getExclusionPattern().pattern())
+        && getInclusionPattern().pattern().equals(other.getInclusionPattern().pattern());
   }
 
   @Override
   public int hashCode() {
-    return 1;
+    return Objects.hash(getExclusionPattern().pattern(), getInclusionPattern().pattern());
   }
 
   @Override

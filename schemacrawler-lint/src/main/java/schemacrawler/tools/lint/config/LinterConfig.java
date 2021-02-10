@@ -25,16 +25,22 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.lint;
+package schemacrawler.tools.lint.config;
 
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionRule;
+import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.ObjectToString;
 
@@ -42,21 +48,35 @@ public class LinterConfig implements Serializable, Comparable<LinterConfig> {
 
   private static final long serialVersionUID = 83079182550531365L;
 
+  @JsonProperty("id")
   private final String linterId;
-  private final Config config;
+
+  private final Map<String, Object> config;
+
+  @JsonProperty("run")
   private boolean runLinter;
+
   private LintSeverity severity;
   private int threshold;
+
+  @JsonProperty("table-inclusion-pattern")
   private String tableInclusionPattern;
+
+  @JsonProperty("table-exclusion-pattern")
   private String tableExclusionPattern;
+
+  @JsonProperty("column-inclusion-pattern")
   private String columnInclusionPattern;
+
+  @JsonProperty("column-exclusion-pattern")
   private String columnExclusionPattern;
 
-  public LinterConfig(final String linterId) {
+  @JsonCreator
+  public LinterConfig(@JsonProperty("id") final String linterId) {
     this.linterId = requireNotBlank(linterId, "No linter id provided");
     runLinter = true; // default value
     threshold = Integer.MAX_VALUE; // default value
-    config = new Config();
+    config = new HashMap<>();
   }
 
   @Override
@@ -145,16 +165,24 @@ public class LinterConfig implements Serializable, Comparable<LinterConfig> {
     config.put(key, value);
   }
 
-  public void putAll(final Config config) {
-    this.config.merge(config);
-  }
-
   public void setColumnExclusionPattern(final String columnExclusionPattern) {
     this.columnExclusionPattern = columnExclusionPattern;
   }
 
   public void setColumnInclusionPattern(final String columnInclusionPattern) {
     this.columnInclusionPattern = columnInclusionPattern;
+  }
+
+  public void setContext(final Map<String, Object> config) {
+    if (config != null) {
+      // Shade with the linter config
+      final Map<String, Object> linterConfig = new HashMap<>();
+      linterConfig.putAll(config);
+      linterConfig.putAll(this.config);
+      //
+      this.config.clear();
+      this.config.putAll(linterConfig);
+    }
   }
 
   public void setRunLinter(final boolean runLinter) {

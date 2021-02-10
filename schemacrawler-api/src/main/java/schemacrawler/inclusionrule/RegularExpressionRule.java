@@ -47,8 +47,10 @@ import us.fatehi.utility.string.StringFormat;
 public final class RegularExpressionRule implements InclusionRuleWithRegularExpression {
 
   private static final long serialVersionUID = 3443758881974362293L;
+
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(RegularExpressionRule.class.getName());
+
   private final Pattern patternExclude;
   private final Pattern patternInclude;
 
@@ -89,12 +91,12 @@ public final class RegularExpressionRule implements InclusionRuleWithRegularExpr
     if (this == obj) {
       return true;
     }
-    if (!(obj instanceof RegularExpressionRule)) {
+    if (!(obj instanceof InclusionRuleWithRegularExpression)) {
       return false;
     }
-    final RegularExpressionRule other = (RegularExpressionRule) obj;
-    return patternExclude.pattern().equals(other.patternExclude.pattern())
-        && patternInclude.pattern().equals(other.patternInclude.pattern());
+    final InclusionRuleWithRegularExpression other = (InclusionRuleWithRegularExpression) obj;
+    return getExclusionPattern().pattern().equals(other.getExclusionPattern().pattern())
+        && getInclusionPattern().pattern().equals(other.getInclusionPattern().pattern());
   }
 
   @Override
@@ -109,7 +111,7 @@ public final class RegularExpressionRule implements InclusionRuleWithRegularExpr
 
   @Override
   public int hashCode() {
-    return Objects.hash(patternExclude.pattern(), patternInclude.pattern());
+    return Objects.hash(getExclusionPattern().pattern(), getInclusionPattern().pattern());
   }
 
   /** {@inheritDoc} */

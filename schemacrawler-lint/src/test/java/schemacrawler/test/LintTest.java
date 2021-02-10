@@ -56,9 +56,9 @@ import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintCollector;
-import schemacrawler.tools.lint.LinterConfig;
-import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.lint.Linters;
+import schemacrawler.tools.lint.config.LinterConfig;
+import schemacrawler.tools.lint.config.LinterConfigs;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.ioresource.ClasspathInputResource;
 
@@ -173,7 +173,7 @@ public class LintTest {
     additionalConfig.put("sql", "SELECT TOP 1 1 FROM INFORMATION_SCHEMA.TABLES");
 
     final ClasspathInputResource inputResource =
-        new ClasspathInputResource("/schemacrawler-linter-configs-sql-from-config.xml");
+        new ClasspathInputResource("/schemacrawler-linter-configs-sql-from-config.yaml");
     final LinterConfigs linterConfigs = new LinterConfigs(additionalConfig);
     linterConfigs.parse(inputResource.openNewInputReader(StandardCharsets.UTF_8));
 

@@ -1,0 +1,24 @@
+- id: "linter.Linter1"
+  severity: "medium"
+  config:
+    other: "something else"
+    exclude: ".*"
+  table-exclusion-pattern: SOME.*
+  column-inclusion-pattern: SOME.*
+  run: true
+  threshold: -1
+- id: "linter.Linter2"
+  severity: null
+  config:
+    sql: > 
+      SELECT
+        *
+      FROM
+        TABLE1
+  table-inclusion-pattern: SOME.*
+  column-exclusion-pattern: SOME.*
+  run: false
+- id: "linter.Linter3"
+  severity: "high"
+  run: true
+  threshold: 1

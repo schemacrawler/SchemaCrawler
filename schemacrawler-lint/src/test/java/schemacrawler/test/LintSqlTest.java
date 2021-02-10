@@ -47,6 +47,6 @@ public class LintSqlTest {
   @Test
   public void executableLintSQLReport(final Connection connection) throws Exception {
     executableLint(
-        connection, "/schemacrawler-linter-configs-sql.xml", null, "executableLintSQLReport");
+        connection, "/schemacrawler-linter-configs-sql.yaml", null, "executableLintSQLReport");
   }
 }

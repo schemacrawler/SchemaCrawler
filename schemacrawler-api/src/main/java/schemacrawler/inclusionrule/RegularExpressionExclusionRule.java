@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.inclusionrule;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 /**
@@ -69,18 +70,12 @@ public final class RegularExpressionExclusionRule implements InclusionRuleWithRe
     if (this == obj) {
       return true;
     }
-    if (obj == null) {
+    if (!(obj instanceof InclusionRuleWithRegularExpression)) {
       return false;
     }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    final RegularExpressionExclusionRule other = (RegularExpressionExclusionRule) obj;
-    if (inclusionRule == null) {
-      return other.inclusionRule == null;
-    } else {
-      return inclusionRule.equals(other.inclusionRule);
-    }
+    final InclusionRuleWithRegularExpression other = (InclusionRuleWithRegularExpression) obj;
+    return getExclusionPattern().pattern().equals(other.getExclusionPattern().pattern())
+        && getInclusionPattern().pattern().equals(other.getInclusionPattern().pattern());
   }
 
   @Override
@@ -103,10 +98,7 @@ public final class RegularExpressionExclusionRule implements InclusionRuleWithRe
 
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (inclusionRule == null ? 0 : inclusionRule.hashCode());
-    return result;
+    return Objects.hash(getExclusionPattern().pattern(), getInclusionPattern().pattern());
   }
 
   /** {@inheritDoc} */

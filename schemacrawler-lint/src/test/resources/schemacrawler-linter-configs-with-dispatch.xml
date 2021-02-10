@@ -1,6 +1,0 @@
-<schemacrawler-linter-configs>
-  <linter id="schemacrawler.tools.linter.LinterTableWithNoIndexes">
-    <severity>critical</severity>
-    <threshold>1</threshold>
-  </linter>
-</schemacrawler-linter-configs>

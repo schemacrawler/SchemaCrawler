@@ -66,8 +66,8 @@ import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.lint.LintSeverity;
-import schemacrawler.tools.lint.LinterConfig;
-import schemacrawler.tools.lint.LinterConfigs;
+import schemacrawler.tools.lint.config.LinterConfig;
+import schemacrawler.tools.lint.config.LinterConfigs;
 import schemacrawler.tools.options.Config;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -100,7 +100,7 @@ public class LinterConfigsDispatchTest {
     LinterConfigs linterConfigs = null;
     try {
       final Reader reader =
-          readerForResource("schemacrawler-linter-configs-with-dispatch.xml", UTF_8);
+          readerForResource("schemacrawler-linter-configs-with-dispatch.yaml", UTF_8);
       linterConfigs = new LinterConfigs(new Config());
       linterConfigs.parse(reader);
     } catch (final IOException | SchemaCrawlerException e) {
@@ -138,7 +138,7 @@ public class LinterConfigsDispatchTest {
     executeLintCommandLine(
         connectionInfo,
         TextOutputFormat.text,
-        "/schemacrawler-linter-configs-with-dispatch.xml",
+        "/schemacrawler-linter-configs-with-dispatch.yaml",
         additionalArgs,
         "schemacrawler-linter-configs-with-dispatch.txt");
 
@@ -155,7 +155,7 @@ public class LinterConfigsDispatchTest {
 
     executableLint(
         connection,
-        "/schemacrawler-linter-configs-with-dispatch.xml",
+        "/schemacrawler-linter-configs-with-dispatch.yaml",
         additionalConfig,
         "schemacrawler-linter-configs-with-dispatch");
 
