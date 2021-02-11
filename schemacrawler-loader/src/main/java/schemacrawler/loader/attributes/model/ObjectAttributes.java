@@ -43,7 +43,6 @@ public abstract class ObjectAttributes implements Serializable, Comparable<Objec
   private static final long serialVersionUID = -6819484903391182146L;
 
   private final String name;
-
   private final List<String> remarks;
   private final Map<String, String> attributes;
 

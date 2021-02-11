@@ -30,7 +30,9 @@ package schemacrawler.tools.lint;
 import java.util.List;
 
 import schemacrawler.SchemaCrawlerLogger;
+import us.fatehi.utility.UtilityMarker;
 
+@UtilityMarker
 public final class LintUtility {
 
   public static final SchemaCrawlerLogger LOGGER =

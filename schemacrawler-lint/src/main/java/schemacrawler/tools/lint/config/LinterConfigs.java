@@ -29,23 +29,14 @@ package schemacrawler.tools.lint.config;
 
 import static java.util.Objects.requireNonNull;
 
-import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.CollectionType;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 import schemacrawler.SchemaCrawlerLogger;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.ObjectToString;
-import us.fatehi.utility.string.StringFormat;
 
 public class LinterConfigs implements Iterable<LinterConfig> {
 
@@ -76,25 +67,6 @@ public class LinterConfigs implements Iterable<LinterConfig> {
   @Override
   public Iterator<LinterConfig> iterator() {
     return linterConfigs.iterator();
-  }
-
-  public void parse(final Reader reader) throws SchemaCrawlerException {
-    requireNonNull(reader, "No input provided");
-
-    try {
-      final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-      final CollectionType listType =
-          mapper.getTypeFactory().constructCollectionType(List.class, LinterConfig.class);
-
-      final List<LinterConfig> linterConfigs = mapper.readValue(reader, listType);
-      Collections.sort(linterConfigs);
-      for (final LinterConfig linterConfig : linterConfigs) {
-        add(linterConfig);
-      }
-    } catch (final Exception e) {
-      throw new SchemaCrawlerException("Could not read linter configs", e);
-    }
-    LOGGER.log(Level.CONFIG, new StringFormat("Read <%d> linter configs", linterConfigs.size()));
   }
 
   public int size() {

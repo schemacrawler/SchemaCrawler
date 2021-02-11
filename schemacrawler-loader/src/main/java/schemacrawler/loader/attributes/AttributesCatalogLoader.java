@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.loader.attributes;
 
 import static java.nio.file.Files.newBufferedReader;
-import static schemacrawler.loader.attributes.model.CatalogAttributesLoader.loadCatalogAttributes;
+import static schemacrawler.loader.attributes.model.CatalogAttributesUtility.readCatalogAttributes;
 import static us.fatehi.utility.IOUtility.isFileReadable;
 
 import java.io.Reader;
@@ -105,7 +105,7 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
             }
 
             try (final Reader reader = newBufferedReader(attributesFile)) {
-              final CatalogAttributes catalogAttributes = loadCatalogAttributes(reader);
+              final CatalogAttributes catalogAttributes = readCatalogAttributes(reader);
               for (final TableAttributes tableAttributes : catalogAttributes) {
                 final Optional<Table> lookupTable =
                     catalog.lookupTable(tableAttributes.getSchema(), tableAttributes.getName());

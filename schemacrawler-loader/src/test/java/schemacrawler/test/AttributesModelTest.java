@@ -43,7 +43,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import schemacrawler.loader.attributes.model.CatalogAttributes;
-import schemacrawler.loader.attributes.model.CatalogAttributesLoader;
+import schemacrawler.loader.attributes.model.CatalogAttributesUtility;
 import schemacrawler.test.utility.TestUtility;
 import us.fatehi.utility.IOUtility;
 
@@ -55,7 +55,7 @@ public class AttributesModelTest {
     final String attributesYaml = IOUtility.readResourceFully("/attributes.yaml");
 
     final CatalogAttributes catalogAttributes =
-        CatalogAttributesLoader.loadCatalogAttributes(new StringReader(attributesYaml));
+        CatalogAttributesUtility.readCatalogAttributes(new StringReader(attributesYaml));
 
     assertThat(
         outputOf(serialized(catalogAttributes)),

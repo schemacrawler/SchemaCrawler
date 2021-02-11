@@ -27,69 +27,80 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static schemacrawler.test.utility.TestUtility.readerForResource;
+import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
 
 import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.tools.command.lint.options.LintOptions;
+import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.lint.config.LinterConfigs;
-import schemacrawler.tools.options.Config;
 
 public class LinterConfigsTest {
 
   @Test
-  public void testParseBadXml0() throws SchemaCrawlerException {
+  @DisplayName("No YAML linter config file")
+  public void testParseBadYaml0() throws SchemaCrawlerException {
+    final LintOptions lintOptions = LintOptionsBuilder.builder().toOptions();
+
+    final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
+
+    assertThat(linterConfigs.size(), is(0));
+  }
+
+  @Test
+  @DisplayName("Invalid YAML linter config file")
+  public void testParseBadYaml1() throws SchemaCrawlerException, IOException {
     assertThrows(
-        NullPointerException.class,
+        SchemaCrawlerRuntimeException.class,
         () -> {
-          final LinterConfigs linterConfigs = new LinterConfigs(new Config());
-          linterConfigs.parse(null);
+          final LintOptions lintOptions =
+              LintOptionsBuilder.builder()
+                  .withLinterConfigs("/schemacrawler-linter-configs-bad-1.yaml")
+                  .toOptions();
+
+          final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
         });
   }
 
   @Test
-  public void testParseBadXml1() throws SchemaCrawlerException, IOException {
+  @DisplayName("Valid but incorrect YAML linter config file")
+  public void testParseBadYaml2() throws SchemaCrawlerException, IOException {
     assertThrows(
-        SchemaCrawlerException.class,
+        SchemaCrawlerRuntimeException.class,
         () -> {
-          final Reader reader = new StringReader("some random string that is not XML");
-          final LinterConfigs linterConfigs = new LinterConfigs(new Config());
-          linterConfigs.parse(reader);
+          final LintOptions lintOptions =
+              LintOptionsBuilder.builder()
+                  .withLinterConfigs("/schemacrawler-linter-configs-bad-1.yaml")
+                  .toOptions();
+
+          final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
         });
   }
 
   @Test
-  public void testParseBadXml2() throws SchemaCrawlerException, IOException {
-    assertThrows(
-        SchemaCrawlerException.class,
-        () -> {
-          final String validYaml = "['Apple', 'Orange', 'Strawberry', 'Mango']";
-          final Reader reader = new StringReader(validYaml);
-          final LinterConfigs linterConfigs = new LinterConfigs(new Config());
-          linterConfigs.parse(reader);
-        });
-  }
-
-  @Test
+  @DisplayName("Valid YAML linter config file")
   public void testParseGoodLinterConfigs() throws SchemaCrawlerException, IOException {
 
-    final Reader reader = readerForResource("schemacrawler-linter-configs-1.yaml", UTF_8);
-    final LinterConfigs linterConfigs = new LinterConfigs(new Config());
-    linterConfigs.parse(reader);
+    final LintOptions lintOptions =
+        LintOptionsBuilder.builder()
+            .withLinterConfigs("/schemacrawler-linter-configs-1.yaml")
+            .toOptions();
+
+    final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
 
     assertThat(linterConfigs.size(), is(3));
     for (final LinterConfig linterConfig : linterConfigs) {

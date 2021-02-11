@@ -34,9 +34,12 @@ import java.io.Reader;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
-public class CatalogAttributesLoader {
+import us.fatehi.utility.UtilityMarker;
 
-  public static CatalogAttributes loadCatalogAttributes(final Reader reader) throws Exception {
+@UtilityMarker
+public class CatalogAttributesUtility {
+
+  public static CatalogAttributes readCatalogAttributes(final Reader reader) throws Exception {
 
     requireNonNull(reader, "No reader provided");
 
@@ -47,7 +50,7 @@ public class CatalogAttributesLoader {
     return catalogAttributes;
   }
 
-  private CatalogAttributesLoader() {
+  private CatalogAttributesUtility() {
     // Prevent instantiation
   }
 }
