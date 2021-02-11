@@ -31,13 +31,15 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
-import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -80,11 +82,12 @@ public class LinterConfigs implements Iterable<LinterConfig> {
     requireNonNull(reader, "No input provided");
 
     try {
-      final YAMLMapper mapper = new YAMLMapper();
+      final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
       final CollectionType listType =
           mapper.getTypeFactory().constructCollectionType(List.class, LinterConfig.class);
 
       final List<LinterConfig> linterConfigs = mapper.readValue(reader, listType);
+      Collections.sort(linterConfigs);
       for (final LinterConfig linterConfig : linterConfigs) {
         add(linterConfig);
       }

@@ -40,6 +40,8 @@ import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -56,6 +58,7 @@ import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintCollector;
+import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.lint.config.LinterConfigs;
@@ -85,10 +88,21 @@ public class LintTest {
     assertThat("FOR_LINT tables not found", catalog.getTables(schema), hasSize(7));
 
     final LinterConfigs linterConfigs = new LinterConfigs(new Config());
+
+    final Map<String, Object> config = new HashMap<>();
+    config.put("bad-column-names", ".*\\.COUNTRY");
     final LinterConfig linterConfig =
-        new LinterConfig("schemacrawler.tools.linter.LinterTableWithBadlyNamedColumns");
-    linterConfig.setThreshold(0);
-    linterConfig.put("bad-column-names", ".*\\.COUNTRY");
+        new LinterConfig(
+            "schemacrawler.tools.linter.LinterTableWithBadlyNamedColumns",
+            true,
+            LintSeverity.medium,
+            0,
+            null,
+            null,
+            null,
+            null,
+            config);
+
     linterConfigs.add(linterConfig);
 
     final Linters linters = new Linters(linterConfigs, true);

@@ -27,7 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.command.lint;
 
-import static schemacrawler.tools.lint.LintUtility.readLinterConfigs;
+import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
 
 import java.util.logging.Level;
 
