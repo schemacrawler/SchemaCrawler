@@ -99,12 +99,12 @@ public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer 
     }
 
     @Override
-    protected boolean include(BeanPropertyWriter writer) {
+    protected boolean include(final BeanPropertyWriter writer) {
       return true;
     }
 
     @Override
-    protected boolean include(PropertyWriter writer) {
+    protected boolean include(final PropertyWriter writer) {
       return true;
     }
   }
@@ -162,6 +162,7 @@ public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer 
   }
 
   private ObjectMapper newConfiguredObjectMapper() {
+
     @JsonIgnoreProperties({
       "parent",
       "referenced-column",

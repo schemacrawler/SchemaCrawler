@@ -52,8 +52,8 @@ import schemacrawler.tools.lint.config.LinterConfigs;
 public class LinterConfigsTest {
 
   @Test
-  @DisplayName("No YAML linter config file")
-  public void testParseBadYaml0() throws SchemaCrawlerException {
+  @DisplayName("No linter config file")
+  public void testParseBad0() throws SchemaCrawlerException {
     final LintOptions lintOptions = LintOptionsBuilder.builder().toOptions();
 
     final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
@@ -62,8 +62,8 @@ public class LinterConfigsTest {
   }
 
   @Test
-  @DisplayName("Invalid YAML linter config file")
-  public void testParseBadYaml1() throws SchemaCrawlerException, IOException {
+  @DisplayName("Invalid linter config file")
+  public void testParseBad1() throws SchemaCrawlerException, IOException {
     assertThrows(
         SchemaCrawlerRuntimeException.class,
         () -> {
@@ -77,8 +77,8 @@ public class LinterConfigsTest {
   }
 
   @Test
-  @DisplayName("Valid but incorrect YAML linter config file")
-  public void testParseBadYaml2() throws SchemaCrawlerException, IOException {
+  @DisplayName("Valid but incorrect linter config file")
+  public void testParseBad2() throws SchemaCrawlerException, IOException {
     assertThrows(
         SchemaCrawlerRuntimeException.class,
         () -> {
@@ -92,8 +92,8 @@ public class LinterConfigsTest {
   }
 
   @Test
-  @DisplayName("Valid YAML linter config file")
-  public void testParseGoodLinterConfigs() throws SchemaCrawlerException, IOException {
+  @DisplayName("\u263A Valid linter config file")
+  public void testParseGood() throws SchemaCrawlerException, IOException {
 
     final LintOptions lintOptions =
         LintOptionsBuilder.builder()
