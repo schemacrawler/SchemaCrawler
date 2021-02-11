@@ -33,10 +33,10 @@ A lint report will be produced in the format specified using the
 `--output-format=json` will generate a lint report in JSON format.
 
 SchemaCrawler linters can be configured (both severity, and thresholds) using
-an [XML configuration file.](config/schemacrawler-linter-configs.xml) You can run SchemaCrawler
+a [YAML configuration file.](config/schemacrawler-linter-configs.yaml) You can run SchemaCrawler
 lint with an additional command-line option, for example, 
-`--linter-configs=[path to linter XML configuration file]`, 
-pointing to the path of the SchemaCrawler linter XML configuration file. You can
+`--linter-configs=<path to linter configuration file>`, 
+pointing to the path of the SchemaCrawler linter configuration file. You can
 configure whether or not to run a linter, change a linter's severity, or exclude
 certain tables and columns from the linter using the configuration file. You can 
 also configure a threshold to fail a build if too many lints are found.

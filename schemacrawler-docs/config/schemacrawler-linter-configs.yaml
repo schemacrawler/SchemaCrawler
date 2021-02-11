@@ -1,0 +1,61 @@
+- id: schemacrawler.tools.linter.LinterTableSql
+  config:
+    message: Lint message A
+    sql: SELECT TOP 1 1 FROM ${table}
+# The same linter can be configured multiple times with different options    
+- id: schemacrawler.tools.linter.LinterTableSql
+  table-exclusion-pattern: .*BOOKS
+  config:
+    message: Lint message A
+    sql: SELECT TOP 1 2 FROM ${table}
+ # Linters can be turned off with the "run" option   
+- id: schemacrawler.tools.linter.LinterTableSql
+  run: false
+  config:
+    message: message D
+    sql: SELECT TOP 1 2 FROM ${table}
+- id: schemacrawler.tools.linter.LinterCatalogSql
+  config:
+    message: message for SQL catalog lint
+    sql: SELECT TOP 1 1 FROM INFORMATION_SCHEMA.TABLES
+# All available linters run by default, so they need to be explicitly turned off
+- id: schemacrawler.tools.linter.LinterForeignKeyMismatch
+  run: false
+# You can oerride severity and threshold (numer of allowed failures)  
+- id: schemacrawler.tools.linter.LinterForeignKeyWithNoIndexes
+  severity: critical
+  threshold: 0
+- id: schemacrawler.tools.linter.LinterNullColumnsInIndex
+  run: false
+- id: schemacrawler.tools.linter.LinterNullIntendedColumns
+  run: false
+- id: schemacrawler.tools.linter.LinterRedundantIndexes
+  run: false
+- id: schemacrawler.tools.linter.LinterTableCycles
+  run: false
+- id: schemacrawler.tools.linter.LinterTableWithIncrementingColumns
+  run: false
+- id: schemacrawler.tools.linter.LinterTableWithNoIndexes
+  run: false
+# Certain columns can be excluded from the linter  
+- id: schemacrawler.tools.linter.LinterTableWithQuotedNames
+  run: true
+  column-exclusion-pattern: .*\.\"UPDATE\"
+- id: schemacrawler.tools.linter.LinterTableWithSingleColumn
+  run: true
+- id: schemacrawler.tools.linter.LinterTooManyLobs
+  run: false
+- id: schemacrawler.tools.linter.LinterColumnTypes
+  run: false
+- id: schemacrawler.tools.linter.LinterTableEmpty
+  run: false
+- id: schemacrawler.tools.linter.LinterTableWithNoPrimaryKey
+  run: false
+- id: schemacrawler.tools.linter.LinterTableAllNullableColumns
+  run: false
+- id: schemacrawler.tools.linter.LinterTableWithNoRemarks
+  run: false
+- id: schemacrawler.tools.linter.LinterTableWithPrimaryKeyNotFirst
+  run: false
+- id: schemacrawler.tools.linter.LinterTableWithNoSurrogatePrimaryKey
+  run: false
