@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
@@ -62,33 +63,52 @@ public class LinterConfigsTest {
   }
 
   @Test
-  @DisplayName("Invalid linter config file")
+  @DisplayName("Missing linter config file")
   public void testParseBad1() throws SchemaCrawlerException, IOException {
-    assertThrows(
-        SchemaCrawlerRuntimeException.class,
-        () -> {
-          final LintOptions lintOptions =
-              LintOptionsBuilder.builder()
-                  .withLinterConfigs("/schemacrawler-linter-configs-bad-1.yaml")
-                  .toOptions();
+    final SchemaCrawlerRuntimeException exception =
+        assertThrows(
+            SchemaCrawlerRuntimeException.class,
+            () -> {
+              final LintOptions lintOptions =
+                  LintOptionsBuilder.builder().withLinterConfigs("/missing.yaml").toOptions();
 
-          final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
-        });
+              final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
+            });
+    assertThat(exception.getCause().getCause().getMessage(), endsWith("line: 1, column: 1]"));
+  }
+
+  @Test
+  @DisplayName("Invalid linter config file")
+  public void testParseBad2() throws SchemaCrawlerException, IOException {
+    final SchemaCrawlerRuntimeException exception =
+        assertThrows(
+            SchemaCrawlerRuntimeException.class,
+            () -> {
+              final LintOptions lintOptions =
+                  LintOptionsBuilder.builder()
+                      .withLinterConfigs("/schemacrawler-linter-configs-bad-1.yaml.bad")
+                      .toOptions();
+
+              final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
+            });
+    assertThat(exception.getCause().getCause().getMessage(), endsWith("line: 1, column: 1]"));
   }
 
   @Test
   @DisplayName("Valid but incorrect linter config file")
-  public void testParseBad2() throws SchemaCrawlerException, IOException {
-    assertThrows(
-        SchemaCrawlerRuntimeException.class,
-        () -> {
-          final LintOptions lintOptions =
-              LintOptionsBuilder.builder()
-                  .withLinterConfigs("/schemacrawler-linter-configs-bad-1.yaml")
-                  .toOptions();
+  public void testParseBad3() throws SchemaCrawlerException, IOException {
+    final SchemaCrawlerRuntimeException exception =
+        assertThrows(
+            SchemaCrawlerRuntimeException.class,
+            () -> {
+              final LintOptions lintOptions =
+                  LintOptionsBuilder.builder()
+                      .withLinterConfigs("/schemacrawler-linter-configs-bad-1.yaml")
+                      .toOptions();
 
-          final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
-        });
+              final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
+            });
+    assertThat(exception.getCause().getCause().getMessage(), endsWith("line: 1, column: 1]"));
   }
 
   @Test
