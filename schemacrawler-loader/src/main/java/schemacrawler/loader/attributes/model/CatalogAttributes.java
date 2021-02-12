@@ -35,11 +35,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-
-public class CatalogAttributes extends ObjectAttributes implements Iterable<TableAttributes> {
+public final class CatalogAttributes extends ObjectAttributes implements Iterable<TableAttributes> {
 
   private static final long serialVersionUID = 1436642683972751860L;
+
+  protected static CatalogAttributes EMPTY_CATALOG_ATTRIBUTES =
+      new CatalogAttributes("empty-catalog", null, null, null);
 
   private final Set<TableAttributes> tables;
 
@@ -48,8 +49,7 @@ public class CatalogAttributes extends ObjectAttributes implements Iterable<Tabl
       final String name,
       final List<String> remarks,
       final Map<String, String> attributes,
-      final Set<TableAttributes> tables)
-      throws SchemaCrawlerException {
+      final Set<TableAttributes> tables) {
     super(name, remarks, attributes);
     if (tables == null) {
       this.tables = Collections.emptySet();

@@ -28,12 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.loader.attributes;
 
-import static java.nio.file.Files.newBufferedReader;
 import static schemacrawler.loader.attributes.model.CatalogAttributesUtility.readCatalogAttributes;
-import static us.fatehi.utility.IOUtility.isFileReadable;
 
-import java.io.Reader;
-import java.nio.file.Path;
 import java.util.Optional;
 import java.util.logging.Level;
 
@@ -49,7 +45,9 @@ import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.StopWatch;
-import us.fatehi.utility.string.StringFormat;
+import us.fatehi.utility.ioresource.EmptyInputResource;
+import us.fatehi.utility.ioresource.InputResource;
+import us.fatehi.utility.ioresource.InputResourceUtility;
 
 public class AttributesCatalogLoader extends BaseCatalogLoader {
 
@@ -75,7 +73,7 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
             commandDescription.getName(), commandDescription.getDescription());
     pluginCommand.addOption(
         OPTION_ATTRIBUTES_FILE,
-        Path.class,
+        String.class,
         "Path to a YAML file with table and column attributes to add to the schema");
     return pluginCommand;
   }
@@ -94,40 +92,34 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
       stopWatch.time(
           "retrieveCatalogAttributes",
           () -> {
-            final Path attributesFile = config.getObject(OPTION_ATTRIBUTES_FILE, null);
-            if (!isFileReadable(attributesFile)) {
-              LOGGER.log(
-                  Level.CONFIG,
-                  new StringFormat(
-                      "Not loading catalog attributes, since attributes file <%s> is not readable",
-                      attributesFile));
+            final String catalogAttributesFile = config.getObject(OPTION_ATTRIBUTES_FILE, null);
+            final InputResource inputResource =
+                InputResourceUtility.createInputResource(catalogAttributesFile);
+            if (inputResource instanceof EmptyInputResource) {
               return null;
             }
+            final CatalogAttributes catalogAttributes = readCatalogAttributes(inputResource);
+            for (final TableAttributes tableAttributes : catalogAttributes) {
+              final Optional<Table> lookupTable =
+                  catalog.lookupTable(tableAttributes.getSchema(), tableAttributes.getName());
+              final Table table;
+              if (lookupTable.isPresent()) {
+                table = lookupTable.get();
+              } else {
+                continue;
+              }
 
-            try (final Reader reader = newBufferedReader(attributesFile)) {
-              final CatalogAttributes catalogAttributes = readCatalogAttributes(reader);
-              for (final TableAttributes tableAttributes : catalogAttributes) {
-                final Optional<Table> lookupTable =
-                    catalog.lookupTable(tableAttributes.getSchema(), tableAttributes.getName());
-                final Table table;
-                if (lookupTable.isPresent()) {
-                  table = lookupTable.get();
-                } else {
-                  continue;
-                }
+              if (tableAttributes.hasRemarks()) {
+                table.setAttribute(REMARKS_KEY, tableAttributes.getRemarks());
+              }
 
-                if (tableAttributes.hasRemarks()) {
-                  table.setAttribute(REMARKS_KEY, tableAttributes.getRemarks());
-                }
-
-                for (final ColumnAttributes columnAttributes : tableAttributes) {
-                  if (columnAttributes.hasRemarks()) {
-                    table
-                        .lookupColumn(columnAttributes.getName())
-                        .ifPresent(
-                            column ->
-                                column.setAttribute(REMARKS_KEY, columnAttributes.getRemarks()));
-                  }
+              for (final ColumnAttributes columnAttributes : tableAttributes) {
+                if (columnAttributes.hasRemarks()) {
+                  table
+                      .lookupColumn(columnAttributes.getName())
+                      .ifPresent(
+                          column ->
+                              column.setAttribute(REMARKS_KEY, columnAttributes.getRemarks()));
                 }
               }
             }

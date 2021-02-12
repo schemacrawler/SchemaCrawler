@@ -99,8 +99,9 @@ public class LinterConfig implements Serializable, Comparable<LinterConfig> {
 
     if (comparison == 0) {
       comparison =
-          (severity == null ? LintSeverity.low : severity)
-              .compareTo(other.severity == null ? LintSeverity.low : other.severity);
+          -1
+              * (severity == null ? LintSeverity.low : severity)
+                  .compareTo(other.severity == null ? LintSeverity.low : other.severity);
     }
 
     if (comparison == 0) {

@@ -28,25 +28,33 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.endsWith;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
-import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
-import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.config.LinterConfig;
 import schemacrawler.tools.lint.config.LinterConfigs;
 
@@ -86,7 +94,7 @@ public class LinterConfigsTest {
             () -> {
               final LintOptions lintOptions =
                   LintOptionsBuilder.builder()
-                      .withLinterConfigs("/schemacrawler-linter-configs-bad-1.yaml.bad")
+                      .withLinterConfigs("/schemacrawler-linter-configs-bad-2.yaml.bad")
                       .toOptions();
 
               final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
@@ -103,17 +111,20 @@ public class LinterConfigsTest {
             () -> {
               final LintOptions lintOptions =
                   LintOptionsBuilder.builder()
-                      .withLinterConfigs("/schemacrawler-linter-configs-bad-1.yaml")
+                      .withLinterConfigs("/schemacrawler-linter-configs-bad-3.yaml")
                       .toOptions();
 
               final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
             });
-    assertThat(exception.getCause().getCause().getMessage(), endsWith("line: 1, column: 1]"));
+    assertThat(
+        exception.getCause().getCause().getMessage(),
+        containsString(
+            "no String-argument constructor/factory method to deserialize from String value ('Apple')"));
   }
 
   @Test
   @DisplayName("\u263A Valid linter config file")
-  public void testParseGood() throws SchemaCrawlerException, IOException {
+  public void testParseGood() throws Exception {
 
     final LintOptions lintOptions =
         LintOptionsBuilder.builder()
@@ -121,30 +132,34 @@ public class LinterConfigsTest {
             .toOptions();
 
     final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
-
-    assertThat(linterConfigs.size(), is(3));
+    final List<LinterConfig> linterConfigsList = new ArrayList<>();
     for (final LinterConfig linterConfig : linterConfigs) {
-      if (linterConfig.getLinterId().equals("linter.Linter1")) {
-        assertThat(linterConfig.getSeverity(), equalTo(LintSeverity.medium));
-        assertThat(linterConfig.isRunLinter(), is(true));
-        assertThat(
-            linterConfig.getTableInclusionRule(), is(new RegularExpressionExclusionRule("SOME.*")));
-        assertThat(
-            linterConfig.getColumnInclusionRule(),
-            is(new RegularExpressionInclusionRule("SOME.*")));
-      }
-
-      if (linterConfig.getLinterId().equals("linter.Linter2")) {
-        assertThat(linterConfig.getSeverity(), nullValue());
-        assertThat(linterConfig.isRunLinter(), is(false));
-        assertThat(
-            linterConfig.getConfig().getStringValue("exclude", "<unknown>"), is("<unknown>"));
-      }
-
-      if (linterConfig.getLinterId().equals("linter.Linter3")) {
-        assertThat(linterConfig.getSeverity(), equalTo(LintSeverity.high));
-        assertThat(linterConfig.isRunLinter(), is(true));
-      }
+      linterConfigsList.add(linterConfig);
     }
+
+    assertThat(
+        outputOf(serialized(linterConfigsList)),
+        hasSameContentAs(classpathResource("schemacrawler-linter-configs-1.json")));
+  }
+
+  private Path serialized(final List<LinterConfig> linterConfigsList) throws Exception {
+
+    @JsonPropertyOrder(
+        value = {"linterId", "runLinter", "severity", "threshold", "config"},
+        alphabetic = true)
+    class JacksonMixin {}
+
+    final JsonMapper jsonMapper = new JsonMapper();
+    jsonMapper.enable(SerializationFeature.INDENT_OUTPUT);
+    jsonMapper.addMixIn(Object.class, JacksonMixin.class);
+    jsonMapper.setVisibility(
+        jsonMapper
+            .getSerializationConfig()
+            .getDefaultVisibilityChecker()
+            .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
+            .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
+            .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
+            .withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
+    return TestUtility.writeStringToTempFile(jsonMapper.writeValueAsString(linterConfigsList));
   }
 }

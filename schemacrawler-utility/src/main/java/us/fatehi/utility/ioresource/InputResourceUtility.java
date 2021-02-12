@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package us.fatehi.utility.ioresource;
 
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.FilterReader;
 import java.io.FilterWriter;
@@ -54,10 +55,15 @@ public class InputResourceUtility {
    */
   public static InputResource createInputResource(final String inputResourceName) {
     InputResource inputResource = null;
+    if (isBlank(inputResourceName)) {
+      inputResource = new EmptyInputResource();
+    }
     try {
-      LOGGER.log(Level.FINE, new StringFormat("Attempting to read file <%s>", inputResourceName));
-      final Path filePath = Paths.get(inputResourceName);
-      inputResource = new FileInputResource(filePath);
+      if (inputResource == null) {
+        LOGGER.log(Level.FINE, new StringFormat("Attempting to read file <%s>", inputResourceName));
+        final Path filePath = Paths.get(inputResourceName);
+        inputResource = new FileInputResource(filePath);
+      }
     } catch (final Exception e) {
       // No-op
     }

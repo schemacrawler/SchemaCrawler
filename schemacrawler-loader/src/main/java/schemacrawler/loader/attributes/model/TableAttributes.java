@@ -36,7 +36,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaReference;
 
 public class TableAttributes extends ObjectAttributes implements Iterable<ColumnAttributes> {
@@ -54,8 +53,7 @@ public class TableAttributes extends ObjectAttributes implements Iterable<Column
       final String name,
       final List<String> remarks,
       final Map<String, String> attributes,
-      final Set<ColumnAttributes> columns)
-      throws SchemaCrawlerException {
+      final Set<ColumnAttributes> columns) {
     super(name, remarks, attributes);
     this.catalogName = catalogName;
     this.schemaName = schemaName;

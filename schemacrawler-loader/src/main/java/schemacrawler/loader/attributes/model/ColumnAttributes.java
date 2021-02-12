@@ -31,16 +31,13 @@ import java.beans.ConstructorProperties;
 import java.util.List;
 import java.util.Map;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-
 public class ColumnAttributes extends ObjectAttributes {
 
   private static final long serialVersionUID = -7531479565539199840L;
 
   @ConstructorProperties({"name", "remarks", "attributes"})
   public ColumnAttributes(
-      final String name, final List<String> remarks, final Map<String, String> attributes)
-      throws SchemaCrawlerException {
+      final String name, final List<String> remarks, final Map<String, String> attributes) {
     super(name, remarks, attributes);
   }
 }
