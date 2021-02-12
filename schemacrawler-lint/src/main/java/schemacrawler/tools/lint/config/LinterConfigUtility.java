@@ -66,7 +66,11 @@ public final class LinterConfigUtility {
     final String linterConfigsFile = lintOptions.getLinterConfigs();
     if (!isBlank(linterConfigsFile)) {
       final InputResource inputResource =
-          InputResourceUtility.createInputResource(linterConfigsFile);
+          InputResourceUtility.createInputResource(linterConfigsFile)
+              .orElseThrow(
+                  () ->
+                      new SchemaCrawlerRuntimeException(
+                          "Could not load linter configs from file, " + linterConfigsFile));
       try (final Reader reader = inputResource.openNewInputReader(UTF_8)) {
         final List<LinterConfig> linterConfigsList = readLinterConfigs(reader);
         for (final LinterConfig linterConfig : linterConfigsList) {

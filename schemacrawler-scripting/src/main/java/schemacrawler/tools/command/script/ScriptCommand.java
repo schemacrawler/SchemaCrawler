@@ -46,7 +46,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.command.script.options.ScriptOptions;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import us.fatehi.utility.ObjectToString;
-import us.fatehi.utility.ioresource.EmptyInputResource;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.string.StringFormat;
 
@@ -88,10 +87,10 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions>
   public void checkAvailability() throws Exception {
     getScriptEngine();
     // Check availability of script
-    final InputResource inputResource = commandOptions.getResource();
-    if (inputResource instanceof EmptyInputResource) {
-      throw new SchemaCrawlerException("No script found, " + commandOptions.getScript());
-    }
+    commandOptions
+        .getResource()
+        .orElseThrow(
+            () -> new SchemaCrawlerException("No script found, " + commandOptions.getScript()));
   }
 
   /** {@inheritDoc} */
@@ -103,7 +102,7 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions>
     final Charset inputCharset = outputOptions.getInputCharset();
 
     final ScriptEngine scriptEngine = getScriptEngine();
-    final InputResource inputResource = commandOptions.getResource();
+    final InputResource inputResource = commandOptions.getResource().get();
     LOGGER.log(Level.CONFIG, new StringFormat("Evaluating script, ", inputResource));
     try (final Reader reader = inputResource.openNewInputReader(inputCharset);
         final Writer writer = outputOptions.openNewOutputWriter()) {

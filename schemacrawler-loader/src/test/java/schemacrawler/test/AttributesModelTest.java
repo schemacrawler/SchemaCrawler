@@ -63,7 +63,7 @@ public class AttributesModelTest {
             SchemaCrawlerRuntimeException.class,
             () -> {
               final InputResource inputResource =
-                  InputResourceUtility.createInputResource("/attributes-bad-2.yaml.bad");
+                  InputResourceUtility.createInputResource("/attributes-bad-2.yaml.bad").get();
               final CatalogAttributes catalogAttributes =
                   CatalogAttributesUtility.readCatalogAttributes(inputResource);
             });
@@ -78,7 +78,7 @@ public class AttributesModelTest {
             SchemaCrawlerRuntimeException.class,
             () -> {
               final InputResource inputResource =
-                  InputResourceUtility.createInputResource("/attributes-bad-3.yaml");
+                  InputResourceUtility.createInputResource("/attributes-bad-3.yaml").get();
               final CatalogAttributes catalogAttributes =
                   CatalogAttributesUtility.readCatalogAttributes(inputResource);
             });
@@ -90,7 +90,7 @@ public class AttributesModelTest {
   public void testParseGood() throws Exception {
 
     final InputResource inputResource =
-        InputResourceUtility.createInputResource("/attributes.yaml");
+        InputResourceUtility.createInputResource("/attributes.yaml").get();
     final CatalogAttributes catalogAttributes =
         CatalogAttributesUtility.readCatalogAttributes(inputResource);
 

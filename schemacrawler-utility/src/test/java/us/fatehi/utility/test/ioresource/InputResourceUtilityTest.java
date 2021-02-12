@@ -41,7 +41,6 @@ import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
 
 import us.fatehi.utility.ioresource.ClasspathInputResource;
-import us.fatehi.utility.ioresource.EmptyInputResource;
 import us.fatehi.utility.ioresource.FileInputResource;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.ioresource.InputResourceUtility;
@@ -50,15 +49,13 @@ public class InputResourceUtilityTest {
 
   @Test
   public void badArgs() {
-    assertThat(
-        InputResourceUtility.createInputResource("bad-resource"),
-        is(instanceOf(EmptyInputResource.class)));
+    assertThat(InputResourceUtility.createInputResource("bad-resource").isPresent(), is(false));
   }
 
   @Test
   public void classpath() {
     final InputResource inputResource =
-        InputResourceUtility.createInputResource("/test-resource.txt");
+        InputResourceUtility.createInputResource("/test-resource.txt").get();
     assertThat(inputResource, is(instanceOf(ClasspathInputResource.class)));
     assertThat(inputResource.getDescription(), endsWith("/test-resource.txt"));
   }
@@ -69,14 +66,13 @@ public class InputResourceUtilityTest {
     Files.write(fileResource, "hello, world".getBytes(UTF_8));
 
     final InputResource inputResource =
-        InputResourceUtility.createInputResource(fileResource.toString());
+        InputResourceUtility.createInputResource(fileResource.toString()).get();
     assertThat(inputResource, is(instanceOf(FileInputResource.class)));
     assertThat(inputResource.getDescription(), is(fileResource.toString()));
   }
 
   @Test
   public void nullArgs() {
-    assertThat(
-        InputResourceUtility.createInputResource(null), is(instanceOf(EmptyInputResource.class)));
+    assertThat(InputResourceUtility.createInputResource(null).isPresent(), is(false));
   }
 }

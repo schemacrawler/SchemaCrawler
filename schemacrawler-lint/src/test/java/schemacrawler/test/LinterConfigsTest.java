@@ -82,7 +82,8 @@ public class LinterConfigsTest {
 
               final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
             });
-    assertThat(exception.getCause().getCause().getMessage(), endsWith("line: 1, column: 1]"));
+    assertThat(
+        exception.getMessage(), is("Could not load linter configs from file, /missing.yaml"));
   }
 
   @Test

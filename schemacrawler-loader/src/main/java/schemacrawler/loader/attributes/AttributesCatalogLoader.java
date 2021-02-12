@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.loader.attributes;
 
 import static schemacrawler.loader.attributes.model.CatalogAttributesUtility.readCatalogAttributes;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.Optional;
 import java.util.logging.Level;
@@ -45,7 +46,6 @@ import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.StopWatch;
-import us.fatehi.utility.ioresource.EmptyInputResource;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.ioresource.InputResourceUtility;
 
@@ -93,11 +93,15 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
           "retrieveCatalogAttributes",
           () -> {
             final String catalogAttributesFile = config.getObject(OPTION_ATTRIBUTES_FILE, null);
-            final InputResource inputResource =
-                InputResourceUtility.createInputResource(catalogAttributesFile);
-            if (inputResource instanceof EmptyInputResource) {
+            if (isBlank(catalogAttributesFile)) {
               return null;
             }
+            final InputResource inputResource =
+                InputResourceUtility.createInputResource(catalogAttributesFile)
+                    .orElseThrow(
+                        () ->
+                            new SchemaCrawlerException(
+                                "Cannot locate catalog attributes file, " + catalogAttributesFile));
             final CatalogAttributes catalogAttributes = readCatalogAttributes(inputResource);
             for (final TableAttributes tableAttributes : catalogAttributes) {
               final Optional<Table> lookupTable =
