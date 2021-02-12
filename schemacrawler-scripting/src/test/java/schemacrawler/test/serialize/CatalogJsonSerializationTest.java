@@ -57,6 +57,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.MissingNode;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -105,8 +106,9 @@ public class CatalogJsonSerializationTest {
     }
 
     // Read generated JSON file, and assert values
-    final ObjectMapper objectMapper = new ObjectMapper();
-    final JsonNode catalogNode = objectMapper.readTree(testOutputFile.toFile());
+    final ObjectMapper mapper = new ObjectMapper();
+    mapper.registerModule(new JavaTimeModule());
+    final JsonNode catalogNode = mapper.readTree(testOutputFile.toFile());
     assertThat(
         "Catalog schemas were not serialized",
         catalogNode.findPath("schemas"),
