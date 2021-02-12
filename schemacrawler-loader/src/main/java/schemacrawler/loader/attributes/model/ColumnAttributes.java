@@ -27,24 +27,17 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.loader.attributes.model;
 
+import java.beans.ConstructorProperties;
 import java.util.List;
 import java.util.Map;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 public class ColumnAttributes extends ObjectAttributes {
 
   private static final long serialVersionUID = -7531479565539199840L;
 
-  @JsonCreator
+  @ConstructorProperties({"name", "remarks", "attributes"})
   public ColumnAttributes(
-      @JsonProperty("name") final String name,
-      @JsonProperty("remarks") final List<String> remarks,
-      @JsonProperty("attributes") final Map<String, String> attributes)
-      throws SchemaCrawlerException {
+      final String name, final List<String> remarks, final Map<String, String> attributes) {
     super(name, remarks, attributes);
   }
 }

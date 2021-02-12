@@ -34,8 +34,6 @@ import nl.jqno.equalsverifier.Warning;
 import schemacrawler.BaseProductVersion;
 import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.IncludeAll;
-import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
-import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
@@ -83,8 +81,6 @@ public class EqualsTest {
   public void inclusionRules() {
     EqualsVerifier.forClass(IncludeAll.class).verify();
     EqualsVerifier.forClass(ExcludeAll.class).verify();
-    EqualsVerifier.forClass(RegularExpressionInclusionRule.class).verify();
-    EqualsVerifier.forClass(RegularExpressionExclusionRule.class).verify();
   }
 
   @Test

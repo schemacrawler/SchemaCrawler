@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -37,13 +36,11 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.LintTestUtility.executableLint;
 import static schemacrawler.test.utility.LintTestUtility.executeLintCommandLine;
-import static schemacrawler.test.utility.TestUtility.readerForResource;
+import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
 
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.PrintStream;
-import java.io.Reader;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,7 +52,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
@@ -63,11 +59,13 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
+import schemacrawler.tools.command.lint.options.LintOptions;
+import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.lint.LintSeverity;
-import schemacrawler.tools.lint.LinterConfig;
-import schemacrawler.tools.lint.LinterConfigs;
+import schemacrawler.tools.lint.config.LinterConfig;
+import schemacrawler.tools.lint.config.LinterConfigs;
 import schemacrawler.tools.options.Config;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -97,15 +95,12 @@ public class LinterConfigsDispatchTest {
   @Test
   public void testLinterConfigs() {
 
-    LinterConfigs linterConfigs = null;
-    try {
-      final Reader reader =
-          readerForResource("schemacrawler-linter-configs-with-dispatch.xml", UTF_8);
-      linterConfigs = new LinterConfigs(new Config());
-      linterConfigs.parse(reader);
-    } catch (final IOException | SchemaCrawlerException e) {
-      fail(e.getMessage());
-    }
+    final LintOptions lintOptions =
+        LintOptionsBuilder.builder()
+            .withLinterConfigs("/schemacrawler-linter-configs-with-dispatch.yaml")
+            .toOptions();
+
+    final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
 
     assertThat(linterConfigs.size(), is(1));
     boolean asserted = false;
@@ -138,7 +133,7 @@ public class LinterConfigsDispatchTest {
     executeLintCommandLine(
         connectionInfo,
         TextOutputFormat.text,
-        "/schemacrawler-linter-configs-with-dispatch.xml",
+        "/schemacrawler-linter-configs-with-dispatch.yaml",
         additionalArgs,
         "schemacrawler-linter-configs-with-dispatch.txt");
 
@@ -155,7 +150,7 @@ public class LinterConfigsDispatchTest {
 
     executableLint(
         connection,
-        "/schemacrawler-linter-configs-with-dispatch.xml",
+        "/schemacrawler-linter-configs-with-dispatch.yaml",
         additionalConfig,
         "schemacrawler-linter-configs-with-dispatch");
 

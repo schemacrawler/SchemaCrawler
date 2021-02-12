@@ -1,0 +1,36 @@
+[ {
+  "linterId" : "linter.Linter3",
+  "runLinter" : true,
+  "severity" : "high",
+  "threshold" : 1,
+  "config" : { },
+  "columnExclusionPattern" : null,
+  "columnInclusionPattern" : null,
+  "tableExclusionPattern" : null,
+  "tableInclusionPattern" : null
+}, {
+  "linterId" : "linter.Linter1",
+  "runLinter" : true,
+  "severity" : "medium",
+  "threshold" : -1,
+  "config" : {
+    "other" : "something else",
+    "exclude" : ".*"
+  },
+  "columnExclusionPattern" : null,
+  "columnInclusionPattern" : "SOME.*",
+  "tableExclusionPattern" : "SOME.*",
+  "tableInclusionPattern" : null
+}, {
+  "linterId" : "linter.Linter2",
+  "runLinter" : false,
+  "severity" : null,
+  "threshold" : 2147483647,
+  "config" : {
+    "sql" : "SELECT\n  *\nFROM\n  TABLE1\n"
+  },
+  "columnExclusionPattern" : "SOME.*",
+  "columnInclusionPattern" : null,
+  "tableExclusionPattern" : null,
+  "tableInclusionPattern" : "SOME.*"
+} ]

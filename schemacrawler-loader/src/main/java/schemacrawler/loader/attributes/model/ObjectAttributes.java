@@ -36,23 +36,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-
 public abstract class ObjectAttributes implements Serializable, Comparable<ObjectAttributes> {
 
   private static final long serialVersionUID = -6819484903391182146L;
 
   private final String name;
-
   private final List<String> remarks;
   private final Map<String, String> attributes;
 
   public ObjectAttributes(
-      final String name, final List<String> remarks, final Map<String, String> attributes)
-      throws SchemaCrawlerException {
+      final String name, final List<String> remarks, final Map<String, String> attributes) {
 
     if (isBlank(name)) {
-      throw new SchemaCrawlerException("No name provided");
+      throw new IllegalArgumentException("No name provided");
     }
     this.name = name;
 

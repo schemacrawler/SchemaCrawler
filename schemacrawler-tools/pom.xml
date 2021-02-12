@@ -38,24 +38,7 @@
       <version>2.8.0</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>testcontainers</artifactId>
-      <version>1.15.1</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>jdbc</artifactId>
-      <version>1.15.1</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <version>1.15.1</version>
-      <scope>test</scope>
-    </dependency>
+
   </dependencies>
   <build>
     <plugins>

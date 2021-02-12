@@ -36,10 +36,12 @@ import static org.hamcrest.Matchers.startsWith;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConfigs;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 
-import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -54,13 +56,15 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
+import schemacrawler.tools.command.lint.options.LintOptions;
+import schemacrawler.tools.command.lint.options.LintOptionsBuilder;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintCollector;
-import schemacrawler.tools.lint.LinterConfig;
-import schemacrawler.tools.lint.LinterConfigs;
+import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.Linters;
+import schemacrawler.tools.lint.config.LinterConfig;
+import schemacrawler.tools.lint.config.LinterConfigs;
 import schemacrawler.tools.options.Config;
-import us.fatehi.utility.ioresource.ClasspathInputResource;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class LintTest {
@@ -85,10 +89,21 @@ public class LintTest {
     assertThat("FOR_LINT tables not found", catalog.getTables(schema), hasSize(7));
 
     final LinterConfigs linterConfigs = new LinterConfigs(new Config());
+
+    final Map<String, Object> config = new HashMap<>();
+    config.put("bad-column-names", ".*\\.COUNTRY");
     final LinterConfig linterConfig =
-        new LinterConfig("schemacrawler.tools.linter.LinterTableWithBadlyNamedColumns");
-    linterConfig.setThreshold(0);
-    linterConfig.put("bad-column-names", ".*\\.COUNTRY");
+        new LinterConfig(
+            "schemacrawler.tools.linter.LinterTableWithBadlyNamedColumns",
+            true,
+            LintSeverity.medium,
+            0,
+            null,
+            null,
+            null,
+            null,
+            config);
+
     linterConfigs.add(linterConfig);
 
     final Linters linters = new Linters(linterConfigs, true);
@@ -172,10 +187,13 @@ public class LintTest {
     additionalConfig.put("message", message);
     additionalConfig.put("sql", "SELECT TOP 1 1 FROM INFORMATION_SCHEMA.TABLES");
 
-    final ClasspathInputResource inputResource =
-        new ClasspathInputResource("/schemacrawler-linter-configs-sql-from-config.xml");
-    final LinterConfigs linterConfigs = new LinterConfigs(additionalConfig);
-    linterConfigs.parse(inputResource.openNewInputReader(StandardCharsets.UTF_8));
+    final LintOptions lintOptions =
+        LintOptionsBuilder.builder()
+            .fromConfig(additionalConfig)
+            .withLinterConfigs("/schemacrawler-linter-configs-sql-from-config.yaml")
+            .toOptions();
+
+    final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
 
     final Linters linters = new Linters(linterConfigs, false);
 

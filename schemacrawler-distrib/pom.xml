@@ -15,7 +15,11 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+
   <dependencies>
+
+    <!-- SchemaCrawler jars -->
+
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-commandline</artifactId>
@@ -32,67 +36,154 @@
       <version>${project.version}</version>
     </dependency>
 
-    <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-testdb</artifactId>
-      <version>${project.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-api</artifactId>
-      <version>${project.version}</version>
-      <type>test-jar</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-tools</artifactId>
-      <version>${project.version}</version>
-      <type>test-jar</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-diagram</artifactId>
-      <version>${project.version}</version>
-      <type>test-jar</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-commandline</artifactId>
-      <version>${project.version}</version>
-      <type>test-jar</type>
-      <scope>test</scope>
-    </dependency>
+    <!-- SchemaCrawler database plugins -->
 
     <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-core</artifactId>
-      <version>2.11.3</version>
-      <scope>provided</scope>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-offline</artifactId>
+      <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-db2</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-hsqldb</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-oracle</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-mysql</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-postgresql</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-sqlite</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-sqlserver</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <!-- JDBC drivers -->
+
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>42.2.18</version>
+    </dependency>
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.22</version>
+    </dependency>
+    <dependency>
+      <groupId>com.microsoft.sqlserver</groupId>
+      <artifactId>mssql-jdbc</artifactId>
+      <version>9.2.0.jre8</version>
+    </dependency>
+    <dependency>
+      <groupId>com.microsoft.sqlserver</groupId>
+      <artifactId>mssql-jdbc_auth</artifactId>
+      <version>9.2.0.x64</version>
+      <type>dll</type>
+    </dependency>
+    <dependency>
+      <groupId>com.oracle.database.jdbc.debug</groupId>
+      <artifactId>ojdbc8_g</artifactId>
+      <version>19.8.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.ibm.db2</groupId>
+      <artifactId>jcc</artifactId>
+      <version>11.5.5.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>1.4.200</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <version>2.5.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.derby</groupId>
+      <artifactId>derby</artifactId>
+      <version>10.14.2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xerial</groupId>
+      <artifactId>sqlite-jdbc</artifactId>
+      <version>3.34.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sap.cloud.db.jdbc</groupId>
+      <artifactId>ngdbc</artifactId>
+      <version>2.6.29</version>
+    </dependency>
+
+    <!-- Command-line processing -->
+
+    <dependency>
+      <groupId>info.picocli</groupId>
+      <artifactId>picocli</artifactId>
+      <version>4.6.1</version>
+    </dependency>
+    <dependency>
+      <groupId>info.picocli</groupId>
+      <artifactId>picocli-shell-jline3</artifactId>
+      <version>4.6.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jline</groupId>
+      <artifactId>jline</artifactId>
+      <version>3.16.0</version>
+    </dependency>
+
+    <!-- Processing configuration -->
+
+    <dependency>
+      <groupId>com.typesafe</groupId>
+      <artifactId>config</artifactId>
+      <version>1.4.1</version>
+    </dependency>
+
+    <!-- Jackson -->
+
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
       <version>2.11.3</version>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.dataformat</groupId>
       <artifactId>jackson-dataformat-yaml</artifactId>
       <version>2.11.3</version>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
       <artifactId>jackson-datatype-jsr310</artifactId>
       <version>2.11.3</version>
-      <scope>provided</scope>
     </dependency>
 
   </dependencies>
+
   <build>
     <pluginManagement>
       <plugins>
@@ -139,7 +230,8 @@
                 <mkdir dir="${user.home}/.ant/lib" />
                 <get
                   src="https://repo1.maven.org/maven2/org/apache/ivy/ivy/2.5.0/ivy-2.5.0.jar"
-                  dest="${user.home}/.ant/lib/ivy-2.5.0.jar" usetimestamp="true" />
+                  dest="${user.home}/.ant/lib/ivy-2.5.0.jar"
+                  usetimestamp="true" />
               </target>
             </configuration>
             <goals>
@@ -152,26 +244,30 @@
             <configuration>
               <target name="make-distribution"
                 description="Package SchemaCrawler distributable">
-                <property name="SchemaCrawler.home" location=".." />
+                <property name="SchemaCrawler.home"
+                  location=".." />
                 <property name="SchemaCrawler.version"
                   value="${project.version}" />
-                <ant antfile="src\assembly\distribution.xml" target="make" />
+                <ant antfile="src\assembly\distribution.xml"
+                  target="make" />
               </target>
             </configuration>
             <goals>
               <goal>run</goal>
             </goals>
-          </execution>          
+          </execution>
           <execution>
             <id>make-main-distribution</id>
             <phase>package</phase>
             <configuration>
               <target name="make-main-distribution"
                 description="Package SchemaCrawler, test database, and examples into the main distributable zip">
-                <property name="SchemaCrawler.home" location=".." />
+                <property name="SchemaCrawler.home"
+                  location=".." />
                 <property name="SchemaCrawler.version"
                   value="${project.version}" />
-                <ant antfile="src\assembly\main-distribution.xml" target="make" />
+                <ant antfile="src\assembly\main-distribution.xml"
+                  target="make" />
               </target>
             </configuration>
             <goals>
@@ -210,175 +306,13 @@
             <id>create-lib</id>
             <phase>prepare-package</phase>
             <goals>
-              <goal>copy</goal>
+              <goal>copy-dependencies</goal>
             </goals>
             <configuration>
-              <artifactItems>
-
-                <!-- SchemaCrawler jars -->
-
-                <artifactItem>
-                  <groupId>us.fatehi</groupId>
-                  <artifactId>schemacrawler-commandline</artifactId>
-                  <version>${project.version}</version>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>us.fatehi</groupId>
-                  <artifactId>schemacrawler-scripting</artifactId>
-                  <version>${project.version}</version>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>us.fatehi</groupId>
-                  <artifactId>schemacrawler-lint</artifactId>
-                  <version>${project.version}</version>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>us.fatehi</groupId>
-                  <artifactId>schemacrawler-offline</artifactId>
-                  <version>${project.version}</version>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>us.fatehi</groupId>
-                  <artifactId>schemacrawler-db2</artifactId>
-                  <version>${project.version}</version>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>us.fatehi</groupId>
-                  <artifactId>schemacrawler-hsqldb</artifactId>
-                  <version>${project.version}</version>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>us.fatehi</groupId>
-                  <artifactId>schemacrawler-oracle</artifactId>
-                  <version>${project.version}</version>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>us.fatehi</groupId>
-                  <artifactId>schemacrawler-mysql</artifactId>
-                  <version>${project.version}</version>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>us.fatehi</groupId>
-                  <artifactId>schemacrawler-db2</artifactId>
-                  <version>${project.version}</version>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>us.fatehi</groupId>
-                  <artifactId>schemacrawler-postgresql</artifactId>
-                  <version>${project.version}</version>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>us.fatehi</groupId>
-                  <artifactId>schemacrawler-sqlite</artifactId>
-                  <version>${project.version}</version>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>us.fatehi</groupId>
-                  <artifactId>schemacrawler-sqlserver</artifactId>
-                  <version>${project.version}</version>
-                </artifactItem>
-
-                <!-- JDBC drivers -->
-
-                <artifactItem>
-                  <groupId>org.postgresql</groupId>
-                  <artifactId>postgresql</artifactId>
-                  <version>42.2.18</version>
-                  <type>jar</type>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>mysql</groupId>
-                  <artifactId>mysql-connector-java</artifactId>
-                  <version>8.0.22</version>
-                  <type>jar</type>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>com.microsoft.sqlserver</groupId>
-                  <artifactId>mssql-jdbc</artifactId>
-                  <version>9.2.0.jre8</version>
-                  <type>jar</type>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>com.microsoft.sqlserver</groupId>
-                  <artifactId>mssql-jdbc_auth</artifactId>
-                  <version>9.2.0.x64</version>
-                  <type>dll</type>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>com.oracle.database.jdbc.debug</groupId>
-                  <artifactId>ojdbc8_g</artifactId>
-                  <version>19.8.0.0</version>
-                  <type>jar</type>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>com.ibm.db2</groupId>
-                  <artifactId>jcc</artifactId>
-                  <version>11.5.5.0</version>
-                  <type>jar</type>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>com.h2database</groupId>
-                  <artifactId>h2</artifactId>
-                  <version>1.4.200</version>
-                  <type>jar</type>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>org.hsqldb</groupId>
-                  <artifactId>hsqldb</artifactId>
-                  <version>2.5.1</version>
-                  <type>jar</type>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>org.apache.derby</groupId>
-                  <artifactId>derby</artifactId>
-                  <version>10.14.2.0</version>
-                  <type>jar</type>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>org.xerial</groupId>
-                  <artifactId>sqlite-jdbc</artifactId>
-                  <version>3.34.0</version>
-                  <type>jar</type>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>com.sap.cloud.db.jdbc</groupId>
-                  <artifactId>ngdbc</artifactId>
-                  <version>2.6.29</version>
-                  <type>jar</type>
-                </artifactItem>
-
-                <!-- Command-line processing -->
-
-                <artifactItem>
-                  <groupId>info.picocli</groupId>
-                  <artifactId>picocli</artifactId>
-                  <version>4.6.1</version>
-                  <type>jar</type>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>info.picocli</groupId>
-                  <artifactId>picocli-shell-jline3</artifactId>
-                  <version>4.6.1</version>
-                  <type>jar</type>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>org.jline</groupId>
-                  <artifactId>jline</artifactId>
-                  <version>3.16.0</version>
-                  <type>jar</type>
-                </artifactItem>
-
-                <!-- Processing configuration -->
-
-                <artifactItem>
-                  <groupId>com.typesafe</groupId>
-                  <artifactId>config</artifactId>
-                  <version>1.4.1</version>
-                </artifactItem>
-
-              </artifactItems>
-
               <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
+              <excludeScope>test</excludeScope>
+              <includeScope>runtime</includeScope>
+              <excludeGroupIds>org.checkerframework,com.google.protobuf</excludeGroupIds>
               <overWriteReleases>false</overWriteReleases>
               <overWriteSnapshots>true</overWriteSnapshots>
             </configuration>

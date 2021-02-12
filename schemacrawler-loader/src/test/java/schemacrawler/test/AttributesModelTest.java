@@ -27,14 +27,17 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test;
 
+import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 
-import java.io.StringReader;
+import java.io.IOException;
 import java.nio.file.Path;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -43,19 +46,53 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import schemacrawler.loader.attributes.model.CatalogAttributes;
-import schemacrawler.loader.attributes.model.CatalogAttributesLoader;
+import schemacrawler.loader.attributes.model.CatalogAttributesUtility;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.test.utility.TestUtility;
-import us.fatehi.utility.IOUtility;
+import us.fatehi.utility.ioresource.InputResource;
+import us.fatehi.utility.ioresource.InputResourceUtility;
 
 public class AttributesModelTest {
 
   @Test
-  public void loadAttributes() throws Exception {
+  @DisplayName("Invalid attributes file format")
+  public void testParseBad2() throws SchemaCrawlerException, IOException {
+    final SchemaCrawlerRuntimeException exception =
+        assertThrows(
+            SchemaCrawlerRuntimeException.class,
+            () -> {
+              final InputResource inputResource =
+                  InputResourceUtility.createInputResource("/attributes-bad-2.yaml.bad").get();
+              final CatalogAttributes catalogAttributes =
+                  CatalogAttributesUtility.readCatalogAttributes(inputResource);
+            });
+    assertThat(exception.getCause().getMessage(), endsWith("line: 1, column: 2]"));
+  }
 
-    final String attributesYaml = IOUtility.readResourceFully("/attributes.yaml");
+  @Test
+  @DisplayName("Valid attributes file format, but incorrect data")
+  public void testParseBad3() throws SchemaCrawlerException, IOException {
+    final SchemaCrawlerRuntimeException exception =
+        assertThrows(
+            SchemaCrawlerRuntimeException.class,
+            () -> {
+              final InputResource inputResource =
+                  InputResourceUtility.createInputResource("/attributes-bad-3.yaml").get();
+              final CatalogAttributes catalogAttributes =
+                  CatalogAttributesUtility.readCatalogAttributes(inputResource);
+            });
+    assertThat(exception.getCause().getMessage(), endsWith("line: 1, column: 1]"));
+  }
 
+  @Test
+  @DisplayName("\u263A Valid attribiutes file")
+  public void testParseGood() throws Exception {
+
+    final InputResource inputResource =
+        InputResourceUtility.createInputResource("/attributes.yaml").get();
     final CatalogAttributes catalogAttributes =
-        CatalogAttributesLoader.loadCatalogAttributes(new StringReader(attributesYaml));
+        CatalogAttributesUtility.readCatalogAttributes(inputResource);
 
     assertThat(
         outputOf(serialized(catalogAttributes)),

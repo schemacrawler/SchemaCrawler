@@ -27,6 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.loader.attributes.model;
 
+import java.beans.ConstructorProperties;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -34,26 +35,21 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class CatalogAttributes extends ObjectAttributes implements Iterable<TableAttributes> {
+public final class CatalogAttributes extends ObjectAttributes implements Iterable<TableAttributes> {
 
   private static final long serialVersionUID = 1436642683972751860L;
 
+  protected static CatalogAttributes EMPTY_CATALOG_ATTRIBUTES =
+      new CatalogAttributes("empty-catalog", null, null, null);
+
   private final Set<TableAttributes> tables;
 
-  @JsonCreator
+  @ConstructorProperties({"name", "remarks", "attributes", "tables"})
   public CatalogAttributes(
-      @JsonProperty("name") final String name,
-      @JsonProperty("remarks") final List<String> remarks,
-      @JsonProperty("attributes") final Map<String, String> attributes,
-      @JsonProperty("tables") final Set<TableAttributes> tables)
-      throws SchemaCrawlerException {
+      final String name,
+      final List<String> remarks,
+      final Map<String, String> attributes,
+      final Set<TableAttributes> tables) {
     super(name, remarks, attributes);
     if (tables == null) {
       this.tables = Collections.emptySet();

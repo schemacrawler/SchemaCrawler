@@ -40,6 +40,8 @@ import java.util.logging.Level;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.lint.config.LinterConfig;
+import schemacrawler.tools.lint.config.LinterConfigs;
 import us.fatehi.utility.string.StringFormat;
 
 public final class Linters implements Iterable<Linter> {

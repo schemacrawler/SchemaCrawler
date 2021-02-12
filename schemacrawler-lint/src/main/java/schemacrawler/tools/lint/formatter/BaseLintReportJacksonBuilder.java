@@ -41,36 +41,40 @@ abstract class BaseLintReportJacksonBuilder implements LintReportBuilder {
   public void generateLintReport(final LintReport report) throws SchemaCrawlerException {
     requireNonNull(out, "No output stream provided");
     try {
-      @JsonNaming(PropertyNamingStrategy.KebabCaseStrategy.class)
-      @JsonPropertyOrder(alphabetic = true)
-      abstract class JacksonAnnotationMixIn {
-        @JsonIgnore public Object value;
-
-        @JsonProperty("value")
-        public abstract Object getValueAsString();
-      }
-
-      final JavaTimeModule timeModule = new JavaTimeModule();
-      timeModule.addSerializer(
-          LocalDateTime.class,
-          new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-
-      final ObjectMapper mapper = newObjectMapper();
-      mapper.enable(
-          ORDER_MAP_ENTRIES_BY_KEYS,
-          INDENT_OUTPUT,
-          USE_EQUALITY_FOR_OBJECT_ID,
-          WRITE_ENUMS_USING_TO_STRING);
-      mapper.addMixIn(Object.class, JacksonAnnotationMixIn.class);
-      mapper.addMixIn(Lint.class, JacksonAnnotationMixIn.class);
-      mapper.registerModule(timeModule);
-
-      // Write JSON to stream
+      final ObjectMapper mapper = newConfiguredObjectMapper();
       mapper.writeValue(out, report);
     } catch (final Exception e) {
-      throw new SchemaCrawlerException("Could not serialize catalog", e);
+      throw new SchemaCrawlerException("Could not generate lint report", e);
     }
   }
 
   protected abstract ObjectMapper newObjectMapper();
+
+  private ObjectMapper newConfiguredObjectMapper() {
+
+    @JsonPropertyOrder(alphabetic = true)
+    @JsonNaming(PropertyNamingStrategy.KebabCaseStrategy.class)
+    abstract class JacksonAnnotationMixIn {
+      @JsonIgnore public Object value;
+
+      @JsonProperty("value")
+      public abstract Object getValueAsString();
+    }
+
+    final JavaTimeModule timeModule = new JavaTimeModule();
+    timeModule.addSerializer(
+        LocalDateTime.class,
+        new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+
+    final ObjectMapper mapper = newObjectMapper();
+    mapper.enable(
+        ORDER_MAP_ENTRIES_BY_KEYS,
+        INDENT_OUTPUT,
+        USE_EQUALITY_FOR_OBJECT_ID,
+        WRITE_ENUMS_USING_TO_STRING);
+    mapper.addMixIn(Object.class, JacksonAnnotationMixIn.class);
+    mapper.addMixIn(Lint.class, JacksonAnnotationMixIn.class);
+    mapper.registerModule(timeModule);
+    return mapper;
+  }
 }

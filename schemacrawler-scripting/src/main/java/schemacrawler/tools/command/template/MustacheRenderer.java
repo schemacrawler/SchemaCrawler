@@ -38,6 +38,7 @@ import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import us.fatehi.utility.ioresource.InputResource;
 
@@ -53,7 +54,10 @@ public final class MustacheRenderer extends BaseTemplateRenderer {
     final OutputOptions outputOptions = getOutputOptions();
 
     final String templateLocation = getResourceFilename();
-    final InputResource inputResource = createInputResource(templateLocation);
+    final InputResource inputResource =
+        createInputResource(templateLocation)
+            .orElseThrow(
+                () -> new SchemaCrawlerException("No template found, " + templateLocation));
 
     final MustacheFactory mustacheFactory = new DefaultMustacheFactory();
     final Mustache mustache =

@@ -64,7 +64,7 @@ public class LintCommandProvider extends BaseCommandProvider {
             new LinterHelp());
     pluginCommand
         .addOption(
-            "linter-configs", Path.class, "Path to the SchemaCrawler lint XML configuration file")
+            "linter-configs", Path.class, "Path to the SchemaCrawler linter configuration file")
         .addOption(
             "lint-dispatch",
             LintDispatch.class,

@@ -32,10 +32,8 @@ import static org.hamcrest.Matchers.arrayWithSize;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 import static schemacrawler.test.utility.TestUtility.newSchemaRetrievalOptions;
 
-import java.nio.file.Path;
 import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
@@ -65,7 +63,6 @@ public class AttributesCatalogLoaderTest {
   public void showRemarks(final TestContext testContext, final Connection connection)
       throws Exception {
 
-    final Path attributesFile = copyResourceToTempFile("/attributes.yaml");
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
 
@@ -75,7 +72,7 @@ public class AttributesCatalogLoaderTest {
           SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
       final Config additionalConfig = new Config();
-      additionalConfig.put("attributes-file", attributesFile);
+      additionalConfig.put("attributes-file", "/attributes.yaml");
 
       final Catalog catalog =
           SchemaCrawlerUtility.getCatalog(

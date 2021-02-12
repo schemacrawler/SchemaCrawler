@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package us.fatehi.utility.ioresource;
 
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.FilterReader;
 import java.io.FilterWriter;
@@ -36,6 +37,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -52,31 +54,33 @@ public class InputResourceUtility {
    * @param inputResourceName Name of input resource.
    * @return Input resource
    */
-  public static InputResource createInputResource(final String inputResourceName) {
+  public static Optional<InputResource> createInputResource(final String inputResourceName) {
     InputResource inputResource = null;
-    try {
-      LOGGER.log(Level.FINE, new StringFormat("Attempting to read file <%s>", inputResourceName));
-      final Path filePath = Paths.get(inputResourceName);
-      inputResource = new FileInputResource(filePath);
-    } catch (final Exception e) {
-      // No-op
-    }
-    try {
+    if (!isBlank(inputResourceName)) {
+      try {
+        LOGGER.log(Level.FINE, new StringFormat("Attempting to read file <%s>", inputResourceName));
+        final Path filePath = Paths.get(inputResourceName);
+        inputResource = new FileInputResource(filePath);
+      } catch (final Exception e) {
+        // No-op
+      }
+      try {
+        if (inputResource == null) {
+          LOGGER.log(
+              Level.FINE,
+              new StringFormat("Attempting to read classpath resource <%s>", inputResourceName));
+          inputResource = new ClasspathInputResource(inputResourceName);
+        }
+      } catch (final Exception e) {
+        // No-op
+      }
       if (inputResource == null) {
         LOGGER.log(
-            Level.FINE,
-            new StringFormat("Attempting to read classpath resource <%s>", inputResourceName));
-        inputResource = new ClasspathInputResource(inputResourceName);
+            Level.INFO,
+            new StringFormat("Could not locate input resource <%s>", inputResourceName));
       }
-    } catch (final Exception e) {
-      // No-op
     }
-    if (inputResource == null) {
-      LOGGER.log(
-          Level.INFO, new StringFormat("Could not locate input resource <%s>", inputResourceName));
-      inputResource = new EmptyInputResource();
-    }
-    return inputResource;
+    return Optional.ofNullable(inputResource);
   }
 
   public static Reader wrapReader(

@@ -67,7 +67,7 @@
     <!-- Copy config files -->
     <copy todir="${main-distribution.staging.dir}/examples/lint">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-docs/config">
-        <include name="schemacrawler-linter-configs.xml" />
+        <include name="schemacrawler-linter-configs.yaml" />
       </fileset>
     </copy>
 

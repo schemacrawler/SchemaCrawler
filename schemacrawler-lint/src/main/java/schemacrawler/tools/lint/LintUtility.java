@@ -27,19 +27,12 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.lint;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static us.fatehi.utility.Utility.isBlank;
-
-import java.io.Reader;
 import java.util.List;
-import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.command.lint.options.LintOptions;
-import us.fatehi.utility.ioresource.InputResource;
-import us.fatehi.utility.ioresource.InputResourceUtility;
+import us.fatehi.utility.UtilityMarker;
 
+@UtilityMarker
 public final class LintUtility {
 
   public static final SchemaCrawlerLogger LOGGER =
@@ -57,28 +50,6 @@ public final class LintUtility {
     }
 
     return main.subList(0, sub.size()).equals(sub);
-  }
-
-  /**
-   * Obtain linter configuration from a system property
-   *
-   * @return LinterConfigs
-   * @throws SchemaCrawlerException
-   */
-  public static LinterConfigs readLinterConfigs(final LintOptions lintOptions) {
-    final LinterConfigs linterConfigs = new LinterConfigs(lintOptions.getConfig());
-    final String linterConfigsFile = lintOptions.getLinterConfigs();
-    if (!isBlank(linterConfigsFile)) {
-      final InputResource inputResource =
-          InputResourceUtility.createInputResource(linterConfigsFile);
-      try (final Reader reader = inputResource.openNewInputReader(UTF_8)) {
-        linterConfigs.parse(reader);
-      } catch (final Exception e) {
-        LOGGER.log(
-            Level.WARNING, "Could not load linter configs from file, " + linterConfigsFile, e);
-      }
-    }
-    return linterConfigs;
   }
 
   private LintUtility() {}

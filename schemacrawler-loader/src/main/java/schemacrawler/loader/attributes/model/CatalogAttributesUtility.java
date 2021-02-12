@@ -27,6 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.loader.attributes.model;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
 
 import java.io.Reader;
@@ -34,20 +35,36 @@ import java.io.Reader;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
-public class CatalogAttributesLoader {
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import us.fatehi.utility.UtilityMarker;
+import us.fatehi.utility.ioresource.InputResource;
 
-  public static CatalogAttributes loadCatalogAttributes(final Reader reader) throws Exception {
+@UtilityMarker
+public class CatalogAttributesUtility {
 
-    requireNonNull(reader, "No reader provided");
+  /**
+   * Pass in a reader at this point, since
+   *
+   * @param catalogAttributesFile
+   * @return
+   * @throws Exception
+   */
+  public static CatalogAttributes readCatalogAttributes(final InputResource inputResource)
+      throws Exception {
+    requireNonNull(inputResource, "No input resource provided");
+    try (final Reader reader = inputResource.openNewInputReader(UTF_8)) {
 
-    final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+      final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
-    final CatalogAttributes catalogAttributes = mapper.readValue(reader, CatalogAttributes.class);
+      final CatalogAttributes catalogAttributes = mapper.readValue(reader, CatalogAttributes.class);
 
-    return catalogAttributes;
+      return catalogAttributes;
+    } catch (final Exception e) {
+      throw new SchemaCrawlerRuntimeException("Cannot read catalog attributes", e);
+    }
   }
 
-  private CatalogAttributesLoader() {
+  private CatalogAttributesUtility() {
     // Prevent instantiation
   }
 }

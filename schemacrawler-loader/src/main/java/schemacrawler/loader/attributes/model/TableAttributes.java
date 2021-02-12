@@ -27,6 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.loader.attributes.model;
 
+import java.beans.ConstructorProperties;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -34,11 +35,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaReference;
 
 public class TableAttributes extends ObjectAttributes implements Iterable<ColumnAttributes> {
@@ -49,15 +46,14 @@ public class TableAttributes extends ObjectAttributes implements Iterable<Column
   private final String catalogName;
   private final Set<ColumnAttributes> columns;
 
-  @JsonCreator
+  @ConstructorProperties({"schema", "catalog", "name", "remarks", "attributes", "columns"})
   public TableAttributes(
-      @JsonProperty("schema") final String schemaName,
-      @JsonProperty("catalog") final String catalogName,
-      @JsonProperty("name") final String name,
-      @JsonProperty("remarks") final List<String> remarks,
-      @JsonProperty("attributes") final Map<String, String> attributes,
-      @JsonProperty("columns") final Set<ColumnAttributes> columns)
-      throws SchemaCrawlerException {
+      final String schemaName,
+      final String catalogName,
+      final String name,
+      final List<String> remarks,
+      final Map<String, String> attributes,
+      final Set<ColumnAttributes> columns) {
     super(name, remarks, attributes);
     this.catalogName = catalogName;
     this.schemaName = schemaName;

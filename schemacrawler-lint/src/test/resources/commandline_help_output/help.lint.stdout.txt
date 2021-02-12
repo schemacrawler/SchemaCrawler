@@ -11,7 +11,7 @@ For more information, see https://www.schemacrawler.com/lint.html
                           Use one of none, write_err, throw_exception,
                             terminate_system
       --linter-configs=<linter-configs>
-                          Path to the SchemaCrawler lint XML configuration file
+                          Path to the SchemaCrawler linter configuration file
       --run-all-linters   Whether to run all linters, including running the
                             ones that are not explicitly configured with their
                             default settings

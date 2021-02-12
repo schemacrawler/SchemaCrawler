@@ -31,6 +31,8 @@ package schemacrawler.tools.options;
 import static us.fatehi.utility.Utility.requireNotBlank;
 import static us.fatehi.utility.ioresource.InputResourceUtility.createInputResource;
 
+import java.util.Optional;
+
 import schemacrawler.tools.executable.CommandOptions;
 import us.fatehi.utility.ioresource.InputResource;
 
@@ -48,7 +50,7 @@ public abstract class LanguageOptions implements CommandOptions {
     return language;
   }
 
-  public final InputResource getResource() {
+  public final Optional<InputResource> getResource() {
     return createInputResource(script);
   }
 
