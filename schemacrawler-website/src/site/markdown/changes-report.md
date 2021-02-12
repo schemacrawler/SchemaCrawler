@@ -10,8 +10,8 @@
 - Drop support for XML linter config file, and introduce a YAML file format
 
 
-<a name="a16.11.7"></a>
-## Release 16.11.7 - 2020-12-26
+<a name="a16.12.1"></a>
+## Release 16.12.1 - 2020-12-26
 
 - Add `--config-file` command back in, with more documentation on configuration on the website
 
