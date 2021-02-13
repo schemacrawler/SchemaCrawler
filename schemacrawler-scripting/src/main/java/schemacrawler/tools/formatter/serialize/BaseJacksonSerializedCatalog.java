@@ -57,6 +57,7 @@ import com.fasterxml.jackson.databind.ser.PropertyFilter;
 import com.fasterxml.jackson.databind.ser.PropertyWriter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
@@ -204,6 +205,7 @@ public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer 
         INDENT_OUTPUT,
         USE_EQUALITY_FOR_OBJECT_ID,
         WRITE_ENUMS_USING_TO_STRING);
+    mapper.registerModule(new JavaTimeModule());
     mapper.addMixIn(Object.class, JacksonAnnotationMixIn.class);
     mapper.setFilterProvider(filters);
     return mapper;

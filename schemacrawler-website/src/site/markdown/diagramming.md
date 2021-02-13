@@ -149,6 +149,26 @@ configuration file, `schemacrawler.config.properties`, and edit the line with
 `schemacrawler.graph.graphviz_opts`.
 
 
+## Mermaid Diagrams
+
+SchemaCrawler can generate [Mermaid Entity Relationship Diagrams](https://mermaid-js.github.io/mermaid/#/entityRelationshipDiagram) for your database. Create a Python script called "mermaid.py" with 
+the contents from [the GitHub file](https://github.com/schemacrawler/SchemaCrawler-Action-Usage-Example/blob/main/mermaid.py).
+Then, run SchemaCrawler with a Docker command like:
+```sh
+docker run \
+--mount type=bind,source="$(pwd)",target=/home/schcrwlr \
+--rm -it \
+schemacrawler/schemacrawler \
+/opt/schemacrawler/schemacrawler.sh \
+--server=sqlite \
+--database=chinook-database-2.0.1.sqlite \
+--info-level=standard \
+--command script \
+--script-language python \
+--script mermaid.py
+```
+
+
 ## SchemaCrawler Diagrams in Use
 
 Schemacrawler database diagrams in use at the Scrum meeting at the Software Development Departement of [La Ville de Nouméa](http://www.noumea.nc/). 
