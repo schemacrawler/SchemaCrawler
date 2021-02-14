@@ -56,8 +56,6 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
 
   private static final String OPTION_ATTRIBUTES_FILE = "attributes-file";
 
-  private static final String REMARKS_KEY = "schemacrawler.database_object.remarks";
-
   public AttributesCatalogLoader() {
     super(
         new CommandDescription(
@@ -114,16 +112,14 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
               }
 
               if (tableAttributes.hasRemarks()) {
-                table.setAttribute(REMARKS_KEY, tableAttributes.getRemarks());
+                table.setRemarks(tableAttributes.getRemarks());
               }
 
               for (final ColumnAttributes columnAttributes : tableAttributes) {
                 if (columnAttributes.hasRemarks()) {
                   table
                       .lookupColumn(columnAttributes.getName())
-                      .ifPresent(
-                          column ->
-                              column.setAttribute(REMARKS_KEY, columnAttributes.getRemarks()));
+                      .ifPresent(column -> column.setRemarks(columnAttributes.getRemarks()));
                 }
               }
             }

@@ -449,7 +449,6 @@ PUBLIC.BOOKS.BOOKS.ID
     ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=4
     ~ SQL_DATETIME_SUB=null
-    ~ schemacrawler.database_object.remarks=Unique (internal) id for book
 PUBLIC.BOOKS.BOOKS.TITLE
   - short name=BOOKS.TITLE
   - data-type=VARCHAR
@@ -478,7 +477,6 @@ PUBLIC.BOOKS.BOOKS.TITLE
     ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=12
     ~ SQL_DATETIME_SUB=null
-    ~ schemacrawler.database_object.remarks=Book title
 PUBLIC.BOOKS.BOOKS.DESCRIPTION
   - short name=BOOKS.DESCRIPTION
   - data-type=VARCHAR
@@ -508,8 +506,6 @@ PUBLIC.BOOKS.BOOKS.DESCRIPTION
     ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=12
     ~ SQL_DATETIME_SUB=null
-    ~ schemacrawler.database_object.remarks=Book description
-(Usually the blurb from the book jacket or promotional materials)
 PUBLIC.BOOKS.BOOKS.PUBLISHERID
   - short name=BOOKS.PUBLISHERID
   - data-type=INTEGER
@@ -538,7 +534,6 @@ PUBLIC.BOOKS.BOOKS.PUBLISHERID
     ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=4
     ~ SQL_DATETIME_SUB=null
-    ~ schemacrawler.database_object.remarks=Foreign key to the book publisher
 PUBLIC.BOOKS.BOOKS.PUBLICATIONDATE
   - short name=BOOKS.PUBLICATIONDATE
   - data-type=DATE
@@ -567,7 +562,6 @@ PUBLIC.BOOKS.BOOKS.PUBLICATIONDATE
     ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=91
     ~ SQL_DATETIME_SUB=1
-    ~ schemacrawler.database_object.remarks=Book publication date
 PUBLIC.BOOKS.BOOKS.PRICE
   - short name=BOOKS.PRICE
   - data-type=DOUBLE
@@ -596,7 +590,6 @@ PUBLIC.BOOKS.BOOKS.PRICE
     ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=8
     ~ SQL_DATETIME_SUB=null
-    ~ schemacrawler.database_object.remarks=Current price for the book
 PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID
   - short name=BOOKS.PREVIOUSEDITIONID
   - data-type=INTEGER
@@ -994,7 +987,6 @@ PUBLIC.BOOKS.PUBLISHERS.ID
     ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=4
     ~ SQL_DATETIME_SUB=null
-    ~ schemacrawler.database_object.remarks=Unique (internal) id for book publisher
 PUBLIC.BOOKS.PUBLISHERS.PUBLISHER
   - short name=PUBLISHERS.PUBLISHER
   - data-type=VARCHAR
@@ -1023,7 +1015,6 @@ PUBLIC.BOOKS.PUBLISHERS.PUBLISHER
     ~ SOURCE_DATA_TYPE=null
     ~ SQL_DATA_TYPE=12
     ~ SQL_DATETIME_SUB=null
-    ~ schemacrawler.database_object.remarks=Name of book publisher
 
 PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΜΟΝΑΔΙΚΌΣ
   - short name=ΒΙΒΛΊΑ.ΜΟΝΑΔΙΚΌΣ
