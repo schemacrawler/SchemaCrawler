@@ -34,12 +34,15 @@ import java.util.Optional;
 
 import schemacrawler.crawl.WeakAssociation;
 
-/**
- * Represents a table in the database.
- *
- * @author Sualeh Fatehi
- */
+/** Represents a table in the database. */
 public interface Table extends DatabaseObject, TypedObject<TableType>, DefinedObject {
+
+  /**
+   * Adds a weak association between columns
+   *
+   * @param weakAssociation Weak association
+   */
+  void addWeakAssociation(WeakAssociation weakAssociation);
 
   /**
    * Gets the list of columns in ordinal order.
