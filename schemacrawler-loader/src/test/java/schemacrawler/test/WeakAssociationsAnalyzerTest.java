@@ -45,9 +45,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.analysis.associations.ProposedWeakAssociation;
-import schemacrawler.analysis.associations.WeakAssociationsAnalyzer;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
+import schemacrawler.loader.weakassociations.ProposedWeakAssociation;
+import schemacrawler.loader.weakassociations.WeakAssociationsAnalyzer;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
