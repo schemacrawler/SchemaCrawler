@@ -66,6 +66,7 @@ import schemacrawler.crawl.WeakAssociation;
 import schemacrawler.crawl.WeakAssociationColumnReference;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Constraint;
 import schemacrawler.schema.DatabaseInfo;
@@ -98,6 +99,7 @@ import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.TestWriter;
+import schemacrawler.utility.MetaDataUtility;
 import schemacrawler.utility.NamedObjectSort;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -621,6 +623,21 @@ public class SchemaCrawlerTest {
 
   @Test
   public void weakAssociations(final TestContext testContext) throws Exception {
+
+    final Column pkColumn =
+        catalog
+            .lookupTable(new SchemaReference("PUBLIC", "BOOKS"), "AUTHORS")
+            .get()
+            .lookupColumn("ID")
+            .get();
+    final Column fkColumn =
+        catalog
+            .lookupTable(new SchemaReference("PUBLIC", "BOOKS"), "BOOKS")
+            .get()
+            .lookupColumn("ID")
+            .get();
+    MetaDataUtility.createWeakAssociation(pkColumn, fkColumn);
+
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);

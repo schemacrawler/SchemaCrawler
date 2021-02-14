@@ -60,6 +60,10 @@ public final class WeakAssociation implements BaseForeignKey<WeakAssociationColu
     this.name = requireNonNull(name, "No name provided");
   }
 
+  public void addColumnReference(final Column pkColumn, final Column fkColumn) {
+    columnReferences.add(new WeakAssociationColumnReference(pkColumn, fkColumn));
+  }
+
   /**
    * {@inheritDoc}
    *
@@ -127,9 +131,5 @@ public final class WeakAssociation implements BaseForeignKey<WeakAssociationColu
   @Override
   public List<String> toUniqueLookupKey() {
     return Arrays.asList(getName());
-  }
-
-  void addColumnReference(final Column pkColumn, final Column fkColumn) {
-    columnReferences.add(new WeakAssociationColumnReference(pkColumn, fkColumn));
   }
 }

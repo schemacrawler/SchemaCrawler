@@ -395,9 +395,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                       final String referenceFile = "schema_standard." + outputFormat.getFormat();
 
                       final SchemaInfoLevelBuilder schemaInfoLevelBuilder =
-                          SchemaInfoLevelBuilder.builder()
-                              .withInfoLevel(InfoLevel.standard)
-                              .setRetrieveWeakAssociations(true);
+                          SchemaInfoLevelBuilder.builder().withInfoLevel(InfoLevel.standard);
 
                       final LimitOptionsBuilder limitOptionsBuilder =
                           LimitOptionsBuilder.builder()
@@ -417,10 +415,13 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                           SchemaTextOptionsBuilder.builder(textOptions);
                       schemaTextOptionsBuilder.sortTables(true);
 
+                      final Config config = schemaTextOptionsBuilder.toConfig();
+                      config.put("find-weak-associations", Boolean.TRUE);
+
                       final SchemaCrawlerExecutable executable =
                           new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());
                       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-                      executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
+                      executable.setAdditionalConfiguration(config);
 
                       assertThat(
                           outputOf(executableExecution(connection, executable, outputFormat)),

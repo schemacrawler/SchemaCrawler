@@ -298,13 +298,6 @@ public final class SchemaInfoLevelBuilder
     return this;
   }
 
-  public SchemaInfoLevelBuilder setRetrieveWeakAssociations(
-      final boolean retrieveWeakAssociations) {
-    schemaInfoRetrievals.put(
-        SchemaInfoRetrieval.retrieveWeakAssociations, retrieveWeakAssociations);
-    return this;
-  }
-
   @Override
   public SchemaInfoLevel toOptions() {
     reduceMap();

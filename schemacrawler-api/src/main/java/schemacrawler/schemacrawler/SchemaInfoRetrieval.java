@@ -68,7 +68,6 @@ public enum SchemaInfoRetrieval {
   retrieveUserDefinedColumnDataTypes(other, detailed),
   retrieveViewInformation(table, detailed),
   retrieveViewTableUsage(table, detailed),
-  retrieveWeakAssociations(table, maximum),
   ;
 
   private final DatabaseObjectInfoRetrieval databaseObjectInfoRetrieval;

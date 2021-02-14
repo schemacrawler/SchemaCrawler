@@ -124,9 +124,6 @@ public class SchemaInfoLevelBuilderTest {
     testMap.put(
         SchemaInfoRetrieval.retrieveViewTableUsage,
         SchemaInfoLevelBuilder::setRetrieveViewViewTableUsage);
-    testMap.put(
-        SchemaInfoRetrieval.retrieveWeakAssociations,
-        SchemaInfoLevelBuilder::setRetrieveWeakAssociations);
 
     final SchemaInfoLevelBuilder builder = SchemaInfoLevelBuilder.builder();
 

@@ -1,4 +1,4 @@
-SchemaCrawler 16.11.7
+SchemaCrawler 16.12.1
 Database schema discovery and comprehension tool
 https://www.schemacrawler.com/
 Copyright (c) 2000-2021, Sualeh Fatehi <sualeh@hotmail.com>.
@@ -18,6 +18,8 @@ Available SchemaCrawler database plugins:
 
 
 Available SchemaCrawler catalog loader plugins:
+ weakassociationsloader
+                Loader for weak associations
  testloader     Loader for testing
  attributesloader
                 Loader for catalog attributes, such as remarks or tags
@@ -253,6 +255,19 @@ Options:
                               for the tables selected by grep, and shown in the
                               results
                             Optional, default is 0
+
+
+Loader for weak associations
+Command:
+loader:weakassociationsloader
+
+Options:
+      --find-weak-associations
+         Analyzes the schema to find weak associations between tables, based on
+           table and column naming patterns
+         This can be a time consuming operation
+         Optional, defaults to false
+Add loader switches to the load command in the SchemaCrawler Shell
 
 
 Loader for testing

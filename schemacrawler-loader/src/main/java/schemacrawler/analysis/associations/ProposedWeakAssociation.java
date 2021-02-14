@@ -37,7 +37,6 @@ import schemacrawler.schema.Table;
 public final class ProposedWeakAssociation
     extends AbstractMap.SimpleImmutableEntry<Column, Column> {
 
-  /** */
   private static final long serialVersionUID = 24677218335455928L;
 
   ProposedWeakAssociation(final Column key, final Column value) {

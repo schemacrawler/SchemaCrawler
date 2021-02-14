@@ -1,4 +1,4 @@
-SchemaCrawler 16.11.7
+SchemaCrawler 16.12.1
 Database schema discovery and comprehension tool
 https://www.schemacrawler.com/
 Copyright (c) 2000-2021, Sualeh Fatehi <sualeh@hotmail.com>.
@@ -18,6 +18,8 @@ Available SchemaCrawler database plugins:
 
 
 Available SchemaCrawler catalog loader plugins:
+ weakassociationsloader
+                Loader for weak associations
  testloader     Loader for testing
  attributesloader
                 Loader for catalog attributes, such as remarks or tags
