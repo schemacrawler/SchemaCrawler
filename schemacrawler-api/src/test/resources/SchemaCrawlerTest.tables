@@ -1,6 +1,5 @@
 PUBLIC.BOOKS.AUTHORS [table]
   ~ COMMIT_ACTION=null
-  ~ schemacrawler.database_object.remarks=Contact details for book authors
 PUBLIC.BOOKS.AUTHORSLIST [view]
   ~ COMMIT_ACTION=null
   ~ INSERTABLE_INTO=YES
@@ -9,11 +8,8 @@ PUBLIC.BOOKS.AUTHORSLIST [view]
   ~ IS_TRIGGER_UPDATABLE=NO
 PUBLIC.BOOKS.BOOKAUTHORS [table]
   ~ COMMIT_ACTION=null
-  ~ schemacrawler.database_object.remarks=Relationship between books and their authors, 
-along with the latest updated information
 PUBLIC.BOOKS.BOOKS [table]
   ~ COMMIT_ACTION=null
-  ~ schemacrawler.database_object.remarks=Details for published books
 PUBLIC.BOOKS.COUPONS [table]
   ~ COMMIT_ACTION=null
 PUBLIC.BOOKS.CUSTOMERDATA [table]
@@ -24,7 +20,6 @@ PUBLIC.BOOKS."Global Counts" [table]
   ~ COMMIT_ACTION=null
 PUBLIC.BOOKS.PUBLISHERS [table]
   ~ COMMIT_ACTION=null
-  ~ schemacrawler.database_object.remarks=List of book publishers
 PUBLIC.BOOKS.ΒΙΒΛΊΑ [table]
   ~ COMMIT_ACTION=null
 PUBLIC."PUBLISHER SALES".REGIONS [table]

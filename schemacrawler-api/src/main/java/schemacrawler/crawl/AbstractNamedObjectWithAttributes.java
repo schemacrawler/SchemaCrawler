@@ -48,9 +48,8 @@ abstract class AbstractNamedObjectWithAttributes extends AbstractNamedObject
 
   private static final long serialVersionUID = -1486322887991472729L;
 
-  private static final String REMARKS_KEY = "schemacrawler.database_object.remarks";
-
   private final Map<String, Object> attributeMap;
+  private String remarks;
 
   /**
    * Effective Java - Item 17 - Minimize Mutability - Package-private constructors make a class
@@ -61,6 +60,7 @@ abstract class AbstractNamedObjectWithAttributes extends AbstractNamedObject
   AbstractNamedObjectWithAttributes(final String name) {
     super(name);
     attributeMap = new HashMap<>();
+    remarks = "";
   }
 
   /** {@inheritDoc} */
@@ -85,11 +85,7 @@ abstract class AbstractNamedObjectWithAttributes extends AbstractNamedObject
   /** {@inheritDoc} */
   @Override
   public final String getRemarks() {
-    if (hasRemarks()) {
-      return (String) attributeMap.get(REMARKS_KEY);
-    } else {
-      return "";
-    }
+    return remarks;
   }
 
   /** {@inheritDoc} */
@@ -101,11 +97,6 @@ abstract class AbstractNamedObjectWithAttributes extends AbstractNamedObject
   /** {@inheritDoc} */
   @Override
   public final boolean hasRemarks() {
-    final Object remarksObject = attributeMap.get(REMARKS_KEY);
-    if (remarksObject == null || !(remarksObject instanceof String)) {
-      return false;
-    }
-    final String remarks = (String) remarksObject;
     return remarks != null && !remarks.isEmpty();
   }
 
@@ -135,17 +126,18 @@ abstract class AbstractNamedObjectWithAttributes extends AbstractNamedObject
     }
   }
 
-  protected final void addAttributes(final Map<String, Object> values) {
-    if (values != null) {
-      attributeMap.putAll(values);
+  @Override
+  public final void setRemarks(final String remarks) {
+    if (isBlank(remarks)) {
+      this.remarks = "";
+    } else {
+      this.remarks = remarks;
     }
   }
 
-  protected final void setRemarks(final String remarks) {
-    if (remarks == null) {
-      attributeMap.remove(REMARKS_KEY);
-    } else {
-      attributeMap.put(REMARKS_KEY, remarks);
+  protected final void addAttributes(final Map<String, Object> values) {
+    if (values != null) {
+      attributeMap.putAll(values);
     }
   }
 }

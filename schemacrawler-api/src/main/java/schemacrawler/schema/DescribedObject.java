@@ -43,4 +43,11 @@ public interface DescribedObject {
    * @return Remarks
    */
   boolean hasRemarks();
+
+  /**
+   * Setter for remarks.
+   *
+   * @param remarks Remarks to set
+   */
+  void setRemarks(final String remarks);
 }

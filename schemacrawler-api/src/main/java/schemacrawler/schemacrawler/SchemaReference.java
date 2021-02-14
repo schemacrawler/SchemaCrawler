@@ -45,6 +45,7 @@ import schemacrawler.schema.Schema;
 public final class SchemaReference implements Schema {
 
   private static final long serialVersionUID = -5309848447599233878L;
+
   private final Map<String, Object> attributeMap = new HashMap<>();
   private final String catalogName;
   private final String schemaName;
@@ -174,6 +175,11 @@ public final class SchemaReference implements Schema {
         attributeMap.put(name, value);
       }
     }
+  }
+
+  @Override
+  public void setRemarks(final String remarks) {
+    // No-op
   }
 
   @Override

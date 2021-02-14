@@ -50,11 +50,6 @@ import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.utility.NamedObjectSort;
 
-/**
- * Represents a table in the database.
- *
- * @author Sualeh Fatehi
- */
 class MutableTable extends AbstractDatabaseObject implements Table {
 
   private enum TableAssociationType {
@@ -81,6 +76,12 @@ class MutableTable extends AbstractDatabaseObject implements Table {
   MutableTable(final Schema schema, final String name) {
     super(schema, name);
     definition = new StringBuilder();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void addWeakAssociation(final WeakAssociation weakAssociation) {
+    weakAssociations.add(weakAssociation);
   }
 
   /** {@inheritDoc} */
@@ -300,10 +301,6 @@ class MutableTable extends AbstractDatabaseObject implements Table {
 
   final void addTrigger(final MutableTrigger trigger) {
     triggers.add(trigger);
-  }
-
-  final void addWeakAssociation(final WeakAssociation weakAssociation) {
-    weakAssociations.add(weakAssociation);
   }
 
   final void appendDefinition(final String definition) {
