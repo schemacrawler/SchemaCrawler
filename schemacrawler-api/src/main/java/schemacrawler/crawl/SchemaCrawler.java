@@ -69,7 +69,6 @@ import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveTriggerInf
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveUserDefinedColumnDataTypes;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveViewInformation;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveViewTableUsage;
-import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveWeakAssociations;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -148,40 +147,10 @@ public final class SchemaCrawler {
       crawlRoutines();
       crawlSynonyms();
       crawlSequences();
-      crawlAnalysis();
 
       return catalog;
     } catch (final SQLException e) {
       throw new SchemaCrawlerException("Database access exception", e);
-    }
-  }
-
-  private void crawlAnalysis() throws SchemaCrawlerException {
-
-    final SchemaInfoLevel infoLevel = options.getLoadOptions().getSchemaInfoLevel();
-
-    final StopWatch stopWatch = new StopWatch("crawlAnalysis");
-
-    LOGGER.log(Level.INFO, "Crawling schema analysis");
-    try {
-      final WeakAssociationsRetriever weakAssociationsRetriever =
-          new WeakAssociationsRetriever(catalog);
-      stopWatch.time(
-          "retrieveWeakAssociations",
-          () -> {
-            if (infoLevel.is(retrieveWeakAssociations)) {
-              weakAssociationsRetriever.retrieveWeakAssociations();
-              return null;
-            } else {
-              LOGGER.log(
-                  Level.INFO, "Not retrieving weak associations, since this was not requested");
-              return null;
-            }
-          });
-
-      LOGGER.log(Level.INFO, stopWatch.stringify());
-    } catch (final Exception e) {
-      throw new SchemaCrawlerException("Exception retrieving weak association information", e);
     }
   }
 

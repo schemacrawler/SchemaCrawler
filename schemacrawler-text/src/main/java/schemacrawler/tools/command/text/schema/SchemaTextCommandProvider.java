@@ -84,14 +84,6 @@ public final class SchemaTextCommandProvider extends BaseCommandProvider {
             "--portable-names=<boolean>",
             "<boolean> can be true or false",
             "Optional, defaults to false")
-        .addOption(
-            "weak-associations",
-            Boolean.class,
-            "Hide or show inferred relationships between tables, "
-                + "based on common table and column naming conventions",
-            "--weak-associations=<boolean>",
-            "<boolean> can be true or false",
-            "Optional, defaults to false")
         // Sort options
         .addOption(
             "sort-columns",

@@ -51,7 +51,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.GrepOptionsBuilder;
-import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -185,8 +184,8 @@ public class DiagramRendererOptionsTest {
     executableDiagram(
         SchemaTextDetailType.schema.name(),
         connection,
-        optionsWithWeakAssociations(),
-        null,
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
+        configWithWeakAssociations(),
         diagramOptions,
         testContext.testMethodName());
   }
@@ -204,8 +203,8 @@ public class DiagramRendererOptionsTest {
     executableDiagram(
         SchemaTextDetailType.schema.name(),
         connection,
-        optionsWithWeakAssociations(),
-        null,
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
+        configWithWeakAssociations(),
         diagramOptions,
         testContext.testMethodName());
   }
@@ -223,8 +222,8 @@ public class DiagramRendererOptionsTest {
     executableDiagram(
         SchemaTextDetailType.schema.name(),
         connection,
-        optionsWithWeakAssociations(),
-        null,
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
+        configWithWeakAssociations(),
         diagramOptions,
         testContext.testMethodName());
   }
@@ -239,8 +238,8 @@ public class DiagramRendererOptionsTest {
     executableDiagram(
         SchemaTextDetailType.schema.name(),
         connection,
-        optionsWithWeakAssociations(),
-        null,
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
+        configWithWeakAssociations(),
         diagramOptions,
         testContext.testMethodName());
   }
@@ -461,16 +460,9 @@ public class DiagramRendererOptionsTest {
         testContext.testMethodName());
   }
 
-  private SchemaCrawlerOptions optionsWithWeakAssociations() {
-    final SchemaInfoLevelBuilder infoLevelBuilder =
-        SchemaInfoLevelBuilder.builder()
-            .withInfoLevel(InfoLevel.standard)
-            .setRetrieveWeakAssociations(true);
-    final LoadOptionsBuilder loadOptionsBuilder =
-        LoadOptionsBuilder.builder().withSchemaInfoLevel(infoLevelBuilder.toOptions());
-    final SchemaCrawlerOptions options =
-        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-            .withLoadOptions(loadOptionsBuilder.toOptions());
-    return options;
+  private Config configWithWeakAssociations() {
+    final Config config = new Config();
+    config.put("weak-associations", Boolean.TRUE);
+    return config;
   }
 }

@@ -285,12 +285,12 @@ public abstract class BaseSchemaTextOptionsBuilder<
     return config;
   }
 
-  /** Corresponds to the --weak-associations command-line argument. */
+  /** Whether to show weak associations in the output. */
   public final B weakAssociations() {
     return weakAssociations(true);
   }
 
-  /** Corresponds to the --weak-associations=&lt;boolean&gt; command-line argument. */
+  /** Whether to show weak associations in the output. */
   public final B weakAssociations(final boolean value) {
     isShowWeakAssociations = value;
     return (B) this;
@@ -301,11 +301,6 @@ public abstract class BaseSchemaTextOptionsBuilder<
     final String noremarksKey = "no-remarks";
     if (config.containsKey(noremarksKey)) {
       noRemarks(config.getBooleanValue(noremarksKey));
-    }
-
-    final String weakassociationsKey = "weak-associations";
-    if (config.containsKey(weakassociationsKey)) {
-      weakAssociations(config.getBooleanValue(weakassociationsKey));
     }
 
     final String portablenamesKey = "portable-names";

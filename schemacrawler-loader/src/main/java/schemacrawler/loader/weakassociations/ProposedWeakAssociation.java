@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.analysis.associations;
+package schemacrawler.loader.weakassociations;
 
 import java.util.AbstractMap;
 
@@ -37,7 +37,6 @@ import schemacrawler.schema.Table;
 public final class ProposedWeakAssociation
     extends AbstractMap.SimpleImmutableEntry<Column, Column> {
 
-  /** */
   private static final long serialVersionUID = 24677218335455928L;
 
   ProposedWeakAssociation(final Column key, final Column value) {
