@@ -50,7 +50,7 @@ public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(WeakAssociationsCatalogLoader.class.getName());
 
-  private static final String OPTION_FIND_WEAK_ASSOCIATIONS = "find-weak-associations";
+  private static final String OPTION_WEAK_ASSOCIATIONS = "weak-associations";
 
   public WeakAssociationsCatalogLoader() {
     super(new CommandDescription("weakassociationsloader", "Loader for weak associations"), 3);
@@ -81,7 +81,7 @@ public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
         PluginCommand.newCatalogLoaderCommand(
             commandDescription.getName(), commandDescription.getDescription());
     pluginCommand.addOption(
-        OPTION_FIND_WEAK_ASSOCIATIONS,
+        OPTION_WEAK_ASSOCIATIONS,
         Boolean.class,
         "Analyzes the schema to find weak associations between tables, based on table and column naming patterns",
         "This can be a time consuming operation",
@@ -104,7 +104,7 @@ public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
           () -> {
             final Config config = getAdditionalConfiguration();
             final boolean findWeakAssociations =
-                config.getBooleanValue(OPTION_FIND_WEAK_ASSOCIATIONS, false);
+                config.getBooleanValue(OPTION_WEAK_ASSOCIATIONS, false);
             if (findWeakAssociations) {
               findWeakAssociations();
               return null;

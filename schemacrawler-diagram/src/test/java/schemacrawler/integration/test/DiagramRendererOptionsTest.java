@@ -462,7 +462,7 @@ public class DiagramRendererOptionsTest {
 
   private Config configWithWeakAssociations() {
     final Config config = new Config();
-    config.put("find-weak-associations", Boolean.TRUE);
+    config.put("weak-associations", Boolean.TRUE);
     return config;
   }
 }

@@ -416,7 +416,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
                       schemaTextOptionsBuilder.sortTables(true);
 
                       final Config config = schemaTextOptionsBuilder.toConfig();
-                      config.put("find-weak-associations", Boolean.TRUE);
+                      config.put("weak-associations", Boolean.TRUE);
 
                       final SchemaCrawlerExecutable executable =
                           new SchemaCrawlerExecutable(SchemaTextDetailType.schema.name());

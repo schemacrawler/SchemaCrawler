@@ -4,27 +4,26 @@ load
 
 Options:
       --attributes-file=<attributes-file>
-                           Path to a YAML file with table and column attributes
-                             to add to the schema
-      --find-weak-associations
-                           Analyzes the schema to find weak associations
-                             between tables, based on table and column naming
-                             patterns
-                           This can be a time consuming operation
-                           Optional, defaults to false
+                            Path to a YAML file with table and column
+                              attributes to add to the schema
   -i, --info-level=<infolevel>
-                           <infolevel> is one of unknown, minimum, standard,
-                             detailed, maximum
-                           The info level determines the amount of database
-                             metadata retrieved, and also determines the time
-                             taken to crawl the schema
-                           Optional, defaults to standard
-      --load-row-counts    Loads row counts for each table
-                           This can be a time consuming operation
-                           Optional, defaults to false
-      --no-empty-tables    Includes only tables that have rows of data
-                           Requires table row counts to be loaded
-                           Optional, default is false
-      --test-load-option   Check that the test option is added to the load
-                             command
+                            <infolevel> is one of unknown, minimum, standard,
+                              detailed, maximum
+                            The info level determines the amount of database
+                              metadata retrieved, and also determines the time
+                              taken to crawl the schema
+                            Optional, defaults to standard
+      --load-row-counts     Loads row counts for each table
+                            This can be a time consuming operation
+                            Optional, defaults to false
+      --no-empty-tables     Includes only tables that have rows of data
+                            Requires table row counts to be loaded
+                            Optional, default is false
+      --test-load-option    Check that the test option is added to the load
+                              command
+      --weak-associations   Analyzes the schema to find weak associations
+                              between tables, based on table and column naming
+                              patterns
+                            This can be a time consuming operation
+                            Optional, defaults to false
 Add loader switches to the load command in the SchemaCrawler Shell

@@ -100,7 +100,7 @@ public class PrimaryKeyWeakAssociationsTest extends BaseSqliteTest {
           new SQLiteDatabaseConnector().getSchemaRetrievalOptionsBuilder(connection).toOptions();
 
       final Config config = new Config();
-      config.put("find-weak-associations", Boolean.TRUE);
+      config.put("weak-associations", Boolean.TRUE);
 
       final Catalog catalog =
           SchemaCrawlerUtility.getCatalog(
