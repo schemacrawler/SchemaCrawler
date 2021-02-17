@@ -1,0 +1,104 @@
+Table "PUBLIC.BOOKS.AUTHORS" {
+  "ID" "INTEGER" 
+  "FIRSTNAME" "VARCHAR" 
+  "LASTNAME" "VARCHAR" 
+  "ADDRESS1" "VARCHAR" 
+  "ADDRESS2" "VARCHAR" 
+  "CITY" "VARCHAR" 
+  "STATE" "CHARACTER" 
+  "POSTALCODE" "VARCHAR" 
+  "COUNTRY" "VARCHAR" 
+  Note: '''
+Contact details for book authors
+  '''
+}
+
+Table "PUBLIC.BOOKS.BOOKS" {
+  "ID" "INTEGER" 
+  "TITLE" "VARCHAR" 
+  "DESCRIPTION" "VARCHAR" 
+  "PUBLISHERID" "INTEGER" 
+  "PUBLICATIONDATE" "DATE" 
+  "PRICE" "DOUBLE" 
+  "PREVIOUSEDITIONID" "INTEGER" 
+  Note: '''
+Details for published books
+  '''
+}
+
+Table "PUBLIC.BOOKS.COUPONS" {
+  "ID" "INTEGER" 
+  "DATA" "CLOB" 
+  "COUPONS" "INTEGER ARRAY" 
+  "BOOKS" "VARCHAR(20) ARRAY[10]" 
+}
+
+Table "PUBLIC.BOOKS.CUSTOMERDATA" {
+  "ID" "INTEGER" 
+  "DATA" "VALID_STRING" 
+}
+
+Table "PUBLIC.BOOKS.CUSTOMERS" {
+  "ID" "INTEGER" 
+  "FIRSTNAME" "NAME_TYPE" 
+  "LASTNAME" "NAME_TYPE" 
+  "AGE" "AGE_TYPE" 
+}
+
+Table "PUBLIC.BOOKS.Global Counts" {
+  "Global Count" "INTEGER" 
+  "UPDATE" "VARCHAR" 
+}
+
+Table "PUBLIC.BOOKS.PUBLISHERS" {
+  "ID" "INTEGER" 
+  "PUBLISHER" "VARCHAR" 
+  Note: '''
+List of book publishers
+  '''
+}
+
+Table "PUBLIC.PUBLISHER SALES.REGIONS" {
+  "CITY" "VARCHAR" 
+  "STATE" "VARCHAR" 
+  "POSTALCODE" "VARCHAR" 
+  "COUNTRY" "VARCHAR" 
+}
+
+Table "PUBLIC.PUBLISHER SALES.SALESDATA" {
+  "SALESDATAID" "INTEGER" 
+  "YEARLYAMOUNT" "DOUBLE" 
+}
+
+Table "PUBLIC.BOOKS.BOOKAUTHORS" {
+  "BOOKID" "INTEGER" 
+  "AUTHORID" "INTEGER" 
+  "SOMEDATA" "VARCHAR" 
+  Note: '''
+Relationship between books and their authors, 
+along with the latest updated information
+  '''
+}
+
+Table "PUBLIC.BOOKS.ΒΙΒΛΊΑ" {
+  "ΜΟΝΑΔΙΚΌΣ" "SMALLINT" 
+  "ΤΊΤΛΟΣ" "VARCHAR" 
+  "ΠΕΡΙΓΡΑΦΉ" "VARCHAR" 
+  "ΕΚΔΌΤΗΣ" "SMALLINT" 
+}
+
+Table "PUBLIC.PUBLISHER SALES.SALES" {
+  "POSTALCODE" "VARCHAR" 
+  "COUNTRY" "VARCHAR" 
+  "BOOKID" "INTEGER" 
+  "PERIODENDDATE" "DATE" 
+  "TOTALAMOUNT" "DOUBLE" 
+  "SALESDATAID" "INTEGER" 
+}
+
+Table "PUBLIC.BOOKS.AUTHORSLIST" {
+  "ID" "INTEGER" 
+  "FIRSTNAME" "VARCHAR" 
+  "LASTNAME" "VARCHAR" 
+}
+

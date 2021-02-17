@@ -9,6 +9,7 @@
 .springBeans
 .recommenders/
 .apt_generated/
+.pydevproject
 bin/
 
 # IntelliJ IDEA
