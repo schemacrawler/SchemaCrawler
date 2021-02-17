@@ -12,7 +12,13 @@ print("}")
 for table in catalog.getTables():
   print('Table "' + re.sub(r'\"', '', table.fullName) + '" {')
   for column in table.columns:
-    print('  "' + column.name + '" "' + column.columnDataType.name + '" ' )
+    print('  "' + column.name + '" "' + column.columnDataType.name + '"', end = '')
+    print(' [', end = '')
+    if not column.nullable:
+      print('not ', end = '')
+    print('null', end = '')
+    print(']', end = '')
+    print()
   if table.hasRemarks():
     print("  Note: '''")
     print(table.remarks)
