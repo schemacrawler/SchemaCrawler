@@ -90,10 +90,10 @@ jobs:
       run: |
         # Publish Docker image
         docker version
-        docker tag schemacrawler/schemacrawler schemacrawler/schemacrawler:v16.12.1
-        docker tag schemacrawler/schemacrawler schemacrawler/schemacrawler:latest
+        docker image tag schemacrawler/schemacrawler schemacrawler/schemacrawler:v16.12.1
+        docker image tag schemacrawler/schemacrawler schemacrawler/schemacrawler:latest
         echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        docker push schemacrawler/schemacrawler
+        docker push --all-tags schemacrawler/schemacrawler
         docker logout
 
 # CREATE GITHUB RELEASE AND ADD ASSETS
