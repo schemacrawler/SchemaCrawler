@@ -38,7 +38,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,9 +47,9 @@ import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.InclusionRuleWithRegularExpression;
 import schemacrawler.schema.Column;
-import schemacrawler.schema.JavaSqlTypeGroup;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.utility.MetaDataUtility;
 import schemacrawler.utility.NamedObjectSort;
 import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.string.StringFormat;
@@ -117,24 +116,6 @@ public final class QueryUtility {
     return executeSqlForScalar(connection, sql);
   }
 
-  private static String getColumnsListAsString(
-      final List<Column> columns,
-      final boolean omitLargeObjectColumns,
-      final Identifiers identifiers) {
-    final List<String> columnsList = new ArrayList<>();
-    for (int i = 0; i < columns.size(); i++) {
-      final Column column = columns.get(i);
-      final JavaSqlTypeGroup javaSqlTypeGroup =
-          column.getColumnDataType().getJavaSqlType().getJavaSqlTypeGroup();
-      if (!(omitLargeObjectColumns
-          && (javaSqlTypeGroup == JavaSqlTypeGroup.large_object
-              || javaSqlTypeGroup == JavaSqlTypeGroup.object))) {
-        columnsList.add(identifiers.quoteName(column.getName()));
-      }
-    }
-    return String.join(", ", columnsList);
-  }
-
   private static String getQuery(final Query query) {
     return expandTemplate(query.getQuery());
   }
@@ -186,8 +167,8 @@ public final class QueryUtility {
       }
       tableProperties.put("table", identifiers.quoteFullName(table));
       tableProperties.put("tablename", table.getName());
-      tableProperties.put("columns", getColumnsListAsString(columns, false, identifiers));
-      tableProperties.put("orderbycolumns", getColumnsListAsString(columns, true, identifiers));
+      tableProperties.put("columns", MetaDataUtility.joinColumns(columns, false, identifiers));
+      tableProperties.put("orderbycolumns", MetaDataUtility.joinColumns(columns, true, identifiers));
       tableProperties.put("tabletype", table.getTableType().toString());
     }
 

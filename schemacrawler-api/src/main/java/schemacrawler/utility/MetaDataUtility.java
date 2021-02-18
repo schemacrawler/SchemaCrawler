@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.utility;
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.schemacrawler.Identifiers.identifiers;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,8 +41,14 @@ import schemacrawler.schema.BaseForeignKey;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.Index;
+import schemacrawler.schema.IndexColumn;
+import schemacrawler.schema.JavaSqlTypeGroup;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableConstraint;
+import schemacrawler.schema.TableConstraintColumn;
+import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
+import schemacrawler.schemacrawler.Identifiers;
 import us.fatehi.utility.UtilityMarker;
 
 /**
@@ -163,6 +170,66 @@ public final class MetaDataUtility {
     return columnNames;
   }
 
+  /**
+   * Gets a comma-separated list of columns for an index.
+   *
+   * @param index Index
+   * @param quotingStrategy Identifier quoting strategy
+   * @param quoteString
+   * @return Comma-separated list of columns
+   */
+  public static String getColumnsListAsString(
+      final Index index,
+      final IdentifierQuotingStrategy quotingStrategy,
+      final String quoteString) {
+
+    requireNonNull(index, "No index provided");
+    requireNonNull(quotingStrategy, "No identifier quoting strategy provided");
+
+    final List<IndexColumn> columns = index.getColumns();
+    return joinColumns(quotingStrategy, quoteString, columns);
+  }
+
+  /**
+   * Gets a comma-separated list of columns for a table.
+   *
+   * @param table Table
+   * @param quotingStrategy Identifier quoting strategy
+   * @param quoteString
+   * @return Comma-separated list of columns
+   */
+  public static String getColumnsListAsString(
+      final Table table,
+      final IdentifierQuotingStrategy quotingStrategy,
+      final String quoteString) {
+
+    requireNonNull(table, "No table provided");
+    requireNonNull(quotingStrategy, "No identifier quoting strategy provided");
+
+    final List<Column> columns = table.getColumns();
+    return joinColumns(quotingStrategy, quoteString, columns);
+  }
+
+  /**
+   * Gets a comma-separated list of columns for an index.
+   *
+   * @param tableConstraint Table constraint
+   * @param quotingStrategy Identifier quoting strategy
+   * @param quoteString
+   * @return Comma-separated list of columns
+   */
+  public static String getColumnsListAsString(
+      final TableConstraint tableConstraint,
+      final IdentifierQuotingStrategy quotingStrategy,
+      final String quoteString) {
+
+    requireNonNull(tableConstraint, "No table constraint provided");
+    requireNonNull(quotingStrategy, "No identifier quoting strategy provided");
+
+    final List<TableConstraintColumn> columns = tableConstraint.getColumns();
+    return joinColumns(quotingStrategy, quoteString, columns);
+  }
+
   public static boolean isForeignKeyUnique(final BaseForeignKey<?> foreignKey) {
     if (foreignKey == null) {
       return false;
@@ -172,6 +239,28 @@ public final class MetaDataUtility {
     final Collection<List<String>> uniqueIndexCoumnNames = uniqueIndexCoumnNames(fkTable);
     final List<String> foreignKeyColumnNames = foreignKeyColumnNames(foreignKey);
     return uniqueIndexCoumnNames.contains(foreignKeyColumnNames);
+  }
+
+  public static String joinColumns(
+      final List<? extends Column> columns,
+      final boolean omitLargeObjectColumns,
+      final Identifiers identifiers) {
+
+    requireNonNull(columns, "No columns provided");
+    requireNonNull(identifiers, "No identifiers provided");
+
+    final List<String> columnsList = new ArrayList<>();
+    for (int i = 0; i < columns.size(); i++) {
+      final Column column = columns.get(i);
+      final JavaSqlTypeGroup javaSqlTypeGroup =
+          column.getColumnDataType().getJavaSqlType().getJavaSqlTypeGroup();
+      if (!(omitLargeObjectColumns
+          && (javaSqlTypeGroup == JavaSqlTypeGroup.large_object
+              || javaSqlTypeGroup == JavaSqlTypeGroup.object))) {
+        columnsList.add(identifiers.quoteName(column.getName()));
+      }
+    }
+    return String.join(", ", columnsList);
   }
 
   public static Collection<List<String>> uniqueIndexCoumnNames(final Table table) {
@@ -194,6 +283,19 @@ public final class MetaDataUtility {
       allIndexCoumns.add(indexColumns);
     }
     return allIndexCoumns;
+  }
+
+  private static String joinColumns(
+      final IdentifierQuotingStrategy quotingStrategy,
+      final String quoteString,
+      final List<? extends Column> columns) {
+    final Identifiers identifiers =
+        identifiers()
+            .withIdentifierQuotingStrategy(quotingStrategy)
+            .withIdentifierQuoteString(quoteString)
+            .build();
+
+    return joinColumns(columns, false, identifiers);
   }
 
   private MetaDataUtility() {
