@@ -31,7 +31,7 @@ for table in catalog.getTables():
     print("  Note: '''")
     print(table.remarks)
     print("  '''")
-  # Primary keys and indexes  
+  # Primary keys and indexes
   if table.hasPrimaryKey() or not table.indexes.isEmpty():
     print('  indexes {')
     if table.hasPrimaryKey():
@@ -39,31 +39,39 @@ for table in catalog.getTables():
       print('    (' + MetaDataUtility.getColumnsListAsString(primaryKey, IdentifierQuotingStrategy.quote_all, '"') + ') ' \
             + '[pk]')
     if not table.indexes.isEmpty():
-      for index in table.indexes: 
+      for index in table.indexes:
         if table.hasPrimaryKey() and \
           MetaDataUtility.getColumnsListAsString(table.primaryKey, IdentifierQuotingStrategy.quote_all, '"') == \
           MetaDataUtility.getColumnsListAsString(index, IdentifierQuotingStrategy.quote_all, '"'):
-          continue    
+          continue
         print('    (' + MetaDataUtility.getColumnsListAsString(index, IdentifierQuotingStrategy.quote_all, '"') + ')', end = '')
         print(' [name: "' + index.name + '"', end = '')
         if index.unique:
           print(', unique', end = '')
-        print(']')     
+        print(']')
     print('  }')
   print('}')
   print('')
-      
-"""
-for table in catalog.tables:  
-  for childTable in table.getRelatedTables(TableRelationshipType.child):
-    print('  ' + table.name + ' ||--o{ ' + childTable.name + ' : "foreign key"')
-  print('')
-"""
+
+# Foreign keys
+for table in catalog.tables:
+  for fk in table.exportedForeignKeys:
+    print('Ref "' + fk.name + '" {')
+    for columnReference in fk.columnReferences:
+      pkColumn = columnReference.primaryKeyColumn
+      fkColumn = columnReference.foreignKeyColumn
+      print('  "' + re.sub(r'\"', '', pkColumn.parent.fullName) + '"."' + re.sub(r'\"', '', pkColumn.name) \
+            + '" < "' \
+            + re.sub(r'\"', '', fkColumn.parent.fullName) + '"."' + re.sub(r'\"', '', fkColumn.name) \
+            + '"')
+    print("}")
+    print('')
+print('')
 
 # Table groups
 for schema in catalog.schemas:
   print('TableGroup "' + re.sub(r'\"', '', schema.fullName) + '" {')
   for table in catalog.getTables(schema):
-    print('  "' + re.sub(r'\"', '', table.fullName) + '\"')
+    print('  "' + re.sub(r'\"', '', table.fullName) + '"')
   print('}')
   print('')
