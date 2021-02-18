@@ -1,6 +1,8 @@
 from __future__ import print_function
-from schemacrawler.schema import TableRelationshipType # pylint: disable=import-error
 import re
+from schemacrawler.schema import TableRelationshipType # pylint: disable=import-error
+from schemacrawler.schemacrawler import IdentifierQuotingStrategy # pylint: disable=import-error
+from schemacrawler.utility import MetaDataUtility # pylint: disable=import-error
 
 print('Project "' + catalog.crawlInfo.runId + '" {')
 print('  database_type: "' + re.sub(r'\"', '', catalog.crawlInfo.databaseVersion.toString()) + '"')
@@ -29,6 +31,23 @@ for table in catalog.getTables():
     print("  Note: '''")
     print(table.remarks)
     print("  '''")
+  if table.hasPrimaryKey() or not table.indexes.isEmpty():
+    print('  indexes {')
+    if table.hasPrimaryKey():
+      primaryKey = table.primaryKey
+      print("    (" + MetaDataUtility.getColumnsListAsString(primaryKey, IdentifierQuotingStrategy.quote_all, '"') + ") [pk]")
+    if not table.indexes.isEmpty():
+      for index in table.indexes: 
+        if table.hasPrimaryKey() and \
+          MetaDataUtility.getColumnsListAsString(table.primaryKey, IdentifierQuotingStrategy.quote_all, '"') == \
+          MetaDataUtility.getColumnsListAsString(index, IdentifierQuotingStrategy.quote_all, '"'):
+          continue    
+        print("    (" + MetaDataUtility.getColumnsListAsString(index, IdentifierQuotingStrategy.quote_all, '"') + ")", end = "")
+        if index.unique:
+          print(" [unique]")
+        else:
+          print()     
+    print('  }')
   print('}')
   print('')
       

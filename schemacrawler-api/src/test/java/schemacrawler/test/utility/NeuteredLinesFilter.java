@@ -40,7 +40,7 @@ final class NeuteredLinesFilter implements Predicate<String> {
     Pattern.compile("-- operating system:.*"),
     Pattern.compile("-- JVM system:.*"),
     Pattern.compile("\\s+<schemaCrawler(Version|About|Info)>.*"),
-    Pattern.compile("\\s+\"runId\": .*"),
+    Pattern.compile(".*[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}.*"), // UUID
     Pattern.compile("\\s+<product(Name|Version)>.*"),
     Pattern.compile(".*[A-Za-z]+ \\d+, 201[456] \\d+:\\d+ [AP]M.*"),
     Pattern.compile(".*20[12][019]-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.*"),
