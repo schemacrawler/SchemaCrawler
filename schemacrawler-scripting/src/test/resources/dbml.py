@@ -8,15 +8,19 @@ print("  Note: '''")
 print(catalog.crawlInfo)
 print("  '''")
 print("}")
-    
+
+# Columns
 for table in catalog.getTables():
   print('Table "' + re.sub(r'\"', '', table.fullName) + '" {')
   for column in table.columns:
     print('  "' + column.name + '" "' + column.columnDataType.name + '"', end = '')
+    # Column attributes
     print(' [', end = '')
     if not column.nullable:
       print('not ', end = '')
     print('null', end = '')
+    if column.hasRemarks():
+      print(", note: '" + re.sub(r'[\r\n]+', ' ', column.remarks) + "'", end = '')
     print(']', end = '')
     print()
   if table.hasRemarks():
