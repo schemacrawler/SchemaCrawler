@@ -22,7 +22,7 @@ for table in catalog.getTables():
     if column.hasDefaultValue():
       print(', default: "' + column.defaultValue + '"', end = '')
     if column.hasRemarks():
-      print(", note: '" + re.sub(r'[\r\n]+', ' ', column.remarks) + "'", end = '')
+      print(", note: '" + column.remarks + "'", end = '')
     print(']', end = '')
     print()
   if table.hasRemarks():
