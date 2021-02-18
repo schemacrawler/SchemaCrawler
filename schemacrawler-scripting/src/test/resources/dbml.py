@@ -24,29 +24,31 @@ for table in catalog.getTables():
     if column.hasDefaultValue():
       print(', default: "' + column.defaultValue + '"', end = '')
     if column.hasRemarks():
-      print(", note: '" + column.remarks + "'", end = '')
+      print(', note: "' + column.remarks + '"', end = '')
     print(']', end = '')
     print()
   if table.hasRemarks():
     print("  Note: '''")
     print(table.remarks)
     print("  '''")
+  # Primary keys and indexes  
   if table.hasPrimaryKey() or not table.indexes.isEmpty():
     print('  indexes {')
     if table.hasPrimaryKey():
       primaryKey = table.primaryKey
-      print("    (" + MetaDataUtility.getColumnsListAsString(primaryKey, IdentifierQuotingStrategy.quote_all, '"') + ") [pk]")
+      print('    (' + MetaDataUtility.getColumnsListAsString(primaryKey, IdentifierQuotingStrategy.quote_all, '"') + ') ' \
+            + '[pk]')
     if not table.indexes.isEmpty():
       for index in table.indexes: 
         if table.hasPrimaryKey() and \
           MetaDataUtility.getColumnsListAsString(table.primaryKey, IdentifierQuotingStrategy.quote_all, '"') == \
           MetaDataUtility.getColumnsListAsString(index, IdentifierQuotingStrategy.quote_all, '"'):
           continue    
-        print("    (" + MetaDataUtility.getColumnsListAsString(index, IdentifierQuotingStrategy.quote_all, '"') + ")", end = "")
+        print('    (' + MetaDataUtility.getColumnsListAsString(index, IdentifierQuotingStrategy.quote_all, '"') + ')', end = '')
+        print(' [name: "' + index.name + '"', end = '')
         if index.unique:
-          print(" [unique]")
-        else:
-          print()     
+          print(', unique', end = '')
+        print(']')     
     print('  }')
   print('}')
   print('')
