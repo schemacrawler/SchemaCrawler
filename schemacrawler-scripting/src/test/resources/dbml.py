@@ -57,15 +57,20 @@ for table in catalog.getTables():
 for table in catalog.tables:
   for fk in table.exportedForeignKeys:
     print('Ref "' + fk.name + '" {')
+    pkTable = None
+    fkTable = None
     for columnReference in fk.columnReferences:
-      pkColumn = columnReference.primaryKeyColumn
-      fkColumn = columnReference.foreignKeyColumn
-      print('  "' + re.sub(r'\"', '', pkColumn.parent.fullName) + '"."' + re.sub(r'\"', '', pkColumn.name) \
-            + '" < "' \
-            + re.sub(r'\"', '', fkColumn.parent.fullName) + '"."' + re.sub(r'\"', '', fkColumn.name) \
-            + '"', end = '')
-      print(' [update: ' + fk.updateRule.toString() + ', delete: ' + fk.deleteRule.toString() + ']', end = '')
-      print()  
+      pkTable = columnReference.primaryKeyColumn.parent
+      fkTable = columnReference.foreignKeyColumn.parent
+    print('  "' \
+          + re.sub(r'\"', '', pkTable.fullName) + '".(' \
+          + MetaDataUtility.getColumnsListAsString(fk, TableRelationshipType.parent, IdentifierQuotingStrategy.quote_all, '"') \
+          + ') < "' \
+          + re.sub(r'\"', '', fkTable.fullName) + '".(' \
+          + MetaDataUtility.getColumnsListAsString(fk, TableRelationshipType.child, IdentifierQuotingStrategy.quote_all, '"') \
+          + ')', end = '')
+    print(' [update: ' + fk.updateRule.toString() + ', delete: ' + fk.deleteRule.toString() + ']', end = '')
+    print()  
     print("}")
     print('')
 print('')

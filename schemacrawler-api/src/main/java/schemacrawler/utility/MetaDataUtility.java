@@ -47,6 +47,7 @@ import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
+import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
 import schemacrawler.schemacrawler.Identifiers;
 import us.fatehi.utility.UtilityMarker;
@@ -168,6 +169,42 @@ public final class MetaDataUtility {
       columnNames.add(columnReference.getForeignKeyColumn().getFullName());
     }
     return columnNames;
+  }
+
+  /**
+   * Gets a comma-separated list of columns for a foreign key.
+   *
+   * @param fk Foreign key
+   * @param quotingStrategy Identifier quoting strategy
+   * @param quoteString
+   * @return Comma-separated list of columns
+   */
+  public static <REF extends ColumnReference, FK extends BaseForeignKey<REF>>
+      String getColumnsListAsString(
+          final FK fk,
+          final TableRelationshipType relationshipType,
+          final IdentifierQuotingStrategy quotingStrategy,
+          final String quoteString) {
+
+    requireNonNull(fk, "No foreign key provided");
+    requireNonNull(quotingStrategy, "No identifier quoting strategy provided");
+    if (relationshipType == null || relationshipType == TableRelationshipType.none) {
+      return "";
+    }
+
+    final List<Column> columns = new ArrayList<>();
+    for (final REF columnReference : fk.getColumnReferences()) {
+      switch (relationshipType) {
+        case parent:
+          columns.add(columnReference.getPrimaryKeyColumn());
+          break;
+        case child:
+          columns.add(columnReference.getForeignKeyColumn());
+          break;
+        default:
+      }
+    }
+    return joinColumns(quotingStrategy, quoteString, columns);
   }
 
   /**
