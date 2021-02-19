@@ -1,5 +1,12 @@
 # SchemaCrawler Change History
 
+<a name="a16.12.2"></a>
+## Release 16.12.2 - 2021-02-19
+
+- Add examples for generating [mermaid](https://mermaid-js.github.io/mermaid/#/entityRelationshipDiagram) 
+and [dbdiagram.io](https://dbdiagram.io/home) diagrams
+
+
 <a name="a16.12.1"></a>
 ## Release 16.12.1 - 2021-02-15
 
@@ -553,7 +560,7 @@
 
 * Support for the Teradata JDBC driver. The Teradata JDBC driver does not follow JDBC specifications. It should throw a SQLFeatureNotSupportedException for getFunctions, or at the least a SQLException state HYC00 ("Optional feature not implemented"). Instead, it throws with a state of HY000 ("General error").
 
-## Release 14.11.01 - 2016-12-16
+## Release 14.11.01 - 2016.12.26
 <a name="a14.11.01"></a>
 
 * Show a better error message when a script file cannot be read.
