@@ -152,7 +152,7 @@ configuration file, `schemacrawler.config.properties`, and edit the line with
 ## Mermaid Diagrams
 
 SchemaCrawler can generate [Mermaid Entity Relationship Diagrams](https://mermaid-js.github.io/mermaid/#/entityRelationshipDiagram) for your database. Create a Python script called "mermaid.py" with 
-the contents from [the GitHub file](https://github.com/schemacrawler/SchemaCrawler-Action-Usage-Example/blob/main/mermaid.py).
+the contents from [the GitHub file](https://github.com/schemacrawler/SchemaCrawler/blob/master/schemacrawler-scripting/src/test/resources/mermaid.py).
 Then, run SchemaCrawler with a Docker command like:
 ```sh
 docker run \
@@ -166,6 +166,26 @@ schemacrawler/schemacrawler \
 --command script \
 --script-language python \
 --script mermaid.py
+```
+
+
+## dbdiagram.io Diagrams
+
+SchemaCrawler can generate [dbdiagram.io diagrams](https://dbdiagram.io/home) for your database. Create a Python script called "dbml.py" with 
+the contents from [the GitHub file](https://github.com/schemacrawler/SchemaCrawler/blob/master/schemacrawler-scripting/src/test/resources/dbml.py).
+Then, run SchemaCrawler with a Docker command like:
+```sh
+docker run \
+--mount type=bind,source="$(pwd)",target=/home/schcrwlr \
+--rm -it \
+schemacrawler/schemacrawler \
+/opt/schemacrawler/schemacrawler.sh \
+--server=sqlite \
+--database=chinook-database-2.0.1.sqlite \
+--info-level=standard \
+--command script \
+--script-language python \
+--script dbml.py
 ```
 
 
