@@ -63,7 +63,9 @@ for table in catalog.tables:
       print('  "' + re.sub(r'\"', '', pkColumn.parent.fullName) + '"."' + re.sub(r'\"', '', pkColumn.name) \
             + '" < "' \
             + re.sub(r'\"', '', fkColumn.parent.fullName) + '"."' + re.sub(r'\"', '', fkColumn.name) \
-            + '"')
+            + '"', end = '')
+      print(' [update: ' + fk.updateRule.toString() + ', delete: ' + fk.deleteRule.toString() + ']', end = '')
+      print()  
     print("}")
     print('')
 print('')
