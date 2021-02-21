@@ -41,13 +41,16 @@ public final class NamedObjectKey implements Serializable {
 
   private final List<String> key;
 
-  public NamedObjectKey(final List<String> key) {
-    requireNonNull(key, "No key provided");
-    this.key = new ArrayList<>(key);
-  }
-
   public NamedObjectKey(final String... key) {
     this(Arrays.asList(key));
+  }
+
+  private NamedObjectKey(final List<String> key) {
+    requireNonNull(key, "No key provided");
+    if (key.isEmpty()) {
+      throw new IllegalArgumentException("No key values provided");
+    }
+    this.key = new ArrayList<>(key);
   }
 
   public NamedObjectKey add(final String name) {
@@ -75,6 +78,6 @@ public final class NamedObjectKey implements Serializable {
 
   @Override
   public String toString() {
-    return "[" + String.join("/", key) + "]";
+    return "[key=" + String.join("/", key) + "]";
   }
 }
