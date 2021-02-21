@@ -32,7 +32,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -42,6 +41,7 @@ import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DatabaseUser;
 import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Reducer;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
@@ -268,7 +268,7 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
     return lookupColumnDataType(new SchemaReference(), name);
   }
 
-  public Optional<MutableTable> lookupTable(final List<String> tableLookupKey) {
+  public Optional<MutableTable> lookupTable(final NamedObjectKey tableLookupKey) {
     return tables.lookup(tableLookupKey);
   }
 
@@ -364,7 +364,7 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
     }
   }
 
-  Optional<MutableRoutine> lookupRoutine(final List<String> routineLookupKey) {
+  Optional<MutableRoutine> lookupRoutine(final NamedObjectKey routineLookupKey) {
     return routines.lookup(routineLookupKey);
   }
 

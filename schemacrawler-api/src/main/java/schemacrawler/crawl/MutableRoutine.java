@@ -30,10 +30,10 @@ package schemacrawler.crawl;
 
 import static us.fatehi.utility.Utility.isBlank;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineBodyType;
 import schemacrawler.schema.RoutineParameter;
@@ -47,11 +47,13 @@ import us.fatehi.utility.CompareUtility;
  * @author Sualeh Fatehi
  */
 abstract class MutableRoutine extends AbstractDatabaseObject implements Routine {
+
   private static final long serialVersionUID = 3906925686089134130L;
+
   private final StringBuilder definition;
   private RoutineBodyType routineBodyType;
-  private String specificName;
-
+  private final String specificName;
+  private transient NamedObjectKey key;
   /**
    * Effective Java - Item 17 - Minimize Mutability - Package-private constructors make a class
    * effectively final
@@ -59,8 +61,9 @@ abstract class MutableRoutine extends AbstractDatabaseObject implements Routine 
    * @param schema Schema of this object
    * @param name Name of the named object
    */
-  MutableRoutine(final Schema schema, final String name) {
+  MutableRoutine(final Schema schema, final String name, final String specificName) {
     super(schema, name);
+    this.specificName = specificName;
     routineBodyType = RoutineBodyType.unknown;
     definition = new StringBuilder();
   }
@@ -124,11 +127,9 @@ abstract class MutableRoutine extends AbstractDatabaseObject implements Routine 
   }
 
   @Override
-  public final List<String> toUniqueLookupKey() {
-    // Make a defensive copy
-    final List<String> lookupKey = new ArrayList<>(super.toUniqueLookupKey());
-    lookupKey.add(specificName);
-    return lookupKey;
+  public final NamedObjectKey toUniqueLookupKey() {
+    buildKey();
+    return key;
   }
 
   final void appendDefinition(final String definition) {
@@ -141,7 +142,10 @@ abstract class MutableRoutine extends AbstractDatabaseObject implements Routine 
     this.routineBodyType = routineBodyType;
   }
 
-  final void setSpecificName(final String specificName) {
-    this.specificName = specificName;
+  private void buildKey() {
+    if (key != null) {
+      return;
+    }
+    this.key = super.toUniqueLookupKey().add(specificName);
   }
 }

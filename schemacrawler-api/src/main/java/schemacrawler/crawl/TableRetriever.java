@@ -35,13 +35,13 @@ import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.ta
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
+import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
@@ -118,7 +118,7 @@ final class TableRetriever extends AbstractRetriever {
     final String remarks = results.getString("REMARKS");
 
     final Optional<SchemaReference> optionalSchema =
-        schemas.lookup(Arrays.asList(catalogName, schemaName));
+        schemas.lookup(new NamedObjectKey(catalogName, schemaName));
     if (!optionalSchema.isPresent()) {
       return;
     }

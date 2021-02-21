@@ -31,7 +31,6 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -42,6 +41,7 @@ import schemacrawler.schema.BaseForeignKey;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.NamedObjectKey;
 import us.fatehi.utility.CompareUtility;
 
 /**
@@ -54,6 +54,7 @@ public final class WeakAssociation implements BaseForeignKey<WeakAssociationColu
   private static final long serialVersionUID = -5164664131926303038L;
 
   private final String name;
+  private transient NamedObjectKey key;
   private final SortedSet<WeakAssociationColumnReference> columnReferences = new TreeSet<>();
 
   public WeakAssociation(final String name) {
@@ -129,7 +130,15 @@ public final class WeakAssociation implements BaseForeignKey<WeakAssociationColu
   }
 
   @Override
-  public List<String> toUniqueLookupKey() {
-    return Arrays.asList(getName());
+  public NamedObjectKey toUniqueLookupKey() {
+    buildKey();
+    return key;
+  }
+
+  private void buildKey() {
+    if (key != null) {
+      return;
+    }
+    this.key = new NamedObjectKey(name);
   }
 }

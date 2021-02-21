@@ -30,12 +30,11 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DependantObject;
+import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schemacrawler.Identifiers;
 
 /**
@@ -50,6 +49,7 @@ abstract class AbstractDependantObject<D extends DatabaseObject> extends Abstrac
   private static final long serialVersionUID = -4327208866052082457L;
 
   private final DatabaseObjectReference<D> parent;
+  private transient NamedObjectKey key;
 
   /**
    * Effective Java - Item 17 - Minimize Mutability - Package-private constructors make a class
@@ -114,10 +114,15 @@ abstract class AbstractDependantObject<D extends DatabaseObject> extends Abstrac
   }
 
   @Override
-  public List<String> toUniqueLookupKey() {
-    // Make a defensive copy
-    final List<String> lookupKey = new ArrayList<>(parent.get().toUniqueLookupKey());
-    lookupKey.add(getName());
-    return lookupKey;
+  public NamedObjectKey toUniqueLookupKey() {
+    buildKey();
+    return key;
+  }
+
+  private void buildKey() {
+    if (key != null) {
+      return;
+    }
+    this.key = parent.get().toUniqueLookupKey().add(getName());
   }
 }

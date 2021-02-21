@@ -41,7 +41,10 @@ import com.openpojo.reflection.impl.PojoClassFactory;
 import com.openpojo.reflection.java.Java;
 import com.openpojo.validation.Validator;
 import com.openpojo.validation.ValidatorBuilder;
+import com.openpojo.validation.rule.impl.EqualsAndHashCodeMatchRule;
 import com.openpojo.validation.rule.impl.GetterMustExistRule;
+import com.openpojo.validation.rule.impl.NoPublicFieldsExceptStaticFinalRule;
+import com.openpojo.validation.rule.impl.NoStaticExceptFinalRule;
 import com.openpojo.validation.rule.impl.SetterMustExistRule;
 import com.openpojo.validation.test.impl.GetterTester;
 import com.openpojo.validation.test.impl.SetterTester;
@@ -66,7 +69,7 @@ public class GettersSettersTest {
   }
 
   // Configured for expectation, so we know when a class gets added or removed.
-  private static final int EXPECTED_CLASS_COUNT = 56;
+  private static final int EXPECTED_CLASS_COUNT = 57;
 
   private static final String PACKAGE_SCHEMACRAWLER_SCHEMA = "schemacrawler.schema";
 
@@ -78,6 +81,9 @@ public class GettersSettersTest {
 
     final Validator validator =
         ValidatorBuilder.create()
+            .with(new EqualsAndHashCodeMatchRule())
+            .with(new NoStaticExceptFinalRule())
+            .with(new NoPublicFieldsExceptStaticFinalRule())
             .with(new GetterMustExistRule())
             .with(new SetterMustExistRule())
             .with(new SetterTester())
@@ -85,6 +91,7 @@ public class GettersSettersTest {
             .build();
 
     validator.validate(
-        PACKAGE_SCHEMACRAWLER_SCHEMA, new FilterPackageClasses("JavaSqlType", "TableTypes"));
+        PACKAGE_SCHEMACRAWLER_SCHEMA,
+        new FilterPackageClasses("NamedObjectKey", "JavaSqlType", "TableTypes"));
   }
 }

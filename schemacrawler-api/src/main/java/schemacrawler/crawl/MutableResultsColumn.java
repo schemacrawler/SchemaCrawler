@@ -28,9 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.Table;
 
@@ -42,21 +40,23 @@ import schemacrawler.schema.Table;
 final class MutableResultsColumn extends AbstractColumn<Table> implements ResultsColumn {
 
   private static final long serialVersionUID = -6983013302549352559L;
+
+  private transient NamedObjectKey key;
   private boolean autoIncrement;
   private boolean caseSensitive;
   private boolean currency;
   private boolean definitelyWritable;
   private int displaySize;
-  private String label;
+  private final String label;
   private boolean readOnly;
   private boolean searchable;
   private boolean signed;
   private boolean writable;
 
-  MutableResultsColumn(final Table parent, final String name) {
+  MutableResultsColumn(final Table parent, final String name, final String label) {
     super(new TableReference(parent), name);
+    this.label = label;
   }
-
   /** {@inheritDoc} */
   @Override
   public int getDisplaySize() {
@@ -118,11 +118,9 @@ final class MutableResultsColumn extends AbstractColumn<Table> implements Result
   }
 
   @Override
-  public List<String> toUniqueLookupKey() {
-    // Make a defensive copy
-    final List<String> lookupKey = new ArrayList<>(super.toUniqueLookupKey());
-    lookupKey.add(label);
-    return lookupKey;
+  public NamedObjectKey toUniqueLookupKey() {
+    buildKey();
+    return key;
   }
 
   void setAutoIncrement(final boolean isAutoIncrement) {
@@ -145,10 +143,6 @@ final class MutableResultsColumn extends AbstractColumn<Table> implements Result
     this.displaySize = displaySize;
   }
 
-  void setLabel(final String label) {
-    this.label = label;
-  }
-
   void setReadOnly(final boolean isReadOnly) {
     readOnly = isReadOnly;
   }
@@ -163,5 +157,12 @@ final class MutableResultsColumn extends AbstractColumn<Table> implements Result
 
   void setWritable(final boolean isWritable) {
     writable = isWritable;
+  }
+
+  private void buildKey() {
+    if (key != null) {
+      return;
+    }
+    this.key = super.toUniqueLookupKey().add(label);
   }
 }

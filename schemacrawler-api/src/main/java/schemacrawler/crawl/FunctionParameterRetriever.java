@@ -38,7 +38,6 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.sql.Statement;
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.logging.Level;
 
@@ -46,6 +45,7 @@ import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.FunctionParameter;
+import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.ParameterModeType;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -128,7 +128,7 @@ final class FunctionParameterRetriever extends AbstractRetriever {
 
     final Optional<MutableRoutine> optionalRoutine =
         allRoutines.lookup(
-            Arrays.asList(columnCatalogName, schemaName, functionName, specificName));
+            new NamedObjectKey(columnCatalogName, schemaName, functionName, specificName));
     if (!optionalRoutine.isPresent()) {
       return;
     }

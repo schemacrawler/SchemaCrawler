@@ -49,6 +49,7 @@ import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -90,7 +91,8 @@ final class TableColumnRetriever extends AbstractRetriever {
     switch (getRetrieverConnection().get(tableColumnsRetrievalStrategy)) {
       case data_dictionary_all:
         LOGGER.log(Level.INFO, "Retrieving table columns, using fast data dictionary retrieval");
-        retrieveTableColumnsFromDataDictionary(allTables, columnFilter, hiddenTableColumnsLookupKeys);
+        retrieveTableColumnsFromDataDictionary(
+            allTables, columnFilter, hiddenTableColumnsLookupKeys);
         break;
 
       case metadata:
@@ -129,7 +131,7 @@ final class TableColumnRetriever extends AbstractRetriever {
     }
 
     final Optional<MutableTable> optionalTable =
-        allTables.lookup(Arrays.asList(columnCatalogName, schemaName, tableName));
+        allTables.lookup(new NamedObjectKey(columnCatalogName, schemaName, tableName));
     if (!optionalTable.isPresent()) {
       return;
     }

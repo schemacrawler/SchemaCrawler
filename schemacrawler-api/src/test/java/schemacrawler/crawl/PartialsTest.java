@@ -93,7 +93,7 @@ public class PartialsTest {
   @Test
   public void functionPartial() {
     final SchemaReference schema = new SchemaReference("catalog", "schema");
-    final MutableFunction function = new MutableFunction(schema, "function");
+    final MutableFunction function = new MutableFunction(schema, "function", null);
     final FunctionPartial functionPartial = new FunctionPartial(function);
     final FunctionReference functionReference = new FunctionReference(function);
 
@@ -131,7 +131,7 @@ public class PartialsTest {
   @Test
   public void procedurePartial() {
     final SchemaReference schema = new SchemaReference("catalog", "schema");
-    final MutableProcedure procedure = new MutableProcedure(schema, "procedure");
+    final MutableProcedure procedure = new MutableProcedure(schema, "procedure", null);
     final ProcedurePartial procedurePartial = new ProcedurePartial(procedure);
     final ProcedureReference procedureReference = new ProcedureReference(procedure);
 
@@ -177,7 +177,7 @@ public class PartialsTest {
     assertThat(table.lookupColumn("column"), isPresentAndIs(column));
     assertThat(table.lookupColumn("unknown_column"), isEmpty());
 
-    final ForeignKey foreignKey = new MutableForeignKey("fk");
+    final ForeignKey foreignKey = new MutableForeignKey("fk", null);
     table.addForeignKey(foreignKey);
 
     assertThat(table.lookupForeignKey("fk"), isPresentAndIs(foreignKey));

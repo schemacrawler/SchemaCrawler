@@ -30,12 +30,11 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.TypedObject;
 import schemacrawler.schemacrawler.Identifiers;
@@ -51,6 +50,7 @@ abstract class AbstractDatabaseObject extends AbstractNamedObjectWithAttributes
   private static final long serialVersionUID = 3099561832386790624L;
 
   private final Schema schema;
+  private transient NamedObjectKey key;
 
   /**
    * Effective Java - Item 17 - Minimize Mutability - Package-private constructors make a class
@@ -127,10 +127,15 @@ abstract class AbstractDatabaseObject extends AbstractNamedObjectWithAttributes
   }
 
   @Override
-  public List<String> toUniqueLookupKey() {
-    // Make a defensive copy
-    final List<String> lookupKey = new ArrayList<>(schema.toUniqueLookupKey());
-    lookupKey.add(getName());
-    return lookupKey;
+  public NamedObjectKey toUniqueLookupKey() {
+    buildKey();
+    return key;
+  }
+
+  private void buildKey() {
+    if (key != null) {
+      return;
+    }
+    this.key = schema.toUniqueLookupKey().add(getName());
   }
 }

@@ -51,8 +51,10 @@ import us.fatehi.utility.string.StringFormat;
 final class MutableColumnDataType extends AbstractDatabaseObject implements ColumnDataType {
 
   private static final long serialVersionUID = 3688503281676530744L;
+
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(SchemaCrawler.class.getName());
+
   private boolean autoIncrementable;
   private ColumnDataType baseType;
   private boolean caseSensitive;

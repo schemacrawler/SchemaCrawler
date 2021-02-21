@@ -90,8 +90,8 @@ final class ResultsRetriever {
       catalog.addTable(table);
 
       final String columnName = resultsMetaData.getColumnName(columnIndex);
-      final MutableResultsColumn column = new MutableResultsColumn(table, columnName);
-      column.setLabel(resultsMetaData.getColumnLabel(columnIndex));
+      final String columnLabel = resultsMetaData.getColumnLabel(columnIndex);
+      final MutableResultsColumn column = new MutableResultsColumn(table, columnName, columnLabel);
 
       try {
         final String databaseSpecificTypeName = resultsMetaData.getColumnTypeName(columnIndex);

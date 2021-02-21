@@ -35,7 +35,6 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.logging.Level;
@@ -44,6 +43,7 @@ import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.JavaSqlType;
+import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.Retriever;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -203,12 +203,13 @@ abstract class AbstractRetriever {
       final String schemaName,
       final String routineName,
       final String specificName) {
-    return catalog.lookupRoutine(Arrays.asList(catalogName, schemaName, routineName, specificName));
+    return catalog.lookupRoutine(
+        new NamedObjectKey(catalogName, schemaName, routineName, specificName));
   }
 
   final Optional<MutableTable> lookupTable(
       final String catalogName, final String schemaName, final String tableName) {
-    return catalog.lookupTable(Arrays.asList(catalogName, schemaName, tableName));
+    return catalog.lookupTable(new NamedObjectKey(catalogName, schemaName, tableName));
   }
 
   final String normalizeCatalogName(final String name) {

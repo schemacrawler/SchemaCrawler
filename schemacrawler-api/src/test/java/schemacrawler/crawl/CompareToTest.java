@@ -33,11 +33,10 @@ import static org.hamcrest.number.OrderingComparison.comparesEqualTo;
 import static org.hamcrest.number.OrderingComparison.greaterThan;
 import static org.hamcrest.number.OrderingComparison.lessThan;
 
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.TableType;
 import schemacrawler.schemacrawler.SchemaReference;
@@ -121,7 +120,7 @@ public class CompareToTest {
               }
 
               @Override
-              public List<String> toUniqueLookupKey() {
+              public NamedObjectKey toUniqueLookupKey() {
                 return null;
               }
             }));

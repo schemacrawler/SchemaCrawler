@@ -28,12 +28,10 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.utility.NamedObjectSort;
 
 /**
@@ -46,6 +44,7 @@ abstract class AbstractNamedObject implements NamedObject {
   private static final long serialVersionUID = -1486322887991472729L;
 
   private final String name;
+  private transient NamedObjectKey key;
 
   /**
    * Effective Java - Item 17 - Minimize Mutability - Package-private constructors make a class
@@ -105,7 +104,15 @@ abstract class AbstractNamedObject implements NamedObject {
   }
 
   @Override
-  public List<String> toUniqueLookupKey() {
-    return new ArrayList<>(Arrays.asList(name));
+  public NamedObjectKey toUniqueLookupKey() {
+    buildKey();
+    return key;
+  }
+
+  private void buildKey() {
+    if (key != null) {
+      return;
+    }
+    this.key = new NamedObjectKey(name);
   }
 }

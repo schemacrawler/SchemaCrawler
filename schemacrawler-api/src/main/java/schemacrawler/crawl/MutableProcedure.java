@@ -51,8 +51,8 @@ final class MutableProcedure extends MutableRoutine implements Procedure {
   private final NamedObjectList<MutableProcedureParameter> columns = new NamedObjectList<>();
   private ProcedureReturnType returnType;
 
-  MutableProcedure(final Schema schema, final String name) {
-    super(schema, name);
+  MutableProcedure(final Schema schema, final String name, final String specificName) {
+    super(schema, name, specificName);
     // Default values
     returnType = ProcedureReturnType.unknown;
   }

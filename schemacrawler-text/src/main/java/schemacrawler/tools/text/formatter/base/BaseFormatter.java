@@ -33,14 +33,13 @@ import static us.fatehi.utility.Utility.hasNoUpperCase;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.IndexColumn;
+import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
@@ -136,10 +135,10 @@ public abstract class BaseFormatter<O extends BaseTextOptions> implements Traver
     if (dbObject == null) {
       return "";
     } else {
-      final List<String> dbObjectLookupKey = dbObject.toUniqueLookupKey();
+      final NamedObjectKey dbObjectLookupKey = dbObject.toUniqueLookupKey();
       return convertForComparison(dbObject.getName())
           + "_"
-          + Integer.toHexString(Arrays.hashCode(dbObjectLookupKey.toArray()));
+          + Integer.toHexString(dbObjectLookupKey.hashCode());
     }
   }
 }

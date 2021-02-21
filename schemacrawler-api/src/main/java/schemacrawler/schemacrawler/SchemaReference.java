@@ -30,16 +30,14 @@ package schemacrawler.schemacrawler;
 import static us.fatehi.utility.Utility.convertForComparison;
 import static us.fatehi.utility.Utility.isBlank;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
 import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Schema;
 
 public final class SchemaReference implements Schema {
@@ -49,6 +47,7 @@ public final class SchemaReference implements Schema {
   private final Map<String, Object> attributeMap = new HashMap<>();
   private final String catalogName;
   private final String schemaName;
+  private transient NamedObjectKey key;
   private transient String fullName;
 
   public SchemaReference() {
@@ -188,8 +187,9 @@ public final class SchemaReference implements Schema {
   }
 
   @Override
-  public List<String> toUniqueLookupKey() {
-    return new ArrayList<>(Arrays.asList(catalogName, schemaName));
+  public NamedObjectKey toUniqueLookupKey() {
+    buildKey();
+    return key;
   }
 
   private void buildFullName() {
@@ -200,5 +200,12 @@ public final class SchemaReference implements Schema {
     final Identifiers identifiers =
         Identifiers.identifiers().withIdentifierQuoteString("\"").build();
     fullName = identifiers.quoteFullName(this);
+  }
+
+  private void buildKey() {
+    if (key != null) {
+      return;
+    }
+    this.key = new NamedObjectKey(catalogName, schemaName);
   }
 }

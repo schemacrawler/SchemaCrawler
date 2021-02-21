@@ -37,7 +37,6 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.logging.Level;
 
@@ -45,6 +44,7 @@ import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
+import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
@@ -136,15 +136,12 @@ final class ForeignKeyRetriever extends AbstractRetriever {
       }
 
       final Optional<MutableForeignKey> foreignKeyOptional =
-          foreignKeys.lookup(Arrays.asList(foreignKeyName, specificName));
+          foreignKeys.lookup(new NamedObjectKey(foreignKeyName, specificName));
       final MutableForeignKey foreignKey;
       if (foreignKeyOptional.isPresent()) {
         foreignKey = foreignKeyOptional.get();
       } else {
-        foreignKey = new MutableForeignKey(foreignKeyName);
-        foreignKey.setSpecificName(specificName);
-        // Specific name needs to be set before the foreign key is added
-        // to the list, since it is part of the unique lookup key
+        foreignKey = new MutableForeignKey(foreignKeyName, specificName);
         foreignKeys.add(foreignKey);
       }
 
@@ -182,7 +179,7 @@ final class ForeignKeyRetriever extends AbstractRetriever {
     Column column = null;
 
     final Optional<MutableTable> tableOptional =
-        catalog.lookupTable(Arrays.asList(catalogName, schemaName, tableName));
+        catalog.lookupTable(new NamedObjectKey(catalogName, schemaName, tableName));
     if (tableOptional.isPresent()) {
       final Table table = tableOptional.get();
       final Optional<? extends Column> columnOptional = table.lookupColumn(columnName);

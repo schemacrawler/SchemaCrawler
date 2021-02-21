@@ -34,6 +34,7 @@ import nl.jqno.equalsverifier.Warning;
 import schemacrawler.BaseProductVersion;
 import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.IncludeAll;
+import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
@@ -68,7 +69,7 @@ public class EqualsTest {
 
     EqualsVerifier.forClass(TestDatabaseObject.class)
         .suppress(Warning.STRICT_INHERITANCE)
-        .withIgnoredFields("attributeMap", "remarks")
+        .withIgnoredFields("key", "attributeMap", "remarks")
         .verify();
   }
 
@@ -86,14 +87,20 @@ public class EqualsTest {
   @Test
   public void namedObject() {
     EqualsVerifier.forClass(AbstractNamedObject.class)
+        .withIgnoredFields("key")
         .suppress(Warning.STRICT_INHERITANCE)
         .verify();
   }
 
   @Test
+  public void namedObjectKey() {
+    EqualsVerifier.forClass(NamedObjectKey.class).verify();
+  }
+
+  @Test
   public void namedObjectWithAttributes() {
     EqualsVerifier.forClass(AbstractNamedObjectWithAttributes.class)
-        .withIgnoredFields("attributeMap", "remarks")
+        .withIgnoredFields("key", "attributeMap", "remarks")
         .suppress(Warning.STRICT_INHERITANCE)
         .verify();
   }
@@ -104,7 +111,7 @@ public class EqualsTest {
     final Table table2 = new MutableTable(new SchemaReference("catalog", "schema"), "table2");
 
     EqualsVerifier.forClass(MutablePrivilege.class)
-        .withIgnoredFields("grants", "parent", "attributeMap", "remarks")
+        .withIgnoredFields("key", "grants", "parent", "attributeMap", "remarks")
         .withPrefabValues(
             DatabaseObjectReference.class, new TableReference(table1), new TableReference(table2))
         .suppress(Warning.STRICT_INHERITANCE)
@@ -123,7 +130,9 @@ public class EqualsTest {
 
   @Test
   public void schemaReference() {
-    EqualsVerifier.forClass(SchemaReference.class).withIgnoredFields("attributeMap").verify();
+    EqualsVerifier.forClass(SchemaReference.class)
+        .withIgnoredFields("key", "attributeMap")
+        .verify();
   }
 
   @Test
@@ -138,6 +147,6 @@ public class EqualsTest {
 
   @Test
   public void weakAssociation() {
-    EqualsVerifier.forClass(WeakAssociation.class).withIgnoredFields("name").verify();
+    EqualsVerifier.forClass(WeakAssociation.class).withIgnoredFields("key", "name").verify();
   }
 }

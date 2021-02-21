@@ -48,11 +48,12 @@ import schemacrawler.schema.Schema;
 final class MutableFunction extends MutableRoutine implements Function {
 
   private static final long serialVersionUID = 3906925686089134130L;
+
   private final NamedObjectList<MutableFunctionParameter> columns = new NamedObjectList<>();
   private FunctionReturnType returnType;
 
-  MutableFunction(final Schema schema, final String name) {
-    super(schema, name);
+  MutableFunction(final Schema schema, final String name, final String specificName) {
+    super(schema, name, specificName);
     // Default values
     returnType = FunctionReturnType.unknown;
   }

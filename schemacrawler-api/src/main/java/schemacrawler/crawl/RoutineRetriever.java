@@ -39,7 +39,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.sql.Statement;
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.logging.Level;
 
@@ -48,6 +47,7 @@ import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Function;
 import schemacrawler.schema.FunctionReturnType;
+import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureReturnType;
 import schemacrawler.schema.Schema;
@@ -153,16 +153,15 @@ final class RoutineRetriever extends AbstractRetriever {
     final String specificName = results.getString("SPECIFIC_NAME");
 
     final Optional<SchemaReference> optionalSchema =
-        schemas.lookup(Arrays.asList(catalogName, schemaName));
+        schemas.lookup(new NamedObjectKey(catalogName, schemaName));
     if (!optionalSchema.isPresent()) {
       return;
     }
     final Schema schema = optionalSchema.get();
 
-    final MutableFunction function = new MutableFunction(schema, functionName);
+    final MutableFunction function = new MutableFunction(schema, functionName, specificName);
     if (functionFilter.test(function)) {
       function.setReturnType(functionType);
-      function.setSpecificName(specificName);
       function.setRemarks(remarks);
       function.addAttributes(results.getAttributes());
 
@@ -190,16 +189,15 @@ final class RoutineRetriever extends AbstractRetriever {
     final String specificName = results.getString("SPECIFIC_NAME");
 
     final Optional<SchemaReference> optionalSchema =
-        schemas.lookup(Arrays.asList(catalogName, schemaName));
+        schemas.lookup(new NamedObjectKey(catalogName, schemaName));
     if (!optionalSchema.isPresent()) {
       return;
     }
     final Schema schema = optionalSchema.get();
 
-    final MutableProcedure procedure = new MutableProcedure(schema, procedureName);
+    final MutableProcedure procedure = new MutableProcedure(schema, procedureName, specificName);
     if (procedureFilter.test(procedure)) {
       procedure.setReturnType(procedureType);
-      procedure.setSpecificName(specificName);
       procedure.setRemarks(remarks);
       procedure.addAttributes(results.getAttributes());
 

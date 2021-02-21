@@ -42,6 +42,7 @@ import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.TableConstraintType;
 import us.fatehi.utility.CompareUtility;
 
@@ -54,15 +55,17 @@ final class MutableForeignKey extends AbstractNamedObjectWithAttributes implemen
 
   private static final long serialVersionUID = 4121411795974895671L;
 
+  private final String specificName;
+  private transient NamedObjectKey key;
   private final SortedSet<MutableForeignKeyColumnReference> columnReferences = new TreeSet<>();
   private final StringBuilder definition;
   private ForeignKeyDeferrability deferrability;
   private ForeignKeyUpdateRule deleteRule;
-  private String specificName;
   private ForeignKeyUpdateRule updateRule;
 
-  MutableForeignKey(final String name) {
+  MutableForeignKey(final String name, final String specificName) {
     super(name);
+    this.specificName = specificName;
 
     definition = new StringBuilder();
 
@@ -155,11 +158,9 @@ final class MutableForeignKey extends AbstractNamedObjectWithAttributes implemen
   }
 
   @Override
-  public List<String> toUniqueLookupKey() {
-    // Make a defensive copy
-    final List<String> lookupKey = new ArrayList<>(super.toUniqueLookupKey());
-    lookupKey.add(specificName);
-    return lookupKey;
+  public NamedObjectKey toUniqueLookupKey() {
+    buildKey();
+    return key;
   }
 
   void addColumnReference(final int keySequence, final Column pkColumn, final Column fkColumn) {
@@ -182,11 +183,14 @@ final class MutableForeignKey extends AbstractNamedObjectWithAttributes implemen
     this.deleteRule = deleteRule;
   }
 
-  void setSpecificName(final String specificName) {
-    this.specificName = specificName;
-  }
-
   void setUpdateRule(final ForeignKeyUpdateRule updateRule) {
     this.updateRule = updateRule;
+  }
+
+  private void buildKey() {
+    if (key != null) {
+      return;
+    }
+    this.key = new NamedObjectKey(getName(), specificName);
   }
 }

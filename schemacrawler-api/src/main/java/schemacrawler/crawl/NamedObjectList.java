@@ -43,6 +43,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.ReducibleCollection;
 import us.fatehi.utility.ObjectToString;
 
@@ -56,8 +57,8 @@ final class NamedObjectList<N extends NamedObject> implements Serializable, Redu
 
   private static final long serialVersionUID = 3257847666804142128L;
 
-  private static List<String> makeLookupKey(final NamedObject namedObject) {
-    final List<String> key;
+  private static NamedObjectKey makeLookupKey(final NamedObject namedObject) {
+    final NamedObjectKey key;
     if (namedObject == null) {
       key = null;
     } else {
@@ -66,15 +67,15 @@ final class NamedObjectList<N extends NamedObject> implements Serializable, Redu
     return key;
   }
 
-  private static List<String> makeLookupKey(final NamedObject namedObject, final String name) {
-    final List<String> key = makeLookupKey(namedObject);
+  private static NamedObjectKey makeLookupKey(final NamedObject namedObject, final String name) {
+    NamedObjectKey key = makeLookupKey(namedObject);
     if (key != null) {
-      key.add(name);
+      key = key.add(name);
     }
     return key;
   }
 
-  private final Map<List<String>, N> objects = new HashMap<>();
+  private final Map<NamedObjectKey, N> objects = new HashMap<>();
 
   @Override
   public void filter(final Predicate<? super N> predicate) {
@@ -82,10 +83,10 @@ final class NamedObjectList<N extends NamedObject> implements Serializable, Redu
       return;
     }
 
-    final Set<Entry<List<String>, N>> entrySet = objects.entrySet();
-    for (final Iterator<Entry<List<String>, N>> iterator = entrySet.iterator();
+    final Set<Entry<NamedObjectKey, N>> entrySet = objects.entrySet();
+    for (final Iterator<Entry<NamedObjectKey, N>> iterator = entrySet.iterator();
         iterator.hasNext(); ) {
-      final Entry<List<String>, N> entry = iterator.next();
+      final Entry<NamedObjectKey, N> entry = iterator.next();
       if (!predicate.test(entry.getValue())) {
         iterator.remove();
       }
@@ -139,7 +140,7 @@ final class NamedObjectList<N extends NamedObject> implements Serializable, Redu
    */
   boolean add(final N namedObject) {
     requireNonNull(namedObject, "Cannot add a null object to the list");
-    final List<String> key = makeLookupKey(namedObject);
+    final NamedObjectKey key = makeLookupKey(namedObject);
     objects.put(key, namedObject);
     return true;
   }
@@ -152,19 +153,19 @@ final class NamedObjectList<N extends NamedObject> implements Serializable, Redu
     return objects.isEmpty();
   }
 
+  Optional<N> lookup(final NamedObject namedObject, final String name) {
+    final NamedObjectKey key = makeLookupKey(namedObject, name);
+    return internalGet(key);
+  }
+
   /**
    * Looks up a named object by lookup key.
    *
    * @param lookupKey Internal lookup key
    * @return Named object
    */
-  Optional<N> lookup(final List<String> lookupKey) {
+  Optional<N> lookup(final NamedObjectKey lookupKey) {
     return internalGet(lookupKey);
-  }
-
-  Optional<N> lookup(final NamedObject namedObject, final String name) {
-    final List<String> key = makeLookupKey(namedObject, name);
-    return internalGet(key);
   }
 
   N remove(final N namedObject) {
@@ -191,7 +192,7 @@ final class NamedObjectList<N extends NamedObject> implements Serializable, Redu
     return all;
   }
 
-  private Optional<N> internalGet(final List<String> key) {
+  private Optional<N> internalGet(final NamedObjectKey key) {
     return Optional.ofNullable(objects.get(key));
   }
 }
