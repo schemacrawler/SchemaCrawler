@@ -83,9 +83,7 @@ abstract class AbstractDatabaseObject extends AbstractNamedObjectWithAttributes
             return typeCompareTo;
           }
         } catch (final Exception e) {
-          // Ignore, since getType() may not be implemented by partial
-          // database
-          // objects
+          // Ignore, since getType() may not be implemented by partial database objects
         }
       }
     }
