@@ -217,11 +217,14 @@ public final class TestUtility {
   public static String javaVersion() {
     final String javaSpecificationVersion = System.getProperty("java.specification.version");
     final double javaSpecificationVersionDouble = Double.parseDouble(javaSpecificationVersion);
-    final int javaSpecificationVersionInt;
+    int javaSpecificationVersionInt;
     if (javaSpecificationVersionDouble < 2) {
       javaSpecificationVersionInt = (int) ((javaSpecificationVersionDouble - 1) * 10);
     } else {
       javaSpecificationVersionInt = (int) javaSpecificationVersionDouble;
+    }
+    if (javaSpecificationVersionInt > 11) {
+      javaSpecificationVersionInt = 11;
     }
     return String.valueOf(javaSpecificationVersionInt);
   }
