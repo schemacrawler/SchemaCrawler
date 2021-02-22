@@ -78,6 +78,6 @@ public final class NamedObjectKey implements Serializable {
 
   @Override
   public String toString() {
-    return "[key=" + String.join("/", key) + "]";
+    return "{\"key\": " + String.join("/", key) + "}";
   }
 }
