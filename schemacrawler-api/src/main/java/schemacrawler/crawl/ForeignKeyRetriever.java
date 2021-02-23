@@ -260,8 +260,9 @@ final class ForeignKeyRetriever extends AbstractRetriever {
                   table.getName()))) {
         createForeignKeys(results, foreignKeys);
       } catch (final SQLException e) {
-        throw new SchemaCrawlerSQLException(
-            "Could not retrieve foreign keys for table " + table, e);
+        // Since not all database drivers may support exported keys, log a warning instead of
+        // throwing an error
+        LOGGER.log(Level.WARNING, "Could not retrieve exported foreign keys for table " + table, e);
       }
     }
   }
