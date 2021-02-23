@@ -34,6 +34,7 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.concurrent.Callable;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
@@ -73,24 +74,35 @@ final class ResultsRetriever {
    * @throws SchemaCrawlerException On an exception
    */
   ResultsColumns retrieveResults() throws SQLException {
+
     final JavaSqlTypes javaSqlTypes = new JavaSqlTypes();
     final MutableResultsColumns resultColumns = new MutableResultsColumns("");
     final MutableCatalog catalog = new MutableCatalog("results");
     final int columnCount = resultsMetaData.getColumnCount();
-    for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
-      final String catalogName = resultsMetaData.getCatalogName(columnIndex);
-      final String schemaName = resultsMetaData.getSchemaName(columnIndex);
-      String tableName = resultsMetaData.getTableName(columnIndex);
+    for (int i = 1; i <= columnCount; i++) {
+
+      final int columnIndex = i;
+
+      final String catalogName =
+          execute("catalog name", () -> resultsMetaData.getCatalogName(columnIndex));
+      final String schemaName =
+          execute("schema name", () -> resultsMetaData.getSchemaName(columnIndex));
+
+      final Schema schema = catalog.addSchema(catalogName, schemaName);
+
+      String tableName = execute("table name", () -> resultsMetaData.getTableName(columnIndex));
       if (isBlank(tableName)) {
         tableName = "";
       }
 
-      final Schema schema = catalog.addSchema(catalogName, schemaName);
       final MutableTable table = new MutableTable(schema, tableName);
       catalog.addTable(table);
 
-      final String columnName = resultsMetaData.getColumnName(columnIndex);
-      final String columnLabel = resultsMetaData.getColumnLabel(columnIndex);
+      final String columnName =
+          execute("column name", () -> resultsMetaData.getColumnName(columnIndex));
+      final String columnLabel =
+          execute("column label", () -> resultsMetaData.getColumnLabel(columnIndex));
+
       final MutableResultsColumn column = new MutableResultsColumn(table, columnName, columnLabel);
 
       try {
@@ -148,5 +160,15 @@ final class ResultsRetriever {
     }
 
     return resultColumns;
+  }
+
+  private String execute(final String resultsColumnField, final Callable<String> getResultsColumn) {
+    try {
+      return getResultsColumn.call();
+    } catch (final Exception e) {
+      LOGGER.log(
+          Level.WARNING, "Could not retrieve results column field, " + resultsColumnField, e);
+      return null;
+    }
   }
 }
