@@ -18,7 +18,7 @@ SchemaCrawler questions from users.
 
 ## Companies and Projects
 
-- The [Neo4j APOC](https://neo4j-contrib.github.io/neo4j-apoc-procedures/#database-modeling) project provides a plugin for database modeling that uses SchemaCrawler to model a relational schema as a graph.
+- The [Neo4j APOC](https://neo4j.com/labs/apoc/4.1/database-integration/load-jdbc/) project provides a plugin for database modeling that uses SchemaCrawler to model a relational schema as a graph.
 - [Goldman Sachs Obevo](https://github.com/goldmansachs/obevo) project, a database deployment tool
   that handles enterprise-scale schemas
 - [SQLDelight from Square, Inc.](https://github.com/cashapp/sqldelight) uses SchemaCrawler internally
