@@ -5,6 +5,7 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
+import java.util.logging.Level;
 
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
@@ -18,28 +19,14 @@ import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import us.fatehi.utility.LoggingConfig;
 
 public final class ExecutableExample {
 
-  private static Connection getConnection() {
-    final String connectionUrl = "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
-    final DatabaseConnectionSource dataSource = new DatabaseConnectionSource(connectionUrl);
-    dataSource.setUserCredentials(new SingleUseUserCredentials("sa", ""));
-    return dataSource.get();
-  }
-
-  private static Path getOutputFile(final String[] args) {
-    final String outputfile;
-    if (args != null && args.length > 0 && !isBlank(args[0])) {
-      outputfile = args[0];
-    } else {
-      outputfile = "./schemacrawler_output.html";
-    }
-    final Path outputFile = Paths.get(outputfile).toAbsolutePath().normalize();
-    return outputFile;
-  }
-
   public static void main(final String[] args) throws Exception {
+
+    // Set log level
+    new LoggingConfig(Level.OFF);
 
     // Create the options
     final LimitOptionsBuilder limitOptionsBuilder =
@@ -67,5 +54,23 @@ public final class ExecutableExample {
     executable.execute();
 
     System.out.println("Created output file, " + outputFile);
+  }
+
+  private static Connection getConnection() {
+    final String connectionUrl = "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
+    final DatabaseConnectionSource dataSource = new DatabaseConnectionSource(connectionUrl);
+    dataSource.setUserCredentials(new SingleUseUserCredentials("sa", ""));
+    return dataSource.get();
+  }
+
+  private static Path getOutputFile(final String[] args) {
+    final String outputfile;
+    if (args != null && args.length > 0 && !isBlank(args[0])) {
+      outputfile = args[0];
+    } else {
+      outputfile = "./schemacrawler_output.html";
+    }
+    final Path outputFile = Paths.get(outputfile).toAbsolutePath().normalize();
+    return outputFile;
   }
 }

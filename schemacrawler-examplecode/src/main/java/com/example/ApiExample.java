@@ -1,6 +1,7 @@
 package com.example;
 
 import java.sql.Connection;
+import java.util.logging.Level;
 
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
@@ -16,17 +17,14 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
+import us.fatehi.utility.LoggingConfig;
 
 public final class ApiExample {
 
-  private static Connection getConnection() {
-    final String connectionUrl = "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
-    final DatabaseConnectionSource dataSource = new DatabaseConnectionSource(connectionUrl);
-    dataSource.setUserCredentials(new SingleUseUserCredentials("sa", ""));
-    return dataSource.get();
-  }
-
   public static void main(final String[] args) throws Exception {
+
+    // Set log level
+    new LoggingConfig(Level.OFF);
 
     // Create the options
     final LimitOptionsBuilder limitOptionsBuilder =
@@ -61,5 +59,12 @@ public final class ApiExample {
         }
       }
     }
+  }
+
+  private static Connection getConnection() {
+    final String connectionUrl = "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
+    final DatabaseConnectionSource dataSource = new DatabaseConnectionSource(connectionUrl);
+    dataSource.setUserCredentials(new SingleUseUserCredentials("sa", ""));
+    return dataSource.get();
   }
 }
