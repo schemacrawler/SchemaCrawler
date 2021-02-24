@@ -15,6 +15,14 @@
   <properties>
     <docker.skip>true</docker.skip>
   </properties>
+  <dependencies>
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-distrib</artifactId>
+      <version>${project.version}</version>
+	  <type>pom</type>
+    </dependency>
+  </dependencies>    
   <build>
     <plugins>
       <plugin>
