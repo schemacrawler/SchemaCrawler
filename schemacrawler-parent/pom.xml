@@ -6,7 +6,7 @@
   <groupId>us.fatehi</groupId>
   <artifactId>schemacrawler-parent</artifactId>
   <packaging>pom</packaging>
-  <version>16.12.2</version>
+  <version>16.12.3</version>
   <name>SchemaCrawler [Parent]</name>
   <description>Free database schema discovery and comprehension tool</description>
   <url>https://www.schemacrawler.com</url>
@@ -72,7 +72,7 @@
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-junit-jupiter</artifactId>
-      <version>3.7.7</version>
+      <version>3.8.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -84,7 +84,7 @@
     <dependency>
       <groupId>com.ginsberg</groupId>
       <artifactId>junit5-system-exit</artifactId>
-      <version>1.0.0</version>
+      <version>1.1.1</version>
       <exclusions>
         <exclusion>
           <groupId>org.junit.platform</groupId>
@@ -114,7 +114,7 @@
     <dependency>
       <groupId>com.tngtech.archunit</groupId>
       <artifactId>archunit-junit5</artifactId>
-      <version>0.16.0</version>
+      <version>0.17.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
