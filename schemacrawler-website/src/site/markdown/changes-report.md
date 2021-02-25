@@ -1,5 +1,11 @@
 # SchemaCrawler Change History
 
+<a name="a16.12.4"></a>
+## Release 16.12.4 - 2021-03-03
+
+- Move Docker Compose for SchemaCrawler to it's own project, with Maven moving _testdb files
+
+
 <a name="a16.12.3"></a>
 ## Release 16.12.3 - 2021-02-23
 
