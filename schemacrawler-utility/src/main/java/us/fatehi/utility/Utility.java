@@ -63,7 +63,7 @@ public final class Utility {
    */
   public static String convertForComparison(final String text) {
     if (text == null || text.length() == 0) {
-      return text;
+      return "";
     }
 
     final StringBuilder builder = new StringBuilder(text.length());
