@@ -29,8 +29,6 @@ package schemacrawler.crawl;
 
 import static us.fatehi.utility.Utility.isBlank;
 
-import schemacrawler.schema.Property;
-
 final class ImmutableServerInfoProperty extends AbstractProperty {
 
   private static final long serialVersionUID = -2744384718272515235L;
@@ -44,15 +42,6 @@ final class ImmutableServerInfoProperty extends AbstractProperty {
       this.description = "";
     } else {
       this.description = description;
-    }
-  }
-
-  @Override
-  public int compareTo(final Property otherProperty) {
-    if (otherProperty == null) {
-      return -1;
-    } else {
-      return getName().compareToIgnoreCase(otherProperty.getName());
     }
   }
 

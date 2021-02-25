@@ -27,11 +27,14 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.loader.attributes.model;
 
+import static java.util.Comparator.comparing;
+import static java.util.Comparator.nullsLast;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -39,6 +42,9 @@ import java.util.TreeMap;
 public abstract class ObjectAttributes implements Serializable, Comparable<ObjectAttributes> {
 
   private static final long serialVersionUID = -6819484903391182146L;
+
+  private static Comparator<ObjectAttributes> comparator =
+      nullsLast(comparing(ObjectAttributes::getName, String.CASE_INSENSITIVE_ORDER));
 
   private final String name;
   private final List<String> remarks;
@@ -66,10 +72,7 @@ public abstract class ObjectAttributes implements Serializable, Comparable<Objec
 
   @Override
   public int compareTo(final ObjectAttributes o) {
-    if (o == null) {
-      return 1;
-    }
-    return name.compareTo(o.name);
+    return comparator.compare(this, o);
   }
 
   public Map<String, String> getAttributes() {
