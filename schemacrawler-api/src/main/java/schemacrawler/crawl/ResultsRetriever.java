@@ -44,6 +44,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.Retriever;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.utility.JavaSqlTypes;
+import us.fatehi.utility.string.StringFormat;
 
 /**
  * A retriever uses database metadata to get the details about a result set.
@@ -122,8 +123,9 @@ final class ResultsRetriever {
       } catch (final Exception e) {
         LOGGER.log(
             Level.WARNING,
-            String.format(
-                "Could not retrieve column data type for %s (%s)", column, column.getLabel()),
+            new StringFormat(
+                "Could not retrieve results column data type for %s (%s)",
+                column, column.getLabel()),
             e);
 
         final MutableColumnDataType unknownColumnDataType =
@@ -151,8 +153,9 @@ final class ResultsRetriever {
       } catch (final Exception e) {
         LOGGER.log(
             Level.WARNING,
-            String.format(
-                "Could not retrieve additional column data for %s (%s)", column, column.getLabel()),
+            new StringFormat(
+                "Could not retrieve results column additional data for %s (%s)",
+                column, column.getLabel()),
             e);
       }
 
@@ -167,7 +170,9 @@ final class ResultsRetriever {
       return getResultsColumn.call();
     } catch (final Exception e) {
       LOGGER.log(
-          Level.WARNING, "Could not retrieve results column field, " + resultsColumnField, e);
+          Level.WARNING,
+          new StringFormat("Could not retrieve results column field, %s", resultsColumnField),
+          e);
       return null;
     }
   }
