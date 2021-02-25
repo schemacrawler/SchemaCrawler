@@ -59,10 +59,6 @@ abstract class AbstractNamedObject implements NamedObject {
   /** {@inheritDoc} */
   @Override
   public int compareTo(final NamedObject obj) {
-    if (obj == null) {
-      return -1;
-    }
-
     return NamedObjectSort.alphabetical.compare(this, obj);
   }
 

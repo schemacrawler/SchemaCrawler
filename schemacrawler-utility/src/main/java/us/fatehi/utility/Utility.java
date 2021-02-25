@@ -53,6 +53,14 @@ public final class Utility {
     }
   }
 
+  /**
+   * Roughly converts database object names so that they can be compared with others in a
+   * case-insensitive way. This code is not meant to "correct" from a Unicode perspective, but a
+   * quick and dirty way of stripping out quote characters, and lower-casing them for comparison.
+   *
+   * @param text Text to convert
+   * @return Text that can be compared
+   */
   public static String convertForComparison(final String text) {
     if (text == null || text.length() == 0) {
       return text;
