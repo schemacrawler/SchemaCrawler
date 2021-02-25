@@ -27,10 +27,14 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schema;
 
+import static java.util.Comparator.comparing;
+import static java.util.Comparator.nullsLast;
+import static java.util.Objects.compare;
 import static java.util.Objects.requireNonNull;
 
 import java.io.Serializable;
 import java.sql.SQLType;
+import java.util.Comparator;
 
 /**
  * A wrapper around java.sql.Types.
@@ -43,6 +47,9 @@ public final class JavaSqlType implements SQLType, Serializable, Comparable<Java
   /** Unknown SQL data type. */
   public static final JavaSqlType UNKNOWN =
       new JavaSqlType(unknownSQLType(), Object.class, JavaSqlTypeGroup.unknown);
+
+  private static Comparator<JavaSqlType> comparator =
+      nullsLast(comparing(JavaSqlType::getName, String.CASE_INSENSITIVE_ORDER));
 
   private static SQLType unknownSQLType() {
     final class UnknownSQLType implements SQLType, Serializable {
@@ -84,7 +91,7 @@ public final class JavaSqlType implements SQLType, Serializable, Comparable<Java
 
   @Override
   public int compareTo(final JavaSqlType otherSqlDataType) {
-    return sqlType.getName().compareTo(otherSqlDataType.sqlType.getName());
+    return compare(this, otherSqlDataType, comparator);
   }
 
   @Override

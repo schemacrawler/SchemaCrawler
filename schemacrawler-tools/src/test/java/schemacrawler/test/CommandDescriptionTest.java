@@ -44,7 +44,7 @@ public class CommandDescriptionTest {
   }
 
   @Test
-  public void compareTo() {
+  public void compare() {
     final CommandDescription commandDescription1 = new CommandDescription("hello1", "world");
     final CommandDescription commandDescription2 = new CommandDescription("hello", "  ");
     assertThat(commandDescription1.compareTo(commandDescription2), is(equalTo(1)));

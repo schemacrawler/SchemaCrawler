@@ -28,10 +28,14 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.catalogloader;
 
+import static java.util.Comparator.comparingInt;
+import static java.util.Comparator.nullsLast;
+import static java.util.Objects.compare;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
+import java.util.Comparator;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -44,12 +48,17 @@ import schemacrawler.tools.options.Config;
 
 public abstract class BaseCatalogLoader implements CatalogLoader {
 
+  private static Comparator<CatalogLoader> comparator =
+      nullsLast(comparingInt(CatalogLoader::getPriority))
+          .thenComparing(loader -> loader.getCommandDescription().getName());
+
   private final int priority;
   private final CommandDescription commandDescription;
   private SchemaRetrievalOptions schemaRetrievalOptions;
   private SchemaCrawlerOptions schemaCrawlerOptions;
   private Config additionalConfig;
   private Connection connection;
+
   private Catalog catalog;
 
   protected BaseCatalogLoader(final CommandDescription commandDescription, final int priority) {
@@ -59,11 +68,7 @@ public abstract class BaseCatalogLoader implements CatalogLoader {
 
   @Override
   public int compareTo(final CatalogLoader otherCatalogLoader) {
-    if (otherCatalogLoader == null) {
-      return 1;
-    } else {
-      return Integer.compare(this.priority, otherCatalogLoader.getPriority());
-    }
+    return compare(this, otherCatalogLoader, comparator);
   }
 
   @Override

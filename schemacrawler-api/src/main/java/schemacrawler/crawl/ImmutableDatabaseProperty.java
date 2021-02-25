@@ -54,6 +54,8 @@ class ImmutableDatabaseProperty extends AbstractProperty implements DatabaseProp
     acronyms = Collections.unmodifiableSet(acronymsMap.entrySet());
   }
 
+  private transient String description;
+
   ImmutableDatabaseProperty(final String name, final Object value) {
     super(name, (Serializable) value);
   }
@@ -70,8 +72,21 @@ class ImmutableDatabaseProperty extends AbstractProperty implements DatabaseProp
   /** {@inheritDoc} */
   @Override
   public String getDescription() {
+    buildDescription();
+    return description;
+  }
+
+  @Override
+  public String toString() {
+    return getDescription() + " = " + getValue();
+  }
+
+  private void buildDescription() {
+    if (description != null) {
+      return;
+    }
     final String get = "get";
-    String description = getName();
+    description = getName();
     if (description.startsWith(get)) {
       description = description.substring(get.length());
     }
@@ -98,11 +113,5 @@ class ImmutableDatabaseProperty extends AbstractProperty implements DatabaseProp
     }
 
     description = description.trim();
-    return description;
-  }
-
-  @Override
-  public String toString() {
-    return getDescription() + " = " + getValue();
   }
 }

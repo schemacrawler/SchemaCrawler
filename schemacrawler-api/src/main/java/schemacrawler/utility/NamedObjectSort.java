@@ -28,30 +28,23 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.utility;
 
+import static java.util.Comparator.comparing;
+import static java.util.Comparator.naturalOrder;
+import static java.util.Comparator.nullsLast;
 import static us.fatehi.utility.Utility.convertForComparison;
 
 import java.util.Comparator;
+import java.util.Objects;
 
 import schemacrawler.schema.NamedObject;
 
 public enum NamedObjectSort implements Comparator<NamedObject> {
 
-  /** Alphabetical sort. */
-  alphabetical {
-    @Override
-    public int compare(final NamedObject namedObject1, final NamedObject namedObject2) {
-      return convertForComparison(namedObject1.getFullName())
-          .compareTo(convertForComparison(namedObject2.getFullName()));
-    }
-  },
+  /** Alphabetical sort, case-insensitive. */
+  alphabetical(comparing(namedObject -> convertForComparison(namedObject.getFullName()))),
 
   /** Natural sort. */
-  natural {
-    @Override
-    public int compare(final NamedObject namedObject1, final NamedObject namedObject2) {
-      return namedObject1.compareTo(namedObject2);
-    }
-  };
+  natural(naturalOrder());
 
   public static NamedObjectSort getNamedObjectSort(final boolean alphabeticalSort) {
     if (alphabeticalSort) {
@@ -61,7 +54,15 @@ public enum NamedObjectSort implements Comparator<NamedObject> {
     }
   }
 
+  private final Comparator<NamedObject> comparator;
+
+  NamedObjectSort(final Comparator<NamedObject> comparator) {
+    this.comparator = nullsLast(comparator);
+  }
+
   /** {@inheritDoc} */
   @Override
-  public abstract int compare(final NamedObject namedObject1, final NamedObject namedObject2);
+  public int compare(final NamedObject namedObject1, final NamedObject namedObject2) {
+    return Objects.compare(namedObject1, namedObject2, comparator);
+  }
 }

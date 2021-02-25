@@ -39,7 +39,6 @@ import java.util.Collections;
 import java.util.List;
 
 import schemacrawler.schema.JdbcDriverProperty;
-import schemacrawler.schema.Property;
 
 /**
  * Represents a JDBC driver property, and it's value. Created from metadata returned by a JDBC call,
@@ -64,15 +63,6 @@ final class ImmutableJdbcDriverProperty extends AbstractProperty implements Jdbc
     } else {
       choices = Arrays.asList(driverPropertyInfo.choices);
       choices.sort(naturalOrder());
-    }
-  }
-
-  @Override
-  public int compareTo(final Property otherProperty) {
-    if (otherProperty == null) {
-      return -1;
-    } else {
-      return getName().compareToIgnoreCase(otherProperty.getName());
     }
   }
 

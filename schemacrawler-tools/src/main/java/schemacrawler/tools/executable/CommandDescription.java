@@ -28,15 +28,22 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.executable;
 
+import static java.util.Comparator.comparing;
+import static java.util.Comparator.nullsLast;
+import static java.util.Objects.compare;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Objects;
 
 public final class CommandDescription implements Serializable, Comparable<CommandDescription> {
 
   private static final long serialVersionUID = 2444083929278551904L;
+
+  private static Comparator<CommandDescription> comparator =
+      nullsLast(comparing(CommandDescription::getName, String.CASE_INSENSITIVE_ORDER));
 
   private final String name;
   private final String description;
@@ -53,11 +60,7 @@ public final class CommandDescription implements Serializable, Comparable<Comman
 
   @Override
   public int compareTo(final CommandDescription otherProperty) {
-    if (otherProperty == null) {
-      return -1;
-    } else {
-      return getName().compareToIgnoreCase(otherProperty.getName());
-    }
+    return compare(this, otherProperty, comparator);
   }
 
   @Override

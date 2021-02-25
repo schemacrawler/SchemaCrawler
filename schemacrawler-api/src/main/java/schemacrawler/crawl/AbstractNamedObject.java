@@ -28,11 +28,14 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
+import static java.util.Objects.compare;
+import static java.util.Objects.hash;
+import static schemacrawler.utility.NamedObjectSort.alphabetical;
+
 import java.util.Objects;
 
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.NamedObjectKey;
-import schemacrawler.utility.NamedObjectSort;
 
 /**
  * Represents a named object.
@@ -59,11 +62,7 @@ abstract class AbstractNamedObject implements NamedObject {
   /** {@inheritDoc} */
   @Override
   public int compareTo(final NamedObject obj) {
-    if (obj == null) {
-      return -1;
-    }
-
-    return NamedObjectSort.alphabetical.compare(this, obj);
+    return compare(this, obj, alphabetical);
   }
 
   @Override
@@ -94,7 +93,7 @@ abstract class AbstractNamedObject implements NamedObject {
 
   @Override
   public int hashCode() {
-    return Objects.hash(name);
+    return hash(name);
   }
 
   /** {@inheritDoc} */
