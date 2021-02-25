@@ -4,12 +4,13 @@ services:
 
   schemacrawler:
     image: schemacrawler/schemacrawler
+    container_name: schemacrawler
     stdin_open: true
     tty: true
     volumes:
       - type: bind
-        source: ./_testdb
-        target: /home/schcrwlr/_testdb
+        source: ./target
+        target: /home/schcrwlr/target
       - type: bind
         source: ./
         target: /home/schcrwlr/output

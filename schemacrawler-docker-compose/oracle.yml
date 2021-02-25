@@ -5,6 +5,7 @@ services:
   oracle:
     # https://github.com/wnameless/docker-oracle-xe-11g
     image: wnameless/oracle-xe-11g-r2
+    container_name: oracle
     ports:
       - target: 1521
         published: 1521
