@@ -53,7 +53,7 @@ public final class TableType implements Serializable, Comparable<TableType> {
   @Override
   public int compareTo(final TableType other) {
     if (other == null) {
-      return 1;
+      return -1;
     }
 
     final String thisToString = toString();

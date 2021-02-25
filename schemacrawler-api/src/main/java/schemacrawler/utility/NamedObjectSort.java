@@ -34,6 +34,7 @@ import static java.util.Comparator.nullsLast;
 import static us.fatehi.utility.Utility.convertForComparison;
 
 import java.util.Comparator;
+import java.util.Objects;
 
 import schemacrawler.schema.NamedObject;
 
@@ -62,6 +63,6 @@ public enum NamedObjectSort implements Comparator<NamedObject> {
   /** {@inheritDoc} */
   @Override
   public int compare(final NamedObject namedObject1, final NamedObject namedObject2) {
-    return comparator.compare(namedObject1, namedObject2);
+    return Objects.compare(namedObject1, namedObject2, comparator);
   }
 }

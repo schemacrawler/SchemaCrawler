@@ -29,6 +29,7 @@ package schemacrawler.schema;
 
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.nullsLast;
+import static java.util.Objects.compare;
 
 import java.io.Serializable;
 import java.util.Comparator;
@@ -40,7 +41,7 @@ public interface Property extends Serializable, Comparable<Property> {
 
   @Override
   default int compareTo(final Property otherProperty) {
-    return comparator.compare(this, otherProperty);
+    return compare(this, otherProperty, comparator);
   }
 
   /**

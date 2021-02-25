@@ -27,7 +27,8 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schemacrawler;
 
-import static us.fatehi.utility.Utility.convertForComparison;
+import static java.util.Objects.compare;
+import static schemacrawler.utility.NamedObjectSort.alphabetical;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.Collections;
@@ -59,14 +60,10 @@ public final class SchemaReference implements Schema {
     this.schemaName = schemaName;
   }
 
+  /** {@inheritDoc} */
   @Override
-  public int compareTo(final NamedObject otherSchemaRef) {
-    if (otherSchemaRef == null) {
-      return -1;
-    } else {
-      return convertForComparison(getFullName())
-          .compareTo(convertForComparison(otherSchemaRef.getFullName()));
-    }
+  public int compareTo(final NamedObject obj) {
+    return compare(this, obj, alphabetical);
   }
 
   @Override

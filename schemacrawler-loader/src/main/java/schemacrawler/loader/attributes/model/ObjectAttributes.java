@@ -29,6 +29,7 @@ package schemacrawler.loader.attributes.model;
 
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.nullsLast;
+import static java.util.Objects.compare;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.Serializable;
@@ -72,7 +73,7 @@ public abstract class ObjectAttributes implements Serializable, Comparable<Objec
 
   @Override
   public int compareTo(final ObjectAttributes o) {
-    return comparator.compare(this, o);
+    return compare(this, o, comparator);
   }
 
   public Map<String, String> getAttributes() {

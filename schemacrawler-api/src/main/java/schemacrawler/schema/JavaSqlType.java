@@ -29,6 +29,7 @@ package schemacrawler.schema;
 
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.nullsLast;
+import static java.util.Objects.compare;
 import static java.util.Objects.requireNonNull;
 
 import java.io.Serializable;
@@ -90,7 +91,7 @@ public final class JavaSqlType implements SQLType, Serializable, Comparable<Java
 
   @Override
   public int compareTo(final JavaSqlType otherSqlDataType) {
-    return comparator.compare(this, otherSqlDataType);
+    return compare(this, otherSqlDataType, comparator);
   }
 
   @Override

@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
+import static schemacrawler.utility.NamedObjectSort.alphabetical;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -48,7 +50,6 @@ import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
-import schemacrawler.utility.NamedObjectSort;
 
 class MutableTable extends AbstractDatabaseObject implements Table {
 
@@ -185,7 +186,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
     }
 
     final List<Table> relatedTablesList = new ArrayList<>(relatedTables);
-    relatedTablesList.sort(NamedObjectSort.alphabetical);
+    relatedTablesList.sort(alphabetical);
     return relatedTablesList;
   }
 

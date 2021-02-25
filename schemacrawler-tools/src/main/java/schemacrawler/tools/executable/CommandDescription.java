@@ -30,6 +30,7 @@ package schemacrawler.tools.executable;
 
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.nullsLast;
+import static java.util.Objects.compare;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
@@ -59,7 +60,7 @@ public final class CommandDescription implements Serializable, Comparable<Comman
 
   @Override
   public int compareTo(final CommandDescription otherProperty) {
-    return comparator.compare(this, otherProperty);
+    return compare(this, otherProperty, comparator);
   }
 
   @Override
