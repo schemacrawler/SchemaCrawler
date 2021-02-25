@@ -17,15 +17,15 @@
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-distrib</artifactId>
       <version>${project.version}</version>
-	  <type>pom</type>
+      <type>pom</type>
     </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-docker</artifactId>
       <version>${project.version}</version>
-	  <type>pom</type>
+      <type>pom</type>
     </dependency>
-  </dependencies>  
+  </dependencies>
   <build>
     <pluginManagement>
       <plugins>
@@ -47,7 +47,7 @@
           </dependencies>
         </plugin>
       </plugins>
-    </pluginManagement>  
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -63,12 +63,13 @@
                   location=".." />
                 <property name="SchemaCrawler.version"
                   value="${project.version}" />
-	<mkdir dir="${project.build.directory}" />
-    <copy todir="${project.build.directory}">
-      <fileset dir="${SchemaCrawler.home}/schemacrawler-distrib/target/_main-distribution/_testdb">
-        <include name="**/*.*" />
-      </fileset>
-    </copy>
+                <mkdir dir="${project.build.directory}" />
+                <copy todir="${project.build.directory}">
+                  <fileset
+                    dir="${SchemaCrawler.home}/schemacrawler-distrib/target/_main-distribution/_testdb">
+                    <include name="**/*.*" />
+                  </fileset>
+                </copy>
               </target>
             </configuration>
             <goals>

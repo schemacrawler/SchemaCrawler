@@ -4,6 +4,7 @@ services:
 
   postgresql:
     image: postgres
+    container_name: postgres
     ports:
       - target: 5432
         published: 5432

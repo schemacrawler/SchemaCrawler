@@ -4,6 +4,7 @@ services:
 
   mysql:
     image: mysql
+    container_name: mysql
     command: --lower_case_table_names=1 --log_bin_trust_function_creators=1
     ports:
       - target: 3306
