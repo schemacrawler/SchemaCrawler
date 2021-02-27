@@ -31,6 +31,7 @@ package schemacrawler.tools.text.formatter.schema;
 import static java.util.Comparator.naturalOrder;
 import static schemacrawler.loader.counts.TableRowCountsUtility.getRowCountMessage;
 import static schemacrawler.loader.counts.TableRowCountsUtility.hasRowCount;
+import static schemacrawler.schema.DataTypeType.user_defined;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.ArrayList;
@@ -352,7 +353,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
   private void printColumnDataType(final ColumnDataType columnDataType) {
 
-    final boolean isUserDefined = columnDataType.isUserDefined();
+    final boolean isUserDefined = columnDataType.getType() == user_defined;
     final String dataType = String.format("[%sdata type]", isUserDefined ? "user defined " : "");
 
     final String typeName;

@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
+import static java.util.Objects.requireNonNull;
+import static schemacrawler.schema.DataTypeType.user_defined;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.ArrayList;
@@ -36,6 +38,7 @@ import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SearchableType;
@@ -55,6 +58,7 @@ final class MutableColumnDataType extends AbstractDatabaseObject implements Colu
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(SchemaCrawler.class.getName());
 
+  private final DataTypeType type;
   private boolean autoIncrementable;
   private ColumnDataType baseType;
   private boolean caseSensitive;
@@ -73,11 +77,10 @@ final class MutableColumnDataType extends AbstractDatabaseObject implements Colu
   private long precision;
   private SearchableType searchable;
   private boolean unsigned;
-  private boolean userDefined;
   private List<String> enumValues;
 
   MutableColumnDataType(final ColumnDataType columnDataType) {
-    this(columnDataType.getSchema(), columnDataType.getName());
+    this(columnDataType.getSchema(), columnDataType.getName(), columnDataType.getType());
 
     autoIncrementable = columnDataType.isAutoIncrementable();
     baseType = columnDataType.getBaseType();
@@ -96,12 +99,14 @@ final class MutableColumnDataType extends AbstractDatabaseObject implements Colu
     precision = columnDataType.getPrecision();
     searchable = columnDataType.getSearchable();
     unsigned = columnDataType.isUnsigned();
-    userDefined = columnDataType.isUserDefined();
     enumValues = new ArrayList<>(columnDataType.getEnumValues());
   }
 
-  MutableColumnDataType(final Schema schema, final String name) {
+  MutableColumnDataType(final Schema schema, final String name, final DataTypeType type) {
     super(schema, name);
+
+    requireNonNull(type, "No type provided");
+    this.type = type;
 
     javaSqlType = JavaSqlType.UNKNOWN;
     javaSqlTypeMappedClass = Object.class;
@@ -199,6 +204,11 @@ final class MutableColumnDataType extends AbstractDatabaseObject implements Colu
     return searchable;
   }
 
+  @Override
+  public DataTypeType getType() {
+    return type;
+  }
+
   /** {@inheritDoc} */
   @Override
   public Class<?> getTypeMappedClass() {
@@ -243,7 +253,7 @@ final class MutableColumnDataType extends AbstractDatabaseObject implements Colu
   /** {@inheritDoc} */
   @Override
   public boolean isUserDefined() {
-    return userDefined;
+    return type == user_defined;
   }
 
   void setAutoIncrementable(final boolean autoIncrementable) {
@@ -342,10 +352,6 @@ final class MutableColumnDataType extends AbstractDatabaseObject implements Colu
 
   void setUnsigned(final boolean unsignedAttribute) {
     unsigned = unsignedAttribute;
-  }
-
-  void setUserDefined(final boolean userDefined) {
-    this.userDefined = userDefined;
   }
 
   private void buildFullName() {

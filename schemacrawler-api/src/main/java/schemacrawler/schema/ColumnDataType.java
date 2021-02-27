@@ -36,7 +36,7 @@ import java.util.List;
  *
  * @author Sualeh Fatehi
  */
-public interface ColumnDataType extends DatabaseObject {
+public interface ColumnDataType extends DatabaseObject, TypedObject<DataTypeType> {
 
   /**
    * Gets the base type of the data type.
@@ -179,9 +179,10 @@ public interface ColumnDataType extends DatabaseObject {
   boolean isUnsigned();
 
   /**
-   * Whether the data type is user-defined.
-   *
+   * @deprecated Whether the data type is user-defined.
    * @return Whether the data type is user-defined
+   * @see getType()
    */
+  @Deprecated
   boolean isUserDefined();
 }

@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.schema.DataTypeType.user_defined;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.ResultSet;
@@ -111,7 +112,7 @@ final class ResultsRetriever {
         final int javaSqlType = resultsMetaData.getColumnType(columnIndex);
         final String columnClassName = resultsMetaData.getColumnClassName(columnIndex);
         final MutableColumnDataType columnDataType =
-            new MutableColumnDataType(schema, databaseSpecificTypeName);
+            new MutableColumnDataType(schema, databaseSpecificTypeName, user_defined);
         columnDataType.setJavaSqlType(javaSqlTypes.valueOf(javaSqlType));
         columnDataType.setTypeMappedClass(columnClassName);
         columnDataType.setPrecision(resultsMetaData.getPrecision(columnIndex));
@@ -129,7 +130,7 @@ final class ResultsRetriever {
             e);
 
         final MutableColumnDataType unknownColumnDataType =
-            new MutableColumnDataType(schema, "<unknown>");
+            new MutableColumnDataType(schema, "<unknown>", user_defined);
         unknownColumnDataType.setJavaSqlType(JavaSqlType.UNKNOWN);
         //
         column.setColumnDataType(unknownColumnDataType);
