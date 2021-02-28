@@ -93,8 +93,7 @@ public class SchemaCrawlerCoverageTest {
         "caseSensitive",
         "fixedPrecisionScale",
         "nullable",
-        "unsigned",
-        "userDefined");
+        "unsigned");
   }
 
   @Test

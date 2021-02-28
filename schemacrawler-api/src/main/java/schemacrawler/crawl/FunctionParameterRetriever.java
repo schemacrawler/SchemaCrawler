@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.InformationSchemaKey.FUNCTION_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionParametersRetrievalStrategy;
 import static us.fatehi.utility.Utility.isBlank;
@@ -155,7 +156,7 @@ final class FunctionParameterRetriever extends AbstractRetriever {
       parameter.setOrdinalPosition(ordinalPosition);
       parameter.setParameterMode(parameterMode);
       parameter.setColumnDataType(
-          lookupOrCreateColumnDataType(function.getSchema(), dataType, typeName));
+          lookupOrCreateColumnDataType(user_defined, function.getSchema(), dataType, typeName));
       parameter.setSize(length);
       parameter.setPrecision(precision);
       parameter.setNullable(isNullable);

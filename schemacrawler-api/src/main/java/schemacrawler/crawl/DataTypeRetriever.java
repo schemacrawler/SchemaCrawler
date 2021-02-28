@@ -29,6 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.schema.DataTypeType.system;
+import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TYPE_INFO;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.typeInfoRetrievalStrategy;
 
@@ -124,8 +126,7 @@ final class DataTypeRetriever extends AbstractRetriever {
           baseType = null;
         }
         final MutableColumnDataType columnDataType =
-            lookupOrCreateColumnDataType(schema, dataType, typeName, className);
-        columnDataType.setUserDefined(true);
+            lookupOrCreateColumnDataType(user_defined, schema, dataType, typeName, className);
         columnDataType.setBaseType(baseType);
         columnDataType.setRemarks(remarks);
 
@@ -162,7 +163,7 @@ final class DataTypeRetriever extends AbstractRetriever {
     final int numPrecisionRadix = results.getInt("NUM_PREC_RADIX", 0);
 
     final MutableColumnDataType columnDataType =
-        lookupOrCreateColumnDataType(systemSchema, dataType, typeName);
+        lookupOrCreateColumnDataType(system, systemSchema, dataType, typeName);
     // Set the Java SQL type code, but no mapped Java class is
     // available, so use the defaults
     columnDataType.setPrecision(precision);

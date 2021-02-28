@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_HIDDEN_TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
@@ -168,7 +169,8 @@ final class TableColumnRetriever extends AbstractRetriever {
 
       column.setOrdinalPosition(ordinalPosition);
       column.setColumnDataType(
-          lookupOrCreateColumnDataType(table.getSchema(), dataType, columnDataTypeName));
+          lookupOrCreateColumnDataType(
+              user_defined, table.getSchema(), dataType, columnDataTypeName));
       column.setSize(size);
       column.setDecimalDigits(decimalDigits);
       column.setNullable(isNullable);

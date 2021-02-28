@@ -118,7 +118,7 @@ public class DataTypeRetrieverTest {
       } else {
         baseTypeName = baseColumnDataType.getFullName();
       }
-      buffer.append("\n").append("  ").append("based on ").append(baseTypeName);
+      buffer.append("\n").append("  ").append("based on ").append(baseTypeName).append("\n");
     }
 
     buffer.append("  attributes:\n");

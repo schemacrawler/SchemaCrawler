@@ -41,6 +41,7 @@ import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.inclusionrule.InclusionRule;
+import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.NamedObjectKey;
@@ -148,13 +149,17 @@ abstract class AbstractRetriever {
    * not exist.
    *
    * @param schema Schema
-   * @param javaSqlType JDBC data type
+   * @param javaSqlTypeInt JDBC data type
    * @param databaseSpecificTypeName Database specific type name
    * @return Column data type
    */
   final MutableColumnDataType lookupOrCreateColumnDataType(
-      final Schema schema, final int javaSqlType, final String databaseSpecificTypeName) {
-    return lookupOrCreateColumnDataType(schema, javaSqlType, databaseSpecificTypeName, null);
+      final DataTypeType type,
+      final Schema schema,
+      final int javaSqlTypeInt,
+      final String databaseSpecificTypeName) {
+    return lookupOrCreateColumnDataType(
+        type, schema, javaSqlTypeInt, databaseSpecificTypeName, null);
   }
 
   /**
@@ -167,6 +172,7 @@ abstract class AbstractRetriever {
    * @return Column data type
    */
   final MutableColumnDataType lookupOrCreateColumnDataType(
+      final DataTypeType type,
       final Schema schema,
       final int javaSqlTypeInt,
       final String databaseSpecificTypeName,
@@ -177,7 +183,7 @@ abstract class AbstractRetriever {
             .orElse(catalog.lookupSystemColumnDataType(databaseSpecificTypeName).orElse(null));
     // Create new data type, if needed
     if (columnDataType == null) {
-      columnDataType = new MutableColumnDataType(schema, databaseSpecificTypeName);
+      columnDataType = new MutableColumnDataType(schema, databaseSpecificTypeName, type);
       final JavaSqlType javaSqlType = retrieverConnection.getJavaSqlTypes().valueOf(javaSqlTypeInt);
       columnDataType.setJavaSqlType(javaSqlType);
       if (isBlank(mappedClassName)) {
