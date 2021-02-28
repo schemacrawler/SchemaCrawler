@@ -94,7 +94,7 @@ public class EqualsTest {
 
   @Test
   public void namedObjectKey() {
-    EqualsVerifier.forClass(NamedObjectKey.class).verify();
+    EqualsVerifier.forClass(NamedObjectKey.class).withNonnullFields("key").verify();
   }
 
   @Test
