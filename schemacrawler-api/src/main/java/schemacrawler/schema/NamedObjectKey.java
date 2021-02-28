@@ -28,9 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.schema;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
 
 public final class NamedObjectKey implements Serializable {
 
@@ -67,7 +65,7 @@ public final class NamedObjectKey implements Serializable {
 
   @Override
   public int hashCode() {
-    return Objects.hash(new ArrayList<>(Arrays.asList(key)));
+    return Arrays.hashCode(key);
   }
 
   @Override
