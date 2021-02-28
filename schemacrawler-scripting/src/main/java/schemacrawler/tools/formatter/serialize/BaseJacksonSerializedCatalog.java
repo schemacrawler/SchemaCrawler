@@ -48,7 +48,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.fasterxml.jackson.databind.ser.BeanPropertyWriter;
@@ -189,7 +189,7 @@ public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer 
         },
         alphabetic = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@uuid")
-    @JsonNaming(PropertyNamingStrategy.KebabCaseStrategy.class)
+    @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
     @JsonFilter("ignore-getter-errors-filter")
     class JacksonAnnotationMixIn {}
 
