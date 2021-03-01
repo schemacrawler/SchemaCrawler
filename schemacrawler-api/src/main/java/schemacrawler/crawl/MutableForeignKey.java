@@ -28,9 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
+import static java.util.Objects.hash;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -57,7 +60,7 @@ final class MutableForeignKey extends AbstractNamedObjectWithAttributes implemen
 
   private final String specificName;
   private transient NamedObjectKey key;
-  private final SortedSet<MutableForeignKeyColumnReference> columnReferences = new TreeSet<>();
+  private final SortedSet<MutableForeignKeyColumnReference> columnReferences;
   private final StringBuilder definition;
   private ForeignKeyDeferrability deferrability;
   private ForeignKeyUpdateRule deleteRule;
@@ -66,6 +69,7 @@ final class MutableForeignKey extends AbstractNamedObjectWithAttributes implemen
   MutableForeignKey(final String name, final String specificName) {
     super(name);
     this.specificName = specificName;
+    columnReferences = new TreeSet<>();
 
     definition = new StringBuilder();
 
@@ -92,6 +96,22 @@ final class MutableForeignKey extends AbstractNamedObjectWithAttributes implemen
     final List<? extends ColumnReference> otherColumnReferences = other.getColumnReferences();
 
     return CompareUtility.compareLists(thisColumnReferences, otherColumnReferences);
+  }
+
+  /** {@inheritDoc} Foreign key equality is based on the column references, not the name. */
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (!(obj instanceof BaseForeignKey)) {
+      return false;
+    }
+    final BaseForeignKey<?> other = (BaseForeignKey<?>) obj;
+    return Objects.equals(getColumnReferences(), other.getColumnReferences());
   }
 
   /** {@inheritDoc} */
@@ -137,6 +157,12 @@ final class MutableForeignKey extends AbstractNamedObjectWithAttributes implemen
   @Override
   public boolean hasDefinition() {
     return definition.length() > 0;
+  }
+
+  /** {@inheritDoc} Foreign key equality is based on the column references, not the name. */
+  @Override
+  public int hashCode() {
+    return hash(columnReferences);
   }
 
   @Override
