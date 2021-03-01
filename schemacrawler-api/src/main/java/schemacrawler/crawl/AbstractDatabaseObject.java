@@ -53,6 +53,8 @@ abstract class AbstractDatabaseObject extends AbstractNamedObjectWithAttributes
   private final Schema schema;
   private transient NamedObjectKey key;
 
+  private transient String fullName;
+
   /**
    * Effective Java - Item 17 - Minimize Mutability - Package-private constructors make a class
    * effectively final
@@ -109,7 +111,8 @@ abstract class AbstractDatabaseObject extends AbstractNamedObjectWithAttributes
   /** {@inheritDoc} */
   @Override
   public String getFullName() {
-    return Identifiers.STANDARD.quoteFullName(this);
+    buildFullName();
+    return fullName;
   }
 
   @Override
@@ -129,6 +132,13 @@ abstract class AbstractDatabaseObject extends AbstractNamedObjectWithAttributes
   public NamedObjectKey key() {
     buildKey();
     return key;
+  }
+
+  private void buildFullName() {
+    if (fullName != null) {
+      return;
+    }
+    fullName = Identifiers.STANDARD.quoteFullName(this);
   }
 
   private void buildKey() {

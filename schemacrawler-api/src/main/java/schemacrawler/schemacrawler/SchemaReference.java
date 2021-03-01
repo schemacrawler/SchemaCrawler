@@ -147,6 +147,12 @@ public final class SchemaReference implements Schema {
     return false;
   }
 
+  @Override
+  public NamedObjectKey key() {
+    buildKey();
+    return key;
+  }
+
   /** {@inheritDoc} */
   @Override
   public <T> Optional<T> lookupAttribute(final String name) {
@@ -183,20 +189,11 @@ public final class SchemaReference implements Schema {
     return getFullName();
   }
 
-  @Override
-  public NamedObjectKey key() {
-    buildKey();
-    return key;
-  }
-
   private void buildFullName() {
     if (fullName != null) {
       return;
     }
-
-    final Identifiers identifiers =
-        Identifiers.identifiers().withIdentifierQuoteString("\"").build();
-    fullName = identifiers.quoteFullName(this);
+    fullName = Identifiers.STANDARD.quoteFullName(this);
   }
 
   private void buildKey() {

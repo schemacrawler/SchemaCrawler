@@ -51,6 +51,8 @@ abstract class AbstractDependantObject<D extends DatabaseObject> extends Abstrac
 
   private final DatabaseObjectReference<D> parent;
   private transient NamedObjectKey key;
+  private transient String fullName;
+  private transient String shortName;
 
   /**
    * Effective Java - Item 17 - Minimize Mutability - Package-private constructors make a class
@@ -82,7 +84,8 @@ abstract class AbstractDependantObject<D extends DatabaseObject> extends Abstrac
   /** {@inheritDoc} */
   @Override
   public final String getFullName() {
-    return Identifiers.STANDARD.quoteFullName(this);
+    buildFullName();
+    return fullName;
   }
 
   /** {@inheritDoc} */
@@ -98,7 +101,8 @@ abstract class AbstractDependantObject<D extends DatabaseObject> extends Abstrac
 
   @Override
   public final String getShortName() {
-    return Identifiers.STANDARD.quoteShortName(this);
+    buildShortName();
+    return shortName;
   }
 
   @Override
@@ -120,10 +124,24 @@ abstract class AbstractDependantObject<D extends DatabaseObject> extends Abstrac
     return key;
   }
 
+  private void buildFullName() {
+    if (fullName != null) {
+      return;
+    }
+    fullName = Identifiers.STANDARD.quoteFullName(this);
+  }
+
   private void buildKey() {
     if (key != null) {
       return;
     }
     this.key = parent.get().key().with(getName());
+  }
+
+  private void buildShortName() {
+    if (shortName != null) {
+      return;
+    }
+    shortName = Identifiers.STANDARD.quoteShortName(this);
   }
 }
