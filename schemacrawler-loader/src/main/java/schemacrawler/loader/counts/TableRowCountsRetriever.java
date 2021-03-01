@@ -71,7 +71,7 @@ public final class TableRowCountsRetriever {
       // so we cannot fail with an exception. Log and continue.
       LOGGER.log(Level.WARNING, "No connection provided", e);
 
-      identifiers = Identifiers.identifiers().withIdentifierQuoteString("\"").build();
+      identifiers = Identifiers.STANDARD;
 
       return;
     }
