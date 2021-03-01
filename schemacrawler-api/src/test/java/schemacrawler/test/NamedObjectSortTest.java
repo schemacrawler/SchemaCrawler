@@ -79,7 +79,7 @@ public class NamedObjectSortTest {
     }
 
     @Override
-    public NamedObjectKey toUniqueLookupKey() {
+    public NamedObjectKey key() {
       return null;
     }
   }
@@ -102,7 +102,7 @@ public class NamedObjectSortTest {
     }
 
     @Override
-    public NamedObjectKey toUniqueLookupKey() {
+    public NamedObjectKey key() {
       return null;
     }
   }

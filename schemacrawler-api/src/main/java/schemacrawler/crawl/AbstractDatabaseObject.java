@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
+import static java.util.Objects.hash;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Objects;
@@ -120,12 +121,12 @@ abstract class AbstractDatabaseObject extends AbstractNamedObjectWithAttributes
   public int hashCode() {
     final int prime = 31;
     int result = super.hashCode();
-    result = prime * result + Objects.hash(schema);
+    result = prime * result + hash(schema);
     return result;
   }
 
   @Override
-  public NamedObjectKey toUniqueLookupKey() {
+  public NamedObjectKey key() {
     buildKey();
     return key;
   }
@@ -134,6 +135,6 @@ abstract class AbstractDatabaseObject extends AbstractNamedObjectWithAttributes
     if (key != null) {
       return;
     }
-    this.key = schema.toUniqueLookupKey().add(getName());
+    this.key = schema.key().with(getName());
   }
 }

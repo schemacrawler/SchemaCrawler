@@ -120,7 +120,7 @@ public class CompareToTest {
               }
 
               @Override
-              public NamedObjectKey toUniqueLookupKey() {
+              public NamedObjectKey key() {
                 return null;
               }
             }));

@@ -135,7 +135,7 @@ public abstract class BaseFormatter<O extends BaseTextOptions> implements Traver
     if (dbObject == null) {
       return "";
     } else {
-      final NamedObjectKey dbObjectLookupKey = dbObject.toUniqueLookupKey();
+      final NamedObjectKey dbObjectLookupKey = dbObject.key();
       return convertForComparison(dbObject.getName())
           + "_"
           + Integer.toHexString(dbObjectLookupKey.hashCode());

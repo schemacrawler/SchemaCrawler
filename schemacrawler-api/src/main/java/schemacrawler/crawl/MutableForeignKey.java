@@ -158,7 +158,7 @@ final class MutableForeignKey extends AbstractNamedObjectWithAttributes implemen
   }
 
   @Override
-  public NamedObjectKey toUniqueLookupKey() {
+  public NamedObjectKey key() {
     buildKey();
     return key;
   }

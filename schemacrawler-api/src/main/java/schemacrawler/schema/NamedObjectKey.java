@@ -44,13 +44,6 @@ public final class NamedObjectKey implements Serializable {
     }
   }
 
-  public NamedObjectKey add(final String name) {
-    final int currentLength = key.length;
-    final String[] newKey = Arrays.copyOf(key, currentLength + 1);
-    newKey[currentLength] = name;
-    return new NamedObjectKey(newKey);
-  }
-
   @Override
   public boolean equals(final Object obj) {
     if (this == obj) {
@@ -71,5 +64,12 @@ public final class NamedObjectKey implements Serializable {
   @Override
   public String toString() {
     return "{\"key\": \"" + String.join("/", key) + "\"}";
+  }
+
+  public NamedObjectKey with(final String name) {
+    final int currentLength = key.length;
+    final String[] newKey = Arrays.copyOf(key, currentLength + 1);
+    newKey[currentLength] = name;
+    return new NamedObjectKey(newKey);
   }
 }

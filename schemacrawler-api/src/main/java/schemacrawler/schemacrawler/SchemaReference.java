@@ -184,7 +184,7 @@ public final class SchemaReference implements Schema {
   }
 
   @Override
-  public NamedObjectKey toUniqueLookupKey() {
+  public NamedObjectKey key() {
     buildKey();
     return key;
   }

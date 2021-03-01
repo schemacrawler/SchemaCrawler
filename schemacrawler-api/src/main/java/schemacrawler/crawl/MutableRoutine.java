@@ -127,7 +127,7 @@ abstract class MutableRoutine extends AbstractDatabaseObject implements Routine 
   }
 
   @Override
-  public final NamedObjectKey toUniqueLookupKey() {
+  public final NamedObjectKey key() {
     buildKey();
     return key;
   }
@@ -146,6 +146,6 @@ abstract class MutableRoutine extends AbstractDatabaseObject implements Routine 
     if (key != null) {
       return;
     }
-    this.key = super.toUniqueLookupKey().add(specificName);
+    this.key = super.key().with(specificName);
   }
 }

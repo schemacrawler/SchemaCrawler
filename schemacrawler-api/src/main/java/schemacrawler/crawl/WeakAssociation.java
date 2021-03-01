@@ -130,7 +130,7 @@ public final class WeakAssociation implements BaseForeignKey<WeakAssociationColu
   }
 
   @Override
-  public NamedObjectKey toUniqueLookupKey() {
+  public NamedObjectKey key() {
     buildKey();
     return key;
   }
