@@ -199,12 +199,13 @@ public final class Identifiers {
     }
   }
 
-  public static final Identifiers STANDARD =
-      Identifiers.identifiers().withIdentifierQuoteString("\"").build();
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(Identifiers.class.getName());
-  private static final Pattern isAllNumeric = Pattern.compile("^\\p{Nd}*$");
 
+  public static final Identifiers STANDARD =
+      Identifiers.identifiers().withIdentifierQuoteString("\"").build();
+
+  private static final Pattern isAllNumeric = Pattern.compile("^\\p{Nd}*$");
   private static final Pattern isIdentifier = Pattern.compile("^[\\p{Nd}\\p{L}\\p{M}_]*$");
 
   public static Builder identifiers() {

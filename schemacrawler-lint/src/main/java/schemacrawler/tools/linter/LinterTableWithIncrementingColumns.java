@@ -29,6 +29,7 @@ package schemacrawler.tools.linter;
 
 import static java.util.Comparator.naturalOrder;
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.convertForComparison;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -133,7 +134,7 @@ public class LinterTableWithIncrementingColumns extends BaseLinter {
 
     final Map<String, Integer> incrementingColumnsMap = new HashMap<>();
     for (final Column column : columns) {
-      final String columnName = Utility.convertForComparison(column.getName());
+      final String columnName = convertForComparison(column.getName());
       incrementingColumnsMap.put(columnName, 1);
       final Matcher matcher = pattern.matcher(columnName);
       if (matcher.matches()) {

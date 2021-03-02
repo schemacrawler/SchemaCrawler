@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
+import static java.util.Objects.hash;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Objects;
@@ -51,6 +52,8 @@ abstract class AbstractDatabaseObject extends AbstractNamedObjectWithAttributes
 
   private final Schema schema;
   private transient NamedObjectKey key;
+
+  private transient String fullName;
 
   /**
    * Effective Java - Item 17 - Minimize Mutability - Package-private constructors make a class
@@ -108,7 +111,8 @@ abstract class AbstractDatabaseObject extends AbstractNamedObjectWithAttributes
   /** {@inheritDoc} */
   @Override
   public String getFullName() {
-    return Identifiers.STANDARD.quoteFullName(this);
+    buildFullName();
+    return fullName;
   }
 
   @Override
@@ -120,20 +124,27 @@ abstract class AbstractDatabaseObject extends AbstractNamedObjectWithAttributes
   public int hashCode() {
     final int prime = 31;
     int result = super.hashCode();
-    result = prime * result + Objects.hash(schema);
+    result = prime * result + hash(schema);
     return result;
   }
 
   @Override
-  public NamedObjectKey toUniqueLookupKey() {
+  public NamedObjectKey key() {
     buildKey();
     return key;
+  }
+
+  private void buildFullName() {
+    if (fullName != null) {
+      return;
+    }
+    fullName = Identifiers.STANDARD.quoteFullName(this);
   }
 
   private void buildKey() {
     if (key != null) {
       return;
     }
-    this.key = schema.toUniqueLookupKey().add(getName());
+    this.key = schema.key().with(getName());
   }
 }

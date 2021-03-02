@@ -94,7 +94,7 @@ public class EqualsTest {
 
   @Test
   public void namedObjectKey() {
-    EqualsVerifier.forClass(NamedObjectKey.class).verify();
+    EqualsVerifier.forClass(NamedObjectKey.class).withNonnullFields("key").verify();
   }
 
   @Test
@@ -147,6 +147,9 @@ public class EqualsTest {
 
   @Test
   public void weakAssociation() {
-    EqualsVerifier.forClass(WeakAssociation.class).withIgnoredFields("key", "name").verify();
+    EqualsVerifier.forClass(WeakAssociation.class)
+        .withNonnullFields("columnReferences")
+        .withIgnoredFields("key", "name")
+        .verify();
   }
 }

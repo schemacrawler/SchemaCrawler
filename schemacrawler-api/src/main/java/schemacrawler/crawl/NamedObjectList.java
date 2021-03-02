@@ -62,7 +62,7 @@ final class NamedObjectList<N extends NamedObject> implements Serializable, Redu
     if (namedObject == null) {
       key = null;
     } else {
-      key = namedObject.toUniqueLookupKey();
+      key = namedObject.key();
     }
     return key;
   }
@@ -70,7 +70,7 @@ final class NamedObjectList<N extends NamedObject> implements Serializable, Redu
   private static NamedObjectKey makeLookupKey(final NamedObject namedObject, final String name) {
     NamedObjectKey key = makeLookupKey(namedObject);
     if (key != null) {
-      key = key.add(name);
+      key = key.with(name);
     }
     return key;
   }

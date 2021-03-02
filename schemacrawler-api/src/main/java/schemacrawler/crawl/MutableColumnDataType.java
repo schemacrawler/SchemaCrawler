@@ -360,9 +360,7 @@ final class MutableColumnDataType extends AbstractDatabaseObject implements Colu
     }
     final Schema schema = getSchema();
     if (!isBlank(schema.getFullName())) {
-      final Identifiers identifiers =
-          Identifiers.identifiers().withIdentifierQuoteString("\"").build();
-      fullName = identifiers.quoteFullName(this);
+      fullName = Identifiers.STANDARD.quoteFullName(this);
     } else {
       // System data-types are reserved words, but should not be quoted
       fullName = getName();

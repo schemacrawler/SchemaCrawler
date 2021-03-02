@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
+import static java.util.Objects.hash;
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
@@ -55,10 +56,11 @@ public final class WeakAssociation implements BaseForeignKey<WeakAssociationColu
 
   private final String name;
   private transient NamedObjectKey key;
-  private final SortedSet<WeakAssociationColumnReference> columnReferences = new TreeSet<>();
+  private final SortedSet<WeakAssociationColumnReference> columnReferences;
 
   public WeakAssociation(final String name) {
     this.name = requireNonNull(name, "No name provided");
+    columnReferences = new TreeSet<>();
   }
 
   public void addColumnReference(final Column pkColumn, final Column fkColumn) {
@@ -92,11 +94,11 @@ public final class WeakAssociation implements BaseForeignKey<WeakAssociationColu
     if (obj == null) {
       return false;
     }
-    if (!(obj instanceof WeakAssociation)) {
+    if (!(obj instanceof BaseForeignKey)) {
       return false;
     }
-    final WeakAssociation other = (WeakAssociation) obj;
-    return Objects.equals(columnReferences, other.columnReferences);
+    final BaseForeignKey<?> other = (BaseForeignKey<?>) obj;
+    return Objects.equals(getColumnReferences(), other.getColumnReferences());
   }
 
   @Override
@@ -116,7 +118,7 @@ public final class WeakAssociation implements BaseForeignKey<WeakAssociationColu
 
   @Override
   public int hashCode() {
-    return Objects.hash(columnReferences);
+    return hash(columnReferences);
   }
 
   @Override
@@ -125,14 +127,14 @@ public final class WeakAssociation implements BaseForeignKey<WeakAssociationColu
   }
 
   @Override
-  public String toString() {
-    return columnReferences.toString();
+  public NamedObjectKey key() {
+    buildKey();
+    return key;
   }
 
   @Override
-  public NamedObjectKey toUniqueLookupKey() {
-    buildKey();
-    return key;
+  public String toString() {
+    return columnReferences.toString();
   }
 
   private void buildKey() {

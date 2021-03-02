@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
+import static java.util.Objects.hash;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Objects;
@@ -50,6 +51,8 @@ abstract class AbstractDependantObject<D extends DatabaseObject> extends Abstrac
 
   private final DatabaseObjectReference<D> parent;
   private transient NamedObjectKey key;
+  private transient String fullName;
+  private transient String shortName;
 
   /**
    * Effective Java - Item 17 - Minimize Mutability - Package-private constructors make a class
@@ -81,7 +84,8 @@ abstract class AbstractDependantObject<D extends DatabaseObject> extends Abstrac
   /** {@inheritDoc} */
   @Override
   public final String getFullName() {
-    return Identifiers.STANDARD.quoteFullName(this);
+    buildFullName();
+    return fullName;
   }
 
   /** {@inheritDoc} */
@@ -97,14 +101,15 @@ abstract class AbstractDependantObject<D extends DatabaseObject> extends Abstrac
 
   @Override
   public final String getShortName() {
-    return Identifiers.STANDARD.quoteShortName(this);
+    buildShortName();
+    return shortName;
   }
 
   @Override
   public final int hashCode() {
     final int prime = 31;
     int result = super.hashCode();
-    result = prime * result + Objects.hash(parent);
+    result = prime * result + hash(parent);
     return result;
   }
 
@@ -114,15 +119,29 @@ abstract class AbstractDependantObject<D extends DatabaseObject> extends Abstrac
   }
 
   @Override
-  public NamedObjectKey toUniqueLookupKey() {
+  public NamedObjectKey key() {
     buildKey();
     return key;
+  }
+
+  private void buildFullName() {
+    if (fullName != null) {
+      return;
+    }
+    fullName = Identifiers.STANDARD.quoteFullName(this);
   }
 
   private void buildKey() {
     if (key != null) {
       return;
     }
-    this.key = parent.get().toUniqueLookupKey().add(getName());
+    this.key = parent.get().key().with(getName());
+  }
+
+  private void buildShortName() {
+    if (shortName != null) {
+      return;
+    }
+    shortName = Identifiers.STANDARD.quoteShortName(this);
   }
 }

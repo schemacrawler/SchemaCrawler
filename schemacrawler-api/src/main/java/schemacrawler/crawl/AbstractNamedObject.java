@@ -73,7 +73,7 @@ abstract class AbstractNamedObject implements NamedObject {
     if (obj == null) {
       return false;
     }
-    if (!(obj instanceof AbstractNamedObject)) {
+    if (!(obj instanceof NamedObject)) {
       return false;
     }
     return Objects.equals(name, ((NamedObject) obj).getName());
@@ -103,7 +103,7 @@ abstract class AbstractNamedObject implements NamedObject {
   }
 
   @Override
-  public NamedObjectKey toUniqueLookupKey() {
+  public NamedObjectKey key() {
     buildKey();
     return key;
   }

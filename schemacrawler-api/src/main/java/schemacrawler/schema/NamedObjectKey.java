@@ -27,36 +27,21 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schema;
 
-import static java.util.Objects.requireNonNull;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
 
 public final class NamedObjectKey implements Serializable {
 
   private static final long serialVersionUID = -5008609072012459037L;
 
-  private final List<String> key;
+  private final String[] key;
 
   public NamedObjectKey(final String... key) {
-    this(Arrays.asList(key));
-  }
-
-  private NamedObjectKey(final List<String> key) {
-    requireNonNull(key, "No key provided");
-    if (key.isEmpty()) {
-      throw new IllegalArgumentException("No key values provided");
+    if (key == null || key.length == 0) {
+      this.key = new String[0];
+    } else {
+      this.key = Arrays.copyOf(key, key.length);
     }
-    this.key = new ArrayList<>(key);
-  }
-
-  public NamedObjectKey add(final String name) {
-    final List<String> newKey = new ArrayList<>(key);
-    newKey.add(name);
-    return new NamedObjectKey(newKey);
   }
 
   @Override
@@ -68,16 +53,23 @@ public final class NamedObjectKey implements Serializable {
       return false;
     }
     final NamedObjectKey other = (NamedObjectKey) obj;
-    return Objects.equals(key, other.key);
+    return Arrays.equals(key, other.key);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(key);
+    return Arrays.hashCode(key);
   }
 
   @Override
   public String toString() {
-    return "{\"key\": " + String.join("/", key) + "}";
+    return "{\"key\": \"" + String.join("/", key) + "\"}";
+  }
+
+  public NamedObjectKey with(final String name) {
+    final int currentLength = key.length;
+    final String[] newKey = Arrays.copyOf(key, currentLength + 1);
+    newKey[currentLength] = name;
+    return new NamedObjectKey(newKey);
   }
 }

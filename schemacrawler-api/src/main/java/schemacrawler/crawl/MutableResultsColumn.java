@@ -118,7 +118,7 @@ final class MutableResultsColumn extends AbstractColumn<Table> implements Result
   }
 
   @Override
-  public NamedObjectKey toUniqueLookupKey() {
+  public NamedObjectKey key() {
     buildKey();
     return key;
   }
@@ -163,6 +163,6 @@ final class MutableResultsColumn extends AbstractColumn<Table> implements Result
     if (key != null) {
       return;
     }
-    this.key = super.toUniqueLookupKey().add(label);
+    this.key = super.key().with(label);
   }
 }

@@ -52,5 +52,5 @@ public interface NamedObject extends Serializable, Comparable<NamedObject> {
   String getName();
 
   /** A value guaranteed to be unique in the database for this object. */
-  NamedObjectKey toUniqueLookupKey();
+  NamedObjectKey key();
 }
