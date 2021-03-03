@@ -27,6 +27,8 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility;
 
+import static java.lang.Math.abs;
+import static java.lang.Math.floor;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 /**
@@ -62,9 +64,9 @@ public final class Color {
    * without using java.awt.Color</a>
    */
   public static Color fromHSV(final float hue, final float saturation, final float value) {
-    final float normaliedHue = hue - (float) Math.floor(hue);
-    final int h = (int) (normaliedHue * 6);
-    final float f = normaliedHue * 6 - h;
+    final float normalizedHue = abs(hue - (float) floor(hue));
+    final int h = (int) (normalizedHue * 6);
+    final float f = normalizedHue * 6 - h;
     final float p = value * (1 - saturation);
     final float q = value * (1 - f * saturation);
     final float t = value * (1 - (1 - f) * saturation);
@@ -85,7 +87,8 @@ public final class Color {
       default:
         throw new IllegalArgumentException(
             String.format(
-                "Could not convert from HSV (%f, %f, %f) to RGB", normaliedHue, saturation, value));
+                "Could not convert from HSV (%f, %f, %f) to RGB",
+                normalizedHue, saturation, value));
     }
   }
 
@@ -154,7 +157,7 @@ public final class Color {
 
   @Override
   public String toString() {
-    final int rgb = (r & 0xFF) << 16 | (g & 0xFF) << 8 | (b & 0xFF);
+    final int rgb = (r & 0xFF) << 16 | (g & 0xFF) << 8 | b & 0xFF;
 
     final String htmlColor = "#" + String.format("%06x", rgb).toUpperCase();
     return htmlColor;
