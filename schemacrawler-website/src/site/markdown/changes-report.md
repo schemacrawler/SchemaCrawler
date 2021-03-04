@@ -5,6 +5,7 @@
 
 - Move Docker Compose for SchemaCrawler to it's own project, with Maven moving _testdb files
 - Make small code optimizations for performance
+- Fix documentation of linter configuration using YAML
 
 
 <a name="a16.12.3"></a>
