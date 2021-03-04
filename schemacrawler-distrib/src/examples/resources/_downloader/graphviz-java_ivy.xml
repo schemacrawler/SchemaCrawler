@@ -8,6 +8,6 @@
   </configurations>
   <dependencies>
     <dependency org="guru.nidi" name="graphviz-java"
-                rev="0.17.1" conf="binaries->default" />
+                rev="0.18.1" conf="binaries->default" />
   </dependencies>
 </ivy-module>
