@@ -37,7 +37,7 @@ import schemacrawler.schema.ForeignKeyColumnReference;
  *
  * @author Sualeh Fatehi
  */
-final class MutableForeignKeyColumnReference extends BaseColumnReference
+final class MutableForeignKeyColumnReference extends AbstractColumnReference
     implements ForeignKeyColumnReference {
 
   private static final long serialVersionUID = 3689073962672273464L;

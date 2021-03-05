@@ -52,7 +52,7 @@ public class EqualsTest {
 
   @Test
   public void columnReference() {
-    EqualsVerifier.forClass(BaseColumnReference.class).verify();
+    EqualsVerifier.forClass(AbstractColumnReference.class).verify();
   }
 
   @Test
@@ -149,7 +149,7 @@ public class EqualsTest {
   public void weakAssociation() {
     EqualsVerifier.forClass(WeakAssociation.class)
         .withNonnullFields("columnReferences")
-        .withIgnoredFields("key", "name")
+        .withOnlyTheseFields("columnReferences")
         .verify();
   }
 }
