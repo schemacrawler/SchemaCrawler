@@ -101,28 +101,7 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
                             new SchemaCrawlerException(
                                 "Cannot locate catalog attributes file, " + catalogAttributesFile));
             final CatalogAttributes catalogAttributes = readCatalogAttributes(inputResource);
-            for (final TableAttributes tableAttributes : catalogAttributes) {
-              final Optional<Table> lookupTable =
-                  catalog.lookupTable(tableAttributes.getSchema(), tableAttributes.getName());
-              final Table table;
-              if (lookupTable.isPresent()) {
-                table = lookupTable.get();
-              } else {
-                continue;
-              }
-
-              if (tableAttributes.hasRemarks()) {
-                table.setRemarks(tableAttributes.getRemarks());
-              }
-
-              for (final ColumnAttributes columnAttributes : tableAttributes) {
-                if (columnAttributes.hasRemarks()) {
-                  table
-                      .lookupColumn(columnAttributes.getName())
-                      .ifPresent(column -> column.setRemarks(columnAttributes.getRemarks()));
-                }
-              }
-            }
+            loadRemarks(catalog, catalogAttributes);
 
             return null;
           });
@@ -130,6 +109,31 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
       LOGGER.log(Level.INFO, stopWatch.stringify());
     } catch (final Exception e) {
       throw new SchemaCrawlerException("Exception loading catalog attributes", e);
+    }
+  }
+
+  private void loadRemarks(final Catalog catalog, final CatalogAttributes catalogAttributes) {
+    for (final TableAttributes tableAttributes : catalogAttributes.getTables()) {
+      final Optional<Table> lookupTable =
+          catalog.lookupTable(tableAttributes.getSchema(), tableAttributes.getName());
+      final Table table;
+      if (lookupTable.isPresent()) {
+        table = lookupTable.get();
+      } else {
+        continue;
+      }
+
+      if (tableAttributes.hasRemarks()) {
+        table.setRemarks(tableAttributes.getRemarks());
+      }
+
+      for (final ColumnAttributes columnAttributes : tableAttributes) {
+        if (columnAttributes.hasRemarks()) {
+          table
+              .lookupColumn(columnAttributes.getName())
+              .ifPresent(column -> column.setRemarks(columnAttributes.getRemarks()));
+        }
+      }
     }
   }
 }

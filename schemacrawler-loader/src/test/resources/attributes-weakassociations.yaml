@@ -1,0 +1,18 @@
+name: catalog
+weak-associations:
+- name: weak1
+  referenced-table:
+  - catalog: PUBLIC
+  - schema: BOOKS
+  - name: AUTHORS
+  referencing-table:
+  - catalog: PUBLIC
+  - schema: BOOKS
+  - name: BOOK_AUTHORS
+  column-references:
+    ID: BOOK_ID 
+  remarks:
+  - "Overwritten remarks line 1"
+  attributes:
+    "some tag 1": tagvalue1
+    tag2: "tag value 2"

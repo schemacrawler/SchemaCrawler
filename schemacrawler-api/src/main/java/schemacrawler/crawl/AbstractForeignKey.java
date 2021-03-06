@@ -38,11 +38,12 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import schemacrawler.schema.BaseForeignKey;
+import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.NamedObject;
 import us.fatehi.utility.CompareUtility;
 
 /** Represents a foreign-key mapping to a primary key in another table. */
-abstract class AbstractForeignKey<R extends schemacrawler.schema.ColumnReference>
+abstract class AbstractForeignKey<R extends ColumnReference>
     extends AbstractNamedObjectWithAttributes implements BaseForeignKey<R> {
 
   private static final long serialVersionUID = -5164664131926303038L;
@@ -68,8 +69,7 @@ abstract class AbstractForeignKey<R extends schemacrawler.schema.ColumnReference
 
     final BaseForeignKey<?> other = (BaseForeignKey<?>) obj;
     final List<R> thisColumnReferences = getColumnReferences();
-    final List<? extends schemacrawler.schema.ColumnReference> otherColumnReferences =
-        other.getColumnReferences();
+    final List<? extends ColumnReference> otherColumnReferences = other.getColumnReferences();
 
     return CompareUtility.compareLists(thisColumnReferences, otherColumnReferences);
   }
