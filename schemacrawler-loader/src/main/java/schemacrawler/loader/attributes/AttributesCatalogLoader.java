@@ -31,6 +31,7 @@ package schemacrawler.loader.attributes;
 import static schemacrawler.loader.attributes.model.CatalogAttributesUtility.readCatalogAttributes;
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.logging.Level;
 
@@ -38,16 +39,20 @@ import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.loader.attributes.model.CatalogAttributes;
 import schemacrawler.loader.attributes.model.ColumnAttributes;
 import schemacrawler.loader.attributes.model.TableAttributes;
+import schemacrawler.loader.attributes.model.WeakAssociationAttributes;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
+import schemacrawler.utility.MetaDataUtility;
 import us.fatehi.utility.StopWatch;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.ioresource.InputResourceUtility;
+import us.fatehi.utility.string.StringFormat;
 
 public class AttributesCatalogLoader extends BaseCatalogLoader {
 
@@ -102,6 +107,7 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
                                 "Cannot locate catalog attributes file, " + catalogAttributesFile));
             final CatalogAttributes catalogAttributes = readCatalogAttributes(inputResource);
             loadRemarks(catalog, catalogAttributes);
+            loadWeakAssociations(catalog, catalogAttributes);
 
             return null;
           });
@@ -133,6 +139,57 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
               .lookupColumn(columnAttributes.getName())
               .ifPresent(column -> column.setRemarks(columnAttributes.getRemarks()));
         }
+      }
+    }
+  }
+
+  private void loadWeakAssociations(
+      final Catalog catalog, final CatalogAttributes catalogAttributes) {
+    for (final WeakAssociationAttributes weakAssociationAttributes :
+        catalogAttributes.getWeakAssociations()) {
+
+      final TableAttributes pkTableAttributes = weakAssociationAttributes.getReferencedTable();
+      final Optional<Table> pkTableOptional =
+          catalog.lookupTable(pkTableAttributes.getSchema(), pkTableAttributes.getName());
+      if (!pkTableOptional.isPresent()) {
+        LOGGER.log(Level.CONFIG, new StringFormat("%s not found", pkTableAttributes));
+        continue;
+      }
+      final Table pkTable = pkTableOptional.get();
+
+      final TableAttributes fkTableAttributes = weakAssociationAttributes.getReferencingTable();
+      final Optional<Table> fkTableOptional =
+          catalog.lookupTable(fkTableAttributes.getSchema(), fkTableAttributes.getName());
+      if (!fkTableOptional.isPresent()) {
+        LOGGER.log(Level.CONFIG, new StringFormat("%s not found", fkTableAttributes));
+        continue;
+      }
+      final Table fkTable = fkTableOptional.get();
+
+      for (final Entry<String, String> entry :
+          weakAssociationAttributes.getColumnReferences().entrySet()) {
+
+        final String pkColumnName = entry.getKey();
+        final Optional<Column> pkColumnOptional = pkTable.lookupColumn(pkColumnName);
+        if (!pkColumnOptional.isPresent()) {
+          LOGGER.log(
+              Level.CONFIG,
+              new StringFormat("Column %s not found in %s", pkColumnName, fkTableAttributes));
+          continue;
+        }
+        final Column pkColumn = pkColumnOptional.get();
+
+        final String fkColumnName = entry.getValue();
+        final Optional<Column> fkColumnOptional = fkTable.lookupColumn(fkColumnName);
+        if (!fkColumnOptional.isPresent()) {
+          LOGGER.log(
+              Level.CONFIG,
+              new StringFormat("Column %s not found in %s", fkColumnName, fkTableAttributes));
+          continue;
+        }
+        final Column fkColumn = fkColumnOptional.get();
+
+        MetaDataUtility.createWeakAssociation(pkColumn, fkColumn);
       }
     }
   }

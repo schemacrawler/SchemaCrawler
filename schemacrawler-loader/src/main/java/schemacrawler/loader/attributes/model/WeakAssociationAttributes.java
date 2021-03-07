@@ -45,20 +45,20 @@ public class WeakAssociationAttributes extends ObjectAttributes {
     "name",
     "remarks",
     "attributes",
-    "referencing-table",
     "referenced-table",
+    "referencing-table",
     "column-references"
   })
   public WeakAssociationAttributes(
       final String name,
       final List<String> remarks,
       final Map<String, String> attributes,
-      final TableAttributes referencingTable,
       final TableAttributes referencedTable,
+      final TableAttributes referencingTable,
       final Map<String, String> columnReferences) {
     super(name, remarks, attributes);
-    this.referencingTable = requireNonNull(referencingTable, "No referencing table provided");
     this.referencedTable = requireNonNull(referencedTable, "No referenced table provided");
+    this.referencingTable = requireNonNull(referencingTable, "No referencing table provided");
     if (columnReferences == null || columnReferences.isEmpty()) {
       throw new IllegalArgumentException("No column references provided");
     }
