@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.loader.attributes;
 
 import static schemacrawler.loader.attributes.model.CatalogAttributesUtility.readCatalogAttributes;
-import static schemacrawler.utility.MetaDataUtility.constructForeignKeyName;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.Map.Entry;
@@ -119,21 +118,6 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
     }
   }
 
-  private void createWeakAssociation(final Column pkColumn, final Column fkColumn) {
-
-    if (pkColumn == null || fkColumn == null) {
-      return;
-    }
-
-    final String foreignKeyName = constructForeignKeyName(pkColumn, fkColumn);
-
-    final WeakAssociation weakAssociation = new WeakAssociation(foreignKeyName);
-    weakAssociation.addColumnReference(pkColumn, fkColumn);
-
-    fkColumn.getParent().addWeakAssociation(weakAssociation);
-    pkColumn.getParent().addWeakAssociation(weakAssociation);
-  }
-
   private void loadRemarks(final Catalog catalog, final CatalogAttributes catalogAttributes) {
     for (final TableAttributes tableAttributes : catalogAttributes.getTables()) {
       final Optional<Table> lookupTable =
@@ -182,6 +166,16 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
       }
       final Table fkTable = fkTableOptional.get();
 
+      final WeakAssociation weakAssociation =
+          new WeakAssociation(weakAssociationAttributes.getName());
+      pkTable.addWeakAssociation(weakAssociation);
+      fkTable.addWeakAssociation(weakAssociation);
+      weakAssociation.setRemarks(weakAssociationAttributes.getRemarks());
+      for (final Entry<String, String> attribute :
+          weakAssociationAttributes.getAttributes().entrySet()) {
+        weakAssociation.setAttribute(attribute.getKey(), attribute.getValue());
+      }
+
       for (final Entry<String, String> entry :
           weakAssociationAttributes.getColumnReferences().entrySet()) {
 
@@ -205,7 +199,7 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
         }
         final Column fkColumn = fkColumnOptional.get();
 
-        createWeakAssociation(pkColumn, fkColumn);
+        weakAssociation.addColumnReference(pkColumn, fkColumn);
       }
     }
   }
