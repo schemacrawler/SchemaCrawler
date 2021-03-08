@@ -65,7 +65,7 @@ final class TablePartial extends AbstractDatabaseObject implements Table, Partia
 
   @Override
   public void addWeakAssociation(final WeakAssociation weakAssociation) {
-    throw new NotLoadedException(this);
+    // Ignore
   }
 
   @Override

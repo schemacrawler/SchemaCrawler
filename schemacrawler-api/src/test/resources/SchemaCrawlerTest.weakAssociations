@@ -1,11 +1,11 @@
 schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS.AUTHORS
-    weak association: SC_DBA8A1FF_AFD2BA21
+    weak association: test_weak_association
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.AUTHORS.ID <~~ PUBLIC.BOOKS.BOOKS.ID
   table: PUBLIC.BOOKS.BOOKS
-    weak association: SC_DBA8A1FF_AFD2BA21
+    weak association: test_weak_association
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.AUTHORS.ID <~~ PUBLIC.BOOKS.BOOKS.ID

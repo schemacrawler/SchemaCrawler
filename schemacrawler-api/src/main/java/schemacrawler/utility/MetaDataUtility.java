@@ -36,7 +36,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import schemacrawler.crawl.WeakAssociation;
 import schemacrawler.schema.BaseForeignKey;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
@@ -117,24 +116,6 @@ public final class MetaDataUtility {
       }
     }
     return false;
-  }
-
-  public static void createWeakAssociation(final Column pkColumn, final Column fkColumn) {
-
-    final boolean isPkColumnPartial = pkColumn instanceof PartialDatabaseObject;
-    final boolean isFkColumnPartial = fkColumn instanceof PartialDatabaseObject;
-
-    if (pkColumn == null || fkColumn == null || isFkColumnPartial && isPkColumnPartial) {
-      return;
-    }
-
-    final String foreignKeyName = MetaDataUtility.constructForeignKeyName(pkColumn, fkColumn);
-
-    final WeakAssociation weakAssociation = new WeakAssociation(foreignKeyName);
-    weakAssociation.addColumnReference(pkColumn, fkColumn);
-
-    fkColumn.getParent().addWeakAssociation(weakAssociation);
-    pkColumn.getParent().addWeakAssociation(weakAssociation);
   }
 
   public static ForeignKeyCardinality findForeignKeyCardinality(

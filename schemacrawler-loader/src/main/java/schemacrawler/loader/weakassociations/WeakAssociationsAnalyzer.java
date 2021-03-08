@@ -100,10 +100,6 @@ public final class WeakAssociationsAnalyzer {
         }
 
         for (final Column fkColumn : fkColumns) {
-          if (pkColumn.equals(fkColumn)) {
-            continue;
-          }
-
           final ProposedWeakAssociation proposedWeakAssociation =
               new ProposedWeakAssociation(pkColumn, fkColumn);
           if (proposedWeakAssociation.isValid() && !foreignKeys.contains(proposedWeakAssociation)) {

@@ -99,7 +99,6 @@ import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.TestWriter;
-import schemacrawler.utility.MetaDataUtility;
 import schemacrawler.utility.NamedObjectSort;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -636,7 +635,11 @@ public class SchemaCrawlerTest {
             .get()
             .lookupColumn("ID")
             .get();
-    MetaDataUtility.createWeakAssociation(pkColumn, fkColumn);
+
+    final WeakAssociation weakAssociation = new WeakAssociation("test_weak_association");
+    weakAssociation.addColumnReference(pkColumn, fkColumn);
+    fkColumn.getParent().addWeakAssociation(weakAssociation);
+    pkColumn.getParent().addWeakAssociation(weakAssociation);
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {

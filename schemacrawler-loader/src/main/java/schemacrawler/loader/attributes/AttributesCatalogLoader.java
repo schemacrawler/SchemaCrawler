@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.loader.attributes;
 
 import static schemacrawler.loader.attributes.model.CatalogAttributesUtility.readCatalogAttributes;
+import static schemacrawler.utility.MetaDataUtility.constructForeignKeyName;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.Map.Entry;
@@ -36,6 +37,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
+import schemacrawler.crawl.WeakAssociation;
 import schemacrawler.loader.attributes.model.CatalogAttributes;
 import schemacrawler.loader.attributes.model.ColumnAttributes;
 import schemacrawler.loader.attributes.model.TableAttributes;
@@ -48,7 +50,6 @@ import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.Config;
-import schemacrawler.utility.MetaDataUtility;
 import us.fatehi.utility.StopWatch;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.ioresource.InputResourceUtility;
@@ -116,6 +117,21 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
     } catch (final Exception e) {
       throw new SchemaCrawlerException("Exception loading catalog attributes", e);
     }
+  }
+
+  private void createWeakAssociation(final Column pkColumn, final Column fkColumn) {
+
+    if (pkColumn == null || fkColumn == null) {
+      return;
+    }
+
+    final String foreignKeyName = constructForeignKeyName(pkColumn, fkColumn);
+
+    final WeakAssociation weakAssociation = new WeakAssociation(foreignKeyName);
+    weakAssociation.addColumnReference(pkColumn, fkColumn);
+
+    fkColumn.getParent().addWeakAssociation(weakAssociation);
+    pkColumn.getParent().addWeakAssociation(weakAssociation);
   }
 
   private void loadRemarks(final Catalog catalog, final CatalogAttributes catalogAttributes) {
@@ -189,7 +205,7 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
         }
         final Column fkColumn = fkColumnOptional.get();
 
-        MetaDataUtility.createWeakAssociation(pkColumn, fkColumn);
+        createWeakAssociation(pkColumn, fkColumn);
       }
     }
   }
