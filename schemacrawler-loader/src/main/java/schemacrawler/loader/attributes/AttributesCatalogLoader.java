@@ -126,6 +126,7 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
       if (lookupTable.isPresent()) {
         table = lookupTable.get();
       } else {
+        LOGGER.log(Level.CONFIG, new StringFormat("%s not found", tableAttributes));
         continue;
       }
 
