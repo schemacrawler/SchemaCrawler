@@ -136,20 +136,32 @@ public interface Catalog extends NamedObject, AttributedObject, DescribedObject,
   Collection<Table> getTables(Schema schema);
 
   /**
+   * Gets a table column by unqualified name.
+   *
+   * @param schema Schema
+   * @param tableName Unqualified table name
+   * @param name Unqualified column name
+   * @return Column.
+   */
+  Optional<Column> lookupColumn(Schema schema, String tableName, String name);
+
+  /**
    * Gets the column data types defined in the schema, by name.
    *
-   * @param name Name
-   * @return Column data types
+   * @param schema Schema
+   * @param dataTypeName Unqualified column data-type name
+   * @return Column data type
    */
-  <C extends ColumnDataType> Optional<C> lookupColumnDataType(Schema schema, String name);
+  <C extends ColumnDataType> Optional<C> lookupColumnDataType(Schema schema, String dataTypeName);
 
   /**
    * Gets a routine by unqualified name.
    *
-   * @param name Name
+   * @param schema Schema
+   * @param routineName Unqualified routine name
    * @return Routine.
    */
-  <R extends Routine> Optional<R> lookupRoutine(Schema schema, String name);
+  <R extends Routine> Optional<R> lookupRoutine(Schema schema, String routineName);
 
   /**
    * Gets a schema by name.
@@ -162,18 +174,20 @@ public interface Catalog extends NamedObject, AttributedObject, DescribedObject,
   /**
    * Gets the sequence by unqualified name.
    *
-   * @param name Name
+   * @param schema Schema
+   * @param sequenceName Unqualified sequence name
    * @return Sequence.
    */
-  <S extends Sequence> Optional<S> lookupSequence(Schema schema, String name);
+  <S extends Sequence> Optional<S> lookupSequence(Schema schema, String sequenceName);
 
   /**
    * Gets the synonym by unqualified name.
    *
-   * @param name Name
+   * @param schema Schema
+   * @param synonymName Unqualified synonym name
    * @return Synonym.
    */
-  <S extends Synonym> Optional<S> lookupSynonym(Schema schema, String name);
+  <S extends Synonym> Optional<S> lookupSynonym(Schema schema, String synonymName);
 
   /**
    * Gets the column data types defined by the RDBMS system, by name.
@@ -186,8 +200,9 @@ public interface Catalog extends NamedObject, AttributedObject, DescribedObject,
   /**
    * Gets a table by unqualified name.
    *
-   * @param name Name
+   * @param schema Schema
+   * @param tableName Unqualified table name
    * @return Table.
    */
-  <T extends Table> Optional<T> lookupTable(Schema schema, String name);
+  <T extends Table> Optional<T> lookupTable(Schema schema, String tableName);
 }

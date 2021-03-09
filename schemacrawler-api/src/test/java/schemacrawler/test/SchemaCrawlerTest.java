@@ -63,6 +63,8 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.crawl.WeakAssociation;
+import schemacrawler.crawl.WeakAssociationBuilder;
+import schemacrawler.crawl.WeakAssociationBuilder.WeakAssociationColumn;
 import schemacrawler.crawl.WeakAssociationColumnReference;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
@@ -636,10 +638,10 @@ public class SchemaCrawlerTest {
             .lookupColumn("ID")
             .get();
 
-    final WeakAssociation weakAssociation = new WeakAssociation("test_weak_association");
-    weakAssociation.addColumnReference(pkColumn, fkColumn);
-    fkColumn.getParent().addWeakAssociation(weakAssociation);
-    pkColumn.getParent().addWeakAssociation(weakAssociation);
+    final WeakAssociationBuilder builder = WeakAssociationBuilder.builder(catalog);
+    builder.addColumnReference(
+        new WeakAssociationColumn(pkColumn), new WeakAssociationColumn(fkColumn));
+    builder.build("test_weak_association");
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {

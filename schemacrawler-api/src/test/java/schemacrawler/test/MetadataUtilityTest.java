@@ -34,6 +34,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+import static schemacrawler.utility.MetaDataUtility.constructForeignKeyName;
 
 import java.sql.Connection;
 import java.util.List;
@@ -81,9 +82,10 @@ public class MetadataUtilityTest {
     assertThat("Column reference not found", columnReference, notNullValue());
 
     assertThat(
-        MetaDataUtility.constructForeignKeyName(
-            columnReference.getForeignKeyColumn(), columnReference.getPrimaryKeyColumn()),
-        is("SC_AA4376_AFD2BA21"));
+        constructForeignKeyName(
+            columnReference.getPrimaryKeyColumn().getParent(),
+            columnReference.getForeignKeyColumn().getParent()),
+        is("SC_AFD2BA21_AA4376"));
 
     assertThat(MetaDataUtility.findForeignKeyCardinality(fk), is(ForeignKeyCardinality.zero_many));
 

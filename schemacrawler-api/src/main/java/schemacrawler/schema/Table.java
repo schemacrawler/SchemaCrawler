@@ -38,13 +38,6 @@ import schemacrawler.crawl.WeakAssociation;
 public interface Table extends DatabaseObject, TypedObject<TableType>, DefinedObject {
 
   /**
-   * Adds a weak association between columns
-   *
-   * @param weakAssociation Weak association
-   */
-  void addWeakAssociation(WeakAssociation weakAssociation);
-
-  /**
    * Gets the list of columns in ordinal order.
    *
    * @return Columns of the table
