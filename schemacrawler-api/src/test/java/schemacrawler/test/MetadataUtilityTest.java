@@ -34,39 +34,119 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
-import static schemacrawler.utility.MetaDataUtility.constructForeignKeyName;
 
 import java.sql.Connection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
+import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableRelationshipType;
+import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.utility.MetaDataUtility;
 import schemacrawler.utility.MetaDataUtility.ForeignKeyCardinality;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-@ExtendWith(TestContextParameterResolver.class)
+@TestInstance(Lifecycle.PER_CLASS)
 public class MetadataUtilityTest {
 
-  @Test
-  public void fkUtilities(final TestContext testContext, final Connection connection)
-      throws Exception {
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-        schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+  private Catalog catalog;
 
-    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
+  @Test
+  public void columnsListAsStringConstraint() throws Exception {
+
+    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
+    assertThat("BOOKS Schema not found", schema, notNullValue());
+
+    final Table table = catalog.lookupTable(schema, "BOOKS").get();
+    assertThat("BOOKS Table not found", table, notNullValue());
+
+    final PrimaryKey pk = table.getPrimaryKey();
+    assertThat("Index not found", pk, notNullValue());
+
+    final String columnsListAsStringChild =
+        MetaDataUtility.getColumnsListAsString(pk, IdentifierQuotingStrategy.quote_all, "'");
+    assertThat(columnsListAsStringChild, is("'ID'"));
+  }
+
+  @Test
+  public void columnsListAsStringFk() throws Exception {
+
+    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
+    assertThat("BOOKS Schema not found", schema, notNullValue());
+
+    final Table table = catalog.lookupTable(schema, "BOOKS").get();
+    assertThat("BOOKS Table not found", table, notNullValue());
+
+    final ForeignKey fk = table.getForeignKeys().toArray(new ForeignKey[0])[0];
+    assertThat("Foreign key not found", fk, notNullValue());
+
+    final String columnsListAsStringChild =
+        MetaDataUtility.getColumnsListAsString(
+            fk, TableRelationshipType.child, IdentifierQuotingStrategy.quote_all, "'");
+    assertThat(columnsListAsStringChild, is("'BOOKID'"));
+
+    final String columnsListAsStringParent =
+        MetaDataUtility.getColumnsListAsString(
+            fk, TableRelationshipType.parent, IdentifierQuotingStrategy.quote_all, "'");
+    assertThat(columnsListAsStringParent, is("'ID'"));
+
+    final String columnsListAsStringNone =
+        MetaDataUtility.getColumnsListAsString(
+            fk, TableRelationshipType.none, IdentifierQuotingStrategy.quote_all, "'");
+    assertThat(columnsListAsStringNone, is(""));
+  }
+
+  @Test
+  public void columnsListAsStringIndex() throws Exception {
+
+    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
+    assertThat("BOOKS Schema not found", schema, notNullValue());
+
+    final Table table = catalog.lookupTable(schema, "BOOKS").get();
+    assertThat("BOOKS Table not found", table, notNullValue());
+
+    final Index index = table.getIndexes().toArray(new Index[0])[0];
+    assertThat("Index not found", index, notNullValue());
+
+    final String columnsListAsStringChild =
+        MetaDataUtility.getColumnsListAsString(index, IdentifierQuotingStrategy.quote_all, "'");
+    assertThat(columnsListAsStringChild, is("'ID'"));
+  }
+
+  @Test
+  public void columnsListAsStringTable() throws Exception {
+
+    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
+    assertThat("BOOKS Schema not found", schema, notNullValue());
+
+    final Table table = catalog.lookupTable(schema, "BOOKS").get();
+    assertThat("BOOKS Table not found", table, notNullValue());
+
+    final String columnsListAsStringChild =
+        MetaDataUtility.getColumnsListAsString(table, IdentifierQuotingStrategy.quote_all, "'");
+    assertThat(
+        columnsListAsStringChild,
+        is(
+            "'ID', 'TITLE', 'DESCRIPTION', 'PUBLISHERID', 'PUBLICATIONDATE', 'PRICE', 'PREVIOUSEDITIONID'"));
+  }
+
+  @Test
+  public void fkUtilities() throws Exception {
 
     final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
     assertThat("BOOKS Schema not found", schema, notNullValue());
@@ -81,12 +161,6 @@ public class MetadataUtilityTest {
         fk.getColumnReferences().toArray(new ColumnReference[0])[0];
     assertThat("Column reference not found", columnReference, notNullValue());
 
-    assertThat(
-        constructForeignKeyName(
-            columnReference.getPrimaryKeyColumn().getParent(),
-            columnReference.getForeignKeyColumn().getParent()),
-        is("SC_AFD2BA21_AA4376"));
-
     assertThat(MetaDataUtility.findForeignKeyCardinality(fk), is(ForeignKeyCardinality.zero_many));
 
     assertThat(
@@ -94,13 +168,16 @@ public class MetadataUtilityTest {
         containsInAnyOrder("PUBLIC.BOOKS.BOOKAUTHORS.BOOKID"));
   }
 
-  @Test
-  public void tableUtilities(final TestContext testContext, final Connection connection)
-      throws Exception {
+  @BeforeAll
+  public void loadCatalog(final Connection connection) throws SchemaCrawlerException {
     final SchemaCrawlerOptions schemaCrawlerOptions =
         schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
-    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
+    catalog = getCatalog(connection, schemaCrawlerOptions);
+  }
+
+  @Test
+  public void tableUtilities() throws Exception {
 
     final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
     assertThat("BOOKS Schema not found", schema, notNullValue());
@@ -126,7 +203,5 @@ public class MetadataUtilityTest {
     assertThat("Index not found", index, notNullValue());
 
     assertThat(MetaDataUtility.columnNames(index), containsInAnyOrder("PUBLIC.BOOKS.BOOKS.ID"));
-
-    assertThat(MetaDataUtility.containsGeneratedColumns(index), is(false));
   }
 }

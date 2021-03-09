@@ -31,7 +31,6 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.FOREIGN_KEYS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy;
-import static schemacrawler.utility.MetaDataUtility.constructForeignKeyName;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
@@ -127,7 +126,8 @@ final class ForeignKeyRetriever extends AbstractRetriever {
 
       final String specificName;
       if (isBlank(foreignKeyName)) {
-        specificName = constructForeignKeyName(pkColumn.getParent(), fkColumn.getParent());
+        specificName =
+            RetrieverUtility.constructForeignKeyName(pkColumn.getParent(), fkColumn.getParent());
       } else {
         specificName = foreignKeyName;
       }

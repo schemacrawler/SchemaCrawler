@@ -49,7 +49,17 @@ public final class RetrieverUtility {
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(RetrieverUtility.class.getName());
 
-  public static Column lookupOrCreateColumn(
+  static String constructForeignKeyName(final Table pkTable, final Table fkTable) {
+    requireNonNull(pkTable, "No referenced table provided");
+    requireNonNull(fkTable, "No referencing table provided");
+
+    final String pkHex = Integer.toHexString(pkTable.getFullName().hashCode());
+    final String fkHex = Integer.toHexString(fkTable.getFullName().hashCode());
+    final String foreignKeyName = String.format("SC_%s_%s", pkHex, fkHex).toUpperCase();
+    return foreignKeyName;
+  }
+
+  static Column lookupOrCreateColumn(
       final Catalog catalog, final Schema schema, final String tableName, final String columnName) {
 
     if (isBlank(columnName)) {

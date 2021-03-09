@@ -30,7 +30,6 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.crawl.RetrieverUtility.lookupOrCreateColumn;
-import static schemacrawler.utility.MetaDataUtility.constructForeignKeyName;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
@@ -144,7 +143,8 @@ public final class WeakAssociationBuilder {
 
     final String weakAssociationName;
     if (isBlank(name)) {
-      weakAssociationName = constructForeignKeyName(referencedTable, referencingTable);
+      weakAssociationName =
+          RetrieverUtility.constructForeignKeyName(referencedTable, referencingTable);
     } else {
       weakAssociationName = name;
     }

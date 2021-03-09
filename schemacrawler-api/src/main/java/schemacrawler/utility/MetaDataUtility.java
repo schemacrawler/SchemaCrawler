@@ -93,29 +93,6 @@ public final class MetaDataUtility {
     return columnNames;
   }
 
-  public static String constructForeignKeyName(final Table pkTable, final Table fkTable) {
-    requireNonNull(pkTable, "No referenced table provided");
-    requireNonNull(fkTable, "No referencing table provided");
-
-    final String pkHex = Integer.toHexString(pkTable.getFullName().hashCode());
-    final String fkHex = Integer.toHexString(fkTable.getFullName().hashCode());
-    final String foreignKeyName = String.format("SC_%s_%s", pkHex, fkHex).toUpperCase();
-    return foreignKeyName;
-  }
-
-  public static boolean containsGeneratedColumns(final Index index) {
-    if (index == null) {
-      return false;
-    }
-
-    for (final Column indexColumn : index) {
-      if (indexColumn.isGenerated()) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   public static ForeignKeyCardinality findForeignKeyCardinality(
       final BaseForeignKey<?> foreignKey) {
     if (foreignKey == null) {
