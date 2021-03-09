@@ -662,6 +662,9 @@ public class SchemaCrawlerTest {
         new WeakAssociationColumn(new SchemaReference("PRIVATE", "BOOKS"), "AUTHORS", "ID"),
         new WeakAssociationColumn(new SchemaReference("PRIVATE", "BOOKS"), "BOOKS", "ID"));
     builder.build("test_partial_both");
+    // No column references (not built)
+    builder.clear();
+    builder.build("test_no_references");
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
