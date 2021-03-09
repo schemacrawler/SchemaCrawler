@@ -28,8 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import schemacrawler.schema.Column;
-
 /** Represents a foreign-key mapping to a primary key in another table. */
 public final class WeakAssociation extends AbstractForeignKey<WeakAssociationColumnReference> {
 
@@ -37,11 +35,5 @@ public final class WeakAssociation extends AbstractForeignKey<WeakAssociationCol
 
   public WeakAssociation(final String name) {
     super(name);
-  }
-
-  public void addColumnReference(final Column pkColumn, final Column fkColumn) {
-    final WeakAssociationColumnReference columnReference =
-        new WeakAssociationColumnReference(pkColumn, fkColumn);
-    addColumnReference(columnReference);
   }
 }

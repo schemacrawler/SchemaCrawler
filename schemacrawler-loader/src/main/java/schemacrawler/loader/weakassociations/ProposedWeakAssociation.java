@@ -27,11 +27,8 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.loader.weakassociations;
 
-import static schemacrawler.utility.MetaDataUtility.constructForeignKeyName;
-
 import java.util.AbstractMap;
 
-import schemacrawler.crawl.WeakAssociation;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
@@ -49,20 +46,6 @@ public final class ProposedWeakAssociation
 
   ProposedWeakAssociation(final ColumnReference columnReference) {
     super(columnReference.getPrimaryKeyColumn(), columnReference.getForeignKeyColumn());
-  }
-
-  public void create() {
-
-    final Column pkColumn = getKey();
-    final Column fkColumn = getValue();
-
-    final String foreignKeyName = constructForeignKeyName(pkColumn, fkColumn);
-
-    final WeakAssociation weakAssociation = new WeakAssociation(foreignKeyName);
-    weakAssociation.addColumnReference(pkColumn, fkColumn);
-
-    fkColumn.getParent().addWeakAssociation(weakAssociation);
-    pkColumn.getParent().addWeakAssociation(weakAssociation);
   }
 
   public boolean isValid() {

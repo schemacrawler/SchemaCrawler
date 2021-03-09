@@ -93,14 +93,12 @@ public final class MetaDataUtility {
     return columnNames;
   }
 
-  public static String constructForeignKeyName(final Column pkColumn, final Column fkColumn) {
-    requireNonNull(pkColumn, "No primary key column provided");
-    requireNonNull(fkColumn, "No foreign key column provided");
+  public static String constructForeignKeyName(final Table pkTable, final Table fkTable) {
+    requireNonNull(pkTable, "No referenced table provided");
+    requireNonNull(fkTable, "No referencing table provided");
 
-    final Table pkTable = pkColumn.getParent();
-    final Table fkParent = fkColumn.getParent();
     final String pkHex = Integer.toHexString(pkTable.getFullName().hashCode());
-    final String fkHex = Integer.toHexString(fkParent.getFullName().hashCode());
+    final String fkHex = Integer.toHexString(fkTable.getFullName().hashCode());
     final String foreignKeyName = String.format("SC_%s_%s", pkHex, fkHex).toUpperCase();
     return foreignKeyName;
   }

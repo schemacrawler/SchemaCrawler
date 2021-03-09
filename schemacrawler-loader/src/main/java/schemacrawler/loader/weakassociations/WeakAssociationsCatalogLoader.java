@@ -33,7 +33,10 @@ import java.util.List;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
+import schemacrawler.crawl.WeakAssociationBuilder;
+import schemacrawler.crawl.WeakAssociationBuilder.WeakAssociationColumn;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
@@ -65,7 +68,14 @@ public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
     for (final ProposedWeakAssociation proposedWeakAssociation : proposedWeakAssociations) {
       LOGGER.log(
           Level.INFO, new StringFormat("Adding weak association <%s> ", proposedWeakAssociation));
-      proposedWeakAssociation.create();
+
+      final Column pkColumn = proposedWeakAssociation.getKey();
+      final Column fkColumn = proposedWeakAssociation.getValue();
+
+      final WeakAssociationBuilder builder = WeakAssociationBuilder.builder(catalog);
+      builder.addColumnReference(
+          new WeakAssociationColumn(pkColumn), new WeakAssociationColumn(fkColumn));
+      builder.build();
     }
   }
 
