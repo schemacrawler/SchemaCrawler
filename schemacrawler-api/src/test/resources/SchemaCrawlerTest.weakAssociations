@@ -1,10 +1,18 @@
 schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS.AUTHORS
+    weak association: test_partial_fk
+      column references: 
+        key sequence: 1
+          PUBLIC.BOOKS.AUTHORS.ID <~~ PRIVATE.BOOKS.BOOKS.ID
     weak association: test_weak_association
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.AUTHORS.ID <~~ PUBLIC.BOOKS.BOOKS.ID
   table: PUBLIC.BOOKS.BOOKS
+    weak association: test_partial_pk
+      column references: 
+        key sequence: 1
+          PRIVATE.BOOKS.AUTHORS.ID <~~ PUBLIC.BOOKS.BOOKS.ID
     weak association: test_weak_association
       column references: 
         key sequence: 1

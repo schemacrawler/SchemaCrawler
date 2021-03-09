@@ -167,4 +167,9 @@ public final class WeakAssociationBuilder {
 
     return weakAssociation;
   }
+
+  public WeakAssociationBuilder clear() {
+    columnReferences.clear();
+    return this;
+  }
 }

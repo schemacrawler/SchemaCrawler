@@ -639,9 +639,29 @@ public class SchemaCrawlerTest {
             .get();
 
     final WeakAssociationBuilder builder = WeakAssociationBuilder.builder(catalog);
+    // Overwrite foreign key
+    builder.clear();
     builder.addColumnReference(
         new WeakAssociationColumn(pkColumn), new WeakAssociationColumn(fkColumn));
     builder.build("test_weak_association");
+    // Partial foreign key
+    builder.clear();
+    builder.addColumnReference(
+        new WeakAssociationColumn(pkColumn),
+        new WeakAssociationColumn(new SchemaReference("PRIVATE", "BOOKS"), "BOOKS", "ID"));
+    builder.build("test_partial_fk");
+    // Partial primary key
+    builder.clear();
+    builder.addColumnReference(
+        new WeakAssociationColumn(new SchemaReference("PRIVATE", "BOOKS"), "AUTHORS", "ID"),
+        new WeakAssociationColumn(fkColumn));
+    builder.build("test_partial_pk");
+    // Partial both (not built)
+    builder.clear();
+    builder.addColumnReference(
+        new WeakAssociationColumn(new SchemaReference("PRIVATE", "BOOKS"), "AUTHORS", "ID"),
+        new WeakAssociationColumn(new SchemaReference("PRIVATE", "BOOKS"), "BOOKS", "ID"));
+    builder.build("test_partial_both");
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {

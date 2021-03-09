@@ -4,6 +4,10 @@ schema: PUBLIC.BOOKS
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.AUTHORS.ID <-- PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID
+    association: weak-no-fk-table WeakAssociation
+      column references: 
+        key sequence: 1
+          PUBLIC.BOOKS.AUTHORS.ID <~~ PRIVATE.BOOKS.BOOKAUTHORS.BOOKID
     association: weak1 WeakAssociation
       column references: 
         key sequence: 1
@@ -47,6 +51,10 @@ schema: PUBLIC.BOOKS
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.ID <-- PUBLIC.BOOKS.BOOKAUTHORS.BOOKID
+    association: weak-no-pk-table WeakAssociation
+      column references: 
+        key sequence: 1
+          PRIVATE.BOOKS.AUTHORS.ID <~~ PUBLIC.BOOKS.BOOKAUTHORS.BOOKID
     association: weak1 WeakAssociation
       column references: 
         key sequence: 1
