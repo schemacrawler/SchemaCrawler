@@ -35,12 +35,15 @@ import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import us.fatehi.utility.string.StringFormat;
 
 public final class WeakAssociationBuilder {
 
@@ -80,6 +83,9 @@ public final class WeakAssociationBuilder {
       return String.format("weak-association <%s.%s.%s>", schema, tableName, columnName);
     }
   }
+
+  private static final SchemaCrawlerLogger LOGGER =
+      SchemaCrawlerLogger.getLogger(WeakAssociationBuilder.class.getName());
 
   public static WeakAssociationBuilder builder(final Catalog catalog) {
     return new WeakAssociationBuilder(catalog);
@@ -134,6 +140,7 @@ public final class WeakAssociationBuilder {
 
   public WeakAssociation build(final String name) {
     if (columnReferences.isEmpty()) {
+      LOGGER.log(Level.CONFIG, "Weak association not built, since there are no column references");
       return null;
     }
 
@@ -155,6 +162,13 @@ public final class WeakAssociationBuilder {
       if (referencedTable.equals(columnReference.getPrimaryKeyColumn().getParent())
           && referencingTable.equals(columnReference.getForeignKeyColumn().getParent())) {
         weakAssociation.addColumnReference(columnReference);
+      } else {
+        LOGGER.log(
+            Level.CONFIG,
+            new StringFormat(
+                "Weak association not built, since column references are not consistent, %s",
+                columnReferences));
+        return null;
       }
     }
 
@@ -170,6 +184,7 @@ public final class WeakAssociationBuilder {
 
   public WeakAssociationBuilder clear() {
     columnReferences.clear();
+    LOGGER.log(Level.FINER, new StringFormat("Builder <%s> cleared", hashCode()));
     return this;
   }
 }

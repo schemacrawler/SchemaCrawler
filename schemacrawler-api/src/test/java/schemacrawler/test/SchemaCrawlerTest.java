@@ -665,6 +665,15 @@ public class SchemaCrawlerTest {
     // No column references (not built)
     builder.clear();
     builder.build("test_no_references");
+    // Multiple tables in play (not built)
+    builder.clear();
+    builder.addColumnReference(
+        new WeakAssociationColumn(pkColumn),
+        new WeakAssociationColumn(new SchemaReference("PRIVATE", "BOOKS"), "BOOKS", "ID"));
+    builder.addColumnReference(
+        new WeakAssociationColumn(new SchemaReference("PRIVATE", "BOOKS"), "AUTHORS", "ID"),
+        new WeakAssociationColumn(fkColumn));
+    builder.build("test_conflicting");
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
