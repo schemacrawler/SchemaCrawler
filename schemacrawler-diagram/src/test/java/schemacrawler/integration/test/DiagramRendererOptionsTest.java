@@ -45,6 +45,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -155,6 +156,7 @@ public class DiagramRendererOptionsTest {
   }
 
   @Test
+  @DisplayName("Diagram with no options")
   public void executableForDiagram_00(final TestContext testContext, final Connection connection)
       throws Exception {
     final SchemaCrawlerOptions schemaCrawlerOptions =
@@ -171,6 +173,7 @@ public class DiagramRendererOptionsTest {
   }
 
   @Test
+  @DisplayName("Diagram with ordinal numbers and weak associations")
   public void executableForDiagram_01(final TestContext testContext, final Connection connection)
       throws Exception {
     final DiagramOptionsBuilder diagramOptionsBuilder =
@@ -191,6 +194,7 @@ public class DiagramRendererOptionsTest {
   }
 
   @Test
+  @DisplayName("Diagram no foreign key names")
   public void executableForDiagram_02(final TestContext testContext, final Connection connection)
       throws Exception {
     final DiagramOptionsBuilder diagramOptionsBuilder =
@@ -210,6 +214,7 @@ public class DiagramRendererOptionsTest {
   }
 
   @Test
+  @DisplayName("Diagram with no-info")
   public void executableForDiagram_03(final TestContext testContext, final Connection connection)
       throws Exception {
     final DiagramOptionsBuilder diagramOptionsBuilder = builder();
@@ -229,6 +234,7 @@ public class DiagramRendererOptionsTest {
   }
 
   @Test
+  @DisplayName("Diagram with unqualified names")
   public void executableForDiagram_04(final TestContext testContext, final Connection connection)
       throws Exception {
     final DiagramOptionsBuilder diagramOptionsBuilder = builder();
@@ -245,6 +251,7 @@ public class DiagramRendererOptionsTest {
   }
 
   @Test
+  @DisplayName("Diagram with limit options")
   public void executableForDiagram_05(final TestContext testContext, final Connection connection)
       throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
@@ -265,6 +272,7 @@ public class DiagramRendererOptionsTest {
   }
 
   @Test
+  @DisplayName("Diagram with default options, with brief command")
   public void executableForDiagram_06(final TestContext testContext, final Connection connection)
       throws Exception {
     final SchemaCrawlerOptions schemaCrawlerOptions =
@@ -281,6 +289,7 @@ public class DiagramRendererOptionsTest {
   }
 
   @Test
+  @DisplayName("Diagram with default options, with schema command")
   public void executableForDiagram_07(final TestContext testContext, final Connection connection)
       throws Exception {
     final SchemaCrawlerOptions schemaCrawlerOptions =
@@ -297,6 +306,7 @@ public class DiagramRendererOptionsTest {
   }
 
   @Test
+  @DisplayName("Diagram with limit options, and unqualified names")
   public void executableForDiagram_08(final TestContext testContext, final Connection connection)
       throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
@@ -318,6 +328,7 @@ public class DiagramRendererOptionsTest {
   }
 
   @Test
+  @DisplayName("Diagram with limit options, and only matching tables")
   public void executableForDiagram_09(final TestContext testContext, final Connection connection)
       throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
@@ -343,6 +354,7 @@ public class DiagramRendererOptionsTest {
   }
 
   @Test
+  @DisplayName("Diagram with a grep for column patterns")
   public void executableForDiagram_10(final TestContext testContext, final Connection connection)
       throws Exception {
     final GrepOptionsBuilder grepOptionsBuilder =
@@ -364,6 +376,7 @@ public class DiagramRendererOptionsTest {
   }
 
   @Test
+  @DisplayName("Diagram with a grep for column patterns, but with only matching tables")
   public void executableForDiagram_11(final TestContext testContext, final Connection connection)
       throws Exception {
     final GrepOptionsBuilder grepOptionsBuilder =
@@ -386,6 +399,7 @@ public class DiagramRendererOptionsTest {
   }
 
   @Test
+  @DisplayName("Diagram with table row counts")
   public void executableForDiagram_12(final TestContext testContext, final Connection connection)
       throws Exception {
     final DiagramOptionsBuilder diagramOptionsBuilder = builder();
@@ -410,6 +424,7 @@ public class DiagramRendererOptionsTest {
   }
 
   @Test
+  @DisplayName("Diagram after setting Graphviz options such as ortho splines")
   public void executableForDiagram_13(final TestContext testContext, final Connection connection)
       throws Exception {
     final Map<String, String> graphvizAttributes = new HashMap<>();
@@ -437,6 +452,7 @@ public class DiagramRendererOptionsTest {
   }
 
   @Test
+  @DisplayName("Diagram of the FOR_LINT schema")
   public void executableForDiagram_lintschema(
       final TestContext testContext, final Connection connection) throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
