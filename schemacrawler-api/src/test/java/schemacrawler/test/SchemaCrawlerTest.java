@@ -639,7 +639,7 @@ public class SchemaCrawlerTest {
             .get();
 
     final WeakAssociationBuilder builder = WeakAssociationBuilder.builder(catalog);
-    // 1. Overwrite foreign key
+    // 1. Happy path - good weak association
     builder.clear();
     builder.addColumnReference(
         new WeakAssociationColumn(pkColumn), new WeakAssociationColumn(fkColumn));
