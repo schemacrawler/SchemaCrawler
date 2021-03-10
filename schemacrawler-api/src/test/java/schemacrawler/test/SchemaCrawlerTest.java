@@ -677,7 +677,7 @@ public class SchemaCrawlerTest {
         new WeakAssociationColumn(new SchemaReference("PRIVATE", "LIBRARY"), "AUTHORS", "ID"),
         new WeakAssociationColumn(fkColumn));
     builder.build("6_weak_conflicting");
-    // 7. Duplicate column references (only one column reference built built)
+    // 7. Duplicate column references (only one column reference built)
     builder.clear();
     builder.addColumnReference(
         new WeakAssociationColumn(pkColumn),

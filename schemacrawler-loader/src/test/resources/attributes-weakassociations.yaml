@@ -1,6 +1,7 @@
-name: catalog
+name: schemacrawler.test.SchemaCrawlerTest
 weak-associations:
-- name: weak1
+# 1. Happy path - good weak association
+- name: 1_weak
   referenced-table:
     catalog: PUBLIC
     schema: BOOKS
@@ -8,45 +9,83 @@ weak-associations:
   referencing-table:
     catalog: PUBLIC
     schema: BOOKS
-    name: BOOKAUTHORS
+    name: BOOKS
   column-references:
-    ID: BOOKID 
+    ID: ID
   remarks:
   - "Overwritten remarks line 1"
   attributes:
     "some tag 1": tagvalue1
     tag2: "tag value 2"
-- name: weak-no-pk-table
-  referenced-table:
-    catalog: PRIVATE
-    schema: BOOKS
-    name: AUTHORS
-  referencing-table:
-    catalog: PUBLIC
-    schema: BOOKS
-    name: BOOKAUTHORS
-  column-references:
-    ID: BOOKID 
-- name: weak-no-fk-table
+# 2. Partial foreign key
+- name: 2_weak_partial_fk
   referenced-table:
     catalog: PUBLIC
     schema: BOOKS
     name: AUTHORS
   referencing-table:
     catalog: PRIVATE
-    schema: BOOKS
+    schema: LIBRARY
     name: BOOKAUTHORS
   column-references:
-    ID: BOOKID 
+    ID: AUTHORID
+# 3. Partial primary key
+- name: 3_weak_partial_pk
+  referenced-table:
+    catalog: PRIVATE
+    schema: LIBRARY
+    name: BOOKS
+  referencing-table:
+    catalog: PUBLIC
+    schema: BOOKS
+    name: BOOKS
+  column-references:
+    BOOKID: ID
+# 4. Partial both (not built)
 - name: weak-no-tables
   referenced-table:
     catalog: PRIVATE
+    schema: LIBRARY
+    name: AUTHORS
+  referencing-table:
+    catalog: PRIVATE
+    schema: LIBRARY
+    name: BOOKAUTHORS
+  column-references:
+    ID: AUTHORID
+# 5. No column references (not built)
+#- name: 5_weak_no_references
+#  referenced-table:
+#    name: AUTHORS
+#  referencing-table:
+#    name: BOOKAUTHORS
+#  column-references:
+# 6. Multiple tables in play (not built)
+# Not possible to implement using YAML format
+# 7. Duplicate column references (only one column reference built)
+- name: 7_weak_duplicate
+  referenced-table:
+    catalog: PUBLIC
     schema: BOOKS
     name: AUTHORS
   referencing-table:
     catalog: PRIVATE
-    schema: BOOKS
-    name: BOOKAUTHORS
+    schema: LIBRARY
+    name: MAGAZINEARTICLES
   column-references:
-    ID: BOOKID 
-    
+    ID: AUTHORID
+    ID: AUTHORID
+ # 8. Two column references
+- name: 8_weak_two_references
+  referenced-table:
+    catalog: PUBLIC
+    schema: PUBLISHER SALES
+    name: SALES
+  referencing-table:
+    catalog: PRIVATE
+    schema: ALLSALES
+    name: REGIONS
+  column-references:
+    POSTALCODE: POSTALCODE
+    COUNTRY: COUNTRY
+
