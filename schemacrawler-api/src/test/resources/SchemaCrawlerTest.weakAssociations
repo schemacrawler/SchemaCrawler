@@ -1,19 +1,23 @@
 schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS.AUTHORS
-    weak association: test_partial_fk
+    weak association: 2_weak_partial_fk
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.AUTHORS.ID <~~ PRIVATE.BOOKS.BOOKS.ID
-    weak association: test_weak_association
+          PUBLIC.BOOKS.AUTHORS.ID <~~ PRIVATE.LIBRARY.BOOKAUTHORS.AUTHORID
+    weak association: 7_weak_duplicate
+      column references: 
+        key sequence: 1
+          PUBLIC.BOOKS.AUTHORS.ID <~~ PRIVATE.LIBRARY.MAGAZINEARTICLES.AUTHORID
+    weak association: 1_weak
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.AUTHORS.ID <~~ PUBLIC.BOOKS.BOOKS.ID
   table: PUBLIC.BOOKS.BOOKS
-    weak association: test_partial_pk
+    weak association: 3_weak_partial_pk
       column references: 
         key sequence: 1
-          PRIVATE.BOOKS.AUTHORS.ID <~~ PUBLIC.BOOKS.BOOKS.ID
-    weak association: test_weak_association
+          PRIVATE.LIBRARY.BOOKS.BOOKID <~~ PUBLIC.BOOKS.BOOKS.ID
+    weak association: 1_weak
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.AUTHORS.ID <~~ PUBLIC.BOOKS.BOOKS.ID
@@ -31,4 +35,10 @@ schema: PUBLIC."PUBLISHER SALES"
   table: PUBLIC."PUBLISHER SALES".REGIONS
   table: PUBLIC."PUBLISHER SALES".SALESDATA
   table: PUBLIC."PUBLISHER SALES".SALES
+    weak association: 8_weak_two_references
+      column references: 
+        key sequence: 1
+          PUBLIC."PUBLISHER SALES".SALES.COUNTRY <~~ PRIVATE.ALLSALES.REGIONS.COUNTRY
+        key sequence: 2
+          PUBLIC."PUBLISHER SALES".SALES.POSTALCODE <~~ PRIVATE.ALLSALES.REGIONS.POSTALCODE
 schema: PUBLIC.SYSTEM_LOBS
