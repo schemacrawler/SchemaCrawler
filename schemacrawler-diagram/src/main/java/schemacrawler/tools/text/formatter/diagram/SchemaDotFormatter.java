@@ -284,13 +284,14 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
       final String fkName,
       final ColumnReference columnRef,
       final ForeignKeyCardinality fkCardinality,
+      final boolean isPkColumnFiltered,
       final boolean isFkColumnFiltered) {
     final boolean isForeignKey = columnRef instanceof ForeignKeyColumnReference;
 
     final Column primaryKeyColumn = columnRef.getPrimaryKeyColumn();
     final Column foreignKeyColumn = columnRef.getForeignKeyColumn();
 
-    final String[] pkPortIds = getPortIds(primaryKeyColumn, false);
+    final String[] pkPortIds = getPortIds(primaryKeyColumn, isPkColumnFiltered);
     final String[] fkPortIds = getPortIds(foreignKeyColumn, isFkColumnFiltered);
 
     final DiagramOptions diagramOptions = options;
@@ -331,26 +332,31 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     printForeignKeys(table, table.getForeignKeys());
   }
 
-  private void printForeignKeys(
-      final Table table, final Collection<? extends BaseForeignKey<?>> foreignKeys) {
-    for (final BaseForeignKey<? extends ColumnReference> foreignKey : foreignKeys) {
+  private <R extends ColumnReference> void printForeignKeys(
+      final Table table, final Collection<? extends BaseForeignKey<R>> foreignKeys) {
+    for (final BaseForeignKey<R> foreignKey : foreignKeys) {
       final ForeignKeyCardinality fkCardinality = findForeignKeyCardinality(foreignKey);
-      for (final ColumnReference columnRef : foreignKey) {
-        final Table referencedTable = columnRef.getForeignKeyColumn().getParent();
+      for (final R columnRef : foreignKey) {
+        final Table referencedTable = columnRef.getPrimaryKeyColumn().getParent();
+        final Table referencingTable = columnRef.getForeignKeyColumn().getParent();
         final boolean isForeignKeyFiltered =
-            referencedTable.getAttribute("schemacrawler.table.no_grep_match", false);
+            referencingTable.getAttribute("schemacrawler.table.no_grep_match", false);
         if (isForeignKeyFiltered) {
           continue;
         }
-        final boolean isFkColumnFiltered =
+        final boolean isPkColumnFiltered =
             referencedTable.getAttribute("schemacrawler.table.filtered_out", false)
                 || referencedTable instanceof PartialDatabaseObject;
-        if (table.equals(columnRef.getPrimaryKeyColumn().getParent())) {
+        final boolean isFkColumnFiltered =
+            referencingTable.getAttribute("schemacrawler.table.filtered_out", false)
+                || referencingTable instanceof PartialDatabaseObject;
+        if (table.equals(referencedTable) || isPkColumnFiltered && table.equals(referencingTable)) {
           formattingHelper.append(
               printColumnReference(
                   identifiers.quoteName(foreignKey.getName()),
                   columnRef,
                   fkCardinality,
+                  isPkColumnFiltered,
                   isFkColumnFiltered));
         }
       }

@@ -354,8 +354,30 @@ public class DiagramRendererOptionsTest {
   }
 
   @Test
-  @DisplayName("Diagram with a grep for column patterns")
-  public void executableForDiagram_10(final TestContext testContext, final Connection connection)
+  @DisplayName("Diagram with a grep for column patterns, with primary key filtered")
+  public void executableForDiagram_10a(final TestContext testContext, final Connection connection)
+      throws Exception {
+    final GrepOptionsBuilder grepOptionsBuilder =
+        GrepOptionsBuilder.builder()
+            .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.SALES\\..*"));
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withGrepOptions(grepOptionsBuilder.toOptions());
+
+    final DiagramOptions diagramOptions = builder().toOptions();
+
+    executableDiagram(
+        SchemaTextDetailType.schema.name(),
+        connection,
+        schemaCrawlerOptions,
+        null,
+        diagramOptions,
+        testContext.testMethodName());
+  }
+
+  @Test
+  @DisplayName("Diagram with a grep for column patterns, with foreign key filtered")
+  public void executableForDiagram_10b(final TestContext testContext, final Connection connection)
       throws Exception {
     final GrepOptionsBuilder grepOptionsBuilder =
         GrepOptionsBuilder.builder()
