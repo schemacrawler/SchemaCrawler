@@ -29,7 +29,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2021-03-10 21:15:39.423</td>
+		<td align='left'>2021-03-10 21:38:50.144</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
@@ -100,7 +100,8 @@ digraph "SchemaCrawler_Diagram" {
   ];
 
   "bookauthors_ead84c5d":"authorid_f4422729.start":w -> "authors_f521e766":"id_af1b0e75.end":e [label=<Z_FK_AUTHOR> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
-  "bookauthors_a361bce6":"authorid_4ce6c7c0.start":w -> "authors_f521e766":"id_af1b0e75.end":e [label=<> style="dashed" dir="both" arrowhead="teetee" arrowtail="box"];
+  "authorid_4ce6c7c0" [label=<PRIVATE.LIBRARY.BOOKAUTHORS.AUTHORID>];
+  "authorid_4ce6c7c0":w -> "authors_f521e766":"id_af1b0e75.end":e [label=<> style="dashed" dir="both" arrowhead="teetee" arrowtail="box"];
   "books_f4a675c8":"id_a0284c53.start":w -> "authors_f521e766":"id_af1b0e75.end":e [label=<> style="dashed" dir="both" arrowhead="teetee" arrowtail="teeodot"];
 
 
@@ -522,8 +523,10 @@ along with the latest updated information</td>
     >
   ];
 
-  "regions_751b8236":"country_9237a800.start":w -> "sales_751e68cc":"country_9291942a.end":e [label=<> style="dashed" dir="both" arrowhead="teetee" arrowtail="box"];
-  "regions_751b8236":"postalcode_c32cfdc2.start":w -> "sales_751e68cc":"postalcode_c386e9ec.end":e [label=<> style="dashed" dir="both" arrowhead="teetee" arrowtail="box"];
+  "country_9237a800" [label=<PRIVATE.ALLSALES.REGIONS.COUNTRY>];
+  "country_9237a800":w -> "sales_751e68cc":"country_9291942a.end":e [label=<> style="dashed" dir="both" arrowhead="teetee" arrowtail="box"];
+  "postalcode_c32cfdc2" [label=<PRIVATE.ALLSALES.REGIONS.POSTALCODE>];
+  "postalcode_c32cfdc2":w -> "sales_751e68cc":"postalcode_c386e9ec.end":e [label=<> style="dashed" dir="both" arrowhead="teetee" arrowtail="box"];
 
 
   /* PUBLIC."PUBLISHER SALES".SALESDATA -=-=-=-=-=-=-=-=-=-=-=-=-=- */

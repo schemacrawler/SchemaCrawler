@@ -47,6 +47,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKeyColumnReference;
+import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
@@ -342,7 +343,8 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
           continue;
         }
         final boolean isFkColumnFiltered =
-            referencedTable.getAttribute("schemacrawler.table.filtered_out", false);
+            referencedTable.getAttribute("schemacrawler.table.filtered_out", false)
+                || referencedTable instanceof PartialDatabaseObject;
         if (table.equals(columnRef.getPrimaryKeyColumn().getParent())) {
           formattingHelper.append(
               printColumnReference(
