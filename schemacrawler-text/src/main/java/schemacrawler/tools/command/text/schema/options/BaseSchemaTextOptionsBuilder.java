@@ -46,6 +46,8 @@ public abstract class BaseSchemaTextOptionsBuilder<
       SCHEMACRAWLER_FORMAT_PREFIX + "hide_primarykey_names";
   private static final String HIDE_FOREIGN_KEY_NAMES =
       SCHEMACRAWLER_FORMAT_PREFIX + "hide_foreignkey_names";
+  private static final String HIDE_WEAK_ASSOCIATION_NAMES =
+      SCHEMACRAWLER_FORMAT_PREFIX + "hide_weakassociation_names";
   private static final String HIDE_INDEX_NAMES = SCHEMACRAWLER_FORMAT_PREFIX + "hide_index_names";
   private static final String HIDE_CONSTRAINT_NAMES =
       SCHEMACRAWLER_FORMAT_PREFIX + "hide_constraint_names";
@@ -65,6 +67,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
   protected boolean isAlphabeticalSortForForeignKeys;
   protected boolean isAlphabeticalSortForIndexes;
   protected boolean isHideForeignKeyNames;
+  protected boolean isHideWeakAssociationNames;
   protected boolean isHideIndexNames;
   protected boolean isHidePrimaryKeyNames;
   protected boolean isHideRemarks;
@@ -90,6 +93,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
     isHideTableRowCounts = config.getBooleanValue(HIDE_TABLE_ROW_COUNTS);
 
     isHideForeignKeyNames = config.getBooleanValue(HIDE_FOREIGN_KEY_NAMES);
+    isHideWeakAssociationNames = config.getBooleanValue(HIDE_WEAK_ASSOCIATION_NAMES);
     isHidePrimaryKeyNames = config.getBooleanValue(HIDE_PRIMARY_KEY_NAMES);
     isHideIndexNames = config.getBooleanValue(HIDE_INDEX_NAMES);
     isHideTriggerNames = config.getBooleanValue(HIDE_TRIGGER_NAMES);
@@ -120,6 +124,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
     isHideTableRowCounts = options.isHideTableRowCounts();
 
     isHideForeignKeyNames = options.isHideForeignKeyNames();
+    isHideWeakAssociationNames = options.isHideWeakAssociationNames();
     isHidePrimaryKeyNames = options.isHidePrimaryKeyNames();
     isHideIndexNames = options.isHideIndexNames();
     isHideTriggerNames = options.isHideTriggerNames();
@@ -208,6 +213,15 @@ public abstract class BaseSchemaTextOptionsBuilder<
     return (B) this;
   }
 
+  public final B noWeakAssociationNames() {
+    return noWeakAssociationNames(true);
+  }
+
+  public final B noWeakAssociationNames(final boolean value) {
+    isHideWeakAssociationNames = value;
+    return (B) this;
+  }
+
   /** Corresponds to the --portable-names command-line argument. */
   public final B portableNames() {
     return portableNames(true);
@@ -217,6 +231,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
   public final B portableNames(final boolean value) {
     isHideTableConstraintNames = value;
     isHideForeignKeyNames = value;
+    isHideWeakAssociationNames = value;
     isHideIndexNames = value;
     isHidePrimaryKeyNames = value;
     isHideTriggerNames = value;
@@ -271,6 +286,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
     config.put(HIDE_TABLE_ROW_COUNTS, isHideTableRowCounts);
 
     config.put(HIDE_FOREIGN_KEY_NAMES, isHideForeignKeyNames);
+    config.put(HIDE_WEAK_ASSOCIATION_NAMES, isHideWeakAssociationNames);
     config.put(HIDE_PRIMARY_KEY_NAMES, isHidePrimaryKeyNames);
     config.put(HIDE_INDEX_NAMES, isHideIndexNames);
     config.put(HIDE_TRIGGER_NAMES, isHideTriggerNames);

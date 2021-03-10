@@ -317,7 +317,8 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     }
 
     final String associationName;
-    if (options.isHideForeignKeyNames() || !isForeignKey) {
+    if (isForeignKey && options.isHideForeignKeyNames()
+        || !isForeignKey && options.isHideWeakAssociationNames()) {
       associationName = "";
     } else {
       associationName = fkName;

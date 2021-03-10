@@ -119,6 +119,7 @@ public class DiagramRendererOptionsTest {
     final Config additionalConfig = new Config();
     additionalConfig.merge(config);
     additionalConfig.merge(diagramOptionsBuilder.toConfig());
+    additionalConfig.put("schemacrawler.format.hide_weakassociation_names", "true");
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);

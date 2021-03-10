@@ -29,7 +29,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2021-03-10 22:32:53.834</td>
+		<td align='left'>2021-03-10 23:06:43.596</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
@@ -101,8 +101,8 @@ digraph "SchemaCrawler_Diagram" {
 
   "bookauthors_ead84c5d":"authorid_f4422729.start":w -> "authors_f521e766":"id_af1b0e75.end":e [label=<Z_FK_AUTHOR> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
   "authorid_4ce6c7c0" [label=<PRIVATE.LIBRARY.BOOKAUTHORS.AUTHORID>];
-  "authorid_4ce6c7c0":w -> "authors_f521e766":"id_af1b0e75.end":e [label=<> style="dashed" dir="both" arrowhead="teetee" arrowtail="box"];
-  "books_f4a675c8":"id_a0284c53.start":w -> "authors_f521e766":"id_af1b0e75.end":e [label=<> style="dashed" dir="both" arrowhead="teetee" arrowtail="teeodot"];
+  "authorid_4ce6c7c0":w -> "authors_f521e766":"id_af1b0e75.end":e [label=<2_weak_partial_fk> style="dashed" dir="both" arrowhead="teetee" arrowtail="box"];
+  "books_f4a675c8":"id_a0284c53.start":w -> "authors_f521e766":"id_af1b0e75.end":e [label=<1_weak> style="dashed" dir="both" arrowhead="teetee" arrowtail="teeodot"];
 
 
   /* PUBLIC.BOOKS.AUTHORSLIST -=-=-=-=-=-=-=-=-=-=-=-=-=- */
@@ -251,7 +251,7 @@ along with the latest updated information</td>
   "bookauthors_ead84c5d":"bookid_e54f6507.start":w -> "books_f4a675c8":"id_a0284c53.end":e [label=<SYS_FK_10128> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
   "books_f4a675c8":"previouseditionid_6cf3995a.start":w -> "books_f4a675c8":"id_a0284c53.end":e [label=<FK_PREVIOUSEDITION> style="solid" dir="both" arrowhead="teetee" arrowtail="teeodot"];
   "bookid_6deb0993" [label=<PRIVATE.LIBRARY.BOOKS.BOOKID>];
-  "books_f4a675c8":"id_a0284c53.start":w -> "bookid_6deb0993":e [label=<> style="dashed" dir="both" arrowhead="teetee" arrowtail="teeodot"];
+  "books_f4a675c8":"id_a0284c53.start":w -> "bookid_6deb0993":e [label=<3_weak_partial_pk> style="dashed" dir="both" arrowhead="teetee" arrowtail="teeodot"];
 
 
   /* PUBLIC.BOOKS.COUPONS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
@@ -526,9 +526,9 @@ along with the latest updated information</td>
   ];
 
   "country_9237a800" [label=<PRIVATE.ALLSALES.REGIONS.COUNTRY>];
-  "country_9237a800":w -> "sales_751e68cc":"country_9291942a.end":e [label=<> style="dashed" dir="both" arrowhead="teetee" arrowtail="box"];
+  "country_9237a800":w -> "sales_751e68cc":"country_9291942a.end":e [label=<8_weak_two_references> style="dashed" dir="both" arrowhead="teetee" arrowtail="box"];
   "postalcode_c32cfdc2" [label=<PRIVATE.ALLSALES.REGIONS.POSTALCODE>];
-  "postalcode_c32cfdc2":w -> "sales_751e68cc":"postalcode_c386e9ec.end":e [label=<> style="dashed" dir="both" arrowhead="teetee" arrowtail="box"];
+  "postalcode_c32cfdc2":w -> "sales_751e68cc":"postalcode_c386e9ec.end":e [label=<8_weak_two_references> style="dashed" dir="both" arrowhead="teetee" arrowtail="box"];
 
 
   /* PUBLIC."PUBLISHER SALES".SALESDATA -=-=-=-=-=-=-=-=-=-=-=-=-=- */
