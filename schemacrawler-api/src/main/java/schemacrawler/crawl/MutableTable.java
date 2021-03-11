@@ -81,12 +81,6 @@ class MutableTable extends AbstractDatabaseObject implements Table {
 
   /** {@inheritDoc} */
   @Override
-  public final void addWeakAssociation(final WeakAssociation weakAssociation) {
-    weakAssociations.add(weakAssociation);
-  }
-
-  /** {@inheritDoc} */
-  @Override
   public int compareTo(final NamedObject obj) {
     if (obj == null) {
       return -1;
@@ -302,6 +296,10 @@ class MutableTable extends AbstractDatabaseObject implements Table {
 
   final void addTrigger(final MutableTrigger trigger) {
     triggers.add(trigger);
+  }
+
+  final void addWeakAssociation(final WeakAssociation weakAssociation) {
+    weakAssociations.add(weakAssociation);
   }
 
   final void appendDefinition(final String definition) {

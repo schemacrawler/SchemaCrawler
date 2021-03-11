@@ -31,13 +31,18 @@ package schemacrawler.loader.attributes;
 import static schemacrawler.loader.attributes.model.CatalogAttributesUtility.readCatalogAttributes;
 import static us.fatehi.utility.Utility.isBlank;
 
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
+import schemacrawler.crawl.WeakAssociation;
+import schemacrawler.crawl.WeakAssociationBuilder;
+import schemacrawler.crawl.WeakAssociationBuilder.WeakAssociationColumn;
 import schemacrawler.loader.attributes.model.CatalogAttributes;
 import schemacrawler.loader.attributes.model.ColumnAttributes;
 import schemacrawler.loader.attributes.model.TableAttributes;
+import schemacrawler.loader.attributes.model.WeakAssociationAttributes;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -48,6 +53,7 @@ import schemacrawler.tools.options.Config;
 import us.fatehi.utility.StopWatch;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.ioresource.InputResourceUtility;
+import us.fatehi.utility.string.StringFormat;
 
 public class AttributesCatalogLoader extends BaseCatalogLoader {
 
@@ -101,28 +107,8 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
                             new SchemaCrawlerException(
                                 "Cannot locate catalog attributes file, " + catalogAttributesFile));
             final CatalogAttributes catalogAttributes = readCatalogAttributes(inputResource);
-            for (final TableAttributes tableAttributes : catalogAttributes) {
-              final Optional<Table> lookupTable =
-                  catalog.lookupTable(tableAttributes.getSchema(), tableAttributes.getName());
-              final Table table;
-              if (lookupTable.isPresent()) {
-                table = lookupTable.get();
-              } else {
-                continue;
-              }
-
-              if (tableAttributes.hasRemarks()) {
-                table.setRemarks(tableAttributes.getRemarks());
-              }
-
-              for (final ColumnAttributes columnAttributes : tableAttributes) {
-                if (columnAttributes.hasRemarks()) {
-                  table
-                      .lookupColumn(columnAttributes.getName())
-                      .ifPresent(column -> column.setRemarks(columnAttributes.getRemarks()));
-                }
-              }
-            }
+            loadRemarks(catalog, catalogAttributes);
+            loadWeakAssociations(catalog, catalogAttributes);
 
             return null;
           });
@@ -130,6 +116,71 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
       LOGGER.log(Level.INFO, stopWatch.stringify());
     } catch (final Exception e) {
       throw new SchemaCrawlerException("Exception loading catalog attributes", e);
+    }
+  }
+
+  private void loadRemarks(final Catalog catalog, final CatalogAttributes catalogAttributes) {
+    for (final TableAttributes tableAttributes : catalogAttributes.getTables()) {
+      final Optional<Table> lookupTable =
+          catalog.lookupTable(tableAttributes.getSchema(), tableAttributes.getName());
+      final Table table;
+      if (lookupTable.isPresent()) {
+        table = lookupTable.get();
+      } else {
+        LOGGER.log(Level.CONFIG, new StringFormat("%s not found", tableAttributes));
+        continue;
+      }
+
+      if (tableAttributes.hasRemarks()) {
+        table.setRemarks(tableAttributes.getRemarks());
+      }
+
+      for (final ColumnAttributes columnAttributes : tableAttributes) {
+        if (columnAttributes.hasRemarks()) {
+          table
+              .lookupColumn(columnAttributes.getName())
+              .ifPresent(column -> column.setRemarks(columnAttributes.getRemarks()));
+        }
+      }
+    }
+  }
+
+  private void loadWeakAssociations(
+      final Catalog catalog, final CatalogAttributes catalogAttributes) {
+    for (final WeakAssociationAttributes weakAssociationAttributes :
+        catalogAttributes.getWeakAssociations()) {
+
+      final TableAttributes pkTableAttributes = weakAssociationAttributes.getReferencedTable();
+      final TableAttributes fkTableAttributes = weakAssociationAttributes.getReferencingTable();
+
+      final WeakAssociationBuilder weakAssociationBuilder = WeakAssociationBuilder.builder(catalog);
+
+      for (final Entry<String, String> entry :
+          weakAssociationAttributes.getColumnReferences().entrySet()) {
+        final String pkColumnName = entry.getKey();
+        final String fkColumnName = entry.getValue();
+
+        final WeakAssociationColumn pkColumn =
+            new WeakAssociationColumn(
+                pkTableAttributes.getSchema(), pkTableAttributes.getName(), pkColumnName);
+        final WeakAssociationColumn fkColumn =
+            new WeakAssociationColumn(
+                fkTableAttributes.getSchema(), fkTableAttributes.getName(), fkColumnName);
+
+        weakAssociationBuilder.addColumnReference(pkColumn, fkColumn);
+      }
+
+      final WeakAssociation weakAssociation =
+          weakAssociationBuilder.build(weakAssociationAttributes.getName());
+      if (weakAssociation == null) {
+        continue;
+      }
+
+      weakAssociation.setRemarks(weakAssociationAttributes.getRemarks());
+      for (final Entry<String, String> attribute :
+          weakAssociationAttributes.getAttributes().entrySet()) {
+        weakAssociation.setAttribute(attribute.getKey(), attribute.getValue());
+      }
     }
   }
 }

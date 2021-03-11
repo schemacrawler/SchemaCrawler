@@ -39,5 +39,6 @@
     "remarks" : [ ],
     "attributes" : { },
     "columns" : [ ]
-  } ]
+  } ],
+  "weakAssociations" : [ ]
 }

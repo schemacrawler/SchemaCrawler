@@ -36,6 +36,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseObject;
@@ -223,6 +224,20 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
 
   /** {@inheritDoc} */
   @Override
+  public Optional<Column> lookupColumn(
+      final Schema schemaRef, final String tableName, final String name) {
+
+    final Optional<MutableTable> tableOptional = lookupTable(schemaRef, tableName);
+    if (tableOptional.isPresent()) {
+      final Table table = tableOptional.get();
+      return table.lookupColumn(name);
+    } else {
+      return Optional.empty();
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public Optional<MutableColumnDataType> lookupColumnDataType(
       final Schema schema, final String name) {
     return columnDataTypes.lookup(schema, name);
@@ -266,10 +281,6 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
   @Override
   public Optional<MutableColumnDataType> lookupSystemColumnDataType(final String name) {
     return lookupColumnDataType(new SchemaReference(), name);
-  }
-
-  public Optional<MutableTable> lookupTable(final NamedObjectKey tableLookupKey) {
-    return tables.lookup(tableLookupKey);
   }
 
   /** {@inheritDoc} */
@@ -366,6 +377,10 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
 
   Optional<MutableRoutine> lookupRoutine(final NamedObjectKey routineLookupKey) {
     return routines.lookup(routineLookupKey);
+  }
+
+  Optional<MutableTable> lookupTable(final NamedObjectKey tableLookupKey) {
+    return tables.lookup(tableLookupKey);
   }
 
   void setCrawlInfo() {

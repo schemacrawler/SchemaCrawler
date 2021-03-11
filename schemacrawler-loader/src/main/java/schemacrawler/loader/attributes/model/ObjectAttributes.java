@@ -99,4 +99,9 @@ public abstract class ObjectAttributes implements Serializable, Comparable<Objec
       return !isBlank(getRemarks());
     }
   }
+
+  @Override
+  public String toString() {
+    return String.format("<%s>", getName());
+  }
 }

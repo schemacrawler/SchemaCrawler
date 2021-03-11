@@ -28,119 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.hash;
-import static java.util.Objects.requireNonNull;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
-import schemacrawler.schema.BaseForeignKey;
-import schemacrawler.schema.Column;
-import schemacrawler.schema.ColumnReference;
-import schemacrawler.schema.NamedObject;
-import schemacrawler.schema.NamedObjectKey;
-import us.fatehi.utility.CompareUtility;
-
-/**
- * Represents a foreign-key mapping to a primary key in another table.
- *
- * @author Sualeh Fatehi
- */
-public final class WeakAssociation implements BaseForeignKey<WeakAssociationColumnReference> {
+/** Represents a foreign-key mapping to a primary key in another table. */
+public final class WeakAssociation extends AbstractForeignKey<WeakAssociationColumnReference> {
 
   private static final long serialVersionUID = -5164664131926303038L;
 
-  private final String name;
-  private transient NamedObjectKey key;
-  private final SortedSet<WeakAssociationColumnReference> columnReferences;
-
   public WeakAssociation(final String name) {
-    this.name = requireNonNull(name, "No name provided");
-    columnReferences = new TreeSet<>();
-  }
-
-  public void addColumnReference(final Column pkColumn, final Column fkColumn) {
-    columnReferences.add(new WeakAssociationColumnReference(pkColumn, fkColumn));
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * <p>Note: Since foreign keys are not always explicitly named in databases, the sorting routine
-   * orders the foreign keys by the names of the columns in the foreign keys.
-   */
-  @Override
-  public int compareTo(final NamedObject obj) {
-    if (obj == null) {
-      return -1;
-    }
-
-    final BaseForeignKey<?> other = (BaseForeignKey<?>) obj;
-    final List<? extends ColumnReference> thisColumnReferences = getColumnReferences();
-    final List<? extends ColumnReference> otherColumnReferences = other.getColumnReferences();
-
-    return CompareUtility.compareLists(thisColumnReferences, otherColumnReferences);
-  }
-
-  @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (!(obj instanceof BaseForeignKey)) {
-      return false;
-    }
-    final BaseForeignKey<?> other = (BaseForeignKey<?>) obj;
-    return Objects.equals(getColumnReferences(), other.getColumnReferences());
-  }
-
-  @Override
-  public List<WeakAssociationColumnReference> getColumnReferences() {
-    return new ArrayList<>(columnReferences);
-  }
-
-  @Override
-  public String getFullName() {
-    return getName();
-  }
-
-  @Override
-  public String getName() {
-    return name;
-  }
-
-  @Override
-  public int hashCode() {
-    return hash(columnReferences);
-  }
-
-  @Override
-  public Iterator<WeakAssociationColumnReference> iterator() {
-    return columnReferences.iterator();
-  }
-
-  @Override
-  public NamedObjectKey key() {
-    buildKey();
-    return key;
-  }
-
-  @Override
-  public String toString() {
-    return columnReferences.toString();
-  }
-
-  private void buildKey() {
-    if (key != null) {
-      return;
-    }
-    this.key = new NamedObjectKey(name);
+    super(name);
   }
 }

@@ -86,7 +86,7 @@ public class AttributesModelTest {
   }
 
   @Test
-  @DisplayName("\u263A Valid attribiutes file")
+  @DisplayName("\u263A Valid attributes file")
   public void testParseGood() throws Exception {
 
     final InputResource inputResource =

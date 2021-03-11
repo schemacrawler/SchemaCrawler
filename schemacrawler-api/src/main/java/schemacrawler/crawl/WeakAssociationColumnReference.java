@@ -34,7 +34,7 @@ import schemacrawler.schema.Column;
  *
  * @author Sualeh Fatehi
  */
-public final class WeakAssociationColumnReference extends BaseColumnReference {
+public final class WeakAssociationColumnReference extends AbstractColumnReference {
 
   private static final long serialVersionUID = -4411771492159843382L;
 

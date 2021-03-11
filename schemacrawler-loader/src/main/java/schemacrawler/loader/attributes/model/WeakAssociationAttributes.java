@@ -27,48 +27,53 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.loader.attributes.model;
 
+import static java.util.Objects.requireNonNull;
+
 import java.beans.ConstructorProperties;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 
-public final class CatalogAttributes extends ObjectAttributes {
+public class WeakAssociationAttributes extends ObjectAttributes {
 
-  private static final long serialVersionUID = 1436642683972751860L;
+  private static final long serialVersionUID = 8305929253225133307L;
 
-  protected static CatalogAttributes EMPTY_CATALOG_ATTRIBUTES =
-      new CatalogAttributes("empty-catalog", null, null, null, null);
+  private final TableAttributes referencingTable;
+  private final TableAttributes referencedTable;
+  private final Map<String, String> columnReferences;
 
-  private final Set<TableAttributes> tables;
-  private final Set<WeakAssociationAttributes> weakAssociations;
-
-  @ConstructorProperties({"name", "remarks", "attributes", "tables", "weak-associations"})
-  public CatalogAttributes(
+  @ConstructorProperties({
+    "name",
+    "remarks",
+    "attributes",
+    "referenced-table",
+    "referencing-table",
+    "column-references"
+  })
+  public WeakAssociationAttributes(
       final String name,
       final List<String> remarks,
       final Map<String, String> attributes,
-      final Set<TableAttributes> tables,
-      final Set<WeakAssociationAttributes> weakAssociations) {
+      final TableAttributes referencedTable,
+      final TableAttributes referencingTable,
+      final Map<String, String> columnReferences) {
     super(name, remarks, attributes);
-    if (tables == null) {
-      this.tables = Collections.emptySet();
-    } else {
-      this.tables = new TreeSet<>(tables);
+    this.referencedTable = requireNonNull(referencedTable, "No referenced table provided");
+    this.referencingTable = requireNonNull(referencingTable, "No referencing table provided");
+    if (columnReferences == null || columnReferences.isEmpty()) {
+      throw new IllegalArgumentException("No column references provided");
     }
-    if (weakAssociations == null) {
-      this.weakAssociations = Collections.emptySet();
-    } else {
-      this.weakAssociations = new TreeSet<>(weakAssociations);
-    }
+    this.columnReferences = columnReferences;
   }
 
-  public Set<TableAttributes> getTables() {
-    return tables;
+  public Map<String, String> getColumnReferences() {
+    return columnReferences;
   }
 
-  public Set<WeakAssociationAttributes> getWeakAssociations() {
-    return weakAssociations;
+  public TableAttributes getReferencedTable() {
+    return referencedTable;
+  }
+
+  public TableAttributes getReferencingTable() {
+    return referencingTable;
   }
 }

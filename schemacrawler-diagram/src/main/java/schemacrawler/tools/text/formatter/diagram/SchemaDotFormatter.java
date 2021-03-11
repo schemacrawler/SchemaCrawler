@@ -47,6 +47,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKeyColumnReference;
+import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
@@ -283,13 +284,16 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
       final String fkName,
       final ColumnReference columnRef,
       final ForeignKeyCardinality fkCardinality,
-      final boolean isFkColumnFiltered) {
+      final boolean isPkColumnFiltered,
+      final boolean isFkColumnFiltered,
+      final boolean showRemarks,
+      final String remarks) {
     final boolean isForeignKey = columnRef instanceof ForeignKeyColumnReference;
 
     final Column primaryKeyColumn = columnRef.getPrimaryKeyColumn();
     final Column foreignKeyColumn = columnRef.getForeignKeyColumn();
 
-    final String[] pkPortIds = getPortIds(primaryKeyColumn, false);
+    final String[] pkPortIds = getPortIds(primaryKeyColumn, isPkColumnFiltered);
     final String[] fkPortIds = getPortIds(foreignKeyColumn, isFkColumnFiltered);
 
     final DiagramOptions diagramOptions = options;
@@ -315,42 +319,69 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     }
 
     final String associationName;
-    if (options.isHideForeignKeyNames() || !isForeignKey) {
+    if (isForeignKey && options.isHideForeignKeyNames()
+        || !isForeignKey && options.isHideWeakAssociationNames()) {
       associationName = "";
     } else {
       associationName = fkName;
     }
 
+    final String label;
+    if (showRemarks) {
+      final String remarksLines = remarks.replaceAll("\\R", "<br/>");
+      label = associationName + "<br/>" + remarksLines;
+    } else {
+      label = associationName;
+    }
+
     return String.format(
         "  %s:w -> %s:e [label=<%s> style=\"%s\" dir=\"both\" arrowhead=\"%s\" arrowtail=\"%s\"];%n",
-        fkPortIds[0], pkPortIds[1], associationName, style, pkSymbol, fkSymbol);
+        fkPortIds[0], pkPortIds[1], label, style, pkSymbol, fkSymbol);
   }
 
   private void printForeignKeys(final Table table) {
     printForeignKeys(table, table.getForeignKeys());
   }
 
-  private void printForeignKeys(
-      final Table table, final Collection<? extends BaseForeignKey<?>> foreignKeys) {
-    for (final BaseForeignKey<? extends ColumnReference> foreignKey : foreignKeys) {
+  private <R extends ColumnReference> void printForeignKeys(
+      final Table table, final Collection<? extends BaseForeignKey<R>> foreignKeys) {
+    for (final BaseForeignKey<R> foreignKey : foreignKeys) {
       final ForeignKeyCardinality fkCardinality = findForeignKeyCardinality(foreignKey);
-      for (final ColumnReference columnRef : foreignKey) {
-        final Table referencedTable = columnRef.getForeignKeyColumn().getParent();
+      boolean showRemarks = !options.isHideRemarks() && foreignKey.hasRemarks();
+      for (final R columnRef : foreignKey) {
+        final Table referencedTable = columnRef.getPrimaryKeyColumn().getParent();
+        final Table referencingTable = columnRef.getForeignKeyColumn().getParent();
         final boolean isForeignKeyFiltered =
-            referencedTable.getAttribute("schemacrawler.table.no_grep_match", false);
+            referencingTable.getAttribute("schemacrawler.table.no_grep_match", false);
         if (isForeignKeyFiltered) {
           continue;
         }
+        final boolean isPkColumnFiltered =
+            referencedTable.getAttribute("schemacrawler.table.filtered_out", false)
+                || referencedTable instanceof PartialDatabaseObject;
         final boolean isFkColumnFiltered =
-            referencedTable.getAttribute("schemacrawler.table.filtered_out", false);
-        if (table.equals(columnRef.getPrimaryKeyColumn().getParent())) {
+            referencingTable.getAttribute("schemacrawler.table.filtered_out", false)
+                || referencingTable instanceof PartialDatabaseObject;
+        final String remarks;
+        if (showRemarks) {
+          remarks = foreignKey.getRemarks();
+        } else {
+          remarks = "";
+        }
+
+        if (table.equals(referencedTable) || isPkColumnFiltered && table.equals(referencingTable)) {
           formattingHelper.append(
               printColumnReference(
                   identifiers.quoteName(foreignKey.getName()),
                   columnRef,
                   fkCardinality,
-                  isFkColumnFiltered));
+                  isPkColumnFiltered,
+                  isFkColumnFiltered,
+                  showRemarks,
+                  remarks));
         }
+        // Show remarks only on the first reference
+        showRemarks = false;
       }
     }
   }

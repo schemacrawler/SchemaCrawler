@@ -37,6 +37,7 @@ public class SchemaTextOptions extends BaseTextOptions {
   private final boolean isAlphabeticalSortForForeignKeys;
   private final boolean isAlphabeticalSortForIndexes;
   private final boolean isHideForeignKeyNames;
+  private final boolean isHideWeakAssociationNames;
   private final boolean isHideIndexNames;
   private final boolean isHidePrimaryKeyNames;
   private final boolean isHideRemarks;
@@ -55,6 +56,7 @@ public class SchemaTextOptions extends BaseTextOptions {
     isAlphabeticalSortForForeignKeys = builder.isAlphabeticalSortForForeignKeys;
     isAlphabeticalSortForIndexes = builder.isAlphabeticalSortForIndexes;
     isHideForeignKeyNames = builder.isHideForeignKeyNames;
+    isHideWeakAssociationNames = builder.isHideWeakAssociationNames;
     isHideIndexNames = builder.isHideIndexNames;
     isHidePrimaryKeyNames = builder.isHidePrimaryKeyNames;
     isHideRemarks = builder.isHideRemarks;
@@ -79,6 +81,7 @@ public class SchemaTextOptions extends BaseTextOptions {
     return isAlphabeticalSortForForeignKeys == that.isAlphabeticalSortForForeignKeys
         && isAlphabeticalSortForIndexes == that.isAlphabeticalSortForIndexes
         && isHideForeignKeyNames == that.isHideForeignKeyNames
+        && isHideWeakAssociationNames == that.isHideWeakAssociationNames
         && isHideIndexNames == that.isHideIndexNames
         && isHidePrimaryKeyNames == that.isHidePrimaryKeyNames
         && isHideRemarks == that.isHideRemarks
@@ -97,6 +100,7 @@ public class SchemaTextOptions extends BaseTextOptions {
         isAlphabeticalSortForForeignKeys,
         isAlphabeticalSortForIndexes,
         isHideForeignKeyNames,
+        isHideWeakAssociationNames,
         isHideIndexNames,
         isHidePrimaryKeyNames,
         isHideRemarks,
@@ -141,16 +145,20 @@ public class SchemaTextOptions extends BaseTextOptions {
     return isHideTableConstraintNames;
   }
 
+  public boolean isHideTableRowCounts() {
+    return isHideTableRowCounts;
+  }
+
   public boolean isHideTriggerNames() {
     return isHideTriggerNames;
   }
 
-  public boolean isShowOrdinalNumbers() {
-    return isShowOrdinalNumbers;
+  public boolean isHideWeakAssociationNames() {
+    return isHideWeakAssociationNames;
   }
 
-  public boolean isHideTableRowCounts() {
-    return isHideTableRowCounts;
+  public boolean isShowOrdinalNumbers() {
+    return isShowOrdinalNumbers;
   }
 
   public boolean isShowStandardColumnTypeNames() {

@@ -63,6 +63,8 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.crawl.WeakAssociation;
+import schemacrawler.crawl.WeakAssociationBuilder;
+import schemacrawler.crawl.WeakAssociationBuilder.WeakAssociationColumn;
 import schemacrawler.crawl.WeakAssociationColumnReference;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
@@ -99,7 +101,6 @@ import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.TestWriter;
-import schemacrawler.utility.MetaDataUtility;
 import schemacrawler.utility.NamedObjectSort;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -636,7 +637,70 @@ public class SchemaCrawlerTest {
             .get()
             .lookupColumn("ID")
             .get();
-    MetaDataUtility.createWeakAssociation(pkColumn, fkColumn);
+
+    final WeakAssociationBuilder builder = WeakAssociationBuilder.builder(catalog);
+    // 1. Happy path - good weak association
+    builder.clear();
+    builder.addColumnReference(
+        new WeakAssociationColumn(pkColumn), new WeakAssociationColumn(fkColumn));
+    builder.build("1_weak");
+    // 2. Partial foreign key
+    builder.clear();
+    builder.addColumnReference(
+        new WeakAssociationColumn(pkColumn),
+        new WeakAssociationColumn(
+            new SchemaReference("PRIVATE", "LIBRARY"), "BOOKAUTHORS", "AUTHORID"));
+    builder.build("2_weak_partial_fk");
+    // 3. Partial primary key
+    builder.clear();
+    builder.addColumnReference(
+        new WeakAssociationColumn(new SchemaReference("PRIVATE", "LIBRARY"), "BOOKS", "BOOKID"),
+        new WeakAssociationColumn(fkColumn));
+    builder.build("3_weak_partial_pk");
+    // 4. Partial both (not built)
+    builder.clear();
+    builder.addColumnReference(
+        new WeakAssociationColumn(new SchemaReference("PRIVATE", "LIBRARY"), "AUTHORS", "ID"),
+        new WeakAssociationColumn(
+            new SchemaReference("PRIVATE", "LIBRARY"), "BOOKAUTHORS", "AUTHORID"));
+    builder.build("4_weak_partial_both");
+    // 5. No column references (not built)
+    builder.clear();
+    builder.build("5_weak_no_references");
+    // 6. Multiple tables in play (not built)
+    builder.clear();
+    builder.addColumnReference(
+        new WeakAssociationColumn(pkColumn),
+        new WeakAssociationColumn(
+            new SchemaReference("PRIVATE", "LIBRARY"), "BOOKAUTHORS", "AUTHORID"));
+    builder.addColumnReference(
+        new WeakAssociationColumn(new SchemaReference("PRIVATE", "LIBRARY"), "AUTHORS", "ID"),
+        new WeakAssociationColumn(fkColumn));
+    builder.build("6_weak_conflicting");
+    // 7. Duplicate column references (only one column reference built)
+    builder.clear();
+    builder.addColumnReference(
+        new WeakAssociationColumn(pkColumn),
+        new WeakAssociationColumn(
+            new SchemaReference("PRIVATE", "LIBRARY"), "MAGAZINEARTICLES", "AUTHORID"));
+    builder.addColumnReference(
+        new WeakAssociationColumn(pkColumn),
+        new WeakAssociationColumn(
+            new SchemaReference("PRIVATE", "LIBRARY"), "MAGAZINEARTICLES", "AUTHORID"));
+    builder.build("7_weak_duplicate");
+    // 8. Two column references
+    builder.clear();
+    builder.addColumnReference(
+        new WeakAssociationColumn(
+            new SchemaReference("PUBLIC", "PUBLISHER SALES"), "SALES", "POSTALCODE"),
+        new WeakAssociationColumn(
+            new SchemaReference("PRIVATE", "ALLSALES"), "REGIONS", "POSTALCODE"));
+    builder.addColumnReference(
+        new WeakAssociationColumn(
+            new SchemaReference("PUBLIC", "PUBLISHER SALES"), "SALES", "COUNTRY"),
+        new WeakAssociationColumn(
+            new SchemaReference("PRIVATE", "ALLSALES"), "REGIONS", "COUNTRY"));
+    builder.build("8_weak_two_references");
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {

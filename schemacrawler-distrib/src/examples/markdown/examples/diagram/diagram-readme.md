@@ -30,6 +30,7 @@ The diagram example demonstrates the integration of SchemaCrawler with Graphviz.
 ```           
 schemacrawler.format.show_ordinal_numbers=true        
 schemacrawler.format.hide_foreignkey_names=true
+schemacrawler.format.hide_weakassociation_names=true
 schemacrawler.format.show_unqualified_names=true
 ```    
 

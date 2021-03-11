@@ -39,14 +39,14 @@ import schemacrawler.schema.ColumnReference;
  *
  * @author Sualeh Fatehi
  */
-public abstract class BaseColumnReference implements ColumnReference, Comparable<ColumnReference> {
+abstract class AbstractColumnReference implements ColumnReference, Comparable<ColumnReference> {
 
   private static final long serialVersionUID = -4411771492159843382L;
 
   private final Column foreignKeyColumn;
   private final Column primaryKeyColumn;
 
-  protected BaseColumnReference(final Column primaryKeyColumn, final Column foreignKeyColumn) {
+  protected AbstractColumnReference(final Column primaryKeyColumn, final Column foreignKeyColumn) {
     this.primaryKeyColumn = requireNonNull(primaryKeyColumn, "No primary key column provided");
     this.foreignKeyColumn = requireNonNull(foreignKeyColumn, "No foreign key column provided");
   }
@@ -77,7 +77,7 @@ public abstract class BaseColumnReference implements ColumnReference, Comparable
     if (obj == null) {
       return false;
     }
-    if (!(obj instanceof BaseColumnReference)) {
+    if (!(obj instanceof AbstractColumnReference)) {
       return false;
     }
     final ColumnReference other = (ColumnReference) obj;

@@ -45,15 +45,11 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.NamedObjectKey;
-import schemacrawler.schema.Schema;
-import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
-import schemacrawler.schemacrawler.SchemaReference;
-import schemacrawler.utility.MetaDataUtility;
 import us.fatehi.utility.string.StringFormat;
 
 /**
@@ -130,7 +126,8 @@ final class ForeignKeyRetriever extends AbstractRetriever {
 
       final String specificName;
       if (isBlank(foreignKeyName)) {
-        specificName = MetaDataUtility.constructForeignKeyName(pkColumn, fkColumn);
+        specificName =
+            RetrieverUtility.constructForeignKeyName(pkColumn.getParent(), fkColumn.getParent());
       } else {
         specificName = foreignKeyName;
       }
@@ -176,32 +173,8 @@ final class ForeignKeyRetriever extends AbstractRetriever {
       final String schemaName,
       final String tableName,
       final String columnName) {
-    Column column = null;
-
-    final Optional<MutableTable> tableOptional =
-        catalog.lookupTable(new NamedObjectKey(catalogName, schemaName, tableName));
-    if (tableOptional.isPresent()) {
-      final Table table = tableOptional.get();
-      final Optional<? extends Column> columnOptional = table.lookupColumn(columnName);
-      if (columnOptional.isPresent()) {
-        column = columnOptional.get();
-      }
-    }
-
-    if (column == null && !isBlank(columnName)) {
-      // Create the table and column, but do not add it to the schema
-      final Schema schema = new SchemaReference(catalogName, schemaName);
-      final Table table = new TablePartial(schema, tableName);
-      column = new ColumnPartial(table, columnName);
-      ((TablePartial) table).addColumn(column);
-
-      LOGGER.log(
-          Level.FINER,
-          new StringFormat(
-              "Creating column reference for a column that is referenced by a foreign key <%s>",
-              column));
-    }
-    return column;
+    return RetrieverUtility.lookupOrCreateColumn(
+        catalog, catalogName, schemaName, tableName, columnName);
   }
 
   private void retrieveForeignKeysFromDataDictionary() throws SchemaCrawlerSQLException {

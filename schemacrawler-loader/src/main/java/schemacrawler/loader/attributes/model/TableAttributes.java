@@ -72,4 +72,9 @@ public class TableAttributes extends ObjectAttributes implements Iterable<Column
   public Iterator<ColumnAttributes> iterator() {
     return columns.iterator();
   }
+
+  @Override
+  public String toString() {
+    return String.format("Table attributes <%s.%s.%s>", schemaName, catalogName, getName());
+  }
 }

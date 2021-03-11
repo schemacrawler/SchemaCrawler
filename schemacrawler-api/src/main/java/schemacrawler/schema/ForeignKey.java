@@ -33,11 +33,7 @@ package schemacrawler.schema;
  *
  * @author Sualeh Fatehi
  */
-public interface ForeignKey
-    extends BaseForeignKey<ForeignKeyColumnReference>,
-        AttributedObject,
-        DescribedObject,
-        Constraint {
+public interface ForeignKey extends BaseForeignKey<ForeignKeyColumnReference>, Constraint {
 
   /**
    * Gets the deferrability.

@@ -32,6 +32,7 @@ import java.util.AbstractMap;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
+import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
 
 public final class ProposedWeakAssociation
@@ -48,18 +49,32 @@ public final class ProposedWeakAssociation
   }
 
   public boolean isValid() {
-    final Column primaryKeyColumn = getKey();
-    final Column foreignKeyColumn = getValue();
 
-    final Table pkTable = primaryKeyColumn.getParent();
-    final Table fkTable = foreignKeyColumn.getParent();
-    if ((foreignKeyColumn.isPartOfPrimaryKey() || foreignKeyColumn.isPartOfUniqueIndex())
+    final Column pkColumn = getKey();
+    final Column fkColumn = getValue();
+    if (pkColumn == null || fkColumn == null) {
+      return false;
+    }
+
+    final boolean isPkColumnPartial = pkColumn instanceof PartialDatabaseObject;
+    final boolean isFkColumnPartial = fkColumn instanceof PartialDatabaseObject;
+    if (isFkColumnPartial && isPkColumnPartial) {
+      return false;
+    }
+
+    if (pkColumn.equals(fkColumn)) {
+      return false;
+    }
+
+    final Table pkTable = pkColumn.getParent();
+    final Table fkTable = fkColumn.getParent();
+    if ((fkColumn.isPartOfPrimaryKey() || fkColumn.isPartOfUniqueIndex())
         && pkTable.compareTo(fkTable) > 0) {
       return false;
     }
 
-    final ColumnDataType fkColumnType = foreignKeyColumn.getColumnDataType();
-    final ColumnDataType pkColumnType = primaryKeyColumn.getColumnDataType();
+    final ColumnDataType fkColumnType = fkColumn.getColumnDataType();
+    final ColumnDataType pkColumnType = pkColumn.getColumnDataType();
     final boolean isValid =
         fkColumnType.getJavaSqlType().getName().equals(pkColumnType.getJavaSqlType().getName());
     return isValid;

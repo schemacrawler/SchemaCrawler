@@ -28,39 +28,22 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.hash;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
-import schemacrawler.schema.BaseForeignKey;
 import schemacrawler.schema.Column;
-import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
-import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.TableConstraintType;
-import us.fatehi.utility.CompareUtility;
 
-/**
- * Represents a foreign-key mapping to a primary key in another table.
- *
- * @author Sualeh Fatehi
- */
-final class MutableForeignKey extends AbstractNamedObjectWithAttributes implements ForeignKey {
+/** Represents a foreign-key mapping to a primary key in another table. */
+final class MutableForeignKey extends AbstractForeignKey<ForeignKeyColumnReference>
+    implements ForeignKey {
 
   private static final long serialVersionUID = 4121411795974895671L;
 
   private final String specificName;
   private transient NamedObjectKey key;
-  private final SortedSet<MutableForeignKeyColumnReference> columnReferences;
   private final StringBuilder definition;
   private ForeignKeyDeferrability deferrability;
   private ForeignKeyUpdateRule deleteRule;
@@ -69,7 +52,6 @@ final class MutableForeignKey extends AbstractNamedObjectWithAttributes implemen
   MutableForeignKey(final String name, final String specificName) {
     super(name);
     this.specificName = specificName;
-    columnReferences = new TreeSet<>();
 
     definition = new StringBuilder();
 
@@ -77,47 +59,6 @@ final class MutableForeignKey extends AbstractNamedObjectWithAttributes implemen
     updateRule = ForeignKeyUpdateRule.unknown;
     deleteRule = ForeignKeyUpdateRule.unknown;
     deferrability = ForeignKeyDeferrability.unknown;
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * <p>Note: Since foreign keys are not always explicitly named in databases, the sorting routine
-   * orders the foreign keys by the names of the columns in the foreign keys.
-   */
-  @Override
-  public int compareTo(final NamedObject obj) {
-    if (obj == null) {
-      return -1;
-    }
-
-    final BaseForeignKey<?> other = (BaseForeignKey<?>) obj;
-    final List<? extends ColumnReference> thisColumnReferences = getColumnReferences();
-    final List<? extends ColumnReference> otherColumnReferences = other.getColumnReferences();
-
-    return CompareUtility.compareLists(thisColumnReferences, otherColumnReferences);
-  }
-
-  /** {@inheritDoc} Foreign key equality is based on the column references, not the name. */
-  @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (!(obj instanceof BaseForeignKey)) {
-      return false;
-    }
-    final BaseForeignKey<?> other = (BaseForeignKey<?>) obj;
-    return Objects.equals(getColumnReferences(), other.getColumnReferences());
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public List<ForeignKeyColumnReference> getColumnReferences() {
-    return new ArrayList<>(columnReferences);
   }
 
   @Override
@@ -159,12 +100,6 @@ final class MutableForeignKey extends AbstractNamedObjectWithAttributes implemen
     return definition.length() > 0;
   }
 
-  /** {@inheritDoc} Foreign key equality is based on the column references, not the name. */
-  @Override
-  public int hashCode() {
-    return hash(columnReferences);
-  }
-
   @Override
   public boolean isDeferrable() {
     return isInitiallyDeferred();
@@ -179,11 +114,6 @@ final class MutableForeignKey extends AbstractNamedObjectWithAttributes implemen
   }
 
   @Override
-  public Iterator<ForeignKeyColumnReference> iterator() {
-    return new ArrayList<ForeignKeyColumnReference>(columnReferences).iterator();
-  }
-
-  @Override
   public NamedObjectKey key() {
     buildKey();
     return key;
@@ -192,7 +122,7 @@ final class MutableForeignKey extends AbstractNamedObjectWithAttributes implemen
   void addColumnReference(final int keySequence, final Column pkColumn, final Column fkColumn) {
     final MutableForeignKeyColumnReference fkColumnReference =
         new MutableForeignKeyColumnReference(keySequence, pkColumn, fkColumn);
-    columnReferences.add(fkColumnReference);
+    addColumnReference(fkColumnReference);
   }
 
   void appendDefinition(final String definition) {

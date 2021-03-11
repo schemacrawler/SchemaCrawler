@@ -1,0 +1,190 @@
+/*
+========================================================================
+SchemaCrawler
+http://www.schemacrawler.com
+Copyright (c) 2000-2021, Sualeh Fatehi <sualeh@hotmail.com>.
+All rights reserved.
+------------------------------------------------------------------------
+
+SchemaCrawler is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+SchemaCrawler and the accompanying materials are made available under
+the terms of the Eclipse Public License v1.0, GNU General Public License
+v3 or GNU Lesser General Public License v3.
+
+You may elect to redistribute this code under any of these licenses.
+
+The Eclipse Public License is available at:
+http://www.eclipse.org/legal/epl-v10.html
+
+The GNU General Public License v3 and the GNU Lesser General Public
+License v3 are available at:
+http://www.gnu.org/licenses/
+
+========================================================================
+*/
+
+package schemacrawler.crawl;
+
+import static java.util.Objects.requireNonNull;
+import static schemacrawler.crawl.RetrieverUtility.lookupOrCreateColumn;
+import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.requireNotBlank;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.logging.Level;
+
+import schemacrawler.SchemaCrawlerLogger;
+import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Column;
+import schemacrawler.schema.PartialDatabaseObject;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.Table;
+import us.fatehi.utility.string.StringFormat;
+
+public final class WeakAssociationBuilder {
+
+  public static final class WeakAssociationColumn {
+
+    private final Schema schema;
+    private final String tableName;
+    private final String columnName;
+
+    public WeakAssociationColumn(final Column column) {
+      this(
+          requireNonNull(column, "No column provided").getSchema(),
+          column.getParent().getName(),
+          column.getName());
+    }
+
+    public WeakAssociationColumn(final Schema schema, final String table, final String column) {
+      this.schema = requireNonNull(schema, "No schema provided");
+      this.tableName = requireNotBlank(table, "No table name provided");
+      this.columnName = requireNotBlank(column, "No column name provided");
+    }
+
+    public String getColumnName() {
+      return columnName;
+    }
+
+    public Schema getSchema() {
+      return schema;
+    }
+
+    public String getTableName() {
+      return tableName;
+    }
+
+    @Override
+    public String toString() {
+      return String.format("weak-association <%s.%s.%s>", schema, tableName, columnName);
+    }
+  }
+
+  private static final SchemaCrawlerLogger LOGGER =
+      SchemaCrawlerLogger.getLogger(WeakAssociationBuilder.class.getName());
+
+  public static WeakAssociationBuilder builder(final Catalog catalog) {
+    return new WeakAssociationBuilder(catalog);
+  }
+
+  private final Catalog catalog;
+  private final Collection<WeakAssociationColumnReference> columnReferences;
+
+  private WeakAssociationBuilder(final Catalog catalog) {
+    this.catalog = requireNonNull(catalog, "No catalog provided");
+    columnReferences = new HashSet<>();
+  }
+
+  public WeakAssociationBuilder addColumnReference(
+      final WeakAssociationColumn referencedColumn, final WeakAssociationColumn referencingColumn) {
+    requireNonNull(referencedColumn, "No referenced column provided");
+    requireNonNull(referencingColumn, "No referencing column provided");
+
+    final Column pkColumn =
+        lookupOrCreateColumn(
+            catalog,
+            referencedColumn.getSchema(),
+            referencedColumn.getTableName(),
+            referencedColumn.getColumnName());
+    final Column fkColumn =
+        lookupOrCreateColumn(
+            catalog,
+            referencingColumn.getSchema(),
+            referencingColumn.getTableName(),
+            referencingColumn.getColumnName());
+
+    if (pkColumn.equals(fkColumn)) {
+      return this;
+    }
+
+    final boolean isPkColumnPartial = pkColumn instanceof PartialDatabaseObject;
+    final boolean isFkColumnPartial = fkColumn instanceof PartialDatabaseObject;
+    if (isFkColumnPartial && isPkColumnPartial) {
+      return this;
+    }
+
+    final WeakAssociationColumnReference columnReference =
+        new WeakAssociationColumnReference(pkColumn, fkColumn);
+    columnReferences.add(columnReference);
+
+    return this;
+  }
+
+  public WeakAssociation build() {
+    return build(null);
+  }
+
+  public WeakAssociation build(final String name) {
+    if (columnReferences.isEmpty()) {
+      LOGGER.log(Level.CONFIG, "Weak association not built, since there are no column references");
+      return null;
+    }
+
+    final WeakAssociationColumnReference someColumnReference = columnReferences.iterator().next();
+    final Table referencedTable = someColumnReference.getPrimaryKeyColumn().getParent();
+    final Table referencingTable = someColumnReference.getForeignKeyColumn().getParent();
+
+    final String weakAssociationName;
+    if (isBlank(name)) {
+      weakAssociationName =
+          RetrieverUtility.constructForeignKeyName(referencedTable, referencingTable);
+    } else {
+      weakAssociationName = name;
+    }
+
+    final WeakAssociation weakAssociation = new WeakAssociation(weakAssociationName);
+    for (final WeakAssociationColumnReference columnReference : columnReferences) {
+      // Add a column reference only if they reference the same two tables
+      if (referencedTable.equals(columnReference.getPrimaryKeyColumn().getParent())
+          && referencingTable.equals(columnReference.getForeignKeyColumn().getParent())) {
+        weakAssociation.addColumnReference(columnReference);
+      } else {
+        LOGGER.log(
+            Level.CONFIG,
+            new StringFormat(
+                "Weak association not built, since column references are not consistent, %s",
+                columnReferences));
+        return null;
+      }
+    }
+
+    if (referencedTable instanceof MutableTable) {
+      ((MutableTable) referencedTable).addWeakAssociation(weakAssociation);
+    }
+    if (referencingTable instanceof MutableTable) {
+      ((MutableTable) referencingTable).addWeakAssociation(weakAssociation);
+    }
+
+    return weakAssociation;
+  }
+
+  public WeakAssociationBuilder clear() {
+    columnReferences.clear();
+    LOGGER.log(Level.FINER, new StringFormat("Builder <%s> cleared", hashCode()));
+    return this;
+  }
+}
