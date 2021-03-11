@@ -12,11 +12,6 @@ weak-associations:
     name: BOOKS
   column-references:
     ID: ID
-  remarks:
-  - "Overwritten remarks line 1"
-  attributes:
-    "some tag 1": tagvalue1
-    tag2: "tag value 2"
 # 2. Partial foreign key
 - name: 2_weak_partial_fk
   referenced-table:
