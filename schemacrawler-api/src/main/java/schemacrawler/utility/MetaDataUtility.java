@@ -36,7 +36,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import schemacrawler.schema.BaseForeignKey;
+import schemacrawler.schema.TableReference;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.Index;
@@ -94,7 +94,7 @@ public final class MetaDataUtility {
   }
 
   public static ForeignKeyCardinality findForeignKeyCardinality(
-      final BaseForeignKey<?> foreignKey) {
+      final TableReference<?> foreignKey) {
     if (foreignKey == null) {
       return ForeignKeyCardinality.unknown;
     }
@@ -116,7 +116,7 @@ public final class MetaDataUtility {
   }
 
   public static List<String> foreignKeyColumnNames(
-      final BaseForeignKey<? extends ColumnReference> foreignKey) {
+      final TableReference<? extends ColumnReference> foreignKey) {
     if (foreignKey == null) {
       return Collections.emptyList();
     }
@@ -135,7 +135,7 @@ public final class MetaDataUtility {
    * @param quoteString
    * @return Comma-separated list of columns
    */
-  public static <REF extends ColumnReference, FK extends BaseForeignKey<REF>>
+  public static <REF extends ColumnReference, FK extends TableReference<REF>>
       String getColumnsListAsString(
           final FK fk,
           final TableRelationshipType relationshipType,
@@ -223,7 +223,7 @@ public final class MetaDataUtility {
     return joinColumns(quotingStrategy, quoteString, columns);
   }
 
-  public static boolean isForeignKeyUnique(final BaseForeignKey<?> foreignKey) {
+  public static boolean isForeignKeyUnique(final TableReference<?> foreignKey) {
     if (foreignKey == null) {
       return false;
     }

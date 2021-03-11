@@ -45,7 +45,7 @@ import java.util.Objects;
 import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.crawl.WeakAssociation;
 import schemacrawler.schema.ActionOrientationType;
-import schemacrawler.schema.BaseForeignKey;
+import schemacrawler.schema.TableReference;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
@@ -406,7 +406,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   private void printColumnReferences(
       final boolean isForeignKey,
       final Table table,
-      final BaseForeignKey<? extends ColumnReference> foreignKey) {
+      final TableReference<? extends ColumnReference> foreignKey) {
     final ForeignKeyCardinality fkCardinality =
         MetaDataUtility.findForeignKeyCardinality(foreignKey);
     for (final ColumnReference columnRef : foreignKey) {

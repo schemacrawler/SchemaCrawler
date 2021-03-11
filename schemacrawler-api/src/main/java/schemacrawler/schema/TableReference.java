@@ -30,12 +30,8 @@ package schemacrawler.schema;
 
 import java.util.List;
 
-/**
- * Represents a foreign-key mapping to a primary key in another table.
- *
- * @author Sualeh Fatehi
- */
-public interface BaseForeignKey<R extends ColumnReference>
+/** Represents a foreign-key mapping to a primary key in another table. */
+public interface TableReference<R extends ColumnReference>
     extends NamedObject, AttributedObject, DescribedObject, Iterable<R> {
 
   /**

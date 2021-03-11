@@ -42,7 +42,7 @@ import java.util.List;
 
 import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.crawl.WeakAssociation;
-import schemacrawler.schema.BaseForeignKey;
+import schemacrawler.schema.TableReference;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
@@ -344,8 +344,8 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   }
 
   private <R extends ColumnReference> void printForeignKeys(
-      final Table table, final Collection<? extends BaseForeignKey<R>> foreignKeys) {
-    for (final BaseForeignKey<R> foreignKey : foreignKeys) {
+      final Table table, final Collection<? extends TableReference<R>> foreignKeys) {
+    for (final TableReference<R> foreignKey : foreignKeys) {
       final ForeignKeyCardinality fkCardinality = findForeignKeyCardinality(foreignKey);
       boolean showRemarks = !options.isHideRemarks() && foreignKey.hasRemarks();
       for (final R columnRef : foreignKey) {

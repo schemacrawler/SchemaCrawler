@@ -37,14 +37,14 @@ import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import schemacrawler.schema.BaseForeignKey;
+import schemacrawler.schema.TableReference;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.NamedObject;
 import us.fatehi.utility.CompareUtility;
 
 /** Represents a foreign-key mapping to a primary key in another table. */
 abstract class AbstractForeignKey<R extends ColumnReference>
-    extends AbstractNamedObjectWithAttributes implements BaseForeignKey<R> {
+    extends AbstractNamedObjectWithAttributes implements TableReference<R> {
 
   private static final long serialVersionUID = -5164664131926303038L;
 
@@ -67,7 +67,7 @@ abstract class AbstractForeignKey<R extends ColumnReference>
       return -1;
     }
 
-    final BaseForeignKey<?> other = (BaseForeignKey<?>) obj;
+    final TableReference<?> other = (TableReference<?>) obj;
     final List<R> thisColumnReferences = getColumnReferences();
     final List<? extends ColumnReference> otherColumnReferences = other.getColumnReferences();
 
@@ -82,10 +82,10 @@ abstract class AbstractForeignKey<R extends ColumnReference>
     if (obj == null) {
       return false;
     }
-    if (!(obj instanceof BaseForeignKey)) {
+    if (!(obj instanceof TableReference)) {
       return false;
     }
-    final BaseForeignKey<?> other = (BaseForeignKey<?>) obj;
+    final TableReference<?> other = (TableReference<?>) obj;
     return Objects.equals(getColumnReferences(), other.getColumnReferences());
   }
 
