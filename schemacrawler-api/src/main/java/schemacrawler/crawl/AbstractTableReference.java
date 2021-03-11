@@ -43,14 +43,14 @@ import schemacrawler.schema.TableReference;
 import us.fatehi.utility.CompareUtility;
 
 /** Represents a foreign-key mapping to a primary key in another table. */
-abstract class AbstractForeignKey extends AbstractNamedObjectWithAttributes
+abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
     implements TableReference {
 
   private static final long serialVersionUID = -5164664131926303038L;
 
   private final SortedSet<ColumnReference> columnReferences;
 
-  public AbstractForeignKey(final String name) {
+  public AbstractTableReference(final String name) {
     super(name);
     columnReferences = new TreeSet<>();
   }
