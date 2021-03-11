@@ -205,4 +205,24 @@ public class DiagramWeakAssociationsTest {
         diagramOptions,
         testContext.testMethodName());
   }
+
+  @Test
+  @DisplayName("Diagram with weak associations without remarks")
+  public void weakAssociationsDiagram_03(final TestContext testContext, final Connection connection)
+      throws Exception {
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    final DiagramOptions diagramOptions = DiagramOptionsBuilder.builder().noRemarks().toOptions();
+
+    final Config additionalConfig = new Config();
+    additionalConfig.put("attributes-file", "/attributes-weakassociations-remarks.yaml");
+
+    executableDiagram(
+        SchemaTextDetailType.schema.name(),
+        connection,
+        schemaCrawlerOptions,
+        additionalConfig,
+        diagramOptions,
+        testContext.testMethodName());
+  }
 }
