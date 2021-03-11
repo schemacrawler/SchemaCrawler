@@ -60,6 +60,7 @@ import schemacrawler.schema.Grant;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexType;
+import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Routine;
@@ -408,16 +409,30 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       final BaseForeignKey<? extends ColumnReference> foreignKey) {
     final ForeignKeyCardinality fkCardinality =
         MetaDataUtility.findForeignKeyCardinality(foreignKey);
-    for (final ColumnReference columnReference : foreignKey) {
-      final Column pkColumn;
-      final Column fkColumn;
+    for (final ColumnReference columnRef : foreignKey) {
+
+      final Column pkColumn = columnRef.getPrimaryKeyColumn();
+      final Column fkColumn = columnRef.getForeignKeyColumn();
+
+      final Table referencedTable = columnRef.getPrimaryKeyColumn().getParent();
+      final Table referencingTable = columnRef.getForeignKeyColumn().getParent();
+      final boolean isForeignKeyFiltered =
+          referencingTable.getAttribute("schemacrawler.table.no_grep_match", false);
+      if (isForeignKeyFiltered) {
+        continue;
+      }
+      final boolean isPkColumnFiltered =
+          referencedTable.getAttribute("schemacrawler.table.filtered_out", false)
+              || referencedTable instanceof PartialDatabaseObject;
+      final boolean isFkColumnFiltered =
+          referencingTable.getAttribute("schemacrawler.table.filtered_out", false)
+              || referencingTable instanceof PartialDatabaseObject;
+
       final String pkColumnName;
       final String fkColumnName;
-      pkColumn = columnReference.getPrimaryKeyColumn();
-      fkColumn = columnReference.getForeignKeyColumn();
 
       boolean isIncoming = false;
-      if (pkColumn.getParent().equals(table)) {
+      if (referencedTable.equals(table)) {
         pkColumnName = identifiers.quoteName(pkColumn);
         isIncoming = true;
       } else if (options.isShowUnqualifiedNames()) {
@@ -425,7 +440,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       } else {
         pkColumnName = identifiers.quoteFullName(pkColumn);
       }
-      if (fkColumn.getParent().equals(table)) {
+      if (referencingTable.equals(table)) {
         fkColumnName = identifiers.quoteName(fkColumn);
       } else if (options.isShowUnqualifiedNames()) {
         fkColumnName = identifiers.quoteShortName(fkColumn);
@@ -433,15 +448,19 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         fkColumnName = identifiers.quoteFullName(fkColumn);
       }
       String keySequenceString = "";
-      if (columnReference instanceof ForeignKeyColumnReference && options.isShowOrdinalNumbers()) {
-        final int keySequence = ((ForeignKeyColumnReference) columnReference).getKeySequence();
+      if (columnRef instanceof ForeignKeyColumnReference && options.isShowOrdinalNumbers()) {
+        final int keySequence = ((ForeignKeyColumnReference) columnRef).getKeySequence();
         keySequenceString = String.format("%2d", keySequence);
       }
 
       final String relationship;
       if (isIncoming) {
-        final String fkHyperlink =
-            formattingHelper.createAnchor(fkColumnName, "#" + nodeId(fkColumn.getParent()));
+        final String fkHyperlink;
+        if (isFkColumnFiltered) {
+          fkHyperlink = fkColumnName;
+        } else {
+          fkHyperlink = formattingHelper.createAnchor(fkColumnName, "#" + nodeId(referencingTable));
+        }
         final String arrow =
             isForeignKey
                 ? formattingHelper.createLeftArrow()
@@ -449,8 +468,12 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         relationship =
             String.format("%s %s%s %s", pkColumnName, arrow, fkCardinality.toString(), fkHyperlink);
       } else {
-        final String pkHyperlink =
-            formattingHelper.createAnchor(pkColumnName, "#" + nodeId(pkColumn.getParent()));
+        final String pkHyperlink;
+        if (isPkColumnFiltered) {
+          pkHyperlink = pkColumnName;
+        } else {
+          pkHyperlink = formattingHelper.createAnchor(pkColumnName, "#" + nodeId(referencedTable));
+        }
         final String arrow =
             isForeignKey
                 ? formattingHelper.createRightArrow()
