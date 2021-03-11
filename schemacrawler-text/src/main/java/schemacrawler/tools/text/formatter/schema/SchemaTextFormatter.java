@@ -50,8 +50,8 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ConditionTimingType;
-import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DefinedObject;
+import schemacrawler.schema.DescribedObject;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
@@ -630,7 +630,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     }
   }
 
-  private void printRemarks(final DatabaseObject object) {
+  private void printRemarks(final DescribedObject object) {
     if (object == null || !object.hasRemarks() || options.isHideRemarks()) {
       return;
     }
@@ -946,6 +946,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         }
         final String fkDetails = "[weak association]";
         formattingHelper.writeNameRow(fkName, fkDetails);
+        printRemarks(weakAssociation);
         printColumnReferences(false, table, weakAssociation);
       }
     }
