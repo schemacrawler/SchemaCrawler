@@ -42,16 +42,16 @@ import java.util.List;
 
 import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.crawl.WeakAssociation;
-import schemacrawler.schema.TableReference;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
-import schemacrawler.schema.ForeignKeyColumnReference;
+import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableReference;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
@@ -281,6 +281,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   }
 
   private String printColumnReference(
+      final boolean isForeignKey,
       final String fkName,
       final ColumnReference columnRef,
       final ForeignKeyCardinality fkCardinality,
@@ -288,7 +289,6 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
       final boolean isFkColumnFiltered,
       final boolean showRemarks,
       final String remarks) {
-    final boolean isForeignKey = columnRef instanceof ForeignKeyColumnReference;
 
     final Column primaryKeyColumn = columnRef.getPrimaryKeyColumn();
     final Column foreignKeyColumn = columnRef.getForeignKeyColumn();
@@ -344,11 +344,12 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   }
 
   private <R extends ColumnReference> void printForeignKeys(
-      final Table table, final Collection<? extends TableReference<R>> foreignKeys) {
-    for (final TableReference<R> foreignKey : foreignKeys) {
+      final Table table, final Collection<? extends TableReference> foreignKeys) {
+    for (final TableReference foreignKey : foreignKeys) {
+      final boolean isForeignKey = foreignKey instanceof ForeignKey;
       final ForeignKeyCardinality fkCardinality = findForeignKeyCardinality(foreignKey);
       boolean showRemarks = !options.isHideRemarks() && foreignKey.hasRemarks();
-      for (final R columnRef : foreignKey) {
+      for (final ColumnReference columnRef : foreignKey) {
         final Table referencedTable = columnRef.getPrimaryKeyColumn().getParent();
         final Table referencingTable = columnRef.getForeignKeyColumn().getParent();
         final boolean isForeignKeyFiltered =
@@ -372,6 +373,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
         if (table.equals(referencedTable) || isPkColumnFiltered && table.equals(referencingTable)) {
           formattingHelper.append(
               printColumnReference(
+                  isForeignKey,
                   identifiers.quoteName(foreignKey.getName()),
                   columnRef,
                   fkCardinality,

@@ -29,7 +29,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2021-03-10 23:06:43.596</td>
+		<td align='left'>2021-03-11 20:38:09.421</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
@@ -525,10 +525,10 @@ along with the latest updated information</td>
     >
   ];
 
-  "country_9237a800" [label=<PRIVATE.ALLSALES.REGIONS.COUNTRY>];
-  "country_9237a800":w -> "sales_751e68cc":"country_9291942a.end":e [label=<8_weak_two_references> style="dashed" dir="both" arrowhead="teetee" arrowtail="box"];
   "postalcode_c32cfdc2" [label=<PRIVATE.ALLSALES.REGIONS.POSTALCODE>];
   "postalcode_c32cfdc2":w -> "sales_751e68cc":"postalcode_c386e9ec.end":e [label=<8_weak_two_references> style="dashed" dir="both" arrowhead="teetee" arrowtail="box"];
+  "country_9237a800" [label=<PRIVATE.ALLSALES.REGIONS.COUNTRY>];
+  "country_9237a800":w -> "sales_751e68cc":"country_9291942a.end":e [label=<8_weak_two_references> style="dashed" dir="both" arrowhead="teetee" arrowtail="box"];
 
 
   /* PUBLIC."PUBLISHER SALES".SALESDATA -=-=-=-=-=-=-=-=-=-=-=-=-=- */

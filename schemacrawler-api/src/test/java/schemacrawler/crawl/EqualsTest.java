@@ -52,7 +52,9 @@ public class EqualsTest {
 
   @Test
   public void columnReference() {
-    EqualsVerifier.forClass(AbstractColumnReference.class).verify();
+    EqualsVerifier.forClass(ImmutableColumnReference.class)
+        .withIgnoredFields("keySequence")
+        .verify();
   }
 
   @Test

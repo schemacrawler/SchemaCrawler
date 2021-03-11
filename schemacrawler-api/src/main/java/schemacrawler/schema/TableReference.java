@@ -31,13 +31,13 @@ package schemacrawler.schema;
 import java.util.List;
 
 /** Represents a foreign-key mapping to a primary key in another table. */
-public interface TableReference<R extends ColumnReference>
-    extends NamedObject, AttributedObject, DescribedObject, Iterable<R> {
+public interface TableReference
+    extends NamedObject, AttributedObject, DescribedObject, Iterable<ColumnReference> {
 
   /**
    * Gets the list of column pairs.
    *
    * @return Column pairs
    */
-  List<R> getColumnReferences();
+  List<ColumnReference> getColumnReferences();
 }

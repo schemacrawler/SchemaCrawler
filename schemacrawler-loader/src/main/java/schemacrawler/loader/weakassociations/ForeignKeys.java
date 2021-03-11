@@ -35,7 +35,6 @@ import java.util.List;
 
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
 
 final class ForeignKeys {
@@ -75,7 +74,7 @@ final class ForeignKeys {
     final Collection<ColumnReference> fkColumnsMap = new HashSet<>();
     for (final Table table : tables) {
       for (final ForeignKey foreignKey : table.getForeignKeys()) {
-        for (final ForeignKeyColumnReference columnRef : foreignKey) {
+        for (final ColumnReference columnRef : foreignKey) {
           fkColumnsMap.add(columnRef);
         }
       }

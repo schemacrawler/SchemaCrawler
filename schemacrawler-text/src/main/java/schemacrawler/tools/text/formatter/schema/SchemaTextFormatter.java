@@ -45,7 +45,6 @@ import java.util.Objects;
 import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.crawl.WeakAssociation;
 import schemacrawler.schema.ActionOrientationType;
-import schemacrawler.schema.TableReference;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
@@ -54,7 +53,6 @@ import schemacrawler.schema.DefinedObject;
 import schemacrawler.schema.DescribedObject;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.Grant;
 import schemacrawler.schema.Index;
@@ -71,6 +69,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableConstraintType;
+import schemacrawler.schema.TableReference;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -404,9 +403,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   private void printColumnReferences(
-      final boolean isForeignKey,
-      final Table table,
-      final TableReference<? extends ColumnReference> foreignKey) {
+      final boolean isForeignKey, final Table table, final TableReference foreignKey) {
     final ForeignKeyCardinality fkCardinality =
         MetaDataUtility.findForeignKeyCardinality(foreignKey);
     for (final ColumnReference columnRef : foreignKey) {
@@ -448,8 +445,8 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         fkColumnName = identifiers.quoteFullName(fkColumn);
       }
       String keySequenceString = "";
-      if (columnRef instanceof ForeignKeyColumnReference && options.isShowOrdinalNumbers()) {
-        final int keySequence = ((ForeignKeyColumnReference) columnRef).getKeySequence();
+      if (options.isShowOrdinalNumbers()) {
+        final int keySequence = columnRef.getKeySequence();
         keySequenceString = String.format("%2d", keySequence);
       }
 

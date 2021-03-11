@@ -45,8 +45,8 @@ import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.GrepOptionsBuilder;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
@@ -70,7 +70,7 @@ public class SchemaCrawlerReferenceTest {
     for (final Table table : tables) {
       final Collection<ForeignKey> foreignKeys = table.getForeignKeys();
       for (final ForeignKey foreignKey : foreignKeys) {
-        for (final ForeignKeyColumnReference fkColumnRef : foreignKey) {
+        for (final ColumnReference fkColumnRef : foreignKey) {
           assertReferencedColumnExists(catalog, fkColumnRef.getPrimaryKeyColumn());
           assertReferencedColumnExists(catalog, fkColumnRef.getForeignKeyColumn());
 
@@ -102,7 +102,7 @@ public class SchemaCrawlerReferenceTest {
     for (final Table table : tables) {
       final Collection<ForeignKey> foreignKeys = table.getForeignKeys();
       for (final ForeignKey foreignKey : foreignKeys) {
-        for (final ForeignKeyColumnReference fkColumnRef : foreignKey) {
+        for (final ColumnReference fkColumnRef : foreignKey) {
           assertReferencedColumnDoesNotExist(catalog, fkColumnRef.getPrimaryKeyColumn(), true);
           assertReferencedColumnExists(catalog, fkColumnRef.getForeignKeyColumn());
 
@@ -134,7 +134,7 @@ public class SchemaCrawlerReferenceTest {
     for (final Table table : tables) {
       final Collection<ForeignKey> foreignKeys = table.getForeignKeys();
       for (final ForeignKey foreignKey : foreignKeys) {
-        for (final ForeignKeyColumnReference fkColumnRef : foreignKey) {
+        for (final ColumnReference fkColumnRef : foreignKey) {
           assertReferencedColumnExists(catalog, fkColumnRef.getPrimaryKeyColumn());
           assertReferencedColumnDoesNotExist(catalog, fkColumnRef.getForeignKeyColumn(), true);
 
@@ -161,7 +161,7 @@ public class SchemaCrawlerReferenceTest {
     for (final Table table : tables) {
       final Collection<ForeignKey> foreignKeys = table.getForeignKeys();
       for (final ForeignKey foreignKey : foreignKeys) {
-        for (final ForeignKeyColumnReference fkColumnRef : foreignKey) {
+        for (final ColumnReference fkColumnRef : foreignKey) {
           assertReferencedColumnDoesNotExist(catalog, fkColumnRef.getPrimaryKeyColumn(), false);
           assertReferencedColumnExists(catalog, fkColumnRef.getForeignKeyColumn());
 
@@ -188,7 +188,7 @@ public class SchemaCrawlerReferenceTest {
     for (final Table table : tables) {
       final Collection<ForeignKey> foreignKeys = table.getForeignKeys();
       for (final ForeignKey foreignKey : foreignKeys) {
-        for (final ForeignKeyColumnReference fkColumnRef : foreignKey) {
+        for (final ColumnReference fkColumnRef : foreignKey) {
           assertReferencedColumnExists(catalog, fkColumnRef.getPrimaryKeyColumn());
           assertReferencedColumnDoesNotExist(catalog, fkColumnRef.getForeignKeyColumn(), false);
 

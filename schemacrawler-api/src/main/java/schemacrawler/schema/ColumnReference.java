@@ -45,6 +45,13 @@ public interface ColumnReference extends Serializable, Comparable<ColumnReferenc
   Column getForeignKeyColumn();
 
   /**
+   * Gets the sequence in the foreign key.
+   *
+   * @return Foreign key sequence
+   */
+  int getKeySequence();
+
+  /**
    * Gets the primary key column.
    *
    * @return Primary key column

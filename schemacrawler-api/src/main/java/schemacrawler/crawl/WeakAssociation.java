@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 /** Represents a foreign-key mapping to a primary key in another table. */
-public final class WeakAssociation extends AbstractForeignKey<WeakAssociationColumnReference> {
+public final class WeakAssociation extends AbstractForeignKey {
 
   private static final long serialVersionUID = -5164664131926303038L;
 

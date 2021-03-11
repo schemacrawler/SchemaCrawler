@@ -37,18 +37,18 @@ import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import schemacrawler.schema.TableReference;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.TableReference;
 import us.fatehi.utility.CompareUtility;
 
 /** Represents a foreign-key mapping to a primary key in another table. */
-abstract class AbstractForeignKey<R extends ColumnReference>
-    extends AbstractNamedObjectWithAttributes implements TableReference<R> {
+abstract class AbstractForeignKey extends AbstractNamedObjectWithAttributes
+    implements TableReference {
 
   private static final long serialVersionUID = -5164664131926303038L;
 
-  private final SortedSet<R> columnReferences;
+  private final SortedSet<ColumnReference> columnReferences;
 
   public AbstractForeignKey(final String name) {
     super(name);
@@ -67,9 +67,9 @@ abstract class AbstractForeignKey<R extends ColumnReference>
       return -1;
     }
 
-    final TableReference<?> other = (TableReference<?>) obj;
-    final List<R> thisColumnReferences = getColumnReferences();
-    final List<? extends ColumnReference> otherColumnReferences = other.getColumnReferences();
+    final TableReference other = (TableReference) obj;
+    final List<ColumnReference> thisColumnReferences = getColumnReferences();
+    final List<ColumnReference> otherColumnReferences = other.getColumnReferences();
 
     return CompareUtility.compareLists(thisColumnReferences, otherColumnReferences);
   }
@@ -85,12 +85,12 @@ abstract class AbstractForeignKey<R extends ColumnReference>
     if (!(obj instanceof TableReference)) {
       return false;
     }
-    final TableReference<?> other = (TableReference<?>) obj;
+    final TableReference other = (TableReference) obj;
     return Objects.equals(getColumnReferences(), other.getColumnReferences());
   }
 
   @Override
-  public List<R> getColumnReferences() {
+  public List<ColumnReference> getColumnReferences() {
     return new ArrayList<>(columnReferences);
   }
 
@@ -100,11 +100,11 @@ abstract class AbstractForeignKey<R extends ColumnReference>
   }
 
   @Override
-  public Iterator<R> iterator() {
+  public Iterator<ColumnReference> iterator() {
     return columnReferences.iterator();
   }
 
-  void addColumnReference(final R columnReference) {
+  void addColumnReference(final ColumnReference columnReference) {
     if (columnReference != null) {
       columnReferences.add(columnReference);
     }

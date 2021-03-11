@@ -4,11 +4,11 @@ schema: PUBLIC.BOOKS
     weak association: SC_AFD2BA21_20BE6F95
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.BOOKS.ID <~~ PUBLIC."PUBLISHER SALES".SALES.BOOKID
+          PUBLIC.BOOKS.BOOKS.ID <-- PUBLIC."PUBLISHER SALES".SALES.BOOKID
     weak association: SC_B8DA20C0_AFD2BA21
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.PUBLISHERS.ID <~~ PUBLIC.BOOKS.BOOKS.PUBLISHERID
+          PUBLIC.BOOKS.PUBLISHERS.ID <-- PUBLIC.BOOKS.BOOKS.PUBLISHERID
   table: PUBLIC.BOOKS.COUPONS
   table: PUBLIC.BOOKS.CUSTOMERDATA
   table: PUBLIC.BOOKS.CUSTOMERS
@@ -17,7 +17,7 @@ schema: PUBLIC.BOOKS
     weak association: SC_B8DA20C0_AFD2BA21
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.PUBLISHERS.ID <~~ PUBLIC.BOOKS.BOOKS.PUBLISHERID
+          PUBLIC.BOOKS.PUBLISHERS.ID <-- PUBLIC.BOOKS.BOOKS.PUBLISHERID
   table: PUBLIC.BOOKS.BOOKAUTHORS
   table: PUBLIC.BOOKS.ΒΙΒΛΊΑ
   table: PUBLIC.BOOKS.AUTHORSLIST
@@ -30,5 +30,5 @@ schema: PUBLIC."PUBLISHER SALES"
     weak association: SC_AFD2BA21_20BE6F95
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.BOOKS.ID <~~ PUBLIC."PUBLISHER SALES".SALES.BOOKID
+          PUBLIC.BOOKS.BOOKS.ID <-- PUBLIC."PUBLISHER SALES".SALES.BOOKID
 schema: PUBLIC.SYSTEM_LOBS

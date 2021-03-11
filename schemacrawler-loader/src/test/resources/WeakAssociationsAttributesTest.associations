@@ -7,15 +7,15 @@ schema: PUBLIC.BOOKS
     association: 2_weak_partial_fk WeakAssociation
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.AUTHORS.ID <~~ PRIVATE.LIBRARY.BOOKAUTHORS.AUTHORID
+          PUBLIC.BOOKS.AUTHORS.ID <-- PRIVATE.LIBRARY.BOOKAUTHORS.AUTHORID
     association: 7_weak_duplicate WeakAssociation
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.AUTHORS.ID <~~ PRIVATE.LIBRARY.MAGAZINEARTICLES.AUTHORID
+          PUBLIC.BOOKS.AUTHORS.ID <-- PRIVATE.LIBRARY.MAGAZINEARTICLES.AUTHORID
     association: 1_weak WeakAssociation
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.AUTHORS.ID <~~ PUBLIC.BOOKS.BOOKS.ID
+          PUBLIC.BOOKS.AUTHORS.ID <-- PUBLIC.BOOKS.BOOKS.ID
   table: PUBLIC.BOOKS.BOOKS
     association: SYS_FK_10128 MutableForeignKey
       column references: 
@@ -28,19 +28,19 @@ schema: PUBLIC.BOOKS
     association: 3_weak_partial_pk WeakAssociation
       column references: 
         key sequence: 1
-          PRIVATE.LIBRARY.BOOKS.BOOKID <~~ PUBLIC.BOOKS.BOOKS.ID
+          PRIVATE.LIBRARY.BOOKS.BOOKID <-- PUBLIC.BOOKS.BOOKS.ID
     association: 1_weak WeakAssociation
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.AUTHORS.ID <~~ PUBLIC.BOOKS.BOOKS.ID
+          PUBLIC.BOOKS.AUTHORS.ID <-- PUBLIC.BOOKS.BOOKS.ID
     association: SC_AFD2BA21_20BE6F95 WeakAssociation
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.BOOKS.ID <~~ PUBLIC."PUBLISHER SALES".SALES.BOOKID
+          PUBLIC.BOOKS.BOOKS.ID <-- PUBLIC."PUBLISHER SALES".SALES.BOOKID
     association: SC_B8DA20C0_AFD2BA21 WeakAssociation
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.PUBLISHERS.ID <~~ PUBLIC.BOOKS.BOOKS.PUBLISHERID
+          PUBLIC.BOOKS.PUBLISHERS.ID <-- PUBLIC.BOOKS.BOOKS.PUBLISHERID
   table: PUBLIC.BOOKS.COUPONS
   table: PUBLIC.BOOKS.CUSTOMERDATA
   table: PUBLIC.BOOKS.CUSTOMERS
@@ -53,7 +53,7 @@ schema: PUBLIC.BOOKS
     association: SC_B8DA20C0_AFD2BA21 WeakAssociation
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.PUBLISHERS.ID <~~ PUBLIC.BOOKS.BOOKS.PUBLISHERID
+          PUBLIC.BOOKS.PUBLISHERS.ID <-- PUBLIC.BOOKS.BOOKS.PUBLISHERID
   table: PUBLIC.BOOKS.BOOKAUTHORS
     association: Z_FK_AUTHOR MutableForeignKey
       column references: 
@@ -98,11 +98,11 @@ schema: PUBLIC."PUBLISHER SALES"
     association: SC_AFD2BA21_20BE6F95 WeakAssociation
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.BOOKS.ID <~~ PUBLIC."PUBLISHER SALES".SALES.BOOKID
+          PUBLIC.BOOKS.BOOKS.ID <-- PUBLIC."PUBLISHER SALES".SALES.BOOKID
     association: 8_weak_two_references WeakAssociation
       column references: 
         key sequence: 1
-          PUBLIC."PUBLISHER SALES".SALES.COUNTRY <~~ PRIVATE.ALLSALES.REGIONS.COUNTRY
+          PUBLIC."PUBLISHER SALES".SALES.POSTALCODE <-- PRIVATE.ALLSALES.REGIONS.POSTALCODE
         key sequence: 2
-          PUBLIC."PUBLISHER SALES".SALES.POSTALCODE <~~ PRIVATE.ALLSALES.REGIONS.POSTALCODE
+          PUBLIC."PUBLISHER SALES".SALES.COUNTRY <-- PRIVATE.ALLSALES.REGIONS.COUNTRY
 schema: PUBLIC.SYSTEM_LOBS

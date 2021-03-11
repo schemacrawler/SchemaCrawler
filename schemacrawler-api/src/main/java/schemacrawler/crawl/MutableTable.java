@@ -39,8 +39,8 @@ import java.util.Optional;
 import java.util.Set;
 
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Privilege;
@@ -158,7 +158,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
     if (tableRelationshipType != null && tableRelationshipType != TableRelationshipType.none) {
       final List<MutableForeignKey> foreignKeysList = new ArrayList<>(foreignKeys.values());
       for (final ForeignKey foreignKey : foreignKeysList) {
-        for (final ForeignKeyColumnReference columnReference : foreignKey) {
+        for (final ColumnReference columnReference : foreignKey) {
           final Table parentTable = columnReference.getPrimaryKeyColumn().getParent();
           final Table childTable = columnReference.getForeignKeyColumn().getParent();
           switch (tableRelationshipType) {
@@ -339,7 +339,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
         final ForeignKey mutableForeignKey = iterator.next();
         boolean isExportedKey = false;
         boolean isImportedKey = false;
-        for (final ForeignKeyColumnReference columnReference : mutableForeignKey) {
+        for (final ColumnReference columnReference : mutableForeignKey) {
           if (columnReference.getPrimaryKeyColumn().getParent().equals(this)) {
             isExportedKey = true;
           }

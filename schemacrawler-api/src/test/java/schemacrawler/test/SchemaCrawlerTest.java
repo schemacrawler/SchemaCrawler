@@ -65,12 +65,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.crawl.WeakAssociation;
 import schemacrawler.crawl.WeakAssociationBuilder;
 import schemacrawler.crawl.WeakAssociationBuilder.WeakAssociationColumn;
-import schemacrawler.crawl.WeakAssociationColumnReference;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.Constraint;
+import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.Grant;
@@ -111,7 +112,7 @@ public class SchemaCrawlerTest {
   private static String printColumnDataType(final ColumnDataType columnDataType) {
     final StringBuilder buffer = new StringBuilder();
 
-    final boolean isUserDefined = columnDataType.isUserDefined();
+    final boolean isUserDefined = columnDataType.getType() == DataTypeType.user_defined;
     final String typeName = columnDataType.getFullName();
     final String dataType = (isUserDefined ? "user defined " : "") + "column data-type";
     final String nullable = (columnDataType.isNullable() ? "" : "not ") + "nullable";
@@ -714,10 +715,9 @@ public class SchemaCrawlerTest {
           for (final WeakAssociation foreignKey : table.getWeakAssociations()) {
             out.println("    weak association: " + foreignKey.getName());
             out.println("      column references: ");
-            final List<WeakAssociationColumnReference> columnReferences =
-                foreignKey.getColumnReferences();
+            final List<ColumnReference> columnReferences = foreignKey.getColumnReferences();
             for (int i = 0; i < columnReferences.size(); i++) {
-              final WeakAssociationColumnReference columnReference = columnReferences.get(i);
+              final ColumnReference columnReference = columnReferences.get(i);
               out.println("        key sequence: " + (i + 1));
               out.println("          " + columnReference);
             }

@@ -46,12 +46,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.crawl.WeakAssociation;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
-import schemacrawler.schema.TableReference;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableReference;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -120,16 +120,16 @@ public class WeakAssociationsAttributesTest {
         getCatalog(connection, schemaRetrievalOptions, schemaCrawlerOptions, additionalConfig);
   }
 
-  private <R extends ColumnReference> void printAssociations(
-      final Collection<? extends TableReference<R>> associations, final TestWriter out) {
-    for (final TableReference<R> association : associations) {
+  private void printAssociations(
+      final Collection<? extends TableReference> associations, final TestWriter out) {
+    for (final TableReference association : associations) {
       out.println(
           "    association: "
               + association.getName()
               + " "
               + association.getClass().getSimpleName());
       out.println("      column references: ");
-      final List<R> columnReferences = association.getColumnReferences();
+      final List<ColumnReference> columnReferences = association.getColumnReferences();
       for (int i = 0; i < columnReferences.size(); i++) {
         final ColumnReference columnReference = columnReferences.get(i);
         out.println("        key sequence: " + (i + 1));

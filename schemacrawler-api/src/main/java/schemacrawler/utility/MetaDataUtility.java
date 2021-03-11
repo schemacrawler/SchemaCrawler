@@ -36,7 +36,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import schemacrawler.schema.TableReference;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.Index;
@@ -46,6 +45,7 @@ import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
+import schemacrawler.schema.TableReference;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
 import schemacrawler.schemacrawler.Identifiers;
@@ -93,8 +93,7 @@ public final class MetaDataUtility {
     return columnNames;
   }
 
-  public static ForeignKeyCardinality findForeignKeyCardinality(
-      final TableReference<?> foreignKey) {
+  public static ForeignKeyCardinality findForeignKeyCardinality(final TableReference foreignKey) {
     if (foreignKey == null) {
       return ForeignKeyCardinality.unknown;
     }
@@ -115,8 +114,7 @@ public final class MetaDataUtility {
     return connectivity;
   }
 
-  public static List<String> foreignKeyColumnNames(
-      final TableReference<? extends ColumnReference> foreignKey) {
+  public static List<String> foreignKeyColumnNames(final TableReference foreignKey) {
     if (foreignKey == null) {
       return Collections.emptyList();
     }
@@ -125,42 +123,6 @@ public final class MetaDataUtility {
       columnNames.add(columnReference.getForeignKeyColumn().getFullName());
     }
     return columnNames;
-  }
-
-  /**
-   * Gets a comma-separated list of columns for a foreign key.
-   *
-   * @param fk Foreign key
-   * @param quotingStrategy Identifier quoting strategy
-   * @param quoteString
-   * @return Comma-separated list of columns
-   */
-  public static <REF extends ColumnReference, FK extends TableReference<REF>>
-      String getColumnsListAsString(
-          final FK fk,
-          final TableRelationshipType relationshipType,
-          final IdentifierQuotingStrategy quotingStrategy,
-          final String quoteString) {
-
-    requireNonNull(fk, "No foreign key provided");
-    requireNonNull(quotingStrategy, "No identifier quoting strategy provided");
-    if (relationshipType == null || relationshipType == TableRelationshipType.none) {
-      return "";
-    }
-
-    final List<Column> columns = new ArrayList<>();
-    for (final REF columnReference : fk.getColumnReferences()) {
-      switch (relationshipType) {
-        case parent:
-          columns.add(columnReference.getPrimaryKeyColumn());
-          break;
-        case child:
-          columns.add(columnReference.getForeignKeyColumn());
-          break;
-        default:
-      }
-    }
-    return joinColumns(quotingStrategy, quoteString, columns);
   }
 
   /**
@@ -223,7 +185,42 @@ public final class MetaDataUtility {
     return joinColumns(quotingStrategy, quoteString, columns);
   }
 
-  public static boolean isForeignKeyUnique(final TableReference<?> foreignKey) {
+  /**
+   * Gets a comma-separated list of columns for a foreign key.
+   *
+   * @param fk Foreign key
+   * @param quotingStrategy Identifier quoting strategy
+   * @param quoteString
+   * @return Comma-separated list of columns
+   */
+  public static String getColumnsListAsString(
+      final TableReference fk,
+      final TableRelationshipType relationshipType,
+      final IdentifierQuotingStrategy quotingStrategy,
+      final String quoteString) {
+
+    requireNonNull(fk, "No foreign key provided");
+    requireNonNull(quotingStrategy, "No identifier quoting strategy provided");
+    if (relationshipType == null || relationshipType == TableRelationshipType.none) {
+      return "";
+    }
+
+    final List<Column> columns = new ArrayList<>();
+    for (final ColumnReference columnReference : fk.getColumnReferences()) {
+      switch (relationshipType) {
+        case parent:
+          columns.add(columnReference.getPrimaryKeyColumn());
+          break;
+        case child:
+          columns.add(columnReference.getForeignKeyColumn());
+          break;
+        default:
+      }
+    }
+    return joinColumns(quotingStrategy, quoteString, columns);
+  }
+
+  public static boolean isForeignKeyUnique(final TableReference foreignKey) {
     if (foreignKey == null) {
       return false;
     }

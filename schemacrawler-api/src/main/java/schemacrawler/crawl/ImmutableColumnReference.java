@@ -34,30 +34,36 @@ import java.util.Objects;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 
-/**
- * Represents a single column mapping from a primary key column to a foreign key column.
- *
- * @author Sualeh Fatehi
- */
-abstract class AbstractColumnReference implements ColumnReference, Comparable<ColumnReference> {
+/** Represents a single column mapping from a primary key column to a foreign key column. */
+final class ImmutableColumnReference implements ColumnReference, Comparable<ColumnReference> {
 
   private static final long serialVersionUID = -4411771492159843382L;
 
   private final Column foreignKeyColumn;
   private final Column primaryKeyColumn;
+  private final int keySequence;
 
-  protected AbstractColumnReference(final Column primaryKeyColumn, final Column foreignKeyColumn) {
+  protected ImmutableColumnReference(
+      final int keySequence, final Column primaryKeyColumn, final Column foreignKeyColumn) {
+    this.keySequence = keySequence;
     this.primaryKeyColumn = requireNonNull(primaryKeyColumn, "No primary key column provided");
     this.foreignKeyColumn = requireNonNull(foreignKeyColumn, "No foreign key column provided");
   }
 
+  /** {@inheritDoc} */
   @Override
   public int compareTo(final ColumnReference columnRef) {
+
     if (columnRef == null) {
       return -1;
     }
 
     int compare = 0;
+
+    final ColumnReference other = columnRef;
+    if (compare == 0) {
+      compare = getKeySequence() - other.getKeySequence();
+    }
     if (compare == 0) {
       compare =
           primaryKeyColumn.getFullName().compareTo(columnRef.getPrimaryKeyColumn().getFullName());
@@ -70,14 +76,14 @@ abstract class AbstractColumnReference implements ColumnReference, Comparable<Co
   }
 
   @Override
-  public final boolean equals(final Object obj) {
+  public boolean equals(final Object obj) {
     if (this == obj) {
       return true;
     }
     if (obj == null) {
       return false;
     }
-    if (!(obj instanceof AbstractColumnReference)) {
+    if (!(obj instanceof ImmutableColumnReference)) {
       return false;
     }
     final ColumnReference other = (ColumnReference) obj;
@@ -93,12 +99,18 @@ abstract class AbstractColumnReference implements ColumnReference, Comparable<Co
 
   /** {@inheritDoc} */
   @Override
+  public int getKeySequence() {
+    return keySequence;
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public Column getPrimaryKeyColumn() {
     return primaryKeyColumn;
   }
 
   @Override
-  public final int hashCode() {
+  public int hashCode() {
     return Objects.hash(foreignKeyColumn, primaryKeyColumn);
   }
 

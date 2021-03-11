@@ -40,6 +40,7 @@ import java.util.logging.Level;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -92,7 +93,7 @@ public final class WeakAssociationBuilder {
   }
 
   private final Catalog catalog;
-  private final Collection<WeakAssociationColumnReference> columnReferences;
+  private final Collection<ColumnReference> columnReferences;
 
   private WeakAssociationBuilder(final Catalog catalog) {
     this.catalog = requireNonNull(catalog, "No catalog provided");
@@ -127,8 +128,8 @@ public final class WeakAssociationBuilder {
       return this;
     }
 
-    final WeakAssociationColumnReference columnReference =
-        new WeakAssociationColumnReference(pkColumn, fkColumn);
+    final ColumnReference columnReference =
+        new ImmutableColumnReference(columnReferences.size(), pkColumn, fkColumn);
     columnReferences.add(columnReference);
 
     return this;
@@ -144,7 +145,7 @@ public final class WeakAssociationBuilder {
       return null;
     }
 
-    final WeakAssociationColumnReference someColumnReference = columnReferences.iterator().next();
+    final ColumnReference someColumnReference = columnReferences.iterator().next();
     final Table referencedTable = someColumnReference.getPrimaryKeyColumn().getParent();
     final Table referencingTable = someColumnReference.getForeignKeyColumn().getParent();
 
@@ -157,7 +158,7 @@ public final class WeakAssociationBuilder {
     }
 
     final WeakAssociation weakAssociation = new WeakAssociation(weakAssociationName);
-    for (final WeakAssociationColumnReference columnReference : columnReferences) {
+    for (final ColumnReference columnReference : columnReferences) {
       // Add a column reference only if they reference the same two tables
       if (referencedTable.equals(columnReference.getPrimaryKeyColumn().getParent())
           && referencingTable.equals(columnReference.getForeignKeyColumn().getParent())) {

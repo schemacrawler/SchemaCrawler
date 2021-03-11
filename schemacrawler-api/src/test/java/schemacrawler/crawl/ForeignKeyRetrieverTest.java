@@ -54,8 +54,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InfoLevel;
@@ -102,9 +102,8 @@ public class ForeignKeyRetrieverTest {
             out.println("      update rule: " + foreignKey.getUpdateRule());
 
             out.println("      column references: ");
-            final List<ForeignKeyColumnReference> columnReferences =
-                foreignKey.getColumnReferences();
-            for (final ForeignKeyColumnReference columnReference : columnReferences) {
+            final List<ColumnReference> columnReferences = foreignKey.getColumnReferences();
+            for (final ColumnReference columnReference : columnReferences) {
               out.println("        key sequence: " + columnReference.getKeySequence());
               out.println("          " + columnReference);
             }
