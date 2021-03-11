@@ -74,7 +74,7 @@ weak-associations:
     name: MAGAZINEARTICLES
   column-references:
     ID: AUTHORID
-    ID: AUTHORID
+    ID: AUTHORID # yamllint disable-line rule:key-duplicates
  # 8. Two column references
 - name: 8_weak_two_references
   referenced-table:
