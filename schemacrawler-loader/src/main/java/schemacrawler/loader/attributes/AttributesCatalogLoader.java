@@ -36,7 +36,6 @@ import java.util.Optional;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
-import schemacrawler.crawl.WeakAssociation;
 import schemacrawler.crawl.WeakAssociationBuilder;
 import schemacrawler.crawl.WeakAssociationBuilder.WeakAssociationColumn;
 import schemacrawler.loader.attributes.model.CatalogAttributes;
@@ -45,6 +44,7 @@ import schemacrawler.loader.attributes.model.TableAttributes;
 import schemacrawler.loader.attributes.model.WeakAssociationAttributes;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.WeakAssociation;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.CommandDescription;

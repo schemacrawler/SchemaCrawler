@@ -41,7 +41,6 @@ import java.util.Collections;
 import java.util.List;
 
 import schemacrawler.crawl.NotLoadedException;
-import schemacrawler.crawl.WeakAssociation;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
@@ -52,6 +51,7 @@ import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableReference;
+import schemacrawler.schema.WeakAssociation;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;

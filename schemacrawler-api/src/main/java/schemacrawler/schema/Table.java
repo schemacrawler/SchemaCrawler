@@ -32,8 +32,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import schemacrawler.crawl.WeakAssociation;
-
 /** Represents a table in the database. */
 public interface Table extends DatabaseObject, TypedObject<TableType>, DefinedObject {
 

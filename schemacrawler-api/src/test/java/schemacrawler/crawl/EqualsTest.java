@@ -149,7 +149,7 @@ public class EqualsTest {
 
   @Test
   public void weakAssociation() {
-    EqualsVerifier.forClass(WeakAssociation.class)
+    EqualsVerifier.forClass(MutableWeakAssociation.class)
         .withNonnullFields("columnReferences")
         .withOnlyTheseFields("columnReferences")
         .verify();

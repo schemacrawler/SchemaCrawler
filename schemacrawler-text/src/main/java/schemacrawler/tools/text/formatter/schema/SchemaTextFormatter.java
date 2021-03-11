@@ -43,7 +43,6 @@ import java.util.Locale;
 import java.util.Objects;
 
 import schemacrawler.crawl.NotLoadedException;
-import schemacrawler.crawl.WeakAssociation;
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
@@ -72,6 +71,7 @@ import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schema.TableReference;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
+import schemacrawler.schema.WeakAssociation;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;

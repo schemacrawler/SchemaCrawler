@@ -44,6 +44,7 @@ import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.WeakAssociation;
 import us.fatehi.utility.string.StringFormat;
 
 public final class WeakAssociationBuilder {
@@ -157,7 +158,7 @@ public final class WeakAssociationBuilder {
       weakAssociationName = name;
     }
 
-    final WeakAssociation weakAssociation = new WeakAssociation(weakAssociationName);
+    final MutableWeakAssociation weakAssociation = new MutableWeakAssociation(weakAssociationName);
     for (final ColumnReference columnReference : columnReferences) {
       // Add a column reference only if they reference the same two tables
       if (referencedTable.equals(columnReference.getPrimaryKeyColumn().getParent())

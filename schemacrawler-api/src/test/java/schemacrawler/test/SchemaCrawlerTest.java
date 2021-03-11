@@ -62,7 +62,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.crawl.WeakAssociation;
 import schemacrawler.crawl.WeakAssociationBuilder;
 import schemacrawler.crawl.WeakAssociationBuilder.WeakAssociationColumn;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
@@ -90,6 +89,7 @@ import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
+import schemacrawler.schema.WeakAssociation;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;

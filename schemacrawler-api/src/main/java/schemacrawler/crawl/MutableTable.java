@@ -50,6 +50,7 @@ import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
+import schemacrawler.schema.WeakAssociation;
 
 class MutableTable extends AbstractDatabaseObject implements Table {
 
@@ -65,7 +66,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
   private final NamedObjectList<MutableTableConstraint> constraints = new NamedObjectList<>();
   private final StringBuilder definition;
   private final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
-  private final NamedObjectList<WeakAssociation> weakAssociations = new NamedObjectList<>();
+  private final NamedObjectList<MutableWeakAssociation> weakAssociations = new NamedObjectList<>();
   private final NamedObjectList<MutableColumn> hiddenColumns = new NamedObjectList<>();
   private final NamedObjectList<MutableIndex> indexes = new NamedObjectList<>();
   private final NamedObjectList<MutablePrivilege<Table>> privileges = new NamedObjectList<>();
@@ -298,7 +299,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
     triggers.add(trigger);
   }
 
-  final void addWeakAssociation(final WeakAssociation weakAssociation) {
+  final void addWeakAssociation(final MutableWeakAssociation weakAssociation) {
     weakAssociations.add(weakAssociation);
   }
 

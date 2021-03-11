@@ -46,6 +46,7 @@ import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
+import schemacrawler.schema.WeakAssociation;
 
 final class TablePartial extends AbstractDatabaseObject implements Table, PartialDatabaseObject {
 
