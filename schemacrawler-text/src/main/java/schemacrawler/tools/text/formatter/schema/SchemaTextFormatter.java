@@ -934,13 +934,19 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
     final List<WeakAssociation> weakAssociations = new ArrayList<>(weakAssociationsCollection);
     weakAssociations.sort(naturalOrder());
-    for (final WeakAssociation weakFk : weakAssociations) {
-      if (weakFk != null) {
+    for (final WeakAssociation weakAssociation : weakAssociations) {
+      if (weakAssociation != null) {
+        final String name = identifiers.quoteName(weakAssociation);
+
         formattingHelper.writeEmptyRow();
 
+        String fkName = "";
+        if (!options.isHideWeakAssociationNames()) {
+          fkName = name;
+        }
         final String fkDetails = "[weak association]";
-        formattingHelper.writeNameRow("", fkDetails);
-        printColumnReferences(false, table, weakFk);
+        formattingHelper.writeNameRow(fkName, fkDetails);
+        printColumnReferences(false, table, weakAssociation);
       }
     }
   }
