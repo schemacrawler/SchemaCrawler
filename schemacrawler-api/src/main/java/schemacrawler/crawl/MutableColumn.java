@@ -56,7 +56,7 @@ final class MutableColumn extends AbstractColumn<Table> implements Column {
   private Column referencedColumn;
 
   MutableColumn(final Table parent, final String name) {
-    super(new TableReference(parent), name);
+    super(new TablePointer(parent), name);
   }
 
   /** {@inheritDoc} */

@@ -29,13 +29,13 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 
-import schemacrawler.schema.Procedure;
+import schemacrawler.schema.Table;
 
-class ProcedureReference extends DatabaseObjectReference<Procedure> {
+class TablePointer extends DatabaseObjectReference<Table> {
 
-  private static final long serialVersionUID = 5422838457822334919L;
+  private static final long serialVersionUID = 8940800217960888019L;
 
-  ProcedureReference(final Procedure procedure) {
-    super(requireNonNull(procedure, "No procedure provided"), new ProcedurePartial(procedure));
+  TablePointer(final Table table) {
+    super(requireNonNull(table, "No table provided"), new TablePartial(table));
   }
 }

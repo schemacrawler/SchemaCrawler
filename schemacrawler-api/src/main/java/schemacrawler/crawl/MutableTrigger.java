@@ -50,7 +50,7 @@ class MutableTrigger extends AbstractDependantObject<Table> implements Trigger {
   private EventManipulationType eventManipulationType;
 
   MutableTrigger(final Table parent, final String name) {
-    super(new TableReference(parent), name);
+    super(new TablePointer(parent), name);
     // Default values
     eventManipulationType = EventManipulationType.unknown;
     actionOrientation = ActionOrientationType.unknown;

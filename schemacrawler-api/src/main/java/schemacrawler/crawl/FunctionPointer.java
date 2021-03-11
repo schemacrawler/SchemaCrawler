@@ -29,13 +29,13 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 
-import schemacrawler.schema.Column;
+import schemacrawler.schema.Function;
 
-class ColumnReference extends DatabaseObjectReference<Column> {
+class FunctionPointer extends DatabaseObjectReference<Function> {
 
-  private static final long serialVersionUID = 122669483681884924L;
+  private static final long serialVersionUID = -5166020646865781875L;
 
-  ColumnReference(final Column column) {
-    super(requireNonNull(column, "No column provided"), new ColumnPartial(column));
+  FunctionPointer(final Function function) {
+    super(requireNonNull(function, "No function provided"), new FunctionPartial(function));
   }
 }

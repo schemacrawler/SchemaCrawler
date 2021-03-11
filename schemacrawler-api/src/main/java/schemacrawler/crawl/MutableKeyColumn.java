@@ -47,7 +47,7 @@ class MutableKeyColumn extends AbstractDependantObject<Table> implements Column,
   private int keyOrdinalPosition;
 
   MutableKeyColumn(final Column column) {
-    super(new TableReference(column.getParent()), column.getName());
+    super(new TablePointer(column.getParent()), column.getName());
     this.column = column;
     definition = new StringBuilder();
   }

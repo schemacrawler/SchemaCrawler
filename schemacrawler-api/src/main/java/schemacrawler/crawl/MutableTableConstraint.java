@@ -48,7 +48,7 @@ class MutableTableConstraint extends AbstractDependantObject<Table> implements T
   private TableConstraintType tableConstraintType;
 
   MutableTableConstraint(final Table parent, final String name) {
-    super(new TableReference(parent), name);
+    super(new TablePointer(parent), name);
     definition = new StringBuilder();
   }
 
