@@ -44,13 +44,13 @@ import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
-import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableReference;
+import schemacrawler.schema.TableReferenceType;
 import schemacrawler.schema.WeakAssociation;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
@@ -346,7 +346,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   private <R extends ColumnReference> void printForeignKeys(
       final Table table, final Collection<? extends TableReference> foreignKeys) {
     for (final TableReference foreignKey : foreignKeys) {
-      final boolean isForeignKey = foreignKey instanceof ForeignKey;
+      final boolean isForeignKey = foreignKey.getType() == TableReferenceType.foreign_key;
       final ForeignKeyCardinality fkCardinality = findForeignKeyCardinality(foreignKey);
       boolean showRemarks = !options.isHideRemarks() && foreignKey.hasRemarks();
       for (final ColumnReference columnRef : foreignKey) {

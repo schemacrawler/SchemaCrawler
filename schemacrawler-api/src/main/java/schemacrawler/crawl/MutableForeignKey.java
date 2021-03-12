@@ -35,6 +35,7 @@ import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.TableConstraintType;
+import schemacrawler.schema.TableReferenceType;
 
 /** Represents a foreign-key mapping to a primary key in another table. */
 final class MutableForeignKey extends AbstractTableReference implements ForeignKey {
@@ -86,6 +87,12 @@ final class MutableForeignKey extends AbstractTableReference implements ForeignK
   @Override
   public String getSpecificName() {
     return specificName;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public TableReferenceType getTableReferenceType() {
+    return TableReferenceType.foreign_key;
   }
 
   /** {@inheritDoc} */

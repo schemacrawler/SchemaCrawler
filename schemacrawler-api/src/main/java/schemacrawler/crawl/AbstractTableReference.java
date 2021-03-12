@@ -40,6 +40,7 @@ import java.util.TreeSet;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.TableReference;
+import schemacrawler.schema.TableReferenceType;
 import us.fatehi.utility.CompareUtility;
 
 /** Represents a foreign-key mapping to a primary key in another table. */
@@ -74,6 +75,7 @@ abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
     return CompareUtility.compareLists(thisColumnReferences, otherColumnReferences);
   }
 
+  /** {@inheritDoc} */
   @Override
   public final boolean equals(final Object obj) {
     if (this == obj) {
@@ -89,16 +91,27 @@ abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
     return Objects.equals(getColumnReferences(), other.getColumnReferences());
   }
 
+  /** {@inheritDoc} */
   @Override
   public List<ColumnReference> getColumnReferences() {
     return new ArrayList<>(columnReferences);
   }
 
+  public abstract TableReferenceType getTableReferenceType();
+
+  /** {@inheritDoc} */
+  @Override
+  public TableReferenceType getType() {
+    return getTableReferenceType();
+  }
+
+  /** {@inheritDoc} */
   @Override
   public final int hashCode() {
     return hash(columnReferences);
   }
 
+  /** {@inheritDoc} */
   @Override
   public Iterator<ColumnReference> iterator() {
     return columnReferences.iterator();

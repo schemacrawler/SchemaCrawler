@@ -6,6 +6,7 @@
 - Move Docker Compose for SchemaCrawler to it's own project, with Maven moving _testdb files
 - Make small code optimizations for performance
 - Allow weak associations to be loaded from catalog attributes file
+- Make WeakAssociation an interface, and consistent with other model classes
 - Fix documentation of linter configuration using YAML
 
 
