@@ -33,7 +33,7 @@ package schemacrawler.schema;
  *
  * @author Sualeh Fatehi
  */
-public interface ForeignKey extends TableReference, Constraint {
+public interface ForeignKey extends TableReference {
 
   /**
    * Gets the deferrability.

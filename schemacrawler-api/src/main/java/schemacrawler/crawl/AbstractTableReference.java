@@ -45,7 +45,6 @@ import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraintColumn;
-import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schema.TableReference;
 import schemacrawler.schema.TableReferenceType;
 import us.fatehi.utility.CompareUtility;
@@ -156,11 +155,6 @@ abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
     return state.getTableConstraintColumns();
   }
 
-  @Override
-  public TableConstraintType getConstraintType() {
-    return TableConstraintType.foreign_key;
-  }
-
   public Table getForeignKeyTable() {
     buildState();
     return state.getForeignKeyTable();
@@ -190,11 +184,6 @@ abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
 
   @Override
   public abstract TableReferenceType getTableReferenceType();
-
-  @Override
-  public TableConstraintType getType() {
-    return TableConstraintType.foreign_key;
-  }
 
   /** {@inheritDoc} */
   @Override

@@ -46,7 +46,7 @@ final class MutablePrimaryKey extends MutableTableConstraint implements PrimaryK
   }
 
   @Override
-  public TableConstraintType getConstraintType() {
+  public TableConstraintType getType() {
     return TableConstraintType.primary_key;
   }
 

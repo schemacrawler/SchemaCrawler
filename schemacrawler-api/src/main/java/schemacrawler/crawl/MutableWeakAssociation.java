@@ -42,11 +42,6 @@ final class MutableWeakAssociation extends AbstractTableReference implements Wea
   }
 
   @Override
-  public TableConstraintType getConstraintType() {
-    return null;
-  }
-
-  @Override
   public String getDefinition() {
     return "";
   }
@@ -55,6 +50,11 @@ final class MutableWeakAssociation extends AbstractTableReference implements Wea
   @Override
   public TableReferenceType getTableReferenceType() {
     return TableReferenceType.weak_association;
+  }
+
+  @Override
+  public TableConstraintType getType() {
+    return TableConstraintType.unknown;
   }
 
   @Override

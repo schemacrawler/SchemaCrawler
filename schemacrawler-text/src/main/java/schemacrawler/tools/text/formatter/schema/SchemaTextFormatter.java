@@ -819,7 +819,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
     final List<TableConstraint> constraints = new ArrayList<>();
     for (final TableConstraint constraint : constraintsCollection) {
-      if (printableConstraints.contains(constraint.getConstraintType())) {
+      if (printableConstraints.contains(constraint.getType())) {
         constraints.add(constraint);
       }
     }
@@ -839,7 +839,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         if (!options.isHideTableConstraintNames()) {
           constraintName = identifiers.quoteName(constraint);
         }
-        final String constraintType = constraint.getConstraintType().getValue().toLowerCase();
+        final String constraintType = constraint.getType().getValue().toLowerCase();
         final String constraintDetails = "[" + constraintType + " constraint]";
         formattingHelper.writeEmptyRow();
         formattingHelper.writeNameRow(constraintName, constraintDetails);

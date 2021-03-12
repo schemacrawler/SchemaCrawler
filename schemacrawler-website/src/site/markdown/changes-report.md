@@ -7,6 +7,7 @@
 - Make small code optimizations for performance
 - Allow weak associations to be loaded from catalog attributes file
 - Make WeakAssociation an interface, and consistent with other model classes
+- Model foreign keys as table constraints for the referencing (foreign key) table
 - Fix documentation of linter configuration using YAML
 
 

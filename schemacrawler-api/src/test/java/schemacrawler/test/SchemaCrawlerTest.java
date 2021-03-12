@@ -487,10 +487,11 @@ public class SchemaCrawlerTest {
               table.getTableConstraints().toArray(new TableConstraint[0]);
           for (final TableConstraint tableConstraint : tableConstraints) {
             out.println("    constraint: " + tableConstraint.getName());
-            out.println("      type: " + tableConstraint.getConstraintType());
+            out.println("      type: " + tableConstraint.getType());
             if (tableConstraint instanceof TableConstraint) {
               final TableConstraint dependentTableConstraint = tableConstraint;
-              final List<TableConstraintColumn> columns = dependentTableConstraint.getConstrainedColumns();
+              final List<TableConstraintColumn> columns =
+                  dependentTableConstraint.getConstrainedColumns();
               for (final TableConstraintColumn tableConstraintColumn : columns) {
                 out.println("      on column: " + tableConstraintColumn.getName());
               }

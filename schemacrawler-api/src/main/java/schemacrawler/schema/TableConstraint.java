@@ -36,8 +36,7 @@ import java.util.List;
  * @author Sualeh Fatehi
  */
 public interface TableConstraint
-    extends Constraint, DependantObject<Table>, TypedObject<TableConstraintType> {
-
+    extends DependantObject<Table>, DefinedObject, TypedObject<TableConstraintType> {
   @Deprecated
   default List<TableConstraintColumn> getColumns() {
     return getConstrainedColumns();
@@ -49,12 +48,17 @@ public interface TableConstraint
    * @return Columns of the table constraint.
    */
   List<TableConstraintColumn> getConstrainedColumns();
+  /**
+   * Whether the constraint is deferrable.
+   *
+   * @return Whether the constraint is deferrable
+   */
+  boolean isDeferrable();
 
   /**
-   * Gets the table constraint type.
+   * Whether the constraint is initially deferred.
    *
-   * @return Table constraint type
+   * @return Whether the constraint is initially deferred
    */
-  @Override
-  TableConstraintType getConstraintType();
+  boolean isInitiallyDeferred();
 }

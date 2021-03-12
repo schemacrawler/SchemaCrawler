@@ -34,7 +34,7 @@ import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.string.StringFormat;
 
 /** Table constraint type. */
-public enum TableConstraintType implements ConstraintType {
+public enum TableConstraintType {
   unknown("unknown"),
   primary_key("PRIMARY KEY"),
   foreign_key("FOREIGN KEY"),
@@ -72,7 +72,6 @@ public enum TableConstraintType implements ConstraintType {
    *
    * @return Value
    */
-  @Override
   public final String getValue() {
     return value;
   }
