@@ -41,12 +41,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
-import schemacrawler.schema.Constraint;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -107,7 +107,7 @@ public class SchemaCrawlerDeepTest {
       table1.addPrivilege((MutablePrivilege) privilege);
       table2.addPrivilege((MutablePrivilege) privilege);
     }
-    for (final Constraint tableConstraint : table0.getTableConstraints()) {
+    for (final TableConstraint tableConstraint : table0.getTableConstraints()) {
       table1.addTableConstraint((MutableTableConstraint) tableConstraint);
       table2.addTableConstraint((MutableTableConstraint) tableConstraint);
     }

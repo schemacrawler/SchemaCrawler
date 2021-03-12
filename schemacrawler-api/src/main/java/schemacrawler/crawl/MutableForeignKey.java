@@ -34,6 +34,7 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.NamedObjectKey;
+import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schema.TableReferenceType;
 
@@ -114,7 +115,7 @@ final class MutableForeignKey extends AbstractTableReference implements ForeignK
   @Override
   public boolean isInitiallyDeferred() {
     if (deferrability == null) {
-      throw new NotLoadedException(this);
+      throw new NotLoadedException((TableConstraint) null);
     }
     return deferrability == ForeignKeyDeferrability.initiallyDeferred;
   }
