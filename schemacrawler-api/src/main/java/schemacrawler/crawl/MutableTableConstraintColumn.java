@@ -27,6 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.crawl;
 
+import schemacrawler.schema.Column;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
 
@@ -36,7 +37,7 @@ final class MutableTableConstraintColumn extends MutableKeyColumn implements Tab
 
   private final TableConstraint tableConstraint;
 
-  MutableTableConstraintColumn(final TableConstraint tableConstraint, final MutableColumn column) {
+  MutableTableConstraintColumn(final TableConstraint tableConstraint, final Column column) {
     super(column);
     this.tableConstraint = tableConstraint;
   }

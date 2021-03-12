@@ -38,12 +38,17 @@ import java.util.List;
 public interface TableConstraint
     extends Constraint, DependantObject<Table>, TypedObject<TableConstraintType> {
 
+  @Deprecated
+  default List<TableConstraintColumn> getColumns() {
+    return getConstrainedColumns();
+  }
+
   /**
    * Gets the list of columns in ordinal order.
    *
    * @return Columns of the table constraint.
    */
-  List<TableConstraintColumn> getColumns();
+  List<TableConstraintColumn> getConstrainedColumns();
 
   /**
    * Gets the table constraint type.

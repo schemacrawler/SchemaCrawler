@@ -59,7 +59,7 @@ public class LinterTableWithPrimaryKeyNotFirst extends BaseLinter {
       return;
     }
 
-    for (final TableConstraintColumn pkColumn : primaryKey.getColumns()) {
+    for (final TableConstraintColumn pkColumn : primaryKey.getConstrainedColumns()) {
       if (pkColumn.getTableConstraintOrdinalPosition() != pkColumn.getOrdinalPosition()) {
         addTableLint(table, getSummary());
         break;

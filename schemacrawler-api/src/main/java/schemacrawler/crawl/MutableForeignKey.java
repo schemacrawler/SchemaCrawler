@@ -35,7 +35,6 @@ import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.TableConstraint;
-import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schema.TableReferenceType;
 
 /** Represents a foreign-key mapping to a primary key in another table. */
@@ -60,11 +59,6 @@ final class MutableForeignKey extends AbstractTableReference implements ForeignK
     updateRule = ForeignKeyUpdateRule.unknown;
     deleteRule = ForeignKeyUpdateRule.unknown;
     deferrability = ForeignKeyDeferrability.unknown;
-  }
-
-  @Override
-  public TableConstraintType getConstraintType() {
-    return TableConstraintType.foreign_key;
   }
 
   /** {@inheritDoc} */

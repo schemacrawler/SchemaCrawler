@@ -54,7 +54,7 @@ class MutableTableConstraint extends AbstractDependantObject<Table> implements T
 
   /** {@inheritDoc} */
   @Override
-  public List<TableConstraintColumn> getColumns() {
+  public List<TableConstraintColumn> getConstrainedColumns() {
     return new ArrayList<>(columns.values());
   }
 

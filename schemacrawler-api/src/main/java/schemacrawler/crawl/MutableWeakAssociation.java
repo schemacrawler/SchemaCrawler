@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
+import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schema.TableReferenceType;
 import schemacrawler.schema.WeakAssociation;
 
@@ -40,9 +41,34 @@ final class MutableWeakAssociation extends AbstractTableReference implements Wea
     super(name);
   }
 
+  @Override
+  public TableConstraintType getConstraintType() {
+    return null;
+  }
+
+  @Override
+  public String getDefinition() {
+    return "";
+  }
+
   /** {@inheritDoc} */
   @Override
   public TableReferenceType getTableReferenceType() {
     return TableReferenceType.weak_association;
+  }
+
+  @Override
+  public boolean hasDefinition() {
+    return false;
+  }
+
+  @Override
+  public boolean isDeferrable() {
+    return false;
+  }
+
+  @Override
+  public boolean isInitiallyDeferred() {
+    return false;
   }
 }

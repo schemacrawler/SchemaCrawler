@@ -617,7 +617,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       }
       formattingHelper.writeNameRow(pkName, "[primary key]");
       printRemarks(primaryKey);
-      printTableColumns(primaryKey.getColumns(), false);
+      printTableColumns(primaryKey.getConstrainedColumns(), false);
       printDependantObjectDefinition(primaryKey);
     }
   }
@@ -845,7 +845,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         formattingHelper.writeNameRow(constraintName, constraintDetails);
 
         if (!isBrief) {
-          printTableColumns(constraint.getColumns(), false);
+          printTableColumns(constraint.getConstrainedColumns(), false);
         }
         printDependantObjectDefinition(constraint);
       }

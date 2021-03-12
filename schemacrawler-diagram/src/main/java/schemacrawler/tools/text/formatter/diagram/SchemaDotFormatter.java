@@ -346,7 +346,8 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   private <R extends ColumnReference> void printForeignKeys(
       final Table table, final Collection<? extends TableReference> foreignKeys) {
     for (final TableReference foreignKey : foreignKeys) {
-      final boolean isForeignKey = foreignKey.getType() == TableReferenceType.foreign_key;
+      final boolean isForeignKey =
+          foreignKey.getTableReferenceType() == TableReferenceType.foreign_key;
       final ForeignKeyCardinality fkCardinality = findForeignKeyCardinality(foreignKey);
       boolean showRemarks = !options.isHideRemarks() && foreignKey.hasRemarks();
       for (final ColumnReference columnRef : foreignKey) {

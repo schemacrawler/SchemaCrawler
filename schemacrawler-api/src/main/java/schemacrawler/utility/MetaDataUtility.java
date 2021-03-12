@@ -181,7 +181,7 @@ public final class MetaDataUtility {
     requireNonNull(tableConstraint, "No table constraint provided");
     requireNonNull(quotingStrategy, "No identifier quoting strategy provided");
 
-    final List<TableConstraintColumn> columns = tableConstraint.getColumns();
+    final List<TableConstraintColumn> columns = tableConstraint.getConstrainedColumns();
     return joinColumns(quotingStrategy, quoteString, columns);
   }
 

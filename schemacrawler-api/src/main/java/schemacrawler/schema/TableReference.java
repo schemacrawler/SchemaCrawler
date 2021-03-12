@@ -35,7 +35,7 @@ public interface TableReference
     extends NamedObject,
         AttributedObject,
         DescribedObject,
-        TypedObject<TableReferenceType>,
+        TableConstraint,
         Iterable<ColumnReference> {
 
   /**
@@ -44,4 +44,6 @@ public interface TableReference
    * @return Column pairs
    */
   List<ColumnReference> getColumnReferences();
+
+  TableReferenceType getTableReferenceType();
 }
