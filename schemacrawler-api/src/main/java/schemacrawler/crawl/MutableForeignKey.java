@@ -127,7 +127,7 @@ final class MutableForeignKey extends AbstractTableReference implements ForeignK
 
   void addColumnReference(final int keySequence, final Column pkColumn, final Column fkColumn) {
     final ColumnReference fkColumnReference =
-        new ImmutableColumnReference(keySequence, pkColumn, fkColumn);
+        new ImmutableColumnReference(keySequence, fkColumn, pkColumn);
     addColumnReference(fkColumnReference);
   }
 

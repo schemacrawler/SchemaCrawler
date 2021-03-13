@@ -11,7 +11,7 @@ schema: PUBLIC.BOOKS
       referenced table: PUBLIC.BOOKS.AUTHORS
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.AUTHORS.ID <-- PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID
+          PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID --> PUBLIC.BOOKS.AUTHORS.ID
       table constraint: 
         parent (referencing table): PUBLIC.BOOKS.BOOKAUTHORS
           constrained column: PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID
@@ -28,7 +28,7 @@ schema: PUBLIC.BOOKS
       referenced table: PUBLIC.BOOKS.AUTHORS
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.AUTHORS.ID <-- PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID
+          PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID --> PUBLIC.BOOKS.AUTHORS.ID
       table constraint: 
         parent (referencing table): PUBLIC.BOOKS.BOOKAUTHORS
           constrained column: PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID
@@ -43,7 +43,7 @@ schema: PUBLIC.BOOKS
       referenced table: PUBLIC.BOOKS.BOOKS
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.BOOKS.ID <-- PUBLIC.BOOKS.BOOKAUTHORS.BOOKID
+          PUBLIC.BOOKS.BOOKAUTHORS.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
       table constraint: 
         parent (referencing table): PUBLIC.BOOKS.BOOKAUTHORS
           constrained column: PUBLIC.BOOKS.BOOKAUTHORS.BOOKID
@@ -59,7 +59,7 @@ schema: PUBLIC.BOOKS
       referenced table: PUBLIC.BOOKS.BOOKS
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.BOOKS.ID <-- PUBLIC.BOOKS.BOOKAUTHORS.BOOKID
+          PUBLIC.BOOKS.BOOKAUTHORS.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
       table constraint: 
         parent (referencing table): PUBLIC.BOOKS.BOOKAUTHORS
           constrained column: PUBLIC.BOOKS.BOOKAUTHORS.BOOKID
@@ -74,7 +74,7 @@ schema: PUBLIC.BOOKS
       referenced table: PUBLIC.BOOKS.BOOKS
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.BOOKS.ID <-- PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID
+          PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID --> PUBLIC.BOOKS.BOOKS.ID
       table constraint: 
         parent (referencing table): PUBLIC.BOOKS.BOOKS
           constrained column: PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID
@@ -94,7 +94,7 @@ schema: PUBLIC.BOOKS
       referenced table: PUBLIC.BOOKS.PUBLISHERS
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.PUBLISHERS.ID <-- PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ
+          PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ --> PUBLIC.BOOKS.PUBLISHERS.ID
       table constraint: 
         parent (referencing table): PUBLIC.BOOKS.ΒΙΒΛΊΑ
           constrained column: PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ
@@ -110,7 +110,7 @@ schema: PUBLIC.BOOKS
       referenced table: PUBLIC.BOOKS.PUBLISHERS
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.PUBLISHERS.ID <-- PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ
+          PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ --> PUBLIC.BOOKS.PUBLISHERS.ID
       table constraint: 
         parent (referencing table): PUBLIC.BOOKS.ΒΙΒΛΊΑ
           constrained column: PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ
@@ -129,9 +129,9 @@ schema: PUBLIC."PUBLISHER SALES"
       referenced table: PUBLIC."PUBLISHER SALES".REGIONS
       column references: 
         key sequence: 1
-          PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE <-- PUBLIC."PUBLISHER SALES".SALES.POSTALCODE
+          PUBLIC."PUBLISHER SALES".SALES.POSTALCODE --> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE
         key sequence: 2
-          PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY <-- PUBLIC."PUBLISHER SALES".SALES.COUNTRY
+          PUBLIC."PUBLISHER SALES".SALES.COUNTRY --> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY
       table constraint: 
         parent (referencing table): PUBLIC."PUBLISHER SALES".SALES
           constrained column: PUBLIC."PUBLISHER SALES".SALES.POSTALCODE
@@ -148,7 +148,7 @@ schema: PUBLIC."PUBLISHER SALES"
       referenced table: PUBLIC."PUBLISHER SALES".SALESDATA
       column references: 
         key sequence: 1
-          PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID <-- PUBLIC."PUBLISHER SALES".SALES.SALESDATAID
+          PUBLIC."PUBLISHER SALES".SALES.SALESDATAID --> PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID
       table constraint: 
         parent (referencing table): PUBLIC."PUBLISHER SALES".SALES
           constrained column: PUBLIC."PUBLISHER SALES".SALES.SALESDATAID
@@ -163,9 +163,9 @@ schema: PUBLIC."PUBLISHER SALES"
       referenced table: PUBLIC."PUBLISHER SALES".REGIONS
       column references: 
         key sequence: 1
-          PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE <-- PUBLIC."PUBLISHER SALES".SALES.POSTALCODE
+          PUBLIC."PUBLISHER SALES".SALES.POSTALCODE --> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE
         key sequence: 2
-          PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY <-- PUBLIC."PUBLISHER SALES".SALES.COUNTRY
+          PUBLIC."PUBLISHER SALES".SALES.COUNTRY --> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY
       table constraint: 
         parent (referencing table): PUBLIC."PUBLISHER SALES".SALES
           constrained column: PUBLIC."PUBLISHER SALES".SALES.POSTALCODE
@@ -182,7 +182,7 @@ schema: PUBLIC."PUBLISHER SALES"
       referenced table: PUBLIC."PUBLISHER SALES".SALESDATA
       column references: 
         key sequence: 1
-          PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID <-- PUBLIC."PUBLISHER SALES".SALES.SALESDATAID
+          PUBLIC."PUBLISHER SALES".SALES.SALESDATAID --> PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID
       table constraint: 
         parent (referencing table): PUBLIC."PUBLISHER SALES".SALES
           constrained column: PUBLIC."PUBLISHER SALES".SALES.SALESDATAID

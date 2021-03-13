@@ -44,10 +44,10 @@ final class ImmutableColumnReference implements ColumnReference, Comparable<Colu
   private final int keySequence;
 
   protected ImmutableColumnReference(
-      final int keySequence, final Column primaryKeyColumn, final Column foreignKeyColumn) {
+      final int keySequence, final Column foreignKeyColumn, final Column primaryKeyColumn) {
     this.keySequence = keySequence;
-    this.primaryKeyColumn = requireNonNull(primaryKeyColumn, "No primary key column provided");
     this.foreignKeyColumn = requireNonNull(foreignKeyColumn, "No foreign key column provided");
+    this.primaryKeyColumn = requireNonNull(primaryKeyColumn, "No primary key column provided");
   }
 
   /** {@inheritDoc} */
@@ -66,11 +66,11 @@ final class ImmutableColumnReference implements ColumnReference, Comparable<Colu
     }
     if (compare == 0) {
       compare =
-          primaryKeyColumn.getFullName().compareTo(columnRef.getPrimaryKeyColumn().getFullName());
+          foreignKeyColumn.getFullName().compareTo(columnRef.getForeignKeyColumn().getFullName());
     }
     if (compare == 0) {
       compare =
-          foreignKeyColumn.getFullName().compareTo(columnRef.getForeignKeyColumn().getFullName());
+          primaryKeyColumn.getFullName().compareTo(columnRef.getPrimaryKeyColumn().getFullName());
     }
     return compare;
   }
@@ -87,8 +87,8 @@ final class ImmutableColumnReference implements ColumnReference, Comparable<Colu
       return false;
     }
     final ColumnReference other = (ColumnReference) obj;
-    return Objects.equals(foreignKeyColumn, other.getForeignKeyColumn())
-        && Objects.equals(primaryKeyColumn, other.getPrimaryKeyColumn());
+    return Objects.equals(primaryKeyColumn, other.getPrimaryKeyColumn())
+        && Objects.equals(foreignKeyColumn, other.getForeignKeyColumn());
   }
 
   /** {@inheritDoc} */
@@ -116,6 +116,6 @@ final class ImmutableColumnReference implements ColumnReference, Comparable<Colu
 
   @Override
   public String toString() {
-    return primaryKeyColumn + " <-- " + foreignKeyColumn;
+    return foreignKeyColumn + " --> " + primaryKeyColumn;
   }
 }

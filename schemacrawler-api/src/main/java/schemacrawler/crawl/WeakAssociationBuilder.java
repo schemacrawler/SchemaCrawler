@@ -130,7 +130,7 @@ public final class WeakAssociationBuilder {
     }
 
     final ColumnReference columnReference =
-        new ImmutableColumnReference(columnReferences.size(), pkColumn, fkColumn);
+        new ImmutableColumnReference(columnReferences.size(), fkColumn, pkColumn);
     columnReferences.add(columnReference);
 
     return this;

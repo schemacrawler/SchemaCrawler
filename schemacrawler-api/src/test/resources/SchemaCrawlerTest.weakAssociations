@@ -3,28 +3,28 @@ schema: PUBLIC.BOOKS
     weak association: 2_weak_partial_fk
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.AUTHORS.ID <-- PRIVATE.LIBRARY.BOOKAUTHORS.AUTHORID
+          PRIVATE.LIBRARY.BOOKAUTHORS.AUTHORID --> PUBLIC.BOOKS.AUTHORS.ID
     weak association: 7_weak_duplicate
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.AUTHORS.ID <-- PRIVATE.LIBRARY.MAGAZINEARTICLES.AUTHORID
+          PRIVATE.LIBRARY.MAGAZINEARTICLES.AUTHORID --> PUBLIC.BOOKS.AUTHORS.ID
     weak association: 1_weak
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.AUTHORS.ID <-- PUBLIC.BOOKS.BOOKS.ID
+          PUBLIC.BOOKS.BOOKS.ID --> PUBLIC.BOOKS.AUTHORS.ID
   table: PUBLIC.BOOKS.BOOKS
     weak association: 3_weak_partial_pk
       column references: 
         key sequence: 1
-          PRIVATE.LIBRARY.BOOKS.BOOKID <-- PUBLIC.BOOKS.BOOKS.ID
+          PUBLIC.BOOKS.BOOKS.ID --> PRIVATE.LIBRARY.BOOKS.BOOKID
     weak association: 1_weak
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.AUTHORS.ID <-- PUBLIC.BOOKS.BOOKS.ID
+          PUBLIC.BOOKS.BOOKS.ID --> PUBLIC.BOOKS.AUTHORS.ID
     weak association: 9_weak_self_reference
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.BOOKS.ID <-- PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID
+          PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID --> PUBLIC.BOOKS.BOOKS.ID
   table: PUBLIC.BOOKS.COUPONS
   table: PUBLIC.BOOKS.CUSTOMERDATA
   table: PUBLIC.BOOKS.CUSTOMERS
@@ -42,7 +42,7 @@ schema: PUBLIC."PUBLISHER SALES"
     weak association: 8_weak_two_references
       column references: 
         key sequence: 1
-          PUBLIC."PUBLISHER SALES".SALES.POSTALCODE <-- PRIVATE.ALLSALES.REGIONS.POSTALCODE
+          PRIVATE.ALLSALES.REGIONS.POSTALCODE --> PUBLIC."PUBLISHER SALES".SALES.POSTALCODE
         key sequence: 2
-          PUBLIC."PUBLISHER SALES".SALES.COUNTRY <-- PRIVATE.ALLSALES.REGIONS.COUNTRY
+          PRIVATE.ALLSALES.REGIONS.COUNTRY --> PUBLIC."PUBLISHER SALES".SALES.COUNTRY
 schema: PUBLIC.SYSTEM_LOBS

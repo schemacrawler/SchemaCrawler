@@ -303,14 +303,14 @@ Foreign Keys
 FK_PUBLICATION_JOIN                        [foreign key, with no action]
  1  ID <--(0..many) PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID                              
 
+FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
+ 1  WRITERID (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID                              
+
 FK_PUBLICATION                             [foreign key, with no action]
  1  ID <--(0..many) PUBLIC.FOR_LINT.PUBLICATIONWRITERS.PUBLICATIONID                              
 
 FK_WRITERS_PUBLICATION                     [foreign key, with no action]
  1  ID <--(0..many) PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID                              
-
-FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
- 1  WRITERID (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID                              
 
 Indexes
 
@@ -398,9 +398,6 @@ PK_WRITERS                                                 [primary key]
 
 Foreign Keys
 
-FK_WRITERS_PUBLICATION                     [foreign key, with no action]
- 1  PUBLICATION_ID (0..many)--> PUBLIC.FOR_LINT.PUBLICATIONS.ID                              
-
 FK_WRITER_JOIN                             [foreign key, with no action]
  1  ID <--(0..many) PUBLIC.FOR_LINT.EXTRA_PK.WRITERID                              
 
@@ -409,6 +406,9 @@ FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
 
 FK_WRITER                                  [foreign key, with no action]
  1  ID <--(0..many) PUBLIC.FOR_LINT.PUBLICATIONWRITERS.WRITERID                              
+
+FK_WRITERS_PUBLICATION                     [foreign key, with no action]
+ 1  PUBLICATION_ID (0..many)--> PUBLIC.FOR_LINT.PUBLICATIONS.ID                              
 
 Indexes
 
