@@ -27,55 +27,35 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.integration.objectdiffer;
 
-
 import de.danielbechler.diff.ObjectDiffer;
 import de.danielbechler.diff.ObjectDifferBuilder;
 import de.danielbechler.diff.node.DiffNode.State;
 
-public class SchemaCrawlerDifferBuilder
-{
+public class SchemaCrawlerDifferBuilder {
 
   final ObjectDifferBuilder objectDifferBuilder;
 
-  public SchemaCrawlerDifferBuilder()
-  {
+  public SchemaCrawlerDifferBuilder() {
 
     objectDifferBuilder = ObjectDifferBuilder.startBuilding();
-    objectDifferBuilder
-      .filtering()
-      .omitNodesWithState(State.UNTOUCHED);
-    objectDifferBuilder
-      .filtering()
-      .omitNodesWithState(State.CIRCULAR);
-    objectDifferBuilder
-      .inclusion()
-      .exclude()
-      .propertyName("fullName");
-    objectDifferBuilder
-      .inclusion()
-      .exclude()
-      .propertyName("parent");
-    objectDifferBuilder
-      .inclusion()
-      .exclude()
-      .propertyName("exportedForeignKeys");
-    objectDifferBuilder
-      .inclusion()
-      .exclude()
-      .propertyName("importedForeignKeys");
-    objectDifferBuilder
-      .inclusion()
-      .exclude()
-      .propertyName("deferrable");
-    objectDifferBuilder
-      .inclusion()
-      .exclude()
-      .propertyName("initiallyDeferred");
+    objectDifferBuilder.filtering().omitNodesWithState(State.UNTOUCHED);
+    objectDifferBuilder.filtering().omitNodesWithState(State.CIRCULAR);
+    // All objects
+    objectDifferBuilder.inclusion().exclude().propertyName("fullName");
+    // Dependent object, to prevent recursive reporting
+    objectDifferBuilder.inclusion().exclude().propertyName("parent");
+    // Table
+    objectDifferBuilder.inclusion().exclude().propertyName("exportedForeignKeys");
+    objectDifferBuilder.inclusion().exclude().propertyName("importedForeignKeys");
+    // Table constraints
+    objectDifferBuilder.inclusion().exclude().propertyName("deferrable");
+    objectDifferBuilder.inclusion().exclude().propertyName("initiallyDeferred");
+    // Foreign keys
+    objectDifferBuilder.inclusion().exclude().propertyName("primaryKeyTable");
+    objectDifferBuilder.inclusion().exclude().propertyName("foreignKeyTable");
   }
 
-  public ObjectDiffer build()
-  {
+  public ObjectDiffer build() {
     return objectDifferBuilder.build();
   }
-
 }
