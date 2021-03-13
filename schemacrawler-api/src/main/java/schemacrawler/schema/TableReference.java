@@ -45,5 +45,31 @@ public interface TableReference
    */
   List<ColumnReference> getColumnReferences();
 
+  /**
+   * Gets the referencing table.
+   *
+   * @return Referencing table.
+   */
+  Table getForeignKeyTable();
+  /**
+   * Gets the referenced table.
+   *
+   * @return Referenced table.
+   */
+  Table getPrimaryKeyTable();
+
+  default Table getReferencedTable() {
+    return getPrimaryKeyTable();
+  }
+
+  default Table getReferencingTable() {
+    return getForeignKeyTable();
+  }
+
+  /**
+   * Type of table reference.
+   *
+   * @return Type of table reference
+   */
   TableReferenceType getTableReferenceType();
 }

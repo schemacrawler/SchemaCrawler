@@ -155,6 +155,7 @@ abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
     return state.getTableConstraintColumns();
   }
 
+  @Override
   public Table getForeignKeyTable() {
     buildState();
     return state.getForeignKeyTable();
@@ -165,6 +166,7 @@ abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
     return getForeignKeyTable();
   }
 
+  @Override
   public Table getPrimaryKeyTable() {
     buildState();
     return state.getPrimaryKeyTable();
