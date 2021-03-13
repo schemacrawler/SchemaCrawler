@@ -37,6 +37,10 @@ schema: PUBLIC.BOOKS
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.ID <-- PUBLIC."PUBLISHER SALES".SALES.BOOKID
+    association: 9_weak_self_reference MutableWeakAssociation
+      column references: 
+        key sequence: 1
+          PUBLIC.BOOKS.BOOKS.ID <-- PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID
     association: SC_B8DA20C0_AFD2BA21 MutableWeakAssociation
       column references: 
         key sequence: 1

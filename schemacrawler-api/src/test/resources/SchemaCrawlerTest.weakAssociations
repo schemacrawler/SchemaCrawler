@@ -21,6 +21,10 @@ schema: PUBLIC.BOOKS
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.AUTHORS.ID <-- PUBLIC.BOOKS.BOOKS.ID
+    weak association: 9_weak_self_reference
+      column references: 
+        key sequence: 1
+          PUBLIC.BOOKS.BOOKS.ID <-- PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID
   table: PUBLIC.BOOKS.COUPONS
   table: PUBLIC.BOOKS.CUSTOMERDATA
   table: PUBLIC.BOOKS.CUSTOMERS

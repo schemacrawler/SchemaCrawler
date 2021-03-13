@@ -88,4 +88,27 @@ weak-associations:
   column-references:
     POSTALCODE: POSTALCODE
     COUNTRY: COUNTRY
-
+# 9. Self-reference
+- name: 9_weak_self_reference
+  referenced-table:
+    catalog: PUBLIC
+    schema: BOOKS
+    name: BOOKS
+  referencing-table:
+    catalog: PUBLIC
+    schema: BOOKS
+    name: BOOKS
+  column-references:
+    ID: PREVIOUSEDITIONID
+# 10. Self-reference to partial table (not built)
+- name: 10_weak_partial_self_reference
+  referenced-table:
+    catalog: PRIVATE
+    schema: LIBRARY
+    name: BOOKS
+  referencing-table:
+    catalog: PRIVATE
+    schema: LIBRARY
+    name: BOOKS
+  column-references:
+    ID: PREVIOUSEDITIONID

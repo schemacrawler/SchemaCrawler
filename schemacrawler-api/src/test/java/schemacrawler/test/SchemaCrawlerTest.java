@@ -702,6 +702,20 @@ public class SchemaCrawlerTest {
         new WeakAssociationColumn(
             new SchemaReference("PRIVATE", "ALLSALES"), "REGIONS", "COUNTRY"));
     builder.build("8_weak_two_references");
+    // 9. Self-reference
+    builder.clear();
+    builder.addColumnReference(
+        new WeakAssociationColumn(new SchemaReference("PUBLIC", "BOOKS"), "BOOKS", "ID"),
+        new WeakAssociationColumn(
+            new SchemaReference("PUBLIC", "BOOKS"), "BOOKS", "PREVIOUSEDITIONID"));
+    builder.build("9_weak_self_reference");
+    // 10. Self-reference in partial table (not built)
+    builder.clear();
+    builder.addColumnReference(
+        new WeakAssociationColumn(new SchemaReference("PRIVATE", "LIBRARY"), "BOOKS", "ID"),
+        new WeakAssociationColumn(
+            new SchemaReference("PRIVATE", "LIBRARY"), "BOOKS", "PREVIOUSEDITIONID"));
+    builder.build("10_weak_partial_self_reference");
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
