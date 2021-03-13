@@ -67,6 +67,14 @@ public class DatabaseInfoRetrieverTest {
   private MutableCatalog catalog;
 
   @Test
+  @DisplayName("Database info")
+  public void databaseInfo(final TestContext testContext, final Connection connection)
+      throws Exception {
+
+    assertThat(catalog.getDatabaseInfo().toString(), is("-- database:  " + System.lineSeparator()));
+  }
+
+  @Test
   @DisplayName("Retrieve database users")
   public void databaseUsers(final TestContext testContext, final Connection connection)
       throws Exception {
@@ -118,14 +126,6 @@ public class DatabaseInfoRetrieverTest {
     assertThat(catalog.getColumnDataTypes(), is(empty()));
     assertThat(catalog.getSchemas(), is(empty()));
     assertThat(catalog.getDatabaseInfo().getServerInfo(), is(empty()));
-  }
-
-  @Test
-  @DisplayName("Database info")
-  public void databaseInfo(final TestContext testContext, final Connection connection)
-      throws Exception {
-
-    assertThat(catalog.getDatabaseInfo().toString(), is("-- database:  " + System.lineSeparator()));
   }
 
   @Test

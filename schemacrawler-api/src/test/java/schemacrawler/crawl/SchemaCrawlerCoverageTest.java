@@ -126,7 +126,8 @@ public class SchemaCrawlerCoverageTest {
     final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
     final Table table = catalog.lookupTable(schema, "AUTHORS").get();
     final TableConstraint tableConstraint = new ArrayList<>(table.getTableConstraints()).get(0);
-    final TableConstraintColumn tableConstraintColumn = tableConstraint.getConstrainedColumns().get(0);
+    final TableConstraintColumn tableConstraintColumn =
+        tableConstraint.getConstrainedColumns().get(0);
     final Column column = table.lookupColumn(tableConstraintColumn.getName()).get();
 
     compareColumnFields(tableConstraintColumn, column);

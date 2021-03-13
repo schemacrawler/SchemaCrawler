@@ -96,16 +96,16 @@ abstract class AbstractNamedObject implements NamedObject {
     return hash(name);
   }
 
-  /** {@inheritDoc} */
-  @Override
-  public final String toString() {
-    return getFullName();
-  }
-
   @Override
   public NamedObjectKey key() {
     buildKey();
     return key;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return getFullName();
   }
 
   private void buildKey() {

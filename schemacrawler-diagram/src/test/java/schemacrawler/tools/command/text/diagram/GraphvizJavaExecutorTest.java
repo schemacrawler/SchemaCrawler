@@ -41,7 +41,6 @@ import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.command.text.diagram.GraphvizJavaExecutor;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 
 public class GraphvizJavaExecutorTest {

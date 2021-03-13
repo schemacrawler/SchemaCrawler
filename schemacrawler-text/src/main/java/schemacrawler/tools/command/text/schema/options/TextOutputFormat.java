@@ -86,11 +86,11 @@ public enum TextOutputFormat implements OutputFormat {
 
   private final OutputFormatState outputFormatState;
 
-  private TextOutputFormat(final String description) {
+  TextOutputFormat(final String description) {
     outputFormatState = new OutputFormatState(name(), description);
   }
 
-  private TextOutputFormat(final String description, final String... additionalFormatSpecifiers) {
+  TextOutputFormat(final String description, final String... additionalFormatSpecifiers) {
     outputFormatState = new OutputFormatState(name(), description, additionalFormatSpecifiers);
   }
 

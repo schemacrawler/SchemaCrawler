@@ -37,6 +37,7 @@ import schemacrawler.tools.options.OutputFormat;
 
 public class SchemaCrawlerDiagramOutputTest extends AbstractSchemaCrawlerOutputTest {
 
+  @Override
   public Stream<OutputFormat> outputFormats() {
     return Arrays.stream(new OutputFormat[] {DiagramOutputFormat.scdot});
   }

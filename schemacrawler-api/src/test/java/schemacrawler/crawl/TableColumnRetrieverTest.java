@@ -138,41 +138,6 @@ public class TableColumnRetrieverTest {
   private MutableCatalog catalog;
 
   @Test
-  @DisplayName("Retrieve table columns from data dictionary")
-  public void tableColumnsFromDataDictionary(final Connection connection) throws Exception {
-    final InformationSchemaViews informationSchemaViews =
-        InformationSchemaViewsBuilder.builder()
-            .withSql(
-                InformationSchemaKey.TABLE_COLUMNS,
-                IOUtility.readResourceFully("/TABLE_COLUMNS.sql"))
-            .toOptions();
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-        SchemaRetrievalOptionsBuilder.builder();
-    schemaRetrievalOptionsBuilder
-        .with(tableColumnsRetrievalStrategy, data_dictionary_all)
-        .withInformationSchemaViews(informationSchemaViews);
-    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-    final RetrieverConnection retrieverConnection =
-        new RetrieverConnection(connection, schemaRetrievalOptions);
-
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-
-    final TableColumnRetriever tableColumnRetriever =
-        new TableColumnRetriever(retrieverConnection, catalog, options);
-    tableColumnRetriever.retrieveTableColumns(catalog.getAllTables(), new IncludeAll());
-
-    // Fix foreign-keys in the original catalog
-    final ForeignKeyRetriever foreignKeyRetriever =
-        new ForeignKeyRetriever(retrieverConnection, catalog, options);
-    foreignKeyRetriever.retrieveForeignKeys(catalog.getAllTables());
-    final PrimaryKeyRetriever primaryKeyRetriever =
-        new PrimaryKeyRetriever(retrieverConnection, catalog, options);
-    primaryKeyRetriever.retrievePrimaryKeys(catalog.getAllTables());
-
-    verifyRetrieveTableColumns(catalog);
-  }
-
-  @Test
   @DisplayName("Retrieve hidden table columns from data dictionary")
   public void hiddenTableColumns(final Connection connection) throws Exception {
     final InformationSchemaViews informationSchemaViews =
@@ -245,5 +210,40 @@ public class TableColumnRetrieverTest {
       assertThat(table.getForeignKeys(), is(empty()));
       assertThat(table.getPrimaryKey(), is(nullValue()));
     }
+  }
+
+  @Test
+  @DisplayName("Retrieve table columns from data dictionary")
+  public void tableColumnsFromDataDictionary(final Connection connection) throws Exception {
+    final InformationSchemaViews informationSchemaViews =
+        InformationSchemaViewsBuilder.builder()
+            .withSql(
+                InformationSchemaKey.TABLE_COLUMNS,
+                IOUtility.readResourceFully("/TABLE_COLUMNS.sql"))
+            .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+        SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder
+        .with(tableColumnsRetrievalStrategy, data_dictionary_all)
+        .withInformationSchemaViews(informationSchemaViews);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection =
+        new RetrieverConnection(connection, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final TableColumnRetriever tableColumnRetriever =
+        new TableColumnRetriever(retrieverConnection, catalog, options);
+    tableColumnRetriever.retrieveTableColumns(catalog.getAllTables(), new IncludeAll());
+
+    // Fix foreign-keys in the original catalog
+    final ForeignKeyRetriever foreignKeyRetriever =
+        new ForeignKeyRetriever(retrieverConnection, catalog, options);
+    foreignKeyRetriever.retrieveForeignKeys(catalog.getAllTables());
+    final PrimaryKeyRetriever primaryKeyRetriever =
+        new PrimaryKeyRetriever(retrieverConnection, catalog, options);
+    primaryKeyRetriever.retrievePrimaryKeys(catalog.getAllTables());
+
+    verifyRetrieveTableColumns(catalog);
   }
 }
