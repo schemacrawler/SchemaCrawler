@@ -15,3 +15,6 @@ with the `--attributes-file` command-line switch.
 2. Start the test database server by following instructions in the `_testdb/README.html` file
 3. Start a command shell in the `attributes` example directory 
 4. Run `attributes.cmd attributes.yaml` (or `attributes.sh attributes.yaml` on Unix). 
+
+## How to Experiment
+- Look at the `weak-associations` example to see how you can add weak associations to the schema

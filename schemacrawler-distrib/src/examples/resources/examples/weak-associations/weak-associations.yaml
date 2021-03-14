@@ -1,0 +1,31 @@
+name: catalog
+weak-associations:
+- name: multi_line_remarks
+  referenced-table:
+    catalog: PUBLIC
+    schema: BOOKS
+    name: AUTHORS
+  referencing-table:
+    catalog: PUBLIC
+    schema: BOOKS
+    name: BOOKS
+  column-references:
+    ID: ID
+  remarks:
+  - "Some remarks line 1"
+  - "Some remarks line 2"
+- name: multi_remarks_reference
+  referenced-table:
+    catalog: PUBLIC
+    schema: PUBLISHER SALES
+    name: SALES
+  referencing-table:
+    catalog: PRIVATE
+    schema: ALLSALES
+    name: REGIONS
+  column-references:
+    POSTALCODE: POSTALCODE
+    COUNTRY: COUNTRY
+  remarks:
+  - "Other remarks line 1"
+  - "Other remarks line 2"
