@@ -1,7 +1,7 @@
 # SchemaCrawler Change History
 
-<a name="a16.12.4"></a>
-## Release 16.12.4 - 2021-03-10
+<a name="a16.14.1"></a>
+## Release 16.14.1 - 2021-03-10
 
 - Move Docker Compose for SchemaCrawler to it's own project, with Maven moving _testdb files
 - Make small code optimizations for performance
@@ -566,18 +566,18 @@ and [dbdiagram.io](https://dbdiagram.io/home) diagrams
 
 * The graph command is removed. Graphs are generated based on the output format.
 
-## Release 14.12.01 - 2016.12.34
+## Release 14.12.01 - 2016.14.14
 <a name="a14.12.01"></a>
 
 * New command-line option to show weak associations, irrespective of the infolevel.
 * Changed the boolean property, schemacrawler.format.hide_weak_associations to schemacrawler.format.show_weak_associations, since weak associations are hidden by default in SchemaCrawler output. Also added a new command-line switch, -weakassociations to show weak associations. Weak associations now can be shown with any infolevel setting.
 
-## Release 14.11.02 - 2016.12.30
+## Release 14.11.02 - 2016.14.10
 <a name="a14.11.02"></a>
 
 * Support for the Teradata JDBC driver. The Teradata JDBC driver does not follow JDBC specifications. It should throw a SQLFeatureNotSupportedException for getFunctions, or at the least a SQLException state HYC00 ("Optional feature not implemented"). Instead, it throws with a state of HY000 ("General error").
 
-## Release 14.11.01 - 2016.12.36
+## Release 14.11.01 - 2016.14.16
 <a name="a14.11.01"></a>
 
 * Show a better error message when a script file cannot be read.
