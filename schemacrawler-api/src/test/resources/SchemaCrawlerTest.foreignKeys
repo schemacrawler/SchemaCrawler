@@ -48,21 +48,6 @@ schema: PUBLIC.BOOKS
         parent (referencing table): PUBLIC.BOOKS.BOOKAUTHORS
           constrained column: PUBLIC.BOOKS.BOOKAUTHORS.BOOKID
   table: PUBLIC.BOOKS.BOOKS
-    foreign key: SYS_FK_10128
-      definition: 
-      specific name: SYS_FK_10128
-      deferrability: not deferrable
-      initially deferred: false
-      delete rule: no action
-      update rule: no action
-      referencing table: PUBLIC.BOOKS.BOOKAUTHORS
-      referenced table: PUBLIC.BOOKS.BOOKS
-      column references: 
-        key sequence: 1
-          PUBLIC.BOOKS.BOOKAUTHORS.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
-      table constraint: 
-        parent (referencing table): PUBLIC.BOOKS.BOOKAUTHORS
-          constrained column: PUBLIC.BOOKS.BOOKAUTHORS.BOOKID
     foreign key: FK_PREVIOUSEDITION
       definition: 
       specific name: FK_PREVIOUSEDITION
@@ -78,6 +63,21 @@ schema: PUBLIC.BOOKS
       table constraint: 
         parent (referencing table): PUBLIC.BOOKS.BOOKS
           constrained column: PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID
+    foreign key: SYS_FK_10128
+      definition: 
+      specific name: SYS_FK_10128
+      deferrability: not deferrable
+      initially deferred: false
+      delete rule: no action
+      update rule: no action
+      referencing table: PUBLIC.BOOKS.BOOKAUTHORS
+      referenced table: PUBLIC.BOOKS.BOOKS
+      column references: 
+        key sequence: 1
+          PUBLIC.BOOKS.BOOKAUTHORS.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
+      table constraint: 
+        parent (referencing table): PUBLIC.BOOKS.BOOKAUTHORS
+          constrained column: PUBLIC.BOOKS.BOOKAUTHORS.BOOKID
   table: PUBLIC.BOOKS.COUPONS
   table: PUBLIC.BOOKS.CUSTOMERDATA
   table: PUBLIC.BOOKS.CUSTOMERS

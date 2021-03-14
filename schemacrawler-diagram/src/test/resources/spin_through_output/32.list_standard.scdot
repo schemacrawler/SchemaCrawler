@@ -29,7 +29,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2021-02-28 16:38:32.973</td>
+		<td align='left'>2021-03-14 03:34:58.588</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
@@ -245,8 +245,8 @@ along with the latest updated information</td>
     >
   ];
 
-  "bookauthors_ead84c5d":"bookid_e54f6507.start":w -> "books_f4a675c8":"id_a0284c53.end":e [label=<SYS_FK_10128> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
   "books_f4a675c8":"previouseditionid_6cf3995a.start":w -> "books_f4a675c8":"id_a0284c53.end":e [label=<FK_PREVIOUSEDITION> style="solid" dir="both" arrowhead="teetee" arrowtail="teeodot"];
+  "bookauthors_ead84c5d":"bookid_e54f6507.start":w -> "books_f4a675c8":"id_a0284c53.end":e [label=<SYS_FK_10128> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
 
 
   /* PUBLIC.BOOKS.COUPONS -=-=-=-=-=-=-=-=-=-=-=-=-=- */

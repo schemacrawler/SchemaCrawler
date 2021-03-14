@@ -17,14 +17,14 @@ schema: PUBLIC.BOOKS
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.ID --> PUBLIC.BOOKS.AUTHORS.ID
   table: PUBLIC.BOOKS.BOOKS
-    association: SYS_FK_10128 MutableForeignKey
-      column references: 
-        key sequence: 1
-          PUBLIC.BOOKS.BOOKAUTHORS.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
     association: FK_PREVIOUSEDITION MutableForeignKey
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID --> PUBLIC.BOOKS.BOOKS.ID
+    association: SYS_FK_10128 MutableForeignKey
+      column references: 
+        key sequence: 1
+          PUBLIC.BOOKS.BOOKAUTHORS.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
     association: SC_AFD2BA21_20BE6F95 MutableWeakAssociation
       column references: 
         key sequence: 1

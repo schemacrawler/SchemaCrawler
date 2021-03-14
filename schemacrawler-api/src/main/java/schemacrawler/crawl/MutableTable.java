@@ -28,10 +28,14 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
+import static java.util.Comparator.naturalOrder;
+import static java.util.Comparator.nullsLast;
 import static schemacrawler.utility.NamedObjectSort.alphabetical;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -334,33 +338,35 @@ class MutableTable extends AbstractDatabaseObject implements Table {
   }
 
   private Collection<ForeignKey> getForeignKeys(final TableAssociationType tableAssociationType) {
+
+    // Sort imported keys (constrained columns) first and then exported keys
+    final Comparator<ForeignKey> fkComparator =
+        nullsLast(
+            ((Comparator<ForeignKey>)
+                    (final ForeignKey one, final ForeignKey two) -> {
+                      final Table oneParent = one.getParent();
+                      final Table twoParent = two.getParent();
+                      if (oneParent.equals(twoParent)) {
+                        return 0;
+                      } else if (oneParent.equals(this)) {
+                        return -1;
+                      } else {
+                        return 1;
+                      }
+                    })
+                .thenComparing(naturalOrder()));
+
     final List<ForeignKey> foreignKeysList = new ArrayList<>(foreignKeys.values());
+    Collections.sort(foreignKeysList, fkComparator);
     if (tableAssociationType != null && tableAssociationType != TableAssociationType.all) {
       for (final Iterator<ForeignKey> iterator = foreignKeysList.iterator(); iterator.hasNext(); ) {
-        final ForeignKey mutableForeignKey = iterator.next();
-        boolean isExportedKey = false;
-        boolean isImportedKey = false;
-        for (final ColumnReference columnReference : mutableForeignKey) {
-          if (columnReference.getPrimaryKeyColumn().getParent().equals(this)) {
-            isExportedKey = true;
-          }
-          if (columnReference.getForeignKeyColumn().getParent().equals(this)) {
-            isImportedKey = true;
-          }
-        }
-        switch (tableAssociationType) {
-          case exported:
-            if (!isExportedKey) {
-              iterator.remove();
-            }
-            break;
-          case imported:
-            if (!isImportedKey) {
-              iterator.remove();
-            }
-            break;
-          default:
-            break;
+        final ForeignKey foreignKey = iterator.next();
+        final boolean isExportedKey = foreignKey.getReferencedTable().equals(this);
+        final boolean isImportedKey = foreignKey.getReferencingTable().equals(this);
+        if (tableAssociationType == TableAssociationType.exported && !isExportedKey) {
+          iterator.remove();
+        } else if (tableAssociationType == TableAssociationType.imported && !isImportedKey) {
+          iterator.remove();
         }
       }
     }
