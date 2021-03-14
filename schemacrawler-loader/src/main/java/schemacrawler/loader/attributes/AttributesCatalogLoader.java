@@ -157,17 +157,17 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
 
       for (final Entry<String, String> entry :
           weakAssociationAttributes.getColumnReferences().entrySet()) {
-        final String pkColumnName = entry.getKey();
-        final String fkColumnName = entry.getValue();
+        final String fkColumnName = entry.getKey();
+        final String pkColumnName = entry.getValue();
 
-        final WeakAssociationColumn pkColumn =
-            new WeakAssociationColumn(
-                pkTableAttributes.getSchema(), pkTableAttributes.getName(), pkColumnName);
         final WeakAssociationColumn fkColumn =
             new WeakAssociationColumn(
                 fkTableAttributes.getSchema(), fkTableAttributes.getName(), fkColumnName);
+        final WeakAssociationColumn pkColumn =
+            new WeakAssociationColumn(
+                pkTableAttributes.getSchema(), pkTableAttributes.getName(), pkColumnName);
 
-        weakAssociationBuilder.addColumnReference(pkColumn, fkColumn);
+        weakAssociationBuilder.addColumnReference(fkColumn, pkColumn);
       }
 
       final WeakAssociation weakAssociation =

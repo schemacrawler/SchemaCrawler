@@ -28,7 +28,7 @@ schema: PUBLIC.BOOKS
     association: 3_weak_partial_pk MutableWeakAssociation
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.BOOKS.ID --> PRIVATE.LIBRARY.BOOKS.BOOKID
+          PUBLIC.BOOKS.BOOKS.ID --> PRIVATE.LIBRARY.BOOKS.ID
     association: 1_weak MutableWeakAssociation
       column references: 
         key sequence: 1

@@ -102,29 +102,29 @@ public final class WeakAssociationBuilder {
   }
 
   public WeakAssociationBuilder addColumnReference(
-      final WeakAssociationColumn referencedColumn, final WeakAssociationColumn referencingColumn) {
-    requireNonNull(referencedColumn, "No referenced column provided");
+      final WeakAssociationColumn referencingColumn, final WeakAssociationColumn referencedColumn) {
     requireNonNull(referencingColumn, "No referencing column provided");
+    requireNonNull(referencedColumn, "No referenced column provided");
 
-    final Column pkColumn =
-        lookupOrCreateColumn(
-            catalog,
-            referencedColumn.getSchema(),
-            referencedColumn.getTableName(),
-            referencedColumn.getColumnName());
     final Column fkColumn =
         lookupOrCreateColumn(
             catalog,
             referencingColumn.getSchema(),
             referencingColumn.getTableName(),
             referencingColumn.getColumnName());
+    final Column pkColumn =
+        lookupOrCreateColumn(
+            catalog,
+            referencedColumn.getSchema(),
+            referencedColumn.getTableName(),
+            referencedColumn.getColumnName());
 
-    if (pkColumn.equals(fkColumn)) {
+    if (fkColumn.equals(pkColumn)) {
       return this;
     }
 
-    final boolean isPkColumnPartial = pkColumn instanceof PartialDatabaseObject;
     final boolean isFkColumnPartial = fkColumn instanceof PartialDatabaseObject;
+    final boolean isPkColumnPartial = pkColumn instanceof PartialDatabaseObject;
     if (isFkColumnPartial && isPkColumnPartial) {
       return this;
     }

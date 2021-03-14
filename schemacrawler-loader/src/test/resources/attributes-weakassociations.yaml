@@ -28,7 +28,7 @@ weak-associations:
     schema: LIBRARY
     name: BOOKAUTHORS
   column-references:
-    ID: AUTHORID
+    AUTHORID: ID
 # 3. Partial primary key
 - name: 3_weak_partial_pk
   referenced-table:
@@ -40,7 +40,7 @@ weak-associations:
     schema: BOOKS
     name: BOOKS
   column-references:
-    BOOKID: ID
+    ID: ID
 # 4. Partial both (not built)
 - name: weak-no-tables
   referenced-table:
@@ -52,7 +52,7 @@ weak-associations:
     schema: LIBRARY
     name: BOOKAUTHORS
   column-references:
-    ID: AUTHORID
+    AUTHORID: ID
 # 5. No column references (not built)
 #- name: 5_weak_no_references
 #  referenced-table:
@@ -73,8 +73,8 @@ weak-associations:
     schema: LIBRARY
     name: MAGAZINEARTICLES
   column-references:
-    ID: AUTHORID
-    ID: AUTHORID # yamllint disable-line rule:key-duplicates
+    AUTHORID: ID
+    AUTHORID: ID # yamllint disable-line rule:key-duplicates
  # 8. Two column references
 - name: 8_weak_two_references
   referenced-table:
@@ -99,7 +99,7 @@ weak-associations:
     schema: BOOKS
     name: BOOKS
   column-references:
-    ID: PREVIOUSEDITIONID
+    PREVIOUSEDITIONID: ID
 # 10. Self-reference to partial table (not built)
 - name: 10_weak_partial_self_reference
   referenced-table:
@@ -111,4 +111,4 @@ weak-associations:
     schema: LIBRARY
     name: BOOKS
   column-references:
-    ID: PREVIOUSEDITIONID
+    PREVIOUSEDITIONID: ID
