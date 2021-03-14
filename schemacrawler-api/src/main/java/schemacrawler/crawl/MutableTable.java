@@ -51,6 +51,7 @@ import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
+import schemacrawler.schema.TableReference;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
@@ -118,13 +119,13 @@ class MutableTable extends AbstractDatabaseObject implements Table {
   /** {@inheritDoc} */
   @Override
   public Collection<ForeignKey> getExportedForeignKeys() {
-    return getForeignKeys(TableAssociationType.exported);
+    return getTableReferences(foreignKeys, TableAssociationType.exported);
   }
 
   /** {@inheritDoc} */
   @Override
   public Collection<ForeignKey> getForeignKeys() {
-    return getForeignKeys(TableAssociationType.all);
+    return getTableReferences(foreignKeys, TableAssociationType.all);
   }
 
   /** {@inheritDoc} */
@@ -135,7 +136,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
 
   @Override
   public Collection<ForeignKey> getImportedForeignKeys() {
-    return getForeignKeys(TableAssociationType.imported);
+    return getTableReferences(foreignKeys, TableAssociationType.imported);
   }
 
   /** {@inheritDoc} */
@@ -216,7 +217,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
   /** {@inheritDoc} */
   @Override
   public Collection<WeakAssociation> getWeakAssociations() {
-    return new ArrayList<>(weakAssociations.values());
+    return getTableReferences(weakAssociations, TableAssociationType.all);
   }
 
   @Override
@@ -337,13 +338,15 @@ class MutableTable extends AbstractDatabaseObject implements Table {
     }
   }
 
-  private Collection<ForeignKey> getForeignKeys(final TableAssociationType tableAssociationType) {
+  private <R extends TableReference> Collection<R> getTableReferences(
+      final NamedObjectList<? extends R> tableReferences,
+      final TableAssociationType tableAssociationType) {
 
     // Sort imported keys (constrained columns) first and then exported keys
-    final Comparator<ForeignKey> fkComparator =
+    final Comparator<R> fkComparator =
         nullsLast(
-            ((Comparator<ForeignKey>)
-                    (final ForeignKey one, final ForeignKey two) -> {
+            ((Comparator<R>)
+                    (final R one, final R two) -> {
                       final Table oneParent = one.getParent();
                       final Table twoParent = two.getParent();
                       if (oneParent.equals(twoParent)) {
@@ -356,11 +359,11 @@ class MutableTable extends AbstractDatabaseObject implements Table {
                     })
                 .thenComparing(naturalOrder()));
 
-    final List<ForeignKey> foreignKeysList = new ArrayList<>(foreignKeys.values());
+    final List<R> foreignKeysList = new ArrayList<>(tableReferences.values());
     Collections.sort(foreignKeysList, fkComparator);
     if (tableAssociationType != null && tableAssociationType != TableAssociationType.all) {
-      for (final Iterator<ForeignKey> iterator = foreignKeysList.iterator(); iterator.hasNext(); ) {
-        final ForeignKey foreignKey = iterator.next();
+      for (final Iterator<R> iterator = foreignKeysList.iterator(); iterator.hasNext(); ) {
+        final R foreignKey = iterator.next();
         final boolean isExportedKey = foreignKey.getReferencedTable().equals(this);
         final boolean isImportedKey = foreignKey.getReferencingTable().equals(this);
         if (tableAssociationType == TableAssociationType.exported && !isExportedKey) {

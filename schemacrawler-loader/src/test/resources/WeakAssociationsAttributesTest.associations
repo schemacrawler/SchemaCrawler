@@ -25,10 +25,6 @@ schema: PUBLIC.BOOKS
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKAUTHORS.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
-    association: SC_AFD2BA21_20BE6F95 MutableWeakAssociation
-      column references: 
-        key sequence: 1
-          PUBLIC."PUBLISHER SALES".SALES.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
     association: 3_weak_partial_pk MutableWeakAssociation
       column references: 
         key sequence: 1
@@ -45,6 +41,10 @@ schema: PUBLIC.BOOKS
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.PUBLISHERID --> PUBLIC.BOOKS.PUBLISHERS.ID
+    association: SC_AFD2BA21_20BE6F95 MutableWeakAssociation
+      column references: 
+        key sequence: 1
+          PUBLIC."PUBLISHER SALES".SALES.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
   table: PUBLIC.BOOKS.COUPONS
   table: PUBLIC.BOOKS.CUSTOMERDATA
   table: PUBLIC.BOOKS.CUSTOMERS

@@ -21,12 +21,12 @@ schema:
     weak association (1 to (0..many)):
       column reference: TABLE3_FK.ENTITY_ID --> TABLE4_UNIQUE.ENTITY_ID
   table: TABLE4_UNIQUE
-    weak association (1 to (0..many)):
-      column reference: TABLE3_FK.ENTITY_ID --> TABLE4_UNIQUE.ENTITY_ID
     weak association (1 to (0..1)):
       column reference: TABLE4_UNIQUE.ENTITY_ID --> TABLE1_PK.ENTITY_ID
     weak association (1 to (0..1)):
       column reference: TABLE4_UNIQUE.ENTITY_ID --> TABLE2_PK.ENTITY_ID
+    weak association (1 to (0..many)):
+      column reference: TABLE3_FK.ENTITY_ID --> TABLE4_UNIQUE.ENTITY_ID
   table: TABLE5_FK
     weak association (1 to (0..many)):
       column reference: TABLE5_FK.ENTITY_ID --> TABLE1_PK.ENTITY_ID

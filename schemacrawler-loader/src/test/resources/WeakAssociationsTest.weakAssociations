@@ -1,14 +1,14 @@
 schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS.AUTHORS
   table: PUBLIC.BOOKS.BOOKS
-    weak association: SC_AFD2BA21_20BE6F95
-      column references: 
-        key sequence: 1
-          PUBLIC."PUBLISHER SALES".SALES.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
     weak association: SC_B8DA20C0_AFD2BA21
       column references: 
         key sequence: 1
           PUBLIC.BOOKS.BOOKS.PUBLISHERID --> PUBLIC.BOOKS.PUBLISHERS.ID
+    weak association: SC_AFD2BA21_20BE6F95
+      column references: 
+        key sequence: 1
+          PUBLIC."PUBLISHER SALES".SALES.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
   table: PUBLIC.BOOKS.COUPONS
   table: PUBLIC.BOOKS.CUSTOMERDATA
   table: PUBLIC.BOOKS.CUSTOMERS
