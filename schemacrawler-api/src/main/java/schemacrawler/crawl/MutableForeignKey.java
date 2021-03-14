@@ -29,16 +29,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.TableConstraintType;
+import schemacrawler.schema.TableReferenceType;
 
 /** Represents a foreign-key mapping to a primary key in another table. */
-final class MutableForeignKey extends AbstractForeignKey<ForeignKeyColumnReference>
-    implements ForeignKey {
+final class MutableForeignKey extends AbstractTableReference implements ForeignKey {
 
   private static final long serialVersionUID = 4121411795974895671L;
 
@@ -59,11 +59,6 @@ final class MutableForeignKey extends AbstractForeignKey<ForeignKeyColumnReferen
     updateRule = ForeignKeyUpdateRule.unknown;
     deleteRule = ForeignKeyUpdateRule.unknown;
     deferrability = ForeignKeyDeferrability.unknown;
-  }
-
-  @Override
-  public TableConstraintType getConstraintType() {
-    return TableConstraintType.foreign_key;
   }
 
   /** {@inheritDoc} */
@@ -87,6 +82,17 @@ final class MutableForeignKey extends AbstractForeignKey<ForeignKeyColumnReferen
   @Override
   public String getSpecificName() {
     return specificName;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public TableReferenceType getTableReferenceType() {
+    return TableReferenceType.foreign_key;
+  }
+
+  @Override
+  public TableConstraintType getType() {
+    return TableConstraintType.foreign_key;
   }
 
   /** {@inheritDoc} */
@@ -120,8 +126,8 @@ final class MutableForeignKey extends AbstractForeignKey<ForeignKeyColumnReferen
   }
 
   void addColumnReference(final int keySequence, final Column pkColumn, final Column fkColumn) {
-    final MutableForeignKeyColumnReference fkColumnReference =
-        new MutableForeignKeyColumnReference(keySequence, pkColumn, fkColumn);
+    final ColumnReference fkColumnReference =
+        new ImmutableColumnReference(keySequence, fkColumn, pkColumn);
     addColumnReference(fkColumnReference);
   }
 

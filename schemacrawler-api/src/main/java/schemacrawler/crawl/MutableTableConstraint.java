@@ -45,23 +45,18 @@ class MutableTableConstraint extends AbstractDependantObject<Table> implements T
   private final StringBuilder definition;
   private boolean deferrable;
   private boolean initiallyDeferred;
+
   private TableConstraintType tableConstraintType;
 
   MutableTableConstraint(final Table parent, final String name) {
-    super(new TableReference(parent), name);
+    super(new TablePointer(parent), name);
     definition = new StringBuilder();
   }
 
   /** {@inheritDoc} */
   @Override
-  public List<TableConstraintColumn> getColumns() {
+  public List<TableConstraintColumn> getConstrainedColumns() {
     return new ArrayList<>(columns.values());
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public TableConstraintType getConstraintType() {
-    return tableConstraintType;
   }
 
   /** {@inheritDoc} */
@@ -72,7 +67,11 @@ class MutableTableConstraint extends AbstractDependantObject<Table> implements T
 
   @Override
   public TableConstraintType getType() {
-    return getConstraintType();
+    if (tableConstraintType != null) {
+      return tableConstraintType;
+    } else {
+      return TableConstraintType.unknown;
+    }
   }
 
   @Override

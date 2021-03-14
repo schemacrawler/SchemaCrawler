@@ -36,6 +36,7 @@ import schemacrawler.tools.options.OutputFormat;
 
 public class SpinThroughDiagramExecutableTest extends AbstractSpinThroughExecutableTest {
 
+  @Override
   public Stream<OutputFormat> outputFormats() {
     return Arrays.stream(new OutputFormat[] {DiagramOutputFormat.scdot, DiagramOutputFormat.htmlx});
   }

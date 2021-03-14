@@ -59,7 +59,7 @@ class MutableIndex extends AbstractDependantObject<Table> implements Index {
   private int pages;
 
   MutableIndex(final Table parent, final String name) {
-    super(new TableReference(parent), name);
+    super(new TablePointer(parent), name);
     // Default values
     indexType = IndexType.unknown;
     definition = new StringBuilder();

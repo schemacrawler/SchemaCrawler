@@ -244,7 +244,7 @@ td.section {
 	</tr>
 	<tr>
 		<td class='property_name'>generated on</td>
-		<td class='property_value'>2021-02-28 16:35:33.0623062</td>
+		<td class='property_value'>2021-03-13 22:03:02.827</td>
 	</tr>
 	<tr>
 		<td class='property_name'>database version</td>
@@ -1666,6 +1666,18 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
+		<td colspan='2' class='name'>FK_PUBLICATIONS_WRITER</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>WRITERID (0..many)→ <a href='#writers_3778840f'>PUBLIC.FOR_LINT.WRITERS.ID</a></td>
+		<td class='minwidth'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
 		<td colspan='2' class='name'>FK_PUBLICATION</td>
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
@@ -1684,18 +1696,6 @@ along with the latest updated information</td>
 	<tr>
 		<td class='spacer'></td>
 		<td class='minwidth'>ID ←(0..many) <a href='#writers_3778840f'>PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID</a></td>
-		<td class='minwidth'></td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>FK_PUBLICATIONS_WRITER</td>
-		<td class='description right'>[foreign key, with no action]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>WRITERID (0..many)→ <a href='#writers_3778840f'>PUBLIC.FOR_LINT.WRITERS.ID</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -2127,18 +2127,6 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>FK_WRITERS_PUBLICATION</td>
-		<td class='description right'>[foreign key, with no action]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>PUBLICATION_ID (0..many)→ <a href='#publications_6ef89996'>PUBLIC.FOR_LINT.PUBLICATIONS.ID</a></td>
-		<td class='minwidth'></td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
 		<td colspan='2' class='name'>FK_WRITER_JOIN</td>
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
@@ -2169,6 +2157,18 @@ along with the latest updated information</td>
 	<tr>
 		<td class='spacer'></td>
 		<td class='minwidth'>ID ←(0..many) <a href='#publicationwriters_f68ea883'>PUBLIC.FOR_LINT.PUBLICATIONWRITERS.WRITERID</a></td>
+		<td class='minwidth'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_WRITERS_PUBLICATION</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>PUBLICATION_ID (0..many)→ <a href='#publications_6ef89996'>PUBLIC.FOR_LINT.PUBLICATIONS.ID</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>

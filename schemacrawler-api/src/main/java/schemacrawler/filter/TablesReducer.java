@@ -34,8 +34,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 
+import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Reducer;
 import schemacrawler.schema.ReducibleCollection;
@@ -131,7 +131,7 @@ final class TablesReducer implements Reducer<Table> {
   private void removeForeignKeys(final ReducibleCollection<? extends Table> allTables) {
     for (final Table table : allTables) {
       for (final ForeignKey foreignKey : table.getExportedForeignKeys()) {
-        for (final ForeignKeyColumnReference fkColumnRef : foreignKey) {
+        for (final ColumnReference fkColumnRef : foreignKey) {
           final Table referencedTable = fkColumnRef.getForeignKeyColumn().getParent();
           if (isTablePartial(referencedTable) || allTables.isFiltered(referencedTable)) {
             markTableFilteredOut(referencedTable);

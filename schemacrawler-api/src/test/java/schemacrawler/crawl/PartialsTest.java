@@ -85,7 +85,7 @@ public class PartialsTest {
     final ColumnPartial columnPartial = new ColumnPartial(table, "column");
     table.addColumn(columnPartial);
 
-    final ColumnReference columnReference = new ColumnReference(columnPartial);
+    final ColumnPointer columnReference = new ColumnPointer(columnPartial);
 
     assertThat(columnReference.get(), is(columnPartial));
   }
@@ -95,7 +95,7 @@ public class PartialsTest {
     final SchemaReference schema = new SchemaReference("catalog", "schema");
     final MutableFunction function = new MutableFunction(schema, "function", null);
     final FunctionPartial functionPartial = new FunctionPartial(function);
-    final FunctionReference functionReference = new FunctionReference(function);
+    final FunctionPointer functionReference = new FunctionPointer(function);
 
     assertThat(functionReference.get(), is(function));
 
@@ -133,7 +133,7 @@ public class PartialsTest {
     final SchemaReference schema = new SchemaReference("catalog", "schema");
     final MutableProcedure procedure = new MutableProcedure(schema, "procedure", null);
     final ProcedurePartial procedurePartial = new ProcedurePartial(procedure);
-    final ProcedureReference procedureReference = new ProcedureReference(procedure);
+    final ProcedurePointer procedureReference = new ProcedurePointer(procedure);
 
     assertThat(procedureReference.get(), is(procedure));
 

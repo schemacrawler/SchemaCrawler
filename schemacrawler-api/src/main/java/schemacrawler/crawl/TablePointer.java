@@ -25,34 +25,17 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+package schemacrawler.crawl;
 
-package schemacrawler.schema;
+import static java.util.Objects.requireNonNull;
 
-/**
- * Represents a table constraint.
- *
- * @author Sualeh Fatehi
- */
-public interface Constraint extends NamedObject, DefinedObject {
+import schemacrawler.schema.Table;
 
-  /**
-   * Gets the table constraint type.
-   *
-   * @return Table constraint type
-   */
-  ConstraintType getConstraintType();
+class TablePointer extends DatabaseObjectReference<Table> {
 
-  /**
-   * Whether the constraint is deferrable.
-   *
-   * @return Whether the constraint is deferrable
-   */
-  boolean isDeferrable();
+  private static final long serialVersionUID = 8940800217960888019L;
 
-  /**
-   * Whether the constraint is initially deferred.
-   *
-   * @return Whether the constraint is initially deferred
-   */
-  boolean isInitiallyDeferred();
+  TablePointer(final Table table) {
+    super(requireNonNull(table, "No table provided"), new TablePartial(table));
+  }
 }

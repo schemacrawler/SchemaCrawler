@@ -48,6 +48,9 @@ public class NamedObjectSortTest {
 
   private class NewNamedObject implements NamedObject {
 
+    /** */
+    private static final long serialVersionUID = 6242517200200079638L;
+
     private final int value;
     private final String name;
 
@@ -85,6 +88,9 @@ public class NamedObjectSortTest {
   }
 
   private class NullNamedObject implements NamedObject {
+
+    /** */
+    private static final long serialVersionUID = -5606558254139597791L;
 
     @Override
     public int compareTo(final NamedObject o) {

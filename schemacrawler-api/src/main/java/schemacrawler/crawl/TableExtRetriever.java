@@ -579,13 +579,13 @@ final class TableExtRetriever extends AbstractRetriever {
             column.lookupPrivilege(privilegeName);
         privilege =
             privilegeOptional.orElse(
-                new MutablePrivilege<>(new ColumnReference(column), privilegeName));
+                new MutablePrivilege<>(new ColumnPointer(column), privilegeName));
       } else {
         final Optional<MutablePrivilege<Table>> privilegeOptional =
             table.lookupPrivilege(privilegeName);
         privilege =
             privilegeOptional.orElse(
-                new MutablePrivilege<>(new TableReference(table), privilegeName));
+                new MutablePrivilege<>(new TablePointer(table), privilegeName));
       }
 
       privilege.addGrant(grantor, grantee, isGrantable);

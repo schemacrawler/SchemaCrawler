@@ -36,7 +36,6 @@ import java.util.Optional;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
-import schemacrawler.crawl.WeakAssociation;
 import schemacrawler.crawl.WeakAssociationBuilder;
 import schemacrawler.crawl.WeakAssociationBuilder.WeakAssociationColumn;
 import schemacrawler.loader.attributes.model.CatalogAttributes;
@@ -45,6 +44,7 @@ import schemacrawler.loader.attributes.model.TableAttributes;
 import schemacrawler.loader.attributes.model.WeakAssociationAttributes;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.WeakAssociation;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.CommandDescription;
@@ -157,17 +157,17 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
 
       for (final Entry<String, String> entry :
           weakAssociationAttributes.getColumnReferences().entrySet()) {
-        final String pkColumnName = entry.getKey();
-        final String fkColumnName = entry.getValue();
+        final String fkColumnName = entry.getKey();
+        final String pkColumnName = entry.getValue();
 
-        final WeakAssociationColumn pkColumn =
-            new WeakAssociationColumn(
-                pkTableAttributes.getSchema(), pkTableAttributes.getName(), pkColumnName);
         final WeakAssociationColumn fkColumn =
             new WeakAssociationColumn(
                 fkTableAttributes.getSchema(), fkTableAttributes.getName(), fkColumnName);
+        final WeakAssociationColumn pkColumn =
+            new WeakAssociationColumn(
+                pkTableAttributes.getSchema(), pkTableAttributes.getName(), pkColumnName);
 
-        weakAssociationBuilder.addColumnReference(pkColumn, fkColumn);
+        weakAssociationBuilder.addColumnReference(fkColumn, pkColumn);
       }
 
       final WeakAssociation weakAssociation =

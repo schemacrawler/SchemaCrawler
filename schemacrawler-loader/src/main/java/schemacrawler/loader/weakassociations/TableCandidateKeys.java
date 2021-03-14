@@ -67,13 +67,13 @@ final class TableCandidateKeys implements Iterable<Column> {
   }
 
   private void addColumnFromPrimaryKey(final Table table, final PrimaryKey primaryKey) {
-    final TableConstraintColumn tableConstraintColumn = primaryKey.getColumns().get(0);
+    final TableConstraintColumn tableConstraintColumn = primaryKey.getConstrainedColumns().get(0);
     table.lookupColumn(tableConstraintColumn.getName()).ifPresent(column -> tableKeys.add(column));
   }
 
   private Set<Column> listTableKeys(final Table table) {
     final PrimaryKey primaryKey = table.getPrimaryKey();
-    if (primaryKey != null && primaryKey.getColumns().size() == 1) {
+    if (primaryKey != null && primaryKey.getConstrainedColumns().size() == 1) {
       addColumnFromPrimaryKey(table, primaryKey);
     }
 

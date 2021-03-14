@@ -28,10 +28,14 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
+import static java.util.Comparator.naturalOrder;
+import static java.util.Comparator.nullsLast;
 import static schemacrawler.utility.NamedObjectSort.alphabetical;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -39,17 +43,19 @@ import java.util.Optional;
 import java.util.Set;
 
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
+import schemacrawler.schema.TableReference;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
+import schemacrawler.schema.WeakAssociation;
 
 class MutableTable extends AbstractDatabaseObject implements Table {
 
@@ -65,7 +71,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
   private final NamedObjectList<MutableTableConstraint> constraints = new NamedObjectList<>();
   private final StringBuilder definition;
   private final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
-  private final NamedObjectList<WeakAssociation> weakAssociations = new NamedObjectList<>();
+  private final NamedObjectList<MutableWeakAssociation> weakAssociations = new NamedObjectList<>();
   private final NamedObjectList<MutableColumn> hiddenColumns = new NamedObjectList<>();
   private final NamedObjectList<MutableIndex> indexes = new NamedObjectList<>();
   private final NamedObjectList<MutablePrivilege<Table>> privileges = new NamedObjectList<>();
@@ -113,13 +119,13 @@ class MutableTable extends AbstractDatabaseObject implements Table {
   /** {@inheritDoc} */
   @Override
   public Collection<ForeignKey> getExportedForeignKeys() {
-    return getForeignKeys(TableAssociationType.exported);
+    return getTableReferences(foreignKeys, TableAssociationType.exported);
   }
 
   /** {@inheritDoc} */
   @Override
   public Collection<ForeignKey> getForeignKeys() {
-    return getForeignKeys(TableAssociationType.all);
+    return getTableReferences(foreignKeys, TableAssociationType.all);
   }
 
   /** {@inheritDoc} */
@@ -130,7 +136,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
 
   @Override
   public Collection<ForeignKey> getImportedForeignKeys() {
-    return getForeignKeys(TableAssociationType.imported);
+    return getTableReferences(foreignKeys, TableAssociationType.imported);
   }
 
   /** {@inheritDoc} */
@@ -158,7 +164,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
     if (tableRelationshipType != null && tableRelationshipType != TableRelationshipType.none) {
       final List<MutableForeignKey> foreignKeysList = new ArrayList<>(foreignKeys.values());
       for (final ForeignKey foreignKey : foreignKeysList) {
-        for (final ForeignKeyColumnReference columnReference : foreignKey) {
+        for (final ColumnReference columnReference : foreignKey) {
           final Table parentTable = columnReference.getPrimaryKeyColumn().getParent();
           final Table childTable = columnReference.getForeignKeyColumn().getParent();
           switch (tableRelationshipType) {
@@ -211,7 +217,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
   /** {@inheritDoc} */
   @Override
   public Collection<WeakAssociation> getWeakAssociations() {
-    return new ArrayList<>(weakAssociations.values());
+    return getTableReferences(weakAssociations, TableAssociationType.all);
   }
 
   @Override
@@ -298,7 +304,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
     triggers.add(trigger);
   }
 
-  final void addWeakAssociation(final WeakAssociation weakAssociation) {
+  final void addWeakAssociation(final MutableWeakAssociation weakAssociation) {
     weakAssociations.add(weakAssociation);
   }
 
@@ -332,34 +338,38 @@ class MutableTable extends AbstractDatabaseObject implements Table {
     }
   }
 
-  private Collection<ForeignKey> getForeignKeys(final TableAssociationType tableAssociationType) {
-    final List<ForeignKey> foreignKeysList = new ArrayList<>(foreignKeys.values());
+  private <R extends TableReference> Collection<R> getTableReferences(
+      final NamedObjectList<? extends R> tableReferences,
+      final TableAssociationType tableAssociationType) {
+
+    // Sort imported keys (constrained columns) first and then exported keys
+    final Comparator<R> fkComparator =
+        nullsLast(
+            ((Comparator<R>)
+                    (final R one, final R two) -> {
+                      final Table oneParent = one.getParent();
+                      final Table twoParent = two.getParent();
+                      if (oneParent.equals(twoParent)) {
+                        return 0;
+                      } else if (oneParent.equals(this)) {
+                        return -1;
+                      } else {
+                        return 1;
+                      }
+                    })
+                .thenComparing(naturalOrder()));
+
+    final List<R> foreignKeysList = new ArrayList<>(tableReferences.values());
+    Collections.sort(foreignKeysList, fkComparator);
     if (tableAssociationType != null && tableAssociationType != TableAssociationType.all) {
-      for (final Iterator<ForeignKey> iterator = foreignKeysList.iterator(); iterator.hasNext(); ) {
-        final ForeignKey mutableForeignKey = iterator.next();
-        boolean isExportedKey = false;
-        boolean isImportedKey = false;
-        for (final ForeignKeyColumnReference columnReference : mutableForeignKey) {
-          if (columnReference.getPrimaryKeyColumn().getParent().equals(this)) {
-            isExportedKey = true;
-          }
-          if (columnReference.getForeignKeyColumn().getParent().equals(this)) {
-            isImportedKey = true;
-          }
-        }
-        switch (tableAssociationType) {
-          case exported:
-            if (!isExportedKey) {
-              iterator.remove();
-            }
-            break;
-          case imported:
-            if (!isImportedKey) {
-              iterator.remove();
-            }
-            break;
-          default:
-            break;
+      for (final Iterator<R> iterator = foreignKeysList.iterator(); iterator.hasNext(); ) {
+        final R foreignKey = iterator.next();
+        final boolean isExportedKey = foreignKey.getReferencedTable().equals(this);
+        final boolean isImportedKey = foreignKey.getReferencingTable().equals(this);
+        if (tableAssociationType == TableAssociationType.exported && !isExportedKey) {
+          iterator.remove();
+        } else if (tableAssociationType == TableAssociationType.imported && !isImportedKey) {
+          iterator.remove();
         }
       }
     }

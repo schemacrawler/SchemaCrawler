@@ -62,15 +62,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.crawl.WeakAssociation;
 import schemacrawler.crawl.WeakAssociationBuilder;
 import schemacrawler.crawl.WeakAssociationBuilder.WeakAssociationColumn;
-import schemacrawler.crawl.WeakAssociationColumnReference;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.Constraint;
+import schemacrawler.schema.ColumnReference;
+import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.Grant;
@@ -89,6 +88,7 @@ import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
+import schemacrawler.schema.WeakAssociation;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -111,7 +111,7 @@ public class SchemaCrawlerTest {
   private static String printColumnDataType(final ColumnDataType columnDataType) {
     final StringBuilder buffer = new StringBuilder();
 
-    final boolean isUserDefined = columnDataType.isUserDefined();
+    final boolean isUserDefined = columnDataType.getType() == DataTypeType.user_defined;
     final String typeName = columnDataType.getFullName();
     final String dataType = (isUserDefined ? "user defined " : "") + "column data-type";
     final String nullable = (columnDataType.isNullable() ? "" : "not ") + "nullable";
@@ -483,14 +483,15 @@ public class SchemaCrawlerTest {
         final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
         for (final Table table : tables) {
           out.println("  table: " + table.getFullName());
-          final Constraint[] tableConstraints =
-              table.getTableConstraints().toArray(new Constraint[0]);
-          for (final Constraint tableConstraint : tableConstraints) {
+          final TableConstraint[] tableConstraints =
+              table.getTableConstraints().toArray(new TableConstraint[0]);
+          for (final TableConstraint tableConstraint : tableConstraints) {
             out.println("    constraint: " + tableConstraint.getName());
-            out.println("      type: " + tableConstraint.getConstraintType());
+            out.println("      type: " + tableConstraint.getType());
             if (tableConstraint instanceof TableConstraint) {
-              final TableConstraint dependentTableConstraint = (TableConstraint) tableConstraint;
-              final List<TableConstraintColumn> columns = dependentTableConstraint.getColumns();
+              final TableConstraint dependentTableConstraint = tableConstraint;
+              final List<TableConstraintColumn> columns =
+                  dependentTableConstraint.getConstrainedColumns();
               for (final TableConstraintColumn tableConstraintColumn : columns) {
                 out.println("      on column: " + tableConstraintColumn.getName());
               }
@@ -642,27 +643,27 @@ public class SchemaCrawlerTest {
     // 1. Happy path - good weak association
     builder.clear();
     builder.addColumnReference(
-        new WeakAssociationColumn(pkColumn), new WeakAssociationColumn(fkColumn));
+        new WeakAssociationColumn(fkColumn), new WeakAssociationColumn(pkColumn));
     builder.build("1_weak");
     // 2. Partial foreign key
     builder.clear();
     builder.addColumnReference(
-        new WeakAssociationColumn(pkColumn),
         new WeakAssociationColumn(
-            new SchemaReference("PRIVATE", "LIBRARY"), "BOOKAUTHORS", "AUTHORID"));
+            new SchemaReference("PRIVATE", "LIBRARY"), "BOOKAUTHORS", "AUTHORID"),
+        new WeakAssociationColumn(pkColumn));
     builder.build("2_weak_partial_fk");
     // 3. Partial primary key
     builder.clear();
     builder.addColumnReference(
-        new WeakAssociationColumn(new SchemaReference("PRIVATE", "LIBRARY"), "BOOKS", "BOOKID"),
-        new WeakAssociationColumn(fkColumn));
+        new WeakAssociationColumn(fkColumn),
+        new WeakAssociationColumn(new SchemaReference("PRIVATE", "LIBRARY"), "BOOKS", "ID"));
     builder.build("3_weak_partial_pk");
     // 4. Partial both (not built)
     builder.clear();
     builder.addColumnReference(
-        new WeakAssociationColumn(new SchemaReference("PRIVATE", "LIBRARY"), "AUTHORS", "ID"),
         new WeakAssociationColumn(
-            new SchemaReference("PRIVATE", "LIBRARY"), "BOOKAUTHORS", "AUTHORID"));
+            new SchemaReference("PRIVATE", "LIBRARY"), "BOOKAUTHORS", "AUTHORID"),
+        new WeakAssociationColumn(new SchemaReference("PRIVATE", "LIBRARY"), "AUTHORS", "ID"));
     builder.build("4_weak_partial_both");
     // 5. No column references (not built)
     builder.clear();
@@ -670,37 +671,50 @@ public class SchemaCrawlerTest {
     // 6. Multiple tables in play (not built)
     builder.clear();
     builder.addColumnReference(
-        new WeakAssociationColumn(pkColumn),
         new WeakAssociationColumn(
-            new SchemaReference("PRIVATE", "LIBRARY"), "BOOKAUTHORS", "AUTHORID"));
+            new SchemaReference("PRIVATE", "LIBRARY"), "BOOKAUTHORS", "AUTHORID"),
+        new WeakAssociationColumn(pkColumn));
     builder.addColumnReference(
-        new WeakAssociationColumn(new SchemaReference("PRIVATE", "LIBRARY"), "AUTHORS", "ID"),
-        new WeakAssociationColumn(fkColumn));
+        new WeakAssociationColumn(fkColumn),
+        new WeakAssociationColumn(new SchemaReference("PRIVATE", "LIBRARY"), "AUTHORS", "ID"));
     builder.build("6_weak_conflicting");
     // 7. Duplicate column references (only one column reference built)
     builder.clear();
     builder.addColumnReference(
-        new WeakAssociationColumn(pkColumn),
         new WeakAssociationColumn(
-            new SchemaReference("PRIVATE", "LIBRARY"), "MAGAZINEARTICLES", "AUTHORID"));
+            new SchemaReference("PRIVATE", "LIBRARY"), "MAGAZINEARTICLES", "AUTHORID"),
+        new WeakAssociationColumn(pkColumn));
     builder.addColumnReference(
-        new WeakAssociationColumn(pkColumn),
         new WeakAssociationColumn(
-            new SchemaReference("PRIVATE", "LIBRARY"), "MAGAZINEARTICLES", "AUTHORID"));
+            new SchemaReference("PRIVATE", "LIBRARY"), "MAGAZINEARTICLES", "AUTHORID"),
+        new WeakAssociationColumn(pkColumn));
     builder.build("7_weak_duplicate");
     // 8. Two column references
     builder.clear();
     builder.addColumnReference(
         new WeakAssociationColumn(
-            new SchemaReference("PUBLIC", "PUBLISHER SALES"), "SALES", "POSTALCODE"),
+            new SchemaReference("PRIVATE", "ALLSALES"), "REGIONS", "POSTALCODE"),
         new WeakAssociationColumn(
-            new SchemaReference("PRIVATE", "ALLSALES"), "REGIONS", "POSTALCODE"));
+            new SchemaReference("PUBLIC", "PUBLISHER SALES"), "SALES", "POSTALCODE"));
+    builder.addColumnReference(
+        new WeakAssociationColumn(new SchemaReference("PRIVATE", "ALLSALES"), "REGIONS", "COUNTRY"),
+        new WeakAssociationColumn(
+            new SchemaReference("PUBLIC", "PUBLISHER SALES"), "SALES", "COUNTRY"));
+    builder.build("8_weak_two_references");
+    // 9. Self-reference
+    builder.clear();
     builder.addColumnReference(
         new WeakAssociationColumn(
-            new SchemaReference("PUBLIC", "PUBLISHER SALES"), "SALES", "COUNTRY"),
+            new SchemaReference("PUBLIC", "BOOKS"), "BOOKS", "PREVIOUSEDITIONID"),
+        new WeakAssociationColumn(new SchemaReference("PUBLIC", "BOOKS"), "BOOKS", "ID"));
+    builder.build("9_weak_self_reference");
+    // 10. Self-reference in partial table (not built)
+    builder.clear();
+    builder.addColumnReference(
         new WeakAssociationColumn(
-            new SchemaReference("PRIVATE", "ALLSALES"), "REGIONS", "COUNTRY"));
-    builder.build("8_weak_two_references");
+            new SchemaReference("PRIVATE", "LIBRARY"), "BOOKS", "PREVIOUSEDITIONID"),
+        new WeakAssociationColumn(new SchemaReference("PRIVATE", "LIBRARY"), "BOOKS", "ID"));
+    builder.build("10_weak_partial_self_reference");
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
@@ -714,10 +728,9 @@ public class SchemaCrawlerTest {
           for (final WeakAssociation foreignKey : table.getWeakAssociations()) {
             out.println("    weak association: " + foreignKey.getName());
             out.println("      column references: ");
-            final List<WeakAssociationColumnReference> columnReferences =
-                foreignKey.getColumnReferences();
+            final List<ColumnReference> columnReferences = foreignKey.getColumnReferences();
             for (int i = 0; i < columnReferences.size(); i++) {
-              final WeakAssociationColumnReference columnReference = columnReferences.get(i);
+              final ColumnReference columnReference = columnReferences.get(i);
               out.println("        key sequence: " + (i + 1));
               out.println("          " + columnReference);
             }

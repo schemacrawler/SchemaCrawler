@@ -25,23 +25,9 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-
 package schemacrawler.schema;
 
-import java.util.List;
-
-/**
- * Represents a foreign-key mapping to a primary key in another table.
- *
- * @author Sualeh Fatehi
- */
-public interface BaseForeignKey<R extends ColumnReference>
-    extends NamedObject, AttributedObject, DescribedObject, Iterable<R> {
-
-  /**
-   * Gets the list of column pairs.
-   *
-   * @return Column pairs
-   */
-  List<R> getColumnReferences();
+public enum TableReferenceType {
+  foreign_key,
+  weak_association
 }

@@ -43,9 +43,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 import schemacrawler.crawl.NotLoadedException;
-import schemacrawler.crawl.WeakAssociation;
 import schemacrawler.schema.ActionOrientationType;
-import schemacrawler.schema.BaseForeignKey;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
@@ -54,7 +52,6 @@ import schemacrawler.schema.DefinedObject;
 import schemacrawler.schema.DescribedObject;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.Grant;
 import schemacrawler.schema.Index;
@@ -71,8 +68,10 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableConstraintType;
+import schemacrawler.schema.TableReference;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
+import schemacrawler.schema.WeakAssociation;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
@@ -404,9 +403,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   private void printColumnReferences(
-      final boolean isForeignKey,
-      final Table table,
-      final BaseForeignKey<? extends ColumnReference> foreignKey) {
+      final boolean isForeignKey, final Table table, final TableReference foreignKey) {
     final ForeignKeyCardinality fkCardinality =
         MetaDataUtility.findForeignKeyCardinality(foreignKey);
     for (final ColumnReference columnRef : foreignKey) {
@@ -448,8 +445,8 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         fkColumnName = identifiers.quoteFullName(fkColumn);
       }
       String keySequenceString = "";
-      if (columnRef instanceof ForeignKeyColumnReference && options.isShowOrdinalNumbers()) {
-        final int keySequence = ((ForeignKeyColumnReference) columnRef).getKeySequence();
+      if (options.isShowOrdinalNumbers()) {
+        final int keySequence = columnRef.getKeySequence();
         keySequenceString = String.format("%2d", keySequence);
       }
 
@@ -620,7 +617,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       }
       formattingHelper.writeNameRow(pkName, "[primary key]");
       printRemarks(primaryKey);
-      printTableColumns(primaryKey.getColumns(), false);
+      printTableColumns(primaryKey.getConstrainedColumns(), false);
       printDependantObjectDefinition(primaryKey);
     }
   }
@@ -822,7 +819,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
     final List<TableConstraint> constraints = new ArrayList<>();
     for (final TableConstraint constraint : constraintsCollection) {
-      if (printableConstraints.contains(constraint.getConstraintType())) {
+      if (printableConstraints.contains(constraint.getType())) {
         constraints.add(constraint);
       }
     }
@@ -842,13 +839,13 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         if (!options.isHideTableConstraintNames()) {
           constraintName = identifiers.quoteName(constraint);
         }
-        final String constraintType = constraint.getConstraintType().getValue().toLowerCase();
+        final String constraintType = constraint.getType().getValue().toLowerCase();
         final String constraintDetails = "[" + constraintType + " constraint]";
         formattingHelper.writeEmptyRow();
         formattingHelper.writeNameRow(constraintName, constraintDetails);
 
         if (!isBrief) {
-          printTableColumns(constraint.getColumns(), false);
+          printTableColumns(constraint.getConstrainedColumns(), false);
         }
         printDependantObjectDefinition(constraint);
       }

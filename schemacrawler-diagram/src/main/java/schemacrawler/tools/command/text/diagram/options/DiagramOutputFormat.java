@@ -123,12 +123,11 @@ public enum DiagramOutputFormat implements OutputFormat {
 
   private final OutputFormatState outputFormatState;
 
-  private DiagramOutputFormat(final String description) {
+  DiagramOutputFormat(final String description) {
     outputFormatState = new OutputFormatState(name(), description);
   }
 
-  private DiagramOutputFormat(
-      final String description, final String... additionalFormatSpecifiers) {
+  DiagramOutputFormat(final String description, final String... additionalFormatSpecifiers) {
     outputFormatState = new OutputFormatState(name(), description, additionalFormatSpecifiers);
   }
 

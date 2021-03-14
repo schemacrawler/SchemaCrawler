@@ -52,7 +52,7 @@ final class ColumnPartial extends AbstractDependantObject<Table>
   }
 
   ColumnPartial(final Table parent, final String name) {
-    super(new TableReference(parent), name);
+    super(new TablePointer(parent), name);
   }
 
   @Override

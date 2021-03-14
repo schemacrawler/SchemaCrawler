@@ -25,25 +25,50 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+
 package schemacrawler.crawl;
 
-import schemacrawler.schema.Column;
+import schemacrawler.schema.TableConstraintType;
+import schemacrawler.schema.TableReferenceType;
+import schemacrawler.schema.WeakAssociation;
 
-/**
- * Represents a single column mapping from a primary key column to a foreign key column.
- *
- * @author Sualeh Fatehi
- */
-public final class WeakAssociationColumnReference extends AbstractColumnReference {
+/** Represents a foreign-key mapping to a primary key in another table. */
+final class MutableWeakAssociation extends AbstractTableReference implements WeakAssociation {
 
-  private static final long serialVersionUID = -4411771492159843382L;
+  private static final long serialVersionUID = -5164664131926303038L;
 
-  WeakAssociationColumnReference(final Column primaryKeyColumn, final Column foreignKeyColumn) {
-    super(primaryKeyColumn, foreignKeyColumn);
+  public MutableWeakAssociation(final String name) {
+    super(name);
   }
 
   @Override
-  public String toString() {
-    return getPrimaryKeyColumn() + " <~~ " + getForeignKeyColumn();
+  public String getDefinition() {
+    return "";
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public TableReferenceType getTableReferenceType() {
+    return TableReferenceType.weak_association;
+  }
+
+  @Override
+  public TableConstraintType getType() {
+    return TableConstraintType.unknown;
+  }
+
+  @Override
+  public boolean hasDefinition() {
+    return false;
+  }
+
+  @Override
+  public boolean isDeferrable() {
+    return false;
+  }
+
+  @Override
+  public boolean isInitiallyDeferred() {
+    return false;
   }
 }

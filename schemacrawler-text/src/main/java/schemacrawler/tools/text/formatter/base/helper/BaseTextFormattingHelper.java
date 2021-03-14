@@ -166,7 +166,8 @@ abstract class BaseTextFormattingHelper implements TextFormattingHelper {
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.tools.text.formatter.base.helper.TextFormattingHelper#writeNameRow(java.lang.String,
+   * @see
+   *     schemacrawler.tools.text.formatter.base.helper.TextFormattingHelper#writeNameRow(java.lang.String,
    *     java.lang.String)
    */
   @Override

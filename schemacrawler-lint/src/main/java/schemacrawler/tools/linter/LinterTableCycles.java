@@ -34,8 +34,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
@@ -75,7 +75,7 @@ public class LinterTableCycles extends BaseLinter {
 
     tablesGraph.addVertex(table);
     for (final ForeignKey foreignKey : table.getForeignKeys()) {
-      for (final ForeignKeyColumnReference columnReference : foreignKey) {
+      for (final ColumnReference columnReference : foreignKey) {
         tablesGraph.addEdge(
             columnReference.getPrimaryKeyColumn().getParent(),
             columnReference.getForeignKeyColumn().getParent());

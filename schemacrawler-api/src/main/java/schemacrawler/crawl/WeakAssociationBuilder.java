@@ -40,9 +40,11 @@ import java.util.logging.Level;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.WeakAssociation;
 import us.fatehi.utility.string.StringFormat;
 
 public final class WeakAssociationBuilder {
@@ -92,7 +94,7 @@ public final class WeakAssociationBuilder {
   }
 
   private final Catalog catalog;
-  private final Collection<WeakAssociationColumnReference> columnReferences;
+  private final Collection<ColumnReference> columnReferences;
 
   private WeakAssociationBuilder(final Catalog catalog) {
     this.catalog = requireNonNull(catalog, "No catalog provided");
@@ -100,35 +102,35 @@ public final class WeakAssociationBuilder {
   }
 
   public WeakAssociationBuilder addColumnReference(
-      final WeakAssociationColumn referencedColumn, final WeakAssociationColumn referencingColumn) {
-    requireNonNull(referencedColumn, "No referenced column provided");
+      final WeakAssociationColumn referencingColumn, final WeakAssociationColumn referencedColumn) {
     requireNonNull(referencingColumn, "No referencing column provided");
+    requireNonNull(referencedColumn, "No referenced column provided");
 
-    final Column pkColumn =
-        lookupOrCreateColumn(
-            catalog,
-            referencedColumn.getSchema(),
-            referencedColumn.getTableName(),
-            referencedColumn.getColumnName());
     final Column fkColumn =
         lookupOrCreateColumn(
             catalog,
             referencingColumn.getSchema(),
             referencingColumn.getTableName(),
             referencingColumn.getColumnName());
+    final Column pkColumn =
+        lookupOrCreateColumn(
+            catalog,
+            referencedColumn.getSchema(),
+            referencedColumn.getTableName(),
+            referencedColumn.getColumnName());
 
-    if (pkColumn.equals(fkColumn)) {
+    if (fkColumn.equals(pkColumn)) {
       return this;
     }
 
-    final boolean isPkColumnPartial = pkColumn instanceof PartialDatabaseObject;
     final boolean isFkColumnPartial = fkColumn instanceof PartialDatabaseObject;
+    final boolean isPkColumnPartial = pkColumn instanceof PartialDatabaseObject;
     if (isFkColumnPartial && isPkColumnPartial) {
       return this;
     }
 
-    final WeakAssociationColumnReference columnReference =
-        new WeakAssociationColumnReference(pkColumn, fkColumn);
+    final ColumnReference columnReference =
+        new ImmutableColumnReference(columnReferences.size(), fkColumn, pkColumn);
     columnReferences.add(columnReference);
 
     return this;
@@ -144,7 +146,7 @@ public final class WeakAssociationBuilder {
       return null;
     }
 
-    final WeakAssociationColumnReference someColumnReference = columnReferences.iterator().next();
+    final ColumnReference someColumnReference = columnReferences.iterator().next();
     final Table referencedTable = someColumnReference.getPrimaryKeyColumn().getParent();
     final Table referencingTable = someColumnReference.getForeignKeyColumn().getParent();
 
@@ -156,8 +158,8 @@ public final class WeakAssociationBuilder {
       weakAssociationName = name;
     }
 
-    final WeakAssociation weakAssociation = new WeakAssociation(weakAssociationName);
-    for (final WeakAssociationColumnReference columnReference : columnReferences) {
+    final MutableWeakAssociation weakAssociation = new MutableWeakAssociation(weakAssociationName);
+    for (final ColumnReference columnReference : columnReferences) {
       // Add a column reference only if they reference the same two tables
       if (referencedTable.equals(columnReference.getPrimaryKeyColumn().getParent())
           && referencingTable.equals(columnReference.getForeignKeyColumn().getParent())) {

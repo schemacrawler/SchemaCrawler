@@ -42,6 +42,6 @@ final class MutableProcedureParameter extends MutableRoutineParameter<Procedure>
   private static final long serialVersionUID = 3546361725629772857L;
 
   MutableProcedureParameter(final Procedure parent, final String name) {
-    super(new ProcedureReference(parent), name);
+    super(new ProcedurePointer(parent), name);
   }
 }

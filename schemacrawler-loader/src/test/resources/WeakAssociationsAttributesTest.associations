@@ -3,44 +3,48 @@ schema: PUBLIC.BOOKS
     association: Z_FK_AUTHOR MutableForeignKey
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.AUTHORS.ID <-- PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID
-    association: 2_weak_partial_fk WeakAssociation
+          PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID --> PUBLIC.BOOKS.AUTHORS.ID
+    association: 2_weak_partial_fk MutableWeakAssociation
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.AUTHORS.ID <~~ PRIVATE.LIBRARY.BOOKAUTHORS.AUTHORID
-    association: 7_weak_duplicate WeakAssociation
+          PRIVATE.LIBRARY.BOOKAUTHORS.AUTHORID --> PUBLIC.BOOKS.AUTHORS.ID
+    association: 7_weak_duplicate MutableWeakAssociation
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.AUTHORS.ID <~~ PRIVATE.LIBRARY.MAGAZINEARTICLES.AUTHORID
-    association: 1_weak WeakAssociation
+          PRIVATE.LIBRARY.MAGAZINEARTICLES.AUTHORID --> PUBLIC.BOOKS.AUTHORS.ID
+    association: 1_weak MutableWeakAssociation
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.AUTHORS.ID <~~ PUBLIC.BOOKS.BOOKS.ID
+          PUBLIC.BOOKS.BOOKS.ID --> PUBLIC.BOOKS.AUTHORS.ID
   table: PUBLIC.BOOKS.BOOKS
-    association: SYS_FK_10128 MutableForeignKey
-      column references: 
-        key sequence: 1
-          PUBLIC.BOOKS.BOOKS.ID <-- PUBLIC.BOOKS.BOOKAUTHORS.BOOKID
     association: FK_PREVIOUSEDITION MutableForeignKey
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.BOOKS.ID <-- PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID
-    association: 3_weak_partial_pk WeakAssociation
+          PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID --> PUBLIC.BOOKS.BOOKS.ID
+    association: SYS_FK_10128 MutableForeignKey
       column references: 
         key sequence: 1
-          PRIVATE.LIBRARY.BOOKS.BOOKID <~~ PUBLIC.BOOKS.BOOKS.ID
-    association: 1_weak WeakAssociation
+          PUBLIC.BOOKS.BOOKAUTHORS.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
+    association: 3_weak_partial_pk MutableWeakAssociation
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.AUTHORS.ID <~~ PUBLIC.BOOKS.BOOKS.ID
-    association: SC_AFD2BA21_20BE6F95 WeakAssociation
+          PUBLIC.BOOKS.BOOKS.ID --> PRIVATE.LIBRARY.BOOKS.ID
+    association: 1_weak MutableWeakAssociation
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.BOOKS.ID <~~ PUBLIC."PUBLISHER SALES".SALES.BOOKID
-    association: SC_B8DA20C0_AFD2BA21 WeakAssociation
+          PUBLIC.BOOKS.BOOKS.ID --> PUBLIC.BOOKS.AUTHORS.ID
+    association: 9_weak_self_reference MutableWeakAssociation
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.PUBLISHERS.ID <~~ PUBLIC.BOOKS.BOOKS.PUBLISHERID
+          PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID --> PUBLIC.BOOKS.BOOKS.ID
+    association: SC_B8DA20C0_AFD2BA21 MutableWeakAssociation
+      column references: 
+        key sequence: 1
+          PUBLIC.BOOKS.BOOKS.PUBLISHERID --> PUBLIC.BOOKS.PUBLISHERS.ID
+    association: SC_AFD2BA21_20BE6F95 MutableWeakAssociation
+      column references: 
+        key sequence: 1
+          PUBLIC."PUBLISHER SALES".SALES.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
   table: PUBLIC.BOOKS.COUPONS
   table: PUBLIC.BOOKS.CUSTOMERDATA
   table: PUBLIC.BOOKS.CUSTOMERS
@@ -49,25 +53,25 @@ schema: PUBLIC.BOOKS
     association: FK_ΒΙΒΛΊΑ_PUBLISHERS MutableForeignKey
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.PUBLISHERS.ID <-- PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ
-    association: SC_B8DA20C0_AFD2BA21 WeakAssociation
+          PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ --> PUBLIC.BOOKS.PUBLISHERS.ID
+    association: SC_B8DA20C0_AFD2BA21 MutableWeakAssociation
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.PUBLISHERS.ID <~~ PUBLIC.BOOKS.BOOKS.PUBLISHERID
+          PUBLIC.BOOKS.BOOKS.PUBLISHERID --> PUBLIC.BOOKS.PUBLISHERS.ID
   table: PUBLIC.BOOKS.BOOKAUTHORS
     association: Z_FK_AUTHOR MutableForeignKey
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.AUTHORS.ID <-- PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID
+          PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID --> PUBLIC.BOOKS.AUTHORS.ID
     association: SYS_FK_10128 MutableForeignKey
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.BOOKS.ID <-- PUBLIC.BOOKS.BOOKAUTHORS.BOOKID
+          PUBLIC.BOOKS.BOOKAUTHORS.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
   table: PUBLIC.BOOKS.ΒΙΒΛΊΑ
     association: FK_ΒΙΒΛΊΑ_PUBLISHERS MutableForeignKey
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.PUBLISHERS.ID <-- PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ
+          PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ --> PUBLIC.BOOKS.PUBLISHERS.ID
   table: PUBLIC.BOOKS.AUTHORSLIST
 schema: PUBLIC.INFORMATION_SCHEMA
 schema: PUBLIC.PUBLIC
@@ -76,33 +80,33 @@ schema: PUBLIC."PUBLISHER SALES"
     association: FK_SALES_REGIONS MutableForeignKey
       column references: 
         key sequence: 1
-          PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE <-- PUBLIC."PUBLISHER SALES".SALES.POSTALCODE
+          PUBLIC."PUBLISHER SALES".SALES.POSTALCODE --> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE
         key sequence: 2
-          PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY <-- PUBLIC."PUBLISHER SALES".SALES.COUNTRY
+          PUBLIC."PUBLISHER SALES".SALES.COUNTRY --> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY
   table: PUBLIC."PUBLISHER SALES".SALESDATA
     association: FK_SALES_SALESDATA MutableForeignKey
       column references: 
         key sequence: 1
-          PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID <-- PUBLIC."PUBLISHER SALES".SALES.SALESDATAID
+          PUBLIC."PUBLISHER SALES".SALES.SALESDATAID --> PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID
   table: PUBLIC."PUBLISHER SALES".SALES
     association: FK_SALES_SALESDATA MutableForeignKey
       column references: 
         key sequence: 1
-          PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID <-- PUBLIC."PUBLISHER SALES".SALES.SALESDATAID
+          PUBLIC."PUBLISHER SALES".SALES.SALESDATAID --> PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID
     association: FK_SALES_REGIONS MutableForeignKey
       column references: 
         key sequence: 1
-          PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE <-- PUBLIC."PUBLISHER SALES".SALES.POSTALCODE
+          PUBLIC."PUBLISHER SALES".SALES.POSTALCODE --> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE
         key sequence: 2
-          PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY <-- PUBLIC."PUBLISHER SALES".SALES.COUNTRY
-    association: SC_AFD2BA21_20BE6F95 WeakAssociation
+          PUBLIC."PUBLISHER SALES".SALES.COUNTRY --> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY
+    association: SC_AFD2BA21_20BE6F95 MutableWeakAssociation
       column references: 
         key sequence: 1
-          PUBLIC.BOOKS.BOOKS.ID <~~ PUBLIC."PUBLISHER SALES".SALES.BOOKID
-    association: 8_weak_two_references WeakAssociation
+          PUBLIC."PUBLISHER SALES".SALES.BOOKID --> PUBLIC.BOOKS.BOOKS.ID
+    association: 8_weak_two_references MutableWeakAssociation
       column references: 
         key sequence: 1
-          PUBLIC."PUBLISHER SALES".SALES.COUNTRY <~~ PRIVATE.ALLSALES.REGIONS.COUNTRY
+          PRIVATE.ALLSALES.REGIONS.POSTALCODE --> PUBLIC."PUBLISHER SALES".SALES.POSTALCODE
         key sequence: 2
-          PUBLIC."PUBLISHER SALES".SALES.POSTALCODE <~~ PRIVATE.ALLSALES.REGIONS.POSTALCODE
+          PRIVATE.ALLSALES.REGIONS.COUNTRY --> PUBLIC."PUBLISHER SALES".SALES.COUNTRY
 schema: PUBLIC.SYSTEM_LOBS

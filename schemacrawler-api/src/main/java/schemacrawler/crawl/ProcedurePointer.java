@@ -25,15 +25,17 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-
 package schemacrawler.crawl;
 
-/** Represents a foreign-key mapping to a primary key in another table. */
-public final class WeakAssociation extends AbstractForeignKey<WeakAssociationColumnReference> {
+import static java.util.Objects.requireNonNull;
 
-  private static final long serialVersionUID = -5164664131926303038L;
+import schemacrawler.schema.Procedure;
 
-  public WeakAssociation(final String name) {
-    super(name);
+class ProcedurePointer extends DatabaseObjectReference<Procedure> {
+
+  private static final long serialVersionUID = 5422838457822334919L;
+
+  ProcedurePointer(final Procedure procedure) {
+    super(requireNonNull(procedure, "No procedure provided"), new ProcedurePartial(procedure));
   }
 }

@@ -54,10 +54,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -101,12 +102,19 @@ public class ForeignKeyRetrieverTest {
             out.println("      delete rule: " + foreignKey.getDeleteRule());
             out.println("      update rule: " + foreignKey.getUpdateRule());
 
+            out.println("      referencing table: " + foreignKey.getReferencingTable());
+            out.println("      referenced table: " + foreignKey.getReferencedTable());
             out.println("      column references: ");
-            final List<ForeignKeyColumnReference> columnReferences =
-                foreignKey.getColumnReferences();
-            for (final ForeignKeyColumnReference columnReference : columnReferences) {
+            final List<ColumnReference> columnReferences = foreignKey.getColumnReferences();
+            for (final ColumnReference columnReference : columnReferences) {
               out.println("        key sequence: " + columnReference.getKeySequence());
               out.println("          " + columnReference);
+            }
+            out.println("      table constraint: ");
+            out.println("        parent (referencing table): " + foreignKey.getParent());
+            for (final TableConstraintColumn constraintColumn :
+                foreignKey.getConstrainedColumns()) {
+              out.println("          constrained column: " + constraintColumn);
             }
 
             assertThat(foreignKey.isDeferrable(), is(foreignKey.isInitiallyDeferred()));

@@ -98,7 +98,7 @@ public class MetadataUtilityTest {
     final String columnsListAsStringChild =
         MetaDataUtility.getColumnsListAsString(
             fk, TableRelationshipType.child, IdentifierQuotingStrategy.quote_all, "'");
-    assertThat(columnsListAsStringChild, is("'BOOKID'"));
+    assertThat(columnsListAsStringChild, is("'PREVIOUSEDITIONID'"));
 
     final String columnsListAsStringParent =
         MetaDataUtility.getColumnsListAsString(
@@ -161,11 +161,11 @@ public class MetadataUtilityTest {
         fk.getColumnReferences().toArray(new ColumnReference[0])[0];
     assertThat("Column reference not found", columnReference, notNullValue());
 
-    assertThat(MetaDataUtility.findForeignKeyCardinality(fk), is(ForeignKeyCardinality.zero_many));
+    assertThat(MetaDataUtility.findForeignKeyCardinality(fk), is(ForeignKeyCardinality.zero_one));
 
     assertThat(
         MetaDataUtility.foreignKeyColumnNames(fk),
-        containsInAnyOrder("PUBLIC.BOOKS.BOOKAUTHORS.BOOKID"));
+        containsInAnyOrder("PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID"));
   }
 
   @BeforeAll

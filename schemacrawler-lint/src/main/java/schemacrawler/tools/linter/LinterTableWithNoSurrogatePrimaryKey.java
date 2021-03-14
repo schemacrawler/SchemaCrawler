@@ -61,7 +61,7 @@ public class LinterTableWithNoSurrogatePrimaryKey extends BaseLinter {
   private boolean hasNoSurrogatePrimaryKey(final Table table) {
     final PrimaryKey primaryKey = table.getPrimaryKey();
     if (primaryKey != null) {
-      final int pkColumnCount = primaryKey.getColumns().size();
+      final int pkColumnCount = primaryKey.getConstrainedColumns().size();
       return pkColumnCount > 1;
     }
 

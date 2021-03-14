@@ -32,8 +32,8 @@ import java.util.List;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
+import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import us.fatehi.utility.graph.DirectedGraph;
@@ -55,7 +55,7 @@ final class TablesGraph extends DirectedGraph<Table> {
     for (final Table table : tables) {
       addVertex(table);
       for (final ForeignKey foreignKey : table.getForeignKeys()) {
-        for (final ForeignKeyColumnReference columnRef : foreignKey) {
+        for (final ColumnReference columnRef : foreignKey) {
           addEdge(
               columnRef.getPrimaryKeyColumn().getParent(),
               columnRef.getForeignKeyColumn().getParent());

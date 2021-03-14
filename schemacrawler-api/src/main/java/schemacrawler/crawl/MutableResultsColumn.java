@@ -54,7 +54,7 @@ final class MutableResultsColumn extends AbstractColumn<Table> implements Result
   private boolean writable;
 
   MutableResultsColumn(final Table parent, final String name, final String label) {
-    super(new TableReference(parent), name);
+    super(new TablePointer(parent), name);
     this.label = label;
   }
   /** {@inheritDoc} */

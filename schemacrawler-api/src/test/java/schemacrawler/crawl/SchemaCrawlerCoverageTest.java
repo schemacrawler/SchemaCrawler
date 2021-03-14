@@ -126,7 +126,8 @@ public class SchemaCrawlerCoverageTest {
     final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
     final Table table = catalog.lookupTable(schema, "AUTHORS").get();
     final TableConstraint tableConstraint = new ArrayList<>(table.getTableConstraints()).get(0);
-    final TableConstraintColumn tableConstraintColumn = tableConstraint.getColumns().get(0);
+    final TableConstraintColumn tableConstraintColumn =
+        tableConstraint.getConstrainedColumns().get(0);
     final Column column = table.lookupColumn(tableConstraintColumn.getName()).get();
 
     compareColumnFields(tableConstraintColumn, column);
@@ -190,7 +191,7 @@ public class SchemaCrawlerCoverageTest {
     final PrimaryKey primaryKey = table.getPrimaryKey();
 
     assertThat(primaryKey.getFullName(), is("PUBLIC.BOOKS.AUTHORS.PK_AUTHORS"));
-    assertThat(primaryKey.getColumns().toString(), is("[PUBLIC.BOOKS.AUTHORS.ID]"));
+    assertThat(primaryKey.getConstrainedColumns().toString(), is("[PUBLIC.BOOKS.AUTHORS.ID]"));
     assertThat(primaryKey.getType(), is(TableConstraintType.primary_key));
     assertThat(primaryKey.isDeferrable(), is(false));
     assertThat(primaryKey.isInitiallyDeferred(), is(false));

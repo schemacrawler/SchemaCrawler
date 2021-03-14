@@ -36,7 +36,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import schemacrawler.schema.BaseForeignKey;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.Index;
@@ -46,6 +45,7 @@ import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
+import schemacrawler.schema.TableReference;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schemacrawler.IdentifierQuotingStrategy;
 import schemacrawler.schemacrawler.Identifiers;
@@ -93,16 +93,13 @@ public final class MetaDataUtility {
     return columnNames;
   }
 
-  public static ForeignKeyCardinality findForeignKeyCardinality(
-      final BaseForeignKey<?> foreignKey) {
-    if (foreignKey == null) {
+  public static ForeignKeyCardinality findForeignKeyCardinality(final TableReference tableRef) {
+    if (tableRef == null) {
       return ForeignKeyCardinality.unknown;
     }
-    final boolean isForeignKeyUnique = isForeignKeyUnique(foreignKey);
-
-    final ColumnReference columnRef0 = foreignKey.getColumnReferences().get(0);
-    final Column fkColumn = columnRef0.getForeignKeyColumn();
-    final boolean isColumnReference = fkColumn instanceof PartialDatabaseObject;
+    final boolean isForeignKeyUnique = isForeignKeyUnique(tableRef);
+    final boolean isColumnReference =
+        tableRef.getReferencingTable() instanceof PartialDatabaseObject;
 
     final ForeignKeyCardinality connectivity;
     if (isColumnReference) {
@@ -115,52 +112,15 @@ public final class MetaDataUtility {
     return connectivity;
   }
 
-  public static List<String> foreignKeyColumnNames(
-      final BaseForeignKey<? extends ColumnReference> foreignKey) {
-    if (foreignKey == null) {
+  public static List<String> foreignKeyColumnNames(final TableReference tableRef) {
+    if (tableRef == null) {
       return Collections.emptyList();
     }
     final List<String> columnNames = new ArrayList<>();
-    for (final ColumnReference columnReference : foreignKey) {
+    for (final ColumnReference columnReference : tableRef) {
       columnNames.add(columnReference.getForeignKeyColumn().getFullName());
     }
     return columnNames;
-  }
-
-  /**
-   * Gets a comma-separated list of columns for a foreign key.
-   *
-   * @param fk Foreign key
-   * @param quotingStrategy Identifier quoting strategy
-   * @param quoteString
-   * @return Comma-separated list of columns
-   */
-  public static <REF extends ColumnReference, FK extends BaseForeignKey<REF>>
-      String getColumnsListAsString(
-          final FK fk,
-          final TableRelationshipType relationshipType,
-          final IdentifierQuotingStrategy quotingStrategy,
-          final String quoteString) {
-
-    requireNonNull(fk, "No foreign key provided");
-    requireNonNull(quotingStrategy, "No identifier quoting strategy provided");
-    if (relationshipType == null || relationshipType == TableRelationshipType.none) {
-      return "";
-    }
-
-    final List<Column> columns = new ArrayList<>();
-    for (final REF columnReference : fk.getColumnReferences()) {
-      switch (relationshipType) {
-        case parent:
-          columns.add(columnReference.getPrimaryKeyColumn());
-          break;
-        case child:
-          columns.add(columnReference.getForeignKeyColumn());
-          break;
-        default:
-      }
-    }
-    return joinColumns(quotingStrategy, quoteString, columns);
   }
 
   /**
@@ -219,18 +179,52 @@ public final class MetaDataUtility {
     requireNonNull(tableConstraint, "No table constraint provided");
     requireNonNull(quotingStrategy, "No identifier quoting strategy provided");
 
-    final List<TableConstraintColumn> columns = tableConstraint.getColumns();
+    final List<TableConstraintColumn> columns = tableConstraint.getConstrainedColumns();
     return joinColumns(quotingStrategy, quoteString, columns);
   }
 
-  public static boolean isForeignKeyUnique(final BaseForeignKey<?> foreignKey) {
-    if (foreignKey == null) {
+  /**
+   * Gets a comma-separated list of columns for a foreign key.
+   *
+   * @param fk Foreign key
+   * @param quotingStrategy Identifier quoting strategy
+   * @param quoteString
+   * @return Comma-separated list of columns
+   */
+  public static String getColumnsListAsString(
+      final TableReference fk,
+      final TableRelationshipType relationshipType,
+      final IdentifierQuotingStrategy quotingStrategy,
+      final String quoteString) {
+
+    requireNonNull(fk, "No foreign key provided");
+    requireNonNull(quotingStrategy, "No identifier quoting strategy provided");
+    if (relationshipType == null || relationshipType == TableRelationshipType.none) {
+      return "";
+    }
+
+    final List<Column> columns = new ArrayList<>();
+    for (final ColumnReference columnReference : fk.getColumnReferences()) {
+      switch (relationshipType) {
+        case parent:
+          columns.add(columnReference.getPrimaryKeyColumn());
+          break;
+        case child:
+          columns.add(columnReference.getForeignKeyColumn());
+          break;
+        default:
+      }
+    }
+    return joinColumns(quotingStrategy, quoteString, columns);
+  }
+
+  public static boolean isForeignKeyUnique(final TableReference tableRef) {
+    if (tableRef == null) {
       return false;
     }
-    final ColumnReference columnRef0 = foreignKey.getColumnReferences().get(0);
-    final Table fkTable = columnRef0.getForeignKeyColumn().getParent();
+    final Table fkTable = tableRef.getForeignKeyTable();
     final Collection<List<String>> uniqueIndexCoumnNames = uniqueIndexCoumnNames(fkTable);
-    final List<String> foreignKeyColumnNames = foreignKeyColumnNames(foreignKey);
+    final List<String> foreignKeyColumnNames = foreignKeyColumnNames(tableRef);
     return uniqueIndexCoumnNames.contains(foreignKeyColumnNames);
   }
 

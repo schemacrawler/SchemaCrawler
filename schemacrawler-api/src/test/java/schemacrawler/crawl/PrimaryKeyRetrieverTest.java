@@ -89,8 +89,8 @@ public class PrimaryKeyRetrieverTest {
           if (table.hasPrimaryKey()) {
             final PrimaryKey primaryKey = table.getPrimaryKey();
             out.println(String.format("  primary key: %s", primaryKey.getName()));
-            out.println(String.format("    columns: %s", primaryKey.getColumns()));
-            out.println(String.format("    constraint type: %s", primaryKey.getConstraintType()));
+            out.println(String.format("    columns: %s", primaryKey.getConstrainedColumns()));
+            out.println(String.format("    constraint type: %s", primaryKey.getType()));
             out.println(String.format("    is deferrable: %b", primaryKey.isDeferrable()));
             out.println(
                 String.format("    is initially deferred: %b", primaryKey.isInitiallyDeferred()));

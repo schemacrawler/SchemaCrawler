@@ -25,17 +25,51 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
+package schemacrawler.schema;
 
-import schemacrawler.schema.Column;
+import java.util.List;
 
-class ColumnReference extends DatabaseObjectReference<Column> {
+/** Represents a foreign-key mapping to a primary key in another table. */
+public interface TableReference
+    extends NamedObject,
+        AttributedObject,
+        DescribedObject,
+        TableConstraint,
+        Iterable<ColumnReference> {
 
-  private static final long serialVersionUID = 122669483681884924L;
+  /**
+   * Gets the list of column pairs.
+   *
+   * @return Column pairs
+   */
+  List<ColumnReference> getColumnReferences();
 
-  ColumnReference(final Column column) {
-    super(requireNonNull(column, "No column provided"), new ColumnPartial(column));
+  /**
+   * Gets the referencing table.
+   *
+   * @return Referencing table.
+   */
+  Table getForeignKeyTable();
+  /**
+   * Gets the referenced table.
+   *
+   * @return Referenced table.
+   */
+  Table getPrimaryKeyTable();
+
+  default Table getReferencedTable() {
+    return getPrimaryKeyTable();
   }
+
+  default Table getReferencingTable() {
+    return getForeignKeyTable();
+  }
+
+  /**
+   * Type of table reference.
+   *
+   * @return Type of table reference
+   */
+  TableReferenceType getTableReferenceType();
 }

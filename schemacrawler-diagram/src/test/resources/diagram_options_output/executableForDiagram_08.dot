@@ -29,7 +29,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2021-02-28 16:37:08.5308493</td>
+		<td align='left'>2021-03-14 03:27:24.857</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
@@ -120,9 +120,9 @@ digraph "SchemaCrawler_Diagram" {
     >
   ];
 
+  "books_f4a675c8":"previouseditionid_6cf3995a.start":w -> "books_f4a675c8":"id_a0284c53.end":e [label=<> style="solid" dir="both" arrowhead="teetee" arrowtail="teeodot"];
   "bookid_e54f6507" [label=<BOOKAUTHORS.BOOKID>];
   "bookid_e54f6507":w -> "books_f4a675c8":"id_a0284c53.end":e [label=<> style="solid" dir="both" arrowhead="teetee" arrowtail="box"];
-  "books_f4a675c8":"previouseditionid_6cf3995a.start":w -> "books_f4a675c8":"id_a0284c53.end":e [label=<> style="solid" dir="both" arrowhead="teetee" arrowtail="teeodot"];
 
 
 }
