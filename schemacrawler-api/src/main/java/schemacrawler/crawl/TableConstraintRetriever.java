@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.CHECK_CONSTRAINTS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.CONSTRAINT_COLUMN_USAGE;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_CONSTRAINTS;
@@ -36,14 +37,18 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
+import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Schema;
+import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
@@ -69,6 +74,17 @@ final class TableConstraintRetriever extends AbstractRetriever {
       throws SQLException {
     super(retrieverConnection, catalog, options);
     tableConstraintsMap = new HashMap<>();
+  }
+
+  public void matchTableConstraints(final NamedObjectList<MutableTable> allTables) {
+    requireNonNull(allTables, "No tables provided");
+    for (final MutableTable mutableTable : allTables) {
+      if (mutableTable == null) {
+        continue;
+      }
+      matchPrimaryKey(mutableTable);
+      addImportedForeignKeys(mutableTable);
+    }
   }
 
   void retrieveTableConstraintDefinitions() {
@@ -198,6 +214,46 @@ final class TableConstraintRetriever extends AbstractRetriever {
       LOGGER.log(Level.WARNING, "Could not retrieve table constraint information", e);
       return;
     }
+  }
+
+  /**
+   * Add foreign keys as table constraints. Foreign keys are not loaded by the CONSTRAINTS view in
+   * the information schema views, so they can be added in without fear of duplication.
+   *
+   * @param mutableTable Table to add constraints to
+   */
+  private void addImportedForeignKeys(final MutableTable mutableTable) {
+    final Collection<ForeignKey> importedForeignKeys = mutableTable.getImportedForeignKeys();
+    for (final ForeignKey foreignKey : importedForeignKeys) {
+      mutableTable.addTableConstraint(foreignKey);
+    }
+  }
+
+  private void matchPrimaryKey(final MutableTable mutableTable) {
+    if (!mutableTable.hasPrimaryKey()) {
+      return;
+    }
+    final MutablePrimaryKey primaryKey = mutableTable.getPrimaryKey();
+    // Remove table constraints that are primary keys, if the columns match
+    for (final TableConstraint tableConstraint : mutableTable.getTableConstraints()) {
+      if (tableConstraint.getType() == TableConstraintType.primary_key
+          && (primaryKey.getName().equals(tableConstraint.getName())
+              || primaryKey
+                  .getConstrainedColumns()
+                  .equals(tableConstraint.getConstrainedColumns()))) {
+        // Copy remarks over
+        if (!primaryKey.hasRemarks() && tableConstraint.hasRemarks()) {
+          primaryKey.setRemarks(tableConstraint.getRemarks());
+        }
+        // Copy attributes over
+        for (final Entry<String, Object> attribute : tableConstraint.getAttributes().entrySet()) {
+          primaryKey.setAttribute(attribute.getKey(), attribute.getValue());
+        }
+        mutableTable.removeTableConstraint(tableConstraint);
+      }
+    }
+    // Add back primary key as table constraints
+    mutableTable.addTableConstraint(primaryKey);
   }
 
   private void retrieveTableConstraintsColumns(

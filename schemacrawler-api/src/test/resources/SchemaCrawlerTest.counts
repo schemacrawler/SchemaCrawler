@@ -17,7 +17,7 @@ schema: PUBLIC.BOOKS
     # privileges: 6
   table: PUBLIC.BOOKS.BOOKAUTHORS
     # columns: 3
-    # constraints: 4
+    # constraints: 6
     # indexes: 3
     # foreign keys: 2
     # imported foreign keys: 0
@@ -25,7 +25,7 @@ schema: PUBLIC.BOOKS
     # privileges: 6
   table: PUBLIC.BOOKS.BOOKS
     # columns: 7
-    # constraints: 6
+    # constraints: 7
     # indexes: 3
     # foreign keys: 2
     # imported foreign keys: 2
@@ -73,7 +73,7 @@ schema: PUBLIC.BOOKS
     # privileges: 6
   table: PUBLIC.BOOKS.ΒΙΒΛΊΑ
     # columns: 4
-    # constraints: 5
+    # constraints: 6
     # indexes: 2
     # foreign keys: 1
     # imported foreign keys: 0
@@ -92,7 +92,7 @@ schema: PUBLIC."PUBLISHER SALES"
     # privileges: 6
   table: PUBLIC."PUBLISHER SALES".SALES
     # columns: 6
-    # constraints: 4
+    # constraints: 6
     # indexes: 2
     # foreign keys: 2
     # imported foreign keys: 0

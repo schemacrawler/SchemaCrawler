@@ -68,7 +68,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
   private static final long serialVersionUID = 3257290248802284852L;
 
   private final NamedObjectList<MutableColumn> columns = new NamedObjectList<>();
-  private final NamedObjectList<MutableTableConstraint> constraints = new NamedObjectList<>();
+  private final NamedObjectList<TableConstraint> constraints = new NamedObjectList<>();
   private final StringBuilder definition;
   private final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
   private final NamedObjectList<MutableWeakAssociation> weakAssociations = new NamedObjectList<>();
@@ -227,6 +227,12 @@ class MutableTable extends AbstractDatabaseObject implements Table {
 
   /** {@inheritDoc} */
   @Override
+  public final boolean hasForeignKeys() {
+    return !foreignKeys.isEmpty();
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public final boolean hasPrimaryKey() {
     return getPrimaryKey() != null;
   }
@@ -261,7 +267,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
 
   /** {@inheritDoc} */
   @Override
-  public Optional<MutableTableConstraint> lookupTableConstraint(final String name) {
+  public Optional<TableConstraint> lookupTableConstraint(final String name) {
     return constraints.lookup(this, name);
   }
 
@@ -296,7 +302,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
     privileges.add(privilege);
   }
 
-  final void addTableConstraint(final MutableTableConstraint tableConstraint) {
+  final void addTableConstraint(final TableConstraint tableConstraint) {
     constraints.add(tableConstraint);
   }
 
@@ -316,6 +322,10 @@ class MutableTable extends AbstractDatabaseObject implements Table {
 
   NamedObjectList<MutableColumn> getAllColumns() {
     return columns;
+  }
+
+  void removeTableConstraint(final TableConstraint tableConstraint) {
+    constraints.remove(tableConstraint);
   }
 
   final void setPrimaryKey(final MutablePrimaryKey primaryKey) {

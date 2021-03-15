@@ -144,6 +144,11 @@ final class TablePartial extends AbstractDatabaseObject implements Table, Partia
     throw new NotLoadedException(this);
   }
 
+  @Override
+  public boolean hasForeignKeys() {
+    throw new NotLoadedException(this);
+  }
+
   /** {@inheritDoc} */
   @Override
   public boolean hasPrimaryKey() {

@@ -120,11 +120,20 @@ abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
       return -1;
     }
 
-    final TableReference other = (TableReference) obj;
-    final List<ColumnReference> thisColumnReferences = getColumnReferences();
-    final List<ColumnReference> otherColumnReferences = other.getColumnReferences();
+    if (obj instanceof TableReference) {
+      final TableReference other = (TableReference) obj;
+      final List<ColumnReference> thisColumnReferences = getColumnReferences();
+      final List<ColumnReference> otherColumnReferences = other.getColumnReferences();
 
-    return CompareUtility.compareLists(thisColumnReferences, otherColumnReferences);
+      return CompareUtility.compareLists(thisColumnReferences, otherColumnReferences);
+    }
+
+    if (obj instanceof NamedObject) {
+      final NamedObject other = obj;
+      return super.compareTo(other);
+    }
+
+    return -1;
   }
 
   /** {@inheritDoc} */

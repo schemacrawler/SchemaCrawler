@@ -133,7 +133,7 @@ public class SchemaCrawlerCoverageTest {
     compareColumnFields(tableConstraintColumn, column);
 
     assertThat(tableConstraintColumn.getTableConstraint(), is(tableConstraint));
-    assertThat(tableConstraintColumn.getTableConstraintOrdinalPosition(), is(0));
+    assertThat(tableConstraintColumn.getTableConstraintOrdinalPosition(), is(1));
   }
 
   @Test

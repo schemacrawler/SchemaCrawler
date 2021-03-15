@@ -636,6 +636,7 @@ public final class SchemaCrawler {
             if (infoLevel.is(retrieveTableConstraintInformation)) {
               constraintRetriever.retrieveTableConstraintInformation();
             }
+            constraintRetriever.matchTableConstraints(allTables);
             return null;
           });
       stopWatch.time(
