@@ -132,6 +132,13 @@ public interface Table extends DatabaseObject, TypedObject<TableType>, DefinedOb
   Collection<WeakAssociation> getWeakAssociations();
 
   /**
+   * Checks if the table has any foreign keys, whether imported or exported.
+   *
+   * @return True if the table has a foreign keys.
+   */
+  boolean hasForeignKeys();
+
+  /**
    * Checks if the table has a primary key.
    *
    * @return True if the table has a primary key.

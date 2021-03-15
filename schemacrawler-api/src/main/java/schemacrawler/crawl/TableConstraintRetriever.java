@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.CHECK_CONSTRAINTS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.CONSTRAINT_COLUMN_USAGE;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_CONSTRAINTS;
@@ -36,14 +37,19 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
+import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Schema;
+import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
@@ -69,6 +75,17 @@ final class TableConstraintRetriever extends AbstractRetriever {
       throws SQLException {
     super(retrieverConnection, catalog, options);
     tableConstraintsMap = new HashMap<>();
+  }
+
+  public void matchTableConstraints(final NamedObjectList<MutableTable> allTables) {
+    requireNonNull(allTables, "No tables provided");
+    for (final MutableTable mutableTable : allTables) {
+      if (mutableTable == null) {
+        continue;
+      }
+      matchPrimaryKey(mutableTable);
+      matchForeignKeys(mutableTable);
+    }
   }
 
   void retrieveTableConstraintDefinitions() {
@@ -198,6 +215,67 @@ final class TableConstraintRetriever extends AbstractRetriever {
       LOGGER.log(Level.WARNING, "Could not retrieve table constraint information", e);
       return;
     }
+  }
+
+  private void matchForeignKeys(final MutableTable mutableTable) {
+    final Collection<ForeignKey> importedForeignKeys = mutableTable.getImportedForeignKeys();
+    if (importedForeignKeys.isEmpty()) {
+      return;
+    }
+    final Collection<TableConstraint> tableConstraints = mutableTable.getTableConstraints();
+    // Remove table constraints that are foreign keys, if the columns match
+    for (final ForeignKey foreignKey : importedForeignKeys) {
+      for (final Iterator<TableConstraint> iterator = tableConstraints.iterator();
+          iterator.hasNext(); ) {
+        final TableConstraint tableConstraint = iterator.next();
+        if (tableConstraint.getType() == TableConstraintType.foreign_key
+            && foreignKey.getConstrainedColumns().equals(tableConstraint.getConstrainedColumns())) {
+          // Copy remarks over
+          if (!foreignKey.hasRemarks() && tableConstraint.hasRemarks()) {
+            foreignKey.setRemarks(tableConstraint.getRemarks());
+          }
+          // Copy attributes over
+          for (final Entry<String, Object> attribute : tableConstraint.getAttributes().entrySet()) {
+            foreignKey.setAttribute(attribute.getKey(), attribute.getValue());
+          }
+          iterator.remove();
+        }
+      }
+    }
+    // Add back all foreign keys as table constraints
+    for (final ForeignKey foreignKey : importedForeignKeys) {
+      mutableTable.addTableConstraint(foreignKey);
+    }
+  }
+
+  private void matchPrimaryKey(final MutableTable mutableTable) {
+    if (!mutableTable.hasPrimaryKey()) {
+      return;
+    }
+    final MutablePrimaryKey primaryKey = mutableTable.getPrimaryKey();
+    final Collection<TableConstraint> tableConstraints = mutableTable.getTableConstraints();
+    // Remove table constraints that are primary keys, if the columns match
+    for (final Iterator<TableConstraint> iterator = tableConstraints.iterator();
+        iterator.hasNext(); ) {
+      final TableConstraint tableConstraint = iterator.next();
+      if (tableConstraint.getType() == TableConstraintType.primary_key
+          && (primaryKey.getName().equals(tableConstraint.getName())
+              || primaryKey
+                  .getConstrainedColumns()
+                  .equals(tableConstraint.getConstrainedColumns()))) {
+        // Copy remarks over
+        if (!primaryKey.hasRemarks() && tableConstraint.hasRemarks()) {
+          primaryKey.setRemarks(tableConstraint.getRemarks());
+        }
+        // Copy attributes over
+        for (final Entry<String, Object> attribute : tableConstraint.getAttributes().entrySet()) {
+          primaryKey.setAttribute(attribute.getKey(), attribute.getValue());
+        }
+        iterator.remove();
+      }
+    }
+    // Add back primary key as table constraints
+    mutableTable.addTableConstraint(primaryKey);
   }
 
   private void retrieveTableConstraintsColumns(
