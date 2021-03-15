@@ -39,7 +39,6 @@ import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -84,7 +83,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
         continue;
       }
       matchPrimaryKey(mutableTable);
-      matchForeignKeys(mutableTable);
+      addImportedForeignKeys(mutableTable);
     }
   }
 
@@ -217,32 +216,14 @@ final class TableConstraintRetriever extends AbstractRetriever {
     }
   }
 
-  private void matchForeignKeys(final MutableTable mutableTable) {
+  /**
+   * Add foreign keys as table constraints. Foreign keys are not loaded by the CONSTRAINTS view in
+   * the information schema views, so they can be added in without fear of duplication.
+   *
+   * @param mutableTable Table to add constraints to
+   */
+  private void addImportedForeignKeys(final MutableTable mutableTable) {
     final Collection<ForeignKey> importedForeignKeys = mutableTable.getImportedForeignKeys();
-    if (importedForeignKeys.isEmpty()) {
-      return;
-    }
-    final Collection<TableConstraint> tableConstraints = mutableTable.getTableConstraints();
-    // Remove table constraints that are foreign keys, if the columns match
-    for (final ForeignKey foreignKey : importedForeignKeys) {
-      for (final Iterator<TableConstraint> iterator = tableConstraints.iterator();
-          iterator.hasNext(); ) {
-        final TableConstraint tableConstraint = iterator.next();
-        if (tableConstraint.getType() == TableConstraintType.foreign_key
-            && foreignKey.getConstrainedColumns().equals(tableConstraint.getConstrainedColumns())) {
-          // Copy remarks over
-          if (!foreignKey.hasRemarks() && tableConstraint.hasRemarks()) {
-            foreignKey.setRemarks(tableConstraint.getRemarks());
-          }
-          // Copy attributes over
-          for (final Entry<String, Object> attribute : tableConstraint.getAttributes().entrySet()) {
-            foreignKey.setAttribute(attribute.getKey(), attribute.getValue());
-          }
-          iterator.remove();
-        }
-      }
-    }
-    // Add back all foreign keys as table constraints
     for (final ForeignKey foreignKey : importedForeignKeys) {
       mutableTable.addTableConstraint(foreignKey);
     }
@@ -253,11 +234,8 @@ final class TableConstraintRetriever extends AbstractRetriever {
       return;
     }
     final MutablePrimaryKey primaryKey = mutableTable.getPrimaryKey();
-    final Collection<TableConstraint> tableConstraints = mutableTable.getTableConstraints();
     // Remove table constraints that are primary keys, if the columns match
-    for (final Iterator<TableConstraint> iterator = tableConstraints.iterator();
-        iterator.hasNext(); ) {
-      final TableConstraint tableConstraint = iterator.next();
+    for (final TableConstraint tableConstraint : mutableTable.getTableConstraints()) {
       if (tableConstraint.getType() == TableConstraintType.primary_key
           && (primaryKey.getName().equals(tableConstraint.getName())
               || primaryKey
@@ -271,7 +249,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
         for (final Entry<String, Object> attribute : tableConstraint.getAttributes().entrySet()) {
           primaryKey.setAttribute(attribute.getKey(), attribute.getValue());
         }
-        iterator.remove();
+        mutableTable.removeTableConstraint(tableConstraint);
       }
     }
     // Add back primary key as table constraints

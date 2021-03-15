@@ -324,6 +324,10 @@ class MutableTable extends AbstractDatabaseObject implements Table {
     return columns;
   }
 
+  void removeTableConstraint(final TableConstraint tableConstraint) {
+    constraints.remove(tableConstraint);
+  }
+
   final void setPrimaryKey(final MutablePrimaryKey primaryKey) {
     if (primaryKey == null) {
       return;
