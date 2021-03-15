@@ -12,6 +12,7 @@ the YAML file, and these provided with the SchemaCrawler download.
 
 You can read and incorporate table and column remarks into the SchemaCrawler schema
 by creating a file like the one below. These remarks will be show in SchemaCrawler output.
+SchemaCrawler does not allow you to provide remarks for external tables or columns.
 
 ```yaml
 name: catalog

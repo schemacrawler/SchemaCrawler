@@ -43,6 +43,7 @@ import schemacrawler.loader.attributes.model.ColumnAttributes;
 import schemacrawler.loader.attributes.model.TableAttributes;
 import schemacrawler.loader.attributes.model.WeakAssociationAttributes;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.WeakAssociation;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -127,7 +128,7 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
       if (lookupTable.isPresent()) {
         table = lookupTable.get();
       } else {
-        LOGGER.log(Level.CONFIG, new StringFormat("%s not found", tableAttributes));
+        LOGGER.log(Level.CONFIG, new StringFormat("Table %s not found", tableAttributes));
         continue;
       }
 
@@ -137,9 +138,13 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
 
       for (final ColumnAttributes columnAttributes : tableAttributes) {
         if (columnAttributes.hasRemarks()) {
-          table
-              .lookupColumn(columnAttributes.getName())
-              .ifPresent(column -> column.setRemarks(columnAttributes.getRemarks()));
+          final Optional<Column> lookupColumn = table.lookupColumn(columnAttributes.getName());
+          if (lookupColumn.isPresent()) {
+            final Column column = lookupColumn.get();
+            column.setRemarks(columnAttributes.getRemarks());
+          } else {
+            LOGGER.log(Level.CONFIG, new StringFormat("Column %s not found", columnAttributes));
+          }
         }
       }
     }

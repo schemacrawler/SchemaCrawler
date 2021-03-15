@@ -34,6 +34,7 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.newSchemaRetrievalOptions;
 
+import java.io.IOException;
 import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
@@ -44,6 +45,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
@@ -60,9 +62,29 @@ import schemacrawler.tools.utility.SchemaCrawlerUtility;
 public class AttributesCatalogLoaderTest {
 
   @Test
+  public void noRemarksForExternalColumn(final TestContext testContext, final Connection connection)
+      throws Exception {
+    final String attributesFile = "/attributes-external-column.yaml";
+    showRemarks(testContext, connection, attributesFile);
+  }
+
+  @Test
+  public void noRemarksForExternalTable(final TestContext testContext, final Connection connection)
+      throws Exception {
+    final String attributesFile = "/attributes-external-table.yaml";
+    showRemarks(testContext, connection, attributesFile);
+  }
+
+  @Test
   public void showRemarks(final TestContext testContext, final Connection connection)
       throws Exception {
+    final String attributesFile = "/attributes.yaml";
+    showRemarks(testContext, connection, attributesFile);
+  }
 
+  private void showRemarks(
+      final TestContext testContext, final Connection connection, final String attributesFile)
+      throws IOException, SchemaCrawlerException {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
 
@@ -72,7 +94,7 @@ public class AttributesCatalogLoaderTest {
           SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
       final Config additionalConfig = new Config();
-      additionalConfig.put("attributes-file", "/attributes.yaml");
+      additionalConfig.put("attributes-file", attributesFile);
 
       final Catalog catalog =
           SchemaCrawlerUtility.getCatalog(
