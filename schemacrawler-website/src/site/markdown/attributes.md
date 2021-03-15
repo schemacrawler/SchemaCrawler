@@ -41,8 +41,9 @@ SchemaCrawler output, if you edit the SchemaCrawler `/config/schemacrawler.confi
 file, and uncomment `schemacrawler.format.show_weak_associations` and set it to be true.
 
 Weak associations can be between columns of tables of the SchemaCrawler schema and columns
-in external schemas. This is useful for documenting data lineage or other types of associations.
+in external schemas. This is useful for tracking data lineage or other types of associations.
 You can provide remarks for weak associations which will also be shown in SchemaCrawler output.
+SchemaCrawler does not allow you to provide column references between two external tables.
 
 ```yaml
 name: catalog
