@@ -1,4 +1,4 @@
-SchemaCrawler 16.12.1
+SchemaCrawler 16.14.1
 Database schema discovery and comprehension tool
 https://www.schemacrawler.com/
 Copyright (c) 2000-2021, Sualeh Fatehi <sualeh@hotmail.com>.
@@ -13,9 +13,14 @@ System Information:
 Windows 10 10.0
 Oracle Corporation Java HotSpot(TM) 64-Bit Server VM 1.8.0_261-b12
 
-Available SchemaCrawler database plugins:
+Available SchemaCrawler database server plugins:
  test-db        Test Database
 
+Notes:
+- For help on an individual database plugin,
+  run SchemaCrawler with options like: `-h server:mysql`
+  or, from the SchemaCrawler interactive shell: `help server:mysql`
+- Options for the server plugins should be provided with the `connect` command
 
 Available SchemaCrawler catalog loader plugins:
  weakassociationsloader
@@ -27,6 +32,11 @@ Available SchemaCrawler catalog loader plugins:
  schemacrawlerloader
                 Loader for SchemaCrawler metadata catalog
 
+Notes:
+- For help on an individual catalog loader,
+  run SchemaCrawler with options like: `-h loader:weakassociationsloader`
+  or, from the SchemaCrawler interactive shell: `help loader:weakassociationsloader`
+- Options for the catalog loaders should be provided with the `load` command
 
 Available SchemaCrawler commands:
  brief          Shows basic schema information, for tables, views and routines,
@@ -54,6 +64,11 @@ Available SchemaCrawler commands:
                 Queries with variables are executed once for each table, with
                   the variables substituted
 
+Notes:
+- For help on an individual SchemaCrawler command,
+  run SchemaCrawler with options like: `-h command:schema`
+  or from the SchemaCrawler interactive shell: `help command:schema`
+- Options for the commands should be provided with the `execute` command
 
 
 ** Turn logging on or off

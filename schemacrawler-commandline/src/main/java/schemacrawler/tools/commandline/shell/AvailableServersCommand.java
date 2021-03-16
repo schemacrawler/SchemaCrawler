@@ -69,8 +69,15 @@ public class AvailableServersCommand implements Runnable {
     final String availableServers = availableServersDescriptive();
     if (!isBlank(availableServers)) {
       System.out.println();
-      System.out.println("Available SchemaCrawler database plugins:");
+      System.out.println("Available SchemaCrawler database server plugins:");
       System.out.println(availableServers);
+
+      System.out.println("Notes:");
+      System.out.println("- For help on an individual database plugin,");
+      System.out.println("  run SchemaCrawler with options like: `-h server:mysql`");
+      System.out.println("  or, from the SchemaCrawler interactive shell: `help server:mysql`");
+      System.out.println(
+          "- Options for the server plugins should be provided with the `connect` command");
     }
   }
 }

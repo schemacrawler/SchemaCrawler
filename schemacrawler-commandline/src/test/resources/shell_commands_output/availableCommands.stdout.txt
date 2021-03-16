@@ -25,3 +25,8 @@ Available SchemaCrawler commands:
                 Queries with variables are executed once for each table, with
                   the variables substituted
 
+Notes:
+- For help on an individual SchemaCrawler command,
+  run SchemaCrawler with options like: `-h command:schema`
+  or from the SchemaCrawler interactive shell: `help command:schema`
+- Options for the commands should be provided with the `execute` command

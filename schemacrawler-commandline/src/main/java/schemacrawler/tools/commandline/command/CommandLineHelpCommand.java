@@ -205,10 +205,20 @@ public final class CommandLineHelpCommand implements Runnable {
       return;
     }
 
+    final boolean isAvailabilityCommand =
+        Arrays.asList("servers", "loaders", "commands").contains(command);
+
     final CommandLine subCommand =
         lookupServerCommand(command).orElse(lookupCommand(parent, command).orElse(null));
     if (subCommand != null) {
       subCommand.usage(System.out, Help.Ansi.AUTO);
+      if (isAvailabilityCommand) {
+        final CommandSpec commandSpec = subCommand.getCommandSpec();
+        final Object userObject = commandSpec.userObject();
+        if (userObject != null && userObject instanceof Runnable) {
+          ((Runnable) userObject).run();
+        }
+      }
       System.out.printf("%n%n");
     }
   }
