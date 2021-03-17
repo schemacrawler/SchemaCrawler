@@ -28,6 +28,10 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline.shell;
 
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
+
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import schemacrawler.JvmSystemInfo;
@@ -88,37 +92,79 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
   @Override
   public void run() {
     if (versionRequested) {
-      System.out.println(Version.about());
+      showVersion();
     }
     if (showenvironment) {
-      System.out.println("System Information:");
-      final OperatingSystemInfo osInfo = new OperatingSystemInfo();
-      System.out.println(osInfo);
-      final JvmSystemInfo jvmInfo = new JvmSystemInfo();
-      System.out.println(jvmInfo);
-
-      new AvailableServersCommand().run();
-      new AvailableCatalogLoadersCommand().run();
-      new AvailableCommandsCommand().run();
+      showEnvironment();
     }
     if (isconnected) {
-      final boolean isConnectedState = state.isConnected();
-      System.out.println(
-          String.format("%sonnected to the database", isConnectedState ? "C" : "Not c"));
+      showConnected();
     }
     if (isloaded) {
-      final boolean isLoadedState = state.isLoaded();
-      System.out.println(
-          String.format("Database metadata is %sloaded", isLoadedState ? "" : "not "));
+      showLoaded();
     }
     if (showstacktrace) {
-      final Throwable lastExceptionState = state.getLastException();
-      if (lastExceptionState != null) {
-        lastExceptionState.printStackTrace(System.out);
-      }
+      showStackTrace();
     }
     if (showstate) {
-      StateUtility.logState(state, true);
+      showState();
     }
+  }
+
+  private void printConnectionInfo() {
+    try {
+      final Connection connection = state.getDataSource().get();
+      final DatabaseMetaData dbMetaData = connection.getMetaData();
+      System.out.printf(
+          "Connected to %n%s %s %nusing JDBC driver %n%s %s",
+          dbMetaData.getDatabaseProductName(),
+          dbMetaData.getDatabaseProductVersion(),
+          dbMetaData.getDriverName(),
+          dbMetaData.getDriverVersion());
+    } catch (final SQLException e) {
+      System.err.println("Could not log connection information");
+      e.printStackTrace();
+    }
+  }
+
+  private void showConnected() {
+    final boolean isConnectedState = state.isConnected();
+    if (isConnectedState) {
+      printConnectionInfo();
+    } else {
+      System.out.println("Not connected to a database");
+    }
+  }
+
+  private void showEnvironment() {
+    System.out.println("System Information:");
+    final OperatingSystemInfo osInfo = new OperatingSystemInfo();
+    System.out.println(osInfo);
+    final JvmSystemInfo jvmInfo = new JvmSystemInfo();
+    System.out.println(jvmInfo);
+
+    new AvailableServersCommand().run();
+    new AvailableCatalogLoadersCommand().run();
+    new AvailableCommandsCommand().run();
+  }
+
+  private void showLoaded() {
+    final boolean isLoadedState = state.isLoaded();
+    System.out.println(String.format("Database metadata is %sloaded", isLoadedState ? "" : "not "));
+  }
+
+  private void showStackTrace() {
+    final Throwable lastExceptionState = state.getLastException();
+    if (lastExceptionState != null) {
+      lastExceptionState.printStackTrace(System.out);
+    }
+  }
+
+  private void showState() {
+    StateUtility.logState(state, true);
+  }
+
+  private void showVersion() {
+    System.out.println(Version.about());
   }
 }
