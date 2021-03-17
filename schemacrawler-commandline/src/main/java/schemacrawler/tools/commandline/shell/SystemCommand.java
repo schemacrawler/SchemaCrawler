@@ -37,6 +37,7 @@ import picocli.CommandLine.Option;
 import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
 import schemacrawler.Version;
+import schemacrawler.tools.commandline.command.AvailableJDBCDrivers;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateUtility;
@@ -143,6 +144,7 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
     final JvmSystemInfo jvmInfo = new JvmSystemInfo();
     System.out.println(jvmInfo);
 
+    new AvailableJDBCDrivers().print(System.out);
     new AvailableServersCommand().run();
     new AvailableCatalogLoadersCommand().run();
     new AvailableCommandsCommand().run();
