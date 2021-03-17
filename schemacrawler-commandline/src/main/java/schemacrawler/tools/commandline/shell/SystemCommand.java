@@ -30,6 +30,8 @@ package schemacrawler.tools.commandline.shell;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
+import schemacrawler.JvmSystemInfo;
+import schemacrawler.OperatingSystemInfo;
 import schemacrawler.Version;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.ShellState;
@@ -46,12 +48,12 @@ import schemacrawler.tools.commandline.state.StateUtility;
 public class SystemCommand extends BaseStateHolder implements Runnable {
 
   @Option(
-      names = "--is-connected",
+      names = {"-C", "--is-connected"},
       description = "Checks whether the shell has a connection to a database")
   private boolean isconnected;
 
   @Option(
-      names = "--is-loaded",
+      names = {"-L", "--is-loaded"},
       description = "Checks whether the shell has loaded database metadata")
   private boolean isloaded;
 
@@ -62,12 +64,21 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
   private boolean showstate;
 
   @Option(
+      names = {"-E", "--show-environment"},
+      description = "Shows SchemaCrawler plugins and environment")
+  private boolean showenvironment;
+
+  @Option(
       names = {"-V", "--version"},
       description = "Display SchemaCrawler version and system information")
   private boolean versionRequested;
 
   public SystemCommand(final ShellState state) {
     super(state);
+  }
+
+  public boolean isShowEnvironment() {
+    return showenvironment;
   }
 
   public boolean isVersionRequested() {
@@ -78,6 +89,17 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
   public void run() {
     if (versionRequested) {
       System.out.println(Version.about());
+    }
+    if (showenvironment) {
+      System.out.println("System Information:");
+      final OperatingSystemInfo osInfo = new OperatingSystemInfo();
+      System.out.println(osInfo);
+      final JvmSystemInfo jvmInfo = new JvmSystemInfo();
+      System.out.println(jvmInfo);
+
+      new AvailableServersCommand().run();
+      new AvailableCatalogLoadersCommand().run();
+      new AvailableCommandsCommand().run();
     }
     if (isconnected) {
       final boolean isConnectedState = state.isConnected();
