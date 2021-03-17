@@ -55,12 +55,18 @@ import us.fatehi.utility.string.StringFormat;
 
 @Command(
     name = "load",
-    header = "** Load database metadata into memory",
+    header = "** Load database metadata into memory using a chain of catalog loaders",
     description = {""},
     headerHeading = "",
     synopsisHeading = "Shell Command:%n",
     customSynopsis = {"load"},
-    optionListHeading = "Options:%n")
+    optionListHeading = "Options:%n",
+    footer = {
+      "",
+      "For additional options, specific to individual catalog loaders,",
+      "run SchemaCrawler with: `-h loaders`",
+      "or from the SchemaCrawler interactive shell: `help loaders`"
+    })
 public class LoadCommand extends BaseStateHolder implements Runnable {
 
   private static final SchemaCrawlerLogger LOGGER =

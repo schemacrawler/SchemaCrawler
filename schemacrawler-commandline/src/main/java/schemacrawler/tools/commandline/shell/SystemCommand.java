@@ -30,8 +30,6 @@ package schemacrawler.tools.commandline.shell;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
-import schemacrawler.JvmSystemInfo;
-import schemacrawler.OperatingSystemInfo;
 import schemacrawler.Version;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.ShellState;
@@ -76,24 +74,10 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
     return versionRequested;
   }
 
-  public void printVersion() {
-    System.out.println(Version.about());
-
-    System.out.println("System Information:");
-    final OperatingSystemInfo osInfo = new OperatingSystemInfo();
-    System.out.println(osInfo);
-    final JvmSystemInfo jvmInfo = new JvmSystemInfo();
-    System.out.println(jvmInfo);
-
-    new AvailableServersCommand().run();
-    new AvailableCatalogLoadersCommand().run();
-    new AvailableCommandsCommand().run();
-  }
-
   @Override
   public void run() {
     if (versionRequested) {
-      printVersion();
+      System.out.println(Version.about());
     }
     if (isconnected) {
       final boolean isConnectedState = state.isConnected();

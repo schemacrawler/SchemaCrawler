@@ -1,4 +1,4 @@
-** Load database metadata into memory
+** Load database metadata into memory using a chain of catalog loaders
 Shell Command:
 load
 
@@ -26,4 +26,7 @@ Options:
                               patterns
                             This can be a time consuming operation
                             Optional, defaults to false
-Add loader switches to the load command in the SchemaCrawler Shell
+
+For additional options, specific to individual catalog loaders,
+run SchemaCrawler with: `-h loaders`
+or from the SchemaCrawler interactive shell: `help loaders`
