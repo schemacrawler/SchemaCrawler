@@ -82,6 +82,7 @@ final class IndexRetriever extends AbstractRetriever {
         break;
 
       default:
+        LOGGER.log(Level.INFO, "Not retrieving indexes");
         break;
     }
   }

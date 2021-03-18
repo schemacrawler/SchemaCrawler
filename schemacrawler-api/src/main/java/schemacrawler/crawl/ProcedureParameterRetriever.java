@@ -96,6 +96,7 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
         break;
 
       default:
+        LOGGER.log(Level.INFO, "Not retrieving procedure parameters");
         break;
     }
   }

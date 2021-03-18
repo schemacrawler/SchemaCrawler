@@ -87,6 +87,7 @@ final class DataTypeRetriever extends AbstractRetriever {
         break;
 
       default:
+        LOGGER.log(Level.INFO, "Not retrieving system column data types");
         break;
     }
   }

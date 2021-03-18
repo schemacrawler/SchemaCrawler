@@ -97,6 +97,7 @@ final class FunctionParameterRetriever extends AbstractRetriever {
         break;
 
       default:
+        LOGGER.log(Level.INFO, "Not retrieving function parameters");
         break;
     }
   }

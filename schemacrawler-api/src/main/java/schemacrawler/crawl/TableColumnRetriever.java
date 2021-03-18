@@ -102,6 +102,7 @@ final class TableColumnRetriever extends AbstractRetriever {
         break;
 
       default:
+        LOGGER.log(Level.INFO, "Not retrieving table columns");
         break;
     }
   }
