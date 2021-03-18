@@ -47,6 +47,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
+import com.ginsberg.junit.exit.SystemExitPreventedException;
 
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
@@ -77,7 +78,7 @@ public class MetadataRetrievalStrategyTest {
 
   @Test
   @ExpectSystemExitWithStatus(1)
-  public void overrideMetadataRetrievalStrategy(
+  public void overrideMetadataRetrievalStrategyDataDictionary(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     clean(METADATA_RETRIEVAL_STRATEGY_OUTPUT);
 
@@ -91,15 +92,18 @@ public class MetadataRetrievalStrategyTest {
         MetadataRetrievalStrategy.data_dictionary_all.name());
 
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("-info-level", infoLevel.name());
-    argsMap.put("-no-info", "true");
+    argsMap.put("--info-level", infoLevel.name());
 
     // Check that System.err has an error
-    assertThat(
-        outputOf(
-            commandlineExecution(
-                connectionInfo, schemaTextDetailType.name(), argsMap, config, outputFormat)),
-        hasNoContent());
+    try {
+      assertThat(
+          outputOf(
+              commandlineExecution(
+                  connectionInfo, schemaTextDetailType.name(), argsMap, config, outputFormat)),
+          hasNoContent());
+    } catch (final SystemExitPreventedException e) {
+      // Continue execution
+    }
 
     assertThat(
         outputOf(err),
@@ -108,6 +112,36 @@ public class MetadataRetrievalStrategyTest {
                 METADATA_RETRIEVAL_STRATEGY_OUTPUT
                     + testContext.testMethodName()
                     + ".stderr.txt")));
+  }
+
+  @Test
+  public void overrideMetadataRetrievalStrategyNone(
+      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
+    clean(METADATA_RETRIEVAL_STRATEGY_OUTPUT);
+
+    final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType.schema;
+    final InfoLevel infoLevel = InfoLevel.minimum;
+    final OutputFormat outputFormat = TextOutputFormat.text;
+
+    final Map<String, Object> config = new HashMap<>();
+    config.put(
+        "schemacrawler.schema.retrieval.strategy.tables", MetadataRetrievalStrategy.none.name());
+
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--info-level", infoLevel.name());
+
+    // Check that System.err has an error
+    assertThat(
+        outputOf(
+            commandlineExecution(
+                connectionInfo, schemaTextDetailType.name(), argsMap, config, outputFormat)),
+        hasSameContentAs(
+            classpathResource(
+                METADATA_RETRIEVAL_STRATEGY_OUTPUT
+                    + testContext.testMethodName()
+                    + ".stdout.txt")));
+
+    assertThat(outputOf(err), hasNoContent());
   }
 
   @BeforeEach
