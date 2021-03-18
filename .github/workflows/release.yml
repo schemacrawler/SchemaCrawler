@@ -107,7 +107,8 @@ jobs:
         tag_name: ${{ github.ref }}
         release_name: ${{ github.ref }}
         body: |
-          SchemaCrawler Release ${{ github.sha }}
+          SchemaCrawler ${{ github.ref }} release at last commit ${{ github.sha }}
+          See the change history at https://www.schemacrawler.com/changes-report.html
         draft: false
         prerelease: false
     - id: upload-release-zip

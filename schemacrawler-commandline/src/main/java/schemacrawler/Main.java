@@ -91,7 +91,7 @@ public final class Main {
     final CommandLine commandLine = new CommandLine(systemCommand);
     commandLine.setUnmatchedArgumentsAllowed(true);
     commandLine.parseArgs(args);
-    if (systemCommand.isVersionRequested()) {
+    if (systemCommand.isVersionRequested() || systemCommand.isShowEnvironment()) {
       systemCommand.run();
       return true;
     }

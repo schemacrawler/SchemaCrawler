@@ -65,11 +65,13 @@ Typical command-line arguments will look like:
 ```
 --server=sqlserver --host=db.example.com --port=1433 --database=schemacrawler --schemas=schemacrawler.dbo --user=xxxxx --password=xxxxx --info-level=standard -command=schema
 ```
+You can also pass connection properties using the `--urlx` command-line switch.
 
-If your Microsoft SQL Server instance is set up with Windows authentication or named pipes, you
+If your Microsoft SQL Server instance is set up with instance names, named pipes, or Windows authentication, you
 will need to use a database connection URL. See the
-[documentation for the Microsoft JDBC Driver for SQL Server](https://msdn.microsoft.com/en-us/library/mt720657)
-for details. You can also pass connection properties using the `--urlx` command-line switch.
+[documentation for the Microsoft JDBC Driver for SQL Server](https://docs.microsoft.com/sql/connect/jdbc/connecting-to-sql-server-with-the-jdbc-driver)
+for details. If you are using the URL version of the command-line, it may be a good idea to include the database name as one of 
+the connection URL property (`databaseName`).
 
 Typical command-line arguments for connecting to SQL Server with Windows authentication will look like:
 ```
@@ -79,6 +81,9 @@ or
 ```
 --server=sqlserver --host=db.example.com --port=1433 --urlx=integratedSecurity=true --database=schemacrawler --schemas=schemacrawler.dbo --user=xxxxx --password=xxxxx --info-level=standard -command=schema
 ```
+
+Please make sure that you use the `--schemas` option to reduce the number of schemas in the output. In the
+SchemaCrawler interactive shell, use the `limit` command with this option.
 
 ### Oracle
 

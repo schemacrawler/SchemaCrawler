@@ -89,6 +89,13 @@ public class AvailableCommandsCommand implements Runnable {
       System.out.println();
       System.out.println("Available SchemaCrawler commands:");
       System.out.println(availableCommands);
+
+      System.out.println("Notes:");
+      System.out.println("- For help on an individual SchemaCrawler command,");
+      System.out.println("  run SchemaCrawler with options like: `-h command:schema`");
+      System.out.println("  or from the SchemaCrawler interactive shell: `help command:schema`");
+      System.out.println(
+          "- Options for the commands should be provided with the `execute` command");
     }
   }
 }

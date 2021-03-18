@@ -26,6 +26,18 @@ SchemaCrawler allows you to override colors assigned to schemas in HTML output a
 
 All of the configuration options available via configuration files can be done programmatically using the SchemaCrawler API. See the examples in the [schemacrawler-examplecode](https://github.com/schemacrawler/SchemaCrawler/tree/master/schemacrawler-examplecode/src/main/java/com/example) project.
 
+
 ## SchemaCrawler Lint Configuration
 
 See details on configuring lints on the [lints page](lint.html).
+
+
+## SchemaCrawler Attributes
+
+See details of how to extend SchemaCrawler metadata with table and column metadata and [weak associations](weak-associations.html) with [attributes](attributes.html).
+
+
+## SchemaCrawler Data Dictionary Extensions
+
+See details of how to extend SchemaCrawler with [Data Dictionary Extensions](data-dictionary-extensions.html).
+

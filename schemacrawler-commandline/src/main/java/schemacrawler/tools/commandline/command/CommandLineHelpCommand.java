@@ -53,6 +53,7 @@ import picocli.CommandLine.Help;
 import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
+import schemacrawler.Version;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
@@ -181,7 +182,8 @@ public final class CommandLineHelpCommand implements Runnable {
   }
 
   private void showCompleteHelp(final CommandLine parent) {
-    new SystemCommand(new ShellState()).printVersion();
+    final SystemCommand r = new SystemCommand(new ShellState());
+    System.out.println(Version.about());
 
     System.out.printf("%n%n");
 
@@ -205,10 +207,20 @@ public final class CommandLineHelpCommand implements Runnable {
       return;
     }
 
+    final boolean isAvailabilityCommand =
+        Arrays.asList("servers", "loaders", "commands").contains(command);
+
     final CommandLine subCommand =
         lookupServerCommand(command).orElse(lookupCommand(parent, command).orElse(null));
     if (subCommand != null) {
       subCommand.usage(System.out, Help.Ansi.AUTO);
+      if (isAvailabilityCommand) {
+        final CommandSpec commandSpec = subCommand.getCommandSpec();
+        final Object userObject = commandSpec.userObject();
+        if (userObject != null && userObject instanceof Runnable) {
+          ((Runnable) userObject).run();
+        }
+      }
       System.out.printf("%n%n");
     }
   }

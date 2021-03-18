@@ -35,4 +35,8 @@ If your database does not have a SchemaCrawler plug-in, use
       --url=<connectionUrl>
                           JDBC connection URL to the database
 
+For additional options, specific to individual database server plugins,
+run SchemaCrawler with: `-h servers`
+or from the SchemaCrawler interactive shell: `help servers`
+
 

@@ -46,6 +46,8 @@ in external schemas. This is useful for tracking data lineage or other types of 
 You can provide remarks for weak associations which will also be shown in SchemaCrawler output.
 SchemaCrawler does not allow you to provide column references between two external tables.
 
+Also see more information on how SchemaCrawler can infer [weak associations](weak-associations.html).
+
 ```yaml
 name: catalog
 weak-associations:

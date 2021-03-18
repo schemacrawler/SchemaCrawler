@@ -10,3 +10,6 @@ You can use the `--weak-associations=true` or `--weak-associations=false` to con
 display of weak associations on schema diagrams and text output. You can also use the 
 `schemacrawler.format.show_weak_associations=true` option in the 
 `schemacrawler.config.properties` file to show weak associations.
+
+In addition, you can [define your own weak attributes in an attributes file](attributes.html) 
+and have them loaded in and displayed in SchemaCrawler output.

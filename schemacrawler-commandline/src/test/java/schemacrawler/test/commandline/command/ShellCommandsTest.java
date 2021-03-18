@@ -48,6 +48,7 @@ import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
+import schemacrawler.tools.commandline.shell.AvailableCatalogLoadersCommand;
 import schemacrawler.tools.commandline.shell.AvailableCommandsCommand;
 import schemacrawler.tools.commandline.shell.AvailableServersCommand;
 import schemacrawler.tools.commandline.shell.ExitCommand;
@@ -65,6 +66,18 @@ public class ShellCommandsTest {
   @Test
   public void availableCommands(final TestContext testContext) {
     new AvailableCommandsCommand().run();
+
+    assertThat(outputOf(err), hasNoContent());
+    assertThat(
+        outputOf(out),
+        hasSameContentAs(
+            classpathResource(
+                SHELL_COMMANDS_OUTPUT + testContext.testMethodName() + ".stdout.txt")));
+  }
+
+  @Test
+  public void availableLoaders(final TestContext testContext) {
+    new AvailableCatalogLoadersCommand().run();
 
     assertThat(outputOf(err), hasNoContent());
     assertThat(

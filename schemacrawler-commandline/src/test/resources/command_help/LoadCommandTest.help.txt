@@ -1,4 +1,4 @@
-** Load database metadata into memory
+** Load database metadata into memory using a chain of catalog loaders
 Shell Command:
 load
 
@@ -8,3 +8,7 @@ Options:
          The info level determines the amount of database metadata retrieved,
            and also determines the time taken to crawl the schema
          Optional, defaults to standard
+
+For additional options, specific to individual catalog loaders,
+run SchemaCrawler with: `-h loaders`
+or from the SchemaCrawler interactive shell: `help loaders`
