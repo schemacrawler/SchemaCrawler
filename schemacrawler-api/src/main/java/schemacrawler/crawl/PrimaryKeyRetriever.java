@@ -80,6 +80,7 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
         break;
 
       default:
+        LOGGER.log(Level.INFO, "Not retrieving primary keys");
         break;
     }
   }

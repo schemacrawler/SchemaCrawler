@@ -100,6 +100,7 @@ final class RoutineRetriever extends AbstractRetriever {
         break;
 
       default:
+        LOGGER.log(Level.INFO, "Not retrieving functions");
         break;
     }
   }

@@ -84,6 +84,7 @@ final class ForeignKeyRetriever extends AbstractRetriever {
         break;
 
       default:
+        LOGGER.log(Level.INFO, "Not retrieving foreign keys");
         break;
     }
   }

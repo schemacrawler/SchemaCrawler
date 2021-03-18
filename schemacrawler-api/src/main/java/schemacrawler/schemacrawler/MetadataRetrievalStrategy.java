@@ -28,7 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 public enum MetadataRetrievalStrategy {
-
+  // Do not load metadata
+  none,
   // use JDBC metadata calls to retrieve information one database object at a time;
   // each JDBC driver decides how to honor these requests
   metadata,
