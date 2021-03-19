@@ -32,6 +32,11 @@ download. An example of a SchemaCrawler database diagram is below.
 <img class="img-fluid img-thumbnail" src="diagram-examples/diagram.png" style="width: 200px;" />
 </a>
 
+SchemaCrawler allows editing diagram via third-party applications. See below for how to generate
+[Mermaid Entity Relationship Diagrams](https://mermaid-js.github.io/mermaid/#/entityRelationshipDiagram) and 
+[dbdiagram.io diagrams](https://dbdiagram.io/home) from your database, which can then be further edited.
+
+
 
 ## Database Diagram Options
 

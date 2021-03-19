@@ -74,7 +74,7 @@ public class AvailableJDBCDrivers implements Iterable<Driver> {
     out.println("Available JDBC drivers:");
     for (final Driver driver : availableJDBCDrivers) {
       out.printf(
-          " %-30s %2d.%d%n",
+          " %-50s %2d.%d%n",
           driver.getClass().getName(), driver.getMajorVersion(), driver.getMinorVersion());
     }
   }

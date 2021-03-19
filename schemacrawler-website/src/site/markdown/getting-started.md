@@ -67,6 +67,9 @@ any location on your hard-disk, and rename the directory to something appropriat
 directory on your `PATH`. Once you open a command shell, you can run SchemaCrawler using 
 `schemacrawler.cmd` (or `schemacrawler.sh` on Unix).
 
+### Configuration
+
+SchemaCrawler offers rich configuration options. Read about them on the [SchemaCrawler Configuration](config.html) page.
 
 ### SchemaCrawler Docker Image
 

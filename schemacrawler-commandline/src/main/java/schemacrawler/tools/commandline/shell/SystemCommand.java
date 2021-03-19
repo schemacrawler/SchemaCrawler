@@ -117,7 +117,7 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
       final Connection connection = state.getDataSource().get();
       final DatabaseMetaData dbMetaData = connection.getMetaData();
       System.out.printf(
-          "Connected to %n%s %s %nusing JDBC driver %n%s %s",
+          "Connected to %n%s %s %nusing JDBC driver %n%s %s%n",
           dbMetaData.getDatabaseProductName(),
           dbMetaData.getDatabaseProductVersion(),
           dbMetaData.getDriverName(),
