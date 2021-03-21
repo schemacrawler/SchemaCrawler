@@ -65,6 +65,11 @@ final class TablePartial extends AbstractDatabaseObject implements Table, Partia
   }
 
   @Override
+  public Collection<PrimaryKey> getAlternateKeys() {
+    throw new NotLoadedException(this);
+  }
+
+  @Override
   public List<Column> getColumns() {
     throw new NotLoadedException(this);
   }
@@ -156,6 +161,11 @@ final class TablePartial extends AbstractDatabaseObject implements Table, Partia
   }
 
   @Override
+  public Optional<PrimaryKey> lookupAlternateKey(final String name) {
+    throw new NotLoadedException(this);
+  }
+
+  @Override
   public Optional<Column> lookupColumn(final String name) {
     if (column.getName().equals(name)) {
       return Optional.ofNullable(column);
@@ -174,7 +184,7 @@ final class TablePartial extends AbstractDatabaseObject implements Table, Partia
   }
 
   @Override
-  public Optional<TableConstraint> lookupIndex(final String name) {
+  public Optional<Index> lookupIndex(final String name) {
     throw new NotLoadedException(this);
   }
 
@@ -184,7 +194,7 @@ final class TablePartial extends AbstractDatabaseObject implements Table, Partia
   }
 
   @Override
-  public Optional<MutableTableConstraint> lookupTableConstraint(final String name) {
+  public Optional<TableConstraint> lookupTableConstraint(final String name) {
     throw new NotLoadedException(this);
   }
 

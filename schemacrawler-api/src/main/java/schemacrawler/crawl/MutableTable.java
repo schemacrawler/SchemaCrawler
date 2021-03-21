@@ -47,6 +47,7 @@ import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -73,6 +74,7 @@ class MutableTable extends AbstractDatabaseObject implements Table {
   private final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
   private final NamedObjectList<MutableWeakAssociation> weakAssociations = new NamedObjectList<>();
   private final NamedObjectList<MutableColumn> hiddenColumns = new NamedObjectList<>();
+  private final NamedObjectList<MutablePrimaryKey> alternateKeys = new NamedObjectList<>();
   private final NamedObjectList<MutableIndex> indexes = new NamedObjectList<>();
   private final NamedObjectList<MutablePrivilege<Table>> privileges = new NamedObjectList<>();
   private final NamedObjectList<MutableTrigger> triggers = new NamedObjectList<>();
@@ -102,6 +104,12 @@ class MutableTable extends AbstractDatabaseObject implements Table {
     }
 
     return comparison;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Collection<PrimaryKey> getAlternateKeys() {
+    return new HashSet<>(alternateKeys.values());
   }
 
   /** {@inheritDoc} */
@@ -239,6 +247,12 @@ class MutableTable extends AbstractDatabaseObject implements Table {
 
   /** {@inheritDoc} */
   @Override
+  public Optional<MutablePrimaryKey> lookupAlternateKey(final String name) {
+    return alternateKeys.lookup(this, name);
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public Optional<MutableColumn> lookupColumn(final String name) {
     Optional<MutableColumn> optionalColumn = columns.lookup(this, name);
     if (!optionalColumn.isPresent()) {
@@ -280,6 +294,10 @@ class MutableTable extends AbstractDatabaseObject implements Table {
   @Override
   public Optional<MutableTrigger> lookupTrigger(final String triggerName) {
     return triggers.lookup(this, triggerName);
+  }
+
+  final void addAlternateKey(final MutablePrimaryKey alternateKey) {
+    alternateKeys.add(alternateKey);
   }
 
   final void addColumn(final MutableColumn column) {
