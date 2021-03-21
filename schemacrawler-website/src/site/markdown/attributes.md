@@ -1,7 +1,8 @@
 # Extensions with Catalog Attributes
 
-SchemaCrawler can read and incorporate table and column remarks, and weak association definitions 
-from a YAML file. Examples of attributes file are shown below. Then you can run SchemaCrawler with a
+SchemaCrawler can read and incorporate user-provided metadata in the form of table and column remarks, 
+and weak association definitions, and alternate key specifications from a YAML file. 
+Examples of attributes file are shown below. Then you can run SchemaCrawler with a
 `--attributes-file <path>` command-line option. 
 
 SchemaCrawler needs [Jackson](https://github.com/FasterXML/jackson) jars on the classpath to read 
@@ -38,7 +39,7 @@ tables:
 
 You can create weak associations between columns of two tables (or even the same table)
 by creating a file like the one below. These weak associations will be shown in 
-SchemaCrawler output, if you edit the SchemaCrawler `/config/schemacrawler.config.properties` 
+SchemaCrawler output and diagrams, if you edit the SchemaCrawler `/config/schemacrawler.config.properties` 
 file, and uncomment `schemacrawler.format.show_weak_associations` and set it to be true.
 
 Weak associations can be between columns of tables of the SchemaCrawler schema and columns
@@ -80,4 +81,27 @@ weak-associations:
   remarks:
   - "Other remarks line 1"
   - "Other remarks line 2"
+```
+
+
+## Specifying Alternate Keys
+
+You can specify alternate keys in tables by creating a file like the one below. These 
+alternate keys will be shown in SchemaCrawler output and diagrams.
+
+SchemaCrawler does not allow you to provide alternate keys in an external tables,
+or a column that is not in the database schema metadata.
+
+```yaml
+name: catalog
+alternate-keys:
+- name: 1_alternate_key
+  catalog: PUBLIC
+  schema: BOOKS
+  table: BOOKAUTHORS
+  columns:
+    - BOOKID
+    - AUTHORID
+  remarks:
+  - "Indicate that this key is being used as a primary key"
 ```

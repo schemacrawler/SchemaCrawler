@@ -1,0 +1,17 @@
+name: catalog
+tables:
+- catalog: PUBLIC
+  schema: BOOKS
+  name: AUTHORS
+  remarks:
+  - Overwritten remarks line 1
+  columns:
+  - name: FIRSTNAME
+    remarks:
+    - Overwritten remarks line 1
+    - Overwritten remarks line 2
+    attributes:
+      tag1: tagvalue1
+  - name: LASTNAME
+    remarks:
+    - Overwritten remarks line 1

@@ -21,4 +21,4 @@ with the `--attributes-file` command-line switch.
 6. View the image in `weak-associations.png` to see the weak associations that were loaded from the YAML file
 
 ## How to Experiment
-- Modify `weak-associations.yaml` and return the command
+- Modify `weak-associations.yaml` and rerun the command
