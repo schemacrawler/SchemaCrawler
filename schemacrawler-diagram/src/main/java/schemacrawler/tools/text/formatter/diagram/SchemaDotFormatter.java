@@ -31,6 +31,7 @@ package schemacrawler.tools.text.formatter.diagram;
 import static schemacrawler.loader.counts.TableRowCountsUtility.getRowCountMessage;
 import static schemacrawler.loader.counts.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
+import static schemacrawler.utility.MetaDataUtility.getColumnsListAsString;
 import static us.fatehi.utility.html.TagBuilder.tableCell;
 import static us.fatehi.utility.html.TagBuilder.tableRow;
 import static us.fatehi.utility.html.TagOutputFormat.html;
@@ -49,6 +50,7 @@ import schemacrawler.schema.Routine;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableReference;
 import schemacrawler.schema.TableReferenceType;
 import schemacrawler.schema.WeakAssociation;
@@ -185,6 +187,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
       printTableColumns(new ArrayList<>(table.getHiddenColumns()));
     }
 
+    printTableConstraints(table);
     printTableRowCount(table);
 
     formattingHelper.append("      </table>").println();
@@ -565,6 +568,37 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
       printTableColumnAutoIncremented(column);
       printTableColumnGenerated(column);
       printTableColumnRemarks(column);
+    }
+  }
+
+  private void printTableConstraints(final Table table) {
+    if (table == null) {
+      return;
+    }
+    final List<TableConstraint> tableConstraints = new ArrayList<>();
+    tableConstraints.addAll(table.getAlternateKeys());
+
+    for (final TableConstraint tableConstraint : tableConstraints) {
+      final String constraintText =
+          String.format(
+              "\u2022 %s (%s) [alternate key]",
+              identifiers.quoteName(tableConstraint.getName()),
+              getColumnsListAsString(
+                  tableConstraint,
+                  identifiers.getIdentifierQuotingStrategy(),
+                  identifiers.getIdentifierQuoteString()));
+      formattingHelper
+          .append(
+              tableRow()
+                  .make()
+                  .addInnerTag(
+                      tableCell()
+                          .withEscapedText(constraintText)
+                          .withAlignment(Alignment.left)
+                          .withColumnSpan(3)
+                          .make())
+                  .render(html))
+          .println();
     }
   }
 
