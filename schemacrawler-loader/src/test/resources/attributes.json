@@ -12,15 +12,15 @@
       "tag2" : "tag value 2"
     },
     "columns" : [ {
+      "name" : "LASTNAME",
+      "remarks" : [ "Overwritten remarks line1", "Overwritten remarks line 2" ],
+      "attributes" : { }
+    }, {
       "name" : "FIRSTNAME",
       "remarks" : [ "Overwritten remarks line 1", "Overwritten remarks line 2" ],
       "attributes" : {
         "tag1" : "tagvalue1"
       }
-    }, {
-      "name" : "LASTNAME",
-      "remarks" : [ "Overwritten remarks line1", "Overwritten remarks line 2" ],
-      "attributes" : { }
     } ]
   }, {
     "catalogName" : "PUBLIC",
@@ -40,5 +40,6 @@
     "attributes" : { },
     "columns" : [ ]
   } ],
+  "alternateKeys" : [ ],
   "weakAssociations" : [ ]
 }

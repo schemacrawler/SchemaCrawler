@@ -27,55 +27,69 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.loader.attributes.model;
 
-import static java.util.Collections.emptySet;
-import static java.util.Collections.unmodifiableSet;
+import static java.util.Collections.unmodifiableList;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.beans.ConstructorProperties;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaReference;
 
-public class TableAttributes extends ObjectAttributes implements Iterable<ColumnAttributes> {
+public class AlternateKeyAttributes extends ObjectAttributes implements Iterable<String> {
 
   private static final long serialVersionUID = -3510286847668145323L;
 
   private final String schemaName;
   private final String catalogName;
-  private final Set<ColumnAttributes> columns;
+  private final String tableName;
+  private final List<String> columns;
 
-  @ConstructorProperties({"schema", "catalog", "name", "remarks", "attributes", "columns"})
-  public TableAttributes(
+  @ConstructorProperties({"schema", "catalog", "table", "name", "remarks", "attributes", "columns"})
+  public AlternateKeyAttributes(
       final String schemaName,
       final String catalogName,
+      final String tableName,
       final String name,
       final List<String> remarks,
       final Map<String, String> attributes,
-      final Set<ColumnAttributes> columns) {
+      final List<String> columns) {
     super(name, remarks, attributes);
     this.catalogName = catalogName;
     this.schemaName = schemaName;
-    if (columns == null) {
-      this.columns = emptySet();
-    } else {
-      this.columns = unmodifiableSet(columns);
+    if (isBlank(tableName)) {
+      throw new IllegalArgumentException("No table name provided");
     }
+    this.tableName = tableName;
+    if (columns == null || columns.isEmpty()) {
+      throw new IllegalArgumentException("No column provided");
+    }
+    this.columns = unmodifiableList(columns);
+  }
+
+  public List<String> getColumns() {
+    return columns;
   }
 
   public Schema getSchema() {
     return new SchemaReference(catalogName, schemaName);
   }
 
+  public String getTableName() {
+    return tableName;
+  }
+
   @Override
-  public Iterator<ColumnAttributes> iterator() {
+  public Iterator<String> iterator() {
     return columns.iterator();
   }
 
   @Override
   public String toString() {
-    return String.format("Table attributes <%s.%s.%s>", schemaName, catalogName, getName());
+    return String.format(
+        "Alternate key attributes <%s.%s.%s.%s[%s]>",
+        schemaName, catalogName, tableName, getName(), columns);
   }
 }

@@ -36,14 +36,18 @@ import java.util.Optional;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
+import schemacrawler.crawl.AlternateKeyBuilder;
+import schemacrawler.crawl.AlternateKeyBuilder.AlternateKeyDefinition;
 import schemacrawler.crawl.WeakAssociationBuilder;
 import schemacrawler.crawl.WeakAssociationBuilder.WeakAssociationColumn;
+import schemacrawler.loader.attributes.model.AlternateKeyAttributes;
 import schemacrawler.loader.attributes.model.CatalogAttributes;
 import schemacrawler.loader.attributes.model.ColumnAttributes;
 import schemacrawler.loader.attributes.model.TableAttributes;
 import schemacrawler.loader.attributes.model.WeakAssociationAttributes;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.WeakAssociation;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -109,6 +113,7 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
                                 "Cannot locate catalog attributes file, " + catalogAttributesFile));
             final CatalogAttributes catalogAttributes = readCatalogAttributes(inputResource);
             loadRemarks(catalog, catalogAttributes);
+            loadAlternateKeys(catalog, catalogAttributes);
             loadWeakAssociations(catalog, catalogAttributes);
 
             return null;
@@ -117,6 +122,33 @@ public class AttributesCatalogLoader extends BaseCatalogLoader {
       LOGGER.log(Level.INFO, stopWatch.stringify());
     } catch (final Exception e) {
       throw new SchemaCrawlerException("Exception loading catalog attributes", e);
+    }
+  }
+
+  private void loadAlternateKeys(final Catalog catalog, final CatalogAttributes catalogAttributes) {
+    final AlternateKeyBuilder alternateKeyBuilder = AlternateKeyBuilder.builder(catalog);
+    for (final AlternateKeyAttributes alternateKeyAttributes :
+        catalogAttributes.getAlternateKeys()) {
+
+      final AlternateKeyDefinition alternateKeyDefinition =
+          new AlternateKeyDefinition(
+              alternateKeyAttributes.getSchema(),
+              alternateKeyAttributes.getTableName(),
+              alternateKeyAttributes.getName(),
+              alternateKeyAttributes.getColumns());
+
+      final Optional<PrimaryKey> optionalAlternateKey =
+          alternateKeyBuilder.addAlternateKey(alternateKeyDefinition);
+      if (!optionalAlternateKey.isPresent()) {
+        continue;
+      }
+      final PrimaryKey alternateKey = optionalAlternateKey.get();
+
+      alternateKey.setRemarks(alternateKeyAttributes.getRemarks());
+      for (final Entry<String, String> attribute :
+          alternateKeyAttributes.getAttributes().entrySet()) {
+        alternateKey.setAttribute(attribute.getKey(), attribute.getValue());
+      }
     }
   }
 
