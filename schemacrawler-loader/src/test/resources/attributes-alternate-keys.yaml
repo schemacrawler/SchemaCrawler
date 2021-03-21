@@ -1,6 +1,6 @@
 name: schemacrawler.test.SchemaCrawlerTest
 alternate-keys:
-# 1. Happy path - good weak association
+# 1. Happy path - good alternate key
 - name: 1_alternate_key
   catalog: PUBLIC
   schema: BOOKS
