@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.crawl.MutablePrimaryKey.newAlternateKey;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.util.ArrayList;
@@ -118,7 +119,7 @@ public final class AlternateKeyBuilder {
     }
 
     final MutablePrimaryKey alternateKey =
-        new MutablePrimaryKey(table, alternateKeyDefinition.getAlternateKeyName());
+        newAlternateKey(table, alternateKeyDefinition.getAlternateKeyName());
     final List<String> columns = alternateKeyDefinition.getColumns();
     for (int i = 0; i < columns.size(); i++) {
       final String columnName = columns.get(i);

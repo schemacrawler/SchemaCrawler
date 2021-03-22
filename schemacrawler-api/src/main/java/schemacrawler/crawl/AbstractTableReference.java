@@ -46,7 +46,6 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableReference;
-import schemacrawler.schema.TableReferenceType;
 import us.fatehi.utility.CompareUtility;
 
 /** Represents a foreign-key mapping to a primary key in another table. */
@@ -192,9 +191,6 @@ abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
   public String getShortName() {
     return getName();
   }
-
-  @Override
-  public abstract TableReferenceType getTableReferenceType();
 
   /** {@inheritDoc} */
   @Override

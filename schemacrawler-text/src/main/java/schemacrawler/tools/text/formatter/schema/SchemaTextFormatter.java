@@ -362,7 +362,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
     formattingHelper.writeEmptyRow();
 
-    for (final PrimaryKey alternateKey : alternateKeys) {
+    for (final TableConstraint alternateKey : alternateKeys) {
       final String name = identifiers.quoteName(alternateKey);
       String pkName = "";
       if (!options.isHidePrimaryKeyNames()) {
@@ -371,7 +371,8 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       if (isBlank(pkName)) {
         pkName = "";
       }
-      formattingHelper.writeNameRow(pkName, "[alternate key]");
+      final String type = alternateKey.getType().getValue().toLowerCase();
+      formattingHelper.writeNameRow(pkName, "[" + type + "]");
       printRemarks(alternateKey);
       printTableColumns(alternateKey.getConstrainedColumns(), false);
     }

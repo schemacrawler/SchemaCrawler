@@ -30,6 +30,7 @@ package schemacrawler.tools.text.formatter.diagram;
 
 import static schemacrawler.loader.counts.TableRowCountsUtility.getRowCountMessage;
 import static schemacrawler.loader.counts.TableRowCountsUtility.hasRowCount;
+import static schemacrawler.schema.TableConstraintType.foreign_key;
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 import static schemacrawler.utility.MetaDataUtility.getColumnsListAsString;
 import static us.fatehi.utility.html.TagBuilder.tableCell;
@@ -52,7 +53,6 @@ import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableReference;
-import schemacrawler.schema.TableReferenceType;
 import schemacrawler.schema.WeakAssociation;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
@@ -396,8 +396,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   private <R extends ColumnReference> void printForeignKeys(
       final Table table, final Collection<? extends TableReference> foreignKeys) {
     for (final TableReference foreignKey : foreignKeys) {
-      final boolean isForeignKey =
-          foreignKey.getTableReferenceType() == TableReferenceType.foreign_key;
+      final boolean isForeignKey = foreignKey.getType() == foreign_key;
       final ForeignKeyCardinality fkCardinality = findForeignKeyCardinality(foreignKey);
       boolean showRemarks = !options.isHideRemarks() && foreignKey.hasRemarks();
       for (final ColumnReference columnRef : foreignKey) {

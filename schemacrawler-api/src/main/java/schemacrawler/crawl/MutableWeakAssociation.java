@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import schemacrawler.schema.TableConstraintType;
-import schemacrawler.schema.TableReferenceType;
 import schemacrawler.schema.WeakAssociation;
 
 /** Represents a foreign-key mapping to a primary key in another table. */
@@ -46,15 +45,9 @@ final class MutableWeakAssociation extends AbstractTableReference implements Wea
     return "";
   }
 
-  /** {@inheritDoc} */
-  @Override
-  public TableReferenceType getTableReferenceType() {
-    return TableReferenceType.weak_association;
-  }
-
   @Override
   public TableConstraintType getType() {
-    return TableConstraintType.unknown;
+    return TableConstraintType.weak_association;
   }
 
   @Override
