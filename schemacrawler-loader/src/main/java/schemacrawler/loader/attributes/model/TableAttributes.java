@@ -27,14 +27,13 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.loader.attributes.model;
 
-import static java.util.Collections.emptySet;
-import static java.util.Collections.unmodifiableSet;
+import static java.util.Collections.emptyList;
+import static java.util.Collections.unmodifiableList;
 
 import java.beans.ConstructorProperties;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaReference;
@@ -45,7 +44,7 @@ public class TableAttributes extends ObjectAttributes implements Iterable<Column
 
   private final String schemaName;
   private final String catalogName;
-  private final Set<ColumnAttributes> columns;
+  private final List<ColumnAttributes> columns;
 
   @ConstructorProperties({"schema", "catalog", "name", "remarks", "attributes", "columns"})
   public TableAttributes(
@@ -54,14 +53,14 @@ public class TableAttributes extends ObjectAttributes implements Iterable<Column
       final String name,
       final List<String> remarks,
       final Map<String, String> attributes,
-      final Set<ColumnAttributes> columns) {
+      final List<ColumnAttributes> columns) {
     super(name, remarks, attributes);
     this.catalogName = catalogName;
     this.schemaName = schemaName;
     if (columns == null) {
-      this.columns = emptySet();
+      this.columns = emptyList();
     } else {
-      this.columns = unmodifiableSet(columns);
+      this.columns = unmodifiableList(columns);
     }
   }
 
