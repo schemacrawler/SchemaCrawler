@@ -28,6 +28,9 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.text.schema.options;
 
+import java.util.EnumMap;
+import java.util.Map;
+
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.text.options.BaseTextOptionsBuilder;
 
@@ -42,19 +45,6 @@ public abstract class BaseSchemaTextOptionsBuilder<
   private static final String HIDE_TABLE_ROW_COUNTS =
       SCHEMACRAWLER_FORMAT_PREFIX + "hide_table_row_counts";
 
-  private static final String HIDE_PRIMARY_KEY_NAMES =
-      SCHEMACRAWLER_FORMAT_PREFIX + "hide_primarykey_names";
-  private static final String HIDE_FOREIGN_KEY_NAMES =
-      SCHEMACRAWLER_FORMAT_PREFIX + "hide_foreignkey_names";
-  private static final String HIDE_WEAK_ASSOCIATION_NAMES =
-      SCHEMACRAWLER_FORMAT_PREFIX + "hide_weakassociation_names";
-  private static final String HIDE_INDEX_NAMES = SCHEMACRAWLER_FORMAT_PREFIX + "hide_index_names";
-  private static final String HIDE_CONSTRAINT_NAMES =
-      SCHEMACRAWLER_FORMAT_PREFIX + "hide_constraint_names";
-  private static final String HIDE_TRIGGER_NAMES =
-      SCHEMACRAWLER_FORMAT_PREFIX + "hide_trigger_names";
-  private static final String HIDE_ROUTINE_SPECIFIC_NAMES =
-      SCHEMACRAWLER_FORMAT_PREFIX + "hide_routine_specific_names";
   private static final String HIDE_REMARKS = SCHEMACRAWLER_FORMAT_PREFIX + "hide_remarks";
 
   private static final String SC_SORT_ALPHABETICALLY_TABLE_INDEXES =
@@ -64,19 +54,15 @@ public abstract class BaseSchemaTextOptionsBuilder<
 
   protected boolean isAlphabeticalSortForForeignKeys;
   protected boolean isAlphabeticalSortForIndexes;
-  protected boolean isHideForeignKeyNames;
-  protected boolean isHideWeakAssociationNames;
-  protected boolean isHideIndexNames;
-  protected boolean isHidePrimaryKeyNames;
   protected boolean isHideRemarks;
-  protected boolean isHideRoutineSpecificNames;
-  protected boolean isHideTableConstraintNames;
-  protected boolean isHideTriggerNames;
   protected boolean isShowOrdinalNumbers;
   protected boolean isShowStandardColumnTypeNames;
   protected boolean isHideTableRowCounts;
+  protected final Map<DatabaseObjectNamesType, Boolean> hideNames;
 
-  public BaseSchemaTextOptionsBuilder() {}
+  public BaseSchemaTextOptionsBuilder() {
+    hideNames = new EnumMap<>(DatabaseObjectNamesType.class);
+  }
 
   @Override
   public B fromConfig(final Config config) {
@@ -89,18 +75,16 @@ public abstract class BaseSchemaTextOptionsBuilder<
     isShowOrdinalNumbers = config.getBooleanValue(SHOW_ORDINAL_NUMBERS);
     isHideTableRowCounts = config.getBooleanValue(HIDE_TABLE_ROW_COUNTS);
 
-    isHideForeignKeyNames = config.getBooleanValue(HIDE_FOREIGN_KEY_NAMES);
-    isHideWeakAssociationNames = config.getBooleanValue(HIDE_WEAK_ASSOCIATION_NAMES);
-    isHidePrimaryKeyNames = config.getBooleanValue(HIDE_PRIMARY_KEY_NAMES);
-    isHideIndexNames = config.getBooleanValue(HIDE_INDEX_NAMES);
-    isHideTriggerNames = config.getBooleanValue(HIDE_TRIGGER_NAMES);
-    isHideRoutineSpecificNames = config.getBooleanValue(HIDE_ROUTINE_SPECIFIC_NAMES);
-    isHideTableConstraintNames = config.getBooleanValue(HIDE_CONSTRAINT_NAMES);
     isHideRemarks = config.getBooleanValue(HIDE_REMARKS);
 
     isAlphabeticalSortForForeignKeys =
         config.getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS);
     isAlphabeticalSortForIndexes = config.getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_INDEXES);
+
+    for (final DatabaseObjectNamesType databaseObjectNamesType : DatabaseObjectNamesType.values()) {
+      final boolean booleanValue = config.getBooleanValue(databaseObjectNamesType.getKey());
+      hideNames.put(databaseObjectNamesType, booleanValue);
+    }
 
     // Override values from command line
     fromConfigCommandLineOverride(config);
@@ -119,17 +103,14 @@ public abstract class BaseSchemaTextOptionsBuilder<
     isShowOrdinalNumbers = options.isShowOrdinalNumbers();
     isHideTableRowCounts = options.isHideTableRowCounts();
 
-    isHideForeignKeyNames = options.isHideForeignKeyNames();
-    isHideWeakAssociationNames = options.isHideWeakAssociationNames();
-    isHidePrimaryKeyNames = options.isHidePrimaryKeyNames();
-    isHideIndexNames = options.isHideIndexNames();
-    isHideTriggerNames = options.isHideTriggerNames();
-    isHideRoutineSpecificNames = options.isHideRoutineSpecificNames();
-    isHideTableConstraintNames = options.isHideTableConstraintNames();
     isHideRemarks = options.isHideRemarks();
 
     isAlphabeticalSortForForeignKeys = options.isAlphabeticalSortForForeignKeys();
     isAlphabeticalSortForIndexes = options.isAlphabeticalSortForIndexes();
+
+    for (final DatabaseObjectNamesType databaseObjectNamesType : DatabaseObjectNamesType.values()) {
+      hideNames.put(databaseObjectNamesType, options.get(databaseObjectNamesType));
+    }
 
     return (B) this;
   }
@@ -143,12 +124,21 @@ public abstract class BaseSchemaTextOptionsBuilder<
     return (B) this;
   }
 
+  public final B noAlternateKeyNames() {
+    return noAlternateKeyNames(true);
+  }
+
+  public final B noAlternateKeyNames(final boolean value) {
+    hideNames.put(DatabaseObjectNamesType.hideAlternateKeyNames, value);
+    return (B) this;
+  }
+
   public final B noConstraintNames() {
     return noConstraintNames(true);
   }
 
   public final B noConstraintNames(final boolean value) {
-    isHideTableConstraintNames = value;
+    hideNames.put(DatabaseObjectNamesType.hideTableConstraintNames, value);
     return (B) this;
   }
 
@@ -157,7 +147,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
   }
 
   public final B noForeignKeyNames(final boolean value) {
-    isHideForeignKeyNames = value;
+    hideNames.put(DatabaseObjectNamesType.hideForeignKeyNames, value);
     return (B) this;
   }
 
@@ -166,7 +156,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
   }
 
   public final B noIndexNames(final boolean value) {
-    isHideIndexNames = value;
+    hideNames.put(DatabaseObjectNamesType.hideIndexNames, value);
     return (B) this;
   }
 
@@ -175,7 +165,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
   }
 
   public final B noPrimaryKeyNames(final boolean value) {
-    isHidePrimaryKeyNames = value;
+    hideNames.put(DatabaseObjectNamesType.hidePrimaryKeyNames, value);
     return (B) this;
   }
 
@@ -195,7 +185,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
   }
 
   public final B noRoutineSpecificNames(final boolean value) {
-    isHideRoutineSpecificNames = value;
+    hideNames.put(DatabaseObjectNamesType.hideRoutineSpecificNames, value);
     return (B) this;
   }
 
@@ -204,7 +194,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
   }
 
   public final B noTriggerNames(final boolean value) {
-    isHideTriggerNames = value;
+    hideNames.put(DatabaseObjectNamesType.hideTriggerNames, value);
     return (B) this;
   }
 
@@ -213,7 +203,7 @@ public abstract class BaseSchemaTextOptionsBuilder<
   }
 
   public final B noWeakAssociationNames(final boolean value) {
-    isHideWeakAssociationNames = value;
+    hideNames.put(DatabaseObjectNamesType.hideWeakAssociationNames, value);
     return (B) this;
   }
 
@@ -224,13 +214,10 @@ public abstract class BaseSchemaTextOptionsBuilder<
 
   /** Corresponds to the --portable-names=&lt;boolean&gt; command-line argument. */
   public final B portableNames(final boolean value) {
-    isHideTableConstraintNames = value;
-    isHideForeignKeyNames = value;
-    isHideWeakAssociationNames = value;
-    isHideIndexNames = value;
-    isHidePrimaryKeyNames = value;
-    isHideTriggerNames = value;
-    isHideRoutineSpecificNames = value;
+
+    for (final DatabaseObjectNamesType databaseObjectNamesType : DatabaseObjectNamesType.values()) {
+      hideNames.put(databaseObjectNamesType, value);
+    }
     isShowUnqualifiedNames = value;
 
     return (B) this;
@@ -280,17 +267,15 @@ public abstract class BaseSchemaTextOptionsBuilder<
     config.put(SHOW_ORDINAL_NUMBERS, isShowOrdinalNumbers);
     config.put(HIDE_TABLE_ROW_COUNTS, isHideTableRowCounts);
 
-    config.put(HIDE_FOREIGN_KEY_NAMES, isHideForeignKeyNames);
-    config.put(HIDE_WEAK_ASSOCIATION_NAMES, isHideWeakAssociationNames);
-    config.put(HIDE_PRIMARY_KEY_NAMES, isHidePrimaryKeyNames);
-    config.put(HIDE_INDEX_NAMES, isHideIndexNames);
-    config.put(HIDE_TRIGGER_NAMES, isHideTriggerNames);
-    config.put(HIDE_ROUTINE_SPECIFIC_NAMES, isHideRoutineSpecificNames);
-    config.put(HIDE_CONSTRAINT_NAMES, isHideTableConstraintNames);
     config.put(HIDE_REMARKS, isHideRemarks);
 
     config.put(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS, isAlphabeticalSortForForeignKeys);
     config.put(SC_SORT_ALPHABETICALLY_TABLE_INDEXES, isAlphabeticalSortForIndexes);
+
+    for (final DatabaseObjectNamesType databaseObjectNamesType : DatabaseObjectNamesType.values()) {
+      config.put(
+          databaseObjectNamesType.getKey(), hideNames.getOrDefault(databaseObjectNamesType, false));
+    }
 
     return config;
   }
