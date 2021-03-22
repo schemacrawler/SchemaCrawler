@@ -36,11 +36,14 @@ import us.fatehi.utility.string.StringFormat;
 /** Table constraint type. */
 public enum TableConstraintType {
   unknown("unknown"),
+  // database schema metadata
   primary_key("PRIMARY KEY"),
   foreign_key("FOREIGN KEY"),
   unique("UNIQUE"),
   check("CHECK"),
-  ;
+  // user-supplied metadata
+  alternate_key("ALTERNATE KEY"),
+  weak_association("WEAK ASSOCIATION");
 
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(TableConstraintType.class.getName());

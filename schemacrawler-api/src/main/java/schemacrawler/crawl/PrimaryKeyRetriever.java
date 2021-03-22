@@ -98,7 +98,7 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
 
     primaryKey = table.getPrimaryKey();
     if (primaryKey == null) {
-      primaryKey = new MutablePrimaryKey(table, primaryKeyName);
+      primaryKey = MutablePrimaryKey.newPrimaryKey(table, primaryKeyName);
       table.setPrimaryKey(primaryKey);
     }
 

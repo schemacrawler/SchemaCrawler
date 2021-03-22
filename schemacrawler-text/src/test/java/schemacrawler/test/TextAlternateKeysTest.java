@@ -26,42 +26,26 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.crawl;
+package schemacrawler.test;
 
-import schemacrawler.schema.TableConstraintType;
-import schemacrawler.schema.WeakAssociation;
+import static schemacrawler.tools.command.text.schema.options.TextOutputFormat.html;
+import static schemacrawler.tools.command.text.schema.options.TextOutputFormat.text;
 
-/** Represents a foreign-key mapping to a primary key in another table. */
-final class MutableWeakAssociation extends AbstractTableReference implements WeakAssociation {
+import java.util.Arrays;
+import java.util.stream.Stream;
 
-  private static final long serialVersionUID = -5164664131926303038L;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-  public MutableWeakAssociation(final String name) {
-    super(name);
-  }
+import schemacrawler.test.utility.TestContextParameterResolver;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.tools.options.OutputFormat;
 
-  @Override
-  public String getDefinition() {
-    return "";
-  }
-
-  @Override
-  public TableConstraintType getType() {
-    return TableConstraintType.weak_association;
-  }
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@ExtendWith(TestContextParameterResolver.class)
+public class TextAlternateKeysTest extends AbstractAlternateKeysTest {
 
   @Override
-  public boolean hasDefinition() {
-    return false;
-  }
-
-  @Override
-  public boolean isDeferrable() {
-    return false;
-  }
-
-  @Override
-  public boolean isInitiallyDeferred() {
-    return false;
+  protected Stream<OutputFormat> outputFormats() {
+    return Arrays.stream(new OutputFormat[] {text, html});
   }
 }

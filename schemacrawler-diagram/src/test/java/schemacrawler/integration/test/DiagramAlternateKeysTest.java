@@ -25,9 +25,28 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.schema;
 
-public enum TableReferenceType {
-  foreign_key,
-  weak_association
+package schemacrawler.integration.test;
+
+import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.htmlx;
+import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.scdot;
+
+import java.util.Arrays;
+import java.util.stream.Stream;
+
+import org.junit.jupiter.api.extension.ExtendWith;
+
+import schemacrawler.test.AbstractAlternateKeysTest;
+import schemacrawler.test.utility.TestContextParameterResolver;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.tools.options.OutputFormat;
+
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@ExtendWith(TestContextParameterResolver.class)
+public class DiagramAlternateKeysTest extends AbstractAlternateKeysTest {
+
+  @Override
+  protected Stream<OutputFormat> outputFormats() {
+    return Arrays.stream(new OutputFormat[] {scdot, htmlx});
+  }
 }

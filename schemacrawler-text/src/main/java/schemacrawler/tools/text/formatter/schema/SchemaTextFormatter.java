@@ -272,6 +272,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     printPrimaryKey(table.getPrimaryKey());
     printForeignKeys(table);
     if (!isBrief) {
+      printAlternateKeys(table);
       printWeakAssociations(table);
       printIndexes(table.getIndexes());
       printTriggers(table.getTriggers());
@@ -349,6 +350,32 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   @Override
   public void handleTablesStart() throws SchemaCrawlerException {
     formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Tables");
+  }
+
+  private void printAlternateKeys(final Table table) {
+    final Collection<PrimaryKey> alternateKeys = table.getAlternateKeys();
+    if (alternateKeys == null || alternateKeys.isEmpty()) {
+      return;
+    }
+    formattingHelper.writeEmptyRow();
+    formattingHelper.writeWideRow("Alternate Keys", "section");
+
+    formattingHelper.writeEmptyRow();
+
+    for (final TableConstraint alternateKey : alternateKeys) {
+      final String name = identifiers.quoteName(alternateKey);
+      String pkName = "";
+      if (!options.isHidePrimaryKeyNames()) {
+        pkName = name;
+      }
+      if (isBlank(pkName)) {
+        pkName = "";
+      }
+      final String type = alternateKey.getType().getValue().toLowerCase();
+      formattingHelper.writeNameRow(pkName, "[" + type + "]");
+      printRemarks(alternateKey);
+      printTableColumns(alternateKey.getConstrainedColumns(), false);
+    }
   }
 
   private void printColumnDataType(final ColumnDataType columnDataType) {

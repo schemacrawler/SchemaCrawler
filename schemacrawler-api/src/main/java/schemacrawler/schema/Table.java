@@ -36,6 +36,13 @@ import java.util.Optional;
 public interface Table extends DatabaseObject, TypedObject<TableType>, DefinedObject {
 
   /**
+   * Gets the list of all alternate keys of the table.
+   *
+   * @return Alternate keys of the table.
+   */
+  Collection<PrimaryKey> getAlternateKeys();
+
+  /**
    * Gets the list of columns in ordinal order.
    *
    * @return Columns of the table
@@ -144,6 +151,14 @@ public interface Table extends DatabaseObject, TypedObject<TableType>, DefinedOb
    * @return True if the table has a primary key.
    */
   boolean hasPrimaryKey();
+
+  /**
+   * Gets an alternate key by unqualified name.
+   *
+   * @param name Name
+   * @return Alternate key.
+   */
+  <A extends PrimaryKey> Optional<A> lookupAlternateKey(String name);
 
   /**
    * Gets a column by unqualified name.

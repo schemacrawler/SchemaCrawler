@@ -27,18 +27,19 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.loader.attributes.model;
 
+import static java.util.Collections.emptyList;
+import static java.util.Collections.emptyMap;
+import static java.util.Collections.unmodifiableList;
+import static java.util.Collections.unmodifiableMap;
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.nullsLast;
 import static java.util.Objects.compare;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 public abstract class ObjectAttributes implements Serializable, Comparable<ObjectAttributes> {
 
@@ -60,14 +61,14 @@ public abstract class ObjectAttributes implements Serializable, Comparable<Objec
     this.name = name;
 
     if (remarks == null) {
-      this.remarks = Collections.emptyList();
+      this.remarks = emptyList();
     } else {
-      this.remarks = new ArrayList<>(remarks);
+      this.remarks = unmodifiableList(remarks);
     }
     if (attributes == null) {
-      this.attributes = Collections.emptyMap();
+      this.attributes = emptyMap();
     } else {
-      this.attributes = new TreeMap<>(attributes);
+      this.attributes = unmodifiableMap(attributes);
     }
   }
 

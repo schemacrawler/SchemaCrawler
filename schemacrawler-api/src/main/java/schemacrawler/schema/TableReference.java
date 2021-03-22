@@ -65,11 +65,4 @@ public interface TableReference
   default Table getReferencingTable() {
     return getForeignKeyTable();
   }
-
-  /**
-   * Type of table reference.
-   *
-   * @return Type of table reference
-   */
-  TableReferenceType getTableReferenceType();
 }

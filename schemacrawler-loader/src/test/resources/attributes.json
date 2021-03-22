@@ -40,5 +40,6 @@
     "attributes" : { },
     "columns" : [ ]
   } ],
+  "alternateKeys" : [ ],
   "weakAssociations" : [ ]
 }

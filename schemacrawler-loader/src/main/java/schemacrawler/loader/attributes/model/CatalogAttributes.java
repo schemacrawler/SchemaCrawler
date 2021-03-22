@@ -27,6 +27,9 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.loader.attributes.model;
 
+import static java.util.Collections.emptySet;
+import static java.util.Collections.unmodifiableSet;
+
 import java.beans.ConstructorProperties;
 import java.util.Collections;
 import java.util.List;
@@ -38,19 +41,25 @@ public final class CatalogAttributes extends ObjectAttributes {
 
   private static final long serialVersionUID = 1436642683972751860L;
 
-  protected static CatalogAttributes EMPTY_CATALOG_ATTRIBUTES =
-      new CatalogAttributes("empty-catalog", null, null, null, null);
-
   private final Set<TableAttributes> tables;
   private final Set<WeakAssociationAttributes> weakAssociations;
+  private final Set<AlternateKeyAttributes> alternateKeys;
 
-  @ConstructorProperties({"name", "remarks", "attributes", "tables", "weak-associations"})
+  @ConstructorProperties({
+    "name",
+    "remarks",
+    "attributes",
+    "tables",
+    "weak-associations",
+    "alternate-keys"
+  })
   public CatalogAttributes(
       final String name,
       final List<String> remarks,
       final Map<String, String> attributes,
       final Set<TableAttributes> tables,
-      final Set<WeakAssociationAttributes> weakAssociations) {
+      final Set<WeakAssociationAttributes> weakAssociations,
+      final Set<AlternateKeyAttributes> alternateKeys) {
     super(name, remarks, attributes);
     if (tables == null) {
       this.tables = Collections.emptySet();
@@ -58,10 +67,19 @@ public final class CatalogAttributes extends ObjectAttributes {
       this.tables = new TreeSet<>(tables);
     }
     if (weakAssociations == null) {
-      this.weakAssociations = Collections.emptySet();
+      this.weakAssociations = emptySet();
     } else {
-      this.weakAssociations = new TreeSet<>(weakAssociations);
+      this.weakAssociations = unmodifiableSet(weakAssociations);
     }
+    if (alternateKeys == null) {
+      this.alternateKeys = emptySet();
+    } else {
+      this.alternateKeys = unmodifiableSet(alternateKeys);
+    }
+  }
+
+  public Set<AlternateKeyAttributes> getAlternateKeys() {
+    return alternateKeys;
   }
 
   public Set<TableAttributes> getTables() {
