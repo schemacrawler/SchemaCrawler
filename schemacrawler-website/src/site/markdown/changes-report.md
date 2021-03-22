@@ -5,6 +5,7 @@
 
 - Add more documentation on website and command-line help for how to use SchemaCrawler
 - Support specification of alternate keys in attributes file, and show them on output and diagrams
+- Use only one enum for table constraints, even for user-defined metadata
 
 
 <a name="a16.14.1"></a>
