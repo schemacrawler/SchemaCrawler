@@ -29,7 +29,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2021-03-21 21:51:39.326</td>
+		<td align='left'>2021-03-22 00:41:40.947</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
@@ -160,6 +160,9 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td colspan='3' align='left'>• 1_alternate_key (BOOKID, AUTHORID) [alternate key]</td>
+	</tr>
+	<tr>
+		<td colspan='3' align='left'>Indicate that this key is being used as a primary key</td>
 	</tr>
       </table>
     >

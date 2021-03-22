@@ -187,7 +187,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
       printTableColumns(new ArrayList<>(table.getHiddenColumns()));
     }
 
-    printTableConstraints(table);
+    printAlternateKeys(table);
     printTableRowCount(table);
 
     formattingHelper.append("      </table>").println();
@@ -281,6 +281,53 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
       portIds[1] = nodeId;
     }
     return portIds;
+  }
+
+  private void printAlternateKeys(final Table table) {
+    if (table == null) {
+      return;
+    }
+    final List<TableConstraint> tableConstraints = new ArrayList<>();
+    tableConstraints.addAll(table.getAlternateKeys());
+
+    for (final TableConstraint tableConstraint : tableConstraints) {
+      final String constraintText =
+          String.format(
+              "\u2022 %s (%s) [alternate key]",
+              identifiers.quoteName(tableConstraint.getName()),
+              getColumnsListAsString(
+                  tableConstraint,
+                  identifiers.getIdentifierQuotingStrategy(),
+                  identifiers.getIdentifierQuoteString()));
+
+      formattingHelper
+          .append(
+              tableRow()
+                  .make()
+                  .addInnerTag(
+                      tableCell()
+                          .withEscapedText(constraintText)
+                          .withAlignment(Alignment.left)
+                          .withColumnSpan(3)
+                          .make())
+                  .render(html))
+          .println();
+
+      if (tableConstraint.hasRemarks()) {
+        formattingHelper
+            .append(
+                tableRow()
+                    .make()
+                    .addInnerTag(
+                        tableCell()
+                            .withEscapedText(tableConstraint.getRemarks())
+                            .withAlignment(Alignment.left)
+                            .withColumnSpan(3)
+                            .make())
+                    .render(html))
+            .println();
+      }
+    }
   }
 
   private String printColumnReference(
@@ -568,37 +615,6 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
       printTableColumnAutoIncremented(column);
       printTableColumnGenerated(column);
       printTableColumnRemarks(column);
-    }
-  }
-
-  private void printTableConstraints(final Table table) {
-    if (table == null) {
-      return;
-    }
-    final List<TableConstraint> tableConstraints = new ArrayList<>();
-    tableConstraints.addAll(table.getAlternateKeys());
-
-    for (final TableConstraint tableConstraint : tableConstraints) {
-      final String constraintText =
-          String.format(
-              "\u2022 %s (%s) [alternate key]",
-              identifiers.quoteName(tableConstraint.getName()),
-              getColumnsListAsString(
-                  tableConstraint,
-                  identifiers.getIdentifierQuotingStrategy(),
-                  identifiers.getIdentifierQuoteString()));
-      formattingHelper
-          .append(
-              tableRow()
-                  .make()
-                  .addInnerTag(
-                      tableCell()
-                          .withEscapedText(constraintText)
-                          .withAlignment(Alignment.left)
-                          .withColumnSpan(3)
-                          .make())
-                  .render(html))
-          .println();
     }
   }
 
