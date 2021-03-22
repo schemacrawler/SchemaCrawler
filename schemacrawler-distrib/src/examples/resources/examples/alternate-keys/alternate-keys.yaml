@@ -1,17 +1,11 @@
 name: catalog
-tables:
-- catalog: PUBLIC
+alternate-keys:
+- name: 1_alternate_key
+  catalog: PUBLIC
   schema: BOOKS
-  name: AUTHORS
-  remarks:
-  - Overwritten remarks line 1
+  table: BOOKAUTHORS
   columns:
-  - name: FIRSTNAME
-    remarks:
-    - Overwritten remarks line 1
-    - Overwritten remarks line 2
-    attributes:
-      tag1: tagvalue1
-  - name: LASTNAME
-    remarks:
-    - Overwritten remarks line 1
+    - BOOKID
+    - AUTHORID
+  remarks:
+  - "Indicate that this key is being used as a primary key"
