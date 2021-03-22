@@ -6,10 +6,8 @@ tables. Ruby on Rails table schemes are supported, as well as other simple namin
 conventions. Table name prefixes are automatically detected. Weak associations are 
 output in the schema diagrams as a dotted line, and are also output in the text formats.
 
-You can use the `--weak-associations=true` or `--weak-associations=false` to control the 
-display of weak associations on schema diagrams and text output. You can also use the 
-`schemacrawler.format.show_weak_associations=true` option in the 
-`schemacrawler.config.properties` file to show weak associations.
+You can use the `--weak-associations=true` to infer and
+display weak associations on schema diagrams and text output.
 
 In addition, you can [define your own weak attributes in an attributes file](attributes.html) 
 and have them loaded in and displayed in SchemaCrawler output.

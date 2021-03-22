@@ -654,10 +654,6 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   }
 
   private void printWeakAssociations(final Table table) {
-    if (!options.isShowWeakAssociations()) {
-      return;
-    }
-
     final Collection<WeakAssociation> weakFks = table.getWeakAssociations();
     printForeignKeys(table, weakFks);
   }

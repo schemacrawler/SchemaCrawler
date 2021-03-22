@@ -385,7 +385,7 @@ public abstract class AbstractSchemaCrawlerOutputTest {
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
     textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo().showJdbcDriverInfo();
-    textOptionsBuilder.weakAssociations().noWeakAssociationNames();
+    textOptionsBuilder.noWeakAssociationNames();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
     assertAll(

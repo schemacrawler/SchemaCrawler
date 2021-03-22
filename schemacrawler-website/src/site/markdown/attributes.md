@@ -39,8 +39,7 @@ tables:
 
 You can create weak associations between columns of two tables (or even the same table)
 by creating a file like the one below. These weak associations will be shown in 
-SchemaCrawler output and diagrams, if you edit the SchemaCrawler `/config/schemacrawler.config.properties` 
-file, and uncomment `schemacrawler.format.show_weak_associations` and set it to be true.
+SchemaCrawler output and diagrams.
 
 Weak associations can be between columns of tables of the SchemaCrawler schema and columns
 in external schemas. This is useful for tracking data lineage or other types of associations.

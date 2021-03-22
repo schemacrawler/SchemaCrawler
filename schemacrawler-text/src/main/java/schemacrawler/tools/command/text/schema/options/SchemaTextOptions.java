@@ -44,7 +44,6 @@ public class SchemaTextOptions extends BaseTextOptions {
   private final boolean isHideRoutineSpecificNames;
   private final boolean isHideTableConstraintNames;
   private final boolean isHideTriggerNames;
-  private final boolean isShowWeakAssociations;
   private final boolean isShowOrdinalNumbers;
   private final boolean isShowStandardColumnTypeNames;
   private final boolean isHideTableRowCounts;
@@ -63,7 +62,6 @@ public class SchemaTextOptions extends BaseTextOptions {
     isHideRoutineSpecificNames = builder.isHideRoutineSpecificNames;
     isHideTableConstraintNames = builder.isHideTableConstraintNames;
     isHideTriggerNames = builder.isHideTriggerNames;
-    isShowWeakAssociations = builder.isShowWeakAssociations;
     isShowOrdinalNumbers = builder.isShowOrdinalNumbers;
     isShowStandardColumnTypeNames = builder.isShowStandardColumnTypeNames;
     isHideTableRowCounts = builder.isHideTableRowCounts;
@@ -88,7 +86,6 @@ public class SchemaTextOptions extends BaseTextOptions {
         && isHideRoutineSpecificNames == that.isHideRoutineSpecificNames
         && isHideTableConstraintNames == that.isHideTableConstraintNames
         && isHideTriggerNames == that.isHideTriggerNames
-        && isShowWeakAssociations == that.isShowWeakAssociations
         && isShowOrdinalNumbers == that.isShowOrdinalNumbers
         && isShowStandardColumnTypeNames == that.isShowStandardColumnTypeNames
         && isHideTableRowCounts == that.isHideTableRowCounts;
@@ -107,7 +104,6 @@ public class SchemaTextOptions extends BaseTextOptions {
         isHideRoutineSpecificNames,
         isHideTableConstraintNames,
         isHideTriggerNames,
-        isShowWeakAssociations,
         isShowOrdinalNumbers,
         isShowStandardColumnTypeNames,
         isHideTableRowCounts);
@@ -163,9 +159,5 @@ public class SchemaTextOptions extends BaseTextOptions {
 
   public boolean isShowStandardColumnTypeNames() {
     return isShowStandardColumnTypeNames;
-  }
-
-  public boolean isShowWeakAssociations() {
-    return isShowWeakAssociations;
   }
 }

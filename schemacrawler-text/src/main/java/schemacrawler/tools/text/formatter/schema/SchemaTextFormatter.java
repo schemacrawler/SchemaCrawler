@@ -967,12 +967,9 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   }
 
   private void printWeakAssociations(final Table table) {
-    if (!options.isShowWeakAssociations()) {
-      return;
-    }
 
     final Collection<WeakAssociation> weakAssociationsCollection = table.getWeakAssociations();
-    if (weakAssociationsCollection.isEmpty()) {
+    if (weakAssociationsCollection == null || weakAssociationsCollection.isEmpty()) {
       return;
     }
 

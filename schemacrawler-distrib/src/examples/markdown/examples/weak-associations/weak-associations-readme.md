@@ -14,11 +14,9 @@ with the `--attributes-file` command-line switch.
 ## How to Run
 1. Make sure that java is on your PATH
 2. Start the test database server by following instructions in the `_testdb/README.html` file
-3. Edit `_schemacrawler/config/schemacrawler.config.properties` and uncomment
-   `schemacrawler.format.show_weak_associations` and set it to be true.
-4. Start a command shell in the `weak-associations` example directory 
-5. Run `weak-associations.cmd weak-associations.yaml` (or `weak-associations.sh weak-associations.yaml` on Unix). 
-6. View the image in `weak-associations.png` to see the weak associations that were loaded from the YAML file
+3. Start a command shell in the `weak-associations` example directory 
+4. Run `weak-associations.cmd weak-associations.yaml` (or `weak-associations.sh weak-associations.yaml` on Unix). 
+5. View the image in `weak-associations.png` to see the weak associations that were loaded from the YAML file
 
 ## How to Experiment
 - Modify `weak-associations.yaml` and rerun the command

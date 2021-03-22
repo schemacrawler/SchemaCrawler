@@ -114,7 +114,6 @@ public abstract class AbstractAlternateKeysTest {
     final SchemaTextOptionsBuilder schemaTextOptionsBuilder = builder(schemaTextOptions);
     schemaTextOptionsBuilder.sortTables(true);
     schemaTextOptionsBuilder.noInfo(schemaTextOptions.isNoInfo());
-    schemaTextOptionsBuilder.weakAssociations(true);
 
     final Config additionalConfig = new Config();
     additionalConfig.merge(config);

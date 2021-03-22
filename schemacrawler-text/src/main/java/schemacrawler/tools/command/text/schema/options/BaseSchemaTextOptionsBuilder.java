@@ -56,8 +56,6 @@ public abstract class BaseSchemaTextOptionsBuilder<
   private static final String HIDE_ROUTINE_SPECIFIC_NAMES =
       SCHEMACRAWLER_FORMAT_PREFIX + "hide_routine_specific_names";
   private static final String HIDE_REMARKS = SCHEMACRAWLER_FORMAT_PREFIX + "hide_remarks";
-  private static final String SHOW_WEAK_ASSOCIATIONS =
-      SCHEMACRAWLER_FORMAT_PREFIX + "show_weak_associations";
 
   private static final String SC_SORT_ALPHABETICALLY_TABLE_INDEXES =
       SCHEMACRAWLER_FORMAT_PREFIX + "sort_alphabetically.table_indexes";
@@ -74,7 +72,6 @@ public abstract class BaseSchemaTextOptionsBuilder<
   protected boolean isHideRoutineSpecificNames;
   protected boolean isHideTableConstraintNames;
   protected boolean isHideTriggerNames;
-  protected boolean isShowWeakAssociations;
   protected boolean isShowOrdinalNumbers;
   protected boolean isShowStandardColumnTypeNames;
   protected boolean isHideTableRowCounts;
@@ -100,7 +97,6 @@ public abstract class BaseSchemaTextOptionsBuilder<
     isHideRoutineSpecificNames = config.getBooleanValue(HIDE_ROUTINE_SPECIFIC_NAMES);
     isHideTableConstraintNames = config.getBooleanValue(HIDE_CONSTRAINT_NAMES);
     isHideRemarks = config.getBooleanValue(HIDE_REMARKS);
-    isShowWeakAssociations = config.getBooleanValue(SHOW_WEAK_ASSOCIATIONS);
 
     isAlphabeticalSortForForeignKeys =
         config.getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS);
@@ -131,7 +127,6 @@ public abstract class BaseSchemaTextOptionsBuilder<
     isHideRoutineSpecificNames = options.isHideRoutineSpecificNames();
     isHideTableConstraintNames = options.isHideTableConstraintNames();
     isHideRemarks = options.isHideRemarks();
-    isShowWeakAssociations = options.isShowWeakAssociations();
 
     isAlphabeticalSortForForeignKeys = options.isAlphabeticalSortForForeignKeys();
     isAlphabeticalSortForIndexes = options.isAlphabeticalSortForIndexes();
@@ -293,23 +288,11 @@ public abstract class BaseSchemaTextOptionsBuilder<
     config.put(HIDE_ROUTINE_SPECIFIC_NAMES, isHideRoutineSpecificNames);
     config.put(HIDE_CONSTRAINT_NAMES, isHideTableConstraintNames);
     config.put(HIDE_REMARKS, isHideRemarks);
-    config.put(SHOW_WEAK_ASSOCIATIONS, isShowWeakAssociations);
 
     config.put(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS, isAlphabeticalSortForForeignKeys);
     config.put(SC_SORT_ALPHABETICALLY_TABLE_INDEXES, isAlphabeticalSortForIndexes);
 
     return config;
-  }
-
-  /** Whether to show weak associations in the output. */
-  public final B weakAssociations() {
-    return weakAssociations(true);
-  }
-
-  /** Whether to show weak associations in the output. */
-  public final B weakAssociations(final boolean value) {
-    isShowWeakAssociations = value;
-    return (B) this;
   }
 
   private void fromConfigCommandLineOverride(final Config config) {

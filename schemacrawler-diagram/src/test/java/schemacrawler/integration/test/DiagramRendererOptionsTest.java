@@ -112,9 +112,6 @@ public class DiagramRendererOptionsTest {
     final DiagramOptionsBuilder diagramOptionsBuilder = builder(diagramOptions);
     diagramOptionsBuilder.sortTables(true);
     diagramOptionsBuilder.noInfo(diagramOptions.isNoInfo());
-    if (!"maximum".equals(options.getLoadOptions().getSchemaInfoLevel().getTag())) {
-      diagramOptionsBuilder.weakAssociations(true);
-    }
 
     final Config additionalConfig = new Config();
     additionalConfig.merge(config);
