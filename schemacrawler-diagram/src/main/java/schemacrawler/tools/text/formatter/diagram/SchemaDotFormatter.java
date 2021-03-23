@@ -47,6 +47,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.PartialDatabaseObject;
+import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
@@ -287,16 +288,26 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     if (table == null) {
       return;
     }
-    final List<TableConstraint> tableConstraints = new ArrayList<>();
-    tableConstraints.addAll(table.getAlternateKeys());
 
-    for (final TableConstraint tableConstraint : tableConstraints) {
+    final Collection<PrimaryKey> alternateKeys = table.getAlternateKeys();
+    if (alternateKeys == null || alternateKeys.isEmpty()) {
+      return;
+    }
+
+    for (final TableConstraint alternateKey : alternateKeys) {
+      final String name = identifiers.quoteName(alternateKey);
+      final String akName;
+      if (!options.isHideAlternateKeyNames()) {
+        akName = name;
+      } else {
+        akName = "";
+      }
       final String constraintText =
           String.format(
               "\u2022 %s (%s) [alternate key]",
-              identifiers.quoteName(tableConstraint.getName()),
+              akName,
               getColumnsListAsString(
-                  tableConstraint,
+                  alternateKey,
                   identifiers.getIdentifierQuotingStrategy(),
                   identifiers.getIdentifierQuoteString()));
 
@@ -313,14 +324,14 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
                   .render(html))
           .println();
 
-      if (tableConstraint.hasRemarks()) {
+      if (alternateKey.hasRemarks()) {
         formattingHelper
             .append(
                 tableRow()
                     .make()
                     .addInnerTag(
                         tableCell()
-                            .withEscapedText(tableConstraint.getRemarks())
+                            .withEscapedText(alternateKey.getRemarks())
                             .withAlignment(Alignment.left)
                             .withColumnSpan(3)
                             .make())

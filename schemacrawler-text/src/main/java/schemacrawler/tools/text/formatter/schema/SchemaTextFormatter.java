@@ -364,15 +364,14 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
     for (final TableConstraint alternateKey : alternateKeys) {
       final String name = identifiers.quoteName(alternateKey);
-      String pkName = "";
-      if (!options.isHidePrimaryKeyNames()) {
-        pkName = name;
-      }
-      if (isBlank(pkName)) {
-        pkName = "";
+      final String akName;
+      if (!options.isHideAlternateKeyNames()) {
+        akName = name;
+      } else {
+        akName = "";
       }
       final String type = alternateKey.getType().getValue().toLowerCase();
-      formattingHelper.writeNameRow(pkName, "[" + type + "]");
+      formattingHelper.writeNameRow(akName, "[" + type + "]");
       printRemarks(alternateKey);
       printTableColumns(alternateKey.getConstrainedColumns(), false);
     }

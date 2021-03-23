@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.text.schema.options;
 
-enum DatabaseObjectNamesType {
+enum HideDatabaseObjectNamesType {
   hideAlternateKeyNames("hide_alternatekey_names"),
   hideForeignKeyNames("hide_foreignkey_names"),
   hideIndexNames("hide_index_names"),
@@ -43,7 +43,7 @@ enum DatabaseObjectNamesType {
 
   private final String key;
 
-  DatabaseObjectNamesType(final String key) {
+  HideDatabaseObjectNamesType(final String key) {
     this.key = key;
   }
 

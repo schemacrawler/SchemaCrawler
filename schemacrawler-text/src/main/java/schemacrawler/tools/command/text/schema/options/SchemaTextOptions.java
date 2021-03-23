@@ -42,7 +42,7 @@ public class SchemaTextOptions extends BaseTextOptions {
   private final boolean isShowOrdinalNumbers;
   private final boolean isShowStandardColumnTypeNames;
   private final boolean isHideTableRowCounts;
-  private final Map<DatabaseObjectNamesType, Boolean> hideNames;
+  private final Map<HideDatabaseObjectNamesType, Boolean> hideNames;
 
   protected SchemaTextOptions(
       final BaseSchemaTextOptionsBuilder<?, ? extends SchemaTextOptions> builder) {
@@ -55,8 +55,8 @@ public class SchemaTextOptions extends BaseTextOptions {
     isShowStandardColumnTypeNames = builder.isShowStandardColumnTypeNames;
     isHideTableRowCounts = builder.isHideTableRowCounts;
 
-    hideNames = new EnumMap<>(DatabaseObjectNamesType.class);
-    for (final DatabaseObjectNamesType databaseObjectNamesType : DatabaseObjectNamesType.values()) {
+    hideNames = new EnumMap<>(HideDatabaseObjectNamesType.class);
+    for (final HideDatabaseObjectNamesType databaseObjectNamesType : HideDatabaseObjectNamesType.values()) {
       hideNames.put(
           databaseObjectNamesType, builder.hideNames.getOrDefault(databaseObjectNamesType, false));
     }
@@ -80,7 +80,7 @@ public class SchemaTextOptions extends BaseTextOptions {
         && hideNames.equals(that.hideNames);
   }
 
-  public boolean get(final DatabaseObjectNamesType key) {
+  public boolean get(final HideDatabaseObjectNamesType key) {
     return hideNames.getOrDefault(key, false);
   }
 
@@ -105,19 +105,19 @@ public class SchemaTextOptions extends BaseTextOptions {
   }
 
   public boolean isHideAlternateKeyNames() {
-    return get(DatabaseObjectNamesType.hideAlternateKeyNames);
+    return get(HideDatabaseObjectNamesType.hideAlternateKeyNames);
   }
 
   public boolean isHideForeignKeyNames() {
-    return get(DatabaseObjectNamesType.hideForeignKeyNames);
+    return get(HideDatabaseObjectNamesType.hideForeignKeyNames);
   }
 
   public boolean isHideIndexNames() {
-    return get(DatabaseObjectNamesType.hideIndexNames);
+    return get(HideDatabaseObjectNamesType.hideIndexNames);
   }
 
   public boolean isHidePrimaryKeyNames() {
-    return get(DatabaseObjectNamesType.hidePrimaryKeyNames);
+    return get(HideDatabaseObjectNamesType.hidePrimaryKeyNames);
   }
 
   public boolean isHideRemarks() {
@@ -125,11 +125,11 @@ public class SchemaTextOptions extends BaseTextOptions {
   }
 
   public boolean isHideRoutineSpecificNames() {
-    return get(DatabaseObjectNamesType.hideRoutineSpecificNames);
+    return get(HideDatabaseObjectNamesType.hideRoutineSpecificNames);
   }
 
   public boolean isHideTableConstraintNames() {
-    return get(DatabaseObjectNamesType.hideTableConstraintNames);
+    return get(HideDatabaseObjectNamesType.hideTableConstraintNames);
   }
 
   public boolean isHideTableRowCounts() {
@@ -137,11 +137,11 @@ public class SchemaTextOptions extends BaseTextOptions {
   }
 
   public boolean isHideTriggerNames() {
-    return get(DatabaseObjectNamesType.hideTriggerNames);
+    return get(HideDatabaseObjectNamesType.hideTriggerNames);
   }
 
   public boolean isHideWeakAssociationNames() {
-    return get(DatabaseObjectNamesType.hideWeakAssociationNames);
+    return get(HideDatabaseObjectNamesType.hideWeakAssociationNames);
   }
 
   public boolean isShowOrdinalNumbers() {

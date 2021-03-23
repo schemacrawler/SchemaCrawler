@@ -190,6 +190,7 @@ output. Change the configuration for the following properties in your
 ```
 schemacrawler.format.hide_primarykey_names=false
 schemacrawler.format.hide_foreignkey_names=false
+#schemacrawler.format.hide_alternatekeys_names=false
 schemacrawler.format.hide_weakassociation_names=false
 schemacrawler.format.hide_index_names=false
 schemacrawler.format.hide_trigger_names=false
