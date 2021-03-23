@@ -104,15 +104,19 @@ SchemaCrawler offers several options to change what you see on the database diag
 
 ### Diagram Options
 
-You can decide whether foreign-key names, column ordinal numbers, and schema names are 
+You can decide whether primary key, foreign key and other names, column ordinal numbers, and schema names are 
 displayed by setting the following properties in the SchemaCrawler configuration file, 
 `schemacrawler.config.properties`.
 
 ```
-schemacrawler.format.show_ordinal_numbers=true
-schemacrawler.format.hide_foreignkey_names=true
-schemacrawler.format.hide_weakassociation_names=true
-schemacrawler.format.show_unqualified_names=true
+schemacrawler.format.hide_primarykey_names=false
+schemacrawler.format.hide_foreignkey_names=false
+schemacrawler.format.hide_alternatekeys_names=false
+schemacrawler.format.hide_weakassociation_names=false
+schemacrawler.format.hide_index_names=false
+schemacrawler.format.hide_trigger_names=false
+schemacrawler.format.hide_routine_specific_names=false
+schemacrawler.format.hide_constraint_names=false
 ```
 
 ### Table Row Counts
