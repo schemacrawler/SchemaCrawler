@@ -137,6 +137,11 @@
       <artifactId>ngdbc</artifactId>
       <version>2.7.13</version>
     </dependency>
+    <dependency>
+      <groupId>net.snowflake</groupId>
+      <artifactId>snowflake-jdbc</artifactId>
+      <version>3.13.1</version>
+    </dependency>
 
     <!-- Command-line processing -->
 
