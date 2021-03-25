@@ -1,16 +1,20 @@
 digraph "SchemaCrawler_Diagram" {
 
   graph [
-    splines="ortho"
+    fontname="Helvetica"
+    labeljust="r"
+    rankdir="RL"
 
   ];
   
   node [
+    fontname="Helvetica"
     shape="none"
 
   ];
   
   edge [
+    fontname="Helvetica"
 
   ];
 
@@ -25,7 +29,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2021-03-25 00:25:39.549</td>
+		<td align='left'>2021-03-25 00:25:40.181</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
@@ -91,6 +95,16 @@ digraph "SchemaCrawler_Diagram" {
 		<td align='left'> </td>
 		<td port='country_12fde8d0.end' align='left'>VARCHAR(50)</td>
 	</tr>
+	<hr/>
+	<tr>
+		<td colspan='3' bgcolor='#F4F4F4' align='left'>• SYS_IDX_PK_AUTHORS_10111 (ID) [unique index]</td>
+	</tr>
+	<tr>
+		<td colspan='3' bgcolor='#F4F4F4' align='left'>• IDX_B_AUTHORS (LASTNAME, FIRSTNAME) [non-unique index]</td>
+	</tr>
+	<tr>
+		<td colspan='3' bgcolor='#F4F4F4' align='left'>• IDX_A_AUTHORS (CITY, STATE, POSTALCODE, COUNTRY) [non-unique index]</td>
+	</tr>
       </table>
     >
   ];
@@ -153,6 +167,16 @@ along with the latest updated information</td>
 		<td port='somedata_f89079e1.start' align='left'>SOMEDATA</td>
 		<td align='left'> </td>
 		<td port='somedata_f89079e1.end' align='left'>VARCHAR(30)</td>
+	</tr>
+	<hr/>
+	<tr>
+		<td colspan='3' bgcolor='#F4F4F4' align='left'>• SYS_IDX_Z_FK_AUTHOR_10134 (AUTHORID) [non-unique index]</td>
+	</tr>
+	<tr>
+		<td colspan='3' bgcolor='#F4F4F4' align='left'>• SYS_IDX_SYS_FK_10128_10132 (BOOKID) [non-unique index]</td>
+	</tr>
+	<tr>
+		<td colspan='3' bgcolor='#F4F4F4' align='left'>• UIDX_BOOKAUTHORS (BOOKID, AUTHORID) [unique index]</td>
 	</tr>
       </table>
     >
@@ -237,6 +261,16 @@ along with the latest updated information</td>
 		<td align='left'> </td>
 		<td port='previouseditionid_6cf3995a.end' align='left'>INTEGER</td>
 	</tr>
+	<hr/>
+	<tr>
+		<td colspan='3' bgcolor='#F4F4F4' align='left'>• SYS_IDX_PK_BOOKS_10119 (ID) [unique index]</td>
+	</tr>
+	<tr>
+		<td colspan='3' bgcolor='#F4F4F4' align='left'>• SYS_IDX_U_PREVIOUSEDITION_10125 (PREVIOUSEDITIONID) [unique index]</td>
+	</tr>
+	<tr>
+		<td colspan='3' bgcolor='#F4F4F4' align='left'>• SYS_IDX_FK_PREVIOUSEDITION_10123 (PREVIOUSEDITIONID) [non-unique index]</td>
+	</tr>
       </table>
     >
   ];
@@ -273,6 +307,10 @@ along with the latest updated information</td>
 		<td align='left'> </td>
 		<td port='books_4764abbf.end' align='left'>VARCHAR(20) ARRAY[10]</td>
 	</tr>
+	<hr/>
+	<tr>
+		<td colspan='3' bgcolor='#F4F4F4' align='left'>• SYS_IDX_PK_COUPONS_10093 (ID) [unique index]</td>
+	</tr>
       </table>
     >
   ];
@@ -296,6 +334,10 @@ along with the latest updated information</td>
 		<td port='data_6560dca4.start' align='left'>DATA</td>
 		<td align='left'> </td>
 		<td port='data_6560dca4.end' align='left'>VALID_STRING(20)</td>
+	</tr>
+	<hr/>
+	<tr>
+		<td colspan='3' bgcolor='#F4F4F4' align='left'>• SYS_IDX_PK_CUSTOMERDATA_10104 (ID) [unique index]</td>
 	</tr>
       </table>
     >
@@ -330,6 +372,10 @@ along with the latest updated information</td>
 		<td port='age_e9b613cc.start' align='left'>AGE</td>
 		<td align='left'> </td>
 		<td port='age_e9b613cc.end' align='left'>AGE_TYPE</td>
+	</tr>
+	<hr/>
+	<tr>
+		<td colspan='3' bgcolor='#F4F4F4' align='left'>• SYS_IDX_PK_CUSTOMERS_10098 (ID) [unique index]</td>
 	</tr>
       </table>
     >
@@ -397,6 +443,10 @@ along with the latest updated information</td>
 		<td align='left'> </td>
 		<td align='left'>Name of book publisher</td>
 	</tr>
+	<hr/>
+	<tr>
+		<td colspan='3' bgcolor='#F4F4F4' align='left'>• SYS_IDX_SYS_PK_10106_10107 (ID) [unique index]</td>
+	</tr>
       </table>
     >
   ];
@@ -432,6 +482,13 @@ along with the latest updated information</td>
 		<td align='left'> </td>
 		<td port='εκδότησ_36c797de.end' align='left'>SMALLINT NOT NULL</td>
 	</tr>
+	<hr/>
+	<tr>
+		<td colspan='3' bgcolor='#F4F4F4' align='left'>• SYS_IDX_FK_ΒΙΒΛΊΑ_PUBLISHERS_10144 (ΕΚΔΌΤΗΣ) [non-unique index]</td>
+	</tr>
+	<tr>
+		<td colspan='3' bgcolor='#F4F4F4' align='left'>• SYS_IDX_PK_ΒΙΒΛΊΑ_10140 (ΜΟΝΑΔΙΚΌΣ) [unique index]</td>
+	</tr>
       </table>
     >
   ];
@@ -465,6 +522,10 @@ along with the latest updated information</td>
 		<td port='country_6b7ff97.start' align='left'><b><i>COUNTRY</i></b></td>
 		<td align='left'> </td>
 		<td port='country_6b7ff97.end' align='left'>VARCHAR(50) NOT NULL</td>
+	</tr>
+	<hr/>
+	<tr>
+		<td colspan='3' bgcolor='#F4F4F4' align='left'>• SYS_IDX_PK_CUSTOMERS_10227 (POSTALCODE, COUNTRY) [unique index]</td>
 	</tr>
       </table>
     >
@@ -512,6 +573,13 @@ along with the latest updated information</td>
 		<td align='left'> </td>
 		<td port='salesdataid_1de64ee5.end' align='left'>INTEGER</td>
 	</tr>
+	<hr/>
+	<tr>
+		<td colspan='3' bgcolor='#F4F4F4' align='left'>• SYS_IDX_FK_SALES_SALESDATA_10241 (SALESDATAID) [non-unique index]</td>
+	</tr>
+	<tr>
+		<td colspan='3' bgcolor='#F4F4F4' align='left'>• SYS_IDX_FK_SALES_REGIONS_10239 (POSTALCODE, COUNTRY) [non-unique index]</td>
+	</tr>
       </table>
     >
   ];
@@ -535,6 +603,10 @@ along with the latest updated information</td>
 		<td port='yearlyamount_221477ac.start' align='left'>YEARLYAMOUNT</td>
 		<td align='left'> </td>
 		<td port='yearlyamount_221477ac.end' align='left'>DOUBLE(64, 0)</td>
+	</tr>
+	<hr/>
+	<tr>
+		<td colspan='3' bgcolor='#F4F4F4' align='left'>• SYS_IDX_UQ_CUSTOMERS_10233 (SALESDATAID) [unique index]</td>
 	</tr>
       </table>
     >

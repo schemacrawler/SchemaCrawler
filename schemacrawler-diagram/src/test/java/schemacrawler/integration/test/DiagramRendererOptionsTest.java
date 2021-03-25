@@ -472,6 +472,26 @@ public class DiagramRendererOptionsTest {
   }
 
   @Test
+  @DisplayName("Diagram with maximum output")
+  public void executableForDiagram_14(final TestContext testContext, final Connection connection)
+      throws Exception {
+
+    final DiagramOptionsBuilder diagramOptionsBuilder = builder();
+    final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
+
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+
+    executableDiagram(
+        SchemaTextDetailType.details.name(),
+        connection,
+        schemaCrawlerOptions,
+        null,
+        diagramOptions,
+        testContext.testMethodName());
+  }
+
+  @Test
   @DisplayName("Diagram of the FOR_LINT schema")
   public void executableForDiagram_lintschema(
       final TestContext testContext, final Connection connection) throws Exception {

@@ -84,7 +84,7 @@ public class DatabaseObjectColorMap {
       hue = hash / 32771f % 1;
     }
 
-    final float saturation = 0.15f;
+    final float saturation = 0.20f;
     final float brightness = 0.95f;
 
     final Color color = Color.fromHSV(hue, saturation, brightness);
