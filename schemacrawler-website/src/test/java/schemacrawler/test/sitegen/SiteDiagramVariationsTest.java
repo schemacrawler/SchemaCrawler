@@ -64,6 +64,7 @@ public class SiteDiagramVariationsTest {
 
   private static void run(
       final DatabaseConnectionInfo connectionInfo,
+      final String command,
       final Map<String, String> argsMap,
       final Map<String, String> config,
       final Path outputFile)
@@ -79,7 +80,7 @@ public class SiteDiagramVariationsTest {
     }
 
     final Path pngFile =
-        commandlineExecution(connectionInfo, "schema", argsMap, runConfig, DiagramOutputFormat.png);
+        commandlineExecution(connectionInfo, command, argsMap, runConfig, DiagramOutputFormat.png);
     move(pngFile, outputFile, REPLACE_EXISTING);
   }
 
@@ -100,7 +101,7 @@ public class SiteDiagramVariationsTest {
     final Map<String, String> argsMap = new HashMap<>();
     argsMap.put("--info-level", "maximum");
 
-    run(connectionInfo, argsMap, null, diagramPath(testContext));
+    run(connectionInfo, "schema", argsMap, null, diagramPath(testContext));
   }
 
   @Test
@@ -113,7 +114,7 @@ public class SiteDiagramVariationsTest {
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.no_schema_colors", "true");
 
-    run(connectionInfo, argsMap, config, diagramPath(testContext));
+    run(connectionInfo, "schema", argsMap, config, diagramPath(testContext));
   }
 
   @Test
@@ -123,7 +124,7 @@ public class SiteDiagramVariationsTest {
     argsMap.put("--info-level", "standard");
     argsMap.put("--title", "Books and Publishers Schema");
 
-    run(connectionInfo, argsMap, null, diagramPath(testContext));
+    run(connectionInfo, "schema", argsMap, null, diagramPath(testContext));
   }
 
   @Test
@@ -148,7 +149,16 @@ public class SiteDiagramVariationsTest {
     // Test
     config.put("schemacrawler.graph.graphviz.graph.splines", "ortho");
 
-    run(connectionInfo, argsMap, config, diagramPath(testContext));
+    run(connectionInfo, "schema", argsMap, config, diagramPath(testContext));
+  }
+
+  @Test
+  public void diagram_13_indexes(
+      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--info-level", "standard");
+
+    run(connectionInfo, "details", argsMap, null, diagramPath(testContext));
   }
 
   @Test
@@ -158,7 +168,7 @@ public class SiteDiagramVariationsTest {
     argsMap.put("--info-level", "maximum");
     argsMap.put("--portable-names", "true");
 
-    run(connectionInfo, argsMap, null, diagramPath(testContext));
+    run(connectionInfo, "schema", argsMap, null, diagramPath(testContext));
   }
 
   @Test
@@ -169,7 +179,7 @@ public class SiteDiagramVariationsTest {
     argsMap.put("c", "brief");
     argsMap.put("--portable-names", "true");
 
-    run(connectionInfo, argsMap, null, diagramPath(testContext));
+    run(connectionInfo, "schema", argsMap, null, diagramPath(testContext));
   }
 
   @Test
@@ -182,7 +192,7 @@ public class SiteDiagramVariationsTest {
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.show_ordinal_numbers", "true");
 
-    run(connectionInfo, argsMap, config, diagramPath(testContext));
+    run(connectionInfo, "schema", argsMap, config, diagramPath(testContext));
   }
 
   @Test
@@ -193,7 +203,7 @@ public class SiteDiagramVariationsTest {
     argsMap.put("--portable-names", "true");
     argsMap.put("--sort-columns", "true");
 
-    run(connectionInfo, argsMap, null, diagramPath(testContext));
+    run(connectionInfo, "schema", argsMap, null, diagramPath(testContext));
   }
 
   @Test
@@ -205,7 +215,7 @@ public class SiteDiagramVariationsTest {
     argsMap.put("--grep-columns", ".*\\.BOOKS\\..*\\.ID");
     argsMap.put("--table-types", "TABLE");
 
-    run(connectionInfo, argsMap, null, diagramPath(testContext));
+    run(connectionInfo, "schema", argsMap, null, diagramPath(testContext));
   }
 
   @Test
@@ -218,7 +228,7 @@ public class SiteDiagramVariationsTest {
     argsMap.put("--only-matching", "true");
     argsMap.put("--table-types", "TABLE");
 
-    run(connectionInfo, argsMap, null, diagramPath(testContext));
+    run(connectionInfo, "schema", argsMap, null, diagramPath(testContext));
   }
 
   @Test
@@ -232,7 +242,7 @@ public class SiteDiagramVariationsTest {
     config.put("schemacrawler.graph.show.primarykey.cardinality", "false");
     config.put("schemacrawler.graph.show.foreignkey.cardinality", "false");
 
-    run(connectionInfo, argsMap, config, diagramPath(testContext));
+    run(connectionInfo, "schema", argsMap, config, diagramPath(testContext));
   }
 
   @Test
@@ -243,7 +253,7 @@ public class SiteDiagramVariationsTest {
     argsMap.put("--load-row-counts", "true");
     argsMap.put("--portable-names", "true");
 
-    run(connectionInfo, argsMap, null, diagramPath(testContext));
+    run(connectionInfo, "schema", argsMap, null, diagramPath(testContext));
   }
 
   private Path diagramPath(final TestContext testContext) {

@@ -98,6 +98,11 @@ SchemaCrawler offers several options to change what you see on the database diag
 <a href="diagram-examples/diagram_12_graphviz_attributes.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
 <img class="img-fluid img-thumbnail" src="diagram-examples/diagram_12_graphviz_attributes.png" style="width: 200px;" />
 </a>
+- See indexes on the diagram, use `--command=details` on the command-line.
+<br />
+<a href="diagram-examples/diagram_13_indexes.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
+<img class="img-fluid img-thumbnail" src="diagram-examples/diagram_13_indexes.png" style="width: 200px;" />
+</a>
 
 
 ## Additional Configuration
