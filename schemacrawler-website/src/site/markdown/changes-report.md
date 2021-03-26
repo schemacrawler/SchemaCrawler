@@ -10,6 +10,8 @@
   `schemacrawler.format.show_weak_associations`
 - Distribute Snowflake JDBC driver with SchemaCrawler
 - Show index information in diagrams with the maximum option
+- Fix issue with SchemaCrawler shell accepting the `\` character
+- Add new grep options, `--grep-tables`
 
 
 <a name="a16.14.1"></a>

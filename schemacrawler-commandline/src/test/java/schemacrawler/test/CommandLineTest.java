@@ -155,6 +155,19 @@ public class CommandLineTest {
   }
 
   @Test
+  public void commandLineOverridesWithGrepConfigTables(
+      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("--grep-tables", ".*\\.BOOKS");
+
+    final Map<String, String> config = new HashMap<>();
+    config.put("schemacrawler.grep.table.pattern.include", ".*AUTHORS");
+    config.put("schemacrawler.grep.table.pattern.exclude", "");
+
+    run(testContext, connectionInfo, argsMap, config, "list");
+  }
+
+  @Test
   public void commandLineOverridesWithSomePortableNames(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> argsMap = new HashMap<>();
