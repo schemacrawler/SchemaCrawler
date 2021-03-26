@@ -73,7 +73,8 @@ public class GrepCommandLineTest {
             ImmutableMap.of(
                 "--tables", "", "--routines", ".*", "--grep-parameters", ".*\\.B_OFFSET"),
             ImmutableMap.of(
-                "--grep-columns", ".*\\.STREET|.*\\.PRICE", "--grep-def", ".*book authors.*"));
+                "--grep-columns", ".*\\.STREET|.*\\.PRICE", "--grep-def", ".*book authors.*"),
+            ImmutableMap.of("--grep-tables", ".*\\.BOOKS"));
     for (int i = 0; i < grepArgs.size(); i++) {
 
       final String referenceFile = String.format("grep%02d.txt", i + 1);

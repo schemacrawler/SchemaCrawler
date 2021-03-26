@@ -192,6 +192,13 @@ Options:
                                STREET|.*\.PRICE matches routine parameters
                                named STREET or PRICE in any routine
                              Optional, default is no grep
+      --grep-tables=<greptables>
+                             <greptables> is a regular expression to match
+                               fully qualified table names, in the form
+                               "CATALOGNAME.SCHEMANAME.TABLENAME" - for
+                               example, --grep-tables=.*\.COUPONS|.*\.BOOKS
+                               matches tables named COUPONS or BOOKS
+                             Optional, default is no grep
       --[no-]invert-match    Inverts the sense of matching, and shows
                                non-matching tables and columns
                              Optional, default is false

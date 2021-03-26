@@ -45,6 +45,7 @@ public final class GrepOptionsBuilder implements OptionsBuilder<GrepOptionsBuild
     return builder().toOptions();
   }
 
+  private Optional<InclusionRule> grepTableInclusionRule;
   private Optional<InclusionRule> grepColumnInclusionRule;
   private Optional<InclusionRule> grepDefinitionInclusionRule;
   private boolean grepInvertMatch;
@@ -53,6 +54,7 @@ public final class GrepOptionsBuilder implements OptionsBuilder<GrepOptionsBuild
 
   /** Default options. */
   private GrepOptionsBuilder() {
+    grepTableInclusionRule = Optional.empty();
     grepColumnInclusionRule = Optional.empty();
     grepRoutineParameterInclusionRule = Optional.empty();
     grepDefinitionInclusionRule = Optional.empty();
@@ -64,6 +66,7 @@ public final class GrepOptionsBuilder implements OptionsBuilder<GrepOptionsBuild
       return this;
     }
 
+    grepTableInclusionRule = options.getGrepTableInclusionRule();
     grepColumnInclusionRule = options.getGrepColumnInclusionRule();
     grepRoutineParameterInclusionRule =
         Optional.ofNullable(options.getGrepRoutineParameterInclusionRule()).orElse(null);
@@ -127,6 +130,20 @@ public final class GrepOptionsBuilder implements OptionsBuilder<GrepOptionsBuild
     return this;
   }
 
+  public GrepOptionsBuilder includeGreppedTables(final InclusionRule grepTableInclusionRule) {
+    this.grepTableInclusionRule = Optional.ofNullable(grepTableInclusionRule);
+    return this;
+  }
+
+  public GrepOptionsBuilder includeGreppedTables(final Pattern grepTablePattern) {
+    if (grepTablePattern == null) {
+      grepTableInclusionRule = Optional.empty();
+    } else {
+      grepTableInclusionRule = Optional.of(new RegularExpressionInclusionRule(grepTablePattern));
+    }
+    return this;
+  }
+
   public GrepOptionsBuilder invertGrepMatch(final boolean grepInvertMatch) {
     this.grepInvertMatch = grepInvertMatch;
     return this;
@@ -136,6 +153,7 @@ public final class GrepOptionsBuilder implements OptionsBuilder<GrepOptionsBuild
   public GrepOptions toOptions() {
     final GrepOptions grepOptions =
         new GrepOptions(
+            grepTableInclusionRule.orElse(null),
             grepColumnInclusionRule.orElse(null),
             grepRoutineParameterInclusionRule.orElse(null),
             grepDefinitionInclusionRule.orElse(null),

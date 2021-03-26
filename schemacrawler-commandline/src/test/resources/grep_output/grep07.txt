@@ -1,0 +1,66 @@
+
+
+Tables
+========================================================================
+
+
+
+PUBLIC.BOOKS.BOOKS                                               [table]
+------------------------------------------------------------------------
+Details for published books
+  ID                                INTEGER NOT NULL            
+                                    Unique (internal) id for book
+  TITLE                             VARCHAR(255) NOT NULL       
+                                    Book title                  
+  DESCRIPTION                       VARCHAR(255)                
+                                    Book description
+(Usually the blurb from the book jacket or promotional materials)
+  PUBLISHERID                       INTEGER NOT NULL            
+                                    Foreign key to the book publisher
+  PUBLICATIONDATE                   DATE                        
+                                    Book publication date       
+  PRICE                             DOUBLE(64, 0)               
+                                    Current price for the book  
+  PREVIOUSEDITIONID                 INTEGER                     
+
+Primary Key
+
+PK_BOOKS                                                   [primary key]
+  ID                                                            
+
+Foreign Keys
+
+SYS_FK_10128                               [foreign key, with no action]
+  ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
+
+FK_PREVIOUSEDITION                         [foreign key, with no action]
+  ID <--(0..1) PREVIOUSEDITIONID                                
+
+Indexes
+
+SYS_IDX_PK_BOOKS_10119                                    [unique index]
+  ID                                ascending                   
+
+SYS_IDX_U_PREVIOUSEDITION_10125                           [unique index]
+  PREVIOUSEDITIONID                 ascending                   
+
+SYS_IDX_FK_PREVIOUSEDITION_10123                      [non-unique index]
+  PREVIOUSEDITIONID                 ascending                   
+
+Table Constraints
+
+U_PREVIOUSEDITION                                    [unique constraint]
+  PREVIOUSEDITIONID                                             
+
+SYS_CT_10116                                          [check constraint]
+  ID                                                            
+BOOKS.BOOKS.ID IS NOT NULL
+
+SYS_CT_10117                                          [check constraint]
+  TITLE                                                         
+BOOKS.BOOKS.TITLE IS NOT NULL
+
+SYS_CT_10118                                          [check constraint]
+  PUBLISHERID                                                   
+BOOKS.BOOKS.PUBLISHERID IS NOT NULL
+

@@ -57,6 +57,8 @@ public final class SchemaCrawlerOptionsConfig {
       return builder;
     }
 
+    final String SC_GREP_TABLE_PATTERN_EXCLUDE = "schemacrawler.grep.table.pattern.exclude";
+    final String SC_GREP_TABLE_PATTERN_INCLUDE = "schemacrawler.grep.table.pattern.include";
     final String SC_GREP_COLUMN_PATTERN_EXCLUDE = "schemacrawler.grep.column.pattern.exclude";
     final String SC_GREP_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.column.pattern.include";
     final String SC_GREP_DEFINITION_PATTERN_EXCLUDE =
@@ -68,6 +70,10 @@ public final class SchemaCrawlerOptionsConfig {
     final String SC_GREP_ROUTINE_PARAMETER_PATTERN_INCLUDE =
         "schemacrawler.grep.routine.inout.pattern.include";
 
+    builder.includeGreppedTables(
+        config
+            .getOptionalInclusionRule(SC_GREP_TABLE_PATTERN_INCLUDE, SC_GREP_TABLE_PATTERN_EXCLUDE)
+            .orElse(null));
     builder.includeGreppedColumns(
         config
             .getOptionalInclusionRule(

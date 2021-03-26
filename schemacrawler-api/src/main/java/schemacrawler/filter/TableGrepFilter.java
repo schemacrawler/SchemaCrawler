@@ -44,6 +44,7 @@ class TableGrepFilter implements Predicate<Table> {
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(TableGrepFilter.class.getName());
 
+  private final InclusionRule grepTableInclusionRule;
   private final InclusionRule grepColumnInclusionRule;
   private final InclusionRule grepDefinitionInclusionRule;
   private final boolean invertMatch;
@@ -51,6 +52,7 @@ class TableGrepFilter implements Predicate<Table> {
   public TableGrepFilter(final GrepOptions options) {
     invertMatch = options.isGrepInvertMatch();
 
+    grepTableInclusionRule = options.getGrepTableInclusionRule().orElse(null);
     grepColumnInclusionRule = options.getGrepColumnInclusionRule().orElse(null);
     grepDefinitionInclusionRule = options.getGrepDefinitionInclusionRule().orElse(null);
   }
@@ -64,15 +66,24 @@ class TableGrepFilter implements Predicate<Table> {
    */
   @Override
   public boolean test(final Table table) {
+    final boolean checkIncludeForTables = grepTableInclusionRule != null;
     final boolean checkIncludeForColumns = grepColumnInclusionRule != null;
     final boolean checkIncludeForDefinitions = grepDefinitionInclusionRule != null;
 
-    if (!checkIncludeForColumns && !checkIncludeForDefinitions) {
+    if (!checkIncludeForTables && !checkIncludeForColumns && !checkIncludeForDefinitions) {
       return true;
     }
 
+    boolean includeForTables = false;
     boolean includeForColumns = false;
     boolean includeForDefinitions = false;
+
+    if (checkIncludeForTables) {
+      if (grepTableInclusionRule.test(table.getFullName())) {
+        includeForTables = true;
+      }
+    }
+
     final List<Column> columns = table.getColumns();
     // Check if info-level=minimum, and no columns were retrieved
     if (columns.isEmpty()) {
@@ -110,7 +121,8 @@ class TableGrepFilter implements Predicate<Table> {
     }
 
     boolean include =
-        checkIncludeForColumns && includeForColumns
+        checkIncludeForTables && includeForTables
+            || checkIncludeForColumns && includeForColumns
             || checkIncludeForDefinitions && includeForDefinitions;
     if (invertMatch) {
       include = !include;

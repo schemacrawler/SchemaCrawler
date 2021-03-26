@@ -35,6 +35,7 @@ import us.fatehi.utility.ObjectToString;
 /** SchemaCrawler options. */
 public final class GrepOptions implements Options {
 
+  private final InclusionRule grepTableInclusionRule;
   private final InclusionRule grepColumnInclusionRule;
   private final InclusionRule grepDefinitionInclusionRule;
   private final boolean grepInvertMatch;
@@ -42,11 +43,13 @@ public final class GrepOptions implements Options {
   private final InclusionRule grepRoutineParameterInclusionRule;
 
   GrepOptions(
+      final InclusionRule grepTableInclusionRule,
       final InclusionRule grepColumnInclusionRule,
       final InclusionRule grepRoutineParameterInclusionRule,
       final InclusionRule grepDefinitionInclusionRule,
       final boolean grepInvertMatch,
       final boolean grepOnlyMatching) {
+    this.grepTableInclusionRule = grepTableInclusionRule;
     this.grepColumnInclusionRule = grepColumnInclusionRule;
     this.grepRoutineParameterInclusionRule = grepRoutineParameterInclusionRule;
     this.grepDefinitionInclusionRule = grepDefinitionInclusionRule;
@@ -81,6 +84,15 @@ public final class GrepOptions implements Options {
     return Optional.ofNullable(grepRoutineParameterInclusionRule);
   }
 
+  /**
+   * Gets the table inclusion rule for grep.
+   *
+   * @return Table inclusion rule for grep.
+   */
+  public Optional<InclusionRule> getGrepTableInclusionRule() {
+    return Optional.ofNullable(grepTableInclusionRule);
+  }
+
   public boolean isGrepColumns() {
     return grepColumnInclusionRule != null;
   }
@@ -105,6 +117,10 @@ public final class GrepOptions implements Options {
 
   public boolean isGrepRoutineParameters() {
     return grepRoutineParameterInclusionRule != null;
+  }
+
+  public boolean isGrepTables() {
+    return grepTableInclusionRule != null;
   }
 
   /** {@inheritDoc} */

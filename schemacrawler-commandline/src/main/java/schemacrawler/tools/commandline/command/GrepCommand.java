@@ -55,6 +55,17 @@ import schemacrawler.tools.commandline.state.ShellState;
 public final class GrepCommand extends BaseStateHolder implements Runnable {
 
   @Option(
+      names = "--grep-tables",
+      description = {
+        "<greptables> is a regular expression to match fully qualified table names, "
+            + "in the form \"CATALOGNAME.SCHEMANAME.TABLENAME\" "
+            + "- for example, --grep-tables=.*\\.COUPONS|.*\\.BOOKS "
+            + "matches tables named COUPONS or BOOKS",
+        "Optional, default is no grep"
+      })
+  private Pattern greptables;
+
+  @Option(
       names = "--grep-columns",
       description = {
         "<grepcolumns> is a regular expression to match fully qualified column names, "
@@ -115,6 +126,9 @@ public final class GrepCommand extends BaseStateHolder implements Runnable {
     final GrepOptionsBuilder grepOptionsBuilder =
         GrepOptionsBuilder.builder().fromOptions(schemaCrawlerOptions.getGrepOptions());
 
+    if (greptables != null) {
+      grepOptionsBuilder.includeGreppedTables(greptables);
+    }
     if (grepcolumns != null) {
       grepOptionsBuilder.includeGreppedColumns(grepcolumns);
     }
