@@ -29,7 +29,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2021-03-22 00:41:40.947</td>
+		<td align='left'>2021-03-25 00:25:31.466</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
@@ -44,8 +44,8 @@ digraph "SchemaCrawler_Diagram" {
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
-		<td colspan='2' bgcolor='#CEE2F2' align='left'><b><i>PUBLIC.BOOKS.AUTHORS</i></b></td>
-		<td bgcolor='#CEE2F2' align='right'>[table]</td>
+		<td colspan='2' bgcolor='#C2DCF2' align='left'><b><i>PUBLIC.BOOKS.AUTHORS</i></b></td>
+		<td bgcolor='#C2DCF2' align='right'>[table]</td>
 	</tr>
 	<tr>
 		<td colspan='3' align='left'>Contact details for book authors</td>
@@ -107,8 +107,8 @@ digraph "SchemaCrawler_Diagram" {
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
-		<td colspan='2' bgcolor='#CEE2F2' align='left'><b><i>PUBLIC.BOOKS.AUTHORSLIST</i></b></td>
-		<td bgcolor='#CEE2F2' align='right'>[view]</td>
+		<td colspan='2' bgcolor='#C2DCF2' align='left'><b><i>PUBLIC.BOOKS.AUTHORSLIST</i></b></td>
+		<td bgcolor='#C2DCF2' align='right'>[view]</td>
 	</tr>
 	<tr>
 		<td port='id_fc9c4d97.start' align='left'>ID</td>
@@ -136,8 +136,8 @@ digraph "SchemaCrawler_Diagram" {
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
-		<td colspan='2' bgcolor='#CEE2F2' align='left'><b><i>PUBLIC.BOOKS.BOOKAUTHORS</i></b></td>
-		<td bgcolor='#CEE2F2' align='right'>[table]</td>
+		<td colspan='2' bgcolor='#C2DCF2' align='left'><b><i>PUBLIC.BOOKS.BOOKAUTHORS</i></b></td>
+		<td bgcolor='#C2DCF2' align='right'>[table]</td>
 	</tr>
 	<tr>
 		<td colspan='3' align='left'>Relationship between books and their authors, 
@@ -158,11 +158,12 @@ along with the latest updated information</td>
 		<td align='left'> </td>
 		<td port='somedata_f89079e1.end' align='left'>VARCHAR(30)</td>
 	</tr>
+	<hr/>
 	<tr>
 		<td colspan='3' align='left'>• 1_alternate_key (BOOKID, AUTHORID) [alternate key]</td>
 	</tr>
 	<tr>
-		<td colspan='3' align='left'>Indicate that this key is being used as a primary key</td>
+		<td colspan='3' bgcolor='#F4F4F4' align='left'>Indicate that this key is being used as a primary key</td>
 	</tr>
       </table>
     >
@@ -175,8 +176,8 @@ along with the latest updated information</td>
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
-		<td colspan='2' bgcolor='#CEE2F2' align='left'><b><i>PUBLIC.BOOKS.BOOKS</i></b></td>
-		<td bgcolor='#CEE2F2' align='right'>[table]</td>
+		<td colspan='2' bgcolor='#C2DCF2' align='left'><b><i>PUBLIC.BOOKS.BOOKS</i></b></td>
+		<td bgcolor='#C2DCF2' align='right'>[table]</td>
 	</tr>
 	<tr>
 		<td colspan='3' align='left'>Details for published books</td>
@@ -260,8 +261,8 @@ along with the latest updated information</td>
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
-		<td colspan='2' bgcolor='#CEE2F2' align='left'><b><i>PUBLIC.BOOKS.COUPONS</i></b></td>
-		<td bgcolor='#CEE2F2' align='right'>[table]</td>
+		<td colspan='2' bgcolor='#C2DCF2' align='left'><b><i>PUBLIC.BOOKS.COUPONS</i></b></td>
+		<td bgcolor='#C2DCF2' align='right'>[table]</td>
 	</tr>
 	<tr>
 		<td port='id_439d8a50.start' align='left'><b><i>ID</i></b></td>
@@ -294,8 +295,8 @@ along with the latest updated information</td>
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
-		<td colspan='2' bgcolor='#CEE2F2' align='left'><b><i>PUBLIC.BOOKS.CUSTOMERDATA</i></b></td>
-		<td bgcolor='#CEE2F2' align='right'>[table]</td>
+		<td colspan='2' bgcolor='#C2DCF2' align='left'><b><i>PUBLIC.BOOKS.CUSTOMERDATA</i></b></td>
+		<td bgcolor='#C2DCF2' align='right'>[table]</td>
 	</tr>
 	<tr>
 		<td port='id_6540fe15.start' align='left'><b><i>ID</i></b></td>
@@ -318,8 +319,8 @@ along with the latest updated information</td>
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
-		<td colspan='2' bgcolor='#CEE2F2' align='left'><b><i>PUBLIC.BOOKS.CUSTOMERS</i></b></td>
-		<td bgcolor='#CEE2F2' align='right'>[table]</td>
+		<td colspan='2' bgcolor='#C2DCF2' align='left'><b><i>PUBLIC.BOOKS.CUSTOMERS</i></b></td>
+		<td bgcolor='#C2DCF2' align='right'>[table]</td>
 	</tr>
 	<tr>
 		<td port='id_e9b52008.start' align='left'><b><i>ID</i></b></td>
@@ -352,8 +353,8 @@ along with the latest updated information</td>
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
-		<td colspan='2' bgcolor='#CEE2F2' align='left'><b><i>PUBLIC.BOOKS."Global Counts"</i></b></td>
-		<td bgcolor='#CEE2F2' align='right'>[table]</td>
+		<td colspan='2' bgcolor='#C2DCF2' align='left'><b><i>PUBLIC.BOOKS."Global Counts"</i></b></td>
+		<td bgcolor='#C2DCF2' align='right'>[table]</td>
 	</tr>
 	<tr>
 		<td port='globalcount_24c6a93.start' align='left'>"Global Count"</td>
@@ -376,8 +377,8 @@ along with the latest updated information</td>
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
-		<td colspan='2' bgcolor='#CEE2F2' align='left'><b><i>PUBLIC.BOOKS.PUBLISHERS</i></b></td>
-		<td bgcolor='#CEE2F2' align='right'>[table]</td>
+		<td colspan='2' bgcolor='#C2DCF2' align='left'><b><i>PUBLIC.BOOKS.PUBLISHERS</i></b></td>
+		<td bgcolor='#C2DCF2' align='right'>[table]</td>
 	</tr>
 	<tr>
 		<td colspan='3' align='left'>List of book publishers</td>
@@ -419,8 +420,8 @@ along with the latest updated information</td>
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
-		<td colspan='2' bgcolor='#CEE2F2' align='left'><b><i>PUBLIC.BOOKS.ΒΙΒΛΊΑ</i></b></td>
-		<td bgcolor='#CEE2F2' align='right'>[table]</td>
+		<td colspan='2' bgcolor='#C2DCF2' align='left'><b><i>PUBLIC.BOOKS.ΒΙΒΛΊΑ</i></b></td>
+		<td bgcolor='#C2DCF2' align='right'>[table]</td>
 	</tr>
 	<tr>
 		<td port='μοναδικόσ_1e05b960.start' align='left'><b><i>ΜΟΝΑΔΙΚΌΣ</i></b></td>
@@ -453,8 +454,8 @@ along with the latest updated information</td>
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
-		<td colspan='2' bgcolor='#F2DDCE' align='left'><b><i>PUBLIC."PUBLISHER SALES".REGIONS</i></b></td>
-		<td bgcolor='#F2DDCE' align='right'>[table]</td>
+		<td colspan='2' bgcolor='#F2D6C2' align='left'><b><i>PUBLIC."PUBLISHER SALES".REGIONS</i></b></td>
+		<td bgcolor='#F2D6C2' align='right'>[table]</td>
 	</tr>
 	<tr>
 		<td port='city_a2f4ad8c.start' align='left'>CITY</td>
@@ -489,8 +490,8 @@ along with the latest updated information</td>
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
-		<td colspan='2' bgcolor='#F2DDCE' align='left'><b><i>PUBLIC."PUBLISHER SALES".SALES</i></b></td>
-		<td bgcolor='#F2DDCE' align='right'>[table]</td>
+		<td colspan='2' bgcolor='#F2D6C2' align='left'><b><i>PUBLIC."PUBLISHER SALES".SALES</i></b></td>
+		<td bgcolor='#F2D6C2' align='right'>[table]</td>
 	</tr>
 	<tr>
 		<td port='postalcode_c386e9ec.start' align='left'>POSTALCODE</td>
@@ -533,8 +534,8 @@ along with the latest updated information</td>
     label=<
       <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
-		<td colspan='2' bgcolor='#F2DDCE' align='left'><b><i>PUBLIC."PUBLISHER SALES".SALESDATA</i></b></td>
-		<td bgcolor='#F2DDCE' align='right'>[table]</td>
+		<td colspan='2' bgcolor='#F2D6C2' align='left'><b><i>PUBLIC."PUBLISHER SALES".SALESDATA</i></b></td>
+		<td bgcolor='#F2D6C2' align='right'>[table]</td>
 	</tr>
 	<tr>
 		<td port='salesdataid_1022f27b.start' align='left'>SALESDATAID</td>

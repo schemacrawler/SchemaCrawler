@@ -8,7 +8,8 @@
 - Use only one enum for table constraints, even for user-defined metadata
 - Remove option to show or hide weak associations,
   `schemacrawler.format.show_weak_associations`
-- Distribute Snowflake JDBC driver with SchemaCrawler  
+- Distribute Snowflake JDBC driver with SchemaCrawler
+- Show index information in diagrams with the maximum option
 
 
 <a name="a16.14.1"></a>

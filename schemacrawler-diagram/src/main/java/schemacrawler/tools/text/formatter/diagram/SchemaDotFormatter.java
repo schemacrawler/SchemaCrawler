@@ -46,6 +46,8 @@ import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnReference;
+import schemacrawler.schema.Index;
+import schemacrawler.schema.IndexType;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Routine;
@@ -75,6 +77,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
 
   private final boolean isVerbose;
   private final boolean isBrief;
+  private final int tableColspan;
 
   /**
    * Text formatting of schema.
@@ -98,6 +101,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
         identifierQuoteString);
     isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
     isBrief = schemaTextDetailType == SchemaTextDetailType.brief;
+    tableColspan = options.isShowOrdinalNumbers() ? 4 : 3;
   }
 
   @Override
@@ -147,7 +151,6 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     final String tableType = "[" + table.getTableType() + "]";
 
     final Color tableNameBgColor = colorMap.getColor(table);
-    final int colspan = options.isShowOrdinalNumbers() ? 3 : 2;
 
     formattingHelper
         .append("  /* ")
@@ -170,13 +173,13 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
                         .withAlignment(Alignment.left)
                         .withEmphasis(true)
                         .withBackground(tableNameBgColor)
-                        .withColumnSpan(colspan)
+                        .withColumnSpan(tableColspan - 1)
                         .make())
                 .addInnerTag(
                     tableCell()
                         .withEscapedText(tableType)
-                        .withAlignment(Alignment.right)
                         .withBackground(tableNameBgColor)
+                        .withAlignment(Alignment.right)
                         .make())
                 .render(html))
         .println();
@@ -186,8 +189,8 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     printTableColumns(table.getColumns());
     if (isVerbose) {
       printTableColumns(new ArrayList<>(table.getHiddenColumns()));
+      printIndexes(table);
     }
-
     printAlternateKeys(table);
     printTableRowCount(table);
 
@@ -294,6 +297,8 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
       return;
     }
 
+    formattingHelper.append("\t<hr/>").append(System.lineSeparator());
+
     for (final TableConstraint alternateKey : alternateKeys) {
       final String name = identifiers.quoteName(alternateKey);
       final String akName;
@@ -302,6 +307,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
       } else {
         akName = "";
       }
+
       final String constraintText =
           String.format(
               "\u2022 %s (%s) [alternate key]",
@@ -319,7 +325,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
                       tableCell()
                           .withEscapedText(constraintText)
                           .withAlignment(Alignment.left)
-                          .withColumnSpan(3)
+                          .withColumnSpan(tableColspan)
                           .make())
                   .render(html))
           .println();
@@ -333,7 +339,8 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
                         tableCell()
                             .withEscapedText(alternateKey.getRemarks())
                             .withAlignment(Alignment.left)
-                            .withColumnSpan(3)
+                            .withBackground(Color.fromRGB(0xF4, 0xF4, 0xF4))
+                            .withColumnSpan(tableColspan)
                             .make())
                     .render(html))
             .println();
@@ -445,6 +452,75 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
         }
         // Show remarks only on the first reference
         showRemarks = false;
+      }
+    }
+  }
+
+  private void printIndexes(final Table table) {
+    if (table == null) {
+      return;
+    }
+
+    final Collection<Index> indexes = table.getIndexes();
+    if (indexes == null || indexes.isEmpty()) {
+      return;
+    }
+
+    formattingHelper.append("\t<hr/>").append(System.lineSeparator());
+
+    for (final Index index : indexes) {
+      final String name = identifiers.quoteName(index);
+      final String indexName;
+      if (!options.isHideIndexNames()) {
+        indexName = name;
+      } else {
+        indexName = "";
+      }
+
+      final IndexType indexType = index.getIndexType();
+      String indexTypeString = "";
+      if (indexType != IndexType.unknown && indexType != IndexType.other) {
+        indexTypeString = indexType.toString() + " ";
+      }
+      final String indexDetails =
+          (index.isUnique() ? "" : "non-") + "unique " + indexTypeString + "index";
+      final String constraintText =
+          String.format(
+              "\u2022 %s (%s) [%s]",
+              indexName,
+              getColumnsListAsString(
+                  index,
+                  identifiers.getIdentifierQuotingStrategy(),
+                  identifiers.getIdentifierQuoteString()),
+              indexDetails);
+
+      formattingHelper
+          .append(
+              tableRow()
+                  .make()
+                  .addInnerTag(
+                      tableCell()
+                          .withEscapedText(constraintText)
+                          .withAlignment(Alignment.left)
+                          .withBackground(Color.fromRGB(0xF4, 0xF4, 0xF4))
+                          .withColumnSpan(tableColspan)
+                          .make())
+                  .render(html))
+          .println();
+
+      if (index.hasRemarks()) {
+        formattingHelper
+            .append(
+                tableRow()
+                    .make()
+                    .addInnerTag(
+                        tableCell()
+                            .withEscapedText(index.getRemarks())
+                            .withAlignment(Alignment.left)
+                            .withColumnSpan(3)
+                            .make())
+                    .render(html))
+            .println();
       }
     }
   }
@@ -640,7 +716,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
                     tableCell()
                         .withEscapedText(table.getRemarks())
                         .withAlignment(Alignment.left)
-                        .withColumnSpan(3)
+                        .withColumnSpan(tableColspan)
                         .make())
                 .render(html))
         .println();
@@ -650,6 +726,9 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     if (options.isHideTableRowCounts() || table == null || !hasRowCount(table)) {
       return;
     }
+
+    formattingHelper.append("\t<hr/>").append(System.lineSeparator());
+
     formattingHelper
         .append(
             tableRow()
@@ -658,7 +737,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
                     tableCell()
                         .withEscapedText(getRowCountMessage(table))
                         .withAlignment(Alignment.right)
-                        .withColumnSpan(3)
+                        .withColumnSpan(tableColspan)
                         .make())
                 .render(html))
         .println();

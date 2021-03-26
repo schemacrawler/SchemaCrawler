@@ -101,7 +101,7 @@ public final class SchemaCrawlerShell {
 
       final Supplier<Path> workingDir = () -> Paths.get(".");
       final PicocliCommands picocliCommands = new PicocliCommands(commandLine);
-      final Parser parser = new DefaultParser();
+      final Parser parser = new DefaultParser().escapeChars(new char[0]);
 
       final SystemRegistry systemRegistry =
           new SystemRegistryImpl(parser, terminal, workingDir, null);
@@ -113,7 +113,7 @@ public final class SchemaCrawlerShell {
               .terminal(terminal)
               .completer(systemRegistry.completer())
               .parser(parser)
-              .variable(LineReader.LIST_MAX, 10) // max tab completion candidates
+              .variable(LineReader.LIST_MAX, 3) // max tab completion candidates
               .build();
       factory.setTerminal(terminal);
 
