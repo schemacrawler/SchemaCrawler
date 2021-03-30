@@ -63,7 +63,7 @@ public final class CommandOutputOptions {
         "  html - For HTML5 output",
         "",
         "You can generate a database diagram using Graphviz",
-        "For a diagram <outputformat> is one of dot, eps, gif, jpg, or png",
+        "For a diagram <outputformat> is one of dot, svg, or png",
         "For a complete list Graphviz output formats, see http://www.graphviz.org/",
         "You can generate HTML output format with an embedded SVG diagram "
             + "with an <outputformat> of htmlx",
@@ -71,7 +71,7 @@ public final class CommandOutputOptions {
         "http://www.graphviz.org/",
         "If Graphviz is not installed, a DOT file is produced.",
         "Or, use:",
-        "  scdot - For Graphviz DOT output, for schema only",
+        "  scdot - For Graphviz DOT output, for schema commands only",
         "",
         "Optional, defaults to the format specified by the output file, " + "otherwise, text"
       })
