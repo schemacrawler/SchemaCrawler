@@ -178,6 +178,6 @@ Example configuration:
 
 
 
-Add command switches to the execute command in the SchemaCrawler Shell
+Add command options to the `execute` command in the SchemaCrawler Shell
 
 
