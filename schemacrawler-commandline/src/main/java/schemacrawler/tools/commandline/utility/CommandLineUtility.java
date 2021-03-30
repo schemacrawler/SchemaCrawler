@@ -56,6 +56,9 @@ public class CommandLineUtility {
   public static final Supplier<Collection<PluginCommand>> catalogLoaderPluginCommands =
       () -> new CatalogLoaderRegistry().getCommandLineCommands();
 
+  public static final Supplier<Collection<PluginCommand>> catalogLoaderPluginHelpCommands =
+      () -> new CatalogLoaderRegistry().getCommandLineHelpCommands();
+
   public static final Supplier<Collection<PluginCommand>> commandPluginCommands =
       () -> CommandRegistry.getCommandRegistry().getCommandLineCommands();
 
