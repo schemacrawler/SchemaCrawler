@@ -25,16 +25,22 @@ For more details, see the `serialize` example in the
 [SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) 
 download.
 
-SchemaCrawler serialization can produce output in Java,
+SchemaCrawler serialization can produce output in binary Java serialization,
 [JavaScript object notation (JSON)](snapshot-examples/snapshot.json) or
-[YAML](snapshot-examples/snapshot.yaml) format. 
+[YAML](snapshot-examples/snapshot.yaml) formats. 
 (Click on the links for example output.) 
 A serialized schema metadata model will be produced in the format specified using the 
 `--output-format` command-line option. For example,
 `--output-format=json` will generate a output in JSON format.
 
+JSON and YAML formats cannot be diff-ed since they contain GUIDs, and the formats are 
+specific to a given version of SchemaCrawler, and subject to change from version 
+to version.
+
+
 ## How to Load a Serialized Catalog
 
-You can load a serialized version of a catalog using the [`offline`](offline.html)
+When you use Java serialization (`--output-format=ser`) to serialize database
+metadata to a file, you can load a serialized metadata using the [`offline`](offline.html)
 server type. Please make sure that you use the same version of SchemaCrawler to 
 serialize snapshots as you use when you load those offline snapshots.
