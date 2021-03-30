@@ -42,7 +42,7 @@ public final class OutputFormatState implements OutputFormat {
       final String formatSpecifier,
       final String description,
       final String... additionalFormatSpecifiers) {
-    requireNotBlank(formatSpecifier, "No formation provided");
+    requireNotBlank(formatSpecifier, "No format specifier provided");
 
     this.description = requireNotBlank(description, "No description provided");
     formatSpecifiers = new ArrayList<>();

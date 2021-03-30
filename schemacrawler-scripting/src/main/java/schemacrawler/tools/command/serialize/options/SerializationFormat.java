@@ -46,13 +46,11 @@ public enum SerializationFormat implements OutputFormat {
   json(
       "JavaScript Object Notation (JSON) serialization format",
       "schemacrawler.tools.formatter.serialize.JsonSerializedCatalog",
-      false,
-      "json"),
+      false),
   yaml(
       "YAML Ain't Markup Language (YAML) serialization format",
       "schemacrawler.tools.formatter.serialize.YamlSerializedCatalog",
-      false,
-      "yaml");
+      false);
 
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(SerializationFormat.class.getName());
@@ -99,11 +97,18 @@ public enum SerializationFormat implements OutputFormat {
   private final boolean isBinaryFormat;
 
   SerializationFormat(
+      final String description, final String serializerClassName, final boolean isBinaryFormat) {
+    outputFormatState = new OutputFormatState(name(), description);
+    this.serializerClassName = serializerClassName;
+    this.isBinaryFormat = isBinaryFormat;
+  }
+
+  SerializationFormat(
       final String description,
       final String serializerClassName,
       final boolean isBinaryFormat,
-      final String... additionalFormatSpecifiers) {
-    outputFormatState = new OutputFormatState(name(), description, additionalFormatSpecifiers);
+      final String formatSpecifier) {
+    outputFormatState = new OutputFormatState(formatSpecifier, description, name());
     this.serializerClassName = serializerClassName;
     this.isBinaryFormat = isBinaryFormat;
   }

@@ -87,13 +87,12 @@ public enum LintReportOutputFormat implements OutputFormat {
 
   private final OutputFormatState outputFormatState;
 
-  private LintReportOutputFormat(final String description) {
+  LintReportOutputFormat(final String description) {
     outputFormatState = new OutputFormatState(name(), description);
   }
 
-  private LintReportOutputFormat(
-      final String description, final String... additionalFormatSpecifiers) {
-    outputFormatState = new OutputFormatState(name(), description, additionalFormatSpecifiers);
+  LintReportOutputFormat(final String description, final String formatSpecifier) {
+    outputFormatState = new OutputFormatState(formatSpecifier, description, name());
   }
 
   @Override
