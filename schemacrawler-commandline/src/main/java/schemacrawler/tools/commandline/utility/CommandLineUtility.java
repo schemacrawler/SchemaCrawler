@@ -46,6 +46,7 @@ import picocli.CommandLine.ParseResult;
 import schemacrawler.Version;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.executable.commandline.PluginCommandOption;
@@ -57,6 +58,9 @@ public class CommandLineUtility {
 
   public static final Supplier<Collection<PluginCommand>> commandPluginCommands =
       () -> CommandRegistry.getCommandRegistry().getCommandLineCommands();
+
+  public static final Supplier<Collection<PluginCommand>> serverPluginHelpCommands =
+      () -> DatabaseConnectorRegistry.getDatabaseConnectorRegistry().getCommandLineHelpCommands();
 
   public static void addPluginCommands(
       final CommandLine commandLine, final Supplier<Collection<PluginCommand>> pluginCommands)

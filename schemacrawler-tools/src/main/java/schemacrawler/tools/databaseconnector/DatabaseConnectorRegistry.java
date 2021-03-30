@@ -36,6 +36,7 @@ import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -46,6 +47,7 @@ import java.util.logging.Level;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.tools.executable.commandline.PluginCommand;
 import us.fatehi.utility.string.StringFormat;
 
 /**
@@ -57,6 +59,7 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
 
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(DatabaseConnectorRegistry.class.getName());
+
   private static DatabaseConnectorRegistry databaseConnectorRegistrySingleton;
 
   public static DatabaseConnectorRegistry getDatabaseConnectorRegistry() {
@@ -170,6 +173,14 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
     }
 
     return DatabaseConnector.UNKNOWN;
+  }
+
+  public Collection<PluginCommand> getCommandLineHelpCommands() {
+    final Collection<PluginCommand> commandLineHelpCommands = new ArrayList<>();
+    for (final DatabaseConnector databaseConnector : databaseConnectorRegistry.values()) {
+      commandLineHelpCommands.add(databaseConnector.getHelpCommand());
+    }
+    return commandLineHelpCommands;
   }
 
   public boolean hasDatabaseSystemIdentifier(final String databaseSystemIdentifier) {

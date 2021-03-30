@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
@@ -42,51 +41,43 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.Main;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
 
 @ExtendWith(TestContextParameterResolver.class)
-public class CommandLineHelpTest
-{
+public class CommandLineHelpTest {
 
-  private static final String COMMAND_LINE_HELP_OUTPUT =
-    "command_line_help_output/";
+  private static final String COMMAND_LINE_HELP_OUTPUT = "command_line_help_output/";
 
   private TestOutputStream err;
   private TestOutputStream out;
 
   @AfterEach
-  public void cleanUpStreams()
-  {
+  public void cleanUpStreams() {
     System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
     System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
   }
 
   @Test
-  public void commandLineHelp(final TestContext testContext)
-    throws Exception
-  {
+  public void commandLineHelp(final TestContext testContext) throws Exception {
     final String server = "oracle";
-    Main.main("-help", "-server", server);
+    Main.main("-h", "server:" + server);
 
     assertThat(outputOf(err), hasNoContent());
-    assertThat(outputOf(out),
-               hasSameContentAs(classpathResource(COMMAND_LINE_HELP_OUTPUT
-                                                  + server
-                                                  + ".help.txt")));
+    assertThat(
+        outputOf(out),
+        hasSameContentAs(classpathResource(COMMAND_LINE_HELP_OUTPUT + server + ".help.txt")));
   }
 
   @BeforeEach
-  public void setUpStreams()
-    throws Exception
-  {
+  public void setUpStreams() throws Exception {
     out = new TestOutputStream();
     System.setOut(new PrintStream(out));
 
     err = new TestOutputStream();
     System.setErr(new PrintStream(err));
   }
-
 }
