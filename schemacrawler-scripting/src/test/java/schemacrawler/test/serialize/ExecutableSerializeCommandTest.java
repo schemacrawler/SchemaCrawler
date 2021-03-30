@@ -74,7 +74,7 @@ public class ExecutableSerializeCommandTest {
   @Test
   @Disabled("Cannot compare files during testing, since a new file is generated")
   public void executableSerializeJava(final Connection connection) throws Exception {
-    assertThat(fileHeaderOf(executeSerialize(connection, SerializationFormat.java)), is("ACED"));
+    assertThat(fileHeaderOf(executeSerialize(connection, SerializationFormat.ser)), is("ACED"));
   }
 
   @Test

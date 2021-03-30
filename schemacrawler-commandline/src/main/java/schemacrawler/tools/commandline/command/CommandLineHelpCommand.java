@@ -36,7 +36,7 @@ import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_OPTION_LIST
 import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_PARAMETER_LIST;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginHelpCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.catalogLoaderPluginCommands;
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.commandPluginCommands;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.commandPluginHelpCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.serverPluginHelpCommands;
 import static us.fatehi.utility.Utility.isBlank;
@@ -89,7 +89,7 @@ public final class CommandLineHelpCommand implements Runnable {
       final CommandLine parent =
           newCommandLine(new SchemaCrawlerShellCommands(), new StateFactory(state));
       addPluginHelpCommands(parent, catalogLoaderPluginCommands);
-      addPluginHelpCommands(parent, commandPluginCommands);
+      addPluginHelpCommands(parent, commandPluginHelpCommands);
       addPluginHelpCommands(parent, serverPluginHelpCommands);
 
       if (!isBlank(command)) {

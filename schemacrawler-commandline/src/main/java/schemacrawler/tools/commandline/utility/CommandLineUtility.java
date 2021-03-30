@@ -59,6 +59,9 @@ public class CommandLineUtility {
   public static final Supplier<Collection<PluginCommand>> commandPluginCommands =
       () -> CommandRegistry.getCommandRegistry().getCommandLineCommands();
 
+  public static final Supplier<Collection<PluginCommand>> commandPluginHelpCommands =
+      () -> CommandRegistry.getCommandRegistry().getCommandLineHelpCommands();
+
   public static final Supplier<Collection<PluginCommand>> serverPluginHelpCommands =
       () -> DatabaseConnectorRegistry.getDatabaseConnectorRegistry().getCommandLineHelpCommands();
 

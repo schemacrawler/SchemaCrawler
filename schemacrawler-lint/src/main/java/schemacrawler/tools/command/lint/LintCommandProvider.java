@@ -82,6 +82,18 @@ public class LintCommandProvider extends BaseCommandProvider {
   }
 
   @Override
+  public PluginCommand getCommandLineHelpCommand() {
+    final PluginCommand pluginCommand = getCommandLineCommand();
+    pluginCommand.addOption(
+        "output-format",
+        LintReportOutputFormat.class,
+        "Supported lint report output formats",
+        "<output-format> is one of ${COMPLETION-CANDIDATES}",
+        "Optional, inferred from the extension of the output file");
+    return pluginCommand;
+  }
+
+  @Override
   public LintCommand newSchemaCrawlerCommand(final String command, final Config config) {
     final LintOptions lintOptions = LintOptionsBuilder.builder().fromConfig(config).toOptions();
     final LintCommand scCommand = new LintCommand();

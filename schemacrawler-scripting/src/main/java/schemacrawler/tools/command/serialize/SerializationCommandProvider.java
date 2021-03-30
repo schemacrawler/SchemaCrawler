@@ -64,6 +64,18 @@ public class SerializationCommandProvider extends BaseCommandProvider {
   }
 
   @Override
+  public PluginCommand getCommandLineHelpCommand() {
+    final PluginCommand pluginCommand = getCommandLineCommand();
+    pluginCommand.addOption(
+        "output-format",
+        SerializationFormat.class,
+        "Supported serialization formats",
+        "<output-format> is one of ${COMPLETION-CANDIDATES}",
+        "Optional, inferred from the extension of the output file");
+    return pluginCommand;
+  }
+
+  @Override
   public SerializationCommand newSchemaCrawlerCommand(final String command, final Config config) {
     final SerializationCommand scCommand = new SerializationCommand();
     scCommand.setCommandOptions(new SerializationOptions());
