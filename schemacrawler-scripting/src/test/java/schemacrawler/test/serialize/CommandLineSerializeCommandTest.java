@@ -95,7 +95,7 @@ public class CommandLineSerializeCommandTest {
   @Test
   public void commandLineJava(final DatabaseConnectionInfo connectionInfo) throws Exception {
     assertThatOutputIsCorrect(
-        commandlineSerialize(connectionInfo, SerializationFormat.java), is("ACED"));
+        commandlineSerialize(connectionInfo, SerializationFormat.ser), is("ACED"));
   }
 
   @Test

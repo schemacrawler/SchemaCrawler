@@ -35,11 +35,10 @@ import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_HEADER;
 import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_OPTION_LIST;
 import static picocli.CommandLine.Model.UsageMessageSpec.SECTION_KEY_PARAMETER_LIST;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginHelpCommands;
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.catalogLoaderPluginCommands;
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.commandPluginCommands;
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.configureCommandLine;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.catalogLoaderPluginHelpCommands;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.commandPluginHelpCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.toCommandSpec;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.serverPluginHelpCommands;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.Arrays;
@@ -54,15 +53,10 @@ import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 import schemacrawler.Version;
-import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
-import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
-import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
-import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.executable.commandline.PluginCommandType;
 
 @Command(
@@ -94,9 +88,9 @@ public final class CommandLineHelpCommand implements Runnable {
       final ShellState state = new ShellState();
       final CommandLine parent =
           newCommandLine(new SchemaCrawlerShellCommands(), new StateFactory(state));
-      addPluginHelpCommands(parent, catalogLoaderPluginCommands);
-      addPluginHelpCommands(parent, commandPluginCommands);
-      addDatabasePluginHelpCommands(parent);
+      addPluginHelpCommands(parent, catalogLoaderPluginHelpCommands);
+      addPluginHelpCommands(parent, commandPluginHelpCommands);
+      addPluginHelpCommands(parent, serverPluginHelpCommands);
 
       if (!isBlank(command)) {
         configureHelpForSubcommand(parent);
@@ -106,16 +100,6 @@ public final class CommandLineHelpCommand implements Runnable {
       }
     } catch (final Exception e) {
       new SchemaCrawlerRuntimeException(e.getMessage(), e);
-    }
-  }
-
-  private void addDatabasePluginHelpCommands(final CommandLine commandLine) {
-    final DatabaseConnectorRegistry databaseConnectorRegistry =
-        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    for (final DatabaseServerType databaseServerType : databaseConnectorRegistry) {
-      final String pluginCommandName = databaseServerType.getDatabaseSystemIdentifier();
-      final CommandSpec pluginCommandSpec = CommandSpec.create().name(pluginCommandName);
-      commandLine.addSubcommand(pluginCommandName, pluginCommandSpec);
     }
   }
 
@@ -145,44 +129,7 @@ public final class CommandLineHelpCommand implements Runnable {
     return Optional.ofNullable(parent.getSubcommands().get(command));
   }
 
-  private Optional<CommandLine> lookupServerCommand(final String command) {
-    final String databaseSystemIdentifier;
-    if (command.contains(":")) {
-      databaseSystemIdentifier = command.split(":")[1];
-    } else {
-      databaseSystemIdentifier = command;
-    }
-
-    final DatabaseConnectorRegistry databaseConnectorRegistry =
-        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
-    if (!databaseConnectorRegistry.hasDatabaseSystemIdentifier(databaseSystemIdentifier)) {
-      return Optional.empty();
-    }
-
-    final DatabaseConnector databaseConnector =
-        databaseConnectorRegistry.findDatabaseConnectorFromDatabaseSystemIdentifier(
-            databaseSystemIdentifier);
-    final PluginCommand helpCommand = databaseConnector.getHelpCommand();
-
-    @Command
-    class EmptyCommand {}
-
-    final CommandLine commandLine = new CommandLine(new EmptyCommand());
-    commandLine.addSubcommand(toCommandSpec(helpCommand));
-
-    final CommandLine subcommandLine =
-        lookupCommand(commandLine, helpCommand.getName()).orElse(null);
-    if (subcommandLine == null) {
-      return Optional.empty();
-    }
-    configureCommandLine(subcommandLine);
-    configureHelpForSubcommand(subcommandLine);
-
-    return Optional.of(subcommandLine);
-  }
-
   private void showCompleteHelp(final CommandLine parent) {
-    final SystemCommand r = new SystemCommand(new ShellState());
     System.out.println(Version.about());
 
     System.out.printf("%n%n");
@@ -210,9 +157,9 @@ public final class CommandLineHelpCommand implements Runnable {
     final boolean isAvailabilityCommand =
         Arrays.asList("servers", "loaders", "commands").contains(command);
 
-    final CommandLine subCommand =
-        lookupServerCommand(command).orElse(lookupCommand(parent, command).orElse(null));
-    if (subCommand != null) {
+    final Optional<CommandLine> lookupCommand = lookupCommand(parent, command);
+    if (lookupCommand.isPresent()) {
+      final CommandLine subCommand = lookupCommand.get();
       subCommand.usage(System.out, Help.Ansi.AUTO);
       if (isAvailabilityCommand) {
         final CommandSpec commandSpec = subCommand.getCommandSpec();

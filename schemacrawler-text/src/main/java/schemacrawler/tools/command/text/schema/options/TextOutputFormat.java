@@ -90,8 +90,8 @@ public enum TextOutputFormat implements OutputFormat {
     outputFormatState = new OutputFormatState(name(), description);
   }
 
-  TextOutputFormat(final String description, final String... additionalFormatSpecifiers) {
-    outputFormatState = new OutputFormatState(name(), description, additionalFormatSpecifiers);
+  TextOutputFormat(final String description, final String formatSpecifier) {
+    outputFormatState = new OutputFormatState(formatSpecifier, description, name());
   }
 
   @Override

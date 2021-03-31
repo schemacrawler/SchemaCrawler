@@ -1,5 +1,14 @@
 # SchemaCrawler Change History
 
+<a name="a16.14.3"></a>
+## Release 16.14.3 - 2021-03-30
+
+- Add more documentation on output formats
+- Change Java serialization output format to `ser` from `java`
+- Allow better help for plugin commands, database plugins, and catalog loader plugins
+- Send a Twitter tweet on a new release
+
+
 <a name="a16.14.2"></a>
 ## Release 16.14.2 - 2021-03-30
 

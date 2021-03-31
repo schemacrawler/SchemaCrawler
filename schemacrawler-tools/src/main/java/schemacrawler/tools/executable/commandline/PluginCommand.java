@@ -189,12 +189,15 @@ public class PluginCommand implements Iterable<PluginCommandOption> {
     }
     switch (type) {
       case command:
-        newFooter.add("Add command switches to the execute command in the SchemaCrawler Shell");
+        newFooter.add("Add command options to the `execute` command in the SchemaCrawler Shell");
         break;
       case loader:
-        newFooter.add("Add loader switches to the load command in the SchemaCrawler Shell");
+        newFooter.add("Add loader options to the `load` command in the SchemaCrawler Shell");
         break;
-
+      case server:
+        newFooter.add("Add loader options to the `connect` command in the SchemaCrawler Shell");
+        break;
+        
       default:
         break;
     }

@@ -39,6 +39,10 @@ public interface CommandProvider {
 
   PluginCommand getCommandLineCommand();
 
+  default PluginCommand getCommandLineHelpCommand() {
+    return getCommandLineCommand();
+  }
+
   Collection<CommandDescription> getSupportedCommands();
 
   SchemaCrawlerCommand newSchemaCrawlerCommand(String command, Config config)

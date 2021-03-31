@@ -38,21 +38,15 @@ import schemacrawler.tools.options.OutputFormatState;
 import us.fatehi.utility.string.StringFormat;
 
 public enum SerializationFormat implements OutputFormat {
-  java(
-      "Java serialization",
-      "schemacrawler.tools.formatter.serialize.JavaSerializedCatalog",
-      true,
-      "ser"),
+  ser("Java serialization", "schemacrawler.tools.formatter.serialize.JavaSerializedCatalog", true),
   json(
       "JavaScript Object Notation (JSON) serialization format",
       "schemacrawler.tools.formatter.serialize.JsonSerializedCatalog",
-      false,
-      "json"),
+      false),
   yaml(
       "YAML Ain't Markup Language (YAML) serialization format",
       "schemacrawler.tools.formatter.serialize.YamlSerializedCatalog",
-      false,
-      "yaml");
+      false);
 
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(SerializationFormat.class.getName());
@@ -67,7 +61,7 @@ public enum SerializationFormat implements OutputFormat {
     final SerializationFormat outputFormat = fromFormatOrNull(format);
     if (outputFormat == null) {
       LOGGER.log(Level.CONFIG, new StringFormat("Unknown format <%s>, using default", format));
-      return java;
+      return ser;
     } else {
       return outputFormat;
     }
@@ -99,11 +93,8 @@ public enum SerializationFormat implements OutputFormat {
   private final boolean isBinaryFormat;
 
   SerializationFormat(
-      final String description,
-      final String serializerClassName,
-      final boolean isBinaryFormat,
-      final String... additionalFormatSpecifiers) {
-    outputFormatState = new OutputFormatState(name(), description, additionalFormatSpecifiers);
+      final String description, final String serializerClassName, final boolean isBinaryFormat) {
+    outputFormatState = new OutputFormatState(name(), description);
     this.serializerClassName = serializerClassName;
     this.isBinaryFormat = isBinaryFormat;
   }

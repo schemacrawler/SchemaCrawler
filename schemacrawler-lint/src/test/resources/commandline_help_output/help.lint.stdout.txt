@@ -12,6 +12,12 @@ For more information, see https://www.schemacrawler.com/lint.html
                             terminate_system
       --linter-configs=<linter-configs>
                           Path to the SchemaCrawler linter configuration file
+      --output-format=<output-format>
+                          Supported lint report output formats
+                          Use one of [txt, text] Plain text format, [html]
+                            HyperText Markup Language (HTML) format, [json]
+                            JavaScript Object Notation (JSON) format, [yaml]
+                            YAML Ain't Markup Language (YAML) format
       --run-all-linters   Whether to run all linters, including running the
                             ones that are not explicitly configured with their
                             default settings
@@ -172,6 +178,6 @@ Example configuration:
 
 
 
-Add command switches to the execute command in the SchemaCrawler Shell
+Add command options to the `execute` command in the SchemaCrawler Shell
 
 

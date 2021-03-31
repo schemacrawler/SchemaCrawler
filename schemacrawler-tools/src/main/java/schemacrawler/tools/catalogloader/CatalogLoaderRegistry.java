@@ -61,6 +61,18 @@ public final class CatalogLoaderRegistry {
     return commandLineCommands;
   }
 
+  public Collection<PluginCommand> getCommandLineHelpCommands() {
+    final Collection<PluginCommand> commandLineCommands = new HashSet<>();
+    try {
+      for (final CatalogLoader catalogLoader : loadCatalogLoaderRegistry()) {
+        commandLineCommands.add(catalogLoader.getCommandLineHelpCommand());
+      }
+    } catch (final SchemaCrawlerException e) {
+      throw new SchemaCrawlerRuntimeException("Could not load catalog loaders", e);
+    }
+    return commandLineCommands;
+  }
+
   public Collection<CommandDescription> getSupportedCatalogLoaders() {
     final Collection<CommandDescription> commandLineCommands = new HashSet<>();
     try {

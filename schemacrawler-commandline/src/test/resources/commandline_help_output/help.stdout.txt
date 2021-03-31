@@ -1,4 +1,4 @@
-SchemaCrawler 16.14.1
+SchemaCrawler 16.14.2
 Database schema discovery and comprehension tool
 https://www.schemacrawler.com/
 Copyright (c) 2000-2021, Sualeh Fatehi <sualeh@hotmail.com>.
@@ -233,7 +233,7 @@ Options:
                               patterns
                             This can be a time consuming operation
                             Optional, defaults to false
-Add loader switches to the load command in the SchemaCrawler Shell
+Add loader options to the `load` command in the SchemaCrawler Shell
 
 
 Loader for testing
@@ -243,7 +243,7 @@ loader:testloader
 Options:
       --test-load-option   Check that the test option is added to the load
                              command
-Add loader switches to the load command in the SchemaCrawler Shell
+Add loader options to the `load` command in the SchemaCrawler Shell
 
 
 Loader for catalog attributes, such as remarks or tags
@@ -254,7 +254,7 @@ Options:
       --attributes-file=<attributes-file>
          Path to a YAML file with table and column attributes to add to the
            schema
-Add loader switches to the load command in the SchemaCrawler Shell
+Add loader options to the `load` command in the SchemaCrawler Shell
 
 
 Loader for table row counts
@@ -268,7 +268,7 @@ Options:
       --no-empty-tables   Includes only tables that have rows of data
                           Requires table row counts to be loaded
                           Optional, default is false
-Add loader switches to the load command in the SchemaCrawler Shell
+Add loader options to the `load` command in the SchemaCrawler Shell
 
 
 ** Load database metadata into memory using a chain of catalog loaders
@@ -320,7 +320,7 @@ Options:
                          --sort-tables=<sorttables>
                          <sorttables> can be true or false
                          Optional, defaults to true
-Add command switches to the execute command in the SchemaCrawler Shell
+Add command options to the `execute` command in the SchemaCrawler Shell
 
 
 ** Test command which is not deployed with the release
@@ -330,7 +330,7 @@ command:test-command
 Options:
       --test-command-parameter=<test-command-parameter>
          Parameter for test command
-Add command switches to the execute command in the SchemaCrawler Shell
+Add command options to the `execute` command in the SchemaCrawler Shell
 
 
 ** Execute a SchemaCrawler command
@@ -350,8 +350,8 @@ Options:
                               html - For HTML5 output
 
                             You can generate a database diagram using Graphviz
-                            For a diagram <outputformat> is one of dot, eps,
-                              gif, jpg, or png
+                            For a diagram <outputformat> is one of dot, svg, or
+                              png
                             For a complete list Graphviz output formats, see
                               http://www.graphviz.org/
                             You can generate HTML output format with an
@@ -363,7 +363,8 @@ Options:
                             If Graphviz is not installed, a DOT file is
                               produced.
                             Or, use:
-                              scdot - For Graphviz DOT output, for schema only
+                              scdot - For Graphviz DOT output, for schema
+                              commands only
 
                             Optional, defaults to the format specified by the
                               output file, otherwise, text

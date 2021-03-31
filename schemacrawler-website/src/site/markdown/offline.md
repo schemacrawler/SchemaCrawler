@@ -14,13 +14,18 @@ producing output in a variety of formats.
 
 ## How to Create an Offline Snapshot
 
-Use the [`serialize`](serialize.html) command, and the `java` serialization method.
+Use the [`serialize`](serialize.html) command with Java serialization.
+It is best to create the snapshot with the `--info-level=maximum`
+and no [limit, filter or grep options](schemacrawler-shell.html).
 
 ## How to Use an Offline Snapshot
 
 In order to connect to an offline snapshot, use the `offline` database
 server type, and then use any SchemaCrawler command that you would like
-to use.
+to use. You can apply [limit, filter or grep options](schemacrawler-shell.html)
+too.
 
-Use the following command-line options in addition to the command: 
+Use the following command-line options to "connect" to your offline catalog,
+assuming that you have previously serialized to a file called "offline_db.ser": 
 `--server=offline --database=offline_db.ser`
+No username and password are required.
