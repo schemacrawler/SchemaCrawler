@@ -161,15 +161,3 @@ jobs:
           -Dskip.signing.artifacts=false \
           -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }} \
           clean deploy
-
-# TWEET RELEASE
-    - id: tweet-release
-      name: Tweet release from @SchemaCrawler
-      uses: ethomson/send-tweet-action@v1
-      if: startsWith(github.ref, 'refs/tags/')
-      with:
-        status: "New #SchemaCrawler release ${{ github.event.release.tag_name }} - https://github.com/schemacrawler/SchemaCrawler/releases/latest - see change log at https://www.schemacrawler.com/changes-report.html"
-        consumer-key: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
-        consumer-secret: ${{ secrets.TWITTER_CONSUMER_API_SECRET }}
-        access-token: ${{ secrets.TWITTER_ACCESS_TOKEN }}
-        access-token-secret: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
