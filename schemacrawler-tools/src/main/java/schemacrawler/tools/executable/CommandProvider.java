@@ -39,7 +39,7 @@ public interface CommandProvider {
 
   PluginCommand getCommandLineCommand();
 
-  default PluginCommand getCommandLineHelpCommand() {
+  default PluginCommand getHelpCommand() {
     return getCommandLineCommand();
   }
 

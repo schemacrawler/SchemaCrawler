@@ -46,7 +46,7 @@ public interface CatalogLoader extends Comparable<CatalogLoader> {
 
   PluginCommand getCommandLineCommand();
 
-  default PluginCommand getCommandLineHelpCommand() {
+  default PluginCommand getHelpCommand() {
     return getCommandLineCommand();
   }
 

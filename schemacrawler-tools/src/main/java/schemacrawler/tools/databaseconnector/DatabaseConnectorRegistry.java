@@ -175,7 +175,7 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
     return DatabaseConnector.UNKNOWN;
   }
 
-  public Collection<PluginCommand> getCommandLineHelpCommands() {
+  public Collection<PluginCommand> getHelpCommands() {
     final Collection<PluginCommand> commandLineHelpCommands = new ArrayList<>();
     for (final DatabaseConnector databaseConnector : databaseConnectorRegistry.values()) {
       commandLineHelpCommands.add(databaseConnector.getHelpCommand());

@@ -64,7 +64,7 @@ public class SerializationCommandProvider extends BaseCommandProvider {
   }
 
   @Override
-  public PluginCommand getCommandLineHelpCommand() {
+  public PluginCommand getHelpCommand() {
     final PluginCommand pluginCommand = getCommandLineCommand();
     pluginCommand.addOption(
         "output-format",

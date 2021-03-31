@@ -151,10 +151,10 @@ public final class CommandRegistry {
     return commandLineCommands;
   }
 
-  public Collection<PluginCommand> getCommandLineHelpCommands() {
+  public Collection<PluginCommand> getHelpCommands() {
     final Collection<PluginCommand> commandLineCommands = new HashSet<>();
     for (final CommandProvider commandProvider : commandRegistry) {
-      commandLineCommands.add(commandProvider.getCommandLineHelpCommand());
+      commandLineCommands.add(commandProvider.getHelpCommand());
     }
     return commandLineCommands;
   }

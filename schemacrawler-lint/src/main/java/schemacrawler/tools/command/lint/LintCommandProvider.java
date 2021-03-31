@@ -82,7 +82,7 @@ public class LintCommandProvider extends BaseCommandProvider {
   }
 
   @Override
-  public PluginCommand getCommandLineHelpCommand() {
+  public PluginCommand getHelpCommand() {
     final PluginCommand pluginCommand = getCommandLineCommand();
     pluginCommand.addOption(
         "output-format",

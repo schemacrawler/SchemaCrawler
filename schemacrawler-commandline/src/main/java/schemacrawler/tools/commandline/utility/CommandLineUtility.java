@@ -57,16 +57,16 @@ public class CommandLineUtility {
       () -> new CatalogLoaderRegistry().getCommandLineCommands();
 
   public static final Supplier<Collection<PluginCommand>> catalogLoaderPluginHelpCommands =
-      () -> new CatalogLoaderRegistry().getCommandLineHelpCommands();
+      () -> new CatalogLoaderRegistry().getHelpCommands();
 
   public static final Supplier<Collection<PluginCommand>> commandPluginCommands =
       () -> CommandRegistry.getCommandRegistry().getCommandLineCommands();
 
   public static final Supplier<Collection<PluginCommand>> commandPluginHelpCommands =
-      () -> CommandRegistry.getCommandRegistry().getCommandLineHelpCommands();
+      () -> CommandRegistry.getCommandRegistry().getHelpCommands();
 
   public static final Supplier<Collection<PluginCommand>> serverPluginHelpCommands =
-      () -> DatabaseConnectorRegistry.getDatabaseConnectorRegistry().getCommandLineHelpCommands();
+      () -> DatabaseConnectorRegistry.getDatabaseConnectorRegistry().getHelpCommands();
 
   public static void addPluginCommands(
       final CommandLine commandLine, final Supplier<Collection<PluginCommand>> pluginCommands)
