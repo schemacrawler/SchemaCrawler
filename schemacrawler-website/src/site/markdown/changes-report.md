@@ -10,7 +10,7 @@
 
 
 <a name="a16.14.2"></a>
-## Release 16.14.2 - 2021-03-30
+## Release 16.14.2 - 2021-03-26
 
 - Add more documentation on website and command-line help for how to use SchemaCrawler
 - Support specification of alternate keys in attributes file, and show them on output and diagrams
@@ -591,18 +591,18 @@ and [dbdiagram.io](https://dbdiagram.io/home) diagrams
 
 * The graph command is removed. Graphs are generated based on the output format.
 
-## Release 14.12.01 - 2016.14.24
+## Release 14.12.01 - 2016.14.34
 <a name="a14.12.01"></a>
 
 * New command-line option to show weak associations, irrespective of the infolevel.
 * Changed the boolean property, schemacrawler.format.hide_weak_associations to schemacrawler.format.show_weak_associations, since weak associations are hidden by default in SchemaCrawler output. Also added a new command-line switch, -weakassociations to show weak associations. Weak associations now can be shown with any infolevel setting.
 
-## Release 14.11.02 - 2016.14.20
+## Release 14.11.02 - 2016.14.30
 <a name="a14.11.02"></a>
 
 * Support for the Teradata JDBC driver. The Teradata JDBC driver does not follow JDBC specifications. It should throw a SQLFeatureNotSupportedException for getFunctions, or at the least a SQLException state HYC00 ("Optional feature not implemented"). Instead, it throws with a state of HY000 ("General error").
 
-## Release 14.11.01 - 2016.14.26
+## Release 14.11.01 - 2016.14.36
 <a name="a14.11.01"></a>
 
 * Show a better error message when a script file cannot be read.
