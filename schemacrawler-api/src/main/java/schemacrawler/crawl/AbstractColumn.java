@@ -116,7 +116,7 @@ abstract class AbstractColumn<P extends DatabaseObject> extends AbstractDependan
   @Override
   public final String getWidth() {
 
-    if (!hasColumnDataType()) {
+    if (!isColumnDataTypeKnown()) {
       return "";
     }
 
@@ -145,7 +145,7 @@ abstract class AbstractColumn<P extends DatabaseObject> extends AbstractDependan
 
   /** {@inheritDoc} */
   @Override
-  public final boolean hasColumnDataType() {
+  public final boolean isColumnDataTypeKnown() {
     return columnDataType != null;
   }
 

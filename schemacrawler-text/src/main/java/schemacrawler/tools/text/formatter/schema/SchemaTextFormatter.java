@@ -732,7 +732,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     if (column == null) {
       return;
     }
-    if (!column.hasColumnDataType()) {
+    if (!column.isColumnDataTypeKnown()) {
       return;
     }
     if (!column.getColumnDataType().isEnumerated()) {

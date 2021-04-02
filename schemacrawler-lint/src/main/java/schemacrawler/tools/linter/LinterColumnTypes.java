@@ -73,7 +73,7 @@ public class LinterColumnTypes extends BaseLinter {
     requireNonNull(columnTypes, "Not initialized");
 
     for (final Column column : getColumns(table)) {
-      if (!column.hasColumnDataType()) {
+      if (!column.isColumnDataTypeKnown()) {
         continue;
       }
       columnTypes.add(column.getName(), column.getColumnDataType());

@@ -133,8 +133,8 @@ class MutableKeyColumn extends AbstractDependantObject<Table> implements Column,
   }
 
   @Override
-  public boolean hasColumnDataType() {
-    return column.hasColumnDataType();
+  public boolean isColumnDataTypeKnown() {
+    return column.isColumnDataTypeKnown();
   }
 
   @Override

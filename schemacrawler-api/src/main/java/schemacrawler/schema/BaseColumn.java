@@ -78,7 +78,7 @@ public interface BaseColumn<D extends DatabaseObject>
    *
    * @return True if the column data type is known
    */
-  boolean hasColumnDataType();
+  boolean isColumnDataTypeKnown();
 
   /**
    * Whether the column is nullable.

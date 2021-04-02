@@ -68,11 +68,11 @@ public class LinterForeignKeyMismatch extends BaseLinter {
       for (final ForeignKey foreignKey : table.getImportedForeignKeys()) {
         for (final ColumnReference columnReference : foreignKey) {
           final Column pkColumn = columnReference.getPrimaryKeyColumn();
-          if (!pkColumn.hasColumnDataType()) {
+          if (!pkColumn.isColumnDataTypeKnown()) {
             continue;
           }
           final Column fkColumn = columnReference.getForeignKeyColumn();
-          if (!fkColumn.hasColumnDataType()) {
+          if (!fkColumn.isColumnDataTypeKnown()) {
             continue;
           }
           if (!pkColumn

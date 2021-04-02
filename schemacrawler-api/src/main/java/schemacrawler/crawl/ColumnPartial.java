@@ -101,7 +101,7 @@ final class ColumnPartial extends AbstractDependantObject<Table>
   }
 
   @Override
-  public boolean hasColumnDataType() {
+  public boolean isColumnDataTypeKnown() {
     return false;
   }
 

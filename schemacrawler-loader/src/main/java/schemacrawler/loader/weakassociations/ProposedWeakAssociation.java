@@ -73,7 +73,7 @@ public final class ProposedWeakAssociation
       return false;
     }
 
-    if (!pkColumn.hasColumnDataType() || !fkColumn.hasColumnDataType()) {
+    if (!pkColumn.isColumnDataTypeKnown() || !fkColumn.isColumnDataTypeKnown()) {
       return false;
     }
     final ColumnDataType fkColumnType = fkColumn.getColumnDataType();

@@ -568,7 +568,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
     if (column == null) {
       return;
     }
-    if (!column.hasColumnDataType()) {
+    if (!column.isColumnDataTypeKnown()) {
       return;
     }
     if (!column.getColumnDataType().isEnumerated()) {

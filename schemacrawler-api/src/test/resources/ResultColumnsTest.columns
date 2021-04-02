@@ -6,6 +6,7 @@ column: PUBLIC.BOOKS.BOOKS.TITLE
   autoIncrement: false
   caseSensitive: true
   columnDataType: PUBLIC.BOOKS."VARCHAR"
+  columnDataTypeKnown: true
   currency: false
   decimalDigits: 0
   definitelyWritable: false
@@ -34,6 +35,7 @@ column: C2
   autoIncrement: false
   caseSensitive: true
   columnDataType: VARCHAR
+  columnDataTypeKnown: true
   currency: false
   decimalDigits: 0
   definitelyWritable: false
@@ -62,6 +64,7 @@ column: PUBLIC.BOOKS.BOOKS.PRICE
   autoIncrement: false
   caseSensitive: false
   columnDataType: PUBLIC.BOOKS."DOUBLE"
+  columnDataTypeKnown: true
   currency: false
   decimalDigits: 0
   definitelyWritable: false

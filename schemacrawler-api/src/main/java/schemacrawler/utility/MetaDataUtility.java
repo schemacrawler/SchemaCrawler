@@ -239,7 +239,7 @@ public final class MetaDataUtility {
     final List<String> columnsList = new ArrayList<>();
     for (int i = 0; i < columns.size(); i++) {
       final Column column = columns.get(i);
-      if (!column.hasColumnDataType()) {
+      if (!column.isColumnDataTypeKnown()) {
         continue;
       }
       final JavaSqlTypeGroup javaSqlTypeGroup =
