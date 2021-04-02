@@ -73,6 +73,9 @@ public final class ProposedWeakAssociation
       return false;
     }
 
+    if (!pkColumn.hasColumnDataType() || !fkColumn.hasColumnDataType()) {
+      return false;
+    }
     final ColumnDataType fkColumnType = fkColumn.getColumnDataType();
     final ColumnDataType pkColumnType = pkColumn.getColumnDataType();
     final boolean isValid =

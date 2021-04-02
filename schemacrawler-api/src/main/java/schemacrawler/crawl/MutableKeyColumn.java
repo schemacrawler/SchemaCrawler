@@ -39,7 +39,6 @@ import schemacrawler.schema.Table;
 
 class MutableKeyColumn extends AbstractDependantObject<Table> implements Column, DefinedObject {
 
-  /** */
   private static final long serialVersionUID = 6988029161945610279L;
 
   private final Column column;
@@ -131,6 +130,11 @@ class MutableKeyColumn extends AbstractDependantObject<Table> implements Column,
   @Override
   public String getWidth() {
     return column.getWidth();
+  }
+
+  @Override
+  public boolean hasColumnDataType() {
+    return column.hasColumnDataType();
   }
 
   @Override

@@ -75,6 +75,9 @@ public class LinterTooManyLobs extends BaseLinter {
   private ArrayList<Column> findLobColumns(final List<Column> columns) {
     final ArrayList<Column> lobColumns = new ArrayList<>();
     for (final Column column : columns) {
+      if (!column.hasColumnDataType()) {
+        continue;
+      }
       final JavaSqlTypeGroup javaSqlTypeGroup =
           column.getColumnDataType().getJavaSqlType().getJavaSqlTypeGroup();
       if (javaSqlTypeGroup == JavaSqlTypeGroup.large_object) {

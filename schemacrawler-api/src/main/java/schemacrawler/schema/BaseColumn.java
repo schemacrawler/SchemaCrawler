@@ -74,6 +74,13 @@ public interface BaseColumn<D extends DatabaseObject>
   String getWidth();
 
   /**
+   * Whether the column data type is known or not.
+   *
+   * @return True if the column data type is known
+   */
+  boolean hasColumnDataType();
+
+  /**
    * Whether the column is nullable.
    *
    * @return Whether the column is nullable

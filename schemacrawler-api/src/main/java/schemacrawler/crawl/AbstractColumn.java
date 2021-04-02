@@ -116,10 +116,11 @@ abstract class AbstractColumn<P extends DatabaseObject> extends AbstractDependan
   @Override
   public final String getWidth() {
 
-    final ColumnDataType columnDataType = getColumnDataType();
-    if (columnDataType == null) {
+    if (!hasColumnDataType()) {
       return "";
     }
+
+    final ColumnDataType columnDataType = getColumnDataType();
 
     if (size <= 0 || size >= 2_000_000_000) {
       return "";
@@ -140,6 +141,12 @@ abstract class AbstractColumn<P extends DatabaseObject> extends AbstractDependan
     }
 
     return columnWidthBuffer.toString();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean hasColumnDataType() {
+    return columnDataType != null;
   }
 
   /** {@inheritDoc} */

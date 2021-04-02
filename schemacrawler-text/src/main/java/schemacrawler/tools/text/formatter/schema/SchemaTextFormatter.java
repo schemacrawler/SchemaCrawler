@@ -732,12 +732,10 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     if (column == null) {
       return;
     }
-    try {
-      if (!column.getColumnDataType().isEnumerated()) {
-        return;
-      }
-    } catch (final NotLoadedException e) {
-      // The column may be partial for index pseudo-columns
+    if (!column.hasColumnDataType()) {
+      return;
+    }
+    if (!column.getColumnDataType().isEnumerated()) {
       return;
     }
     final String enumValues =
