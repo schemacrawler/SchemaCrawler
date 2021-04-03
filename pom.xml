@@ -16,10 +16,12 @@
   <name>SchemaCrawler [Aggregator]</name>
 
   <modules>
+
     <module>schemacrawler-parent</module>
 
     <module>schemacrawler-testdb</module>
 
+	<!-- SchemaCrawler jar -->
     <module>schemacrawler-utility</module>
     <module>schemacrawler-api</module>
     <module>schemacrawler-tools</module>
@@ -33,6 +35,7 @@
     <module>schemacrawler-scripting</module>
     <module>schemacrawler-lint</module>
 
+	<!-- Database plugins -->
     <module>schemacrawler-dbtest</module>
     <module>schemacrawler-db2</module>
     <module>schemacrawler-hsqldb</module>
