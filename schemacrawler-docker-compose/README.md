@@ -16,6 +16,8 @@
   `docker-compose -f schemacrawler.yml -f postgresql.yml up -d`
 - Create a test PostgreSQL database schema, run
   `docker exec -it schemacrawler ./target/createtestschema.sh --url "jdbc:postgresql://postgresql:5432/schemacrawler?ApplicationName=SchemaCrawler;loggerLevel=DEBUG" --user schemacrawler --password schemacrawler --debug`
+- Create alias, run
+  `alias schemacrawler='/opt/schemacrawler/schemacrawler.sh'`
 
 ### Testing
 
@@ -39,6 +41,8 @@
   `docker-compose -f schemacrawler.yml -f oracle.yml up -d`
 - Create a test Oracle database schema, run
   `docker exec -it schemacrawler ./target/createtestschema.sh --url "jdbc:oracle:thin:@//oracle:1521/xe" --user system --password oracle --scripts-resource /oracle-11g.scripts.txt --debug`
+- Create alias, run
+  `alias schemacrawler='/opt/schemacrawler/schemacrawler.sh'`
 
 ### Testing
 
@@ -62,6 +66,8 @@
   `docker-compose -f schemacrawler.yml -f sqlserver.yml up -d`
 - Create a test Microsoft SQL Server database schema, run
   `docker exec -it schemacrawler ./target/createtestschema.sh --url "jdbc:sqlserver://sqlserver:1433;databaseName=master" --user SA --password Schem#Crawl3r --debug`
+- Create alias, run
+  `alias schemacrawler='/opt/schemacrawler/schemacrawler.sh'`
 
 ### Testing
 
@@ -85,6 +91,8 @@
   `docker-compose -f schemacrawler.yml -f mysql.yml up -d`
 - Create a test MySQL database schema, run
   `docker exec -it schemacrawler ./target/createtestschema.sh --url "jdbc:mysql://mysql:3306/books?disableMariaDbDriver&useInformationSchema=true" --user root --password schemacrawler --debug`
+- Create alias, run
+  `alias schemacrawler='/opt/schemacrawler/schemacrawler.sh'`
 
 ### Testing
 
@@ -109,6 +117,8 @@
   `docker-compose -f schemacrawler.yml -f db2.yml up -d`
 - Create a test IBM DB2 database schema, run
   `docker exec -it schemacrawler ./target/createtestschema.sh --url "jdbc:db2://db2:50000/schcrwlr:retrieveMessagesFromServerOnGetMessage=true;" --user schcrwlr --password schemacrawler --debug`
+- Create alias, run
+  `alias schemacrawler='/opt/schemacrawler/schemacrawler.sh'`
 
 ### Testing
 

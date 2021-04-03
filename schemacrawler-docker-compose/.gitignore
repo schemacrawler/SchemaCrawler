@@ -12,3 +12,6 @@ buildNumber.properties
 .mvn/timing.properties
 /*.old
 **/_testdb/
+.bash_history
+.sdb/
+.cache/

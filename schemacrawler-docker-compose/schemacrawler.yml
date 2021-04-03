@@ -9,8 +9,5 @@ services:
     tty: true
     volumes:
       - type: bind
-        source: ./target
-        target: /home/schcrwlr/target
-      - type: bind
         source: ./
-        target: /home/schcrwlr/output
+        target: /home/schcrwlr
