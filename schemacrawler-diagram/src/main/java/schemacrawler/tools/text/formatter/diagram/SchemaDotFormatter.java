@@ -33,6 +33,7 @@ import static schemacrawler.loader.counts.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.schema.TableConstraintType.foreign_key;
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 import static schemacrawler.utility.MetaDataUtility.getColumnsListAsString;
+import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.html.TagBuilder.tableCell;
 import static us.fatehi.utility.html.TagBuilder.tableRow;
 import static us.fatehi.utility.html.TagOutputFormat.html;
@@ -308,14 +309,16 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
         akName = "";
       }
 
+      String columnsList =
+          getColumnsListAsString(
+              alternateKey,
+              identifiers.getIdentifierQuotingStrategy(),
+              identifiers.getIdentifierQuoteString());
+      if (!isBlank(columnsList)) {
+        columnsList = " (" + columnsList + ")";
+      }
       final String constraintText =
-          String.format(
-              "\u2022 %s (%s) [alternate key]",
-              akName,
-              getColumnsListAsString(
-                  alternateKey,
-                  identifiers.getIdentifierQuotingStrategy(),
-                  identifiers.getIdentifierQuoteString()));
+          String.format("\u2022 %s%s [alternate key]", akName, columnsList);
 
       formattingHelper
           .append(
@@ -484,15 +487,16 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
       }
       final String indexDetails =
           (index.isUnique() ? "" : "non-") + "unique " + indexTypeString + "index";
+      String columnsList =
+          getColumnsListAsString(
+              index,
+              identifiers.getIdentifierQuotingStrategy(),
+              identifiers.getIdentifierQuoteString());
+      if (!isBlank(columnsList)) {
+        columnsList = " (" + columnsList + ")";
+      }
       final String constraintText =
-          String.format(
-              "\u2022 %s (%s) [%s]",
-              indexName,
-              getColumnsListAsString(
-                  index,
-                  identifiers.getIdentifierQuotingStrategy(),
-                  identifiers.getIdentifierQuoteString()),
-              indexDetails);
+          String.format("\u2022 %s%s [%s]", indexName, columnsList, indexDetails);
 
       formattingHelper
           .append(
