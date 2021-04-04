@@ -91,7 +91,7 @@ jobs:
           -Ddistrib \
           -Ddocker.skip=false \
           clean install \
-          org.jacoco:jacoco-maven-plugin:0.8.5:report-aggregate
+          org.jacoco:jacoco-maven-plugin:0.8.6:report-aggregate
 
 # GET TEST RESULTS
     - id: publish-test-results
