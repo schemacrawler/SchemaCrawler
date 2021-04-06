@@ -15,9 +15,7 @@
 - To start SchemaCrawler with PostgreSQL, run
   `docker-compose -f schemacrawler.yml -f postgresql.yml up -d`
 - Create a test PostgreSQL database schema, run
-  `docker exec -it schemacrawler ./target/createtestschema.sh --url "jdbc:postgresql://postgresql:5432/schemacrawler?ApplicationName=SchemaCrawler;loggerLevel=DEBUG" --user schemacrawler --password schemacrawler --debug`
-- Create alias, run
-  `alias schemacrawler='/opt/schemacrawler/schemacrawler.sh'`
+  `docker exec -it schemacrawler ./testdb/createtestschema.sh --url "jdbc:postgresql://postgresql:5432/schemacrawler?ApplicationName=SchemaCrawler;loggerLevel=DEBUG" --user schemacrawler --password schemacrawler --debug`
 
 ### Testing
 
@@ -25,6 +23,7 @@
   `docker exec -it schemacrawler /bin/bash`
 - Run SchemaCrawler from Docker container bash
   `schemacrawler --server postgresql --host postgresql --database schemacrawler --user schemacrawler --password schemacrawler --info-level minimum -c list`
+- Output can be created with `--output-file output/out.txt`
 
 ### Tear Down
 
@@ -40,9 +39,7 @@
 - To start SchemaCrawler with Oracle, run
   `docker-compose -f schemacrawler.yml -f oracle.yml up -d`
 - Create a test Oracle database schema, run
-  `docker exec -it schemacrawler ./target/createtestschema.sh --url "jdbc:oracle:thin:@//oracle:1521/xe" --user system --password oracle --scripts-resource /oracle-11g.scripts.txt --debug`
-- Create alias, run
-  `alias schemacrawler='/opt/schemacrawler/schemacrawler.sh'`
+  `docker exec -it schemacrawler ./testdb/createtestschema.sh --url "jdbc:oracle:thin:@//oracle:1521/xe" --user system --password oracle --scripts-resource /oracle-11g.scripts.txt --debug`
 
 ### Testing
 
@@ -50,6 +47,7 @@
   `docker exec -it schemacrawler /bin/bash`
 - Run SchemaCrawler from Docker container bash
   `schemacrawler --server oracle --host oracle --database xe --user system --password oracle --info-level minimum -c list`
+- Output can be created with `--output-file output/out.txt`
 
 ### Tear Down
 
@@ -65,9 +63,7 @@
 - To start SchemaCrawler with Microsoft SQL Server, run
   `docker-compose -f schemacrawler.yml -f sqlserver.yml up -d`
 - Create a test Microsoft SQL Server database schema, run
-  `docker exec -it schemacrawler ./target/createtestschema.sh --url "jdbc:sqlserver://sqlserver:1433;databaseName=master" --user SA --password Schem#Crawl3r --debug`
-- Create alias, run
-  `alias schemacrawler='/opt/schemacrawler/schemacrawler.sh'`
+  `docker exec -it schemacrawler ./testdb/createtestschema.sh --url "jdbc:sqlserver://sqlserver:1433;databaseName=master" --user SA --password Schem#Crawl3r --debug`
 
 ### Testing
 
@@ -75,6 +71,7 @@
   `docker exec -it schemacrawler /bin/bash`
 - Run SchemaCrawler from Docker container bash
   `schemacrawler --server sqlserver --host sqlserver --database BOOKS --schemas BOOKS\.dbo --user SA --password Schem#Crawl3r --info-level minimum -c list`
+- Output can be created with `--output-file output/out.txt`
 
 ### Tear Down
 
@@ -90,9 +87,7 @@
 - To start SchemaCrawler with MySQL, run
   `docker-compose -f schemacrawler.yml -f mysql.yml up -d`
 - Create a test MySQL database schema, run
-  `docker exec -it schemacrawler ./target/createtestschema.sh --url "jdbc:mysql://mysql:3306/books?disableMariaDbDriver&useInformationSchema=true" --user root --password schemacrawler --debug`
-- Create alias, run
-  `alias schemacrawler='/opt/schemacrawler/schemacrawler.sh'`
+  `docker exec -it schemacrawler ./testdb/createtestschema.sh --url "jdbc:mysql://mysql:3306/books?disableMariaDbDriver&useInformationSchema=true" --user root --password schemacrawler --debug`
 
 ### Testing
 
@@ -100,6 +95,7 @@
   `docker exec -it schemacrawler /bin/bash`
 - Run SchemaCrawler from Docker container bash
   `schemacrawler --server mysql --host mysql --database books --user schemacrawler --password schemacrawler --info-level minimum -c list`
+- Output can be created with `--output-file output/out.txt`
 
 ### Tear Down
 
@@ -116,9 +112,7 @@
 - To start SchemaCrawler with IBM DB2, run
   `docker-compose -f schemacrawler.yml -f db2.yml up -d`
 - Create a test IBM DB2 database schema, run
-  `docker exec -it schemacrawler ./target/createtestschema.sh --url "jdbc:db2://db2:50000/schcrwlr:retrieveMessagesFromServerOnGetMessage=true;" --user schcrwlr --password schemacrawler --debug`
-- Create alias, run
-  `alias schemacrawler='/opt/schemacrawler/schemacrawler.sh'`
+  `docker exec -it schemacrawler ./testdb/createtestschema.sh --url "jdbc:db2://db2:50000/schcrwlr:retrieveMessagesFromServerOnGetMessage=true;" --user schcrwlr --password schemacrawler --debug`
 
 ### Testing
 
@@ -126,6 +120,7 @@
   `docker exec -it schemacrawler /bin/bash`
 - Run SchemaCrawler from Docker container bash
   `schemacrawler --server db2 --host db2 --database schcrwlr --user schcrwlr --password schemacrawler --info-level minimum -c list`
+- Output can be created with `--output-file output/out.txt`
 
 Connect to the IBM DB2 container if needed, run
 `docker exec -it db2 /bin/bash`

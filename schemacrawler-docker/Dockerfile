@@ -36,7 +36,7 @@ LABEL "maintainer"="Sualeh Fatehi <sualeh@hotmail.com>" \
       "org.opencontainers.image.license"="(GPL-3.0 OR OR LGPL-3.0+ EPL-1.0)"
 
 
-# Install Graphviz
+# Install Graphviz as root user
 RUN \
   apk add --update --no-cache \
   bash \
@@ -68,7 +68,6 @@ COPY \
 # Create aliases for SchemaCrawler
 RUN \
     echo 'alias schemacrawler="/opt/schemacrawler/schemacrawler.sh"' \
-    >> /home/schcrwlr/.profile
-RUN \
-    echo 'alias schemacrawler="/opt/schemacrawler/schemacrawler.sh"' \
+    >> /home/schcrwlr/.profile \
+ && echo 'alias schemacrawler="/opt/schemacrawler/schemacrawler.sh"' \
     >> /home/schcrwlr/.bashrc
