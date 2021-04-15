@@ -1,11 +1,6 @@
 # Who Uses SchemaCrawler
 
 
-## Ecosystem
-
-See details on the [SchemaCrawler Ecosystem](ecosystem.html).
-
-
 ## Question from Users
 
 SchemaCrawler questions from users.
@@ -18,6 +13,11 @@ SchemaCrawler questions from users.
 
 ## Companies and Projects
 
+- [schemacrawler-additionnallints](https://github.com/mbarre/schemacrawler-additionnallints) is maintained by
+Michèle Barré <Michele.Barre at GMail> and [Adrien Sales]
+- [![Chocolatey](https://img.shields.io/chocolatey/v/schemacrawler.svg)](https://chocolatey.org/packages/schemacrawler)
+The [Chocolatey SchemaCrawler package](https://github.com/adriens/chocolatey-schemacrawler) is maintained by
+[Adrien Sales]
 - The [Neo4j APOC](https://neo4j.com/labs/apoc/4.1/database-integration/load-jdbc/) project provides a plugin for database modeling that uses SchemaCrawler to model a relational schema as a graph.
 - [Goldman Sachs Obevo](https://github.com/goldmansachs/obevo) project, a database deployment tool
   that handles enterprise-scale schemas
@@ -68,6 +68,8 @@ Photograph courtesy of [Adrien Sales](https://www.linkedin.com/in/adrien-sales).
 
 SchemaCrawler in the press, and in online articles and blogs.
 
+- steph1978's article [Graph my database](https://linuxfr.org/users/steph1978/journaux/graph-my-database)
+- [Визуализация схемы БД через утилиту schemacrawler](https://pythonforbeginers.blogspot.com/2021/02/blog-post.html)
 - João Rocha da Silva's article [How to make nice diagrams from your SQLite database](https://silvae86.github.io/databases/sqlite/diagrams/macos/reverse/engineering/2019/04/14/how_to_reverse_engineer_database_diagrams/)
 - Dan Nguyen's article, [Generating cool SQLite database diagrams with schemacrawler on Mac OS](https://gist.github.com/dannguyen/f056d05bb7fec408bb7c14ea1552c349)
 - Buffer of My Mind on [SchemaCrawler](http://mindbuffer.wordpress.com/2010/10/14/schema-crawler/)
