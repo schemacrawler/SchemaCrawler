@@ -25,8 +25,11 @@ Additional SchemaCrawler database plugins are available from the [schemacrawler/
 ### Scoop
 
 You can install SchemaCrawler on Windows using the [Scoop command-line installer](https://scoop.sh/). Follow these steps:
+
 1. Install the [Scoop command-line installer](https://scoop.sh/)
-2. Run `scoop install https://www.github.com/schemacrawler/SchemaCrawler-Installers/releases/latest/download/schemacrawler.json` from a PowerShell command-prompt
+2. Run 
+  `scoop install https://www.github.com/schemacrawler/SchemaCrawler-Installers/releases/latest/download/schemacrawler.json` 
+  from a PowerShell command-prompt
 
 ### Chocolatey
 

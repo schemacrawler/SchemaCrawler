@@ -97,6 +97,15 @@ jobs:
         docker logout
 
 # CREATE GITHUB RELEASE AND ADD ASSETS
+    - id: upload-artifacts
+      name: Upload installers
+      uses: actions/upload-artifact@v2
+      with:
+        name: release-artifacts-v16.14.4
+        path: |
+          ./schemacrawler-distrib/target/schemacrawler-16.14.4-distribution.zip
+          ./schemacrawler-distrib/target/schemacrawler-16.14.4-distribution.zip.SHA-512
+        retention-days: 1
     - id: create-release
       name: Create GitHub release
       uses: actions/create-release@latest
