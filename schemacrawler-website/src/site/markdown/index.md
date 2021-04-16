@@ -138,5 +138,5 @@ More code examples are at [Code Examples Using the SchemaCrawler API](code-examp
 
 SchemaCrawler is grateful to
 
-- [Adrien Sales](https://www.linkedin.com/in/adrien-sales) for developing the [SchemaCrawler ecosystem](ecosystem.html)
+- [Adrien Sales](https://www.linkedin.com/in/adrien-sales) for developing the ecosystem
 - [Atlassian](https://www.atlassian.com/) for providing a license for [Clover](https://www.atlassian.com/software/clover)

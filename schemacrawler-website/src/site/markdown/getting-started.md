@@ -90,7 +90,7 @@ about [building].
 
 ### Additional Installation Options
 
-Additional installation options are available from the [SchemaCrawler ecosystem](ecosystem.html).
+Additional [download and installation options](downloads.html) are available.
 
 
 [FAQs]: faq.html
