@@ -37,8 +37,9 @@ jobs:
       uses: actions/checkout@v2
     - id: setup-jdk
       name: Set up JDK
-      uses: actions/setup-java@v1
+      uses: actions/setup-java@v2
       with:
+        distribution: zulu
         java-version: ${{ matrix.java }}
     - id: install-packages
       name: Install packages
