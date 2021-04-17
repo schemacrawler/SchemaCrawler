@@ -116,7 +116,7 @@ public class JdbcDriverInfoRetrieverTest {
 
     final MutableJdbcDriverInfo jdbcDriverInfo = catalog.getJdbcDriverInfo();
     assertThat(jdbcDriverInfo.getProductName(), is("HSQL Database Engine Driver"));
-    assertThat(jdbcDriverInfo.getProductVersion(), is("2.5.1"));
+    assertThat(jdbcDriverInfo.getProductVersion(), is("2.6.0"));
 
     final List<Property> driverProperties = new ArrayList<>(jdbcDriverInfo.getDriverProperties());
     assertThat(driverProperties, hasSize(0));
