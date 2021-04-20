@@ -138,7 +138,7 @@ public class TestDatabase {
 
   private static int getFreePort() {
     final int defaultPort = 9001;
-    try (ServerSocket socket = new ServerSocket(0)) {
+    try (final ServerSocket socket = new ServerSocket(0)) {
       socket.setReuseAddress(true);
       final int port = socket.getLocalPort();
       if (port <= 0) {
@@ -263,6 +263,7 @@ public class TestDatabase {
             server.getDatabasePath(0, true)));
 
     server.start();
+    server.checkRunning(true);
   }
 
   private void stopServer() {
