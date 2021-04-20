@@ -31,7 +31,6 @@ package schemacrawler.testdb;
 import static java.nio.file.Files.delete;
 import static java.nio.file.Files.walkFileTree;
 import static java.util.Objects.requireNonNull;
-import static org.hsqldb.server.ServerConstants.SERVER_STATE_ONLINE;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -66,10 +65,10 @@ public class TestDatabase {
   public static TestDatabase initialize() {
     if (testDatabase == null) {
       try {
+        final String host = getLocalHost();
         final int port = getFreePort();
-        testDatabase =
-            new TestDatabase(false, getLocalHost(), port, String.format("schemacrawler%d", port));
-
+        final String database = String.format("schemacrawler%d", port);
+        testDatabase = new TestDatabase(false, host, port, database);
         testDatabase.start();
       } catch (final Exception e) {
         e.printStackTrace();
@@ -92,9 +91,7 @@ public class TestDatabase {
   public static TestDatabase startDefaultTestDatabase(final boolean trace) {
     try {
       final TestDatabase testDatabase = new TestDatabase(trace, "localhost", 9001, "schemacrawler");
-
       testDatabase.start();
-
       return testDatabase;
     } catch (final Exception e) {
       e.printStackTrace();
@@ -209,6 +206,24 @@ public class TestDatabase {
   /** Load driver, and create database, schema and data. */
   public void start() throws Exception {
     LOGGER.log(Level.FINE, String.format("%s - Setting up database", toString()));
+    startServer();
+    createTestDatabase();
+  }
+
+  /** Shut down the database server. */
+  public void stop() {
+    stopServer();
+  }
+
+  private void createTestDatabase() throws SQLException {
+    final Connection connection = getConnection();
+    connection.setAutoCommit(true);
+    final TestSchemaCreator schemaCreator =
+        new TestSchemaCreator(connection, "/hsqldb.scripts.txt");
+    schemaCreator.run();
+  }
+
+  private void startServer() throws IOException {
     // Attempt to delete the database files
     deleteServerFiles();
 
@@ -247,17 +262,10 @@ public class TestDatabase {
             server.getDatabaseName(0, true),
             server.getDatabasePath(0, true)));
 
-    startServer(server);
-
-    final Connection connection = getConnection();
-    connection.setAutoCommit(true);
-    final TestSchemaCreator schemaCreator =
-        new TestSchemaCreator(connection, "/hsqldb.scripts.txt");
-    schemaCreator.run();
+    server.start();
   }
 
-  /** Shut down the database server. */
-  public void stop() {
+  private void stopServer() {
     try (final Connection connection = getConnection();
         final Statement statement = connection.createStatement(); ) {
       statement.execute("SHUTDOWN");
@@ -271,29 +279,5 @@ public class TestDatabase {
       LOGGER.log(Level.WARNING, e.getMessage(), e);
     }
     LOGGER.log(Level.INFO, "SHUTDOWN database");
-  }
-
-  private void startServer(final Server server) throws Exception {
-    requireNonNull(server, "HyperSQL server not provided");
-
-    server.start();
-    for (int tries = 0; tries < 5; tries++) {
-      if (server.getState() == SERVER_STATE_ONLINE) {
-        return;
-      } else {
-        Thread.sleep(1000);
-      }
-    }
-
-    // Not started after wait
-    final Throwable serverError = server.getServerError();
-    final String message =
-        String.format(
-            "Could not start HyperSQL server for database %s:%d/%s due to %s",
-            server.getAddress(),
-            server.getPort(),
-            server.getDatabaseName(0, true),
-            server.getStateDescriptor());
-    throw new IllegalStateException(message, serverError);
   }
 }
