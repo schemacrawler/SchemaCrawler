@@ -61,7 +61,7 @@ public class ExampleTest {
 
   @BeforeAll
   public static void startDatabase() {
-    testDatabase = TestDatabase.startDefaultTestDatabase(false);
+    testDatabase = TestDatabase.initializeStandard();
   }
 
   @AfterAll

@@ -31,6 +31,8 @@ package schemacrawler.testdb;
 import static java.nio.file.Files.delete;
 import static java.nio.file.Files.walkFileTree;
 import static java.util.Objects.requireNonNull;
+import static org.hsqldb.server.ServerConstants.SC_DEFAULT_ADDRESS;
+import static org.hsqldb.server.ServerConstants.SC_DEFAULT_HSQL_SERVER_PORT;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -49,48 +51,37 @@ import java.util.logging.Logger;
 
 import org.hsqldb.server.Server;
 
-/**
- * Sets up a database schema for tests and examples.
- *
- * @author sfatehi
- */
+/** Sets up a database schema for tests and examples. */
 public class TestDatabase {
 
   private static final Logger LOGGER = Logger.getLogger(TestDatabase.class.getName());
 
   private static final String CONNECTION_STRING = "jdbc:hsqldb:hsql://${host}:${port}/${database}";
-  private static final String serverFileStem = "hsqldb.schemacrawler";
-  private static TestDatabase testDatabase;
+  private static final String HSQLDB_SCHEMACRAWLER = "hsqldb.schemacrawler";
 
   public static TestDatabase initialize() {
-    if (testDatabase == null) {
-      try {
-        final String host = getLocalHost();
-        final int port = getFreePort();
-        final String database = String.format("schemacrawler%d", port);
-        testDatabase = new TestDatabase(false, host, port, database);
-        testDatabase.start();
-      } catch (final Exception e) {
-        e.printStackTrace();
-        System.exit(1);
-      }
-    }
-    return testDatabase;
-  }
-
-  /**
-   * Starts up a test database in server mode.
-   *
-   * @param args Command-line arguments
-   * @throws Exception
-   */
-  public static void main(final String[] args) throws Exception {
-    startDefaultTestDatabase(true);
-  }
-
-  public static TestDatabase startDefaultTestDatabase(final boolean trace) {
     try {
-      final TestDatabase testDatabase = new TestDatabase(trace, "localhost", 9001, "schemacrawler");
+      final String host = SC_DEFAULT_ADDRESS;
+      final int port = getFreePort();
+      final String database = String.format("schemacrawler%d", port);
+      final boolean trace = false;
+      final TestDatabase testDatabase = new TestDatabase(trace, host, port, database);
+      testDatabase.start();
+      return testDatabase;
+    } catch (final Exception e) {
+      e.printStackTrace();
+      System.exit(1);
+      return null;
+    }
+  }
+
+  public static TestDatabase initializeStandard() {
+    try {
+      final String host = SC_DEFAULT_ADDRESS;
+      final int port = SC_DEFAULT_HSQL_SERVER_PORT;
+      final String database = "schemacrawler";
+      final boolean trace = false;
+      final TestDatabase testDatabase = new TestDatabase(trace, host, port, database);
       testDatabase.start();
       return testDatabase;
     } catch (final Exception e) {
@@ -101,39 +92,15 @@ public class TestDatabase {
   }
 
   /**
-   * Delete files from the previous run of the database server.
+   * Starts up a test database in server mode.
    *
-   * @throws IOException
+   * @param args Command-line arguments
+   * @throws Exception
    */
-  private static void deleteServerFiles() throws IOException {
-    final Path start = Paths.get(".").normalize().toAbsolutePath();
-    walkFileTree(
-        start,
-        new SimpleFileVisitor<Path>() {
-          @Override
-          public FileVisitResult visitFile(final Path file, final BasicFileAttributes attrs)
-              throws IOException {
-            for (final String filename :
-                new String[] {
-                  serverFileStem + ".lck",
-                  serverFileStem + ".log",
-                  serverFileStem + ".lobs",
-                  serverFileStem + ".script",
-                  serverFileStem + ".properties"
-                }) {
-              if (!attrs.isDirectory() && file.endsWith(filename)) {
-                delete(file);
-              }
-            }
-            return FileVisitResult.CONTINUE;
-          }
-
-          @Override
-          public FileVisitResult visitFileFailed(final Path file, final IOException exc)
-              throws IOException {
-            return FileVisitResult.CONTINUE;
-          }
-        });
+  public static void main(final String[] args) throws Exception {
+    final TestDatabase testDatabase =
+        new TestDatabase(true, SC_DEFAULT_ADDRESS, SC_DEFAULT_HSQL_SERVER_PORT, "schemacrawler");
+    testDatabase.start();
   }
 
   private static int getFreePort() {
@@ -146,16 +113,6 @@ public class TestDatabase {
       } else {
         return port;
       }
-    } catch (final IOException e) {
-      return defaultPort;
-    }
-  }
-
-  private static String getLocalHost() {
-    final String defaultPort = "localhost";
-    try (ServerSocket socket = new ServerSocket(0)) {
-      socket.setReuseAddress(true);
-      return socket.getInetAddress().getHostAddress();
     } catch (final IOException e) {
       return defaultPort;
     }
@@ -223,6 +180,43 @@ public class TestDatabase {
     schemaCreator.run();
   }
 
+  /**
+   * Delete files from the previous run of the database server.
+   *
+   * @throws IOException
+   */
+  private void deleteServerFiles() throws IOException {
+    final Path start = Paths.get(".", HSQLDB_SCHEMACRAWLER).normalize().toAbsolutePath();
+    walkFileTree(
+        start,
+        new SimpleFileVisitor<Path>() {
+          @Override
+          public FileVisitResult visitFile(final Path file, final BasicFileAttributes attrs)
+              throws IOException {
+            for (final String filename :
+                new String[] {
+                  database + ".lck",
+                  database + ".log",
+                  database + ".lobs",
+                  database + ".script",
+                  database + ".properties"
+                }) {
+              if (!attrs.isDirectory() && file.endsWith(filename)) {
+                delete(file);
+                LOGGER.log(Level.INFO, "Deleted " + file.toAbsolutePath());
+              }
+            }
+            return FileVisitResult.CONTINUE;
+          }
+
+          @Override
+          public FileVisitResult visitFileFailed(final Path file, final IOException exc)
+              throws IOException {
+            return FileVisitResult.CONTINUE;
+          }
+        });
+  }
+
   private void startServer() throws IOException {
     // Attempt to delete the database files
     deleteServerFiles();
@@ -251,7 +245,7 @@ public class TestDatabase {
     server.setAddress(host);
     server.setPort(port);
     server.setDatabaseName(0, database);
-    server.setDatabasePath(0, serverFileStem);
+    server.setDatabasePath(0, String.format("file:%s/%s", HSQLDB_SCHEMACRAWLER, database));
 
     LOGGER.log(
         Level.INFO,
