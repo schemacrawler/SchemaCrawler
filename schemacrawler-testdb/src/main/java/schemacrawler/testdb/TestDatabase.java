@@ -28,8 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.testdb;
 
-import static java.nio.file.Files.delete;
-import static java.nio.file.Files.walkFileTree;
+import static java.nio.file.Files.createTempDirectory;
 import static java.util.Objects.requireNonNull;
 import static org.hsqldb.server.ServerConstants.SC_DEFAULT_ADDRESS;
 import static org.hsqldb.server.ServerConstants.SC_DEFAULT_HSQL_SERVER_PORT;
@@ -37,11 +36,7 @@ import static org.hsqldb.server.ServerConstants.SC_DEFAULT_HSQL_SERVER_PORT;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
-import java.nio.file.FileVisitResult;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -180,46 +175,7 @@ public class TestDatabase {
     schemaCreator.run();
   }
 
-  /**
-   * Delete files from the previous run of the database server.
-   *
-   * @throws IOException
-   */
-  private void deleteServerFiles() throws IOException {
-    final Path start = Paths.get(".", HSQLDB_SCHEMACRAWLER).normalize().toAbsolutePath();
-    walkFileTree(
-        start,
-        new SimpleFileVisitor<Path>() {
-          @Override
-          public FileVisitResult visitFile(final Path file, final BasicFileAttributes attrs)
-              throws IOException {
-            for (final String filename :
-                new String[] {
-                  database + ".lck",
-                  database + ".log",
-                  database + ".lobs",
-                  database + ".script",
-                  database + ".properties"
-                }) {
-              if (!attrs.isDirectory() && file.endsWith(filename)) {
-                delete(file);
-                LOGGER.log(Level.INFO, "Deleted " + file.toAbsolutePath());
-              }
-            }
-            return FileVisitResult.CONTINUE;
-          }
-
-          @Override
-          public FileVisitResult visitFileFailed(final Path file, final IOException exc)
-              throws IOException {
-            return FileVisitResult.CONTINUE;
-          }
-        });
-  }
-
   private void startServer() throws IOException {
-    // Attempt to delete the database files
-    deleteServerFiles();
 
     Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
 
@@ -234,6 +190,10 @@ public class TestDatabase {
       errWriter = null;
     }
 
+    // Create temp directory
+    final Path tempDirectory =
+        createTempDirectory(String.format("%s.%s", HSQLDB_SCHEMACRAWLER, database));
+
     // Start the server
     final Server server = new Server();
     server.setSilent(!trace);
@@ -245,7 +205,7 @@ public class TestDatabase {
     server.setAddress(host);
     server.setPort(port);
     server.setDatabaseName(0, database);
-    server.setDatabasePath(0, String.format("file:%s/%s", HSQLDB_SCHEMACRAWLER, database));
+    server.setDatabasePath(0, String.format("file:%s", tempDirectory));
 
     LOGGER.log(
         Level.INFO,
@@ -265,12 +225,6 @@ public class TestDatabase {
         final Statement statement = connection.createStatement(); ) {
       statement.execute("SHUTDOWN");
     } catch (final SQLException e) {
-      LOGGER.log(Level.WARNING, e.getMessage(), e);
-    }
-
-    try {
-      deleteServerFiles();
-    } catch (final IOException e) {
       LOGGER.log(Level.WARNING, e.getMessage(), e);
     }
     LOGGER.log(Level.INFO, "SHUTDOWN database");
