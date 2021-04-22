@@ -214,8 +214,9 @@ public class TestDatabase {
             server.getDatabaseName(0, true),
             server.getDatabasePath(0, true)));
 
+    // Blocked server start
     server.start();
-    // server.checkRunning(true);
+    server.checkRunning(true);
   }
 
   private void stopServer() {
