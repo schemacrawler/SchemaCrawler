@@ -198,8 +198,6 @@ public class TestDatabase {
     final Server server = new Server();
     server.setSilent(!trace);
     server.setTrace(trace);
-    server.setRestartOnShutdown(false);
-    server.setNoSystemExit(true);
     server.setLogWriter(logWriter);
     server.setErrWriter(errWriter);
     server.setAddress(host);
@@ -217,7 +215,7 @@ public class TestDatabase {
             server.getDatabasePath(0, true)));
 
     server.start();
-    server.checkRunning(true);
+    // server.checkRunning(true);
   }
 
   private void stopServer() {
