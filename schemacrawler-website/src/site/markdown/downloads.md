@@ -13,7 +13,7 @@ If you would like to use SchemaCrawler without installing it, you can explore th
 
 If you need to use SchemaCrawler locally, you have a number of options. You can [download SchemaCrawler releases with tutorials from GitHub.](https://github.com/sualeh/SchemaCrawler/releases). You can install the SchemaCrawler Interactive Shell using platform-specific installers downloaded from [schemacrawler/SchemaCrawler-Installers](https://github.com/schemacrawler/SchemaCrawler-Installers). For Windows, SchemaCrawler is also available via the [Scoop command-line installer](https://scoop.sh/), [Chocolatey package manager](https://chocolatey.org/packages/schemacrawler), as well as via [Microsoft Windows Package Manager, winget](https://docs.microsoft.com/en-us/windows/package-manager/).
 
-If you want to use SchemaCrawler as a library, and in your build, all jars are in the [Central Repository](https://search.maven.org/search?q=g:us.fatehi%20a:schemacrawler*). They can be used as dependencies in [Gradle](https://gradle.org/) or [Apache Maven](https://maven.apache.org/) projects, or with any other build system that supports the Central Repository. SchemaCrawler reports can be incorporated into Apache Maven builds with the [SchemaCrawler Report Maven Plugin](https://github.com/schemacrawler/SchemaCrawler-Report-Maven-Plugin) and into the GitHub Actions workflow with the [SchemaCrawler Action](https://github.com/schemacrawler/SchemaCrawler-Action).
+If you want to use SchemaCrawler as a library, and in your build, all jars are in the [Central Repository](https://search.maven.org/search?q=g:us.fatehi%20a:schemacrawler*). They can be used as dependencies in [Gradle](https://gradle.org/) or [Apache Maven](https://maven.apache.org/) projects, or with any other build system that supports the Central Repository. SchemaCrawler reports can be incorporated into Apache Maven builds with the [SchemaCrawler Report Maven Plugin](https://github.com/schemacrawler/SchemaCrawler-Report-Maven-Plugin) and into the GitHub Actions workflow with the [SchemaCrawler Action](https://github.com/schemacrawler/SchemaCrawler-Action). If you would like to extend SchemaCrawler with plugins for a certain database, create new database lints, or create a new command, use the [starter projects to create new SchemaCrawler plugins](https://github.com/schemacrawler/SchemaCrawler-Plugins-Starter) on GitHub.
 
 [Pre-packaged SchemaCrawler Docker images](https://hub.docker.com/r/schemacrawler/schemacrawler/) are available on Docker Hub.
 
@@ -28,8 +28,8 @@ You can install SchemaCrawler on Windows using the [Scoop command-line installer
 
 1. Install the [Scoop command-line installer](https://scoop.sh/)
 2. Run  
-  `scoop install https://www.github.com/schemacrawler/SchemaCrawler-Installers/releases/latest/download/schemacrawler.json`  
-  from a PowerShell command-prompt
+    `scoop install https://www.github.com/schemacrawler/SchemaCrawler-Installers/releases/latest/download/schemacrawler.json`  
+    from a PowerShell command-prompt
 
 ### Chocolatey
 

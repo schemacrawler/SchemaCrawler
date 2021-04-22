@@ -32,11 +32,9 @@ SchemaCrawler is available under a number of [licenses](https://www.schemacrawle
 
 ## Distributions and Downloads
 
-Explore the SchemaCrawler command-line with a live tutorial on [Katacoda](https://www.katacoda.com/schemacrawler). [Download SchemaCrawler releases with tutorials from GitHub.](https://github.com/sualeh/SchemaCrawler/releases) All SchemaCrawler jars are in the [Central Repository](https://search.maven.org/search?q=g:us.fatehi%20a:schemacrawler*). They can be used as dependencies in [Gradle](https://gradle.org/) or [Apache Maven](https://maven.apache.org/) projects, or with any other build system that supports the Central Repository. [Pre-packaged Docker images](https://hub.docker.com/r/schemacrawler/schemacrawler/) are on Docker Hub. Platform-specific installers for SchemaCrawler Interactive Shell are available as releases on [schemacrawler/SchemaCrawler-Installers](https://github.com/schemacrawler/SchemaCrawler-Installers).
+Explore the SchemaCrawler command-line with a live tutorial on [Katacoda](https://www.katacoda.com/schemacrawler).
 
-Additional SchemaCrawler database plugins are available from the [schemacrawler/SchemaCrawler-Database-Plugins](https://github.com/schemacrawler/SchemaCrawler-Database-Plugins) project.
-
-SchemaCrawler reports can be incorporated into Apache Maven builds with the [SchemaCrawler Report Maven Plugin](https://github.com/schemacrawler/SchemaCrawler-Report-Maven-Plugin) and into the GitHub Actions workflow with the [SchemaCrawler Action](https://github.com/schemacrawler/SchemaCrawler-Action).
+SchemaCrawler is available in a number of formats, including a download with examples, source code examples, plugin starters, a Maven reporting plugin, Docker containers, operating system specific installers, and jars on The Central Repository. For a complete list, see [downloads and distributions](https://www.schemacrawler.com/downloads.html).
 
 
 ## Support
