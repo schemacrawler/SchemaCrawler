@@ -27,12 +27,12 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static schemacrawler.integration.test.utility.MySQLTestUtility.newMySQLContainer8;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -48,9 +48,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
@@ -64,76 +64,51 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 @Testcontainers(disabledWithoutDocker = true)
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 @DisplayName("Test for support of enum values")
-public class MySQLEnumColumnTest
-  extends BaseAdditionalDatabaseTest
-{
+public class MySQLEnumColumnTest extends BaseAdditionalDatabaseTest {
 
   @Container
-  private JdbcDatabaseContainer dbContainer = new MySQLContainer<>()
-    .withCommand("mysqld", "--lower_case_table_names=1")
-    .withUsername("schemacrawler");
-
-  @BeforeEach
-  public void createDatabase()
-    throws SQLException, SchemaCrawlerException
-  {
-    createDataSource(dbContainer.getJdbcUrl(),
-                     dbContainer.getUsername(),
-                     dbContainer.getPassword());
-  }
+  private final JdbcDatabaseContainer<?> dbContainer =
+      newMySQLContainer8().withUsername("schemacrawler");
 
   @Test
-  public void columnWithEnum()
-    throws Exception
-  {
-    try (
-      final Connection connection = getConnection();
-      final Statement stmt = connection.createStatement();
-    )
-    {
-      stmt.execute(
-        "CREATE TABLE shirts (name VARCHAR(40), size ENUM('small', 'medium', 'large'))");
+  public void columnWithEnum() throws Exception {
+    try (final Connection connection = getConnection();
+        final Statement stmt = connection.createStatement(); ) {
+      stmt.execute("CREATE TABLE shirts (name VARCHAR(40), size ENUM('small', 'medium', 'large'))");
       connection.commit();
     }
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+        DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
-    final SchemaCrawlerExecutable executable =
-      new SchemaCrawlerExecutable("details");
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
-    assertThat(outputOf(executableExecution(getConnection(), executable)),
-               hasSameContentAs(classpathResource("testColumnWithEnum.txt")));
+    assertThat(
+        outputOf(executableExecution(getConnection(), executable)),
+        hasSameContentAs(classpathResource("testColumnWithEnum.txt")));
 
     // Additional programmatic test
     final Catalog catalog = executable.getCatalog();
-    final Schema schema = catalog
-      .lookupSchema("test")
-      .orElse(null);
+    final Schema schema = catalog.lookupSchema("test").orElse(null);
     assertThat(schema, notNullValue());
-    final Table table = catalog
-      .lookupTable(schema, "shirts")
-      .orElse(null);
+    final Table table = catalog.lookupTable(schema, "shirts").orElse(null);
     assertThat(table, notNullValue());
 
-    final Column nameColumn = table
-      .lookupColumn("name")
-      .orElse(null);
+    final Column nameColumn = table.lookupColumn("name").orElse(null);
     assertThat(nameColumn, notNullValue());
-    final List<String> nameEnumValues = nameColumn
-      .getColumnDataType()
-      .getEnumValues();
+    final List<String> nameEnumValues = nameColumn.getColumnDataType().getEnumValues();
     assertThat(nameEnumValues, is(empty()));
 
-    final Column sizeColumn = table
-      .lookupColumn("size")
-      .orElse(null);
+    final Column sizeColumn = table.lookupColumn("size").orElse(null);
     assertThat(sizeColumn, notNullValue());
-    final List<String> enumValues = sizeColumn
-      .getColumnDataType()
-      .getEnumValues();
+    final List<String> enumValues = sizeColumn.getColumnDataType().getEnumValues();
     assertThat(enumValues, containsInAnyOrder("small", "medium", "large"));
   }
 
+  @BeforeEach
+  public void createDatabase() throws SQLException, SchemaCrawlerException {
+    createDataSource(
+        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
+  }
 }

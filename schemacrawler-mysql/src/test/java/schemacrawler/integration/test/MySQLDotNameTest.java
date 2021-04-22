@@ -27,9 +27,9 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
+import static schemacrawler.integration.test.utility.MySQLTestUtility.newMySQLContainer8;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
@@ -44,9 +44,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
@@ -61,34 +61,23 @@ import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 @Testcontainers(disabledWithoutDocker = true)
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 @DisplayName("Test for issue #252 on GitHub")
-public class MySQLDotNameTest
-  extends BaseAdditionalDatabaseTest
-{
+public class MySQLDotNameTest extends BaseAdditionalDatabaseTest {
 
   @Container
-  private JdbcDatabaseContainer dbContainer = new MySQLContainer<>()
-    .withCommand("mysqld", "--lower_case_table_names=1")
-    .withUsername("schemacrawler");
+  private final JdbcDatabaseContainer<?> dbContainer =
+      newMySQLContainer8().withUsername("schemacrawler");
 
   @BeforeEach
-  public void createDatabase()
-    throws SQLException, SchemaCrawlerException
-  {
-    createDataSource(dbContainer.getJdbcUrl(),
-                     dbContainer.getUsername(),
-                     dbContainer.getPassword());
+  public void createDatabase() throws SQLException, SchemaCrawlerException {
+    createDataSource(
+        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
   }
 
   @Test
   @DisplayName("Retrieve table and columns names with a dot in them")
-  public void dotName()
-    throws Exception
-  {
-    try (
-      final Connection connection = getConnection();
-      final Statement stmt = connection.createStatement();
-    )
-    {
+  public void dotName() throws Exception {
+    try (final Connection connection = getConnection();
+        final Statement stmt = connection.createStatement(); ) {
       stmt.execute("CREATE TABLE `test.abc` (`a.b` INT(11) DEFAULT NULL)");
       connection.commit();
     }
@@ -96,33 +85,23 @@ public class MySQLDotNameTest
     final Connection connection = getConnection();
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+        schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-      SchemaRetrievalOptionsBuilder
-        .builder()
-        .fromOptions(matchSchemaRetrievalOptions(connection))
-        .with(tableColumnsRetrievalStrategy, data_dictionary_all);
-    final SchemaRetrievalOptions schemaRetrievalOptions =
-      schemaRetrievalOptionsBuilder.toOptions();
+        SchemaRetrievalOptionsBuilder.builder()
+            .fromOptions(matchSchemaRetrievalOptions(connection))
+            .with(tableColumnsRetrievalStrategy, data_dictionary_all);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
 
-    final SchemaCrawler schemaCrawler = new SchemaCrawler(connection,
-                                                          schemaRetrievalOptions,
-                                                          schemaCrawlerOptions);
+    final SchemaCrawler schemaCrawler =
+        new SchemaCrawler(connection, schemaRetrievalOptions, schemaCrawlerOptions);
     final Catalog catalog = schemaCrawler.crawl();
 
-    final Schema schema = catalog
-      .lookupSchema("test")
-      .orElse(null);
+    final Schema schema = catalog.lookupSchema("test").orElse(null);
     assertThat(schema, notNullValue());
-    final Table table = catalog
-      .lookupTable(schema, "test.abc")
-      .orElse(null);
+    final Table table = catalog.lookupTable(schema, "test.abc").orElse(null);
     assertThat(table, notNullValue());
-    final Column column = table
-      .lookupColumn("a.b")
-      .orElse(null);
+    final Column column = table.lookupColumn("a.b").orElse(null);
     assertThat(column, notNullValue());
   }
-
 }

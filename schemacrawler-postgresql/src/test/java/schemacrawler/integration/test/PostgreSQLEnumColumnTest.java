@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
-
 import static java.nio.file.Files.lines;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -37,6 +36,7 @@ import static org.hamcrest.Matchers.matchesPattern;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
 import static org.hamcrest.collection.IsEmptyCollection.emptyCollectionOf;
 import static org.hamcrest.core.IsNull.notNullValue;
+import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQLContainer9;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -55,9 +55,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
@@ -73,122 +73,85 @@ import schemacrawler.tools.options.OutputFormat;
 @Testcontainers(disabledWithoutDocker = true)
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 @DisplayName("Test for issue #284 - support enum values")
-public class PostgreSQLEnumColumnTest
-  extends BaseAdditionalDatabaseTest
-{
+public class PostgreSQLEnumColumnTest extends BaseAdditionalDatabaseTest {
 
-  @Container
-  private JdbcDatabaseContainer dbContainer = new PostgreSQLContainer<>();
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQLContainer9();
 
-  @BeforeEach
-  public void createDatabase()
-    throws Exception
-  {
-    createDataSource(dbContainer.getJdbcUrl(),
-                     dbContainer.getUsername(),
-                     dbContainer.getPassword());
+  @Test
+  public void columnWithEnum() throws Exception {
 
-    try (
-      final Connection connection = getConnection();
-      final Statement stmt = connection.createStatement();
-    )
-    {
-      stmt.execute("CREATE TYPE mood AS ENUM ('sad', 'ok', 'happy')");
-      stmt.execute("CREATE TABLE person (name text, current_mood mood)");
-      connection.commit();
-    }
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+
+    final Catalog catalog = getCatalog(getConnection(), schemaCrawlerOptions);
+    final Schema schema = catalog.lookupSchema("public").orElse(null);
+    assertThat(schema, notNullValue());
+    final Table table = catalog.lookupTable(schema, "person").orElse(null);
+    assertThat(table, notNullValue());
+
+    final Column nameColumn = table.lookupColumn("name").orElse(null);
+    assertThat(nameColumn, notNullValue());
+    assertThat(nameColumn.getColumnDataType().isEnumerated(), is(false));
+    assertThat(nameColumn.getColumnDataType().getEnumValues(), emptyCollectionOf(String.class));
+
+    final Column currentMoodColumn = table.lookupColumn("current_mood").orElse(null);
+    assertThat(currentMoodColumn, notNullValue());
+    assertThat(currentMoodColumn.getColumnDataType().isEnumerated(), is(true));
+    assertThat(
+        currentMoodColumn.getColumnDataType().getEnumValues(),
+        containsInAnyOrder("sad", "ok", "happy"));
   }
 
   @Test
-  public void columnWithEnumOutputFormats()
-    throws Exception
-  {
+  public void columnWithEnumOutputFormats() throws Exception {
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
-    ;
+        schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     final SchemaCrawlerExecutable executable;
     executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
-    for (final OutputFormat outputFormat : new OutputFormat[] {
-      DiagramOutputFormat.scdot, TextOutputFormat.text, TextOutputFormat.html
-    })
-    {
-      assertThat(outputOf(executableExecution(getConnection(),
-                                              executable,
-                                              outputFormat)),
-                 hasSameContentAs(classpathResource("testColumnWithEnum."
-                                                    + outputFormat.getFormat())));
+    for (final OutputFormat outputFormat :
+        new OutputFormat[] {
+          DiagramOutputFormat.scdot, TextOutputFormat.text, TextOutputFormat.html
+        }) {
+      assertThat(
+          outputOf(executableExecution(getConnection(), executable, outputFormat)),
+          hasSameContentAs(classpathResource("testColumnWithEnum." + outputFormat.getFormat())));
     }
   }
 
   @Test
-  public void columnWithEnumSerialization()
-    throws Exception
-  {
+  public void columnWithEnumSerialization() throws Exception {
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
-      schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+        schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     SchemaCrawlerExecutable executable;
     executable = new SchemaCrawlerExecutable("serialize");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
-    for (final OutputFormat outputFormat : new OutputFormat[] {
-      SerializationFormat.json, SerializationFormat.yaml
-    })
-    {
-      final Path outputFile =
-        executableExecution(getConnection(), executable, outputFormat);
-      final List<String> enumOutput = lines(outputFile)
-        .filter(line -> line.contains("happy"))
-        .collect(Collectors.toList());
+    for (final OutputFormat outputFormat :
+        new OutputFormat[] {SerializationFormat.json, SerializationFormat.yaml}) {
+      final Path outputFile = executableExecution(getConnection(), executable, outputFormat);
+      final List<String> enumOutput =
+          lines(outputFile).filter(line -> line.contains("happy")).collect(Collectors.toList());
       assertThat(enumOutput, is(not(empty())));
       assertThat(enumOutput.get(0), matchesPattern(".*happy.*"));
     }
   }
 
-  @Test
-  public void columnWithEnum()
-    throws Exception
-  {
+  @BeforeEach
+  public void createDatabase() throws Exception {
+    createDataSource(
+        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
 
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-      schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
-
-    final Catalog catalog = getCatalog(getConnection(), schemaCrawlerOptions);
-    final Schema schema = catalog
-      .lookupSchema("public")
-      .orElse(null);
-    assertThat(schema, notNullValue());
-    final Table table = catalog
-      .lookupTable(schema, "person")
-      .orElse(null);
-    assertThat(table, notNullValue());
-
-    final Column nameColumn = table
-      .lookupColumn("name")
-      .orElse(null);
-    assertThat(nameColumn, notNullValue());
-    assertThat(nameColumn
-                 .getColumnDataType()
-                 .isEnumerated(), is(false));
-    assertThat(nameColumn
-                 .getColumnDataType()
-                 .getEnumValues(), emptyCollectionOf(String.class));
-
-    final Column currentMoodColumn = table
-      .lookupColumn("current_mood")
-      .orElse(null);
-    assertThat(currentMoodColumn, notNullValue());
-    assertThat(currentMoodColumn
-                 .getColumnDataType()
-                 .isEnumerated(), is(true));
-    assertThat(currentMoodColumn
-                 .getColumnDataType()
-                 .getEnumValues(), containsInAnyOrder("sad", "ok", "happy"));
+    try (final Connection connection = getConnection();
+        final Statement stmt = connection.createStatement(); ) {
+      stmt.execute("CREATE TYPE mood AS ENUM ('sad', 'ok', 'happy')");
+      stmt.execute("CREATE TABLE person (name text, current_mood mood)");
+      connection.commit();
+    }
   }
-
 }

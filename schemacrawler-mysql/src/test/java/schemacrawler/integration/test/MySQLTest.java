@@ -29,6 +29,7 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
+import static schemacrawler.integration.test.utility.MySQLTestUtility.newMySQLContainer8;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -42,7 +43,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
@@ -65,12 +65,8 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 public class MySQLTest extends BaseAdditionalDatabaseTest {
 
   @Container
-  private JdbcDatabaseContainer dbContainer =
-      new MySQLContainer<>("mysql:8.0.19")
-          .withCommand(
-              "mysqld", "--lower_case_table_names=1", "--log_bin_trust_function_creators=1")
-          .withUsername("schemacrawler")
-          .withDatabaseName("books");
+  private final JdbcDatabaseContainer<?> dbContainer =
+      newMySQLContainer8().withUsername("schemacrawler").withDatabaseName("books");
 
   @BeforeEach
   public void createDatabase() throws SQLException, SchemaCrawlerException {

@@ -54,6 +54,7 @@ jobs:
         echo github.repository: ${{ github.repository }}
         echo github.ref: ${{ github.head_ref || github.ref }}
         echo github.sha: ${{ github.sha }}
+        docker -v
         mvn -v
         cat ~/.m2/settings.xml
 

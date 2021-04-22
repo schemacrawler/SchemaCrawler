@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static schemacrawler.integration.test.utility.MySQLTestUtility.newMySQLContainer5;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -40,7 +41,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
@@ -61,11 +61,8 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 public class MySQL56Test extends BaseAdditionalDatabaseTest {
 
   @Container
-  private JdbcDatabaseContainer dbContainer =
-      new MySQLContainer<>("mysql:5.6.46")
-          .withCommand("mysqld", "--lower_case_table_names=1")
-          .withUsername("schemacrawler")
-          .withDatabaseName("books");
+  private final JdbcDatabaseContainer<?> dbContainer =
+      newMySQLContainer5().withUsername("schemacrawler").withDatabaseName("books");
 
   @BeforeEach
   public void createDatabase() throws SQLException, SchemaCrawlerException {
