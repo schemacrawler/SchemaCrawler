@@ -54,6 +54,7 @@ import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.MSSQLServerContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
@@ -78,7 +79,12 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 public class SqlServerTest extends BaseAdditionalDatabaseTest {
 
-  @Container private JdbcDatabaseContainer dbContainer = new MSSQLServerContainer<>();
+  @Container
+  private final JdbcDatabaseContainer<?> dbContainer =
+      new MSSQLServerContainer<>(
+              DockerImageName.parse("mcr.microsoft.com/mssql/server")
+                  .withTag("2017-CU22-ubuntu-16.04"))
+          .acceptLicense();
 
   @BeforeEach
   public void createDatabase() throws SQLException, SchemaCrawlerException {
