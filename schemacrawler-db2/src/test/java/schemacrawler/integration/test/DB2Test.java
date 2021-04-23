@@ -51,6 +51,7 @@ import org.testcontainers.containers.Db2Container;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
 
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
@@ -71,15 +72,17 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 public class DB2Test extends BaseAdditionalDatabaseTest {
 
-  @Container private JdbcDatabaseContainer dbContainer = new Db2Container().acceptLicense();
+  @Container
+  private final JdbcDatabaseContainer<?> dbContainer =
+      new Db2Container(DockerImageName.parse("ibmcom/db2").withTag("11.5.5.1")).acceptLicense();
 
   @BeforeEach
   public void createDatabase() throws SQLException, SchemaCrawlerException {
-    /**
-     * // Add the following trace properties to the URL for debugging // Set the trace directory
-     * appropriately final String traceProperties = ":traceDirectory=C:\\Java" + ";traceFile=trace3"
-     * + ";traceFileAppend=false" + ";traceLevel=" + (DB2BaseDataSource.TRACE_ALL) + ";";
-     */
+    // Add the following trace properties to the URL for debugging
+    // Set the trace directory appropriately
+    // final String traceProperties = ":traceDirectory=C:\\Java" + ";traceFile=trace3" +
+    // ";traceFileAppend=false" + ";traceLevel=" + (DB2BaseDataSource.TRACE_ALL) + ";";
+
     createDataSource(
         dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
 
