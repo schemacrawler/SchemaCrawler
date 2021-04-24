@@ -45,7 +45,7 @@ public interface Index
    *
    * @return Cardinality
    */
-  int getCardinality();
+  long getCardinality();
 
   /**
    * Gets the list of columns in ordinal order.
@@ -67,7 +67,7 @@ public interface Index
    *
    * @return Pages
    */
-  int getPages();
+  long getPages();
 
   /**
    * If the index is unique.
