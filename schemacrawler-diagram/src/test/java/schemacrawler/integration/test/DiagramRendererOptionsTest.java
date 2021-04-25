@@ -472,7 +472,7 @@ public class DiagramRendererOptionsTest {
   }
 
   @Test
-  @DisplayName("Diagram with maximum output")
+  @DisplayName("Diagram with maximum output, including indexes")
   public void executableForDiagram_14(final TestContext testContext, final Connection connection)
       throws Exception {
 

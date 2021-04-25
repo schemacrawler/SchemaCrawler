@@ -521,6 +521,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
                         tableCell()
                             .withEscapedText(index.getRemarks())
                             .withAlignment(Alignment.left)
+                            .withBackground(Color.fromRGB(0xF4, 0xF4, 0xF4))
                             .withColumnSpan(3)
                             .make())
                     .render(html))
