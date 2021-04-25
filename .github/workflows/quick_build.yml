@@ -23,7 +23,7 @@ jobs:
       name: Set up JDK
       uses: actions/setup-java@v2
       with:
-        distribution: adopt
+        distribution: zulu
         java-version: 8
     - id: install-packages
       name: Install packages
