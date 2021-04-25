@@ -28,6 +28,7 @@ The [Chocolatey SchemaCrawler package](https://github.com/adriens/chocolatey-sch
 - [Data Platform at Zoomcar](https://medium.com/@shanker.sneh/https-medium-com-shanker-sneh-data-platform-at-zoomcar-a-narrative-part-i-f2455e3e2ae5)
 - [Relational to Neo4j Importer](https://github.com/jexp/neo4j-rdbms-import)
 - [Continuous integration gates for schema design issues](https://github.com/HakumenNC/docker-schemacrawler-reporting)
+- [avro-schema-generator](https://github.com/artur-tamazian/avro-schema-generator) uses SchemaCrawler internally
 - [A large number of projects on GitHub](https://github.com/search?q=schemacrawler+-user%3Asualeh+-user%3Aschemacrawler&type=Code)
 
 
