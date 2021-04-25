@@ -74,7 +74,7 @@ public class SchemaReferenceTest {
   }
 
   @Test
-  @DisplayName("Remarks are not supported for schemas")
+  @DisplayName("Remarks are not supported for schemas, but test to enforce expected behavior")
   public void schemaRefRemarks() {
     final String REMARKS = "remarks";
 
