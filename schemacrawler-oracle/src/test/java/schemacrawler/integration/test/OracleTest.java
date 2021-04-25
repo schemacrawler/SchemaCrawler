@@ -72,7 +72,8 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 public class OracleTest extends BaseAdditionalDatabaseTest {
 
   @Container
-  private JdbcDatabaseContainer dbContainer = new OracleContainer("wnameless/oracle-xe-11g-r2");
+  private final JdbcDatabaseContainer<?> dbContainer =
+      new OracleContainer("wnameless/oracle-xe-11g-r2");
 
   @BeforeEach
   public void createDatabase() throws SQLException, SchemaCrawlerException {

@@ -53,10 +53,10 @@ class MutableIndex extends AbstractDependantObject<Table> implements Index {
 
   private final NamedObjectList<MutableIndexColumn> columns = new NamedObjectList<>();
   private final StringBuilder definition;
-  private int cardinality;
+  private long cardinality;
   private IndexType indexType;
   private boolean isUnique;
-  private int pages;
+  private long pages;
 
   MutableIndex(final Table parent, final String name) {
     super(new TablePointer(parent), name);
@@ -107,7 +107,7 @@ class MutableIndex extends AbstractDependantObject<Table> implements Index {
 
   /** {@inheritDoc} */
   @Override
-  public final int getCardinality() {
+  public final long getCardinality() {
     return cardinality;
   }
 
@@ -131,7 +131,7 @@ class MutableIndex extends AbstractDependantObject<Table> implements Index {
 
   /** {@inheritDoc} */
   @Override
-  public final int getPages() {
+  public final long getPages() {
     return pages;
   }
 
@@ -175,7 +175,7 @@ class MutableIndex extends AbstractDependantObject<Table> implements Index {
     }
   }
 
-  final void setCardinality(final int cardinality) {
+  final void setCardinality(final long cardinality) {
     this.cardinality = cardinality;
   }
 
@@ -183,7 +183,7 @@ class MutableIndex extends AbstractDependantObject<Table> implements Index {
     this.indexType = requireNonNull(indexType, "Null index type");
   }
 
-  final void setPages(final int pages) {
+  final void setPages(final long pages) {
     this.pages = pages;
   }
 

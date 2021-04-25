@@ -115,11 +115,11 @@ final class IndexRetriever extends AbstractRetriever {
 
     final boolean uniqueIndex = !results.getBoolean("NON_UNIQUE");
     final IndexType type = results.getEnumFromId("TYPE", IndexType.unknown);
-    final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
+    final int ordinalPosition = results.getShort("ORDINAL_POSITION", (short) 0);
     final IndexColumnSortSequence sortSequence =
         IndexColumnSortSequence.valueOfFromCode(results.getString("ASC_OR_DESC"));
-    final int cardinality = results.getInt("CARDINALITY", 0);
-    final int pages = results.getInt("PAGES", 0);
+    final long cardinality = results.getLong("CARDINALITY", 0L);
+    final long pages = results.getLong("PAGES", 0L);
 
     final Column column;
     final Optional<MutableColumn> columnOptional = table.lookupColumn(columnName);
