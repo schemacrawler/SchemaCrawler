@@ -1,4 +1,4 @@
-SchemaCrawler 16.14.4
+SchemaCrawler 16.14.5
 Database schema discovery and comprehension tool
 https://www.schemacrawler.com/
 Copyright (c) 2000-2021, Sualeh Fatehi <sualeh@hotmail.com>.
