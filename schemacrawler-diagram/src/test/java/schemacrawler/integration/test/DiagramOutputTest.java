@@ -31,6 +31,8 @@ package schemacrawler.integration.test;
 import static java.nio.file.Files.createDirectories;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static schemacrawler.plugin.EnumDataTypeInfo.EMPTY_ENUM_DATA_TYPE_INFO;
+import static schemacrawler.plugin.EnumDataTypeInfo.EnumDataTypeTypes.enumerated_column;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -40,6 +42,7 @@ import static schemacrawler.tools.command.text.diagram.options.DiagramOptionsBui
 
 import java.nio.file.Path;
 import java.sql.Connection;
+import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -47,11 +50,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
+import schemacrawler.plugin.EnumDataTypeHelper;
+import schemacrawler.plugin.EnumDataTypeInfo;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaReference;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
@@ -123,7 +130,9 @@ public class DiagramOutputTest {
             DiagramOutputFormat.scdot));
   }
 
-  private static Catalog getCatalog(final Connection connection) throws SchemaCrawlerException {
+  private static Catalog getCatalog(
+      final Connection connection, final EnumDataTypeHelper enumHelper)
+      throws SchemaCrawlerException {
     SchemaCrawlerOptions schemaCrawlerOptions =
         DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
     final LimitOptionsBuilder limitOptionsBuilder =
@@ -132,7 +141,16 @@ public class DiagramOutputTest {
             .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
     schemaCrawlerOptions = schemaCrawlerOptions.withLimitOptions(limitOptionsBuilder.toOptions());
 
-    final Catalog catalog = SchemaCrawlerUtility.getCatalog(connection, schemaCrawlerOptions);
+    SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaCrawlerUtility.matchSchemaRetrievalOptions(connection);
+    schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.builder(schemaRetrievalOptions)
+            .withEnumDataTypeHelper(enumHelper)
+            .toOptions();
+
+    final Catalog catalog =
+        SchemaCrawlerUtility.getCatalog(
+            connection, schemaRetrievalOptions, schemaCrawlerOptions, new Config());
     return catalog;
   }
 
@@ -154,6 +172,34 @@ public class DiagramOutputTest {
   }
 
   @Test
+  @DisplayName("Diagram with maximum output, including columns enum values")
+  public void executableForDiagram_enum(final TestContext testContext, final Connection connection)
+      throws Exception {
+
+    final DiagramOptionsBuilder diagramOptionsBuilder = builder();
+    final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
+
+    final Catalog catalog =
+        getCatalog(
+            connection,
+            (column, columnDataType, conn) -> {
+              if (column.getName().equals("FIRSTNAME")) {
+                return new EnumDataTypeInfo(
+                    enumerated_column, Arrays.asList("Tom", "Dick", "Harry"));
+              } else {
+                return EMPTY_ENUM_DATA_TYPE_INFO;
+              }
+            });
+
+    executableDiagram(
+        SchemaTextDetailType.details.name(),
+        connection,
+        catalog,
+        diagramOptions,
+        testContext.testMethodName());
+  }
+
+  @Test
   @DisplayName("Diagram with maximum output, including indexes with remarks")
   public void executableForDiagram_indexRemarks(
       final TestContext testContext, final Connection connection) throws Exception {
@@ -161,7 +207,7 @@ public class DiagramOutputTest {
     final DiagramOptionsBuilder diagramOptionsBuilder = builder();
     final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
 
-    final Catalog catalog = getCatalog(connection);
+    final Catalog catalog = getCatalog(connection, EnumDataTypeHelper.NO_OP_ENUM_DATA_TYPE_HELPER);
     catalog
         .lookupTable(new SchemaReference("PUBLIC", "BOOKS"), "AUTHORS")
         .get()
