@@ -156,7 +156,7 @@ public final class SchemaReference implements Schema {
   /** {@inheritDoc} */
   @Override
   public <T> Optional<T> lookupAttribute(final String name) {
-    return Optional.of(getAttribute(name));
+    return Optional.ofNullable(getAttribute(name));
   }
 
   /** {@inheritDoc} */
