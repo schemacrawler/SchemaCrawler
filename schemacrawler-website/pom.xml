@@ -10,7 +10,7 @@
     <relativePath>../schemacrawler-parent/pom.xml</relativePath>
   </parent>
   <artifactId>schemacrawler-website</artifactId>
-  <packaging>pom</packaging>
+  <packaging>jar</packaging>
   <name>SchemaCrawler Website</name>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
