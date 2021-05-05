@@ -100,7 +100,9 @@ public final class SchemaCrawlerExecutable {
 
     // Prepare to execute
     scCommand.setCatalog(catalog);
-    scCommand.setConnection(connection);
+    if (scCommand.usesConnection()) {
+      scCommand.setConnection(connection);
+    }
 
     // Execute
     LOGGER.log(Level.INFO, new StringFormat("Executing SchemaCrawler command <%s>", command));
