@@ -27,6 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.command.text.embeddeddiagram;
 
+import schemacrawler.tools.command.text.diagram.GraphExecutorFactory;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
@@ -46,7 +47,8 @@ public final class EmbeddedDiagramCommandProvider extends BaseCommandProvider {
       final String command, final Config config) {
     final DiagramOptions diagramOptions =
         DiagramOptionsBuilder.builder().fromConfig(config).toOptions();
-    final EmbeddedDiagramRenderer scCommand = new EmbeddedDiagramRenderer(command);
+    final EmbeddedDiagramRenderer scCommand =
+        new EmbeddedDiagramRenderer(command, new GraphExecutorFactory());
     scCommand.setCommandOptions(diagramOptions);
     return scCommand;
   }

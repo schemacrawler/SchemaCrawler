@@ -164,6 +164,12 @@ public class TestDatabase {
 
   /** Shut down the database server. */
   public void stop() {
+    if (trace) {
+      System.out.println(
+          String.format(
+              "Stopping HyperSQL server for database %s:%d/%s",
+              getHost(), getPort(), getDatabase()));
+    }
     stopServer();
   }
 
@@ -205,14 +211,15 @@ public class TestDatabase {
     server.setDatabaseName(0, database);
     server.setDatabasePath(0, String.format("file:%s", tempDirectory));
 
-    LOGGER.log(
-        Level.INFO,
-        String.format(
-            "Starting HyperSQL server for database %s:%d/%s at %s",
-            server.getAddress(),
-            server.getPort(),
-            server.getDatabaseName(0, true),
-            server.getDatabasePath(0, true)));
+    if (trace) {
+      System.out.println(
+          String.format(
+              "Starting HyperSQL server for database %s:%d/%s at %s",
+              server.getAddress(),
+              server.getPort(),
+              server.getDatabaseName(0, true),
+              server.getDatabasePath(0, true)));
+    }
 
     // Blocked server start
     server.start();

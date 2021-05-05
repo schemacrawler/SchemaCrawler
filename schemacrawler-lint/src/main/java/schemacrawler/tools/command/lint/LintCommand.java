@@ -88,7 +88,7 @@ public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
 
   @Override
   public boolean usesConnection() {
-    return false;
+    return true;
   }
 
   private void dispatch(final Linters linters) {

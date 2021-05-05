@@ -28,14 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.text.diagram;
 
-import static schemacrawler.tools.command.text.diagram.GraphvizUtility.isGraphvizAvailable;
-import static schemacrawler.tools.command.text.diagram.GraphvizUtility.isGraphvizJavaAvailable;
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.scdot;
 import static us.fatehi.utility.IOUtility.createTempFilePath;
 import static us.fatehi.utility.IOUtility.readResourceFully;
 
 import java.nio.file.Path;
-import java.util.List;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
@@ -53,23 +51,17 @@ import schemacrawler.utility.NamedObjectSort;
 public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptions> {
 
   private DiagramOutputFormat diagramOutputFormat;
+  private final GraphExecutorFactory graphExecutorFactory;
 
-  public DiagramRenderer(final String command) {
+  public DiagramRenderer(final String command, final GraphExecutorFactory graphExecutorFactory) {
     super(command);
+    this.graphExecutorFactory =
+        requireNonNull(graphExecutorFactory, "No graph executor factory provided");
   }
 
   @Override
   public void checkAvailability() throws Exception {
-    if (diagramOutputFormat == scdot) {
-      return;
-    } else if (isGraphvizAvailable()) {
-      return;
-    } else if (isGraphvizJavaAvailable(diagramOutputFormat)) {
-      return;
-    } else {
-      throw new SchemaCrawlerException(
-          String.format("Cannot generate diagram in %s output format", diagramOutputFormat));
-    }
+    graphExecutorFactory.canGenerate(diagramOutputFormat);
   }
 
   /** {@inheritDoc} */
@@ -109,7 +101,18 @@ public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptio
 
     traverser.traverse();
 
-    final GraphExecutor graphExecutor = getGraphExecutor(dotFile);
+    // Set the format, in case we are using the default
+    final Path outputFile = outputOptions.getOutputFile(outputOptions.getOutputFormatValue());
+    outputOptions =
+        OutputOptionsBuilder.builder(outputOptions)
+            .withOutputFormat(diagramOutputFormat)
+            .withOutputFormatValue(diagramOutputFormat.getFormat())
+            .withOutputFile(outputFile)
+            .toOptions();
+
+    final GraphExecutor graphExecutor =
+        graphExecutorFactory.getGraphExecutor(
+            dotFile, diagramOutputFormat, outputFile, commandOptions);
     final boolean successful = graphExecutor.call();
     if (!successful) {
       final String message = readResourceFully("/dot.error.txt");
@@ -126,45 +129,6 @@ public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptio
   @Override
   public boolean usesConnection() {
     return false;
-  }
-
-  private GraphExecutor getGraphExecutor(final Path dotFile) throws SchemaCrawlerException {
-    final Path outputFile = outputOptions.getOutputFile(outputOptions.getOutputFormatValue());
-
-    // Set the format, in case we are using the default
-    outputOptions =
-        OutputOptionsBuilder.builder(outputOptions)
-            .withOutputFormat(diagramOutputFormat)
-            .withOutputFormatValue(diagramOutputFormat.getFormat())
-            .withOutputFile(outputFile)
-            .toOptions();
-
-    GraphExecutor graphExecutor;
-    if (diagramOutputFormat != scdot) {
-      final List<String> graphvizOpts = commandOptions.getGraphvizOpts();
-      boolean graphExecutorAvailable = false;
-
-      // Try 1: Use Graphviz
-      graphExecutor =
-          new GraphvizProcessExecutor(dotFile, outputFile, diagramOutputFormat, graphvizOpts);
-      graphExecutorAvailable = graphExecutor.canGenerate();
-
-      // Try 2: Use Java library for Graphviz
-      if (!graphExecutorAvailable) {
-        graphExecutor = new GraphvizJavaExecutor(dotFile, outputFile, diagramOutputFormat);
-        graphExecutorAvailable = graphExecutor.canGenerate();
-      }
-
-      if (!graphExecutorAvailable) {
-        final String message = readResourceFully("/dot.error.txt");
-        throw new SchemaCrawlerRuntimeException(message);
-      }
-
-    } else {
-      graphExecutor = new GraphNoOpExecutor(diagramOutputFormat);
-    }
-
-    return graphExecutor;
   }
 
   private SchemaTextDetailType getSchemaTextDetailType() {

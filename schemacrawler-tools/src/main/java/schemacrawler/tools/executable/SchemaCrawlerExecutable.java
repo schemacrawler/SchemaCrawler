@@ -87,7 +87,7 @@ public final class SchemaCrawlerExecutable {
     // available
     final SchemaCrawlerCommand<?> scCommand = loadCommand();
 
-    // Set options
+    // Set identifiers strategy
     scCommand.setIdentifiers(schemaRetrievalOptions.getIdentifiers());
 
     // Initialize, and check if the command is available
@@ -100,7 +100,9 @@ public final class SchemaCrawlerExecutable {
 
     // Prepare to execute
     scCommand.setCatalog(catalog);
-    scCommand.setConnection(connection);
+    if (scCommand.usesConnection()) {
+      scCommand.setConnection(connection);
+    }
 
     // Execute
     LOGGER.log(Level.INFO, new StringFormat("Executing SchemaCrawler command <%s>", command));

@@ -33,9 +33,10 @@ import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
-import static schemacrawler.tools.command.text.diagram.GraphvizUtility.isGraphvizAvailable;
-import static schemacrawler.tools.command.text.diagram.GraphvizUtility.isGraphvizJavaAvailable;
+import static java.util.Objects.requireNonNull;
+import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.htmlx;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.svg;
+import static schemacrawler.tools.command.text.schema.options.TextOutputFormat.html;
 import static us.fatehi.utility.IOUtility.copy;
 import static us.fatehi.utility.IOUtility.createTempFilePath;
 
@@ -46,12 +47,10 @@ import java.io.Writer;
 import java.nio.file.Path;
 import java.util.regex.Pattern;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.command.text.diagram.DiagramRenderer;
+import schemacrawler.tools.command.text.diagram.GraphExecutorFactory;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
-import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import schemacrawler.tools.command.text.schema.SchemaTextRenderer;
-import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.options.OutputFormat;
@@ -86,31 +85,31 @@ public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOpt
     finalHtmlFileWriter.append(System.lineSeparator());
   }
 
-  public EmbeddedDiagramRenderer(final String command) {
+  private final GraphExecutorFactory graphExecutorFactory;
+
+  public EmbeddedDiagramRenderer(
+      final String command, final GraphExecutorFactory graphExecutorFactory) {
     super(command);
+    this.graphExecutorFactory =
+        requireNonNull(graphExecutorFactory, "No graph executor factory provided");
   }
 
   @Override
   public void checkAvailability() throws Exception {
-    if (isGraphvizAvailable()) {
-      return;
-    } else if (isGraphvizJavaAvailable(svg)) {
-      return;
-    } else {
-      throw new SchemaCrawlerException("Cannot generate diagram in SVG format");
-    }
+    graphExecutorFactory.canGenerate(svg);
   }
 
   @Override
   public void execute() throws Exception {
     checkCatalog();
 
-    final Path finalHtmlFile = createTempFilePath("schemacrawler", "html");
-    final Path baseHtmlFile = createTempFilePath("schemacrawler", "html");
-    final Path baseSvgFile = createTempFilePath("schemacrawler", "svg");
+    final String stem = "schemacrawler";
+    final Path finalHtmlFile = createTempFilePath(stem, htmlx.getFormat());
+    final Path baseHtmlFile = createTempFilePath(stem, html.getFormat());
+    final Path baseSvgFile = createTempFilePath(stem, svg.getFormat());
 
-    executeCommand(new SchemaTextRenderer(command), baseHtmlFile, TextOutputFormat.html);
-    executeCommand(new DiagramRenderer(command), baseSvgFile, DiagramOutputFormat.svg);
+    executeCommand(new SchemaTextRenderer(command), baseHtmlFile, html);
+    executeCommand(new DiagramRenderer(command, graphExecutorFactory), baseSvgFile, svg);
 
     // Interleave HTML and SVG
     try (final BufferedWriter finalHtmlFileWriter =
@@ -136,27 +135,47 @@ public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOpt
     return false;
   }
 
+  /**
+   * Lightweight execution of SchemaCrawler commands. Doing it this way avoids going via the command
+   * registry and explicit loading and initialization of commands via a command provider, and
+   * ability to avoid reloading the catalog, and not having to set the connection. On the other
+   * hand, some of this code is duplicated from SchemaCrawlerExecuable.
+   *
+   * @param scCommand SchemaCrawler command to execute
+   * @param outputFile Output file to create
+   * @param outputFormat Output format
+   */
   private void executeCommand(
       final SchemaCrawlerCommand<? super DiagramOptions> scCommand,
       final Path outputFile,
       final OutputFormat outputFormat)
       throws Exception {
-    scCommand.setSchemaCrawlerOptions(getSchemaCrawlerOptions());
-    scCommand.setCommandOptions(commandOptions);
-
-    scCommand.setIdentifiers(getIdentifiers());
-    scCommand.setCatalog(getCatalog());
-    scCommand.setConnection(getConnection());
 
     final OutputOptions outputOptions =
         OutputOptionsBuilder.builder(getOutputOptions())
             .withOutputFormat(outputFormat)
             .withOutputFile(outputFile)
             .toOptions();
+
+    // Normally set by the command provider during instantiation
+    scCommand.setCommandOptions(commandOptions);
+
+    // Set when a new command provider is initialized
+    scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
     scCommand.setOutputOptions(outputOptions);
 
-    scCommand.checkAvailability();
+    // Set identifiers strategy
+    scCommand.setIdentifiers(identifiers);
+
+    // Initialize, and check if the command is available
     scCommand.initialize();
+    scCommand.checkAvailability();
+
+    // Prepare to execute
+    scCommand.setCatalog(catalog);
+    // Note: No need to set connection on the command
+
+    // Execute
     scCommand.execute();
   }
 }
