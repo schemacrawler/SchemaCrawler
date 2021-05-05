@@ -48,6 +48,7 @@ import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.command.text.diagram.DiagramRenderer;
+import schemacrawler.tools.command.text.diagram.GraphExecutorFactory;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import schemacrawler.tools.command.text.schema.SchemaTextRenderer;
@@ -110,7 +111,10 @@ public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOpt
     final Path baseSvgFile = createTempFilePath("schemacrawler", "svg");
 
     executeCommand(new SchemaTextRenderer(command), baseHtmlFile, TextOutputFormat.html);
-    executeCommand(new DiagramRenderer(command), baseSvgFile, DiagramOutputFormat.svg);
+    executeCommand(
+        new DiagramRenderer(command, new GraphExecutorFactory()),
+        baseSvgFile,
+        DiagramOutputFormat.svg);
 
     // Interleave HTML and SVG
     try (final BufferedWriter finalHtmlFileWriter =
@@ -155,8 +159,8 @@ public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOpt
             .toOptions();
     scCommand.setOutputOptions(outputOptions);
 
-    scCommand.checkAvailability();
     scCommand.initialize();
+    scCommand.checkAvailability();
     scCommand.execute();
   }
 }

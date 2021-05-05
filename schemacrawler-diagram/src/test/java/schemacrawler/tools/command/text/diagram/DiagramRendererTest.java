@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.integration.test;
+package schemacrawler.tools.command.text.diagram;
 
 import static java.nio.file.Files.createDirectories;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
@@ -36,6 +36,7 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder.builder;
+import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.scdot;
 
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -45,6 +46,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
+import schemacrawler.integration.test.DiagramOutputTest;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -56,7 +58,6 @@ import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
-import schemacrawler.tools.command.text.diagram.DiagramRenderer;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
@@ -71,6 +72,30 @@ import us.fatehi.utility.IOUtility;
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
 public class DiagramRendererTest {
+
+  private final class GraphvizJavaExecutorFactory extends GraphExecutorFactory {
+
+    @Override
+    public void canGenerate(final DiagramOutputFormat diagramOutputFormat) throws Exception {
+      // No-op
+    }
+
+    @Override
+    public GraphExecutor getGraphExecutor(
+        final Path dotFile,
+        final DiagramOutputFormat diagramOutputFormat,
+        final Path outputFile,
+        final DiagramOptions commandOptions)
+        throws SchemaCrawlerException {
+      final GraphExecutor graphExecutor;
+      if (diagramOutputFormat != scdot) {
+        graphExecutor = new GraphvizJavaExecutor(dotFile, outputFile, diagramOutputFormat);
+      } else {
+        graphExecutor = new GraphNoOpExecutor(diagramOutputFormat);
+      }
+      return graphExecutor;
+    }
+  }
 
   private static final String DIAGRAM_OUTPUT = "diagram_renderer_output/";
   private static Path directory;
@@ -170,11 +195,29 @@ public class DiagramRendererTest {
     final Catalog catalog = getCatalog(connection);
 
     commandDiagram(
-        new DiagramRenderer(SchemaTextDetailType.details.name()),
+        new DiagramRenderer(SchemaTextDetailType.details.name(), new GraphExecutorFactory()),
         connection,
         catalog,
         diagramOptions,
         DiagramOutputFormat.canon,
+        testContext.testMethodName());
+  }
+
+  @Test
+  public void diagramRenderer_graphviz_java(
+      final TestContext testContext, final Connection connection) throws Exception {
+
+    final DiagramOptionsBuilder diagramOptionsBuilder = builder();
+    final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
+
+    final Catalog catalog = getCatalog(connection);
+
+    commandDiagram(
+        new DiagramRenderer(SchemaTextDetailType.details.name(), new GraphvizJavaExecutorFactory()),
+        connection,
+        catalog,
+        diagramOptions,
+        DiagramOutputFormat.svg,
         testContext.testMethodName());
   }
 
