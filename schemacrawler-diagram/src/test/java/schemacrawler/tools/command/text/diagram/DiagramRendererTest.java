@@ -231,11 +231,31 @@ public class DiagramRendererTest {
     final Catalog catalog = getCatalog(connection);
 
     commandDiagram(
-        new EmbeddedDiagramRenderer(SchemaTextDetailType.details.name()),
+        new EmbeddedDiagramRenderer(
+            SchemaTextDetailType.details.name(), new GraphExecutorFactory()),
         connection,
         catalog,
         diagramOptions,
         DiagramOutputFormat.htmlx,
         testContext.testMethodName());
+  }
+
+  @Test
+  public void embeddedDiagramRenderer_graphviz_java(
+      final TestContext testContext, final Connection connection) throws Exception {
+
+    final DiagramOptionsBuilder diagramOptionsBuilder = builder();
+    final DiagramOptions diagramOptions = diagramOptionsBuilder.toOptions();
+
+    final Catalog catalog = getCatalog(connection);
+
+    commandDiagram(
+        new EmbeddedDiagramRenderer(
+            SchemaTextDetailType.details.name(), new GraphvizJavaExecutorFactory()),
+        connection,
+        catalog,
+        diagramOptions,
+        DiagramOutputFormat.htmlx,
+        "embeddedDiagramRenderer_graphviz");
   }
 }

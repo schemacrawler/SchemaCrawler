@@ -33,9 +33,10 @@ import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
-import static schemacrawler.tools.command.text.diagram.GraphvizUtility.isGraphvizAvailable;
-import static schemacrawler.tools.command.text.diagram.GraphvizUtility.isGraphvizJavaAvailable;
+import static java.util.Objects.requireNonNull;
+import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.htmlx;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.svg;
+import static schemacrawler.tools.command.text.schema.options.TextOutputFormat.html;
 import static us.fatehi.utility.IOUtility.copy;
 import static us.fatehi.utility.IOUtility.createTempFilePath;
 
@@ -46,13 +47,10 @@ import java.io.Writer;
 import java.nio.file.Path;
 import java.util.regex.Pattern;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.command.text.diagram.DiagramRenderer;
 import schemacrawler.tools.command.text.diagram.GraphExecutorFactory;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
-import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import schemacrawler.tools.command.text.schema.SchemaTextRenderer;
-import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.options.OutputFormat;
@@ -87,34 +85,31 @@ public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOpt
     finalHtmlFileWriter.append(System.lineSeparator());
   }
 
-  public EmbeddedDiagramRenderer(final String command) {
+  private final GraphExecutorFactory graphExecutorFactory;
+
+  public EmbeddedDiagramRenderer(
+      final String command, final GraphExecutorFactory graphExecutorFactory) {
     super(command);
+    this.graphExecutorFactory =
+        requireNonNull(graphExecutorFactory, "No graph executor factory provided");
   }
 
   @Override
   public void checkAvailability() throws Exception {
-    if (isGraphvizAvailable()) {
-      return;
-    } else if (isGraphvizJavaAvailable(svg)) {
-      return;
-    } else {
-      throw new SchemaCrawlerException("Cannot generate diagram in SVG format");
-    }
+    graphExecutorFactory.canGenerate(svg);
   }
 
   @Override
   public void execute() throws Exception {
     checkCatalog();
 
-    final Path finalHtmlFile = createTempFilePath("schemacrawler", "html");
-    final Path baseHtmlFile = createTempFilePath("schemacrawler", "html");
-    final Path baseSvgFile = createTempFilePath("schemacrawler", "svg");
+    final String stem = "schemacrawler";
+    final Path finalHtmlFile = createTempFilePath(stem, htmlx.getFormat());
+    final Path baseHtmlFile = createTempFilePath(stem, html.getFormat());
+    final Path baseSvgFile = createTempFilePath(stem, svg.getFormat());
 
-    executeCommand(new SchemaTextRenderer(command), baseHtmlFile, TextOutputFormat.html);
-    executeCommand(
-        new DiagramRenderer(command, new GraphExecutorFactory()),
-        baseSvgFile,
-        DiagramOutputFormat.svg);
+    executeCommand(new SchemaTextRenderer(command), baseHtmlFile, html);
+    executeCommand(new DiagramRenderer(command, graphExecutorFactory), baseSvgFile, svg);
 
     // Interleave HTML and SVG
     try (final BufferedWriter finalHtmlFileWriter =
