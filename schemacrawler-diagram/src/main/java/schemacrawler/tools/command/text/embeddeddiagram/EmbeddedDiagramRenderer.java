@@ -140,27 +140,47 @@ public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOpt
     return false;
   }
 
+  /**
+   * Lightweight execution of SchemaCrawler commands. Doing it this way avoids going via the command
+   * registry and explicit loading and initialization of commands via a command provider, and
+   * ability to avoid reloading the catalog, and not having to set the connection. On the other
+   * hand, some of this code is duplicated from SchemaCrawlerExecuable.
+   *
+   * @param scCommand SchemaCrawler command to execute
+   * @param outputFile Output file to create
+   * @param outputFormat Output format
+   */
   private void executeCommand(
       final SchemaCrawlerCommand<? super DiagramOptions> scCommand,
       final Path outputFile,
       final OutputFormat outputFormat)
       throws Exception {
-    scCommand.setSchemaCrawlerOptions(getSchemaCrawlerOptions());
-    scCommand.setCommandOptions(commandOptions);
-
-    scCommand.setIdentifiers(getIdentifiers());
-    scCommand.setCatalog(getCatalog());
-    scCommand.setConnection(getConnection());
 
     final OutputOptions outputOptions =
         OutputOptionsBuilder.builder(getOutputOptions())
             .withOutputFormat(outputFormat)
             .withOutputFile(outputFile)
             .toOptions();
+
+    // Normally set by the command provider during instantiation
+    scCommand.setCommandOptions(commandOptions);
+
+    // Set when a new command provider is initialized
+    scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
     scCommand.setOutputOptions(outputOptions);
 
+    // Set identifiers strategy
+    scCommand.setIdentifiers(identifiers);
+
+    // Initialize, and check if the command is available
     scCommand.initialize();
     scCommand.checkAvailability();
+
+    // Prepare to execute
+    scCommand.setCatalog(catalog);
+    // Note: No need to set connection on the command
+
+    // Execute
     scCommand.execute();
   }
 }

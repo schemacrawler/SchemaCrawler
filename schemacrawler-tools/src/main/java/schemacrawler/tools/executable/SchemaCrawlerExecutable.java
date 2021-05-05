@@ -87,7 +87,7 @@ public final class SchemaCrawlerExecutable {
     // available
     final SchemaCrawlerCommand<?> scCommand = loadCommand();
 
-    // Set options
+    // Set identifiers strategy
     scCommand.setIdentifiers(schemaRetrievalOptions.getIdentifiers());
 
     // Initialize, and check if the command is available
