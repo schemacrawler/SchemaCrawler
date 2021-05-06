@@ -370,6 +370,25 @@ class MutableTable extends AbstractDatabaseObject implements Table {
       final NamedObjectList<? extends R> tableReferences,
       final TableAssociationType tableAssociationType) {
 
+    final List<R> foreignKeysList = new ArrayList<>(tableReferences.values());
+    if (tableAssociationType != null && tableAssociationType != TableAssociationType.all) {
+      for (final Iterator<R> iterator = foreignKeysList.iterator(); iterator.hasNext(); ) {
+        final R foreignKey = iterator.next();
+
+        final boolean isExportedKey = foreignKey.getReferencedTable().equals(this);
+        if (tableAssociationType == TableAssociationType.exported && !isExportedKey) {
+          iterator.remove();
+          continue;
+        }
+
+        final boolean isImportedKey = foreignKey.getReferencingTable().equals(this);
+        if (tableAssociationType == TableAssociationType.imported && !isImportedKey) {
+          iterator.remove();
+          continue;
+        }
+      }
+    }
+
     // Sort imported keys (constrained columns) first and then exported keys
     final Comparator<R> fkComparator =
         nullsLast(
@@ -386,21 +405,8 @@ class MutableTable extends AbstractDatabaseObject implements Table {
                       }
                     })
                 .thenComparing(naturalOrder()));
-
-    final List<R> foreignKeysList = new ArrayList<>(tableReferences.values());
     Collections.sort(foreignKeysList, fkComparator);
-    if (tableAssociationType != null && tableAssociationType != TableAssociationType.all) {
-      for (final Iterator<R> iterator = foreignKeysList.iterator(); iterator.hasNext(); ) {
-        final R foreignKey = iterator.next();
-        final boolean isExportedKey = foreignKey.getReferencedTable().equals(this);
-        final boolean isImportedKey = foreignKey.getReferencingTable().equals(this);
-        if (tableAssociationType == TableAssociationType.exported && !isExportedKey) {
-          iterator.remove();
-        } else if (tableAssociationType == TableAssociationType.imported && !isImportedKey) {
-          iterator.remove();
-        }
-      }
-    }
+
     return foreignKeysList;
   }
 }
