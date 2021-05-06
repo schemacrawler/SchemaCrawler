@@ -370,37 +370,46 @@ class MutableTable extends AbstractDatabaseObject implements Table {
       final NamedObjectList<? extends R> tableReferences,
       final TableAssociationType tableAssociationType) {
 
+    final List<R> foreignKeysList = new ArrayList<>(tableReferences.values());
+    if (tableAssociationType != null && tableAssociationType != TableAssociationType.all) {
+      for (final Iterator<R> iterator = foreignKeysList.iterator(); iterator.hasNext(); ) {
+        final R foreignKey = iterator.next();
+
+        final boolean isExportedKey = foreignKey.getReferencedTable().equals(this);
+        if (tableAssociationType == TableAssociationType.exported && !isExportedKey) {
+          iterator.remove();
+          continue;
+        }
+
+        final boolean isImportedKey = foreignKey.getReferencingTable().equals(this);
+        if (tableAssociationType == TableAssociationType.imported && !isImportedKey) {
+          iterator.remove();
+          continue;
+        }
+      }
+    }
+
     // Sort imported keys (constrained columns) first and then exported keys
+    // Note: This comparator assumes the all the foreign keys belong to this table - either imported
+    // or exported, and no explicit checks for this are done
     final Comparator<R> fkComparator =
         nullsLast(
             ((Comparator<R>)
                     (final R one, final R two) -> {
-                      final Table oneParent = one.getParent();
-                      final Table twoParent = two.getParent();
-                      if (oneParent.equals(twoParent)) {
+                      final boolean isOneImportedKey = one.getReferencingTable().equals(this);
+                      final boolean isTwoImportedKey = two.getReferencingTable().equals(this);
+
+                      if (isOneImportedKey == isTwoImportedKey) {
                         return 0;
-                      } else if (oneParent.equals(this)) {
+                      } else if (isOneImportedKey) {
                         return -1;
                       } else {
                         return 1;
                       }
                     })
                 .thenComparing(naturalOrder()));
-
-    final List<R> foreignKeysList = new ArrayList<>(tableReferences.values());
     Collections.sort(foreignKeysList, fkComparator);
-    if (tableAssociationType != null && tableAssociationType != TableAssociationType.all) {
-      for (final Iterator<R> iterator = foreignKeysList.iterator(); iterator.hasNext(); ) {
-        final R foreignKey = iterator.next();
-        final boolean isExportedKey = foreignKey.getReferencedTable().equals(this);
-        final boolean isImportedKey = foreignKey.getReferencingTable().equals(this);
-        if (tableAssociationType == TableAssociationType.exported && !isExportedKey) {
-          iterator.remove();
-        } else if (tableAssociationType == TableAssociationType.imported && !isImportedKey) {
-          iterator.remove();
-        }
-      }
-    }
+
     return foreignKeysList;
   }
 }

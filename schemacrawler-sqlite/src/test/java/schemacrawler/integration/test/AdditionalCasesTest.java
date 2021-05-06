@@ -28,74 +28,63 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.integration.test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
+
+import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.test.utility.*;
+import schemacrawler.test.utility.BaseSqliteTest;
+import schemacrawler.test.utility.DatabaseTestUtility;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
+import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
-import java.nio.file.Path;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.FileHasContent.*;
-
 @ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestContextParameterResolver.class)
-public class AdditionalCasesTest
-  extends BaseSqliteTest
-{
+public class AdditionalCasesTest extends BaseSqliteTest {
 
   @Test
-  public void renameTable(final TestContext testContext)
-    throws Exception
-  {
-    run(testContext.testMethodFullName(), "/rename_table.sql", "details");
-  }
-
-  @Test
-  public void advancedUsage(final TestContext testContext)
-    throws Exception
-  {
+  public void advancedUsage(final TestContext testContext) throws Exception {
     run(testContext.testMethodFullName(), "/advanced_usage.sql", "details");
   }
 
   @Test
-  public void quotedCreateScript(final TestContext testContext)
-    throws Exception
-  {
-    run(testContext.testMethodFullName(),
-        "/identifiers_unquoted.sql",
-        "schema");
+  public void quotedCreateScript(final TestContext testContext) throws Exception {
+    run(testContext.testMethodFullName(), "/identifiers_unquoted.sql", "schema");
     run(testContext.testMethodFullName(), "/identifiers_quoted.sql", "schema");
   }
 
-  private void run(final String currentMethodFullName,
-                   final String databaseSqlResource,
-                   final String command)
-    throws Exception
-  {
+  @Test
+  public void renameTable(final TestContext testContext) throws Exception {
+    run(testContext.testMethodFullName(), "/rename_table.sql", "details");
+  }
+
+  private void run(
+      final String currentMethodFullName, final String databaseSqlResource, final String command)
+      throws Exception {
     final Path sqliteDbFile = createTestDatabase(databaseSqlResource);
 
     final SchemaCrawlerOptions options =
-      DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+        DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
-    final SchemaTextOptions textOptions =
-      SchemaTextOptionsBuilder.newSchemaTextOptions();
+    final SchemaTextOptions textOptions = SchemaTextOptionsBuilder.newSchemaTextOptions();
 
-    final SchemaCrawlerExecutable executable =
-      new SchemaCrawlerExecutable(command);
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(options);
-    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
-                                            .builder(textOptions)
-                                            .toConfig());
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
-    assertThat(outputOf(executableExecution(createConnection(sqliteDbFile),
-                                            executable)),
-               hasSameContentAs(classpathResource(currentMethodFullName)));
+    assertThat(
+        outputOf(executableExecution(createConnection(sqliteDbFile), executable)),
+        hasSameContentAs(classpathResource(currentMethodFullName)));
   }
-
 }

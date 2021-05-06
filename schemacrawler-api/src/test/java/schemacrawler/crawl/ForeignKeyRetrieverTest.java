@@ -30,6 +30,7 @@ package schemacrawler.crawl;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -82,10 +83,15 @@ import schemacrawler.utility.NamedObjectSort;
 public class ForeignKeyRetrieverTest {
 
   public static void verifyRetrieveForeignKeys(final Catalog catalog) throws IOException {
+    verifyRetrieveForeignKeys(catalog, "SchemaCrawlerTest.foreignKeys");
+  }
+
+  public static void verifyRetrieveForeignKeys(final Catalog catalog, final String referenceFile)
+      throws IOException {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-      assertThat("Schema count does not match", schemas, arrayWithSize(5));
+      assertThat("Schema count does not match", schemas, arrayWithSize(greaterThan(2)));
       for (final Schema schema : schemas) {
         out.println("schema: " + schema.getFullName());
         final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
@@ -123,8 +129,7 @@ public class ForeignKeyRetrieverTest {
       }
     }
     // IMPORTANT: The data dictionary test should return the same information as the metadata test
-    assertThat(
-        outputOf(testout), hasSameContentAs(classpathResource("SchemaCrawlerTest.foreignKeys")));
+    assertThat(outputOf(testout), hasSameContentAs(classpathResource(referenceFile)));
   }
 
   private MutableCatalog catalog;
