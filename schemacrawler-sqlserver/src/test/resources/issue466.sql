@@ -1,0 +1,1150 @@
+/****** Object:  Table [dbo].[A]    Script Date: 06.05.2021 13:50:58 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[A](
+	[id] [bigint] NOT NULL,
+ CONSTRAINT [pk_A] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[AU]    Script Date: 06.05.2021 13:50:58 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[AU](
+	[id] [bigint] NOT NULL,
+	[targetSLD_id] [bigint] NULL,
+	[targetR_id] [bigint] NULL,
+ CONSTRAINT [pk_AU] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[BCCG]    Script Date: 06.05.2021 13:50:58 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[BCCG](
+	[id] [bigint] NOT NULL,
+	[targetCS_id] [bigint] NOT NULL,
+	[targetR_id] [bigint] NOT NULL,
+ CONSTRAINT [pk_BCCG] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[CCR]    Script Date: 06.05.2021 13:50:58 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[CCR](
+	[id] [bigint] NOT NULL,
+	[targetCO_id] [bigint] NOT NULL,
+ CONSTRAINT [pk_CCR] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[CCRTR]    Script Date: 06.05.2021 13:50:58 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[CCRTR](
+	[targetCCR_id] [bigint] NOT NULL,
+	[targetR_id] [bigint] NOT NULL,
+ CONSTRAINT [pk_CCRTR] PRIMARY KEY CLUSTERED 
+(
+	[targetCCR_id] ASC,
+	[targetR_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[CIPP]    Script Date: 06.05.2021 13:50:58 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[CIPP](
+	[targetCR_id] [bigint] NOT NULL,
+	[targetPP_id] [bigint] NOT NULL,
+	[targetPC_id] [bigint] NOT NULL,
+	[targetR_id] [bigint] NOT NULL,
+	[id] [bigint] NOT NULL,
+ CONSTRAINT [pk_CIPP] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC,
+	[targetPP_id] ASC,
+	[targetR_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[CO]    Script Date: 06.05.2021 13:50:58 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[CO](
+	[id] [bigint] NOT NULL,
+	[targetCS_id] [bigint] NOT NULL,
+	[targetSCV_id] [bigint] NULL,
+	[targetSCV_v] [int] NULL,
+ CONSTRAINT [pk_CO] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[CR]    Script Date: 06.05.2021 13:50:58 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[CR](
+	[targetR_id] [bigint] NOT NULL,
+	[id] [bigint] NOT NULL,
+	[targetTC_id] [bigint] NOT NULL,
+	[targetCR_id] [bigint] NULL,
+	[targetCO_id] [bigint] NOT NULL,
+ CONSTRAINT [pk_CR] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[CS]    Script Date: 06.05.2021 13:50:58 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[CS](
+	[id] [bigint] NOT NULL,
+	[targetT_id] [bigint] NOT NULL,
+	[targetPC_id] [bigint] NULL,
+	[targeR_id] [bigint] NULL,
+ CONSTRAINT [pk_CS] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[DEV]    Script Date: 06.05.2021 13:50:59 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[DEV](
+	[targetR_id] [bigint] NOT NULL,
+	[id] [bigint] NOT NULL,
+ CONSTRAINT [pk_DEV] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[HPIPP]    Script Date: 06.05.2021 13:50:59 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[HPIPP](
+	[targetPP_id] [bigint] NOT NULL,
+	[targetPH_id] [bigint] NOT NULL,
+	[targetPC_id] [bigint] NOT NULL,
+ CONSTRAINT [pk_HPIPP] PRIMARY KEY CLUSTERED 
+(
+	[targetPP_id] ASC,
+	[targetPC_id] ASC,
+	[targetPH_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[HSD]    Script Date: 06.05.2021 13:50:59 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[HSD](
+	[targetHPIPP_targetPP_id] [bigint] NOT NULL,
+	[targetHPIPP_targetPH_id] [bigint] NOT NULL,
+	[targetHPIPP_targetPC_id] [bigint] NOT NULL,
+	[targetS_id] [bigint] NOT NULL,
+	[sn] [nvarchar](5) NOT NULL,
+ CONSTRAINT [pk_HSD] PRIMARY KEY CLUSTERED 
+(
+	[targetHPIPP_targetPP_id] ASC,
+	[targetHPIPP_targetPC_id] ASC,
+	[targetHPIPP_targetPH_id] ASC,
+	[targetS_id] ASC,
+	[sn] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[M]    Script Date: 06.05.2021 13:50:59 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[M](
+	[id] [bigint] NOT NULL,
+ CONSTRAINT [pk_M] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[MT]    Script Date: 06.05.2021 13:50:59 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[MT](
+	[id] [bigint] NOT NULL,
+ CONSTRAINT [pk_MT] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[PC]    Script Date: 06.05.2021 13:50:59 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[PC](
+	[id] [bigint] NOT NULL,
+	[targetPC_id] [bigint] NULL,
+ CONSTRAINT [pk_PC] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[PCH]    Script Date: 06.05.2021 13:50:59 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[PCH](
+	[targetPC_id] [bigint] NOT NULL,
+	[id] [bigint] NOT NULL,
+ CONSTRAINT [pk_PCH] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[PCIPP]    Script Date: 06.05.2021 13:50:59 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[PCIPP](
+	[targetPP_id] [bigint] NOT NULL,
+	[targetPC_id] [bigint] NOT NULL,
+	[targetR_id] [bigint] NOT NULL,
+ CONSTRAINT [pk_PCIPP] PRIMARY KEY CLUSTERED 
+(
+	[targetPP_id] ASC,
+	[targetPC_id] ASC,
+	[targetR_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[PCIPrP]    Script Date: 06.05.2021 13:50:59 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[PCIPrP](
+	[targetPC_id] [bigint] NOT NULL,
+	[targetRIPrP_id] [bigint] NOT NULL,
+	[id] [bigint] NOT NULL,
+ CONSTRAINT [pk_PCIPrP] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC,
+	[targetPC_id] ASC,
+	[targetRIPrP_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[PCM]    Script Date: 06.05.2021 13:50:59 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[PCM](
+	[id] [bigint] NOT NULL,
+	[targetPC_id] [bigint] NOT NULL,
+	[targetMT_id] [bigint] NOT NULL,
+ CONSTRAINT [pk_PCM] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[PCMRL]    Script Date: 06.05.2021 13:50:59 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[PCMRL](
+	[targetR_id] [bigint] NOT NULL,
+	[targetPCM_id] [bigint] NOT NULL,
+ CONSTRAINT [pk_PCMRL] PRIMARY KEY CLUSTERED 
+(
+	[targetPCM_id] ASC,
+	[targetR_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[PH]    Script Date: 06.05.2021 13:50:59 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[PH](
+	[id] [bigint] NOT NULL,
+	[targetR_id] [bigint] NOT NULL,
+ CONSTRAINT [pk_PH] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[PM]    Script Date: 06.05.2021 13:50:59 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[PM](
+	[id] [bigint] NOT NULL,
+	[targetPP_id] [bigint] NOT NULL,
+	[targetPC_id] [bigint] NOT NULL,
+	[targetR_id] [bigint] NOT NULL,
+ CONSTRAINT [pk_PM] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[PP]    Script Date: 06.05.2021 13:50:59 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[PP](
+	[id] [bigint] NOT NULL,
+	[targetR_id] [bigint] NOT NULL,
+ CONSTRAINT [pk_PP] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[PPP]    Script Date: 06.05.2021 13:50:59 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[PPP](
+	[id] [bigint] NOT NULL,
+	[targetR_id] [bigint] NOT NULL,
+ CONSTRAINT [pk_PPP] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[R]    Script Date: 06.05.2021 13:50:59 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[R](
+	[targetM_id] [bigint] NULL,
+	[targetR_id] [bigint] NULL,
+	[targetST_id] [bigint] NULL,
+	[id] [bigint] NOT NULL,
+	[targetSLD_id] [bigint] NULL,
+	[targetA_id] [bigint] NULL,
+	[targetPH_id] [bigint] NULL,
+	[targetS_id] [bigint] NULL,
+ CONSTRAINT [pk_R] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[RGIPP]    Script Date: 06.05.2021 13:50:59 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[RGIPP](
+	[id] [bigint] NOT NULL,
+	[targetPPP_id] [bigint] NOT NULL,
+ CONSTRAINT [pk_RGIPP] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[RIPP]    Script Date: 06.05.2021 13:50:59 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[RIPP](
+	[targetPP_id] [bigint] NOT NULL,
+	[targetR_id] [bigint] NOT NULL,
+ CONSTRAINT [pk_RIPP] PRIMARY KEY CLUSTERED 
+(
+	[targetPP_id] ASC,
+	[targetR_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[RIPrP]    Script Date: 06.05.2021 13:50:59 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[RIPrP](
+	[targetPPP_id] [bigint] NOT NULL,
+	[targetR_id] [bigint] NOT NULL,
+	[targetRGIPP_id] [bigint] NOT NULL,
+ CONSTRAINT [pk_RIPrP] PRIMARY KEY CLUSTERED 
+(
+	[targetPPP_id] ASC,
+	[targetR_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[RPC]    Script Date: 06.05.2021 13:50:59 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[RPC](
+	[targetPC_id] [bigint] NOT NULL,
+	[targetR_id] [bigint] NOT NULL,
+ CONSTRAINT [pk_RPC] PRIMARY KEY CLUSTERED 
+(
+	[targetR_id] ASC,
+	[targetPC_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[RPCH]    Script Date: 06.05.2021 13:51:00 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[RPCH](
+	[targetPCH_id] [bigint] NOT NULL,
+	[targetR_id] [bigint] NOT NULL,
+ CONSTRAINT [ pk_RPCH] PRIMARY KEY CLUSTERED 
+(
+	[targetR_id] ASC,
+	[targetPCH_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[S]    Script Date: 06.05.2021 13:51:00 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[S](
+	[id] [bigint] NOT NULL,
+	[targetS_id] [bigint] NULL,
+ CONSTRAINT [pk_S] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[SC]    Script Date: 06.05.2021 13:51:00 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[SC](
+	[id] [bigint] NOT NULL,
+ CONSTRAINT [pk_SC] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[SCCR]    Script Date: 06.05.2021 13:51:00 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[SCCR](
+	[id] [bigint] NOT NULL,
+ CONSTRAINT [pk_SCCR] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[SCV]    Script Date: 06.05.2021 13:51:00 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[SCV](
+	[targetSC_id] [bigint] NOT NULL,
+	[v] [int] NOT NULL,
+ CONSTRAINT [pk_SCV] PRIMARY KEY CLUSTERED 
+(
+	[targetSC_id] ASC,
+	[v] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[SCVR]    Script Date: 06.05.2021 13:51:00 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[SCVR](
+	[id] [bigint] NOT NULL,
+	[targetPC_id] [bigint] NOT NULL,
+	[targetSC_id] [bigint] NOT NULL,
+	[targetR_id] [bigint] NOT NULL,
+ CONSTRAINT [pk_SCVR] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[SCVV]    Script Date: 06.05.2021 13:51:00 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[SCVV](
+	[id] [bigint] NOT NULL,
+	[targetSCV_id] [bigint] NOT NULL,
+ CONSTRAINT [pk_SSCVV] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[SLD]    Script Date: 06.05.2021 13:51:00 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[SLD](
+	[id] [bigint] NOT NULL,
+ CONSTRAINT [pk_SLD] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[SRSPC]    Script Date: 06.05.2021 13:51:00 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[SRSPC](
+	[targetSSPC_id] [bigint] NOT NULL,
+	[targetR_id] [bigint] NOT NULL,
+ CONSTRAINT [pk_SRSPC] PRIMARY KEY CLUSTERED 
+(
+	[targetR_id] ASC,
+	[targetSSPC_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[SSPC]    Script Date: 06.05.2021 13:51:00 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[SSPC](
+	[id] [bigint] NOT NULL,
+ CONSTRAINT [pk_SSPC] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[ST]    Script Date: 06.05.2021 13:51:00 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[ST](
+	[id] [bigint] NOT NULL,
+ CONSTRAINT [pk_ST] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[T]    Script Date: 06.05.2021 13:51:00 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[T](
+	[targetPC_id] [bigint] NULL,
+	[id] [bigint] NOT NULL,
+	[targetR_id] [bigint] NULL,
+	[targetR_R_id] [bigint] NOT NULL,
+ CONSTRAINT [pk_T] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[TG]    Script Date: 06.05.2021 13:51:00 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[TG](
+	[id] [bigint] NOT NULL,
+	[targetR_id] [bigint] NULL,
+ CONSTRAINT [pk_TG] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[TGPC]    Script Date: 06.05.2021 13:51:00 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[TGPC](
+	[id] [bigint] NOT NULL,
+	[targetR_id] [bigint] NOT NULL,
+ CONSTRAINT [pk_TGPC] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[US]    Script Date: 06.05.2021 13:51:00 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[US](
+	[id] [bigint] NOT NULL,
+	[targetUSR_id] [bigint] NULL,
+	[targetPC_id] [bigint] NOT NULL,
+	[targetR_id] [bigint] NOT NULL,
+ CONSTRAINT [pk_US] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[USR]    Script Date: 06.05.2021 13:51:00 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[USR](
+	[id] [bigint] NOT NULL,
+ CONSTRAINT [pk_USR] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[VFD]    Script Date: 06.05.2021 13:51:00 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[VFD](
+	[targetPC_id] [bigint] NOT NULL,
+	[targetR_id] [bigint] NOT NULL,
+	[id] [bigint] NOT NULL,
+ CONSTRAINT [pk_VFD] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[VR]    Script Date: 06.05.2021 13:51:00 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[VR](
+	[targetR_id] [bigint] NOT NULL,
+	[targetVRB_id] [bigint] NOT NULL,
+	[id] [bigint] NOT NULL,
+ CONSTRAINT [pk_VR] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+/****** Object:  Table [dbo].[VRB]    Script Date: 06.05.2021 13:51:01 ******/
+SET ANSI_NULLS ON
+;
+SET QUOTED_IDENTIFIER ON
+;
+CREATE TABLE [dbo].[VRB](
+	[targetVRB_id] [bigint] NULL,
+	[targetPC_id] [bigint] NOT NULL,
+	[id] [bigint] NOT NULL,
+	[targetPP_id] [bigint] NULL,
+ CONSTRAINT [pk_VRB] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+;
+ALTER TABLE [dbo].[AU]  WITH CHECK ADD  CONSTRAINT [fk_targetAU_R] FOREIGN KEY([targetR_id])
+REFERENCES [dbo].[R] ([id])
+;
+ALTER TABLE [dbo].[AU] CHECK CONSTRAINT [fk_targetAU_R]
+;
+ALTER TABLE [dbo].[AU]  WITH CHECK ADD  CONSTRAINT [fk_targetAU_SLD] FOREIGN KEY([targetSLD_id])
+REFERENCES [dbo].[SLD] ([id])
+ON DELETE SET NULL
+;
+ALTER TABLE [dbo].[AU] CHECK CONSTRAINT [fk_targetAU_SLD]
+;
+ALTER TABLE [dbo].[BCCG]  WITH CHECK ADD  CONSTRAINT [fk_targetBCCG_CS] FOREIGN KEY([targetCS_id])
+REFERENCES [dbo].[CS] ([id])
+;
+ALTER TABLE [dbo].[BCCG] CHECK CONSTRAINT [fk_targetBCCG_CS]
+;
+ALTER TABLE [dbo].[BCCG]  WITH CHECK ADD  CONSTRAINT [fk_targetBCCG_R] FOREIGN KEY([targetR_id])
+REFERENCES [dbo].[R] ([id])
+;
+ALTER TABLE [dbo].[BCCG] CHECK CONSTRAINT [fk_targetBCCG_R]
+;
+ALTER TABLE [dbo].[CCR]  WITH CHECK ADD  CONSTRAINT [fk_targetCCR_CO] FOREIGN KEY([targetCO_id])
+REFERENCES [dbo].[CO] ([id])
+;
+ALTER TABLE [dbo].[CCR] CHECK CONSTRAINT [fk_targetCCR_CO]
+;
+ALTER TABLE [dbo].[CCRTR]  WITH CHECK ADD  CONSTRAINT [fk_targetCCR_R] FOREIGN KEY([targetR_id])
+REFERENCES [dbo].[R] ([id])
+;
+ALTER TABLE [dbo].[CCRTR] CHECK CONSTRAINT [fk_targetCCR_R]
+;
+ALTER TABLE [dbo].[CCRTR]  WITH CHECK ADD  CONSTRAINT [fk_targetCCRTR_CCR] FOREIGN KEY([targetCCR_id])
+REFERENCES [dbo].[CCR] ([id])
+ON DELETE CASCADE
+;
+ALTER TABLE [dbo].[CCRTR] CHECK CONSTRAINT [fk_targetCCRTR_CCR]
+;
+ALTER TABLE [dbo].[CIPP]  WITH CHECK ADD  CONSTRAINT [fk_targetCIPP_CR] FOREIGN KEY([targetCR_id])
+REFERENCES [dbo].[CR] ([id])
+;
+ALTER TABLE [dbo].[CIPP] CHECK CONSTRAINT [fk_targetCIPP_CR]
+;
+ALTER TABLE [dbo].[CIPP]  WITH CHECK ADD  CONSTRAINT [fk_targetCIPP_PCIPP] FOREIGN KEY([targetPP_id], [targetPC_id], [targetR_id])
+REFERENCES [dbo].[PCIPP] ([targetPP_id], [targetPC_id], [targetR_id])
+ON DELETE CASCADE
+;
+ALTER TABLE [dbo].[CIPP] CHECK CONSTRAINT [fk_targetCIPP_PCIPP]
+;
+ALTER TABLE [dbo].[CIPP]  WITH CHECK ADD  CONSTRAINT [fk_targetCIPP_R] FOREIGN KEY([targetR_id])
+REFERENCES [dbo].[R] ([id])
+;
+ALTER TABLE [dbo].[CIPP] CHECK CONSTRAINT [fk_targetCIPP_R]
+;
+ALTER TABLE [dbo].[CO]  WITH CHECK ADD  CONSTRAINT [fk_targetCO_CS] FOREIGN KEY([targetCS_id])
+REFERENCES [dbo].[CS] ([id])
+;
+ALTER TABLE [dbo].[CO] CHECK CONSTRAINT [fk_targetCO_CS]
+;
+ALTER TABLE [dbo].[CO]  WITH CHECK ADD  CONSTRAINT [fk_targetCO_SCV] FOREIGN KEY([targetSCV_id], [targetSCV_v])
+REFERENCES [dbo].[SCV] ([targetSC_id], [v])
+;
+ALTER TABLE [dbo].[CO] CHECK CONSTRAINT [fk_targetCO_SCV]
+;
+ALTER TABLE [dbo].[CR]  WITH CHECK ADD  CONSTRAINT [fk_targetCR_CO] FOREIGN KEY([targetCO_id])
+REFERENCES [dbo].[CO] ([id])
+ON DELETE CASCADE
+;
+ALTER TABLE [dbo].[CR] CHECK CONSTRAINT [fk_targetCR_CO]
+;
+ALTER TABLE [dbo].[CR]  WITH CHECK ADD  CONSTRAINT [fk_targetCR_CR] FOREIGN KEY([targetCR_id])
+REFERENCES [dbo].[CR] ([id])
+;
+ALTER TABLE [dbo].[CR] CHECK CONSTRAINT [fk_targetCR_CR]
+;
+ALTER TABLE [dbo].[CR]  WITH CHECK ADD  CONSTRAINT [fk_targetCR_R] FOREIGN KEY([targetR_id])
+REFERENCES [dbo].[R] ([id])
+;
+ALTER TABLE [dbo].[CR] CHECK CONSTRAINT [fk_targetCR_R]
+;
+ALTER TABLE [dbo].[CS]  WITH CHECK ADD  CONSTRAINT [fk_targetCS_PC] FOREIGN KEY([targetPC_id])
+REFERENCES [dbo].[PC] ([id])
+;
+ALTER TABLE [dbo].[CS] CHECK CONSTRAINT [fk_targetCS_PC]
+;
+ALTER TABLE [dbo].[CS]  WITH CHECK ADD  CONSTRAINT [fk_targetCS_R] FOREIGN KEY([targeR_id])
+REFERENCES [dbo].[R] ([id])
+;
+ALTER TABLE [dbo].[CS] CHECK CONSTRAINT [fk_targetCS_R]
+;
+ALTER TABLE [dbo].[CS]  WITH CHECK ADD  CONSTRAINT [fk_targetCS_T] FOREIGN KEY([targetT_id])
+REFERENCES [dbo].[T] ([id])
+ON DELETE CASCADE
+;
+ALTER TABLE [dbo].[CS] CHECK CONSTRAINT [fk_targetCS_T]
+;
+ALTER TABLE [dbo].[DEV]  WITH CHECK ADD  CONSTRAINT [fk_targetDEV_R] FOREIGN KEY([targetR_id])
+REFERENCES [dbo].[R] ([id])
+;
+ALTER TABLE [dbo].[DEV] CHECK CONSTRAINT [fk_targetDEV_R]
+;
+ALTER TABLE [dbo].[HPIPP]  WITH CHECK ADD  CONSTRAINT [fk_targetHPIPP_PC] FOREIGN KEY([targetPC_id])
+REFERENCES [dbo].[PC] ([id])
+;
+ALTER TABLE [dbo].[HPIPP] CHECK CONSTRAINT [fk_targetHPIPP_PC]
+;
+ALTER TABLE [dbo].[HPIPP]  WITH CHECK ADD  CONSTRAINT [fk_targetHPIPP_PH] FOREIGN KEY([targetPH_id])
+REFERENCES [dbo].[PH] ([id])
+;
+ALTER TABLE [dbo].[HPIPP] CHECK CONSTRAINT [fk_targetHPIPP_PH]
+;
+ALTER TABLE [dbo].[HPIPP]  WITH CHECK ADD  CONSTRAINT [fk_targetHPIPP_PP] FOREIGN KEY([targetPP_id])
+REFERENCES [dbo].[PP] ([id])
+ON DELETE CASCADE
+;
+ALTER TABLE [dbo].[HPIPP] CHECK CONSTRAINT [fk_targetHPIPP_PP]
+;
+ALTER TABLE [dbo].[HSD]  WITH CHECK ADD  CONSTRAINT [fk_targetHSD_HPIPP] FOREIGN KEY([targetHPIPP_targetPP_id], [targetHPIPP_targetPC_id], [targetHPIPP_targetPH_id])
+REFERENCES [dbo].[HPIPP] ([targetPP_id], [targetPC_id], [targetPH_id])
+ON DELETE CASCADE
+;
+ALTER TABLE [dbo].[HSD] CHECK CONSTRAINT [fk_targetHSD_HPIPP]
+;
+ALTER TABLE [dbo].[PC]  WITH CHECK ADD  CONSTRAINT [fk_targetPC_PC] FOREIGN KEY([targetPC_id])
+REFERENCES [dbo].[PC] ([id])
+;
+ALTER TABLE [dbo].[PC] CHECK CONSTRAINT [fk_targetPC_PC]
+;
+ALTER TABLE [dbo].[PCH]  WITH CHECK ADD  CONSTRAINT [fk_targetPCH_PC] FOREIGN KEY([targetPC_id])
+REFERENCES [dbo].[PC] ([id])
+ON DELETE CASCADE
+;
+ALTER TABLE [dbo].[PCH] CHECK CONSTRAINT [fk_targetPCH_PC]
+;
+ALTER TABLE [dbo].[PCIPP]  WITH CHECK ADD  CONSTRAINT [fk_targetPCIPP_PC] FOREIGN KEY([targetPC_id])
+REFERENCES [dbo].[PC] ([id])
+;
+ALTER TABLE [dbo].[PCIPP] CHECK CONSTRAINT [fk_targetPCIPP_PC]
+;
+ALTER TABLE [dbo].[PCIPP]  WITH CHECK ADD  CONSTRAINT [fk_targetPCIPP_PP] FOREIGN KEY([targetPP_id])
+REFERENCES [dbo].[PP] ([id])
+;
+ALTER TABLE [dbo].[PCIPP] CHECK CONSTRAINT [fk_targetPCIPP_PP]
+;
+ALTER TABLE [dbo].[PCIPP]  WITH CHECK ADD  CONSTRAINT [fk_targetPCIPP_R] FOREIGN KEY([targetR_id])
+REFERENCES [dbo].[R] ([id])
+;
+ALTER TABLE [dbo].[PCIPP] CHECK CONSTRAINT [fk_targetPCIPP_R]
+;
+ALTER TABLE [dbo].[PCIPP]  WITH CHECK ADD  CONSTRAINT [fk_targetPCIPP_RIPP] FOREIGN KEY([targetPP_id], [targetR_id])
+REFERENCES [dbo].[RIPP] ([targetPP_id], [targetR_id])
+ON DELETE CASCADE
+;
+ALTER TABLE [dbo].[PCIPP] CHECK CONSTRAINT [fk_targetPCIPP_RIPP]
+;
+ALTER TABLE [dbo].[PCIPrP]  WITH CHECK ADD  CONSTRAINT [fk_targetPCIPrP_RIPrP] FOREIGN KEY([targetRIPrP_id])
+REFERENCES [dbo].[RGIPP] ([id])
+ON DELETE CASCADE
+;
+ALTER TABLE [dbo].[PCIPrP] CHECK CONSTRAINT [fk_targetPCIPrP_RIPrP]
+;
+ALTER TABLE [dbo].[PCIPrP]  WITH CHECK ADD  CONSTRAINT [fk_targetPCIPrP_PC] FOREIGN KEY([targetPC_id])
+REFERENCES [dbo].[PC] ([id])
+;
+ALTER TABLE [dbo].[PCIPrP] CHECK CONSTRAINT [fk_targetPCIPrP_PC]
+;
+ALTER TABLE [dbo].[PCM]  WITH CHECK ADD  CONSTRAINT [fk_targetPCM_MT] FOREIGN KEY([targetMT_id])
+REFERENCES [dbo].[MT] ([id])
+;
+ALTER TABLE [dbo].[PCM] CHECK CONSTRAINT [fk_targetPCM_MT]
+;
+ALTER TABLE [dbo].[PCM]  WITH CHECK ADD  CONSTRAINT [fk_targetPCM_PC] FOREIGN KEY([targetPC_id])
+REFERENCES [dbo].[PC] ([id])
+ON DELETE CASCADE
+;
+ALTER TABLE [dbo].[PCM] CHECK CONSTRAINT [fk_targetPCM_PC]
+;
+ALTER TABLE [dbo].[PCMRL]  WITH CHECK ADD  CONSTRAINT [fk_targetPCMRL_PCM] FOREIGN KEY([targetPCM_id])
+REFERENCES [dbo].[PCM] ([id])
+ON DELETE CASCADE
+;
+ALTER TABLE [dbo].[PCMRL] CHECK CONSTRAINT [fk_targetPCMRL_PCM]
+;
+ALTER TABLE [dbo].[PCMRL]  WITH CHECK ADD  CONSTRAINT [fk_targetPCMRL_R] FOREIGN KEY([targetR_id])
+REFERENCES [dbo].[R] ([id])
+;
+ALTER TABLE [dbo].[PCMRL] CHECK CONSTRAINT [fk_targetPCMRL_R]
+;
+ALTER TABLE [dbo].[PH]  WITH CHECK ADD  CONSTRAINT [fk_targetPH_R] FOREIGN KEY([targetR_id])
+REFERENCES [dbo].[R] ([id])
+;
+ALTER TABLE [dbo].[PH] CHECK CONSTRAINT [fk_targetPH_R]
+;
+ALTER TABLE [dbo].[PM]  WITH CHECK ADD  CONSTRAINT [fk_targetPM_PCIPP] FOREIGN KEY([targetPP_id], [targetPC_id], [targetR_id])
+REFERENCES [dbo].[PCIPP] ([targetPP_id], [targetPC_id], [targetR_id])
+ON DELETE CASCADE
+;
+ALTER TABLE [dbo].[PM] CHECK CONSTRAINT [fk_targetPM_PCIPP]
+;
+ALTER TABLE [dbo].[PP]  WITH CHECK ADD  CONSTRAINT [fk_targetPP_R] FOREIGN KEY([targetR_id])
+REFERENCES [dbo].[R] ([id])
+;
+ALTER TABLE [dbo].[PP] CHECK CONSTRAINT [fk_targetPP_R]
+;
+ALTER TABLE [dbo].[PPP]  WITH CHECK ADD  CONSTRAINT [fk_targetPPP_R] FOREIGN KEY([targetR_id])
+REFERENCES [dbo].[R] ([id])
+;
+ALTER TABLE [dbo].[PPP] CHECK CONSTRAINT [fk_targetPPP_R]
+;
+ALTER TABLE [dbo].[R]  WITH CHECK ADD  CONSTRAINT [fk_targetR_A] FOREIGN KEY([targetA_id])
+REFERENCES [dbo].[A] ([id])
+;
+ALTER TABLE [dbo].[R] CHECK CONSTRAINT [fk_targetR_A]
+;
+ALTER TABLE [dbo].[R]  WITH CHECK ADD  CONSTRAINT [fk_targetR_M] FOREIGN KEY([targetM_id])
+REFERENCES [dbo].[M] ([id])
+ON DELETE SET NULL
+;
+ALTER TABLE [dbo].[R] CHECK CONSTRAINT [fk_targetR_M]
+;
+ALTER TABLE [dbo].[R]  WITH CHECK ADD  CONSTRAINT [fk_targetR_PH] FOREIGN KEY([targetPH_id])
+REFERENCES [dbo].[PH] ([id])
+;
+ALTER TABLE [dbo].[R] CHECK CONSTRAINT [fk_targetR_PH]
+;
+ALTER TABLE [dbo].[R]  WITH CHECK ADD  CONSTRAINT [fk_targetR_R] FOREIGN KEY([targetR_id])
+REFERENCES [dbo].[R] ([id])
+;
+ALTER TABLE [dbo].[R] CHECK CONSTRAINT [fk_targetR_R]
+;
+ALTER TABLE [dbo].[R]  WITH CHECK ADD  CONSTRAINT [fk_targetR_S] FOREIGN KEY([targetS_id])
+REFERENCES [dbo].[S] ([id])
+;
+ALTER TABLE [dbo].[R] CHECK CONSTRAINT [fk_targetR_S]
+;
+ALTER TABLE [dbo].[R]  WITH CHECK ADD  CONSTRAINT [fk_targetR_SLD] FOREIGN KEY([targetSLD_id])
+REFERENCES [dbo].[SLD] ([id])
+ON DELETE SET NULL
+;
+ALTER TABLE [dbo].[R] CHECK CONSTRAINT [fk_targetR_SLD]
+;
+ALTER TABLE [dbo].[R]  WITH CHECK ADD  CONSTRAINT [fk_targetR_ST] FOREIGN KEY([targetST_id])
+REFERENCES [dbo].[ST] ([id])
+ON DELETE SET NULL
+;
+ALTER TABLE [dbo].[R] CHECK CONSTRAINT [fk_targetR_ST]
+;
+ALTER TABLE [dbo].[RGIPP]  WITH CHECK ADD  CONSTRAINT [fk_targetRGIPP_PPP] FOREIGN KEY([targetPPP_id])
+REFERENCES [dbo].[PPP] ([id])
+ON DELETE CASCADE
+;
+ALTER TABLE [dbo].[RGIPP] CHECK CONSTRAINT [fk_targetRGIPP_PPP]
+;
+ALTER TABLE [dbo].[RIPP]  WITH CHECK ADD  CONSTRAINT [fk_targetRIPP_PP] FOREIGN KEY([targetPP_id])
+REFERENCES [dbo].[PP] ([id])
+ON DELETE CASCADE
+;
+ALTER TABLE [dbo].[RIPP] CHECK CONSTRAINT [fk_targetRIPP_PP]
+;
+ALTER TABLE [dbo].[RIPP]  WITH CHECK ADD  CONSTRAINT [fk_targetRIPP_R] FOREIGN KEY([targetR_id])
+REFERENCES [dbo].[R] ([id])
+;
+ALTER TABLE [dbo].[RIPP] CHECK CONSTRAINT [fk_targetRIPP_R]
+;
+ALTER TABLE [dbo].[RIPrP]  WITH CHECK ADD  CONSTRAINT [fk_targetRIPrP_PPP] FOREIGN KEY([targetPPP_id])
+REFERENCES [dbo].[PPP] ([id])
+ON DELETE CASCADE
+;
+ALTER TABLE [dbo].[RIPrP] CHECK CONSTRAINT [fk_targetRIPrP_PPP]
+;
+ALTER TABLE [dbo].[RIPrP]  WITH CHECK ADD  CONSTRAINT [fk_targetRIPrP_R] FOREIGN KEY([targetR_id])
+REFERENCES [dbo].[R] ([id])
+;
+ALTER TABLE [dbo].[RIPrP] CHECK CONSTRAINT [fk_targetRIPrP_R]
+;
+ALTER TABLE [dbo].[RIPrP]  WITH CHECK ADD  CONSTRAINT [fk_targetRIPrP_RGIPP] FOREIGN KEY([targetRGIPP_id])
+REFERENCES [dbo].[RGIPP] ([id])
+;
+ALTER TABLE [dbo].[RIPrP] CHECK CONSTRAINT [fk_targetRIPrP_RGIPP]
+;
+ALTER TABLE [dbo].[RPC]  WITH CHECK ADD  CONSTRAINT [fk_targetRPC_PC] FOREIGN KEY([targetPC_id])
+REFERENCES [dbo].[PC] ([id])
+ON DELETE CASCADE
+;
+ALTER TABLE [dbo].[RPC] CHECK CONSTRAINT [fk_targetRPC_PC]
+;
+ALTER TABLE [dbo].[RPC]  WITH CHECK ADD  CONSTRAINT [fk_targetRPC_R] FOREIGN KEY([targetR_id])
+REFERENCES [dbo].[R] ([id])
+;
+ALTER TABLE [dbo].[RPC] CHECK CONSTRAINT [fk_targetRPC_R]
+;
+ALTER TABLE [dbo].[RPCH]  WITH CHECK ADD  CONSTRAINT [fk_targetRPCH_PCH] FOREIGN KEY([targetPCH_id])
+REFERENCES [dbo].[PCH] ([id])
+ON DELETE CASCADE
+;
+ALTER TABLE [dbo].[RPCH] CHECK CONSTRAINT [fk_targetRPCH_PCH]
+;
+ALTER TABLE [dbo].[RPCH]  WITH CHECK ADD  CONSTRAINT [fk_targetRPCH_R] FOREIGN KEY([targetR_id])
+REFERENCES [dbo].[R] ([id])
+;
+ALTER TABLE [dbo].[RPCH] CHECK CONSTRAINT [fk_targetRPCH_R]
+;
+ALTER TABLE [dbo].[S]  WITH CHECK ADD  CONSTRAINT [fk_targetS_S] FOREIGN KEY([targetS_id])
+REFERENCES [dbo].[S] ([id])
+;
+ALTER TABLE [dbo].[S] CHECK CONSTRAINT [fk_targetS_S]
+;
+ALTER TABLE [dbo].[SCCR]  WITH CHECK ADD  CONSTRAINT [fk_targetSCCR_CCR] FOREIGN KEY([id])
+REFERENCES [dbo].[CCR] ([id])
+ON DELETE CASCADE
+;
+ALTER TABLE [dbo].[SCCR] CHECK CONSTRAINT [fk_targetSCCR_CCR]
+;
+ALTER TABLE [dbo].[SCV]  WITH CHECK ADD  CONSTRAINT [fk_targetSCV_SC] FOREIGN KEY([targetSC_id])
+REFERENCES [dbo].[SC] ([id])
+ON DELETE CASCADE
+;
+ALTER TABLE [dbo].[SCV] CHECK CONSTRAINT [fk_targetSCV_SC]
+;
+ALTER TABLE [dbo].[SCVR]  WITH CHECK ADD  CONSTRAINT [fk_targetSCVR_PC] FOREIGN KEY([targetPC_id])
+REFERENCES [dbo].[PC] ([id])
+;
+ALTER TABLE [dbo].[SCVR] CHECK CONSTRAINT [fk_targetSCVR_PC]
+;
+ALTER TABLE [dbo].[SCVR]  WITH CHECK ADD  CONSTRAINT [fk_targetSCVR_R] FOREIGN KEY([targetR_id])
+REFERENCES [dbo].[R] ([id])
+;
+ALTER TABLE [dbo].[SCVR] CHECK CONSTRAINT [fk_targetSCVR_R]
+;
+ALTER TABLE [dbo].[SCVR]  WITH CHECK ADD  CONSTRAINT [fk_targetSCVR_SC] FOREIGN KEY([targetSC_id])
+REFERENCES [dbo].[SC] ([id])
+ON DELETE CASCADE
+;
+ALTER TABLE [dbo].[SCVR] CHECK CONSTRAINT [fk_targetSCVR_SC]
+;
+ALTER TABLE [dbo].[SCVV]  WITH CHECK ADD  CONSTRAINT [fk_targetSCVV_SCV] FOREIGN KEY([targetSCV_id])
+REFERENCES [dbo].[SCVR] ([id])
+ON DELETE CASCADE
+;
+ALTER TABLE [dbo].[SCVV] CHECK CONSTRAINT [fk_targetSCVV_SCV]
+;
+ALTER TABLE [dbo].[SRSPC]  WITH CHECK ADD  CONSTRAINT [fk_targetSRSPC_R] FOREIGN KEY([targetR_id])
+REFERENCES [dbo].[R] ([id])
+;
+ALTER TABLE [dbo].[SRSPC] CHECK CONSTRAINT [fk_targetSRSPC_R]
+;
+ALTER TABLE [dbo].[SRSPC]  WITH CHECK ADD  CONSTRAINT [fk_targetSRSPC_SSPC] FOREIGN KEY([targetSSPC_id])
+REFERENCES [dbo].[SSPC] ([id])
+ON DELETE CASCADE
+;
+ALTER TABLE [dbo].[SRSPC] CHECK CONSTRAINT [fk_targetSRSPC_SSPC]
+;
+ALTER TABLE [dbo].[T]  WITH CHECK ADD  CONSTRAINT [fk_targetT_PC] FOREIGN KEY([targetPC_id])
+REFERENCES [dbo].[PC] ([id])
+ON DELETE SET NULL
+;
+ALTER TABLE [dbo].[T] CHECK CONSTRAINT [fk_targetT_PC]
+;
+ALTER TABLE [dbo].[T]  WITH CHECK ADD  CONSTRAINT [fk_targetT_R] FOREIGN KEY([targetR_id])
+REFERENCES [dbo].[R] ([id])
+;
+ALTER TABLE [dbo].[T] CHECK CONSTRAINT [fk_targetT_R]
+;
+ALTER TABLE [dbo].[T]  WITH CHECK ADD  CONSTRAINT [fk_targetT_R_R] FOREIGN KEY([targetR_R_id])
+REFERENCES [dbo].[R] ([id])
+;
+ALTER TABLE [dbo].[T] CHECK CONSTRAINT [fk_targetT_R_R]
+;
+ALTER TABLE [dbo].[TG]  WITH CHECK ADD  CONSTRAINT [fk_targetTG_R] FOREIGN KEY([targetR_id])
+REFERENCES [dbo].[R] ([id])
+;
+ALTER TABLE [dbo].[TG] CHECK CONSTRAINT [fk_targetTG_R]
+;
+ALTER TABLE [dbo].[TGPC]  WITH CHECK ADD  CONSTRAINT [fk_targetTGPC_R] FOREIGN KEY([targetR_id])
+REFERENCES [dbo].[R] ([id])
+;
+ALTER TABLE [dbo].[TGPC] CHECK CONSTRAINT [fk_targetTGPC_R]
+;
+ALTER TABLE [dbo].[US]  WITH CHECK ADD  CONSTRAINT [fk_targetUS_PC] FOREIGN KEY([targetPC_id])
+REFERENCES [dbo].[PC] ([id])
+;
+ALTER TABLE [dbo].[US] CHECK CONSTRAINT [fk_targetUS_PC]
+;
+ALTER TABLE [dbo].[US]  WITH CHECK ADD  CONSTRAINT [fk_targetUS_R] FOREIGN KEY([targetR_id])
+REFERENCES [dbo].[R] ([id])
+;
+ALTER TABLE [dbo].[US] CHECK CONSTRAINT [fk_targetUS_R]
+;
+ALTER TABLE [dbo].[US]  WITH CHECK ADD  CONSTRAINT [fk_targetUS_USR] FOREIGN KEY([targetUSR_id])
+REFERENCES [dbo].[USR] ([id])
+;
+ALTER TABLE [dbo].[US] CHECK CONSTRAINT [fk_targetUS_USR]
+;
+ALTER TABLE [dbo].[VFD]  WITH CHECK ADD  CONSTRAINT [fk_targetVFD_PC] FOREIGN KEY([targetPC_id])
+REFERENCES [dbo].[PC] ([id])
+;
+ALTER TABLE [dbo].[VFD] CHECK CONSTRAINT [fk_targetVFD_PC]
+;
+ALTER TABLE [dbo].[VFD]  WITH CHECK ADD  CONSTRAINT [fk_targetVFD_R] FOREIGN KEY([targetR_id])
+REFERENCES [dbo].[R] ([id])
+;
+ALTER TABLE [dbo].[VFD] CHECK CONSTRAINT [fk_targetVFD_R]
+;
+ALTER TABLE [dbo].[VR]  WITH CHECK ADD  CONSTRAINT [fk_targetVR_R] FOREIGN KEY([targetR_id])
+REFERENCES [dbo].[R] ([id])
+;
+ALTER TABLE [dbo].[VR] CHECK CONSTRAINT [fk_targetVR_R]
+;
+ALTER TABLE [dbo].[VR]  WITH CHECK ADD  CONSTRAINT [fk_targetVR_VRB] FOREIGN KEY([targetVRB_id])
+REFERENCES [dbo].[VRB] ([id])
+ON DELETE CASCADE
+;
+ALTER TABLE [dbo].[VR] CHECK CONSTRAINT [fk_targetVR_VRB]
+;
+ALTER TABLE [dbo].[VRB]  WITH CHECK ADD  CONSTRAINT [fk_targetVRB_PC] FOREIGN KEY([targetPC_id])
+REFERENCES [dbo].[PC] ([id])
+;
+ALTER TABLE [dbo].[VRB] CHECK CONSTRAINT [fk_targetVRB_PC]
+;
+ALTER TABLE [dbo].[VRB]  WITH CHECK ADD  CONSTRAINT [fk_targetVRB_PP] FOREIGN KEY([targetPP_id])
+REFERENCES [dbo].[PP] ([id])
+ON DELETE SET NULL
+;
+ALTER TABLE [dbo].[VRB] CHECK CONSTRAINT [fk_targetVRB_PP]
+;
+ALTER TABLE [dbo].[VRB]  WITH CHECK ADD  CONSTRAINT [fk_targetVRB_VRB] FOREIGN KEY([targetVRB_id])
+REFERENCES [dbo].[VRB] ([id])
+;
+ALTER TABLE [dbo].[VRB] CHECK CONSTRAINT [fk_targetVRB_VRB]
+;
