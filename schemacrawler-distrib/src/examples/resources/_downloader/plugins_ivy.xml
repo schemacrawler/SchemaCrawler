@@ -8,11 +8,11 @@
   </configurations>
   <dependencies>
     <dependency org="us.fatehi" name="schemacrawler-timesten"
-      rev="16.14.5" conf="binaries->default" />
+      rev="16.14.6" conf="binaries->default" />
     <dependency org="us.fatehi" name="schemacrawler-sapiq"
-      rev="16.14.5" conf="binaries->default" />
+      rev="16.14.6" conf="binaries->default" />
     <dependency org="us.fatehi" name="schemacrawler-hana"
-      rev="16.14.5" conf="binaries->default" />
+      rev="16.14.6" conf="binaries->default" />
 
     <dependency org="com.sap.cloud.db.jdbc" name="ngdbc"
       rev="2.6.29" conf="binaries->default" />
