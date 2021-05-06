@@ -27,43 +27,39 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
+
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
-public class BundledDistributionTest
-{
+public class BundledDistributionTest {
 
   @Test
-  public void testInformationSchema_sqlserver()
-    throws Exception
-  {
+  public void testInformationSchema_sqlserver() throws Exception {
 
     final Connection connection = null;
     final DatabaseConnectorRegistry registry =
-      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     final DatabaseConnector databaseSystemIdentifier =
-      registry.findDatabaseConnectorFromDatabaseSystemIdentifier("sqlserver");
-    assertThat(databaseSystemIdentifier
-                 .getSchemaRetrievalOptionsBuilder(connection)
-                 .toOptions()
-                 .getInformationSchemaViews()
-                 .size(), is(11));
+        registry.findDatabaseConnectorFromDatabaseSystemIdentifier("sqlserver");
+    assertThat(
+        databaseSystemIdentifier
+            .getSchemaRetrievalOptionsBuilder(connection)
+            .toOptions()
+            .getInformationSchemaViews()
+            .size(),
+        is(10));
   }
 
   @Test
-  public void testPlugin_sqlserver()
-    throws Exception
-  {
+  public void testPlugin_sqlserver() throws Exception {
     final DatabaseConnectorRegistry registry =
-      DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
+        DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
     assertThat(registry.hasDatabaseSystemIdentifier("sqlserver"), is(true));
   }
-
 }
