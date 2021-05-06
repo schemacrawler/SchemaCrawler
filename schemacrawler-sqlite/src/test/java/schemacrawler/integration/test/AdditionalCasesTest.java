@@ -59,11 +59,6 @@ public class AdditionalCasesTest extends BaseSqliteTest {
   }
 
   @Test
-  public void fkSort(final TestContext testContext) throws Exception {
-    run(testContext.testMethodFullName(), "/fk_sort.sql", "schema");
-  }
-
-  @Test
   public void quotedCreateScript(final TestContext testContext) throws Exception {
     run(testContext.testMethodFullName(), "/identifiers_unquoted.sql", "schema");
     run(testContext.testMethodFullName(), "/identifiers_quoted.sql", "schema");
