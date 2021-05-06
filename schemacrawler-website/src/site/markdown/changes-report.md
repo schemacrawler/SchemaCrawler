@@ -5,6 +5,7 @@
 ## Release 16.14.6 - 2021-04-25
 
 - Fix issue #465 with embedded HTML renderer
+- Remove ability to retrieve SQL Server stored procedure definitions - see issue #470
 
 
 <a name="a16.14.5"></a>
