@@ -39,13 +39,3 @@ jobs:
       with:
         name: icons
         path: ./schemacrawler-website/src/site/resources/images/schemacrawler_logo.*
-
-    - id: push-icons
-      name: Commit icons to repository
-      run: |
-        # Commit icons to repository
-        git config --global user.name "Sualeh Fatehi"
-        git config --global user.email "sualeh@hotmail.com"
-        git add **/schemacrawler_logo.*
-        git commit -m "Create icons for different platforms"
-        git push
