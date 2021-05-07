@@ -37,6 +37,8 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
 
@@ -90,7 +92,7 @@ final class ForeignKeyRetriever extends AbstractRetriever {
   }
 
   private void createForeignKeys(
-      final MetadataResultSet results, final NamedObjectList<MutableForeignKey> foreignKeys)
+      final MetadataResultSet results, final Map<NamedObjectKey, MutableForeignKey> foreignKeys)
       throws SQLException {
     while (results.next()) {
       final String foreignKeyName = results.getString("FK_NAME");
@@ -133,14 +135,17 @@ final class ForeignKeyRetriever extends AbstractRetriever {
         specificName = foreignKeyName;
       }
 
+      final NamedObjectKey fkLookupKey =
+          new NamedObjectKey(fkTableCatalogName, fkTableSchemaName, specificName);
+
       final Optional<MutableForeignKey> foreignKeyOptional =
-          foreignKeys.lookup(new NamedObjectKey(foreignKeyName, specificName));
+          Optional.ofNullable(foreignKeys.get(fkLookupKey));
       final MutableForeignKey foreignKey;
       if (foreignKeyOptional.isPresent()) {
         foreignKey = foreignKeyOptional.get();
       } else {
         foreignKey = new MutableForeignKey(foreignKeyName, specificName);
-        foreignKeys.add(foreignKey);
+        foreignKeys.put(fkLookupKey, foreignKey);
       }
 
       foreignKey.addColumnReference(keySequence, pkColumn, fkColumn);
@@ -187,7 +192,7 @@ final class ForeignKeyRetriever extends AbstractRetriever {
       return;
     }
 
-    final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
+    final Map<NamedObjectKey, MutableForeignKey> foreignKeys = new HashMap<>();
     final Query fkSql = informationSchemaViews.getQuery(FOREIGN_KEYS);
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
@@ -202,7 +207,7 @@ final class ForeignKeyRetriever extends AbstractRetriever {
 
   private void retrieveForeignKeysFromMetadata(final NamedObjectList<MutableTable> allTables)
       throws SchemaCrawlerSQLException {
-    final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
+    final Map<NamedObjectKey, MutableForeignKey> foreignKeys = new HashMap<>();
     for (final MutableTable table : allTables) {
       if (table instanceof View) {
         continue;
