@@ -48,12 +48,12 @@
     <snapshotRepository>
       <id>sonatype-nexus-snapshots</id>
       <name>Sonatype Nexus Snapshots</name>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
     <repository>
       <id>sonatype-nexus</id>
       <name>Sonatype Nexus</name>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+      <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2</url>
     </repository>
   </distributionManagement>
   <dependencies>
@@ -341,7 +341,7 @@
         <extensions>true</extensions>
         <configuration>
           <serverId>sonatype-nexus</serverId>
-          <nexusUrl>https://oss.sonatype.org</nexusUrl>
+          <nexusUrl>https://s01.oss.sonatype.org</nexusUrl>
           <autoReleaseAfterClose>true</autoReleaseAfterClose>
           <keepStagingRepositoryOnFailure>true</keepStagingRepositoryOnFailure>
           <keepStagingRepositoryOnCloseRuleFailure>true</keepStagingRepositoryOnCloseRuleFailure>
