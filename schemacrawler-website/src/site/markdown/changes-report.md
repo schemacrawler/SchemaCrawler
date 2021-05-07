@@ -2,10 +2,12 @@
 
 
 <a name="a16.14.6"></a>
-## Release 16.14.6 - 2021-04-25
+## Release 16.14.6 - 2021-05-07
 
 - Fix issue #465 with embedded HTML renderer
-- Remove ability to retrieve SQL Server stored procedure definitions - see issue #470
+- Fix issue #466 with loading tables with a large number of exported foreign keys in SQL Server
+- Fix issue #469 to ensure that foreign key names are scoped within a schema
+- Fix issue #470 to remove ability to retrieve SQL Server stored procedure definitions
 
 
 <a name="a16.14.5"></a>

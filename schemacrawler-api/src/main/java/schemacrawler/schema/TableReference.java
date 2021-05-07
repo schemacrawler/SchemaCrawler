@@ -51,6 +51,7 @@ public interface TableReference
    * @return Referencing table.
    */
   Table getForeignKeyTable();
+
   /**
    * Gets the referenced table.
    *
