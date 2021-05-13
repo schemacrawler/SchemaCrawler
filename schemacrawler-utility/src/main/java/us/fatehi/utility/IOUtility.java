@@ -172,7 +172,8 @@ public final class IOUtility {
 
   public static String readFully(final InputStream stream) {
     if (stream == null) {
-      return null;
+      LOGGER.log(Level.WARNING, "Cannot read null stream");
+      return "";
     }
     final Reader reader = new InputStreamReader(stream, UTF_8);
     return readFully(reader);
