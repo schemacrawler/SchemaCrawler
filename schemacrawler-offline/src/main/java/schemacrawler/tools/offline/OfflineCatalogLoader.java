@@ -7,7 +7,7 @@ import static schemacrawler.filter.ReducerFactory.getSynonymReducer;
 import static schemacrawler.filter.ReducerFactory.getTableReducer;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -59,13 +59,14 @@ public final class OfflineCatalogLoader extends BaseCatalogLoader {
       }
 
       final Path offlineDatabasePath = dbConnection.getOfflineDatabasePath();
-      final FileInputStream inputFileStream = new FileInputStream(offlineDatabasePath.toFile());
-
-      final JavaSerializedCatalog deserializedCatalog = new JavaSerializedCatalog(inputFileStream);
-
-      catalog = deserializedCatalog.getCatalog();
+      try (final FileInputStream inputFileStream =
+          new FileInputStream(offlineDatabasePath.toFile())) {
+        final JavaSerializedCatalog deserializedCatalog =
+            new JavaSerializedCatalog(inputFileStream);
+        catalog = deserializedCatalog.getCatalog();
+      }
       reduceCatalog(catalog);
-    } catch (final FileNotFoundException | SQLException e) {
+    } catch (final IOException | SQLException e) {
       throw new SchemaCrawlerException("Could not load offline database", e);
     }
 
