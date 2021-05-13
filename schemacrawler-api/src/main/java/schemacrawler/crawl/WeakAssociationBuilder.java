@@ -119,6 +119,11 @@ public final class WeakAssociationBuilder {
             referencedColumn.getTableName(),
             referencedColumn.getColumnName());
 
+    // Ensure that we have non-null values, since the constructor for WeakAssociationColumn can take
+    // any kind of column as arguments
+    requireNonNull(fkColumn, "No referencing column provided");
+    requireNonNull(pkColumn, "No referenced column provided");
+
     if (fkColumn.equals(pkColumn)) {
       return this;
     }

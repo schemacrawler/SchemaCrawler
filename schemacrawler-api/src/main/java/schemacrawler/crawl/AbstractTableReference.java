@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static java.util.Objects.hash;
+import static java.util.Objects.requireNonNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -80,8 +81,8 @@ abstract class AbstractTableReference extends AbstractNamedObjectWithAttributes
         tableConstraintColumn.setKeyOrdinalPosition(i + 1);
         tableConstraintColumns.add(tableConstraintColumn);
       }
-      this.pkTable = pkTable;
-      this.fkTable = fkTable;
+      this.pkTable = requireNonNull(pkTable, "No primary table found");
+      this.fkTable = requireNonNull(fkTable, "No foreign table found");
     }
 
     Table getForeignKeyTable() {
