@@ -2,6 +2,7 @@ jdk11 = true
 disableTools = [ "PyreCheck", "Rubocop" ]
 ignoreFiles = """
 **/TestDatabase.*
+**/SqlScript.*
 **/build/
 **/src/test/
 """
