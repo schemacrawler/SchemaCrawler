@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.lint;
 
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -37,6 +38,7 @@ import java.util.TreeSet;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerLogger;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import us.fatehi.utility.string.StringFormat;
 
@@ -49,6 +51,26 @@ public final class LinterRegistry implements Iterable<String> {
 
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(LinterRegistry.class.getName());
+
+  private static final Linter NO_OP_LINTER =
+      new BaseLinter() {
+
+        @Override
+        public String getLinterId() {
+          return "schemacrawler.NO_OP_LINTER";
+        }
+
+        @Override
+        public String getSummary() {
+          return "No-op linter";
+        }
+
+        @Override
+        protected void lint(final Table table, final Connection connection)
+            throws SchemaCrawlerException {
+          // No-op
+        }
+      };
 
   private static Map<String, Class<Linter>> loadLinterRegistry() throws SchemaCrawlerException {
 
@@ -90,6 +112,7 @@ public final class LinterRegistry implements Iterable<String> {
   }
 
   public Linter newLinter(final String linterId) {
+
     if (hasLinter(linterId)) {
       final Class<Linter> linterClass = linterRegistry.get(linterId);
       try {
@@ -100,10 +123,12 @@ public final class LinterRegistry implements Iterable<String> {
             Level.WARNING,
             new StringFormat("Could not instantiate linter <%s>", linterClass.getName()),
             e);
-        return null;
+        return NO_OP_LINTER;
       }
     } else {
-      return null;
+      LOGGER.log(
+          Level.WARNING, new StringFormat("Could not instantiate linter with id <%s>", linterId));
+      return NO_OP_LINTER;
     }
   }
 }
