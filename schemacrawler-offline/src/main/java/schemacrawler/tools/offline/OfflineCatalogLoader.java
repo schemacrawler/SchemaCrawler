@@ -39,7 +39,8 @@ public final class OfflineCatalogLoader extends BaseCatalogLoader {
       return;
     }
 
-    if (!isDatabaseSystemIdentifier("offline")) {
+    if (!isDatabaseSystemIdentifier(
+        OfflineDatabaseConnector.DB_SERVER_TYPE.getDatabaseSystemIdentifier())) {
       return;
     }
 

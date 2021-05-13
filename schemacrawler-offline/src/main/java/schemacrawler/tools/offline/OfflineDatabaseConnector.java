@@ -27,51 +27,40 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.offline;
 
-
 import java.io.IOException;
+
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionUrlBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 
-public final class OfflineDatabaseConnector
-  extends DatabaseConnector
-{
+public final class OfflineDatabaseConnector extends DatabaseConnector {
 
   public static final DatabaseServerType DB_SERVER_TYPE =
-    new DatabaseServerType("offline",
-                           "SchemaCrawler "
-                           + "Offline "
-                           + "Catalog "
-                           + "Snapshot");
+      new DatabaseServerType("offline", "SchemaCrawler Offline Catalog Snapshot");
 
-  public OfflineDatabaseConnector()
-    throws IOException
-  {
-    super(DB_SERVER_TYPE,
-          url -> url != null && url.startsWith("jdbc:offline:"),
-          (informationSchemaViewsBuilder, connection) -> {},
-          (schemaRetrievalOptionsBuilder, connection) -> {},
-          (limitOptionsBuilder) -> {},
-          () -> DatabaseConnectionUrlBuilder.builder(
-              "jdbc:offline:${database}"));
+  public OfflineDatabaseConnector() throws IOException {
+    super(
+        DB_SERVER_TYPE,
+        url -> url != null && url.startsWith("jdbc:offline:"),
+        (informationSchemaViewsBuilder, connection) -> {},
+        (schemaRetrievalOptionsBuilder, connection) -> {},
+        limitOptionsBuilder -> {},
+        () -> DatabaseConnectionUrlBuilder.builder("jdbc:offline:${database}"));
   }
 
   @Override
-  public PluginCommand getHelpCommand()
-  {
+  public PluginCommand getHelpCommand() {
     final PluginCommand pluginCommand = super.getHelpCommand();
     pluginCommand
-      .addOption("server",
-                 String.class,
-                 "--server=offline%n"
-         + "Loads SchemaCrawler plug-in for offline snapshots")
-      .addOption("host", String.class, "Should be omitted")
-      .addOption("port", Integer.class, "Should be omitted")
-      .addOption("database",
-                 String.class,
-                 "File name and location of the database metadata snapshot");
+        .addOption(
+            "server",
+            String.class,
+            "--server=offline%n" + "Loads SchemaCrawler plug-in for offline snapshots")
+        .addOption("host", String.class, "Should be omitted")
+        .addOption("port", Integer.class, "Should be omitted")
+        .addOption(
+            "database", String.class, "File name and location of the database metadata snapshot");
     return pluginCommand;
   }
-  
 }
