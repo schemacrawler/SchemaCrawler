@@ -1,7 +1,7 @@
 jdk11 = true
 disableTools = [ "PyreCheck", "Rubocop" ]
 ignoreFiles = """
-**/schemacrawler-testdb/
+**/TestDatabase.*
 **/build/
 **/src/test/
 """
