@@ -34,10 +34,10 @@ import static us.fatehi.utility.Utility.convertForComparison;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -148,10 +148,13 @@ public class LinterTableWithIncrementingColumns extends BaseLinter {
       }
     }
 
-    final Set<String> columnNameBases = new HashSet<>(incrementingColumnsMap.keySet());
-    for (final String columnNameBase : columnNameBases) {
-      if (incrementingColumnsMap.get(columnNameBase) == 1) {
-        incrementingColumnsMap.remove(columnNameBase);
+    // Remove columns that have a count of 1 (removing from the map iterator removes from the map)
+    for (final Iterator<Entry<String, Integer>> columnCounts =
+            incrementingColumnsMap.entrySet().iterator();
+        columnCounts.hasNext(); ) {
+      final Entry<String, Integer> columnCount = columnCounts.next();
+      if (columnCount.getValue() == 1) {
+        columnCounts.remove();
       }
     }
 
