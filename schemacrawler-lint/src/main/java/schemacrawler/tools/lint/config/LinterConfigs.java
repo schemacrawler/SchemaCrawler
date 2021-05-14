@@ -34,14 +34,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.ObjectToString;
 
 public class LinterConfigs implements Iterable<LinterConfig> {
-
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(LinterConfig.class.getName());
 
   private final List<LinterConfig> linterConfigs;
 
