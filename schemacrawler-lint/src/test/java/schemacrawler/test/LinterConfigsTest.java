@@ -80,7 +80,7 @@ public class LinterConfigsTest {
               final LintOptions lintOptions =
                   LintOptionsBuilder.builder().withLinterConfigs("/missing.yaml").toOptions();
 
-              final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
+              /*final LinterConfigs linterConfigs = */ readLinterConfigs(lintOptions);
             });
     assertThat(
         exception.getMessage(), is("Could not load linter configs from file, /missing.yaml"));
@@ -98,7 +98,7 @@ public class LinterConfigsTest {
                       .withLinterConfigs("/schemacrawler-linter-configs-bad-2.yaml.bad")
                       .toOptions();
 
-              final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
+              /*final LinterConfigs linterConfigs =*/ readLinterConfigs(lintOptions);
             });
     assertThat(exception.getCause().getCause().getMessage(), endsWith("line: 1, column: 1]"));
   }
@@ -115,7 +115,7 @@ public class LinterConfigsTest {
                       .withLinterConfigs("/schemacrawler-linter-configs-bad-3.yaml")
                       .toOptions();
 
-              final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
+              /*final LinterConfigs linterConfigs =*/ readLinterConfigs(lintOptions);
             });
     assertThat(
         exception.getCause().getCause().getMessage(),
