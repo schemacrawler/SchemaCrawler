@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
@@ -53,7 +53,7 @@ abstract class BaseLintReportJacksonBuilder implements LintReportBuilder {
   private ObjectMapper newConfiguredObjectMapper() {
 
     @JsonPropertyOrder(alphabetic = true)
-    @JsonNaming(PropertyNamingStrategy.KebabCaseStrategy.class)
+    @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
     abstract class JacksonAnnotationMixIn {
       @JsonIgnore public Object value;
 
