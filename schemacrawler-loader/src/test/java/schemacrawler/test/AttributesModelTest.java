@@ -64,8 +64,8 @@ public class AttributesModelTest {
             () -> {
               final InputResource inputResource =
                   InputResourceUtility.createInputResource("/attributes-bad-2.yaml.bad").get();
-              final CatalogAttributes catalogAttributes =
-                  CatalogAttributesUtility.readCatalogAttributes(inputResource);
+              /*final CatalogAttributes catalogAttributes =*/ CatalogAttributesUtility
+                  .readCatalogAttributes(inputResource);
             });
     assertThat(exception.getCause().getMessage(), endsWith("line: 1, column: 2]"));
   }
@@ -79,8 +79,8 @@ public class AttributesModelTest {
             () -> {
               final InputResource inputResource =
                   InputResourceUtility.createInputResource("/attributes-bad-3.yaml").get();
-              final CatalogAttributes catalogAttributes =
-                  CatalogAttributesUtility.readCatalogAttributes(inputResource);
+              /*final CatalogAttributes catalogAttributes =*/ CatalogAttributesUtility
+                  .readCatalogAttributes(inputResource);
             });
     assertThat(exception.getCause().getMessage(), endsWith("line: 1, column: 1]"));
   }
