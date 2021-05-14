@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import picocli.CommandLine;
-import picocli.CommandLine.Command;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
@@ -32,14 +31,7 @@ public class LoadCommandTest {
     final ShellState state = new ShellState();
     final LoadCommand optionsParser = new LoadCommand(state);
 
-    @Command(name = "base-command")
-    class SomeClass {}
-
     final CommandLine commandLine = newCommandLine(optionsParser, null);
-    final CommandLine baseCommandLine =
-        newCommandLine(new SomeClass(), null).addSubcommand(commandLine);
-
-    //  CommandLineUtility.addLoadCommandOptions(baseCommandLine);
 
     final String helpMessage = commandLine.getUsageMessage();
 
