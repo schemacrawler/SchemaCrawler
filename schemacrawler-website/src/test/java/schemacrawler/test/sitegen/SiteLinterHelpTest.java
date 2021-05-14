@@ -27,8 +27,11 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.sitegen;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -63,6 +66,8 @@ public class SiteLinterHelpTest {
   @Test
   public void linterHelp() throws Exception {
     final Path path = Paths.get(directory.toString(), "lint.md");
-    LinterHelp.main(new String[] {path.toString()});
+
+    final String linterHelpMarkdown = new LinterHelp(true).get()[0];
+    Files.write(path, linterHelpMarkdown.getBytes(UTF_8));
   }
 }

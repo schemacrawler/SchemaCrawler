@@ -27,17 +27,11 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.lint;
 
-import java.io.IOException;
 import java.util.function.Supplier;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 public final class LinterHelp implements Supplier<String[]> {
-
-  public static void main(final String[] args) throws IOException {
-    final String linterHelpMarkdown = new LinterHelp(true).get()[0];
-    System.out.println(linterHelpMarkdown);
-  }
 
   private final boolean generateMarkdown;
 
