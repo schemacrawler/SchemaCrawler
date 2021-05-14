@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.server.oracle;
 
-
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionParametersRetrievalStrategy;
@@ -39,27 +38,26 @@ import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.pr
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablesRetrievalStrategy;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.typeInfoRetrievalStrategy;
+
 import java.io.IOException;
+
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 
-public final class OracleDatabaseConnector
-  extends DatabaseConnector
-{
+public final class OracleDatabaseConnector extends DatabaseConnector {
 
-  static final DatabaseServerType DB_SERVER_TYPE =
-    new DatabaseServerType("oracle", "Oracle");
+  public static final DatabaseServerType DB_SERVER_TYPE =
+      new DatabaseServerType("oracle", "Oracle");
 
-
-  public OracleDatabaseConnector() throws IOException
-  {
-    super(DB_SERVER_TYPE, 
+  public OracleDatabaseConnector() throws IOException {
+    super(
+        DB_SERVER_TYPE,
         url -> url != null && url.startsWith("jdbc:oracle:"),
-        new OracleInformationSchemaViewsBuilder(),        
-        (schemaRetrievalOptionsBuilder,
-            connection) -> schemaRetrievalOptionsBuilder
+        new OracleInformationSchemaViewsBuilder(),
+        (schemaRetrievalOptionsBuilder, connection) ->
+            schemaRetrievalOptionsBuilder
                 .with(typeInfoRetrievalStrategy, data_dictionary_all)
                 .with(tablesRetrievalStrategy, data_dictionary_all)
                 .with(tableColumnsRetrievalStrategy, data_dictionary_all)
@@ -70,34 +68,29 @@ public final class OracleDatabaseConnector
                 .with(procedureParametersRetrievalStrategy, data_dictionary_all)
                 .with(functionsRetrievalStrategy, data_dictionary_all)
                 .with(functionParametersRetrievalStrategy, data_dictionary_all),
-        (limitOptionsBuilder) -> limitOptionsBuilder
-            .includeSchemas(new RegularExpressionExclusionRule(
-                "ANONYMOUS|APEX_PUBLIC_USER|APPQOSSYS|BI|CTXSYS|DBSNMP|DIP|EXFSYS|FLOWS_30000|FLOWS_FILES|GSMADMIN_INTERNAL|HR|IX|LBACSYS|MDDATA|MDSYS|MGMT_VIEW|OE|OLAPSYS|ORACLE_OCM|ORDPLUGINS|ORDSYS|OUTLN|OWBSYS|PM|RDSADMIN|SCOTT|SH|SI_INFORMTN_SCHEMA|SPATIAL_CSW_ADMIN_USR|SPATIAL_WFS_ADMIN_USR|SYS|SYSMAN|\\\"SYSTEM\\\"|TSMSYS|WKPROXY|WKSYS|WK_TEST|WMSYS|XDB|APEX_[0-9]{6}|FLOWS_[0-9]{5,6}|XS\\$NULL")),
+        limitOptionsBuilder ->
+            limitOptionsBuilder.includeSchemas(
+                new RegularExpressionExclusionRule(
+                    "ANONYMOUS|APEX_PUBLIC_USER|APPQOSSYS|BI|CTXSYS|DBSNMP|DIP|EXFSYS|FLOWS_30000|FLOWS_FILES|GSMADMIN_INTERNAL|HR|IX|LBACSYS|MDDATA|MDSYS|MGMT_VIEW|OE|OLAPSYS|ORACLE_OCM|ORDPLUGINS|ORDSYS|OUTLN|OWBSYS|PM|RDSADMIN|SCOTT|SH|SI_INFORMTN_SCHEMA|SPATIAL_CSW_ADMIN_USR|SPATIAL_WFS_ADMIN_USR|SYS|SYSMAN|\\\"SYSTEM\\\"|TSMSYS|WKPROXY|WKSYS|WK_TEST|WMSYS|XDB|APEX_[0-9]{6}|FLOWS_[0-9]{5,6}|XS\\$NULL")),
         new OracleUrlBuilder());
 
     System.setProperty("oracle.jdbc.Trace", "true");
   }
 
   @Override
-  public PluginCommand getHelpCommand()
-  {
+  public PluginCommand getHelpCommand() {
     final PluginCommand pluginCommand = super.getHelpCommand();
     pluginCommand
-      .addOption("server",
-                 String.class,
-                 "--server=oracle%n" + "Loads SchemaCrawler plug-in for Oracle")
-      .addOption("host",
-                 String.class,
-                 "Host name%n" + "Optional, defaults to localhost")
-      .addOption("port",
-                 Integer.class,
-                 "Port number%n" + "Optional, defaults to 1521")
-      .addOption("database",
-                 String.class,
-                 "Oracle Service Name%n"
-         + "You can use a query similar to the one below to find it.%n"
-         + "SELECT GLOBAL_NAME FROM GLOBAL_NAME");
+        .addOption(
+            "server", String.class, "--server=oracle%n" + "Loads SchemaCrawler plug-in for Oracle")
+        .addOption("host", String.class, "Host name%n" + "Optional, defaults to localhost")
+        .addOption("port", Integer.class, "Port number%n" + "Optional, defaults to 1521")
+        .addOption(
+            "database",
+            String.class,
+            "Oracle Service Name%n"
+                + "You can use a query similar to the one below to find it.%n"
+                + "SELECT GLOBAL_NAME FROM GLOBAL_NAME");
     return pluginCommand;
   }
-
 }

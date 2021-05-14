@@ -78,12 +78,16 @@ public final class DatabaseServerType implements Serializable, Comparable<Databa
       return 0;
     } else if (other == null) {
       return -1;
-    } else if (other.isUnknownDatabaseSystem() && !isUnknownDatabaseSystem()) {
+    }
+
+    final boolean thisUnknown = databaseSystemIdentifier == null;
+    final boolean otherUnknown = other.databaseSystemIdentifier == null;
+    if (otherUnknown && !thisUnknown) {
       return 1;
-    } else if (!other.isUnknownDatabaseSystem() && isUnknownDatabaseSystem()) {
+    } else if (!otherUnknown && thisUnknown) {
       return -1;
     } else {
-      return getDatabaseSystemIdentifier().compareTo(other.getDatabaseSystemIdentifier());
+      return databaseSystemIdentifier.compareTo(other.databaseSystemIdentifier);
     }
   }
 

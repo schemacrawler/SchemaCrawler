@@ -171,8 +171,7 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
       formattingHelper.println();
       formattingHelper.writeObjectStart();
       formattingHelper.writeObjectNameRow("", title, "", Color.white);
-      try {
-        final MetadataResultSet dataRows = new MetadataResultSet(rows);
+      try (final MetadataResultSet dataRows = new MetadataResultSet(rows)) {
         dataRows.setShowLobs(options.isShowLobs());
 
         formattingHelper.writeRowHeader(dataRows.getColumnNames());

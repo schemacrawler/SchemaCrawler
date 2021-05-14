@@ -45,7 +45,8 @@ public final class OracleCatalogLoader extends BaseCatalogLoader {
   @Override
   public void loadCatalog() throws SchemaCrawlerException {
 
-    if (!isDatabaseSystemIdentifier("oracle")) {
+    if (!isDatabaseSystemIdentifier(
+        OracleDatabaseConnector.DB_SERVER_TYPE.getDatabaseSystemIdentifier())) {
       return;
     }
 

@@ -1,8 +1,9 @@
 package schemacrawler.tools.command.text.diagram;
 
+import static java.nio.file.Files.lines;
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.joining;
 
-import java.io.FileReader;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,6 @@ import guru.nidi.graphviz.engine.GraphvizV8Engine;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
-import us.fatehi.utility.IOUtility;
 
 public final class GraphvizJavaExecutorUtility {
 
@@ -41,8 +41,7 @@ public final class GraphvizJavaExecutorUtility {
     try {
       // Strip all line breaks, in order to use the pure Java engine for
       // Graphviz
-      String dotSource = IOUtility.readFully(new FileReader(dotFile.toFile()));
-      dotSource = dotSource.replaceAll("\\R", " ");
+      final String dotSource = lines(dotFile).collect(joining(" "));
 
       final List<GraphvizEngine> engines = loadGraphvizEngines();
       Graphviz.useEngine(engines);

@@ -32,7 +32,6 @@ import static java.util.Comparator.comparingInt;
 import static java.util.Comparator.nullsLast;
 import static java.util.Objects.compare;
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.util.Comparator;
@@ -147,9 +146,9 @@ public abstract class BaseCatalogLoader implements CatalogLoader {
   protected boolean isDatabaseSystemIdentifier(final String databaseSystemIdentifier) {
     final String actualDatabaseSystemIdentifier =
         getSchemaRetrievalOptions().getDatabaseServerType().getDatabaseSystemIdentifier();
-    if (actualDatabaseSystemIdentifier == databaseSystemIdentifier) {
+    if (actualDatabaseSystemIdentifier == null && databaseSystemIdentifier == null) {
       return true;
-    } else if (!isBlank(actualDatabaseSystemIdentifier)) {
+    } else if (actualDatabaseSystemIdentifier != null) {
       return actualDatabaseSystemIdentifier.equals(databaseSystemIdentifier);
     } else {
       return false;

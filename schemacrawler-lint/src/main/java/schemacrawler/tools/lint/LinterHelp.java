@@ -27,28 +27,11 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.lint;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.StandardOpenOption.APPEND;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.function.Supplier;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 public final class LinterHelp implements Supplier<String[]> {
-
-  public static void main(final String[] args) throws IOException {
-    final String linterHelpMarkdown = new LinterHelp(true).get()[0];
-    if (args.length == 1) {
-      final Path outputFile = Paths.get(args[0]);
-      Files.write(outputFile, linterHelpMarkdown.getBytes(UTF_8), APPEND);
-    } else {
-      System.out.println(linterHelpMarkdown);
-    }
-  }
 
   private final boolean generateMarkdown;
 

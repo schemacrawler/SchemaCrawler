@@ -99,7 +99,7 @@ public final class CommandLineHelpCommand implements Runnable {
         showCompleteHelp(parent);
       }
     } catch (final Exception e) {
-      new SchemaCrawlerRuntimeException(e.getMessage(), e);
+      throw new SchemaCrawlerRuntimeException(e.getMessage(), e);
     }
   }
 

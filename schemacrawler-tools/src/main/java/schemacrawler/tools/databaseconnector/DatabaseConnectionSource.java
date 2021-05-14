@@ -78,7 +78,7 @@ public final class DatabaseConnectionSource implements Supplier<Connection> {
   private static Properties safeProperties(final Properties properties) {
     final Properties logProperties = new Properties(properties);
     if (properties.contains("password")) {
-      logProperties.put("password", "*****");
+      logProperties.put("password (redacted)", "*****");
     }
     return logProperties;
   }
