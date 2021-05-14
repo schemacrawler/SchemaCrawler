@@ -87,9 +87,6 @@ public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer 
               && !PARTIAL_PROPERTIES.contains(writer.getName())) {
             return;
           }
-          if (writer instanceof BeanPropertyWriter) {
-            final Object value = ((BeanPropertyWriter) writer).get(pojo);
-          }
           writer.serializeAsField(pojo, jgen, provider);
         } catch (final Exception e) {
           return;
