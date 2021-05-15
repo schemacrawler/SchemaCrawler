@@ -1,5 +1,7 @@
 # SchemaCrawler Support and Consulting
 
+## Levels of Support
+
 There are various support channels available if you are having trouble using SchemaCrawler, think you may have found a bug, or want advice with using SchemaCrawler in your project.
 
 **Professional Support Packages** provide you with direct access to the author of 
@@ -12,7 +14,7 @@ including the developer of SchemaCrawler, read messages on Stack Overflow. Pleas
 Please do not ask questions on the issues page - instead, ask questions on 
 [Stack Overflow]. Please read *Guidelines for Support* below.
 
------
+
 
 ## Guidelines for Support
 
