@@ -66,12 +66,12 @@
         crossorigin="anonymous">
       </script>
       <!-- End Bootstrap -->
-      <!-- Lightbox -->
-      <script
-          src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"
-          integrity="sha512-k2GFCTbp9rQU412BStrcD/rlwv1PYec9SNrkbQlo6RZCf75l6KcC3UwDY8H5n5hl4v77IDtIPwOk9Dqjs/mMBQ=="
-          crossorigin="anonymous">
-      </script>
+      <!-- Lightbox2 -->
+	  <script 
+        src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox-plus-jquery.min.js" 
+		integrity="sha512-6gudNVbNM/cVsLUMOb8g2b/RBqtQJ3aDfRFgU+5paeaCTtbYY/Dg00MzZq7r6RvJGI2KKtPBhjkHGTL/iOe21A==" 
+		crossorigin="anonymous">
+	  </script>
       <!--  SchemaCrawler styles -->
       <link rel="stylesheet" href="css/style.css">
       <!--[if lt IE 9]>
