@@ -30,7 +30,6 @@ package us.fatehi.utility.ioresource;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.ioresource.InputResourceUtility.wrapWriter;
 
-import java.io.BufferedWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.logging.Level;
@@ -49,7 +48,7 @@ public final class WriterOutputResource implements OutputResource {
   @Override
   public Writer openNewOutputWriter(final Charset charset, final boolean appendOutput) {
     LOGGER.log(Level.INFO, "Output to provided writer");
-    return wrapWriter(getDescription(), new BufferedWriter(writer), false);
+    return wrapWriter(getDescription(), writer, false);
   }
 
   @Override
