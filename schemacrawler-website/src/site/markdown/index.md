@@ -16,7 +16,7 @@ convenience is [bundled with drivers](database-support.html) for some commonly u
 RDBMS systems. SchemaCrawler works with any operating system that supports
 Java SE 8, Compact Profile 2 or better.
 
-![GitHub Repo stars](https://img.shields.io/github/stars/schemacrawler/schemacrawler?style=social)
+[![GitHub Repo stars](https://img.shields.io/github/stars/schemacrawler/schemacrawler?style=social)](https://github.com/schemacrawler/SchemaCrawler)
 [![Quick Build](https://github.com/schemacrawler/SchemaCrawler/workflows/Quick%20Build/badge.svg)](https://github.com/schemacrawler/SchemaCrawler/actions?query=workflow%3A%22Quick+Build%22)
 [![Integration Tests](https://github.com/schemacrawler/SchemaCrawler/workflows/Integration%20Tests/badge.svg)](https://github.com/schemacrawler/SchemaCrawler/actions?query=workflow%3A%22Integration+Tests%22)
 [![codecov](https://codecov.io/gh/schemacrawler/SchemaCrawler/branch/master/graph/badge.svg)](https://codecov.io/gh/schemacrawler/SchemaCrawler)
@@ -27,14 +27,14 @@ Java SE 8, Compact Profile 2 or better.
 [![Chocolatey](https://img.shields.io/chocolatey/v/schemacrawler.svg)](https://chocolatey.org/packages/schemacrawler)
 
 
------
+
 
 ## SchemaCrawler Command-line
 
 SchemaCrawler comes with a set of command-line tools that allow database
 metadata to be output as [plain text,](snapshot-examples/snapshot.text)
 [HTML5,](snapshot-examples/snapshot.html)
-[HTML5 with embedded diagrams,](snapshot-examples/snapshot.svg.html),
+[HTML5 with embedded diagrams](snapshot-examples/snapshot.svg.html),
 [JavaScript object notation (JSON)](snapshot-examples/snapshot.json) or
 [YAML](snapshot-examples/snapshot.yaml).
 The HTML5 output is a combination of valid XML (that
@@ -63,7 +63,8 @@ not part of the SchemaCrawler download.
 
 Explore the SchemaCrawler command-line on [Katacoda](https://www.katacoda.com/schemacrawler).
 
------
+
+
 
 ## SchemaCrawler API
 
@@ -133,6 +134,9 @@ For more details, please refer to the [javadocs](apidocs/index.html).
 
 <script src="https://gist.github.com/schemacrawler/63e4b8cb0515c6e928e7a9a419f46411.js"></script>
 More code examples are at [Code Examples Using the SchemaCrawler API](code-examples.html).
+
+
+
 
 ## Acknowledgements
 

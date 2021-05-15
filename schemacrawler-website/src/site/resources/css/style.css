@@ -29,12 +29,5 @@ body {
   color: rgb(92, 92, 92);
 }
 
-#banner {
-  margin-bottom: 1.5rem;
-  font-weight: bold;
-}
-
-#banner h1 {
-  font-size: 3rem;
-  font-family: "Palatino Linotype", Georgia, "Times New Roman", serif;
-}
+a:link { text-decoration: none; }
+a:visited { text-decoration: none; }
