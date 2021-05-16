@@ -1,7 +1,7 @@
 # SchemaCrawler Output
 
 SchemaCrawler generates clean [plain
-text,](snapshot-examples/snapshot.text) 
+text,](snapshot-examples/snapshot.txt) 
 [HTML5,](snapshot-examples/snapshot.html) [HTML5 with embedded
 diagrams,](snapshot-examples/snapshot.svg.html) or [JavaScript object
 notation (JSON)](snapshot-examples/snapshot.json) output. The HTML5

@@ -56,7 +56,7 @@ SchemaCrawler is also a command-line tool to output your database schema and dat
 
 ### <a name="output">What does SchemaCrawler output look like?</a>
 
-SchemaCrawler can produce [plain text,](snapshot-examples/snapshot.text)
+SchemaCrawler can produce [plain text,](snapshot-examples/snapshot.txt)
 [HTML5,](snapshot-examples/snapshot.html)
 [HTML5 with embedded diagrams](snapshot-examples/snapshot.svg.html),
 [JavaScript object notation (JSON)](snapshot-examples/snapshot.json) or

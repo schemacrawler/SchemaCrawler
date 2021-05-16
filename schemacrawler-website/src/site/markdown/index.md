@@ -32,7 +32,7 @@ Java SE 8, Compact Profile 2 or better.
 ## SchemaCrawler Command-line
 
 SchemaCrawler comes with a set of command-line tools that allow database
-metadata to be output as [plain text,](snapshot-examples/snapshot.text)
+metadata to be output as [plain text,](snapshot-examples/snapshot.txt)
 [HTML5,](snapshot-examples/snapshot.html)
 [HTML5 with embedded diagrams](snapshot-examples/snapshot.svg.html),
 [JavaScript object notation (JSON)](snapshot-examples/snapshot.json) or
