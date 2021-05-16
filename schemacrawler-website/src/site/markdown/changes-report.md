@@ -1009,14 +1009,14 @@ and [dbdiagram.io](https://dbdiagram.io/home) diagrams
 ## Release 10.09.01 - 2014-05-14
 <a name="a10.09.01"></a>
 
-* Fixed table type to be based on a string, not an enum. See <http://sourceforge.net/p/schemacrawler/discussion/495990/thread/09186044> for details.
+* Fixed table type to be based on a string, not an enum.
 * Changed the object inheritance of a privilege, so that it is not a database object.
 
 ## Release 10.08.05 - 2014-04-25
 <a name="a10.08.05"></a>
 
 * Fixed lint "foreign key with no index" to look at primary keys as well.
-* Fixed bug #31, <https://sourceforge.net/p/schemacrawler/bugs/31/>, for loading XML databases.
+* Fixed bug with loading XML databases.
 * Fixed MySQL connection issue, by removing URL parameter "useInformationSchema=true" so that MySQL's buggy metadata provider is not used. This provider does not honor mixed-case tables names.
 
 ## Release 10.08.04 - 2014-04-03
@@ -1055,8 +1055,7 @@ and [dbdiagram.io](https://dbdiagram.io/home) diagrams
 <a name="a10.7"></a>
 
 * Providing richer information about table constraints. Renaming check constraints to table constraints.
-* Worked abound ArrayIndexOutOfBoundsException in MySQL connector with connector 5.1.26 and server version 5.0.95\. 
-  See <https://sourceforge.net/p/schemacrawler/patches/5/>
+* Worked abound ArrayIndexOutOfBoundsException in MySQL connector with connector 5.1.26 and server version 5.0.95. 
 
 ## Release 10.6 - 2013-10-30
 <a name="a10.6"></a>
@@ -1210,7 +1209,7 @@ and [dbdiagram.io](https://dbdiagram.io/home) diagrams
 <a name="a8.8"></a>
 
 * Added JSON and TSV output formats.
-* Moved SchemaCrawler Maven Plugin into a new SourceForge project.
+* Moved SchemaCrawler Maven Plugin into a new project.
 
 ## Release 8.7 - 2011-09-05
 <a name="a8.7"></a>
