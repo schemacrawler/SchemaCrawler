@@ -33,7 +33,6 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.INDEXES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.indexesRetrievalStrategy;
 import static us.fatehi.utility.Utility.isBlank;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
@@ -175,8 +174,7 @@ final class IndexRetriever extends AbstractRetriever {
     }
 
     final Query indexesSql = informationSchemaViews.getQuery(INDEXES);
-    final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
+    try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(indexesSql, statement, getSchemaInclusionRule())) {
       results.setDescription("retrieveIndexesFromDataDictionary");

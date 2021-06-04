@@ -31,7 +31,6 @@ package schemacrawler.crawl;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_SYNONYMS;
 import static us.fatehi.utility.Utility.isBlank;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
@@ -93,8 +92,7 @@ final class SynonymRetriever extends AbstractRetriever {
     final NamedObjectList<SchemaReference> schemas = getAllSchemas();
 
     final Query synonymsDefinitionSql = informationSchemaViews.getQuery(EXT_SYNONYMS);
-    final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
+    try (final Statement statement = createStatement();
         MetadataResultSet results =
             new MetadataResultSet(synonymsDefinitionSql, statement, getSchemaInclusionRule())) {
       while (results.next()) {

@@ -32,9 +32,9 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion.ruleForSchemaInclusion;
 import static us.fatehi.utility.Utility.isBlank;
 
-import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.logging.Level;
@@ -106,12 +106,12 @@ abstract class AbstractRetriever {
     return belongsToCatalog && belongsToSchema;
   }
 
-  final NamedObjectList<SchemaReference> getAllSchemas() {
-    return catalog.getAllSchemas();
+  final Statement createStatement() throws SQLException {
+    return retrieverConnection.getConnection().createStatement();
   }
 
-  final Connection getDatabaseConnection() {
-    return retrieverConnection.getConnection();
+  final NamedObjectList<SchemaReference> getAllSchemas() {
+    return catalog.getAllSchemas();
   }
 
   final DatabaseMetaData getMetaData() {

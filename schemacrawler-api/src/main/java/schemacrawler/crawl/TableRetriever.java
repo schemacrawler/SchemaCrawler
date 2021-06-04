@@ -32,7 +32,6 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablesRetrievalStrategy;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
@@ -163,7 +162,6 @@ final class TableRetriever extends AbstractRetriever {
       throw new SchemaCrawlerSQLException("No tables SQL provided", null);
     }
     final Query tablesSql = informationSchemaViews.getQuery(TABLES);
-    final Connection connection = getDatabaseConnection();
     final TableTypes supportedTableTypes = getRetrieverConnection().getTableTypes();
     final TableTypes filteredTableTypes;
     if (tableTypes.isIncludeAll()) {
@@ -171,7 +169,7 @@ final class TableRetriever extends AbstractRetriever {
     } else {
       filteredTableTypes = tableTypes;
     }
-    try (final Statement statement = connection.createStatement();
+    try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(tablesSql, statement, getSchemaInclusionRule())) {
       results.setDescription("retrieveTablesFromDataDictionary");

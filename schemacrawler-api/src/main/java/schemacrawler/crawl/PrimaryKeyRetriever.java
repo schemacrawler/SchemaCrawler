@@ -32,7 +32,6 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.PRIMARY_KEYS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.primaryKeysRetrievalStrategy;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
@@ -126,8 +125,7 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
     }
 
     final Query pkSql = informationSchemaViews.getQuery(PRIMARY_KEYS);
-    final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
+    try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(pkSql, statement, getSchemaInclusionRule())) {
       results.setDescription("retrievePrimaryKeysFromDataDictionary");

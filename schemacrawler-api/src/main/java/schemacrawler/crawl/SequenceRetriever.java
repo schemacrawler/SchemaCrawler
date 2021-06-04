@@ -31,7 +31,6 @@ package schemacrawler.crawl;
 import static schemacrawler.schemacrawler.InformationSchemaKey.SEQUENCES;
 
 import java.math.BigInteger;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
@@ -92,9 +91,7 @@ final class SequenceRetriever extends AbstractRetriever {
     final NamedObjectList<SchemaReference> schemas = getAllSchemas();
 
     final Query sequencesDefinitionSql = informationSchemaViews.getQuery(SEQUENCES);
-    final Connection connection = getDatabaseConnection();
-
-    try (final Statement statement = connection.createStatement();
+    try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(sequencesDefinitionSql, statement, getSchemaInclusionRule())) {
       while (results.next()) {

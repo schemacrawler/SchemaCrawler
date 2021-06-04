@@ -35,7 +35,6 @@ import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.fu
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.proceduresRetrievalStrategy;
 import static us.fatehi.utility.Utility.isBlank;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.sql.Statement;
@@ -216,8 +215,7 @@ final class RoutineRetriever extends AbstractRetriever {
       throw new SchemaCrawlerSQLException("No functions SQL provided", null);
     }
     final Query functionsSql = informationSchemaViews.getQuery(FUNCTIONS);
-    final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
+    try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(functionsSql, statement, getSchemaInclusionRule())) {
       results.setDescription("retrieveFunctionsFromDataDictionary");
@@ -266,8 +264,7 @@ final class RoutineRetriever extends AbstractRetriever {
       throw new SchemaCrawlerSQLException("No procedures SQL provided", null);
     }
     final Query proceduresSql = informationSchemaViews.getQuery(PROCEDURES);
-    final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
+    try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(proceduresSql, statement, getSchemaInclusionRule())) {
       results.setDescription("retrieveProceduresFromDataDictionary");
