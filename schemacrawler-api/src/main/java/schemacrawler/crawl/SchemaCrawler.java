@@ -172,19 +172,10 @@ public final class SchemaCrawler {
       final DataTypeRetriever dataTypeRetriever =
           new DataTypeRetriever(retrieverConnection, catalog, options);
 
-      stopWatch.time(
-          "retrieveSystemColumnDataTypes",
-          () -> {
-            if (infoLevel.is(retrieveColumnDataTypes)) {
-              LOGGER.log(Level.INFO, "Retrieving system column data types");
-              dataTypeRetriever.retrieveSystemColumnDataTypes();
-            } else {
-              LOGGER.log(
-                  Level.INFO,
-                  "Not retrieving system column data types, since this was not requested");
-            }
-            return null;
-          });
+      time(
+          stopWatch,
+          retrieveColumnDataTypes,
+          () -> dataTypeRetriever.retrieveSystemColumnDataTypes());
 
       stopWatch.time(
           "retrieveUserDefinedColumnDataTypes",
@@ -232,42 +223,14 @@ public final class SchemaCrawler {
             retriever.retrieveDatabaseInfo();
             return null;
           });
+      time(
+          stopWatch,
+          retrieveAdditionalDatabaseInfo,
+          () -> retriever.retrieveAdditionalDatabaseInfo());
 
-      stopWatch.time(
-          "retrieveAdditionalDatabaseInfo",
-          () -> {
-            if (infoLevel.is(retrieveAdditionalDatabaseInfo)) {
-              retriever.retrieveAdditionalDatabaseInfo();
-            } else {
-              LOGGER.log(
-                  Level.INFO,
-                  "Not retrieving additional database information, since this was not requested");
-            }
-            return null;
-          });
+      time(stopWatch, retrieveServerInfo, () -> retriever.retrieveServerInfo());
 
-      stopWatch.time(
-          "retrieveServerInfo",
-          () -> {
-            if (infoLevel.is(retrieveServerInfo)) {
-              retriever.retrieveServerInfo();
-            } else {
-              LOGGER.log(
-                  Level.INFO, "Not retrieving server information, since this was not requested");
-            }
-            return null;
-          });
-
-      stopWatch.time(
-          "retrieveDatabaseUsers",
-          () -> {
-            if (infoLevel.is(retrieveDatabaseUsers)) {
-              retriever.retrieveDatabaseUsers();
-            } else {
-              LOGGER.log(Level.INFO, "Not retrieving database users, since this was not requested");
-            }
-            return null;
-          });
+      time(stopWatch, retrieveDatabaseUsers, () -> retriever.retrieveDatabaseUsers());
 
       LOGGER.log(Level.INFO, "Retrieving JDBC driver information");
       stopWatch.time(
@@ -277,18 +240,10 @@ public final class SchemaCrawler {
             return null;
           });
 
-      stopWatch.time(
-          "retrieveAdditionalJdbcDriverInfo",
-          () -> {
-            if (infoLevel.is(retrieveAdditionalJdbcDriverInfo)) {
-              retriever.retrieveAdditionalJdbcDriverInfo();
-            } else {
-              LOGGER.log(
-                  Level.INFO,
-                  "Not retrieving additional JDBC driver information, since this was not requested");
-            }
-            return null;
-          });
+      time(
+          stopWatch,
+          retrieveAdditionalJdbcDriverInfo,
+          () -> retriever.retrieveAdditionalJdbcDriverInfo());
 
       LOGGER.log(Level.INFO, "Retrieving SchemaCrawler crawl information");
       stopWatch.time(
@@ -382,16 +337,11 @@ public final class SchemaCrawler {
             return null;
           });
 
-      stopWatch.time(
-          "retrieveRoutineInformation",
-          () -> {
-            if (infoLevel.is(retrieveRoutineInformation)) {
-              retrieverExtra.retrieveRoutineInformation();
-            }
-            return null;
-          });
+      time(
+          stopWatch, retrieveRoutineInformation, () -> retrieverExtra.retrieveRoutineInformation());
 
       LOGGER.log(Level.INFO, stopWatch.stringify());
+
     } catch (final SchemaCrawlerSQLException e) {
       throw new SchemaCrawlerException(e.getMessage(), e.getCause());
     } catch (final SchemaCrawlerException e) {
@@ -686,14 +636,15 @@ public final class SchemaCrawler {
   private void time(
       final StopWatch stopWatch, final SchemaInfoRetrieval retrieval, final Function function)
       throws Exception {
+    final String retrievalName = retrieval.name();
     stopWatch.time(
-        retrieval.name(),
+        retrievalName,
         () -> {
           if (infoLevel.is(retrieval)) {
-            LOGGER.log(Level.INFO, "Starting " + retrieval);
+            LOGGER.log(Level.INFO, "Running " + retrievalName);
             function.run();
           } else {
-            LOGGER.log(Level.INFO, retrieval + " not requested");
+            LOGGER.log(Level.INFO, retrievalName + " not requested");
           }
           return null;
         });
