@@ -217,43 +217,25 @@ public final class SchemaCrawler {
 
       LOGGER.log(Level.INFO, "Retrieving database information");
 
-      stopWatch.time(
-          "retrieveDatabaseInfo",
-          () -> {
-            retriever.retrieveDatabaseInfo();
-            return null;
-          });
+      time(stopWatch, "retrieveDatabaseInfo", () -> retriever.retrieveDatabaseInfo());
+      time(stopWatch, "retrieveJdbcDriverInfo", () -> retriever.retrieveJdbcDriverInfo());
+      time(stopWatch, "retrieveCrawlInfo", () -> retriever.retrieveCrawlInfo());
+
       time(
           stopWatch,
           retrieveAdditionalDatabaseInfo,
           () -> retriever.retrieveAdditionalDatabaseInfo());
 
       time(stopWatch, retrieveServerInfo, () -> retriever.retrieveServerInfo());
-
       time(stopWatch, retrieveDatabaseUsers, () -> retriever.retrieveDatabaseUsers());
-
-      LOGGER.log(Level.INFO, "Retrieving JDBC driver information");
-      stopWatch.time(
-          "retrieveJdbcDriverInfo",
-          () -> {
-            retriever.retrieveJdbcDriverInfo();
-            return null;
-          });
 
       time(
           stopWatch,
           retrieveAdditionalJdbcDriverInfo,
           () -> retriever.retrieveAdditionalJdbcDriverInfo());
 
-      LOGGER.log(Level.INFO, "Retrieving SchemaCrawler crawl information");
-      stopWatch.time(
-          "retrieveCrawlInfo",
-          () -> {
-            retriever.retrieveCrawlInfo();
-            return null;
-          });
-
       LOGGER.log(Level.INFO, stopWatch.stringify());
+
     } catch (final SchemaCrawlerSQLException e) {
       throw new SchemaCrawlerException(e.getMessage(), e.getCause());
     } catch (final SchemaCrawlerException e) {
@@ -359,19 +341,15 @@ public final class SchemaCrawler {
     try {
       final SchemaRetriever retriever = new SchemaRetriever(retrieverConnection, catalog, options);
 
-      stopWatch.time(
+      time(
+          stopWatch,
           "retrieveSchemas",
-          () -> {
-            retriever.retrieveSchemas(options.getLimitOptions().get(ruleForSchemaInclusion));
-            return null;
-          });
+          () -> retriever.retrieveSchemas(options.getLimitOptions().get(ruleForSchemaInclusion)));
 
-      stopWatch.time(
+      time(
+          stopWatch,
           "filterAndSortSchemas",
-          () -> {
-            catalog.reduce(Schema.class, getSchemaReducer(options));
-            return null;
-          });
+          () -> catalog.reduce(Schema.class, getSchemaReducer(options)));
 
       LOGGER.log(Level.INFO, stopWatch.stringify());
 
@@ -636,11 +614,19 @@ public final class SchemaCrawler {
   private void time(
       final StopWatch stopWatch, final SchemaInfoRetrieval retrieval, final Function function)
       throws Exception {
-    final String retrievalName = retrieval.name();
+    time(stopWatch, retrieval.name(), infoLevel.is(retrieval), function);
+  }
+
+  private void time(
+      final StopWatch stopWatch,
+      final String retrievalName,
+      final boolean run,
+      final Function function)
+      throws Exception {
     stopWatch.time(
         retrievalName,
         () -> {
-          if (infoLevel.is(retrieval)) {
+          if (run) {
             LOGGER.log(Level.INFO, "Running " + retrievalName);
             function.run();
           } else {
@@ -648,5 +634,10 @@ public final class SchemaCrawler {
           }
           return null;
         });
+  }
+
+  private void time(final StopWatch stopWatch, final String retrievalName, final Function function)
+      throws Exception {
+    time(stopWatch, retrievalName, true, function);
   }
 }
