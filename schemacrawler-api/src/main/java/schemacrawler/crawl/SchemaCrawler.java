@@ -88,11 +88,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
-import schemacrawler.schemacrawler.SchemaInfoRetrieval;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import us.fatehi.utility.StopWatch;
-import us.fatehi.utility.StopWatch.Function;
 import us.fatehi.utility.string.StringFormat;
 
 /**
@@ -104,12 +101,14 @@ public final class SchemaCrawler {
 
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(SchemaCrawler.class.getName());
+
   private final Connection connection;
   private final SchemaCrawlerOptions options;
   private final SchemaRetrievalOptions schemaRetrievalOptions;
   private MutableCatalog catalog;
   private RetrieverConnection retrieverConnection;
   private final SchemaInfoLevel infoLevel;
+  private final RetrievalStopWatch stopWatch;
 
   /**
    * Constructs a SchemaCrawler object, from a connection.
@@ -128,6 +127,7 @@ public final class SchemaCrawler {
             schemaRetrievalOptions, "No database-specific schema retrieval overrides provided");
     this.options = requireNonNull(options, "No SchemaCrawler options provided");
     infoLevel = options.getLoadOptions().getSchemaInfoLevel();
+    stopWatch = new RetrievalStopWatch(infoLevel);
   }
 
   /**
@@ -161,17 +161,15 @@ public final class SchemaCrawler {
     try {
       LOGGER.log(Level.INFO, "Crawling column data types");
 
-      final StopWatch stopWatch = new StopWatch("crawlColumnDataTypes");
+      stopWatch.reset("crawlColumnDataTypes");
 
       final DatabaseInfoRetriever retriever =
           new DatabaseInfoRetriever(retrieverConnection, catalog, options);
       final DataTypeRetriever dataTypeRetriever =
           new DataTypeRetriever(retrieverConnection, catalog, options);
 
-      time(
-          stopWatch,
-          retrieveColumnDataTypes,
-          () -> dataTypeRetriever.retrieveSystemColumnDataTypes());
+      stopWatch.time(
+          retrieveColumnDataTypes, () -> dataTypeRetriever.retrieveSystemColumnDataTypes());
 
       stopWatch.time(
           "retrieveUserDefinedColumnDataTypes",
@@ -205,29 +203,25 @@ public final class SchemaCrawler {
         return;
       }
 
-      final StopWatch stopWatch = new StopWatch("crawlDatabaseInfo");
+      stopWatch.reset("crawlDatabaseInfo");
 
       final DatabaseInfoRetriever retriever =
           new DatabaseInfoRetriever(retrieverConnection, catalog, options);
 
       LOGGER.log(Level.INFO, "Retrieving database information");
 
-      time(stopWatch, "retrieveDatabaseInfo", () -> retriever.retrieveDatabaseInfo());
-      time(stopWatch, "retrieveJdbcDriverInfo", () -> retriever.retrieveJdbcDriverInfo());
-      time(stopWatch, "retrieveCrawlInfo", () -> retriever.retrieveCrawlInfo());
+      stopWatch.time("retrieveDatabaseInfo", () -> retriever.retrieveDatabaseInfo());
+      stopWatch.time("retrieveJdbcDriverInfo", () -> retriever.retrieveJdbcDriverInfo());
+      stopWatch.time("retrieveCrawlInfo", () -> retriever.retrieveCrawlInfo());
 
-      time(
-          stopWatch,
-          retrieveAdditionalDatabaseInfo,
-          () -> retriever.retrieveAdditionalDatabaseInfo());
+      stopWatch.time(
+          retrieveAdditionalDatabaseInfo, () -> retriever.retrieveAdditionalDatabaseInfo());
 
-      time(stopWatch, retrieveServerInfo, () -> retriever.retrieveServerInfo());
-      time(stopWatch, retrieveDatabaseUsers, () -> retriever.retrieveDatabaseUsers());
+      stopWatch.time(retrieveServerInfo, () -> retriever.retrieveServerInfo());
+      stopWatch.time(retrieveDatabaseUsers, () -> retriever.retrieveDatabaseUsers());
 
-      time(
-          stopWatch,
-          retrieveAdditionalJdbcDriverInfo,
-          () -> retriever.retrieveAdditionalJdbcDriverInfo());
+      stopWatch.time(
+          retrieveAdditionalJdbcDriverInfo, () -> retriever.retrieveAdditionalJdbcDriverInfo());
 
       LOGGER.log(Level.INFO, stopWatch.stringify());
 
@@ -248,7 +242,7 @@ public final class SchemaCrawler {
       return;
     }
 
-    final StopWatch stopWatch = new StopWatch("crawlRoutines");
+    stopWatch.reset("crawlRoutines");
 
     LOGGER.log(Level.INFO, "Crawling routines");
 
@@ -311,8 +305,7 @@ public final class SchemaCrawler {
             catalog.reduce(Routine.class, getRoutineReducer(options));
           });
 
-      time(
-          stopWatch, retrieveRoutineInformation, () -> retrieverExtra.retrieveRoutineInformation());
+      stopWatch.time(retrieveRoutineInformation, () -> retrieverExtra.retrieveRoutineInformation());
 
       LOGGER.log(Level.INFO, stopWatch.stringify());
 
@@ -326,22 +319,19 @@ public final class SchemaCrawler {
   }
 
   private void crawlSchemas() throws SchemaCrawlerException {
-    final StopWatch stopWatch = new StopWatch("crawlSchemas");
+    stopWatch.reset("crawlSchemas");
 
     LOGGER.log(Level.INFO, "Crawling schemas");
 
     try {
       final SchemaRetriever retriever = new SchemaRetriever(retrieverConnection, catalog, options);
 
-      time(
-          stopWatch,
+      stopWatch.time(
           "retrieveSchemas",
           () -> retriever.retrieveSchemas(options.getLimitOptions().get(ruleForSchemaInclusion)));
 
-      time(
-          stopWatch,
-          "filterAndSortSchemas",
-          () -> catalog.reduce(Schema.class, getSchemaReducer(options)));
+      stopWatch.time(
+          "filterAndSortSchemas", () -> catalog.reduce(Schema.class, getSchemaReducer(options)));
 
       LOGGER.log(Level.INFO, stopWatch.stringify());
 
@@ -368,7 +358,7 @@ public final class SchemaCrawler {
       return;
     }
 
-    final StopWatch stopWatch = new StopWatch("crawlSequences");
+    stopWatch.reset("crawlSequences");
 
     LOGGER.log(Level.INFO, "Crawling sequences");
 
@@ -407,7 +397,7 @@ public final class SchemaCrawler {
       return;
     }
 
-    final StopWatch stopWatch = new StopWatch("crawlSynonyms");
+    stopWatch.reset("crawlSynonyms");
 
     LOGGER.log(Level.INFO, "Crawling synonyms");
 
@@ -444,7 +434,7 @@ public final class SchemaCrawler {
       return;
     }
 
-    final StopWatch stopWatch = new StopWatch("crawlTables");
+    stopWatch.reset("crawlTables");
 
     LOGGER.log(Level.INFO, "Crawling tables");
 
@@ -540,47 +530,35 @@ public final class SchemaCrawler {
           });
 
       LOGGER.log(Level.INFO, "Retrieving additional table information");
-      time(
-          stopWatch,
+      stopWatch.time(
           retrieveTableConstraintInformation,
           () -> constraintRetriever.retrieveTableConstraintInformation());
       // Required step: Match all constraints such as primary keys and foreign keys
-      time(
-          stopWatch,
-          retrieveTableColumns,
-          () -> constraintRetriever.matchTableConstraints(allTables));
-      time(
-          stopWatch,
+      stopWatch.time(
+          retrieveTableColumns, () -> constraintRetriever.matchTableConstraints(allTables));
+      stopWatch.time(
           retrieveTableConstraintDefinitions,
           () -> constraintRetriever.retrieveTableConstraintDefinitions());
-      time(
-          stopWatch, retrieveTriggerInformation, () -> retrieverExtra.retrieveTriggerInformation());
-      time(stopWatch, retrieveViewInformation, () -> retrieverExtra.retrieveViewInformation());
-      time(stopWatch, retrieveViewTableUsage, () -> retrieverExtra.retrieveViewTableUsage());
-      time(
-          stopWatch,
-          retrieveTableDefinitionsInformation,
-          () -> retrieverExtra.retrieveTableDefinitions());
-      time(stopWatch, retrieveIndexInformation, () -> retrieverExtra.retrieveIndexInformation());
+      stopWatch.time(retrieveTriggerInformation, () -> retrieverExtra.retrieveTriggerInformation());
+      stopWatch.time(retrieveViewInformation, () -> retrieverExtra.retrieveViewInformation());
+      stopWatch.time(retrieveViewTableUsage, () -> retrieverExtra.retrieveViewTableUsage());
+      stopWatch.time(
+          retrieveTableDefinitionsInformation, () -> retrieverExtra.retrieveTableDefinitions());
+      stopWatch.time(retrieveIndexInformation, () -> retrieverExtra.retrieveIndexInformation());
 
-      time(
-          stopWatch,
+      stopWatch.time(
           retrieveAdditionalTableAttributes,
           () -> retrieverExtra.retrieveAdditionalTableAttributes());
-      time(stopWatch, retrieveTablePrivileges, () -> retrieverExtra.retrieveTablePrivileges());
-      time(
-          stopWatch,
+      stopWatch.time(retrieveTablePrivileges, () -> retrieverExtra.retrieveTablePrivileges());
+      stopWatch.time(
           retrieveAdditionalColumnAttributes,
           () -> retrieverExtra.retrieveAdditionalColumnAttributes());
-      time(
-          stopWatch,
+      stopWatch.time(
           retrieveAdditionalColumnMetadata,
           () -> retrieverExtra.retrieveAdditionalColumnMetadata());
 
-      time(
-          stopWatch,
-          retrieveTableColumnPrivileges,
-          () -> retrieverExtra.retrieveTableColumnPrivileges());
+      stopWatch.time(
+          retrieveTableColumnPrivileges, () -> retrieverExtra.retrieveTableColumnPrivileges());
 
       LOGGER.log(Level.INFO, stopWatch.stringify());
     } catch (final SchemaCrawlerSQLException e) {
@@ -590,34 +568,5 @@ public final class SchemaCrawler {
     } catch (final Exception e) {
       throw new SchemaCrawlerException("Exception retrieving table information", e);
     }
-  }
-
-  private void time(
-      final StopWatch stopWatch, final SchemaInfoRetrieval retrieval, final Function function)
-      throws Exception {
-    time(stopWatch, retrieval.name(), infoLevel.is(retrieval), function);
-  }
-
-  private void time(
-      final StopWatch stopWatch,
-      final String retrievalName,
-      final boolean run,
-      final Function function)
-      throws Exception {
-    stopWatch.time(
-        retrievalName,
-        () -> {
-          if (run) {
-            LOGGER.log(Level.INFO, "Running " + retrievalName);
-            function.call();
-          } else {
-            LOGGER.log(Level.INFO, retrievalName + " not requested");
-          }
-        });
-  }
-
-  private void time(final StopWatch stopWatch, final String retrievalName, final Function function)
-      throws Exception {
-    time(stopWatch, retrievalName, true, function);
   }
 }
