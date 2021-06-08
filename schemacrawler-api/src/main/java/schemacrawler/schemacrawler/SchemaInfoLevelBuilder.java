@@ -191,6 +191,11 @@ public final class SchemaInfoLevelBuilder
     return this;
   }
 
+  public SchemaInfoLevelBuilder setRetrievePrimaryKeys(final boolean retrievePrimaryKeys) {
+    schemaInfoRetrievals.put(SchemaInfoRetrieval.retrievePrimaryKeys, retrievePrimaryKeys);
+    return this;
+  }
+
   public SchemaInfoLevelBuilder setRetrieveRoutineInformation(
       final boolean retrieveRoutineInformation) {
     schemaInfoRetrievals.put(
