@@ -50,6 +50,7 @@ import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Routine;
+import schemacrawler.schema.RoutineType;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -102,7 +103,7 @@ public class RoutineRetrieverFunctionsTest {
 
     final RoutineRetriever functionRetriever =
         new RoutineRetriever(retrieverConnection, catalog, options);
-    functionRetriever.retrieveFunctions(new IncludeAll());
+    functionRetriever.retrieveRoutines(Arrays.asList(RoutineType.function), new IncludeAll());
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {

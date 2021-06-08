@@ -168,10 +168,10 @@ public final class SchemaCrawler {
     final DataTypeRetriever retriever =
         new DataTypeRetriever(retrieverConnection, catalog, options);
 
-    stopWatch.time(retrieveColumnDataTypes, () -> retriever.retrieveSystemColumnDataTypes());
+    stopWatch.time(retrieveColumnDataTypes, retriever::retrieveSystemColumnDataTypes);
 
     stopWatch.time(
-        retrieveUserDefinedColumnDataTypes, () -> retriever.retrieveUserDefinedColumnDataTypes());
+        retrieveUserDefinedColumnDataTypes, retriever::retrieveUserDefinedColumnDataTypes);
 
     stopWatch.stopAndLogTime();
   }
@@ -188,18 +188,16 @@ public final class SchemaCrawler {
     final DatabaseInfoRetriever retriever =
         new DatabaseInfoRetriever(retrieverConnection, catalog, options);
 
-    stopWatch.time("retrieveDatabaseInfo", () -> retriever.retrieveDatabaseInfo());
-    stopWatch.time("retrieveJdbcDriverInfo", () -> retriever.retrieveJdbcDriverInfo());
-    stopWatch.time("retrieveCrawlInfo", () -> retriever.retrieveCrawlInfo());
+    stopWatch.time("retrieveDatabaseInfo", retriever::retrieveDatabaseInfo);
+    stopWatch.time("retrieveJdbcDriverInfo", retriever::retrieveJdbcDriverInfo);
+    stopWatch.time("retrieveCrawlInfo", retriever::retrieveCrawlInfo);
 
-    stopWatch.time(
-        retrieveAdditionalDatabaseInfo, () -> retriever.retrieveAdditionalDatabaseInfo());
+    stopWatch.time(retrieveAdditionalDatabaseInfo, retriever::retrieveAdditionalDatabaseInfo);
 
-    stopWatch.time(retrieveServerInfo, () -> retriever.retrieveServerInfo());
-    stopWatch.time(retrieveDatabaseUsers, () -> retriever.retrieveDatabaseUsers());
+    stopWatch.time(retrieveServerInfo, retriever::retrieveServerInfo);
+    stopWatch.time(retrieveDatabaseUsers, retriever::retrieveDatabaseUsers);
 
-    stopWatch.time(
-        retrieveAdditionalJdbcDriverInfo, () -> retriever.retrieveAdditionalJdbcDriverInfo());
+    stopWatch.time(retrieveAdditionalJdbcDriverInfo, retriever::retrieveAdditionalJdbcDriverInfo);
 
     stopWatch.stopAndLogTime();
   }
@@ -226,16 +224,7 @@ public final class SchemaCrawler {
 
     stopWatch.time(
         retrieveRoutines,
-        () -> {
-          if (routineTypes.contains(RoutineType.procedure)) {
-            LOGGER.log(Level.INFO, "Retrieving procedure names");
-            retriever.retrieveProcedures(limitOptions.get(ruleForRoutineInclusion));
-          }
-          if (routineTypes.contains(RoutineType.function)) {
-            LOGGER.log(Level.INFO, "Retrieving function names");
-            retriever.retrieveFunctions(limitOptions.get(ruleForRoutineInclusion));
-          }
-        });
+        () -> retriever.retrieveRoutines(routineTypes, limitOptions.get(ruleForRoutineInclusion)));
 
     final NamedObjectList<MutableRoutine> allRoutines = catalog.getAllRoutines();
     LOGGER.log(Level.INFO, new StringFormat("Retrieved %d routines", allRoutines.size()));
@@ -267,7 +256,7 @@ public final class SchemaCrawler {
           catalog.reduce(Routine.class, getRoutineReducer(options));
         });
 
-    stopWatch.time(retrieveRoutineInformation, () -> retrieverExtra.retrieveRoutineInformation());
+    stopWatch.time(retrieveRoutineInformation, retrieverExtra::retrieveRoutineInformation);
 
     stopWatch.stopAndLogTime();
   }
@@ -420,7 +409,7 @@ public final class SchemaCrawler {
     LOGGER.log(Level.INFO, "Retrieving additional table information");
     stopWatch.time(
         retrieveTableConstraintInformation,
-        () -> constraintRetriever.retrieveTableConstraintInformation());
+        constraintRetriever::retrieveTableConstraintInformation);
     // Required step: Match all constraints such as primary keys and foreign keys
     stopWatch.time(
         "matchTableConstraints",
@@ -428,12 +417,11 @@ public final class SchemaCrawler {
         retrieveTableColumns);
     stopWatch.time(
         retrieveTableConstraintDefinitions,
-        () -> constraintRetriever.retrieveTableConstraintDefinitions());
-    stopWatch.time(retrieveTriggerInformation, () -> retrieverExtra.retrieveTriggerInformation());
-    stopWatch.time(retrieveViewInformation, () -> retrieverExtra.retrieveViewInformation());
-    stopWatch.time(retrieveViewTableUsage, () -> retrieverExtra.retrieveViewTableUsage());
-    stopWatch.time(
-        retrieveTableDefinitionsInformation, () -> retrieverExtra.retrieveTableDefinitions());
+        constraintRetriever::retrieveTableConstraintDefinitions);
+    stopWatch.time(retrieveTriggerInformation, retrieverExtra::retrieveTriggerInformation);
+    stopWatch.time(retrieveViewInformation, retrieverExtra::retrieveViewInformation);
+    stopWatch.time(retrieveViewTableUsage, retrieverExtra::retrieveViewTableUsage);
+    stopWatch.time(retrieveTableDefinitionsInformation, retrieverExtra::retrieveTableDefinitions);
     stopWatch.time(
         retrieveIndexInformation, () -> retrieverExtra.retrieveIndexInformation(), retrieveIndexes);
 
@@ -445,15 +433,15 @@ public final class SchemaCrawler {
     LOGGER.log(Level.INFO, "Retrieving additional table column information");
     stopWatch.time(
         retrieveAdditionalColumnAttributes,
-        () -> retrieverExtra.retrieveAdditionalColumnAttributes(),
+        retrieverExtra::retrieveAdditionalColumnAttributes,
         retrieveTableColumns);
     stopWatch.time(
         retrieveAdditionalColumnMetadata,
-        () -> retrieverExtra.retrieveAdditionalColumnMetadata(),
+        retrieverExtra::retrieveAdditionalColumnMetadata,
         retrieveTableColumns);
     stopWatch.time(
         retrieveTableColumnPrivileges,
-        () -> retrieverExtra.retrieveTableColumnPrivileges(),
+        retrieverExtra::retrieveTableColumnPrivileges,
         retrieveTableColumns);
 
     stopWatch.stopAndLogTime();
