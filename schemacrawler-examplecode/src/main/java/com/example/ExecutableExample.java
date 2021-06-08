@@ -47,11 +47,13 @@ public final class ExecutableExample {
         OutputOptionsBuilder.newOutputOptions(TextOutputFormat.html, outputFile);
     final String command = "schema";
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
-    executable.setSchemaCrawlerOptions(options);
-    executable.setOutputOptions(outputOptions);
-    executable.setConnection(getConnection());
-    executable.execute();
+    try (Connection connection = getConnection()) {
+      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
+      executable.setSchemaCrawlerOptions(options);
+      executable.setOutputOptions(outputOptions);
+      executable.setConnection(connection);
+      executable.execute();
+    }
 
     System.out.println("Created output file, " + outputFile);
   }
