@@ -51,8 +51,9 @@ public final class RetrievalStopWatch {
     reset("none");
   }
 
-  public void reset(final String id) {
-    stopWatch = new StopWatch(id);
+  public void reset(final String crawl) {
+    stopWatch = new StopWatch(crawl);
+    LOGGER.log(Level.INFO, "Running " + crawl);
   }
 
   /**
@@ -60,8 +61,12 @@ public final class RetrievalStopWatch {
    *
    * @return String supplier.
    */
-  public Supplier<String> stringify() {
-    return stopWatch.stringify();
+  public Supplier<String> stopAndLogTime() {
+    final Supplier<String> stringify = stopWatch.stringify();
+    reset("none");
+
+    LOGGER.log(Level.INFO, stopWatch.stringify());
+    return stringify;
   }
 
   public void time(final SchemaInfoRetrieval retrieval, final Function function) throws Exception {
