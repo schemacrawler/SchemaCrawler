@@ -102,7 +102,7 @@ public class RoutineRetrieverFunctionsTest {
 
     final RoutineRetriever functionRetriever =
         new RoutineRetriever(retrieverConnection, catalog, options);
-    functionRetriever.retrieveFunctions(catalog.getAllSchemas(), new IncludeAll());
+    functionRetriever.retrieveFunctions(new IncludeAll());
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {

@@ -124,7 +124,7 @@ public class RoutineRetrieverProceduresTest {
 
     final RoutineRetriever procedureRetriever =
         new RoutineRetriever(retrieverConnection, catalog, options);
-    procedureRetriever.retrieveProcedures(catalog.getAllSchemas(), new IncludeAll());
+    procedureRetriever.retrieveProcedures(new IncludeAll());
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {

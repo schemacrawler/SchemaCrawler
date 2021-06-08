@@ -171,12 +171,7 @@ public final class SchemaCrawler {
     stopWatch.time(retrieveColumnDataTypes, () -> retriever.retrieveSystemColumnDataTypes());
 
     stopWatch.time(
-        retrieveUserDefinedColumnDataTypes,
-        () -> {
-          for (final Schema schema : retriever.getAllSchemas()) {
-            retriever.retrieveUserDefinedColumnDataTypes(schema);
-          }
-        });
+        retrieveUserDefinedColumnDataTypes, () -> retriever.retrieveUserDefinedColumnDataTypes());
 
     stopWatch.stopAndLogTime();
   }
@@ -232,14 +227,13 @@ public final class SchemaCrawler {
     stopWatch.time(
         retrieveRoutines,
         () -> {
-          final NamedObjectList<SchemaReference> schemas = retriever.getAllSchemas();
           if (routineTypes.contains(RoutineType.procedure)) {
             LOGGER.log(Level.INFO, "Retrieving procedure names");
-            retriever.retrieveProcedures(schemas, limitOptions.get(ruleForRoutineInclusion));
+            retriever.retrieveProcedures(limitOptions.get(ruleForRoutineInclusion));
           }
           if (routineTypes.contains(RoutineType.function)) {
             LOGGER.log(Level.INFO, "Retrieving function names");
-            retriever.retrieveFunctions(schemas, limitOptions.get(ruleForRoutineInclusion));
+            retriever.retrieveFunctions(limitOptions.get(ruleForRoutineInclusion));
           }
         });
 
@@ -377,9 +371,7 @@ public final class SchemaCrawler {
         retrieveTables,
         () -> {
           LOGGER.log(Level.INFO, "Retrieving table names");
-          final NamedObjectList<SchemaReference> schemas = retriever.getAllSchemas();
           retriever.retrieveTables(
-              schemas,
               limitOptions.getTableNamePattern(),
               limitOptions.getTableTypes(),
               limitOptions.get(ruleForTableInclusion));
@@ -442,7 +434,8 @@ public final class SchemaCrawler {
     stopWatch.time(retrieveViewTableUsage, () -> retrieverExtra.retrieveViewTableUsage());
     stopWatch.time(
         retrieveTableDefinitionsInformation, () -> retrieverExtra.retrieveTableDefinitions());
-    stopWatch.time(retrieveIndexInformation, () -> retrieverExtra.retrieveIndexInformation());
+    stopWatch.time(
+        retrieveIndexInformation, () -> retrieverExtra.retrieveIndexInformation(), retrieveIndexes);
 
     stopWatch.time(
         retrieveAdditionalTableAttributes,

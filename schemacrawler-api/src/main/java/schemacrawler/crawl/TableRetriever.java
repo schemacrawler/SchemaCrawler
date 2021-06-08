@@ -71,13 +71,13 @@ final class TableRetriever extends AbstractRetriever {
   }
 
   void retrieveTables(
-      final NamedObjectList<SchemaReference> schemas,
       final String tableNamePattern,
       final TableTypes tableTypes,
       final InclusionRule tableInclusionRule)
       throws SQLException {
-    requireNonNull(schemas, "No schemas provided");
     requireNonNull(tableTypes, "No table types provided");
+
+    final NamedObjectList<SchemaReference> schemas = getAllSchemas();
 
     final InclusionRuleFilter<Table> tableFilter =
         new InclusionRuleFilter<>(tableInclusionRule, false);

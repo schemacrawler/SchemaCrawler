@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.crawl;
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.FUNCTIONS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.PROCEDURES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.functionsRetrievalStrategy;
@@ -75,10 +74,9 @@ final class RoutineRetriever extends AbstractRetriever {
     super(retrieverConnection, catalog, options);
   }
 
-  void retrieveFunctions(
-      final NamedObjectList<SchemaReference> schemas, final InclusionRule routineInclusionRule)
-      throws SQLException {
-    requireNonNull(schemas, "No schemas provided");
+  void retrieveFunctions(final InclusionRule routineInclusionRule) throws SQLException {
+
+    final NamedObjectList<SchemaReference> schemas = getAllSchemas();
 
     final InclusionRuleFilter<Function> functionFilter =
         new InclusionRuleFilter<>(routineInclusionRule, false);
@@ -104,10 +102,9 @@ final class RoutineRetriever extends AbstractRetriever {
     }
   }
 
-  void retrieveProcedures(
-      final NamedObjectList<SchemaReference> schemas, final InclusionRule routineInclusionRule)
-      throws SQLException {
-    requireNonNull(schemas, "No schemas provided");
+  void retrieveProcedures(final InclusionRule routineInclusionRule) throws SQLException {
+
+    final NamedObjectList<SchemaReference> schemas = getAllSchemas();
 
     final InclusionRuleFilter<Procedure> procedureFilter =
         new InclusionRuleFilter<>(routineInclusionRule, false);

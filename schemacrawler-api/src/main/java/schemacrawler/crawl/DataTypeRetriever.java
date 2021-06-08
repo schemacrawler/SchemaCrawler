@@ -91,49 +91,15 @@ final class DataTypeRetriever extends AbstractRetriever {
     }
   }
 
-  void retrieveUserDefinedColumnDataTypes(final Schema schema) throws SQLException {
-    requireNonNull(schema, "No schema provided");
+  void retrieveUserDefinedColumnDataTypes() throws SQLException {
 
-    final Optional<SchemaReference> schemaOptional = catalog.lookupSchema(schema.getFullName());
-    if (!schemaOptional.isPresent()) {
+    final NamedObjectList<SchemaReference> schemas = getAllSchemas();
+
+    for (final Schema schema : schemas) {
       LOGGER.log(
           Level.INFO,
-          new StringFormat(
-              "Cannot locate schema, so not retrieving data types for schema: %s", schema));
-      return;
-    }
-
-    LOGGER.log(Level.INFO, new StringFormat("Retrieving data types for schema <%s>", schema));
-
-    final String catalogName = schema.getCatalogName();
-    final String schemaName = schema.getName();
-
-    try (final MetadataResultSet results =
-        new MetadataResultSet(getMetaData().getUDTs(catalogName, schemaName, null, null))) {
-      while (results.next()) {
-        // "TYPE_CAT", "TYPE_SCHEM"
-        final String typeName = results.getString("TYPE_NAME");
-        LOGGER.log(Level.FINE, new StringFormat("Retrieving data type <%s.%s>", schema, typeName));
-        final int dataType = results.getInt("DATA_TYPE", 0);
-        final String className = results.getString("CLASS_NAME");
-        final String remarks = results.getString("REMARKS");
-        final short baseTypeValue = results.getShort("BASE_TYPE", (short) 0);
-
-        final ColumnDataType baseType;
-        if (baseTypeValue != 0) {
-          baseType = catalog.lookupBaseColumnDataTypeByType(baseTypeValue);
-        } else {
-          baseType = null;
-        }
-        final MutableColumnDataType columnDataType =
-            lookupOrCreateColumnDataType(user_defined, schema, dataType, typeName, className);
-        columnDataType.setBaseType(baseType);
-        columnDataType.setRemarks(remarks);
-
-        columnDataType.addAttributes(results.getAttributes());
-
-        catalog.addColumnDataType(columnDataType);
-      }
+          new StringFormat("Retrieving user-defined data types for schema <%s>", schema));
+      retrieveUserDefinedColumnDataTypesFromMetadata(schema);
     }
   }
 
@@ -221,6 +187,53 @@ final class DataTypeRetriever extends AbstractRetriever {
       LOGGER.log(
           Level.INFO,
           new StringFormat("Processed %d system column data types", numSystemColumnDataTypes));
+    }
+  }
+
+  private void retrieveUserDefinedColumnDataTypesFromMetadata(final Schema schema)
+      throws SQLException {
+    requireNonNull(schema, "No schema provided");
+
+    final Optional<SchemaReference> schemaOptional = catalog.lookupSchema(schema.getFullName());
+    if (!schemaOptional.isPresent()) {
+      LOGGER.log(
+          Level.INFO,
+          new StringFormat(
+              "Cannot locate schema, so not retrieving data types for schema: %s", schema));
+      return;
+    }
+
+    LOGGER.log(Level.INFO, new StringFormat("Retrieving data types for schema <%s>", schema));
+
+    final String catalogName = schema.getCatalogName();
+    final String schemaName = schema.getName();
+
+    try (final MetadataResultSet results =
+        new MetadataResultSet(getMetaData().getUDTs(catalogName, schemaName, null, null))) {
+      while (results.next()) {
+        // "TYPE_CAT", "TYPE_SCHEM"
+        final String typeName = results.getString("TYPE_NAME");
+        LOGGER.log(Level.FINE, new StringFormat("Retrieving data type <%s.%s>", schema, typeName));
+        final int dataType = results.getInt("DATA_TYPE", 0);
+        final String className = results.getString("CLASS_NAME");
+        final String remarks = results.getString("REMARKS");
+        final short baseTypeValue = results.getShort("BASE_TYPE", (short) 0);
+
+        final ColumnDataType baseType;
+        if (baseTypeValue != 0) {
+          baseType = catalog.lookupBaseColumnDataTypeByType(baseTypeValue);
+        } else {
+          baseType = null;
+        }
+        final MutableColumnDataType columnDataType =
+            lookupOrCreateColumnDataType(user_defined, schema, dataType, typeName, className);
+        columnDataType.setBaseType(baseType);
+        columnDataType.setRemarks(remarks);
+
+        columnDataType.addAttributes(results.getAttributes());
+
+        catalog.addColumnDataType(columnDataType);
+      }
     }
   }
 }
