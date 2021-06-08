@@ -69,12 +69,32 @@ public final class RetrievalStopWatch {
     return stringify;
   }
 
-  public void time(final SchemaInfoRetrieval retrieval, final Function function) throws Exception {
-    time(retrieval.name(), infoLevel.is(retrieval), function);
+  public void time(
+      final SchemaInfoRetrieval retrieval,
+      final Function function,
+      final SchemaInfoRetrieval... additionalRetrievals)
+      throws Exception {
+    final boolean run = infoLevel.is(retrieval) && run(additionalRetrievals);
+    time(retrieval.name(), run, function);
   }
 
-  public void time(final String retrievalName, final Function function) throws Exception {
-    time(retrievalName, true, function);
+  public void time(
+      final String retrievalName,
+      final Function function,
+      final SchemaInfoRetrieval... additionalRetrievals)
+      throws Exception {
+    final boolean run = run(additionalRetrievals);
+    time(retrievalName, run, function);
+  }
+
+  private boolean run(final SchemaInfoRetrieval... additionalRetrievals) {
+    boolean run = true;
+    if (additionalRetrievals != null && additionalRetrievals.length > 0) {
+      for (final SchemaInfoRetrieval additionalRetrieval : additionalRetrievals) {
+        run = run && infoLevel.is(additionalRetrieval);
+      }
+    }
+    return run;
   }
 
   private void time(final String retrievalName, final boolean run, final Function function)

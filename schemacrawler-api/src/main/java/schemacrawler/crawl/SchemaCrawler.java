@@ -72,7 +72,6 @@ import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveViewInform
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveViewTableUsage;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.logging.Level;
 
@@ -153,84 +152,64 @@ public final class SchemaCrawler {
       crawlSequences();
 
       return catalog;
-    } catch (final SQLException e) {
-      throw new SchemaCrawlerException("Database access exception", e);
-    }
-  }
-
-  private void crawlColumnDataTypes() throws SchemaCrawlerException {
-
-    try {
-      stopWatch.reset("crawlColumnDataTypes");
-
-      final DatabaseInfoRetriever retriever =
-          new DatabaseInfoRetriever(retrieverConnection, catalog, options);
-      final DataTypeRetriever dataTypeRetriever =
-          new DataTypeRetriever(retrieverConnection, catalog, options);
-
-      stopWatch.time(
-          retrieveColumnDataTypes, () -> dataTypeRetriever.retrieveSystemColumnDataTypes());
-
-      stopWatch.time(
-          retrieveUserDefinedColumnDataTypes,
-          () -> {
-            for (final Schema schema : retriever.getAllSchemas()) {
-              dataTypeRetriever.retrieveUserDefinedColumnDataTypes(schema);
-            }
-          });
-
-      stopWatch.stopAndLogTime();
-
     } catch (final SchemaCrawlerSQLException e) {
       throw new SchemaCrawlerException(e.getMessage(), e.getCause());
     } catch (final SchemaCrawlerException e) {
       throw e;
     } catch (final Exception e) {
-      throw new SchemaCrawlerException("Exception retrieving column data type information", e);
+      throw new SchemaCrawlerException(e.getMessage(), e);
     }
   }
 
-  private void crawlDatabaseInfo() throws SchemaCrawlerException {
+  private void crawlColumnDataTypes() throws Exception {
+
+    stopWatch.reset("crawlColumnDataTypes");
+
+    final DataTypeRetriever retriever =
+        new DataTypeRetriever(retrieverConnection, catalog, options);
+
+    stopWatch.time(retrieveColumnDataTypes, () -> retriever.retrieveSystemColumnDataTypes());
+
+    stopWatch.time(
+        retrieveUserDefinedColumnDataTypes,
+        () -> {
+          for (final Schema schema : retriever.getAllSchemas()) {
+            retriever.retrieveUserDefinedColumnDataTypes(schema);
+          }
+        });
+
+    stopWatch.stopAndLogTime();
+  }
+
+  private void crawlDatabaseInfo() throws Exception {
 
     if (!infoLevel.is(retrieveDatabaseInfo)) {
       LOGGER.log(Level.INFO, "Not retrieving database information, since this was not requested");
       return;
     }
 
-    try {
+    stopWatch.reset("crawlDatabaseInfo");
 
-      stopWatch.reset("crawlDatabaseInfo");
+    final DatabaseInfoRetriever retriever =
+        new DatabaseInfoRetriever(retrieverConnection, catalog, options);
 
-      final DatabaseInfoRetriever retriever =
-          new DatabaseInfoRetriever(retrieverConnection, catalog, options);
+    stopWatch.time("retrieveDatabaseInfo", () -> retriever.retrieveDatabaseInfo());
+    stopWatch.time("retrieveJdbcDriverInfo", () -> retriever.retrieveJdbcDriverInfo());
+    stopWatch.time("retrieveCrawlInfo", () -> retriever.retrieveCrawlInfo());
 
-      LOGGER.log(Level.INFO, "Retrieving database information");
+    stopWatch.time(
+        retrieveAdditionalDatabaseInfo, () -> retriever.retrieveAdditionalDatabaseInfo());
 
-      stopWatch.time("retrieveDatabaseInfo", () -> retriever.retrieveDatabaseInfo());
-      stopWatch.time("retrieveJdbcDriverInfo", () -> retriever.retrieveJdbcDriverInfo());
-      stopWatch.time("retrieveCrawlInfo", () -> retriever.retrieveCrawlInfo());
+    stopWatch.time(retrieveServerInfo, () -> retriever.retrieveServerInfo());
+    stopWatch.time(retrieveDatabaseUsers, () -> retriever.retrieveDatabaseUsers());
 
-      stopWatch.time(
-          retrieveAdditionalDatabaseInfo, () -> retriever.retrieveAdditionalDatabaseInfo());
+    stopWatch.time(
+        retrieveAdditionalJdbcDriverInfo, () -> retriever.retrieveAdditionalJdbcDriverInfo());
 
-      stopWatch.time(retrieveServerInfo, () -> retriever.retrieveServerInfo());
-      stopWatch.time(retrieveDatabaseUsers, () -> retriever.retrieveDatabaseUsers());
-
-      stopWatch.time(
-          retrieveAdditionalJdbcDriverInfo, () -> retriever.retrieveAdditionalJdbcDriverInfo());
-
-      stopWatch.stopAndLogTime();
-
-    } catch (final SchemaCrawlerSQLException e) {
-      throw new SchemaCrawlerException(e.getMessage(), e.getCause());
-    } catch (final SchemaCrawlerException e) {
-      throw e;
-    } catch (final Exception e) {
-      throw new SchemaCrawlerException("Exception retrieving database information", e);
-    }
+    stopWatch.stopAndLogTime();
   }
 
-  private void crawlRoutines() throws SchemaCrawlerException {
+  private void crawlRoutines() throws Exception {
 
     final LimitOptions limitOptions = options.getLimitOptions();
     if (!(infoLevel.is(retrieveRoutines) && !limitOptions.isExcludeAll(ruleForRoutineInclusion))) {
@@ -238,109 +217,90 @@ public final class SchemaCrawler {
       return;
     }
 
-    try {
-      stopWatch.reset("crawlRoutines");
+    stopWatch.reset("crawlRoutines");
 
-      final RoutineRetriever retriever =
-          new RoutineRetriever(retrieverConnection, catalog, options);
-      final RoutineExtRetriever retrieverExtra =
-          new RoutineExtRetriever(retrieverConnection, catalog, options);
-      final ProcedureParameterRetriever procedureParameterRetriever =
-          new ProcedureParameterRetriever(retrieverConnection, catalog, options);
-      final FunctionParameterRetriever functionParameterRetriever =
-          new FunctionParameterRetriever(retrieverConnection, catalog, options);
+    final RoutineRetriever retriever = new RoutineRetriever(retrieverConnection, catalog, options);
+    final RoutineExtRetriever retrieverExtra =
+        new RoutineExtRetriever(retrieverConnection, catalog, options);
+    final ProcedureParameterRetriever procedureParameterRetriever =
+        new ProcedureParameterRetriever(retrieverConnection, catalog, options);
+    final FunctionParameterRetriever functionParameterRetriever =
+        new FunctionParameterRetriever(retrieverConnection, catalog, options);
 
-      final Collection<RoutineType> routineTypes = limitOptions.getRoutineTypes();
+    final Collection<RoutineType> routineTypes = limitOptions.getRoutineTypes();
 
-      stopWatch.time(
-          retrieveRoutines,
-          () -> {
-            final NamedObjectList<SchemaReference> schemas = retriever.getAllSchemas();
+    stopWatch.time(
+        retrieveRoutines,
+        () -> {
+          final NamedObjectList<SchemaReference> schemas = retriever.getAllSchemas();
+          if (routineTypes.contains(RoutineType.procedure)) {
+            LOGGER.log(Level.INFO, "Retrieving procedure names");
+            retriever.retrieveProcedures(schemas, limitOptions.get(ruleForRoutineInclusion));
+          }
+          if (routineTypes.contains(RoutineType.function)) {
+            LOGGER.log(Level.INFO, "Retrieving function names");
+            retriever.retrieveFunctions(schemas, limitOptions.get(ruleForRoutineInclusion));
+          }
+        });
+
+    final NamedObjectList<MutableRoutine> allRoutines = catalog.getAllRoutines();
+    LOGGER.log(Level.INFO, new StringFormat("Retrieved %d routines", allRoutines.size()));
+    if (allRoutines.isEmpty()) {
+      return;
+    }
+
+    stopWatch.time(
+        retrieveRoutineParameters,
+        () -> {
+          LOGGER.log(Level.INFO, "Retrieving routine columns");
+          if (!limitOptions.isExcludeAll(ruleForRoutineParameterInclusion)) {
             if (routineTypes.contains(RoutineType.procedure)) {
-              LOGGER.log(Level.INFO, "Retrieving procedure names");
-              retriever.retrieveProcedures(schemas, limitOptions.get(ruleForRoutineInclusion));
+              procedureParameterRetriever.retrieveProcedureParameters(
+                  allRoutines, limitOptions.get(ruleForRoutineParameterInclusion));
             }
+
             if (routineTypes.contains(RoutineType.function)) {
-              LOGGER.log(Level.INFO, "Retrieving function names");
-              retriever.retrieveFunctions(schemas, limitOptions.get(ruleForRoutineInclusion));
+              functionParameterRetriever.retrieveFunctionParameters(
+                  allRoutines, limitOptions.get(ruleForRoutineParameterInclusion));
             }
-          });
+          }
+        });
 
-      final NamedObjectList<MutableRoutine> allRoutines = catalog.getAllRoutines();
-      LOGGER.log(Level.INFO, new StringFormat("Retrieved %d routines", allRoutines.size()));
-      if (allRoutines.isEmpty()) {
-        return;
-      }
+    stopWatch.time(
+        "filterAndSortRoutines",
+        () -> {
+          // Filter the list of routines based on grep criteria
+          catalog.reduce(Routine.class, getRoutineReducer(options));
+        });
 
-      stopWatch.time(
-          retrieveRoutineParameters,
-          () -> {
-            LOGGER.log(Level.INFO, "Retrieving routine columns");
-            if (!limitOptions.isExcludeAll(ruleForRoutineParameterInclusion)) {
-              if (routineTypes.contains(RoutineType.procedure)) {
-                procedureParameterRetriever.retrieveProcedureParameters(
-                    allRoutines, limitOptions.get(ruleForRoutineParameterInclusion));
-              }
+    stopWatch.time(retrieveRoutineInformation, () -> retrieverExtra.retrieveRoutineInformation());
 
-              if (routineTypes.contains(RoutineType.function)) {
-                functionParameterRetriever.retrieveFunctionParameters(
-                    allRoutines, limitOptions.get(ruleForRoutineParameterInclusion));
-              }
-            }
-          });
-
-      stopWatch.time(
-          "filterAndSortRoutines",
-          () -> {
-            // Filter the list of routines based on grep criteria
-            catalog.reduce(Routine.class, getRoutineReducer(options));
-          });
-
-      stopWatch.time(retrieveRoutineInformation, () -> retrieverExtra.retrieveRoutineInformation());
-
-      stopWatch.stopAndLogTime();
-
-    } catch (final SchemaCrawlerSQLException e) {
-      throw new SchemaCrawlerException(e.getMessage(), e.getCause());
-    } catch (final SchemaCrawlerException e) {
-      throw e;
-    } catch (final Exception e) {
-      throw new SchemaCrawlerException("Exception retrieving routine information", e);
-    }
+    stopWatch.stopAndLogTime();
   }
 
-  private void crawlSchemas() throws SchemaCrawlerException {
+  private void crawlSchemas() throws Exception {
 
-    try {
-      stopWatch.reset("crawlSchemas");
+    stopWatch.reset("crawlSchemas");
 
-      final SchemaRetriever retriever = new SchemaRetriever(retrieverConnection, catalog, options);
+    final SchemaRetriever retriever = new SchemaRetriever(retrieverConnection, catalog, options);
 
-      stopWatch.time(
-          "retrieveSchemas",
-          () -> retriever.retrieveSchemas(options.getLimitOptions().get(ruleForSchemaInclusion)));
+    stopWatch.time(
+        "retrieveSchemas",
+        () -> retriever.retrieveSchemas(options.getLimitOptions().get(ruleForSchemaInclusion)));
 
-      stopWatch.time(
-          "filterAndSortSchemas", () -> catalog.reduce(Schema.class, getSchemaReducer(options)));
+    stopWatch.time(
+        "filterAndSortSchemas", () -> catalog.reduce(Schema.class, getSchemaReducer(options)));
 
-      stopWatch.stopAndLogTime();
+    stopWatch.stopAndLogTime();
 
-      final NamedObjectList<SchemaReference> schemas = retriever.getAllSchemas();
-      if (schemas.isEmpty()) {
-        throw new SchemaCrawlerException("No matching schemas found");
-      }
-      LOGGER.log(Level.INFO, new StringFormat("Retrieved %d schemas", schemas.size()));
-
-    } catch (final SchemaCrawlerSQLException e) {
-      throw new SchemaCrawlerException(e.getMessage(), e.getCause());
-    } catch (final SchemaCrawlerException e) {
-      throw e;
-    } catch (final Exception e) {
-      throw new SchemaCrawlerException("Exception retrieving schema information", e);
+    final NamedObjectList<SchemaReference> schemas = retriever.getAllSchemas();
+    if (schemas.isEmpty()) {
+      throw new SchemaCrawlerException("No matching schemas found");
     }
+    LOGGER.log(Level.INFO, new StringFormat("Retrieved %d schemas", schemas.size()));
   }
 
-  private void crawlSequences() throws SchemaCrawlerException {
+  private void crawlSequences() throws Exception {
 
     final LimitOptions limitOptions = options.getLimitOptions();
     if (!(infoLevel.is(retrieveSequenceInformation)
@@ -349,34 +309,24 @@ public final class SchemaCrawler {
       return;
     }
 
-    try {
-      stopWatch.reset("crawlSequences");
+    stopWatch.reset("crawlSequences");
 
-      final SequenceRetriever retrieverExtra =
-          new SequenceRetriever(retrieverConnection, catalog, options);
+    final SequenceRetriever retrieverExtra =
+        new SequenceRetriever(retrieverConnection, catalog, options);
 
-      stopWatch.time(
-          retrieveSequenceInformation,
-          () ->
-              retrieverExtra.retrieveSequenceInformation(
-                  limitOptions.get(ruleForSequenceInclusion)));
+    stopWatch.time(
+        retrieveSequenceInformation,
+        () ->
+            retrieverExtra.retrieveSequenceInformation(limitOptions.get(ruleForSequenceInclusion)));
 
-      stopWatch.time(
-          "filterAndSortSequences",
-          () -> catalog.reduce(Sequence.class, getSequenceReducer(options)));
+    stopWatch.time(
+        "filterAndSortSequences",
+        () -> catalog.reduce(Sequence.class, getSequenceReducer(options)));
 
-      stopWatch.stopAndLogTime();
-
-    } catch (final SchemaCrawlerSQLException e) {
-      throw new SchemaCrawlerException(e.getMessage(), e.getCause());
-    } catch (final SchemaCrawlerException e) {
-      throw e;
-    } catch (final Exception e) {
-      throw new SchemaCrawlerException("Exception retrieving sequence information", e);
-    }
+    stopWatch.stopAndLogTime();
   }
 
-  private void crawlSynonyms() throws SchemaCrawlerException {
+  private void crawlSynonyms() throws Exception {
 
     final LimitOptions limitOptions = options.getLimitOptions();
     if (!(infoLevel.is(retrieveSynonymInformation)
@@ -385,32 +335,22 @@ public final class SchemaCrawler {
       return;
     }
 
-    try {
-      stopWatch.reset("crawlSynonyms");
+    stopWatch.reset("crawlSynonyms");
 
-      final SynonymRetriever retrieverExtra =
-          new SynonymRetriever(retrieverConnection, catalog, options);
+    final SynonymRetriever retrieverExtra =
+        new SynonymRetriever(retrieverConnection, catalog, options);
 
-      stopWatch.time(
-          retrieveSynonymInformation,
-          () ->
-              retrieverExtra.retrieveSynonymInformation(limitOptions.get(ruleForSynonymInclusion)));
+    stopWatch.time(
+        retrieveSynonymInformation,
+        () -> retrieverExtra.retrieveSynonymInformation(limitOptions.get(ruleForSynonymInclusion)));
 
-      stopWatch.time(
-          "filterAndSortSynonms", () -> catalog.reduce(Synonym.class, getSynonymReducer(options)));
+    stopWatch.time(
+        "filterAndSortSynonms", () -> catalog.reduce(Synonym.class, getSynonymReducer(options)));
 
-      stopWatch.stopAndLogTime();
-
-    } catch (final SchemaCrawlerSQLException e) {
-      throw new SchemaCrawlerException(e.getMessage(), e.getCause());
-    } catch (final SchemaCrawlerException e) {
-      throw e;
-    } catch (final Exception e) {
-      throw new SchemaCrawlerException("Exception retrieving synonym information", e);
-    }
+    stopWatch.stopAndLogTime();
   }
 
-  private void crawlTables() throws SchemaCrawlerException {
+  private void crawlTables() throws Exception {
 
     final LimitOptions limitOptions = options.getLimitOptions();
     if (!(infoLevel.is(retrieveTables) && !limitOptions.isExcludeAll(ruleForTableInclusion))) {
@@ -418,128 +358,111 @@ public final class SchemaCrawler {
       return;
     }
 
-    try {
-      stopWatch.reset("crawlTables");
+    stopWatch.reset("crawlTables");
 
-      final TableRetriever retriever = new TableRetriever(retrieverConnection, catalog, options);
-      final TableColumnRetriever columnRetriever =
-          new TableColumnRetriever(retrieverConnection, catalog, options);
-      final PrimaryKeyRetriever pkRetriever =
-          new PrimaryKeyRetriever(retrieverConnection, catalog, options);
-      final ForeignKeyRetriever fkRetriever =
-          new ForeignKeyRetriever(retrieverConnection, catalog, options);
-      final TableConstraintRetriever constraintRetriever =
-          new TableConstraintRetriever(retrieverConnection, catalog, options);
-      final TableExtRetriever retrieverExtra =
-          new TableExtRetriever(retrieverConnection, catalog, options);
-      final IndexRetriever indexRetriever =
-          new IndexRetriever(retrieverConnection, catalog, options);
+    final TableRetriever retriever = new TableRetriever(retrieverConnection, catalog, options);
+    final TableColumnRetriever columnRetriever =
+        new TableColumnRetriever(retrieverConnection, catalog, options);
+    final PrimaryKeyRetriever pkRetriever =
+        new PrimaryKeyRetriever(retrieverConnection, catalog, options);
+    final ForeignKeyRetriever fkRetriever =
+        new ForeignKeyRetriever(retrieverConnection, catalog, options);
+    final TableConstraintRetriever constraintRetriever =
+        new TableConstraintRetriever(retrieverConnection, catalog, options);
+    final TableExtRetriever retrieverExtra =
+        new TableExtRetriever(retrieverConnection, catalog, options);
+    final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection, catalog, options);
 
-      stopWatch.time(
-          retrieveTables,
-          () -> {
-            LOGGER.log(Level.INFO, "Retrieving table names");
-            final NamedObjectList<SchemaReference> schemas = retriever.getAllSchemas();
-            retriever.retrieveTables(
-                schemas,
-                limitOptions.getTableNamePattern(),
-                limitOptions.getTableTypes(),
-                limitOptions.get(ruleForTableInclusion));
-          });
+    stopWatch.time(
+        retrieveTables,
+        () -> {
+          LOGGER.log(Level.INFO, "Retrieving table names");
+          final NamedObjectList<SchemaReference> schemas = retriever.getAllSchemas();
+          retriever.retrieveTables(
+              schemas,
+              limitOptions.getTableNamePattern(),
+              limitOptions.getTableTypes(),
+              limitOptions.get(ruleForTableInclusion));
+        });
 
-      final NamedObjectList<MutableTable> allTables = catalog.getAllTables();
-      LOGGER.log(Level.INFO, new StringFormat("Retrieved %d tables", allTables.size()));
-      if (allTables.isEmpty()) {
-        return;
-      }
-
-      stopWatch.time(
-          retrieveTableColumns,
-          () -> {
-            if (!limitOptions.isExcludeAll(ruleForColumnInclusion)) {
-              columnRetriever.retrieveTableColumns(
-                  allTables, limitOptions.get(ruleForColumnInclusion));
-            }
-          });
-
-      stopWatch.time(
-          retrievePrimaryKeys,
-          () -> {
-            if (infoLevel.is(retrieveTableColumns)) {
-              pkRetriever.retrievePrimaryKeys(allTables);
-            }
-          });
-
-      stopWatch.time(
-          retrieveForeignKeys,
-          () -> {
-            if (infoLevel.is(retrieveTableColumns)) {
-              fkRetriever.retrieveForeignKeys(allTables);
-            }
-          });
-
-      stopWatch.time(
-          "filterAndSortTables",
-          () -> {
-            // Filter the list of tables based on grep criteria, and
-            // parent-child relationships
-            catalog.reduce(Table.class, getTableReducer(options));
-
-            // Sort the remaining tables
-            final TablesGraph tablesGraph = new TablesGraph(allTables);
-            tablesGraph.setTablesSortIndexes();
-          });
-
-      stopWatch.time(
-          retrieveIndexes,
-          () -> {
-            if (infoLevel.is(retrieveTableColumns)) {
-              indexRetriever.retrieveIndexes(allTables);
-            }
-          });
-
-      LOGGER.log(Level.INFO, "Retrieving additional table information");
-      stopWatch.time(
-          retrieveTableConstraintInformation,
-          () -> constraintRetriever.retrieveTableConstraintInformation());
-      // Required step: Match all constraints such as primary keys and foreign keys
-      stopWatch.time(
-          retrieveTableColumns, () -> constraintRetriever.matchTableConstraints(allTables));
-      stopWatch.time(
-          retrieveTableConstraintDefinitions,
-          () -> constraintRetriever.retrieveTableConstraintDefinitions());
-      stopWatch.time(retrieveTriggerInformation, () -> retrieverExtra.retrieveTriggerInformation());
-      stopWatch.time(retrieveViewInformation, () -> retrieverExtra.retrieveViewInformation());
-      stopWatch.time(retrieveViewTableUsage, () -> retrieverExtra.retrieveViewTableUsage());
-      stopWatch.time(
-          retrieveTableDefinitionsInformation, () -> retrieverExtra.retrieveTableDefinitions());
-      stopWatch.time(retrieveIndexInformation, () -> retrieverExtra.retrieveIndexInformation());
-
-      stopWatch.time(
-          retrieveAdditionalTableAttributes,
-          () -> retrieverExtra.retrieveAdditionalTableAttributes());
-      stopWatch.time(retrieveTablePrivileges, () -> retrieverExtra.retrieveTablePrivileges());
-
-      LOGGER.log(Level.INFO, "Retrieving additional table column information");
-      if (infoLevel.is(retrieveTableColumns)) {
-        stopWatch.time(
-            retrieveAdditionalColumnAttributes,
-            () -> retrieverExtra.retrieveAdditionalColumnAttributes());
-        stopWatch.time(
-            retrieveAdditionalColumnMetadata,
-            () -> retrieverExtra.retrieveAdditionalColumnMetadata());
-        stopWatch.time(
-            retrieveTableColumnPrivileges, () -> retrieverExtra.retrieveTableColumnPrivileges());
-      }
-
-      stopWatch.stopAndLogTime();
-
-    } catch (final SchemaCrawlerSQLException e) {
-      throw new SchemaCrawlerException(e.getMessage(), e.getCause());
-    } catch (final SchemaCrawlerException e) {
-      throw e;
-    } catch (final Exception e) {
-      throw new SchemaCrawlerException("Exception retrieving table information", e);
+    final NamedObjectList<MutableTable> allTables = catalog.getAllTables();
+    LOGGER.log(Level.INFO, new StringFormat("Retrieved %d tables", allTables.size()));
+    if (allTables.isEmpty()) {
+      return;
     }
+
+    stopWatch.time(
+        retrieveTableColumns,
+        () -> {
+          if (!limitOptions.isExcludeAll(ruleForColumnInclusion)) {
+            columnRetriever.retrieveTableColumns(
+                allTables, limitOptions.get(ruleForColumnInclusion));
+          }
+        });
+
+    stopWatch.time(
+        retrievePrimaryKeys,
+        () -> pkRetriever.retrievePrimaryKeys(allTables),
+        retrieveTableColumns);
+
+    stopWatch.time(
+        retrieveForeignKeys,
+        () -> fkRetriever.retrieveForeignKeys(allTables),
+        retrieveTableColumns);
+
+    stopWatch.time(
+        "filterAndSortTables",
+        () -> {
+          // Filter the list of tables based on grep criteria, and
+          // parent-child relationships
+          catalog.reduce(Table.class, getTableReducer(options));
+
+          // Sort the remaining tables
+          final TablesGraph tablesGraph = new TablesGraph(allTables);
+          tablesGraph.setTablesSortIndexes();
+        });
+
+    stopWatch.time(
+        retrieveIndexes, () -> indexRetriever.retrieveIndexes(allTables), retrieveTableColumns);
+
+    LOGGER.log(Level.INFO, "Retrieving additional table information");
+    stopWatch.time(
+        retrieveTableConstraintInformation,
+        () -> constraintRetriever.retrieveTableConstraintInformation());
+    // Required step: Match all constraints such as primary keys and foreign keys
+    stopWatch.time(
+        "matchTableConstraints",
+        () -> constraintRetriever.matchTableConstraints(allTables),
+        retrieveTableColumns);
+    stopWatch.time(
+        retrieveTableConstraintDefinitions,
+        () -> constraintRetriever.retrieveTableConstraintDefinitions());
+    stopWatch.time(retrieveTriggerInformation, () -> retrieverExtra.retrieveTriggerInformation());
+    stopWatch.time(retrieveViewInformation, () -> retrieverExtra.retrieveViewInformation());
+    stopWatch.time(retrieveViewTableUsage, () -> retrieverExtra.retrieveViewTableUsage());
+    stopWatch.time(
+        retrieveTableDefinitionsInformation, () -> retrieverExtra.retrieveTableDefinitions());
+    stopWatch.time(retrieveIndexInformation, () -> retrieverExtra.retrieveIndexInformation());
+
+    stopWatch.time(
+        retrieveAdditionalTableAttributes,
+        () -> retrieverExtra.retrieveAdditionalTableAttributes());
+    stopWatch.time(retrieveTablePrivileges, () -> retrieverExtra.retrieveTablePrivileges());
+
+    LOGGER.log(Level.INFO, "Retrieving additional table column information");
+    stopWatch.time(
+        retrieveAdditionalColumnAttributes,
+        () -> retrieverExtra.retrieveAdditionalColumnAttributes(),
+        retrieveTableColumns);
+    stopWatch.time(
+        retrieveAdditionalColumnMetadata,
+        () -> retrieverExtra.retrieveAdditionalColumnMetadata(),
+        retrieveTableColumns);
+    stopWatch.time(
+        retrieveTableColumnPrivileges,
+        () -> retrieverExtra.retrieveTableColumnPrivileges(),
+        retrieveTableColumns);
+
+    stopWatch.stopAndLogTime();
   }
 }
