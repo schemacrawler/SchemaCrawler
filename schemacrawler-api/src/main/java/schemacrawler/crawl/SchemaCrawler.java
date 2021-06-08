@@ -362,23 +362,22 @@ public final class SchemaCrawler {
 
     LOGGER.log(Level.INFO, "Crawling sequences");
 
-    final SequenceRetriever retrieverExtra;
     try {
-      retrieverExtra = new SequenceRetriever(retrieverConnection, catalog, options);
+      final SequenceRetriever retrieverExtra =
+          new SequenceRetriever(retrieverConnection, catalog, options);
 
       stopWatch.time(
-          "retrieveSequenceInformation",
-          () -> {
-            retrieverExtra.retrieveSequenceInformation(limitOptions.get(ruleForSequenceInclusion));
-          });
+          retrieveSequenceInformation,
+          () ->
+              retrieverExtra.retrieveSequenceInformation(
+                  limitOptions.get(ruleForSequenceInclusion)));
 
       stopWatch.time(
           "filterAndSortSequences",
-          () -> {
-            catalog.reduce(Sequence.class, getSequenceReducer(options));
-          });
+          () -> catalog.reduce(Sequence.class, getSequenceReducer(options)));
 
       LOGGER.log(Level.INFO, stopWatch.stringify());
+
     } catch (final SchemaCrawlerSQLException e) {
       throw new SchemaCrawlerException(e.getMessage(), e.getCause());
     } catch (final SchemaCrawlerException e) {
@@ -401,22 +400,20 @@ public final class SchemaCrawler {
 
     LOGGER.log(Level.INFO, "Crawling synonyms");
 
-    final SynonymRetriever retrieverExtra;
     try {
-      retrieverExtra = new SynonymRetriever(retrieverConnection, catalog, options);
-      stopWatch.time(
-          "retrieveSynonymInformation",
-          () -> {
-            retrieverExtra.retrieveSynonymInformation(limitOptions.get(ruleForSynonymInclusion));
-          });
+      final SynonymRetriever retrieverExtra =
+          new SynonymRetriever(retrieverConnection, catalog, options);
 
       stopWatch.time(
-          "filterAndSortSynonms",
-          () -> {
-            catalog.reduce(Synonym.class, getSynonymReducer(options));
-          });
+          retrieveSynonymInformation,
+          () ->
+              retrieverExtra.retrieveSynonymInformation(limitOptions.get(ruleForSynonymInclusion)));
+
+      stopWatch.time(
+          "filterAndSortSynonms", () -> catalog.reduce(Synonym.class, getSynonymReducer(options)));
 
       LOGGER.log(Level.INFO, stopWatch.stringify());
+
     } catch (final SchemaCrawlerSQLException e) {
       throw new SchemaCrawlerException(e.getMessage(), e.getCause());
     } catch (final SchemaCrawlerException e) {
