@@ -172,17 +172,10 @@ public final class SchemaCrawler {
           retrieveColumnDataTypes, () -> dataTypeRetriever.retrieveSystemColumnDataTypes());
 
       stopWatch.time(
-          "retrieveUserDefinedColumnDataTypes",
+          retrieveUserDefinedColumnDataTypes,
           () -> {
-            if (infoLevel.is(retrieveUserDefinedColumnDataTypes)) {
-              LOGGER.log(Level.INFO, "Retrieving user column data types");
-              for (final Schema schema : retriever.getAllSchemas()) {
-                dataTypeRetriever.retrieveUserDefinedColumnDataTypes(schema);
-              }
-            } else {
-              LOGGER.log(
-                  Level.INFO,
-                  "Not retrieving user column data types, since this was not requested");
+            for (final Schema schema : retriever.getAllSchemas()) {
+              dataTypeRetriever.retrieveUserDefinedColumnDataTypes(schema);
             }
           });
 
