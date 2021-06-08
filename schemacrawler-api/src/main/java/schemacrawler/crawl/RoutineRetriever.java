@@ -35,10 +35,10 @@ import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.fu
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.proceduresRetrievalStrategy;
 import static us.fatehi.utility.Utility.isBlank;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.sql.Statement;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.logging.Level;
 
@@ -50,6 +50,7 @@ import schemacrawler.schema.FunctionReturnType;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureReturnType;
+import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
@@ -76,60 +77,19 @@ final class RoutineRetriever extends AbstractRetriever {
     super(retrieverConnection, catalog, options);
   }
 
-  void retrieveFunctions(
-      final NamedObjectList<SchemaReference> schemas, final InclusionRule routineInclusionRule)
+  void retrieveRoutines(
+      final Collection<RoutineType> routineTypes, final InclusionRule routineInclusionRule)
       throws SQLException {
-    requireNonNull(schemas, "No schemas provided");
 
-    final InclusionRuleFilter<Function> functionFilter =
-        new InclusionRuleFilter<>(routineInclusionRule, false);
-    if (functionFilter.isExcludeAll()) {
-      LOGGER.log(Level.INFO, "Not retrieving functions, since this was not requested");
-      return;
+    requireNonNull(routineTypes, "No routine types provided");
+
+    if (routineTypes.contains(RoutineType.procedure)) {
+      LOGGER.log(Level.INFO, "Retrieving procedure names");
+      retrieveProcedures(routineInclusionRule);
     }
-
-    switch (getRetrieverConnection().get(functionsRetrievalStrategy)) {
-      case data_dictionary_all:
-        LOGGER.log(Level.INFO, "Retrieving functions, using fast data dictionary retrieval");
-        retrieveFunctionsFromDataDictionary(schemas, functionFilter);
-        break;
-
-      case metadata:
-        LOGGER.log(Level.INFO, "Retrieving functions");
-        retrieveFunctionsFromMetadata(schemas, functionFilter);
-        break;
-
-      default:
-        LOGGER.log(Level.INFO, "Not retrieving functions");
-        break;
-    }
-  }
-
-  void retrieveProcedures(
-      final NamedObjectList<SchemaReference> schemas, final InclusionRule routineInclusionRule)
-      throws SQLException {
-    requireNonNull(schemas, "No schemas provided");
-
-    final InclusionRuleFilter<Procedure> procedureFilter =
-        new InclusionRuleFilter<>(routineInclusionRule, false);
-    if (procedureFilter.isExcludeAll()) {
-      LOGGER.log(Level.INFO, "Not retrieving procedures, since this was not requested");
-      return;
-    }
-
-    switch (getRetrieverConnection().get(proceduresRetrievalStrategy)) {
-      case data_dictionary_all:
-        LOGGER.log(Level.INFO, "Retrieving procedures, using fast data dictionary retrieval");
-        retrieveProceduresFromDataDictionary(schemas, procedureFilter);
-        break;
-
-      case metadata:
-        LOGGER.log(Level.INFO, "Retrieving procedures");
-        retrieveProceduresFromMetadata(schemas, procedureFilter);
-        break;
-
-      default:
-        break;
+    if (routineTypes.contains(RoutineType.function)) {
+      LOGGER.log(Level.INFO, "Retrieving function names");
+      retrieveFunctions(routineInclusionRule);
     }
   }
 
@@ -206,6 +166,34 @@ final class RoutineRetriever extends AbstractRetriever {
     }
   }
 
+  private void retrieveFunctions(final InclusionRule routineInclusionRule) throws SQLException {
+
+    final NamedObjectList<SchemaReference> schemas = getAllSchemas();
+
+    final InclusionRuleFilter<Function> functionFilter =
+        new InclusionRuleFilter<>(routineInclusionRule, false);
+    if (functionFilter.isExcludeAll()) {
+      LOGGER.log(Level.INFO, "Not retrieving functions, since this was not requested");
+      return;
+    }
+
+    switch (getRetrieverConnection().get(functionsRetrievalStrategy)) {
+      case data_dictionary_all:
+        LOGGER.log(Level.INFO, "Retrieving functions, using fast data dictionary retrieval");
+        retrieveFunctionsFromDataDictionary(schemas, functionFilter);
+        break;
+
+      case metadata:
+        LOGGER.log(Level.INFO, "Retrieving functions");
+        retrieveFunctionsFromMetadata(schemas, functionFilter);
+        break;
+
+      default:
+        LOGGER.log(Level.INFO, "Not retrieving functions");
+        break;
+    }
+  }
+
   private void retrieveFunctionsFromDataDictionary(
       final NamedObjectList<SchemaReference> schemas,
       final InclusionRuleFilter<Function> functionFilter)
@@ -216,8 +204,7 @@ final class RoutineRetriever extends AbstractRetriever {
       throw new SchemaCrawlerSQLException("No functions SQL provided", null);
     }
     final Query functionsSql = informationSchemaViews.getQuery(FUNCTIONS);
-    final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
+    try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(functionsSql, statement, getSchemaInclusionRule())) {
       results.setDescription("retrieveFunctionsFromDataDictionary");
@@ -256,6 +243,33 @@ final class RoutineRetriever extends AbstractRetriever {
     }
   }
 
+  private void retrieveProcedures(final InclusionRule routineInclusionRule) throws SQLException {
+
+    final NamedObjectList<SchemaReference> schemas = getAllSchemas();
+
+    final InclusionRuleFilter<Procedure> procedureFilter =
+        new InclusionRuleFilter<>(routineInclusionRule, false);
+    if (procedureFilter.isExcludeAll()) {
+      LOGGER.log(Level.INFO, "Not retrieving procedures, since this was not requested");
+      return;
+    }
+
+    switch (getRetrieverConnection().get(proceduresRetrievalStrategy)) {
+      case data_dictionary_all:
+        LOGGER.log(Level.INFO, "Retrieving procedures, using fast data dictionary retrieval");
+        retrieveProceduresFromDataDictionary(schemas, procedureFilter);
+        break;
+
+      case metadata:
+        LOGGER.log(Level.INFO, "Retrieving procedures");
+        retrieveProceduresFromMetadata(schemas, procedureFilter);
+        break;
+
+      default:
+        break;
+    }
+  }
+
   private void retrieveProceduresFromDataDictionary(
       final NamedObjectList<SchemaReference> schemas,
       final InclusionRuleFilter<Procedure> procedureFilter)
@@ -266,8 +280,7 @@ final class RoutineRetriever extends AbstractRetriever {
       throw new SchemaCrawlerSQLException("No procedures SQL provided", null);
     }
     final Query proceduresSql = informationSchemaViews.getQuery(PROCEDURES);
-    final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
+    try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(proceduresSql, statement, getSchemaInclusionRule())) {
       results.setDescription("retrieveProceduresFromDataDictionary");

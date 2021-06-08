@@ -32,7 +32,6 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLES;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tablesRetrievalStrategy;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
@@ -72,13 +71,13 @@ final class TableRetriever extends AbstractRetriever {
   }
 
   void retrieveTables(
-      final NamedObjectList<SchemaReference> schemas,
       final String tableNamePattern,
       final TableTypes tableTypes,
       final InclusionRule tableInclusionRule)
       throws SQLException {
-    requireNonNull(schemas, "No schemas provided");
     requireNonNull(tableTypes, "No table types provided");
+
+    final NamedObjectList<SchemaReference> schemas = getAllSchemas();
 
     final InclusionRuleFilter<Table> tableFilter =
         new InclusionRuleFilter<>(tableInclusionRule, false);
@@ -163,7 +162,6 @@ final class TableRetriever extends AbstractRetriever {
       throw new SchemaCrawlerSQLException("No tables SQL provided", null);
     }
     final Query tablesSql = informationSchemaViews.getQuery(TABLES);
-    final Connection connection = getDatabaseConnection();
     final TableTypes supportedTableTypes = getRetrieverConnection().getTableTypes();
     final TableTypes filteredTableTypes;
     if (tableTypes.isIncludeAll()) {
@@ -171,7 +169,7 @@ final class TableRetriever extends AbstractRetriever {
     } else {
       filteredTableTypes = tableTypes;
     }
-    try (final Statement statement = connection.createStatement();
+    try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(tablesSql, statement, getSchemaInclusionRule())) {
       results.setDescription("retrieveTablesFromDataDictionary");

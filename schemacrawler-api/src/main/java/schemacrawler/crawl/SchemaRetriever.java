@@ -30,7 +30,6 @@ package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.SCHEMATA;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashSet;
@@ -194,9 +193,7 @@ final class SchemaRetriever extends AbstractRetriever {
     }
     final Query schemataSql = informationSchemaViews.getQuery(SCHEMATA);
 
-    final Connection connection = getDatabaseConnection();
-
-    try (final Statement statement = connection.createStatement();
+    try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(schemataSql, statement, getSchemaInclusionRule())) {
       results.setDescription("retrieveAllSchemasFromInformationSchemaViews");

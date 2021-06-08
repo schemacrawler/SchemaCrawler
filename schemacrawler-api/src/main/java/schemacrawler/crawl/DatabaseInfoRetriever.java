@@ -258,8 +258,7 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
     }
     final Query databaseUsersSql = informationSchemaViews.getQuery(DATABASE_USERS);
 
-    final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
+    try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(databaseUsersSql, statement, new IncludeAll())) {
       results.setDescription("retrieveDatabaseUsers");
@@ -320,8 +319,7 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
     }
     final Query serverInfoSql = informationSchemaViews.getQuery(SERVER_INFORMATION);
 
-    final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
+    try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(serverInfoSql, statement, new IncludeAll())) {
       results.setDescription("retrieveServerInfo");

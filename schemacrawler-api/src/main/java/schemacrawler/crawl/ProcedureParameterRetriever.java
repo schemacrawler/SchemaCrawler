@@ -34,7 +34,6 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.PROCEDURE_COLUMNS
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.procedureParametersRetrievalStrategy;
 import static us.fatehi.utility.Utility.isBlank;
 
-import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -205,8 +204,7 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
       throw new SchemaCrawlerSQLException("No procedure parameters SQL provided", null);
     }
     final Query procedureColumnsSql = informationSchemaViews.getQuery(PROCEDURE_COLUMNS);
-    final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
+    try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(procedureColumnsSql, statement, getSchemaInclusionRule())) {
       results.setDescription("retrieveProcedureParametersFromDataDictionary");

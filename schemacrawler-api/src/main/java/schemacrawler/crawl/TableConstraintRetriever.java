@@ -33,7 +33,6 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.CHECK_CONSTRAINTS
 import static schemacrawler.schemacrawler.InformationSchemaKey.CONSTRAINT_COLUMN_USAGE;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_CONSTRAINTS;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
@@ -96,8 +95,6 @@ final class TableConstraintRetriever extends AbstractRetriever {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
 
-    final Connection connection = getDatabaseConnection();
-
     if (!informationSchemaViews.hasQuery(CHECK_CONSTRAINTS)) {
       LOGGER.log(Level.FINE, "Extended table constraints SQL statement was not provided");
       return;
@@ -106,7 +103,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
         informationSchemaViews.getQuery(CHECK_CONSTRAINTS);
 
     // Get check constraint definitions
-    try (final Statement statement = connection.createStatement();
+    try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(
                 extTableConstraintInformationSql, statement, getSchemaInclusionRule())) {
@@ -146,17 +143,27 @@ final class TableConstraintRetriever extends AbstractRetriever {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
 
-    final Connection connection = getDatabaseConnection();
-
-    createTableConstraints(connection, tableConstraintsMap, informationSchemaViews);
+    createTableConstraints(tableConstraintsMap, informationSchemaViews);
 
     if (!tableConstraintsMap.isEmpty()) {
-      retrieveTableConstraintsColumns(connection, tableConstraintsMap, informationSchemaViews);
+      retrieveTableConstraintsColumns(tableConstraintsMap, informationSchemaViews);
+    }
+  }
+
+  /**
+   * Add foreign keys as table constraints. Foreign keys are not loaded by the CONSTRAINTS view in
+   * the information schema views, so they can be added in without fear of duplication.
+   *
+   * @param mutableTable Table to add constraints to
+   */
+  private void addImportedForeignKeys(final MutableTable mutableTable) {
+    final Collection<ForeignKey> importedForeignKeys = mutableTable.getImportedForeignKeys();
+    for (final ForeignKey foreignKey : importedForeignKeys) {
+      mutableTable.addTableConstraint(foreignKey);
     }
   }
 
   private void createTableConstraints(
-      final Connection connection,
       final Map<List<String>, MutableTableConstraint> tableConstraintsMap,
       final InformationSchemaViews informationSchemaViews) {
     if (!informationSchemaViews.hasQuery(TABLE_CONSTRAINTS)) {
@@ -165,7 +172,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
     }
 
     final Query tableConstraintsInformationSql = informationSchemaViews.getQuery(TABLE_CONSTRAINTS);
-    try (final Statement statement = connection.createStatement();
+    try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(
                 tableConstraintsInformationSql, statement, getSchemaInclusionRule())) {
@@ -216,19 +223,6 @@ final class TableConstraintRetriever extends AbstractRetriever {
     }
   }
 
-  /**
-   * Add foreign keys as table constraints. Foreign keys are not loaded by the CONSTRAINTS view in
-   * the information schema views, so they can be added in without fear of duplication.
-   *
-   * @param mutableTable Table to add constraints to
-   */
-  private void addImportedForeignKeys(final MutableTable mutableTable) {
-    final Collection<ForeignKey> importedForeignKeys = mutableTable.getImportedForeignKeys();
-    for (final ForeignKey foreignKey : importedForeignKeys) {
-      mutableTable.addTableConstraint(foreignKey);
-    }
-  }
-
   private void matchPrimaryKey(final MutableTable mutableTable) {
     if (!mutableTable.hasPrimaryKey()) {
       return;
@@ -257,7 +251,6 @@ final class TableConstraintRetriever extends AbstractRetriever {
   }
 
   private void retrieveTableConstraintsColumns(
-      final Connection connection,
       final Map<List<String>, MutableTableConstraint> tableConstraintsMap,
       final InformationSchemaViews informationSchemaViews) {
     if (!informationSchemaViews.hasQuery(CONSTRAINT_COLUMN_USAGE)) {
@@ -267,7 +260,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
     final Query tableConstraintsColumnsInformationSql =
         informationSchemaViews.getQuery(CONSTRAINT_COLUMN_USAGE);
 
-    try (final Statement statement = connection.createStatement();
+    try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(
                 tableConstraintsColumnsInformationSql, statement, getSchemaInclusionRule())) {

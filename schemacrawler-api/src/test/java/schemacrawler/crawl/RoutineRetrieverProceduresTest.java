@@ -50,6 +50,7 @@ import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Routine;
+import schemacrawler.schema.RoutineType;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -124,7 +125,7 @@ public class RoutineRetrieverProceduresTest {
 
     final RoutineRetriever procedureRetriever =
         new RoutineRetriever(retrieverConnection, catalog, options);
-    procedureRetriever.retrieveProcedures(catalog.getAllSchemas(), new IncludeAll());
+    procedureRetriever.retrieveRoutines(Arrays.asList(RoutineType.procedure), new IncludeAll());
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {

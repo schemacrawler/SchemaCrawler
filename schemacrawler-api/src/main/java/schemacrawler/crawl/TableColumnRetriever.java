@@ -35,7 +35,6 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.tableColumnsRetrievalStrategy;
 import static us.fatehi.utility.Utility.isBlank;
 
-import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -215,8 +214,7 @@ final class TableColumnRetriever extends AbstractRetriever {
       return hiddenTableColumnsLookupKeys;
     }
     final Query hiddenColumnsSql = informationSchemaViews.getQuery(EXT_HIDDEN_TABLE_COLUMNS);
-    final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
+    try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(hiddenColumnsSql, statement, getSchemaInclusionRule())) {
       results.setDescription("retrieveHiddenColumns");
@@ -254,8 +252,7 @@ final class TableColumnRetriever extends AbstractRetriever {
       throw new SchemaCrawlerSQLException("No table columns SQL provided", null);
     }
     final Query tableColumnsSql = informationSchemaViews.getQuery(TABLE_COLUMNS);
-    final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
+    try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(tableColumnsSql, statement, getSchemaInclusionRule())) {
       results.setDescription("retrieveTableColumnsFromDataDictionary");

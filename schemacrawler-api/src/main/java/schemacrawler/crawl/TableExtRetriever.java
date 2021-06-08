@@ -36,7 +36,6 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.TRIGGERS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEWS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEW_TABLE_USAGE;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
@@ -90,8 +89,7 @@ final class TableExtRetriever extends AbstractRetriever {
     }
     final Query columnAttributesSql = informationSchemaViews.getQuery(ADDITIONAL_COLUMN_ATTRIBUTES);
 
-    final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
+    try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(columnAttributesSql, statement, getSchemaInclusionRule())) {
 
@@ -137,7 +135,7 @@ final class TableExtRetriever extends AbstractRetriever {
     final NamedObjectList<MutableTable> tables = catalog.getAllTables();
     for (final MutableTable table : tables) {
       final NamedObjectList<MutableColumn> columns = table.getAllColumns();
-      for (MutableColumn column : columns) {
+      for (final MutableColumn column : columns) {
         MutableColumnDataType columnDataType = (MutableColumnDataType) column.getColumnDataType();
 
         // Check for enumerated column data-types
@@ -181,8 +179,7 @@ final class TableExtRetriever extends AbstractRetriever {
     }
     final Query tableAttributesSql = informationSchemaViews.getQuery(ADDITIONAL_TABLE_ATTRIBUTES);
 
-    final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
+    try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(tableAttributesSql, statement, getSchemaInclusionRule())) {
 
@@ -228,8 +225,7 @@ final class TableExtRetriever extends AbstractRetriever {
     LOGGER.log(Level.INFO, "Retrieving additional index information");
 
     final Query extIndexesInformationSql = informationSchemaViews.getQuery(EXT_INDEXES);
-    final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
+    try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(extIndexesInformationSql, statement, getSchemaInclusionRule())) {
 
@@ -302,8 +298,7 @@ final class TableExtRetriever extends AbstractRetriever {
     LOGGER.log(Level.INFO, "Retrieving table definitions");
 
     final Query tableDefinitionsInformationSql = informationSchemaViews.getQuery(EXT_TABLES);
-    final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
+    try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(
                 tableDefinitionsInformationSql, statement, getSchemaInclusionRule())) {
@@ -362,8 +357,7 @@ final class TableExtRetriever extends AbstractRetriever {
     LOGGER.log(Level.INFO, "Retrieving trigger definitions");
 
     final Query triggerInformationSql = informationSchemaViews.getQuery(TRIGGERS);
-    final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
+    try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(triggerInformationSql, statement, getSchemaInclusionRule())) {
 
@@ -438,8 +432,7 @@ final class TableExtRetriever extends AbstractRetriever {
     LOGGER.log(Level.INFO, "Retrieving additional view information");
 
     final Query viewInformationSql = informationSchemaViews.getQuery(VIEWS);
-    final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
+    try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(viewInformationSql, statement, getSchemaInclusionRule())) {
 
@@ -493,8 +486,7 @@ final class TableExtRetriever extends AbstractRetriever {
     LOGGER.log(Level.INFO, "Retrieving view table usage");
 
     final Query viewTableUsageSql = informationSchemaViews.getQuery(VIEW_TABLE_USAGE);
-    final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
+    try (final Statement statement = createStatement();
         final MetadataResultSet results =
             new MetadataResultSet(viewTableUsageSql, statement, getSchemaInclusionRule())) {
 

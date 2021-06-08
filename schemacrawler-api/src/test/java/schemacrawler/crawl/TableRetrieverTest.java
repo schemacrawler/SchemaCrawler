@@ -127,8 +127,7 @@ public class TableRetrieverTest {
     final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
     final TableRetriever tableRetriever = new TableRetriever(retrieverConnection, catalog, options);
-    tableRetriever.retrieveTables(
-        catalog.getAllSchemas(), "", TableTypes.from("TABLE", "VIEW"), new IncludeAll());
+    tableRetriever.retrieveTables("", TableTypes.from("TABLE", "VIEW"), new IncludeAll());
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {

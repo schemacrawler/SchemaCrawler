@@ -74,6 +74,8 @@ public class SchemaInfoLevelBuilderTest {
         SchemaInfoRetrieval.retrieveDatabaseUsers,
         SchemaInfoLevelBuilder::setRetrieveDatabaseUsers);
     testMap.put(
+        SchemaInfoRetrieval.retrievePrimaryKeys, SchemaInfoLevelBuilder::setRetrievePrimaryKeys);
+    testMap.put(
         SchemaInfoRetrieval.retrieveForeignKeys, SchemaInfoLevelBuilder::setRetrieveForeignKeys);
     testMap.put(SchemaInfoRetrieval.retrieveIndexes, SchemaInfoLevelBuilder::setRetrieveIndexes);
     testMap.put(

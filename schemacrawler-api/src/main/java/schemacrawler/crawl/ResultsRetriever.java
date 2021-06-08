@@ -59,12 +59,14 @@ final class ResultsRetriever {
       SchemaCrawlerLogger.getLogger(ResultsRetriever.class.getName());
 
   private final ResultSetMetaData resultsMetaData;
+  private final JavaSqlTypes javaSqlTypes;
 
   ResultsRetriever(final ResultSet resultSet) throws SQLException {
     // NOTE: Do not check if the result set is closed, since some JDBC
     // drivers like SQLite may not work
     requireNonNull(resultSet, "Cannot retrieve metadata for null results");
     resultsMetaData = resultSet.getMetaData();
+    javaSqlTypes = new JavaSqlTypes();
   }
 
   /**
@@ -77,12 +79,10 @@ final class ResultsRetriever {
    */
   ResultsColumns retrieveResults() throws SQLException {
 
-    final JavaSqlTypes javaSqlTypes = new JavaSqlTypes();
     final MutableResultsColumns resultColumns = new MutableResultsColumns("");
     final MutableCatalog catalog = new MutableCatalog("results");
     final int columnCount = resultsMetaData.getColumnCount();
     for (int i = 1; i <= columnCount; i++) {
-
       final int columnIndex = i;
 
       final String catalogName =
@@ -106,59 +106,8 @@ final class ResultsRetriever {
           execute("column label", () -> resultsMetaData.getColumnLabel(columnIndex));
 
       final MutableResultsColumn column = new MutableResultsColumn(table, columnName, columnLabel);
-
-      try {
-        final String databaseSpecificTypeName = resultsMetaData.getColumnTypeName(columnIndex);
-        final int javaSqlType = resultsMetaData.getColumnType(columnIndex);
-        final String columnClassName = resultsMetaData.getColumnClassName(columnIndex);
-        final MutableColumnDataType columnDataType =
-            new MutableColumnDataType(schema, databaseSpecificTypeName, user_defined);
-        columnDataType.setJavaSqlType(javaSqlTypes.valueOf(javaSqlType));
-        columnDataType.setTypeMappedClass(columnClassName);
-        columnDataType.setPrecision(resultsMetaData.getPrecision(columnIndex));
-        final int scale = resultsMetaData.getScale(columnIndex);
-        columnDataType.setMaximumScale(scale);
-        columnDataType.setMinimumScale(scale);
-        //
-        column.setColumnDataType(columnDataType);
-      } catch (final Exception e) {
-        LOGGER.log(
-            Level.WARNING,
-            new StringFormat(
-                "Could not retrieve results column data type for %s (%s)",
-                column, column.getLabel()),
-            e);
-
-        final MutableColumnDataType unknownColumnDataType =
-            new MutableColumnDataType(schema, "<unknown>", user_defined);
-        unknownColumnDataType.setJavaSqlType(JavaSqlType.UNKNOWN);
-        //
-        column.setColumnDataType(unknownColumnDataType);
-      }
-
-      try {
-        final boolean isNullable =
-            resultsMetaData.isNullable(columnIndex) == ResultSetMetaData.columnNullable;
-
-        column.setOrdinalPosition(columnIndex);
-        column.setDisplaySize(resultsMetaData.getColumnDisplaySize(columnIndex));
-        column.setAutoIncrement(resultsMetaData.isAutoIncrement(columnIndex));
-        column.setCaseSensitive(resultsMetaData.isCaseSensitive(columnIndex));
-        column.setCurrency(resultsMetaData.isCurrency(columnIndex));
-        column.setDefinitelyWritable(resultsMetaData.isDefinitelyWritable(columnIndex));
-        column.setNullable(isNullable);
-        column.setReadOnly(resultsMetaData.isReadOnly(columnIndex));
-        column.setSearchable(resultsMetaData.isSearchable(columnIndex));
-        column.setSigned(resultsMetaData.isSigned(columnIndex));
-        column.setWritable(resultsMetaData.isWritable(columnIndex));
-      } catch (final Exception e) {
-        LOGGER.log(
-            Level.WARNING,
-            new StringFormat(
-                "Could not retrieve results column additional data for %s (%s)",
-                column, column.getLabel()),
-            e);
-      }
+      setColumnDataType(columnIndex, column);
+      retrieveAdditionalColumnData(columnIndex, column);
 
       resultColumns.addColumn(column);
     }
@@ -175,6 +124,64 @@ final class ResultsRetriever {
           new StringFormat("Could not retrieve results column field, %s", resultsColumnField),
           e);
       return null;
+    }
+  }
+
+  private void retrieveAdditionalColumnData(
+      final int columnIndex, final MutableResultsColumn column) {
+    try {
+      final boolean isNullable =
+          resultsMetaData.isNullable(columnIndex) == ResultSetMetaData.columnNullable;
+
+      column.setOrdinalPosition(columnIndex);
+      column.setDisplaySize(resultsMetaData.getColumnDisplaySize(columnIndex));
+      column.setAutoIncrement(resultsMetaData.isAutoIncrement(columnIndex));
+      column.setCaseSensitive(resultsMetaData.isCaseSensitive(columnIndex));
+      column.setCurrency(resultsMetaData.isCurrency(columnIndex));
+      column.setDefinitelyWritable(resultsMetaData.isDefinitelyWritable(columnIndex));
+      column.setNullable(isNullable);
+      column.setReadOnly(resultsMetaData.isReadOnly(columnIndex));
+      column.setSearchable(resultsMetaData.isSearchable(columnIndex));
+      column.setSigned(resultsMetaData.isSigned(columnIndex));
+      column.setWritable(resultsMetaData.isWritable(columnIndex));
+    } catch (final Exception e) {
+      LOGGER.log(
+          Level.WARNING,
+          new StringFormat(
+              "Could not retrieve results column additional data for %s (%s)",
+              column, column.getLabel()),
+          e);
+    }
+  }
+
+  private void setColumnDataType(final int columnIndex, final MutableResultsColumn column) {
+    final Schema schema = column.getSchema();
+    try {
+      final String databaseSpecificTypeName = resultsMetaData.getColumnTypeName(columnIndex);
+      final int javaSqlType = resultsMetaData.getColumnType(columnIndex);
+      final String columnClassName = resultsMetaData.getColumnClassName(columnIndex);
+      final MutableColumnDataType columnDataType =
+          new MutableColumnDataType(schema, databaseSpecificTypeName, user_defined);
+      columnDataType.setJavaSqlType(javaSqlTypes.valueOf(javaSqlType));
+      columnDataType.setTypeMappedClass(columnClassName);
+      columnDataType.setPrecision(resultsMetaData.getPrecision(columnIndex));
+      final int scale = resultsMetaData.getScale(columnIndex);
+      columnDataType.setMaximumScale(scale);
+      columnDataType.setMinimumScale(scale);
+      //
+      column.setColumnDataType(columnDataType);
+    } catch (final Exception e) {
+      LOGGER.log(
+          Level.WARNING,
+          new StringFormat(
+              "Could not retrieve results column data type for %s (%s)", column, column.getLabel()),
+          e);
+
+      final MutableColumnDataType unknownColumnDataType =
+          new MutableColumnDataType(schema, "<unknown>", user_defined);
+      unknownColumnDataType.setJavaSqlType(JavaSqlType.UNKNOWN);
+      //
+      column.setColumnDataType(unknownColumnDataType);
     }
   }
 }
