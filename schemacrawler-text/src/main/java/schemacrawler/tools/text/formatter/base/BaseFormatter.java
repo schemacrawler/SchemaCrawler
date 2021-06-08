@@ -141,4 +141,14 @@ public abstract class BaseFormatter<O extends BaseTextOptions> implements Traver
           + Integer.toHexString(dbObjectLookupKey.hashCode());
     }
   }
+
+protected String quoteName(final DatabaseObject table){
+    final String tableName;
+    if (options.isShowUnqualifiedNames()) {
+      tableName = identifiers.quoteName(table);
+    } else {
+      tableName = identifiers.quoteFullName(table);
+    }
+    return tableName;
+  }
 }

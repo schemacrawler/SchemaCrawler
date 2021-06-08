@@ -143,12 +143,7 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
   @Override
   public void handle(final Table table) {
 
-    final String tableName;
-    if (options.isShowUnqualifiedNames()) {
-      tableName = identifiers.quoteName(table);
-    } else {
-      tableName = identifiers.quoteFullName(table);
-    }
+    final String tableName = quoteName(table);
     final String tableType = "[" + table.getTableType() + "]";
 
     final Color tableNameBgColor = colorMap.getColor(table);

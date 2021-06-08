@@ -152,12 +152,7 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
   public void handle(final Routine routine) {
     final String routineTypeDetail =
         String.format("%s, %s", routine.getRoutineType(), routine.getReturnType());
-    final String routineName;
-    if (options.isShowUnqualifiedNames()) {
-      routineName = identifiers.quoteName(routine);
-    } else {
-      routineName = identifiers.quoteFullName(routine);
-    }
+    final String routineName = quoteName(routine);
     final String routineType = "[" + routineTypeDetail + "]";
 
     formattingHelper.writeNameRow(routineName, routineType);
@@ -167,12 +162,7 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
   /** {@inheritDoc} */
   @Override
   public void handle(final Sequence sequence) {
-    final String sequenceName;
-    if (options.isShowUnqualifiedNames()) {
-      sequenceName = identifiers.quoteName(sequence);
-    } else {
-      sequenceName = identifiers.quoteFullName(sequence);
-    }
+    final String sequenceName = quoteName(sequence);
     final String sequenceType = "[sequence]";
 
     formattingHelper.writeNameRow(sequenceName, sequenceType);
@@ -182,12 +172,7 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
   /** {@inheritDoc} */
   @Override
   public void handle(final Synonym synonym) {
-    final String synonymName;
-    if (options.isShowUnqualifiedNames()) {
-      synonymName = identifiers.quoteName(synonym);
-    } else {
-      synonymName = identifiers.quoteFullName(synonym);
-    }
+    final String synonymName = quoteName(synonym);
     final String synonymType = "[synonym]";
 
     formattingHelper.writeNameRow(synonymName, synonymType);
@@ -196,12 +181,7 @@ public final class SchemaListFormatter extends BaseFormatter<SchemaTextOptions>
 
   @Override
   public void handle(final Table table) {
-    final String tableName;
-    if (options.isShowUnqualifiedNames()) {
-      tableName = identifiers.quoteName(table);
-    } else {
-      tableName = identifiers.quoteFullName(table);
-    }
+    final String tableName = quoteName(table);
     final String tableType = "[" + table.getTableType() + "]";
 
     formattingHelper.writeNameRow(tableName, tableType);
