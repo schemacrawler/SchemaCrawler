@@ -122,7 +122,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
     return false;
   }
 
-  private final SchemaCrawlerCommand<?> addNextAndConfigureForExecution(
+  private SchemaCrawlerCommand<?> addNextAndConfigureForExecution(
       final String command, final OutputOptions outputOptions) throws SchemaCrawlerException {
     try {
       final SchemaCrawlerCommand<?> scCommand =
@@ -143,11 +143,11 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
       throw e;
     } catch (final Exception e) {
       throw new SchemaCrawlerException(
-          String.format("Cannot chain command, unknown command <%s>", command));
+          String.format("Cannot chain command, unknown command <%s>", command), e);
     }
   }
 
-  private final void checkAvailabilityChain() throws Exception {
+  private void checkAvailabilityChain() throws Exception {
     if (scCommands.isEmpty()) {
       LOGGER.log(Level.INFO, "No command to execute");
       return;
@@ -158,7 +158,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
     }
   }
 
-  private final void executeChain() throws Exception {
+  private void executeChain() throws Exception {
     if (scCommands.isEmpty()) {
       LOGGER.log(Level.INFO, "No command to execute");
       return;
@@ -169,7 +169,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
     }
   }
 
-  private final void initializeChain() throws Exception {
+  private void initializeChain() throws Exception {
     if (scCommands.isEmpty()) {
       LOGGER.log(Level.INFO, "No command to initialize");
       return;
