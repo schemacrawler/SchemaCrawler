@@ -92,6 +92,7 @@ import schemacrawler.schemacrawler.SchemaInfoRetrieval;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import us.fatehi.utility.StopWatch;
+import us.fatehi.utility.StopWatch.Function;
 import us.fatehi.utility.string.StringFormat;
 
 /**
@@ -100,11 +101,6 @@ import us.fatehi.utility.string.StringFormat;
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawler {
-
-  @FunctionalInterface
-  private interface Function {
-    void run() throws Exception;
-  }
 
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(SchemaCrawler.class.getName());
@@ -190,7 +186,6 @@ public final class SchemaCrawler {
                   Level.INFO,
                   "Not retrieving user column data types, since this was not requested");
             }
-            return null;
           });
 
       LOGGER.log(Level.INFO, stopWatch.stringify());
@@ -283,7 +278,6 @@ public final class SchemaCrawler {
               LOGGER.log(Level.INFO, "Retrieving function names");
               retriever.retrieveFunctions(schemas, limitOptions.get(ruleForRoutineInclusion));
             }
-            return null;
           });
 
       final NamedObjectList<MutableRoutine> allRoutines = catalog.getAllRoutines();
@@ -308,7 +302,6 @@ public final class SchemaCrawler {
                     allRoutines, limitOptions.get(ruleForRoutineParameterInclusion));
               }
             }
-            return null;
           });
 
       stopWatch.time(
@@ -316,7 +309,6 @@ public final class SchemaCrawler {
           () -> {
             // Filter the list of routines based on grep criteria
             catalog.reduce(Routine.class, getRoutineReducer(options));
-            return null;
           });
 
       time(
@@ -388,14 +380,12 @@ public final class SchemaCrawler {
           "retrieveSequenceInformation",
           () -> {
             retrieverExtra.retrieveSequenceInformation(limitOptions.get(ruleForSequenceInclusion));
-            return null;
           });
 
       stopWatch.time(
           "filterAndSortSequences",
           () -> {
             catalog.reduce(Sequence.class, getSequenceReducer(options));
-            return null;
           });
 
       LOGGER.log(Level.INFO, stopWatch.stringify());
@@ -428,14 +418,12 @@ public final class SchemaCrawler {
           "retrieveSynonymInformation",
           () -> {
             retrieverExtra.retrieveSynonymInformation(limitOptions.get(ruleForSynonymInclusion));
-            return null;
           });
 
       stopWatch.time(
           "filterAndSortSynonms",
           () -> {
             catalog.reduce(Synonym.class, getSynonymReducer(options));
-            return null;
           });
 
       LOGGER.log(Level.INFO, stopWatch.stringify());
@@ -481,7 +469,6 @@ public final class SchemaCrawler {
                 limitOptions.getTableNamePattern(),
                 limitOptions.getTableTypes(),
                 limitOptions.get(ruleForTableInclusion));
-            return null;
           });
 
       final NamedObjectList<MutableTable> allTables = catalog.getAllTables();
@@ -499,7 +486,6 @@ public final class SchemaCrawler {
               columnRetriever.retrieveTableColumns(
                   allTables, limitOptions.get(ruleForColumnInclusion));
             }
-            return null;
           });
 
       stopWatch.time(
@@ -515,7 +501,6 @@ public final class SchemaCrawler {
                   Level.WARNING,
                   "Foreign-keys are not being retrieved, so tables cannot be sorted using the natural sort order");
             }
-            return null;
           });
 
       stopWatch.time(
@@ -528,8 +513,6 @@ public final class SchemaCrawler {
             // Sort the remaining tables
             final TablesGraph tablesGraph = new TablesGraph(allTables);
             tablesGraph.setTablesSortIndexes();
-
-            return null;
           });
 
       final PrimaryKeyRetriever primaryKeyRetriever =
@@ -541,7 +524,6 @@ public final class SchemaCrawler {
             if (infoLevel.is(retrieveTableColumns)) {
               primaryKeyRetriever.retrievePrimaryKeys(allTables);
             }
-            return null;
           });
 
       final IndexRetriever indexRetriever =
@@ -555,7 +537,6 @@ public final class SchemaCrawler {
                 indexRetriever.retrieveIndexes(allTables);
               }
             }
-            return null;
           });
 
       LOGGER.log(Level.INFO, "Retrieving additional table information");
@@ -628,11 +609,10 @@ public final class SchemaCrawler {
         () -> {
           if (run) {
             LOGGER.log(Level.INFO, "Running " + retrievalName);
-            function.run();
+            function.call();
           } else {
             LOGGER.log(Level.INFO, retrievalName + " not requested");
           }
-          return null;
         });
   }
 

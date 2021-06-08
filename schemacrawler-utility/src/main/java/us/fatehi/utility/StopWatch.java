@@ -44,6 +44,11 @@ import java.util.function.Supplier;
 
 public final class StopWatch {
 
+  @FunctionalInterface
+  public interface Function {
+    void call() throws Exception;
+  }
+
   private static final class TaskInfo {
 
     private final Duration duration;
@@ -74,13 +79,13 @@ public final class StopWatch {
           .appendValue(SECOND_OF_MINUTE, 2)
           .appendFraction(NANO_OF_SECOND, 3, 3, true)
           .toFormatter();
-
   private final String id;
   private final List<TaskInfo> tasks = new LinkedList<>();
   private String currentTaskName;
   private boolean running;
   // State for current task
   private Instant start;
+
   private Duration totalDuration;
 
   public StopWatch(final String id) {
@@ -130,6 +135,12 @@ public final class StopWatch {
     final V returnValue = callable.call();
     stop();
     return returnValue;
+  }
+
+  public void time(final String taskName, final Function callable) throws Exception {
+    start(taskName);
+    callable.call();
+    stop();
   }
 
   private double calculatePercentage(final Duration duration, final Duration totalDuration) {
