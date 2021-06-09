@@ -13,6 +13,7 @@ SchemaCrawler questions from users.
 
 ## Companies and Projects
 
+- [Dang, T.K., Huy, T.M., Dang, L.H. *et al.* An Elastic Data Conversion Framework: A Case Study for MySQL and MongoDB. *SN COMPUT. SCI.* **2,** 325 (2021).](https://doi.org/10.1007/s42979-021-00716-3)
 - [schemacrawler-additionnallints](https://github.com/mbarre/schemacrawler-additionnallints) is maintained by
 Michèle Barré <Michele.Barre at GMail> and [Adrien Sales]
 - [![Chocolatey](https://img.shields.io/chocolatey/v/schemacrawler.svg)](https://chocolatey.org/packages/schemacrawler)
