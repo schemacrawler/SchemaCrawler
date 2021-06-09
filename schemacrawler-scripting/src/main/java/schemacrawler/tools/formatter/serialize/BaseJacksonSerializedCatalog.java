@@ -31,9 +31,11 @@ import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;
 import static com.fasterxml.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS;
 import static com.fasterxml.jackson.databind.SerializationFeature.USE_EQUALITY_FOR_OBJECT_ID;
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_ENUMS_USING_TO_STRING;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
 
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Arrays;
 import java.util.List;
@@ -129,12 +131,7 @@ public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer 
   @Override
   public void save(final OutputStream out) throws SchemaCrawlerException {
     requireNonNull(out, "No output stream provided");
-    try {
-      final ObjectMapper mapper = newConfiguredObjectMapper();
-      mapper.writeValue(out, this);
-    } catch (final Exception e) {
-      throw new SchemaCrawlerException("Could not serialize catalog", e);
-    }
+    save(new OutputStreamWriter(out, UTF_8));
   }
 
   /** {@inheritDoc} */

@@ -122,11 +122,7 @@ public final class DataTextFormatter extends BaseTabularFormatter<OperationOptio
   public void handleData(final Table table, final ResultSet rows) throws SchemaCrawlerException {
     final String tableName;
     if (table != null) {
-      if (options.isShowUnqualifiedNames()) {
-        tableName = identifiers.quoteName(table);
-      } else {
-        tableName = identifiers.quoteFullName(table);
-      }
+      tableName = quoteName(table);
     } else {
       tableName = "";
     }

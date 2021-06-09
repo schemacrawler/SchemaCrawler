@@ -42,7 +42,10 @@ public final class ApiExample {
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
     // Get the schema definition
-    final Catalog catalog = SchemaCrawlerUtility.getCatalog(getConnection(), options);
+    final Catalog catalog;
+    try (Connection connection = getConnection()) {
+      catalog = SchemaCrawlerUtility.getCatalog(connection, options);
+    }
 
     for (final Schema schema : catalog.getSchemas()) {
       System.out.println(schema);

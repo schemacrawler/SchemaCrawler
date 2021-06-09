@@ -143,12 +143,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   public void handle(final Routine routine) {
     final String routineTypeDetail =
         String.format("%s, %s", routine.getRoutineType(), routine.getReturnType());
-    final String routineName;
-    if (options.isShowUnqualifiedNames()) {
-      routineName = identifiers.quoteName(routine);
-    } else {
-      routineName = identifiers.quoteFullName(routine);
-    }
+    final String routineName = quoteName(routine);
     final String routineType = "[" + routineTypeDetail + "]";
 
     formattingHelper.println();
@@ -180,12 +175,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   /** {@inheritDoc} */
   @Override
   public void handle(final Sequence sequence) {
-    final String sequenceName;
-    if (options.isShowUnqualifiedNames()) {
-      sequenceName = identifiers.quoteName(sequence);
-    } else {
-      sequenceName = identifiers.quoteFullName(sequence);
-    }
+    final String sequenceName = quoteName(sequence);
     final String sequenceType = "[sequence]";
 
     formattingHelper.println();
@@ -212,12 +202,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
   /** {@inheritDoc} */
   @Override
   public void handle(final Synonym synonym) {
-    final String synonymName;
-    if (options.isShowUnqualifiedNames()) {
-      synonymName = identifiers.quoteName(synonym);
-    } else {
-      synonymName = identifiers.quoteFullName(synonym);
-    }
+    final String synonymName = quoteName(synonym);
     final String synonymType = "[synonym]";
 
     formattingHelper.println();
@@ -228,12 +213,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
     printRemarks(synonym);
 
     if (!isBrief) {
-      final String referencedObjectName;
-      if (options.isShowUnqualifiedNames()) {
-        referencedObjectName = identifiers.quoteName(synonym.getReferencedObject());
-      } else {
-        referencedObjectName = identifiers.quoteFullName(synonym.getReferencedObject());
-      }
+      final String referencedObjectName = quoteName(synonym.getReferencedObject());
       formattingHelper.writeDetailRow(
           "",
           String.format(
@@ -249,12 +229,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
   @Override
   public void handle(final Table table) {
-    final String tableName;
-    if (options.isShowUnqualifiedNames()) {
-      tableName = identifiers.quoteName(table);
-    } else {
-      tableName = identifiers.quoteFullName(table);
-    }
+    final String tableName = quoteName(table);
     final String tableType = "[" + table.getTableType() + "]";
 
     formattingHelper.println();
@@ -952,12 +927,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
 
     formattingHelper.writeEmptyRow();
     for (final Table usedTable : tableUsage) {
-      final String tableName;
-      if (options.isShowUnqualifiedNames()) {
-        tableName = identifiers.quoteName(usedTable);
-      } else {
-        tableName = identifiers.quoteFullName(usedTable);
-      }
+      final String tableName = quoteName(usedTable);
       final String tableType = "[" + usedTable.getTableType() + "]";
       formattingHelper.writeNameRow(tableName, tableType);
     }

@@ -58,7 +58,7 @@ public final class UserCredentialsOptions {
     try {
       return passwordOptions.getPassword();
     } catch (final Exception e) {
-      throw new ParameterException(spec.commandLine(), "No password provided");
+      throw new ParameterException(spec.commandLine(), "No password provided", e);
     }
   }
 
@@ -70,7 +70,7 @@ public final class UserCredentialsOptions {
     try {
       return userOptions.getUser();
     } catch (final Exception e) {
-      throw new ParameterException(spec.commandLine(), "No user provided");
+      throw new ParameterException(spec.commandLine(), "No user provided", e);
     }
   }
 }

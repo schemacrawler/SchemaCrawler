@@ -72,6 +72,7 @@ import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveViewInform
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveViewTableUsage;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.logging.Level;
 
@@ -102,13 +103,11 @@ public final class SchemaCrawler {
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(SchemaCrawler.class.getName());
 
-  private final Connection connection;
   private final SchemaCrawlerOptions options;
-  private final SchemaRetrievalOptions schemaRetrievalOptions;
-  private MutableCatalog catalog;
-  private RetrieverConnection retrieverConnection;
+  private final RetrieverConnection retrieverConnection;
   private final SchemaInfoLevel infoLevel;
   private final RetrievalStopWatch stopWatch;
+  private MutableCatalog catalog;
 
   /**
    * Constructs a SchemaCrawler object, from a connection.
@@ -116,18 +115,21 @@ public final class SchemaCrawler {
    * @param connection An database connection.
    * @param schemaRetrievalOptions Database-specific schema retrieval overrides
    * @param options SchemaCrawler options
+   * @throws SQLException
    */
   public SchemaCrawler(
       final Connection connection,
       final SchemaRetrievalOptions schemaRetrievalOptions,
-      final SchemaCrawlerOptions options) {
-    this.connection = requireNonNull(connection, "No connection specified");
-    this.schemaRetrievalOptions =
-        requireNonNull(
-            schemaRetrievalOptions, "No database-specific schema retrieval overrides provided");
-    this.options = requireNonNull(options, "No SchemaCrawler options provided");
-    infoLevel = options.getLoadOptions().getSchemaInfoLevel();
-    stopWatch = new RetrievalStopWatch(infoLevel);
+      final SchemaCrawlerOptions options)
+      throws SchemaCrawlerException {
+    try {
+      retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
+      this.options = requireNonNull(options, "No SchemaCrawler options provided");
+      infoLevel = options.getLoadOptions().getSchemaInfoLevel();
+      stopWatch = new RetrievalStopWatch(infoLevel);
+    } catch (final SQLException e) {
+      throw new SchemaCrawlerException(e.getMessage(), e);
+    }
   }
 
   /**
@@ -139,7 +141,6 @@ public final class SchemaCrawler {
   public Catalog crawl() throws SchemaCrawlerException {
     catalog = new MutableCatalog("catalog");
     try {
-      retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
 
       crawlDatabaseInfo();
       LOGGER.log(Level.INFO, String.format("%n%s", catalog.getCrawlInfo()));
@@ -159,6 +160,42 @@ public final class SchemaCrawler {
     } catch (final Exception e) {
       throw new SchemaCrawlerException(e.getMessage(), e);
     }
+  }
+
+  private void crawlAdditionalTableColumnInformation(final TableExtRetriever retrieverExtra)
+      throws Exception {
+    LOGGER.log(Level.INFO, "Retrieving additional table column information");
+    stopWatch.time(
+        retrieveAdditionalColumnAttributes,
+        retrieverExtra::retrieveAdditionalColumnAttributes,
+        retrieveTableColumns);
+    stopWatch.time(
+        retrieveAdditionalColumnMetadata,
+        retrieverExtra::retrieveAdditionalColumnMetadata,
+        retrieveTableColumns);
+    stopWatch.time(
+        retrieveTableColumnPrivileges,
+        retrieverExtra::retrieveTableColumnPrivileges,
+        retrieveTableColumns);
+  }
+
+  private void crawlAdditionalTableInformation(
+      final TableConstraintRetriever constraintRetriever, final TableExtRetriever retrieverExtra)
+      throws Exception {
+    stopWatch.time(
+        retrieveTableConstraintDefinitions,
+        constraintRetriever::retrieveTableConstraintDefinitions);
+
+    stopWatch.time(retrieveViewInformation, retrieverExtra::retrieveViewInformation);
+    stopWatch.time(retrieveViewTableUsage, retrieverExtra::retrieveViewTableUsage);
+    stopWatch.time(retrieveTableDefinitionsInformation, retrieverExtra::retrieveTableDefinitions);
+    stopWatch.time(
+        retrieveIndexInformation, () -> retrieverExtra.retrieveIndexInformation(), retrieveIndexes);
+
+    stopWatch.time(
+        retrieveAdditionalTableAttributes,
+        () -> retrieverExtra.retrieveAdditionalTableAttributes());
+    stopWatch.time(retrieveTablePrivileges, () -> retrieverExtra.retrieveTablePrivileges());
   }
 
   private void crawlColumnDataTypes() throws Exception {
@@ -415,34 +452,11 @@ public final class SchemaCrawler {
         "matchTableConstraints",
         () -> constraintRetriever.matchTableConstraints(allTables),
         retrieveTableColumns);
-    stopWatch.time(
-        retrieveTableConstraintDefinitions,
-        constraintRetriever::retrieveTableConstraintDefinitions);
+
     stopWatch.time(retrieveTriggerInformation, retrieverExtra::retrieveTriggerInformation);
-    stopWatch.time(retrieveViewInformation, retrieverExtra::retrieveViewInformation);
-    stopWatch.time(retrieveViewTableUsage, retrieverExtra::retrieveViewTableUsage);
-    stopWatch.time(retrieveTableDefinitionsInformation, retrieverExtra::retrieveTableDefinitions);
-    stopWatch.time(
-        retrieveIndexInformation, () -> retrieverExtra.retrieveIndexInformation(), retrieveIndexes);
 
-    stopWatch.time(
-        retrieveAdditionalTableAttributes,
-        () -> retrieverExtra.retrieveAdditionalTableAttributes());
-    stopWatch.time(retrieveTablePrivileges, () -> retrieverExtra.retrieveTablePrivileges());
-
-    LOGGER.log(Level.INFO, "Retrieving additional table column information");
-    stopWatch.time(
-        retrieveAdditionalColumnAttributes,
-        retrieverExtra::retrieveAdditionalColumnAttributes,
-        retrieveTableColumns);
-    stopWatch.time(
-        retrieveAdditionalColumnMetadata,
-        retrieverExtra::retrieveAdditionalColumnMetadata,
-        retrieveTableColumns);
-    stopWatch.time(
-        retrieveTableColumnPrivileges,
-        retrieverExtra::retrieveTableColumnPrivileges,
-        retrieveTableColumns);
+    crawlAdditionalTableInformation(constraintRetriever, retrieverExtra);
+    crawlAdditionalTableColumnInformation(retrieverExtra);
 
     stopWatch.stopAndLogTime();
   }

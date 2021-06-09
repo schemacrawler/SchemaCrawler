@@ -143,25 +143,29 @@ public final class SchemaCrawlerShell {
         }
       }
     } catch (final Throwable throwable) {
-      logSafeArguments(args);
-      logFullStackTrace(Level.SEVERE, throwable);
+      handleFatalError(args, throwable);
+    }
+  }
 
-      final String errorMessage;
-      if (throwable instanceof picocli.CommandLine.PicocliException) {
-        final Throwable cause = throwable.getCause();
-        if (cause != null && !isBlank(cause.getMessage())) {
-          errorMessage = cause.getMessage();
-        } else {
-          errorMessage = throwable.getMessage();
-        }
+  private static void handleFatalError(final String[] args, final Throwable throwable) {
+    logSafeArguments(args);
+    logFullStackTrace(Level.SEVERE, throwable);
+
+    final String errorMessage;
+    if (throwable instanceof picocli.CommandLine.PicocliException) {
+      final Throwable cause = throwable.getCause();
+      if (cause != null && !isBlank(cause.getMessage())) {
+        errorMessage = cause.getMessage();
       } else {
         errorMessage = throwable.getMessage();
       }
-
-      printCommandLineErrorMessage(errorMessage);
-
-      System.exit(1);
+    } else {
+      errorMessage = throwable.getMessage();
     }
+
+    printCommandLineErrorMessage(errorMessage);
+
+    System.exit(1);
   }
 
   private SchemaCrawlerShell() {
