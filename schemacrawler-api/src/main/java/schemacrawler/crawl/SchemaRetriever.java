@@ -29,7 +29,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static schemacrawler.schemacrawler.InformationSchemaKey.SCHEMATA;
+import static us.fatehi.utility.DatabaseUtility.readResultsVector;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashSet;
@@ -46,7 +48,6 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaReference;
-import us.fatehi.utility.DatabaseUtility;
 import us.fatehi.utility.string.StringFormat;
 
 final class SchemaRetriever extends AbstractRetriever {
@@ -124,10 +125,9 @@ final class SchemaRetriever extends AbstractRetriever {
     final Set<String> catalogNames = new HashSet<>();
 
     if (supportsCatalogs) {
-      try {
+      try (final ResultSet catalogsResults = getMetaData().getCatalogs()) {
         int numCatalogs = 0;
-        final List<String> metaDataCatalogNames =
-            DatabaseUtility.readResultsVector(getMetaData().getCatalogs());
+        final List<String> metaDataCatalogNames = readResultsVector(catalogsResults);
         for (final String catalogName : metaDataCatalogNames) {
           numCatalogs = numCatalogs + 1;
           catalogNames.add(catalogName);
