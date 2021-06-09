@@ -156,21 +156,10 @@ final class TableColumnRetriever extends AbstractRetriever {
           Arrays.asList(columnCatalogName, schemaName, tableName, columnName);
       final boolean isHidden = hiddenTableColumnsLookupKeys.contains(lookupKey);
 
-      String columnDataTypeName = null;
-      if (!isBlank(typeName)) {
-        final String[] split = typeName.split("\\.");
-        if (split.length > 0) {
-          columnDataTypeName = split[split.length - 1];
-        }
-      }
-      if (isBlank(columnDataTypeName)) {
-        columnDataTypeName = typeName;
-      }
-
       column.setOrdinalPosition(ordinalPosition);
       column.setColumnDataType(
           lookupOrCreateColumnDataType(
-              user_defined, table.getSchema(), dataType, columnDataTypeName));
+              user_defined, table.getSchema(), dataType, getColumnTypeName(typeName)));
       column.setSize(size);
       column.setDecimalDigits(decimalDigits);
       column.setNullable(isNullable);
@@ -193,6 +182,20 @@ final class TableColumnRetriever extends AbstractRetriever {
         table.addColumn(column);
       }
     }
+  }
+
+  private String getColumnTypeName(final String typeName) {
+    String columnDataTypeName = null;
+    if (!isBlank(typeName)) {
+      final String[] split = typeName.split("\\.");
+      if (split.length > 0) {
+        columnDataTypeName = split[split.length - 1];
+      }
+    }
+    if (isBlank(columnDataTypeName)) {
+      columnDataTypeName = typeName;
+    }
+    return columnDataTypeName;
   }
 
   private MutableColumn lookupOrCreateTableColumn(
