@@ -94,7 +94,7 @@ final class TablesReducer implements Reducer<Table> {
       }
     }
 
-    allTables.filter(table -> keepTables.contains(table));
+    allTables.filter(keepTables::contains);
   }
 
   private Collection<Table> includeRelatedTables(
@@ -123,9 +123,6 @@ final class TablesReducer implements Reducer<Table> {
 
   private void markTableFilteredOut(final Table table) {
     table.setAttribute("schemacrawler.table.filtered_out", true);
-    if (options.getGrepOptions().isGrepOnlyMatching()) {
-      table.setAttribute("schemacrawler.table.no_grep_match", true);
-    }
   }
 
   private void removeForeignKeys(final ReducibleCollection<? extends Table> allTables) {

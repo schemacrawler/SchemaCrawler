@@ -27,6 +27,8 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.filter;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Level;
@@ -34,6 +36,9 @@ import java.util.logging.Level;
 import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnReference;
+import schemacrawler.schema.ForeignKey;
+import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schemacrawler.GrepOptions;
@@ -48,9 +53,14 @@ class TableGrepFilter implements Predicate<Table> {
   private final InclusionRule grepColumnInclusionRule;
   private final InclusionRule grepDefinitionInclusionRule;
   private final boolean invertMatch;
+  private final boolean grepOnlyMatching;
 
   public TableGrepFilter(final GrepOptions options) {
+
+    requireNonNull(options, "No grep options provided");
+
     invertMatch = options.isGrepInvertMatch();
+    grepOnlyMatching = options.isGrepOnlyMatching();
 
     grepTableInclusionRule = options.getGrepTableInclusionRule().orElse(null);
     grepColumnInclusionRule = options.getGrepColumnInclusionRule().orElse(null);
@@ -128,10 +138,35 @@ class TableGrepFilter implements Predicate<Table> {
       include = !include;
     }
 
+    // This is not strictly filter logic. It has the side effect of marking tables that need to
+    // remain in the catalog, but are not matched by strict grep - that is, with --only-matching.
+    if (grepOnlyMatching) {
+      if (!include) {
+        markAsNotStrictMatch(table);
+      } else {
+        // For included tables, mark partial references as not strict
+        excludePartialReferences(table);
+      }
+    }
+
     if (!include) {
       LOGGER.log(Level.FINE, new StringFormat("Excluding table <%s>", table));
     }
-
     return include;
+  }
+
+  private void excludePartialReferences(final Table table) {
+    for (final ForeignKey foreignKey : table.getExportedForeignKeys()) {
+      for (final ColumnReference fkColumnRef : foreignKey) {
+        final Table referencedTable = fkColumnRef.getForeignKeyColumn().getParent();
+        if (referencedTable instanceof PartialDatabaseObject) {
+          markAsNotStrictMatch(referencedTable);
+        }
+      }
+    }
+  }
+
+  private void markAsNotStrictMatch(final Table table) {
+    table.setAttribute("schemacrawler.table.no_grep_match", true);
   }
 }
