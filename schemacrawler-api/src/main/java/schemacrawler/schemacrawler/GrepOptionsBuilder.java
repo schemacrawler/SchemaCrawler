@@ -49,7 +49,6 @@ public final class GrepOptionsBuilder implements OptionsBuilder<GrepOptionsBuild
   private Optional<InclusionRule> grepColumnInclusionRule;
   private Optional<InclusionRule> grepDefinitionInclusionRule;
   private boolean grepInvertMatch;
-  private boolean grepOnlyMatching;
   private Optional<InclusionRule> grepRoutineParameterInclusionRule;
 
   /** Default options. */
@@ -73,13 +72,7 @@ public final class GrepOptionsBuilder implements OptionsBuilder<GrepOptionsBuild
     grepDefinitionInclusionRule =
         Optional.ofNullable(options.getGrepDefinitionInclusionRule()).orElse(null);
     grepInvertMatch = options.isGrepInvertMatch();
-    grepOnlyMatching = options.isGrepOnlyMatching();
 
-    return this;
-  }
-
-  public GrepOptionsBuilder grepOnlyMatching(final boolean grepOnlyMatching) {
-    this.grepOnlyMatching = grepOnlyMatching;
     return this;
   }
 
@@ -157,8 +150,7 @@ public final class GrepOptionsBuilder implements OptionsBuilder<GrepOptionsBuild
             grepColumnInclusionRule.orElse(null),
             grepRoutineParameterInclusionRule.orElse(null),
             grepDefinitionInclusionRule.orElse(null),
-            grepInvertMatch,
-            grepOnlyMatching);
+            grepInvertMatch);
 
     return grepOptions;
   }

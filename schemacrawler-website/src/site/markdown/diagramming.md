@@ -64,11 +64,6 @@ SchemaCrawler offers several options to change what you see on the database diag
 </a>
 - Grep for columns, and also display outgoing relationships, using `--grep-columns=.*\\.BOOKS\\..*\\.ID` as a command-line option.
 <br />
-<a href="diagram-examples/diagram_6_grep.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
-<img class="img-fluid img-thumbnail" src="diagram-examples/diagram_6_grep.png" style="width: 200px;" />
-</a>
-- Grep for columns, but only show matching tables, using `--grep-columns=.*\\.BOOKS\\..*\\.ID -only-matching` as command-line options.
-<br />
 <a href="diagram-examples/diagram_7_grep_onlymatching.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
 <img class="img-fluid img-thumbnail" src="diagram-examples/diagram_7_grep_onlymatching.png" style="width: 200px;" />
 </a>

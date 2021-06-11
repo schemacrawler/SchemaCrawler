@@ -219,19 +219,6 @@ public class SiteDiagramVariationsTest {
   }
 
   @Test
-  public void diagram_7_grep_onlymatching(
-      final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("--info-level", "maximum");
-    argsMap.put("--portable-names", "true");
-    argsMap.put("--grep-columns", ".*\\.BOOKS\\..*\\.ID");
-    argsMap.put("--only-matching", "true");
-    argsMap.put("--table-types", "TABLE");
-
-    run(connectionInfo, "schema", argsMap, null, diagramPath(testContext));
-  }
-
-  @Test
   public void diagram_8_no_cardinality(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
     final Map<String, String> argsMap = new HashMap<>();

@@ -1,5 +1,10 @@
 # SchemaCrawler Change History
 
+<a name="a16.15.1"></a>
+## Release 16.15.1 - 2021-06-12
+
+- Remove `--only-matching` command-line option, and associated functionality
+
 
 <a name="a16.14.6"></a>
 ## Release 16.14.6 - 2021-05-07

@@ -326,15 +326,14 @@ public class DiagramRendererOptionsTest {
   }
 
   @Test
-  @DisplayName("Diagram with limit options, and only matching tables")
+  @DisplayName("Diagram with limit options, and grep tables")
   public void executableForDiagram_09(final TestContext testContext, final Connection connection)
       throws Exception {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder().includeTables(new RegularExpressionInclusionRule(".*BOOKS"));
     final GrepOptionsBuilder grepOptionsBuilder =
         GrepOptionsBuilder.builder()
-            .includeGreppedTables(new RegularExpressionInclusionRule(".*\\.BOOKS"))
-            .grepOnlyMatching(true);
+            .includeGreppedTables(new RegularExpressionInclusionRule(".*\\.BOOKS"));
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
             .withLimitOptions(limitOptionsBuilder.toOptions())
@@ -398,13 +397,12 @@ public class DiagramRendererOptionsTest {
   }
 
   @Test
-  @DisplayName("Diagram with a grep for column patterns, but with only matching tables")
+  @DisplayName("Diagram with a grep for column patterns")
   public void executableForDiagram_11(final TestContext testContext, final Connection connection)
       throws Exception {
     final GrepOptionsBuilder grepOptionsBuilder =
         GrepOptionsBuilder.builder()
-            .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.REGIONS\\..*"))
-            .grepOnlyMatching(true);
+            .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.REGIONS\\..*"));
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
             .withGrepOptions(grepOptionsBuilder.toOptions());

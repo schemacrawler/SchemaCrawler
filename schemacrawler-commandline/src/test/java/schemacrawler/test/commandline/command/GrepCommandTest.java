@@ -29,7 +29,6 @@ public class GrepCommandTest {
       "--grep-def",
       "new.*pattern[7-9]",
       "--invert-match=true",
-      "--only-matching=true",
       "additional",
       "-extra"
     };
@@ -57,7 +56,6 @@ public class GrepCommandTest {
         is(new RegularExpressionInclusionRule(Pattern.compile("new.*pattern[7-9]"))));
 
     assertThat(grepOptions.isGrepInvertMatch(), is(true));
-    assertThat(grepOptions.isGrepOnlyMatching(), is(true));
   }
 
   @Test
@@ -100,7 +98,6 @@ public class GrepCommandTest {
     assertThat(grepOptions.isGrepRoutineParameters(), is(false));
     assertThat(grepOptions.isGrepDefinitions(), is(false));
     assertThat(grepOptions.isGrepInvertMatch(), is(false));
-    assertThat(grepOptions.isGrepOnlyMatching(), is(false));
   }
 
   @Test
@@ -118,6 +115,5 @@ public class GrepCommandTest {
     assertThat(grepOptions.isGrepRoutineParameters(), is(false));
     assertThat(grepOptions.isGrepDefinitions(), is(false));
     assertThat(grepOptions.isGrepInvertMatch(), is(false));
-    assertThat(grepOptions.isGrepOnlyMatching(), is(false));
   }
 }
