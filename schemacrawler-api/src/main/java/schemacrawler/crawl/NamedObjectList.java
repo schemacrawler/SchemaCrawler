@@ -93,11 +93,6 @@ final class NamedObjectList<N extends NamedObject> implements Serializable, Redu
     }
   }
 
-  @Override
-  public boolean isFiltered(final NamedObject object) {
-    return !contains(object);
-  }
-
   /** {@inheritDoc} */
   @Override
   public Iterator<N> iterator() {
