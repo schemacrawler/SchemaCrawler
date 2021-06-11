@@ -419,12 +419,8 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       if (isForeignKeyFiltered) {
         continue;
       }
-      final boolean isPkColumnFiltered =
-          referencedTable.getAttribute("schemacrawler.table.filtered_out", false)
-              || referencedTable instanceof PartialDatabaseObject;
-      final boolean isFkColumnFiltered =
-          referencingTable.getAttribute("schemacrawler.table.filtered_out", false)
-              || referencingTable instanceof PartialDatabaseObject;
+      final boolean isPkColumnFiltered = referencedTable instanceof PartialDatabaseObject;
+      final boolean isFkColumnFiltered = referencingTable instanceof PartialDatabaseObject;
 
       final String pkColumnName;
       final String fkColumnName;

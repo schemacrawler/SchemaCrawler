@@ -85,7 +85,7 @@ final class TablesReducer implements Reducer<Table> {
 
     // Mark tables as being filtered out
     for (final Table table : allTables) {
-      if (isTablePartial(table) || !keepTables.contains(table)) {
+      if (!keepTables.contains(table)) {
         markTableFilteredOut(table);
       }
     }
