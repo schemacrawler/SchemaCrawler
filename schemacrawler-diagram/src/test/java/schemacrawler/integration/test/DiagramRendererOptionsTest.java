@@ -332,7 +332,9 @@ public class DiagramRendererOptionsTest {
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder().includeTables(new RegularExpressionInclusionRule(".*BOOKS"));
     final GrepOptionsBuilder grepOptionsBuilder =
-        GrepOptionsBuilder.builder().grepOnlyMatching(true);
+        GrepOptionsBuilder.builder()
+            .includeGreppedTables(new RegularExpressionInclusionRule(".*\\.BOOKS"))
+            .grepOnlyMatching(true);
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
             .withLimitOptions(limitOptionsBuilder.toOptions())
