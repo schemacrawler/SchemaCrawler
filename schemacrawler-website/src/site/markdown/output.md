@@ -45,7 +45,3 @@ variations, with examples in SchemaCrawler's HTML output format:
   `--grep-columns=.*\\.BOOKS\\..*\\.ID` as a command-line option, with
   an appropriate regular expression [(see
   HTML output)](html-examples/html_6_grep.html).
-- Grep for columns, but only show matching tables, using
-  `--grep-columns=.*\\.BOOKS\\..*\\.ID` and `-only-matching` as
-  command-line options [(see
-   HTML output)](html-examples/html_7_grep_onlymatching.html).

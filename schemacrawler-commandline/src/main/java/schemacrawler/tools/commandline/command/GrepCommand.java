@@ -105,16 +105,6 @@ public final class GrepCommand extends BaseStateHolder implements Runnable {
       negatable = true)
   private Boolean invertMatch;
 
-  @Option(
-      names = "--only-matching",
-      description = {
-        "Shows only matching tables, and does not show foreign keys "
-            + "that reference other non-matching tables",
-        "Optional, default is false"
-      },
-      negatable = true)
-  private Boolean onlyMatching;
-
   public GrepCommand(final ShellState state) {
     super(state);
   }
@@ -141,9 +131,6 @@ public final class GrepCommand extends BaseStateHolder implements Runnable {
 
     if (invertMatch != null) {
       grepOptionsBuilder.invertGrepMatch(invertMatch);
-    }
-    if (onlyMatching != null) {
-      grepOptionsBuilder.grepOnlyMatching(onlyMatching);
     }
 
     // Set grep options on the state

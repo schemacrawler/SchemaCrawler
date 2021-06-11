@@ -202,10 +202,6 @@ Options:
       --[no-]invert-match    Inverts the sense of matching, and shows
                                non-matching tables and columns
                              Optional, default is false
-      --[no-]only-matching   Shows only matching tables, and does not show
-                               foreign keys that reference other non-matching
-                               tables
-                             Optional, default is false
 
 
 ** Filter database object metadata

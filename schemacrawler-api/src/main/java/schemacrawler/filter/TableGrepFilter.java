@@ -27,6 +27,8 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.filter;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Level;
@@ -50,6 +52,9 @@ class TableGrepFilter implements Predicate<Table> {
   private final boolean invertMatch;
 
   public TableGrepFilter(final GrepOptions options) {
+
+    requireNonNull(options, "No grep options provided");
+
     invertMatch = options.isGrepInvertMatch();
 
     grepTableInclusionRule = options.getGrepTableInclusionRule().orElse(null);
@@ -131,7 +136,6 @@ class TableGrepFilter implements Predicate<Table> {
     if (!include) {
       LOGGER.log(Level.FINE, new StringFormat("Excluding table <%s>", table));
     }
-
     return include;
   }
 }

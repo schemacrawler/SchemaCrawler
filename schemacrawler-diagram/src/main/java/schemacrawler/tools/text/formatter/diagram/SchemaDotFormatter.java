@@ -424,10 +424,10 @@ public final class SchemaDotFormatter extends BaseDotFormatter implements Schema
           continue;
         }
         final boolean isPkColumnFiltered =
-            referencedTable.getAttribute("schemacrawler.table.filtered_out", false)
+            referencedTable.getAttribute("schemacrawler.filtered_out", false)
                 || referencedTable instanceof PartialDatabaseObject;
         final boolean isFkColumnFiltered =
-            referencingTable.getAttribute("schemacrawler.table.filtered_out", false)
+            referencingTable.getAttribute("schemacrawler.filtered_out", false)
                 || referencingTable instanceof PartialDatabaseObject;
         final String remarks;
         if (showRemarks) {
