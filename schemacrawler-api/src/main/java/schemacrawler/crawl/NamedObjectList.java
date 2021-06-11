@@ -42,6 +42,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 
+import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.ReducibleCollection;
@@ -87,8 +88,13 @@ final class NamedObjectList<N extends NamedObject> implements Serializable, Redu
     for (final Iterator<Entry<NamedObjectKey, N>> iterator = entrySet.iterator();
         iterator.hasNext(); ) {
       final Entry<NamedObjectKey, N> entry = iterator.next();
-      if (!predicate.test(entry.getValue())) {
+      final N namedObject = entry.getValue();
+      if (!predicate.test(namedObject)) {
         iterator.remove();
+        if (namedObject instanceof AttributedObject) {
+          final AttributedObject attributedObject = (AttributedObject) namedObject;
+          attributedObject.setAttribute("schemacrawler.filtered_out", true);
+        }
       }
     }
   }

@@ -83,13 +83,6 @@ final class TablesReducer implements Reducer<Table> {
     keepTables.addAll(childTables);
     keepTables.addAll(parentTables);
 
-    // Mark tables as being filtered out
-    for (final Table table : allTables) {
-      if (!keepTables.contains(table)) {
-        markTableFilteredOut(table);
-      }
-    }
-
     allTables.filter(keepTables::contains);
   }
 
@@ -115,9 +108,5 @@ final class TablesReducer implements Reducer<Table> {
 
   private boolean isTablePartial(final Table table) {
     return table instanceof PartialDatabaseObject;
-  }
-
-  private void markTableFilteredOut(final Table table) {
-    table.setAttribute("schemacrawler.table.filtered_out", true);
   }
 }
