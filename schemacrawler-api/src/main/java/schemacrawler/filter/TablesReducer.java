@@ -34,8 +34,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import schemacrawler.schema.ColumnReference;
-import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Reducer;
 import schemacrawler.schema.ReducibleCollection;
@@ -60,8 +58,6 @@ final class TablesReducer implements Reducer<Table> {
       return;
     }
     doReduce(allTables);
-
-    removeForeignKeys(allTables);
   }
 
   private void doReduce(final ReducibleCollection<? extends Table> allTables) {
@@ -123,18 +119,5 @@ final class TablesReducer implements Reducer<Table> {
 
   private void markTableFilteredOut(final Table table) {
     table.setAttribute("schemacrawler.table.filtered_out", true);
-  }
-
-  private void removeForeignKeys(final ReducibleCollection<? extends Table> allTables) {
-    for (final Table table : allTables) {
-      for (final ForeignKey foreignKey : table.getExportedForeignKeys()) {
-        for (final ColumnReference fkColumnRef : foreignKey) {
-          final Table referencedTable = fkColumnRef.getForeignKeyColumn().getParent();
-          if (isTablePartial(referencedTable) || allTables.isFiltered(referencedTable)) {
-            markTableFilteredOut(referencedTable);
-          }
-        }
-      }
-    }
   }
 }
