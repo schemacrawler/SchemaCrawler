@@ -74,7 +74,7 @@
     <dependency>
       <groupId>com.github.spullara.mustache.java</groupId>
       <artifactId>compiler</artifactId>
-      <version>0.9.7</version>
+      <version>0.9.10</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -86,7 +86,7 @@
     <dependency>
       <groupId>org.jruby</groupId>
       <artifactId>jruby</artifactId>
-      <version>9.2.17.0</version>
+      <version>9.2.18.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
