@@ -6,8 +6,8 @@
 - Remove `--only-matching` command-line option, and associated functionality
 
 
-<a name="a16.14.6"></a>
-## Release 16.14.6 - 2021-05-07
+<a name="a16.15.1"></a>
+## Release 16.15.1 - 2021-05-07
 
 - Fix issue #465 with embedded HTML renderer
 - Fix issue #466 with loading tables with a large number of exported foreign keys in SQL Server
@@ -618,18 +618,18 @@ and [dbdiagram.io](https://dbdiagram.io/home) diagrams
 
 * The graph command is removed. Graphs are generated based on the output format.
 
-## Release 14.12.01 - 2016.14.64
+## Release 14.12.01 - 2016.15.14
 <a name="a14.12.01"></a>
 
 * New command-line option to show weak associations, irrespective of the infolevel.
 * Changed the boolean property, schemacrawler.format.hide_weak_associations to schemacrawler.format.show_weak_associations, since weak associations are hidden by default in SchemaCrawler output. Also added a new command-line switch, -weakassociations to show weak associations. Weak associations now can be shown with any infolevel setting.
 
-## Release 14.11.02 - 2016.14.60
+## Release 14.11.02 - 2016.15.10
 <a name="a14.11.02"></a>
 
 * Support for the Teradata JDBC driver. The Teradata JDBC driver does not follow JDBC specifications. It should throw a SQLFeatureNotSupportedException for getFunctions, or at the least a SQLException state HYC00 ("Optional feature not implemented"). Instead, it throws with a state of HY000 ("General error").
 
-## Release 14.11.01 - 2016.14.66
+## Release 14.11.01 - 2016.15.16
 <a name="a14.11.01"></a>
 
 * Show a better error message when a script file cannot be read.
