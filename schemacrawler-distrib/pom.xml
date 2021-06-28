@@ -84,7 +84,7 @@
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
-      <version>42.2.21</version>
+      <version>42.2.22</version>
     </dependency>
     <dependency>
       <groupId>mysql</groupId>
@@ -130,7 +130,7 @@
     <dependency>
       <groupId>org.xerial</groupId>
       <artifactId>sqlite-jdbc</artifactId>
-      <version>3.34.0</version>
+      <version>3.36.0</version>
     </dependency>
     <dependency>
       <groupId>com.sap.cloud.db.jdbc</groupId>
@@ -140,7 +140,7 @@
     <dependency>
       <groupId>net.snowflake</groupId>
       <artifactId>snowflake-jdbc</artifactId>
-      <version>3.13.4</version>
+      <version>3.13.5</version>
     </dependency>
 
     <!-- Command-line processing -->
