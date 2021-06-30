@@ -1,5 +1,13 @@
 # SchemaCrawler Support and Consulting
 
+## Supported Versions
+
+Only the latest version of SchemaCrawler (v16.15.1) is supported from the point of new feature development and security updates. 
+If you would like support for an older version of SchemaCrawler, please request a Professional Support Package. 
+You can report a security vulnerability by filing an issue on the [SchemaCrawler issues page].
+
+
+
 ## Levels of Support
 
 There are various support channels available if you are having trouble using SchemaCrawler, think you may have found a bug, or want advice with using SchemaCrawler in your project.
@@ -10,7 +18,7 @@ SchemaCrawler, to help you with advice with using SchemaCrawler in your project,
 **Community Support** is available on [Stack Overflow]. Helpful SchemaCrawler users, 
 including the developer of SchemaCrawler, read messages on Stack Overflow. Please read *Guidelines for Support* below.
 
-**Bug and Issue Reports** can be filed on the [SchemaCrawler issues page]. 
+**Bug, Security Vulnerability and Issue Reports** can be filed on the [SchemaCrawler issues page]. 
 Please do not ask questions on the issues page - instead, ask questions on 
 [Stack Overflow]. Please read *Guidelines for Support* below.
 
@@ -18,10 +26,10 @@ Please do not ask questions on the issues page - instead, ask questions on
 
 ## Guidelines for Support
 
-Some guidelines for a quick response on [Stack Overflow] and the [SchemaCrawler issues page]:
+Some guidelines for a quick response on [Stack Overflow] and the [SchemaCrawler discussions page]:
 
 - Please explain the issue briefly, and specify the versions of SchemaCrawler, Java, 
-    operating system, database, and JDBC driver that you are using
+  operating system, database, and JDBC driver that you are using
 - Provide the steps that you took to reproduce the issue, and any steps that you took to 
   solve the issue
 - Zip and attach the SchemaCrawler debug logs, which can be obtained by running 
@@ -29,4 +37,5 @@ Some guidelines for a quick response on [Stack Overflow] and the [SchemaCrawler 
 
 
 [Stack Overflow]: http://stackoverflow.com/search?q=schemacrawler+is%3Aquestion
+[SchemaCrawler discussions page]: https://github.com/schemacrawler/SchemaCrawler/discussions
 [SchemaCrawler issues page]: https://github.com/schemacrawler/SchemaCrawler/issues
