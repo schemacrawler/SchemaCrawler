@@ -55,6 +55,15 @@ import us.fatehi.utility.string.StringFormat;
  */
 final class SynonymRetriever extends AbstractRetriever {
 
+  private static final class UnknownDatabaseObject extends AbstractDatabaseObject {
+
+    private static final long serialVersionUID = -2212843304418302122L;
+
+    UnknownDatabaseObject(final Schema schema, final String name) {
+      super(schema, name);
+    }
+  }
+
   private static final SchemaCrawlerLogger LOGGER =
       SchemaCrawlerLogger.getLogger(SynonymRetriever.class.getName());
 
@@ -133,11 +142,7 @@ final class SynonymRetriever extends AbstractRetriever {
         } else if (referencedRoutine.isPresent()) {
           referencedObject = referencedRoutine.get();
         } else {
-          referencedObject =
-              new AbstractDatabaseObject(referencedSchema, referencedObjectName) {
-
-                private static final long serialVersionUID = -2212843304418302122L;
-              };
+          referencedObject = new UnknownDatabaseObject(referencedSchema, referencedObjectName);
         }
 
         final MutableSynonym synonym = new MutableSynonym(schema, synonymName);
