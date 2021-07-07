@@ -1,13 +1,19 @@
 # SchemaCrawler Change History
 
+<a name="a16.15.2"></a>
+## Release 16.15.2 - 2021-07-07
+
+- Fix issue #482 - serialization for catalogs that have synonyms for objects that do not exist
+
+
 <a name="a16.15.1"></a>
 ## Release 16.15.1 - 2021-06-12
 
 - Remove `--only-matching` command-line option, and associated functionality
 
 
-<a name="a16.15.1"></a>
-## Release 16.15.1 - 2021-05-07
+<a name="a16.14.6"></a>
+## Release 16.14.6 - 2021-05-07
 
 - Fix issue #465 with embedded HTML renderer
 - Fix issue #466 with loading tables with a large number of exported foreign keys in SQL Server

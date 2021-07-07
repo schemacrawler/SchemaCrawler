@@ -63,8 +63,6 @@ import org.springframework.core.io.support.ResourcePatternUtils;
 
 public class DatabaseScriptsTest {
 
-  private static final Pattern fileNamePattern = Pattern.compile(".*\\/(.*\\..*)");
-
   private class DatabaseScriptSection {
 
     private final Pattern scriptNamePattern = Pattern.compile("(\\d\\d)_(.*)_(\\d\\d)_[A-Z].sql");
@@ -83,23 +81,6 @@ public class DatabaseScriptsTest {
       subSection = Integer.valueOf(matcher.group(3));
     }
 
-    public String getName() {
-      return name;
-    }
-
-    public int getSection() {
-      return section;
-    }
-
-    public int getSubSection() {
-      return subSection;
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(name, section, subSection);
-    }
-
     @Override
     public boolean equals(final Object o) {
       if (this == o) {
@@ -113,8 +94,8 @@ public class DatabaseScriptsTest {
     }
 
     @Override
-    public String toString() {
-      return String.format("%02d_%s_%02d", section, name, subSection);
+    public int hashCode() {
+      return Objects.hash(name, section, subSection);
     }
 
     public boolean matches(final String line) {
@@ -124,17 +105,18 @@ public class DatabaseScriptsTest {
         return false;
       }
     }
+
+    @Override
+    public String toString() {
+      return String.format("%02d_%s_%02d", section, name, subSection);
+    }
   }
+
+  private static final Pattern fileNamePattern = Pattern.compile(".*\\/(.*\\..*)");
 
   private Collection<DatabaseScriptSection> booksDatabaseScriptSections;
 
   @Autowired private ResourceLoader resourceLoader;
-
-  @BeforeEach
-  public void setup() throws IOException {
-    booksDatabaseScriptSections = makeScriptSections("classpath*:/**/db/books/*.sql");
-    assertThat(booksDatabaseScriptSections.size(), is(28));
-  }
 
   @Test
   public void booksDatabaseScripts() throws Exception {
@@ -151,7 +133,7 @@ public class DatabaseScriptsTest {
         final List<String> lines =
             reader.lines().filter(line -> !isBlank(line)).collect(Collectors.toList());
         assertThat(lines, is(not(empty())));
-        int i = 0;
+        final int i = 0;
         for (final String line : lines) {
           for (final DatabaseScriptSection databaseScriptSection : scriptSectionsCounts.keySet()) {
             if (databaseScriptSection.matches(line)) {
@@ -163,7 +145,7 @@ public class DatabaseScriptsTest {
         throw new RuntimeException(e.getMessage(), e);
       }
 
-      for (Map.Entry<DatabaseScriptSection, Integer> databaseScriptSectionIntegerEntry :
+      for (final Map.Entry<DatabaseScriptSection, Integer> databaseScriptSectionIntegerEntry :
           scriptSectionsCounts.entrySet()) {
         final int count = databaseScriptSectionIntegerEntry.getValue();
         if (count != 1) {
@@ -188,12 +170,10 @@ public class DatabaseScriptsTest {
     }
   }
 
-  private Map<DatabaseScriptSection, Integer> makeScriptSectionsCounts() {
-    final Map<DatabaseScriptSection, Integer> scriptSectionsCounts = new HashMap<>();
-    for (DatabaseScriptSection databaseScriptSection : booksDatabaseScriptSections) {
-      scriptSectionsCounts.put(databaseScriptSection, 0);
-    }
-    return scriptSectionsCounts;
+  @BeforeEach
+  public void setup() throws IOException {
+    booksDatabaseScriptSections = makeScriptSections("classpath*:/**/db/books/*.sql");
+    assertThat(booksDatabaseScriptSections.size(), is(29));
   }
 
   private String getScriptName(final String path) {
@@ -226,5 +206,13 @@ public class DatabaseScriptsTest {
       scripts.add(new DatabaseScriptSection(scriptName));
     }
     return scripts;
+  }
+
+  private Map<DatabaseScriptSection, Integer> makeScriptSectionsCounts() {
+    final Map<DatabaseScriptSection, Integer> scriptSectionsCounts = new HashMap<>();
+    for (final DatabaseScriptSection databaseScriptSection : booksDatabaseScriptSections) {
+      scriptSectionsCounts.put(databaseScriptSection, 0);
+    }
+    return scriptSectionsCounts;
   }
 }
