@@ -11,5 +11,5 @@ services:
         protocol: tcp
         mode: host
     environment:
-      ACCEPT_EULA: Y
+      ACCEPT_EULA: "Y"
       SA_PASSWORD: Schem#Crawl3r
