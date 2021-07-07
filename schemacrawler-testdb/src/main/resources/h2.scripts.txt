@@ -18,6 +18,7 @@
 #,/db/books/09_functions_01_A.sql
 #,/db/books/10_triggers_01_A.sql
 #,/db/books/11_synonyms_01_A.sql
+#,/db/books/11_synonyms_02_A.sql
 #,/db/books/12_generated_columns_01_A.sql
 #,/db/books/12_hidden_columns_01_A.sql
 ;,/db/books/13_grants_01_A.sql
