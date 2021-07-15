@@ -42,7 +42,7 @@ import java.util.logging.Level;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
@@ -61,8 +61,8 @@ import schemacrawler.utility.NamedObjectSort;
 @ExtendWith(TestContextParameterResolver.class)
 public class ExcludeTest {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(ExcludeTest.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(ExcludeTest.class.getName());
 
   @Test
   public void excludeColumns(final TestContext testContext, final Connection connection)

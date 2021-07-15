@@ -30,7 +30,7 @@ package schemacrawler.schema;
 
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import us.fatehi.utility.string.StringFormat;
 
 /** Table constraint type. */
@@ -45,8 +45,8 @@ public enum TableConstraintType {
   alternate_key("ALTERNATE KEY"),
   weak_association("WEAK ASSOCIATION");
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(TableConstraintType.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(TableConstraintType.class.getName());
 
   /**
    * Find the enumeration value corresponding to the string.

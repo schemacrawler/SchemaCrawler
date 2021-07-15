@@ -40,7 +40,7 @@ import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Model;
 import picocli.CommandLine.ParameterException;
 import picocli.CommandLine.Spec;
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -79,8 +79,8 @@ import us.fatehi.utility.string.StringFormat;
     })
 public class ConnectCommand extends BaseStateHolder implements Runnable {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(ConnectCommand.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(ConnectCommand.class.getName());
 
   @ArgGroup(exclusive = true)
   private DatabaseConnectionGroupOptions databaseConnectionGroupOptions;

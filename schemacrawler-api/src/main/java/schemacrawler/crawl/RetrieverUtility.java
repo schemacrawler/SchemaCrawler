@@ -34,7 +34,7 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.util.Optional;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
@@ -46,8 +46,8 @@ import us.fatehi.utility.string.StringFormat;
 @UtilityMarker
 public final class RetrieverUtility {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(RetrieverUtility.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(RetrieverUtility.class.getName());
 
   static String constructForeignKeyName(final Table pkTable, final Table fkTable) {
     requireNonNull(pkTable, "No referenced table provided");

@@ -32,7 +32,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.crawl.WeakAssociationBuilder;
 import schemacrawler.crawl.WeakAssociationBuilder.WeakAssociationColumn;
 import schemacrawler.schema.Catalog;
@@ -48,8 +48,8 @@ import us.fatehi.utility.string.StringFormat;
 
 public final class WeakAssociationsCatalogLoader extends BaseCatalogLoader {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(WeakAssociationsCatalogLoader.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(WeakAssociationsCatalogLoader.class.getName());
 
   private static final String OPTION_WEAK_ASSOCIATIONS = "weak-associations";
 

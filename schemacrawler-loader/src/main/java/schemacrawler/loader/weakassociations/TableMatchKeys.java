@@ -39,7 +39,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schema.Table;
 import us.fatehi.utility.Multimap;
 import us.fatehi.utility.Utility;
@@ -48,8 +48,8 @@ import us.fatehi.utility.string.StringFormat;
 
 final class TableMatchKeys {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(TableMatchKeys.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(TableMatchKeys.class.getName());
 
   private final List<Table> tables;
 

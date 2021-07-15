@@ -38,7 +38,7 @@ import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.IndexType;
@@ -56,8 +56,8 @@ import us.fatehi.utility.string.StringFormat;
  */
 final class IndexRetriever extends AbstractRetriever {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(IndexRetriever.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(IndexRetriever.class.getName());
 
   IndexRetriever(
       final RetrieverConnection retrieverConnection,

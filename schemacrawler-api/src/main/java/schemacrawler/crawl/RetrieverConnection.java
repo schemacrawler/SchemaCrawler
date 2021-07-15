@@ -39,7 +39,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.schema.TableTypes;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -57,8 +57,8 @@ import us.fatehi.utility.string.StringFormat;
  */
 final class RetrieverConnection {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(RetrieverConnection.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(RetrieverConnection.class.getName());
 
   private final Connection connection;
   private final JavaSqlTypes javaSqlTypes;

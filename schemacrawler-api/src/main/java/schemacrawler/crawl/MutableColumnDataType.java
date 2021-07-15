@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.JavaSqlType;
@@ -55,8 +55,8 @@ final class MutableColumnDataType extends AbstractDatabaseObject implements Colu
 
   private static final long serialVersionUID = 3688503281676530744L;
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(SchemaCrawler.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(SchemaCrawler.class.getName());
 
   private final DataTypeType type;
   private boolean autoIncrementable;
@@ -342,7 +342,7 @@ final class MutableColumnDataType extends AbstractDatabaseObject implements Colu
         javaSqlTypeMappedClass = Class.forName(mappedClassName);
       } catch (final ClassNotFoundException e) {
         LOGGER.log(
-            Level.FINE, new StringFormat("Could not load mapped class <%s>", mappedClassName), e);
+            Level.FINE, e, new StringFormat("Could not load mapped class <%s>", mappedClassName));
         javaSqlTypeMappedClass = Object.class;
       }
     } else {

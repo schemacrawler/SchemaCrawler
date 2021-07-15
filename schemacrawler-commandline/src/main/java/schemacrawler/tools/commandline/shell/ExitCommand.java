@@ -31,7 +31,7 @@ package schemacrawler.tools.commandline.shell;
 import java.util.logging.Level;
 
 import picocli.CommandLine.Command;
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 
 @Command(
     name = "exit",
@@ -42,8 +42,8 @@ import schemacrawler.SchemaCrawlerLogger;
     customSynopsis = {"exit"},
     optionListHeading = "Options:%n")
 public class ExitCommand implements Runnable {
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(ExitCommand.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(ExitCommand.class.getName());
 
   @Override
   public void run() {

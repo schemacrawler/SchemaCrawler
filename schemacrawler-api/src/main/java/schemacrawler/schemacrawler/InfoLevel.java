@@ -35,7 +35,7 @@ import static schemacrawler.schemacrawler.SchemaInfoLevelBuilder.standard;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import us.fatehi.utility.string.StringFormat;
 
 public enum InfoLevel {
@@ -45,8 +45,8 @@ public enum InfoLevel {
   detailed(() -> detailed()),
   maximum(() -> maximum());
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(InfoLevel.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(InfoLevel.class.getName());
 
   public static InfoLevel valueOfFromString(final String infoLevelValue) {
     try {

@@ -35,7 +35,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.crawl.ResultsCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ResultsColumns;
@@ -63,8 +63,8 @@ import us.fatehi.utility.string.StringFormat;
 @UtilityMarker
 public final class SchemaCrawlerUtility {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(SchemaCrawlerUtility.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(SchemaCrawlerUtility.class.getName());
 
   /**
    * Crawls a database, and returns a catalog.

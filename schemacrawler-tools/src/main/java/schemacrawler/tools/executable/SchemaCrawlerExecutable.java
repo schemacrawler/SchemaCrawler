@@ -34,7 +34,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -57,8 +57,8 @@ import us.fatehi.utility.string.StringFormat;
  */
 public final class SchemaCrawlerExecutable {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(SchemaCrawlerExecutable.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(SchemaCrawlerExecutable.class.getName());
 
   private final String command;
   private Config additionalConfig;

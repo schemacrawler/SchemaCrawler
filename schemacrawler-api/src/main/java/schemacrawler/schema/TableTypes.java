@@ -44,7 +44,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 
 /**
  * Represents a collection of tables types for a database system, as returned by the database server
@@ -53,8 +53,8 @@ import schemacrawler.SchemaCrawlerLogger;
  */
 public final class TableTypes implements Iterable<TableType> {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(TableTypes.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(TableTypes.class.getName());
 
   /** Obtain a collection of tables types from provided list. */
   public static TableTypes from(final Collection<String> tableTypeStrings) {

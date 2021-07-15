@@ -37,7 +37,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
@@ -45,8 +45,8 @@ import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 
 public class GraphExecutorFactory {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(GraphExecutorFactory.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(GraphExecutorFactory.class.getName());
 
   public void canGenerate(final DiagramOutputFormat diagramOutputFormat) throws Exception {
     if (diagramOutputFormat == null) {

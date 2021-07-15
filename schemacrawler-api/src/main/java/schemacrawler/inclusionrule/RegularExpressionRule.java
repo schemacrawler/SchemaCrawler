@@ -33,9 +33,9 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
-import schemacrawler.SchemaCrawlerLogger;
 import us.fatehi.utility.string.StringFormat;
 
 /**
@@ -48,8 +48,7 @@ public final class RegularExpressionRule implements InclusionRuleWithRegularExpr
 
   private static final long serialVersionUID = 3443758881974362293L;
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(RegularExpressionRule.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(RegularExpressionRule.class.getName());
 
   private final Pattern patternExclude;
   private final Pattern patternInclude;
@@ -141,7 +140,7 @@ public final class RegularExpressionRule implements InclusionRuleWithRegularExpr
 
     // Log caller
     if (LOGGER.isLoggable(Level.FINE)) {
-      LOGGER.log(Level.FINE, 5, actionMessage.get(), null);
+      LOGGER.log(Level.FINE, actionMessage.get());
     }
 
     return include;

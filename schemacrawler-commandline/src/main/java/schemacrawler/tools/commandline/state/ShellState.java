@@ -34,7 +34,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.FilterOptions;
 import schemacrawler.schemacrawler.GrepOptions;
@@ -47,8 +47,8 @@ import us.fatehi.utility.string.StringFormat;
 
 public class ShellState {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(ShellState.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(ShellState.class.getName());
 
   private Config baseConfig;
   private Config commandOptions;

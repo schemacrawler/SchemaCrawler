@@ -14,14 +14,14 @@ import guru.nidi.graphviz.engine.Graphviz;
 import guru.nidi.graphviz.engine.GraphvizEngine;
 import guru.nidi.graphviz.engine.GraphvizJdkEngine;
 import guru.nidi.graphviz.engine.GraphvizV8Engine;
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 
 public final class GraphvizJavaExecutorUtility {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(GraphvizJavaExecutorUtility.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(GraphvizJavaExecutorUtility.class.getName());
 
   /**
    * Need a static method to account for imports of pure Java Graphviz library.

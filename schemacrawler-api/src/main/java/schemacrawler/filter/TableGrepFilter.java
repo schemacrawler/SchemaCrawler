@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
@@ -43,8 +43,8 @@ import us.fatehi.utility.string.StringFormat;
 
 class TableGrepFilter implements Predicate<Table> {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(TableGrepFilter.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(TableGrepFilter.class.getName());
 
   private final InclusionRule grepTableInclusionRule;
   private final InclusionRule grepColumnInclusionRule;

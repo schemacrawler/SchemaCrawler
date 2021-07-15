@@ -33,7 +33,7 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.util.List;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputFormatState;
 import us.fatehi.utility.string.StringFormat;
@@ -44,8 +44,8 @@ public enum TextOutputFormat implements OutputFormat {
   html("HyperText Markup Language (HTML) format"),
   tsv("Tab-separated values (TSV) format");
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(TextOutputFormat.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(TextOutputFormat.class.getName());
 
   /**
    * Gets the value from the format.

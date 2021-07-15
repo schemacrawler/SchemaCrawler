@@ -29,14 +29,14 @@ package schemacrawler.tools.lint;
 
 import java.util.List;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import us.fatehi.utility.UtilityMarker;
 
 @UtilityMarker
 public final class LintUtility {
 
-  public static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(LintUtility.class.getName());
+  public static final Logger LOGGER =
+      Logger.getLogger(LintUtility.class.getName());
 
   public static <E> boolean listStartsWith(final List<E> main, final List<E> sub) {
     if (main == null || sub == null) {

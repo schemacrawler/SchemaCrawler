@@ -44,7 +44,7 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.TableConstraint;
@@ -61,8 +61,8 @@ import us.fatehi.utility.string.StringFormat;
  */
 final class TableConstraintRetriever extends AbstractRetriever {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(TableConstraintRetriever.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(TableConstraintRetriever.class.getName());
 
   private final Map<List<String>, MutableTableConstraint> tableConstraintsMap;
 

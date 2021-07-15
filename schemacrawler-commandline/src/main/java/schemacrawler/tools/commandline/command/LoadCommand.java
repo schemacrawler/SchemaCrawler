@@ -40,7 +40,7 @@ import picocli.CommandLine.Model;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.ParseResult;
 import picocli.CommandLine.Spec;
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
@@ -69,8 +69,8 @@ import us.fatehi.utility.string.StringFormat;
     })
 public class LoadCommand extends BaseStateHolder implements Runnable {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(LoadCommand.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(LoadCommand.class.getName());
 
   @Option(
       names = {"-i", "--info-level"},

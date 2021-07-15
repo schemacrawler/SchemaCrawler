@@ -29,7 +29,7 @@ package schemacrawler.tools.lint;
 
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 
 public enum LintDispatch {
   none {
@@ -61,8 +61,8 @@ public enum LintDispatch {
   },
   ;
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(LintDispatch.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(LintDispatch.class.getName());
 
   private static final String dispatchMessage = "Too many schema lints were found";
 

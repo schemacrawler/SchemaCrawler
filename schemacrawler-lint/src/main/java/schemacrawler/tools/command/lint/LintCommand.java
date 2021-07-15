@@ -31,7 +31,7 @@ import static schemacrawler.tools.lint.config.LinterConfigUtility.readLinterConf
 
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.command.lint.options.LintOptions;
 import schemacrawler.tools.command.lint.options.LintReportOutputFormat;
@@ -49,8 +49,8 @@ import us.fatehi.utility.string.StringFormat;
 
 public class LintCommand extends BaseSchemaCrawlerCommand<LintOptions> {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(LintCommand.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(LintCommand.class.getName());
 
   public static final String COMMAND = "lint";
 

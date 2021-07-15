@@ -40,7 +40,7 @@ import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Model;
 import picocli.CommandLine.ParseResult;
 import picocli.CommandLine.Spec;
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
@@ -73,8 +73,8 @@ import us.fatehi.utility.string.StringFormat;
     })
 public class ExecuteCommand extends BaseStateHolder implements Runnable {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(AvailableCommandsCommand.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(AvailableCommandsCommand.class.getName());
 
   @Mixin private CommandOptions commandOptions;
   @Mixin private CommandOutputOptions commandOutputOptions;

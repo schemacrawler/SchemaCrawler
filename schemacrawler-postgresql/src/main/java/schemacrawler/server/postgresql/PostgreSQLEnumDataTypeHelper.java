@@ -42,7 +42,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.plugin.EnumDataTypeInfo;
 import schemacrawler.plugin.EnumDataTypeInfo.EnumDataTypeTypes;
@@ -51,8 +51,8 @@ import schemacrawler.schema.ColumnDataType;
 import us.fatehi.utility.string.StringFormat;
 
 public class PostgreSQLEnumDataTypeHelper implements EnumDataTypeHelper {
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(PostgreSQLEnumDataTypeHelper.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(PostgreSQLEnumDataTypeHelper.class.getName());
 
   private static List<String> getEnumValues(
       final ColumnDataType columnDataType, final Connection connection) {
@@ -66,7 +66,7 @@ public class PostgreSQLEnumDataTypeHelper implements EnumDataTypeHelper {
       final List<String> enumValues = readResultsVector(resultSet);
       return enumValues;
     } catch (final SQLException e) {
-      LOGGER.log(Level.WARNING, new StringFormat("Error executing SQL <%s>", sql), e);
+      LOGGER.log(Level.WARNING, e, new StringFormat("Error executing SQL <%s>", sql));
     }
     return new ArrayList<>();
   }

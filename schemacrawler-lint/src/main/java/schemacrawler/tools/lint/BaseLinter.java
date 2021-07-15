@@ -37,7 +37,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.inclusionrule.InclusionRule;
@@ -58,8 +58,8 @@ import us.fatehi.utility.string.StringFormat;
  */
 public abstract class BaseLinter extends Linter {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(BaseLinter.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(BaseLinter.class.getName());
 
   private Catalog catalog;
   private InclusionRule tableInclusionRule;

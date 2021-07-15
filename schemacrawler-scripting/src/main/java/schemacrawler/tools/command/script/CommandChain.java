@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.executable.CommandRegistry;
@@ -53,8 +53,8 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
 
   private static final String COMMAND = "chain";
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(CommandChain.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(CommandChain.class.getName());
 
   private final CommandRegistry commandRegistry;
   private final List<SchemaCrawlerCommand<?>> scCommands;

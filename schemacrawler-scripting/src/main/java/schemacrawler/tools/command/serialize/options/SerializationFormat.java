@@ -32,7 +32,7 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.util.List;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputFormatState;
 import us.fatehi.utility.string.StringFormat;
@@ -48,8 +48,8 @@ public enum SerializationFormat implements OutputFormat {
       "schemacrawler.tools.formatter.serialize.YamlSerializedCatalog",
       false);
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(SerializationFormat.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(SerializationFormat.class.getName());
 
   /**
    * Gets the value from the format.

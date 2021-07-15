@@ -32,7 +32,7 @@ import static schemacrawler.filter.ReducerFactory.getTableReducer;
 
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -44,8 +44,8 @@ import us.fatehi.utility.StopWatch;
 
 public class TableRowCountsCatalogLoader extends BaseCatalogLoader {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(TableRowCountsCatalogLoader.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(TableRowCountsCatalogLoader.class.getName());
 
   private static final String OPTION_NO_EMPTY_TABLES = "no-empty-tables";
   private static final String OPTION_LOAD_ROW_COUNTS = "load-row-counts";

@@ -41,7 +41,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.command.script.options.ScriptOptions;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
@@ -56,8 +56,8 @@ import us.fatehi.utility.string.StringFormat;
  */
 public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions> {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(ScriptCommand.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(ScriptCommand.class.getName());
 
   static final String COMMAND = "script";
 

@@ -41,7 +41,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
@@ -60,8 +60,8 @@ import us.fatehi.utility.string.StringFormat;
  */
 final class ForeignKeyRetriever extends AbstractRetriever {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(ForeignKeyRetriever.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(ForeignKeyRetriever.class.getName());
 
   ForeignKeyRetriever(
       final RetrieverConnection retrieverConnection,

@@ -35,7 +35,7 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.crawl.AlternateKeyBuilder;
 import schemacrawler.crawl.AlternateKeyBuilder.AlternateKeyDefinition;
 import schemacrawler.crawl.WeakAssociationBuilder;
@@ -62,8 +62,8 @@ import us.fatehi.utility.string.StringFormat;
 
 public class AttributesCatalogLoader extends BaseCatalogLoader {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(AttributesCatalogLoader.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(AttributesCatalogLoader.class.getName());
 
   private static final String OPTION_ATTRIBUTES_FILE = "attributes-file";
 

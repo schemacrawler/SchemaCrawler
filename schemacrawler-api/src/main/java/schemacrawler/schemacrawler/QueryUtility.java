@@ -43,7 +43,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.InclusionRuleWithRegularExpression;
 import schemacrawler.schema.Column;
@@ -57,8 +57,8 @@ import us.fatehi.utility.string.StringFormat;
 @UtilityMarker
 public final class QueryUtility {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(QueryUtility.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(QueryUtility.class.getName());
 
   public static ResultSet executeAgainstSchema(
       final Query query, final Statement statement, final InclusionRule schemaInclusionRule)

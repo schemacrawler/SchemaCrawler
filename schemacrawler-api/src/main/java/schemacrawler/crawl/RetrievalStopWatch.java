@@ -32,7 +32,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaInfoRetrieval;
 import us.fatehi.utility.StopWatch;
@@ -40,8 +40,8 @@ import us.fatehi.utility.StopWatch.Function;
 
 public final class RetrievalStopWatch {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(RetrievalStopWatch.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(RetrievalStopWatch.class.getName());
 
   private StopWatch stopWatch;
   private final SchemaInfoLevel infoLevel;

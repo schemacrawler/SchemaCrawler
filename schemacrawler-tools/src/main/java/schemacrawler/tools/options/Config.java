@@ -38,7 +38,7 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.schemacrawler.Options;
@@ -52,8 +52,8 @@ import us.fatehi.utility.string.StringFormat;
  */
 public final class Config implements Options {
 
-  public static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(Config.class.getName());
+  public static final Logger LOGGER =
+      Logger.getLogger(Config.class.getName());
 
   private final Map<String, Object> configMap;
 
@@ -121,8 +121,8 @@ public final class Config implements Options {
     } catch (final NumberFormatException e) {
       LOGGER.log(
           Level.FINEST,
-          new StringFormat("Could not parse integer value for property <%s>", propertyName),
-          e);
+          e,
+          new StringFormat("Could not parse integer value for property <%s>", propertyName));
       return defaultValue;
     }
   }

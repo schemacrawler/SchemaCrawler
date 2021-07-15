@@ -45,7 +45,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Column;
@@ -63,8 +63,8 @@ import us.fatehi.utility.string.StringFormat;
  */
 final class TableColumnRetriever extends AbstractRetriever {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(TableColumnRetriever.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(TableColumnRetriever.class.getName());
 
   TableColumnRetriever(
       final RetrieverConnection retrieverConnection,

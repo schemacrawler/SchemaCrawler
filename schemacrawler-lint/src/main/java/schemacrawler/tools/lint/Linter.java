@@ -33,7 +33,7 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.NamedObject;
@@ -50,8 +50,8 @@ import us.fatehi.utility.string.StringFormat;
  */
 public abstract class Linter {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(Linter.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(Linter.class.getName());
 
   private LintCollector collector;
   private LintSeverity severity;

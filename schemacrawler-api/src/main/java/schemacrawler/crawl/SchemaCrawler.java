@@ -76,7 +76,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineType;
@@ -100,8 +100,8 @@ import us.fatehi.utility.string.StringFormat;
  */
 public final class SchemaCrawler {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(SchemaCrawler.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(SchemaCrawler.class.getName());
 
   private final SchemaCrawlerOptions options;
   private final RetrieverConnection retrieverConnection;

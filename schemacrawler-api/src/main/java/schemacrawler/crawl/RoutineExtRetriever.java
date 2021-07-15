@@ -35,7 +35,7 @@ import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schema.RoutineBodyType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
@@ -49,8 +49,8 @@ import us.fatehi.utility.string.StringFormat;
  */
 final class RoutineExtRetriever extends AbstractRetriever {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(RoutineExtRetriever.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(RoutineExtRetriever.class.getName());
 
   RoutineExtRetriever(
       final RetrieverConnection retrieverConnection,
