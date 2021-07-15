@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logFullStackTrace;
+import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logFatalStackTrace;
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSafeArguments;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.catalogLoaderPluginCommands;
@@ -67,7 +67,7 @@ public final class SchemaCrawlerCommandLine {
       executeCommandLine(commandLine);
     } catch (final Throwable throwable) {
       logSafeArguments(args);
-      logFullStackTrace(Level.SEVERE, throwable);
+      logFatalStackTrace(throwable);
 
       final String errorMessage;
       if (throwable instanceof picocli.CommandLine.PicocliException) {

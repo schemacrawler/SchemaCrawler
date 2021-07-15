@@ -50,15 +50,12 @@ public final class CommandLineLoggingUtility {
 
   private static final Logger LOGGER = Logger.getLogger(CommandLineLoggingUtility.class.getName());
 
-  public static void logFullStackTrace(final Level level, final Throwable t) {
-    if (level == null || !LOGGER.isLoggable(level)) {
-      return;
-    }
-    if (t == null) {
+  public static void logFatalStackTrace(final Throwable t) {
+    if (t == null || !LOGGER.isLoggable(Level.SEVERE)) {
       return;
     }
 
-    LOGGER.log(level, t.getMessage(), t);
+    LOGGER.log(Level.SEVERE, t.getMessage(), t);
   }
 
   public static void logSafeArguments(final String[] args) {

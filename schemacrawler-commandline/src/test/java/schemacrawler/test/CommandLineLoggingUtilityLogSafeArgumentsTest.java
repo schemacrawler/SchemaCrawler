@@ -20,7 +20,6 @@ public class CommandLineLoggingUtilityLogSafeArgumentsTest {
   @BeforeAll
   public static void setupLogCaptor() {
     logCaptor = LogCaptor.forClass(CommandLineLoggingUtility.class);
-    logCaptor.setLogLevelToInfo();
   }
 
   @AfterAll
@@ -31,6 +30,8 @@ public class CommandLineLoggingUtilityLogSafeArgumentsTest {
   @AfterEach
   public void clearLogs() {
     logCaptor.clearLogs();
+
+    logCaptor.setLogLevelToInfo();
   }
 
   @Test
@@ -146,5 +147,15 @@ public class CommandLineLoggingUtilityLogSafeArgumentsTest {
     assertThat(
         logCaptor.getInfoLogs().get(1).replaceAll("\r", ""),
         matchesPattern("Command line: \narg1\narg2"));
+  }
+
+  @Test
+  public void logSafeArguments_simple_noInfo() {
+
+    logCaptor.disableLogs();
+
+    CommandLineLoggingUtility.logSafeArguments(new String[] {"arg1", "arg2"});
+
+    assertThat(logCaptor.getLogs(), hasSize(0));
   }
 }
