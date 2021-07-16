@@ -45,7 +45,7 @@ import java.util.logging.Level;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.crawl.ResultsCrawler;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
@@ -58,8 +58,8 @@ import schemacrawler.test.utility.TestWriter;
 @ExtendWith(TestContextParameterResolver.class)
 public class ResultColumnsTest {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(ResultColumnsTest.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(ResultColumnsTest.class.getName());
 
   @Test
   public void columns(final TestContext testContext, final Connection cxn) throws Exception {

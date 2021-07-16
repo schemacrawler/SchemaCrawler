@@ -36,7 +36,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.Query;
@@ -46,8 +46,8 @@ import us.fatehi.utility.string.StringFormat;
 
 public class LinterTableSql extends BaseLinter {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(LinterTableSql.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(LinterTableSql.class.getName());
 
   private String message;
   private String sql;
@@ -92,8 +92,8 @@ public class LinterTableSql extends BaseLinter {
     } catch (final SQLException e) {
       LOGGER.log(
           Level.WARNING,
-          new StringFormat("Could not execute SQL for table lints, for table", table),
-          e);
+          e,
+          new StringFormat("Could not execute SQL for table lints, for table", table));
     }
   }
 }

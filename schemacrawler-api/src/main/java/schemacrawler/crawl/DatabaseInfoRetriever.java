@@ -50,7 +50,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -61,8 +61,8 @@ import us.fatehi.utility.string.StringFormat;
 
 final class DatabaseInfoRetriever extends AbstractRetriever {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(DatabaseInfoRetriever.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(DatabaseInfoRetriever.class.getName());
 
   private static final List<String> ignoreMethods =
       Arrays.asList(
@@ -176,7 +176,7 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
 
       } catch (final IllegalAccessException | InvocationTargetException e) {
         LOGGER.log(
-            Level.FINE, new StringFormat("Could not execute method <%s>", method), e.getCause());
+            Level.FINE, e.getCause(), new StringFormat("Could not execute method <%s>", method));
       } catch (final AbstractMethodError | SQLFeatureNotSupportedException e) {
         logSQLFeatureNotSupported(
             new StringFormat("Database metadata method <%s> not supported", method), e);
@@ -381,8 +381,8 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
       } catch (final Exception e) {
         LOGGER.log(
             Level.FINE,
-            new StringFormat("Could not execute method <%s>", methodName),
-            e.getCause());
+            e.getCause(),
+            new StringFormat("Could not execute method <%s>", methodName));
         continue;
       }
     }

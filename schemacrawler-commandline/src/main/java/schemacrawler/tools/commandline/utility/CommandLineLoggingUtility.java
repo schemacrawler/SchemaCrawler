@@ -37,10 +37,10 @@ import java.util.SortedMap;
 import java.util.StringJoiner;
 import java.util.TreeMap;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
-import schemacrawler.SchemaCrawlerLogger;
 import schemacrawler.Version;
 import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.string.StringFormat;
@@ -48,18 +48,14 @@ import us.fatehi.utility.string.StringFormat;
 @UtilityMarker
 public final class CommandLineLoggingUtility {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(CommandLineLoggingUtility.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(CommandLineLoggingUtility.class.getName());
 
-  public static void logFullStackTrace(final Level level, final Throwable t) {
-    if (level == null || !LOGGER.isLoggable(level)) {
-      return;
-    }
-    if (t == null) {
+  public static void logFatalStackTrace(final Throwable t) {
+    if (t == null || !LOGGER.isLoggable(Level.SEVERE)) {
       return;
     }
 
-    LOGGER.log(level, t.getMessage(), t);
+    LOGGER.log(Level.SEVERE, t.getMessage(), t);
   }
 
   public static void logSafeArguments(final String[] args) {
@@ -80,22 +76,24 @@ public final class CommandLineLoggingUtility {
       return;
     }
 
+    final String passwordRedacted = "<password provided>";
     final StringJoiner argsList = new StringJoiner(System.lineSeparator());
     for (final Iterator<String> iterator = Arrays.asList(args).iterator(); iterator.hasNext(); ) {
       final String arg = iterator.next();
       if (arg == null) {
         continue;
-      } else if (arg.startsWith("-password=")) {
-        argsList.add("-password=*****");
-      } else if (arg.startsWith("-password")) {
-        argsList.add("-password");
-        if (iterator.hasNext()) {
-          // Skip over the password
-          iterator.next();
-          argsList.add("*****");
-        }
       } else {
-        argsList.add(arg);
+        if (arg.matches("--password.*=.*")) {
+          argsList.add(passwordRedacted);
+        } else if (arg.startsWith("--password")) {
+          argsList.add(passwordRedacted);
+          if (iterator.hasNext()) {
+            // Skip over the password
+            iterator.next();
+          }
+        } else {
+          argsList.add(arg);
+        }
       }
     }
 

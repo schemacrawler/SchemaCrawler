@@ -32,7 +32,7 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.util.List;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputFormatState;
 import us.fatehi.utility.string.StringFormat;
@@ -81,8 +81,8 @@ public enum DiagramOutputFormat implements OutputFormat {
   xlib("Xlib canvas", "x11"),
   ;
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(DiagramOutputFormat.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(DiagramOutputFormat.class.getName());
 
   /**
    * Gets the value from the format.

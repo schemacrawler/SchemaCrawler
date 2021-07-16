@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
@@ -49,8 +49,8 @@ import us.fatehi.utility.string.StringFormat;
 @Retriever
 public final class TableRowCountsRetriever {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(TableRowCountsRetriever.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(TableRowCountsRetriever.class.getName());
 
   private final Connection connection;
   private final Catalog catalog;
@@ -84,7 +84,7 @@ public final class TableRowCountsRetriever {
         final long count = executeForLong(query, connection, table, identifiers);
         addRowCountToTable(table, count);
       } catch (final SQLException e) {
-        LOGGER.log(Level.WARNING, new StringFormat("Could not get count for table <%s>", table), e);
+        LOGGER.log(Level.WARNING, e, new StringFormat("Could not get count for table <%s>", table));
       }
     }
   }

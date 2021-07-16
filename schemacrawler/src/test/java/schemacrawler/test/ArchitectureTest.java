@@ -110,7 +110,7 @@ public class ArchitectureTest {
     noClasses()
         .that(
             resideOutsideOfPackages("schemacrawler.testdb", "sf.util")
-                .and(are(not(simpleName("SchemaCrawlerLogger"))))
+                .and(are(not(simpleName("Logger"))))
                 .and(are(not(simpleName("LogLevel")))))
         .should(USE_JAVA_UTIL_LOGGING)
         .because("SchemaCrawler wraps Java logging in a utility")

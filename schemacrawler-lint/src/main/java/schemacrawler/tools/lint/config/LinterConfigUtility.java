@@ -40,7 +40,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.command.lint.options.LintOptions;
@@ -52,8 +52,8 @@ import us.fatehi.utility.string.StringFormat;
 @UtilityMarker
 public final class LinterConfigUtility {
 
-  public static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(LinterConfigUtility.class.getName());
+  public static final Logger LOGGER =
+      Logger.getLogger(LinterConfigUtility.class.getName());
 
   /**
    * Obtain linter configuration from a system property

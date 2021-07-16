@@ -37,12 +37,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 
 public class AvailableJDBCDrivers implements Iterable<Driver> {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(AvailableJDBCDrivers.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(AvailableJDBCDrivers.class.getName());
 
   private static List<Driver> availableJDBCDrivers() {
     final List<Driver> availableJDBCDrivers = new ArrayList<>();

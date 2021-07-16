@@ -42,12 +42,12 @@ import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import com.typesafe.config.ConfigParseOptions;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 
 public class CommandLineConfigUtility {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(CommandLineConfigUtility.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(CommandLineConfigUtility.class.getName());
 
   public static Map<String, Object> loadConfig() {
 

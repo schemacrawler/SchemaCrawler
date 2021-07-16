@@ -12,7 +12,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import us.fatehi.utility.ProcessExecutor;
 import us.fatehi.utility.string.FileContents;
@@ -20,8 +20,8 @@ import us.fatehi.utility.string.StringFormat;
 
 public final class GraphvizUtility {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(GraphvizUtility.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(GraphvizUtility.class.getName());
 
   public static boolean isGraphvizAvailable() {
     final List<String> command = new ArrayList<>();

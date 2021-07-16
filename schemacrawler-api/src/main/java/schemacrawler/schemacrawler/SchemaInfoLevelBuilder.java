@@ -34,13 +34,13 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 
 public final class SchemaInfoLevelBuilder
     implements OptionsBuilder<SchemaInfoLevelBuilder, SchemaInfoLevel> {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(SchemaInfoLevelBuilder.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(SchemaInfoLevelBuilder.class.getName());
 
   public static SchemaInfoLevelBuilder builder() {
     return new SchemaInfoLevelBuilder();

@@ -30,7 +30,7 @@ package schemacrawler.schema;
 
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import us.fatehi.utility.string.StringFormat;
 
 /** Condition timing type. */
@@ -45,8 +45,8 @@ public enum ConditionTimingType {
   /** After */
   after("AFTER");
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(ConditionTimingType.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(ConditionTimingType.class.getName());
 
   /**
    * Find the enumeration value corresponding to the string.

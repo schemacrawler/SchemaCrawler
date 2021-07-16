@@ -39,7 +39,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.DatabaseObject;
@@ -59,8 +59,8 @@ import schemacrawler.utility.TypeMap;
 @Retriever
 abstract class AbstractRetriever {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(AbstractRetriever.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(AbstractRetriever.class.getName());
   final MutableCatalog catalog;
   private final SchemaCrawlerOptions options;
   private final RetrieverConnection retrieverConnection;
@@ -135,13 +135,13 @@ abstract class AbstractRetriever {
     if ("HYC00".equalsIgnoreCase(e.getSQLState()) || "HY000".equalsIgnoreCase(e.getSQLState())) {
       logSQLFeatureNotSupported(message, e);
     } else {
-      LOGGER.log(Level.WARNING, message, e);
+      LOGGER.log(Level.WARNING, e, message);
     }
   }
 
   final void logSQLFeatureNotSupported(final Supplier<String> message, final Throwable e) {
     LOGGER.log(Level.WARNING, message);
-    LOGGER.log(Level.FINE, message, e);
+    LOGGER.log(Level.FINE, e, message);
   }
 
   /**

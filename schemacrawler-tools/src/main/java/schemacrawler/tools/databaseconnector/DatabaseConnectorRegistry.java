@@ -44,7 +44,7 @@ import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -57,8 +57,8 @@ import us.fatehi.utility.string.StringFormat;
  */
 public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerType> {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(DatabaseConnectorRegistry.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(DatabaseConnectorRegistry.class.getName());
 
   private static DatabaseConnectorRegistry databaseConnectorRegistrySingleton;
 
@@ -90,10 +90,10 @@ public final class DatabaseConnectorRegistry implements Iterable<DatabaseServerT
         } catch (final Exception e) {
           LOGGER.log(
               Level.CONFIG,
+              e,
               new StringFormat(
-                  "Could not load database connector, %s=%s",
-                  databaseSystemIdentifier, databaseConnector.getClass().getName()),
-              e);
+            "Could not load database connector, %s=%s",
+            databaseSystemIdentifier, databaseConnector.getClass().getName()));
         }
       }
     } catch (final Exception e) {

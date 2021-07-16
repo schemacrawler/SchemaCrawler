@@ -42,7 +42,7 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Function;
@@ -66,8 +66,8 @@ import us.fatehi.utility.string.StringFormat;
  */
 final class RoutineRetriever extends AbstractRetriever {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(RoutineRetriever.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(RoutineRetriever.class.getName());
 
   RoutineRetriever(
       final RetrieverConnection retrieverConnection,

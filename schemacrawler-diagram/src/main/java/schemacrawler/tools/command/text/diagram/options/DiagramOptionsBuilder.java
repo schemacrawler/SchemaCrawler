@@ -38,7 +38,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.tools.command.text.schema.options.BaseSchemaTextOptionsBuilder;
 import schemacrawler.tools.options.Config;
 import us.fatehi.utility.PropertiesUtility;
@@ -57,8 +57,8 @@ public final class DiagramOptionsBuilder
   private static final String SC_GRAPHVIZ_OPTS = "SC_GRAPHVIZ_OPTS";
   private static final String GRAPH_GRAPHVIZ_ATTRIBUTES = SCHEMACRAWLER_GRAPH_PREFIX + "graphviz";
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(DiagramOptions.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(DiagramOptions.class.getName());
 
   public static DiagramOptionsBuilder builder() {
     return new DiagramOptionsBuilder();

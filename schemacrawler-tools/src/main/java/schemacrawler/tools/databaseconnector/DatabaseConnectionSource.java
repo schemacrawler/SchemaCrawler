@@ -46,15 +46,15 @@ import java.util.Properties;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import us.fatehi.utility.string.StringFormat;
 
 public final class DatabaseConnectionSource implements Supplier<Connection> {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(DatabaseConnectionSource.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(DatabaseConnectionSource.class.getName());
 
   private static void logConnection(final Connection connection) {
     if (connection == null || !LOGGER.isLoggable(Level.INFO)) {

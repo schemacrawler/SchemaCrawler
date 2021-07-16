@@ -34,7 +34,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
@@ -45,8 +45,8 @@ import us.fatehi.utility.string.StringFormat;
 
 public class LinterTableEmpty extends BaseLinter {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(LinterTableEmpty.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(LinterTableEmpty.class.getName());
 
   public LinterTableEmpty() {
     setSeverity(LintSeverity.low);
@@ -71,7 +71,7 @@ public class LinterTableEmpty extends BaseLinter {
         addTableLint(table, getSummary());
       }
     } catch (final SQLException e) {
-      LOGGER.log(Level.WARNING, new StringFormat("Could not get count for table, ", table), e);
+      LOGGER.log(Level.WARNING, e, new StringFormat("Could not get count for table, ", table));
     }
   }
 }

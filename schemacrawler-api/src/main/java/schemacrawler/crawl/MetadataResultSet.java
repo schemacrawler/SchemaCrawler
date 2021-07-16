@@ -58,7 +58,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.IdentifiedEnum;
 import schemacrawler.schema.ResultsColumn;
@@ -76,8 +76,8 @@ import us.fatehi.utility.string.StringFormat;
  */
 public final class MetadataResultSet implements AutoCloseable {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(MetadataResultSet.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(MetadataResultSet.class.getName());
 
   private static final int FETCHSIZE = 20;
 
@@ -147,8 +147,8 @@ public final class MetadataResultSet implements AutoCloseable {
            */
           LOGGER.log(
               Level.WARNING,
-              new StringFormat("Could not read value for column <%s>", resultsColumn),
-              e);
+              e,
+              new StringFormat("Could not read value for column <%s>", resultsColumn));
         }
       }
     }
@@ -200,8 +200,8 @@ public final class MetadataResultSet implements AutoCloseable {
       } catch (final SQLException e) {
         LOGGER.log(
             Level.WARNING,
-            new StringFormat("Could not read boolean value for column <%s>", columnName),
-            e);
+            e,
+            new StringFormat("Could not read boolean value for column <%s>", columnName));
       }
     }
     return false;
@@ -279,8 +279,8 @@ public final class MetadataResultSet implements AutoCloseable {
       } catch (final SQLException e) {
         LOGGER.log(
             Level.WARNING,
-            new StringFormat("Could not read integer value for column <%s>", columnName),
-            e);
+            e,
+            new StringFormat("Could not read integer value for column <%s>", columnName));
       }
     }
     return value;
@@ -310,8 +310,8 @@ public final class MetadataResultSet implements AutoCloseable {
       } catch (final SQLException e) {
         LOGGER.log(
             Level.WARNING,
-            new StringFormat("Could not read long value for column <%s>", columnName),
-            e);
+            e,
+            new StringFormat("Could not read long value for column <%s>", columnName));
       }
     }
     return value;
@@ -341,8 +341,8 @@ public final class MetadataResultSet implements AutoCloseable {
       } catch (final SQLException e) {
         LOGGER.log(
             Level.WARNING,
-            new StringFormat("Could not read short value for column <%s>", columnName),
-            e);
+            e,
+            new StringFormat("Could not read short value for column <%s>", columnName));
       }
     }
     return value;
@@ -369,8 +369,8 @@ public final class MetadataResultSet implements AutoCloseable {
       } catch (final SQLException e) {
         LOGGER.log(
             Level.WARNING,
-            new StringFormat("Could not read string value for column <%s>", columnName),
-            e);
+            e,
+            new StringFormat("Could not read string value for column <%s>", columnName));
       }
     }
     return value;

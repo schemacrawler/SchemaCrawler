@@ -31,15 +31,15 @@ package schemacrawler.tools.commandline.state;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import us.fatehi.utility.string.ObjectToStringFormat;
 
 public final class StateUtility {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(StateUtility.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(StateUtility.class.getName());
 
   public static void logState(final ShellState state, final boolean showlog) {
     if (state == null) {

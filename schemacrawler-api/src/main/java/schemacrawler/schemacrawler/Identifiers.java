@@ -43,7 +43,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DependantObject;
 import schemacrawler.schema.NamedObject;
@@ -199,8 +199,8 @@ public final class Identifiers {
     }
   }
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(Identifiers.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(Identifiers.class.getName());
 
   public static final Identifiers STANDARD =
       Identifiers.identifiers().withIdentifierQuoteString("\"").build();

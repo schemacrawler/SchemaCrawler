@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
@@ -60,8 +60,8 @@ import us.fatehi.utility.string.StringFormat;
  * @author Sualeh Fatehi
  */
 public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOptions> {
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(OperationCommand.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(OperationCommand.class.getName());
 
   public OperationCommand(final String command) {
     super(command);
@@ -114,7 +114,7 @@ public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOp
                   query, statement, table, isAlphabeticalSortForTableColumns, identifiers)) {
             handler.handleData(table, results);
           } catch (final SQLException e) {
-            LOGGER.log(Level.WARNING, new StringFormat("Bad operation for table <%s>", table), e);
+            LOGGER.log(Level.WARNING, e, new StringFormat("Bad operation for table <%s>", table));
           }
         }
       }

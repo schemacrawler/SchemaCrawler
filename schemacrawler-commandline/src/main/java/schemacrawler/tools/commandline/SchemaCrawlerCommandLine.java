@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logFullStackTrace;
+import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logFatalStackTrace;
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSafeArguments;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.catalogLoaderPluginCommands;
@@ -41,14 +41,14 @@ import java.util.Map;
 import java.util.logging.Level;
 
 import picocli.CommandLine;
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 
 public final class SchemaCrawlerCommandLine {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(SchemaCrawlerCommandLine.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(SchemaCrawlerCommandLine.class.getName());
 
   public static void execute(final String[] args) {
 
@@ -67,7 +67,7 @@ public final class SchemaCrawlerCommandLine {
       executeCommandLine(commandLine);
     } catch (final Throwable throwable) {
       logSafeArguments(args);
-      logFullStackTrace(Level.SEVERE, throwable);
+      logFatalStackTrace(throwable);
 
       final String errorMessage;
       if (throwable instanceof picocli.CommandLine.PicocliException) {

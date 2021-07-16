@@ -40,13 +40,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import us.fatehi.utility.string.StringFormat;
 
 public final class TypeMap implements Map<String, Class<?>> {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(TypeMap.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(TypeMap.class.getName());
 
   /**
    * The default mappings are from the JDBC Specification 4.2, Appendix B - Data Type Conversion
@@ -188,8 +188,8 @@ public final class TypeMap implements Map<String, Class<?>> {
       } catch (final ClassNotFoundException e) {
         LOGGER.log(
             Level.WARNING,
-            new StringFormat("Could not obtain class mapping for data type <%s>", typeName),
-            e);
+            e,
+            new StringFormat("Could not obtain class mapping for data type <%s>", typeName));
         return null;
       }
     }

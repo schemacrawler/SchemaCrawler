@@ -6,7 +6,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.function.BiConsumer;
 import java.util.logging.Level;
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.Query;
 import us.fatehi.utility.string.StringFormat;
@@ -16,8 +16,8 @@ class OracleInformationSchemaViewsBuilder
 {
   
 
-  private static final SchemaCrawlerLogger LOGGER =
-    SchemaCrawlerLogger.getLogger(OracleDatabaseConnector.class.getName());
+  private static final Logger LOGGER =
+    Logger.getLogger(OracleDatabaseConnector.class.getName());
 
   private static String getCatalogScope(final Connection connection)
   {

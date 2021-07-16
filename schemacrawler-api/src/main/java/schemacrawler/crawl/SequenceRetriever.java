@@ -36,7 +36,7 @@ import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.NamedObjectKey;
@@ -54,8 +54,8 @@ import schemacrawler.schemacrawler.SchemaReference;
  */
 final class SequenceRetriever extends AbstractRetriever {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(SequenceRetriever.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(SequenceRetriever.class.getName());
 
   SequenceRetriever(
       final RetrieverConnection retrieverConnection,

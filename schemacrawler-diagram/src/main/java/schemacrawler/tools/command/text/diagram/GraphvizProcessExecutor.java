@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 
-import schemacrawler.SchemaCrawlerLogger;
+import java.util.logging.Logger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import us.fatehi.utility.ProcessExecutor;
@@ -48,8 +48,8 @@ import us.fatehi.utility.string.StringFormat;
 
 final class GraphvizProcessExecutor extends AbstractGraphProcessExecutor {
 
-  private static final SchemaCrawlerLogger LOGGER =
-      SchemaCrawlerLogger.getLogger(GraphvizProcessExecutor.class.getName());
+  private static final Logger LOGGER =
+      Logger.getLogger(GraphvizProcessExecutor.class.getName());
 
   private final List<String> graphvizOpts;
 
