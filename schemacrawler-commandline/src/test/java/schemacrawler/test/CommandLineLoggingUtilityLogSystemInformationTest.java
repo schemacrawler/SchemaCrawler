@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import nl.altindag.log.LogCaptor;
 import schemacrawler.tools.commandline.utility.CommandLineLoggingUtility;
 
-public class CommandLineLoggingUtilityLogSystemClasspathTest {
+public class CommandLineLoggingUtilityLogSystemInformationTest {
 
   private static LogCaptor logCaptor;
 
@@ -51,6 +51,25 @@ public class CommandLineLoggingUtilityLogSystemClasspathTest {
     logCaptor.disableLogs();
 
     CommandLineLoggingUtility.logSystemClasspath();
+
+    assertThat(logCaptor.getLogs(), hasSize(0));
+  }
+
+  @Test
+  public void logSystemProperties_simple() {
+
+    CommandLineLoggingUtility.logSystemProperties();
+
+    assertThat(logCaptor.getLogs(), hasSize(1));
+    assertThat(logCaptor.getInfoLogs().get(0), startsWith("System properties:"));
+  }
+
+  @Test
+  public void logSystemProperties_simple_noConfig() {
+
+    logCaptor.disableLogs();
+
+    CommandLineLoggingUtility.logSystemProperties();
 
     assertThat(logCaptor.getLogs(), hasSize(0));
   }
