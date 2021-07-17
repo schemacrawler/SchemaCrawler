@@ -31,6 +31,8 @@ package us.fatehi.utility.test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -66,5 +68,23 @@ public class IOUtilityTest {
     assertThat(IOUtility.getFileExtension("abc. "), is(" "));
     assertThat(IOUtility.getFileExtension("abc.xyz"), is("xyz"));
     assertThat(IOUtility.getFileExtension(".xyz"), is("xyz"));
+  }
+
+  @Test
+  public void fileReadable() throws IOException {
+    assertThat(IOUtility.isFileReadable(null), is(false));
+    // ("." is not a file, but a directory)
+    assertThat(IOUtility.isFileReadable(Paths.get(".")), is(false));
+
+    final Path tempFile = Files.createTempFile("sc", ".dat");
+    // (empty file)
+    assertThat(IOUtility.isFileReadable(tempFile), is(false));
+  }
+
+  @Test
+  public void fileWritable() throws IOException {
+    assertThat(IOUtility.isFileWritable(null), is(false));
+    // ("." is not a file, but a directory)
+    assertThat(IOUtility.isFileWritable(Paths.get(".")), is(false));
   }
 }
