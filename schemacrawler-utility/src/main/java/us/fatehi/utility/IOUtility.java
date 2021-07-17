@@ -191,11 +191,13 @@ public final class IOUtility {
       return "";
     }
 
-    try (final StringWriter writer = new StringWriter()) {
+    try {
+      final StringWriter writer = new StringWriter();
       copy(reader, writer);
       writer.close();
       return writer.toString();
     } catch (final IOException e) {
+      // This is the error thrown while closing the writer itself, not during copy
       LOGGER.log(Level.WARNING, e.getMessage(), e);
       return "";
     }

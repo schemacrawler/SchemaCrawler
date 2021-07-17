@@ -30,8 +30,10 @@ package us.fatehi.utility.test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -96,8 +98,10 @@ public class IOUtilityTest {
     assertThat(IOUtility.readFully((Reader) null), is(""));
 
     final Reader reader = mock(Reader.class);
-    when(reader.read()).thenThrow(IOException.class);
+    doThrow(new IOException("Exception using a mocked reader"))
+        .when(reader)
+        .read(any(), anyInt(), anyInt());
 
-    //  assertThat(IOUtility.readFully(reader), is(""));
+    assertThat(IOUtility.readFully(reader), is(""));
   }
 }
