@@ -191,8 +191,7 @@ public final class IOUtility {
       return "";
     }
 
-    try {
-      final StringWriter writer = new StringWriter();
+    try (final StringWriter writer = new StringWriter()) {
       copy(reader, writer);
       writer.close();
       return writer.toString();
