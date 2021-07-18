@@ -35,7 +35,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -44,6 +47,50 @@ import org.junit.jupiter.api.Test;
 import us.fatehi.utility.DatabaseUtility;
 
 public class DatabaseUtilityTest {
+
+  @Test
+  public void checkConnection() throws SQLException {
+
+    final Connection connection = mock(Connection.class);
+
+    assertThat(DatabaseUtility.checkConnection(connection), is(connection));
+
+    when(connection.isClosed()).thenReturn(true);
+
+    final SQLException exception1 =
+        assertThrows(
+            SQLException.class,
+            () -> assertThat(DatabaseUtility.checkConnection(null), is(nullValue())));
+    assertThat(exception1.getMessage(), is("No database connection provided"));
+
+    final SQLException exception2 =
+        assertThrows(
+            SQLException.class,
+            () -> assertThat(DatabaseUtility.checkConnection(connection), is(nullValue())));
+    assertThat(exception2.getMessage(), is("Connection is closed"));
+  }
+
+  @Test
+  public void checkResultSet() throws SQLException {
+
+    final ResultSet results = mock(ResultSet.class);
+
+    assertThat(DatabaseUtility.checkResultSet(results), is(results));
+
+    when(results.isClosed()).thenReturn(true);
+
+    final SQLException exception1 =
+        assertThrows(
+            SQLException.class,
+            () -> assertThat(DatabaseUtility.checkResultSet(null), is(nullValue())));
+    assertThat(exception1.getMessage(), is("No result-set provided"));
+
+    final SQLException exception2 =
+        assertThrows(
+            SQLException.class,
+            () -> assertThat(DatabaseUtility.checkResultSet(results), is(nullValue())));
+    assertThat(exception2.getMessage(), is("Result-set is closed"));
+  }
 
   @Test
   public void executeSql() throws SQLException {
