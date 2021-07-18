@@ -48,6 +48,7 @@ import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
     customSynopsis = {"servers"},
     optionListHeading = "Options:%n")
 public class AvailableServersCommand implements Runnable {
+
   private static String availableServersDescriptive() {
     final CommandLine.Help.ColorScheme.Builder colorSchemaBuilder =
         new CommandLine.Help.ColorScheme.Builder();

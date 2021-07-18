@@ -49,11 +49,6 @@ import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * Utility methods.
- *
- * @author Sualeh Fatehi
- */
 @UtilityMarker
 public final class IOUtility {
 
@@ -197,6 +192,7 @@ public final class IOUtility {
       writer.close();
       return writer.toString();
     } catch (final IOException e) {
+      // This is the error thrown while closing the writer itself, not during copy
       LOGGER.log(Level.WARNING, e.getMessage(), e);
       return "";
     }

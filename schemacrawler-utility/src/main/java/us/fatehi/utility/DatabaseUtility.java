@@ -42,11 +42,6 @@ import java.util.logging.Logger;
 
 import us.fatehi.utility.string.StringFormat;
 
-/**
- * Utility methods.
- *
- * @author Sualeh Fatehi
- */
 @UtilityMarker
 public final class DatabaseUtility {
 
