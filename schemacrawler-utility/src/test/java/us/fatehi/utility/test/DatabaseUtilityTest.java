@@ -42,20 +42,27 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 
 import us.fatehi.utility.DatabaseUtility;
 
+@TestInstance(Lifecycle.PER_CLASS)
 public class DatabaseUtilityTest {
+
+  private Connection connection;
 
   @Test
   public void checkConnection() throws SQLException {
 
-    final Connection connection = mock(Connection.class);
-
     assertThat(DatabaseUtility.checkConnection(connection), is(connection));
 
-    when(connection.isClosed()).thenReturn(true);
+    final Connection mockConnection = mock(Connection.class);
+    when(mockConnection.isClosed()).thenReturn(true);
 
     final SQLException exception1 =
         assertThrows(
@@ -66,7 +73,7 @@ public class DatabaseUtilityTest {
     final SQLException exception2 =
         assertThrows(
             SQLException.class,
-            () -> assertThat(DatabaseUtility.checkConnection(connection), is(nullValue())));
+            () -> assertThat(DatabaseUtility.checkConnection(mockConnection), is(nullValue())));
     assertThat(exception2.getMessage(), is("Connection is closed"));
   }
 
@@ -90,6 +97,20 @@ public class DatabaseUtilityTest {
             SQLException.class,
             () -> assertThat(DatabaseUtility.checkResultSet(results), is(nullValue())));
     assertThat(exception2.getMessage(), is("Result-set is closed"));
+  }
+
+  @BeforeAll
+  public void createDatabase() throws Exception {
+
+    final EmbeddedDatabase db =
+        new EmbeddedDatabaseBuilder()
+            .generateUniqueName(true)
+            .setScriptEncoding("UTF-8")
+            .ignoreFailedDrops(true)
+            .addScript("testdb.sql")
+            .build();
+
+    connection = db.getConnection();
   }
 
   @Test
