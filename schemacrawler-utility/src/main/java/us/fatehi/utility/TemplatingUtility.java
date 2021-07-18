@@ -32,11 +32,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * Configuration properties.
- *
- * @author Sualeh Fatehi
- */
 @UtilityMarker
 public final class TemplatingUtility {
 

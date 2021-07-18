@@ -39,6 +39,7 @@ import java.util.logging.Logger;
 
 import us.fatehi.utility.string.StringFormat;
 
+@UtilityMarker
 public class PropertiesUtility {
 
   private static final Logger LOGGER = Logger.getLogger(PropertiesUtility.class.getName());

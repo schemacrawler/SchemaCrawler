@@ -49,11 +49,6 @@ import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * Utility methods.
- *
- * @author Sualeh Fatehi
- */
 @UtilityMarker
 public final class IOUtility {
 

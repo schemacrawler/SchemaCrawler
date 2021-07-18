@@ -33,11 +33,6 @@ import java.util.Map.Entry;
 import java.util.StringJoiner;
 import java.util.regex.Pattern;
 
-/**
- * Utility methods.
- *
- * @author Sualeh Fatehi
- */
 @UtilityMarker
 public final class Utility {
 
