@@ -36,8 +36,16 @@ import static us.fatehi.utility.Utility.hasNoUpperCase;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.isClassAvailable;
 import static us.fatehi.utility.Utility.isIntegral;
+import static us.fatehi.utility.Utility.join;
 import static us.fatehi.utility.Utility.toSnakeCase;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.collections.MapUtils;
 import org.junit.jupiter.api.Test;
 
 public class UtilityTest {
@@ -104,6 +112,33 @@ public class UtilityTest {
     assertThat(isIntegral("1"), is(true));
     assertThat(isIntegral("+1"), is(true));
     assertThat(isIntegral("-1"), is(true));
+  }
+
+  @Test
+  public void joinCollectionTest() {
+    assertThat(join((Collection) null, ","), nullValue());
+    assertThat(join(new ArrayList<>(), ","), nullValue());
+
+    assertThat(join(Arrays.asList("abc"), ","), is("abc"));
+    assertThat(join(Arrays.asList(new String[] {null}), ","), is("null"));
+    assertThat(join(Arrays.asList("abc", "bcd"), ","), is("abc,bcd"));
+    assertThat(join(Arrays.asList("abc", null), ","), is("abc,null"));
+  }
+
+  @Test
+  public void joinMapTest() {
+    assertThat(join((Map) null, ","), nullValue());
+    assertThat(join(new HashMap<>(), ","), nullValue());
+
+    final String[][] map =
+        new String[][] {
+          {"RED", null},
+          {null, "#00FF00"},
+          {"BLUE", "#0000FF"}
+        };
+
+    assertThat(
+        join(MapUtils.putAll(new HashMap<>(), map), ","), is("RED=null,null=#00FF00,BLUE=#0000FF"));
   }
 
   @Test
