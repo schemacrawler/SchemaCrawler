@@ -43,6 +43,7 @@ import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -116,6 +117,36 @@ public class DatabaseUtilityTest {
             .build();
 
     connection = db.getConnection();
+  }
+
+  @Test
+  public void executeScriptFromResource() throws SQLException {
+
+    final String tableName = "TABLE2";
+
+    // 1. No SQL resource found
+    // Pre-condition - table does not exist
+    assertThat(doesTableExist(tableName), is(false));
+    // Test
+    DatabaseUtility.executeScriptFromResource(connection, "no-resource.sql");
+    // Post-condition - table exists
+    assertThat(doesTableExist(tableName), is(false));
+
+    // 2. Unhappy path - bad SQL
+    // Pre-condition - table does not exist
+    assertThat(doesTableExist(tableName), is(false));
+    // Test
+    DatabaseUtility.executeScriptFromResource(connection, "/bad-resource-1.sql");
+    // Post-condition - table exists
+    assertThat(doesTableExist(tableName), is(false));
+
+    // 2. Happy path
+    // Pre-condition - table does not exist
+    assertThat(doesTableExist(tableName), is(false));
+    // Test
+    DatabaseUtility.executeScriptFromResource(connection, "/sql-resource-1.sql");
+    // Post-condition - table exists
+    assertThat(doesTableExist(tableName), is(true));
   }
 
   @Test
@@ -242,5 +273,14 @@ public class DatabaseUtilityTest {
     assertThat(
         DatabaseUtility.readResultsVector(statement.executeQuery("SELECT COL3 FROM TABLE1")),
         containsInAnyOrder("2"));
+  }
+
+  private boolean doesTableExist(final String tableName) throws SQLException {
+    final String catalog = connection.getCatalog();
+    final DatabaseMetaData dbMetaData = connection.getMetaData();
+    final ResultSet results =
+        dbMetaData.getTables(catalog, null, tableName, new String[] {"TABLE"});
+    final boolean tableExists = results.next();
+    return tableExists;
   }
 }
