@@ -41,8 +41,8 @@ public final class Utility {
       return "";
     }
     final int index = indexOfDifference(string1, string2);
-    if (index == -1) {
-      return null;
+    if (index < 1) {
+      return "";
     } else {
       return string1.substring(0, index).toLowerCase();
     }

@@ -49,6 +49,7 @@ public class UtilityTest {
     assertThat(commonPrefix("preTest", "preCompile"), is("pre"));
     assertThat(commonPrefix("something", "nothing"), is(""));
     assertThat(commonPrefix("preTest", ""), is(""));
+    assertThat(commonPrefix("12345", "12345"), is(""));
   }
 
   @Test
