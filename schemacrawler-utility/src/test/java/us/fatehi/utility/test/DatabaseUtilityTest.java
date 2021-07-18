@@ -31,6 +31,8 @@ package us.fatehi.utility.test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.emptyCollectionOf;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -216,5 +218,29 @@ public class DatabaseUtilityTest {
             SQLException.class,
             () -> DatabaseUtility.executeSqlForScalar(connection, "SELECT COL2, COL3 FROM TABLE1"));
     assertThat(exception.getMessage(), startsWith("Too many columns"));
+  }
+
+  @Test
+  public void readResultsVector() throws SQLException {
+    final Statement statement = connection.createStatement();
+
+    // Read no values
+    assertThat(
+        DatabaseUtility.readResultsVector(
+            statement.executeQuery("SELECT COL1 FROM TABLE1 WHERE ENTITY_ID = 3")),
+        is(emptyCollectionOf(String.class)));
+    // Read one value
+    assertThat(
+        DatabaseUtility.readResultsVector(
+            statement.executeQuery("SELECT COL1 FROM TABLE1 WHERE ENTITY_ID = 1")),
+        containsInAnyOrder("ABC"));
+    // Read more than value, including nulls (ignoring nulls)
+    assertThat(
+        DatabaseUtility.readResultsVector(statement.executeQuery("SELECT COL1 FROM TABLE1")),
+        containsInAnyOrder("ABC", "XYZ"));
+    // Read other data types as strings, including nulls (ignoring nulls)
+    assertThat(
+        DatabaseUtility.readResultsVector(statement.executeQuery("SELECT COL3 FROM TABLE1")),
+        containsInAnyOrder("2"));
   }
 }
