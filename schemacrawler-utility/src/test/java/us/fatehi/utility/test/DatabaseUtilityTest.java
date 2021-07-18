@@ -29,7 +29,9 @@ http://www.gnu.org/licenses/
 package us.fatehi.utility.test;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -37,6 +39,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -116,10 +119,17 @@ public class DatabaseUtilityTest {
   @Test
   public void executeSql() throws SQLException {
 
-    final Statement statement = mock(Statement.class);
+    final Statement statement = connection.createStatement();
 
     assertThat(DatabaseUtility.executeSql(null, "<some query>"), is(nullValue()));
     assertThat(DatabaseUtility.executeSql(statement, null), is(nullValue()));
+
+    assertThat(
+        DatabaseUtility.executeSql(statement, "SELECT COL1 FROM TABLE1 WHERE ENTITY_ID = 1"),
+        is(not(nullValue())));
+    assertThat(
+        DatabaseUtility.executeSql(statement, "UPDATE TABLE1 SET COL2 = 'GHI' WHERE ENTITY_ID = 1"),
+        is(nullValue()));
   }
 
   @Test
@@ -134,5 +144,77 @@ public class DatabaseUtilityTest {
             () ->
                 assertThat(DatabaseUtility.executeSql(statement, "<some query>"), is(nullValue())));
     assertThat(exception.getMessage(), is("Exception using a mocked statement"));
+  }
+
+  @Test
+  public void executeSqlForLong() throws SQLException {
+
+    // Happy path
+    assertThat(
+        DatabaseUtility.executeSqlForLong(
+            connection, "SELECT COL3 FROM TABLE1 WHERE ENTITY_ID = 1"),
+        is(2L));
+
+    // Unhappy paths
+    Exception exception;
+    // NULL in database
+    exception =
+        assertThrows(
+            SQLException.class,
+            () ->
+                DatabaseUtility.executeSqlForLong(
+                    connection, "SELECT COL3 FROM TABLE1 WHERE ENTITY_ID = 2"));
+    assertThat(exception.getMessage(), startsWith("Cannot get a long value"));
+    // No rows of data
+    exception =
+        assertThrows(
+            SQLException.class,
+            () ->
+                DatabaseUtility.executeSqlForLong(
+                    connection, "SELECT COL3 FROM TABLE1 WHERE ENTITY_ID = 3"));
+    assertThat(exception.getMessage(), startsWith("Cannot get a long value"));
+    // Not a number
+    exception =
+        assertThrows(
+            SQLException.class,
+            () ->
+                DatabaseUtility.executeSqlForLong(
+                    connection, "SELECT COL1 FROM TABLE1 WHERE ENTITY_ID = 1"));
+    assertThat(exception.getMessage(), startsWith("Cannot get a long value"));
+  }
+
+  @Test
+  public void executeSqlForScalar() throws SQLException {
+
+    // Happy path
+    assertThat(
+        DatabaseUtility.executeSqlForScalar(
+            connection, "SELECT COL3 FROM TABLE1 WHERE COL1 = 'ABC'"),
+        is(new BigDecimal(2)));
+    // Happy path - NULL in database
+    assertThat(
+        DatabaseUtility.executeSqlForScalar(
+            connection, "SELECT COL3 FROM TABLE1 WHERE COL1 = 'XYZ'"),
+        is(nullValue()));
+    // Happy path - no rows of data
+    assertThat(
+        DatabaseUtility.executeSqlForScalar(
+            connection, "SELECT COL3 FROM TABLE1 WHERE COL1 = 'ZZZ'"),
+        is(nullValue()));
+
+    // Unhappy paths
+    Exception exception;
+    // Too many rows
+    exception =
+        assertThrows(
+            SQLException.class,
+            () -> DatabaseUtility.executeSqlForScalar(connection, "SELECT COL3 FROM TABLE1"));
+    assertThat(exception.getMessage(), startsWith("Too many rows"));
+    // Too many columns
+    exception =
+        assertThrows(
+            SQLException.class,
+            () -> DatabaseUtility.executeSqlForScalar(connection, "SELECT COL2, COL3 FROM TABLE1"));
+    assertThat(exception.getMessage(), startsWith("Too many columns"));
   }
 }
