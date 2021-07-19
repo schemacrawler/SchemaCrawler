@@ -31,7 +31,6 @@ import static java.util.Objects.requireNonNull;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -39,7 +38,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.schema.Table;
@@ -58,22 +56,23 @@ public class TableMatchKeysTest {
 
     withoutPrefix = matchkeys.get(new LightTable("table0"));
     assertThat(withoutPrefix, is(nullValue()));
+
+    matchkeys = new TableMatchKeys(tables("table1"));
+    assertThat(matchkeys.toString(), is("{table1=[table1]}"));
+
+    withoutPrefix = matchkeys.get(new LightTable("table0"));
+    assertThat(withoutPrefix, is(nullValue()));
+
+    withoutPrefix = matchkeys.get(new LightTable("table1"));
+    assertThat(withoutPrefix, containsInAnyOrder("table1"));
   }
 
   @Test
   public void tableMatchKeys_mixed_prefixes() {
-    TableMatchKeys matchkeys;
     List<String> withoutPrefix;
 
-    matchkeys = new TableMatchKeys(tables("vap_old_table1", "vap_old_table2", "vap_table3"));
-    assertThat(
-        matchkeys.toString(),
-        is(
-            "{"
-                + "vap_old_table2=[old_table2, vap_old_table2], "
-                + "vap_old_table1=[old_table1, vap_old_table1], "
-                + "vap_table3=[table3, vap_table3]"
-                + "}"));
+    final TableMatchKeys matchkeys =
+        new TableMatchKeys(tables("vap_old_table1", "vap_old_table2", "vap_table3"));
 
     withoutPrefix = matchkeys.get(new LightTable("table0"));
     assertThat(withoutPrefix, is(nullValue()));
@@ -90,11 +89,9 @@ public class TableMatchKeysTest {
 
   @Test
   public void tableMatchKeys_no_prefix() {
-    TableMatchKeys matchkeys;
     List<String> withoutPrefix;
 
-    matchkeys = new TableMatchKeys(tables("table1", "table2"));
-    assertThat(matchkeys.toString(), is("{table2=[table2], table1=[table1]}"));
+    final TableMatchKeys matchkeys = new TableMatchKeys(tables("table1", "table2"));
 
     withoutPrefix = matchkeys.get(new LightTable("table0"));
     assertThat(withoutPrefix, is(nullValue()));
@@ -107,25 +104,42 @@ public class TableMatchKeysTest {
   }
 
   @Test
-  @Disabled
-  public void tableMatchKeys_same_prefixes() {
-    TableMatchKeys matchkeys;
+  public void tableMatchKeys_plurals() {
     List<String> withoutPrefix;
 
-    matchkeys = new TableMatchKeys(tables("vap_old_table1", "vap_old_table2", "vap_old_table3"));
-    assertThat(matchkeys.toString(), is("{}"));
+    final TableMatchKeys matchkeys = new TableMatchKeys(tables("cats", "buffaloes", "giraffes"));
 
     withoutPrefix = matchkeys.get(new LightTable("table0"));
-    assertThat(withoutPrefix, is(empty()));
+    assertThat(withoutPrefix, is(nullValue()));
+
+    withoutPrefix = matchkeys.get(new LightTable("cats"));
+    assertThat(withoutPrefix, containsInAnyOrder("cat"));
+
+    withoutPrefix = matchkeys.get(new LightTable("buffaloes"));
+    assertThat(withoutPrefix, containsInAnyOrder("buffalo"));
+
+    withoutPrefix = matchkeys.get(new LightTable("giraffes"));
+    assertThat(withoutPrefix, containsInAnyOrder("giraffe"));
+  }
+
+  @Test
+  public void tableMatchKeys_same_prefixes() {
+    List<String> withoutPrefix;
+
+    final TableMatchKeys matchkeys =
+        new TableMatchKeys(tables("vap_old_table1", "vap_old_table2", "vap_old_table3"));
+
+    withoutPrefix = matchkeys.get(new LightTable("table0"));
+    assertThat(withoutPrefix, is(nullValue()));
 
     withoutPrefix = matchkeys.get(new LightTable("vap_old_table1"));
-    assertThat(withoutPrefix, containsInAnyOrder("old_table1"));
+    assertThat(withoutPrefix, containsInAnyOrder("vap_old_table1"));
 
     withoutPrefix = matchkeys.get(new LightTable("vap_old_table2"));
-    assertThat(withoutPrefix, containsInAnyOrder("old_table2"));
+    assertThat(withoutPrefix, containsInAnyOrder("vap_old_table2"));
 
     withoutPrefix = matchkeys.get(new LightTable("vap_old_table3"));
-    assertThat(withoutPrefix, containsInAnyOrder("old_table3"));
+    assertThat(withoutPrefix, containsInAnyOrder("vap_old_table3"));
   }
 
   private List<Table> tables(final String... tableNames) {
