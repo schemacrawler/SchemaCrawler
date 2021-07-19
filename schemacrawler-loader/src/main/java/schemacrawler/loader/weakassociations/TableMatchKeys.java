@@ -38,8 +38,8 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.schema.Table;
 import us.fatehi.utility.Multimap;
 import us.fatehi.utility.Utility;
@@ -48,8 +48,7 @@ import us.fatehi.utility.string.StringFormat;
 
 final class TableMatchKeys {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(TableMatchKeys.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(TableMatchKeys.class.getName());
 
   private final List<Table> tables;
 
@@ -97,7 +96,7 @@ final class TableMatchKeys {
         final String table1 = tables.get(i).getName();
         final String table2 = tables.get(j).getName();
         final String commonPrefix = Utility.commonPrefix(table1, table2);
-        if (!isBlank(commonPrefix) && commonPrefix.endsWith("_")) {
+        if (!isBlank(commonPrefix)) {
           final List<String> splitCommonPrefixes = new ArrayList<>();
           final String[] splitPrefix = commonPrefix.split("_");
           if (splitPrefix != null && splitPrefix.length > 0) {
@@ -111,7 +110,9 @@ final class TableMatchKeys {
               }
             }
           }
-          splitCommonPrefixes.add(commonPrefix);
+          if (commonPrefix.endsWith("_")) {
+            splitCommonPrefixes.add(commonPrefix);
+          }
 
           for (final String splitCommonPrefix : splitCommonPrefixes) {
             final int prevCount;

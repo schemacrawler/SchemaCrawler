@@ -133,13 +133,13 @@ public class TableMatchKeysTest {
     assertThat(withoutPrefix, is(nullValue()));
 
     withoutPrefix = matchkeys.get(new LightTable("vap_old_table1"));
-    assertThat(withoutPrefix, containsInAnyOrder("vap_old_table1"));
+    assertThat(withoutPrefix, containsInAnyOrder("old_table1", "vap_old_table1"));
 
     withoutPrefix = matchkeys.get(new LightTable("vap_old_table2"));
-    assertThat(withoutPrefix, containsInAnyOrder("vap_old_table2"));
+    assertThat(withoutPrefix, containsInAnyOrder("old_table2", "vap_old_table2"));
 
     withoutPrefix = matchkeys.get(new LightTable("vap_old_table3"));
-    assertThat(withoutPrefix, containsInAnyOrder("vap_old_table3"));
+    assertThat(withoutPrefix, containsInAnyOrder("old_table3", "vap_old_table3"));
   }
 
   private List<Table> tables(final String... tableNames) {
