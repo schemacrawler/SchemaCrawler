@@ -31,14 +31,13 @@ import static java.util.Collections.unmodifiableList;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.beans.ConstructorProperties;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaReference;
 
-public class AlternateKeyAttributes extends ObjectAttributes implements Iterable<String> {
+public class AlternateKeyAttributes extends ObjectAttributes {
 
   private static final long serialVersionUID = -3510286847668145323L;
 
@@ -64,7 +63,7 @@ public class AlternateKeyAttributes extends ObjectAttributes implements Iterable
     }
     this.tableName = tableName;
     if (columns == null || columns.isEmpty()) {
-      throw new IllegalArgumentException("No column provided");
+      throw new IllegalArgumentException("No columns provided");
     }
     this.columns = unmodifiableList(columns);
   }
@@ -79,11 +78,6 @@ public class AlternateKeyAttributes extends ObjectAttributes implements Iterable
 
   public String getTableName() {
     return tableName;
-  }
-
-  @Override
-  public Iterator<String> iterator() {
-    return columns.iterator();
   }
 
   @Override
