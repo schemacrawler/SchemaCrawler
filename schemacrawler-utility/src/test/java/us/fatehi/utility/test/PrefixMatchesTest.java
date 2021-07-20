@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.loader.weakassociations;
+package us.fatehi.utility.test;
 
 import static java.util.Objects.requireNonNull;
 import static org.hamcrest.CoreMatchers.is;
@@ -38,6 +38,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+
+import us.fatehi.utility.PrefixMatches;
 
 public class PrefixMatchesTest {
 

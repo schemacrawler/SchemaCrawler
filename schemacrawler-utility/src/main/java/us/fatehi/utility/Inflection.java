@@ -1,4 +1,4 @@
-package schemacrawler.loader.weakassociations;
+package us.fatehi.utility;
 
 import java.util.ArrayList;
 import java.util.List;

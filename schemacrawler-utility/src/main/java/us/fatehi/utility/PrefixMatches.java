@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.loader.weakassociations;
+package us.fatehi.utility;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.commonPrefix;
@@ -42,18 +42,17 @@ import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import us.fatehi.utility.Multimap;
 import us.fatehi.utility.string.ObjectToStringFormat;
 import us.fatehi.utility.string.StringFormat;
 
-final class PrefixMatches {
+public final class PrefixMatches {
 
   private static final Logger LOGGER = Logger.getLogger(PrefixMatches.class.getName());
 
   private final String keySeparator;
   private final Multimap<String, String> keyPrefixes;
 
-  PrefixMatches(final List<String> keys, final String keySeparator) {
+  public PrefixMatches(final List<String> keys, final String keySeparator) {
     this.keySeparator = requireNonNull(keySeparator, "No key separator provided");
     keyPrefixes = new Multimap<>();
 
