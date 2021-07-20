@@ -31,7 +31,6 @@ import static java.util.Objects.requireNonNull;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
@@ -47,19 +46,22 @@ public class PrefixMatchesTest {
     PrefixMatches matchkeys;
     List<String> withoutPrefix;
 
+    // 1.
     assertThrows(NullPointerException.class, () -> new PrefixMatches(null, "_"));
 
+    // 2.
     matchkeys = new PrefixMatches(Collections.emptyList(), "_");
     assertThat(matchkeys.toString(), is("{}"));
 
     withoutPrefix = matchkeys.get("key0");
-    assertThat(withoutPrefix, is(nullValue()));
+    assertThat(withoutPrefix, containsInAnyOrder("key0"));
 
+    // 3.
     matchkeys = new PrefixMatches(keys("key1"), "_");
     assertThat(matchkeys.toString(), is("{key1=[key1]}"));
 
     withoutPrefix = matchkeys.get("key0");
-    assertThat(withoutPrefix, is(nullValue()));
+    assertThat(withoutPrefix, containsInAnyOrder("key0"));
 
     withoutPrefix = matchkeys.get("key1");
     assertThat(withoutPrefix, containsInAnyOrder("key1"));
@@ -73,7 +75,7 @@ public class PrefixMatchesTest {
         new PrefixMatches(keys("pfx1_pfx2_key1", "pfx1_pfx2_key2", "pfx1_key3"), "_");
 
     withoutPrefix = matchkeys.get("key0");
-    assertThat(withoutPrefix, is(nullValue()));
+    assertThat(withoutPrefix, containsInAnyOrder("key0"));
 
     withoutPrefix = matchkeys.get("pfx1_pfx2_key1");
     assertThat(withoutPrefix, containsInAnyOrder("key1", "pfx2_key1", "pfx1_pfx2_key1"));
@@ -92,7 +94,7 @@ public class PrefixMatchesTest {
     final PrefixMatches matchkeys = new PrefixMatches(keys("key1", "key2"), "_");
 
     withoutPrefix = matchkeys.get("key0");
-    assertThat(withoutPrefix, is(nullValue()));
+    assertThat(withoutPrefix, containsInAnyOrder("key0"));
 
     withoutPrefix = matchkeys.get("key1");
     assertThat(withoutPrefix, containsInAnyOrder("key1"));
@@ -108,7 +110,7 @@ public class PrefixMatchesTest {
     final PrefixMatches matchkeys = new PrefixMatches(keys("cats", "buffaloes", "giraffes"), "_");
 
     withoutPrefix = matchkeys.get("key0");
-    assertThat(withoutPrefix, is(nullValue()));
+    assertThat(withoutPrefix, containsInAnyOrder("key0"));
 
     withoutPrefix = matchkeys.get("cats");
     assertThat(withoutPrefix, containsInAnyOrder("cat"));
@@ -128,7 +130,7 @@ public class PrefixMatchesTest {
         new PrefixMatches(keys("pfx1_pfx2_key1", "pfx1_pfx2_key2", "pfx1_pfx2_key3"), "_");
 
     withoutPrefix = matchkeys.get("key0");
-    assertThat(withoutPrefix, is(nullValue()));
+    assertThat(withoutPrefix, containsInAnyOrder("key0"));
 
     withoutPrefix = matchkeys.get("pfx1_pfx2_key1");
     assertThat(withoutPrefix, containsInAnyOrder("key1", "pfx2_key1", "pfx1_pfx2_key1"));

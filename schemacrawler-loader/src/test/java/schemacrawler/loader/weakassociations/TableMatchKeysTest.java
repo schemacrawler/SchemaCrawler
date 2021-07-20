@@ -31,7 +31,6 @@ import static java.util.Objects.requireNonNull;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
@@ -49,19 +48,22 @@ public class TableMatchKeysTest {
     TableMatchKeys matchkeys;
     List<String> withoutPrefix;
 
+    // 1.
     assertThrows(NullPointerException.class, () -> new TableMatchKeys(null));
 
+    // 2.
     matchkeys = new TableMatchKeys(Collections.emptyList());
     assertThat(matchkeys.toString(), is("{}"));
 
     withoutPrefix = matchkeys.get(new LightTable("table0"));
-    assertThat(withoutPrefix, is(nullValue()));
+    assertThat(withoutPrefix, containsInAnyOrder("table0"));
 
+    // 3.
     matchkeys = new TableMatchKeys(tables("table1"));
     assertThat(matchkeys.toString(), is("{table1=[table1]}"));
 
     withoutPrefix = matchkeys.get(new LightTable("table0"));
-    assertThat(withoutPrefix, is(nullValue()));
+    assertThat(withoutPrefix, containsInAnyOrder("table0"));
 
     withoutPrefix = matchkeys.get(new LightTable("table1"));
     assertThat(withoutPrefix, containsInAnyOrder("table1"));
@@ -75,7 +77,7 @@ public class TableMatchKeysTest {
         new TableMatchKeys(tables("vap_old_table1", "vap_old_table2", "vap_table3"));
 
     withoutPrefix = matchkeys.get(new LightTable("table0"));
-    assertThat(withoutPrefix, is(nullValue()));
+    assertThat(withoutPrefix, containsInAnyOrder("table0"));
 
     withoutPrefix = matchkeys.get(new LightTable("vap_old_table1"));
     assertThat(withoutPrefix, containsInAnyOrder("table1", "old_table1", "vap_old_table1"));

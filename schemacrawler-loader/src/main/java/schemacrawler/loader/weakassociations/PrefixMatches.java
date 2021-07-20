@@ -32,6 +32,7 @@ import static us.fatehi.utility.Utility.commonPrefix;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -60,7 +61,11 @@ final class PrefixMatches {
   }
 
   public List<String> get(final String key) {
-    return keyPrefixes.get(key);
+    if (keyPrefixes.containsKey(key)) {
+      return keyPrefixes.get(key);
+    } else {
+      return Arrays.asList(key);
+    }
   }
 
   @Override
@@ -140,6 +145,7 @@ final class PrefixMatches {
         prefixes.add(prefixesList.get(i).getKey());
       }
     }
+    // Always return the full key as a prefix to itself
     prefixes.add("");
 
     return prefixes;
