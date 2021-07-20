@@ -49,16 +49,14 @@ final class PrefixMatches {
 
   private static final Logger LOGGER = Logger.getLogger(PrefixMatches.class.getName());
 
-  private final List<String> keys;
   private final String keySeparator;
   private final Multimap<String, String> keyPrefixes;
 
   PrefixMatches(final List<String> keys, final String keySeparator) {
-    this.keys = requireNonNull(keys, "No keys provided");
     this.keySeparator = requireNonNull(keySeparator, "No key separator provided");
     keyPrefixes = new Multimap<>();
 
-    analyze();
+    analyze(keys);
   }
 
   public List<String> get(final String key) {
@@ -70,7 +68,7 @@ final class PrefixMatches {
     return keyPrefixes.toString();
   }
 
-  private void analyze() {
+  private void analyze(final List<String> keys) {
     if (keys.isEmpty()) {
       return;
     }
@@ -129,29 +127,7 @@ final class PrefixMatches {
       }
     }
 
-    // Make sure we have the smallest prefixes
-    final List<String> keySet = new ArrayList<>(prefixesMap.keySet());
-    keySet.sort(
-        (key1, key2) -> {
-          int comparison = 0;
-          comparison = key2.length() - key1.length();
-          if (comparison == 0) {
-            comparison = key2.compareTo(key1);
-          }
-          return comparison;
-        });
-    for (int i = 0; i < keySet.size(); i++) {
-      for (int j = i + 1; j < keySet.size(); j++) {
-        final String longPrefix = keySet.get(i);
-        if (longPrefix.startsWith(keySet.get(j))) {
-          prefixesMap.remove(longPrefix);
-          break;
-        }
-      }
-    }
-
-    // Sort prefixes by the number of keys using them, in descending
-    // order
+    // Sort prefixes by the number of keys using them, in descending order
     final List<Map.Entry<String, Integer>> prefixesList = new ArrayList<>(prefixesMap.entrySet());
     Collections.sort(
         prefixesList, (entry1, entry2) -> entry1.getValue().compareTo(entry2.getValue()));

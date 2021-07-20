@@ -76,10 +76,10 @@ public class PrefixMatchesTest {
     assertThat(withoutPrefix, is(nullValue()));
 
     withoutPrefix = matchkeys.get("pfx1_pfx2_key1");
-    assertThat(withoutPrefix, containsInAnyOrder("pfx2_key1", "pfx1_pfx2_key1"));
+    assertThat(withoutPrefix, containsInAnyOrder("key1", "pfx2_key1", "pfx1_pfx2_key1"));
 
     withoutPrefix = matchkeys.get("pfx1_pfx2_key2");
-    assertThat(withoutPrefix, containsInAnyOrder("pfx2_key2", "pfx1_pfx2_key2"));
+    assertThat(withoutPrefix, containsInAnyOrder("key2", "pfx2_key2", "pfx1_pfx2_key2"));
 
     withoutPrefix = matchkeys.get("pfx1_key3");
     assertThat(withoutPrefix, containsInAnyOrder("key3", "pfx1_key3"));
@@ -131,13 +131,13 @@ public class PrefixMatchesTest {
     assertThat(withoutPrefix, is(nullValue()));
 
     withoutPrefix = matchkeys.get("pfx1_pfx2_key1");
-    assertThat(withoutPrefix, containsInAnyOrder("pfx2_key1", "pfx1_pfx2_key1"));
+    assertThat(withoutPrefix, containsInAnyOrder("key1", "pfx2_key1", "pfx1_pfx2_key1"));
 
     withoutPrefix = matchkeys.get("pfx1_pfx2_key2");
-    assertThat(withoutPrefix, containsInAnyOrder("pfx2_key2", "pfx1_pfx2_key2"));
+    assertThat(withoutPrefix, containsInAnyOrder("key2", "pfx2_key2", "pfx1_pfx2_key2"));
 
     withoutPrefix = matchkeys.get("pfx1_pfx2_key3");
-    assertThat(withoutPrefix, containsInAnyOrder("pfx2_key3", "pfx1_pfx2_key3"));
+    assertThat(withoutPrefix, containsInAnyOrder("key3", "pfx2_key3", "pfx1_pfx2_key3"));
   }
 
   private List<String> keys(final String... keyNames) {
