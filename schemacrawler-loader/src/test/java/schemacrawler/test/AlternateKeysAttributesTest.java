@@ -28,15 +28,19 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.sql.Connection;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -45,6 +49,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
+import schemacrawler.loader.attributes.model.AlternateKeyAttributes;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Schema;
@@ -69,6 +74,67 @@ import schemacrawler.tools.options.Config;
 public class AlternateKeysAttributesTest {
 
   private Catalog catalog;
+
+  @Test
+  public void alternateKeyAttributesConstructor() {
+
+    Exception exception;
+
+    exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () ->
+                new AlternateKeyAttributes(
+                    "schema",
+                    "catalog",
+                    "  ",
+                    "alternate_key",
+                    Arrays.asList("remarks", "other remarks"),
+                    Collections.emptyMap(),
+                    Arrays.asList("column1", "column2")));
+    assertThat(exception.getMessage(), is("No table name provided"));
+
+    exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () ->
+                new AlternateKeyAttributes(
+                    "schema",
+                    "catalog",
+                    "table",
+                    "alternate_key",
+                    Arrays.asList("remarks", "other remarks"),
+                    Collections.emptyMap(),
+                    Collections.emptyList()));
+    assertThat(exception.getMessage(), is("No columns provided"));
+
+    exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () ->
+                new AlternateKeyAttributes(
+                    "schema",
+                    "catalog",
+                    "table",
+                    "alternate_key",
+                    Arrays.asList("remarks", "other remarks"),
+                    Collections.emptyMap(),
+                    null));
+    assertThat(exception.getMessage(), is("No columns provided"));
+
+    final AlternateKeyAttributes alternateKeyAttributes =
+        new AlternateKeyAttributes(
+            "schema",
+            "catalog",
+            "table",
+            "alternate_key",
+            Arrays.asList("remarks", "other remarks"),
+            Collections.emptyMap(),
+            Arrays.asList("column1", "column2"));
+    assertThat(
+        alternateKeyAttributes.toString(),
+        is("Alternate key attributes <schema.catalog.table.alternate_key[[column1, column2]]>"));
+  }
 
   @Test
   public void alternateKeys(final TestContext testContext) throws Exception {
