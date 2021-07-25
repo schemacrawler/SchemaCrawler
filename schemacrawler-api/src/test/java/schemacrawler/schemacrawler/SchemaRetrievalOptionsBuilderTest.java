@@ -5,6 +5,7 @@ import static com.github.npathai.hamcrestopt.OptionalMatchers.isPresent;
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isPresentAndIs;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -62,6 +63,58 @@ public class SchemaRetrievalOptionsBuilderTest {
     assertThat(builder.supportsCatalogs, is(true));
     assertThat(builder.supportsSchemas, is(true));
     assertThat(builder.overridesTypeMap, isPresent());
+  }
+
+  @Test
+  public void dbServerType() {
+    final SchemaRetrievalOptionsBuilder builder = SchemaRetrievalOptionsBuilder.builder();
+
+    assertThat(builder.dbServerType, is(DatabaseServerType.UNKNOWN));
+
+    builder.withDatabaseServerType(new DatabaseServerType("newdb", "New Database"));
+    assertThat(builder.dbServerType.getDatabaseSystemIdentifier(), is("newdb"));
+
+    builder.withDatabaseServerType(null);
+    assertThat(builder.dbServerType, is(DatabaseServerType.UNKNOWN));
+  }
+
+  @Test
+  public void fromOptions() {
+    final SchemaRetrievalOptions options =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
+    final SchemaRetrievalOptionsBuilder builder = SchemaRetrievalOptionsBuilder.builder(options);
+    assertThat(builder.supportsCatalogs, is(true));
+    assertThat(builder.supportsSchemas, is(true));
+    assertThat(builder.overridesTypeMap, isEmpty());
+  }
+
+  @Test
+  public void fromOptions_null() {
+    final SchemaRetrievalOptionsBuilder builder =
+        SchemaRetrievalOptionsBuilder.builder().fromOptions(null);
+    assertThat(builder.supportsCatalogs, is(true));
+    assertThat(builder.supportsSchemas, is(true));
+    assertThat(builder.overridesTypeMap, isEmpty());
+  }
+
+  @Test
+  public void metadataRetrievalStrategy() {
+    final SchemaRetrievalOptionsBuilder builder = SchemaRetrievalOptionsBuilder.builder();
+
+    MetadataRetrievalStrategy metadataRetrievalStrategy;
+
+    metadataRetrievalStrategy =
+        builder.get(SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy);
+    assertThat(metadataRetrievalStrategy, is(MetadataRetrievalStrategy.metadata));
+
+    builder.with(
+        SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy,
+        MetadataRetrievalStrategy.data_dictionary_all);
+    metadataRetrievalStrategy =
+        builder.get(SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy);
+    assertThat(metadataRetrievalStrategy, is(MetadataRetrievalStrategy.data_dictionary_all));
+
+    assertThat(builder.get(null), is(nullValue()));
   }
 
   @Test
