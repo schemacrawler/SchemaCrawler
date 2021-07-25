@@ -60,7 +60,7 @@ public final class SchemaRetrievalOptionsBuilder
   String identifierQuoteString;
   Identifiers identifiers;
   InformationSchemaViews informationSchemaViews;
-  Optional<Boolean> overridesSupportSchemas;
+  Optional<Boolean> overridesSupportsSchemas;
   Optional<Boolean> overridesSupportsCatalogs;
   Optional<TypeMap> overridesTypeMap;
   boolean supportsCatalogs;
@@ -71,7 +71,7 @@ public final class SchemaRetrievalOptionsBuilder
   private SchemaRetrievalOptionsBuilder() {
     dbServerType = DatabaseServerType.UNKNOWN;
     informationSchemaViews = InformationSchemaViewsBuilder.newInformationSchemaViews();
-    overridesSupportSchemas = Optional.empty();
+    overridesSupportsSchemas = Optional.empty();
     overridesSupportsCatalogs = Optional.empty();
     supportsCatalogs = true;
     supportsSchemas = true;
@@ -125,7 +125,7 @@ public final class SchemaRetrievalOptionsBuilder
 
     dbServerType = options.getDatabaseServerType();
     informationSchemaViews = options.getInformationSchemaViews();
-    overridesSupportSchemas = Optional.empty();
+    overridesSupportsSchemas = Optional.empty();
     overridesSupportsCatalogs = Optional.empty();
     supportsCatalogs = options.isSupportsCatalogs();
     supportsSchemas = options.isSupportsSchemas();
@@ -149,10 +149,6 @@ public final class SchemaRetrievalOptionsBuilder
     return informationSchemaViews;
   }
 
-  public void setInformationSchemaViews(InformationSchemaViews informationSchemaViews) {
-    this.informationSchemaViews = informationSchemaViews;
-  }
-
   @Override
   public SchemaRetrievalOptions toOptions() {
     return new SchemaRetrievalOptions(this);
@@ -161,7 +157,16 @@ public final class SchemaRetrievalOptionsBuilder
   public SchemaRetrievalOptionsBuilder with(
       final SchemaInfoMetadataRetrievalStrategy schemaInfoMetadataRetrievalStrategy,
       final MetadataRetrievalStrategy metadataRetrievalStrategy) {
-    if (schemaInfoMetadataRetrievalStrategy != null && metadataRetrievalStrategy != null) {
+
+    if (schemaInfoMetadataRetrievalStrategy == null) {
+      return this;
+    }
+
+    if (metadataRetrievalStrategy == null) {
+      // Reset to default
+      metadataRetrievalStrategyMap.put(
+          schemaInfoMetadataRetrievalStrategy, MetadataRetrievalStrategy.metadata);
+    } else {
       metadataRetrievalStrategyMap.put(
           schemaInfoMetadataRetrievalStrategy, metadataRetrievalStrategy);
     }
@@ -188,7 +193,7 @@ public final class SchemaRetrievalOptionsBuilder
 
   /** Overrides the JDBC driver provided information about whether the database supports schema. */
   public SchemaRetrievalOptionsBuilder withDoesNotSupportSchemas() {
-    overridesSupportSchemas = Optional.of(false);
+    overridesSupportsSchemas = Optional.of(false);
     return this;
   }
 
@@ -236,7 +241,7 @@ public final class SchemaRetrievalOptionsBuilder
   }
 
   public SchemaRetrievalOptionsBuilder withoutSupportsSchemas() {
-    overridesSupportSchemas = Optional.empty();
+    overridesSupportsSchemas = Optional.empty();
     return this;
   }
 
@@ -250,7 +255,7 @@ public final class SchemaRetrievalOptionsBuilder
 
   /** Overrides the JDBC driver provided information about whether the database supports schema. */
   public SchemaRetrievalOptionsBuilder withSupportsSchemas() {
-    overridesSupportSchemas = Optional.of(true);
+    overridesSupportsSchemas = Optional.of(true);
     return this;
   }
 
@@ -300,8 +305,8 @@ public final class SchemaRetrievalOptionsBuilder
 
   private boolean lookupSupportsSchemas(final DatabaseMetaData metaData) {
     boolean supportsSchemas = true;
-    if (overridesSupportSchemas.isPresent()) {
-      supportsSchemas = overridesSupportSchemas.get();
+    if (overridesSupportsSchemas.isPresent()) {
+      supportsSchemas = overridesSupportsSchemas.get();
     } else if (metaData != null) {
       try {
         supportsSchemas = metaData.supportsSchemasInTableDefinitions();

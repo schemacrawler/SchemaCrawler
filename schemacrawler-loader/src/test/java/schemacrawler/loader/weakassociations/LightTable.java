@@ -34,10 +34,12 @@ public final class LightTable implements Table {
 
   private final Schema schema;
   private final String name;
+  private final Map<String, Object> attributes;
 
   public LightTable(final Schema schema, final String name) {
     this.schema = requireNonNull(schema, "No schema provided");
     this.name = requireNotBlank(name, "No table name provided");
+    attributes = new HashMap<>();
   }
 
   public LightTable(final String name) {
@@ -71,17 +73,21 @@ public final class LightTable implements Table {
 
   @Override
   public <T> T getAttribute(final String name) {
-    return null;
+    return (T) attributes.get(name);
   }
 
   @Override
   public <T> T getAttribute(final String name, final T defaultValue) throws ClassCastException {
-    return null;
+    if (hasAttribute(name)) {
+      return getAttribute(name);
+    } else {
+      return defaultValue;
+    }
   }
 
   @Override
   public Map<String, Object> getAttributes() {
-    return new HashMap<>();
+    return attributes;
   }
 
   @Override
@@ -181,7 +187,7 @@ public final class LightTable implements Table {
 
   @Override
   public boolean hasAttribute(final String name) {
-    return false;
+    return attributes.containsKey(name);
   }
 
   @Override
@@ -221,7 +227,7 @@ public final class LightTable implements Table {
 
   @Override
   public <T> Optional<T> lookupAttribute(final String name) {
-    return Optional.empty();
+    return Optional.of(getAttribute(name));
   }
 
   @Override
@@ -255,10 +261,14 @@ public final class LightTable implements Table {
   }
 
   @Override
-  public void removeAttribute(final String name) {}
+  public void removeAttribute(final String name) {
+    attributes.remove(name);
+  }
 
   @Override
-  public <T> void setAttribute(final String name, final T value) {}
+  public <T> void setAttribute(final String name, final T value) {
+    attributes.put(name, value);
+  }
 
   @Override
   public void setRemarks(final String remarks) {}

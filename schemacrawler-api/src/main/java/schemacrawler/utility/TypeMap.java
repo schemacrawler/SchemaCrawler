@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.utility;
 
 import static java.util.stream.Collectors.toMap;
-import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.JDBCType;
@@ -39,14 +38,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
-import us.fatehi.utility.string.StringFormat;
 
 public final class TypeMap implements Map<String, Class<?>> {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(TypeMap.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(TypeMap.class.getName());
 
   /**
    * The default mappings are from the JDBC Specification 4.2, Appendix B - Data Type Conversion
@@ -154,7 +150,7 @@ public final class TypeMap implements Map<String, Class<?>> {
 
   @Override
   public Set<Entry<String, Class<?>>> entrySet() {
-    throw new UnsupportedOperationException();
+    return new HashSet<>(sqlTypeMap.entrySet());
   }
 
   @Override
@@ -168,30 +164,6 @@ public final class TypeMap implements Map<String, Class<?>> {
       return sqlTypeMap.get(key);
     } else {
       return Object.class;
-    }
-  }
-
-  /**
-   * Gets the Java type mapping for a data type. If no mapping exists, returns null. If a class name
-   * is passed in, it overrides the mapping in the type map.
-   *
-   * @param typeName Type name to find a mapping for.
-   * @param className Overridden class name
-   * @return Mapped class
-   */
-  public Class<?> get(final String typeName, final String className) {
-    if (isBlank(className)) {
-      return sqlTypeMap.get(typeName);
-    } else {
-      try {
-        return Class.forName(className);
-      } catch (final ClassNotFoundException e) {
-        LOGGER.log(
-            Level.WARNING,
-            e,
-            new StringFormat("Could not obtain class mapping for data type <%s>", typeName));
-        return null;
-      }
     }
   }
 
