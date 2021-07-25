@@ -123,6 +123,22 @@ public class SchemaRetrievalOptionsBuilderTest {
   }
 
   @Test
+  public void identifierQuoteString() {
+    final SchemaRetrievalOptionsBuilder builder = SchemaRetrievalOptionsBuilder.builder();
+
+    assertThat(builder.identifierQuoteString, is(""));
+
+    builder.withIdentifierQuoteString("@");
+    assertThat(builder.identifierQuoteString, is("@"));
+
+    builder.withIdentifierQuoteString(null);
+    assertThat(builder.identifierQuoteString, is(""));
+
+    builder.withIdentifierQuoteString("\t");
+    assertThat(builder.identifierQuoteString, is(""));
+  }
+
+  @Test
   public void metadataRetrievalStrategy() {
     final SchemaRetrievalOptionsBuilder builder = SchemaRetrievalOptionsBuilder.builder();
 
