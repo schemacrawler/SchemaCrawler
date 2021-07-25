@@ -3,6 +3,7 @@ package schemacrawler.schemacrawler;
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isPresent;
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isPresentAndIs;
+import static java.util.Collections.emptyList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.nullValue;
@@ -15,6 +16,9 @@ import org.junit.jupiter.api.Test;
 
 import com.sap.db.jdbcext.wrapper.Connection;
 import com.sap.db.jdbcext.wrapper.DatabaseMetaData;
+
+import schemacrawler.plugin.EnumDataTypeInfo;
+import schemacrawler.plugin.EnumDataTypeInfo.EnumDataTypeTypes;
 
 public class SchemaRetrievalOptionsBuilderTest {
 
@@ -76,6 +80,27 @@ public class SchemaRetrievalOptionsBuilderTest {
 
     builder.withDatabaseServerType(null);
     assertThat(builder.dbServerType, is(DatabaseServerType.UNKNOWN));
+  }
+
+  @Test
+  public void enumDataTypeHelper() {
+    final SchemaRetrievalOptionsBuilder builder = SchemaRetrievalOptionsBuilder.builder();
+
+    assertThat(
+        builder.enumDataTypeHelper.getEnumDataTypeInfo(null, null, null).getType(),
+        is(EnumDataTypeInfo.EnumDataTypeTypes.not_enumerated));
+
+    builder.withEnumDataTypeHelper(
+        (column, columnDataType, connection) ->
+            new EnumDataTypeInfo(EnumDataTypeTypes.enumerated_column, emptyList()));
+    assertThat(
+        builder.enumDataTypeHelper.getEnumDataTypeInfo(null, null, null).getType(),
+        is(EnumDataTypeInfo.EnumDataTypeTypes.enumerated_column));
+
+    builder.withEnumDataTypeHelper(null);
+    assertThat(
+        builder.enumDataTypeHelper.getEnumDataTypeInfo(null, null, null).getType(),
+        is(EnumDataTypeInfo.EnumDataTypeTypes.not_enumerated));
   }
 
   @Test
