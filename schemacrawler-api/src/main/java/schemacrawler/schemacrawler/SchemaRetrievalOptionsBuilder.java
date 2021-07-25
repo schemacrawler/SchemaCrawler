@@ -149,7 +149,7 @@ public final class SchemaRetrievalOptionsBuilder
     return informationSchemaViews;
   }
 
-  public void setInformationSchemaViews(InformationSchemaViews informationSchemaViews) {
+  public void setInformationSchemaViews(final InformationSchemaViews informationSchemaViews) {
     this.informationSchemaViews = informationSchemaViews;
   }
 
@@ -161,7 +161,16 @@ public final class SchemaRetrievalOptionsBuilder
   public SchemaRetrievalOptionsBuilder with(
       final SchemaInfoMetadataRetrievalStrategy schemaInfoMetadataRetrievalStrategy,
       final MetadataRetrievalStrategy metadataRetrievalStrategy) {
-    if (schemaInfoMetadataRetrievalStrategy != null && metadataRetrievalStrategy != null) {
+
+    if (schemaInfoMetadataRetrievalStrategy == null) {
+      return this;
+    }
+
+    if (metadataRetrievalStrategy == null) {
+      // Reset to default
+      metadataRetrievalStrategyMap.put(
+          schemaInfoMetadataRetrievalStrategy, MetadataRetrievalStrategy.metadata);
+    } else {
       metadataRetrievalStrategyMap.put(
           schemaInfoMetadataRetrievalStrategy, metadataRetrievalStrategy);
     }

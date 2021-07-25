@@ -11,6 +11,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
 
@@ -32,13 +33,21 @@ public class SchemaRetrievalOptionsBuilderTest {
     final Connection connection = mock(Connection.class);
     when(connection.getMetaData()).thenReturn(dbMetaData);
 
-    final SchemaRetrievalOptionsBuilder builder = SchemaRetrievalOptionsBuilder.builder();
+    SchemaRetrievalOptionsBuilder builder;
+
+    builder = SchemaRetrievalOptionsBuilder.builder();
     assertThat(builder.supportsCatalogs, is(true));
     assertThat(builder.supportsSchemas, is(true));
     assertThat(builder.overridesTypeMap, isEmpty());
     builder.fromConnnection(connection);
     assertThat(builder.supportsCatalogs, is(false));
     assertThat(builder.supportsSchemas, is(true));
+    assertThat(builder.overridesTypeMap, isPresent());
+
+    builder = SchemaRetrievalOptionsBuilder.builder();
+    builder.withTypeMap(new HashMap<>());
+    assertThat(builder.overridesTypeMap, isPresent());
+    builder.fromConnnection(connection);
     assertThat(builder.overridesTypeMap, isPresent());
   }
 
@@ -159,6 +168,50 @@ public class SchemaRetrievalOptionsBuilderTest {
     assertThat(metadataRetrievalStrategy, is(MetadataRetrievalStrategy.data_dictionary_all));
 
     assertThat(builder.get(null), is(nullValue()));
+
+    // -- Set with variations of null arguments
+
+    // 1.
+    // Setup
+    builder.with(
+        SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy,
+        MetadataRetrievalStrategy.data_dictionary_all);
+    metadataRetrievalStrategy =
+        builder.get(SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy);
+    assertThat(metadataRetrievalStrategy, is(MetadataRetrievalStrategy.data_dictionary_all));
+    // Test
+    builder.with(SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy, null);
+    metadataRetrievalStrategy =
+        builder.get(SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy);
+    assertThat(metadataRetrievalStrategy, is(MetadataRetrievalStrategy.metadata));
+
+    // 2.
+    // Setup
+    builder.with(
+        SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy,
+        MetadataRetrievalStrategy.data_dictionary_all);
+    metadataRetrievalStrategy =
+        builder.get(SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy);
+    assertThat(metadataRetrievalStrategy, is(MetadataRetrievalStrategy.data_dictionary_all));
+    // Test
+    builder.with(null, MetadataRetrievalStrategy.metadata);
+    metadataRetrievalStrategy =
+        builder.get(SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy);
+    assertThat(metadataRetrievalStrategy, is(MetadataRetrievalStrategy.data_dictionary_all));
+
+    // 3.
+    // Setup
+    builder.with(
+        SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy,
+        MetadataRetrievalStrategy.data_dictionary_all);
+    metadataRetrievalStrategy =
+        builder.get(SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy);
+    assertThat(metadataRetrievalStrategy, is(MetadataRetrievalStrategy.data_dictionary_all));
+    // Test
+    builder.with(null, null);
+    metadataRetrievalStrategy =
+        builder.get(SchemaInfoMetadataRetrievalStrategy.foreignKeysRetrievalStrategy);
+    assertThat(metadataRetrievalStrategy, is(MetadataRetrievalStrategy.data_dictionary_all));
   }
 
   @Test
@@ -180,5 +233,19 @@ public class SchemaRetrievalOptionsBuilderTest {
     assertThat(builder.overridesSupportsSchemas, isEmpty());
     builder.withDoesNotSupportSchemas();
     assertThat(builder.overridesSupportsSchemas, isPresentAndIs(false));
+  }
+
+  @Test
+  public void typeMap() {
+    final SchemaRetrievalOptionsBuilder builder = SchemaRetrievalOptionsBuilder.builder();
+
+    assertThat(builder.overridesTypeMap, isEmpty());
+
+    builder.withTypeMap(new HashMap<>());
+    assertThat(builder.overridesTypeMap, isPresent());
+    assertThat(builder.overridesTypeMap.get().size(), is(0));
+
+    builder.withTypeMap(null);
+    assertThat(builder.overridesTypeMap, isEmpty());
   }
 }
