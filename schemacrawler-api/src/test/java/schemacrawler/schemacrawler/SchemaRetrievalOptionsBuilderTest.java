@@ -29,6 +29,7 @@ public class SchemaRetrievalOptionsBuilderTest {
     final DatabaseMetaData dbMetaData = mock(DatabaseMetaData.class);
     when(dbMetaData.supportsCatalogsInTableDefinitions()).thenReturn(false);
     when(dbMetaData.supportsSchemasInTableDefinitions()).thenReturn(true);
+    when(dbMetaData.getIdentifierQuoteString()).thenReturn("@");
 
     final Connection connection = mock(Connection.class);
     when(connection.getMetaData()).thenReturn(dbMetaData);
@@ -39,16 +40,12 @@ public class SchemaRetrievalOptionsBuilderTest {
     assertThat(builder.supportsCatalogs, is(true));
     assertThat(builder.supportsSchemas, is(true));
     assertThat(builder.overridesTypeMap, isEmpty());
+    assertThat(builder.identifierQuoteString, is(""));
     builder.fromConnnection(connection);
     assertThat(builder.supportsCatalogs, is(false));
     assertThat(builder.supportsSchemas, is(true));
     assertThat(builder.overridesTypeMap, isPresent());
-
-    builder = SchemaRetrievalOptionsBuilder.builder();
-    builder.withTypeMap(new HashMap<>());
-    assertThat(builder.overridesTypeMap, isPresent());
-    builder.fromConnnection(connection);
-    assertThat(builder.overridesTypeMap, isPresent());
+    assertThat(builder.identifierQuoteString, is("@"));
   }
 
   @Test
@@ -76,6 +73,50 @@ public class SchemaRetrievalOptionsBuilderTest {
     assertThat(builder.supportsCatalogs, is(true));
     assertThat(builder.supportsSchemas, is(true));
     assertThat(builder.overridesTypeMap, isPresent());
+  }
+
+  @Test
+  public void dbMetaData_overrides() throws SQLException {
+
+    final DatabaseMetaData dbMetaData = mock(DatabaseMetaData.class);
+    when(dbMetaData.supportsCatalogsInTableDefinitions()).thenReturn(false);
+    when(dbMetaData.supportsSchemasInTableDefinitions()).thenReturn(true);
+    when(dbMetaData.getIdentifierQuoteString()).thenReturn("#");
+
+    final Connection connection = mock(Connection.class);
+    when(connection.getMetaData()).thenReturn(dbMetaData);
+
+    SchemaRetrievalOptionsBuilder builder;
+
+    builder = SchemaRetrievalOptionsBuilder.builder();
+    builder.withSupportsCatalogs();
+    builder.withSupportsSchemas();
+    builder.withIdentifierQuoteString("@");
+
+    assertThat(builder.supportsCatalogs, is(true));
+    assertThat(builder.overridesSupportsCatalogs, isPresentAndIs(true));
+    assertThat(builder.supportsSchemas, is(true));
+    assertThat(builder.overridesSupportsSchemas, isPresentAndIs(true));
+    assertThat(builder.overridesTypeMap, isEmpty());
+    assertThat(builder.identifierQuoteString, is("@"));
+    builder.fromConnnection(connection);
+    assertThat(builder.supportsCatalogs, is(true));
+    assertThat(builder.overridesSupportsCatalogs, isPresentAndIs(true));
+    assertThat(builder.supportsSchemas, is(true));
+    assertThat(builder.overridesSupportsSchemas, isPresentAndIs(true));
+    assertThat(builder.overridesTypeMap, isPresent());
+    assertThat(builder.identifierQuoteString, is("@"));
+
+    builder = SchemaRetrievalOptionsBuilder.builder();
+    builder.withTypeMap(new HashMap<>());
+    assertThat(builder.overridesTypeMap, isPresent());
+    builder.fromConnnection(connection);
+    assertThat(builder.overridesTypeMap, isPresent());
+
+    when(dbMetaData.getIdentifierQuoteString()).thenReturn("\t");
+    builder = SchemaRetrievalOptionsBuilder.builder();
+    builder.fromConnnection(connection);
+    assertThat(builder.identifierQuoteString, is(""));
   }
 
   @Test
