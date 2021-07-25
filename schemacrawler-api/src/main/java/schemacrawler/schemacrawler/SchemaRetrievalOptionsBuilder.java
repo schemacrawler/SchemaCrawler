@@ -149,10 +149,6 @@ public final class SchemaRetrievalOptionsBuilder
     return informationSchemaViews;
   }
 
-  public void setInformationSchemaViews(final InformationSchemaViews informationSchemaViews) {
-    this.informationSchemaViews = informationSchemaViews;
-  }
-
   @Override
   public SchemaRetrievalOptions toOptions() {
     return new SchemaRetrievalOptions(this);
