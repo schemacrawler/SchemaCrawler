@@ -131,6 +131,9 @@ public class SchemaRetrievalOptionsBuilderTest {
     builder.withIdentifierQuoteString("@");
     assertThat(builder.identifierQuoteString, is("@"));
 
+    builder.withoutIdentifierQuoteString();
+    assertThat(builder.identifierQuoteString, is(""));
+
     builder.withIdentifierQuoteString(null);
     assertThat(builder.identifierQuoteString, is(""));
 
