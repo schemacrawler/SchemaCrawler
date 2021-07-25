@@ -35,4 +35,31 @@ public class SchemaRetrievalOptionsBuilderTest {
     assertThat(builder.supportsSchemas, is(true));
     assertThat(builder.overridesTypeMap, isPresent());
   }
+
+  @Test
+  public void dbMetaData_null() throws SQLException {
+
+    SchemaRetrievalOptionsBuilder builder;
+
+    builder = SchemaRetrievalOptionsBuilder.builder();
+    assertThat(builder.supportsCatalogs, is(true));
+    assertThat(builder.supportsSchemas, is(true));
+    assertThat(builder.overridesTypeMap, isEmpty());
+    builder.fromConnnection(null);
+    assertThat(builder.supportsCatalogs, is(true));
+    assertThat(builder.supportsSchemas, is(true));
+    assertThat(builder.overridesTypeMap, isEmpty());
+
+    final Connection connection = mock(Connection.class);
+    when(connection.getMetaData()).thenThrow(SQLException.class);
+
+    builder = SchemaRetrievalOptionsBuilder.builder();
+    assertThat(builder.supportsCatalogs, is(true));
+    assertThat(builder.supportsSchemas, is(true));
+    assertThat(builder.overridesTypeMap, isEmpty());
+    builder.fromConnnection(connection);
+    assertThat(builder.supportsCatalogs, is(true));
+    assertThat(builder.supportsSchemas, is(true));
+    assertThat(builder.overridesTypeMap, isPresent());
+  }
 }
