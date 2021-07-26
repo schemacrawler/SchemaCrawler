@@ -33,14 +33,12 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
 
 public final class SchemaInfoLevelBuilder
     implements OptionsBuilder<SchemaInfoLevelBuilder, SchemaInfoLevel> {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(SchemaInfoLevelBuilder.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(SchemaInfoLevelBuilder.class.getName());
 
   public static SchemaInfoLevelBuilder builder() {
     return new SchemaInfoLevelBuilder();
@@ -329,6 +327,10 @@ public final class SchemaInfoLevelBuilder
       if (schemaInfoLevelOrdinal <= infoLevelOrdinal) {
         schemaInfoRetrievals.put(schemaInfoRetrieval, true);
       }
+    }
+
+    if (isBlank(tag)) {
+      withTag(infoLevel.name());
     }
 
     return this;

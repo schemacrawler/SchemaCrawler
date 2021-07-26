@@ -192,6 +192,25 @@ public class SchemaRetrievalOptionsBuilderTest {
   }
 
   @Test
+  public void informationSchemaViews() {
+
+    final InformationSchemaViews informationSchemaViews =
+        InformationSchemaViewsBuilder.builder()
+            .withSql(InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES, "SELECT * FROM DUAL")
+            .toOptions();
+
+    final SchemaRetrievalOptionsBuilder builder = SchemaRetrievalOptionsBuilder.builder();
+
+    assertThat(builder.getInformationSchemaViews().isEmpty(), is(true));
+
+    builder.withInformationSchemaViews(informationSchemaViews);
+    assertThat(builder.getInformationSchemaViews().isEmpty(), is(false));
+
+    builder.withInformationSchemaViews(null);
+    assertThat(builder.getInformationSchemaViews().isEmpty(), is(true));
+  }
+
+  @Test
   public void metadataRetrievalStrategy() {
     final SchemaRetrievalOptionsBuilder builder = SchemaRetrievalOptionsBuilder.builder();
 

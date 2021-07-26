@@ -32,7 +32,7 @@ import java.util.Map;
 
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 
-public class DiagramOptions extends SchemaTextOptions {
+public final class DiagramOptions extends SchemaTextOptions {
 
   private final List<String> graphvizOpts;
   private final Map<String, String> graphvizAttributes;

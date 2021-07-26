@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -38,6 +39,7 @@ import java.util.function.BiConsumer;
 
 import org.junit.jupiter.api.Test;
 
+import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaInfoRetrieval;
@@ -142,10 +144,56 @@ public class SchemaInfoLevelBuilderTest {
   }
 
   @Test
+  public void tag() {
+    final SchemaInfoLevelBuilder builder = SchemaInfoLevelBuilder.builder();
+    SchemaInfoLevel options;
+
+    options = builder.toOptions();
+    assertThat(options.getTag(), equalTo(""));
+    assertThat(
+        options.toString().replaceAll(System.lineSeparator(), "\n"),
+        startsWith("SchemaInfoLevel <>"));
+
+    builder.withInfoLevel(InfoLevel.standard);
+    options = builder.toOptions();
+    assertThat(options.getTag(), equalTo("standard"));
+    assertThat(
+        options.toString().replaceAll(System.lineSeparator(), "\n"),
+        startsWith("SchemaInfoLevel <standard>"));
+
+    builder.withTag("custom");
+    options = builder.toOptions();
+    assertThat(options.getTag(), equalTo("custom"));
+    assertThat(
+        options.toString().replaceAll(System.lineSeparator(), "\n"),
+        startsWith("SchemaInfoLevel <custom>"));
+
+    builder.withTag("\t\t");
+    options = builder.toOptions();
+    assertThat(options.getTag(), equalTo(""));
+  }
+
+  @Test
   public void testFromOptions() {
     final SchemaInfoLevel options1 = SchemaInfoLevelBuilder.standard();
     final SchemaInfoLevel options2 =
         SchemaInfoLevelBuilder.builder().fromOptions(options1).toOptions();
     assertThat(options1, equalTo(options2));
+  }
+
+  @Test
+  public void without() {
+    final SchemaInfoLevelBuilder builder =
+        SchemaInfoLevelBuilder.builder().withInfoLevel(InfoLevel.standard);
+    SchemaInfoLevel options;
+
+    options = builder.toOptions();
+    assertThat(options.is(SchemaInfoRetrieval.retrieveTables), equalTo(true));
+    assertThat(options.is(SchemaInfoRetrieval.retrieveRoutines), equalTo(true));
+
+    builder.withoutTables().withoutRoutines();
+    options = builder.toOptions();
+    assertThat(options.is(SchemaInfoRetrieval.retrieveTables), equalTo(false));
+    assertThat(options.is(SchemaInfoRetrieval.retrieveRoutines), equalTo(false));
   }
 }
