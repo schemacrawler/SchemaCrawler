@@ -37,31 +37,6 @@ http://www.gnu.org/licenses/
 public class BaseSchemaTextOptionsBuilderTest {
 
   @Test
-  public void coverage() {
-    final Config config = SchemaTextOptionsBuilder.builder().sortTableColumns().toConfig();
-    final SchemaTextOptions options =
-        SchemaTextOptionsBuilder.builder().sortTableColumns().toOptions();
-
-    SchemaTextOptionsBuilder builder;
-
-    // From config
-    builder = SchemaTextOptionsBuilder.builder();
-    assertThat(builder.toOptions().isAlphabeticalSortForTableColumns(), is(false));
-    builder.fromConfig(config);
-    assertThat(builder.toOptions().isAlphabeticalSortForTableColumns(), is(true));
-    builder.fromConfig(null);
-    assertThat(builder.toOptions().isAlphabeticalSortForTableColumns(), is(true));
-
-    // From options
-    builder = SchemaTextOptionsBuilder.builder();
-    assertThat(builder.toOptions().isAlphabeticalSortForTableColumns(), is(false));
-    builder.fromOptions(options);
-    assertThat(builder.toOptions().isAlphabeticalSortForTableColumns(), is(true));
-    builder.fromOptions(null);
-    assertThat(builder.toOptions().isAlphabeticalSortForTableColumns(), is(true));
-  }
-
-  @Test
   public void hideRowCounts() {
     final Config config = SchemaTextOptionsBuilder.builder().hideRowCounts().toConfig();
     final SchemaTextOptions options =
@@ -199,5 +174,69 @@ public class BaseSchemaTextOptionsBuilderTest {
     assertThat(builder.toOptions().isHideTriggerNames(), is(true));
     builder.fromOptions(null);
     assertThat(builder.toOptions().isHideTriggerNames(), is(true));
+  }
+
+  @Test
+  public void sorts() {
+    final Config config =
+        SchemaTextOptionsBuilder.builder()
+            .sortTableColumns()
+            .sortIndexes()
+            .sortForeignKeys()
+            .toConfig();
+    final SchemaTextOptions options =
+        SchemaTextOptionsBuilder.builder()
+            .sortTableColumns()
+            .sortIndexes()
+            .sortForeignKeys()
+            .toOptions();
+
+    SchemaTextOptionsBuilder builder;
+
+    // On and off
+    builder = SchemaTextOptionsBuilder.builder();
+    assertThat(builder.toOptions().isAlphabeticalSortForTableColumns(), is(false));
+    assertThat(builder.toOptions().isAlphabeticalSortForIndexes(), is(false));
+    assertThat(builder.toOptions().isAlphabeticalSortForForeignKeys(), is(false));
+    builder.sortTableColumns().sortIndexes().sortForeignKeys();
+    assertThat(builder.toOptions().isAlphabeticalSortForTableColumns(), is(true));
+    assertThat(builder.toOptions().isAlphabeticalSortForIndexes(), is(true));
+    assertThat(builder.toOptions().isAlphabeticalSortForForeignKeys(), is(true));
+    builder.sortTableColumns(false).sortIndexes(false).sortForeignKeys(false);
+    assertThat(builder.toOptions().isAlphabeticalSortForTableColumns(), is(false));
+    assertThat(builder.toOptions().isAlphabeticalSortForIndexes(), is(false));
+    assertThat(builder.toOptions().isAlphabeticalSortForForeignKeys(), is(false));
+    builder.sortTableColumns(true).sortIndexes(true).sortForeignKeys(true);
+    assertThat(builder.toOptions().isAlphabeticalSortForTableColumns(), is(true));
+    assertThat(builder.toOptions().isAlphabeticalSortForIndexes(), is(true));
+    assertThat(builder.toOptions().isAlphabeticalSortForForeignKeys(), is(true));
+
+    // From config
+    builder = SchemaTextOptionsBuilder.builder();
+    assertThat(builder.toOptions().isAlphabeticalSortForTableColumns(), is(false));
+    assertThat(builder.toOptions().isAlphabeticalSortForIndexes(), is(false));
+    assertThat(builder.toOptions().isAlphabeticalSortForForeignKeys(), is(false));
+    builder.fromConfig(config);
+    assertThat(builder.toOptions().isAlphabeticalSortForTableColumns(), is(true));
+    assertThat(builder.toOptions().isAlphabeticalSortForIndexes(), is(true));
+    assertThat(builder.toOptions().isAlphabeticalSortForForeignKeys(), is(true));
+    builder.fromConfig(null);
+    assertThat(builder.toOptions().isAlphabeticalSortForTableColumns(), is(true));
+    assertThat(builder.toOptions().isAlphabeticalSortForIndexes(), is(true));
+    assertThat(builder.toOptions().isAlphabeticalSortForForeignKeys(), is(true));
+
+    // From options
+    builder = SchemaTextOptionsBuilder.builder();
+    assertThat(builder.toOptions().isAlphabeticalSortForTableColumns(), is(false));
+    assertThat(builder.toOptions().isAlphabeticalSortForIndexes(), is(false));
+    assertThat(builder.toOptions().isAlphabeticalSortForForeignKeys(), is(false));
+    builder.fromOptions(options);
+    assertThat(builder.toOptions().isAlphabeticalSortForTableColumns(), is(true));
+    assertThat(builder.toOptions().isAlphabeticalSortForIndexes(), is(true));
+    assertThat(builder.toOptions().isAlphabeticalSortForForeignKeys(), is(true));
+    builder.fromOptions(null);
+    assertThat(builder.toOptions().isAlphabeticalSortForTableColumns(), is(true));
+    assertThat(builder.toOptions().isAlphabeticalSortForIndexes(), is(true));
+    assertThat(builder.toOptions().isAlphabeticalSortForForeignKeys(), is(true));
   }
 }
