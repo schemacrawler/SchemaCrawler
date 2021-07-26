@@ -106,11 +106,7 @@ public final class JavaSqlType implements SQLType, Serializable, Comparable<Java
       return false;
     }
     final JavaSqlType other = (JavaSqlType) obj;
-    if (sqlType == null) {
-      return other.sqlType == null;
-    } else {
-      return sqlType.getVendorTypeNumber().equals(other.sqlType.getVendorTypeNumber());
-    }
+    return sqlType.getVendorTypeNumber().equals(other.sqlType.getVendorTypeNumber());
   }
 
   public Class<?> getDefaultMappedClass() {
@@ -137,7 +133,7 @@ public final class JavaSqlType implements SQLType, Serializable, Comparable<Java
     if (vendorTypeNumber != null) {
       return vendorTypeNumber;
     } else {
-      return Integer.MAX_VALUE;
+      return Integer.MIN_VALUE;
     }
   }
 
@@ -145,7 +141,7 @@ public final class JavaSqlType implements SQLType, Serializable, Comparable<Java
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + (sqlType == null ? 0 : sqlType.getVendorTypeNumber());
+    result = prime * result + sqlType.getVendorTypeNumber();
     return result;
   }
 
