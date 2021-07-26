@@ -130,4 +130,74 @@ public class BaseSchemaTextOptionsBuilderTest {
     builder.fromOptions(null);
     assertThat(builder.toOptions().isHideAlternateKeyNames(), is(true));
   }
+
+  @Test
+  public void noRoutineSpecificNames() {
+    final Config config = SchemaTextOptionsBuilder.builder().noRoutineSpecificNames().toConfig();
+    final SchemaTextOptions options =
+        SchemaTextOptionsBuilder.builder().noRoutineSpecificNames().toOptions();
+
+    SchemaTextOptionsBuilder builder;
+
+    // On and off
+    builder = SchemaTextOptionsBuilder.builder();
+    assertThat(builder.toOptions().isHideRoutineSpecificNames(), is(false));
+    builder.noRoutineSpecificNames();
+    assertThat(builder.toOptions().isHideRoutineSpecificNames(), is(true));
+    builder.noRoutineSpecificNames(false);
+    assertThat(builder.toOptions().isHideRoutineSpecificNames(), is(false));
+    builder.noRoutineSpecificNames(true);
+    assertThat(builder.toOptions().isHideRoutineSpecificNames(), is(true));
+
+    // From config
+    builder = SchemaTextOptionsBuilder.builder();
+    assertThat(builder.toOptions().isHideRoutineSpecificNames(), is(false));
+    builder.fromConfig(config);
+    assertThat(builder.toOptions().isHideRoutineSpecificNames(), is(true));
+    builder.fromConfig(null);
+    assertThat(builder.toOptions().isHideRoutineSpecificNames(), is(true));
+
+    // From options
+    builder = SchemaTextOptionsBuilder.builder();
+    assertThat(builder.toOptions().isHideRoutineSpecificNames(), is(false));
+    builder.fromOptions(options);
+    assertThat(builder.toOptions().isHideRoutineSpecificNames(), is(true));
+    builder.fromOptions(null);
+    assertThat(builder.toOptions().isHideRoutineSpecificNames(), is(true));
+  }
+
+  @Test
+  public void noTriggerNames() {
+    final Config config = SchemaTextOptionsBuilder.builder().noTriggerNames().toConfig();
+    final SchemaTextOptions options =
+        SchemaTextOptionsBuilder.builder().noTriggerNames().toOptions();
+
+    SchemaTextOptionsBuilder builder;
+
+    // On and off
+    builder = SchemaTextOptionsBuilder.builder();
+    assertThat(builder.toOptions().isHideTriggerNames(), is(false));
+    builder.noTriggerNames();
+    assertThat(builder.toOptions().isHideTriggerNames(), is(true));
+    builder.noTriggerNames(false);
+    assertThat(builder.toOptions().isHideTriggerNames(), is(false));
+    builder.noTriggerNames(true);
+    assertThat(builder.toOptions().isHideTriggerNames(), is(true));
+
+    // From config
+    builder = SchemaTextOptionsBuilder.builder();
+    assertThat(builder.toOptions().isHideTriggerNames(), is(false));
+    builder.fromConfig(config);
+    assertThat(builder.toOptions().isHideTriggerNames(), is(true));
+    builder.fromConfig(null);
+    assertThat(builder.toOptions().isHideTriggerNames(), is(true));
+
+    // From options
+    builder = SchemaTextOptionsBuilder.builder();
+    assertThat(builder.toOptions().isHideTriggerNames(), is(false));
+    builder.fromOptions(options);
+    assertThat(builder.toOptions().isHideTriggerNames(), is(true));
+    builder.fromOptions(null);
+    assertThat(builder.toOptions().isHideTriggerNames(), is(true));
+  }
 }
