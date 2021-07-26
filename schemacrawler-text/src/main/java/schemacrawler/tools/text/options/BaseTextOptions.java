@@ -63,12 +63,22 @@ public abstract class BaseTextOptions implements CommandOptions {
     colorMap = builder.colorMap;
   }
 
+  @Override
+  public final boolean equals(final Object obj) {
+    return super.equals(obj);
+  }
+
   public DatabaseObjectColorMap getColorMap() {
     return colorMap;
   }
 
   public IdentifierQuotingStrategy getIdentifierQuotingStrategy() {
     return identifierQuotingStrategy;
+  }
+
+  @Override
+  public final int hashCode() {
+    return super.hashCode();
   }
 
   public boolean isAlphabeticalSortForRoutineParameters() {

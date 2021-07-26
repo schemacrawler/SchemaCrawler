@@ -62,38 +62,8 @@ public class SchemaTextOptions extends BaseTextOptions {
     }
   }
 
-  @Override
-  public boolean equals(final Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (!(o instanceof SchemaTextOptions)) {
-      return false;
-    }
-    final SchemaTextOptions that = (SchemaTextOptions) o;
-    return isAlphabeticalSortForForeignKeys == that.isAlphabeticalSortForForeignKeys
-        && isAlphabeticalSortForIndexes == that.isAlphabeticalSortForIndexes
-        && isHideRemarks == that.isHideRemarks
-        && isShowOrdinalNumbers == that.isShowOrdinalNumbers
-        && isShowStandardColumnTypeNames == that.isShowStandardColumnTypeNames
-        && isHideTableRowCounts == that.isHideTableRowCounts
-        && hideNames.equals(that.hideNames);
-  }
-
   public boolean get(final HideDatabaseObjectNamesType key) {
     return hideNames.getOrDefault(key, false);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(
-        isAlphabeticalSortForForeignKeys,
-        isAlphabeticalSortForIndexes,
-        isHideRemarks,
-        isShowOrdinalNumbers,
-        isShowStandardColumnTypeNames,
-        isHideTableRowCounts,
-        hideNames);
   }
 
   public boolean isAlphabeticalSortForForeignKeys() {
