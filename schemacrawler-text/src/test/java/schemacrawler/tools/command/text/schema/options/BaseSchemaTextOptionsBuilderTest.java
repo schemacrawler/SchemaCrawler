@@ -177,6 +177,46 @@ public class BaseSchemaTextOptionsBuilderTest {
   }
 
   @Test
+  public void portableNames() {
+
+    SchemaTextOptionsBuilder builder;
+    SchemaTextOptions options;
+
+    // On and off
+    builder = SchemaTextOptionsBuilder.builder();
+    options = builder.toOptions();
+    assertThat(options.isShowUnqualifiedNames(), is(false));
+    for (final HideDatabaseObjectNamesType hideDatabaseObjectNamesType :
+        HideDatabaseObjectNamesType.values()) {
+      assertThat(options.get(hideDatabaseObjectNamesType), is(false));
+    }
+
+    builder.portableNames();
+    options = builder.toOptions();
+    assertThat(options.isShowUnqualifiedNames(), is(true));
+    for (final HideDatabaseObjectNamesType hideDatabaseObjectNamesType :
+        HideDatabaseObjectNamesType.values()) {
+      assertThat(options.get(hideDatabaseObjectNamesType), is(true));
+    }
+
+    builder.portableNames(false);
+    options = builder.toOptions();
+    assertThat(options.isShowUnqualifiedNames(), is(false));
+    for (final HideDatabaseObjectNamesType hideDatabaseObjectNamesType :
+        HideDatabaseObjectNamesType.values()) {
+      assertThat(options.get(hideDatabaseObjectNamesType), is(false));
+    }
+
+    builder.portableNames(true);
+    options = builder.toOptions();
+    assertThat(options.isShowUnqualifiedNames(), is(true));
+    for (final HideDatabaseObjectNamesType hideDatabaseObjectNamesType :
+        HideDatabaseObjectNamesType.values()) {
+      assertThat(options.get(hideDatabaseObjectNamesType), is(true));
+    }
+  }
+
+  @Test
   public void sorts() {
     final Config config =
         SchemaTextOptionsBuilder.builder()
