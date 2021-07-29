@@ -179,6 +179,8 @@ public class SchemaCrawlerExecutableTest {
     final Catalog mockCatalog = mock(Catalog.class);
     final SchemaRetrievalOptions mockSchemaRetrievalOptions =
         SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
+    final Config config = new Config();
+    config.put("uses-connection", "false");
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("test-command");
 
@@ -187,6 +189,7 @@ public class SchemaCrawlerExecutableTest {
 
     executable.setOutputOptions(outputOptions);
     executable.setConnection(connection);
+    executable.setAdditionalConfiguration(config);
     executable.setCatalog(mockCatalog);
     executable.setSchemaRetrievalOptions(mockSchemaRetrievalOptions);
     executable.execute();

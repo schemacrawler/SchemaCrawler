@@ -58,6 +58,7 @@ public class TestCommandProvider extends BaseCommandProvider {
 
     final boolean throwRuntimeException = config.getBooleanValue("throw-runtime-exception");
     final boolean returnNull = config.getBooleanValue("return-null");
+    final boolean usesConnection = config.getBooleanValue("uses-connection", true);
 
     if (returnNull) {
       return null;
@@ -66,7 +67,7 @@ public class TestCommandProvider extends BaseCommandProvider {
       throw new RuntimeException("Request throw during command initialization");
     }
 
-    final TestOptions commandOptions = new TestOptions(testCommandParameter);
+    final TestOptions commandOptions = new TestOptions(usesConnection, testCommandParameter);
     final TestCommand testCommand = new TestCommand();
     testCommand.setCommandOptions(commandOptions);
     return testCommand;

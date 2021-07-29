@@ -32,13 +32,19 @@ import schemacrawler.tools.executable.CommandOptions;
 public class TestOptions implements CommandOptions {
 
   private final String testCommandParameter;
+  private final boolean usesConnection;
+
+  public TestOptions(final boolean usesConnection, final String testCommandParameter) {
+    this.usesConnection = usesConnection;
+    this.testCommandParameter = testCommandParameter;
+  }
 
   @Override
   public String toString() {
     return "TestOptions [testCommandParameter=" + testCommandParameter + "]";
   }
 
-  public TestOptions(final String testCommandParameter) {
-    this.testCommandParameter = testCommandParameter;
+  public boolean usesConnection() {
+    return usesConnection;
   }
 }
