@@ -33,7 +33,11 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
 import static us.fatehi.utility.IOUtility.readFully;
 
 import java.io.FileReader;
@@ -49,6 +53,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
@@ -109,10 +115,63 @@ public class SchemaCrawlerExecutableTest {
     final SchemaCrawlerExecutable executable2 = new SchemaCrawlerExecutable(command2);
     executable2.setConnection(connection);
     final Config config = new Config();
-    config.put("throw-runtime-exception", "true");
+    config.put("return-null", "true");
     executable2.setAdditionalConfiguration(config);
     final SchemaCrawlerRuntimeException ex2 =
         assertThrows(SchemaCrawlerRuntimeException.class, () -> executable2.execute());
     assertThat(ex2.getMessage(), is("Cannot run command <" + command2 + ">"));
+  }
+
+  @Test
+  public void executable_options(final Connection connection) throws Exception {
+
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("test-command");
+
+    // SchemaCrawler options
+    assertThat(executable.getSchemaCrawlerOptions(), is(not(nullValue())));
+
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    assertThat(executable.getSchemaCrawlerOptions(), is(sameInstance(schemaCrawlerOptions)));
+
+    executable.setSchemaCrawlerOptions(null);
+    assertThat(executable.getSchemaCrawlerOptions(), is(not(nullValue())));
+    assertThat(executable.getSchemaCrawlerOptions(), is(not(sameInstance(schemaCrawlerOptions))));
+
+    // // Output options
+    assertThat(executable.getOutputOptions(), is(not(nullValue())));
+
+    final OutputOptions outputOptions = OutputOptionsBuilder.newOutputOptions();
+    executable.setOutputOptions(outputOptions);
+    assertThat(executable.getOutputOptions(), is(sameInstance(outputOptions)));
+
+    executable.setOutputOptions(null);
+    assertThat(executable.getOutputOptions(), is(not(nullValue())));
+    assertThat(executable.getOutputOptions(), is(not(sameInstance(outputOptions))));
+
+    // Schema retrieval options
+    assertThat(executable.getSchemaRetrievalOptions(), is(nullValue()));
+
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+    assertThat(executable.getSchemaRetrievalOptions(), is(sameInstance(schemaRetrievalOptions)));
+
+    executable.setSchemaRetrievalOptions(null);
+    assertThat(executable.getSchemaRetrievalOptions(), is(nullValue()));
+    assertThat(
+        executable.getSchemaRetrievalOptions(), is(not(sameInstance(schemaRetrievalOptions))));
+
+    // Catalog
+    assertThat(executable.getCatalog(), is(nullValue()));
+
+    final Catalog catalog = mock(Catalog.class);
+    executable.setCatalog(catalog);
+    assertThat(executable.getCatalog(), is(sameInstance(catalog)));
+
+    executable.setCatalog(null);
+    assertThat(executable.getCatalog(), is(nullValue()));
+    assertThat(executable.getCatalog(), is(not(sameInstance(catalog))));
   }
 }

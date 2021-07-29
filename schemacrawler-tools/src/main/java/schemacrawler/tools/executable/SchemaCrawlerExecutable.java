@@ -122,6 +122,10 @@ public final class SchemaCrawlerExecutable {
     return schemaCrawlerOptions;
   }
 
+  public SchemaRetrievalOptions getSchemaRetrievalOptions() {
+    return schemaRetrievalOptions;
+  }
+
   public boolean hasConnection() {
     if (connection == null) {
       return false;
