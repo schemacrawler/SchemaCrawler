@@ -38,11 +38,13 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static us.fatehi.utility.IOUtility.readFully;
 
 import java.io.FileReader;
 import java.nio.file.Path;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -120,6 +122,28 @@ public class SchemaCrawlerExecutableTest {
     final SchemaCrawlerRuntimeException ex2 =
         assertThrows(SchemaCrawlerRuntimeException.class, () -> executable2.execute());
     assertThat(ex2.getMessage(), is("Cannot run command <" + command2 + ">"));
+  }
+
+  @Test
+  public void executable_has_connection(final Connection connection) throws Exception {
+
+    final Connection mockConnection = mock(Connection.class);
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("test-command");
+
+    assertThat(executable.hasConnection(), is(false));
+
+    when(mockConnection.isClosed()).thenReturn(true);
+    executable.setConnection(mockConnection);
+    assertThat(executable.hasConnection(), is(false));
+
+    when(mockConnection.isClosed()).thenThrow(SQLException.class);
+    executable.setConnection(mockConnection);
+    assertThat(executable.hasConnection(), is(false));
+
+    executable.setConnection(connection);
+    assertThat(executable.hasConnection(), is(true));
+
+    assertThrows(NullPointerException.class, () -> executable.setConnection(null));
   }
 
   @Test

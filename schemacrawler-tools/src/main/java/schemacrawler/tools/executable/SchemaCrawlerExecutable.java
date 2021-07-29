@@ -135,7 +135,7 @@ public final class SchemaCrawlerExecutable {
       return !closed;
     } catch (final SQLException e) {
       LOGGER.log(Level.FINE, e.getMessage(), e);
-      return true;
+      return false;
     }
   }
 
