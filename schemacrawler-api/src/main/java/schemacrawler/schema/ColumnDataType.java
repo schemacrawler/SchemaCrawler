@@ -177,12 +177,4 @@ public interface ColumnDataType extends DatabaseObject, TypedObject<DataTypeType
    * @return Whether the data type is unsigned
    */
   boolean isUnsigned();
-
-  /**
-   * @deprecated Whether the data type is user-defined.
-   * @return Whether the data type is user-defined
-   * @see getType()
-   */
-  @Deprecated
-  boolean isUserDefined();
 }

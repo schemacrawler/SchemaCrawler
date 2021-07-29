@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.typeInfoRetrievalStrategy;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -48,7 +49,7 @@ public class DataTypeRetrieverTest {
   private static String printColumnDataType(final ColumnDataType columnDataType) {
     final StringBuilder buffer = new StringBuilder();
 
-    final boolean isUserDefined = columnDataType.isUserDefined();
+    final boolean isUserDefined = columnDataType.getType() == user_defined;
     final String typeName = columnDataType.getFullName();
     final String dataType = (isUserDefined ? "user defined " : "") + "column data-type";
     final String nullable = (columnDataType.isNullable() ? "" : "not ") + "nullable";
