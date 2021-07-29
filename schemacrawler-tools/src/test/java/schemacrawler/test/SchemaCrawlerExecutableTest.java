@@ -38,6 +38,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
+import static us.fatehi.utility.IOUtility.createTempFilePath;
 import static us.fatehi.utility.IOUtility.readFully;
 
 import java.io.FileReader;
@@ -48,7 +49,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -60,7 +60,6 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
-import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class SchemaCrawlerExecutableTest {
@@ -68,14 +67,12 @@ public class SchemaCrawlerExecutableTest {
   @Test
   public void executable(final Connection connection) throws Exception {
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("test-command");
-    final Path testOutputFile = IOUtility.createTempFilePath("sc", "data");
+    final Path testOutputFile = createTempFilePath("sc", "data");
 
-    final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder().includeAllRoutines();
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("test-command");
+
     final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-            .withLimitOptions(limitOptionsBuilder.toOptions());
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
     final OutputOptions outputOptions =
         OutputOptionsBuilder.newOutputOptions("text", testOutputFile);
@@ -173,5 +170,37 @@ public class SchemaCrawlerExecutableTest {
     executable.setCatalog(null);
     assertThat(executable.getCatalog(), is(nullValue()));
     assertThat(executable.getCatalog(), is(not(sameInstance(catalog))));
+  }
+
+  @Test
+  public void executable_with_settings(final Connection connection) throws Exception {
+
+    final Path testOutputFile = createTempFilePath("sc", "data");
+    final Catalog mockCatalog = mock(Catalog.class);
+    final SchemaRetrievalOptions mockSchemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
+
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("test-command");
+
+    final OutputOptions outputOptions =
+        OutputOptionsBuilder.newOutputOptions("text", testOutputFile);
+
+    executable.setOutputOptions(outputOptions);
+    executable.setConnection(connection);
+    executable.setCatalog(mockCatalog);
+    executable.setSchemaRetrievalOptions(mockSchemaRetrievalOptions);
+    executable.execute();
+
+    assertThat(
+        "Output generated from schemacrawler.test.utility.testcommand.TestCommand"
+            + lineSeparator()
+            + "TestOptions [testCommandParameter=]"
+            + lineSeparator(),
+        equalTo(readFully(new FileReader(testOutputFile.toFile()))));
+    assertThat(executable.toString(), is("test-command"));
+
+    assertThat(executable.getCatalog(), is(sameInstance(mockCatalog)));
+    assertThat(
+        executable.getSchemaRetrievalOptions(), is(sameInstance(mockSchemaRetrievalOptions)));
   }
 }
