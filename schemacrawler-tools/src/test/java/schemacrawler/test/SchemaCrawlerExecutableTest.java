@@ -32,6 +32,8 @@ import static java.lang.System.lineSeparator;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static us.fatehi.utility.IOUtility.readFully;
 
 import java.io.FileReader;
@@ -41,11 +43,15 @@ import java.sql.Connection;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import us.fatehi.utility.IOUtility;
@@ -79,8 +85,34 @@ public class SchemaCrawlerExecutableTest {
             + "TestOptions [testCommandParameter=]"
             + lineSeparator(),
         equalTo(readFully(new FileReader(testOutputFile.toFile()))));
+    assertThat(executable.toString(), is("test-command"));
 
     assertThat(executable.getOutputOptions(), is(outputOptions));
     assertThat(executable.getSchemaCrawlerOptions(), is(schemaCrawlerOptions));
+
+    final Catalog catalog = executable.getCatalog();
+    assertThat(catalog.getSchemas(), hasSize(6));
+    assertThat(catalog.getTables(), hasSize(19));
+  }
+
+  @Test
+  public void executable_bad_command(final Connection connection) throws Exception {
+
+    final String command1 = "bad-command";
+    final SchemaCrawlerExecutable executable1 = new SchemaCrawlerExecutable(command1);
+    executable1.setConnection(connection);
+    final SchemaCrawlerException ex1 =
+        assertThrows(SchemaCrawlerException.class, () -> executable1.execute());
+    assertThat(ex1.getMessage(), is("Unknown command <" + command1 + ">"));
+
+    final String command2 = "test-command";
+    final SchemaCrawlerExecutable executable2 = new SchemaCrawlerExecutable(command2);
+    executable2.setConnection(connection);
+    final Config config = new Config();
+    config.put("throw-runtime-exception", "true");
+    executable2.setAdditionalConfiguration(config);
+    final SchemaCrawlerRuntimeException ex2 =
+        assertThrows(SchemaCrawlerRuntimeException.class, () -> executable2.execute());
+    assertThat(ex2.getMessage(), is("Cannot run command <" + command2 + ">"));
   }
 }

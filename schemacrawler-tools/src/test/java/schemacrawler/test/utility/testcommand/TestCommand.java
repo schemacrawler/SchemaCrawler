@@ -48,6 +48,7 @@ public final class TestCommand extends BaseSchemaCrawlerCommand<TestOptions> {
   /** {@inheritDoc} */
   @Override
   public void execute() throws Exception {
+
     try (final PrintWriter writer = new PrintWriter(outputOptions.openNewOutputWriter()); ) {
       writer.println("Output generated from " + this.getClass().getName());
       writer.println(commandOptions);
