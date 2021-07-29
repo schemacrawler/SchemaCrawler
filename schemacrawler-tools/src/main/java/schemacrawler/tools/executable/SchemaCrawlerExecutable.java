@@ -31,7 +31,6 @@ import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -126,19 +125,6 @@ public final class SchemaCrawlerExecutable {
     return schemaRetrievalOptions;
   }
 
-  public boolean hasConnection() {
-    if (connection == null) {
-      return false;
-    }
-    try {
-      final boolean closed = connection.isClosed();
-      return !closed;
-    } catch (final SQLException e) {
-      LOGGER.log(Level.FINE, e.getMessage(), e);
-      return false;
-    }
-  }
-
   public void setAdditionalConfiguration(final Config additionalConfig) {
     // Make a defensive copy
     this.additionalConfig = new Config(additionalConfig);
@@ -190,10 +176,7 @@ public final class SchemaCrawlerExecutable {
     final SchemaCrawlerCommand<?> scCommand =
         commandRegistry.configureNewCommand(
             command, schemaCrawlerOptions, additionalConfig, outputOptions);
-    if (scCommand == null) {
-      throw new SchemaCrawlerException(String.format("Could not configure command <%s>", command));
-    }
 
-    return scCommand;
+    return requireNonNull(scCommand, "No SchemaCrawler command instantiated");
   }
 }
