@@ -126,6 +126,17 @@ public class LimitOptionsBuilderTest {
     assertThat(
         limitOptions.get(DatabaseObjectRuleForInclusion.ruleForRoutineParameterInclusion),
         is(inclusionRule));
+
+    // 6. Set include all
+    limitOptions = limitOptionsBuilder.includeAllRoutines().toOptions();
+    assertThat(
+        limitOptions.get(DatabaseObjectRuleForInclusion.ruleForRoutineInclusion), is(includeAll));
+    limitOptions = limitOptionsBuilder.includeAllSequences().toOptions();
+    assertThat(
+        limitOptions.get(DatabaseObjectRuleForInclusion.ruleForSequenceInclusion), is(includeAll));
+    limitOptions = limitOptionsBuilder.includeAllSynonyms().toOptions();
+    assertThat(
+        limitOptions.get(DatabaseObjectRuleForInclusion.ruleForSynonymInclusion), is(includeAll));
   }
 
   @Test
