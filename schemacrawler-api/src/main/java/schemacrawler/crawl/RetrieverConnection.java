@@ -38,8 +38,8 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.plugin.EnumDataTypeHelper;
 import schemacrawler.schema.TableTypes;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -57,8 +57,7 @@ import us.fatehi.utility.string.StringFormat;
  */
 final class RetrieverConnection {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(RetrieverConnection.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(RetrieverConnection.class.getName());
 
   private final Connection connection;
   private final JavaSqlTypes javaSqlTypes;
@@ -71,7 +70,7 @@ final class RetrieverConnection {
       throws SQLException {
 
     this.connection = checkConnection(connection);
-    metaData = connection.getMetaData();
+    metaData = requireNonNull(connection.getMetaData(), "No database metadata obtained");
     this.schemaRetrievalOptions =
         requireNonNull(schemaRetrievalOptions, "No database specific overrides provided");
 
