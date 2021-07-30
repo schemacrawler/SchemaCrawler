@@ -216,6 +216,37 @@ public class LimitOptionsBuilderTest {
   }
 
   @Test
+  public void tableNamePattern() {
+
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder();
+    LimitOptions limitOptions;
+
+    // 1. Test defaults
+    limitOptions = limitOptionsBuilder.toOptions();
+    assertThat(limitOptions.getTableNamePattern(), is(nullValue()));
+
+    // 2. Test empty string
+    limitOptionsBuilder.tableNamePattern("");
+    limitOptions = limitOptionsBuilder.toOptions();
+    assertThat(limitOptions.getTableNamePattern(), is(nullValue()));
+
+    // 3. Test blank string
+    limitOptionsBuilder.tableNamePattern("\t\t");
+    limitOptions = limitOptionsBuilder.toOptions();
+    assertThat(limitOptions.getTableNamePattern(), is(nullValue()));
+
+    // 4. Test pattern
+    limitOptionsBuilder.tableNamePattern("pattern");
+    limitOptions = limitOptionsBuilder.toOptions();
+    assertThat(limitOptions.getTableNamePattern(), is("pattern"));
+
+    // 5. Test null
+    limitOptionsBuilder.tableNamePattern(null);
+    limitOptions = limitOptionsBuilder.toOptions();
+    assertThat(limitOptions.getTableNamePattern(), is(nullValue()));
+  }
+
+  @Test
   public void tableTypes() {
 
     final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder();
@@ -247,6 +278,13 @@ public class LimitOptionsBuilderTest {
 
     // 4. Test null collection (which resets to defaults)
     limitOptionsBuilder.tableTypes((Collection<String>) null);
+    limitOptions = limitOptionsBuilder.toOptions();
+    assertThat(limitOptions.getTableTypes().toArray(), is(nullValue()));
+    limitOptionsPlayback = LimitOptionsBuilder.builder().fromOptions(limitOptions).toOptions();
+    assertThat(limitOptionsPlayback.getTableTypes().toArray(), is(nullValue()));
+
+    // 5. Test null varargs (which resets to defaults)
+    limitOptionsBuilder.tableTypes((String[]) null);
     limitOptions = limitOptionsBuilder.toOptions();
     assertThat(limitOptions.getTableTypes().toArray(), is(nullValue()));
     limitOptionsPlayback = LimitOptionsBuilder.builder().fromOptions(limitOptions).toOptions();
