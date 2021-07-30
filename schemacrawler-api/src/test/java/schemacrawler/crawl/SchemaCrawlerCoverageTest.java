@@ -33,6 +33,9 @@ import static com.github.npathai.hamcrestopt.OptionalMatchers.isPresentAndIs;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.matchesPattern;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.ObjectPropertyTestUtility.checkBooleanProperties;
 import static schemacrawler.test.utility.ObjectPropertyTestUtility.checkIntegerProperties;
@@ -57,6 +60,7 @@ import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.PrimaryKey;
+import schemacrawler.schema.Reducer;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
@@ -115,6 +119,17 @@ public class SchemaCrawlerCoverageTest {
     //    final Routine routine = new MutableFunction(systemLobsSchema, "NEW_PUBLISHER", null);
     //    assertThat(catalog.lookupRoutine(systemLobsSchema, "NEW_PUBLISHER"),
     // isPresentAndIs(routine));
+  }
+
+  @Test
+  public void catalogReduce() throws Exception {
+    final Reducer reducer = spy(Reducer.class);
+
+    catalog.reduce(Catalog.class, (Reducer<Catalog>) reducer);
+    verifyNoMoreInteractions(reducer);
+
+    assertThrows(NullPointerException.class, () -> catalog.reduce(null, reducer));
+    assertThrows(NullPointerException.class, () -> catalog.reduce(Table.class, null));
   }
 
   @Test
