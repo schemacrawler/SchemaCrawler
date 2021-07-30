@@ -141,26 +141,8 @@ public class LimitOptionsBuilderTest {
 
   @Test
   public void newOptions() {
-
-    final LimitOptions limitOptions = LimitOptionsBuilder.newLimitOptions();
-
-    assertThat(
-        limitOptions.getRoutineTypes(),
-        is(EnumSet.of(RoutineType.function, RoutineType.procedure)));
-    assertThat(
-        asList(limitOptions.getTableTypes().toArray()),
-        containsInAnyOrder("TABLE", "VIEW", "BASE TABLE"));
-
-    final IncludeAll includeAll = new IncludeAll();
-    final ExcludeAll excludeAll = new ExcludeAll();
-    for (final DatabaseObjectRuleForInclusion databaseObjectRuleForInclusion :
-        DatabaseObjectRuleForInclusion.values()) {
-      if (databaseObjectRuleForInclusion.isExcludeByDefault()) {
-        assertThat(limitOptions.get(databaseObjectRuleForInclusion), is(excludeAll));
-      } else {
-        assertThat(limitOptions.get(databaseObjectRuleForInclusion), is(includeAll));
-      }
-    }
+    assertDefaultLimitOptions(LimitOptionsBuilder.newLimitOptions());
+    assertDefaultLimitOptions(LimitOptionsBuilder.builder().fromOptions(null).toOptions());
   }
 
   @Test
@@ -269,5 +251,25 @@ public class LimitOptionsBuilderTest {
     assertThat(limitOptions.getTableTypes().toArray(), is(nullValue()));
     limitOptionsPlayback = LimitOptionsBuilder.builder().fromOptions(limitOptions).toOptions();
     assertThat(limitOptionsPlayback.getTableTypes().toArray(), is(nullValue()));
+  }
+
+  private void assertDefaultLimitOptions(final LimitOptions limitOptions) {
+    assertThat(
+        limitOptions.getRoutineTypes(),
+        is(EnumSet.of(RoutineType.function, RoutineType.procedure)));
+    assertThat(
+        asList(limitOptions.getTableTypes().toArray()),
+        containsInAnyOrder("TABLE", "VIEW", "BASE TABLE"));
+
+    final IncludeAll includeAll = new IncludeAll();
+    final ExcludeAll excludeAll = new ExcludeAll();
+    for (final DatabaseObjectRuleForInclusion databaseObjectRuleForInclusion :
+        DatabaseObjectRuleForInclusion.values()) {
+      if (databaseObjectRuleForInclusion.isExcludeByDefault()) {
+        assertThat(limitOptions.get(databaseObjectRuleForInclusion), is(excludeAll));
+      } else {
+        assertThat(limitOptions.get(databaseObjectRuleForInclusion), is(includeAll));
+      }
+    }
   }
 }
