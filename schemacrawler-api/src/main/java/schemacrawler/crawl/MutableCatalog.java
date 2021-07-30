@@ -291,9 +291,10 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
 
   @Override
   public <N extends NamedObject> void reduce(final Class<N> clazz, final Reducer<N> reducer) {
-    if (reducer == null) {
-      return;
-    } else if (Schema.class.isAssignableFrom(clazz)) {
+    requireNonNull(reducer, "No reducer provided");
+    requireNonNull(clazz, "No lookup class provided");
+
+    if (Schema.class.isAssignableFrom(clazz)) {
       ((Reducer<Schema>) reducer).reduce(schemas);
     } else if (Table.class.isAssignableFrom(clazz)) {
       // Filter the list of tables based on grep criteria, and

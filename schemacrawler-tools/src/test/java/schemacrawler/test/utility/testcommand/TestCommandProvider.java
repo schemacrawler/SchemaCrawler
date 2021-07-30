@@ -55,7 +55,19 @@ public class TestCommandProvider extends BaseCommandProvider {
   @Override
   public TestCommand newSchemaCrawlerCommand(final String command, final Config config) {
     final String testCommandParameter = config.getStringValue("test-command-parameter", "");
-    final TestOptions commandOptions = new TestOptions(testCommandParameter);
+
+    final boolean throwRuntimeException = config.getBooleanValue("throw-runtime-exception");
+    final boolean returnNull = config.getBooleanValue("return-null");
+    final boolean usesConnection = config.getBooleanValue("uses-connection", true);
+
+    if (returnNull) {
+      return null;
+    }
+    if (throwRuntimeException) {
+      throw new RuntimeException("Request throw during command initialization");
+    }
+
+    final TestOptions commandOptions = new TestOptions(usesConnection, testCommandParameter);
     final TestCommand testCommand = new TestCommand();
     testCommand.setCommandOptions(commandOptions);
     return testCommand;

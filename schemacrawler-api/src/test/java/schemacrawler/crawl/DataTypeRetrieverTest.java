@@ -2,9 +2,12 @@ package schemacrawler.crawl;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.emptyCollectionOf;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static schemacrawler.schema.DataTypeType.user_defined;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.data_dictionary_all;
 import static schemacrawler.schemacrawler.SchemaInfoMetadataRetrievalStrategy.typeInfoRetrievalStrategy;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -15,9 +18,11 @@ import static us.fatehi.utility.Utility.isBlank;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -32,6 +37,7 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestContext;
@@ -48,7 +54,7 @@ public class DataTypeRetrieverTest {
   private static String printColumnDataType(final ColumnDataType columnDataType) {
     final StringBuilder buffer = new StringBuilder();
 
-    final boolean isUserDefined = columnDataType.isUserDefined();
+    final boolean isUserDefined = columnDataType.getType() == user_defined;
     final String typeName = columnDataType.getFullName();
     final String dataType = (isUserDefined ? "user defined " : "") + "column data-type";
     final String nullable = (columnDataType.isNullable() ? "" : "not ") + "nullable";
@@ -122,7 +128,7 @@ public class DataTypeRetrieverTest {
     }
 
     buffer.append("  attributes:\n");
-    final Map<String, Object> attributes = columnDataType.getAttributes();
+    final Map<String, Object> attributes = new TreeMap<>(columnDataType.getAttributes());
     for (final Map.Entry<String, Object> attribute : attributes.entrySet()) {
       buffer
           .append("    ")
@@ -191,5 +197,31 @@ public class DataTypeRetrieverTest {
     dataTypeRetriever.retrieveSystemColumnDataTypes();
 
     verifyRetrieveColumnDataTypes(catalog, testContext.testMethodFullName());
+  }
+
+  @Test
+  @DisplayName("System data types")
+  public void systemDataTypes(final TestContext testContext, final Connection connection)
+      throws Exception {
+
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
+    final RetrieverConnection retrieverConnection =
+        new RetrieverConnection(connection, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final DataTypeRetriever dataTypeRetriever =
+        new DataTypeRetriever(retrieverConnection, catalog, options);
+    dataTypeRetriever.retrieveSystemColumnDataTypes();
+
+    final Collection<ColumnDataType> systemColumnDataTypes = catalog.getSystemColumnDataTypes();
+    assertThat(systemColumnDataTypes, hasSize(23));
+
+    // Additional catalog tests
+    assertThat(
+        catalog.getColumnDataTypes(new SchemaReference("catalog", "schema")),
+        is(emptyCollectionOf(ColumnDataType.class)));
+    assertThrows(NullPointerException.class, () -> catalog.getColumnDataTypes(null));
   }
 }

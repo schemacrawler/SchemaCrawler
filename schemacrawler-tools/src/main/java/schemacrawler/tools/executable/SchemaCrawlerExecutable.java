@@ -31,10 +31,9 @@ import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -57,8 +56,7 @@ import us.fatehi.utility.string.StringFormat;
  */
 public final class SchemaCrawlerExecutable {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(SchemaCrawlerExecutable.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerExecutable.class.getName());
 
   private final String command;
   private Config additionalConfig;
@@ -123,17 +121,8 @@ public final class SchemaCrawlerExecutable {
     return schemaCrawlerOptions;
   }
 
-  public boolean hasConnection() {
-    if (connection == null) {
-      return false;
-    }
-    try {
-      final boolean closed = connection.isClosed();
-      return !closed;
-    } catch (final SQLException e) {
-      LOGGER.log(Level.FINE, e.getMessage(), e);
-      return true;
-    }
+  public SchemaRetrievalOptions getSchemaRetrievalOptions() {
+    return schemaRetrievalOptions;
   }
 
   public void setAdditionalConfiguration(final Config additionalConfig) {
@@ -187,10 +176,7 @@ public final class SchemaCrawlerExecutable {
     final SchemaCrawlerCommand<?> scCommand =
         commandRegistry.configureNewCommand(
             command, schemaCrawlerOptions, additionalConfig, outputOptions);
-    if (scCommand == null) {
-      throw new SchemaCrawlerException("Could not configure command, " + command);
-    }
 
-    return scCommand;
+    return requireNonNull(scCommand, "No SchemaCrawler command instantiated");
   }
 }

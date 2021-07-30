@@ -118,10 +118,6 @@ public final class SchemaInfoLevelBuilder
     return this;
   }
 
-  public String getTag() {
-    return tag;
-  }
-
   public SchemaInfoLevelBuilder setRetrieveAdditionalColumnAttributes(
       final boolean retrieveAdditionalColumnAttributes) {
     schemaInfoRetrievals.put(
@@ -309,7 +305,7 @@ public final class SchemaInfoLevelBuilder
 
   @Override
   public String toString() {
-    return tag == null ? "" : tag;
+    return tag;
   }
 
   /**
@@ -363,16 +359,9 @@ public final class SchemaInfoLevelBuilder
     return this;
   }
 
-  private Boolean is(final SchemaInfoRetrieval schemaInfoRetrieval) {
-    if (schemaInfoRetrieval == null) {
-      return false;
-    }
-    return schemaInfoRetrievals.getOrDefault(schemaInfoRetrieval, false);
-  }
-
   private void reduceMap() {
     for (final SchemaInfoRetrieval schemaInfoRetrieval : SchemaInfoRetrieval.values()) {
-      if (!is(schemaInfoRetrieval)) {
+      if (!schemaInfoRetrievals.getOrDefault(schemaInfoRetrieval, false)) {
         schemaInfoRetrievals.remove(schemaInfoRetrieval);
       }
     }

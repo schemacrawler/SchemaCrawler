@@ -32,6 +32,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.not;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +46,47 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaInfoRetrieval;
 
 public class SchemaInfoLevelBuilderTest {
+
+  @Test
+  public void nullInfoLevel() {
+    assertThat(
+        SchemaInfoLevelBuilder.builder().withInfoLevel(null).toOptions(),
+        is(SchemaInfoLevelBuilder.builder().toOptions()));
+  }
+
+  @Test
+  public void prebuilt() {
+    final SchemaInfoLevel minimum = SchemaInfoLevelBuilder.minimum();
+    assertThat(minimum.getTag(), is("minimum"));
+    assertThat(minimum.is(SchemaInfoRetrieval.retrieveTables), is(true));
+    assertThat(minimum.is(SchemaInfoRetrieval.retrievePrimaryKeys), is(false));
+    assertThat(minimum.is(SchemaInfoRetrieval.retrieveRoutineInformation), is(false));
+    assertThat(minimum.is(SchemaInfoRetrieval.retrieveAdditionalColumnAttributes), is(false));
+
+    final SchemaInfoLevel standard = SchemaInfoLevelBuilder.standard();
+    assertThat(standard.getTag(), is("standard"));
+    assertThat(standard.is(SchemaInfoRetrieval.retrieveTables), is(true));
+    assertThat(standard.is(SchemaInfoRetrieval.retrievePrimaryKeys), is(true));
+    assertThat(standard.is(SchemaInfoRetrieval.retrieveRoutineInformation), is(false));
+    assertThat(standard.is(SchemaInfoRetrieval.retrieveAdditionalColumnAttributes), is(false));
+
+    final SchemaInfoLevel detailed = SchemaInfoLevelBuilder.detailed();
+    assertThat(detailed.getTag(), is("detailed"));
+    assertThat(detailed.is(SchemaInfoRetrieval.retrieveTables), is(true));
+    assertThat(detailed.is(SchemaInfoRetrieval.retrievePrimaryKeys), is(true));
+    assertThat(detailed.is(SchemaInfoRetrieval.retrieveRoutineInformation), is(true));
+    assertThat(detailed.is(SchemaInfoRetrieval.retrieveAdditionalColumnAttributes), is(false));
+
+    final SchemaInfoLevel maximum = SchemaInfoLevelBuilder.maximum();
+    assertThat(maximum.getTag(), is("maximum"));
+    assertThat(maximum.is(SchemaInfoRetrieval.retrieveTables), is(true));
+    assertThat(maximum.is(SchemaInfoRetrieval.retrievePrimaryKeys), is(true));
+    assertThat(maximum.is(SchemaInfoRetrieval.retrieveRoutineInformation), is(true));
+    assertThat(maximum.is(SchemaInfoRetrieval.retrieveAdditionalColumnAttributes), is(true));
+
+    assertThat(SchemaInfoLevelBuilder.newSchemaInfoLevel(), is(standard));
+    assertThat(standard.is(null), is(false));
+  }
 
   @Test
   public void setRetrieveAdditionalColumnMetadata() {
@@ -148,7 +190,10 @@ public class SchemaInfoLevelBuilderTest {
     final SchemaInfoLevelBuilder builder = SchemaInfoLevelBuilder.builder();
     SchemaInfoLevel options;
 
+    assertThat(builder.toString(), equalTo(""));
+
     options = builder.toOptions();
+    assertThat(builder.toString(), equalTo(options.getTag()));
     assertThat(options.getTag(), equalTo(""));
     assertThat(
         options.toString().replaceAll(System.lineSeparator(), "\n"),
@@ -156,6 +201,7 @@ public class SchemaInfoLevelBuilderTest {
 
     builder.withInfoLevel(InfoLevel.standard);
     options = builder.toOptions();
+    assertThat(builder.toString(), equalTo(options.getTag()));
     assertThat(options.getTag(), equalTo("standard"));
     assertThat(
         options.toString().replaceAll(System.lineSeparator(), "\n"),
@@ -163,6 +209,7 @@ public class SchemaInfoLevelBuilderTest {
 
     builder.withTag("custom");
     options = builder.toOptions();
+    assertThat(builder.toString(), equalTo(options.getTag()));
     assertThat(options.getTag(), equalTo("custom"));
     assertThat(
         options.toString().replaceAll(System.lineSeparator(), "\n"),
@@ -170,15 +217,24 @@ public class SchemaInfoLevelBuilderTest {
 
     builder.withTag("\t\t");
     options = builder.toOptions();
+    assertThat(builder.toString(), equalTo(options.getTag()));
     assertThat(options.getTag(), equalTo(""));
   }
 
   @Test
   public void testFromOptions() {
+    final SchemaInfoLevel options0 = SchemaInfoLevelBuilder.builder().toOptions();
     final SchemaInfoLevel options1 = SchemaInfoLevelBuilder.standard();
     final SchemaInfoLevel options2 =
         SchemaInfoLevelBuilder.builder().fromOptions(options1).toOptions();
+    final SchemaInfoLevel options3 = SchemaInfoLevelBuilder.builder().fromOptions(null).toOptions();
+    final SchemaInfoLevel options4 = SchemaInfoLevelBuilder.builder().withTag("custom").toOptions();
+
+    assertThat(options0, not(equalTo(options1)));
+    assertThat(options0, equalTo(options3));
+    assertThat(options0, not(equalTo(options4)));
     assertThat(options1, equalTo(options2));
+    assertThat(options1, not(equalTo(options4)));
   }
 
   @Test

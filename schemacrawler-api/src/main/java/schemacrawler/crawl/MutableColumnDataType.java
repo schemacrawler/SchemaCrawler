@@ -29,14 +29,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.schema.DataTypeType.user_defined;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.JavaSqlType;
@@ -55,8 +54,7 @@ final class MutableColumnDataType extends AbstractDatabaseObject implements Colu
 
   private static final long serialVersionUID = 3688503281676530744L;
 
-  private static final Logger LOGGER =
-      Logger.getLogger(SchemaCrawler.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(SchemaCrawler.class.getName());
 
   private final DataTypeType type;
   private boolean autoIncrementable;
@@ -248,12 +246,6 @@ final class MutableColumnDataType extends AbstractDatabaseObject implements Colu
   @Override
   public boolean isUnsigned() {
     return unsigned;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public boolean isUserDefined() {
-    return type == user_defined;
   }
 
   void setAutoIncrementable(final boolean autoIncrementable) {

@@ -38,8 +38,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
@@ -51,8 +51,7 @@ import us.fatehi.utility.string.StringFormat;
 /** Command registry for mapping command to executable. */
 public final class CommandRegistry {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(CommandRegistry.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(CommandRegistry.class.getName());
 
   private static CommandRegistry commandRegistrySingleton;
 
@@ -131,6 +130,9 @@ public final class CommandRegistry {
     final SchemaCrawlerCommand<?> scCommand;
     try {
       scCommand = executableCommandProvider.newSchemaCrawlerCommand(command, additionalConfig);
+      if (scCommand == null) {
+        throw new NullPointerException("No SchemaCrawler command instantiated");
+      }
       scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
       scCommand.setOutputOptions(outputOptions);
     } catch (final Throwable e) {

@@ -33,11 +33,19 @@ import static com.github.npathai.hamcrestopt.OptionalMatchers.isPresentAndIs;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.matchesPattern;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.ObjectPropertyTestUtility.checkBooleanProperties;
 import static schemacrawler.test.utility.ObjectPropertyTestUtility.checkIntegerProperties;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -51,12 +59,15 @@ import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.PrimaryKey;
+import schemacrawler.schema.Reducer;
 import schemacrawler.schema.Sequence;
+import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
@@ -64,11 +75,13 @@ import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestUtility;
@@ -79,6 +92,52 @@ import schemacrawler.test.utility.TestUtility;
 public class SchemaCrawlerCoverageTest {
 
   private Catalog catalog;
+
+  @Test
+  public void catalogLookup() throws Exception {
+    final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
+
+    assertThat(catalog.lookupSchema(null), isEmpty());
+    assertThat(catalog.lookupSchema("UNKNOWN"), isEmpty());
+    assertThat(catalog.lookupSchema("PUBLIC.BOOKS"), isPresentAndIs(schema));
+
+    final Sequence sequence = new MutableSequence(schema, "PUBLISHER_ID_SEQ");
+    assertThat(catalog.lookupSequence(schema, null), isEmpty());
+    assertThat(catalog.lookupSequence(schema, "UNKNOWN"), isEmpty());
+    assertThat(catalog.lookupSequence(schema, "PUBLISHER_ID_SEQ"), isPresentAndIs(sequence));
+
+    final Synonym synonym = new MutableSynonym(schema, "PUBLICATIONS");
+    assertThat(catalog.lookupSynonym(schema, null), isEmpty());
+    assertThat(catalog.lookupSynonym(schema, "UNKNOWN"), isEmpty());
+    assertThat(catalog.lookupSynonym(schema, "PUBLICATIONS"), isPresentAndIs(synonym));
+
+    final ColumnDataType systemColumnDataType =
+        new MutableColumnDataType(new SchemaReference(), "VARCHAR", DataTypeType.system);
+    assertThat(catalog.lookupSystemColumnDataType(null), isEmpty());
+    assertThat(catalog.lookupSystemColumnDataType("UNKNOWN"), isEmpty());
+    assertThat(catalog.lookupSystemColumnDataType("VARCHAR"), isPresentAndIs(systemColumnDataType));
+
+    final Table table = new MutableTable(schema, "AUTHORS");
+    assertThat(catalog.lookupTable(schema, null), isEmpty());
+    assertThat(catalog.lookupTable(schema, "UNKNOWN"), isEmpty());
+    assertThat(catalog.lookupTable(schema, "AUTHORS"), isPresentAndIs(table));
+
+    // TODO: Routine lookup is not possible, since multiple routines may be returned
+    //    final Routine routine = new MutableFunction(systemLobsSchema, "NEW_PUBLISHER", null);
+    //    assertThat(catalog.lookupRoutine(systemLobsSchema, "NEW_PUBLISHER"),
+    // isPresentAndIs(routine));
+  }
+
+  @Test
+  public void catalogReduce() throws Exception {
+    final Reducer reducer = spy(Reducer.class);
+
+    catalog.reduce(Catalog.class, (Reducer<Catalog>) reducer);
+    verifyNoMoreInteractions(reducer);
+
+    assertThrows(NullPointerException.class, () -> catalog.reduce(null, reducer));
+    assertThrows(NullPointerException.class, () -> catalog.reduce(Table.class, null));
+  }
 
   @Test
   public void columnDataTypeProperties() throws Exception {
@@ -200,6 +259,32 @@ public class SchemaCrawlerCoverageTest {
     final Optional<TableConstraint> optionalTableConstraint =
         table.lookupTableConstraint(primaryKey.getName());
     assertThat(optionalTableConstraint, isPresentAndIs(constraint));
+  }
+
+  @Test
+  public void schemaCrawlerExceptions() throws Exception {
+
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    final SchemaRetrievalOptions schemaRetrievalOptions =
+        SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
+
+    final Connection connection1 = mock(Connection.class);
+    when(connection1.isClosed()).thenThrow(new SQLException("Forced SQL exception"));
+
+    final Throwable exception =
+        assertThrows(
+            SchemaCrawlerException.class,
+            () -> new SchemaCrawler(connection1, schemaRetrievalOptions, schemaCrawlerOptions));
+    assertThat(exception.getCause().getMessage(), is("Forced SQL exception"));
+
+    final Connection connection2 = mock(Connection.class);
+    final DatabaseMetaData databaseMetaData = mock(DatabaseMetaData.class);
+    when(connection2.isClosed()).thenReturn(false);
+    when(connection2.getMetaData()).thenReturn(databaseMetaData);
+    final SchemaCrawler schemaCrawler =
+        new SchemaCrawler(connection2, schemaRetrievalOptions, schemaCrawlerOptions);
+    assertThrows(SchemaCrawlerException.class, () -> schemaCrawler.crawl());
   }
 
   @Test

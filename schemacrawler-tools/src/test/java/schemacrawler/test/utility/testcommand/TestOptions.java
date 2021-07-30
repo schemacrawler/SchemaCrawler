@@ -25,38 +25,26 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-
 package schemacrawler.test.utility.testcommand;
 
-import java.io.PrintWriter;
+import schemacrawler.tools.executable.CommandOptions;
 
-import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+public class TestOptions implements CommandOptions {
 
-/**
- * Main executor for the script engine integration.
- *
- * @author Sualeh Fatehi
- */
-public final class TestCommand extends BaseSchemaCrawlerCommand<TestOptions> {
+  private final String testCommandParameter;
+  private final boolean usesConnection;
 
-  static final String COMMAND = "test-command";
-
-  public TestCommand() {
-    super(COMMAND);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public void execute() throws Exception {
-    try (final PrintWriter writer = new PrintWriter(outputOptions.openNewOutputWriter()); ) {
-      writer.println("Output generated from " + this.getClass().getName());
-      writer.println(commandOptions);
-      writer.flush();
-    }
+  public TestOptions(final boolean usesConnection, final String testCommandParameter) {
+    this.usesConnection = usesConnection;
+    this.testCommandParameter = testCommandParameter;
   }
 
   @Override
+  public String toString() {
+    return "TestOptions [testCommandParameter=" + testCommandParameter + "]";
+  }
+
   public boolean usesConnection() {
-    return true;
+    return usesConnection;
   }
 }
