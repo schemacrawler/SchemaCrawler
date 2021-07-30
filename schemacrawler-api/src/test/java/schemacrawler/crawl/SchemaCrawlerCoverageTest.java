@@ -106,6 +106,11 @@ public class SchemaCrawlerCoverageTest {
     assertThat(catalog.lookupSystemColumnDataType("UNKNOWN"), isEmpty());
     assertThat(catalog.lookupSystemColumnDataType("VARCHAR"), isPresentAndIs(systemColumnDataType));
 
+    final Table table = new MutableTable(schema, "AUTHORS");
+    assertThat(catalog.lookupTable(schema, null), isEmpty());
+    assertThat(catalog.lookupTable(schema, "UNKNOWN"), isEmpty());
+    assertThat(catalog.lookupTable(schema, "AUTHORS"), isPresentAndIs(table));
+
     // TODO: Routine lookup is not possible, since multiple routines may be returned
     //    final Routine routine = new MutableFunction(systemLobsSchema, "NEW_PUBLISHER", null);
     //    assertThat(catalog.lookupRoutine(systemLobsSchema, "NEW_PUBLISHER"),
