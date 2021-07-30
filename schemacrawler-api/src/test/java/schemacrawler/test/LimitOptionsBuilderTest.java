@@ -12,6 +12,7 @@ import static schemacrawler.schema.RoutineType.procedure;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumSet;
+import java.util.regex.Pattern;
 
 import org.junit.jupiter.api.Test;
 
@@ -29,8 +30,8 @@ public class LimitOptionsBuilderTest {
 
     final IncludeAll includeAll = new IncludeAll();
     final ExcludeAll excludeAll = new ExcludeAll();
-    final RegularExpressionRule inclusionRule =
-        new RegularExpressionRule(".*PUBLIC.*", ".*PUBLICNUISANCE.*");
+    final RegularExpressionRule inclusionRule = new RegularExpressionRule(".*PUBLIC.*", "");
+    final Pattern pattern = Pattern.compile(".*PUBLIC.*");
 
     final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder();
     LimitOptions limitOptions;
@@ -72,7 +73,7 @@ public class LimitOptionsBuilderTest {
       }
     }
 
-    // 4. Set specific values
+    // 4. Set specific values, with inclusion rule
     limitOptions = limitOptionsBuilder.includeSchemas(inclusionRule).toOptions();
     assertThat(
         limitOptions.get(DatabaseObjectRuleForInclusion.ruleForSchemaInclusion), is(inclusionRule));
@@ -95,6 +96,33 @@ public class LimitOptionsBuilderTest {
     assertThat(
         limitOptions.get(DatabaseObjectRuleForInclusion.ruleForColumnInclusion), is(inclusionRule));
     limitOptions = limitOptionsBuilder.includeRoutineParameters(inclusionRule).toOptions();
+    assertThat(
+        limitOptions.get(DatabaseObjectRuleForInclusion.ruleForRoutineParameterInclusion),
+        is(inclusionRule));
+
+    // 5. Set specific values, with pattern
+    limitOptions = limitOptionsBuilder.includeSchemas(pattern).toOptions();
+    assertThat(
+        limitOptions.get(DatabaseObjectRuleForInclusion.ruleForSchemaInclusion), is(inclusionRule));
+    limitOptions = limitOptionsBuilder.includeTables(pattern).toOptions();
+    assertThat(
+        limitOptions.get(DatabaseObjectRuleForInclusion.ruleForTableInclusion), is(inclusionRule));
+    limitOptions = limitOptionsBuilder.includeRoutines(pattern).toOptions();
+    assertThat(
+        limitOptions.get(DatabaseObjectRuleForInclusion.ruleForRoutineInclusion),
+        is(inclusionRule));
+    limitOptions = limitOptionsBuilder.includeSequences(pattern).toOptions();
+    assertThat(
+        limitOptions.get(DatabaseObjectRuleForInclusion.ruleForSequenceInclusion),
+        is(inclusionRule));
+    limitOptions = limitOptionsBuilder.includeSynonyms(pattern).toOptions();
+    assertThat(
+        limitOptions.get(DatabaseObjectRuleForInclusion.ruleForSynonymInclusion),
+        is(inclusionRule));
+    limitOptions = limitOptionsBuilder.includeColumns(pattern).toOptions();
+    assertThat(
+        limitOptions.get(DatabaseObjectRuleForInclusion.ruleForColumnInclusion), is(inclusionRule));
+    limitOptions = limitOptionsBuilder.includeRoutineParameters(pattern).toOptions();
     assertThat(
         limitOptions.get(DatabaseObjectRuleForInclusion.ruleForRoutineParameterInclusion),
         is(inclusionRule));

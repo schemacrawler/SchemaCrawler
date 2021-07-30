@@ -85,7 +85,7 @@ public final class LimitOptionsBuilder
   private LimitOptionsBuilder() {
     inclusionRules = new EnumMap<>(DatabaseObjectRuleForInclusion.class);
 
-    for (DatabaseObjectRuleForInclusion ruleForInclusion :
+    for (final DatabaseObjectRuleForInclusion ruleForInclusion :
         DatabaseObjectRuleForInclusion.values()) {
       resetToDefault(ruleForInclusion);
     }
@@ -100,7 +100,7 @@ public final class LimitOptionsBuilder
       return this;
     }
 
-    for (DatabaseObjectRuleForInclusion ruleForInclusion :
+    for (final DatabaseObjectRuleForInclusion ruleForInclusion :
         DatabaseObjectRuleForInclusion.values()) {
       inclusionRules.put(ruleForInclusion, options.get(ruleForInclusion));
     }
@@ -148,6 +148,10 @@ public final class LimitOptionsBuilder
   public LimitOptionsBuilder includeRoutineParameters(
       final InclusionRule routineParameterInclusionRule) {
     return include(ruleForRoutineParameterInclusion, routineParameterInclusionRule);
+  }
+
+  public LimitOptionsBuilder includeRoutineParameters(final Pattern routineParameterPattern) {
+    return include(ruleForRoutineParameterInclusion, routineParameterPattern);
   }
 
   public LimitOptionsBuilder includeRoutines(final InclusionRule routineInclusionRule) {
