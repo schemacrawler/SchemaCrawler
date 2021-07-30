@@ -1,5 +1,6 @@
 package schemacrawler.test;
 
+import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
@@ -9,16 +10,119 @@ import static schemacrawler.schema.RoutineType.function;
 import static schemacrawler.schema.RoutineType.procedure;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.EnumSet;
 
 import org.junit.jupiter.api.Test;
 
+import schemacrawler.inclusionrule.ExcludeAll;
+import schemacrawler.inclusionrule.IncludeAll;
+import schemacrawler.inclusionrule.RegularExpressionRule;
 import schemacrawler.schema.RoutineType;
+import schemacrawler.schemacrawler.DatabaseObjectRuleForInclusion;
 import schemacrawler.schemacrawler.LimitOptions;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 
 public class LimitOptionsBuilderTest {
+  @Test
+  public void inclusionRules() {
+
+    final IncludeAll includeAll = new IncludeAll();
+    final ExcludeAll excludeAll = new ExcludeAll();
+    final RegularExpressionRule inclusionRule =
+        new RegularExpressionRule(".*PUBLIC.*", ".*PUBLICNUISANCE.*");
+
+    final LimitOptionsBuilder limitOptionsBuilder = LimitOptionsBuilder.builder();
+    LimitOptions limitOptions;
+
+    // 1. Default values
+    limitOptions = limitOptionsBuilder.toOptions();
+    for (final DatabaseObjectRuleForInclusion databaseObjectRuleForInclusion :
+        DatabaseObjectRuleForInclusion.values()) {
+      if (databaseObjectRuleForInclusion.isExcludeByDefault()) {
+        assertThat(limitOptions.get(databaseObjectRuleForInclusion), is(excludeAll));
+      } else {
+        assertThat(limitOptions.get(databaseObjectRuleForInclusion), is(includeAll));
+      }
+    }
+
+    // 2. Non-default values
+    for (final DatabaseObjectRuleForInclusion databaseObjectRuleForInclusion :
+        DatabaseObjectRuleForInclusion.values()) {
+      limitOptionsBuilder.include(databaseObjectRuleForInclusion, inclusionRule);
+    }
+    limitOptions = limitOptionsBuilder.toOptions();
+    for (final DatabaseObjectRuleForInclusion databaseObjectRuleForInclusion :
+        DatabaseObjectRuleForInclusion.values()) {
+      assertThat(limitOptions.get(databaseObjectRuleForInclusion), is(inclusionRule));
+    }
+
+    // 3. Set to null, so effectively use defaults
+    for (final DatabaseObjectRuleForInclusion databaseObjectRuleForInclusion :
+        DatabaseObjectRuleForInclusion.values()) {
+      limitOptionsBuilder.include(databaseObjectRuleForInclusion, null);
+    }
+    limitOptions = limitOptionsBuilder.toOptions();
+    for (final DatabaseObjectRuleForInclusion databaseObjectRuleForInclusion :
+        DatabaseObjectRuleForInclusion.values()) {
+      if (databaseObjectRuleForInclusion.isExcludeByDefault()) {
+        assertThat(limitOptions.get(databaseObjectRuleForInclusion), is(excludeAll));
+      } else {
+        assertThat(limitOptions.get(databaseObjectRuleForInclusion), is(includeAll));
+      }
+    }
+
+    // 4. Set specific values
+    limitOptions = limitOptionsBuilder.includeSchemas(inclusionRule).toOptions();
+    assertThat(
+        limitOptions.get(DatabaseObjectRuleForInclusion.ruleForSchemaInclusion), is(inclusionRule));
+    limitOptions = limitOptionsBuilder.includeTables(inclusionRule).toOptions();
+    assertThat(
+        limitOptions.get(DatabaseObjectRuleForInclusion.ruleForTableInclusion), is(inclusionRule));
+    limitOptions = limitOptionsBuilder.includeRoutines(inclusionRule).toOptions();
+    assertThat(
+        limitOptions.get(DatabaseObjectRuleForInclusion.ruleForRoutineInclusion),
+        is(inclusionRule));
+    limitOptions = limitOptionsBuilder.includeSequences(inclusionRule).toOptions();
+    assertThat(
+        limitOptions.get(DatabaseObjectRuleForInclusion.ruleForSequenceInclusion),
+        is(inclusionRule));
+    limitOptions = limitOptionsBuilder.includeSynonyms(inclusionRule).toOptions();
+    assertThat(
+        limitOptions.get(DatabaseObjectRuleForInclusion.ruleForSynonymInclusion),
+        is(inclusionRule));
+    limitOptions = limitOptionsBuilder.includeColumns(inclusionRule).toOptions();
+    assertThat(
+        limitOptions.get(DatabaseObjectRuleForInclusion.ruleForColumnInclusion), is(inclusionRule));
+    limitOptions = limitOptionsBuilder.includeRoutineParameters(inclusionRule).toOptions();
+    assertThat(
+        limitOptions.get(DatabaseObjectRuleForInclusion.ruleForRoutineParameterInclusion),
+        is(inclusionRule));
+  }
+
+  @Test
+  public void newOptions() {
+
+    final LimitOptions limitOptions = LimitOptionsBuilder.newLimitOptions();
+
+    assertThat(
+        limitOptions.getRoutineTypes(),
+        is(EnumSet.of(RoutineType.function, RoutineType.procedure)));
+    assertThat(
+        asList(limitOptions.getTableTypes().toArray()),
+        containsInAnyOrder("TABLE", "VIEW", "BASE TABLE"));
+
+    final IncludeAll includeAll = new IncludeAll();
+    final ExcludeAll excludeAll = new ExcludeAll();
+    for (final DatabaseObjectRuleForInclusion databaseObjectRuleForInclusion :
+        DatabaseObjectRuleForInclusion.values()) {
+      if (databaseObjectRuleForInclusion.isExcludeByDefault()) {
+        assertThat(limitOptions.get(databaseObjectRuleForInclusion), is(excludeAll));
+      } else {
+        assertThat(limitOptions.get(databaseObjectRuleForInclusion), is(includeAll));
+      }
+    }
+  }
 
   @Test
   public void routineTypes() {
@@ -41,7 +145,7 @@ public class LimitOptionsBuilderTest {
     assertThat(limitOptionsPlayback.getRoutineTypes(), is(empty()));
 
     // 3. Test collection with non-defaults
-    limitOptionsBuilder.routineTypes(Arrays.asList(function));
+    limitOptionsBuilder.routineTypes(asList(function));
     limitOptions = limitOptionsBuilder.toOptions();
     assertThat(limitOptions.getRoutineTypes(), containsInAnyOrder(function));
     limitOptionsPlayback = LimitOptionsBuilder.builder().fromOptions(limitOptions).toOptions();
