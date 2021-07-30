@@ -81,6 +81,25 @@ public class SchemaCrawlerCoverageTest {
   private Catalog catalog;
 
   @Test
+  public void catalogLookup() throws Exception {
+    final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
+
+    assertThat(catalog.lookupSchema(null), isEmpty());
+    assertThat(catalog.lookupSchema("UNKNOWN"), isEmpty());
+    assertThat(catalog.lookupSchema("PUBLIC.BOOKS"), isPresentAndIs(schema));
+
+    final Sequence sequence = new MutableSequence(schema, "PUBLISHER_ID_SEQ");
+    assertThat(catalog.lookupSequence(schema, null), isEmpty());
+    assertThat(catalog.lookupSequence(schema, "UNKNOWN"), isEmpty());
+    assertThat(catalog.lookupSequence(schema, "PUBLISHER_ID_SEQ"), isPresentAndIs(sequence));
+
+    // TODO: Routine lookup is not possible, since multiple routines may be returned
+    //    final Routine routine = new MutableFunction(systemLobsSchema, "NEW_PUBLISHER", null);
+    //    assertThat(catalog.lookupRoutine(systemLobsSchema, "NEW_PUBLISHER"),
+    // isPresentAndIs(routine));
+  }
+
+  @Test
   public void columnDataTypeProperties() throws Exception {
     final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
     final Table table = catalog.lookupTable(schema, "AUTHORS").get();
