@@ -207,7 +207,21 @@ public class LimitOptionsBuilderTest {
     limitOptionsPlayback = LimitOptionsBuilder.builder().fromOptions(limitOptions).toOptions();
     assertThat(limitOptionsPlayback.getRoutineTypes(), containsInAnyOrder(function));
 
-    // 3. Test null string (which resets to defaults)
+    // 4. Test string with list
+    limitOptionsBuilder.routineTypes("function,PROCEDURE");
+    limitOptions = limitOptionsBuilder.toOptions();
+    assertThat(limitOptions.getRoutineTypes(), containsInAnyOrder(function, procedure));
+    limitOptionsPlayback = LimitOptionsBuilder.builder().fromOptions(limitOptions).toOptions();
+    assertThat(limitOptionsPlayback.getRoutineTypes(), containsInAnyOrder(function, procedure));
+
+    // 5. Test string with list with bad values
+    limitOptionsBuilder.routineTypes("function,bad_value");
+    limitOptions = limitOptionsBuilder.toOptions();
+    assertThat(limitOptions.getRoutineTypes(), containsInAnyOrder(function));
+    limitOptionsPlayback = LimitOptionsBuilder.builder().fromOptions(limitOptions).toOptions();
+    assertThat(limitOptionsPlayback.getRoutineTypes(), containsInAnyOrder(function));
+
+    // 6. Test null string (which resets to defaults)
     limitOptionsBuilder.routineTypes((String) null);
     limitOptions = limitOptionsBuilder.toOptions();
     assertThat(limitOptions.getRoutineTypes(), containsInAnyOrder(function, procedure));
