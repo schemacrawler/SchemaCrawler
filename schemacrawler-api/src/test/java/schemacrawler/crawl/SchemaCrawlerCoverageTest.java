@@ -51,12 +51,14 @@ import schemacrawler.inclusionrule.RegularExpressionExclusionRule;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Sequence;
+import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
@@ -92,6 +94,17 @@ public class SchemaCrawlerCoverageTest {
     assertThat(catalog.lookupSequence(schema, null), isEmpty());
     assertThat(catalog.lookupSequence(schema, "UNKNOWN"), isEmpty());
     assertThat(catalog.lookupSequence(schema, "PUBLISHER_ID_SEQ"), isPresentAndIs(sequence));
+
+    final Synonym synonym = new MutableSynonym(schema, "PUBLICATIONS");
+    assertThat(catalog.lookupSynonym(schema, null), isEmpty());
+    assertThat(catalog.lookupSynonym(schema, "UNKNOWN"), isEmpty());
+    assertThat(catalog.lookupSynonym(schema, "PUBLICATIONS"), isPresentAndIs(synonym));
+
+    final ColumnDataType systemColumnDataType =
+        new MutableColumnDataType(new SchemaReference(), "VARCHAR", DataTypeType.system);
+    assertThat(catalog.lookupSystemColumnDataType(null), isEmpty());
+    assertThat(catalog.lookupSystemColumnDataType("UNKNOWN"), isEmpty());
+    assertThat(catalog.lookupSystemColumnDataType("VARCHAR"), isPresentAndIs(systemColumnDataType));
 
     // TODO: Routine lookup is not possible, since multiple routines may be returned
     //    final Routine routine = new MutableFunction(systemLobsSchema, "NEW_PUBLISHER", null);
