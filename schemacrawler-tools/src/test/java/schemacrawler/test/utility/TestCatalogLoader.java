@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.utility;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -37,6 +36,7 @@ public class TestCatalogLoader extends BaseCatalogLoader {
 
   public TestCatalogLoader() {
     super(new CommandDescription("testloader", "Loader for testing"), 3);
+    forceFailureIfConfigured();
   }
 
   @Override
@@ -53,7 +53,15 @@ public class TestCatalogLoader extends BaseCatalogLoader {
   }
 
   @Override
-  public void loadCatalog() throws SchemaCrawlerException {
-    // Do nothing
+  public void loadCatalog() {
+    // No-op
+  }
+
+  private void forceFailureIfConfigured() {
+    final String propertyValue =
+        System.getProperty(this.getClass().getName() + ".force-instantiation-failure");
+    if (propertyValue != null) {
+      throw new RuntimeException("Forced instantiation error");
+    }
   }
 }

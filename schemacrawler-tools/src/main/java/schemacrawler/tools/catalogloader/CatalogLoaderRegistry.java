@@ -35,8 +35,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.executable.CommandDescription;
@@ -46,8 +46,7 @@ import us.fatehi.utility.string.StringFormat;
 /** Registry for mapping database connectors from DatabaseConnector-line switch. */
 public final class CatalogLoaderRegistry {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(CatalogLoaderRegistry.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(CatalogLoaderRegistry.class.getName());
 
   public Collection<PluginCommand> getCommandLineCommands() {
     final Collection<PluginCommand> commandLineCommands = new HashSet<>();
@@ -106,7 +105,7 @@ public final class CatalogLoaderRegistry {
 
         catalogLoaderRegistry.add(catalogLoader);
       }
-    } catch (final Exception e) {
+    } catch (final Throwable e) {
       throw new SchemaCrawlerException("Could not load catalog loader registry", e);
     }
 

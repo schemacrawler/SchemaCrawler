@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     xmlns="http://maven.apache.org/POM/4.0.0"
-     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>us.fatehi</groupId>
   <artifactId>schemacrawler-parent</artifactId>
@@ -91,6 +91,12 @@
       <groupId>xmlunit</groupId>
       <artifactId>xmlunit</artifactId>
       <version>1.6</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.github.stefanbirkner</groupId>
+      <artifactId>system-lambda</artifactId>
+      <version>1.2.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -295,7 +301,8 @@
               <additionalOptions>
                 <additionalOption>-Xdoclint:none</additionalOption>
               </additionalOptions>
-              <bottom>Copyright © 2000-2021 {organizationName}. All rights reserved.</bottom>
+              <bottom>Copyright © 2000-2021 {organizationName}. All
+                rights reserved.</bottom>
               <doctitle>SchemaCrawler ${project.version}</doctitle>
             </configuration>
           </execution>
@@ -308,8 +315,8 @@
         <configuration>
           <!-- Prevent `gpg` from using pinentry programs -->
           <gpgArguments>
-              <arg>--pinentry-mode</arg>
-              <arg>loopback</arg>
+            <arg>--pinentry-mode</arg>
+            <arg>loopback</arg>
           </gpgArguments>
           <skip>${skip.signing.artifacts}</skip>
         </configuration>
