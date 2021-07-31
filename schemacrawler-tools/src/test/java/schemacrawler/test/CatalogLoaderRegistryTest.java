@@ -1,7 +1,9 @@
 package schemacrawler.test;
 
 import static com.github.stefanbirkner.systemlambda.SystemLambda.restoreSystemProperties;
+import static java.util.stream.Collectors.toList;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -24,9 +26,12 @@ public class CatalogLoaderRegistryTest {
 
   @Test
   public void commandLineCommands() throws Exception {
-    final Collection<PluginCommand> commandLineCommands1 =
+    final Collection<PluginCommand> commandLineCommands =
         new CatalogLoaderRegistry().getCommandLineCommands();
-    assertThat(commandLineCommands1, hasSize(2));
+    assertThat(commandLineCommands, hasSize(2));
+    final List<String> names =
+        commandLineCommands.stream().map(PluginCommand::getName).collect(toList());
+    assertThat(names, containsInAnyOrder("loader:testloader", null));
 
     restoreSystemProperties(
         () -> {
@@ -42,6 +47,8 @@ public class CatalogLoaderRegistryTest {
   public void helpCommands() throws Exception {
     final Collection<PluginCommand> helpCommands = new CatalogLoaderRegistry().getHelpCommands();
     assertThat(helpCommands, hasSize(2));
+    final List<String> names = helpCommands.stream().map(PluginCommand::getName).collect(toList());
+    assertThat(names, containsInAnyOrder("loader:testloader", null));
 
     restoreSystemProperties(
         () -> {
@@ -56,7 +63,7 @@ public class CatalogLoaderRegistryTest {
   @Test
   public void loadCatalogLoaders() throws SchemaCrawlerException {
     final ChainedCatalogLoader chainedCatalogLoaders =
-        new CatalogLoaderRegistry().loadCatalogLoaders();
+        new CatalogLoaderRegistry().newChainedCatalogLoader();
 
     final List<CatalogLoader> catalogLoaders = new ArrayList<>();
     chainedCatalogLoaders.forEach(catalogLoaders::add);
@@ -69,6 +76,9 @@ public class CatalogLoaderRegistryTest {
     final Collection<CommandDescription> supportedCatalogLoaders =
         new CatalogLoaderRegistry().getSupportedCatalogLoaders();
     assertThat(supportedCatalogLoaders, hasSize(2));
+    final List<String> names =
+        supportedCatalogLoaders.stream().map(CommandDescription::getName).collect(toList());
+    assertThat(names, containsInAnyOrder("testloader", "schemacrawlerloader"));
 
     restoreSystemProperties(
         () -> {

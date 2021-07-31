@@ -51,7 +51,7 @@ public final class CatalogLoaderRegistry {
   public Collection<PluginCommand> getCommandLineCommands() {
     final Collection<PluginCommand> commandLineCommands = new HashSet<>();
     try {
-      for (final CatalogLoader catalogLoader : loadCatalogLoaderRegistry()) {
+      for (final CatalogLoader catalogLoader : instantiateCatalogLoaders()) {
         commandLineCommands.add(catalogLoader.getCommandLineCommand());
       }
     } catch (final SchemaCrawlerException e) {
@@ -63,7 +63,7 @@ public final class CatalogLoaderRegistry {
   public Collection<PluginCommand> getHelpCommands() {
     final Collection<PluginCommand> commandLineCommands = new HashSet<>();
     try {
-      for (final CatalogLoader catalogLoader : loadCatalogLoaderRegistry()) {
+      for (final CatalogLoader catalogLoader : instantiateCatalogLoaders()) {
         commandLineCommands.add(catalogLoader.getHelpCommand());
       }
     } catch (final SchemaCrawlerException e) {
@@ -75,7 +75,7 @@ public final class CatalogLoaderRegistry {
   public Collection<CommandDescription> getSupportedCatalogLoaders() {
     final Collection<CommandDescription> commandLineCommands = new HashSet<>();
     try {
-      for (final CatalogLoader catalogLoader : loadCatalogLoaderRegistry()) {
+      for (final CatalogLoader catalogLoader : instantiateCatalogLoaders()) {
         final CommandDescription commandDescription = catalogLoader.getCommandDescription();
         commandLineCommands.add(
             new CommandDescription(
@@ -87,12 +87,12 @@ public final class CatalogLoaderRegistry {
     return commandLineCommands;
   }
 
-  public ChainedCatalogLoader loadCatalogLoaders() throws SchemaCrawlerException {
-    final List<CatalogLoader> chainedCatalogLoaders = loadCatalogLoaderRegistry();
+  public ChainedCatalogLoader newChainedCatalogLoader() throws SchemaCrawlerException {
+    final List<CatalogLoader> chainedCatalogLoaders = instantiateCatalogLoaders();
     return new ChainedCatalogLoader(chainedCatalogLoaders);
   }
 
-  private List<CatalogLoader> loadCatalogLoaderRegistry() throws SchemaCrawlerException {
+  private List<CatalogLoader> instantiateCatalogLoaders() throws SchemaCrawlerException {
 
     final List<CatalogLoader> catalogLoaderRegistry = new ArrayList<>();
 

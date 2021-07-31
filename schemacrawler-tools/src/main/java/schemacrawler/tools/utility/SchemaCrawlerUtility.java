@@ -92,7 +92,7 @@ public final class SchemaCrawlerUtility {
       final Config additionalConfig)
       throws SchemaCrawlerException {
     final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
-    final CatalogLoader catalogLoader = catalogLoaderRegistry.loadCatalogLoaders();
+    final CatalogLoader catalogLoader = catalogLoaderRegistry.newChainedCatalogLoader();
     LOGGER.log(Level.CONFIG, new StringFormat("Catalog loader: %s", catalogLoader));
 
     catalogLoader.setConnection(connection);
