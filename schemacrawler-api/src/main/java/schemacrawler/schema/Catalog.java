@@ -80,6 +80,15 @@ public interface Catalog extends NamedObject, AttributedObject, DescribedObject,
   Collection<Routine> getRoutines(Schema schema);
 
   /**
+   * Gets a routine by unqualified name.
+   *
+   * @param schema Schema
+   * @param routineName Unqualified routine name
+   * @return Routine.
+   */
+  Collection<Routine> getRoutines(Schema schema, String routineName);
+
+  /**
    * Gets the schemas.
    *
    * @return Schemas
@@ -153,15 +162,6 @@ public interface Catalog extends NamedObject, AttributedObject, DescribedObject,
    * @return Column data type
    */
   <C extends ColumnDataType> Optional<C> lookupColumnDataType(Schema schema, String dataTypeName);
-
-  /**
-   * Gets a routine by unqualified name.
-   *
-   * @param schema Schema
-   * @param routineName Unqualified routine name
-   * @return Routine.
-   */
-  <R extends Routine> Optional<R> lookupRoutine(Schema schema, String routineName);
 
   /**
    * Gets a schema by name.
