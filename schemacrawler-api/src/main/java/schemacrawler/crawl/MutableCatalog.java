@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -143,7 +144,16 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
   /** {@inheritDoc} */
   @Override
   public Collection<Routine> getRoutines(final Schema schema) {
-    final FilterBySchema filter = new FilterBySchema(schema);
+    return getRoutines(schema, null);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Collection<Routine> getRoutines(final Schema schema, final String routineName) {
+    Predicate<DatabaseObject> filter = new FilterBySchema(schema);
+    if (!isBlank(routineName)) {
+      filter = filter.and(routine -> routine.getName().equals(routineName));
+    }
     final Collection<Routine> routines = new ArrayList<>();
     for (final Routine routine : this.routines) {
       if (filter.test(routine)) {
@@ -241,12 +251,6 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
   public Optional<MutableColumnDataType> lookupColumnDataType(
       final Schema schema, final String name) {
     return columnDataTypes.lookup(schema, name);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public Optional<MutableRoutine> lookupRoutine(final Schema schema, final String name) {
-    return routines.lookup(schema, name);
   }
 
   /** {@inheritDoc} */

@@ -30,11 +30,12 @@ package schemacrawler.crawl;
 
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isEmpty;
 import static com.github.npathai.hamcrestopt.OptionalMatchers.isPresentAndIs;
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.matchesPattern;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -66,6 +67,7 @@ import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Reducer;
+import schemacrawler.schema.Routine;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
@@ -121,11 +123,6 @@ public class SchemaCrawlerCoverageTest {
     assertThat(catalog.lookupTable(schema, null), isEmpty());
     assertThat(catalog.lookupTable(schema, "UNKNOWN"), isEmpty());
     assertThat(catalog.lookupTable(schema, "AUTHORS"), isPresentAndIs(table));
-
-    // TODO: Routine lookup is not possible, since multiple routines may be returned
-    //    final Routine routine = new MutableFunction(systemLobsSchema, "NEW_PUBLISHER", null);
-    //    assertThat(catalog.lookupRoutine(systemLobsSchema, "NEW_PUBLISHER"),
-    // isPresentAndIs(routine));
   }
 
   @Test
@@ -193,6 +190,22 @@ public class SchemaCrawlerCoverageTest {
 
     assertThat(tableConstraintColumn.getTableConstraint(), is(tableConstraint));
     assertThat(tableConstraintColumn.getTableConstraintOrdinalPosition(), is(1));
+  }
+
+  @Test
+  public void getRoutines() throws Exception {
+    final SchemaReference schema = new SchemaReference("PUBLIC", "BOOKS");
+
+    final Routine routine1 =
+        new MutableFunction(schema, "NEW_PUBLISHER", "NEW_PUBLISHER_FORCE_VALUE");
+    final Routine routine2 = new MutableFunction(schema, "NEW_PUBLISHER", "NEW_PUBLISHER_10160");
+
+    assertThat(
+        catalog.getRoutines(schema, "NEW_PUBLISHER"), containsInAnyOrder(routine1, routine2));
+    assertThat(catalog.getRoutines(schema), hasItem(routine1));
+    assertThat(catalog.getRoutines(schema), hasItem(routine2));
+    assertThat(catalog.getRoutines(), hasItem(routine1));
+    assertThat(catalog.getRoutines(), hasItem(routine2));
   }
 
   @Test
