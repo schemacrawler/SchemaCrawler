@@ -120,6 +120,6 @@ public class TextFormatterCoverageTest {
     assertThat(
         outputOf(testout.getFilePath()),
         hasSameContentAs(
-            classpathResource(FORMATTER_COVERAGE_OUTPUT + referenceFileName + ".dot")));
+            classpathResource(FORMATTER_COVERAGE_OUTPUT + referenceFileName + ".txt")));
   }
 }
