@@ -29,17 +29,21 @@ package schemacrawler.crawl;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.function.Consumer;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DataTypeType;
+import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaReference;
@@ -108,6 +112,16 @@ public class TextFormatterCoverageTest {
   }
 
   @Test
+  public void nullCrawlInfo(final TestContext testContext) throws Exception {
+    checkTextOutput(
+        formatter -> {
+          formatter.handle((CrawlInfo) null);
+          formatter.handle(mock(DatabaseInfo.class));
+        },
+        testContext.testMethodFullName());
+  }
+
+  @Test
   public void nullTable(final TestContext testContext) throws Exception {
 
     final MutableTable table = null;
@@ -116,11 +130,23 @@ public class TextFormatterCoverageTest {
         () -> checkTextOutputForTable(table, testContext.testMethodFullName()));
   }
 
-  private void checkTextOutputForTable(final Table table, final String referenceFileName)
+  @Test
+  public void serverInfo(final TestContext testContext) throws Exception {
+
+    final MutableDatabaseInfo dbInfo = new MutableDatabaseInfo();
+    dbInfo.addServerInfo(
+        new ImmutableServerInfoProperty("PROP1", "VALUE1", "Server info property"));
+
+    checkTextOutput(formatter -> formatter.handle(dbInfo), testContext.testMethodFullName());
+  }
+
+  private void checkTextOutput(
+      final Consumer<SchemaTextFormatter> formatterMethod, final String referenceFileName)
       throws IOException, SchemaCrawlerException {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout) {
-      final SchemaTextOptions textOptions = SchemaTextOptionsBuilder.builder().toOptions();
+      final SchemaTextOptions textOptions =
+          SchemaTextOptionsBuilder.builder().showDatabaseInfo().toOptions();
       final OutputOptionsBuilder outputOptionsBuilder =
           OutputOptionsBuilder.builder()
               .withOutputFormatValue(TextOutputFormat.text.name())
@@ -130,11 +156,16 @@ public class TextFormatterCoverageTest {
       final SchemaTextFormatter formatter =
           new SchemaTextFormatter(SchemaTextDetailType.details, textOptions, outputOptions, "\"");
 
-      formatter.handle(table);
+      formatterMethod.accept(formatter);
     }
     assertThat(
         outputOf(testout.getFilePath()),
         hasSameContentAs(
             classpathResource(FORMATTER_COVERAGE_OUTPUT + referenceFileName + ".txt")));
+  }
+
+  private void checkTextOutputForTable(final Table table, final String referenceFileName)
+      throws IOException, SchemaCrawlerException {
+    checkTextOutput(formatter -> formatter.handle(table), referenceFileName);
   }
 }
