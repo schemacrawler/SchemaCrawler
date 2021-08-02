@@ -38,6 +38,7 @@ import java.io.IOException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaReference;
@@ -60,20 +61,44 @@ public class DotFormatterCoverageTest {
   @Test
   public void blankTable(final TestContext testContext) throws Exception {
 
-    final Table table = new MutableTable(new SchemaReference(), "TEST_TABLE");
-    final String referenceFileName = testContext.testMethodFullName();
+    final MutableTable table = new MutableTable(new SchemaReference(), "TEST_TABLE");
 
-    checkDotOutputForTable(table, referenceFileName);
+    checkDotOutputForTable(table, testContext.testMethodFullName());
+  }
+
+  @Test
+  public void generatedColumnTable(final TestContext testContext) throws Exception {
+
+    final MutableTable table = new MutableTable(new SchemaReference(), "TEST_TABLE");
+    final MutableColumn column = new MutableColumn(table, "GENERATED_COLUMN");
+    column.setColumnDataType(
+        new MutableColumnDataType(new SchemaReference(), "DATA_TYPE", DataTypeType.user_defined));
+    column.setGenerated(true);
+    table.addColumn(column);
+
+    checkDotOutputForTable(table, testContext.testMethodFullName());
+  }
+
+  @Test
+  public void hiddenColumnTable(final TestContext testContext) throws Exception {
+
+    final MutableTable table = new MutableTable(new SchemaReference(), "TEST_TABLE");
+    final MutableColumn column = new MutableColumn(table, "HIDDEN_COLUMN");
+    column.setColumnDataType(
+        new MutableColumnDataType(new SchemaReference(), "DATA_TYPE", DataTypeType.user_defined));
+    column.setHidden(true);
+    table.addHiddenColumn(column);
+
+    checkDotOutputForTable(table, testContext.testMethodFullName());
   }
 
   @Test
   public void nullTable(final TestContext testContext) throws Exception {
 
-    final Table table = null;
-    final String referenceFileName = testContext.testMethodFullName();
-
+    final MutableTable table = null;
     assertThrows(
-        NullPointerException.class, () -> checkDotOutputForTable(table, referenceFileName));
+        NullPointerException.class,
+        () -> checkDotOutputForTable(table, testContext.testMethodFullName()));
   }
 
   private void checkDotOutputForTable(final Table table, final String referenceFileName)
