@@ -34,6 +34,7 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -62,6 +63,20 @@ public class TextFormatterCoverageTest {
   public void blankTable(final TestContext testContext) throws Exception {
 
     final MutableTable table = new MutableTable(new SchemaReference(), "TEST_TABLE");
+
+    checkTextOutputForTable(table, testContext.testMethodFullName());
+  }
+
+  @Test
+  public void enumValuesColumnTable(final TestContext testContext) throws Exception {
+
+    final MutableTable table = new MutableTable(new SchemaReference(), "TEST_TABLE");
+    final MutableColumnDataType columnDataType =
+        new MutableColumnDataType(new SchemaReference(), "DATA_TYPE", DataTypeType.user_defined);
+    columnDataType.setEnumValues(Arrays.asList("VALUE1", "VALUE2"));
+    final MutableColumn column = new MutableColumn(table, "ENUM_VALUES_COLUMN");
+    column.setColumnDataType(columnDataType);
+    table.addColumn(column);
 
     checkTextOutputForTable(table, testContext.testMethodFullName());
   }
