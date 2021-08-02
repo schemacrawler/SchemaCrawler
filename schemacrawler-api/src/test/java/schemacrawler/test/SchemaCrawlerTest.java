@@ -374,6 +374,11 @@ public class SchemaCrawlerTest {
         out.println(String.format("  privilege: %s", privilege.getName()));
         final Collection<Grant<Table>> grants = privilege.getGrants();
         for (final Grant<Table> grant : grants) {
+          if (!privilege.getName().equals("SELECT")) {
+            assertThat(grant.getGrantor(), is("_SYSTEM"));
+            assertThat(grant.getGrantee(), is("SA"));
+            assertThat(grant.isGrantable(), is(true));
+          }
           out.println("    " + grant);
         }
       }
