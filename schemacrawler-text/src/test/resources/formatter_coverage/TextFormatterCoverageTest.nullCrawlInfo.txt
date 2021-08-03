@@ -1,0 +1,7 @@
+
+Database Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+database product name                                                   
+database product version                                                
+database user name                                                      
+

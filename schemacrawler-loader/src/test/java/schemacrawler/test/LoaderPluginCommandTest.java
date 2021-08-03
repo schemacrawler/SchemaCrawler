@@ -35,6 +35,7 @@ import org.junit.jupiter.api.Test;
 
 import schemacrawler.loader.attributes.AttributesCatalogLoader;
 import schemacrawler.loader.counts.TableRowCountsCatalogLoader;
+import schemacrawler.loader.weakassociations.WeakAssociationsCatalogLoader;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 
 public class LoaderPluginCommandTest {
@@ -59,6 +60,15 @@ public class LoaderPluginCommandTest {
         is(
             "PluginCommand[name='attributesloader', options=["
                 + "PluginCommandOption[name='attributes-file', valueClass=java.lang.String]"
+                + "]]"));
+
+    final PluginCommand weakAssociationsPluginCommand =
+        new WeakAssociationsCatalogLoader().getCommandLineCommand();
+    assertThat(
+        weakAssociationsPluginCommand.toString(),
+        is(
+            "PluginCommand[name='weakassociationsloader', options=["
+                + "PluginCommandOption[name='weak-associations', valueClass=java.lang.Boolean]"
                 + "]]"));
   }
 }

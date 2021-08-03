@@ -32,6 +32,7 @@ import org.junit.jupiter.api.Test;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import schemacrawler.BaseProductVersion;
+import schemacrawler.crawl.MutablePrivilege.PrivilegeGrant;
 import schemacrawler.inclusionrule.ExcludeAll;
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.schema.NamedObjectKey;
@@ -78,6 +79,21 @@ public class EqualsTest {
   @Test
   public void directedEdge() {
     EqualsVerifier.forClass(DirectedEdge.class).verify();
+  }
+
+  @Test
+  public void grants() {
+
+    final Table table1 = new MutableTable(new SchemaReference("catalog", "schema"), "table1");
+    final Table table2 = new MutableTable(new SchemaReference("catalog", "schema"), "table2");
+    final MutablePrivilege<Table> privilege1 =
+        new MutablePrivilege<>(new TablePointer(table1), "privilege1");
+    final MutablePrivilege<Table> privilege2 =
+        new MutablePrivilege<>(new TablePointer(table2), "privilege2");
+
+    EqualsVerifier.forClass(PrivilegeGrant.class)
+        .withPrefabValues(MutablePrivilege.class, privilege1, privilege2)
+        .verify();
   }
 
   @Test

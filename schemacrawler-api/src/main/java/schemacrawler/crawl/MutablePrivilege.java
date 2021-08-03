@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import schemacrawler.schema.DatabaseObject;
@@ -49,7 +50,7 @@ import schemacrawler.schema.Privilege;
 final class MutablePrivilege<D extends DatabaseObject> extends AbstractDependantObject<D>
     implements Privilege<D> {
 
-  private final class PrivilegeGrant implements Grant<D> {
+  final class PrivilegeGrant implements Grant<D> {
 
     private static final long serialVersionUID = 356151825191631484L;
     private final String grantee;
@@ -94,24 +95,10 @@ final class MutablePrivilege<D extends DatabaseObject> extends AbstractDependant
         return false;
       }
       final PrivilegeGrant other = (PrivilegeGrant) obj;
-      if (!getParent().equals(other.getParent())) {
-        return false;
-      }
-      if (grantee == null) {
-        if (other.grantee != null) {
-          return false;
-        }
-      } else if (!grantee.equals(other.grantee)) {
-        return false;
-      }
-      if (grantor == null) {
-        if (other.grantor != null) {
-          return false;
-        }
-      } else if (!grantor.equals(other.grantor)) {
-        return false;
-      }
-      return isGrantable == other.isGrantable;
+      return Objects.equals(getParent(), other.getParent())
+          && Objects.equals(grantee, other.grantee)
+          && Objects.equals(grantor, other.grantor)
+          && isGrantable == other.isGrantable;
     }
 
     /** {@inheritDoc} */
@@ -127,19 +114,13 @@ final class MutablePrivilege<D extends DatabaseObject> extends AbstractDependant
     }
 
     @Override
-    public MutablePrivilege<D> getParent() {
+    public Privilege<D> getParent() {
       return MutablePrivilege.this;
     }
 
     @Override
     public int hashCode() {
-      final int prime = 31;
-      int result = 1;
-      result = prime * result + getParent().hashCode();
-      result = prime * result + (grantee == null ? 0 : grantee.hashCode());
-      result = prime * result + (grantor == null ? 0 : grantor.hashCode());
-      result = prime * result + (isGrantable ? 1231 : 1237);
-      return result;
+      return Objects.hash(getParent(), grantee, grantor, isGrantable);
     }
 
     /** {@inheritDoc} */

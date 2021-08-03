@@ -1,0 +1,24 @@
+  /* TEST_TABLE -=-=-=-=-=-=-=-=-=-=-=-=-=- */
+  "test_table_cef32220" [
+    label=<
+      <table border="1" cellborder="0" cellspacing="0" color="#888888">
+	<tr>
+		<td colspan='2' bgcolor='#F2E6C2' align='left'><b><i>TEST_TABLE</i></b></td>
+		<td bgcolor='#F2E6C2' align='right'>[unknown]</td>
+	</tr>
+	<tr>
+		<td port='hidden_column_7b84016b.start' align='left'>HIDDEN_COLUMN</td>
+		<td align='left'> </td>
+		<td port='hidden_column_7b84016b.end' align='left'>DATA_TYPE NOT NULL</td>
+	</tr>
+	<tr>
+		<td align='left'></td>
+		<td align='left'> </td>
+		<td align='left'>hidden</td>
+	</tr>
+      </table>
+    >
+  ];
+
+
+
