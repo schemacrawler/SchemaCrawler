@@ -74,14 +74,14 @@ public final class ResultsCrawler {
 
     final StopWatch stopWatch = new StopWatch("crawlResultSet");
 
-    LOGGER.log(Level.INFO, "Crawling result set");
+    LOGGER.log(Level.FINE, "Crawling result set");
 
     try {
       final ResultsRetriever resultsRetriever = new ResultsRetriever(results);
       final ResultsColumns resultsColumns =
           stopWatch.time("retrieveResults", resultsRetriever::retrieveResults);
 
-      LOGGER.log(Level.INFO, stopWatch.stringify());
+      LOGGER.log(Level.FINE, stopWatch.stringify());
 
       return resultsColumns;
     } catch (final Exception e) {
