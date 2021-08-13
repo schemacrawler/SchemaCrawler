@@ -22,7 +22,7 @@ import schemacrawler.tools.commandline.command.AvailableCommands;
 import schemacrawler.tools.commandline.command.AvailableJDBCDrivers;
 import schemacrawler.tools.commandline.command.AvailableServers;
 
-public class TestAvailablePlugins {
+public class AvailablePluginsTest {
 
   @Test
   public void availableCatalogLoaders() {
@@ -47,16 +47,14 @@ public class TestAvailablePlugins {
   @Test
   public void availableJDBCDrivers() throws UnsupportedEncodingException {
     final AvailableJDBCDrivers availableJDBCDrivers = new AvailableJDBCDrivers();
-
     final int size = availableJDBCDrivers.size();
-    assertThat(size == 3 || size == 4, is(true));
+    assertThat(size == 1 || size == 2, is(true));
 
     final List<Driver> availableJDBCDriversList = new ArrayList<>();
     availableJDBCDrivers.forEach(availableJDBCDriversList::add);
 
     assertThat(
-        availableJDBCDriversList
-            .stream()
+        availableJDBCDriversList.stream()
             .map(driver -> driver.getClass().getTypeName())
             .collect(toList()),
         hasItem("org.hsqldb.jdbc.JDBCDriver"));

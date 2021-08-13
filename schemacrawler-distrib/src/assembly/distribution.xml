@@ -6,8 +6,8 @@
 
   <property name="distribution.target"
     location="${SchemaCrawler.home}/schemacrawler-distrib/target" />
-  <property 
-  	name="schemacrawler.base-distribution"
+  <property
+    name="schemacrawler.base-distribution"
     value="${distribution.target}/_base-distribution" />
   <property
     name="schemacrawler.expanded-distribution"
@@ -20,14 +20,14 @@
             make-expanded-distribution
           "
     description="Package SchemaCrawler distributable" />
-            	
-            	
+
+
   <target name="make-base-distribution">
 
-    <property 
-    	name="distribution.assembly"
+    <property
+        name="distribution.assembly"
       location="${SchemaCrawler.home}/schemacrawler-distrib/src/assembly" />
-  	
+
     <copy todir="${schemacrawler.base-distribution}">
       <fileset dir="${distribution.assembly}">
         <include name="schemacrawler.cmd" />
@@ -46,6 +46,13 @@
       file="${SchemaCrawler.home}/schemacrawler-docs/config/schemacrawler.colormap.properties"
       todir="${schemacrawler.base-distribution}/config" />
 
+    <copy todir="${schemacrawler.base-distribution}/lib">
+      <fileset dir="${SchemaCrawler.home}/schemacrawler-jdbc-drivers/target/_jdbc-drivers/lib">
+        <include name="*.jar" />
+        <include name="*.dll" />
+      </fileset>
+    </copy>
+
     <create-dbserver-distribution database="offline" />
     <create-dbserver-distribution database="db2" />
     <create-dbserver-distribution database="hsqldb" />
@@ -54,8 +61,8 @@
     <create-dbserver-distribution database="postgresql" />
     <create-dbserver-distribution database="sqlite" />
     <create-dbserver-distribution database="sqlserver" />
-  	
-  	<!-- Create SQLite test database -->
+
+    <!-- Create SQLite test database -->
     <java classname="schemacrawler.testdb.TestSchemaCreatorMain"
       failonerror="true">
       <arg value="--url" />
@@ -71,8 +78,8 @@
     </java>
 
   </target>
-    	
-	
+
+
   <target name="make-expanded-distribution">
 
     <property
@@ -105,7 +112,7 @@
       <ivy:resources resolveId="mustache"
         file="${distribution.downloader}/mustache_ivy.xml"/>
     </copy>
-  	<!-- 
+    <!--
     <copy todir="${schemacrawler.expanded-distribution}/lib">
       <ivy:resources resolveId="plugins"
         file="${distribution.downloader}/plugins_ivy.xml"/>

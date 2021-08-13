@@ -14,9 +14,6 @@
     <dependency org="us.fatehi" name="schemacrawler-hana"
       rev="16.15.2" conf="binaries->default" />
 
-    <dependency org="com.sap.cloud.db.jdbc" name="ngdbc"
-      rev="2.6.29" conf="binaries->default" />
-
     <exclude org="us.fatehi" module="schemacrawler" />
     <exclude org="org.hsqldb" module="hsqldb" />
   </dependencies>

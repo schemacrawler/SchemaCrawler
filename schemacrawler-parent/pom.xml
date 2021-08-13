@@ -250,6 +250,7 @@
               <directory>.</directory>
               <includes>
                 <include>pom.xml.versionsBackup</include>
+                <include>dependency-reduced-pom.xml</include>
               </includes>
             </fileset>
           </filesets>

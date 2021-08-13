@@ -19,9 +19,10 @@
 
     <module>schemacrawler-parent</module>
 
+    <module>schemacrawler-jdbc-drivers</module>
     <module>schemacrawler-testdb</module>
 
-	<!-- SchemaCrawler jar -->
+    <!-- SchemaCrawler jar -->
     <module>schemacrawler-utility</module>
     <module>schemacrawler-api</module>
     <module>schemacrawler-tools</module>
@@ -35,7 +36,7 @@
     <module>schemacrawler-scripting</module>
     <module>schemacrawler-lint</module>
 
-	<!-- Database plugins -->
+    <!-- Database plugins -->
     <module>schemacrawler-dbtest</module>
     <module>schemacrawler-db2</module>
     <module>schemacrawler-hsqldb</module>
@@ -64,7 +65,7 @@
         <module>schemacrawler-docs</module>
         <module>schemacrawler-distrib</module>
         <module>schemacrawler-docker</module>
-		<module>schemacrawler-docker-compose</module>
+        <module>schemacrawler-docker-compose</module>
         <module>schemacrawler-website</module>
 
       </modules>

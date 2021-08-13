@@ -16,6 +16,13 @@
   <dependencies>
     <dependency>
       <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-jdbc-drivers</artifactId>
+      <version>${project.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler</artifactId>
       <version>${project.version}</version>
     </dependency>
