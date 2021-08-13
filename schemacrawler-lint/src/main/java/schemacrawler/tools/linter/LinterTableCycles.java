@@ -34,8 +34,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ForeignKey;
+import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
@@ -75,10 +75,13 @@ public class LinterTableCycles extends BaseLinter {
 
     tablesGraph.addVertex(table);
     for (final ForeignKey foreignKey : table.getForeignKeys()) {
-      for (final ColumnReference columnReference : foreignKey) {
-        tablesGraph.addEdge(
-            columnReference.getPrimaryKeyColumn().getParent(),
-            columnReference.getForeignKeyColumn().getParent());
+      // Add edges for tables that are limited using limit options
+      // That is, do not consider partial tables which are excluded by the limit
+      final Table pkTable = foreignKey.getPrimaryKeyTable();
+      final Table fkTable = foreignKey.getForeignKeyTable();
+      if (!(pkTable instanceof PartialDatabaseObject)
+          && !(fkTable instanceof PartialDatabaseObject)) {
+        tablesGraph.addEdge(pkTable, fkTable);
       }
     }
   }

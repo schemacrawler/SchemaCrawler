@@ -44,6 +44,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -59,6 +60,36 @@ public class Issue496LintTest {
 
   @Test
   public void issue496(final Connection connection) throws Exception {
+
+    final LimitOptionsBuilder limitOptionsBuilder =
+        LimitOptionsBuilder.builder()
+            .includeTables(table -> table.equals("PUBLIC.FOR_LINT.WRITERS"));
+    final SchemaCrawlerOptions schemaCrawlerOptions =
+        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+            .withLimitOptions(limitOptionsBuilder.toOptions());
+
+    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
+    assertThat(catalog, notNullValue());
+    assertThat(catalog.getSchemas().size(), is(6));
+    final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
+    assertThat("FOR_LINT schema not found", schema, notNullValue());
+    assertThat("FOR_LINT tables not found", catalog.getTables(schema), hasSize(1));
+
+    final LintOptions lintOptions =
+        LintOptionsBuilder.builder().withLinterConfigs("/issue496-linter-configs.yaml").toOptions();
+
+    final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
+
+    final Linters linters = new Linters(linterConfigs, false);
+
+    linters.lint(catalog, connection);
+    final LintCollector lintCollector = linters.getCollector();
+
+    assertThat(lintCollector.size(), is(0));
+  }
+
+  @Test
+  public void issue496_withoutInclude(final Connection connection) throws Exception {
 
     final SchemaCrawlerOptions schemaCrawlerOptions =
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
