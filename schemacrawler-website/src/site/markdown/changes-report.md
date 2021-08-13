@@ -1,7 +1,15 @@
 # SchemaCrawler Change History
 
+
 <a name="a16.15.3"></a>
-## Release 16.15.3 - 2021-07-07
+## Release 16.15.3 - 2021-08-13
+
+- Fix issue #496 - honor table includes in lint cyclic dependency checks
+- Clarify information on licensing
+
+
+<a name="a16.15.2"></a>
+## Release 16.15.2 - 2021-07-07
 
 - Fix issue #482 - serialization for catalogs that have synonyms for objects that do not exist
 
