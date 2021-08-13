@@ -69,11 +69,6 @@
       <version>3.36.0.1</version>
     </dependency>
     <dependency>
-      <groupId>com.sap.cloud.db.jdbc</groupId>
-      <artifactId>ngdbc</artifactId>
-      <version>2.9.12</version>
-    </dependency>
-    <dependency>
       <groupId>net.snowflake</groupId>
       <artifactId>snowflake-jdbc</artifactId>
       <version>3.13.6</version>
@@ -82,7 +77,7 @@
       <groupId>com.amazon.redshift</groupId>
       <artifactId>redshift-jdbc42</artifactId>
       <version>2.0.0.7</version>
-    </dependency>	
+    </dependency>
     <dependency>
       <groupId>net.sf.ucanaccess</groupId>
       <artifactId>ucanaccess</artifactId>
@@ -97,10 +92,19 @@
       <groupId>monetdb</groupId>
       <artifactId>monetdb-java-lite</artifactId>
       <version>2.39</version>
-    </dependency>    
+    </dependency>
   </dependencies>
 
   <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>license-maven-plugin</artifactId>
+          <version>2.0.0</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -119,6 +123,24 @@
               <excludeGroupIds>org.checkerframework,com.google.protobuf</excludeGroupIds>
               <overWriteReleases>false</overWriteReleases>
               <overWriteSnapshots>true</overWriteSnapshots>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>download-licenses</id>
+            <goals>
+              <goal>download-licenses</goal>
+            </goals>
+            <configuration>
+              <licensesOutputDirectory>${project.build.directory}/_licenses</licensesOutputDirectory>
+              <licensesOutputFile>${project.build.directory}/_licenses/licenses..xml</licensesOutputFile>
+              <excludedScopes>test,provided</excludedScopes>
+              <cleanLicensesOutputDirectory>true</cleanLicensesOutputDirectory>
             </configuration>
           </execution>
         </executions>

@@ -37,7 +37,8 @@
       </fileset>
     </copy>
 
-    <copy file="${SchemaCrawler.home}/schemacrawler/target/schemacrawler-${SchemaCrawler.version}.jar"
+    <copy
+        file="${SchemaCrawler.home}/schemacrawler/target/schemacrawler-${SchemaCrawler.version}.jar"
         todir="${schemacrawler.base-distribution}/lib" />
     <copy
       file="${SchemaCrawler.home}/schemacrawler-docs/config/schemacrawler.config.properties"
@@ -50,6 +51,12 @@
       <fileset dir="${SchemaCrawler.home}/schemacrawler-jdbc-drivers/target/_jdbc-drivers/lib">
         <include name="*.jar" />
         <include name="*.dll" />
+      </fileset>
+    </copy>
+
+    <copy todir="${schemacrawler.base-distribution}/licenses">
+      <fileset dir="${SchemaCrawler.home}/schemacrawler-jdbc-drivers/target/_licenses">
+        <include name="*.*" />
       </fileset>
     </copy>
 

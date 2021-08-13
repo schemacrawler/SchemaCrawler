@@ -70,7 +70,7 @@
       	<include name="mermaid.py" />
       </fileset>
     </copy>
-  	
+
     <!-- Copy config files -->
     <copy todir="${main-distribution.staging.dir}/examples/lint">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-docs/config">
@@ -137,7 +137,7 @@
 
   </target>
 
-	
+
   <target name="cleanup-distribution">
 
     <delete>
@@ -159,7 +159,7 @@
 
       <copy
         file="${SchemaCrawler.home}/schemacrawler-@{database}/DRIVER.LICENSE.txt"
-        tofile="${schemacrawler.base-distribution}/DRIVER.LICENSE-@{database}.txt"
+        tofile="${schemacrawler.base-distribution}/_licenses/DRIVER.LICENSE-@{database}.txt"
         failonerror="false" />
 
     </sequential>
