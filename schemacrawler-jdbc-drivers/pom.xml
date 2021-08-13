@@ -83,6 +83,21 @@
       <artifactId>redshift-jdbc42</artifactId>
       <version>2.0.0.7</version>
     </dependency>	
+    <dependency>
+      <groupId>net.sf.ucanaccess</groupId>
+      <artifactId>ucanaccess</artifactId>
+      <version>5.0.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.firebirdsql.jdbc</groupId>
+      <artifactId>jaybird</artifactId>
+      <version>4.0.3.java8</version>
+    </dependency>
+    <dependency>
+      <groupId>monetdb</groupId>
+      <artifactId>monetdb-java-lite</artifactId>
+      <version>2.39</version>
+    </dependency>    
   </dependencies>
 
   <build>

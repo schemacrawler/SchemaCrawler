@@ -43,6 +43,7 @@ import org.testcontainers.containers.CockroachContainer;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
 
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
@@ -60,7 +61,10 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 public class CockroachDBTest extends BaseAdditionalDatabaseTest {
 
-  @Container private JdbcDatabaseContainer dbContainer = new CockroachContainer();
+  final DockerImageName imageName =
+      DockerImageName.parse("cockroachdb/cockroach").withTag("v19.2.12");
+
+  @Container private final JdbcDatabaseContainer<?> dbContainer = new CockroachContainer(imageName);
 
   @BeforeEach
   public void createDatabase() throws SQLException, SchemaCrawlerException {
