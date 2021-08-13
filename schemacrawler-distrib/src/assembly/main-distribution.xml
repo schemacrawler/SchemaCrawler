@@ -151,19 +151,4 @@
 
   </target>
 
-  <macrodef name="create-dbserver-distribution">
-
-    <attribute name="database" />
-
-    <sequential>
-
-      <copy
-        file="${SchemaCrawler.home}/schemacrawler-@{database}/DRIVER.LICENSE.txt"
-        tofile="${schemacrawler.base-distribution}/_licenses/DRIVER.LICENSE-@{database}.txt"
-        failonerror="false" />
-
-    </sequential>
-
-  </macrodef>
-
 </project>

@@ -60,15 +60,6 @@
       </fileset>
     </copy>
 
-    <create-dbserver-distribution database="offline" />
-    <create-dbserver-distribution database="db2" />
-    <create-dbserver-distribution database="hsqldb" />
-    <create-dbserver-distribution database="mysql" />
-    <create-dbserver-distribution database="oracle" />
-    <create-dbserver-distribution database="postgresql" />
-    <create-dbserver-distribution database="sqlite" />
-    <create-dbserver-distribution database="sqlserver" />
-
     <!-- Create SQLite test database -->
     <java classname="schemacrawler.testdb.TestSchemaCreatorMain"
       failonerror="true">
@@ -143,21 +134,5 @@
     </copy>
 
   </target>
-
-
-  <macrodef name="create-dbserver-distribution">
-
-    <attribute name="database" />
-
-    <sequential>
-
-      <copy
-        file="${SchemaCrawler.home}/schemacrawler-@{database}/DRIVER.LICENSE.txt"
-        tofile="${schemacrawler.base-distribution}/DRIVER.LICENSE-@{database}.txt"
-        failonerror="false" />
-
-    </sequential>
-
-  </macrodef>
 
 </project>
