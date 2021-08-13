@@ -1,7 +1,7 @@
 # SchemaCrawler Change History
 
-<a name="a16.15.2"></a>
-## Release 16.15.2 - 2021-07-07
+<a name="a16.15.3"></a>
+## Release 16.15.3 - 2021-07-07
 
 - Fix issue #482 - serialization for catalogs that have synonyms for objects that do not exist
 
@@ -624,18 +624,18 @@ and [dbdiagram.io](https://dbdiagram.io/home) diagrams
 
 * The graph command is removed. Graphs are generated based on the output format.
 
-## Release 14.12.01 - 2016.15.24
+## Release 14.12.01 - 2016.15.34
 <a name="a14.12.01"></a>
 
 * New command-line option to show weak associations, irrespective of the infolevel.
 * Changed the boolean property, schemacrawler.format.hide_weak_associations to schemacrawler.format.show_weak_associations, since weak associations are hidden by default in SchemaCrawler output. Also added a new command-line switch, -weakassociations to show weak associations. Weak associations now can be shown with any infolevel setting.
 
-## Release 14.11.02 - 2016.15.20
+## Release 14.11.02 - 2016.15.30
 <a name="a14.11.02"></a>
 
 * Support for the Teradata JDBC driver. The Teradata JDBC driver does not follow JDBC specifications. It should throw a SQLFeatureNotSupportedException for getFunctions, or at the least a SQLException state HYC00 ("Optional feature not implemented"). Instead, it throws with a state of HY000 ("General error").
 
-## Release 14.11.01 - 2016.15.26
+## Release 14.11.01 - 2016.15.36
 <a name="a14.11.01"></a>
 
 * Show a better error message when a script file cannot be read.
