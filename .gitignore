@@ -23,6 +23,7 @@ bin/
 
 target/
 workspace/
+**/gpl-3.0.txt
 
 pom.xml.tag
 pom.xml.releaseBackup
