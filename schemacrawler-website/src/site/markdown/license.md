@@ -20,6 +20,7 @@ have obtained the SchemaCrawler jar files from the
 [The Central Repository](https://search.maven.org/search?q=g:us.fatehi%20a:schemacrawler*), 
 or built them yourself from the source code.
 
+
 ## License With JDBC Drivers
 
 SchemaCrawler and the accompanying materials are also distributed bundled with JDBC drivers for 
@@ -36,3 +37,9 @@ or the the [SchemaCrawler Docker image](https://hub.docker.com/r/schemacrawler/s
 you are downloading and using SchemaCrawler distributed along with open-source JDBC drivers.
 In this case, you are licensed to use SchemaCrawler only under the 
 [GNU General Public License v3](http://www.gnu.org/licenses/gpl-3.0.en.html).
+
+
+## Custom or Commercial License
+
+If you need to use SchemaCrawler with customized licensing terms, or with a commercial license, please see 
+the [Consulting page](consulting.html), and obtain a Professional Support Package.

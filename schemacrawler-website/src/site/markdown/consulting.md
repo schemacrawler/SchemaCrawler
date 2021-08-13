@@ -6,6 +6,8 @@ Only the latest version of SchemaCrawler (v16.15.2) is supported from the point 
 If you would like support for an older version of SchemaCrawler, please request a Professional Support Package. 
 You can report a security vulnerability by filing an issue on the [SchemaCrawler issues page].
 
+If you download and use SchemaCrawler, you are implicitly agreeing to the SchemaCrawler [licensing terms]. Please review
+these [licensing terms].
 
 
 ## Levels of Support
@@ -13,7 +15,9 @@ You can report a security vulnerability by filing an issue on the [SchemaCrawler
 There are various support channels available if you are having trouble using SchemaCrawler, think you may have found a bug, or want advice with using SchemaCrawler in your project.
 
 **Professional Support Packages** provide you with direct access to the author of 
-SchemaCrawler, to help you with advice with using SchemaCrawler in your project, and for consulting assignments for implementation. Please contact Sualeh Fatehi <sualeh@hotmail.com> for details on a Professional Support Package to suit your needs.
+SchemaCrawler, to help you with advice with using SchemaCrawler in your project, and for consulting assignments for implementation. 
+Custom licensing terms for commercial use can be arranged if needed.
+Please contact Sualeh Fatehi <sualeh@hotmail.com> for details on a Professional Support Package to suit your needs.
 
 **Community Support** is available on [Stack Overflow]. Helpful SchemaCrawler users, 
 including the developer of SchemaCrawler, read messages on Stack Overflow. Please read *Guidelines for Support* below.
@@ -39,3 +43,4 @@ Some guidelines for a quick response on [Stack Overflow] and the [SchemaCrawler 
 [Stack Overflow]: http://stackoverflow.com/search?q=schemacrawler+is%3Aquestion
 [SchemaCrawler discussions page]: https://github.com/schemacrawler/SchemaCrawler/discussions
 [SchemaCrawler issues page]: https://github.com/schemacrawler/SchemaCrawler/issues
+[licensing terms]: license.html
