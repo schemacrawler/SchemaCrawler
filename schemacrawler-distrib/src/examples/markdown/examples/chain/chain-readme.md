@@ -8,7 +8,7 @@ example shows how to "chain" or run multiple SchemaCrawler commands.
 1. Make sure that java is on your PATH
 2. Start a command shell in the `_downloader` directory 
 3. Run `download.cmd javascript` (or `download.sh javascript` on Unix) to
-   install serialization support using JavaScript, if you are using Java 15 or above
+   install support for JavaScript, if you are using Java 15 or above
 
 ## How to Run
 1. Make sure that java is on your PATH
