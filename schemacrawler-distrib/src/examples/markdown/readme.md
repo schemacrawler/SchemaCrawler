@@ -29,8 +29,8 @@ the provided scripts.
 3. Run `download.cmd` (or `download.sh` on Unix). 
    Provide one of the following arguments:    
     - `plugins` - for additional SchemaCrawler plug-ins  
-    - `jackson` - for support of JSON ouput format 
     - `graphviz-java` - for a pure Java Gaphviz library to generate diagrams
+    - `javascript` - for JavaScript language scripting with SchemaCrawler, for Java 15 and upwards
     - `groovy` - for Groovy language scripting with SchemaCrawler
     - `python` - for Python language scripting with SchemaCrawler
     - `ruby` - for Ruby language scripting with SchemaCrawler

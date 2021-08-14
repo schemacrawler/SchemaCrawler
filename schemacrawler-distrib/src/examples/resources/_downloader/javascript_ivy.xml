@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="https://ant.apache.org/ivy/schemas/ivy.xsd">
+  <info organisation="us.fatehi.schemacrawler" module="python"/>
+  <configurations>
+    <conf name="binaries" visibility="public" />
+  </configurations>
+  <dependencies>
+    <dependency org="org.openjdk.nashorn" name="nashorn-core"
+                rev="15.3" conf="binaries->default" />
+  </dependencies>
+</ivy-module>
