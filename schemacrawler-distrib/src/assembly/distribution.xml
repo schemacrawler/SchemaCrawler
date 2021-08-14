@@ -102,10 +102,6 @@
       <ivy:resources resolveId="groovy"
         file="${distribution.downloader}/groovy_ivy.xml"/>
     </copy>
-    <copy verbose="true" todir="${schemacrawler.expanded-distribution}/lib">
-      <ivy:resources resolveId="jackson"
-        file="${distribution.downloader}/jackson_ivy.xml"/>
-    </copy>
     <copy todir="${schemacrawler.expanded-distribution}/lib">
       <ivy:resources resolveId="mustache"
         file="${distribution.downloader}/mustache_ivy.xml"/>
@@ -116,6 +112,10 @@
         file="${distribution.downloader}/plugins_ivy.xml"/>
     </copy>
     -->
+    <copy todir="${schemacrawler.expanded-distribution}/lib">
+      <ivy:resources resolveId="javascript"
+        file="${distribution.downloader}/javascript_ivy.xml"/>
+    </copy>  	
     <copy todir="${schemacrawler.expanded-distribution}/lib">
       <ivy:resources resolveId="python"
         file="${distribution.downloader}/python_ivy.xml"/>

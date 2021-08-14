@@ -1,5 +1,6 @@
 coverage:
   round: nearest
-  range: 60..80
 ignore:
   - "schemacrawler-testdb"  # ignore folders and all its contents
+  - "schemacrawler-diff"  # ignore folders and all its contents
+  - "schemacrawler-examplecode"  # ignore folders and all its contents
