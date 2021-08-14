@@ -1,11 +1,12 @@
 # SchemaCrawler Change History
 
 
-<a name="a16.15.3"></a>
-## Release 16.15.3 - 2021-08-13
+<a name="a16.15.4"></a>
+## Release 16.15.4 - 2021-08-15
 
 - Fix issue #496 - honor table includes in lint cyclic dependency checks
 - Clarify information on licensing
+- Create downloader for JavaScript engine for Java 15 and above
 
 
 <a name="a16.15.2"></a>
