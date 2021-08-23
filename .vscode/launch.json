@@ -1,0 +1,54 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "<Current File>",
+      "request": "launch",
+      "mainClass": "${file}"
+    },
+    {
+      "type": "java",
+      "name": "SchemaCrawler Version",
+      "request": "launch",
+      "mainClass": "schemacrawler.Version",
+      "projectName": "schemacrawler-api"
+    },
+    {
+      "type": "java",
+      "name": "SchemaCrawler",
+      "request": "launch",
+      "mainClass": "schemacrawler.Main",
+      "projectName": "schemacrawler-commandline"
+    },
+    {
+      "type": "java",
+      "name": "Start Test Database",
+      "request": "launch",
+      "mainClass": "schemacrawler.testdb.TestDatabase",
+      "projectName": "schemacrawler-testdb"
+    },
+    {
+      "type": "java",
+      "name": "Create Test Schema",
+      "request": "launch",
+      "mainClass": "schemacrawler.testdb.TestSchemaCreatorMain",
+      "projectName": "schemacrawler-testdb"
+    },
+    {
+      "type": "java",
+      "name": "SchemaCrawler - Web Application",
+      "request": "launch",
+      "mainClass": "us.fatehi.schemacrawler.webapp.SchemaCrawlerWebApplication",
+      "projectName": "schemacrawler-webapp",
+      "env": {
+        "AWS_ACCESS_KEY_ID": "AKIA2W3JPZEUR5FD6O7K",
+        "AWS_SECRET": "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",
+        "AWS_S3_BUCKET": "schemacrawler-web-app-1"
+      }
+    }
+  ]
+}

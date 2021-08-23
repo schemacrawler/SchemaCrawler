@@ -42,7 +42,7 @@ RUN \
   bash \
   bash-completion \
   graphviz \
-  ttf-freefont
+  fonts-freefont-ttf
 
 # Copy SchemaCrawler distribution from the build directory
 COPY \
