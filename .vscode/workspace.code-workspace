@@ -1,35 +1,35 @@
 {
-	"folders": [
-		{
-			"path": "..",
-		}
-	],
-	"settings": {
-		"files.exclude": {
-			"workspace": true,
-		},
-		"java.configuration.updateBuildConfiguration": "interactive",
-		"java.format.settings.profile": "GoogleStyle",
-		"java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
-		"java.test.config": [
-			{
-				"name": "Standard",
-				"workingDirectory": "${workspaceFolder}"
-			},
-			{
-				"name": "Run Heavy Database Tests",
-				"vmargs": [
-					"-Dheavydb"
-				]
-			},
-			{
-				"name": "Run Light Database Tests",
-				"vmargs": [
-					"-Dlightdb"
-				]
-			},
-		],
-		"editor.tabSize": 2,
-		"files.trimTrailingWhitespace": true,
-	}
+  "folders":[
+    {
+      "path":".."
+    }
+  ],
+  "settings":{
+    "files.exclude":{
+      "workspace":true
+    },
+    "java.configuration.updateBuildConfiguration":"interactive",
+    "java.format.settings.profile":"GoogleStyle",
+    "java.format.settings.url":"https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
+    "java.test.config":[
+      {
+        "name":"Standard",
+        "workingDirectory":"${workspaceFolder}"
+      },
+      {
+        "name":"Run Heavy Database Tests",
+        "vmargs":[
+          "-Dheavydb"
+        ]
+      },
+      {
+        "name":"Run Light Database Tests",
+        "vmargs":[
+          "-Dlightdb"
+        ]
+      }
+    ],
+    "editor.tabSize":2,
+    "files.trimTrailingWhitespace":true
+  }
 }
