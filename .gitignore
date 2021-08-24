@@ -25,6 +25,8 @@ target/
 workspace/
 **/gpl-3.0.txt
 
+**/launch.json
+
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
