@@ -8,7 +8,7 @@
     "files.exclude":{
       "workspace":true
     },
-    "java.configuration.updateBuildConfiguration":"interactive",
+    "java.configuration.updateBuildConfiguration":"automatic",
     "java.format.settings.profile":"GoogleStyle",
     "java.format.settings.url":"https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
     "java.test.config":[
@@ -30,6 +30,8 @@
       }
     ],
     "editor.tabSize":2,
-    "files.trimTrailingWhitespace":true
+    "editor.foldingImportsByDefault": true,
+    "files.trimTrailingWhitespace":true,
+    "git.enableCommitSigning":true
   }
 }

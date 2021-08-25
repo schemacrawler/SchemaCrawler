@@ -1,5 +1,5 @@
 {
-  "name":"Java 8",
+  "name":"SchemaCrawler",
   "build":{
     "dockerfile":"Dockerfile",
     "args":{
@@ -8,7 +8,6 @@
       "NODE_VERSION":"none"
     }
   },
-  "shutdownAction":"none",
   "settings":{
     "java.home":"/docker-java-home",
     "java.import.gradle.java.home":"/usr/local/sdkman/candidates/java/current",
@@ -18,7 +17,17 @@
         "name":"JavaSE-1.8",
         "path":"/usr/local/sdkman/candidates/java/current"
       }
-    ]
+    ],
+    "files.exclude":{
+      "workspace":true
+    },
+    "java.configuration.updateBuildConfiguration":"automatic",
+    "java.format.settings.profile":"GoogleStyle",
+    "java.format.settings.url":"https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
+    "editor.tabSize":2,
+    "editor.foldingImportsByDefault": true,
+    "files.trimTrailingWhitespace":true,
+    "git.enableCommitSigning":true
   },
   "extensions":[
     "vscjava.vscode-java-pack",
@@ -30,6 +39,5 @@
     "jebbs.markdown-extended",
     "davidanson.vscode-markdownlint"
   ],
-  "postCreateCommand":"java -version",
   "remoteUser":"vscode"
 }
