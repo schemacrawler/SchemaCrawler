@@ -1,30 +1,23 @@
 /*
-========================================================================
-SchemaCrawler
-http://www.schemacrawler.com
-Copyright (c) 2000-2021, Sualeh Fatehi <sualeh@hotmail.com>.
-All rights reserved.
-------------------------------------------------------------------------
-
-SchemaCrawler is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-SchemaCrawler and the accompanying materials are made available under
-the terms of the Eclipse Public License v1.0, GNU General Public License
-v3 or GNU Lesser General Public License v3.
-
-You may elect to redistribute this code under any of these licenses.
-
-The Eclipse Public License is available at:
-http://www.eclipse.org/legal/epl-v10.html
-
-The GNU General Public License v3 and the GNU Lesser General Public
-License v3 are available at:
-http://www.gnu.org/licenses/
-
-========================================================================
-*/
+ * ======================================================================== SchemaCrawler
+ * http://www.schemacrawler.com Copyright (c) 2000-2021, Sualeh Fatehi <sualeh@hotmail.com>. All
+ * rights reserved. ------------------------------------------------------------------------
+ * 
+ * SchemaCrawler is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * 
+ * SchemaCrawler and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0, GNU General Public License v3 or GNU Lesser General Public License v3.
+ * 
+ * You may elect to redistribute this code under any of these licenses.
+ * 
+ * The Eclipse Public License is available at: http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * The GNU General Public License v3 and the GNU Lesser General Public License v3 are available at:
+ * http://www.gnu.org/licenses/
+ * 
+ * ========================================================================
+ */
 
 package schemacrawler.integration.test;
 
@@ -116,7 +109,8 @@ public class DatabaseScriptsTest {
 
   private Collection<DatabaseScriptSection> booksDatabaseScriptSections;
 
-  @Autowired private ResourceLoader resourceLoader;
+  @Autowired
+  private ResourceLoader resourceLoader;
 
   @Test
   public void booksDatabaseScripts() throws Exception {
@@ -126,10 +120,8 @@ public class DatabaseScriptsTest {
     for (final String scriptName : scripts) {
       final Map<DatabaseScriptSection, Integer> scriptSectionsCounts = makeScriptSectionsCounts();
       final String scriptsResource = "/" + scriptName;
-      try (final BufferedReader reader =
-          new BufferedReader(
-              new InputStreamReader(
-                  DatabaseScriptsTest.class.getResourceAsStream(scriptsResource), UTF_8))) {
+      try (final BufferedReader reader = new BufferedReader(new InputStreamReader(
+          DatabaseScriptsTest.class.getResourceAsStream(scriptsResource), UTF_8))) {
         final List<String> lines =
             reader.lines().filter(line -> !isBlank(line)).collect(Collectors.toList());
         assertThat(lines, is(not(empty())));
@@ -145,8 +137,8 @@ public class DatabaseScriptsTest {
         throw new RuntimeException(e.getMessage(), e);
       }
 
-      for (final Map.Entry<DatabaseScriptSection, Integer> databaseScriptSectionIntegerEntry :
-          scriptSectionsCounts.entrySet()) {
+      for (final Map.Entry<DatabaseScriptSection, Integer> databaseScriptSectionIntegerEntry : scriptSectionsCounts
+          .entrySet()) {
         final int count = databaseScriptSectionIntegerEntry.getValue();
         if (count != 1) {
           final String error;
@@ -155,10 +147,8 @@ public class DatabaseScriptsTest {
           } else {
             error = "duplicate";
           }
-          final String message =
-              String.format(
-                  "%s: %s %s",
-                  scriptName, error, databaseScriptSectionIntegerEntry.getKey().toString());
+          final String message = String.format("%s: %s %s", scriptName, error,
+              databaseScriptSectionIntegerEntry.getKey().toString());
           failedScripts.add(message);
         }
       }
