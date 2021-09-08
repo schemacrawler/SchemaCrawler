@@ -171,7 +171,7 @@ docker run \
 schemacrawler/schemacrawler \
 /opt/schemacrawler/schemacrawler.sh \
 --server=sqlite \
---database=chinook-database-2.1.2.sqlite \
+--database=chinook-database-2.1.3.sqlite \
 --info-level=standard \
 --command script \
 --script-language python \
@@ -191,7 +191,7 @@ docker run \
 schemacrawler/schemacrawler \
 /opt/schemacrawler/schemacrawler.sh \
 --server=sqlite \
---database=chinook-database-2.1.2.sqlite \
+--database=chinook-database-2.1.3.sqlite \
 --info-level=standard \
 --command script \
 --script-language python \
