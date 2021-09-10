@@ -74,12 +74,12 @@ public class OfflineDriver implements Driver {
 
   @Override
   public int getMajorVersion() {
-    return Integer.valueOf(Version.getVersion().split("\n")[0]);
+    return Integer.valueOf(Version.getVersion().split("\\.")[0]);
   }
 
   @Override
   public int getMinorVersion() {
-    return Integer.valueOf(Version.getVersion().split("\n")[1]);
+    return Integer.valueOf(Version.getVersion().split("\\.")[1]);
   }
 
   @Override
