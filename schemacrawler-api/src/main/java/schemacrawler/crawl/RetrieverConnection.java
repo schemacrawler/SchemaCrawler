@@ -30,12 +30,9 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.DatabaseUtility.checkConnection;
-import static us.fatehi.utility.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.Driver;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -83,15 +80,6 @@ final class RetrieverConnection {
   public MetadataRetrievalStrategy get(
       final SchemaInfoMetadataRetrievalStrategy schemaInfoMetadataRetrievalStrategy) {
     return schemaRetrievalOptions.get(schemaInfoMetadataRetrievalStrategy);
-  }
-
-  public Driver getDriver() throws SQLException {
-    final Driver jdbcDriver = DriverManager.getDriver(connection.getMetaData().getURL());
-    if (jdbcDriver == null) {
-      throw new SQLException("No JDBC driver found");
-    }
-
-    return jdbcDriver;
   }
 
   Connection getConnection() {

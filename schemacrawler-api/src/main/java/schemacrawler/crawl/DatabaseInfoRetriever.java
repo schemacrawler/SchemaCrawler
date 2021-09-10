@@ -37,6 +37,7 @@ import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.Driver;
+import java.sql.DriverManager;
 import java.sql.DriverPropertyInfo;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -61,8 +62,7 @@ import us.fatehi.utility.string.StringFormat;
 
 final class DatabaseInfoRetriever extends AbstractRetriever {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(DatabaseInfoRetriever.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(DatabaseInfoRetriever.class.getName());
 
   private static final List<String> ignoreMethods =
       Arrays.asList(
@@ -208,7 +208,10 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
       final DatabaseMetaData dbMetaData = getMetaData();
       final String url = dbMetaData.getURL();
 
-      final Driver jdbcDriver = getRetrieverConnection().getDriver();
+      final Driver jdbcDriver = DriverManager.getDriver(getMetaData().getURL());
+      if (jdbcDriver == null) {
+        throw new SQLException("No JDBC driver found");
+      }
 
       driverInfo.setJdbcDriverClassName(jdbcDriver.getClass().getName());
       driverInfo.setJdbcCompliant(jdbcDriver.jdbcCompliant());
@@ -218,7 +221,7 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
         driverInfo.addJdbcDriverProperty(new ImmutableJdbcDriverProperty(driverPropertyInfo));
       }
     } catch (final SQLException e) {
-      LOGGER.log(Level.WARNING, "Could not obtain JDBC driver information", e);
+      LOGGER.log(Level.WARNING, "Could not obtain additional JDBC driver information", e);
     }
   }
 
