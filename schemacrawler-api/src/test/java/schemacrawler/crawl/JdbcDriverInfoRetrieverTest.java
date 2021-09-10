@@ -41,6 +41,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -87,7 +88,7 @@ public class JdbcDriverInfoRetrieverTest {
         new DatabaseInfoRetriever(retrieverConnection, catalog, options);
     databaseInfoRetriever.retrieveJdbcDriverInfo();
 
-    final MutableJdbcDriverInfo jdbcDriverInfo = catalog.getJdbcDriverInfo();
+    final JdbcDriverInfo jdbcDriverInfo = catalog.getJdbcDriverInfo();
     assertThat(jdbcDriverInfo.getProductName(), is("HSQL Database Engine Driver"));
     assertThat(jdbcDriverInfo.getProductVersion(), is("2.6.0"));
 

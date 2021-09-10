@@ -86,9 +86,9 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends Ba
     }
 
     if (options.isNoInfo()
-        || (options.isNoSchemaCrawlerInfo()
+        || options.isNoSchemaCrawlerInfo()
             && !options.isShowDatabaseInfo()
-            && !options.isShowJdbcDriverInfo())) {
+            && !options.isShowJdbcDriverInfo()) {
       return;
     }
 
@@ -168,23 +168,33 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends Ba
 
     formattingHelper.writeObjectStart();
     formattingHelper.writeNameValueRow(
+        "connection url", driverInfo.getConnectionUrl(), Alignment.inherit);
+    formattingHelper.writeNameValueRow(
         "driver name", driverInfo.getProductName(), Alignment.inherit);
     formattingHelper.writeNameValueRow(
         "driver version", driverInfo.getProductVersion(), Alignment.inherit);
-    formattingHelper.writeNameValueRow(
-        "driver class name", driverInfo.getDriverClassName(), Alignment.inherit);
-    formattingHelper.writeNameValueRow("url", driverInfo.getConnectionUrl(), Alignment.inherit);
-    formattingHelper.writeNameValueRow(
-        "is JDBC compliant", Boolean.toString(driverInfo.isJdbcCompliant()), Alignment.inherit);
+    if (driverInfo.hasDriverClassName()) {
+      formattingHelper.writeNameValueRow(
+          "driver class name", driverInfo.getDriverClassName(), Alignment.inherit);
+      formattingHelper.writeNameValueRow(
+          "is JDBC compliant", Boolean.toString(driverInfo.isJdbcCompliant()), Alignment.inherit);
+      formattingHelper.writeNameValueRow(
+          "supported JDBC version",
+          String.format(
+              "%d.%d", driverInfo.getJdbcMajorVersion(), driverInfo.getJdbcMinorVersion()),
+          Alignment.inherit);
+    }
     formattingHelper.writeObjectEnd();
 
-    final Collection<JdbcDriverProperty> jdbcDriverProperties = driverInfo.getDriverProperties();
-    if (!jdbcDriverProperties.isEmpty()) {
-      formattingHelper.writeHeader(DocumentHeaderType.section, "JDBC Driver Properties");
-      for (final JdbcDriverProperty driverProperty : jdbcDriverProperties) {
-        formattingHelper.writeObjectStart();
-        printJdbcDriverProperty(driverProperty);
-        formattingHelper.writeObjectEnd();
+    if (driverInfo.hasDriverClassName()) {
+      final Collection<JdbcDriverProperty> jdbcDriverProperties = driverInfo.getDriverProperties();
+      if (!jdbcDriverProperties.isEmpty()) {
+        formattingHelper.writeHeader(DocumentHeaderType.section, "JDBC Driver Properties");
+        for (final JdbcDriverProperty driverProperty : jdbcDriverProperties) {
+          formattingHelper.writeObjectStart();
+          printJdbcDriverProperty(driverProperty);
+          formattingHelper.writeObjectEnd();
+        }
       }
     }
   }
@@ -202,7 +212,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends Ba
   public final void handleInfoStart() throws SchemaCrawlerException {
     if (!printVerboseDatabaseInfo
         || options.isNoInfo()
-        || (!options.isShowDatabaseInfo() && !options.isShowJdbcDriverInfo())) {
+        || !options.isShowDatabaseInfo() && !options.isShowJdbcDriverInfo()) {
       return;
     }
 

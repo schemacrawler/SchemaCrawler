@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
+import java.sql.SQLException;
 import java.util.Collection;
 
 import schemacrawler.ProductVersion;
@@ -54,11 +55,49 @@ public interface JdbcDriverInfo extends ProductVersion {
   String getDriverClassName();
 
   /**
+   * Retrieves JDBC driver's major version number.
+   *
+   * @return JDBC driver's major version
+   */
+  int getDriverMajorVersion();
+
+  /**
+   * Retrieves this JDBC driver's minor version number.
+   *
+   * @return JDBC driver's minor version number
+   */
+  int getDriverMinorVersion();
+
+  /**
    * Gets all the JDBC driver properties, and their values.
    *
    * @return JDBC driver properties
    */
   Collection<JdbcDriverProperty> getDriverProperties();
+
+  /**
+   * Gets the major JDBC version number supported by JDBC driver.
+   *
+   * @return JDBC version major number
+   * @exception SQLException if a database access error occurs
+   */
+  int getJdbcMajorVersion();
+
+  /**
+   * Gets the minor JDBC version number supported by JDBC driver.
+   *
+   * @return JDBC version major number
+   * @exception SQLException if a database access error occurs
+   */
+  int getJdbcMinorVersion();
+
+  /**
+   * Whether the JDBC driver class name is available. It may either not have been retrieved, or may
+   * have been loaded by another classloader.
+   *
+   * @return True if the JDBC driver class name is available.
+   */
+  boolean hasDriverClassName();
 
   /**
    * Reports whether this JDBC driver is a genuine JDBC Compliant <sup><font size=-2>TM</font></sup>

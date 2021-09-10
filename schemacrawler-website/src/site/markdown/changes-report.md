@@ -1,6 +1,14 @@
 # SchemaCrawler Change History
 
 
+<a name="a16.15.5"></a>
+## Release 16.15.5 - 2021-09-10
+
+- Fix issue #504 - do not load JDBC driver information based on SchemaInfoRetrieval.retrieveAdditionalJdbcDriverInfo
+- Add supported JDBC version in JDBC driver information
+- Reorganize output for JDBC driver information
+
+
 <a name="a16.15.4"></a>
 ## Release 16.15.4 - 2021-08-15
 
