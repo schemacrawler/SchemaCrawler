@@ -11,7 +11,7 @@
     },
     "java.configuration.updateBuildConfiguration": "automatic",
     "java.format.settings.profile": "GoogleStyle",
-    "java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
+    "java.format.settings.url": "https://gist.github.com/sualeh/470c0954b597f1c717baa1ae64a80013",
     "java.test.config": [
       {
         "name": "Standard",
