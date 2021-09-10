@@ -33,7 +33,6 @@ import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.DriverPropertyInfo;
@@ -45,35 +44,15 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.function.Supplier;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import us.fatehi.utility.string.StringFormat;
 
 public final class DatabaseConnectionSource implements Supplier<Connection> {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(DatabaseConnectionSource.class.getName());
-
-  private static void logConnection(final Connection connection) {
-    if (connection == null || !LOGGER.isLoggable(Level.INFO)) {
-      return;
-    }
-    try {
-      final DatabaseMetaData dbMetaData = connection.getMetaData();
-      LOGGER.log(
-          Level.INFO,
-          new StringFormat(
-              "Connected to %n%s %s %nusing JDBC driver %n%s %s",
-              dbMetaData.getDatabaseProductName(),
-              dbMetaData.getDatabaseProductVersion(),
-              dbMetaData.getDriverName(),
-              dbMetaData.getDriverVersion()));
-    } catch (final SQLException e) {
-      LOGGER.log(Level.WARNING, "Could not log connection information", e);
-    }
-  }
+  private static final Logger LOGGER = Logger.getLogger(DatabaseConnectionSource.class.getName());
 
   private static Properties safeProperties(final Properties properties) {
     final Properties logProperties = new Properties(properties);
@@ -204,7 +183,6 @@ public final class DatabaseConnectionSource implements Supplier<Connection> {
       final Connection connection = driver.connect(connectionUrl, jdbcConnectionProperties);
 
       LOGGER.log(Level.INFO, new StringFormat("Opened database connection <%s>", connection));
-      logConnection(connection);
 
       // Clear password
       jdbcConnectionProperties.remove("password");

@@ -31,11 +31,14 @@ package schemacrawler.tools.utility;
 import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.Driver;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.crawl.ResultsCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ResultsColumns;
@@ -63,8 +66,7 @@ import us.fatehi.utility.string.StringFormat;
 @UtilityMarker
 public final class SchemaCrawlerUtility {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(SchemaCrawlerUtility.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerUtility.class.getName());
 
   /**
    * Crawls a database, and returns a catalog.
@@ -91,9 +93,12 @@ public final class SchemaCrawlerUtility {
       final SchemaCrawlerOptions schemaCrawlerOptions,
       final Config additionalConfig)
       throws SchemaCrawlerException {
+
     final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
     final CatalogLoader catalogLoader = catalogLoaderRegistry.newChainedCatalogLoader();
+
     LOGGER.log(Level.CONFIG, new StringFormat("Catalog loader: %s", catalogLoader));
+    logConnection(connection);
 
     catalogLoader.setConnection(connection);
     catalogLoader.setSchemaRetrievalOptions(schemaRetrievalOptions);
@@ -105,7 +110,6 @@ public final class SchemaCrawlerUtility {
     requireNonNull(catalog, "Catalog could not be retrieved");
     return catalog;
   }
-
   /**
    * Obtains result-set metadata from a live result-set.
    *
@@ -187,6 +191,38 @@ public final class SchemaCrawlerUtility {
       DatabaseUtility.checkResultSet(resultSet);
     } catch (final SQLException e) {
       throw new SchemaCrawlerException("Bad result-set", e);
+    }
+  }
+
+  private static void logConnection(final Connection connection) {
+    if (connection == null || !LOGGER.isLoggable(Level.INFO)) {
+      return;
+    }
+    try {
+      final DatabaseMetaData dbMetaData = connection.getMetaData();
+      final String connectionUrl = dbMetaData.getURL();
+
+      String driverClassName = "";
+      try {
+        final Driver driver = DriverManager.getDriver(connectionUrl);
+        if (driver != null) {
+          driverClassName = driver.getClass().getName();
+        }
+      } catch (final SQLException e) {
+        LOGGER.log(Level.WARNING, "Could not log JDBC driver class name", e);
+      }
+      LOGGER.log(
+          Level.INFO,
+          new StringFormat(
+              "Connected to %n%s %s %nusing JDBC driver %n%s %s (class \"%s\")%nwith %s",
+              dbMetaData.getDatabaseProductName(),
+              dbMetaData.getDatabaseProductVersion(),
+              dbMetaData.getDriverName(),
+              dbMetaData.getDriverVersion(),
+              driverClassName,
+              connectionUrl));
+    } catch (final SQLException e) {
+      LOGGER.log(Level.WARNING, "Could not log connection information", e);
     }
   }
 
