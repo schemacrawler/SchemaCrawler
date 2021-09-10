@@ -86,24 +86,7 @@ final class RetrieverConnection {
   }
 
   public Driver getDriver() throws SQLException {
-    Driver jdbcDriver = null;
-
-    final String jdbcDriverClassName =
-        schemaRetrievalOptions.getDatabaseServerType().getJdbcDriverClassName();
-    if (!isBlank(jdbcDriverClassName)) {
-      try {
-        final Class<? extends Driver> jdbcDriverClass =
-            (Class<? extends Driver>) Class.forName(jdbcDriverClassName);
-        jdbcDriver = jdbcDriverClass.getDeclaredConstructor().newInstance();
-      } catch (final Exception e) {
-        LOGGER.log(Level.WARNING, "No JDBC driver found for " + jdbcDriverClassName, e);
-      }
-    }
-
-    if (jdbcDriver == null) {
-      jdbcDriver = DriverManager.getDriver(connection.getMetaData().getURL());
-    }
-
+    final Driver jdbcDriver = DriverManager.getDriver(connection.getMetaData().getURL());
     if (jdbcDriver == null) {
       throw new SQLException("No JDBC driver found");
     }
