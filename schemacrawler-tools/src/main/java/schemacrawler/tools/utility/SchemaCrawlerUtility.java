@@ -214,7 +214,7 @@ public final class SchemaCrawlerUtility {
       LOGGER.log(
           Level.INFO,
           new StringFormat(
-              "Connected to %n%s %s %nusing JDBC driver %n%s %s (class \"%s\")%nwith %s",
+              "Connected to %s %s %nusing JDBC driver %s %s (driver class \"%s\")%nwith \"%s\"",
               dbMetaData.getDatabaseProductName(),
               dbMetaData.getDatabaseProductVersion(),
               dbMetaData.getDriverName(),
