@@ -60,8 +60,6 @@ public class JdbcDriverInfoRetrieverTest {
   public void jdbcDriverInfo(final Connection connection) throws Exception {
     final DatabaseServerType databaseServerType = new DatabaseServerType("hsqldb-1", "HyperSQL");
     verifyJdbcDriverInfoRetrieval(connection, databaseServerType);
-
-    assertThat(catalog.getJdbcDriverInfo().getDriverClassName(), is("org.hsqldb.jdbc.JDBCDriver"));
   }
 
   @BeforeEach

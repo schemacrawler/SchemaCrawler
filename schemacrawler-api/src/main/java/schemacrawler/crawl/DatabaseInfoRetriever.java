@@ -49,8 +49,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.inclusionrule.IncludeAll;
 import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -209,6 +209,10 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
       final String url = dbMetaData.getURL();
 
       final Driver jdbcDriver = getRetrieverConnection().getDriver();
+
+      driverInfo.setJdbcDriverClassName(jdbcDriver.getClass().getName());
+      driverInfo.setJdbcCompliant(jdbcDriver.jdbcCompliant());
+
       final DriverPropertyInfo[] propertyInfo = jdbcDriver.getPropertyInfo(url, new Properties());
       for (final DriverPropertyInfo driverPropertyInfo : propertyInfo) {
         driverInfo.addJdbcDriverProperty(new ImmutableJdbcDriverProperty(driverPropertyInfo));
@@ -296,9 +300,6 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
       driverInfo.setDriverName(dbMetaData.getDriverName());
       driverInfo.setDriverVersion(dbMetaData.getDriverVersion());
       driverInfo.setConnectionUrl(url);
-      final Driver jdbcDriver = getRetrieverConnection().getDriver();
-      driverInfo.setJdbcDriverClassName(jdbcDriver.getClass().getName());
-      driverInfo.setJdbcCompliant(jdbcDriver.jdbcCompliant());
     } catch (final SQLException e) {
       LOGGER.log(Level.WARNING, "Could not obtain JDBC driver information", e);
     }
