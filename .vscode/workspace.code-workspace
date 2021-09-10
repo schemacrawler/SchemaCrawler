@@ -33,6 +33,10 @@
     "editor.tabSize": 2,
     "editor.foldingImportsByDefault": true,
     "files.trimTrailingWhitespace": true,
-    "git.enableCommitSigning": true
+    "git.enableCommitSigning": true,
+    "git.autofetch": true,
+    "workbench.editorAssociations": {
+      "*.md": "vscode.markdown.preview.editor"
+    },
   }
 }
