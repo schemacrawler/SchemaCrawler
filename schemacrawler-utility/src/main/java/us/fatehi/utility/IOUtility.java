@@ -62,11 +62,11 @@ public final class IOUtility {
    */
   public static void copy(final Reader reader, final Writer writer) {
     if (reader == null) {
-      LOGGER.log(Level.WARNING, "Cannot read null reader");
+      LOGGER.log(Level.FINE, "Cannot read null reader");
       return;
     }
     if (writer == null) {
-      LOGGER.log(Level.WARNING, "Cannot write null writer");
+      LOGGER.log(Level.FINE, "Cannot write null writer");
       return;
     }
 
@@ -167,7 +167,7 @@ public final class IOUtility {
 
   public static String readFully(final InputStream stream) {
     if (stream == null) {
-      LOGGER.log(Level.WARNING, "Cannot read null stream");
+      LOGGER.log(Level.FINE, "Cannot read null stream");
       return "";
     }
     final Reader reader = new InputStreamReader(stream, UTF_8);
@@ -182,7 +182,7 @@ public final class IOUtility {
    */
   public static String readFully(final Reader reader) {
     if (reader == null) {
-      LOGGER.log(Level.WARNING, "Cannot read null reader");
+      LOGGER.log(Level.FINE, "Cannot read null reader");
       return "";
     }
 
