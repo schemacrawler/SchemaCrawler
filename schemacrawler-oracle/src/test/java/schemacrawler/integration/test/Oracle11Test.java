@@ -48,11 +48,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.OracleContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
 
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
+import schemacrawler.integration.test.utility.OracleContainer;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.DatabaseUser;
 import schemacrawler.schema.Property;
@@ -69,17 +70,16 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
 @Testcontainers(disabledWithoutDocker = true)
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
-public class OracleTest extends BaseAdditionalDatabaseTest {
+public class Oracle11Test extends BaseAdditionalDatabaseTest {
 
   @Container
   private final JdbcDatabaseContainer<?> dbContainer =
-      new OracleContainer("wnameless/oracle-xe-11g-r2");
+      new OracleContainer(DockerImageName.parse("gvenzl/oracle-xe").withTag("11-slim")).usingSid();
 
   @BeforeEach
   public void createDatabase() throws SQLException, SchemaCrawlerException {
     final String urlx = "restrictGetTables=true;useFetchSizeWithLongColumn=true";
-    createDataSource(
-        dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword(), urlx);
+    createDataSource(dbContainer.getJdbcUrl(), "SYS AS SYSDBA", dbContainer.getPassword(), urlx);
 
     createDatabase("/oracle-11g.scripts.txt");
   }
@@ -129,14 +129,12 @@ public class OracleTest extends BaseAdditionalDatabaseTest {
         databaseUsers.stream().map(DatabaseUser::getName).collect(Collectors.toList()),
         hasItems("SYS", "SYSTEM", "BOOKS"));
     assertThat(
-        databaseUsers
-            .stream()
+        databaseUsers.stream()
             .map(databaseUser -> databaseUser.getAttributes().size())
             .collect(Collectors.toList()),
         hasItems(1));
     assertThat(
-        databaseUsers
-            .stream()
+        databaseUsers.stream()
             .map(databaseUser -> databaseUser.getAttributes().keySet())
             .flatMap(Collection::stream)
             .collect(Collectors.toSet()),
