@@ -663,7 +663,7 @@ deletes are detected for TYPE_SCROLL_INSENSITIVE result sets  false
 deletes are detected for TYPE_SCROLL_SENSITIVE result sets  false                         
 does max row size include blobs           true                          
 driver major version                      21                            
-driver minor version                      1                             
+driver minor version                      3                             
 extra name characters                     $#                            
 generated key always returned             false                         
 identifier quote string                   "                             
