@@ -89,6 +89,7 @@ final class NeuteredLinesFilter implements Predicate<String> {
     // -- server-specific values
     Pattern.compile("\\s+value\\s+localhost:\\d+:xe\\s+"),
     Pattern.compile("\\s+value\\s+localhost:\\d+\\/xepdb1\\s+"),
+    Pattern.compile("BOOKS\\.\\\"ISEQ\\$\\$_\\d+\\\"\\s+\\[sequence\\]"),
     // PostgreSQL
     // -- unnamed objects
     Pattern.compile(".*pg_temp_.*"),

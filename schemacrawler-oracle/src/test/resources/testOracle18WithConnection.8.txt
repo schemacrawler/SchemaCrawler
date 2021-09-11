@@ -1618,7 +1618,7 @@ oracle.net.websocketUser                               [driver property]
 password                                               [driver property]
   
   not required
-  value                             test                        
+  value                             null                        
 
 prelim_auth                                            [driver property]
   
@@ -1678,7 +1678,7 @@ useFetchSizeWithLongColumn                             [driver property]
 user                                                   [driver property]
   
   not required
-  value                             test                        
+  value                             null                        
 
 v$session.ename                                        [driver property]
   
