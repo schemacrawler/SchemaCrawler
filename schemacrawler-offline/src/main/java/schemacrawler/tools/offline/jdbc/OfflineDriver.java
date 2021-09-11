@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.offline.jdbc;
 
-
 import static schemacrawler.tools.offline.jdbc.OfflineConnectionUtility.newOfflineConnection;
 import static us.fatehi.utility.Utility.isBlank;
 
@@ -42,81 +41,60 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import java.util.logging.Logger;
+import schemacrawler.Version;
 
-public class OfflineDriver
-  implements Driver
-{
+public class OfflineDriver implements Driver {
 
-  private static final Logger LOGGER =
-    Logger.getLogger(OfflineDriver.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(OfflineDriver.class.getName());
 
   private static final String JDBC_URL_PREFIX = "jdbc:offline:";
 
-  static
-  {
-    try
-    {
+  static {
+    try {
       DriverManager.registerDriver(new OfflineDriver());
-    }
-    catch (final SQLException e)
-    {
+    } catch (final SQLException e) {
       LOGGER.log(Level.SEVERE, "Cannot register offline driver", e);
     }
   }
 
   @Override
-  public boolean acceptsURL(final String url)
-  {
+  public boolean acceptsURL(final String url) {
     return !isBlank(url) && url.startsWith(JDBC_URL_PREFIX);
   }
 
   @Override
-  public Connection connect(final String url, final Properties info)
-    throws SQLException
-  {
-    if (acceptsURL(url))
-    {
+  public Connection connect(final String url, final Properties info) throws SQLException {
+    if (acceptsURL(url)) {
       final String path = url.substring(JDBC_URL_PREFIX.length());
       return newOfflineConnection(Paths.get(path));
-    }
-    else
-    {
+    } else {
       return null;
     }
   }
 
   @Override
-  public int getMajorVersion()
-  {
-    return 0;
+  public int getMajorVersion() {
+    return Integer.valueOf(Version.getVersion().split("\\.")[0]);
   }
 
   @Override
-  public int getMinorVersion()
-  {
-    return 0;
+  public int getMinorVersion() {
+    return Integer.valueOf(Version.getVersion().split("\\.")[1]);
   }
 
   @Override
-  public Logger getParentLogger()
-    throws SQLFeatureNotSupportedException
-  {
+  public Logger getParentLogger() throws SQLFeatureNotSupportedException {
     throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
-  public DriverPropertyInfo[] getPropertyInfo(final String url,
-                                              final Properties info)
-    throws SQLException
-  {
+  public DriverPropertyInfo[] getPropertyInfo(final String url, final Properties info)
+      throws SQLException {
     return new DriverPropertyInfo[0];
   }
 
   @Override
-  public boolean jdbcCompliant()
-  {
+  public boolean jdbcCompliant() {
     return false;
   }
-
 }

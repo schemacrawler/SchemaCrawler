@@ -40,36 +40,23 @@ import java.io.Serializable;
 public final class DatabaseServerType implements Serializable, Comparable<DatabaseServerType> {
 
   private static final long serialVersionUID = 2160456864554076419L;
+
   public static final DatabaseServerType UNKNOWN = new DatabaseServerType();
+
   private final String databaseSystemIdentifier;
   private final String databaseSystemName;
-  private final String jdbcDriverClassName;
 
   public DatabaseServerType(
       final String databaseSystemIdentifier, final String databaseSystemName) {
-    this(databaseSystemIdentifier, databaseSystemName, null);
-  }
-
-  public DatabaseServerType(
-      final String databaseSystemIdentifier,
-      final String databaseSystemName,
-      final String jdbcDriverClassName) {
     this.databaseSystemIdentifier =
         requireNotBlank(databaseSystemIdentifier, "No database system identifier provided");
     this.databaseSystemName =
         requireNotBlank(databaseSystemName, "No database system name provided");
-
-    if (isBlank(jdbcDriverClassName)) {
-      this.jdbcDriverClassName = null;
-    } else {
-      this.jdbcDriverClassName = jdbcDriverClassName;
-    }
   }
 
   private DatabaseServerType() {
     databaseSystemIdentifier = null;
     databaseSystemName = null;
-    jdbcDriverClassName = null;
   }
 
   @Override
@@ -116,10 +103,6 @@ public final class DatabaseServerType implements Serializable, Comparable<Databa
 
   public String getDatabaseSystemName() {
     return databaseSystemName;
-  }
-
-  public String getJdbcDriverClassName() {
-    return jdbcDriverClassName;
   }
 
   @Override

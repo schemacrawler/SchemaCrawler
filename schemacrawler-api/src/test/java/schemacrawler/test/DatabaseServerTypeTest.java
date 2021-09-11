@@ -69,7 +69,6 @@ public class DatabaseServerTypeTest {
   public void equals() {
     EqualsVerifier.forClass(DatabaseServerType.class)
         .withIgnoredFields("databaseSystemName")
-        .withIgnoredFields("jdbcDriverClassName")
         .verify();
   }
 

@@ -27,7 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
-
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.is;
@@ -39,26 +39,25 @@ import java.sql.SQLFeatureNotSupportedException;
 import java.util.Properties;
 
 import org.junit.jupiter.api.Test;
+
+import schemacrawler.Version;
 import schemacrawler.tools.offline.jdbc.OfflineDriver;
 
-public class OfflineDriverTest
-{
+public class OfflineDriverTest {
 
   @Test
-  public void offlineDriver()
-    throws SQLException
-  {
+  public void offlineDriver() throws SQLException {
     final OfflineDriver offlineDriver =
-      (OfflineDriver) DriverManager.getDriver("jdbc:offline:test");
+        (OfflineDriver) DriverManager.getDriver("jdbc:offline:test");
 
-    assertThat(offlineDriver.getMajorVersion(), is(0));
-    assertThat(offlineDriver.getMinorVersion(), is(0));
+    assertThat(
+        Version.getVersion(),
+        startsWith(
+            String.format(
+                "%d.%d", offlineDriver.getMajorVersion(), offlineDriver.getMinorVersion())));
     assertThat(offlineDriver.jdbcCompliant(), is(false));
-    assertThat(offlineDriver.getPropertyInfo("jdbc:offline:test",
-                                             new Properties()),
-               is(arrayWithSize(0)));
-    assertThrows(SQLFeatureNotSupportedException.class,
-                 () -> offlineDriver.getParentLogger());
+    assertThat(
+        offlineDriver.getPropertyInfo("jdbc:offline:test", new Properties()), is(arrayWithSize(0)));
+    assertThrows(SQLFeatureNotSupportedException.class, () -> offlineDriver.getParentLogger());
   }
-
 }

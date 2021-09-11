@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static java.util.Comparator.naturalOrder;
+import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -48,12 +49,31 @@ import schemacrawler.schema.JdbcDriverProperty;
 final class MutableJdbcDriverInfo implements JdbcDriverInfo {
 
   private static final long serialVersionUID = 8030156654422512161L;
-  private final Set<ImmutableJdbcDriverProperty> jdbcDriverProperties = new HashSet<>();
-  private String connectionUrl = "";
-  private String driverClassName = "";
-  private String driverName = "";
-  private String driverVersion = "";
+
+  private final Set<ImmutableJdbcDriverProperty> jdbcDriverProperties;
+  private String connectionUrl;
+  private String driverClassName;
+  private String driverName;
+  private String driverVersion;
+  private int driverMajorVersion;
+  private int driverMinorVersion;
+  private int jdbcMajorVersion;
+  private int jdbcMinorVersion;
   private boolean jdbcCompliant;
+
+  public MutableJdbcDriverInfo() {
+
+    jdbcDriverProperties = new HashSet<>();
+    connectionUrl = "";
+    driverClassName = "";
+    driverName = "";
+    driverVersion = "";
+    driverMajorVersion = 0;
+    driverMinorVersion = 0;
+    jdbcMajorVersion = 0;
+    jdbcMinorVersion = 0;
+    jdbcCompliant = false;
+  }
 
   /** {@inheritDoc} */
   @Override
@@ -67,12 +87,32 @@ final class MutableJdbcDriverInfo implements JdbcDriverInfo {
     return driverClassName;
   }
 
+  @Override
+  public int getDriverMajorVersion() {
+    return driverMajorVersion;
+  }
+
+  @Override
+  public int getDriverMinorVersion() {
+    return driverMinorVersion;
+  }
+
   /** {@inheritDoc} */
   @Override
   public Collection<JdbcDriverProperty> getDriverProperties() {
     final List<JdbcDriverProperty> properties = new ArrayList<>(jdbcDriverProperties);
     properties.sort(naturalOrder());
     return properties;
+  }
+
+  @Override
+  public int getJdbcMajorVersion() {
+    return jdbcMajorVersion;
+  }
+
+  @Override
+  public int getJdbcMinorVersion() {
+    return jdbcMinorVersion;
   }
 
   /** {@inheritDoc} */
@@ -85,6 +125,11 @@ final class MutableJdbcDriverInfo implements JdbcDriverInfo {
   @Override
   public String getProductVersion() {
     return driverVersion;
+  }
+
+  @Override
+  public boolean hasDriverClassName() {
+    return !isBlank(driverClassName);
   }
 
   /** {@inheritDoc} */
@@ -121,6 +166,14 @@ final class MutableJdbcDriverInfo implements JdbcDriverInfo {
     this.connectionUrl = connectionUrl;
   }
 
+  void setDriverMajorVersion(final int driverMajorVersion) {
+    this.driverMajorVersion = driverMajorVersion;
+  }
+
+  void setDriverMinorVersion(final int driverMinorVersion) {
+    this.driverMinorVersion = driverMinorVersion;
+  }
+
   void setDriverName(final String driverName) {
     this.driverName = driverName;
   }
@@ -135,5 +188,13 @@ final class MutableJdbcDriverInfo implements JdbcDriverInfo {
 
   void setJdbcDriverClassName(final String jdbcDriverClassName) {
     driverClassName = jdbcDriverClassName;
+  }
+
+  void setJdbcMajorVersion(final int jdbcMajorVersion) {
+    this.jdbcMajorVersion = jdbcMajorVersion;
+  }
+
+  void setJdbcMinorVersion(final int jdbcMinorVersion) {
+    this.jdbcMinorVersion = jdbcMinorVersion;
   }
 }

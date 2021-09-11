@@ -815,11 +815,12 @@ uses local files                          false
 
 JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+connection url                            jdbc:oracle:thin:system/oracle@localhost:60712:xe
 driver name                               Oracle JDBC driver            
 driver version                            21.1.0.0.0                    
 driver class name                         oracle.jdbc.OracleDriver      
-url                                       jdbc:oracle:thin:system/oracle@localhost:49204:xe
 is JDBC compliant                         true                          
+supported JDBC version                    4.2                           
 
 
 JDBC Driver Properties

@@ -11,7 +11,7 @@
     },
     "java.configuration.updateBuildConfiguration": "automatic",
     "java.format.settings.profile": "GoogleStyle",
-    "java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
+    "java.format.settings.url": "https://gist.github.com/sualeh/470c0954b597f1c717baa1ae64a80013",
     "java.test.config": [
       {
         "name": "Standard",
@@ -33,6 +33,10 @@
     "editor.tabSize": 2,
     "editor.foldingImportsByDefault": true,
     "files.trimTrailingWhitespace": true,
-    "git.enableCommitSigning": true
+    "git.enableCommitSigning": true,
+    "git.autofetch": true,
+    "workbench.editorAssociations": {
+      "*.md": "vscode.markdown.preview.editor"
+    },
   }
 }

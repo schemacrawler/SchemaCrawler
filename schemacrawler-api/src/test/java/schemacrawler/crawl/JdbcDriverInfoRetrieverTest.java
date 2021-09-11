@@ -38,17 +38,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 
@@ -59,34 +58,9 @@ public class JdbcDriverInfoRetrieverTest {
   private MutableCatalog catalog;
 
   @Test
-  @DisplayName("Retrieve JDBC driver info")
   public void jdbcDriverInfo(final Connection connection) throws Exception {
     final DatabaseServerType databaseServerType = new DatabaseServerType("hsqldb-1", "HyperSQL");
     verifyJdbcDriverInfoRetrieval(connection, databaseServerType);
-
-    assertThat(catalog.getJdbcDriverInfo().getDriverClassName(), is("org.hsqldb.jdbc.JDBCDriver"));
-  }
-
-  @Test
-  @DisplayName("Retrieve JDBC driver info with overridden driver class")
-  public void jdbcDriverInfoOverridden(final TestContext testContext, final Connection connection)
-      throws Exception {
-    final DatabaseServerType databaseServerType =
-        new DatabaseServerType(
-            "hsqldb-2", "HyperSQL with extended driver", "org.hsqldb.jdbcDriver");
-    verifyJdbcDriverInfoRetrieval(connection, databaseServerType);
-
-    assertThat(catalog.getJdbcDriverInfo().getDriverClassName(), is("org.hsqldb.jdbcDriver"));
-  }
-
-  @Test
-  @DisplayName("Retrieve JDBC driver info with an unknown driver class name")
-  public void jdbcDriverInfoOverriddenBad(final Connection connection) throws Exception {
-    final DatabaseServerType databaseServerType =
-        new DatabaseServerType("hsqldb-3", "HyperSQL", "com.example.BadDriverClass");
-    verifyJdbcDriverInfoRetrieval(connection, databaseServerType);
-
-    assertThat(catalog.getJdbcDriverInfo().getDriverClassName(), is("org.hsqldb.jdbc.JDBCDriver"));
   }
 
   @BeforeEach
@@ -114,7 +88,7 @@ public class JdbcDriverInfoRetrieverTest {
         new DatabaseInfoRetriever(retrieverConnection, catalog, options);
     databaseInfoRetriever.retrieveJdbcDriverInfo();
 
-    final MutableJdbcDriverInfo jdbcDriverInfo = catalog.getJdbcDriverInfo();
+    final JdbcDriverInfo jdbcDriverInfo = catalog.getJdbcDriverInfo();
     assertThat(jdbcDriverInfo.getProductName(), is("HSQL Database Engine Driver"));
     assertThat(jdbcDriverInfo.getProductVersion(), is("2.6.0"));
 
