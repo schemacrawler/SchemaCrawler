@@ -36,17 +36,36 @@
 
 ### Setup
 
+#### Oracle 18
+
 - To start SchemaCrawler with Oracle, run
   `docker-compose -f schemacrawler.yml -f oracle.yml up -d`
 - Create a test Oracle database schema, run
-  `docker exec -it schemacrawler ./testdb/createtestschema.sh --url "jdbc:oracle:thin:@//oracle:1521/xe" --user system --password oracle --scripts-resource /oracle-11g.scripts.txt --debug`
+  `docker exec -it schemacrawler ./testdb/createtestschema.sh --url "jdbc:oracle:thin:@//oracle:1521/xepdb1" --user "SYS AS SYSDBA" --password test --scripts-resource /oracle.scripts.txt --debug`
+
+#### Oracle 11
+
+- To start SchemaCrawler with Oracle, run
+  `docker-compose -f schemacrawler.yml -f oracle-11g.yml up -d`
+- Create a test Oracle database schema, run
+  `docker exec -it schemacrawler ./testdb/createtestschema.sh --url "jdbc:oracle:thin:@oracle:1521:xe" --user "SYS AS SYSDBA" --password test --scripts-resource /oracle-11g.scripts.txt --debug`
 
 ### Testing
+
+#### Oracle 18
 
 - Start SchemaCrawler bash with
   `docker exec -it schemacrawler /bin/bash`
 - Run SchemaCrawler from Docker container bash
-  `schemacrawler --server oracle --host oracle --database xe --user system --password oracle --info-level minimum -c list`
+  `schemacrawler --server oracle --host oracle --database xepdb1 --user "SYS AS SYSDBA" --password test --info-level minimum -c list`
+- Output can be created with `--output-file output/out.txt`
+
+#### Oracle 11
+
+- Start SchemaCrawler bash with
+  `docker exec -it schemacrawler /bin/bash`
+- Run SchemaCrawler from Docker container bash
+  `schemacrawler --url "jdbc:oracle:thin:@oracle:1521:xe" --user "SYS AS SYSDBA" --password test --info-level minimum -c list`
 - Output can be created with `--output-file output/out.txt`
 
 ### Tear Down
