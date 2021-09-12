@@ -202,25 +202,28 @@ public final class SchemaCrawlerUtility {
       final DatabaseMetaData dbMetaData = connection.getMetaData();
       final String connectionUrl = dbMetaData.getURL();
 
-      String driverClassName = "";
-      try {
-        final Driver driver = DriverManager.getDriver(connectionUrl);
-        if (driver != null) {
-          driverClassName = driver.getClass().getName();
-        }
-      } catch (final SQLException e) {
-        LOGGER.log(Level.WARNING, "Could not log JDBC driver class name", e);
-      }
       LOGGER.log(
           Level.INFO,
           new StringFormat(
-              "Connected to %s %s %nusing JDBC driver %s %s (driver class \"%s\")%nwith \"%s\"",
+              "Connected to %n%s %s %nusing JDBC driver %n%s %s%nwith %n\"%s\"",
               dbMetaData.getDatabaseProductName(),
               dbMetaData.getDatabaseProductVersion(),
               dbMetaData.getDriverName(),
               dbMetaData.getDriverVersion(),
-              driverClassName,
               connectionUrl));
+
+      // Log JDBC driver class name. There is no reliable way to get the driver class, so this is a
+      // best guess. The JDBC connection (including the Driver may have been loaded using another
+      // classloader, and so may not be available with the driver manager.
+      try {
+        final Driver driver = DriverManager.getDriver(connectionUrl);
+        if (driver != null) {
+          final String driverClassName = driver.getClass().getName();
+          LOGGER.log(Level.INFO, "JDBC driver class name, " + driverClassName);
+        }
+      } catch (final SQLException e) {
+        LOGGER.log(Level.CONFIG, "Database connection may have be provided on another classloader");
+      }
     } catch (final SQLException e) {
       LOGGER.log(Level.WARNING, "Could not log connection information", e);
     }

@@ -208,6 +208,11 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
       final DatabaseMetaData dbMetaData = getMetaData();
       final String url = dbMetaData.getURL();
 
+      driverInfo.setDriverMajorVersion(dbMetaData.getDriverMajorVersion());
+      driverInfo.setDriverMinorVersion(dbMetaData.getDriverMinorVersion());
+      driverInfo.setJdbcMajorVersion(dbMetaData.getJDBCMajorVersion());
+      driverInfo.setJdbcMinorVersion(dbMetaData.getJDBCMinorVersion());
+
       final Driver jdbcDriver = DriverManager.getDriver(getMetaData().getURL());
       if (jdbcDriver == null) {
         throw new SQLException("No JDBC driver found");
@@ -215,10 +220,6 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
 
       driverInfo.setJdbcDriverClassName(jdbcDriver.getClass().getName());
       driverInfo.setJdbcCompliant(jdbcDriver.jdbcCompliant());
-      driverInfo.setDriverMajorVersion(dbMetaData.getDriverMajorVersion());
-      driverInfo.setDriverMinorVersion(dbMetaData.getDriverMinorVersion());
-      driverInfo.setJdbcMajorVersion(dbMetaData.getJDBCMajorVersion());
-      driverInfo.setJdbcMinorVersion(dbMetaData.getJDBCMinorVersion());
 
       final DriverPropertyInfo[] propertyInfo = jdbcDriver.getPropertyInfo(url, new Properties());
       for (final DriverPropertyInfo driverPropertyInfo : propertyInfo) {
