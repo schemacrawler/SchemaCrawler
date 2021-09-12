@@ -74,7 +74,7 @@ public class Oracle11Test extends BaseAdditionalDatabaseTest {
 
   @Container
   private final JdbcDatabaseContainer<?> dbContainer =
-      new OracleContainer(DockerImageName.parse("gvenzl/oracle-xe").withTag("11-slim")).usingSid();
+      new OracleContainer(DockerImageName.parse("gvenzl/oracle-xe").withTag("11")).usingSid();
 
   @BeforeEach
   public void createDatabase() throws SQLException, SchemaCrawlerException {
@@ -124,7 +124,7 @@ public class Oracle11Test extends BaseAdditionalDatabaseTest {
     assertThat(String.valueOf(serverInfo.get(0).getValue()), matchesPattern("[0-9a-zA-Z]{1,12}"));
 
     final List<DatabaseUser> databaseUsers = (List<DatabaseUser>) catalog.getDatabaseUsers();
-    assertThat(databaseUsers, hasSize(13));
+    assertThat(databaseUsers, hasSize(11));
     assertThat(
         databaseUsers.stream().map(DatabaseUser::getName).collect(Collectors.toList()),
         hasItems("SYS", "SYSTEM", "BOOKS"));
