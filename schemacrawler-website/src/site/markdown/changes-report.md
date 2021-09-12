@@ -7,6 +7,7 @@
 - Fix issue #504 - do not load JDBC driver information based on SchemaInfoRetrieval.retrieveAdditionalJdbcDriverInfo
 - Add supported JDBC version in JDBC driver information
 - Reorganize output for JDBC driver information
+- Add tests for Oracle 18
 
 
 <a name="a16.15.4"></a>

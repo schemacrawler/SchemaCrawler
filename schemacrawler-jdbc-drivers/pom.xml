@@ -6,7 +6,7 @@
   <parent>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
-    <version>16.15.4</version>
+    <version>16.15.5</version>
     <relativePath>../schemacrawler-parent/pom.xml</relativePath>
   </parent>
   <artifactId>schemacrawler-jdbc-drivers</artifactId>
@@ -41,7 +41,7 @@
     <dependency>
       <groupId>com.oracle.database.jdbc.debug</groupId>
       <artifactId>ojdbc8_g</artifactId>
-      <version>21.1.0.0</version>
+      <version>21.3.0.0</version>
     </dependency>
     <dependency>
       <groupId>com.ibm.db2</groupId>
@@ -66,17 +66,17 @@
     <dependency>
       <groupId>org.xerial</groupId>
       <artifactId>sqlite-jdbc</artifactId>
-      <version>3.36.0.2</version>
+      <version>3.36.0.3</version>
     </dependency>
     <dependency>
       <groupId>net.snowflake</groupId>
       <artifactId>snowflake-jdbc</artifactId>
-      <version>3.13.6</version>
+      <version>3.13.7</version>
     </dependency>
     <dependency>
       <groupId>com.amazon.redshift</groupId>
       <artifactId>redshift-jdbc42</artifactId>
-      <version>2.0.0.7</version>
+      <version>2.1.0.1</version>
     </dependency>
     <dependency>
       <groupId>net.sf.ucanaccess</groupId>
