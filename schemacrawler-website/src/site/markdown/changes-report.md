@@ -1,8 +1,13 @@
 # SchemaCrawler Change History
 
+<a name="a16.15.6"></a>
+## Release 16.15.6 - 2021-09-12
+
+- Fix issue #504 - fix logging level
+
 
 <a name="a16.15.5"></a>
-## Release 16.15.5 - 2021-09-10
+## Release 16.15.5 - 2021-09-11
 
 - Fix issue #504 - do not load JDBC driver information based on SchemaInfoRetrieval.retrieveAdditionalJdbcDriverInfo
 - Add supported JDBC version in JDBC driver information
@@ -77,7 +82,7 @@
 <a name="a16.14.1"></a>
 ## Release 16.14.1 - 2021-03-10
 
-- Move Docker Compose for SchemaCrawler to it's own project, with Maven moving `_testdb` 
+- Move Docker Compose for SchemaCrawler to it's own project, with Maven moving `_testdb`
   files for use in the Docker compose scripts
 - Make small code optimizations for performance
 - Allow weak associations to be loaded from catalog attributes file
@@ -96,7 +101,7 @@
 <a name="a16.12.2"></a>
 ## Release 16.12.2 - 2021-02-19
 
-- Add examples for generating [mermaid](https://mermaid-js.github.io/mermaid/#/entityRelationshipDiagram) 
+- Add examples for generating [mermaid](https://mermaid-js.github.io/mermaid/#/entityRelationshipDiagram)
 and [dbdiagram.io](https://dbdiagram.io/home) diagrams
 
 
@@ -136,7 +141,7 @@ and [dbdiagram.io](https://dbdiagram.io/home) diagrams
 
 - Additional ways to provide the database username, for example by an environmental variable
 - Publish [SchemaCrawler Action for GitHub Actions](https://github.com/schemacrawler/SchemaCrawler-Action)
-- Exit with exit code 1 on a command-line error  
+- Exit with exit code 1 on a command-line error
 - Fix issue with running plugins in interactive mode
 
 
@@ -158,7 +163,7 @@ and [dbdiagram.io](https://dbdiagram.io/home) diagrams
 - Make schema text commands a plugin into SchemaCrawler
 - `show` and `sort` commands are folded into schema text command options
 - Load configuration using [lightbend/config](https://github.com/lightbend/config)
-  
+
 
 <a name="a16.10.1"></a>
 ## Release 16.10.1 - 2020-09-20
@@ -186,7 +191,7 @@ and [dbdiagram.io](https://dbdiagram.io/home) diagrams
 
 - Change option to get help on SchemaCrawler commands, by using `--help command:lint` or
   `--help server:db2` for example
-- Add ability to disable a database plugin by setting environment variable or 
+- Add ability to disable a database plugin by setting environment variable or
   system property `SC_WITHOUT_DATABASE_PLUGIN` to the name of the server -
   `SC_WITHOUT_DATABASE_PLUGIN=oracle` for example
 - Do not read binary (BLOB and LONGVARBINARY) data
@@ -237,7 +242,7 @@ and [dbdiagram.io](https://dbdiagram.io/home) diagrams
 ## Release 16.6.1 - 2020-04-10
 
 - Make analysis of weak associations part of the maximum info-level retrieval
-- Add new command-line option, --load-row-counts, to load table row counts 
+- Add new command-line option, --load-row-counts, to load table row counts
 
 
 <a name="a16.5.3"></a>
@@ -1084,7 +1089,7 @@ and [dbdiagram.io](https://dbdiagram.io/home) diagrams
 <a name="a10.7"></a>
 
 * Providing richer information about table constraints. Renaming check constraints to table constraints.
-* Worked abound ArrayIndexOutOfBoundsException in MySQL connector with connector 5.1.26 and server version 5.0.95. 
+* Worked abound ArrayIndexOutOfBoundsException in MySQL connector with connector 5.1.26 and server version 5.0.95.
 
 ## Release 10.6 - 2013-10-30
 <a name="a10.6"></a>
