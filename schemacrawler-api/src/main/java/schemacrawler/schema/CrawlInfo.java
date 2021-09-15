@@ -35,7 +35,7 @@ import schemacrawler.ProductVersion;
 public interface CrawlInfo extends Serializable {
 
   /**
-   * Gets the timestamp of when the database was crawled, in UTC to the minute.
+   * Gets the timestamp of when the database was crawled, in UTC to the second.
    *
    * @return Timestamp
    */
