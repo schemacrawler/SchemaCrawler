@@ -24,7 +24,7 @@
 #
 # ========================================================================
 
-FROM openjdk:8-jdk-alpine
+FROM openjdk:17-jdk-alpine
 
 LABEL "maintainer"="Sualeh Fatehi <sualeh@hotmail.com>" \
       "org.opencontainers.image.authors"="Sualeh Fatehi <sualeh@hotmail.com>" \
