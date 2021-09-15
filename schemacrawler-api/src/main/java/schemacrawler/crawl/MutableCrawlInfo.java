@@ -29,14 +29,18 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static java.time.ZoneOffset.UTC;
-import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
-import static java.time.format.DateTimeFormatter.ISO_LOCAL_TIME;
+import static java.time.temporal.ChronoField.DAY_OF_MONTH;
+import static java.time.temporal.ChronoField.HOUR_OF_DAY;
+import static java.time.temporal.ChronoField.MINUTE_OF_HOUR;
+import static java.time.temporal.ChronoField.MONTH_OF_YEAR;
+import static java.time.temporal.ChronoField.YEAR;
 import static java.util.Objects.requireNonNull;
 
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.SignStyle;
 import java.util.UUID;
 
 import schemacrawler.BaseProductVersion;
@@ -62,9 +66,15 @@ final class MutableCrawlInfo implements CrawlInfo {
   static {
     DATE_TIME_FORMATTER =
         new DateTimeFormatterBuilder()
-            .append(ISO_LOCAL_DATE)
+            .appendValue(YEAR, 4, 10, SignStyle.EXCEEDS_PAD)
+            .appendLiteral('-')
+            .appendValue(MONTH_OF_YEAR, 2)
+            .appendLiteral('-')
+            .appendValue(DAY_OF_MONTH, 2)
             .appendLiteral(' ')
-            .append(ISO_LOCAL_TIME)
+            .appendValue(HOUR_OF_DAY, 2)
+            .appendLiteral(':')
+            .appendValue(MINUTE_OF_HOUR, 2)
             .toFormatter();
   }
 

@@ -42,9 +42,8 @@ final class NeuteredLinesFilter implements Predicate<String> {
     Pattern.compile("\\s+<schemaCrawler(Version|About|Info)>.*"),
     Pattern.compile(".*[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}.*"), // UUID
     Pattern.compile("\\s+<product(Name|Version)>.*"),
-    Pattern.compile(".*[A-Za-z]+ \\d+, 201[456] \\d+:\\d+ [AP]M.*"),
-    Pattern.compile(".*20[12][019]-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.*"),
-    Pattern.compile(".*20[12][019]-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d.*"),
+    Pattern.compile(".*[A-Za-z]+ \\d+, 201[456] \\d+:\\d+ [AP]M.*"), // date and time
+    Pattern.compile(".*20[12][019]-\\d\\d-\\d\\d[ T]\\d\\d:\\d\\d.*"), // date and time
     // JSON and YAML output
     Pattern.compile("- column @uuid: .*"),
     Pattern.compile("\\s+\"?run-id\"?\\s?: .*"),
@@ -65,7 +64,7 @@ final class NeuteredLinesFilter implements Predicate<String> {
     // DB2
     // -- unnamed objects
     Pattern.compile("SQL\\d{15}.*"),
-    // indexes
+    // -- indexes
     Pattern.compile("[\"0-9A-Z]{28,30}.*"),
     // constraints
     // -- server-specific values
