@@ -170,7 +170,7 @@
                 description="Download Apache ivy, and make it available to Apache ant">
                 <mkdir dir="${user.home}/.ant/lib" />
                 <get
-                  src="https://repo1.maven.org/maven2/org/apache/ivy/ivy/2.5.0/ivy-2.5.0.jar"
+                  src="https://repo.maven.apache.org/maven2/org/apache/ivy/ivy/2.5.0/ivy-2.5.0.jar"
                   dest="${user.home}/.ant/lib/ivy-2.5.0.jar"
                   usetimestamp="true" />
               </target>
