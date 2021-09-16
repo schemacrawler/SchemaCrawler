@@ -6,7 +6,7 @@
   <groupId>us.fatehi</groupId>
   <artifactId>schemacrawler-parent</artifactId>
   <packaging>pom</packaging>
-  <version>16.15.6</version>
+  <version>16.15.7</version>
   <name>SchemaCrawler [Parent]</name>
   <description>Free database schema discovery and comprehension tool</description>
   <url>https://www.schemacrawler.com</url>
@@ -188,13 +188,13 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
-      <version>5.3.9</version>
+      <version>5.3.10</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
-      <version>5.3.9</version>
+      <version>5.3.10</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

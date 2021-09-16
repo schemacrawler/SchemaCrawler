@@ -6,7 +6,7 @@
   <parent>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
-    <version>16.15.6</version>
+    <version>16.15.7</version>
     <relativePath>../schemacrawler-parent/pom.xml</relativePath>
   </parent>
   <artifactId>schemacrawler-jdbc-drivers</artifactId>
@@ -71,7 +71,7 @@
     <dependency>
       <groupId>net.snowflake</groupId>
       <artifactId>snowflake-jdbc</artifactId>
-      <version>3.13.7</version>
+      <version>3.13.8</version>
     </dependency>
     <dependency>
       <groupId>com.amazon.redshift</groupId>

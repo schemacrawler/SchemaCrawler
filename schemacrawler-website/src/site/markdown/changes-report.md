@@ -1,6 +1,12 @@
 # SchemaCrawler Change History
 
 <a name="a16.15.6"></a>
+## Release 16.15.6 - 2021-09-15
+
+- Fix issue #509 - distribute Docker image with JDK 17
+
+
+<a name="a16.15.6"></a>
 ## Release 16.15.6 - 2021-09-12
 
 - Fix issue #504 - fix logging level

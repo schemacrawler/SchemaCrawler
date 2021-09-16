@@ -46,6 +46,7 @@ import static java.util.Objects.requireNonNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.condition.JRE.JAVA_8;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 import static us.fatehi.utility.IOUtility.isFileReadable;
 import static us.fatehi.utility.Utility.isBlank;
@@ -89,6 +90,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.condition.JRE;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -215,18 +217,11 @@ public final class TestUtility {
   }
 
   public static String javaVersion() {
-    final String javaSpecificationVersion = System.getProperty("java.specification.version");
-    final double javaSpecificationVersionDouble = Double.parseDouble(javaSpecificationVersion);
-    int javaSpecificationVersionInt;
-    if (javaSpecificationVersionDouble < 2) {
-      javaSpecificationVersionInt = (int) ((javaSpecificationVersionDouble - 1) * 10);
+    if (JRE.currentVersion() == JAVA_8) {
+      return "8";
     } else {
-      javaSpecificationVersionInt = (int) javaSpecificationVersionDouble;
+      return "11";
     }
-    if (javaSpecificationVersionInt > 11) {
-      javaSpecificationVersionInt = 11;
-    }
-    return String.valueOf(javaSpecificationVersionInt);
   }
 
   /**
