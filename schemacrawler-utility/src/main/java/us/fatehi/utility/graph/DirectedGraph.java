@@ -27,8 +27,8 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.graph;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -41,8 +41,8 @@ public class DirectedGraph<T extends Comparable<? super T>> {
 
   public DirectedGraph(final String name) {
     this.name = name;
-    verticesMap = new HashMap<>();
-    edges = new HashSet<>();
+    verticesMap = new LinkedHashMap<>();
+    edges = new LinkedHashSet<>();
   }
 
   /**
@@ -76,7 +76,7 @@ public class DirectedGraph<T extends Comparable<? super T>> {
   }
 
   public Set<DirectedEdge<T>> edgeSet() {
-    return new HashSet<>(edges);
+    return new LinkedHashSet<>(edges);
   }
 
   /** @return the name */
@@ -87,7 +87,7 @@ public class DirectedGraph<T extends Comparable<? super T>> {
   public Set<DirectedEdge<T>> getOutgoingEdges(final Vertex<T> vertexFrom) {
     Objects.requireNonNull(vertexFrom, "No vertex provided");
 
-    final Set<DirectedEdge<T>> outgoingEdges = new HashSet<>();
+    final Set<DirectedEdge<T>> outgoingEdges = new LinkedHashSet<>();
     for (final DirectedEdge<T> edge : edges) {
       if (edge.getFrom().equals(vertexFrom)) {
         outgoingEdges.add(edge);
@@ -119,6 +119,6 @@ public class DirectedGraph<T extends Comparable<? super T>> {
   }
 
   public Set<Vertex<T>> vertexSet() {
-    return new HashSet<>(verticesMap.values());
+    return new LinkedHashSet<>(verticesMap.values());
   }
 }
