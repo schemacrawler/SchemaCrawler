@@ -9,39 +9,16 @@ jobs:
     steps:
 
 # SETUP BUILD ENVIRONMENT
-    - id: cache-m2
-      name: Cache Maven packages
-      uses: actions/cache@v2
-      with:
-        path: ~/.m2
-        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-        restore-keys: ${{ runner.os }}-m2
-    - id: checkout-code
-      name: Checkout code
-      uses: actions/checkout@v2
-    - id: setup-jdk
-      name: Set up JDK
-      uses: actions/setup-java@v2
-      with:
-        distribution: zulu
-        java-version: 8
+    - id: prepare-maven-build
+      name: Prepare Maven build
+      uses: sualeh/prepare-maven-build@v0.0.3
     - id: install-packages
       name: Install packages
       run: |
         # Install Graphviz
         sudo apt-get -qq update
         sudo apt-get -q install graphviz
-    - id: show-environment
-      name: Show environment
-      run: |
-        # Show environment
-        echo github.repository: ${{ github.repository }}
-        echo github.ref: ${{ github.head_ref || github.ref }}
-        echo github.sha: ${{ github.sha }}
         dot -V
-        docker -v
-        mvn -v
-        cat ~/.m2/settings.xml
 
 # BUILD AND TEST
     - id: build-test
