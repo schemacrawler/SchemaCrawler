@@ -73,6 +73,11 @@ public class SchemaRetrieverTest {
     final DatabaseMetaData databaseMetaData = mock(DatabaseMetaData.class);
     final Connection spyConnection = spy(connection);
     when(spyConnection.getMetaData()).thenReturn(databaseMetaData);
+    when(databaseMetaData.getDatabaseProductName()).thenReturn("databaseProductName");
+    when(databaseMetaData.getDatabaseProductVersion()).thenReturn("databaseProductVersion");
+    when(databaseMetaData.getURL()).thenReturn("connectionUrl");
+    when(databaseMetaData.getDriverName()).thenReturn("driverName");
+    when(databaseMetaData.getDriverVersion()).thenReturn("driverVersion");
 
     final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
     final MutableCatalog catalog = new MutableCatalog("test_catalog", connectionInfo);

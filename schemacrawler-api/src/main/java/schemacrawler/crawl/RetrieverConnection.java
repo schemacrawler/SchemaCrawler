@@ -38,6 +38,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.plugin.EnumDataTypeHelper;
+import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.TableTypes;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.MetadataRetrievalStrategy;
@@ -61,6 +62,7 @@ final class RetrieverConnection {
   private final DatabaseMetaData metaData;
   private final SchemaRetrievalOptions schemaRetrievalOptions;
   private final TableTypes tableTypes;
+  private final ConnectionInfo connectionInfo;
 
   RetrieverConnection(
       final Connection connection, final SchemaRetrievalOptions schemaRetrievalOptions)
@@ -70,6 +72,7 @@ final class RetrieverConnection {
     metaData = requireNonNull(connection.getMetaData(), "No database metadata obtained");
     this.schemaRetrievalOptions =
         requireNonNull(schemaRetrievalOptions, "No database specific overrides provided");
+    connectionInfo = ConnectionInfoBuilder.builder(connection).build();
 
     tableTypes = TableTypes.from(connection);
     LOGGER.log(Level.CONFIG, new StringFormat("Supported table types are <%s>", tableTypes));
@@ -80,6 +83,10 @@ final class RetrieverConnection {
   public MetadataRetrievalStrategy get(
       final SchemaInfoMetadataRetrievalStrategy schemaInfoMetadataRetrievalStrategy) {
     return schemaRetrievalOptions.get(schemaInfoMetadataRetrievalStrategy);
+  }
+
+  public ConnectionInfo getConnectionInfo() {
+    return connectionInfo;
   }
 
   Connection getConnection() {

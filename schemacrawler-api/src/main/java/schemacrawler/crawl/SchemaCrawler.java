@@ -78,7 +78,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
@@ -140,9 +139,7 @@ public final class SchemaCrawler {
    */
   public Catalog crawl() throws SchemaCrawlerException {
     try {
-      final ConnectionInfo connectionInfo =
-          ConnectionInfoBuilder.builder(retrieverConnection.getConnection()).build();
-      catalog = new MutableCatalog("catalog", connectionInfo);
+      catalog = new MutableCatalog("catalog", retrieverConnection.getConnectionInfo());
 
       crawlDatabaseInfo();
       LOGGER.log(Level.INFO, String.format("%n%s", catalog.getCrawlInfo()));
