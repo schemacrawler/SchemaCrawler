@@ -28,47 +28,79 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schema;
 
-import java.util.Collection;
+import java.io.Serializable;
+import java.sql.SQLException;
 
-import schemacrawler.ProductVersion;
+/** Connection information. */
+public interface ConnectionInfo extends Serializable {
 
-/** Database and connection information. */
-public interface DatabaseInfo extends ProductVersion {
+  /**
+   * Gets the database connection URL.
+   *
+   * @return Database connection URL
+   */
+  String getConnectionUrl();
 
   /**
    * Gets the name of the database product.
    *
    * @return Name of the database product
    */
-  default String getDatabaseProductName() {
-    return getProductName();
-  }
+  String getDatabaseProductName();
 
   /**
    * Gets the version of the database product.
    *
    * @return Version of the database product
    */
-  default String getDatabaseProductVersion() {
-    return getProductVersion();
-  }
+  String getDatabaseProductVersion();
 
   /**
-   * Gets all database properties.
+   * Retrieves JDBC driver's major version number.
    *
-   * @return Database properties
+   * @return JDBC driver's major version
    */
-  Collection<DatabaseProperty> getProperties();
+  int getDriverMajorVersion();
 
   /**
-   * Gets the schema from the database connection.
+   * Retrieves this JDBC driver's minor version number.
    *
-   * @return Schema
+   * @return JDBC driver's minor version number
    */
-  Collection<Property> getServerInfo();
+  int getDriverMinorVersion();
 
   /**
-   * Gets the user name as known to this database.
+   * Gets the name of the JDBC driver.
+   *
+   * @return Name of the JDBC driver
+   */
+  String getDriverName();
+
+  /**
+   * Gets the version of the JDBC driver.
+   *
+   * @return Version of the JDBC driver
+   */
+  String getDriverVersion();
+
+  /**
+   * Gets the major JDBC version number supported by JDBC driver.
+   *
+   * @return JDBC version major number
+   * @exception SQLException if a database access error occurs
+   */
+  int getJdbcMajorVersion();
+
+  /**
+   * Gets the minor JDBC version number supported by JDBC driver.
+   *
+   * @return JDBC version major number
+   * @exception SQLException if a database access error occurs
+   */
+  int getJdbcMinorVersion();
+
+  /**
+   * Gets the database user name.
    *
    * @return Database user name
    */

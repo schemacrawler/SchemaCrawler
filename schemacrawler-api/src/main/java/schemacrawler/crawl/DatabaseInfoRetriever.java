@@ -53,6 +53,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.inclusionrule.IncludeAll;
+import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
@@ -128,12 +129,15 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
     return new ImmutableDatabaseProperty(name, propertyValue);
   }
 
+  private final ConnectionInfo connectionInfo;
+
   DatabaseInfoRetriever(
       final RetrieverConnection retrieverConnection,
       final MutableCatalog catalog,
       final SchemaCrawlerOptions options)
       throws SQLException {
     super(retrieverConnection, catalog, options);
+    connectionInfo = ConnectionInfoBuilder.builder(retrieverConnection.getConnection()).build();
   }
 
   /**
@@ -208,11 +212,6 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
       final DatabaseMetaData dbMetaData = getMetaData();
       final String url = dbMetaData.getURL();
 
-      driverInfo.setDriverMajorVersion(dbMetaData.getDriverMajorVersion());
-      driverInfo.setDriverMinorVersion(dbMetaData.getDriverMinorVersion());
-      driverInfo.setJdbcMajorVersion(dbMetaData.getJDBCMajorVersion());
-      driverInfo.setJdbcMinorVersion(dbMetaData.getJDBCMinorVersion());
-
       final Driver jdbcDriver = DriverManager.getDriver(getMetaData().getURL());
       if (jdbcDriver == null) {
         throw new SQLException("No JDBC driver found");
@@ -246,16 +245,9 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
       return;
     }
 
-    final DatabaseMetaData dbMetaData;
-    try {
-      dbMetaData = getMetaData();
-
-      dbInfo.setUserName(dbMetaData.getUserName());
-      dbInfo.setProductName(dbMetaData.getDatabaseProductName());
-      dbInfo.setProductVersion(dbMetaData.getDatabaseProductVersion());
-    } catch (final SQLException e) {
-      LOGGER.log(Level.WARNING, "Could not obtain database information", e);
-    }
+    dbInfo.setUserName(connectionInfo.getUserName());
+    dbInfo.setProductName(connectionInfo.getDatabaseProductName());
+    dbInfo.setProductVersion(connectionInfo.getDatabaseProductVersion());
   }
 
   void retrieveDatabaseUsers() {
@@ -301,16 +293,14 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
       return;
     }
 
-    try {
-      final DatabaseMetaData dbMetaData = getMetaData();
+    driverInfo.setDriverName(connectionInfo.getDriverName());
+    driverInfo.setDriverVersion(connectionInfo.getDriverVersion());
+    driverInfo.setConnectionUrl(connectionInfo.getConnectionUrl());
 
-      driverInfo.setDriverName(dbMetaData.getDriverName());
-      driverInfo.setDriverVersion(dbMetaData.getDriverVersion());
-      driverInfo.setConnectionUrl(dbMetaData.getURL());
-
-    } catch (final SQLException e) {
-      LOGGER.log(Level.WARNING, "Could not obtain JDBC driver information", e);
-    }
+    driverInfo.setDriverMajorVersion(connectionInfo.getDriverMajorVersion());
+    driverInfo.setDriverMinorVersion(connectionInfo.getDriverMinorVersion());
+    driverInfo.setJdbcMajorVersion(connectionInfo.getJdbcMajorVersion());
+    driverInfo.setJdbcMinorVersion(connectionInfo.getJdbcMinorVersion());
   }
 
   void retrieveServerInfo() {
