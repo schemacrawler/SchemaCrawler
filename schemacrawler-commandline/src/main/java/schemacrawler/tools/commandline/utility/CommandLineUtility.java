@@ -132,8 +132,7 @@ public class CommandLineUtility {
   }
 
   public static void printCommandLineErrorMessage(final String errorMessage) {
-    final Version version = Version.version();
-    System.err.printf("%s %s%n%n", version.getProductName(), version.getProductVersion());
+    System.err.printf("%s%n%n", Version.version());
     if (!isBlank(errorMessage)) {
       System.err.printf("Error: %s%n%n", errorMessage);
     } else {

@@ -37,16 +37,14 @@ import java.io.StringReader;
 /**
  * Version information for this product. Has methods to obtain information about the product, as
  * well as a main method, so it can be called from the command-line.
- *
- * @author Sualeh Fatehi
  */
-public final class Version implements ProductVersion {
+public final class Version extends BaseProductVersion {
 
   private static final long serialVersionUID = 1143606778430634288L;
 
   private static final String ABOUT;
-  private static final String PRODUCTNAME = "SchemaCrawler";
-  private static final String VERSION;
+  private static final String PRODUCT_NAME = "SchemaCrawler";
+  private static final String PRODUCT_VERSION;
 
   static {
     ABOUT = readResourceFully("/help/SchemaCrawler.txt");
@@ -57,12 +55,12 @@ public final class Version implements ProductVersion {
       if (readLine != null) {
         productLine = readLine.split(" ");
       } else {
-        productLine = new String[] {PRODUCTNAME, ""};
+        productLine = new String[] {PRODUCT_NAME, ""};
       }
     } catch (final IOException e) {
-      productLine = new String[] {PRODUCTNAME, ""};
+      productLine = new String[] {PRODUCT_NAME, ""};
     }
-    VERSION = productLine[1];
+    PRODUCT_VERSION = productLine[1];
   }
 
   /**
@@ -88,7 +86,7 @@ public final class Version implements ProductVersion {
   }
 
   private Version() {
-    // Prevent external instantiation
+    super(PRODUCT_NAME, PRODUCT_VERSION);
   }
 
   /**
@@ -98,25 +96,5 @@ public final class Version implements ProductVersion {
    */
   public String getProductDescription() {
     return ABOUT;
-  }
-
-  /**
-   * Product name.
-   *
-   * @return Product name.
-   */
-  @Override
-  public String getProductName() {
-    return PRODUCTNAME;
-  }
-
-  /**
-   * Product version number.
-   *
-   * @return Product version number.
-   */
-  @Override
-  public String getProductVersion() {
-    return VERSION;
   }
 }

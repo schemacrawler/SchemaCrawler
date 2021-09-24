@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.shell;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
 import picocli.CommandLine.Command;
@@ -125,7 +124,6 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
     try {
       final Connection connection = state.getDataSource().get();
       final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
-      final DatabaseMetaData dbMetaData = connection.getMetaData();
       System.out.println(connectionInfo);
     } catch (final SQLException e) {
       System.err.println("Could not log connection information");
@@ -143,8 +141,8 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
   }
 
   private void showEnvironment() {
-    final Version version = Version.version();
-    System.out.printf("%s %s%n%n", version.getProductName(), version.getProductVersion());
+
+    System.out.printf("%s%n%n", Version.version());
 
     System.out.println("System Information:");
     final OperatingSystemInfo osInfo = new OperatingSystemInfo();

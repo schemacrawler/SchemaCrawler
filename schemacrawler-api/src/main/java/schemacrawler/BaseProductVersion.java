@@ -32,11 +32,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Objects;
 
-/**
- * Operating system information.
- *
- * @author Sualeh Fatehi sualeh@hotmail.com
- */
 public class BaseProductVersion implements ProductVersion {
 
   private static final long serialVersionUID = 4051323422934251828L;

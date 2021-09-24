@@ -49,7 +49,7 @@ import schemacrawler.BaseProductVersion;
 import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
 import schemacrawler.ProductVersion;
-import schemacrawler.SchemaCrawlerInfo;
+import schemacrawler.Version;
 import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.CrawlInfo;
 
@@ -92,7 +92,7 @@ final class MutableCrawlInfo implements CrawlInfo {
   MutableCrawlInfo(final ConnectionInfo connectionInfo) {
     requireNonNull(connectionInfo, "No connection information provided");
 
-    schemaCrawlerVersion = new SchemaCrawlerInfo();
+    schemaCrawlerVersion = Version.version();
     operatingSystemVersion = new OperatingSystemInfo();
     jvmVersion = new JvmSystemInfo();
 
