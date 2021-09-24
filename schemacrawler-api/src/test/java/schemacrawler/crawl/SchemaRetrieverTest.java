@@ -48,11 +48,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import schemacrawler.inclusionrule.IncludeAll;
+import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestContextParameterResolver;
@@ -72,7 +74,8 @@ public class SchemaRetrieverTest {
     final Connection spyConnection = spy(connection);
     when(spyConnection.getMetaData()).thenReturn(databaseMetaData);
 
-    final MutableCatalog catalog = new MutableCatalog("test_catalog");
+    final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
+    final MutableCatalog catalog = new MutableCatalog("test_catalog", connectionInfo);
 
     final InformationSchemaViews informationSchemaViews =
         InformationSchemaViewsBuilder.builder()
@@ -93,11 +96,8 @@ public class SchemaRetrieverTest {
 
     verify(databaseMetaData, times(0)).getSchemas();
     assertThat(
-        schemaRetriever
-            .getAllSchemas()
-            .values()
-            .stream()
-            .map(schema -> schema.getFullName())
+        schemaRetriever.getAllSchemas().values().stream()
+            .map(SchemaReference::getFullName)
             .collect(toList()),
         is(
             asList(

@@ -41,6 +41,7 @@ import java.util.function.Consumer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DataTypeType;
 import schemacrawler.schema.DatabaseInfo;
@@ -133,7 +134,7 @@ public class TextFormatterCoverageTest {
   @Test
   public void serverInfo(final TestContext testContext) throws Exception {
 
-    final MutableDatabaseInfo dbInfo = new MutableDatabaseInfo();
+    final MutableDatabaseInfo dbInfo = new MutableDatabaseInfo(mock(ConnectionInfo.class));
     dbInfo.addServerInfo(
         new ImmutableServerInfoProperty("PROP1", "VALUE1", "Server info property"));
 

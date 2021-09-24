@@ -39,6 +39,7 @@ import java.util.function.Predicate;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DatabaseUser;
@@ -87,11 +88,13 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
   private final NamedObjectList<ImmutableDatabaseUser> databaseUsers = new NamedObjectList<>();
   private final MutableCrawlInfo crawlInfo;
 
-  MutableCatalog(final String name) {
+  MutableCatalog(final String name, final ConnectionInfo connectionInfo) {
     super(name);
-    databaseInfo = new MutableDatabaseInfo();
-    jdbcDriverInfo = new MutableJdbcDriverInfo();
-    crawlInfo = new MutableCrawlInfo();
+    requireNonNull(connectionInfo, "No connection information provided");
+
+    databaseInfo = new MutableDatabaseInfo(connectionInfo);
+    jdbcDriverInfo = new MutableJdbcDriverInfo(connectionInfo);
+    crawlInfo = new MutableCrawlInfo(connectionInfo);
   }
 
   /** {@inheritDoc} */
@@ -386,9 +389,5 @@ final class MutableCatalog extends AbstractNamedObjectWithAttributes implements 
 
   Optional<MutableTable> lookupTable(final NamedObjectKey tableLookupKey) {
     return tables.lookup(tableLookupKey);
-  }
-
-  void setCrawlInfo() {
-    crawlInfo.setDatabaseInfo(jdbcDriverInfo, databaseInfo);
   }
 }

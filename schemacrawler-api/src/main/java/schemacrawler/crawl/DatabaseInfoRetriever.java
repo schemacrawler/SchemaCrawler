@@ -53,7 +53,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.inclusionrule.IncludeAll;
-import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.Query;
@@ -129,15 +128,12 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
     return new ImmutableDatabaseProperty(name, propertyValue);
   }
 
-  private final ConnectionInfo connectionInfo;
-
   DatabaseInfoRetriever(
       final RetrieverConnection retrieverConnection,
       final MutableCatalog catalog,
       final SchemaCrawlerOptions options)
       throws SQLException {
     super(retrieverConnection, catalog, options);
-    connectionInfo = ConnectionInfoBuilder.builder(retrieverConnection.getConnection()).build();
   }
 
   /**
@@ -229,27 +225,6 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
     }
   }
 
-  void retrieveCrawlInfo() {
-    catalog.setCrawlInfo();
-  }
-
-  /**
-   * Provides information on the database.
-   *
-   * @throws SQLException On a SQL exception
-   */
-  void retrieveDatabaseInfo() {
-
-    final MutableDatabaseInfo dbInfo = catalog.getDatabaseInfo();
-    if (dbInfo == null) {
-      return;
-    }
-
-    dbInfo.setUserName(connectionInfo.getUserName());
-    dbInfo.setProductName(connectionInfo.getDatabaseProductName());
-    dbInfo.setProductVersion(connectionInfo.getDatabaseProductVersion());
-  }
-
   void retrieveDatabaseUsers() {
 
     final InformationSchemaViews informationSchemaViews =
@@ -280,27 +255,6 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve database users", e);
     }
-  }
-
-  /**
-   * Provides information on the JDBC driver.
-   *
-   * @throws SQLException On a SQL exception
-   */
-  void retrieveJdbcDriverInfo() {
-    final MutableJdbcDriverInfo driverInfo = catalog.getJdbcDriverInfo();
-    if (driverInfo == null) {
-      return;
-    }
-
-    driverInfo.setDriverName(connectionInfo.getDriverName());
-    driverInfo.setDriverVersion(connectionInfo.getDriverVersion());
-    driverInfo.setConnectionUrl(connectionInfo.getConnectionUrl());
-
-    driverInfo.setDriverMajorVersion(connectionInfo.getDriverMajorVersion());
-    driverInfo.setDriverMinorVersion(connectionInfo.getDriverMinorVersion());
-    driverInfo.setJdbcMajorVersion(connectionInfo.getJdbcMajorVersion());
-    driverInfo.setJdbcMinorVersion(connectionInfo.getJdbcMinorVersion());
   }
 
   void retrieveServerInfo() {

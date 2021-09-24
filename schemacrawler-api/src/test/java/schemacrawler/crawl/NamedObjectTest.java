@@ -35,6 +35,7 @@ import org.junit.jupiter.api.Test;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
+import schemacrawler.schemacrawler.SchemaReference;
 
 public class NamedObjectTest {
 
@@ -50,9 +51,8 @@ public class NamedObjectTest {
     MutableTable table;
     final NamedObjectList<Table> tables = new NamedObjectList<>();
 
-    final MutableCatalog catalog = new MutableCatalog("DATABASE");
     for (final String schemaName : schemaNames) {
-      final Schema schema = catalog.addSchema("CATALOG", schemaName);
+      final Schema schema = new SchemaReference("CATALOG", schemaName);
       for (final String tableName : tableNames) {
         table = new MutableTable(schema, tableName);
         table.setTableType(TABLE);

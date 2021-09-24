@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static java.util.Comparator.naturalOrder;
+import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,6 +38,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.Property;
@@ -50,11 +52,23 @@ import schemacrawler.schema.Property;
 final class MutableDatabaseInfo implements DatabaseInfo {
 
   private static final long serialVersionUID = 4051323422934251828L;
-  private final Set<DatabaseProperty> databaseProperties = new HashSet<>();
-  private final Set<Property> serverInfo = new HashSet<>();
-  private String productName = "";
-  private String productVersion = "";
-  private String userName = "";
+
+  private final String productName;
+  private final String productVersion;
+  private final String userName;
+  private final Set<Property> serverInfo;
+  private final Set<DatabaseProperty> databaseProperties;
+
+  public MutableDatabaseInfo(final ConnectionInfo connectionInfo) {
+    requireNonNull(connectionInfo, "No connection information provided");
+
+    productName = connectionInfo.getDatabaseProductName();
+    productVersion = connectionInfo.getDatabaseProductVersion();
+    userName = connectionInfo.getUserName();
+
+    serverInfo = new HashSet<>();
+    databaseProperties = new HashSet<>();
+  }
 
   /** {@inheritDoc} */
   @Override
@@ -109,17 +123,5 @@ final class MutableDatabaseInfo implements DatabaseInfo {
     if (property != null) {
       serverInfo.add(property);
     }
-  }
-
-  void setProductName(final String productName) {
-    this.productName = productName;
-  }
-
-  void setProductVersion(final String productVersion) {
-    this.productVersion = productVersion;
-  }
-
-  void setUserName(final String userName) {
-    this.userName = userName;
   }
 }

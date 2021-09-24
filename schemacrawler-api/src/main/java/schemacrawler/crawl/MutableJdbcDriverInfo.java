@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static java.util.Comparator.naturalOrder;
+import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
 
@@ -50,28 +52,33 @@ final class MutableJdbcDriverInfo implements JdbcDriverInfo {
 
   private static final long serialVersionUID = 8030156654422512161L;
 
-  private final Set<ImmutableJdbcDriverProperty> jdbcDriverProperties;
-  private String connectionUrl;
+  private final String connectionUrl;
+  private final String driverName;
+  private final String driverVersion;
+  private final int driverMajorVersion;
+  private final int driverMinorVersion;
+  private final int jdbcMajorVersion;
+  private final int jdbcMinorVersion;
+
   private String driverClassName;
-  private String driverName;
-  private String driverVersion;
-  private int driverMajorVersion;
-  private int driverMinorVersion;
-  private int jdbcMajorVersion;
-  private int jdbcMinorVersion;
   private boolean jdbcCompliant;
 
-  public MutableJdbcDriverInfo() {
+  private final Set<ImmutableJdbcDriverProperty> jdbcDriverProperties;
+
+  public MutableJdbcDriverInfo(final ConnectionInfo connectionInfo) {
+    requireNonNull(connectionInfo, "No connection information provided");
+
+    connectionUrl = connectionInfo.getConnectionUrl();
+    driverName = connectionInfo.getDriverName();
+    driverVersion = connectionInfo.getDriverVersion();
+    driverMajorVersion = connectionInfo.getDriverMajorVersion();
+    driverMinorVersion = connectionInfo.getDriverMinorVersion();
+    jdbcMajorVersion = connectionInfo.getJdbcMajorVersion();
+    jdbcMinorVersion = connectionInfo.getJdbcMinorVersion();
 
     jdbcDriverProperties = new HashSet<>();
-    connectionUrl = "";
+
     driverClassName = "";
-    driverName = "";
-    driverVersion = "";
-    driverMajorVersion = 0;
-    driverMinorVersion = 0;
-    jdbcMajorVersion = 0;
-    jdbcMinorVersion = 0;
     jdbcCompliant = false;
   }
 
@@ -162,39 +169,11 @@ final class MutableJdbcDriverInfo implements JdbcDriverInfo {
     jdbcDriverProperties.add(jdbcDriverProperty);
   }
 
-  void setConnectionUrl(final String connectionUrl) {
-    this.connectionUrl = connectionUrl;
-  }
-
-  void setDriverMajorVersion(final int driverMajorVersion) {
-    this.driverMajorVersion = driverMajorVersion;
-  }
-
-  void setDriverMinorVersion(final int driverMinorVersion) {
-    this.driverMinorVersion = driverMinorVersion;
-  }
-
-  void setDriverName(final String driverName) {
-    this.driverName = driverName;
-  }
-
-  void setDriverVersion(final String driverVersion) {
-    this.driverVersion = driverVersion;
-  }
-
   void setJdbcCompliant(final boolean jdbcCompliant) {
     this.jdbcCompliant = jdbcCompliant;
   }
 
   void setJdbcDriverClassName(final String jdbcDriverClassName) {
     driverClassName = jdbcDriverClassName;
-  }
-
-  void setJdbcMajorVersion(final int jdbcMajorVersion) {
-    this.jdbcMajorVersion = jdbcMajorVersion;
-  }
-
-  void setJdbcMinorVersion(final int jdbcMinorVersion) {
-    this.jdbcMinorVersion = jdbcMinorVersion;
   }
 }
