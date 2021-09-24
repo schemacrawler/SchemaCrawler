@@ -40,7 +40,9 @@ import java.io.StringReader;
  *
  * @author Sualeh Fatehi
  */
-public final class Version {
+public final class Version implements ProductVersion {
+
+  private static final long serialVersionUID = 1143606778430634288L;
 
   private static final String ABOUT;
   private static final String PRODUCTNAME = "SchemaCrawler";
@@ -73,24 +75,6 @@ public final class Version {
   }
 
   /**
-   * Product name.
-   *
-   * @return Product name.
-   */
-  public static String getProductName() {
-    return PRODUCTNAME;
-  }
-
-  /**
-   * Product version number.
-   *
-   * @return Product version number.
-   */
-  public static String getVersion() {
-    return VERSION;
-  }
-
-  /**
    * Main routine. Prints information about this product.
    *
    * @param args Arguments to the main routine - they are ignored.
@@ -99,7 +83,40 @@ public final class Version {
     System.out.println(about());
   }
 
+  public static Version version() {
+    return new Version();
+  }
+
   private Version() {
     // Prevent external instantiation
+  }
+
+  /**
+   * Information about this product.
+   *
+   * @return Information about this product.
+   */
+  public String getProductDescription() {
+    return ABOUT;
+  }
+
+  /**
+   * Product name.
+   *
+   * @return Product name.
+   */
+  @Override
+  public String getProductName() {
+    return PRODUCTNAME;
+  }
+
+  /**
+   * Product version number.
+   *
+   * @return Product version number.
+   */
+  @Override
+  public String getProductVersion() {
+    return VERSION;
   }
 }

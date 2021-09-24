@@ -96,21 +96,28 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
   public void run() {
     if (versionRequested) {
       showVersion();
-    }
-    if (showenvironment) {
+    } else if (showenvironment) {
       showEnvironment();
-    }
-    if (isconnected) {
+    } else if (isconnected) {
       showConnected();
-    }
-    if (isloaded) {
+    } else if (isloaded) {
       showLoaded();
-    }
-    if (showstacktrace) {
+    } else if (showstacktrace) {
       showStackTrace();
-    }
-    if (showstate) {
+    } else if (showstate) {
       showState();
+    } else {
+      // Default - show all the information
+      showEnvironment();
+      System.out.println();
+
+      System.out.println("Connection Information:");
+      showConnected();
+      System.out.println();
+
+      System.out.println("Load Information:");
+      showLoaded();
+      System.out.println();
     }
   }
 
@@ -136,11 +143,14 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
   }
 
   private void showEnvironment() {
+    final Version version = Version.version();
+    System.out.printf("%s %s%n%n", version.getProductName(), version.getProductVersion());
+
     System.out.println("System Information:");
     final OperatingSystemInfo osInfo = new OperatingSystemInfo();
-    System.out.println(osInfo);
+    System.out.printf("  Operating System:%n    %s%n", osInfo);
     final JvmSystemInfo jvmInfo = new JvmSystemInfo();
-    System.out.println(jvmInfo);
+    System.out.printf("  JVM:%n    %s%n", jvmInfo);
 
     new AvailableJDBCDrivers().print(System.out);
     new AvailableServersCommand().run();

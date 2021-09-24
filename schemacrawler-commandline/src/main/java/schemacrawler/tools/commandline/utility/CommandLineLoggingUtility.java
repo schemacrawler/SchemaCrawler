@@ -63,12 +63,13 @@ public final class CommandLineLoggingUtility {
       return;
     }
 
+    final Version version = Version.version();
     LOGGER.log(
         Level.INFO,
         String.format(
             "Environment:%n%s %s%n%s%n%s%n",
-            Version.getProductName(),
-            Version.getVersion(),
+            version.getProductName(),
+            version.getProductVersion(),
             new OperatingSystemInfo(),
             new JvmSystemInfo()));
 

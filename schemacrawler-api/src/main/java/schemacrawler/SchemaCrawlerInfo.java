@@ -38,6 +38,6 @@ public final class SchemaCrawlerInfo extends BaseProductVersion {
   private static final long serialVersionUID = 4051323422934251828L;
 
   public SchemaCrawlerInfo() {
-    super(Version.getProductName(), Version.getVersion());
+    super(Version.version().getProductName(), Version.version().getProductVersion());
   }
 }

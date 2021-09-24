@@ -51,7 +51,7 @@ public class OfflineDriverTest {
         (OfflineDriver) DriverManager.getDriver("jdbc:offline:test");
 
     assertThat(
-        Version.getVersion(),
+        Version.version().getProductVersion(),
         startsWith(
             String.format(
                 "%d.%d", offlineDriver.getMajorVersion(), offlineDriver.getMinorVersion())));
