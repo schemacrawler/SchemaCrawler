@@ -30,6 +30,7 @@ package schemacrawler.crawl;
 
 import static java.util.Comparator.naturalOrder;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -133,9 +134,7 @@ final class MutablePrivilege<D extends DatabaseObject> extends AbstractDependant
     public String toString() {
       return String.format(
           "%s --> %s%s",
-          isBlank(grantor) ? "" : grantor,
-          isBlank(grantee) ? "" : grantee,
-          isGrantable ? " (grantable)" : "");
+          trimToEmpty(grantor), trimToEmpty(grantee), isGrantable ? " (grantable)" : "");
     }
   }
 

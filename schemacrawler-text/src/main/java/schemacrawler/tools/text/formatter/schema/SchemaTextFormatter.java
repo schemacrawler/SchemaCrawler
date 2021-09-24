@@ -33,6 +33,7 @@ import static schemacrawler.loader.counts.TableRowCountsUtility.getRowCountMessa
 import static schemacrawler.loader.counts.TableRowCountsUtility.hasRowCount;
 import static schemacrawler.schema.DataTypeType.user_defined;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -609,9 +610,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
       if (!options.isHidePrimaryKeyNames()) {
         pkName = name;
       }
-      if (isBlank(pkName)) {
-        pkName = "";
-      }
+      pkName = trimToEmpty(pkName);
       formattingHelper.writeNameRow(pkName, "[primary key]");
       printRemarks(primaryKey);
       printTableColumns(primaryKey.getConstrainedColumns(), false);

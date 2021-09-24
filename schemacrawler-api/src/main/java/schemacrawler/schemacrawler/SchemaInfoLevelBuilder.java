@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -351,11 +352,7 @@ public final class SchemaInfoLevelBuilder
   }
 
   public SchemaInfoLevelBuilder withTag(final String tag) {
-    if (isBlank(tag)) {
-      this.tag = "";
-    } else {
-      this.tag = tag;
-    }
+    this.tag = trimToEmpty(tag);
     return this;
   }
 

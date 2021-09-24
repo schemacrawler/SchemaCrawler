@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.command.lint.options;
 
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
 
 import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.options.Config;
@@ -155,11 +156,7 @@ public final class LintOptionsBuilder
 
   /** With the name of a linter configs file. */
   public LintOptionsBuilder withLinterConfigs(final String linterConfigs) {
-    if (isBlank(linterConfigs)) {
-      this.linterConfigs = "";
-    } else {
-      this.linterConfigs = linterConfigs;
-    }
+    this.linterConfigs = trimToEmpty(linterConfigs);
     return this;
   }
 

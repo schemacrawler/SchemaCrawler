@@ -30,6 +30,7 @@ package schemacrawler.schemacrawler;
 import static schemacrawler.plugin.EnumDataTypeHelper.NO_OP_ENUM_DATA_TYPE_HELPER;
 import static schemacrawler.schemacrawler.MetadataRetrievalStrategy.metadata;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -282,9 +283,7 @@ public final class SchemaRetrievalOptionsBuilder
       }
     }
 
-    if (isBlank(identifierQuoteString)) {
-      identifierQuoteString = "";
-    }
+    identifierQuoteString = trimToEmpty(identifierQuoteString);
 
     return identifierQuoteString;
   }

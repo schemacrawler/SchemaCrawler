@@ -30,6 +30,7 @@ package schemacrawler.tools.options;
 
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -86,14 +87,8 @@ public final class OutputOptions implements Options {
     if (outputResource instanceof FileOutputResource) {
       outputFile = ((FileOutputResource) outputResource).getOutputFile();
     } else {
-      final String fileExtension;
-      if (isBlank(extension)) {
-        fileExtension = "";
-      } else {
-        fileExtension = extension;
-      }
       outputFile =
-          Paths.get(".", String.format("schemacrawler-%s.%s", UUID.randomUUID(), fileExtension))
+          Paths.get(".", String.format("schemacrawler-%s.%s", UUID.randomUUID(), trimToEmpty(extension)))
               .normalize()
               .toAbsolutePath();
     }

@@ -4,6 +4,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.IOUtility.getFileExtension;
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
 
 import java.io.Writer;
 import java.nio.charset.Charset;
@@ -76,11 +77,7 @@ public final class OutputOptionsBuilder
   }
 
   public OutputOptionsBuilder title(final String title) {
-    if (isBlank(title)) {
-      this.title = "";
-    } else {
-      this.title = title;
-    }
+    this.title = trimToEmpty(title);
     return this;
   }
 
