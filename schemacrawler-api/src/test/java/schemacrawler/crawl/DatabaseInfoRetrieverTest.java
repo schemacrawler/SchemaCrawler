@@ -46,6 +46,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.DatabaseUser;
 import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.InformationSchemaKey;
@@ -71,7 +72,9 @@ public class DatabaseInfoRetrieverTest {
   public void databaseInfo(final TestContext testContext, final Connection connection)
       throws Exception {
 
-    assertThat(catalog.getDatabaseInfo().toString(), is("-- database:  " + System.lineSeparator()));
+    assertThat(
+        catalog.getDatabaseInfo().toString(),
+        is("-- database: HSQL Database Engine 2.6.0" + System.lineSeparator()));
   }
 
   @Test
@@ -106,14 +109,12 @@ public class DatabaseInfoRetrieverTest {
         databaseUsers.stream().map(DatabaseUser::getName).collect(Collectors.toList()),
         hasItems("OTHERUSER", "SA"));
     assertThat(
-        databaseUsers
-            .stream()
+        databaseUsers.stream()
             .map(databaseUser -> databaseUser.getAttributes().size())
             .collect(Collectors.toList()),
         hasItems(4, 4));
     assertThat(
-        databaseUsers
-            .stream()
+        databaseUsers.stream()
             .map(databaseUser -> databaseUser.getAttributes().keySet())
             .flatMap(Collection::stream)
             .collect(Collectors.toSet()),
@@ -122,7 +123,8 @@ public class DatabaseInfoRetrieverTest {
 
   @BeforeAll
   public void loadBaseCatalog(final Connection connection) throws SQLException {
-    catalog = new MutableCatalog("database_info_test");
+    final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
+    catalog = new MutableCatalog("database_info_test", connectionInfo);
     assertThat(catalog.getColumnDataTypes(), is(empty()));
     assertThat(catalog.getSchemas(), is(empty()));
     assertThat(catalog.getDatabaseInfo().getServerInfo(), is(empty()));

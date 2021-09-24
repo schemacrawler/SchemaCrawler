@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint;
 
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -47,15 +47,9 @@ public final class LintReport implements Iterable<Lint<? extends Serializable>> 
       final String title,
       final CrawlInfo crawlInfo,
       final Collection<Lint<? extends Serializable>> lints) {
-    if (isBlank(title)) {
-      this.title = "";
-    } else {
-      this.title = title;
-    }
-    requireNonNull(crawlInfo, "No crawl information provided");
-    this.crawlInfo = crawlInfo;
-    requireNonNull(lints, "No lints provided");
-    this.lints = lints;
+    this.title = trimToEmpty(title);
+    this.crawlInfo = requireNonNull(crawlInfo, "No crawl information provided");
+    this.lints = requireNonNull(lints, "No lints provided");
   }
 
   public CrawlInfo getCrawlInfo() {

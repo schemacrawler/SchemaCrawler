@@ -30,20 +30,23 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schema.DataTypeType.user_defined;
-import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.schema.JavaSqlType;
+import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.Schema;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Retriever;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.utility.JavaSqlTypes;
 import us.fatehi.utility.string.StringFormat;
 
@@ -55,11 +58,12 @@ import us.fatehi.utility.string.StringFormat;
 @Retriever
 final class ResultsRetriever {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(ResultsRetriever.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ResultsRetriever.class.getName());
 
   private final ResultSetMetaData resultsMetaData;
   private final JavaSqlTypes javaSqlTypes;
+  private final NamedObjectList<Schema> schemas;
+  private final NamedObjectList<Table> tables;
 
   ResultsRetriever(final ResultSet resultSet) throws SQLException {
     // NOTE: Do not check if the result set is closed, since some JDBC
@@ -67,6 +71,8 @@ final class ResultsRetriever {
     requireNonNull(resultSet, "Cannot retrieve metadata for null results");
     resultsMetaData = resultSet.getMetaData();
     javaSqlTypes = new JavaSqlTypes();
+    schemas = new NamedObjectList<>();
+    tables = new NamedObjectList<>();
   }
 
   /**
@@ -80,7 +86,6 @@ final class ResultsRetriever {
   ResultsColumns retrieveResults() throws SQLException {
 
     final MutableResultsColumns resultColumns = new MutableResultsColumns("");
-    final MutableCatalog catalog = new MutableCatalog("results");
     final int columnCount = resultsMetaData.getColumnCount();
     for (int i = 1; i <= columnCount; i++) {
       final int columnIndex = i;
@@ -90,15 +95,28 @@ final class ResultsRetriever {
       final String schemaName =
           execute("schema name", () -> resultsMetaData.getSchemaName(columnIndex));
 
-      final Schema schema = catalog.addSchema(catalogName, schemaName);
+      final Schema schema =
+          schemas
+              .lookup(new NamedObjectKey(catalogName, schemaName))
+              .orElseGet(
+                  () -> {
+                    final SchemaReference newSchema = new SchemaReference(catalogName, schemaName);
+                    schemas.add(newSchema);
+                    return newSchema;
+                  });
 
-      String tableName = execute("table name", () -> resultsMetaData.getTableName(columnIndex));
-      if (isBlank(tableName)) {
-        tableName = "";
-      }
+      final String tableName =
+          trimToEmpty(execute("table name", () -> resultsMetaData.getTableName(columnIndex)));
 
-      final MutableTable table = new MutableTable(schema, tableName);
-      catalog.addTable(table);
+      final Table table =
+          tables
+              .lookup(schema, tableName)
+              .orElseGet(
+                  () -> {
+                    final Table newTable = new TablePartial(schema, tableName);
+                    tables.add(newTable);
+                    return newTable;
+                  });
 
       final String columnName =
           execute("column name", () -> resultsMetaData.getColumnName(columnIndex));
@@ -149,8 +167,8 @@ final class ResultsRetriever {
           Level.WARNING,
           e,
           new StringFormat(
-          "Could not retrieve results column additional data for %s (%s)",
-          column, column.getLabel()));
+              "Could not retrieve results column additional data for %s (%s)",
+              column, column.getLabel()));
     }
   }
 
@@ -175,7 +193,8 @@ final class ResultsRetriever {
           Level.WARNING,
           e,
           new StringFormat(
-          "Could not retrieve results column data type for %s (%s)", column, column.getLabel()));
+              "Could not retrieve results column data type for %s (%s)",
+              column, column.getLabel()));
 
       final MutableColumnDataType unknownColumnDataType =
           new MutableColumnDataType(schema, "<unknown>", user_defined);

@@ -31,16 +31,15 @@ package schemacrawler.tools.utility;
 import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.Driver;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.crawl.ConnectionInfoBuilder;
 import schemacrawler.crawl.ResultsCrawler;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -199,31 +198,8 @@ public final class SchemaCrawlerUtility {
       return;
     }
     try {
-      final DatabaseMetaData dbMetaData = connection.getMetaData();
-      final String connectionUrl = dbMetaData.getURL();
-
-      LOGGER.log(
-          Level.INFO,
-          new StringFormat(
-              "Connected to %n%s %s %nusing JDBC driver %n%s %s%nwith %n\"%s\"",
-              dbMetaData.getDatabaseProductName(),
-              dbMetaData.getDatabaseProductVersion(),
-              dbMetaData.getDriverName(),
-              dbMetaData.getDriverVersion(),
-              connectionUrl));
-
-      // Log JDBC driver class name. There is no reliable way to get the driver class, so this is a
-      // best guess. The JDBC connection (including the Driver may have been loaded using another
-      // classloader, and so may not be available with the driver manager.
-      try {
-        final Driver driver = DriverManager.getDriver(connectionUrl);
-        if (driver != null) {
-          final String driverClassName = driver.getClass().getName();
-          LOGGER.log(Level.INFO, "JDBC driver class name, " + driverClassName);
-        }
-      } catch (final SQLException e) {
-        LOGGER.log(Level.CONFIG, "Database connection may have be provided on another classloader");
-      }
+      final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
+      LOGGER.log(Level.INFO, connectionInfo.toString());
     } catch (final SQLException e) {
       LOGGER.log(Level.WARNING, "Could not log connection information", e);
     }

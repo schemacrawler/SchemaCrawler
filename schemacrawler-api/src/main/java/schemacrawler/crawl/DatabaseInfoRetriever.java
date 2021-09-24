@@ -208,11 +208,6 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
       final DatabaseMetaData dbMetaData = getMetaData();
       final String url = dbMetaData.getURL();
 
-      driverInfo.setDriverMajorVersion(dbMetaData.getDriverMajorVersion());
-      driverInfo.setDriverMinorVersion(dbMetaData.getDriverMinorVersion());
-      driverInfo.setJdbcMajorVersion(dbMetaData.getJDBCMajorVersion());
-      driverInfo.setJdbcMinorVersion(dbMetaData.getJDBCMinorVersion());
-
       final Driver jdbcDriver = DriverManager.getDriver(getMetaData().getURL());
       if (jdbcDriver == null) {
         throw new SQLException("No JDBC driver found");
@@ -227,34 +222,6 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
       }
     } catch (final SQLException e) {
       LOGGER.log(Level.WARNING, "Could not obtain additional JDBC driver information", e);
-    }
-  }
-
-  void retrieveCrawlInfo() {
-    catalog.setCrawlInfo();
-  }
-
-  /**
-   * Provides information on the database.
-   *
-   * @throws SQLException On a SQL exception
-   */
-  void retrieveDatabaseInfo() {
-
-    final MutableDatabaseInfo dbInfo = catalog.getDatabaseInfo();
-    if (dbInfo == null) {
-      return;
-    }
-
-    final DatabaseMetaData dbMetaData;
-    try {
-      dbMetaData = getMetaData();
-
-      dbInfo.setUserName(dbMetaData.getUserName());
-      dbInfo.setProductName(dbMetaData.getDatabaseProductName());
-      dbInfo.setProductVersion(dbMetaData.getDatabaseProductVersion());
-    } catch (final SQLException e) {
-      LOGGER.log(Level.WARNING, "Could not obtain database information", e);
     }
   }
 
@@ -287,29 +254,6 @@ final class DatabaseInfoRetriever extends AbstractRetriever {
       }
     } catch (final Exception e) {
       LOGGER.log(Level.WARNING, "Could not retrieve database users", e);
-    }
-  }
-
-  /**
-   * Provides information on the JDBC driver.
-   *
-   * @throws SQLException On a SQL exception
-   */
-  void retrieveJdbcDriverInfo() {
-    final MutableJdbcDriverInfo driverInfo = catalog.getJdbcDriverInfo();
-    if (driverInfo == null) {
-      return;
-    }
-
-    try {
-      final DatabaseMetaData dbMetaData = getMetaData();
-
-      driverInfo.setDriverName(dbMetaData.getDriverName());
-      driverInfo.setDriverVersion(dbMetaData.getDriverVersion());
-      driverInfo.setConnectionUrl(dbMetaData.getURL());
-
-    } catch (final SQLException e) {
-      LOGGER.log(Level.WARNING, "Could not obtain JDBC driver information", e);
     }
   }
 

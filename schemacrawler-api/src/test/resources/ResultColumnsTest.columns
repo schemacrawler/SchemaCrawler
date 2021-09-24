@@ -17,7 +17,7 @@ column: PUBLIC.BOOKS.BOOKS.TITLE
   nullable: false
   ordinalPosition: 1
   parent: PUBLIC.BOOKS.BOOKS
-  parentPartial: false
+  parentPartial: true
   readOnly: false
   remarks: 
   schema: PUBLIC.BOOKS
@@ -46,7 +46,7 @@ column: C2
   nullable: false
   ordinalPosition: 2
   parent: 
-  parentPartial: false
+  parentPartial: true
   readOnly: true
   remarks: 
   schema: 
@@ -75,7 +75,7 @@ column: PUBLIC.BOOKS.BOOKS.PRICE
   nullable: true
   ordinalPosition: 3
   parent: PUBLIC.BOOKS.BOOKS
-  parentPartial: false
+  parentPartial: true
   readOnly: false
   remarks: 
   schema: PUBLIC.BOOKS

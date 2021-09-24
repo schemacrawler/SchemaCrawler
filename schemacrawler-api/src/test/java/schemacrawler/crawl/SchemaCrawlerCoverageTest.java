@@ -295,6 +295,12 @@ public class SchemaCrawlerCoverageTest {
     final DatabaseMetaData databaseMetaData = mock(DatabaseMetaData.class);
     when(connection2.isClosed()).thenReturn(false);
     when(connection2.getMetaData()).thenReturn(databaseMetaData);
+    when(databaseMetaData.getDatabaseProductName()).thenReturn("databaseProductName");
+    when(databaseMetaData.getDatabaseProductVersion()).thenReturn("databaseProductVersion");
+    when(databaseMetaData.getURL()).thenReturn("connectionUrl");
+    when(databaseMetaData.getDriverName()).thenReturn("driverName");
+    when(databaseMetaData.getDriverVersion()).thenReturn("driverVersion");
+
     final SchemaCrawler schemaCrawler =
         new SchemaCrawler(connection2, schemaRetrievalOptions, schemaCrawlerOptions);
     assertThrows(SchemaCrawlerException.class, () -> schemaCrawler.crawl());

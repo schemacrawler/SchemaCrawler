@@ -32,6 +32,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
@@ -161,7 +162,8 @@ public class DataTypeRetrieverTest {
 
   @BeforeAll
   public void loadBaseCatalog(final Connection connection) throws SQLException {
-    catalog = new MutableCatalog("datatype_test");
+    final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
+    catalog = new MutableCatalog("datatype_test", connectionInfo);
     assertThat(catalog.getColumnDataTypes(), is(empty()));
     assertThat(catalog.getSchemas(), is(empty()));
     assertThat(catalog.getDatabaseInfo().getServerInfo(), is(empty()));

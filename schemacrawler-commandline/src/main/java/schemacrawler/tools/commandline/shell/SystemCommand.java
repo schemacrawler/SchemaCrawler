@@ -37,6 +37,8 @@ import picocli.CommandLine.Option;
 import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
 import schemacrawler.Version;
+import schemacrawler.crawl.ConnectionInfoBuilder;
+import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.tools.commandline.command.AvailableJDBCDrivers;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.ShellState;
@@ -115,13 +117,9 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
   private void printConnectionInfo() {
     try {
       final Connection connection = state.getDataSource().get();
+      final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
       final DatabaseMetaData dbMetaData = connection.getMetaData();
-      System.out.printf(
-          "Connected to %n%s %s %nusing JDBC driver %n%s %s%n",
-          dbMetaData.getDatabaseProductName(),
-          dbMetaData.getDatabaseProductVersion(),
-          dbMetaData.getDriverName(),
-          dbMetaData.getDriverVersion());
+      System.out.println(connectionInfo);
     } catch (final SQLException e) {
       System.err.println("Could not log connection information");
       e.printStackTrace();

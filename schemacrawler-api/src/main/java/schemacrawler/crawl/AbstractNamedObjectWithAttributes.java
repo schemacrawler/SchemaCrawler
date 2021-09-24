@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -128,11 +129,7 @@ abstract class AbstractNamedObjectWithAttributes extends AbstractNamedObject
 
   @Override
   public final void setRemarks(final String remarks) {
-    if (isBlank(remarks)) {
-      this.remarks = "";
-    } else {
-      this.remarks = remarks;
-    }
+    this.remarks = trimToEmpty(remarks);
   }
 
   protected final void addAttributes(final Map<String, Object> values) {

@@ -27,7 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.crawl;
 
-import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
 
 final class ImmutableServerInfoProperty extends AbstractProperty {
 
@@ -38,11 +38,7 @@ final class ImmutableServerInfoProperty extends AbstractProperty {
   ImmutableServerInfoProperty(final String name, final String value, final String description) {
     super(name, value);
 
-    if (isBlank(description)) {
-      this.description = "";
-    } else {
-      this.description = description;
-    }
+    this.description = trimToEmpty(description);
   }
 
   @Override

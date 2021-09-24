@@ -41,13 +41,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import schemacrawler.schema.ConnectionInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 
@@ -65,7 +62,8 @@ public class JdbcDriverInfoRetrieverTest {
 
   @BeforeEach
   public void loadBaseCatalog(final Connection connection) throws SQLException {
-    catalog = new MutableCatalog("database_info_test");
+    final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
+    catalog = new MutableCatalog("database_info_test", connectionInfo);
     assertThat(catalog.getColumnDataTypes(), is(empty()));
     assertThat(catalog.getSchemas(), is(empty()));
     assertThat(catalog.getJdbcDriverInfo().getDriverClassName(), is(""));
@@ -75,18 +73,6 @@ public class JdbcDriverInfoRetrieverTest {
       final Connection connection, final DatabaseServerType databaseServerType)
       throws SQLException {
     assertThat(catalog.getJdbcDriverInfo().getDriverClassName(), is(""));
-
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
-        SchemaRetrievalOptionsBuilder.builder().withDatabaseServerType(databaseServerType);
-    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
-    final RetrieverConnection retrieverConnection =
-        new RetrieverConnection(connection, schemaRetrievalOptions);
-
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-
-    final DatabaseInfoRetriever databaseInfoRetriever =
-        new DatabaseInfoRetriever(retrieverConnection, catalog, options);
-    databaseInfoRetriever.retrieveJdbcDriverInfo();
 
     final JdbcDriverInfo jdbcDriverInfo = catalog.getJdbcDriverInfo();
     assertThat(jdbcDriverInfo.getProductName(), is("HSQL Database Engine Driver"));
