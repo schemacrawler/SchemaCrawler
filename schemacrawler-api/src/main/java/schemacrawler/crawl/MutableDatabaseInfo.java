@@ -53,8 +53,8 @@ final class MutableDatabaseInfo implements DatabaseInfo {
 
   private static final long serialVersionUID = 4051323422934251828L;
 
-  private final String productName;
-  private final String productVersion;
+  private final String databaseProductName;
+  private final String databaseProductVersion;
   private final String userName;
   private final Set<Property> serverInfo;
   private final Set<DatabaseProperty> databaseProperties;
@@ -62,8 +62,8 @@ final class MutableDatabaseInfo implements DatabaseInfo {
   public MutableDatabaseInfo(final ConnectionInfo connectionInfo) {
     requireNonNull(connectionInfo, "No connection information provided");
 
-    productName = connectionInfo.getDatabaseProductName();
-    productVersion = connectionInfo.getDatabaseProductVersion();
+    databaseProductName = connectionInfo.getDatabaseProductName();
+    databaseProductVersion = connectionInfo.getDatabaseProductVersion();
     userName = connectionInfo.getUserName();
 
     serverInfo = new HashSet<>();
@@ -73,13 +73,13 @@ final class MutableDatabaseInfo implements DatabaseInfo {
   /** {@inheritDoc} */
   @Override
   public String getProductName() {
-    return productName;
+    return databaseProductName;
   }
 
   /** {@inheritDoc} */
   @Override
   public String getProductVersion() {
-    return productVersion;
+    return databaseProductVersion;
   }
 
   /** {@inheritDoc} */

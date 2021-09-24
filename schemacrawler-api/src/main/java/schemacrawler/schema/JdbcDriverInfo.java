@@ -69,11 +69,29 @@ public interface JdbcDriverInfo extends ProductVersion {
   int getDriverMinorVersion();
 
   /**
+   * Gets the name of the JDBC driver.
+   *
+   * @return Name of the JDBC driver
+   */
+  default String getDriverName() {
+    return getProductName();
+  }
+
+  /**
    * Gets all the JDBC driver properties, and their values.
    *
    * @return JDBC driver properties
    */
   Collection<JdbcDriverProperty> getDriverProperties();
+
+  /**
+   * Gets the version of the JDBC driver.
+   *
+   * @return Version of the JDBC driver
+   */
+  default String getDriverVersion() {
+    return getProductVersion();
+  }
 
   /**
    * Gets the major JDBC version number supported by JDBC driver.
