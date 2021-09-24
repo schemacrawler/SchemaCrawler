@@ -30,7 +30,7 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.schema.DataTypeType.user_defined;
-import static us.fatehi.utility.Utility.isBlank;
+import static us.fatehi.utility.Utility.trimToEmpty;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -40,8 +40,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.JavaSqlType;
+import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.Schema;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Retriever;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaReference;
@@ -60,6 +62,8 @@ final class ResultsRetriever {
 
   private final ResultSetMetaData resultsMetaData;
   private final JavaSqlTypes javaSqlTypes;
+  private final NamedObjectList<Schema> schemas;
+  private final NamedObjectList<Table> tables;
 
   ResultsRetriever(final ResultSet resultSet) throws SQLException {
     // NOTE: Do not check if the result set is closed, since some JDBC
@@ -67,6 +71,8 @@ final class ResultsRetriever {
     requireNonNull(resultSet, "Cannot retrieve metadata for null results");
     resultsMetaData = resultSet.getMetaData();
     javaSqlTypes = new JavaSqlTypes();
+    schemas = new NamedObjectList<>();
+    tables = new NamedObjectList<>();
   }
 
   /**
@@ -89,14 +95,28 @@ final class ResultsRetriever {
       final String schemaName =
           execute("schema name", () -> resultsMetaData.getSchemaName(columnIndex));
 
-      final Schema schema = new SchemaReference(catalogName, schemaName);
+      final Schema schema =
+          schemas
+              .lookup(new NamedObjectKey(catalogName, schemaName))
+              .orElseGet(
+                  () -> {
+                    final SchemaReference newSchema = new SchemaReference(catalogName, schemaName);
+                    schemas.add(newSchema);
+                    return newSchema;
+                  });
 
-      String tableName = execute("table name", () -> resultsMetaData.getTableName(columnIndex));
-      if (isBlank(tableName)) {
-        tableName = "";
-      }
+      final String tableName =
+          trimToEmpty(execute("table name", () -> resultsMetaData.getTableName(columnIndex)));
 
-      final MutableTable table = new MutableTable(schema, tableName);
+      final Table table =
+          tables
+              .lookup(schema, tableName)
+              .orElseGet(
+                  () -> {
+                    final Table newTable = new TablePartial(schema, tableName);
+                    tables.add(newTable);
+                    return newTable;
+                  });
 
       final String columnName =
           execute("column name", () -> resultsMetaData.getColumnName(columnIndex));
