@@ -25,34 +25,24 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package us.fatehi.utility.ioresource;
+package schemacrawler.test.utility;
 
-import static java.util.Objects.requireNonNull;
-import static us.fatehi.utility.ioresource.InputResourceUtility.wrapWriter;
+import java.util.function.Function;
+import java.util.regex.Pattern;
 
-import java.io.Writer;
-import java.nio.charset.Charset;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+final class NeuteredExpressionsFilter implements Function<String, String> {
 
-public final class WriterOutputResource implements OutputResource {
-
-  private static final Logger LOGGER = Logger.getLogger(WriterOutputResource.class.getName());
-
-  private final Writer writer;
-
-  public WriterOutputResource(final Writer writer) {
-    this.writer = requireNonNull(writer, "No writer provided");
-  }
+  private final Pattern[] neuters = {
+    //
+    Pattern.compile("\u001B\\[[;\\d]*m"), Pattern.compile("\u2592")
+  };
 
   @Override
-  public Writer openNewOutputWriter(final Charset charset, final boolean appendOutput) {
-    LOGGER.log(Level.FINE, "Output to provided writer");
-    return wrapWriter(getDescription(), writer, false);
-  }
-
-  @Override
-  public String toString() {
-    return "<writer>";
+  public String apply(final String line) {
+    String neuteredLine = line;
+    for (final Pattern neuter : neuters) {
+      neuteredLine = neuter.matcher(neuteredLine).replaceAll("");
+    }
+    return neuteredLine;
   }
 }

@@ -150,7 +150,8 @@ public final class TestUtility {
     } else {
       final Reader fileReader = readerForFile(testOutputTempFile, isCompressed);
       final Predicate<String> linesFilter = new SvgElementFilter().and(new NeuteredLinesFilter());
-      contentEquals = contentEquals(referenceReader, fileReader, failures, linesFilter);
+      final Function<String, String> neuterMap = new NeuteredExpressionsFilter();
+      contentEquals = contentEquals(referenceReader, fileReader, failures, linesFilter, neuterMap);
     }
 
     if ("html".equals(outputFormat)) {
@@ -315,7 +316,8 @@ public final class TestUtility {
       final Reader expectedInputReader,
       final Reader actualInputReader,
       final List<String> failures,
-      final Predicate<String> keepLines)
+      final Predicate<String> keepLines,
+      final Function<String, String> neuterMap)
       throws Exception {
     if (expectedInputReader == null || actualInputReader == null) {
       return false;
@@ -324,17 +326,11 @@ public final class TestUtility {
     try (final Stream<String> expectedLinesStream =
             new BufferedReader(expectedInputReader).lines();
         final Stream<String> actualLinesStream = new BufferedReader(actualInputReader).lines()) {
-      final Function<String, String> stripAnsiCodes =
-          line -> line.replaceAll("\u001B\\[[;\\d]*m", "");
-      final Function<String, String> stripColorCodes = line -> line.replaceAll("\u2592", "");
 
       final Iterator<String> expectedLinesIterator =
           expectedLinesStream.filter(keepLines).iterator();
       final Iterator<String> actualLinesIterator =
-          actualLinesStream
-              .filter(keepLines)
-              .map(stripAnsiCodes.andThen(stripColorCodes))
-              .iterator();
+          actualLinesStream.filter(keepLines).map(neuterMap).iterator();
 
       while (expectedLinesIterator.hasNext() && actualLinesIterator.hasNext()) {
         final String expectedline = expectedLinesIterator.next();

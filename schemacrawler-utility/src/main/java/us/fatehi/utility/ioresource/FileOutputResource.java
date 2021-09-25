@@ -70,7 +70,7 @@ public final class FileOutputResource implements OutputResource {
       openOptions = new OpenOption[] {WRITE, CREATE, TRUNCATE_EXISTING};
     }
     final Writer writer = newBufferedWriter(outputFile, charset, openOptions);
-    LOGGER.log(Level.INFO, new StringFormat("Opened output writer to file <%s>", outputFile));
+    LOGGER.log(Level.FINE, new StringFormat("Opened output writer to file <%s>", outputFile));
     return wrapWriter(getDescription(), writer, true);
   }
 
