@@ -88,13 +88,4 @@ public final class Version extends BaseProductVersion {
   private Version() {
     super(PRODUCT_NAME, PRODUCT_VERSION);
   }
-
-  /**
-   * Information about this product.
-   *
-   * @return Information about this product.
-   */
-  public String getProductDescription() {
-    return ABOUT;
-  }
 }
