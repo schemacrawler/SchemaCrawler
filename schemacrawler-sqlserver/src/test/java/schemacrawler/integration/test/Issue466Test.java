@@ -71,7 +71,7 @@ public class Issue466Test extends BaseAdditionalDatabaseTest {
   private final JdbcDatabaseContainer<?> dbContainer =
       new MSSQLServerContainer<>(
               DockerImageName.parse("mcr.microsoft.com/mssql/server")
-                  .withTag("2017-CU22-ubuntu-16.04"))
+                  .withTag("2017-CU26-ubuntu-16.04"))
           .acceptLicense();
 
   @BeforeEach
