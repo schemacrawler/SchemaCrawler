@@ -29,7 +29,6 @@ package schemacrawler.test;
 
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
-import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 
 import java.nio.file.Path;
@@ -39,6 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -48,6 +48,7 @@ import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import us.fatehi.utility.IOUtility;
@@ -57,9 +58,13 @@ public class GrepCommandLineTest {
 
   private static final String GREP_OUTPUT = "grep_output/";
 
+  @BeforeAll
+  public static void clean() throws Exception {
+    TestUtility.clean(GREP_OUTPUT);
+  }
+
   @Test
   public void grep(final DatabaseConnectionInfo connectionInfo) throws Exception {
-    clean(GREP_OUTPUT);
 
     final List<String> failures = new ArrayList<>();
 

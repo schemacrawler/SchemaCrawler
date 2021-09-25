@@ -33,8 +33,6 @@ import java.sql.SQLException;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
-import schemacrawler.JvmSystemInfo;
-import schemacrawler.OperatingSystemInfo;
 import schemacrawler.Version;
 import schemacrawler.crawl.ConnectionInfoBuilder;
 import schemacrawler.schema.ConnectionInfo;
@@ -42,6 +40,7 @@ import schemacrawler.tools.commandline.command.AvailableJDBCDrivers;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateUtility;
+import schemacrawler.tools.commandline.utility.CommandLineUtility;
 
 @Command(
     name = "system",
@@ -142,13 +141,7 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
 
   private void showEnvironment() {
 
-    System.out.printf("%s%n%n", Version.version());
-
-    System.out.println("System Information:");
-    final OperatingSystemInfo osInfo = new OperatingSystemInfo();
-    System.out.printf("  Operating System:%n    %s%n", osInfo);
-    final JvmSystemInfo jvmInfo = new JvmSystemInfo();
-    System.out.printf("  JVM:%n    %s%n", jvmInfo);
+    System.out.println(CommandLineUtility.getEnvironment());
 
     new AvailableJDBCDrivers().print(System.out);
     new AvailableServersCommand().run();

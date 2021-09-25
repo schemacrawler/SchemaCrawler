@@ -43,6 +43,8 @@ import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Model.OptionSpec;
 import picocli.CommandLine.Model.UsageMessageSpec;
 import picocli.CommandLine.ParseResult;
+import schemacrawler.JvmSystemInfo;
+import schemacrawler.OperatingSystemInfo;
 import schemacrawler.Version;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
@@ -87,6 +89,12 @@ public class CommandLineUtility {
     commandLine.setToggleBooleanFlags(false);
 
     return commandLine;
+  }
+
+  public static String getEnvironment() {
+    return String.format(
+        "Environment:%n  %s%n  %s%n  %s%n",
+        Version.version(), new OperatingSystemInfo(), new JvmSystemInfo());
   }
 
   /**
@@ -140,6 +148,9 @@ public class CommandLineUtility {
     }
 
     System.err.println(readResourceFully("/command-line-error.footer.txt"));
+
+    System.err.println();
+    System.err.println(CommandLineUtility.getEnvironment());
   }
 
   public static CommandSpec toCommandSpec(final PluginCommand pluginCommand) {

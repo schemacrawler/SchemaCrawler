@@ -33,7 +33,6 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.clean;
 
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
@@ -42,6 +41,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -56,6 +56,7 @@ import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
+import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
@@ -67,7 +68,13 @@ public class MetadataRetrievalStrategyTest {
   private static final String METADATA_RETRIEVAL_STRATEGY_OUTPUT =
       "metadata_retrieval_strategy_output/";
 
+  @BeforeAll
+  public static void clean() throws Exception {
+    TestUtility.clean(METADATA_RETRIEVAL_STRATEGY_OUTPUT);
+  }
+
   private TestOutputStream out;
+
   private TestOutputStream err;
 
   @AfterEach
@@ -80,7 +87,6 @@ public class MetadataRetrievalStrategyTest {
   @ExpectSystemExitWithStatus(1)
   public void overrideMetadataRetrievalStrategyDataDictionary(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    clean(METADATA_RETRIEVAL_STRATEGY_OUTPUT);
 
     final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType.schema;
     final InfoLevel infoLevel = InfoLevel.minimum;
@@ -117,7 +123,6 @@ public class MetadataRetrievalStrategyTest {
   @Test
   public void overrideMetadataRetrievalStrategyNone(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    clean(METADATA_RETRIEVAL_STRATEGY_OUTPUT);
 
     final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType.schema;
     final InfoLevel infoLevel = InfoLevel.minimum;

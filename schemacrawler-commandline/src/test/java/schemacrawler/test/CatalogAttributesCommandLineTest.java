@@ -32,13 +32,13 @@ import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecu
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -47,6 +47,7 @@ import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 
@@ -56,11 +57,14 @@ public class CatalogAttributesCommandLineTest {
 
   private static final String CATALOG_ATTRIBUTES_OUTPUT = "catalog_attributes_output/";
 
+  @BeforeAll
+  public static void clean() throws Exception {
+    TestUtility.clean(CATALOG_ATTRIBUTES_OUTPUT);
+  }
+
   @Test
   public void showRemarks(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-
-    clean(CATALOG_ATTRIBUTES_OUTPUT);
 
     final Path attributesFile =
         copyResourceToTempFile("/" + CATALOG_ATTRIBUTES_OUTPUT + "attributes.yaml");

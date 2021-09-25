@@ -32,11 +32,11 @@ import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecu
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.clean;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -45,6 +45,7 @@ import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.command.text.schema.options.SchemaTextDetailType;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 
@@ -54,10 +55,14 @@ public class NoEmptyTablesCommandLineTest {
 
   private static final String HIDE_EMPTY_TABLES_OUTPUT = "no_empty_tables_output/";
 
+  @BeforeAll
+  public static void clean() throws Exception {
+    TestUtility.clean(HIDE_EMPTY_TABLES_OUTPUT);
+  }
+
   @Test
   public void noEmptyTables(
       final TestContext testContext, final DatabaseConnectionInfo connectionInfo) throws Exception {
-    clean(HIDE_EMPTY_TABLES_OUTPUT);
 
     final String referenceFile = testContext.testMethodName() + ".txt";
 

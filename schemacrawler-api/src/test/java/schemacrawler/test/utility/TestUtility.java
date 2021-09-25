@@ -163,17 +163,18 @@ public final class TestUtility {
     }
 
     if (!contentEquals) {
+      // Reset System streams
+      System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+      System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
+
       final Path testOutputTargetFilePath =
           buildDirectory().resolve("unit_tests_results_output").resolve(referenceFile);
       createDirectories(testOutputTargetFilePath.getParent());
       deleteIfExists(testOutputTargetFilePath);
       move(testOutputTempFile, testOutputTargetFilePath, REPLACE_EXISTING);
 
-      // Reset System streams
-      System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
-      System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
-
-      System.err.printf("Output does not match - actual output in%n" + testOutputTargetFilePath);
+      System.err.printf(
+          "%nOutput does not match - actual output in%n%s%n", testOutputTargetFilePath);
     } else {
       delete(testOutputTempFile);
     }
