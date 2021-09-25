@@ -94,8 +94,8 @@ final class MutableCrawlInfo implements CrawlInfo {
     requireNonNull(connectionInfo, "No connection information provided");
 
     schemaCrawlerVersion = Version.version();
-    operatingSystemVersion = new OperatingSystemInfo();
-    jvmVersion = new JvmSystemInfo();
+    operatingSystemVersion = OperatingSystemInfo.operatingSystemInfo();
+    jvmVersion = JvmSystemInfo.jvmSystemInfo();
 
     this.jdbcDriverVersion =
         new BaseProductVersion(connectionInfo.getDriverName(), connectionInfo.getDriverVersion());

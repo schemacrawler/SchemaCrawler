@@ -28,16 +28,18 @@ http://www.gnu.org/licenses/
 
 package schemacrawler;
 
-/**
- * JVM system information.
- *
- * @author Sualeh Fatehi sualeh@hotmail.com
- */
+/** JVM system information. */
 public final class JvmSystemInfo extends BaseProductVersion {
 
   private static final long serialVersionUID = 4051323422934251828L;
 
-  public JvmSystemInfo() {
+  private static final JvmSystemInfo JVM_SYSTEM_INFO = new JvmSystemInfo();
+
+  public static JvmSystemInfo jvmSystemInfo() {
+    return JVM_SYSTEM_INFO;
+  }
+
+  private JvmSystemInfo() {
     super(
         String.format(
             "%s %s",

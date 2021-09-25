@@ -94,7 +94,9 @@ public class CommandLineUtility {
   public static String getEnvironment() {
     return String.format(
         "Environment:%n  %s%n  %s%n  %s%n",
-        Version.version(), new OperatingSystemInfo(), new JvmSystemInfo());
+        Version.version(),
+        OperatingSystemInfo.operatingSystemInfo(),
+        JvmSystemInfo.jvmSystemInfo());
   }
 
   /**

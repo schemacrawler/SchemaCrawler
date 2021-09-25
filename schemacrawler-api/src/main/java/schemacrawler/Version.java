@@ -45,8 +45,7 @@ public final class Version extends BaseProductVersion {
   private static final long serialVersionUID = 1143606778430634288L;
 
   private static final String ABOUT;
-  private static final String PRODUCT_NAME = "SchemaCrawler";
-  private static final String PRODUCT_VERSION;
+  private static final Version VERSION;
 
   static {
     try (final BufferedReader reader =
@@ -57,7 +56,8 @@ public final class Version extends BaseProductVersion {
       final List<String> lines = reader.lines().collect(toList());
       lines.add("");
 
-      PRODUCT_VERSION = lines.get(0).split(" ")[1];
+      final String productVersion = lines.get(0).split(" ")[1];
+      VERSION = new Version("SchemaCrawler", productVersion);
       ABOUT = String.join(lineSeparator(), lines);
 
     } catch (final Exception e) {
@@ -84,10 +84,10 @@ public final class Version extends BaseProductVersion {
   }
 
   public static Version version() {
-    return new Version();
+    return VERSION;
   }
 
-  private Version() {
-    super(PRODUCT_NAME, PRODUCT_VERSION);
+  private Version(final String productName, final String productVersion) {
+    super(productName, productVersion);
   }
 }
