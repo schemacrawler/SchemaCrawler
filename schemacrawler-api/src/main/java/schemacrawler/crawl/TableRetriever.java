@@ -36,8 +36,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.NamedObjectKey;
@@ -59,8 +59,7 @@ import us.fatehi.utility.string.StringFormat;
  */
 final class TableRetriever extends AbstractRetriever {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(TableRetriever.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(TableRetriever.class.getName());
 
   TableRetriever(
       final RetrieverConnection retrieverConnection,
@@ -159,7 +158,7 @@ final class TableRetriever extends AbstractRetriever {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
     if (!informationSchemaViews.hasQuery(TABLES)) {
-      throw new SchemaCrawlerSQLException("No tables SQL provided", null);
+      throw new SchemaCrawlerSQLException("No tables SQL provided");
     }
     final Query tablesSql = informationSchemaViews.getQuery(TABLES);
     final TableTypes supportedTableTypes = getRetrieverConnection().getTableTypes();

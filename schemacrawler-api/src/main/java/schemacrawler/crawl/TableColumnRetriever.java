@@ -44,8 +44,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Column;
@@ -63,8 +63,7 @@ import us.fatehi.utility.string.StringFormat;
  */
 final class TableColumnRetriever extends AbstractRetriever {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(TableColumnRetriever.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(TableColumnRetriever.class.getName());
 
   TableColumnRetriever(
       final RetrieverConnection retrieverConnection,
@@ -252,7 +251,7 @@ final class TableColumnRetriever extends AbstractRetriever {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
     if (!informationSchemaViews.hasQuery(TABLE_COLUMNS)) {
-      throw new SchemaCrawlerSQLException("No table columns SQL provided", null);
+      throw new SchemaCrawlerSQLException("No table columns SQL provided");
     }
     final Query tableColumnsSql = informationSchemaViews.getQuery(TABLE_COLUMNS);
     try (final Statement statement = createStatement();

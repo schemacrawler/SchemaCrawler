@@ -39,8 +39,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SearchableType;
@@ -53,8 +53,7 @@ import us.fatehi.utility.string.StringFormat;
 
 final class DataTypeRetriever extends AbstractRetriever {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(DataTypeRetriever.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(DataTypeRetriever.class.getName());
 
   DataTypeRetriever(
       final RetrieverConnection retrieverConnection,
@@ -157,7 +156,7 @@ final class DataTypeRetriever extends AbstractRetriever {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
     if (!informationSchemaViews.hasQuery(TYPE_INFO)) {
-      throw new SchemaCrawlerSQLException("No system column data types SQL provided", null);
+      throw new SchemaCrawlerSQLException("No system column data types SQL provided");
     }
     final Query typeInfoSql = informationSchemaViews.getQuery(TYPE_INFO);
     try (final Statement statement = createStatement();
