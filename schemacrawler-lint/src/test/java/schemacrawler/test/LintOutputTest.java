@@ -35,13 +35,13 @@ import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAnd
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.LintTestUtility.executeLintCommandLine;
-import static schemacrawler.test.utility.TestUtility.clean;
 
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -55,6 +55,7 @@ import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.command.lint.options.LintReportOutputFormat;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -67,10 +68,14 @@ public class LintOutputTest {
 
   private static final String TEXT_OUTPUT = "lint_text_output/";
 
+  @BeforeAll
+  public static void clean() throws Exception {
+    TestUtility.clean(TEXT_OUTPUT);
+  }
+
   @Test
   public void commandlineLintReportOutput(final DatabaseConnectionInfo connectionInfo)
       throws Exception {
-    clean(TEXT_OUTPUT);
 
     final Map<String, String> argsMap = new HashMap<>();
     argsMap.put("--schemas", ".*FOR_LINT");
@@ -89,17 +94,12 @@ public class LintOutputTest {
                       final String referenceFile = "lint." + outputFormat.getFormat();
 
                       executeLintCommandLine(
-                          connectionInfo,
-                          outputFormat,
-                          null,
-                          argsMap,
-                          TEXT_OUTPUT + referenceFile);
+                          connectionInfo, outputFormat, null, argsMap, TEXT_OUTPUT + referenceFile);
                     }));
   }
 
   @Test
   public void executableLintReportOutput(final Connection connection) throws Exception {
-    clean(TEXT_OUTPUT);
 
     final InfoLevel infoLevel = InfoLevel.standard;
 

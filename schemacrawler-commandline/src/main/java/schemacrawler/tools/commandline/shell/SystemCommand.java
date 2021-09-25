@@ -29,13 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.shell;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
-import schemacrawler.JvmSystemInfo;
-import schemacrawler.OperatingSystemInfo;
 import schemacrawler.Version;
 import schemacrawler.crawl.ConnectionInfoBuilder;
 import schemacrawler.schema.ConnectionInfo;
@@ -43,6 +40,7 @@ import schemacrawler.tools.commandline.command.AvailableJDBCDrivers;
 import schemacrawler.tools.commandline.state.BaseStateHolder;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateUtility;
+import schemacrawler.tools.commandline.utility.CommandLineUtility;
 
 @Command(
     name = "system",
@@ -96,21 +94,28 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
   public void run() {
     if (versionRequested) {
       showVersion();
-    }
-    if (showenvironment) {
+    } else if (showenvironment) {
       showEnvironment();
-    }
-    if (isconnected) {
+    } else if (isconnected) {
       showConnected();
-    }
-    if (isloaded) {
+    } else if (isloaded) {
       showLoaded();
-    }
-    if (showstacktrace) {
+    } else if (showstacktrace) {
       showStackTrace();
-    }
-    if (showstate) {
+    } else if (showstate) {
       showState();
+    } else {
+      // Default - show all the information
+      showEnvironment();
+      System.out.println();
+
+      System.out.println("Connection Information:");
+      showConnected();
+      System.out.println();
+
+      System.out.println("Load Information:");
+      showLoaded();
+      System.out.println();
     }
   }
 
@@ -118,7 +123,6 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
     try {
       final Connection connection = state.getDataSource().get();
       final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
-      final DatabaseMetaData dbMetaData = connection.getMetaData();
       System.out.println(connectionInfo);
     } catch (final SQLException e) {
       System.err.println("Could not log connection information");
@@ -136,11 +140,8 @@ public class SystemCommand extends BaseStateHolder implements Runnable {
   }
 
   private void showEnvironment() {
-    System.out.println("System Information:");
-    final OperatingSystemInfo osInfo = new OperatingSystemInfo();
-    System.out.println(osInfo);
-    final JvmSystemInfo jvmInfo = new JvmSystemInfo();
-    System.out.println(jvmInfo);
+
+    System.out.println(CommandLineUtility.getEnvironment());
 
     new AvailableJDBCDrivers().print(System.out);
     new AvailableServersCommand().run();

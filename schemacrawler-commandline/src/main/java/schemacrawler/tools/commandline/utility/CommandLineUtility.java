@@ -43,6 +43,8 @@ import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Model.OptionSpec;
 import picocli.CommandLine.Model.UsageMessageSpec;
 import picocli.CommandLine.ParseResult;
+import schemacrawler.JvmSystemInfo;
+import schemacrawler.OperatingSystemInfo;
 import schemacrawler.Version;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
@@ -89,6 +91,12 @@ public class CommandLineUtility {
     return commandLine;
   }
 
+  public static String getEnvironment() {
+    return String.format(
+        "Environment:%n  %s%n  %s%n  %s%n",
+        Version.version(), new OperatingSystemInfo(), new JvmSystemInfo());
+  }
+
   /**
    * SchemaCrawler plugins are registered on-the-fly, by adding them to the classpath. Inspect the
    * command-line to see if there are any additional plugin-specific options passed in from the
@@ -132,7 +140,7 @@ public class CommandLineUtility {
   }
 
   public static void printCommandLineErrorMessage(final String errorMessage) {
-    System.err.printf("%s %s%n%n", Version.getProductName(), Version.getVersion());
+    System.err.printf("%s%n%n", Version.version());
     if (!isBlank(errorMessage)) {
       System.err.printf("Error: %s%n%n", errorMessage);
     } else {
@@ -140,6 +148,9 @@ public class CommandLineUtility {
     }
 
     System.err.println(readResourceFully("/command-line-error.footer.txt"));
+
+    System.err.println();
+    System.err.println(CommandLineUtility.getEnvironment());
   }
 
   public static CommandSpec toCommandSpec(final PluginCommand pluginCommand) {

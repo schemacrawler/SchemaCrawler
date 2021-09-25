@@ -45,7 +45,7 @@ public final class ConsoleOutputResource implements OutputResource {
   public Writer openNewOutputWriter(final Charset charset, final boolean appendOutput)
       throws IOException {
     final Writer writer = new BufferedWriter(new OutputStreamWriter(System.out, charset));
-    LOGGER.log(Level.INFO, "Opened output writer to console");
+    LOGGER.log(Level.FINE, "Opened output writer to console");
     return wrapWriter(getDescription(), writer, false);
   }
 

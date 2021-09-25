@@ -34,7 +34,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder.builder;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat.scdot;
 
@@ -58,6 +57,7 @@ import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
@@ -100,6 +100,11 @@ public class DiagramRendererTest {
   private static final String DIAGRAM_OUTPUT = "diagram_renderer_output/";
   private static Path directory;
 
+  @BeforeAll
+  public static void clean() throws Exception {
+    TestUtility.clean(DIAGRAM_OUTPUT);
+  }
+
   public static Path commandExecution(
       final Connection connection,
       final SchemaCrawlerCommand<DiagramOptions> scCommand,
@@ -125,11 +130,6 @@ public class DiagramRendererTest {
     scCommand.execute();
 
     return tempFilePath;
-  }
-
-  @BeforeAll
-  public static void removeOutputDir() throws Exception {
-    clean(DIAGRAM_OUTPUT);
   }
 
   @BeforeAll

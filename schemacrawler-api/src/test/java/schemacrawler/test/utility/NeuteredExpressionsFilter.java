@@ -25,19 +25,24 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+package schemacrawler.test.utility;
 
-package schemacrawler;
+import java.util.function.Function;
+import java.util.regex.Pattern;
 
-/**
- * SchemaCrawler information.
- *
- * @author Sualeh Fatehi sualeh@hotmail.com
- */
-public final class SchemaCrawlerInfo extends BaseProductVersion {
+final class NeuteredExpressionsFilter implements Function<String, String> {
 
-  private static final long serialVersionUID = 4051323422934251828L;
+  private final Pattern[] neuters = {
+    //
+    Pattern.compile("\u001B\\[[;\\d]*m"), Pattern.compile("\u2592")
+  };
 
-  public SchemaCrawlerInfo() {
-    super(Version.getProductName(), Version.getVersion());
+  @Override
+  public String apply(final String line) {
+    String neuteredLine = line;
+    for (final Pattern neuter : neuters) {
+      neuteredLine = neuter.matcher(neuteredLine).replaceAll("");
+    }
+    return neuteredLine;
   }
 }

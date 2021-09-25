@@ -39,9 +39,6 @@ import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.JvmSystemInfo;
-import schemacrawler.OperatingSystemInfo;
-import schemacrawler.Version;
 import us.fatehi.utility.UtilityMarker;
 import us.fatehi.utility.string.StringFormat;
 
@@ -63,14 +60,7 @@ public final class CommandLineLoggingUtility {
       return;
     }
 
-    LOGGER.log(
-        Level.INFO,
-        String.format(
-            "Environment:%n%s %s%n%s%n%s%n",
-            Version.getProductName(),
-            Version.getVersion(),
-            new OperatingSystemInfo(),
-            new JvmSystemInfo()));
+    LOGGER.log(Level.INFO, CommandLineUtility.getEnvironment());
 
     if (args == null) {
       return;

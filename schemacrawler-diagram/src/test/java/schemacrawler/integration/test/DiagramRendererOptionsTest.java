@@ -36,7 +36,6 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableExecuti
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder.builder;
 
 import java.nio.file.Path;
@@ -61,6 +60,7 @@ import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
@@ -78,8 +78,8 @@ public class DiagramRendererOptionsTest {
   private static Path directory;
 
   @BeforeAll
-  public static void removeOutputDir() throws Exception {
-    clean(DIAGRAM_OPTIONS_OUTPUT);
+  public static void clean() throws Exception {
+    TestUtility.clean(DIAGRAM_OPTIONS_OUTPUT);
   }
 
   @BeforeAll

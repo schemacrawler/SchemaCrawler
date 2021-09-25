@@ -28,39 +28,41 @@ http://www.gnu.org/licenses/
 
 package schemacrawler;
 
-import static us.fatehi.utility.IOUtility.readResourceFully;
+import static java.lang.System.lineSeparator;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.stream.Collectors.toList;
 
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.StringReader;
+import java.io.InputStreamReader;
+import java.util.List;
 
 /**
  * Version information for this product. Has methods to obtain information about the product, as
  * well as a main method, so it can be called from the command-line.
- *
- * @author Sualeh Fatehi
  */
-public final class Version {
+public final class Version extends BaseProductVersion {
+
+  private static final long serialVersionUID = 1143606778430634288L;
 
   private static final String ABOUT;
-  private static final String PRODUCTNAME = "SchemaCrawler";
-  private static final String VERSION;
+  private static final String PRODUCT_NAME = "SchemaCrawler";
+  private static final String PRODUCT_VERSION;
 
   static {
-    ABOUT = readResourceFully("/help/SchemaCrawler.txt");
+    try (final BufferedReader reader =
+        new BufferedReader(
+            new InputStreamReader(
+                Version.class.getResourceAsStream("/help/SchemaCrawler.txt"), UTF_8))) {
 
-    String[] productLine;
-    try (final BufferedReader reader = new BufferedReader(new StringReader(ABOUT))) {
-      final String readLine = reader.readLine();
-      if (readLine != null) {
-        productLine = readLine.split(" ");
-      } else {
-        productLine = new String[] {PRODUCTNAME, ""};
-      }
-    } catch (final IOException e) {
-      productLine = new String[] {PRODUCTNAME, ""};
+      final List<String> lines = reader.lines().collect(toList());
+      lines.add("");
+
+      PRODUCT_VERSION = lines.get(0).split(" ")[1];
+      ABOUT = String.join(lineSeparator(), lines);
+
+    } catch (final Exception e) {
+      throw new RuntimeException("Could not read internal information");
     }
-    VERSION = productLine[1];
   }
 
   /**
@@ -73,33 +75,19 @@ public final class Version {
   }
 
   /**
-   * Product name.
-   *
-   * @return Product name.
-   */
-  public static String getProductName() {
-    return PRODUCTNAME;
-  }
-
-  /**
-   * Product version number.
-   *
-   * @return Product version number.
-   */
-  public static String getVersion() {
-    return VERSION;
-  }
-
-  /**
    * Main routine. Prints information about this product.
    *
    * @param args Arguments to the main routine - they are ignored.
    */
   public static void main(final String[] args) {
-    System.out.println(about());
+    System.out.println(ABOUT);
+  }
+
+  public static Version version() {
+    return new Version();
   }
 
   private Version() {
-    // Prevent external instantiation
+    super(PRODUCT_NAME, PRODUCT_VERSION);
   }
 }
