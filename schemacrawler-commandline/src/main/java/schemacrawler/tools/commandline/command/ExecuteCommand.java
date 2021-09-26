@@ -93,8 +93,8 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
 
       final SchemaCrawlerExecutable executable = configureExecutable();
 
-      if (!state.isLoaded()) {
-        throw new ExecutionException(spec.commandLine(), "No database metadata is loaded");
+      if (!state.isLoaded() && !state.isDeferCatalogLoad()) {
+        throw new ExecutionException(spec.commandLine(), "Database metadata is not loaded");
       }
       if (!state.isConnected()) {
         throw new ExecutionException(spec.commandLine(), "Not able to make database connection");

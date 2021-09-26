@@ -33,8 +33,8 @@ import java.sql.SQLException;
 import java.util.Map;
 import java.util.function.Supplier;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.FilterOptions;
 import schemacrawler.schemacrawler.GrepOptions;
@@ -47,8 +47,7 @@ import us.fatehi.utility.string.StringFormat;
 
 public class ShellState {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(ShellState.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ShellState.class.getName());
 
   private Config baseConfig;
   private Config commandOptions;
@@ -58,6 +57,7 @@ public class ShellState {
   private Throwable lastException;
   private SchemaCrawlerOptions schemaCrawlerOptions;
   private SchemaRetrievalOptions schemaRetrievalOptions;
+  private boolean isDeferCatalogLoad;
 
   public void disconnect() {
     if (dataSource == null) {
@@ -104,6 +104,10 @@ public class ShellState {
     return dataSource != null;
   }
 
+  public boolean isDeferCatalogLoad() {
+    return isDeferCatalogLoad;
+  }
+
   public boolean isLoaded() {
     return catalog != null;
   }
@@ -138,6 +142,10 @@ public class ShellState {
 
   public void setDataSource(final Supplier<Connection> dataSource) {
     this.dataSource = dataSource;
+  }
+
+  public void setDeferCatalogLoad(final boolean isDeferCatalogLoad) {
+    this.isDeferCatalogLoad = isDeferCatalogLoad;
   }
 
   public void setLastException(final Throwable lastException) {

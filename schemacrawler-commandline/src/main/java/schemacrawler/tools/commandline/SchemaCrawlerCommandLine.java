@@ -39,16 +39,15 @@ import static us.fatehi.utility.Utility.isBlank;
 
 import java.util.Map;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import picocli.CommandLine;
-import java.util.logging.Logger;
 import schemacrawler.tools.commandline.state.ShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 
 public final class SchemaCrawlerCommandLine {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(SchemaCrawlerCommandLine.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerCommandLine.class.getName());
 
   public static void execute(final String[] args) {
 
@@ -56,6 +55,7 @@ public final class SchemaCrawlerCommandLine {
       requireNonNull(args, "No arguments provided");
 
       final ShellState state = new ShellState();
+      state.setDeferCatalogLoad(true);
       final StateFactory stateFactory = new StateFactory(state);
 
       final SchemaCrawlerCommandLineCommands commands = new SchemaCrawlerCommandLineCommands();
