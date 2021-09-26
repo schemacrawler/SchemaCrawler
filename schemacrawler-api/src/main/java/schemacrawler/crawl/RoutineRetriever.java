@@ -41,8 +41,8 @@ import java.sql.Statement;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.Function;
@@ -66,8 +66,7 @@ import us.fatehi.utility.string.StringFormat;
  */
 final class RoutineRetriever extends AbstractRetriever {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(RoutineRetriever.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(RoutineRetriever.class.getName());
 
   RoutineRetriever(
       final RetrieverConnection retrieverConnection,
@@ -201,7 +200,7 @@ final class RoutineRetriever extends AbstractRetriever {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
     if (!informationSchemaViews.hasQuery(FUNCTIONS)) {
-      throw new SchemaCrawlerSQLException("No functions SQL provided", null);
+      throw new SchemaCrawlerSQLException("No functions SQL provided");
     }
     final Query functionsSql = informationSchemaViews.getQuery(FUNCTIONS);
     try (final Statement statement = createStatement();
@@ -277,7 +276,7 @@ final class RoutineRetriever extends AbstractRetriever {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
     if (!informationSchemaViews.hasQuery(PROCEDURES)) {
-      throw new SchemaCrawlerSQLException("No procedures SQL provided", null);
+      throw new SchemaCrawlerSQLException("No procedures SQL provided");
     }
     final Query proceduresSql = informationSchemaViews.getQuery(PROCEDURES);
     try (final Statement statement = createStatement();

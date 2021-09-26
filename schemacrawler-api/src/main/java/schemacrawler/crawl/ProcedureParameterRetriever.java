@@ -39,8 +39,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.NamedObjectKey;
@@ -201,7 +201,7 @@ final class ProcedureParameterRetriever extends AbstractRetriever {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
     if (!informationSchemaViews.hasQuery(PROCEDURE_COLUMNS)) {
-      throw new SchemaCrawlerSQLException("No procedure parameters SQL provided", null);
+      throw new SchemaCrawlerSQLException("No procedure parameters SQL provided");
     }
     final Query procedureColumnsSql = informationSchemaViews.getQuery(PROCEDURE_COLUMNS);
     try (final Statement statement = createStatement();

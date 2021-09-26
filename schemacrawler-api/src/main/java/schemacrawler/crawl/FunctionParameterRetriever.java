@@ -40,8 +40,8 @@ import java.sql.SQLFeatureNotSupportedException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.inclusionrule.InclusionRule;
 import schemacrawler.schema.FunctionParameter;
@@ -61,8 +61,7 @@ import us.fatehi.utility.string.StringFormat;
  */
 final class FunctionParameterRetriever extends AbstractRetriever {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(FunctionParameterRetriever.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(FunctionParameterRetriever.class.getName());
 
   FunctionParameterRetriever(
       final RetrieverConnection retrieverConnection,
@@ -201,7 +200,7 @@ final class FunctionParameterRetriever extends AbstractRetriever {
     final InformationSchemaViews informationSchemaViews =
         getRetrieverConnection().getInformationSchemaViews();
     if (!informationSchemaViews.hasQuery(FUNCTION_COLUMNS)) {
-      throw new SchemaCrawlerSQLException("No function columns SQL provided", null);
+      throw new SchemaCrawlerSQLException("No function columns SQL provided");
     }
     final Query functionColumnsSql = informationSchemaViews.getQuery(FUNCTION_COLUMNS);
     try (final Statement statement = createStatement();

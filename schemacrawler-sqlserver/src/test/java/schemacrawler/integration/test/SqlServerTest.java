@@ -83,7 +83,7 @@ public class SqlServerTest extends BaseAdditionalDatabaseTest {
   private final JdbcDatabaseContainer<?> dbContainer =
       new MSSQLServerContainer<>(
               DockerImageName.parse("mcr.microsoft.com/mssql/server")
-                  .withTag("2017-CU22-ubuntu-16.04"))
+                  .withTag("2017-CU26-ubuntu-16.04"))
           .acceptLicense();
 
   @BeforeEach
@@ -131,14 +131,12 @@ public class SqlServerTest extends BaseAdditionalDatabaseTest {
         databaseUsers.stream().map(DatabaseUser::getName).collect(Collectors.toList()),
         hasItems("dbo", "public", "db_datareader"));
     assertThat(
-        databaseUsers
-            .stream()
+        databaseUsers.stream()
             .map(databaseUser -> databaseUser.getAttributes().size())
             .collect(Collectors.toList()),
         hasItems(4));
     assertThat(
-        databaseUsers
-            .stream()
+        databaseUsers.stream()
             .map(databaseUser -> databaseUser.getAttributes().keySet())
             .flatMap(Collection::stream)
             .collect(Collectors.toSet()),

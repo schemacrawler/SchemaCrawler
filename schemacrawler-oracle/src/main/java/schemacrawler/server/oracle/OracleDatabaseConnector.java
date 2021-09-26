@@ -53,7 +53,7 @@ public final class OracleDatabaseConnector extends DatabaseConnector {
 
   public OracleDatabaseConnector() throws IOException {
     super(
-        DB_SERVER_TYPE,
+        new DatabaseServerType("oracle", "Oracle"),
         url -> url != null && url.startsWith("jdbc:oracle:"),
         new OracleInformationSchemaViewsBuilder(),
         (schemaRetrievalOptionsBuilder, connection) ->
