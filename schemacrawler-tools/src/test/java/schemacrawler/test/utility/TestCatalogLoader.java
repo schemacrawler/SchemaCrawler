@@ -36,7 +36,7 @@ public class TestCatalogLoader extends BaseCatalogLoader {
 
   public TestCatalogLoader() {
     super(new CommandDescription("testloader", "Loader for testing"), 3);
-    forceFailureIfConfigured();
+    forceInstantiationFailureIfConfigured();
   }
 
   @Override
@@ -54,14 +54,23 @@ public class TestCatalogLoader extends BaseCatalogLoader {
 
   @Override
   public void loadCatalog() {
-    // No-op
+    forceLoadFailureIfConfigured();
   }
 
-  private void forceFailureIfConfigured() {
+  private void forceInstantiationFailureIfConfigured() {
     final String propertyValue =
         System.getProperty(this.getClass().getName() + ".force-instantiation-failure");
     if (propertyValue != null) {
       throw new RuntimeException("Forced instantiation error");
+    }
+  }
+
+  private void forceLoadFailureIfConfigured() {
+    final String propertyValue =
+        System.getProperty(this.getClass().getName() + ".force-load-failure");
+    if (propertyValue != null) {
+      // Hard fail, do not throw, since exceptions are caught
+      System.exit(2);
     }
   }
 }

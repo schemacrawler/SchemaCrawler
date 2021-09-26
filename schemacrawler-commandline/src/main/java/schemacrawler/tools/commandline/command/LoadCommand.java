@@ -101,6 +101,7 @@ public class LoadCommand extends BaseStateHolder implements Runnable {
       saveCommandOptions();
 
       if (state.isDeferCatalogLoad()) {
+        LOGGER.log(Level.CONFIG, "Not loading catalog, since this is deferred");
         return;
       }
 
