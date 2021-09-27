@@ -27,6 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test;
 
+import static com.github.stefanbirkner.systemlambda.SystemLambda.restoreSystemProperties;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
@@ -49,6 +50,7 @@ import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
 
 import schemacrawler.Main;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestCatalogLoader;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -78,7 +80,11 @@ public class CommandLineNegativeTest {
     final Map<String, String> argsMapOverride = new HashMap<>();
     argsMapOverride.put("--command", "badcommand");
 
-    run(testContext, argsMapOverride, connectionInfo);
+    restoreSystemProperties(
+        () -> {
+          System.setProperty(TestCatalogLoader.class.getName() + ".force-load-failure", "throw");
+          run(testContext, argsMapOverride, connectionInfo);
+        });
   }
 
   @BeforeEach

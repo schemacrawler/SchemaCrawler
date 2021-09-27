@@ -74,7 +74,6 @@ public class MetadataRetrievalStrategyTest {
   }
 
   private TestOutputStream out;
-
   private TestOutputStream err;
 
   @AfterEach
@@ -100,7 +99,7 @@ public class MetadataRetrievalStrategyTest {
     final Map<String, String> argsMap = new HashMap<>();
     argsMap.put("--info-level", infoLevel.name());
 
-    // Check that System.err has an error
+    // Check that System.err has an error, since the SQL for retrieving tables was not provided
     try {
       assertThat(
           outputOf(

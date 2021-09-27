@@ -1,6 +1,6 @@
 SchemaCrawler 16.15.7
 
-Error: Cannot load catalog
+Error: No tables SQL provided
 
 Run SchemaCrawler again with just the
 -h

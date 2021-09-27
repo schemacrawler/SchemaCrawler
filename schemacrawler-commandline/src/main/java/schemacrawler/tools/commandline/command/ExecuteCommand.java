@@ -33,6 +33,7 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.matched
 import java.sql.Connection;
 import java.util.Map;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.ExecutionException;
@@ -40,8 +41,8 @@ import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Model;
 import picocli.CommandLine.ParseResult;
 import picocli.CommandLine.Spec;
-import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
@@ -73,8 +74,7 @@ import us.fatehi.utility.string.StringFormat;
     })
 public class ExecuteCommand extends BaseStateHolder implements Runnable {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(AvailableCommandsCommand.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(AvailableCommandsCommand.class.getName());
 
   @Mixin private CommandOptions commandOptions;
   @Mixin private CommandOutputOptions commandOutputOptions;
@@ -87,65 +87,80 @@ public class ExecuteCommand extends BaseStateHolder implements Runnable {
   @Override
   public void run() {
 
-    if (!state.isLoaded()) {
-      throw new ExecutionException(spec.commandLine(), "No database metadata is loaded");
-    }
-    if (!state.isConnected()) {
-      throw new ExecutionException(spec.commandLine(), "Not able to make database connection");
-    }
+    try {
+      // Parse and save command options
+      saveCommandOptions();
 
-    try (final Connection connection = state.getDataSource().get()) {
+      final SchemaCrawlerExecutable executable = configureExecutable();
 
-      final ParseResult parseResult = spec.commandLine().getParseResult();
-      final Map<String, Object> commandConfig = matchedOptionValues(parseResult);
-      LOGGER.log(Level.INFO, "Loaded command config");
-      LOGGER.log(Level.CONFIG, new ObjectToStringFormat(commandConfig));
-      state.setCommandOptions(commandConfig);
-
-      final OutputOptionsBuilder outputOptionsBuilder =
-          OutputOptionsConfig.fromConfig(null, state.getConfig());
-
-      if (commandOutputOptions.getOutputFile().isPresent()) {
-        outputOptionsBuilder.withOutputFile(commandOutputOptions.getOutputFile().get());
-      } else {
-        outputOptionsBuilder.withConsoleOutput();
+      if (!state.isLoaded() && !state.isDeferCatalogLoad()) {
+        throw new ExecutionException(spec.commandLine(), "Database metadata is not loaded");
       }
-      commandOutputOptions
-          .getOutputFormatValue()
-          .ifPresent(outputOptionsBuilder::withOutputFormatValue);
-      commandOutputOptions.getTitle().ifPresent(outputOptionsBuilder::title);
-
-      final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptions();
-      final SchemaRetrievalOptions schemaRetrievalOptions = state.getSchemaRetrievalOptions();
-      final OutputOptions outputOptions = outputOptionsBuilder.toOptions();
-      final Config additionalConfig = state.getConfig();
-
-      // Output file name has to be specified for diagrams
-      // (Check after output options have been built)
-      if (DiagramOutputFormat.isSupportedFormat(outputOptions.getOutputFormatValue())
-          && !commandOutputOptions.getOutputFile().isPresent()) {
-        throw new SchemaCrawlerRuntimeException(
-            "Output file has to be specified for schema diagrams");
+      if (!state.isConnected()) {
+        throw new ExecutionException(spec.commandLine(), "Not able to make database connection");
       }
 
-      final Catalog catalog = state.getCatalog();
-      final String command = commandOptions.getCommand();
+      try (final Connection connection = state.getDataSource().get()) {
 
-      LOGGER.log(Level.INFO, new StringFormat("Setting up SchemaCrawler command <%s>", command));
-      LOGGER.log(Level.CONFIG, new ObjectToStringFormat(outputOptions));
+        final SchemaRetrievalOptions schemaRetrievalOptions = state.getSchemaRetrievalOptions();
+        final Catalog catalog = state.getCatalog();
 
-      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
-      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-      executable.setOutputOptions(outputOptions);
-      executable.setAdditionalConfiguration(additionalConfig);
-      executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+        executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+        executable.setConnection(connection);
+        executable.setCatalog(catalog);
 
-      executable.setConnection(connection);
-      executable.setCatalog(catalog);
+        executable.execute();
+      }
 
-      executable.execute();
     } catch (final Exception e) {
       throw new ExecutionException(spec.commandLine(), "Cannot execute SchemaCrawler command", e);
     }
+  }
+
+  private SchemaCrawlerExecutable configureExecutable() {
+
+    final OutputOptionsBuilder outputOptionsBuilder =
+        OutputOptionsConfig.fromConfig(null, state.getConfig());
+
+    if (commandOutputOptions.getOutputFile().isPresent()) {
+      outputOptionsBuilder.withOutputFile(commandOutputOptions.getOutputFile().get());
+    } else {
+      outputOptionsBuilder.withConsoleOutput();
+    }
+    commandOutputOptions
+        .getOutputFormatValue()
+        .ifPresent(outputOptionsBuilder::withOutputFormatValue);
+    commandOutputOptions.getTitle().ifPresent(outputOptionsBuilder::title);
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptions();
+    final OutputOptions outputOptions = outputOptionsBuilder.toOptions();
+    final Config additionalConfig = state.getConfig();
+
+    // Output file name has to be specified for diagrams
+    // (Check after output options have been built)
+    if (DiagramOutputFormat.isSupportedFormat(outputOptions.getOutputFormatValue())
+        && !commandOutputOptions.getOutputFile().isPresent()) {
+      throw new SchemaCrawlerRuntimeException(
+          "Output file has to be specified for schema diagrams");
+    }
+
+    final String command = commandOptions.getCommand();
+
+    LOGGER.log(Level.INFO, new StringFormat("Setting up SchemaCrawler command <%s>", command));
+    LOGGER.log(Level.CONFIG, new ObjectToStringFormat(outputOptions));
+
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setOutputOptions(outputOptions);
+    executable.setAdditionalConfiguration(additionalConfig);
+    return executable;
+  }
+
+  private void saveCommandOptions() throws SchemaCrawlerException {
+    final ParseResult parseResult = spec.commandLine().getParseResult();
+    final Map<String, Object> commandConfig = matchedOptionValues(parseResult);
+    LOGGER.log(Level.INFO, "Loaded command config");
+    LOGGER.log(Level.CONFIG, new ObjectToStringFormat(commandConfig));
+    state.setCommandOptions(commandConfig);
   }
 }
