@@ -1,7 +1,14 @@
 # SchemaCrawler Change History
 
-<a name="a16.15.6"></a>
-## Release 16.15.6 - 2021-09-15
+
+<a name="a16.15.8"></a>
+## Release 16.15.8 - 2021-10-01
+
+- Check for a valid command before loading catalog
+
+
+<a name="a16.15.7"></a>
+## Release 16.15.7 - 2021-09-15
 
 - Fix issue #509 - distribute Docker image with JDK 17
 
