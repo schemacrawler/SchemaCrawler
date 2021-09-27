@@ -14,3 +14,4 @@ services:
       - type: bind
         source: ./
         target: /home/schcrwlr/output
+    entrypoint: /bin/bash
