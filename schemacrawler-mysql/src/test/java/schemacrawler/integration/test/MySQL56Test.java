@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.integration.test.utility.MySQLTestUtility.newMySQLContainer5;
+import static schemacrawler.integration.test.utility.MySQLTestUtility.newMySQLContainer56;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -58,18 +58,18 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
 @Testcontainers(disabledWithoutDocker = true)
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
-public class MySQL5Test extends BaseAdditionalDatabaseTest {
+public class MySQL56Test extends BaseAdditionalDatabaseTest {
 
   @Container
   private final JdbcDatabaseContainer<?> dbContainer =
-      newMySQLContainer5().withUsername("schemacrawler").withDatabaseName("books");
+      newMySQLContainer56().withUsername("schemacrawler").withDatabaseName("books");
 
   @BeforeEach
   public void createDatabase() throws SQLException, SchemaCrawlerException {
     createDataSource(
         dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
 
-    createDatabase("/mysql-5.scripts.txt");
+    createDatabase("/mysql-5.6.scripts.txt");
   }
 
   @Test
