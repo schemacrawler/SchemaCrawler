@@ -133,14 +133,12 @@ public class DB2Test extends BaseAdditionalDatabaseTest {
         databaseUsers.stream().map(DatabaseUser::getName).collect(Collectors.toList()),
         hasItems("DB2INST1"));
     assertThat(
-        databaseUsers
-            .stream()
+        databaseUsers.stream()
             .map(databaseUser -> databaseUser.getAttributes().size())
             .collect(Collectors.toList()),
         hasItems(16));
     assertThat(
-        databaseUsers
-            .stream()
+        databaseUsers.stream()
             .map(databaseUser -> databaseUser.getAttributes().keySet())
             .flatMap(Collection::stream)
             .collect(Collectors.toSet()),

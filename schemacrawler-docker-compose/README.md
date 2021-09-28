@@ -138,7 +138,7 @@
 - Start SchemaCrawler bash with
   `docker exec -it schemacrawler /bin/bash`
 - Run SchemaCrawler from Docker container bash
-  `schemacrawler --server db2 --host db2 --database schcrwlr --user schcrwlr --password schemacrawler --info-level minimum -c list`
+  `schemacrawler --server db2 --host db2 --database schcrwlr --schemas SCHCRWLR --user schcrwlr --password schemacrawler --info-level minimum -c list`
 - Output can be created with `--output-file output/out.txt`
 
 Connect to the IBM DB2 container if needed, run
