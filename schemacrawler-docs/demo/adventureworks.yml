@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+
+  adventureworks:
+    image: phillipsj/adventureworks
+    container_name: adventureworks
+    ports:
+      - target: 1433
+        published: 1433
+        protocol: tcp
+        mode: host
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: Schem#Crawl3r
+
+  schemacrawler:
+    image: schemacrawler/schemacrawler
+    container_name: schemacrawler
+    stdin_open: true
+    tty: true
+    volumes:
+      - type: bind
+        source: ./
+        target: /home/schcrwlr/output
+    entrypoint: /bin/bash
