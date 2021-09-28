@@ -30,7 +30,7 @@ package schemacrawler.integration.test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNull.notNullValue;
-import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQLContainer13;
+import static schemacrawler.integration.test.utility.PostgreSQLTestUtility.newPostgreSQLContainer12;
 import static schemacrawler.test.utility.DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 import static schemacrawler.tools.utility.SchemaCrawlerUtility.getCatalog;
 import static schemacrawler.utility.MetaDataUtility.getColumnsListAsString;
@@ -62,7 +62,7 @@ import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 @DisplayName("Test for issue #458 - daterange index in Postgres results in NotLoadedException")
 public class PostgreSQLGiSTTest extends BaseAdditionalDatabaseTest {
 
-  @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQLContainer13();
+  @Container private final JdbcDatabaseContainer<?> dbContainer = newPostgreSQLContainer12();
 
   @BeforeEach
   public void createDatabase() throws Exception {
