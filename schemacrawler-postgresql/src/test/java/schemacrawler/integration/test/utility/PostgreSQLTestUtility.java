@@ -35,12 +35,12 @@ public final class PostgreSQLTestUtility {
 
   @SuppressWarnings("resource")
   public static JdbcDatabaseContainer<?> newPostgreSQLContainer13() {
-    return newPostgreSQLContainer("13.2");
+    return newPostgreSQLContainer("13.4");
   }
 
   @SuppressWarnings("resource")
   public static JdbcDatabaseContainer<?> newPostgreSQLContainer9() {
-    return newPostgreSQLContainer("9.6.21");
+    return newPostgreSQLContainer("9.6.23");
   }
 
   @SuppressWarnings("resource")
