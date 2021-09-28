@@ -35,12 +35,12 @@ public final class MySQLTestUtility {
 
   @SuppressWarnings("resource")
   public static JdbcDatabaseContainer<?> newMySQLContainer5() {
-    return newMySQLContainer("5.6.51");
+    return newMySQLContainer("5.7.35");
   }
 
   @SuppressWarnings("resource")
   public static JdbcDatabaseContainer<?> newMySQLContainer8() {
-    return newMySQLContainer("8.0.24");
+    return newMySQLContainer("8.0.26");
   }
 
   @SuppressWarnings("resource")

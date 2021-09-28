@@ -58,7 +58,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
 @Testcontainers(disabledWithoutDocker = true)
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
-public class MySQL56Test extends BaseAdditionalDatabaseTest {
+public class MySQL5Test extends BaseAdditionalDatabaseTest {
 
   @Container
   private final JdbcDatabaseContainer<?> dbContainer =
@@ -69,7 +69,7 @@ public class MySQL56Test extends BaseAdditionalDatabaseTest {
     createDataSource(
         dbContainer.getJdbcUrl(), dbContainer.getUsername(), dbContainer.getPassword());
 
-    createDatabase("/mysql-5.6.scripts.txt");
+    createDatabase("/mysql-5.scripts.txt");
   }
 
   @Test
