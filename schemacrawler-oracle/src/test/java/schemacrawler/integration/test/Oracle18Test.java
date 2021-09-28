@@ -92,7 +92,7 @@ public class Oracle18Test extends BaseAdditionalDatabaseTest {
             .includeAllSequences()
             .includeAllSynonyms()
             .includeRoutines(new RegularExpressionInclusionRule("[0-9a-zA-Z_\\.]*"))
-            .tableTypes("TABLE,VIEW");
+            .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
     final LoadOptionsBuilder loadOptionsBuilder =
         LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final SchemaCrawlerOptions schemaCrawlerOptions =
