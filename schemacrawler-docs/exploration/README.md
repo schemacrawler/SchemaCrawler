@@ -3,12 +3,12 @@
 
 ### Setup
 
-- Download an Access version of the WorldWideImporters database
-  `wget -N -q --show-progress https://excelclasstraining.com/downloads/Sakila.accdb`
+- Download an SQLite version of the [Sakila database](https://dev.mysql.com/doc/sakila/en/)
+  `wget -N -q --show-progress https://github.com/ivanceras/sakila/raw/master/sqlite-sakila-db/sakila.db`
 - To start SchemaCrawler, run
   `docker run -v "$(pwd)":/home/schcrwlr/share --name schemacrawler --rm -i -t --entrypoint=/bin/bash schemacrawler/schemacrawler:v16.15.7`
 - Run SchemaCrawler from Docker container bash
-  `schemacrawler --url "jdbc:ucanaccess://share/Sakila.accdb;showSchema=true;sysSchema=true" --schemas PUBLIC\.PUBLIC --info-level minimum -c list --table-types TABLE`
+  `schemacrawler --url "jdbc:sqlite:share/sakila.db" --info-level minimum -c list --table-types TABLE`
 - Output can be created with `--output-file output/out.txt`
 
 ### Tear Down

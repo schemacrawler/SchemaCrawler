@@ -2,5 +2,6 @@
 graphs/
 /derby.log
 *.accdb
+*.db
 *.pdf
 *.png
