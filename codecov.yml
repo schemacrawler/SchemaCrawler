@@ -5,3 +5,5 @@ ignore: # ignore folders and all their contents
   - "schemacrawler-testdb"
   - "schemacrawler-diff"
   - "schemacrawler-examplecode"
+- name: SchemaCrawler Action for GitHub Actions
+  uses: schemacrawler/SchemaCrawler-Action@v16.15.7
