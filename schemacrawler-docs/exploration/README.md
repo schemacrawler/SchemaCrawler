@@ -6,7 +6,7 @@
 - Download an SQLite version of the [Sakila database](https://dev.mysql.com/doc/sakila/en/)
   `wget -N -q --show-progress https://github.com/ivanceras/sakila/raw/master/sqlite-sakila-db/sakila.db`
 - To start SchemaCrawler, run
-  `docker run -v "$(pwd)":/home/schcrwlr/share --name schemacrawler --rm -i -t --entrypoint=/bin/bash schemacrawler/schemacrawler:v16.15.7`
+  `docker run -v "$(pwd)":/home/schcrwlr/share --name schemacrawler --rm -i -t --entrypoint=/bin/bash schemacrawler/schemacrawler:v16.15.8`
 
 
 ## Tutorial

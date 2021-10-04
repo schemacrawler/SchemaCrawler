@@ -2,7 +2,7 @@
 
 
 <a name="a16.15.8"></a>
-## Release 16.15.8 - 2021-10-01
+## Release 16.15.8 - 2021-10-04
 
 - Check for a valid command before loading catalog
 - Fix issue #517 - TABLE_COLUMNS.sql causes SQL0604N against UTF-8 IBM DB2 database
