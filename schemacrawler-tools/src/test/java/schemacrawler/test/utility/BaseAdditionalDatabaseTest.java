@@ -29,14 +29,10 @@ package schemacrawler.test.utility;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -45,16 +41,6 @@ import schemacrawler.testdb.TestSchemaCreator;
 
 @ExtendWith(TestLoggingExtension.class)
 public abstract class BaseAdditionalDatabaseTest {
-
-  protected static final Logger LOGGER = Logger.getLogger(ExecutableTestUtility.class.getName());
-
-  @BeforeAll
-  public static final void startLogging() {
-    final ConsoleHandler ch = new ConsoleHandler();
-    ch.setLevel(Level.INFO);
-    LOGGER.addHandler(ch);
-    LOGGER.setLevel(Level.INFO);
-  }
 
   private DataSource dataSource;
 
@@ -76,7 +62,6 @@ public abstract class BaseAdditionalDatabaseTest {
       final String user,
       final String password,
       final String connectionProperties) {
-    LOGGER.log(Level.CONFIG, "Database connection URL: " + connectionUrl);
 
     final BasicDataSource ds = new BasicDataSource();
     ds.setUrl(connectionUrl);
