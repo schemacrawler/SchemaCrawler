@@ -20,7 +20,7 @@
 - See table relationships in a diagram
   `schemacrawler --url "jdbc:sqlite:share/sakila.db" --no-info --info-level standard --command schema --grep-tables film --output-file share/film-table.pdf`
 - See child table relationships in a diagram
-  `schemacrawler --url "jdbc:sqlite:share/sakila.db" --no-info --info-level standard --command schema --grep-tables film --children 1 --output-file share/film-table.pdf`
+  `schemacrawler --url "jdbc:sqlite:share/sakila.db" --info-level standard --command schema --grep-tables film --children 1 --output-file share/film-table-children.pdf`
 - Find all tables with a "film_id" column in a diagram
   `schemacrawler --url "jdbc:sqlite:share/sakila.db" --no-info --info-level standard --command schema --grep-columns .*\.film_id --output-file share/film-table.pdf`
 - Guess at weak associations in a diagram
