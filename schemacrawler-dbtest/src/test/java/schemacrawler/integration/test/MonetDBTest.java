@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -37,14 +36,14 @@ import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.logging.Level;
 
-import nl.cwi.monetdb.embedded.env.MonetDBEmbeddedDatabase;
-import nl.cwi.monetdb.embedded.env.MonetDBEmbeddedException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+
+import nl.cwi.monetdb.embedded.env.MonetDBEmbeddedDatabase;
+import nl.cwi.monetdb.embedded.env.MonetDBEmbeddedException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.DatabaseTestUtility;
@@ -53,32 +52,17 @@ import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
 @EnabledIfSystemProperty(named = "lightdb", matches = "^((?!(false|no)).)*$")
-public class MonetDBTest
-  extends BaseAdditionalDatabaseTest
-{
+public class MonetDBTest extends BaseAdditionalDatabaseTest {
 
   private boolean isDatabaseRunning;
 
-  @AfterEach
-  public void stopDatabaseServer()
-    throws MonetDBEmbeddedException
-  {
-    if (isDatabaseRunning)
-    {
-      MonetDBEmbeddedDatabase.stopDatabase();
-    }
-  }
-
   @BeforeEach
-  public void createDatabase()
-  {
-    try
-    {
+  public void createDatabase() {
+    try {
       // Set up native libraries, and load JDBC driver
       final Path directoryPath = Files.createTempDirectory("monetdbjavalite");
       MonetDBEmbeddedDatabase.startDatabase(directoryPath.toString());
-      if (MonetDBEmbeddedDatabase.isDatabaseRunning())
-      {
+      if (MonetDBEmbeddedDatabase.isDatabaseRunning()) {
         MonetDBEmbeddedDatabase.stopDatabase();
       }
 
@@ -86,47 +70,42 @@ public class MonetDBTest
       createDatabase("/monetdb.scripts.txt");
 
       isDatabaseRunning = true;
-    }
-    catch (final Throwable e)
-    {
-      LOGGER.log(Level.FINE, e.getMessage(), e);
+    } catch (final Throwable e) {
+      System.err.println(e.getMessage());
       // Do not run if MonetDBLite cannot be loaded
       isDatabaseRunning = false;
     }
   }
 
+  @AfterEach
+  public void stopDatabaseServer() throws MonetDBEmbeddedException {
+    if (isDatabaseRunning) {
+      MonetDBEmbeddedDatabase.stopDatabase();
+    }
+  }
+
   @Test
-  public void testMonetDBWithConnection()
-    throws Exception
-  {
-    if (!isDatabaseRunning)
-    {
-      LOGGER.log(Level.INFO, "Did NOT run MonetDB test");
+  public void testMonetDBWithConnection() throws Exception {
+    if (!isDatabaseRunning) {
+      System.err.println("Did NOT run MonetDB test");
       return;
     }
 
     final SchemaCrawlerOptions options =
-      DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+        DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
-    final SchemaTextOptionsBuilder textOptionsBuilder =
-      SchemaTextOptionsBuilder.builder();
-    textOptionsBuilder
-      .noIndexNames()
-      .showDatabaseInfo()
-      .showJdbcDriverInfo();
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
+    textOptionsBuilder.noIndexNames().showDatabaseInfo().showJdbcDriverInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    final SchemaCrawlerExecutable executable =
-      new SchemaCrawlerExecutable("details");
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(options);
-    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
-                                            .builder(textOptions)
-                                            .toConfig());
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
 
     final String expectedResource =
-      String.format("testMonetDBWithConnection.%s.txt", javaVersion());
-    assertThat(outputOf(executableExecution(getConnection(), executable)),
-               hasSameContentAs(classpathResource(expectedResource)));
+        String.format("testMonetDBWithConnection.%s.txt", javaVersion());
+    assertThat(
+        outputOf(executableExecution(getConnection(), executable)),
+        hasSameContentAs(classpathResource(expectedResource)));
   }
-
 }

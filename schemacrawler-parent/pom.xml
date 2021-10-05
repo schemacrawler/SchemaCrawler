@@ -6,7 +6,7 @@
   <groupId>us.fatehi</groupId>
   <artifactId>schemacrawler-parent</artifactId>
   <packaging>pom</packaging>
-  <version>16.15.7</version>
+  <version>16.15.8</version>
   <name>SchemaCrawler [Parent]</name>
   <description>Free database schema discovery and comprehension tool</description>
   <url>https://www.schemacrawler.com</url>
@@ -44,13 +44,22 @@
     <url>https://github.com/schemacrawler/SchemaCrawler</url>
     <connection>scm:git:git://github.com/schemacrawler/SchemaCrawler.git</connection>
   </scm>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>5.8.1</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <dependencies>
 
-    <!-- NOTES:
-         1. Jackson is distributed with the SchemaCrawler distribution
-         2. Used in "loader", "diagram" and "text" for tests of catalog attributes for weak associations
-         3. Used in "scripting" for catalog YAML and XML serialization
-      -->
+    <!-- NOTES: 1. Jackson is distributed with the SchemaCrawler distribution 
+      2. Used in "loader", "diagram" and "text" for tests of catalog attributes 
+      for weak associations 3. Used in "scripting" for catalog YAML and XML serialization -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
@@ -86,7 +95,6 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
-      <version>5.7.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
