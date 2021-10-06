@@ -63,4 +63,3 @@ __init__.py
 **/derby.log
 
 /schemacrawler-scripting/serialize.*
-/schemacrawler-docker-compose/*.md

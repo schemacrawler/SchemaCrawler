@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+
+  sqlserver:
+    image: chriseaton/adventureworks
+    container_name: adventureworks
+    ports:
+      - target: 1433
+        published: 1433
+        protocol: tcp
+        mode: host
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: Schem#Crawl3r
