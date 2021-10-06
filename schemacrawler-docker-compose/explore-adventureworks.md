@@ -13,33 +13,29 @@
 
 - List all the tables in the database  
   `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level minimum --command list`
-- List only film related tables in the database  
-  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level minimum --command list --grep-tables film.*`
-- Explore the "film" table in detail  
-  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r  --no-info --info-level maximum --command details --grep-tables film`
+- Create an entity-relationship diagram of the database  
+  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level standard --command schema --output-file share/adventureworks.pdf`
+- Explore the "Employee" table in detail  
+  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r  --no-info --info-level maximum --command details --grep-tables .*\..*\.Employee`
 - See table relationships in a diagram  
-  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level standard --command schema --grep-tables film --output-file share/film-table.pdf`
+  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level standard --command schema --grep-tables .*\.Employee --output-file share/employee-table.pdf`
 - See child table relationships in a diagram  
-  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level standard --command schema --grep-tables film --children 1 --output-file share/film-table-children.pdf`
-- Find all tables with a "film_id" column in a diagram  
-  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level standard --command schema --grep-columns .*\.film_id --output-file share/film_id_tables.pdf`
+  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level standard --command schema --grep-tables .*\.Employee --children 1 --output-file share/employee-table-children.pdf`
+- Find all tables with a "BusinessEntityID" column in a diagram  
+  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level standard --command schema --grep-columns .*\.BusinessEntityID --output-file share/businessentityid-tables.pdf`
 - Guess at weak associations in a diagram  
-  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level standard --command schema --grep-columns .*\.film_id --weak-associations --output-file share/film-table-weak-associations.pdf`
+  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level standard --command schema --grep-tables .*\.Employee --children 1 --weak-associations --output-file share/businessentityid-tables-weak-associations.pdf`
 - Find schema design problems with lint  
-  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level standard --command lint --grep-columns .*\.film_id`
-- See row counts film related tables in the database  
-  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level minimum --command count --grep-tables film.*`
-- See data in "film" table  
-  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level standard --command dump --grep-tables film --output-file share/film-data.html`
+  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level standard --command lint --grep-tables .*\.Employee --children 1`
+- See row counts employee related tables in the database  
+  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level standard --command count --grep-tables .*\.Employee --children 1`
+- See data in "Employee" table  
+  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level standard --command dump --grep-tables .*\.Employee --output-file share/employee-data.html`
 - Output schema to HTML, with diagram, in a single file  
-  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level maximum --command details --grep-tables film --output-format htmlx --output-file share/film-table.html`
-- Diff with another version of Sakila  
-  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level standard --command schema --output-file sakila.txt`  
-  `wget -O sakila_master.db https://github.com/bradleygrant/sakila-sqlite3/raw/main/sakila_master.db`  
-  `schemacrawler --url "jdbc:sqlite:sakila_master.db" --info-level standard --command schema --output-file sakila_master.txt`
-- *TODO*: Open in dbdiagram.io and edit the film text table schema, and generate new scripts
+  `schemacrawler --server sqlserver --host adventureworks --database AdventureWorks --schemas AdventureWorks\.[A-Z].* --user SA --password Schem#Crawl3r --info-level maximum --command details --grep-tables .*\.Employee --children 1 --output-format htmlx --output-file share/employee-table.html`
+
 
 ### Tear Down
 
-- To stop the SchemaCrawler Docker container, run
-  `docker--commandompose -f schemacrawler.yml down -t0`
+- Stop the SchemaCrawler and database Docker containers  
+  `docker-compose -f schemacrawler.yml -f adventureworks.yml down -t0`

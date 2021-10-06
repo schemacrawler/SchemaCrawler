@@ -13,5 +13,5 @@ services:
         target: /home/schcrwlr/testdb
       - type: bind
         source: ./
-        target: /home/schcrwlr/output
+        target: /home/schcrwlr/share
     entrypoint: /bin/bash
