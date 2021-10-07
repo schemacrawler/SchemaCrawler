@@ -35,11 +35,13 @@ import static us.fatehi.utility.html.TagBuilder.tableHeaderCell;
 import static us.fatehi.utility.html.TagBuilder.tableRow;
 
 import java.io.PrintWriter;
+import java.lang.reflect.Array;
 
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.utility.BinaryData;
 import us.fatehi.utility.html.Alignment;
 import us.fatehi.utility.html.Tag;
+import us.fatehi.utility.html.TagBuilder;
 import us.fatehi.utility.html.TagOutputFormat;
 
 /**
@@ -58,6 +60,27 @@ abstract class BaseTextFormattingHelper implements TextFormattingHelper {
       dashedSeparator.append(pattern);
     }
     return dashedSeparator.toString();
+  }
+
+  private static String toString(final Object array) {
+    if (array == null) {
+      return "NULL";
+    }
+    if (!array.getClass().isArray()) {
+      return array.toString();
+    }
+
+    final StringBuilder buffer = new StringBuilder();
+    final int length = Array.getLength(array);
+    buffer.append("[");
+    for (int i = 0; i < length; i++) {
+      buffer.append(Array.get(array, i));
+      if (i < length - 1) {
+        buffer.append(", ");
+      }
+    }
+    buffer.append("]");
+    return buffer.toString();
   }
 
   protected final PrintWriter out;
@@ -248,17 +271,15 @@ abstract class BaseTextFormattingHelper implements TextFormattingHelper {
     }
     final Tag row = tableRow().make();
     for (final Object element : columnData) {
+      final TagBuilder tableCell = tableCell().withEscapedText(toString(element));
       if (element == null) {
-        row.addInnerTag(tableCell().withText("NULL").withStyleClass("data_null").make());
+        tableCell.withStyleClass("data_null");
       } else if (element instanceof BinaryData) {
-        row.addInnerTag(
-            tableCell().withEscapedText(element.toString()).withStyleClass("data_binary").make());
+        tableCell.withStyleClass("data_binary");
       } else if (element instanceof Number) {
-        row.addInnerTag(
-            tableCell().withEscapedText(element.toString()).withStyleClass("data_number").make());
-      } else {
-        row.addInnerTag(tableCell().withEscapedText(element.toString()).make());
+        tableCell.withStyleClass("data_number");
       }
+      row.addInnerTag(tableCell.make());
     }
 
     out.println(row.render(TagOutputFormat.valueOf(outputFormat.name())));
