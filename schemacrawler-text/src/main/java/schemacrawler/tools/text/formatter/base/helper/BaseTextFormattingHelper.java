@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.text.formatter.base.helper;
 
+import static us.fatehi.utility.Utility.arrayToObjectList;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.html.TagBuilder.anchor;
 import static us.fatehi.utility.html.TagBuilder.tableCell;
@@ -35,7 +36,6 @@ import static us.fatehi.utility.html.TagBuilder.tableHeaderCell;
 import static us.fatehi.utility.html.TagBuilder.tableRow;
 
 import java.io.PrintWriter;
-import java.lang.reflect.Array;
 
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.utility.BinaryData;
@@ -66,21 +66,11 @@ abstract class BaseTextFormattingHelper implements TextFormattingHelper {
     if (array == null) {
       return "NULL";
     }
-    if (!array.getClass().isArray()) {
-      return array.toString();
+    if (array.getClass().isArray()) {
+      return arrayToObjectList(array).toString();
     }
 
-    final StringBuilder buffer = new StringBuilder();
-    final int length = Array.getLength(array);
-    buffer.append("[");
-    for (int i = 0; i < length; i++) {
-      buffer.append(Array.get(array, i));
-      if (i < length - 1) {
-        buffer.append(", ");
-      }
-    }
-    buffer.append("]");
-    return buffer.toString();
+    return array.toString();
   }
 
   protected final PrintWriter out;

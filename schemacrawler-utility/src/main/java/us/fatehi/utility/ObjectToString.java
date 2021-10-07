@@ -27,6 +27,8 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility;
 
+import static us.fatehi.utility.Utility.arrayToObjectList;
+
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -72,7 +74,7 @@ public final class ObjectToString {
 
         if (fieldValue != null) {
           if (fieldType.isArray()) {
-            fieldValue = Arrays.toString((Object[]) fieldValue);
+            fieldValue = arrayToObjectList(fieldValue).toString();
           }
         }
 
@@ -144,7 +146,7 @@ public final class ObjectToString {
     } else if (Collection.class.isAssignableFrom(objectClass)) {
       appendIterable(((Collection<?>) object).iterator(), ", ", buffer);
     } else if (objectClass.isArray()) {
-      appendIterable(Arrays.asList((Object[]) object).iterator(), ", ", buffer);
+      appendIterable(arrayToObjectList(object).iterator(), ", ", buffer);
     } else if (objectClass.isEnum()) {
       buffer.append(object.toString());
     } else if (Arrays.asList(
@@ -169,8 +171,8 @@ public final class ObjectToString {
 
   private static boolean definesToString(final Object object) {
     boolean definesToString = false;
-    final Class<?>[] classes = getClassHierarchy(object);
-    if (classes.length > 0) {
+    final List<Class<?>> classes = getClassHierarchy(object);
+    if (!classes.isEmpty()) {
       for (final Class<?> clazz : classes) {
         try {
           definesToString = clazz.getDeclaredMethod("toString") != null;
@@ -185,7 +187,7 @@ public final class ObjectToString {
     return definesToString;
   }
 
-  private static Class<?>[] getClassHierarchy(final Object object) {
+  private static List<Class<?>> getClassHierarchy(final Object object) {
     final List<Class<?>> classHierarchy = new ArrayList<>();
     if (object != null) {
       Class<?> clazz = object.getClass();
@@ -197,13 +199,13 @@ public final class ObjectToString {
         }
       }
     }
-    return classHierarchy.toArray(new Class<?>[classHierarchy.size()]);
+    return classHierarchy;
   }
 
-  private static Field[] getFields(final Object object) {
-    final Class<?>[] classes = getClassHierarchy(object);
+  private static List<Field> getFields(final Object object) {
+    final List<Class<?>> classes = getClassHierarchy(object);
     final List<Field> allFields = new ArrayList<>();
-    if (classes != null && classes.length > 0) {
+    if (classes != null && !classes.isEmpty()) {
       for (final Class<?> clazz : classes) {
         if (clazz.isArray()
             || clazz.isPrimitive()
@@ -229,7 +231,7 @@ public final class ObjectToString {
     // Sort fields
     Collections.sort(allFields, (field1, field2) -> field1.getName().compareTo(field2.getName()));
 
-    return allFields.toArray(new Field[allFields.size()]);
+    return allFields;
   }
 
   private static char[] indent(final int indent) {
