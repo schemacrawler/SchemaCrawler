@@ -1,5 +1,6 @@
 package us.fatehi.utility.test.string;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -12,6 +13,33 @@ import us.fatehi.test.utility.TestUtility;
 import us.fatehi.utility.ObjectToString;
 
 public class ObjectToStringTest {
+
+  @Test
+  public void listOrObjectToString() {
+    assertThat(ObjectToString.listOrObjectToString(null), is("null"));
+
+    assertThat(
+        ObjectToString.listOrObjectToString(new Object()).replaceAll("\\R", ""),
+        containsString(Object.class.getName()));
+    assertThat(ObjectToString.listOrObjectToString(new int[] {1, 2}), is("1, 2"));
+    assertThat(ObjectToString.listOrObjectToString(new String[] {"1", "2"}), is("1, 2"));
+
+    assertThat(ObjectToString.listOrObjectToString("hello, world"), is("hello, world"));
+    assertThat(ObjectToString.listOrObjectToString(AccessMode.READ), is("READ"));
+    assertThat(ObjectToString.listOrObjectToString('a'), is("a"));
+    assertThat(ObjectToString.listOrObjectToString(Character.valueOf('a')), is("a"));
+
+    assertThat(ObjectToString.listOrObjectToString(1), is("1"));
+    assertThat(ObjectToString.listOrObjectToString(Integer.valueOf(1)), is("1"));
+    assertThat(ObjectToString.listOrObjectToString(1.1), is("1.1"));
+    assertThat(ObjectToString.listOrObjectToString(Double.valueOf(1.1)), is("1.1"));
+    assertThat(ObjectToString.listOrObjectToString(true), is("true"));
+    assertThat(ObjectToString.listOrObjectToString(Boolean.TRUE), is("true"));
+
+    assertThat(
+        ObjectToString.listOrObjectToString(TestUtility.makeTestObject()).replaceAll("\\R", ""),
+        containsString(TestObject.class.getName()));
+  }
 
   @Test
   public void serialize() {
