@@ -75,6 +75,11 @@ public class DatabaseObjectColorMap {
     return dbObjectColor;
   }
 
+  @Override
+  public String toString() {
+    return colorMap.toString();
+  }
+
   private Color generatePastelColor(final String text) {
     final float hue;
     if (isBlank(text)) {

@@ -32,9 +32,11 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.values;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.StringJoiner;
+
+import us.fatehi.utility.ObjectToString;
 
 /** Descriptor for level of schema detail to be retrieved when crawling a schema. */
 public final class SchemaInfoLevel implements Options {
@@ -95,10 +97,10 @@ public final class SchemaInfoLevel implements Options {
 
   @Override
   public String toString() {
-    final StringJoiner settings = new StringJoiner(System.lineSeparator());
+    final Map<String, Boolean> values = new HashMap<>();
     for (final SchemaInfoRetrieval schemaInfoRetrieval : values()) {
-      settings.add(String.format("  %s=%b", schemaInfoRetrieval.name(), is(schemaInfoRetrieval)));
+      values.put(schemaInfoRetrieval.name(), is(schemaInfoRetrieval));
     }
-    return String.format("SchemaInfoLevel <%s>%n{%n%s%n}%n", tag, settings);
+    return ObjectToString.toString(values);
   }
 }
