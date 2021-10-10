@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.text.formatter.base.helper;
 
-import static us.fatehi.utility.Utility.arrayToObjectList;
+import static us.fatehi.utility.ObjectToString.arrayToList;
 import static us.fatehi.utility.Utility.isBlank;
 import static us.fatehi.utility.html.TagBuilder.anchor;
 import static us.fatehi.utility.html.TagBuilder.tableCell;
@@ -67,7 +67,7 @@ abstract class BaseTextFormattingHelper implements TextFormattingHelper {
       return "NULL";
     }
     if (array.getClass().isArray()) {
-      return arrayToObjectList(array).toString();
+      return arrayToList(array).toString();
     }
 
     return array.toString();

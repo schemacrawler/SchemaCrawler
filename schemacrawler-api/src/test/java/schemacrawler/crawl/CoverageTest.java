@@ -58,7 +58,7 @@ public class CoverageTest {
           private static final long serialVersionUID = 6176088733525976950L;
         });
     assertThat(list.size(), equalTo(2));
-    assertThat(list.toString(), equalTo("name1, name2"));
+    assertThat(list.toString(), equalTo("[\"name1\", \"name2\"]"));
   }
 
   @Test

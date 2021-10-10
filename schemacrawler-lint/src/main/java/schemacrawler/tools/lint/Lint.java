@@ -192,7 +192,7 @@ public final class Lint<V extends Serializable>
       } else {
         valueObject = value;
       }
-      return ObjectToString.toString(valueObject);
+      return ObjectToString.listOrObjectToString(valueObject);
     } else {
       return "";
     }

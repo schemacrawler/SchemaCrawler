@@ -27,9 +27,9 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schemacrawler;
 
-import static java.lang.System.lineSeparator;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
@@ -96,9 +96,10 @@ public class InformationSchemaViewsBuilderTest {
 
   @Test
   public void substituteAll() {
+    final String sql = "SOME SQL SELECT";
     final InformationSchemaViewsBuilder builder =
         InformationSchemaViewsBuilder.builder()
-            .withSql(InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES, "SOME SQL SELECT")
+            .withSql(InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES, sql)
             .withSql(
                 InformationSchemaKey.ADDITIONAL_TABLE_ATTRIBUTES,
                 "SOME ${key} SUBSTITUTE SQL SELECT");
@@ -106,12 +107,18 @@ public class InformationSchemaViewsBuilderTest {
     builder.substituteAll("key", "value");
 
     assertThat(
-        builder.toString(),
-        is(
-            lineSeparator()
-                + "ADDITIONAL_COLUMN_ATTRIBUTES: SOME SQL SELECT"
-                + lineSeparator()
-                + "ADDITIONAL_TABLE_ATTRIBUTES: SOME value SUBSTITUTE SQL SELECT"));
+        builder
+            .toOptions()
+            .getAllInformationSchemaViews()
+            .get(InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES),
+        is(sql));
+
+    assertThat(
+        builder
+            .toOptions()
+            .getAllInformationSchemaViews()
+            .get(InformationSchemaKey.ADDITIONAL_TABLE_ATTRIBUTES),
+        is("SOME value SUBSTITUTE SQL SELECT"));
   }
 
   @Test
@@ -135,13 +142,24 @@ public class InformationSchemaViewsBuilderTest {
   public void withSql() {
     final InformationSchemaViewsBuilder builder = InformationSchemaViewsBuilder.builder();
 
-    builder.withSql(InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES, "SOME SQL SELECT");
+    final String sql = "SOME SQL SELECT";
+
+    builder.withSql(InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES, sql);
 
     assertThat(
-        builder.toString(), is(lineSeparator() + "ADDITIONAL_COLUMN_ATTRIBUTES: SOME SQL SELECT"));
+        builder
+            .toOptions()
+            .getAllInformationSchemaViews()
+            .get(InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES),
+        is(sql));
 
     builder.withSql(InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES, null);
 
-    assertThat(builder.toString(), is(""));
+    assertThat(
+        builder
+            .toOptions()
+            .getAllInformationSchemaViews()
+            .get(InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES),
+        is(nullValue()));
   }
 }

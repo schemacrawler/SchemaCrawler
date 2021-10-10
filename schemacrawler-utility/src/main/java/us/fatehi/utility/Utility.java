@@ -27,11 +27,7 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.StringJoiner;
@@ -39,23 +35,6 @@ import java.util.regex.Pattern;
 
 @UtilityMarker
 public final class Utility {
-
-  public static List<Object> arrayToObjectList(final Object array) {
-    if (array == null) {
-      return null;
-    }
-
-    if (!array.getClass().isArray()) {
-      return Arrays.asList(array);
-    }
-
-    final int length = Array.getLength(array);
-    final List<Object> objectList = new ArrayList<>();
-    for (int i = 0; i < length; i++) {
-      objectList.add(Array.get(array, i));
-    }
-    return objectList;
-  }
 
   public static String commonPrefix(final String string1, final String string2) {
     if (string1 == null || string2 == null) {
