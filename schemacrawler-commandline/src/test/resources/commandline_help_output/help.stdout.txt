@@ -288,7 +288,8 @@ Command:
 command:schema
 Applies to all commands that show schema information
 Options:
-      --no-info          Hide or show database information
+      --no-info          Hide or show SchemaCrawler header and database
+                           information
                          --no-info=<boolean>
                          <boolean> can be true or false
                          Optional, defaults to false

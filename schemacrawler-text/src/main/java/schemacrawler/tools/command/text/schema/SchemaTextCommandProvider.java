@@ -62,7 +62,7 @@ public final class SchemaTextCommandProvider extends BaseCommandProvider {
         .addOption(
             "no-info",
             Boolean.class,
-            "Hide or show database information",
+            "Hide or show SchemaCrawler header and database information",
             "--no-info=<boolean>",
             "<boolean> can be true or false",
             "Optional, defaults to false")
