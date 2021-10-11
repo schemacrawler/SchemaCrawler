@@ -1,6 +1,13 @@
 # SchemaCrawler Change History
 
 
+<a name="a16.15.9"></a>
+## Release 16.15.9 - 2021-10-15
+
+- Fix printing of dumps when the data has array data types
+- Show JSON-like config in logs
+
+
 <a name="a16.15.8"></a>
 ## Release 16.15.8 - 2021-10-04
 

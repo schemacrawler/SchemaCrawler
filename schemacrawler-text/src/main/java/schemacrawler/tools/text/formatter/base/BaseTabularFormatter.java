@@ -129,7 +129,8 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends Ba
       for (final Property property : serverInfo) {
         final String name = property.getName();
         final Object value = property.getValue();
-        formattingHelper.writeNameValueRow(name, ObjectToString.toString(value), Alignment.inherit);
+        formattingHelper.writeNameValueRow(
+            name, ObjectToString.listOrObjectToString(value), Alignment.inherit);
       }
       formattingHelper.writeObjectEnd();
     }
@@ -152,7 +153,8 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends Ba
       for (final DatabaseProperty property : dbProperties) {
         final String name = property.getDescription();
         final Object value = property.getValue();
-        formattingHelper.writeNameValueRow(name, ObjectToString.toString(value), Alignment.inherit);
+        formattingHelper.writeNameValueRow(
+            name, ObjectToString.listOrObjectToString(value), Alignment.inherit);
       }
       formattingHelper.writeObjectEnd();
     }
@@ -230,6 +232,6 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions> extends Ba
     formattingHelper.writeNameRow(driverProperty.getName(), "[driver property]");
     formattingHelper.writeDescriptionRow(driverProperty.getDescription());
     formattingHelper.writeDescriptionRow(details);
-    formattingHelper.writeDetailRow("", "value", ObjectToString.toString(value));
+    formattingHelper.writeDetailRow("", "value", ObjectToString.listOrObjectToString(value));
   }
 }

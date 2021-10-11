@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test;
 
+import static java.lang.System.lineSeparator;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -195,25 +196,46 @@ public class SchemaInfoLevelBuilderTest {
     options = builder.toOptions();
     assertThat(builder.toString(), equalTo(options.getTag()));
     assertThat(options.getTag(), equalTo(""));
-    assertThat(
-        options.toString().replaceAll(System.lineSeparator(), "\n"),
-        startsWith("SchemaInfoLevel <>"));
+    assertThat(options.toString().replaceAll(lineSeparator(), "\n"), startsWith("{"));
 
     builder.withInfoLevel(InfoLevel.standard);
     options = builder.toOptions();
     assertThat(builder.toString(), equalTo(options.getTag()));
     assertThat(options.getTag(), equalTo("standard"));
     assertThat(
-        options.toString().replaceAll(System.lineSeparator(), "\n"),
-        startsWith("SchemaInfoLevel <standard>"));
+        options.toString().replaceAll(lineSeparator(), ""),
+        is(
+            "{  \"retrieveAdditionalColumnAttributes\": false,  \"retrieveAdditionalColumnMetadata\": false,  "
+                + "\"retrieveAdditionalDatabaseInfo\": false,  \"retrieveAdditionalJdbcDriverInfo\": false,  "
+                + "\"retrieveAdditionalTableAttributes\": false,  \"retrieveColumnDataTypes\": true,  "
+                + "\"retrieveDatabaseInfo\": true,  \"retrieveDatabaseUsers\": false,  \"retrieveForeignKeys\": true,  "
+                + "\"retrieveIndexInformation\": false,  \"retrieveIndexes\": true,  \"retrievePrimaryKeys\": true,  "
+                + "\"retrieveRoutineInformation\": false,  \"retrieveRoutineParameters\": true,  \"retrieveRoutines\": true,  "
+                + "\"retrieveSequenceInformation\": false,  \"retrieveServerInfo\": false,  \"retrieveSynonymInformation\": false,  "
+                + "\"retrieveTableColumnPrivileges\": false,  \"retrieveTableColumns\": true,  "
+                + "\"retrieveTableConstraintDefinitions\": false,  \"retrieveTableConstraintInformation\": false,  "
+                + "\"retrieveTableDefinitionsInformation\": false,  \"retrieveTablePrivileges\": false,  \"retrieveTables\": true,  "
+                + "\"retrieveTriggerInformation\": false,  \"retrieveUserDefinedColumnDataTypes\": false,  "
+                + "\"retrieveViewInformation\": false,  \"retrieveViewTableUsage\": false}"));
 
     builder.withTag("custom");
     options = builder.toOptions();
     assertThat(builder.toString(), equalTo(options.getTag()));
     assertThat(options.getTag(), equalTo("custom"));
     assertThat(
-        options.toString().replaceAll(System.lineSeparator(), "\n"),
-        startsWith("SchemaInfoLevel <custom>"));
+        options.toString().replaceAll(lineSeparator(), ""),
+        is(
+            "{  \"retrieveAdditionalColumnAttributes\": false,  \"retrieveAdditionalColumnMetadata\": false,  "
+                + "\"retrieveAdditionalDatabaseInfo\": false,  \"retrieveAdditionalJdbcDriverInfo\": false,  "
+                + "\"retrieveAdditionalTableAttributes\": false,  \"retrieveColumnDataTypes\": true,  \"retrieveDatabaseInfo\": true,  "
+                + "\"retrieveDatabaseUsers\": false,  \"retrieveForeignKeys\": true,  \"retrieveIndexInformation\": false,  "
+                + "\"retrieveIndexes\": true,  \"retrievePrimaryKeys\": true,  \"retrieveRoutineInformation\": false,  "
+                + "\"retrieveRoutineParameters\": true,  \"retrieveRoutines\": true,  \"retrieveSequenceInformation\": false,  "
+                + "\"retrieveServerInfo\": false,  \"retrieveSynonymInformation\": false,  \"retrieveTableColumnPrivileges\": false,  "
+                + "\"retrieveTableColumns\": true,  \"retrieveTableConstraintDefinitions\": false,  "
+                + "\"retrieveTableConstraintInformation\": false,  \"retrieveTableDefinitionsInformation\": false,  "
+                + "\"retrieveTablePrivileges\": false,  \"retrieveTables\": true,  \"retrieveTriggerInformation\": false,  "
+                + "\"retrieveUserDefinedColumnDataTypes\": false,  \"retrieveViewInformation\": false,  \"retrieveViewTableUsage\": false}"));
 
     builder.withTag("\t\t");
     options = builder.toOptions();

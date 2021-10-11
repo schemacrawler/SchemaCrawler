@@ -55,7 +55,7 @@ public class ObjectToStringFormatTest {
         is(new ObjectToStringFormat("hello, world").toString()));
 
     final List<String> list = Arrays.asList("one", "two", "three");
-    assertThat(new ObjectToStringFormat(list).get(), is("one, two, three"));
+    assertThat(new ObjectToStringFormat(list).get(), is("[\"one\", \"two\", \"three\"]"));
 
     final Map<String, Integer> map = new HashMap<>();
     map.put("one", 1);
@@ -63,11 +63,14 @@ public class ObjectToStringFormatTest {
     map.put("three", 3);
     assertThat(
         new ObjectToStringFormat(map).get().replace(System.lineSeparator(), "\n"),
-        is("\none: 1\nthree: 3\ntwo: 2"));
+        is("{\n  \"one\": 1,\n  \"three\": 3,\n  \"two\": 2\n}"));
 
     assertThat(
-        new ObjectToStringFormat(Instant.now()).get(),
-        matchesPattern(Pattern.compile(".*nanos: \\d.*seconds: \\d.*", DOTALL)));
+        new ObjectToStringFormat(Instant.now()).get().replaceAll("\\R", "\n"),
+        matchesPattern(
+            Pattern.compile(
+                "\\{\n  \"@object\": \"java.time.Instant\",\n  \"nanos\": \\d+,\n  \"seconds\": \\d+\n\\}",
+                DOTALL)));
   }
 
   @Test

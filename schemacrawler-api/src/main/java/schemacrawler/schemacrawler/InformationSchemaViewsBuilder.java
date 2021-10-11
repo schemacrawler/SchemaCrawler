@@ -38,7 +38,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
-import us.fatehi.utility.ObjectToString;
 import us.fatehi.utility.TemplatingUtility;
 
 /** The database specific views to get additional database metadata in a standard format. */
@@ -112,11 +111,6 @@ public final class InformationSchemaViewsBuilder
   @Override
   public InformationSchemaViews toOptions() {
     return new InformationSchemaViews(informationSchemaQueries);
-  }
-
-  @Override
-  public String toString() {
-    return ObjectToString.toString(informationSchemaQueries);
   }
 
   public InformationSchemaViewsBuilder withFunction(
