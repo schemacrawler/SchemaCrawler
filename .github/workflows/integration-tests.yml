@@ -9,25 +9,20 @@ on:
 jobs:
   build:
     name: Build, run database integration tests, and publish results
-    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        java: [8, 11]
+        java: [8, 17]
+    runs-on: ${{ matrix.os }}
     steps:
 
 # SETUP BUILD ENVIRONMENT
     - id: prepare-maven-build
       name: Prepare Maven build
-      uses: sualeh/prepare-maven-build@v0.0.3
-    - id: install-packages
-      name: Install packages
-      run: |
-        # Install Graphviz
-        sudo apt-get -qq update
-        sudo apt-get -q install graphviz
-        dot -V
+      uses: sualeh/prepare-maven-build@v1.1.1
+      with:
+        java-version: ${{ matrix.java }}
 
 # LINT CODE
     - id: lint-code-base
@@ -53,6 +48,7 @@ jobs:
       name: Build and run database integration tests
       env:
         TZ: GMT
+      shell: bash
       run: |
         # Build
         mvn \
@@ -72,7 +68,9 @@ jobs:
       if: contains(github.ref, 'master')
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      shell: bash
       run: |
+        # Upload results and coverage
         bash <(curl -s https://codecov.io/bash) -t 4456b669-238d-485f-a64a-250449710514
     - id: upload-coverage-test-results
       name: Upload coverage test results
