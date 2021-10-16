@@ -42,6 +42,29 @@ jobs:
           -Ddocker.skip=false \
           clean package
 
+# INSTALL GRAPHVIZ, AND RERUN DIAGRAM TESTS
+    - id: install-graphviz
+      name: Install graphviz
+      shell: bash
+      run: |
+        # Install Graphviz
+        sudo apt-get -qq update
+        sudo apt-get -q install graphviz
+        dot -V
+    - id: build-test-diagrams
+      name: Build and run diagram tests
+      shell: bash
+      run: |
+        # Build
+        mvn \
+          --no-transfer-progress \
+          --batch-mode \
+          --projects \
+          schemacrawler-diagram \
+          --also-make \
+          clean package
+
+
   build-test-coverage:
     name: Build, run coverage tests, and publish results
     runs-on: ubuntu-latest
