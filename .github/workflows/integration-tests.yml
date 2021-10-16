@@ -36,11 +36,34 @@ jobs:
         mvn \
           --no-transfer-progress \
           --batch-mode \
-          -Dtestcoverage \
           -Dlightdb \
           -Dheavydb \
           -Ddistrib \
           -Ddocker.skip=false \
+          clean package
+
+  build-test-coverage:
+    name: Build, run coverage tests, and publish results
+    runs-on: ubuntu-latest
+    steps:
+
+# SETUP BUILD ENVIRONMENT
+    - id: prepare-maven-build
+      name: Prepare Maven build
+      uses: sualeh/prepare-maven-build@v1.1.1
+      with:
+        java-version: 8
+
+# BUILD AND TEST
+    - id: build-test
+      name: Build and run database integration tests
+      shell: bash
+      run: |
+        # Build
+        mvn \
+          --no-transfer-progress \
+          --batch-mode \
+          -Dtestcoverage \
           clean install \
           org.jacoco:jacoco-maven-plugin:0.8.7:report-aggregate
 

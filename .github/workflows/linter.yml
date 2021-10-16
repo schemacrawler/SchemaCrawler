@@ -1,4 +1,4 @@
-name: Lint code-base
+name: Lint Code Base
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Lint code-base
+    name: Lint code base
     runs-on: ubuntu-latest
     steps:
 
