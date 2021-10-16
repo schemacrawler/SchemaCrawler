@@ -7,7 +7,7 @@
     <conf name="binaries" visibility="public" />
   </configurations>
   <dependencies>
-    <dependency org="guru.nidi" name="graphviz-java"
+    <dependency org="guru.nidi" name="graphviz-java-all-j2v8"
                 rev="0.18.1" conf="binaries->default" />
   </dependencies>
 </ivy-module>
