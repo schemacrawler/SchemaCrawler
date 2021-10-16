@@ -54,6 +54,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.DatabaseTestUtility;
+import schemacrawler.test.utility.DisabledWithoutGraphviz;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -186,6 +187,7 @@ public class DiagramRendererTest {
   }
 
   @Test
+  @ExtendWith(DisabledWithoutGraphviz.class)
   public void diagramRenderer_graphviz(final TestContext testContext, final Connection connection)
       throws Exception {
 
@@ -222,6 +224,7 @@ public class DiagramRendererTest {
   }
 
   @Test
+  @ExtendWith(DisabledWithoutGraphviz.class)
   public void embeddedDiagramRenderer_graphviz(
       final TestContext testContext, final Connection connection) throws Exception {
 

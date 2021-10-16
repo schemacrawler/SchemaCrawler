@@ -53,6 +53,14 @@ jobs:
       uses: sualeh/prepare-maven-build@v1.1.1
       with:
         java-version: 8
+    - id: install-packages
+      name: Install packages
+      shell: bash
+      run: |
+        # Install Graphviz
+        sudo apt-get -qq update
+        sudo apt-get -q install graphviz
+        dot -V
 
 # BUILD AND TEST
     - id: build-test
