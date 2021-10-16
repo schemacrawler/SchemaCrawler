@@ -28,7 +28,7 @@ jobs:
 # LINT CODE
     - id: lint-code-base
       name: Lint Code Base
-      uses: docker://github/super-linter:v3
+      uses: github/super-linter/slim@v4
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         VALIDATE_ALL_CODEBASE: true
@@ -43,6 +43,7 @@ jobs:
         VALIDATE_DOCKER: true
         VALIDATE_CSS: true
         VALIDATE_ENV: true
+        VALIDATE_SQL: true
 
 # BUILD AND TEST
     - id: build-test
@@ -61,7 +62,7 @@ jobs:
           -Ddistrib \
           -Ddocker.skip=false \
           clean install \
-          org.jacoco:jacoco-maven-plugin:0.8.6:report-aggregate
+          org.jacoco:jacoco-maven-plugin:0.8.7:report-aggregate
 
 # GET TEST RESULTS
     - id: publish-test-results
