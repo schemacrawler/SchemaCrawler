@@ -1,6 +1,8 @@
 name: Quick Build
 
-on: push
+on:
+  workflow_dispatch:
+  push:
 
 jobs:
   build:
@@ -16,6 +18,7 @@ jobs:
         java-version: 8
     - id: install-packages
       name: Install packages
+      shell: bash
       run: |
         # Install Graphviz
         sudo apt-get -qq update
@@ -25,6 +28,7 @@ jobs:
 # BUILD AND TEST
     - id: build-test
       name: Build all modules and run tests
+      shell: bash
       run: |
         # Build
         mvn \
