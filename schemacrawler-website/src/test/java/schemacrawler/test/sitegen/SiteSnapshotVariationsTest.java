@@ -27,8 +27,8 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.sitegen;
 
-import static java.nio.file.Files.deleteIfExists;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
+import static schemacrawler.test.utility.TestUtility.deleteIfPossible;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -137,7 +137,7 @@ public class SiteSnapshotVariationsTest {
       final OutputFormat outputFormat,
       final Path outputFile)
       throws Exception {
-    deleteIfExists(outputFile);
+    deleteIfPossible(outputFile);
 
     final Map<String, String> argsMap = new HashMap<>();
     if (additionalArgsMap != null) {

@@ -36,11 +36,11 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.ScriptTestUtility.commandLineScriptExecution;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
+import static schemacrawler.test.utility.TestUtility.deleteIfPossible;
 import static schemacrawler.test.utility.TestUtility.validateDiagram;
 import static us.fatehi.utility.IOUtility.readFully;
 
 import java.io.FileReader;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -78,11 +78,11 @@ public class SchemaCrawlerExecutableChainTest {
     if (failures.size() > 0) {
       fail(failures.toString());
     }
-    Files.deleteIfExists(schemaFile);
+    deleteIfPossible(schemaFile);
 
     final Path diagramFile = Paths.get("chain_schema.png");
     validateDiagram(diagramFile);
-    Files.deleteIfExists(diagramFile);
+    deleteIfPossible(diagramFile);
   }
 
   @Test
@@ -122,10 +122,10 @@ public class SchemaCrawlerExecutableChainTest {
     if (failures.size() > 0) {
       fail(failures.toString());
     }
-    Files.deleteIfExists(schemaFile);
+    deleteIfPossible(schemaFile);
 
     final Path diagramFile = Paths.get("schema.png");
     validateDiagram(diagramFile);
-    Files.deleteIfExists(diagramFile);
+    deleteIfPossible(diagramFile);
   }
 }

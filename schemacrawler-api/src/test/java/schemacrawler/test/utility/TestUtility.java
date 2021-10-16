@@ -171,7 +171,7 @@ public final class TestUtility {
       final Path testOutputTargetFilePath =
           buildDirectory().resolve("unit_tests_results_output").resolve(referenceFile);
       createDirectories(testOutputTargetFilePath.getParent());
-      deleteIfExists(testOutputTargetFilePath);
+      deleteIfPossible(testOutputTargetFilePath);
       move(testOutputTempFile, testOutputTargetFilePath, REPLACE_EXISTING);
 
       System.err.printf(
@@ -191,6 +191,14 @@ public final class TestUtility {
     try (final InputStream resourceStream = TestUtility.class.getResourceAsStream(resource)) {
       requireNonNull(resourceStream, "Resource not found, " + resource);
       return writeToTempFile(resourceStream);
+    }
+  }
+
+  public static void deleteIfPossible(final Path testOutputTargetFilePath) {
+    try {
+      deleteIfExists(testOutputTargetFilePath);
+    } catch (final IOException e) {
+      // Ignore exception
     }
   }
 

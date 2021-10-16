@@ -27,10 +27,10 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.sitegen;
 
-import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.move;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
+import static schemacrawler.test.utility.TestUtility.deleteIfPossible;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -64,7 +64,7 @@ public class SiteHTMLVariationsTest {
       final Map<String, String> config,
       final Path outputFile)
       throws Exception {
-    deleteIfExists(outputFile);
+    deleteIfPossible(outputFile);
 
     argsMapMap.put("-title", "Details of Example Database");
 

@@ -27,7 +27,6 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.sitegen;
 
-import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.exists;
 import static java.nio.file.Files.move;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
@@ -35,6 +34,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
+import static schemacrawler.test.utility.TestUtility.deleteIfPossible;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -71,7 +71,7 @@ public class SiteDiagramVariationsTest {
       final Map<String, String> config,
       final Path outputFile)
       throws Exception {
-    deleteIfExists(outputFile);
+    deleteIfPossible(outputFile);
     assertThat(exists(outputFile), is(false));
 
     final Map<String, Object> runConfig = new HashMap<>();
