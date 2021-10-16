@@ -58,7 +58,6 @@ import schemacrawler.test.utility.DisabledWithoutGraphviz;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
-import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder;
@@ -73,7 +72,6 @@ import us.fatehi.utility.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
-@ExtendWith(TestLoggingExtension.class)
 public class DiagramRendererTest {
 
   private final class GraphvizJavaExecutorFactory extends GraphExecutorFactory {
