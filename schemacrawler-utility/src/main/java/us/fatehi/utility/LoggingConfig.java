@@ -81,6 +81,8 @@ public final class LoggingConfig {
 
     applySlf4jLogLevel(logLevel);
     applyPicocliLogLevel(logLevel);
+
+    System.setProperty("polyglot.engine.WarnInterpreterOnly", "false");
   }
 
   /**
