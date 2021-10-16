@@ -1,0 +1,42 @@
+name: Lint code-base
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  build:
+    name: Lint code-base
+    runs-on: ubuntu-latest
+    steps:
+
+# CHECKOUT CODE
+  - id: checkout-code
+    name: Checkout code
+    uses: actions/checkout@v2
+    with:
+      # Full git history is needed to get a proper list 
+      # of changed files within `super-linter`
+      fetch-depth: 0
+
+# LINT CODE
+    - id: lint-code-base
+      name: Lint Code Base
+      uses: github/super-linter/slim@v4
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        VALIDATE_ALL_CODEBASE: true
+        VALIDATE_YAML: true
+        VALIDATE_JSON: true
+        VALIDATE_XML: true
+        VALIDATE_MD: true
+        VALIDATE_BASH: true
+        # VALIDATE_PYTHON: false
+        # VALIDATE_RUBY: false
+        VALIDATE_JAVASCRIPT_ES: true
+        VALIDATE_DOCKER: true
+        VALIDATE_CSS: true
+        VALIDATE_ENV: true
+        VALIDATE_SQL: true

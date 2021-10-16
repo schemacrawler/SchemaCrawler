@@ -25,26 +25,6 @@ jobs:
       with:
         java-version: ${{ matrix.java }}
 
-# LINT CODE
-    - id: lint-code-base
-      name: Lint Code Base
-      uses: github/super-linter/slim@v4
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        VALIDATE_ALL_CODEBASE: true
-        VALIDATE_YAML: true
-        VALIDATE_JSON: true
-        VALIDATE_XML: true
-        VALIDATE_MD: true
-        VALIDATE_BASH: true
-        # VALIDATE_PYTHON: false
-        # VALIDATE_RUBY: false
-        VALIDATE_JAVASCRIPT_ES: true
-        VALIDATE_DOCKER: true
-        VALIDATE_CSS: true
-        VALIDATE_ENV: true
-        VALIDATE_SQL: true
-
 # BUILD AND TEST
     - id: build-test
       name: Build and run database integration tests
