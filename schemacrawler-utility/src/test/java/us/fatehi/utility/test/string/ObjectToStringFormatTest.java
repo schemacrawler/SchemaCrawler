@@ -28,23 +28,45 @@ http://www.gnu.org/licenses/
 
 package us.fatehi.utility.test.string;
 
-import static java.util.regex.Pattern.DOTALL;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.matchesPattern;
 
-import java.time.Instant;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import org.junit.jupiter.api.Test;
 
 import us.fatehi.utility.string.ObjectToStringFormat;
 
 public class ObjectToStringFormatTest {
+
+  static class SomeClass {
+    private String string;
+    private int integer;
+
+    public SomeClass(final String string, final int integer) {
+      this.string = string;
+      this.integer = integer;
+    }
+
+    public int getInteger() {
+      return integer;
+    }
+
+    public String getString() {
+      return string;
+    }
+
+    public void setInteger(final int integer) {
+      this.integer = integer;
+    }
+
+    public void setString(final String string) {
+      this.string = string;
+    }
+  }
 
   @Test
   public void happyPath() {
@@ -66,11 +88,10 @@ public class ObjectToStringFormatTest {
         is("{\n  \"one\": 1,\n  \"three\": 3,\n  \"two\": 2\n}"));
 
     assertThat(
-        new ObjectToStringFormat(Instant.now()).get().replaceAll("\\R", "\n"),
-        matchesPattern(
-            Pattern.compile(
-                "\\{\n  \"@object\": \"java.time.Instant\",\n  \"nanos\": \\d+,\n  \"seconds\": \\d+\n\\}",
-                DOTALL)));
+        new ObjectToStringFormat(new SomeClass("hello, world", 42)).get().replaceAll("\\R", ""),
+        is(
+            "{  \"@object\": \"us.fatehi.utility.test.string.ObjectToStringFormatTest$SomeClass\",  "
+                + "\"integer\": 42,  \"string\": \"hello, world\"}"));
   }
 
   @Test
