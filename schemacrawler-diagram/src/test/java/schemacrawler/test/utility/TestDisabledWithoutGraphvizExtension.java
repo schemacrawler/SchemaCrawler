@@ -6,7 +6,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 
 import schemacrawler.tools.command.text.diagram.GraphvizUtility;
 
-public class DisabledWithoutGraphviz implements ExecutionCondition {
+public class TestDisabledWithoutGraphvizExtension implements ExecutionCondition {
 
   @Override
   public ConditionEvaluationResult evaluateExecutionCondition(final ExtensionContext context) {
