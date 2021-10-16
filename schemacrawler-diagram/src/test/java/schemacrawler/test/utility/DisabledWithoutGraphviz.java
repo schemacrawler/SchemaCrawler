@@ -13,7 +13,7 @@ public class DisabledWithoutGraphviz implements ExecutionCondition {
     if (GraphvizUtility.isGraphvizAvailable()) {
       return ConditionEvaluationResult.enabled("Graphviz is installed on the system");
     } else {
-      return ConditionEvaluationResult.enabled("Graphviz is not installed on the system");
+      return ConditionEvaluationResult.disabled("Graphviz is not installed on the system");
     }
   }
 }
