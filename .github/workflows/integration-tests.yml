@@ -113,3 +113,36 @@ jobs:
       with:
         name: coverage-test-results
         path: ./schemacrawler/target/site/jacoco-aggregate
+
+  build-test-docker:
+    name: Build, run coverage tests, and build Docker image
+    runs-on: ubuntu-latest
+    steps:
+
+# SETUP BUILD ENVIRONMENT
+    - id: prepare-maven-build
+      name: Prepare Maven build
+      uses: sualeh/prepare-maven-build@v1.1.1
+      with:
+        java-version: 8
+    - id: install-packages
+      name: Install packages
+      shell: bash
+      run: |
+        # Install Graphviz
+        sudo apt-get -qq update
+        sudo apt-get -q install graphviz
+        dot -V
+
+# BUILD AND TEST
+    - id: build-test
+      name: Build and run tests, and build Docker image
+      shell: bash
+      run: |
+        # Build
+        mvn \
+          --no-transfer-progress \
+          --batch-mode \
+          -Ddistrib \
+          -Ddocker.skip=false \
+          clean package
