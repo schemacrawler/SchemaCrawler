@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
-        # (MacOS does not support Docker)
+        # (MacOS does not support Docker for Testcontainers)
         java: [8, 17]
     runs-on: ${{ matrix.os }}
     steps:
@@ -39,7 +39,6 @@ jobs:
           -Dlightdb \
           -Dheavydb \
           -Ddistrib \
-          -Ddocker.skip=false \
           clean package
 
 # INSTALL GRAPHVIZ, AND RERUN DIAGRAM TESTS
