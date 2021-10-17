@@ -44,11 +44,18 @@ jobs:
 # INSTALL GRAPHVIZ, AND RERUN DIAGRAM TESTS
     - id: install-graphviz
       name: Install graphviz
+      if:
       shell: bash
       run: |
         # Install Graphviz
-        sudo apt-get -qq update
-        sudo apt-get -q install graphviz
+        if [ "$RUNNER_OS" == "Linux" ]; then
+          sudo apt-get install graphviz
+        elif [ "$RUNNER_OS" == "Windows" ]; then
+          choco install graphviz
+        else
+          echo "$RUNNER_OS not supported"
+          exit 1
+        fi
         dot -V
     - id: build-test-diagrams
       name: Build and run diagram tests
