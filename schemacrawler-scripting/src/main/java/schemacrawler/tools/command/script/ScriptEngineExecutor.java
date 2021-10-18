@@ -33,39 +33,16 @@ import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import us.fatehi.utility.ObjectToString;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.string.StringFormat;
 
 /** Main executor for the script engine integration. */
-public final class ScriptEngineExecutor extends AbstractScriptExecutor {
+public final class ScriptEngineExecutor extends AbstractScriptEngineExecutor {
 
   private static final Logger LOGGER = Logger.getLogger(ScriptEngineExecutor.class.getName());
-
-  private static void logScriptEngineDetails(
-      final Level level, final ScriptEngineFactory scriptEngineFactory) {
-    if (!LOGGER.isLoggable(level)) {
-      return;
-    }
-
-    LOGGER.log(
-        level,
-        String.format(
-            "Using script engine%n%s %s (%s %s)%nScript engine names: %s%nSupported file extensions: %s",
-            scriptEngineFactory.getEngineName(),
-            scriptEngineFactory.getEngineVersion(),
-            scriptEngineFactory.getLanguageName(),
-            scriptEngineFactory.getLanguageVersion(),
-            ObjectToString.toString(scriptEngineFactory.getNames()),
-            ObjectToString.toString(scriptEngineFactory.getExtensions())));
-  }
-
-  private ScriptEngine scriptEngine;
 
   public ScriptEngineExecutor(
       final String scriptingLanguage,
@@ -73,19 +50,6 @@ public final class ScriptEngineExecutor extends AbstractScriptExecutor {
       final InputResource scriptResource,
       final Writer writer) {
     super(scriptingLanguage, inputCharset, scriptResource, writer);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public Boolean call() throws Exception {
-
-    if (scriptEngine == null) {
-      return false;
-    }
-
-    executeWithScriptEngine(scriptEngine);
-
-    return true;
   }
 
   @Override
@@ -99,7 +63,8 @@ public final class ScriptEngineExecutor extends AbstractScriptExecutor {
     }
   }
 
-  private ScriptEngine obtainScriptEngine() throws SchemaCrawlerException {
+  @Override
+  protected void obtainScriptEngine() throws SchemaCrawlerException {
     final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
     LOGGER.log(Level.CONFIG, new StringFormat("Using script language <%s>", scriptingLanguage));
     try {
@@ -116,9 +81,5 @@ public final class ScriptEngineExecutor extends AbstractScriptExecutor {
       throw new SchemaCrawlerException(
           "Script engine not found for language, " + scriptingLanguage);
     }
-
-    logScriptEngineDetails(Level.CONFIG, scriptEngine.getFactory());
-
-    return scriptEngine;
   }
 }

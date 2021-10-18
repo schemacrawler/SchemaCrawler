@@ -33,17 +33,16 @@ import static us.fatehi.utility.Utility.isClassAvailable;
 import java.io.Writer;
 import java.nio.charset.Charset;
 
-import javax.script.ScriptEngine;
-
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.HostAccess;
 
 import com.oracle.truffle.js.scriptengine.GraalJSScriptEngine;
 
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import us.fatehi.utility.ioresource.InputResource;
 
 /** Main executor for the GraalVM JavaScript integration. */
-public final class GraalVMJavaScriptExecutor extends AbstractScriptExecutor {
+public final class GraalVMJavaScriptExecutor extends AbstractScriptEngineExecutor {
 
   public GraalVMJavaScriptExecutor(
       final String scriptingLanguage,
@@ -51,23 +50,7 @@ public final class GraalVMJavaScriptExecutor extends AbstractScriptExecutor {
       final InputResource scriptResource,
       final Writer writer) {
     super(scriptingLanguage, inputCharset, scriptResource, writer);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public Boolean call() throws Exception {
-
-    final ScriptEngine scriptEngine =
-        GraalJSScriptEngine.create(
-            null,
-            Context.newBuilder("js")
-                .allowHostAccess(HostAccess.ALL)
-                .allowHostClassLookup(s -> true)
-                .option("js.ecmascript-version", "2021"));
-
-    executeWithScriptEngine(scriptEngine);
-
-    return true;
+    System.setProperty("polyglot.engine.WarnInterpreterOnly", "false");
   }
 
   @Override
@@ -76,5 +59,16 @@ public final class GraalVMJavaScriptExecutor extends AbstractScriptExecutor {
             || scriptingLanguage.equalsIgnoreCase("javascript"))
         && isClassAvailable("org.graalvm.polyglot.Context")
         && isClassAvailable("com.oracle.truffle.js.scriptengine.GraalJSScriptEngine");
+  }
+
+  @Override
+  protected void obtainScriptEngine() throws SchemaCrawlerException {
+    scriptEngine =
+        GraalJSScriptEngine.create(
+            null,
+            Context.newBuilder("js")
+                .allowHostAccess(HostAccess.ALL)
+                .allowHostClassLookup(s -> true)
+                .option("js.ecmascript-version", "2021"));
   }
 }
