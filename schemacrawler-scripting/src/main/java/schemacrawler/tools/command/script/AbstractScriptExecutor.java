@@ -31,39 +31,30 @@ package schemacrawler.tools.command.script;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
+import java.io.Reader;
 import java.io.Writer;
-import java.nio.charset.Charset;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
-
-import us.fatehi.utility.ioresource.InputResource;
 
 abstract class AbstractScriptExecutor implements ScriptExecutor {
 
-  private static final Logger LOGGER = Logger.getLogger(AbstractScriptExecutor.class.getName());
-
-  protected final Charset inputCharset;
-  protected final InputResource scriptResource;
-  protected final Writer writer;
   protected final String scriptingLanguage;
+  protected Reader reader;
+  protected Writer writer;
   protected Map<String, Object> context;
 
-  protected AbstractScriptExecutor(
-      final String scriptingLanguage,
-      final Charset inputCharset,
-      final InputResource scriptResource,
-      final Writer writer) {
+  protected AbstractScriptExecutor(final String scriptingLanguage) {
     this.scriptingLanguage = requireNotBlank(scriptingLanguage, "No scripting language provided");
-    this.inputCharset = requireNonNull(inputCharset, "No input encoding provided");
-    this.scriptResource = requireNonNull(scriptResource, "No script input resource provided");
-    this.writer = requireNonNull(writer, "No output writer provided");
-    context = Collections.emptyMap();
   }
 
   @Override
-  public void setContext(final Map<String, Object> context) {
+  public void initialize(
+      final Map<String, Object> context, final Reader reader, final Writer writer) {
+
+    this.reader = requireNonNull(reader, "No script input resource provided");
+    this.writer = requireNonNull(writer, "No output writer provided");
+
     if (context == null) {
       this.context = Collections.emptyMap();
     }

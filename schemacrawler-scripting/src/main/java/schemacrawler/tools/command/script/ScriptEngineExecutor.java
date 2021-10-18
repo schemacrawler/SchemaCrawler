@@ -28,15 +28,12 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.script;
 
-import java.io.Writer;
-import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.script.ScriptEngineManager;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.string.StringFormat;
 
 /** Main executor for the script engine integration. */
@@ -44,12 +41,8 @@ public final class ScriptEngineExecutor extends AbstractScriptEngineExecutor {
 
   private static final Logger LOGGER = Logger.getLogger(ScriptEngineExecutor.class.getName());
 
-  public ScriptEngineExecutor(
-      final String scriptingLanguage,
-      final Charset inputCharset,
-      final InputResource scriptResource,
-      final Writer writer) {
-    super(scriptingLanguage, inputCharset, scriptResource, writer);
+  public ScriptEngineExecutor(final String scriptingLanguage) {
+    super(scriptingLanguage);
   }
 
   @Override

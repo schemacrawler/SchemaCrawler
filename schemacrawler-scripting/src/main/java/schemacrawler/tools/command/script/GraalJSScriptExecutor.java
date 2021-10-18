@@ -30,21 +30,13 @@ package schemacrawler.tools.command.script;
 
 import static us.fatehi.utility.Utility.isClassAvailable;
 
-import java.io.Writer;
-import java.nio.charset.Charset;
-
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import us.fatehi.utility.ioresource.InputResource;
 
 /** Main executor for the GraalVM JavaScript integration. */
 public final class GraalJSScriptExecutor extends AbstractScriptEngineExecutor {
 
-  public GraalJSScriptExecutor(
-      final String scriptingLanguage,
-      final Charset inputCharset,
-      final InputResource scriptResource,
-      final Writer writer) {
-    super(scriptingLanguage, inputCharset, scriptResource, writer);
+  public GraalJSScriptExecutor() {
+    super("javascript");
     System.setProperty("polyglot.engine.WarnInterpreterOnly", "false");
   }
 

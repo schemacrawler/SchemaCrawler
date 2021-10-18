@@ -32,6 +32,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.io.StringWriter;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,17 +48,17 @@ public class ScriptExecutorTest {
   @Test
   public void graal() throws Exception {
     final StringWriter writer = new StringWriter();
-    final ScriptExecutor scriptExecutor =
-        new GraalJSScriptExecutor(
-            "javascript",
-            UTF_8,
-            new StringInputResource(
-                "if (javaObj instanceof Java.type('java.lang.Object')) { print(\"Hello, World!\"); }"),
-            writer);
+    final ScriptExecutor scriptExecutor = new GraalJSScriptExecutor();
 
     final Map<String, Object> context = new HashMap<>();
     context.put("javaObj", new Object());
-    scriptExecutor.setContext(context);
+
+    scriptExecutor.initialize(
+        context,
+        new StringInputResource(
+                "if (javaObj instanceof Java.type('java.lang.Object')) { print(\"Hello, World!\"); }")
+            .openNewInputReader(UTF_8),
+        writer);
 
     assertThat(scriptExecutor.canGenerate(), is(true));
     assertThat(scriptExecutor.call(), is(true));
@@ -65,25 +66,13 @@ public class ScriptExecutorTest {
   }
 
   @Test
-  public void graalBadLanguage() throws Exception {
-    final StringWriter writer = new StringWriter();
-    final ScriptExecutor scriptExecutor =
-        new GraalJSScriptExecutor(
-            "foulmouth",
-            UTF_8,
-            new StringInputResource(
-                "if (javaObj instanceof Java.type('java.lang.Object')) { print(\"Hello, World!\"); }"),
-            writer);
-
-    assertThat(scriptExecutor.canGenerate(), is(false));
-  }
-
-  @Test
   public void scriptEngine() throws Exception {
     final StringWriter writer = new StringWriter();
-    final ScriptExecutor scriptExecutor =
-        new ScriptEngineExecutor(
-            "python", UTF_8, new StringInputResource("print(\"Hello, World!\")"), writer);
+    final ScriptExecutor scriptExecutor = new ScriptEngineExecutor("python");
+    scriptExecutor.initialize(
+        Collections.emptyMap(),
+        new StringInputResource("print(\"Hello, World!\")").openNewInputReader(UTF_8),
+        writer);
 
     assertThat(scriptExecutor.canGenerate(), is(true));
     assertThat(scriptExecutor.call(), is(true));
@@ -92,10 +81,7 @@ public class ScriptExecutorTest {
 
   @Test
   public void scriptEngineBadLanguage() throws Exception {
-    final StringWriter writer = new StringWriter();
-    final ScriptExecutor scriptExecutor =
-        new ScriptEngineExecutor(
-            "foulmouth", UTF_8, new StringInputResource("print(\"Hello, World!\")"), writer);
+    final ScriptExecutor scriptExecutor = new ScriptEngineExecutor("foulmouth");
 
     assertThat(scriptExecutor.canGenerate(), is(false));
   }

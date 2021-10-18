@@ -28,9 +28,10 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.script;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.Reader;
 import java.io.Writer;
-import java.nio.charset.Charset;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,7 +43,6 @@ import javax.script.ScriptEngineFactory;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import us.fatehi.utility.ObjectToString;
-import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.string.StringFormat;
 
 /** Main executor for the script engine integration. */
@@ -71,13 +71,10 @@ abstract class AbstractScriptEngineExecutor extends AbstractScriptExecutor {
 
   protected ScriptEngine scriptEngine;
 
-  public AbstractScriptEngineExecutor(
-      final String scriptingLanguage,
-      final Charset inputCharset,
-      final InputResource scriptResource,
-      final Writer writer) {
-    super(scriptingLanguage, inputCharset, scriptResource, writer);
+  public AbstractScriptEngineExecutor(final String scriptingLanguage) {
+    super(scriptingLanguage);
   }
+
   /** {@inheritDoc} */
   @Override
   public Boolean call() throws Exception {
@@ -88,14 +85,17 @@ abstract class AbstractScriptEngineExecutor extends AbstractScriptExecutor {
     }
     logScriptEngineDetails(Level.CONFIG, scriptEngine.getFactory());
 
-    LOGGER.log(Level.CONFIG, new StringFormat("Evaluating script, ", scriptResource));
-    try (final Reader reader = scriptResource.openNewInputReader(inputCharset);
+    requireNonNull(reader, "No reader provided");
+    requireNonNull(writer, "No writer provided");
+
+    LOGGER.log(Level.CONFIG, new StringFormat("Evaluating script"));
+    try (final Reader reader = this.reader;
         final Writer writer = this.writer) {
 
       // Set up the context
       scriptEngine.getContext().setWriter(writer);
-      for (final Entry<String, Object> entry : context.entrySet()) {
-        scriptEngine.put(entry.getKey(), entry.getValue());
+      for (final Entry<String, Object> contextValue : context.entrySet()) {
+        scriptEngine.put(contextValue.getKey(), contextValue.getValue());
       }
 
       // Evaluate the script
