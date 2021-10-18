@@ -33,18 +33,13 @@ import static us.fatehi.utility.Utility.isClassAvailable;
 import java.io.Writer;
 import java.nio.charset.Charset;
 
-import org.graalvm.polyglot.Context;
-import org.graalvm.polyglot.HostAccess;
-
-import com.oracle.truffle.js.scriptengine.GraalJSScriptEngine;
-
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import us.fatehi.utility.ioresource.InputResource;
 
 /** Main executor for the GraalVM JavaScript integration. */
-public final class GraalVMJavaScriptExecutor extends AbstractScriptEngineExecutor {
+public final class GraalJSScriptExecutor extends AbstractScriptEngineExecutor {
 
-  public GraalVMJavaScriptExecutor(
+  public GraalJSScriptExecutor(
       final String scriptingLanguage,
       final Charset inputCharset,
       final InputResource scriptResource,
@@ -63,12 +58,6 @@ public final class GraalVMJavaScriptExecutor extends AbstractScriptEngineExecuto
 
   @Override
   protected void obtainScriptEngine() throws SchemaCrawlerException {
-    scriptEngine =
-        GraalJSScriptEngine.create(
-            null,
-            Context.newBuilder("js")
-                .allowHostAccess(HostAccess.ALL)
-                .allowHostClassLookup(s -> true)
-                .option("js.ecmascript-version", "2021"));
+    scriptEngine = GraalJSScriptUtility.createGraalJSScriptEngine();
   }
 }

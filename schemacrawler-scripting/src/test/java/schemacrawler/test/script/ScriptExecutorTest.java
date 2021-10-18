@@ -37,7 +37,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-import schemacrawler.tools.command.script.GraalVMJavaScriptExecutor;
+import schemacrawler.tools.command.script.GraalJSScriptExecutor;
 import schemacrawler.tools.command.script.ScriptEngineExecutor;
 import schemacrawler.tools.command.script.ScriptExecutor;
 import us.fatehi.utility.ioresource.StringInputResource;
@@ -48,7 +48,7 @@ public class ScriptExecutorTest {
   public void graal() throws Exception {
     final StringWriter writer = new StringWriter();
     final ScriptExecutor scriptExecutor =
-        new GraalVMJavaScriptExecutor(
+        new GraalJSScriptExecutor(
             "javascript",
             UTF_8,
             new StringInputResource(
@@ -68,7 +68,7 @@ public class ScriptExecutorTest {
   public void graalBadLanguage() throws Exception {
     final StringWriter writer = new StringWriter();
     final ScriptExecutor scriptExecutor =
-        new GraalVMJavaScriptExecutor(
+        new GraalJSScriptExecutor(
             "foulmouth",
             UTF_8,
             new StringInputResource(
