@@ -31,15 +31,28 @@ package schemacrawler.tools.command.script;
 import static java.util.Objects.requireNonNull;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
+import java.io.IOException;
+import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.script.Compilable;
+import javax.script.CompiledScript;
+import javax.script.ScriptEngine;
+import javax.script.ScriptException;
 
 import us.fatehi.utility.ioresource.InputResource;
+import us.fatehi.utility.string.StringFormat;
 
 abstract class AbstractScriptExecutor implements ScriptExecutor {
+
+  private static final Logger LOGGER = Logger.getLogger(AbstractScriptExecutor.class.getName());
 
   protected final Charset inputCharset;
   protected final InputResource scriptResource;
@@ -59,30 +72,34 @@ abstract class AbstractScriptExecutor implements ScriptExecutor {
     context = Collections.emptyMap();
   }
 
-  public Map<String, Object> getContext() {
-    return context;
-  }
-
-  public Charset getInputCharset() {
-    return inputCharset;
-  }
-
-  public String getScriptingLanguage() {
-    return scriptingLanguage;
-  }
-
-  public InputResource getScriptResource() {
-    return scriptResource;
-  }
-
-  public Writer getWriter() {
-    return writer;
-  }
-
+  @Override
   public void setContext(final Map<String, Object> context) {
     if (context == null) {
       this.context = Collections.emptyMap();
     }
     this.context = new HashMap<>(context);
+  }
+
+  protected void executeWithScriptEngine(final ScriptEngine scriptEngine)
+      throws ScriptException, IOException {
+    LOGGER.log(Level.CONFIG, new StringFormat("Evaluating script, ", scriptResource));
+    try (final Reader reader = scriptResource.openNewInputReader(inputCharset);
+        final Writer writer = this.writer) {
+
+      // Set up the context
+      scriptEngine.getContext().setWriter(writer);
+      for (final Entry<String, Object> entry : context.entrySet()) {
+        scriptEngine.put(entry.getKey(), entry.getValue());
+      }
+
+      // Evaluate the script
+      if (scriptEngine instanceof Compilable) {
+        final CompiledScript script = ((Compilable) scriptEngine).compile(reader);
+        final Object result = script.eval();
+        LOGGER.log(Level.INFO, new StringFormat("Script execution result:%n%s", result));
+      } else {
+        scriptEngine.eval(reader);
+      }
+    }
   }
 }

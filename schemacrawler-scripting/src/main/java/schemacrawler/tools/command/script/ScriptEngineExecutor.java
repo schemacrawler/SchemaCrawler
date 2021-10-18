@@ -28,15 +28,11 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.command.script;
 
-import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.Charset;
-import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.script.Compilable;
-import javax.script.CompiledScript;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
@@ -87,25 +83,7 @@ public final class ScriptEngineExecutor extends AbstractScriptExecutor {
       return false;
     }
 
-    LOGGER.log(Level.CONFIG, new StringFormat("Evaluating script, ", scriptResource));
-    try (final Reader reader = scriptResource.openNewInputReader(inputCharset);
-        final Writer writer = super.writer) {
-
-      // Set up the context
-      scriptEngine.getContext().setWriter(writer);
-      for (final Entry<String, Object> entry : context.entrySet()) {
-        scriptEngine.put(entry.getKey(), entry.getValue());
-      }
-
-      // Evaluate the script
-      if (scriptEngine instanceof Compilable) {
-        final CompiledScript script = ((Compilable) scriptEngine).compile(reader);
-        final Object result = script.eval();
-        LOGGER.log(Level.INFO, new StringFormat("Script execution result:%n%s", result));
-      } else {
-        scriptEngine.eval(reader);
-      }
-    }
+    executeWithScriptEngine(scriptEngine);
 
     return true;
   }
@@ -113,7 +91,7 @@ public final class ScriptEngineExecutor extends AbstractScriptExecutor {
   @Override
   public boolean canGenerate() {
     try {
-      getScriptEngine();
+      obtainScriptEngine();
       return scriptEngine != null;
     } catch (final SchemaCrawlerException e) {
       LOGGER.log(Level.CONFIG, "Script engine not found for language, " + scriptingLanguage, e);
@@ -121,7 +99,7 @@ public final class ScriptEngineExecutor extends AbstractScriptExecutor {
     }
   }
 
-  private ScriptEngine getScriptEngine() throws SchemaCrawlerException {
+  private ScriptEngine obtainScriptEngine() throws SchemaCrawlerException {
     final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
     LOGGER.log(Level.CONFIG, new StringFormat("Using script language <%s>", scriptingLanguage));
     try {
