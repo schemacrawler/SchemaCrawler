@@ -33,19 +33,14 @@ import static java.util.Objects.requireNonNull;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.script.Compilable;
-import javax.script.CompiledScript;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineFactory;
-import javax.script.ScriptEngineManager;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.command.script.options.ScriptOptions;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
-import us.fatehi.utility.ObjectToString;
 import us.fatehi.utility.ioresource.InputResource;
 import us.fatehi.utility.string.StringFormat;
 
@@ -56,23 +51,7 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions>
 
   static final String COMMAND = "script";
 
-  private static void logScriptEngineDetails(
-      final Level level, final ScriptEngineFactory scriptEngineFactory) {
-    if (!LOGGER.isLoggable(level)) {
-      return;
-    }
-
-    LOGGER.log(
-        level,
-        String.format(
-            "Using script engine%n%s %s (%s %s)%nScript engine names: %s%nSupported file extensions: %s",
-            scriptEngineFactory.getEngineName(),
-            scriptEngineFactory.getEngineVersion(),
-            scriptEngineFactory.getLanguageName(),
-            scriptEngineFactory.getLanguageVersion(),
-            ObjectToString.toString(scriptEngineFactory.getNames()),
-            ObjectToString.toString(scriptEngineFactory.getExtensions())));
-  }
+  private ScriptExecutor scriptExecutor;
 
   public ScriptCommand() {
     super(COMMAND);
@@ -80,12 +59,29 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions>
 
   @Override
   public void checkAvailability() throws Exception {
-    getScriptEngine();
     // Check availability of script
     commandOptions
         .getResource()
         .orElseThrow(
             () -> new SchemaCrawlerException("No script found, " + commandOptions.getScript()));
+
+    final String scriptingLanguage = commandOptions.getLanguage();
+
+    // Attempt to use Graal JavaScript
+    scriptExecutor = new GraalJSScriptExecutor(scriptingLanguage);
+    if (scriptExecutor.canGenerate()) {
+      return;
+    }
+
+    // Attempt to use a script engine
+    scriptExecutor = new ScriptEngineExecutor(scriptingLanguage);
+    if (scriptExecutor.canGenerate()) {
+      return;
+    }
+
+    // No suitable engine found
+    throw new SchemaCrawlerException(
+        "Scripting engine not found for language, " + scriptingLanguage);
   }
 
   /** {@inheritDoc} */
@@ -94,57 +90,29 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions>
     requireNonNull(commandOptions, "No script language provided");
     checkCatalog();
 
-    final Charset inputCharset = outputOptions.getInputCharset();
-
-    final ScriptEngine scriptEngine = getScriptEngine();
-    final InputResource inputResource = commandOptions.getResource().get();
-    LOGGER.log(Level.CONFIG, new StringFormat("Evaluating script, ", inputResource));
-    try (final Reader reader = inputResource.openNewInputReader(inputCharset);
-        final Writer writer = outputOptions.openNewOutputWriter()) {
-
-      // Set up the context
-      scriptEngine.getContext().setWriter(writer);
-      scriptEngine.put("catalog", catalog);
-      scriptEngine.put("connection", connection);
-      scriptEngine.put("chain", new CommandChain(this));
-
-      // Evaluate the script
-      if (scriptEngine instanceof Compilable) {
-        final CompiledScript script = ((Compilable) scriptEngine).compile(reader);
-        final Object result = script.eval();
-        LOGGER.log(Level.INFO, new StringFormat("Script execution result:%n%s", result));
-      } else {
-        scriptEngine.eval(reader);
-      }
+    if (scriptExecutor == null) {
+      throw new SchemaCrawlerException("Scripting engine not found");
     }
+
+    final Charset inputCharset = outputOptions.getInputCharset();
+    final InputResource inputResource = commandOptions.getResource().get();
+    final Reader reader = inputResource.openNewInputReader(inputCharset);
+    final Writer writer = outputOptions.openNewOutputWriter();
+
+    LOGGER.log(Level.CONFIG, new StringFormat("Evaluating script, %s", inputResource));
+
+    // Set up the context
+    final Map<String, Object> context = new HashMap<>();
+    context.put("catalog", catalog);
+    context.put("connection", connection);
+    context.put("chain", new CommandChain(this));
+
+    scriptExecutor.initialize(context, reader, writer);
+    scriptExecutor.call();
   }
 
   @Override
   public boolean usesConnection() {
     return true;
-  }
-
-  private ScriptEngine getScriptEngine() throws SchemaCrawlerException {
-    final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
-    ScriptEngine scriptEngine = null;
-    final String scriptingLanguage = commandOptions.getLanguage();
-    LOGGER.log(Level.CONFIG, new StringFormat("Using script language <%s>", scriptingLanguage));
-    try {
-      scriptEngine = scriptEngineManager.getEngineByName(scriptingLanguage);
-    } catch (final Exception e) {
-      // Ignore exception
-    }
-
-    if (scriptEngine == null) {
-      scriptEngine = scriptEngineManager.getEngineByExtension(scriptingLanguage);
-    }
-
-    if (scriptEngine == null) {
-      throw new SchemaCrawlerException("Script engine not found");
-    }
-
-    logScriptEngineDetails(Level.CONFIG, scriptEngine.getFactory());
-
-    return scriptEngine;
   }
 }

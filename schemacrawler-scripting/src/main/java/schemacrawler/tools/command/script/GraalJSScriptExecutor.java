@@ -35,8 +35,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 /** Main executor for the GraalVM JavaScript integration. */
 public final class GraalJSScriptExecutor extends AbstractScriptEngineExecutor {
 
-  public GraalJSScriptExecutor() {
-    super("javascript");
+  public GraalJSScriptExecutor(final String scriptingLanguage) {
+    super(scriptingLanguage);
     System.setProperty("polyglot.engine.WarnInterpreterOnly", "false");
   }
 

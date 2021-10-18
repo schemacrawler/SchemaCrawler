@@ -48,7 +48,7 @@ public class ScriptExecutorTest {
   @Test
   public void graal() throws Exception {
     final StringWriter writer = new StringWriter();
-    final ScriptExecutor scriptExecutor = new GraalJSScriptExecutor();
+    final ScriptExecutor scriptExecutor = new GraalJSScriptExecutor("javascript");
 
     final Map<String, Object> context = new HashMap<>();
     context.put("javaObj", new Object());
@@ -63,6 +63,13 @@ public class ScriptExecutorTest {
     assertThat(scriptExecutor.canGenerate(), is(true));
     assertThat(scriptExecutor.call(), is(true));
     assertThat(writer.toString().replaceAll("\\R", ""), is("Hello, World!"));
+  }
+
+  @Test
+  public void graalEngineBadLanguage() throws Exception {
+    final ScriptExecutor scriptExecutor = new GraalJSScriptExecutor("foulmouth");
+
+    assertThat(scriptExecutor.canGenerate(), is(false));
   }
 
   @Test

@@ -38,9 +38,6 @@ public class GraalJSScriptUtility {
   public static GraalJSScriptEngine createGraalJSScriptEngine() {
     return GraalJSScriptEngine.create(
         null,
-        Context.newBuilder("js")
-            .allowHostAccess(HostAccess.ALL)
-            .allowHostClassLookup(s -> true)
-            .option("js.ecmascript-version", "2021"));
+        Context.newBuilder("js").allowHostAccess(HostAccess.ALL).allowHostClassLookup(s -> true));
   }
 }

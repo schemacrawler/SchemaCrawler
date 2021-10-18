@@ -28,8 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.script;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -113,8 +113,8 @@ public class SchemaCrawlerExecutableChainTest {
     executable.execute();
 
     assertThat(
-        "Created files \"schema.txt\" and \"schema.png\"" + System.lineSeparator(),
-        equalTo(readFully(new FileReader(testOutputFile.toFile()))));
+        readFully(new FileReader(testOutputFile.toFile())).replaceAll("\\R", ""),
+        is("Created files \"schema.txt\" and \"schema.png\""));
 
     final Path schemaFile = Paths.get("schema.txt");
     final List<String> failures =
