@@ -1,38 +1,24 @@
-// Define all standard Java packages:
-var JavaPackages = new JavaImporter(
-  java.lang,
-  java.util,
-  java.io,
-  java.nio
-);
-
-// Define all classes:
-var TableRelationshipType = Java.type('schemacrawler.schema.TableRelationshipType');
-    
-with (JavaPackages) {
- 
 var dropTables = function()
 {
   var statement = connection.createStatement();
-  var tables = catalog.tables.toArray();
+  var tables = catalog.getTables().toArray();
   for (var i = (tables.length - 1); i >= 0; i--)
   {
     var table = tables[i];
-    var sql = "DROP " + table.type + " " + table.fullName;
+    var tableType = table.getType().toString().toUpperCase();
+    var sql = "DROP " + tableType + " " + table.getFullName();
     print("Executing SQL: " + sql);
     try
     {
       statement.executeUpdate(sql);
     } catch (e)
     {
+      print("Exception: " + e.getMessage());
+      print("(Not dropping table due to exception)");
       print("");
-      print(e.message);
-      print("(Not dropping any more tables, due to exception)");
-      return;
     }
   }
 };
 
+print("NOTE: Restart the database server after running this script, since tables will be dropped!");
 dropTables();
-
-}
