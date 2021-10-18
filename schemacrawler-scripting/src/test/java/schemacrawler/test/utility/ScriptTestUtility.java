@@ -47,7 +47,7 @@ public class ScriptTestUtility {
       final DatabaseConnectionInfo connectionInfo, final String script) throws Exception {
     final Map<String, String> argsMap = additionalArgsMap();
     argsMap.put("--script", script);
-    argsMap.put("--log-level", "ALL");
+    // argsMap.put("--log-level", "ALL");
     return commandlineExecution(connectionInfo, "script", argsMap, "text");
   }
 
