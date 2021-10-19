@@ -14,8 +14,8 @@ and [dbdiagram.io](https://dbdiagram.io/home) diagrams with a little scripting w
 1. Make sure that java is on your PATH
 2. Start the test database server by following instructions in the `_testdb/README.html` file
 3. Start a command shell in the `other-diagrams` example directory
-4. Run `diagram.cmd mermaid.py` (or `diagram.sh mermaid.py` on Unix) and view the output in [mermaid](https://mermaid-js.github.io/mermaid-live-editor)
-5. Run `diagram.cmd dbml.py` (or `diagram.sh dbml.py` on Unix) and view the output in [dbdiagram.io](https://dbdiagram.io/d)
+4. Run `other-diagram.cmd mermaid.py` (or `other-diagram.sh mermaid.py` on Unix) and view the output in [mermaid](https://mermaid-js.github.io/mermaid-live-editor)
+5. Run `other-diagram.cmd dbml.py` (or `other-diagram.sh dbml.py` on Unix) and view the output in [dbdiagram.io](https://dbdiagram.io/d)
 
 ## How to Experiment
 1. Try modifying the Python in the *.py files to do different things. 
