@@ -9,5 +9,7 @@
   <dependencies>
     <dependency org="org.graalvm.js" name="js"
                 rev="21.2.0" conf="binaries->default" />
+    <dependency org="org.graalvm.js" name="js-scriptengine"
+                rev="21.2.0" conf="binaries->default" />
   </dependencies>
 </ivy-module>

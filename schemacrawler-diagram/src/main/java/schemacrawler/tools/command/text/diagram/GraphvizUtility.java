@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import us.fatehi.utility.ProcessExecutor;
 import us.fatehi.utility.string.FileContents;
@@ -20,8 +20,7 @@ import us.fatehi.utility.string.StringFormat;
 
 public final class GraphvizUtility {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(GraphvizUtility.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(GraphvizUtility.class.getName());
 
   public static boolean isGraphvizAvailable() {
     final List<String> command = new ArrayList<>();
@@ -55,7 +54,12 @@ public final class GraphvizUtility {
       exitCode = Integer.MIN_VALUE;
     }
     final boolean successful = exitCode != null && exitCode == 0;
-    LOGGER.log(Level.CONFIG, new StringFormat("Is Graphviz available? %s", successful));
+    LOGGER.log(
+        Level.CONFIG,
+        new StringFormat(
+            "Checking if diagram can be generated with Graphviz - "
+                + "\n is Graphviz installed? = <%s>",
+            successful));
 
     return successful;
   }
@@ -69,9 +73,9 @@ public final class GraphvizUtility {
     LOGGER.log(
         Level.CONFIG,
         new StringFormat(
-            "Checking if diagram can be generated - "
-                + " can load <%s> = <%b>, "
-                + " can generate format <%s> = <%b>",
+            "Checking if diagram can be generated with the Graphviz Java library - "
+                + "\n can load <%s>? = <%b>, "
+                + "\n can generate format <%s>? = <%b>",
             className, hasClass, diagramOutputFormat.getDescription(), supportsFormat));
 
     return hasClass && supportsFormat;

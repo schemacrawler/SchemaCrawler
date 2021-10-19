@@ -115,6 +115,12 @@
       <version>21.2.0</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.graalvm.js</groupId>
+      <artifactId>js-scriptengine</artifactId>
+      <version>21.2.0</version>
+      <scope>provided</scope>
+    </dependency>
 
   </dependencies>
   <build>

@@ -1,13 +1,13 @@
 var forEach = Array.prototype.forEach;
 
-print(catalog.crawlInfo)
+print(catalog.getCrawlInfo())
 
 forEach.call(catalog.getTables(), function(table)
 {
   print('');
-  print(table.fullName);
-  forEach.call(table.columns, function(column)
+  print(table.getFullName());
+  forEach.call(table.getColumns(), function(column)
   {
-    print("  " + column.name);
+    print("  " + column.getName());
   });
 });

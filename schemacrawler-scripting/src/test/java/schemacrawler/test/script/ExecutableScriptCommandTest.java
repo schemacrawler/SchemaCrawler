@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.script;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.condition.OS.WINDOWS;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
@@ -37,6 +38,7 @@ import static schemacrawler.test.utility.ScriptTestUtility.scriptExecution;
 import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledOnOs;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
@@ -54,6 +56,9 @@ public class ExecutableScriptCommandTest {
   }
 
   @Test
+  @DisabledOnOs(
+      value = WINDOWS,
+      disabledReason = "Graal JS has a bug with Unicode output on Windows")
   public void executableJavaScript(final Connection connection) throws Exception {
     assertThat(
         outputOf(scriptExecution(connection, "/plaintextschema.js")),

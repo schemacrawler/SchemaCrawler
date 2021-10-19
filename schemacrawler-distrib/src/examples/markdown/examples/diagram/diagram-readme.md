@@ -6,9 +6,11 @@ The diagram example demonstrates the integration of SchemaCrawler with Graphviz.
 ## How to Run
 1. Make sure that java is on your PATH
 2. Start a command shell in the `_downloader` directory 
-3. Run `download.cmd graphviz-java` (or `download.sh graphviz-java` on Unix) to
-   install the `graphviz-java` package
-4. The `graphviz-java` package only supports PNG and SVG output. For other types of
+3. Run `download.cmd javascript` (or `download.sh javascript` on Unix) to
+   install the JavaScript support package required for `graphviz-java`
+4. Run `download.cmd graphviz-java` (or `download.sh graphviz-java` on Unix) to
+   install the `graphviz-java` package   
+5. The `graphviz-java` package only supports PNG and SVG output. For other types of
    output, install [Graphviz](https://www.graphviz.org/).
 
 ### Run With SQLite Database
