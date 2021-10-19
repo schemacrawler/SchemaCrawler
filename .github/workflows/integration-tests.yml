@@ -66,9 +66,9 @@ jobs:
           --no-transfer-progress \
           --batch-mode \
           --projects \
-          schemacrawler-diagram \
+          schemacrawler-diagram,schemacrawler-scripting \
           --also-make \
-          clean package
+          package
 
 
   build-test-coverage:
