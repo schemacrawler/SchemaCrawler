@@ -14,7 +14,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
         # (MacOS does not support Docker for Testcontainers)
-        java: [8, 11]
+        java: [8, 17]
     runs-on: ${{ matrix.os }}
     steps:
 
