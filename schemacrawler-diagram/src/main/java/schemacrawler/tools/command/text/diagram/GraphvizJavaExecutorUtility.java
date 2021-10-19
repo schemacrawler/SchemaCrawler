@@ -8,13 +8,13 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import guru.nidi.graphviz.engine.Format;
 import guru.nidi.graphviz.engine.Graphviz;
 import guru.nidi.graphviz.engine.GraphvizEngine;
 import guru.nidi.graphviz.engine.GraphvizJdkEngine;
 import guru.nidi.graphviz.engine.GraphvizV8Engine;
-import java.util.logging.Logger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 
@@ -59,18 +59,21 @@ public final class GraphvizJavaExecutorUtility {
 
   private static List<GraphvizEngine> loadGraphvizEngines() {
     final List<GraphvizEngine> engines = new ArrayList<>();
-    try {
-      final GraphvizEngine engine = new GraphvizV8Engine();
-      engines.add(engine);
-    } catch (final NoClassDefFoundError e) {
-      LOGGER.log(Level.INFO, "Cannot load GraphvizV8Engine");
-    }
 
     try {
       final GraphvizEngine engine = new GraphvizJdkEngine();
       engines.add(engine);
-    } catch (final NoClassDefFoundError e) {
-      LOGGER.log(Level.INFO, "Cannot load GraphvizJdkEngine");
+      LOGGER.log(Level.CONFIG, "Loaded GraphvizJdkEngine");
+    } catch (final Throwable e) {
+      LOGGER.log(Level.CONFIG, "Cannot load GraphvizJdkEngine");
+    }
+
+    try {
+      final GraphvizEngine engine = new GraphvizV8Engine();
+      engines.add(engine);
+      LOGGER.log(Level.CONFIG, "Loaded GraphvizV8Engine");
+    } catch (final Throwable e) {
+      LOGGER.log(Level.CONFIG, "Cannot load GraphvizV8Engine");
     }
 
     return engines;

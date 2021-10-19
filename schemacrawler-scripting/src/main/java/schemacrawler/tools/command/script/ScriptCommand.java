@@ -70,12 +70,16 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions>
     // Attempt to use Graal JavaScript
     scriptExecutor = new GraalJSScriptExecutor(scriptingLanguage);
     if (scriptExecutor.canGenerate()) {
+      LOGGER.log(Level.CONFIG, "Loaded JavaScript executor using Graal JavaScript");
       return;
     }
 
     // Attempt to use a script engine
     scriptExecutor = new ScriptEngineExecutor(scriptingLanguage);
     if (scriptExecutor.canGenerate()) {
+      LOGGER.log(
+          Level.CONFIG,
+          new StringFormat("Loaded <%s> executor using script engine", scriptingLanguage));
       return;
     }
 
