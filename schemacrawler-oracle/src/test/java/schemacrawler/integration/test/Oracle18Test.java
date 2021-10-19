@@ -48,12 +48,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.JdbcDatabaseContainer;
+import org.testcontainers.containers.OracleContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
-import schemacrawler.integration.test.utility.OracleContainer;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.DatabaseUser;
 import schemacrawler.schema.Property;
