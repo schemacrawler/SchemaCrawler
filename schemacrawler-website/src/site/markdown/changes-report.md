@@ -1,8 +1,8 @@
 # SchemaCrawler Change History
 
 
-<a name="a16.15.10"></a>
-## Release 16.15.10 - 2021-10-19
+<a name="a16.15.9"></a>
+## Release 16.15.9 - 2021-10-19
 
 - Make sure integration tests run on Java 8 and 17, on Windows and Linux, with and without Graphviz installed
 - Use Graal JS as the preferred JavaScript engine for scripting and diagrams on all Java versions
@@ -15,8 +15,8 @@
 - Show JSON-like config in logs
 
 
-<a name="a16.15.8"></a>
-## Release 16.15.8 - 2021-10-04
+<a name="a16.15.9"></a>
+## Release 16.15.9 - 2021-10-04
 
 - Check for a valid command before loading catalog
 - Fix issue #517 - TABLE_COLUMNS.sql causes SQL0604N against UTF-8 IBM DB2 database
