@@ -56,7 +56,7 @@ final class NeuteredLinesFilter implements Predicate<String> {
     Pattern.compile(".*15\\.0[6-7]\\.\\d\\d.*"),
     Pattern.compile(".*16\\.\\d{1,2}\\.\\d{1,2}.*"),
     // Operating systems and environment
-    Pattern.compile(".*(Windows|Linux).*"),
+    Pattern.compile(".*(Windows|Linux|Mac OS).*"),
     Pattern.compile(".*(Java|OpenJDK).*"),
     // SQL Server
     // -- server-specific values

@@ -6,7 +6,7 @@
   <parent>
     <artifactId>schemacrawler-parent</artifactId>
     <groupId>us.fatehi</groupId>
-    <version>16.15.8</version>
+    <version>16.15.9</version>
     <relativePath>../schemacrawler-parent/pom.xml</relativePath>
   </parent>
   <artifactId>schemacrawler-diagram</artifactId>
@@ -59,7 +59,7 @@
     <dependency>
       <groupId>org.graalvm.js</groupId>
       <artifactId>js</artifactId>
-      <version>21.2.0</version>
+      <version>21.3.0</version>
       <scope>provided</scope>
     </dependency>
 

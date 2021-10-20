@@ -6,7 +6,7 @@
   <parent>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
-    <version>16.15.8</version>
+    <version>16.15.9</version>
     <relativePath>../schemacrawler-parent/pom.xml</relativePath>
   </parent>
   <artifactId>schemacrawler-sqlserver</artifactId>
@@ -69,7 +69,7 @@
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>mssqlserver</artifactId>
-      <version>1.16.0</version>
+      <version>1.16.1</version>
       <scope>test</scope>
     </dependency>
 

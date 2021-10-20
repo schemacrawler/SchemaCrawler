@@ -1,16 +1,11 @@
 # SchemaCrawler Change History
 
 
-<a name="a16.15.10"></a>
-## Release 16.15.10 - 2021-10-19
+<a name="a16.15.9"></a>
+## Release 16.15.9 - 2021-10-19
 
 - Make sure integration tests run on Java 8 and 17, on Windows and Linux, with and without Graphviz installed
 - Use Graal JS as the preferred JavaScript engine for scripting and diagrams on all Java versions
-
-
-<a name="a16.15.9"></a>
-## Release 16.15.9 - 2021-10-11
-
 - Fix printing of dumps when the data has array data types
 - Show JSON-like config in logs
 

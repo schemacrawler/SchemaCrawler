@@ -230,7 +230,7 @@ public final class TestUtility {
     if (JRE.currentVersion() == JAVA_8) {
       return "8";
     } else {
-      return "11";
+      return "LTE";
     }
   }
 
