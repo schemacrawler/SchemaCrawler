@@ -12,8 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
-        # (MacOS does not support Docker for Testcontainers)
+        os: [ubuntu-latest, macos-latest, windows-latest]
         java: [8, 17]
     runs-on: ${{ matrix.os }}
     steps:
