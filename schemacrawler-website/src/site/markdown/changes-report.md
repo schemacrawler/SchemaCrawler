@@ -1,6 +1,12 @@
 # SchemaCrawler Change History
 
 
+<a name="a16.15.10"></a>
+## Release 16.15.10 - 2021-10-22
+
+- Fix #522 - Crawling Oracle schema with non DBA user cause exception
+
+
 <a name="a16.15.9"></a>
 ## Release 16.15.9 - 2021-10-19
 
