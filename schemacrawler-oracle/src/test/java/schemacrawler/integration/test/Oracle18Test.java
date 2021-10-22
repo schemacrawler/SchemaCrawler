@@ -133,12 +133,12 @@ public class Oracle18Test extends BaseAdditionalDatabaseTest {
         databaseUsers.stream()
             .map(databaseUser -> databaseUser.getAttributes().size())
             .collect(Collectors.toList()),
-        hasItems(1));
+        hasItems(2));
     assertThat(
         databaseUsers.stream()
             .map(databaseUser -> databaseUser.getAttributes().keySet())
             .flatMap(Collection::stream)
             .collect(Collectors.toSet()),
-        hasItems("ACCOUNT_STATUS"));
+        hasItems("USER_ID", "CREATED"));
   }
 }

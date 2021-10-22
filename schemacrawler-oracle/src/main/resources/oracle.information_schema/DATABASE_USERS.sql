@@ -1,5 +1,6 @@
 SELECT
   USERNAME,
-  ACCOUNT_STATUS
+  USER_ID,
+  CREATED
 FROM
   ${catalogscope}_USERS
