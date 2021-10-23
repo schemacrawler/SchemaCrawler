@@ -41,14 +41,6 @@ public final class OutputOptionsBuilder
         .toOptions();
   }
 
-  public static OutputOptions newOutputOptions(
-      final String outputFormatValue, final Path outputFile) {
-    return OutputOptionsBuilder.builder()
-        .withOutputFormatValue(outputFormatValue)
-        .withOutputFile(outputFile)
-        .toOptions();
-  }
-
   private OutputResource outputResource;
   private String outputFormatValue;
   private Charset inputEncodingCharset;

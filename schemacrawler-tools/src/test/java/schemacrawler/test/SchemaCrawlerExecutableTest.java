@@ -55,6 +55,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.test.utility.ExecutableTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.Config;
@@ -75,7 +76,7 @@ public class SchemaCrawlerExecutableTest {
         SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
 
     final OutputOptions outputOptions =
-        OutputOptionsBuilder.newOutputOptions("text", testOutputFile);
+        ExecutableTestUtility.newOutputOptions("text", testOutputFile);
 
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setOutputOptions(outputOptions);
@@ -185,7 +186,7 @@ public class SchemaCrawlerExecutableTest {
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("test-command");
 
     final OutputOptions outputOptions =
-        OutputOptionsBuilder.newOutputOptions("text", testOutputFile);
+        ExecutableTestUtility.newOutputOptions("text", testOutputFile);
 
     executable.setOutputOptions(outputOptions);
     executable.setConnection(connection);

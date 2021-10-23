@@ -24,7 +24,7 @@
         factory-method="newSchemaCrawlerOptions" />
 
   <bean id="outputOptions"
-        class="schemacrawler.tools.options.OutputOptionsBuilder"
+        class="schemacrawler.test.utility.ExecutableTestUtility"
         factory-method="newOutputOptions">
     <constructor-arg name="outputFormatValue"
                      value="text" />

@@ -18,10 +18,10 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.test.utility.ExecutableTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.options.OutputOptionsBuilder;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class Issue342Test {
@@ -43,7 +43,7 @@ public class Issue342Test {
             .withLoadOptions(loadOptionsBuilder.toOptions());
 
     final Path outputFile = createTempFile("schemacrawler", ".dat").toPath();
-    final OutputOptions outputOptions = OutputOptionsBuilder.newOutputOptions("json", outputFile);
+    final OutputOptions outputOptions = ExecutableTestUtility.newOutputOptions("json", outputFile);
     final String command = "schema";
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);

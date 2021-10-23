@@ -39,6 +39,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 
 public final class ExecutableTestUtility {
@@ -100,5 +101,13 @@ public final class ExecutableTestUtility {
 
   private ExecutableTestUtility() {
     // Prevent instantiation
+  }
+
+public static OutputOptions newOutputOptions(
+      final String outputFormatValue, final Path outputFile) {
+    return OutputOptionsBuilder.builder()
+        .withOutputFormatValue(outputFormatValue)
+        .withOutputFile(outputFile)
+        .toOptions();
   }
 }
