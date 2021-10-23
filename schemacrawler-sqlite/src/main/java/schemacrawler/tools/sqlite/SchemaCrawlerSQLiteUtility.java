@@ -27,25 +27,18 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.tools.sqlite;
 
-
 import java.nio.file.Path;
 
-public class SchemaCrawlerSQLiteUtility
-{
+public class SchemaCrawlerSQLiteUtility {
 
-  public static Path createSchemaCrawlerDiagram(final Path dbFile,
-                                                final String extension)
-    throws Exception
-  {
-    final EmbeddedSQLiteWrapper sqLiteDatabaseLoader =
-      new EmbeddedSQLiteWrapper();
+  public static Path createSchemaCrawlerDiagram(
+      final Path dbFile, final String title, final String extension) throws Exception {
+    final EmbeddedSQLiteWrapper sqLiteDatabaseLoader = new EmbeddedSQLiteWrapper();
     sqLiteDatabaseLoader.loadDatabaseFile(dbFile);
-    return sqLiteDatabaseLoader.createDiagram(extension);
+    return sqLiteDatabaseLoader.createDiagram(title, extension);
   }
 
-  private SchemaCrawlerSQLiteUtility()
-  {
+  private SchemaCrawlerSQLiteUtility() {
     // Prevent instantiation
   }
-
 }
