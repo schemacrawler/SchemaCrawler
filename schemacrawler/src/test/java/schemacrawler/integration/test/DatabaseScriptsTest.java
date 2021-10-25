@@ -109,8 +109,7 @@ public class DatabaseScriptsTest {
 
   private Collection<DatabaseScriptSection> booksDatabaseScriptSections;
 
-  @Autowired
-  private ResourceLoader resourceLoader;
+  @Autowired private ResourceLoader resourceLoader;
 
   @Test
   public void booksDatabaseScripts() throws Exception {
@@ -120,8 +119,10 @@ public class DatabaseScriptsTest {
     for (final String scriptName : scripts) {
       final Map<DatabaseScriptSection, Integer> scriptSectionsCounts = makeScriptSectionsCounts();
       final String scriptsResource = "/" + scriptName;
-      try (final BufferedReader reader = new BufferedReader(new InputStreamReader(
-          DatabaseScriptsTest.class.getResourceAsStream(scriptsResource), UTF_8))) {
+      try (final BufferedReader reader =
+          new BufferedReader(
+              new InputStreamReader(
+                  DatabaseScriptsTest.class.getResourceAsStream(scriptsResource), UTF_8))) {
         final List<String> lines =
             reader.lines().filter(line -> !isBlank(line)).collect(Collectors.toList());
         assertThat(lines, is(not(empty())));
@@ -136,8 +137,8 @@ public class DatabaseScriptsTest {
         throw new RuntimeException(e.getMessage(), e);
       }
 
-      for (final Map.Entry<DatabaseScriptSection, Integer> databaseScriptSectionIntegerEntry : scriptSectionsCounts
-          .entrySet()) {
+      for (final Map.Entry<DatabaseScriptSection, Integer> databaseScriptSectionIntegerEntry :
+          scriptSectionsCounts.entrySet()) {
         final int count = databaseScriptSectionIntegerEntry.getValue();
         if (count != 1) {
           final String error;
@@ -146,8 +147,10 @@ public class DatabaseScriptsTest {
           } else {
             error = "duplicate";
           }
-          final String message = String.format("%s: %s %s", scriptName, error,
-              databaseScriptSectionIntegerEntry.getKey().toString());
+          final String message =
+              String.format(
+                  "%s: %s %s",
+                  scriptName, error, databaseScriptSectionIntegerEntry.getKey().toString());
           failedScripts.add(message);
         }
       }
@@ -162,7 +165,7 @@ public class DatabaseScriptsTest {
   @BeforeEach
   public void setup() throws IOException {
     booksDatabaseScriptSections = makeScriptSections("classpath*:/**/db/books/*.sql");
-    assertThat(booksDatabaseScriptSections.size(), is(29));
+    assertThat(booksDatabaseScriptSections.size(), is(30));
   }
 
   private String getScriptName(final String path) {

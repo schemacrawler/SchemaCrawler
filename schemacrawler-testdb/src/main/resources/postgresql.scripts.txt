@@ -14,6 +14,7 @@
 ;,/db/books/05_views_materialized_01_A.sql
 ;,/db/books/06_indexes_01_A.sql
 ;,/db/books/07_remarks_01_A.sql
+;,/db/books/07_remarks_02_A.sql
 #,/db/books/08_procedures_01_A.sql
 @,/db/books/09_functions_01_D.sql
 #,/db/books/10_triggers_01_A.sql
