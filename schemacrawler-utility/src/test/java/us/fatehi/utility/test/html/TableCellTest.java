@@ -79,8 +79,13 @@ public class TableCellTest {
 
     assertThat(
         tablecell.render(TagOutputFormat.html),
-        is(
-            "<td colspan='2' sometag='custom&value' align='right'><b><i>display &amp; text</i></b></td>"));
+        anyOf(
+          is(
+            "<td sometag='custom&value' colspan='2' align='right'><b><i>display &amp; text</i></b></td>"
+          ),
+          is(
+            "<td colspan='2' sometag='custom&value' align='right'><b><i>display &amp; text</i></b></td>"
+          )));
     assertThat(tablecell.render(TagOutputFormat.text), is("display & text"));
     assertThat(tablecell.render(TagOutputFormat.tsv), is("display & text"));
   }
