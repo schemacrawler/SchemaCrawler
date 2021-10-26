@@ -1,10 +1,10 @@
 #,/db/books/00_drop_schemas_01_A.sql
 #,/db/books/01_schemas_01_A.sql
-;,/db/books/02_types_01_B.sql
-#,/db/books/02_types_02_A.sql
-#,/db/books/02_types_03_A.sql
-#,/db/books/03_domains_01_A.sql
-#,/db/books/04_sequences_01_A.sql
+;,/db/books/10_types_01_B.sql
+#,/db/books/10_types_02_A.sql
+#,/db/books/10_types_03_A.sql
+#,/db/books/11_domains_01_A.sql
+#,/db/books/20_sequences_01_A.sql
 ;,/db/books/30_tables_02_C.sql
 ;,/db/books/30_tables_01_A.sql
 ;,/db/books/30_tables_03_A.sql
