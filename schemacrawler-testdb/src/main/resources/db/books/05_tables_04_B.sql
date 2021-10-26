@@ -1,5 +1,5 @@
 -- Table with special characters in the name
--- Also, with a correction to the foreign key where the data type does match the primary key
+-- Also, a foreign key where the data type does not match the primary key
 CREATE TABLE Βιβλία
 (
   Μοναδικός SMALLINT NOT NULL,

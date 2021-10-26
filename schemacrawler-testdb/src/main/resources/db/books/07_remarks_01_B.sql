@@ -4,57 +4,57 @@
 
 EXECUTE SP_ADDEXTENDEDPROPERTY 'MS_Description', 
    'List of book publishers',
-   'user', 'dbo', 'table', 'Publishers'
+   'SCHEMA', 'dbo', 'TABLE', 'Publishers'
 ;
 EXECUTE SP_ADDEXTENDEDPROPERTY 'MS_Description', 
    'Unique (internal) id for book publisher',
-   'user', 'dbo', 'table', 'Publishers', 'column', 'Id'
+   'SCHEMA', 'dbo', 'TABLE', 'Publishers', 'COLUMN', 'Id'
 ;
 EXECUTE SP_ADDEXTENDEDPROPERTY 'MS_Description', 
    'Name of book publisher',
-   'user', 'dbo', 'table', 'Publishers', 'column', 'Publisher'
+   'SCHEMA', 'dbo', 'TABLE', 'Publishers', 'COLUMN', 'Publisher'
 ;
 
 
 EXECUTE SP_ADDEXTENDEDPROPERTY 'MS_Description', 
    'Contact details for book authors',
-   'user', 'dbo', 'table', 'Authors'
+   'SCHEMA', 'dbo', 'TABLE', 'Authors'
 ;
 
 
 EXECUTE SP_ADDEXTENDEDPROPERTY 'MS_Description', 
    'Details for published books',
-   'user', 'dbo', 'table', 'Books'
+   'SCHEMA', 'dbo', 'TABLE', 'Books'
 ;
 EXECUTE SP_ADDEXTENDEDPROPERTY 'MS_Description', 
    'Unique (internal) id for book',
-   'user', 'dbo', 'table', 'Books', 'column', 'Id'
+   'SCHEMA', 'dbo', 'TABLE', 'Books', 'COLUMN', 'Id'
 ;
 EXECUTE SP_ADDEXTENDEDPROPERTY 'MS_Description', 
    'Book title',
-   'user', 'dbo', 'table', 'Books', 'column', 'Title'
+   'SCHEMA', 'dbo', 'TABLE', 'Books', 'COLUMN', 'Title'
 ;
 EXECUTE SP_ADDEXTENDEDPROPERTY 'MS_Description', 
    'Book description
 (Usually the blurb from the book jacket or promotional materials)',
-   'user', 'dbo', 'table', 'Books', 'column', 'Description'
+   'SCHEMA', 'dbo', 'TABLE', 'Books', 'COLUMN', 'Description'
 ;
 EXECUTE SP_ADDEXTENDEDPROPERTY 'MS_Description', 
    'Foreign key to the book publisher',
-   'user', 'dbo', 'table', 'Books', 'column', 'PublisherId'
+   'SCHEMA', 'dbo', 'TABLE', 'Books', 'COLUMN', 'PublisherId'
 ;
 EXECUTE SP_ADDEXTENDEDPROPERTY 'MS_Description', 
    'Book publication date',
-   'user', 'dbo', 'table', 'Books', 'column', 'PublicationDate'
+   'SCHEMA', 'dbo', 'TABLE', 'Books', 'COLUMN', 'PublicationDate'
 ;
 EXECUTE SP_ADDEXTENDEDPROPERTY 'MS_Description', 
    'Current price for the book',
-   'user', 'dbo', 'table', 'Books', 'column', 'Price'
+   'SCHEMA', 'dbo', 'TABLE', 'Books', 'COLUMN', 'Price'
 ;
 
 
 EXECUTE SP_ADDEXTENDEDPROPERTY 'MS_Description', 
    'Relationship between books and their authors, 
 along with the latest updated information',
-   'user', 'dbo', 'table', 'BookAuthors'
+   'SCHEMA', 'dbo', 'TABLE', 'BookAuthors'
 ;
