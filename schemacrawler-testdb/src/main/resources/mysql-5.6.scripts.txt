@@ -22,8 +22,8 @@
 #,/db/books/11_synonyms_02_A.sql
 #,/db/books/12_generated_columns_01_C.sql
 #,/db/books/12_hidden_columns_01_A.sql
-#,/db/books/13_grants_01_A.sql
-#,/db/books/13_grants_02_A.sql
+#,/db/books/70_grants_01_A.sql
+#,/db/books/70_grants_02_A.sql
 ;,/db/books/90_data_01_A.sql
 ;,/db/books/90_data_02_B.sql
 ;,/db/books/90_data_03_B.sql
