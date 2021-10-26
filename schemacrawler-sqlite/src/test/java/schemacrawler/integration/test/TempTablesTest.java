@@ -65,7 +65,7 @@ public class TempTablesTest extends BaseSqliteTest {
 
     TestSchemaCreatorMain.call("--url", "jdbc:sqlite:" + sqliteDbFile);
     final Connection connection =
-        executeSqlInTestDatabase(sqliteDbFile, "/db/books/05_temp_tables_01_B.sql");
+        executeSqlInTestDatabase(sqliteDbFile, "/db/books/33_temp_tables_01_B.sql");
 
     final LimitOptionsBuilder limitOptionsBuilder =
         LimitOptionsBuilder.builder().tableTypes("GLOBAL TEMPORARY");
