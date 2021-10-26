@@ -39,6 +39,8 @@ import us.fatehi.utility.html.Alignment;
 import us.fatehi.utility.html.Tag;
 import us.fatehi.utility.html.TagOutputFormat;
 
+import java.util.Arrays;
+
 public class AnchorTest {
 
   @DisplayName("anchor: basic output")
@@ -59,10 +61,8 @@ public class AnchorTest {
     assertThat(anchor.getTagName(), is("a"));
     assertThat(anchor.toString(), is("a"));
 
-    assertThat(
-        anchor.render(TagOutputFormat.html),
-        is(
-            "<a sometag='customvalue' style='somestyle' href='http://www.schemacrawler.com' bgcolor='#FF0064' class='class'>display text</a>"));
+    assertRenderEqual(anchor.render(TagOutputFormat.html), 
+      "<a sometag='customvalue' style='somestyle' href='http://www.schemacrawler.com' bgcolor='#FF0064' class='class'>display text</a>");
     assertThat(anchor.render(TagOutputFormat.text), is("display text"));
     assertThat(anchor.render(TagOutputFormat.tsv), is("display text"));
   }
@@ -79,10 +79,8 @@ public class AnchorTest {
             .make();
     anchor.addAttribute("sometag", "custom&value");
 
-    assertThat(
-        anchor.render(TagOutputFormat.html),
-        is(
-            "<a sometag='custom&value' href='http://www.schemacrawler.com' align='right'><b><i>display &amp; text</i></b></a>"));
+    assertRenderEqual(anchor.render(TagOutputFormat.html),
+      "<a sometag='custom&value' href='http://www.schemacrawler.com' align='right'><b><i>display &amp; text</i></b></a>");
     assertThat(anchor.render(TagOutputFormat.text), is("display & text"));
     assertThat(anchor.render(TagOutputFormat.tsv), is("display & text"));
   }
@@ -101,5 +99,19 @@ public class AnchorTest {
     assertThat(anchor.render(TagOutputFormat.html), is("<a>display &amp; text</a>"));
     assertThat(anchor.render(TagOutputFormat.text), is("display & text"));
     assertThat(anchor.render(TagOutputFormat.tsv), is("display & text"));
+  }
+
+  public void assertRenderEqual(String actual, String expected) {
+    String[] expectedParts = expected.split(">", 2);
+    String[] actualParts = actual.split(">", 2);
+    assertThat(actualParts[1], is(expectedParts[1]));
+
+    String[] expectedTags = expectedParts[0].split(" ");
+    String[] actualTags = actualParts[0].split(" ");
+    assertThat(actualTags.length, is(expectedTags.length));
+
+    Arrays.sort(expectedTags);
+    Arrays.sort(actualTags);   
+    assertThat(actualTags, is(expectedTags));
   }
 }
