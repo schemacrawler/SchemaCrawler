@@ -5,7 +5,7 @@ SchemaCrawler has a good mix of useful features for data governance. You can
 [search for database schema objects](schemacrawler-grep.html) using regular
 expressions, and output the schema and data in a readable text format. The
 output serves for database documentation, and is designed to be
-[diff-ed](http://en.wikipedia.org/wiki/Diff) against other database schemas.
+[diff-ed](https://en.wikipedia.org/wiki/Diff) against other database schemas.
 SchemaCrawler also generates [schema diagrams.](diagramming.html) You can
 [execute scripts](scripting.html) in any standard scripting language against
 your database. You can find potential schema design issues with
@@ -19,12 +19,12 @@ Java SE 8, Compact Profile 2 or better.
 [![GitHub Repo stars](https://img.shields.io/github/stars/schemacrawler/schemacrawler?style=social)](https://github.com/schemacrawler/SchemaCrawler)
 [![Quick Build](https://github.com/schemacrawler/SchemaCrawler/workflows/Quick%20Build/badge.svg)](https://github.com/schemacrawler/SchemaCrawler/actions?query=workflow%3A%22Quick+Build%22)
 [![Integration Tests](https://github.com/schemacrawler/SchemaCrawler/workflows/Integration%20Tests/badge.svg)](https://github.com/schemacrawler/SchemaCrawler/actions?query=workflow%3A%22Integration+Tests%22)
-[![codecov](https://codecov.io/gh/schemacrawler/SchemaCrawler/branch/master/graph/badge.svg)](https://codecov.io/gh/schemacrawler/SchemaCrawler)
+[![codecov](https://app.codecov.io/gh/schemacrawler/SchemaCrawler/branch/master/graph/badge.svg)](https://app.codecov.io/gh/schemacrawler/SchemaCrawler)
 
 [![The Central Repository](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler.svg)](https://search.maven.org/search?q=g:us.fatehi%20schemacrawler*)
 [![Main distribution](https://img.shields.io/github/downloads/schemacrawler/schemacrawler/total)](https://github.com/schemacrawler/SchemaCrawler/releases/latest)
 [![Docker Pulls](https://img.shields.io/docker/pulls/schemacrawler/schemacrawler.svg)](https://hub.docker.com/r/schemacrawler/schemacrawler/)
-[![Chocolatey](https://img.shields.io/chocolatey/v/schemacrawler.svg)](https://chocolatey.org/packages/schemacrawler)
+[![Chocolatey](https://img.shields.io/chocolatey/v/schemacrawler.svg)](https://community.chocolatey.org/packages/schemacrawler)
 
 
 
@@ -40,19 +40,19 @@ metadata to be output as [plain text,](snapshot-examples/snapshot.txt)
 The HTML5 output is a combination of valid XML (that
 can be manipulated by XML tools or XSLT), and HTML that can be viewed in a
 browser. All formats are designed to be easy to
-[diff](http://en.wikipedia.org/wiki/Diff), or find differences with other
+[diff](https://en.wikipedia.org/wiki/Diff), or find differences with other
 schemas that may have been output in the same format.
 
 SchemaCrawler has [grep](schemacrawler-grep.html) functionality that allows
 you to search for table and column names using regular expressions.
 SchemaCrawler is capable of creating entity-relationship diagrams in
-[DOT format,](http://www.graphviz.org/doc/info/lang.html ) which
-[Graphviz](http://www.graphviz.org/) can convert into [schema diagrams.](diagramming.html)
+[DOT format,](https://www.graphviz.org/doc/info/lang.html ) which
+[Graphviz](https://www.graphviz.org/) can convert into [schema diagrams.](diagramming.html)
 SchemaCrawler has powerful scripting ability,
 using JavaScript, Groovy, Ruby or Python. A live connection is provided to the
 script context to allow you to select from or even modify your database.
 Examples are provided for all of these with the
-[download](http://github.com/schemacrawler/SchemaCrawler/releases/).
+[download](https://github.com/schemacrawler/SchemaCrawler/releases/).
 
 SchemaCrawler is integrated with templating engines, such
 as [Apache Velocity](https://velocity.apache.org/), [Thymeleaf](https://www.thymeleaf.org/),

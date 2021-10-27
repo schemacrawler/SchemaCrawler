@@ -1,7 +1,7 @@
 # SchemaCrawler Database Diagramming
 
-SchemaCrawler generates database diagrams using [Graphviz](http://www.graphviz.org/) in any of the
-[output formats supported by Graphviz](http://www.graphviz.org/doc/info/output.html).
+SchemaCrawler generates database diagrams using [Graphviz](https://www.graphviz.org/) in any of the
+[output formats supported by Graphviz](https://www.graphviz.org/doc/info/output.html).
 SchemaCrawler is unique among database diagramming tools in that you do not need to
 know the table names or column names that you are interested in. All you need to know
 is what to search for, in the form of a regular expression. You can filter out tables,
@@ -12,9 +12,9 @@ ones, whether they are parent or child tables. If your schema changes, you can s
 regenerate the diagram, without having to know the exact changes that were made to the
 schema.
 
-SchemaCrawler relies on [Graphviz](http://www.graphviz.org/) to generate diagrams.
-Install [Graphviz](http://www.graphviz.org/) first, and ensure that it is on the system
-PATH. If installing [Graphviz](http://www.graphviz.org/) is not an option for you, use
+SchemaCrawler relies on [Graphviz](https://www.graphviz.org/) to generate diagrams.
+Install [Graphviz](https://www.graphviz.org/) first, and ensure that it is on the system
+PATH. If installing [Graphviz](https://www.graphviz.org/) is not an option for you, use
 the pure Java Graphviz library. Instructions are provided with
 [the SchemaCrawler download](https://github.com/schemacrawler/SchemaCrawler/releases),
 in the `diagram` example.
@@ -25,7 +25,7 @@ example,
 `--command=schema --output-format=png --output-file=graph.png`
 
 See the diagram example in the
-[SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/)
+[SchemaCrawler examples](https://github.com/schemacrawler/SchemaCrawler/releases/)
 download. An example of a SchemaCrawler database diagram is below.
 
 <a href="diagram-examples/diagram.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
@@ -201,7 +201,7 @@ schemacrawler/schemacrawler \
 
 ## SchemaCrawler Diagrams in Use
 
-Schemacrawler database diagrams in use at the Scrum meeting at the Software Development Departement of [La Ville de Nouméa](http://www.noumea.nc/).
+Schemacrawler database diagrams in use at the Scrum meeting at the Software Development Departement of [La Ville de Nouméa](https://www.noumea.nc/).
 Photograph courtesy of [Adrien Sales](https://www.linkedin.com/in/adrien-sales).
 
 <a href="images/SchemaCrawler_Noumea.jpg" data-lightbox="sc-in-use" data-title="Schemacrawler database diagrams in use">

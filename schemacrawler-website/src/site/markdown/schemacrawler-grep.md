@@ -2,7 +2,7 @@
 
 SchemaCrawler is a command-line tool that allows you to search your database
 for tables and columns that match a regular expression, much like the standard
-[grep](http://en.wikipedia.org/wiki/Grep) tool.
+[grep](https://en.wikipedia.org/wiki/Grep) tool.
 
 The SchemaCrawler command-line allows limiting tables, views, columns, stored
 procedure and function based on regular expressions, in addition to the grep
@@ -20,5 +20,5 @@ options similar to
 This will find all tables that have a CUSTOMER_ID column.
 
 For more details, see the grep example in the 
-[SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) 
+[SchemaCrawler examples](https://github.com/schemacrawler/SchemaCrawler/releases/) 
 download.

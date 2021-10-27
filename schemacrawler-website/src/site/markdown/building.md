@@ -57,19 +57,19 @@ Before importing the various SchemaCrawler projects into [Eclipse] or [IntelliJ 
 
 
 [Java]: https://www.java.com/
-[Eclipse]: http://www.eclipse.org/downloads/eclipse-packages/
+[Eclipse]: https://www.eclipse.org/downloads/eclipse-packages/
 [IntelliJ IDEA]: https://www.jetbrains.com/idea/download/
-[SchemaCrawler examples]: http://github.com/schemacrawler/SchemaCrawler/releases/
+[SchemaCrawler examples]: https://github.com/schemacrawler/SchemaCrawler/releases/
 [SchemaCrawler jars]: https://search.maven.org/search?q=g:us.fatehi%20a:schemacrawler*
 [SchemaCrawler Docker image]: https://hub.docker.com/r/schemacrawler/schemacrawler/
 [Apache ant]: https://ant.apache.org/
 [Gradle]: https://gradle.org/
-[Groovy]: http://www.groovy-lang.org/
-[Ruby]: http://www.ruby-lang.org/en/
+[Groovy]: https://www.groovy-lang.org/
+[Ruby]: https://www.ruby-lang.org/en/
 [Python]: https://www.python.org/
-[Graphviz]: http://www.graphviz.org/
+[Graphviz]: https://www.graphviz.org/
 [Apache Velocity]: https://velocity.apache.org/
 [Apache Maven]: https://maven.apache.org/
-[m2e Maven Integration for Eclipse]: http://eclipse.org/m2e/
-[Clover]: http://www.atlassian.com/software/clover/
+[m2e Maven Integration for Eclipse]: https://eclipse.org/m2e/
+[Clover]: https://www.atlassian.com/software/clover/
 [how-tos]: how-to.html

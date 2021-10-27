@@ -8,7 +8,7 @@ notation (JSON)](snapshot-examples/snapshot.json) output. The HTML5
 output is a combination of valid XML (that can be manipulated by XML
 tools or XSLT), and HTML that can be viewed in a browser. The output
 serves for database documentation, and is designed to be
-[diff-ed](http://en.wikipedia.org/wiki/Diff) against other database
+[diff-ed](https://en.wikipedia.org/wiki/Diff) against other database
 schemas.
 
 SchemaCrawler is unique among database documentation tools in that you

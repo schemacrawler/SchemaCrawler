@@ -6,12 +6,12 @@ SchemaCrawler is bundled with JDBC drivers for some commonly used relational dat
 
 The JDBC drivers for database systems commonly used with SchemaCrawler are included with the SchemaCrawler download:
 
-- [SQLite](http://www.sqlite.org/) [Xerial SQLite JDBC driver](https://github.com/xerial/sqlite-jdbc) 
-- [Oracle](http://www.oracle.com/) [JDBC driver](http://www.oracle.com/technology/software/tech/java/sqlj_jdbc/index.html)
-- [Microsoft SQL Server](http://www.microsoft.com/sqlserver/) [JDBC driver](https://github.com/Microsoft/mssql-jdbc)
-- [IBM DB2](http://www.ibm.com/software/data/db2/) [JDBC driver](https://www.ibm.com/support/pages/db2-jdbc-driver-versions-and-downloads)
-- [MySQL](http://www.mysql.com/) [Connector/J JDBC driver](http://dev.mysql.com/downloads/connector/j/)
-- [PostgreSQL](http://www.postgresql.org/) [JDBC driver](http://jdbc.postgresql.org/)
+- [SQLite](https://www.sqlite.org/) [Xerial SQLite JDBC driver](https://github.com/xerial/sqlite-jdbc) 
+- [Oracle](https://www.oracle.com/) [JDBC driver](https://www.oracle.com/technology/software/tech/java/sqlj_jdbc/index.html)
+- [Microsoft SQL Server](https://www.microsoft.com/sqlserver/) [JDBC driver](https://github.com/Microsoft/mssql-jdbc)
+- [IBM DB2](https://www.ibm.com/software/data/db2/) [JDBC driver](https://www.ibm.com/support/pages/db2-jdbc-driver-versions-and-downloads)
+- [MySQL](https://www.mysql.com/) [Connector/J JDBC driver](https://dev.mysql.com/downloads/connector/j/)
+- [PostgreSQL](https://www.postgresql.org/) [JDBC driver](https://jdbc.postgresql.org/)
 - Offline database support does not need any JDBC driver
 
 For any other database that includes a compliant JDBC driver, place the JDBC in the
