@@ -83,7 +83,7 @@ public class SortingTest {
 
     final String[] sortedNatural =
         new String[] {
-          "Z_FK_AUTHOR", "SYS_FK_10128",
+          "Z_FK_AUTHOR", "SYS_FK_10126",
         };
 
     final String[] sortedAlpha = Arrays.copyOf(sortedNatural, sortedNatural.length);
@@ -98,7 +98,7 @@ public class SortingTest {
 
     final String[] sortedNatural =
         new String[] {
-          "SYS_IDX_PK_AUTHORS_10111", "IDX_B_AUTHORS", "IDX_A_AUTHORS",
+          "SYS_IDX_PK_AUTHORS_10109", "IDX_B_AUTHORS", "IDX_A_AUTHORS",
         };
     final String[] sortedAlpha = Arrays.copyOf(sortedNatural, sortedNatural.length);
     Arrays.sort(sortedAlpha);
