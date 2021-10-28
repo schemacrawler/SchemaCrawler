@@ -24,7 +24,7 @@
 ;,/db/books/71_synonyms_02_A.sql
 ;,/db/books/80_remarks_01_A.sql
 #,/db/books/80_remarks_02_A.sql
-;#,/db/books/80_remarks_03_A.sql
+#,/db/books/80_remarks_03_A.sql
 ;,/db/books/90_data_01_A.sql
 ;,/db/books/90_data_02_B.sql
 ;,/db/books/90_data_03_A.sql
