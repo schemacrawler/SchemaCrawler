@@ -1,4 +1,4 @@
 SELECT
   'current_database' AS NAME,
-  current_database() AS VALUE,
+  CURRENT_DATABASE() AS VALUE,
   '' AS DESCRIPTION
