@@ -27,11 +27,17 @@ http://www.gnu.org/licenses/
 */
 package us.fatehi.utility.test.html;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
 import static us.fatehi.utility.html.TagBuilder.tableCell;
 import static us.fatehi.utility.html.TagBuilder.tableHeaderCell;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -58,9 +64,22 @@ public class TableCellTest {
     assertThat(tablecell.getTagName(), is("td"));
     assertThat(tablecell.toString(), is("td"));
 
-    assertThat(
-        tablecell.render(TagOutputFormat.html),
-        is("<td sometag='customvalue' bgcolor='#FF0064' class='class'>display text</td>"));
+    // Use jsoup to ensure that the rendered HTML can be parsed, and check attributes without
+    // relying on the order that they are generated
+    final String renderedHtml = tablecell.render(TagOutputFormat.html);
+    assertThat(renderedHtml, not(nullValue()));
+
+    final Document doc =
+        Jsoup.parseBodyFragment(String.format("<table><tr>%s</tr></table>", renderedHtml));
+    final Element td = doc.select("td").first();
+
+    System.out.println(renderedHtml);
+    System.out.println(td.attributes());
+    assertThat(td.attr("sometag"), is("customvalue"));
+    assertThat(td.attr("bgcolor"), is("#FF0064"));
+    assertThat(td.attr("class"), is("class"));
+    assertThat(td.text(), is("display text"));
+
     assertThat(tablecell.render(TagOutputFormat.text), is("display text"));
     assertThat(tablecell.render(TagOutputFormat.tsv), is("display text"));
   }
@@ -77,10 +96,22 @@ public class TableCellTest {
             .make();
     tablecell.addAttribute("sometag", "custom&value");
 
-    assertThat(
-        tablecell.render(TagOutputFormat.html),
-        is(
-            "<td colspan='2' sometag='custom&value' align='right'><b><i>display &amp; text</i></b></td>"));
+    // Use jsoup to ensure that the rendered HTML can be parsed, and check attributes without
+    // relying on the order that they are generated
+    final String renderedHtml = tablecell.render(TagOutputFormat.html);
+    final Document doc =
+        Jsoup.parseBodyFragment(String.format("<table><tr>%s</tr></table>", renderedHtml));
+    final Element td = doc.select("td").first();
+
+    assertThat(renderedHtml, not(nullValue()));
+    System.out.println(renderedHtml);
+    System.out.println(td.attributes());
+    assertThat(td.attr("sometag"), is("custom&value"));
+    assertThat(td.attr("colspan"), is("2"));
+    assertThat(td.attr("align"), is("right"));
+    assertThat(td.text(), is("display & text"));
+    assertThat(td.select("b").first().outerHtml(), is("<b><i>display &amp; text</i></b>"));
+
     assertThat(tablecell.render(TagOutputFormat.text), is("display & text"));
     assertThat(tablecell.render(TagOutputFormat.tsv), is("display & text"));
   }
@@ -88,7 +119,7 @@ public class TableCellTest {
   @DisplayName("th: basic output")
   @Test
   public void th1() {
-    final Tag th =
+    final Tag tableheader =
         tableHeaderCell()
             .withEscapedText("<escaped & text>")
             .withWidth(2)
@@ -96,16 +127,30 @@ public class TableCellTest {
             .withStyleClass("class")
             .withBackground(Color.fromRGB(255, 0, 100))
             .make();
-    th.addAttribute("sometag", "customvalue");
+    tableheader.addAttribute("sometag", "customvalue");
 
-    assertThat(th.getTagName(), is("th"));
-    assertThat(th.toString(), is("th"));
+    assertThat(tableheader.getTagName(), is("th"));
+    assertThat(tableheader.toString(), is("th"));
 
-    assertThat(
-        th.render(TagOutputFormat.html),
-        is(
-            "<th sometag='customvalue' bgcolor='#FF0064' class='class'>&lt;escaped &amp; text&gt;</th>"));
-    assertThat(th.render(TagOutputFormat.text), is("<escaped & text>"));
-    assertThat(th.render(TagOutputFormat.tsv), is("<escaped & text>"));
+    // Use jsoup to ensure that the rendered HTML can be parsed, and check attributes without
+    // relying on the order that they are generated
+    final String renderedHtml = tableheader.render(TagOutputFormat.html);
+    assertThat(renderedHtml, not(nullValue()));
+
+    final Document doc =
+        Jsoup.parseBodyFragment(String.format("<table><tr>%s</tr></table>", renderedHtml));
+    final Element th = doc.select("th").first();
+
+    System.out.println(renderedHtml);
+    System.out.println(th.attributes());
+    assertThat(th.attr("sometag"), is("customvalue"));
+    assertThat(th.attr("bgcolor"), is("#FF0064"));
+    assertThat(th.attr("class"), is("class"));
+    assertThat(th.text(), is("<escaped & text>"));
+
+    assertThat(renderedHtml, containsString("&lt;escaped &amp; text&gt;"));
+
+    assertThat(tableheader.render(TagOutputFormat.text), is("<escaped & text>"));
+    assertThat(tableheader.render(TagOutputFormat.tsv), is("<escaped & text>"));
   }
 }
