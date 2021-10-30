@@ -33,8 +33,11 @@ import java.util.regex.Pattern;
 final class NeuteredExpressionsFilter implements Function<String, String> {
 
   private final Pattern[] neuters = {
-    //
-    Pattern.compile("\u001B\\[[;\\d]*m"), Pattern.compile("\u2592")
+    // ANSI escape sequences
+    Pattern.compile("\u001B\\[[;\\d]*m"),
+    Pattern.compile("\u2592"),
+    // HSQLDB system constraint names
+    Pattern.compile("_\\d{5}")
   };
 
   @Override

@@ -553,6 +553,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         }
         final String fkDetails = "[foreign key" + ruleString + "]";
         formattingHelper.writeNameRow(fkName, fkDetails);
+        printRemarks(foreignKey);
         printColumnReferences(true, table, foreignKey);
         printDependantObjectDefinition(foreignKey);
       }
@@ -838,6 +839,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         formattingHelper.writeEmptyRow();
         formattingHelper.writeNameRow(constraintName, constraintDetails);
 
+        printRemarks(constraint);
         if (!isBrief) {
           printTableColumns(constraint.getConstrainedColumns(), false);
         }

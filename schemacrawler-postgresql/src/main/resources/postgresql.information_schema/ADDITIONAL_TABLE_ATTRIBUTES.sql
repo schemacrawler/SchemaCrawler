@@ -1,11 +1,11 @@
 SELECT
-  current_database()::information_schema.sql_identifier AS TABLE_CATALOG,
-  nc.nspname::information_schema.sql_identifier AS TABLE_SCHEMA,
-  c.relname::information_schema.sql_identifier AS TABLE_NAME,
-  c.*
+  CURRENT_DATABASE()::INFORMATION_SCHEMA.SQL_IDENTIFIER AS TABLE_CATALOG,
+  NC.NSPNAME::INFORMATION_SCHEMA.SQL_IDENTIFIER AS TABLE_SCHEMA,
+  C.RELNAME::INFORMATION_SCHEMA.SQL_IDENTIFIER AS TABLE_NAME,
+  C.*
 FROM
-  pg_catalog.pg_class c
-  INNER JOIN pg_catalog.pg_namespace nc
-    ON c.relowner = nc.nspowner
+  PG_CATALOG.PG_CLASS C
+  INNER JOIN PG_CATALOG.PG_NAMESPACE NC
+    ON C.RELOWNER = NC.NSPOWNER
 WHERE
-  c.relkind IN ('r', 'v')
+  C.RELKIND IN ('r', 'v')

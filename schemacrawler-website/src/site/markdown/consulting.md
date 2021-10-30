@@ -40,7 +40,7 @@ Some guidelines for a quick response on [Stack Overflow] and the [SchemaCrawler 
   SchemaCrawler with an additional `--log-level=ALL` command-line argument
 
 
-[Stack Overflow]: http://stackoverflow.com/search?q=schemacrawler+is%3Aquestion
+[Stack Overflow]: https://stackoverflow.com/search?q=schemacrawler+is%3Aquestion
 [SchemaCrawler discussions page]: https://github.com/schemacrawler/SchemaCrawler/discussions
 [SchemaCrawler issues page]: https://github.com/schemacrawler/SchemaCrawler/issues
 [licensing terms]: license.html

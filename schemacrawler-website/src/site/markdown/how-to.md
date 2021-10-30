@@ -87,7 +87,7 @@ Re-run SchemaCrawler with the `--info-level=standard --command=brief` command-li
 ### <a name="excluded-tables-or-columns">How to include or exclude certain tables or columns</a>
 Change the configuration for the SchemaCrawler the table or column include and exclude patterns in the
 `schemacrawler.config.properties` file. The include or exclude specification is
-a [Java regular expression](http://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html).
+a [Java regular expression](https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html).
 The include pattern is evaluated first, and the exclusions are made from the included tables or columns list.
 Also see the [filtering and grep command-line options.](faq.html#commands)
 
@@ -221,19 +221,19 @@ SchemaCrawler has built-in support to be used with JavaScript scripts. Write you
 
 ### <a name="velocity">How to create your own output format</a>
 
-SchemaCrawler integrates with [Apache Velocity](https://velocity.apache.org/) to allow for templated output. Put Velocity on your classpath, and create your template, and run SchemaCrawler with the command-line options `--command velocity --template <your Velocity template>`. See the Velocity example in the [SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) download.
+SchemaCrawler integrates with [Apache Velocity](https://velocity.apache.org/) to allow for templated output. Put Velocity on your classpath, and create your template, and run SchemaCrawler with the command-line options `--command velocity --template <your Velocity template>`. See the Velocity example in the [SchemaCrawler examples](https://github.com/schemacrawler/SchemaCrawler/releases/) download.
 
 ---------
 
 ### <a name="diagrams">How to create a database diagram of your schema</a>
 
-SchemaCrawler integrates with [Graphviz](http://www.graphviz.org/) to produce graph images. See the diagram example in the [SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) download. For more details, see the [diagram section](diagramming.html).
+SchemaCrawler integrates with [Graphviz](https://www.graphviz.org/) to produce graph images. See the diagram example in the [SchemaCrawler examples](https://github.com/schemacrawler/SchemaCrawler/releases/) download. For more details, see the [diagram section](diagramming.html).
 
 ---------
 
 ### <a name="graphviz_opts">How to provide additional Graphviz command-line options</a>
 
-SchemaCrawler integrates with [Graphviz](http://www.graphviz.org/) to produce graph images. See the previous question for details.
+SchemaCrawler integrates with [Graphviz](https://www.graphviz.org/) to produce graph images. See the previous question for details.
 You can provide additional Graphviz command-line options using the `SC_GRAPHVIZ_OPTS` environmental variable, or pass in the additional arguments using the `SC_GRAPHVIZ_OPTS` Java system property.
 
 ---------
@@ -251,8 +251,8 @@ In certain situations, it may not be possible to install Graphviz. SchemaCrawler
 
 ### <a name="api">How to use SchemaCrawler programmatically</a>
 
-Read [Java API Makes Database Metadata as Easily Accessible as POJOs](http://www.devx.com/Java/Article/32443) for an introduction to the SchemaCrawler API. (This article may refer to an older release of the SchemaCrawler API, but the concepts are the same.) You can also browse the [javadocs](apidocs/index.html) .
-_See the api example in the [SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) download._
+Read [Java API Makes Database Metadata as Easily Accessible as POJOs](https://www.devx.com/Java/Article/32443) for an introduction to the SchemaCrawler API. (This article may refer to an older release of the SchemaCrawler API, but the concepts are the same.) You can also browse the [javadocs](apidocs/index.html) .
+_See the api example in the [SchemaCrawler examples](https://github.com/schemacrawler/SchemaCrawler/releases/) download._
 
 Or, if you are impatient, try code similar to the following:
 

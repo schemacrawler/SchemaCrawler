@@ -27,7 +27,7 @@ folder to any location on your system, and use it from there.
 
 Before downloading SchemaCrawler, be sure to read the [FAQs] and take a look at the [resources].
 
-Also read the [Scribe Tools](http://scribetools.readthedocs.org/en/latest/schemacrawler/index.html) 
+Also read the [Scribe Tools](https://scribetools.readthedocs.org/en/latest/schemacrawler/index.html) 
 _Read The Docs_ guide.
 
 
@@ -99,16 +99,16 @@ Additional [download and installation options](downloads.html) are available.
 [database support]: database-support.html
 [building]: building.html
 [Java]: https://www.java.com/
-[SchemaCrawler examples]: http://github.com/schemacrawler/SchemaCrawler/releases/
-[SchemaCrawler distribution with examples]: http://github.com/schemacrawler/SchemaCrawler/releases/
+[SchemaCrawler examples]: https://github.com/schemacrawler/SchemaCrawler/releases/
+[SchemaCrawler distribution with examples]: https://github.com/schemacrawler/SchemaCrawler/releases/
 [SchemaCrawler jars]: https://search.maven.org/search?q=g:us.fatehi%20a:schemacrawler*
 [SchemaCrawler Docker image]: https://hub.docker.com/r/schemacrawler/schemacrawler/
 [Gradle]: https://gradle.org/
-[Groovy]: http://www.groovy-lang.org/
-[Ruby]: http://www.ruby-lang.org/en/
+[Groovy]: https://www.groovy-lang.org/
+[Ruby]: https://www.ruby-lang.org/en/
 [Python]: https://www.python.org/
-[Graphviz]: http://www.graphviz.org/
-[Spring Framework]: http://www.springsource.org/spring-framework
+[Graphviz]: https://www.graphviz.org/
+[Spring Framework]: https://www.springsource.org/spring-framework
 [Apache Velocity]: https://velocity.apache.org/
 [Apache Maven]: https://maven.apache.org/
 [Apache ant]: https://ant.apache.org/

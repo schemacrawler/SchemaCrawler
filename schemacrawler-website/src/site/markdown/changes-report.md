@@ -1,6 +1,14 @@
 # SchemaCrawler Change History
 
 
+<a name="a16.15.11"></a>
+## Release 16.15.11 - 2021-11-01
+
+- Show index and constraint remarks in output
+- Create a new metadata extension view, EXT_TABLE_CONSTRAINTS for remarks and definitions of constraints  
+  and implement it for databases that support it
+
+
 <a name="a16.15.10"></a>
 ## Release 16.15.10 - 2021-10-22
 

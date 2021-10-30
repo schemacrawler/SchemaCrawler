@@ -255,6 +255,13 @@ public final class SchemaInfoLevelBuilder
     return this;
   }
 
+  public SchemaInfoLevelBuilder setRetrieveTableConstraints(
+      final boolean retrieveTableConstraints) {
+    schemaInfoRetrievals.put(
+        SchemaInfoRetrieval.retrieveTableConstraints, retrieveTableConstraints);
+    return this;
+  }
+
   public SchemaInfoLevelBuilder setRetrieveTableDefinitionsInformation(
       final boolean retrieveTableDefinitionsInformation) {
     schemaInfoRetrievals.put(

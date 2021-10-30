@@ -63,6 +63,7 @@ import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveTableColum
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveTableColumns;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveTableConstraintDefinitions;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveTableConstraintInformation;
+import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveTableConstraints;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveTableDefinitionsInformation;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveTablePrivileges;
 import static schemacrawler.schemacrawler.SchemaInfoRetrieval.retrieveTables;
@@ -183,7 +184,8 @@ public final class SchemaCrawler {
       throws Exception {
     stopWatch.time(
         retrieveTableConstraintDefinitions,
-        constraintRetriever::retrieveTableConstraintDefinitions);
+        constraintRetriever::retrieveTableConstraintDefinitions,
+        retrieveTableConstraints);
 
     stopWatch.time(retrieveViewInformation, retrieverExtra::retrieveViewInformation);
     stopWatch.time(retrieveViewTableUsage, retrieverExtra::retrieveViewTableUsage);
@@ -439,9 +441,11 @@ public final class SchemaCrawler {
         retrieveIndexes, () -> indexRetriever.retrieveIndexes(allTables), retrieveTableColumns);
 
     LOGGER.log(Level.INFO, "Retrieving additional table information");
+    stopWatch.time(retrieveTableConstraints, constraintRetriever::retrieveTableConstraints);
     stopWatch.time(
         retrieveTableConstraintInformation,
-        constraintRetriever::retrieveTableConstraintInformation);
+        constraintRetriever::retrieveTableConstraintInformation,
+        retrieveTableConstraints);
     // Required step: Match all constraints such as primary keys and foreign keys
     stopWatch.time(
         "matchTableConstraints",

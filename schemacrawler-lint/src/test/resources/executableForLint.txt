@@ -40,7 +40,7 @@ PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
 
                                                             [lint, high]
-	redundant index	PUBLIC.BOOKS.BOOKAUTHORS.SYS_IDX_SYS_FK_10128_10132
+	redundant index	PUBLIC.BOOKS.BOOKAUTHORS.SYS_IDX_SYS_FK_10126_10130
 	no primary key	
 	primary key may not be a surrogate	
                                                              [lint, low]
@@ -52,10 +52,10 @@ PUBLIC.BOOKS.BOOKS                                               [table]
 ------------------------------------------------------------------------
 
                                                             [lint, high]
-	redundant index	PUBLIC.BOOKS.BOOKS.SYS_IDX_FK_PREVIOUSEDITION_10123
-	redundant index	PUBLIC.BOOKS.BOOKS.SYS_IDX_U_PREVIOUSEDITION_10125
+	redundant index	PUBLIC.BOOKS.BOOKS.SYS_IDX_U_PREVIOUSEDITION_10123
+	redundant index	PUBLIC.BOOKS.BOOKS.SYS_IDX_FK_PREVIOUSEDITION_10121
                                                           [lint, medium]
-	unique index with nullable columns	PUBLIC.BOOKS.BOOKS.SYS_IDX_U_PREVIOUSEDITION_10125
+	unique index with nullable columns	PUBLIC.BOOKS.BOOKS.SYS_IDX_U_PREVIOUSEDITION_10123
                                                              [lint, low]
 	should have remarks	PREVIOUSEDITIONID
 

@@ -336,7 +336,7 @@ public final class TestUtility {
         final Stream<String> actualLinesStream = new BufferedReader(actualInputReader).lines()) {
 
       final Iterator<String> expectedLinesIterator =
-          expectedLinesStream.filter(keepLines).iterator();
+          expectedLinesStream.filter(keepLines).map(neuterMap).iterator();
       final Iterator<String> actualLinesIterator =
           actualLinesStream.filter(keepLines).map(neuterMap).iterator();
 
