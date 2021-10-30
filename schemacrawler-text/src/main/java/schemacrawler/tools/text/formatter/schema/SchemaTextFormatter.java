@@ -839,6 +839,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         formattingHelper.writeEmptyRow();
         formattingHelper.writeNameRow(constraintName, constraintDetails);
 
+        printRemarks(constraint);
         if (!isBrief) {
           printTableColumns(constraint.getConstrainedColumns(), false);
         }
