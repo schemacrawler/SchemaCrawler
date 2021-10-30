@@ -47,6 +47,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.TableConstraint;
@@ -139,23 +140,6 @@ final class TableConstraintRetriever extends AbstractRetriever {
    *
    * @throws SQLException On a SQL exception
    */
-  void retrieveTableConstraints() {
-
-    final InformationSchemaViews informationSchemaViews =
-        getRetrieverConnection().getInformationSchemaViews();
-
-    createTableConstraints(tableConstraintsMap, informationSchemaViews);
-
-    if (!tableConstraintsMap.isEmpty()) {
-      retrieveTableConstraintsColumns(tableConstraintsMap, informationSchemaViews);
-    }
-  }
-
-  /**
-   * Retrieves table constraint information from the database, in the INFORMATION_SCHEMA format.
-   *
-   * @throws SQLException On a SQL exception
-   */
   void retrieveTableConstraintInformation() throws SQLException {
 
     final InformationSchemaViews informationSchemaViews =
@@ -229,6 +213,23 @@ final class TableConstraintRetriever extends AbstractRetriever {
   }
 
   /**
+   * Retrieves table constraint information from the database, in the INFORMATION_SCHEMA format.
+   *
+   * @throws SQLException On a SQL exception
+   */
+  void retrieveTableConstraints() {
+
+    final InformationSchemaViews informationSchemaViews =
+        getRetrieverConnection().getInformationSchemaViews();
+
+    createTableConstraints(tableConstraintsMap, informationSchemaViews);
+
+    if (!tableConstraintsMap.isEmpty()) {
+      retrieveTableConstraintsColumns(tableConstraintsMap, informationSchemaViews);
+    }
+  }
+
+  /**
    * Add foreign keys as table constraints. Foreign keys are not loaded by the CONSTRAINTS view in
    * the information schema views, so they can be added in without fear of duplication.
    *
@@ -237,7 +238,27 @@ final class TableConstraintRetriever extends AbstractRetriever {
   private void addImportedForeignKeys(final MutableTable mutableTable) {
     final Collection<ForeignKey> importedForeignKeys = mutableTable.getImportedForeignKeys();
     for (final ForeignKey foreignKey : importedForeignKeys) {
+      final Optional<TableConstraint> lookupTableConstraint =
+          mutableTable.lookupTableConstraint(foreignKey.getName());
+      if (lookupTableConstraint.isPresent()) {
+        final TableConstraint tableConstraint = lookupTableConstraint.get();
+        copyRemarksAndAttributes(tableConstraint, foreignKey);
+      }
+      // Add or replace the table constraint with the foreign key, which has more information like
+      // column mappings
       mutableTable.addTableConstraint(foreignKey);
+    }
+  }
+
+  private void copyRemarksAndAttributes(
+      final TableConstraint tableConstraint, final DatabaseObject databaseObject) {
+    // Copy remarks over
+    if (!databaseObject.hasRemarks() && tableConstraint.hasRemarks()) {
+      databaseObject.setRemarks(tableConstraint.getRemarks());
+    }
+    // Copy attributes over
+    for (final Entry<String, Object> attribute : tableConstraint.getAttributes().entrySet()) {
+      databaseObject.setAttribute(attribute.getKey(), attribute.getValue());
     }
   }
 
@@ -313,14 +334,7 @@ final class TableConstraintRetriever extends AbstractRetriever {
               || primaryKey
                   .getConstrainedColumns()
                   .equals(tableConstraint.getConstrainedColumns()))) {
-        // Copy remarks over
-        if (!primaryKey.hasRemarks() && tableConstraint.hasRemarks()) {
-          primaryKey.setRemarks(tableConstraint.getRemarks());
-        }
-        // Copy attributes over
-        for (final Entry<String, Object> attribute : tableConstraint.getAttributes().entrySet()) {
-          primaryKey.setAttribute(attribute.getKey(), attribute.getValue());
-        }
+        copyRemarksAndAttributes(tableConstraint, primaryKey);
         mutableTable.removeTableConstraint(tableConstraint);
       }
     }

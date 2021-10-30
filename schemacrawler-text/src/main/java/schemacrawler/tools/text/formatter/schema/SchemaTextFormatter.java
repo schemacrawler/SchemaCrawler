@@ -553,6 +553,7 @@ public final class SchemaTextFormatter extends BaseTabularFormatter<SchemaTextOp
         }
         final String fkDetails = "[foreign key" + ruleString + "]";
         formattingHelper.writeNameRow(fkName, fkDetails);
+        printRemarks(foreignKey);
         printColumnReferences(true, table, foreignKey);
         printDependantObjectDefinition(foreignKey);
       }
