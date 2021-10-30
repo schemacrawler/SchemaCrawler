@@ -147,6 +147,9 @@ public class SchemaInfoLevelBuilderTest {
     testMap.put(
         SchemaInfoRetrieval.retrieveTableColumns, SchemaInfoLevelBuilder::setRetrieveTableColumns);
     testMap.put(
+        SchemaInfoRetrieval.retrieveTableConstraints,
+        SchemaInfoLevelBuilder::setRetrieveTableConstraints);
+    testMap.put(
         SchemaInfoRetrieval.retrieveTableConstraintDefinitions,
         SchemaInfoLevelBuilder::setRetrieveTableConstraintDefinitions);
     testMap.put(
@@ -213,7 +216,7 @@ public class SchemaInfoLevelBuilderTest {
                 + "\"retrieveRoutineInformation\": false,  \"retrieveRoutineParameters\": true,  \"retrieveRoutines\": true,  "
                 + "\"retrieveSequenceInformation\": false,  \"retrieveServerInfo\": false,  \"retrieveSynonymInformation\": false,  "
                 + "\"retrieveTableColumnPrivileges\": false,  \"retrieveTableColumns\": true,  "
-                + "\"retrieveTableConstraintDefinitions\": false,  \"retrieveTableConstraintInformation\": false,  "
+                + "\"retrieveTableConstraintDefinitions\": false,  \"retrieveTableConstraintInformation\": false,  \"retrieveTableConstraints\": false,  "
                 + "\"retrieveTableDefinitionsInformation\": false,  \"retrieveTablePrivileges\": false,  \"retrieveTables\": true,  "
                 + "\"retrieveTriggerInformation\": false,  \"retrieveUserDefinedColumnDataTypes\": false,  "
                 + "\"retrieveViewInformation\": false,  \"retrieveViewTableUsage\": false}"));
@@ -232,8 +235,9 @@ public class SchemaInfoLevelBuilderTest {
                 + "\"retrieveIndexes\": true,  \"retrievePrimaryKeys\": true,  \"retrieveRoutineInformation\": false,  "
                 + "\"retrieveRoutineParameters\": true,  \"retrieveRoutines\": true,  \"retrieveSequenceInformation\": false,  "
                 + "\"retrieveServerInfo\": false,  \"retrieveSynonymInformation\": false,  \"retrieveTableColumnPrivileges\": false,  "
-                + "\"retrieveTableColumns\": true,  \"retrieveTableConstraintDefinitions\": false,  "
-                + "\"retrieveTableConstraintInformation\": false,  \"retrieveTableDefinitionsInformation\": false,  "
+                + "\"retrieveTableColumns\": true,  "
+                + "\"retrieveTableConstraintDefinitions\": false,  \"retrieveTableConstraintInformation\": false,  \"retrieveTableConstraints\": false,  "
+                + "\"retrieveTableDefinitionsInformation\": false,  "
                 + "\"retrieveTablePrivileges\": false,  \"retrieveTables\": true,  \"retrieveTriggerInformation\": false,  "
                 + "\"retrieveUserDefinedColumnDataTypes\": false,  \"retrieveViewInformation\": false,  \"retrieveViewTableUsage\": false}"));
 

@@ -54,11 +54,14 @@ import schemacrawler.plugin.EnumDataTypeInfo;
 import schemacrawler.plugin.EnumDataTypeInfo.EnumDataTypeTypes;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.View;
+import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -82,38 +85,31 @@ public class TableExtRetrieverTest {
   public void enumDataTypes(final Connection connection) throws Exception {
 
     final EnumDataTypeHelper enumDataTypeHelper =
-        new EnumDataTypeHelper() {
-
-          @Override
-          public EnumDataTypeInfo getEnumDataTypeInfo(
-              final Column column,
-              final ColumnDataType columnDataType,
-              final Connection connection) {
-            final String columnDataTypeName = columnDataType.getName();
-            switch (columnDataTypeName) {
-              case "NAME_TYPE":
-                final EnumDataTypeInfo enumDataTypeType =
-                    new EnumDataTypeInfo(
-                        EnumDataTypeTypes.enumerated_data_type,
-                        Arrays.asList("Moe", "Larry", "Curly"));
-                assertThat(
-                    enumDataTypeType.toString(),
-                    is("EnumDataTypeInfo [enumerated_data_type, [Moe, Larry, Curly]]"));
-                return enumDataTypeType;
-              case "AGE_TYPE":
-                final EnumDataTypeInfo enumColumnType =
-                    new EnumDataTypeInfo(
-                        EnumDataTypeTypes.enumerated_column, Arrays.asList("1", "16", "29"));
-                assertThat(
-                    enumColumnType.toString(),
-                    is("EnumDataTypeInfo [enumerated_column, [1, 16, 29]]"));
-                return enumColumnType;
-              default:
-                assertThat(
-                    EnumDataTypeInfo.EMPTY_ENUM_DATA_TYPE_INFO.toString(),
-                    is("EnumDataTypeInfo [not_enumerated, []]"));
-                return EnumDataTypeInfo.EMPTY_ENUM_DATA_TYPE_INFO;
-            }
+        (column, columnDataType, databaseConnection) -> {
+          final String columnDataTypeName = columnDataType.getName();
+          switch (columnDataTypeName) {
+            case "NAME_TYPE":
+              final EnumDataTypeInfo enumDataTypeType =
+                  new EnumDataTypeInfo(
+                      EnumDataTypeTypes.enumerated_data_type,
+                      Arrays.asList("Moe", "Larry", "Curly"));
+              assertThat(
+                  enumDataTypeType.toString(),
+                  is("EnumDataTypeInfo [enumerated_data_type, [Moe, Larry, Curly]]"));
+              return enumDataTypeType;
+            case "AGE_TYPE":
+              final EnumDataTypeInfo enumColumnType =
+                  new EnumDataTypeInfo(
+                      EnumDataTypeTypes.enumerated_column, Arrays.asList("1", "16", "29"));
+              assertThat(
+                  enumColumnType.toString(),
+                  is("EnumDataTypeInfo [enumerated_column, [1, 16, 29]]"));
+              return enumColumnType;
+            default:
+              assertThat(
+                  EnumDataTypeInfo.EMPTY_ENUM_DATA_TYPE_INFO.toString(),
+                  is("EnumDataTypeInfo [not_enumerated, []]"));
+              return EnumDataTypeInfo.EMPTY_ENUM_DATA_TYPE_INFO;
           }
         };
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
@@ -133,39 +129,39 @@ public class TableExtRetrieverTest {
     final Collection<Table> tables = catalog.getTables();
     assertThat(tables, hasSize(19));
     final Table table =
-        catalog.lookupTable(schema, "CUSTOMERS").orElseThrow(() -> new IllegalAccessException());
+        catalog.lookupTable(schema, "CUSTOMERS").orElseThrow(IllegalAccessException::new);
 
     // Non-enum data type
-    final Column id = table.lookupColumn("ID").orElseThrow(() -> new IllegalAccessException());
+    final Column id = table.lookupColumn("ID").orElseThrow(IllegalAccessException::new);
     final ColumnDataType idDataType = id.getColumnDataType();
     final ColumnDataType idDataTypeMain =
         catalog
             .lookupColumnDataType(new SchemaReference(), idDataType.getName())
-            .orElseThrow(() -> new IllegalAccessException());
+            .orElseThrow(IllegalAccessException::new);
     assertThat(idDataType == idDataTypeMain, is(true)); // assert same object reference
     assertThat(idDataType.isEnumerated(), is(false));
     assertThat(idDataType.getEnumValues(), is(Collections.EMPTY_LIST));
 
     // Globally enumerated data type
     final Column firstName =
-        table.lookupColumn("FIRSTNAME").orElseThrow(() -> new IllegalAccessException());
+        table.lookupColumn("FIRSTNAME").orElseThrow(IllegalAccessException::new);
     final ColumnDataType firstNameDataType = firstName.getColumnDataType();
     final ColumnDataType firstNameDataTypeMain =
         catalog
             .lookupColumnDataType(schema, firstNameDataType.getName())
-            .orElseThrow(() -> new IllegalAccessException());
+            .orElseThrow(IllegalAccessException::new);
     assertThat(
         firstNameDataType == firstNameDataTypeMain, is(true)); // assert same object reference
     assertThat(firstNameDataType.isEnumerated(), is(true));
     assertThat(firstNameDataType.getEnumValues(), is(Arrays.asList("Moe", "Larry", "Curly")));
 
     // Enumerated column data type
-    final Column age = table.lookupColumn("AGE").orElseThrow(() -> new IllegalAccessException());
+    final Column age = table.lookupColumn("AGE").orElseThrow(IllegalAccessException::new);
     final ColumnDataType ageDataType = age.getColumnDataType();
     final ColumnDataType ageDataTypeMain =
         catalog
             .lookupColumnDataType(schema, ageDataType.getName())
-            .orElseThrow(() -> new IllegalAccessException());
+            .orElseThrow(IllegalAccessException::new);
     assertThat(ageDataType == ageDataTypeMain, is(false)); // assert different object references
     assertThat(ageDataType.isEnumerated(), is(true));
     assertThat(ageDataType.getEnumValues(), is(Arrays.asList("1", "16", "29")));
@@ -232,6 +228,53 @@ public class TableExtRetrieverTest {
           assertThat(column.isGenerated(), is(false));
           assertThat(column.getDefinition(), is(""));
         }
+      }
+    }
+  }
+
+  @Test
+  @DisplayName("Retrieve table constraint definitions from INFORMATION_SCHEMA")
+  public void tableConstraintInfo(final Connection connection) throws Exception {
+
+    final String remarks = "TEST Table Constraint remarks";
+    final String definition = "TEST Table Constraint definition";
+
+    final InformationSchemaViews informationSchemaViews =
+        InformationSchemaViewsBuilder.builder()
+            .withSql(
+                InformationSchemaKey.EXT_TABLE_CONSTRAINTS,
+                String.format(
+                    "SELECT DISTINCT CONSTRAINT_CATALOG, CONSTRAINT_SCHEMA, "
+                        + "TABLE_NAME, CONSTRAINT_NAME, '%s' AS REMARKS, '%s' AS CONSTRAINT_DEFINITION "
+                        + "FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS",
+                    remarks, definition))
+            .toOptions();
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
+        SchemaRetrievalOptionsBuilder.builder();
+    schemaRetrievalOptionsBuilder.withInformationSchemaViews(informationSchemaViews);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder.toOptions();
+    final RetrieverConnection retrieverConnection =
+        new RetrieverConnection(connection, schemaRetrievalOptions);
+
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+
+    final TableConstraintRetriever tableExtRetriever =
+        new TableConstraintRetriever(retrieverConnection, catalog, options);
+    tableExtRetriever.retrieveTableConstraintInformation();
+
+    final Collection<Table> tables = catalog.getTables();
+    assertThat(tables, hasSize(19));
+    for (final Table table : tables) {
+      for (final TableConstraint constraint : table.getTableConstraints()) {
+        if (constraint instanceof ForeignKey) {
+          continue;
+        }
+        assertThat(
+            String.format("<%s> remarks do not match expected", constraint),
+            constraint.getRemarks(),
+            is(remarks));
+        // NOTE: Table constraint definition is not set
+        assertThat(constraint.getDefinition(), is(""));
       }
     }
   }

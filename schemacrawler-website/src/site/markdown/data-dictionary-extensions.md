@@ -197,6 +197,18 @@ For details on the columns in this view, please refer to [getPrimaryKeys](https:
 | INDEX_DEFINITION | The definition of the index. |
 
 
+### METADATA_EXTENSION.EXT_TABLE_CONSTRAINTS
+
+| Column name | Description |
+| --- | --- |
+| CONSTRAINT_CATALOG | The name of the catalog containing the table constraint. |
+| CONSTRAINT_SCHEMA | The name of the schema containing the table constraint. |
+| CONSTRAINT_NAME | The name of the table constraint. |
+| TABLE_NAME | The name of the table which has the table constraint. |
+| REMARKS | Comments or remarks about the table constraint. |
+| CONSTRAINT_DEFINITION | The definition of the table constraint. |
+
+
 ## Additional Metadata
 
 ### Additional Metadata in SchemaCrawler Output
