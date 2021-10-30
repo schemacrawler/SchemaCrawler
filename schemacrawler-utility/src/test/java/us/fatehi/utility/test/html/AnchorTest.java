@@ -29,8 +29,13 @@ package us.fatehi.utility.test.html;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
 import static us.fatehi.utility.html.TagBuilder.anchor;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -59,10 +64,21 @@ public class AnchorTest {
     assertThat(anchor.getTagName(), is("a"));
     assertThat(anchor.toString(), is("a"));
 
-    assertThat(
-        anchor.render(TagOutputFormat.html),
-        is(
-            "<a sometag='customvalue' style='somestyle' href='http://www.schemacrawler.com' bgcolor='#FF0064' class='class'>display text</a>"));
+    // Use jsoup to ensure that the rendered HTML can be parsed, and check attributes without
+    // relying on the order that they are generated
+    final String renderedHtml = anchor.render(TagOutputFormat.html);
+    assertThat(renderedHtml, is(not(nullValue())));
+
+    final Document doc = Jsoup.parseBodyFragment(renderedHtml);
+    final Element link = doc.select("a").first();
+
+    assertThat(link.attr("href"), is("http://www.schemacrawler.com"));
+    assertThat(link.attr("style"), is("somestyle"));
+    assertThat(link.attr("sometag"), is("customvalue"));
+    assertThat(link.attr("bgcolor"), is("#FF0064"));
+    assertThat(link.attr("class"), is("class"));
+    assertThat(link.text(), is("display text"));
+
     assertThat(anchor.render(TagOutputFormat.text), is("display text"));
     assertThat(anchor.render(TagOutputFormat.tsv), is("display text"));
   }
@@ -79,10 +95,20 @@ public class AnchorTest {
             .make();
     anchor.addAttribute("sometag", "custom&value");
 
-    assertThat(
-        anchor.render(TagOutputFormat.html),
-        is(
-            "<a sometag='custom&value' href='http://www.schemacrawler.com' align='right'><b><i>display &amp; text</i></b></a>"));
+    // Use jsoup to ensure that the rendered HTML can be parsed, and check attributes without
+    // relying on the order that they are generated
+    final String renderedHtml = anchor.render(TagOutputFormat.html);
+    assertThat(renderedHtml, is(not(nullValue())));
+
+    final Document doc = Jsoup.parseBodyFragment(renderedHtml);
+    final Element link = doc.select("a").first();
+
+    assertThat(link.attr("href"), is("http://www.schemacrawler.com"));
+    assertThat(link.attr("align"), is("right"));
+    assertThat(link.attr("sometag"), is("custom&value"));
+    assertThat(link.text(), is("display & text"));
+    assertThat(link.select("b").first().outerHtml(), is("<b><i>display &amp; text</i></b>"));
+
     assertThat(anchor.render(TagOutputFormat.text), is("display & text"));
     assertThat(anchor.render(TagOutputFormat.tsv), is("display & text"));
   }

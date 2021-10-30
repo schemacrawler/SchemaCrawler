@@ -15,4 +15,12 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <skip.signing.artifacts>true</skip.signing.artifacts>
   </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.jsoup</groupId>
+      <artifactId>jsoup</artifactId>
+      <version>1.14.3</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 </project>
