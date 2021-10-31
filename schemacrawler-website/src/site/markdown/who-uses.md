@@ -15,7 +15,7 @@ SchemaCrawler questions from users.
 
 - Recommendation from the Google Cloud Architecture Center
 on how to [Manage a monolithic database](https://cloud.google.com/architecture/microservices-architecture-refactoring-monoliths#manage_a_monolithic_database)
-- [Dang, T.K., Huy, T.M., Dang, L.H. *et al.* An Elastic Data Conversion Framework: A Case Study for MySQL and MongoDB. *SN COMPUT. SCI.* **2,** 325 (2021).](https://doi.org/10.1007/s42979-021-00716-3)
+- [Dang, T.K., Huy, T.M., Dang, L.H. *et al.* An Elastic Data Conversion Framework: A Case Study for MySQL and MongoDB. *SN COMPUT. SCI.* **2,** 325 (2021).](https://link.springer.com/10.1007/s42979-021-00716-3)
 - [schemacrawler-additionnallints](https://github.com/mbarre/schemacrawler-additional-lints) is maintained by
 Michèle Barré <Michele.Barre at GMail> and [Adrien Sales]
 - [![Chocolatey](https://img.shields.io/chocolatey/v/schemacrawler.svg)](https://community.chocolatey.org/packages/schemacrawler)
