@@ -64,7 +64,7 @@ SchemaCrawler offers several options to change what you see on the database diag
 </a>
 - Grep for columns, and also display outgoing relationships, using `--grep-columns=.*\\.BOOKS\\..*\\.ID` as a command-line option.
 <br />
-<a href="diagram-examples/diagram_7_grep_onlymatching.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
+<a href="diagram-examples/diagram_6_grep.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
 <img class="img-fluid img-thumbnail" src="diagram-examples/diagram_7_grep_onlymatching.png" style="width: 200px;" />
 </a>
 - Do not show cardinality on the diagrams, to avoid clutter. Set configuration option `schemacrawler.graph.show.primarykey.cardinality=false` and `schemacrawler.graph.show.foreignkey.cardinality=false` in the configuration file.
