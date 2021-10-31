@@ -12,14 +12,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-# CHECKOUT CODE
-    - id: checkout-code
-      name: Checkout code
-      uses: actions/checkout@v2
+# SETUP BUILD ENVIRONMENT
+    - id: prepare-maven-build
+      name: Prepare Maven build
+      uses: sualeh/prepare-maven-build@v1.2.0
       with:
-        # Full git history is needed to get a proper list
-        # of changed files within `super-linter`
-        fetch-depth: 0
+        java-version: 8
+    - id: install-packages
+      name: Install packages
+      shell: bash
+      run: |
+        # Install Graphviz
+        sudo apt-get -qq update
+        sudo apt-get -q install graphviz
+        dot -V
+
+# BUILD AND TEST
+    - id: build-test
+      name: Build all modules and run tests
+      shell: bash
+      run: |
+        # Build
+        mvn \
+          --no-transfer-progress \
+          --batch-mode \
+          -Ddistrib \
+          package
 
 # LINT CODE
     - id: lint-code-base
@@ -40,3 +58,13 @@ jobs:
         VALIDATE_CSS: true
         VALIDATE_ENV: true
         # VALIDATE_SQL: true
+
+    - id: check-website-links
+      name: Check website links
+      uses: ruzickap/action-my-broken-link-checker@v1
+      with:
+        url: https://www.schemacrawler.com/
+        pages_path: ./schemacrawler-website/target/_website
+        cmd_params: "--skip-tls-verification --verbose --color=always"
+        run_timeout: 10
+        debug: true
