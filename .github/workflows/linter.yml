@@ -61,7 +61,7 @@ jobs:
 
     - id: check-website-links
       name: Check website links
-      uses: ruzickap/action-my-broken-link-checker@v1
+      uses: ruzickap/action-my-broken-link-checker@v1.0.3
       with:
         url: https://www.schemacrawler.com/
         pages_path: ./schemacrawler-website/target/_website
