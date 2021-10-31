@@ -9,8 +9,8 @@
   and implement it for databases that support it
 
 
-<a name="a16.15.11"></a>
-## Release 16.15.11 - 2021-10-22
+<a name="a16.15.10"></a>
+## Release 16.15.10 - 2021-10-22
 
 - Fix #522 - Crawling Oracle schema with non DBA user cause exception
 
