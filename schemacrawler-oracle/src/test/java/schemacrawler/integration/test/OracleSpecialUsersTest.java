@@ -75,7 +75,10 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
 
   @Test
   @DisplayName("Oracle test for user with just Schema Object Access role")
-  /** Test user cannot get metadata, but can run data queries */
+  /**
+   * Test user cannot get metadata, but can run data queries. The BOOKSUSER does not have access
+   * either to DBA_ nor ALL_ data dictionary tables.
+   */
   public void testOracleWithConnectionSchemaObjectAccessUser() throws Exception {
     final Connection connection = booksUserDataSource.getConnection();
     final String expectedResource =
@@ -85,7 +88,10 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
 
   @Test
   @DisplayName("Oracle test for user with just Select Catalog role")
-  /** Test user can get metadata, but cannot run data queries */
+  /**
+   * Test user can get metadata, but cannot run data queries. The CATUSER does not have access
+   * either to DBA_ data dictionary tables, but only to the ALL_ dictionary tables.
+   */
   public void testOracleWithConnectionSelectCatalogUser() throws Exception {
     final Connection connection = catalogUserDataSource.getConnection();
     final String expectedResource =
