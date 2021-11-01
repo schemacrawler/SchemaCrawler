@@ -32,7 +32,10 @@ import static schemacrawler.test.utility.TestUtility.javaVersion;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.JdbcDatabaseContainer;
@@ -45,24 +48,48 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 @Testcontainers(disabledWithoutDocker = true)
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
-public class Oracle11Test extends BaseOracleWithConnectionTest {
+public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
 
   @Container
   private final JdbcDatabaseContainer<?> dbContainer =
       new OracleContainer(DockerImageName.parse("gvenzl/oracle-xe").withTag("11")).usingSid();
 
+  private DataSource booksUserDataSource;
+  private DataSource catalogUserDataSource;
+
   @BeforeEach
   public void createDatabase() throws SQLException, SchemaCrawlerException {
+
     final String urlx = "restrictGetTables=true;useFetchSizeWithLongColumn=true";
     createDataSource(dbContainer.getJdbcUrl(), "SYS AS SYSDBA", dbContainer.getPassword(), urlx);
 
     createDatabase("/oracle-11g.scripts.txt");
+
+    createDatabase("/utility/oracle-create-users-scripts.txt");
+
+    booksUserDataSource =
+        createDataSourceObject(dbContainer.getJdbcUrl(), "BOOKSUSER", "booksuser", urlx);
+    catalogUserDataSource =
+        createDataSourceObject(dbContainer.getJdbcUrl(), "CATUSER", "catuser", urlx);
   }
 
   @Test
-  public void testOracleWithConnection() throws Exception {
-    final Connection connection = getConnection();
-    final String expectedResource = String.format("testOracleWithConnection.%s.txt", javaVersion());
+  @DisplayName("Oracle test for user with just Schema Object Access role")
+  /** Test user cannot get metadata, but can run data queries */
+  public void testOracleWithConnectionSchemaObjectAccessUser() throws Exception {
+    final Connection connection = booksUserDataSource.getConnection();
+    final String expectedResource =
+        String.format("testOracleWithConnectionSchemaObjectAccessUser.%s.txt", javaVersion());
+    testOracleWithConnection(connection, expectedResource, 11);
+  }
+
+  @Test
+  @DisplayName("Oracle test for user with just Select Catalog role")
+  /** Test user can get metadata, but cannot run data queries */
+  public void testOracleWithConnectionSelectCatalogUser() throws Exception {
+    final Connection connection = catalogUserDataSource.getConnection();
+    final String expectedResource =
+        String.format("testOracleWithConnectionSelectCatalogUser.%s.txt", javaVersion());
     testOracleWithConnection(connection, expectedResource, 11);
   }
 }
