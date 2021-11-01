@@ -1,3 +1,9 @@
+-- Create Oracle User With Just Select Catalog Role
+
+CREATE USER CATUSER IDENTIFIED BY catuser;
+GRANT CONNECT TO CATUSER;
+GRANT SELECT_CATALOG_ROLE TO CATUSER;
+
 -- Create Oracle User With Just Schema Object Access Role
 
 CREATE USER BOOKSUSER IDENTIFIED BY booksuser;

@@ -64,6 +64,6 @@ public class Oracle18Test extends BaseOracleWithConnectionTest {
     final Connection connection = getConnection();
     final String expectedResource =
         String.format("testOracle18WithConnection.%s.txt", javaVersion());
-    testOracleWithConnection(connection, expectedResource, 30);
+    testOracleWithConnection(connection, expectedResource, 32);
   }
 }

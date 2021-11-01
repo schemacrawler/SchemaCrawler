@@ -63,6 +63,6 @@ public class Oracle11Test extends BaseOracleWithConnectionTest {
   public void testOracleWithConnection() throws Exception {
     final Connection connection = getConnection();
     final String expectedResource = String.format("testOracleWithConnection.%s.txt", javaVersion());
-    testOracleWithConnection(connection, expectedResource, 11);
+    testOracleWithConnection(connection, expectedResource, 13);
   }
 }

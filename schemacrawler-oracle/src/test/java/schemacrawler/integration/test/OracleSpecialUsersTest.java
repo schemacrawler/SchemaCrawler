@@ -65,8 +65,6 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
 
     createDatabase("/oracle-11g.scripts.txt");
 
-    createDatabase("/utility/oracle-create-users-scripts.txt");
-
     booksUserDataSource =
         createDataSourceObject(dbContainer.getJdbcUrl(), "BOOKSUSER", "booksuser", urlx);
     catalogUserDataSource =
@@ -83,7 +81,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
     final Connection connection = booksUserDataSource.getConnection();
     final String expectedResource =
         String.format("testOracleWithConnectionSchemaObjectAccessUser.%s.txt", javaVersion());
-    testOracleWithConnection(connection, expectedResource, 11);
+    testOracleWithConnection(connection, expectedResource, 13);
   }
 
   @Test
@@ -96,6 +94,6 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
     final Connection connection = catalogUserDataSource.getConnection();
     final String expectedResource =
         String.format("testOracleWithConnectionSelectCatalogUser.%s.txt", javaVersion());
-    testOracleWithConnection(connection, expectedResource, 11);
+    testOracleWithConnection(connection, expectedResource, 13);
   }
 }
