@@ -33,6 +33,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.matchesPattern;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
+import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
@@ -55,7 +56,9 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
 import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
+import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.Config;
 
 public abstract class BaseOracleWithConnectionTest extends BaseAdditionalDatabaseTest {
 
@@ -115,5 +118,16 @@ public abstract class BaseOracleWithConnectionTest extends BaseAdditionalDatabas
             .flatMap(Collection::stream)
             .collect(Collectors.toSet()),
         hasItems("USER_ID", "CREATED"));
+  }
+
+  protected void testSelectQuery(final Connection connection, final String expectedResource)
+      throws Exception {
+    final SchemaCrawlerExecutable executable = executableOf("authors");
+    final Config additionalConfig = new Config();
+    additionalConfig.put("authors", "SELECT * FROM BOOKS.AUTHORS");
+    executable.setAdditionalConfiguration(additionalConfig);
+    assertThat(
+        outputOf(executableExecution(connection, executable, TextOutputFormat.text.name())),
+        hasSameContentAs(classpathResource(expectedResource)));
   }
 }

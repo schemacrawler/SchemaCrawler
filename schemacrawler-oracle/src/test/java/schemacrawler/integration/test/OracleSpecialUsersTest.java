@@ -27,10 +27,14 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
+import static org.hamcrest.CoreMatchers.startsWith;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.SQLSyntaxErrorException;
 
 import javax.sql.DataSource;
 
@@ -82,6 +86,12 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
     final String expectedResource =
         String.format("testOracleWithConnectionSchemaObjectAccessUser.%s.txt", javaVersion());
     testOracleWithConnection(connection, expectedResource, 13);
+
+    final SQLSyntaxErrorException sqlException =
+        assertThrows(
+            SQLSyntaxErrorException.class,
+            () -> testSelectQuery(connection, "testOracleWithConnectionQuery.txt"));
+    assertThat(sqlException.getMessage(), startsWith("ORA-00942: table or view does not exist"));
   }
 
   @Test
@@ -95,5 +105,11 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
     final String expectedResource =
         String.format("testOracleWithConnectionSelectCatalogUser.%s.txt", javaVersion());
     testOracleWithConnection(connection, expectedResource, 13);
+
+    final SQLSyntaxErrorException sqlException =
+        assertThrows(
+            SQLSyntaxErrorException.class,
+            () -> testSelectQuery(connection, "testOracleWithConnectionQuery.txt"));
+    assertThat(sqlException.getMessage(), startsWith("ORA-00942: table or view does not exist"));
   }
 }
