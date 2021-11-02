@@ -58,7 +58,8 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
   private final JdbcDatabaseContainer<?> dbContainer =
       new OracleContainer(DockerImageName.parse("gvenzl/oracle-xe").withTag("11")).usingSid();
 
-  private DataSource booksUserDataSource;
+  private DataSource schemaOwnerUserDataSource;
+  private DataSource selectUserDataSource;
   private DataSource catalogUserDataSource;
 
   @BeforeEach
@@ -69,41 +70,24 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
 
     createDatabase("/oracle-11g.scripts.txt");
 
-    booksUserDataSource =
-        createDataSourceObject(dbContainer.getJdbcUrl(), "BOOKSUSER", "booksuser", urlx);
+    schemaOwnerUserDataSource =
+        createDataSourceObject(dbContainer.getJdbcUrl(), "BOOKS", "BOOKS", urlx);
+    selectUserDataSource =
+        createDataSourceObject(dbContainer.getJdbcUrl(), "SELUSER", "SELUSER", urlx);
     catalogUserDataSource =
-        createDataSourceObject(dbContainer.getJdbcUrl(), "CATUSER", "catuser", urlx);
+        createDataSourceObject(dbContainer.getJdbcUrl(), "CATUSER", "CATUSER", urlx);
   }
 
   @Test
-  @DisplayName("Oracle test for user with just Schema Object Access role")
-  /**
-   * Test user cannot get metadata, but can run data queries. The BOOKSUSER does not have access
-   * either to DBA_ nor ALL_ data dictionary tables.
-   */
-  public void testOracleWithConnectionSchemaObjectAccessUser() throws Exception {
-    final Connection connection = booksUserDataSource.getConnection();
-    final String expectedResource =
-        String.format("testOracleWithConnectionSchemaObjectAccessUser.%s.txt", javaVersion());
-    testOracleWithConnection(connection, expectedResource, 13);
-
-    final SQLSyntaxErrorException sqlException =
-        assertThrows(
-            SQLSyntaxErrorException.class,
-            () -> testSelectQuery(connection, "testOracleWithConnectionQuery.txt"));
-    assertThat(sqlException.getMessage(), startsWith("ORA-00942: table or view does not exist"));
-  }
-
-  @Test
-  @DisplayName("Oracle test for user with just Select Catalog role")
+  @DisplayName("Oracle test for user with just SELECT_CATALOG_ROLE")
   /**
    * Test user can get metadata, but cannot run data queries. The CATUSER does not have access
    * either to DBA_ data dictionary tables, but only to the ALL_ dictionary tables.
    */
-  public void testOracleWithConnectionSelectCatalogUser() throws Exception {
+  public void testOracleSelectCatalogRoleUser() throws Exception {
     final Connection connection = catalogUserDataSource.getConnection();
     final String expectedResource =
-        String.format("testOracleWithConnectionSelectCatalogUser.%s.txt", javaVersion());
+        String.format("testOracleSelectCatalogRoleUser.%s.txt", javaVersion());
     testOracleWithConnection(connection, expectedResource, 13);
 
     final SQLSyntaxErrorException sqlException =
@@ -111,5 +95,35 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
             SQLSyntaxErrorException.class,
             () -> testSelectQuery(connection, "testOracleWithConnectionQuery.txt"));
     assertThat(sqlException.getMessage(), startsWith("ORA-00942: table or view does not exist"));
+  }
+
+  @Test
+  @DisplayName("Oracle test for user who is the schema owner")
+  /**
+   * Test user cannot get metadata, but can run data queries. The SELUSER does not have access
+   * either to DBA_ nor ALL_ data dictionary tables.
+   */
+  public void testOracleWithSchemaOwnerUser() throws Exception {
+    final Connection connection = schemaOwnerUserDataSource.getConnection();
+    final String expectedResource =
+        String.format("testOracleWithSchemaOwnerUser.%s.txt", javaVersion());
+    testOracleWithConnection(connection, expectedResource, 13);
+
+    testSelectQuery(connection, "testOracleWithConnectionQuery.txt");
+  }
+
+  @Test
+  @DisplayName("Oracle test for user with just GRANT SELECT")
+  /**
+   * Test user cannot get metadata, but can run data queries. The SELUSER does not have access
+   * either to DBA_ nor ALL_ data dictionary tables.
+   */
+  public void testOracleWithSelectGrantUser() throws Exception {
+    final Connection connection = selectUserDataSource.getConnection();
+    final String expectedResource =
+        String.format("testOracleWithSelectGrantUser.%s.txt", javaVersion());
+    testOracleWithConnection(connection, expectedResource, 13);
+
+    testSelectQuery(connection, "testOracleWithConnectionQuery.txt");
   }
 }
