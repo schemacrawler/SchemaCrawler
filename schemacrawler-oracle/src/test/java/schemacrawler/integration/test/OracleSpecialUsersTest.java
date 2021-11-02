@@ -30,6 +30,8 @@ package schemacrawler.integration.test;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
+import static schemacrawler.schemacrawler.QueryUtility.executeForScalar;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import java.sql.Connection;
@@ -48,6 +50,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
+import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 @Testcontainers(disabledWithoutDocker = true)
@@ -79,11 +82,8 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
   }
 
   @Test
-  @DisplayName("Oracle test for user with just SELECT_CATALOG_ROLE")
-  /**
-   * Test user can get metadata, but cannot run data queries. The CATUSER does not have access
-   * either to DBA_ data dictionary tables, but only to the ALL_ dictionary tables.
-   */
+  @DisplayName("Oracle test for user CATUSER with just SELECT_CATALOG_ROLE")
+  /** CATUSER can get metadata, but cannot run data queries. */
   public void testOracleSelectCatalogRoleUser() throws Exception {
     final Connection connection = catalogUserDataSource.getConnection();
     final String expectedResource =
@@ -95,14 +95,13 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
             SQLSyntaxErrorException.class,
             () -> testSelectQuery(connection, "testOracleWithConnectionQuery.txt"));
     assertThat(sqlException.getMessage(), startsWith("ORA-00942: table or view does not exist"));
+
+    assertCatalogScope(connection, true, true);
   }
 
   @Test
-  @DisplayName("Oracle test for user who is the schema owner")
-  /**
-   * Test user cannot get metadata, but can run data queries. The SELUSER does not have access
-   * either to DBA_ nor ALL_ data dictionary tables.
-   */
+  @DisplayName("Oracle test for user BOOKS who is the schema owner")
+  /** BOOKS user can get metadata, and can run data queries. */
   public void testOracleWithSchemaOwnerUser() throws Exception {
     final Connection connection = schemaOwnerUserDataSource.getConnection();
     final String expectedResource =
@@ -110,14 +109,13 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
     testOracleWithConnection(connection, expectedResource, 13);
 
     testSelectQuery(connection, "testOracleWithConnectionQuery.txt");
+
+    assertCatalogScope(connection, false, true);
   }
 
   @Test
-  @DisplayName("Oracle test for user with just GRANT SELECT")
-  /**
-   * Test user cannot get metadata, but can run data queries. The SELUSER does not have access
-   * either to DBA_ nor ALL_ data dictionary tables.
-   */
+  @DisplayName("Oracle test for user SELUSER with just GRANT SELECT")
+  /** SELUSER cannot get metadata, but can run data queries. */
   public void testOracleWithSelectGrantUser() throws Exception {
     final Connection connection = selectUserDataSource.getConnection();
     final String expectedResource =
@@ -125,5 +123,42 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
     testOracleWithConnection(connection, expectedResource, 13);
 
     testSelectQuery(connection, "testOracleWithConnectionQuery.txt");
+
+    assertCatalogScope(connection, false, true);
+  }
+
+  private void assertCatalogScope(
+      final Connection connection, final boolean dbaAccess, final boolean allAccess) {
+
+    assertDataDictionaryAccess(
+        new Query(
+            "Select from DBA data dictionary tables",
+            "SELECT TABLE_NAME FROM DBA_TABLES WHERE ROWNUM = 1"),
+        connection,
+        dbaAccess);
+
+    assertDataDictionaryAccess(
+        new Query(
+            "Select from ALL data dictionary tables",
+            "SELECT TABLE_NAME FROM ALL_TABLES WHERE ROWNUM = 1"),
+        connection,
+        allAccess);
+  }
+
+  private void assertDataDictionaryAccess(
+      final Query query, final Connection connection, final boolean accessAllowed) {
+    try {
+      final Object scalar = executeForScalar(query, connection);
+      if (scalar == null) {
+        fail(query.getName() + " is allowed, but not expected to be allowed");
+      }
+      if (!accessAllowed) {
+        fail(query.getName() + " is allowed, but not expected to be allowed");
+      }
+    } catch (final SQLException e) {
+      if (accessAllowed) {
+        fail(query.getName() + "  is not allowed, but is expected to be allowed");
+      }
+    }
   }
 }
