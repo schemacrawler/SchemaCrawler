@@ -27,22 +27,10 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.integration.test;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.matchesPattern;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 
+import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,24 +41,11 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
-import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
-import schemacrawler.schema.Catalog;
-import schemacrawler.schema.DatabaseUser;
-import schemacrawler.schema.Property;
-import schemacrawler.schemacrawler.LimitOptionsBuilder;
-import schemacrawler.schemacrawler.LoadOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
-import schemacrawler.tools.command.text.schema.options.SchemaTextOptions;
-import schemacrawler.tools.command.text.schema.options.SchemaTextOptionsBuilder;
-import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
 @Testcontainers(disabledWithoutDocker = true)
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
-public class Oracle11Test extends BaseAdditionalDatabaseTest {
+public class Oracle11Test extends BaseOracleWithConnectionTest {
 
   @Container
   private final JdbcDatabaseContainer<?> dbContainer =
@@ -86,58 +61,10 @@ public class Oracle11Test extends BaseAdditionalDatabaseTest {
 
   @Test
   public void testOracleWithConnection() throws Exception {
-    final LimitOptionsBuilder limitOptionsBuilder =
-        LimitOptionsBuilder.builder()
-            .includeSchemas(new RegularExpressionInclusionRule("BOOKS"))
-            .includeAllSequences()
-            .includeAllSynonyms()
-            .includeRoutines(new RegularExpressionInclusionRule("[0-9a-zA-Z_\\.]*"))
-            .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
-    final LoadOptionsBuilder loadOptionsBuilder =
-        LoadOptionsBuilder.builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    final SchemaCrawlerOptions schemaCrawlerOptions =
-        SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-            .withLimitOptions(limitOptionsBuilder.toOptions())
-            .withLoadOptions(loadOptionsBuilder.toOptions());
-
-    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder.builder();
-    textOptionsBuilder.showDatabaseInfo().showJdbcDriverInfo();
-    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
-
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions).toConfig());
-
-    // -- Schema output tests
+    final Connection connection = getConnection();
     final String expectedResource = String.format("testOracleWithConnection.%s.txt", javaVersion());
-    assertThat(
-        outputOf(executableExecution(getConnection(), executable)),
-        hasSameContentAs(classpathResource(expectedResource)));
+    testOracleWithConnection(connection, expectedResource, 13);
 
-    // -- Additional catalog tests
-    final Catalog catalog = executable.getCatalog();
-
-    final List<Property> serverInfo = new ArrayList<>(catalog.getDatabaseInfo().getServerInfo());
-
-    assertThat(serverInfo.size(), equalTo(1));
-    assertThat(serverInfo.get(0).getName(), equalTo("GLOBAL_NAME"));
-    assertThat(String.valueOf(serverInfo.get(0).getValue()), matchesPattern("[0-9a-zA-Z]{1,12}"));
-
-    final List<DatabaseUser> databaseUsers = (List<DatabaseUser>) catalog.getDatabaseUsers();
-    assertThat(databaseUsers, hasSize(11));
-    assertThat(
-        databaseUsers.stream().map(DatabaseUser::getName).collect(Collectors.toList()),
-        hasItems("SYS", "SYSTEM", "BOOKS"));
-    assertThat(
-        databaseUsers.stream()
-            .map(databaseUser -> databaseUser.getAttributes().size())
-            .collect(Collectors.toList()),
-        hasItems(2));
-    assertThat(
-        databaseUsers.stream()
-            .map(databaseUser -> databaseUser.getAttributes().keySet())
-            .flatMap(Collection::stream)
-            .collect(Collectors.toSet()),
-        hasItems("USER_ID", "CREATED"));
+    testSelectQuery(connection, "testOracleWithConnectionQuery.txt");
   }
 }

@@ -63,6 +63,15 @@ public abstract class BaseAdditionalDatabaseTest {
       final String password,
       final String connectionProperties) {
 
+    dataSource = createDataSourceObject(connectionUrl, user, password, connectionProperties);
+  }
+
+  protected DataSource createDataSourceObject(
+      final String connectionUrl,
+      final String user,
+      final String password,
+      final String connectionProperties) {
+
     final BasicDataSource ds = new BasicDataSource();
     ds.setUrl(connectionUrl);
     ds.setUsername(user);
@@ -72,7 +81,7 @@ public abstract class BaseAdditionalDatabaseTest {
     }
     ds.setDefaultAutoCommit(false);
 
-    dataSource = ds;
+    return ds;
   }
 
   protected final Connection getConnection() throws SchemaCrawlerException {
