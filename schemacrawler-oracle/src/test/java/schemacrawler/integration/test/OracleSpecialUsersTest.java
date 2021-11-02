@@ -65,6 +65,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
   private DataSource schemaOwnerUserDataSource;
   private DataSource selectUserDataSource;
   private DataSource catalogUserDataSource;
+  private DataSource noAccessUserDataSource;
 
   @BeforeAll
   public void createDatabase() throws SQLException, SchemaCrawlerException {
@@ -82,6 +83,8 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
         createDataSourceObject(dbContainer.getJdbcUrl(), "SELUSER", "SELUSER", urlx);
     catalogUserDataSource =
         createDataSourceObject(dbContainer.getJdbcUrl(), "CATUSER", "CATUSER", urlx);
+    noAccessUserDataSource =
+        createDataSourceObject(dbContainer.getJdbcUrl(), "NOTUSER", "NOTUSER", urlx);
   }
 
   @Test
@@ -92,7 +95,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
     final Connection connection = catalogUserDataSource.getConnection();
     final String expectedResource =
         String.format("testOracleSelectCatalogRoleUser.%s.txt", javaVersion());
-    testOracleWithConnection(connection, expectedResource, 13);
+    testOracleWithConnection(connection, expectedResource, 14);
 
     final SQLSyntaxErrorException sqlException =
         assertThrows(
@@ -114,6 +117,25 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
   }
 
   @Test
+  @DisplayName("Oracle test for user NOTUSER with no access")
+  /** NOTUSER cannot get metadata, nor run data queries. */
+  public void testOracleWithNoAccessUser() throws Exception {
+
+    final Connection connection = noAccessUserDataSource.getConnection();
+    final String expectedResource =
+        String.format("testOracleWithNoAccessUser.%s.txt", javaVersion());
+    testOracleWithConnection(connection, expectedResource, 14);
+
+    final SQLSyntaxErrorException sqlException =
+        assertThrows(
+            SQLSyntaxErrorException.class,
+            () -> testSelectQuery(connection, "testOracleWithConnectionQuery.txt"));
+    assertThat(sqlException.getMessage(), startsWith("ORA-00942: table or view does not exist"));
+
+    assertCatalogScope(connection, false, false);
+  }
+
+  @Test
   @DisplayName("Oracle test for user BOOKS who is the schema owner")
   /** BOOKS user can get metadata, and can run data queries. */
   public void testOracleWithSchemaOwnerUser() throws Exception {
@@ -121,7 +143,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
     final Connection connection = schemaOwnerUserDataSource.getConnection();
     final String expectedResource =
         String.format("testOracleWithSchemaOwnerUser.%s.txt", javaVersion());
-    testOracleWithConnection(connection, expectedResource, 13);
+    testOracleWithConnection(connection, expectedResource, 14);
 
     testSelectQuery(connection, "testOracleWithConnectionQuery.txt");
 
@@ -136,7 +158,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
     final Connection connection = selectUserDataSource.getConnection();
     final String expectedResource =
         String.format("testOracleWithSelectGrantUser.%s.txt", javaVersion());
-    testOracleWithConnection(connection, expectedResource, 13);
+    testOracleWithConnection(connection, expectedResource, 14);
 
     testSelectQuery(connection, "testOracleWithConnectionQuery.txt");
 
