@@ -31,6 +31,7 @@ import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 import static schemacrawler.schemacrawler.QueryUtility.executeForScalar;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 
@@ -40,24 +41,24 @@ import java.sql.SQLSyntaxErrorException;
 
 import javax.sql.DataSource;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.OracleContainer;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
+@TestInstance(PER_CLASS)
 @Testcontainers(disabledWithoutDocker = true)
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
 
-  @Container
   private final JdbcDatabaseContainer<?> dbContainer =
       new OracleContainer(DockerImageName.parse("gvenzl/oracle-xe").withTag("11")).usingSid();
 
@@ -65,8 +66,10 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
   private DataSource selectUserDataSource;
   private DataSource catalogUserDataSource;
 
-  @BeforeEach
+  @BeforeAll
   public void createDatabase() throws SQLException, SchemaCrawlerException {
+
+    dbContainer.start();
 
     final String urlx = "restrictGetTables=true;useFetchSizeWithLongColumn=true";
     createDataSource(dbContainer.getJdbcUrl(), "SYS AS SYSDBA", dbContainer.getPassword(), urlx);
@@ -85,6 +88,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
   @DisplayName("Oracle test for user CATUSER with just SELECT_CATALOG_ROLE")
   /** CATUSER can get metadata, but cannot run data queries. */
   public void testOracleSelectCatalogRoleUser() throws Exception {
+
     final Connection connection = catalogUserDataSource.getConnection();
     final String expectedResource =
         String.format("testOracleSelectCatalogRoleUser.%s.txt", javaVersion());
@@ -100,9 +104,20 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
   }
 
   @Test
+  @DisplayName("Oracle test for system user")
+  /** CATUSER can get metadata, but cannot run data queries. */
+  public void testOracleSystemUser() throws Exception {
+
+    final Connection connection = getConnection();
+
+    assertCatalogScope(connection, true, true);
+  }
+
+  @Test
   @DisplayName("Oracle test for user BOOKS who is the schema owner")
   /** BOOKS user can get metadata, and can run data queries. */
   public void testOracleWithSchemaOwnerUser() throws Exception {
+
     final Connection connection = schemaOwnerUserDataSource.getConnection();
     final String expectedResource =
         String.format("testOracleWithSchemaOwnerUser.%s.txt", javaVersion());
@@ -117,6 +132,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
   @DisplayName("Oracle test for user SELUSER with just GRANT SELECT")
   /** SELUSER cannot get metadata, but can run data queries. */
   public void testOracleWithSelectGrantUser() throws Exception {
+
     final Connection connection = selectUserDataSource.getConnection();
     final String expectedResource =
         String.format("testOracleWithSelectGrantUser.%s.txt", javaVersion());
