@@ -30,6 +30,9 @@ package schemacrawler.integration.test;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
+import static schemacrawler.schemacrawler.QueryUtility.executeForScalar;
 import static schemacrawler.test.utility.TestUtility.javaVersion;
 
 import java.sql.Connection;
@@ -38,78 +41,162 @@ import java.sql.SQLSyntaxErrorException;
 
 import javax.sql.DataSource;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.OracleContainer;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
+import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
+@TestInstance(PER_CLASS)
 @Testcontainers(disabledWithoutDocker = true)
 @EnabledIfSystemProperty(named = "heavydb", matches = "^((?!(false|no)).)*$")
 public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
 
-  @Container
   private final JdbcDatabaseContainer<?> dbContainer =
       new OracleContainer(DockerImageName.parse("gvenzl/oracle-xe").withTag("11")).usingSid();
 
-  private DataSource booksUserDataSource;
+  private DataSource schemaOwnerUserDataSource;
+  private DataSource selectUserDataSource;
   private DataSource catalogUserDataSource;
+  private DataSource noAccessUserDataSource;
 
-  @BeforeEach
+  @BeforeAll
   public void createDatabase() throws SQLException, SchemaCrawlerException {
+
+    dbContainer.start();
 
     final String urlx = "restrictGetTables=true;useFetchSizeWithLongColumn=true";
     createDataSource(dbContainer.getJdbcUrl(), "SYS AS SYSDBA", dbContainer.getPassword(), urlx);
 
     createDatabase("/oracle-11g.scripts.txt");
 
-    booksUserDataSource =
-        createDataSourceObject(dbContainer.getJdbcUrl(), "BOOKSUSER", "booksuser", urlx);
+    schemaOwnerUserDataSource =
+        createDataSourceObject(dbContainer.getJdbcUrl(), "BOOKS", "BOOKS", urlx);
+    selectUserDataSource =
+        createDataSourceObject(dbContainer.getJdbcUrl(), "SELUSER", "SELUSER", urlx);
     catalogUserDataSource =
-        createDataSourceObject(dbContainer.getJdbcUrl(), "CATUSER", "catuser", urlx);
+        createDataSourceObject(dbContainer.getJdbcUrl(), "CATUSER", "CATUSER", urlx);
+    noAccessUserDataSource =
+        createDataSourceObject(dbContainer.getJdbcUrl(), "NOTUSER", "NOTUSER", urlx);
   }
 
   @Test
-  @DisplayName("Oracle test for user with just Schema Object Access role")
-  /**
-   * Test user cannot get metadata, but can run data queries. The BOOKSUSER does not have access
-   * either to DBA_ nor ALL_ data dictionary tables.
-   */
-  public void testOracleWithConnectionSchemaObjectAccessUser() throws Exception {
-    final Connection connection = booksUserDataSource.getConnection();
-    final String expectedResource =
-        String.format("testOracleWithConnectionSchemaObjectAccessUser.%s.txt", javaVersion());
-    testOracleWithConnection(connection, expectedResource, 13);
+  @DisplayName("Oracle test for user CATUSER with just SELECT_CATALOG_ROLE")
+  /** CATUSER can get metadata, but cannot run data queries. */
+  public void testOracleSelectCatalogRoleUser() throws Exception {
 
-    final SQLSyntaxErrorException sqlException =
-        assertThrows(
-            SQLSyntaxErrorException.class,
-            () -> testSelectQuery(connection, "testOracleWithConnectionQuery.txt"));
-    assertThat(sqlException.getMessage(), startsWith("ORA-00942: table or view does not exist"));
-  }
-
-  @Test
-  @DisplayName("Oracle test for user with just Select Catalog role")
-  /**
-   * Test user can get metadata, but cannot run data queries. The CATUSER does not have access
-   * either to DBA_ data dictionary tables, but only to the ALL_ dictionary tables.
-   */
-  public void testOracleWithConnectionSelectCatalogUser() throws Exception {
     final Connection connection = catalogUserDataSource.getConnection();
     final String expectedResource =
-        String.format("testOracleWithConnectionSelectCatalogUser.%s.txt", javaVersion());
-    testOracleWithConnection(connection, expectedResource, 13);
+        String.format("testOracleSelectCatalogRoleUser.%s.txt", javaVersion());
+    testOracleWithConnection(connection, expectedResource, 14);
 
     final SQLSyntaxErrorException sqlException =
         assertThrows(
             SQLSyntaxErrorException.class,
             () -> testSelectQuery(connection, "testOracleWithConnectionQuery.txt"));
     assertThat(sqlException.getMessage(), startsWith("ORA-00942: table or view does not exist"));
+
+    assertCatalogScope(connection, true, true);
+  }
+
+  @Test
+  @DisplayName("Oracle test for system user")
+  /** CATUSER can get metadata, but cannot run data queries. */
+  public void testOracleSystemUser() throws Exception {
+
+    final Connection connection = getConnection();
+
+    assertCatalogScope(connection, true, true);
+  }
+
+  @Test
+  @DisplayName("Oracle test for user NOTUSER with no access")
+  /** NOTUSER cannot get metadata, nor run data queries. */
+  public void testOracleWithNoAccessUser() throws Exception {
+
+    final Connection connection = noAccessUserDataSource.getConnection();
+    final String expectedResource =
+        String.format("testOracleWithNoAccessUser.%s.txt", javaVersion());
+    testOracleWithConnection(connection, expectedResource, 14);
+
+    final SQLSyntaxErrorException sqlException =
+        assertThrows(
+            SQLSyntaxErrorException.class,
+            () -> testSelectQuery(connection, "testOracleWithConnectionQuery.txt"));
+    assertThat(sqlException.getMessage(), startsWith("ORA-00942: table or view does not exist"));
+
+    assertCatalogScope(connection, false, false);
+  }
+
+  @Test
+  @DisplayName("Oracle test for user BOOKS who is the schema owner")
+  /** BOOKS user can get metadata, and can run data queries. */
+  public void testOracleWithSchemaOwnerUser() throws Exception {
+
+    final Connection connection = schemaOwnerUserDataSource.getConnection();
+    final String expectedResource =
+        String.format("testOracleWithSchemaOwnerUser.%s.txt", javaVersion());
+    testOracleWithConnection(connection, expectedResource, 14);
+
+    testSelectQuery(connection, "testOracleWithConnectionQuery.txt");
+
+    assertCatalogScope(connection, false, true);
+  }
+
+  @Test
+  @DisplayName("Oracle test for user SELUSER with just GRANT SELECT")
+  /** SELUSER cannot get metadata, but can run data queries. */
+  public void testOracleWithSelectGrantUser() throws Exception {
+
+    final Connection connection = selectUserDataSource.getConnection();
+    final String expectedResource =
+        String.format("testOracleWithSelectGrantUser.%s.txt", javaVersion());
+    testOracleWithConnection(connection, expectedResource, 14);
+
+    testSelectQuery(connection, "testOracleWithConnectionQuery.txt");
+
+    assertCatalogScope(connection, false, true);
+  }
+
+  private void assertCatalogScope(
+      final Connection connection, final boolean dbaAccess, final boolean allAccess) {
+
+    assertDataDictionaryAccess(
+        new Query(
+            "Select from DBA data dictionary tables",
+            "SELECT TABLE_NAME FROM DBA_TABLES WHERE ROWNUM = 1"),
+        connection,
+        dbaAccess);
+
+    assertDataDictionaryAccess(
+        new Query(
+            "Select from ALL data dictionary tables",
+            "SELECT TABLE_NAME FROM ALL_TABLES WHERE ROWNUM = 1"),
+        connection,
+        allAccess);
+  }
+
+  private void assertDataDictionaryAccess(
+      final Query query, final Connection connection, final boolean accessAllowed) {
+    try {
+      final Object scalar = executeForScalar(query, connection);
+      if (scalar == null) {
+        fail(query.getName() + " is allowed, but not expected to be allowed");
+      }
+      if (!accessAllowed) {
+        fail(query.getName() + " is allowed, but not expected to be allowed");
+      }
+    } catch (final SQLException e) {
+      if (accessAllowed) {
+        fail(query.getName() + "  is not allowed, but is expected to be allowed");
+      }
+    }
   }
 }
