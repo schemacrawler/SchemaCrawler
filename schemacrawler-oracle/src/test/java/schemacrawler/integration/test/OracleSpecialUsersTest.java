@@ -132,7 +132,7 @@ public class OracleSpecialUsersTest extends BaseOracleWithConnectionTest {
             () -> testSelectQuery(connection, "testOracleWithConnectionQuery.txt"));
     assertThat(sqlException.getMessage(), startsWith("ORA-00942: table or view does not exist"));
 
-    assertCatalogScope(connection, false, false);
+    assertCatalogScope(connection, false, true);
   }
 
   @Test
