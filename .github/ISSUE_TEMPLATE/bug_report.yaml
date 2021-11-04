@@ -1,0 +1,69 @@
+name: Issue Report
+description: Report an issue
+title: "[Issue]: "
+labels: ["issue"]
+assignees:
+  - sualeh
+body:
+  - type: markdown
+    value: "## Issue"
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description:
+      placeholder: What did you expect to happen? Also, provide the steps to reproduce the issue.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduce
+      description: How can we reproduce the issue?
+      placeholder: Provide the steps to reproduce the issue
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: shell
+    validations:
+      required: false
+  - type: markdown
+    value: "Zip and attach the complete SchemaCrawler debug logs, which can be obtained by running SchemaCrawler with an additional `-loglevel=ALL` on the command-line argument"
+
+
+  - type: markdown
+    value: "## Environment"
+  - type: input
+    id: schemacrawler-version
+    attributes:
+      label: SchemaCrawler Version
+    validations:
+      required: true
+  - type: input
+    id: java-version
+    attributes:
+      label: Java Version
+    validations:
+      required: true
+  - type: input
+    id: os-version
+    attributes:
+      label: Operating System and Version
+    validations:
+      required: true
+  - type: input
+    id: db-version
+    attributes:
+      label: Relational Database System and Version
+    validations:
+      required: true
+  - type: input
+    id: db-version
+    attributes:
+      label: JDBC Driver and Version
+    validations:
+      required: true
