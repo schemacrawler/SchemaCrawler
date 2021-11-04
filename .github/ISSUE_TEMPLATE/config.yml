@@ -9,3 +9,6 @@ contact_links:
   - name: SchemaCrawler
     url: https://www.schemacrawler.com/
     about: Review SchemaCrawler documentation
+  - name: SchemaCrawler Discussions
+    url: https://github.com/schemacrawler/SchemaCrawler/discussions
+    about: Ask questions or discuss with the SchemaCrawler community
