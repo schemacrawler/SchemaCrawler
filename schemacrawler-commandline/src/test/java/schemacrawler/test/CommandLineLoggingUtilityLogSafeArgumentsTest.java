@@ -5,34 +5,27 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.matchesPattern;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import nl.altindag.log.LogCaptor;
 import schemacrawler.tools.commandline.utility.CommandLineLoggingUtility;
 
-@Disabled
 public class CommandLineLoggingUtilityLogSafeArgumentsTest {
 
-  private static LogCaptor logCaptor;
-
-  @BeforeAll
-  public static void setupLogCaptor() {
-    logCaptor = LogCaptor.forClass(CommandLineLoggingUtility.class);
-  }
-
-  @AfterAll
-  public static void tearDown() {
-    logCaptor.close();
-  }
+  private LogCaptor logCaptor;
 
   @AfterEach
-  public void clearLogs() {
+  public void _clearLogs() {
     logCaptor.clearLogs();
+    logCaptor.close();
+    logCaptor = null;
+  }
 
+  @BeforeEach
+  public void _setupLogCaptor() {
+    logCaptor = LogCaptor.forClass(CommandLineLoggingUtility.class);
     logCaptor.setLogLevelToInfo();
   }
 
