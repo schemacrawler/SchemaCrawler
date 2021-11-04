@@ -6,7 +6,9 @@ assignees:
   - sualeh
 body:
   - type: markdown
-    value: "## Issue"
+    attributes:
+      value: |
+        ## Issue
   - type: textarea
     id: description
     attributes:
@@ -32,11 +34,15 @@ body:
     validations:
       required: false
   - type: markdown
-    value: "Zip and attach the complete SchemaCrawler debug logs, which can be obtained by running SchemaCrawler with an additional `-loglevel=ALL` on the command-line argument"
+    attributes:
+      value: |
+        Zip and attach the complete SchemaCrawler debug logs, which can be obtained by running SchemaCrawler with an additional `-loglevel=ALL` on the command-line argument"
 
 
   - type: markdown
-    value: "## Environment"
+    attributes:
+      value: |
+        ## Environment
   - type: input
     id: schemacrawler-version
     attributes:
@@ -62,7 +68,7 @@ body:
     validations:
       required: true
   - type: input
-    id: db-version
+    id: jdbc-driver-version
     attributes:
       label: JDBC Driver and Version
     validations:
