@@ -15,14 +15,16 @@ body:
       label: Description
       description:
       placeholder: What did you expect to happen? Also, provide the steps to reproduce the issue.
+      render: markdown
     validations:
       required: true
   - type: textarea
-    id: reproduce
+    id: reproduction
     attributes:
-      label: Reproduce
+      label: How to Reproduce
       description: How can we reproduce the issue?
       placeholder: Provide the steps to reproduce the issue
+      render: markdown
     validations:
       required: false
   - type: textarea
