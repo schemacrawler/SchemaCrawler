@@ -43,4 +43,5 @@ to version.
 When you use Java serialization (`--output-format=ser`) to serialize database
 metadata to a file, you can load a serialized metadata using the [`offline`](offline.html)
 server type. Please make sure that you use the same version of SchemaCrawler to 
-serialize snapshots as you use when you load those offline snapshots.
+create serialized snapshots and to load those offline snapshots.
+ 
