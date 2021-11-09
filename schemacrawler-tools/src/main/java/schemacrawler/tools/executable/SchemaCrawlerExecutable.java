@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.tools.utility.SchemaCrawlerUtility.matchSchemaRetrievalOptions;
 import static us.fatehi.utility.Utility.requireNotBlank;
 
 import java.sql.Connection;
@@ -77,7 +78,7 @@ public final class SchemaCrawlerExecutable {
   public void execute() throws Exception {
 
     if (schemaRetrievalOptions == null) {
-      schemaRetrievalOptions = SchemaCrawlerUtility.matchSchemaRetrievalOptions(connection);
+      schemaRetrievalOptions = matchSchemaRetrievalOptions(connection);
     }
 
     // Load the command to see if it is available

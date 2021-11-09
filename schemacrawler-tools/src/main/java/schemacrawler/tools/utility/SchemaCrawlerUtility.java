@@ -44,6 +44,7 @@ import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.catalogloader.CatalogLoader;
@@ -136,8 +137,7 @@ public final class SchemaCrawlerUtility {
    * @return SchemaRetrievalOptions
    * @throws SchemaCrawlerException On an exception.
    */
-  public static SchemaRetrievalOptions matchSchemaRetrievalOptions(final Connection connection)
-      throws SchemaCrawlerException {
+  public static SchemaRetrievalOptions matchSchemaRetrievalOptions(final Connection connection) {
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder =
         buildSchemaRetrievalOptions(connection);
 
@@ -154,7 +154,7 @@ public final class SchemaCrawlerUtility {
    * @throws SchemaCrawlerException On an exception.
    */
   private static SchemaRetrievalOptionsBuilder buildSchemaRetrievalOptions(
-      final Connection connection) throws SchemaCrawlerException {
+      final Connection connection) {
     checkConnection(connection);
     final DatabaseConnectorRegistry registry =
         DatabaseConnectorRegistry.getDatabaseConnectorRegistry();
@@ -177,11 +177,11 @@ public final class SchemaCrawlerUtility {
     return schemaRetrievalOptionsBuilder;
   }
 
-  private static void checkConnection(final Connection connection) throws SchemaCrawlerException {
+  private static void checkConnection(final Connection connection) {
     try {
       DatabaseUtility.checkConnection(connection);
     } catch (final SQLException e) {
-      throw new SchemaCrawlerException("Bad database connection", e);
+      throw new SchemaCrawlerRuntimeException("Bad database connection", e);
     }
   }
 

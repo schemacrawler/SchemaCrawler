@@ -31,6 +31,7 @@ import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import us.fatehi.utility.PropertiesUtility;
 
 final class UnknownDatabaseConnector extends DatabaseConnector {
@@ -62,21 +63,25 @@ final class UnknownDatabaseConnector extends DatabaseConnector {
     final DatabaseConnectionSource databaseConnectionSource =
         super.newDatabaseConnectionSource(connectionOptions);
 
+    final String url = databaseConnectionSource.getConnectionUrl();
+    failIfSchemaCrawlerPluginsNotAvailable(url);
+
+    return databaseConnectionSource;
+  }
+
+  private void failIfSchemaCrawlerPluginsNotAvailable(final String url) {
     final String withoutDatabasePlugin =
         PropertiesUtility.getSystemConfigurationProperty(
             "SC_IGNORE_MISSING_DATABASE_PLUGIN", Boolean.FALSE.toString());
     if (!Boolean.valueOf(withoutDatabasePlugin)) {
       // Check if SchemaCrawler database plugin is in use
-      final String url = databaseConnectionSource.getConnectionUrl();
       for (final Pattern pattern : patterns) {
         if (pattern.matcher(url).matches()) {
-          throw new SchemaCrawlerException(
+          throw new SchemaCrawlerRuntimeException(
               String.format(
                   "SchemaCrawler database plugin should be on the CLASSPATH for <%s>", url));
         }
       }
     }
-
-    return databaseConnectionSource;
   }
 }

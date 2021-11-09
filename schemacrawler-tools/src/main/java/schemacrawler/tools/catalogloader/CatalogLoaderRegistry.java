@@ -50,39 +50,27 @@ public final class CatalogLoaderRegistry {
 
   public Collection<PluginCommand> getCommandLineCommands() {
     final Collection<PluginCommand> commandLineCommands = new HashSet<>();
-    try {
-      for (final CatalogLoader catalogLoader : instantiateCatalogLoaders()) {
-        commandLineCommands.add(catalogLoader.getCommandLineCommand());
-      }
-    } catch (final SchemaCrawlerException e) {
-      throw new SchemaCrawlerRuntimeException("Could not load catalog loaders", e);
+    for (final CatalogLoader catalogLoader : instantiateCatalogLoaders()) {
+      commandLineCommands.add(catalogLoader.getCommandLineCommand());
     }
     return commandLineCommands;
   }
 
   public Collection<PluginCommand> getHelpCommands() {
     final Collection<PluginCommand> commandLineCommands = new HashSet<>();
-    try {
-      for (final CatalogLoader catalogLoader : instantiateCatalogLoaders()) {
-        commandLineCommands.add(catalogLoader.getHelpCommand());
-      }
-    } catch (final SchemaCrawlerException e) {
-      throw new SchemaCrawlerRuntimeException("Could not load catalog loaders", e);
+    for (final CatalogLoader catalogLoader : instantiateCatalogLoaders()) {
+      commandLineCommands.add(catalogLoader.getHelpCommand());
     }
     return commandLineCommands;
   }
 
   public Collection<CommandDescription> getSupportedCatalogLoaders() {
     final Collection<CommandDescription> commandLineCommands = new HashSet<>();
-    try {
-      for (final CatalogLoader catalogLoader : instantiateCatalogLoaders()) {
-        final CommandDescription commandDescription = catalogLoader.getCommandDescription();
-        commandLineCommands.add(
-            new CommandDescription(
-                commandDescription.getName(), commandDescription.getDescription()));
-      }
-    } catch (final SchemaCrawlerException e) {
-      throw new SchemaCrawlerRuntimeException("Could not load catalog loaders", e);
+    for (final CatalogLoader catalogLoader : instantiateCatalogLoaders()) {
+      final CommandDescription commandDescription = catalogLoader.getCommandDescription();
+      commandLineCommands.add(
+          new CommandDescription(
+              commandDescription.getName(), commandDescription.getDescription()));
     }
     return commandLineCommands;
   }
@@ -92,7 +80,7 @@ public final class CatalogLoaderRegistry {
     return new ChainedCatalogLoader(chainedCatalogLoaders);
   }
 
-  private List<CatalogLoader> instantiateCatalogLoaders() throws SchemaCrawlerException {
+  private List<CatalogLoader> instantiateCatalogLoaders() {
 
     final List<CatalogLoader> catalogLoaderRegistry = new ArrayList<>();
 
@@ -106,7 +94,7 @@ public final class CatalogLoaderRegistry {
         catalogLoaderRegistry.add(catalogLoader);
       }
     } catch (final Throwable e) {
-      throw new SchemaCrawlerException("Could not load catalog loader registry", e);
+      throw new SchemaCrawlerRuntimeException("Could not load catalog loader registry", e);
     }
 
     Collections.sort(catalogLoaderRegistry);
