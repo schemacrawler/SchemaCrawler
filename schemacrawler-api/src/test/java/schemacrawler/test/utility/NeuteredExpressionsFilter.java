@@ -36,8 +36,12 @@ final class NeuteredExpressionsFilter implements Function<String, String> {
     // ANSI escape sequences
     Pattern.compile("\u001B\\[[;\\d]*m"),
     Pattern.compile("\u2592"),
-    // HSQLDB system constraint names
-    Pattern.compile("_\\d{5}")
+    // HSQLDB
+    // -- system constraint names
+    Pattern.compile("_\\d{5}"),
+    // Oracle
+    // -- constraint names
+    Pattern.compile("SYS_C00\\d{4}")
   };
 
   @Override
