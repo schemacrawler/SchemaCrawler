@@ -39,6 +39,7 @@ import org.junit.jupiter.api.Test;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.test.utility.TestDatabaseConnector;
 import schemacrawler.test.utility.WithSystemProperty;
 import schemacrawler.tools.executable.commandline.PluginCommand;
@@ -99,7 +100,7 @@ public class DatabaseConnectorTest {
     final DatabaseConnector databaseConnector = DatabaseConnector.UNKNOWN;
 
     assertThrows(
-        SchemaCrawlerException.class,
+        SchemaCrawlerRuntimeException.class,
         () ->
             databaseConnector.newDatabaseConnectionSource(
                 new DatabaseUrlConnectionOptions("jdbc:mysql://localhost:9001/schemacrawler")));

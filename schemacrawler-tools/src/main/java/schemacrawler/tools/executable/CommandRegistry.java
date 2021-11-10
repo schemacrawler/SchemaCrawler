@@ -56,17 +56,13 @@ public final class CommandRegistry {
   private static CommandRegistry commandRegistrySingleton;
 
   public static CommandRegistry getCommandRegistry() {
-    try {
-      if (commandRegistrySingleton == null) {
-        commandRegistrySingleton = new CommandRegistry();
-      }
-    } catch (final SchemaCrawlerException e) {
-      throw new SchemaCrawlerRuntimeException("Cannot load SchemaCrawler commands", e);
+    if (commandRegistrySingleton == null) {
+      commandRegistrySingleton = new CommandRegistry();
     }
     return commandRegistrySingleton;
   }
 
-  private static List<CommandProvider> loadCommandRegistry() throws SchemaCrawlerException {
+  private static List<CommandProvider> loadCommandRegistry() {
 
     final List<CommandProvider> commandProviders = new ArrayList<>();
 
@@ -81,8 +77,8 @@ public final class CommandRegistry {
                 commandProvider.getSupportedCommands(), commandProvider.getClass().getName()));
         commandProviders.add(commandProvider);
       }
-    } catch (final Exception e) {
-      throw new SchemaCrawlerException("Could not load extended command registry", e);
+    } catch (final Throwable e) {
+      throw new SchemaCrawlerRuntimeException("Could not load extended command registry", e);
     }
 
     return commandProviders;
@@ -90,7 +86,7 @@ public final class CommandRegistry {
 
   private final List<CommandProvider> commandRegistry;
 
-  private CommandRegistry() throws SchemaCrawlerException {
+  private CommandRegistry() {
     commandRegistry = loadCommandRegistry();
   }
 

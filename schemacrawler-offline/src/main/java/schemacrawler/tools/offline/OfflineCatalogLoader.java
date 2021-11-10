@@ -6,11 +6,14 @@ import static schemacrawler.filter.ReducerFactory.getSequenceReducer;
 import static schemacrawler.filter.ReducerFactory.getSynonymReducer;
 import static schemacrawler.filter.ReducerFactory.getTableReducer;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Reducible;
@@ -25,11 +28,14 @@ import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
+import us.fatehi.utility.string.StringFormat;
 
 public final class OfflineCatalogLoader extends BaseCatalogLoader {
 
+  private static final Logger LOGGER = Logger.getLogger(OfflineCatalogLoader.class.getName());
+
   public OfflineCatalogLoader() {
-    super(new CommandDescription("offlineloader", "Loader for offline databases"), -1);
+    super(new CommandDescription("offlineloader", "Loader for offline catalog snapshots"), -1);
   }
 
   @Override
@@ -59,15 +65,19 @@ public final class OfflineCatalogLoader extends BaseCatalogLoader {
       }
 
       final Path offlineDatabasePath = dbConnection.getOfflineDatabasePath();
-      try (final FileInputStream inputFileStream =
-          new FileInputStream(offlineDatabasePath.toFile())) {
+      LOGGER.log(
+          Level.CONFIG,
+          new StringFormat(
+              "Reading serialized offline catalog snapshot <%s>", offlineDatabasePath));
+
+      try (final InputStream inputFileStream = Files.newInputStream(offlineDatabasePath)) {
         final JavaSerializedCatalog deserializedCatalog =
             new JavaSerializedCatalog(inputFileStream);
         catalog = deserializedCatalog.getCatalog();
       }
       reduceCatalog(catalog);
     } catch (final IOException | SQLException e) {
-      throw new SchemaCrawlerException("Could not load offline database", e);
+      throw new SchemaCrawlerException("Could not load offline catalog snapshot", e);
     }
 
     setCatalog(catalog);

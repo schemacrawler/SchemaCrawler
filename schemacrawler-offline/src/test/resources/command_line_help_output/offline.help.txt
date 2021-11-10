@@ -6,6 +6,7 @@
       --host=<host>       Should be omitted
       --port=<port>       Should be omitted
       --server=<server>   --server=offline
-                          Loads SchemaCrawler plug-in for offline snapshots
+                          Loads SchemaCrawler plug-in for offline catalog
+                            snapshots
 
 

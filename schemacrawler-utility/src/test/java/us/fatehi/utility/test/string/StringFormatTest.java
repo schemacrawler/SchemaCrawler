@@ -31,9 +31,6 @@ package us.fatehi.utility.test.string;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.util.IllegalFormatConversionException;
 
 import org.junit.jupiter.api.Test;
 
@@ -43,8 +40,7 @@ public class StringFormatTest {
 
   @Test
   public void badFormat() {
-    assertThrows(
-        IllegalFormatConversionException.class, () -> new StringFormat("%d", "hello").get());
+    assertThat(new StringFormat("%d", "hello").get(), is(""));
   }
 
   @Test

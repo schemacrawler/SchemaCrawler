@@ -56,7 +56,7 @@ public final class OfflineDatabaseConnector extends DatabaseConnector {
         .addOption(
             "server",
             String.class,
-            "--server=offline%n" + "Loads SchemaCrawler plug-in for offline snapshots")
+            "--server=offline%n" + "Loads SchemaCrawler plug-in for offline catalog snapshots")
         .addOption("host", String.class, "Should be omitted")
         .addOption("port", Integer.class, "Should be omitted")
         .addOption(

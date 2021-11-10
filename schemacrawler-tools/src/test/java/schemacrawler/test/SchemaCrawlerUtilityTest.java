@@ -46,6 +46,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.utility.SchemaCrawlerUtility;
 
@@ -64,7 +65,7 @@ public class SchemaCrawlerUtilityTest {
   public void getCatalogClosedConnection(final Connection connection) throws Exception {
     connection.close();
     assertThrows(
-        SchemaCrawlerException.class,
+        SchemaCrawlerRuntimeException.class,
         () -> SchemaCrawlerUtility.getCatalog(connection, newSchemaCrawlerOptions()));
   }
 
