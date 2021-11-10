@@ -35,6 +35,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.sql.SQLFeatureNotSupportedException;
+import java.util.Collections;
 
 public class OfflineConnectionUtility {
 
@@ -62,17 +63,23 @@ public class OfflineConnectionUtility {
           return false;
         case "isValid":
           return true;
+        case "getTypeMap":
+          return Collections.emptyMap();
         case "toString":
-          return String.format("SchemaCrawler Offline Database Connection");
+          return String.format(
+              "schemacrawler.tools.offline.jdbc.OfflineConnection@%s",
+              offlineDatabasePath.hashCode());
         default:
           throw new SQLFeatureNotSupportedException(
-              "Offline connection does not support method, " + methodName, "HYC00");
+              String.format(
+                  "Offline catalog snapshot connection does not support method <%s>", methodName),
+              "HYC00");
       }
     }
   }
 
   public static OfflineConnection newOfflineConnection(final Path offlineDatabasePath) {
-    requireNonNull(offlineDatabasePath, "No offline database path provided");
+    requireNonNull(offlineDatabasePath, "No offline catalog snapshot path provided");
 
     final Path absoluteOfflineDatabasePath = offlineDatabasePath.toAbsolutePath();
     return (OfflineConnection)

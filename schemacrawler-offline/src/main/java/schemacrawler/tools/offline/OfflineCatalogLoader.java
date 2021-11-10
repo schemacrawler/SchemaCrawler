@@ -35,7 +35,7 @@ public final class OfflineCatalogLoader extends BaseCatalogLoader {
   private static final Logger LOGGER = Logger.getLogger(OfflineCatalogLoader.class.getName());
 
   public OfflineCatalogLoader() {
-    super(new CommandDescription("offlineloader", "Loader for offline databases"), -1);
+    super(new CommandDescription("offlineloader", "Loader for offline catalog snapshots"), -1);
   }
 
   @Override
@@ -67,7 +67,8 @@ public final class OfflineCatalogLoader extends BaseCatalogLoader {
       final Path offlineDatabasePath = dbConnection.getOfflineDatabasePath();
       LOGGER.log(
           Level.CONFIG,
-          new StringFormat("Reading serialized database file <%s>", offlineDatabasePath));
+          new StringFormat(
+              "Reading serialized offline catalog snapshot <%s>", offlineDatabasePath));
 
       try (final InputStream inputFileStream = Files.newInputStream(offlineDatabasePath)) {
         final JavaSerializedCatalog deserializedCatalog =
@@ -76,7 +77,7 @@ public final class OfflineCatalogLoader extends BaseCatalogLoader {
       }
       reduceCatalog(catalog);
     } catch (final IOException | SQLException e) {
-      throw new SchemaCrawlerException("Could not load offline database", e);
+      throw new SchemaCrawlerException("Could not load offline catalog snapshot", e);
     }
 
     setCatalog(catalog);
