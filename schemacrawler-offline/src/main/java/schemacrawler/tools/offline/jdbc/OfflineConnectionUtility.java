@@ -62,6 +62,8 @@ public class OfflineConnectionUtility {
           return false;
         case "isValid":
           return true;
+        case "toString":
+          return String.format("SchemaCrawler Offline Database Connection");
         default:
           throw new SQLFeatureNotSupportedException(
               "Offline connection does not support method, " + methodName, "HYC00");
@@ -72,11 +74,12 @@ public class OfflineConnectionUtility {
   public static OfflineConnection newOfflineConnection(final Path offlineDatabasePath) {
     requireNonNull(offlineDatabasePath, "No offline database path provided");
 
+    final Path absoluteOfflineDatabasePath = offlineDatabasePath.toAbsolutePath();
     return (OfflineConnection)
         newProxyInstance(
             OfflineConnectionUtility.class.getClassLoader(),
             new Class[] {OfflineConnection.class},
-            new OfflineConnectionInvocationHandler(offlineDatabasePath));
+            new OfflineConnectionInvocationHandler(absoluteOfflineDatabasePath));
   }
 
   private OfflineConnectionUtility() {

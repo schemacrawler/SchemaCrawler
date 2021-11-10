@@ -201,7 +201,8 @@ public final class SchemaCrawlerUtility {
       final ConnectionInfo connectionInfo = ConnectionInfoBuilder.builder(connection).build();
       LOGGER.log(Level.INFO, connectionInfo.toString());
     } catch (final SQLException e) {
-      LOGGER.log(Level.WARNING, "Could not log connection information", e);
+      LOGGER.log(Level.WARNING, "Could not log connection information");
+      LOGGER.log(Level.FINE, "Could not log connection information", e);
     }
   }
 
