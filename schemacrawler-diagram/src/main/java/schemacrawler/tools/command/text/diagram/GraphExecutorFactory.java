@@ -36,21 +36,19 @@ import static us.fatehi.utility.IOUtility.readResourceFully;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
+
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 
 public class GraphExecutorFactory {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(GraphExecutorFactory.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(GraphExecutorFactory.class.getName());
 
-  public void canGenerate(final DiagramOutputFormat diagramOutputFormat) throws Exception {
+  public void canGenerate(final DiagramOutputFormat diagramOutputFormat) {
     if (diagramOutputFormat == null) {
-      throw new SchemaCrawlerException("No diagram output format specified");
+      throw new SchemaCrawlerRuntimeException("No diagram output format specified");
     } else if (diagramOutputFormat == scdot) {
       return;
     } else if (isGraphvizAvailable()) {
@@ -58,8 +56,8 @@ public class GraphExecutorFactory {
     } else if (isGraphvizJavaAvailable(diagramOutputFormat)) {
       return;
     } else {
-      throw new SchemaCrawlerException(
-          String.format("Cannot generate diagram in %s output format", diagramOutputFormat));
+      throw new SchemaCrawlerRuntimeException(
+          String.format("Cannot generate diagram in <%s> output format", diagramOutputFormat));
     }
   }
 
@@ -67,8 +65,7 @@ public class GraphExecutorFactory {
       final Path dotFile,
       final DiagramOutputFormat diagramOutputFormat,
       final Path outputFile,
-      final DiagramOptions commandOptions)
-      throws SchemaCrawlerException {
+      final DiagramOptions commandOptions) {
 
     GraphExecutor graphExecutor;
     if (diagramOutputFormat != scdot) {

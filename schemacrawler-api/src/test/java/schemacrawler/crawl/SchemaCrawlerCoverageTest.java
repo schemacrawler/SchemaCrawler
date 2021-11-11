@@ -77,9 +77,9 @@ import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
@@ -287,7 +287,7 @@ public class SchemaCrawlerCoverageTest {
 
     final Throwable exception =
         assertThrows(
-            SchemaCrawlerException.class,
+            SchemaCrawlerRuntimeException.class,
             () -> new SchemaCrawler(connection1, schemaRetrievalOptions, schemaCrawlerOptions));
     assertThat(exception.getCause().getMessage(), is("Forced SQL exception"));
 
@@ -303,7 +303,7 @@ public class SchemaCrawlerCoverageTest {
 
     final SchemaCrawler schemaCrawler =
         new SchemaCrawler(connection2, schemaRetrievalOptions, schemaCrawlerOptions);
-    assertThrows(SchemaCrawlerException.class, () -> schemaCrawler.crawl());
+    assertThrows(SchemaCrawlerRuntimeException.class, () -> schemaCrawler.crawl());
   }
 
   @Test

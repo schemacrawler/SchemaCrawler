@@ -105,7 +105,7 @@ public class DatabaseConnectionSourceTest {
     assertThat(
         sqlException.getMessage(),
         is(
-            "Could not find a suitable JDBC driver for database connection URL, jdbc:unknown-db:test"));
+            "Could not find a suitable JDBC driver for database connection URL <jdbc:unknown-db:test>: No suitable driver"));
 
     assertThat(
         connectionSource.toString(),

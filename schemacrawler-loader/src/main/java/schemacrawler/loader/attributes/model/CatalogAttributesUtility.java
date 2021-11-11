@@ -49,8 +49,7 @@ public class CatalogAttributesUtility {
    * @return
    * @throws Exception
    */
-  public static CatalogAttributes readCatalogAttributes(final InputResource inputResource)
-      throws Exception {
+  public static CatalogAttributes readCatalogAttributes(final InputResource inputResource) {
     requireNonNull(inputResource, "No input resource provided");
     try (final Reader reader = inputResource.openNewInputReader(UTF_8)) {
 

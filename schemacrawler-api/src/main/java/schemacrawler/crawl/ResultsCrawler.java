@@ -33,8 +33,8 @@ import static java.util.Objects.requireNonNull;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
@@ -47,8 +47,7 @@ import us.fatehi.utility.StopWatch;
  */
 public final class ResultsCrawler {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(ResultsCrawler.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ResultsCrawler.class.getName());
 
   private final ResultSet results;
 
@@ -84,12 +83,10 @@ public final class ResultsCrawler {
       LOGGER.log(Level.FINE, stopWatch.stringify());
 
       return resultsColumns;
+    } catch (final SQLException e) {
+      throw e;
     } catch (final Exception e) {
-      if (e instanceof SQLException) {
-        throw (SQLException) e;
-      } else {
-        throw new SchemaCrawlerSQLException("Could not retrieve result-set metadata", e);
-      }
+      throw new SchemaCrawlerSQLException("Could not retrieve result-set metadata", e);
     }
   }
 }

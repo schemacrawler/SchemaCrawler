@@ -50,7 +50,7 @@ public final class SchemaTextRenderer extends BaseSchemaCrawlerCommand<SchemaTex
   }
 
   @Override
-  public void checkAvailability() throws Exception {
+  public void checkAvailability() {
     // Text rendering is always available
   }
 

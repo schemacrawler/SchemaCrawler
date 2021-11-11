@@ -46,7 +46,7 @@ public final class TemplateCommand extends BaseSchemaCrawlerCommand<LanguageOpti
   }
 
   @Override
-  public void checkAvailability() throws Exception {
+  public void checkAvailability() {
     // Nothing to check at this point. The Command should be available
     // after the class is loaded, and imports are resolved.
   }

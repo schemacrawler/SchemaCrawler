@@ -30,7 +30,6 @@ package schemacrawler.tools.databaseconnector;
 import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import us.fatehi.utility.PropertiesUtility;
 
@@ -59,7 +58,7 @@ final class UnknownDatabaseConnector extends DatabaseConnector {
 
   @Override
   public DatabaseConnectionSource newDatabaseConnectionSource(
-      final DatabaseConnectionOptions connectionOptions) throws SchemaCrawlerException {
+      final DatabaseConnectionOptions connectionOptions) {
     final DatabaseConnectionSource databaseConnectionSource =
         super.newDatabaseConnectionSource(connectionOptions);
 

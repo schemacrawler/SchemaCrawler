@@ -66,6 +66,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 
 /** Decorates a database to allow for serialization to and from plain Java serialization. */
 public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer {
@@ -142,7 +143,7 @@ public abstract class BaseJacksonSerializedCatalog implements CatalogSerializer 
       final ObjectMapper mapper = newConfiguredObjectMapper();
       mapper.writeValue(out, this);
     } catch (final Exception e) {
-      throw new SchemaCrawlerException("Could not serialize catalog", e);
+      throw new SchemaCrawlerRuntimeException("Could not serialize catalog", e);
     }
   }
 

@@ -49,10 +49,11 @@ public class ProcessExecutor implements Callable<Integer> {
   private int exitCode;
 
   @Override
-  public Integer call() throws Exception {
-    requireNonNull(command, "No command provided");
+  public Integer call() {
 
     try {
+      requireNonNull(command, "No command provided");
+
       processOutput = createTempFilePath("temp", "stdout");
       processError = createTempFilePath("temp", "stderr");
 

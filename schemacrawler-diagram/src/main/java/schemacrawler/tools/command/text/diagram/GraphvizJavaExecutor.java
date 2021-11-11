@@ -31,39 +31,28 @@ import static schemacrawler.tools.command.text.diagram.GraphvizUtility.isGraphvi
 
 import java.nio.file.Path;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
+
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import us.fatehi.utility.string.StringFormat;
 
 final class GraphvizJavaExecutor extends AbstractGraphProcessExecutor {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(GraphvizJavaExecutor.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(GraphvizJavaExecutor.class.getName());
 
   GraphvizJavaExecutor(
-      final Path dotFile, final Path outputFile, final DiagramOutputFormat diagramOutputFormat)
-      throws SchemaCrawlerException {
+      final Path dotFile, final Path outputFile, final DiagramOutputFormat diagramOutputFormat) {
     super(dotFile, outputFile, diagramOutputFormat);
-  }
-
-  @Override
-  public Boolean call() {
-    try {
-      GraphvizJavaExecutorUtility.generateGraph(dotFile, outputFile, diagramOutputFormat);
-    } catch (final SchemaCrawlerException e) {
-      LOGGER.log(Level.INFO, String.format("Could not generate diagram from:%n%s", dotFile), e);
-      return false;
-    }
-
-    LOGGER.log(Level.INFO, new StringFormat("Generated diagram <%s>", outputFile));
-
-    return true;
   }
 
   @Override
   public boolean canGenerate() {
     return isGraphvizJavaAvailable(diagramOutputFormat);
+  }
+
+  @Override
+  public void run() {
+    GraphvizJavaExecutorUtility.generateGraph(dotFile, outputFile, diagramOutputFormat);
+    LOGGER.log(Level.INFO, new StringFormat("Generated diagram <%s>", outputFile));
   }
 }

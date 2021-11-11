@@ -95,7 +95,7 @@ public class EmbeddedDiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOpt
   }
 
   @Override
-  public void checkAvailability() throws Exception {
+  public void checkAvailability() {
     graphExecutorFactory.canGenerate(svg);
   }
 

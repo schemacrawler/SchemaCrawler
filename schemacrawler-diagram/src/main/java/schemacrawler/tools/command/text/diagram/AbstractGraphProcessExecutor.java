@@ -33,7 +33,7 @@ import static us.fatehi.utility.IOUtility.isFileWritable;
 
 import java.nio.file.Path;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 
 abstract class AbstractGraphProcessExecutor implements GraphExecutor {
@@ -43,8 +43,7 @@ abstract class AbstractGraphProcessExecutor implements GraphExecutor {
   protected final DiagramOutputFormat diagramOutputFormat;
 
   protected AbstractGraphProcessExecutor(
-      final Path dotFile, final Path outputFile, final DiagramOutputFormat diagramOutputFormat)
-      throws SchemaCrawlerException {
+      final Path dotFile, final Path outputFile, final DiagramOutputFormat diagramOutputFormat) {
     requireNonNull(dotFile, "No DOT file provided");
     requireNonNull(outputFile, "No diagram output file provided");
     requireNonNull(diagramOutputFormat, "No diagram output format provided");
@@ -54,11 +53,13 @@ abstract class AbstractGraphProcessExecutor implements GraphExecutor {
     this.diagramOutputFormat = diagramOutputFormat;
 
     if (!isFileReadable(this.dotFile)) {
-      throw new SchemaCrawlerException("Cannot read DOT file, " + this.dotFile);
+      throw new SchemaCrawlerRuntimeException(
+          String.format("Cannot read DOT file <%s>", this.dotFile));
     }
 
     if (!isFileWritable(this.outputFile)) {
-      throw new SchemaCrawlerException("Cannot write output file, " + this.outputFile);
+      throw new SchemaCrawlerRuntimeException(
+          String.format("Cannot write output file <%s>", this.outputFile));
     }
   }
 }

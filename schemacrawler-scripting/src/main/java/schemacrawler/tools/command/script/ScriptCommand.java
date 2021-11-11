@@ -38,7 +38,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.command.script.options.ScriptOptions;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import us.fatehi.utility.ioresource.InputResource;
@@ -58,12 +58,14 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions>
   }
 
   @Override
-  public void checkAvailability() throws Exception {
+  public void checkAvailability() {
     // Check availability of script
     commandOptions
         .getResource()
         .orElseThrow(
-            () -> new SchemaCrawlerException("No script found, " + commandOptions.getScript()));
+            () ->
+                new SchemaCrawlerRuntimeException(
+                    String.format("Script not found <%s>", commandOptions.getScript())));
 
     final String scriptingLanguage = commandOptions.getLanguage();
 
@@ -84,7 +86,7 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions>
     }
 
     // No suitable engine found
-    throw new SchemaCrawlerException(
+    throw new SchemaCrawlerRuntimeException(
         "Scripting engine not found for language, " + scriptingLanguage);
   }
 
@@ -95,7 +97,7 @@ public final class ScriptCommand extends BaseSchemaCrawlerCommand<ScriptOptions>
     checkCatalog();
 
     if (scriptExecutor == null) {
-      throw new SchemaCrawlerException("Scripting engine not found");
+      throw new SchemaCrawlerRuntimeException("Scripting engine not found");
     }
 
     final Charset inputCharset = outputOptions.getInputCharset();

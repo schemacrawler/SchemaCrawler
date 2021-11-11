@@ -34,6 +34,7 @@ import java.util.logging.Logger;
 import javax.script.ScriptEngineManager;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import us.fatehi.utility.string.StringFormat;
 
 /** Main executor for the script engine integration. */
@@ -50,8 +51,11 @@ public final class ScriptEngineExecutor extends AbstractScriptEngineExecutor {
     try {
       obtainScriptEngine();
       return scriptEngine != null;
-    } catch (final SchemaCrawlerException e) {
-      LOGGER.log(Level.CONFIG, "Script engine not found for language, " + scriptingLanguage, e);
+    } catch (final Exception e) {
+      LOGGER.log(
+          Level.CONFIG,
+          e,
+          new StringFormat("Script engine not found for language <%s>", scriptingLanguage));
       return false;
     }
   }
@@ -71,8 +75,8 @@ public final class ScriptEngineExecutor extends AbstractScriptEngineExecutor {
     }
 
     if (scriptEngine == null) {
-      throw new SchemaCrawlerException(
-          "Script engine not found for language, " + scriptingLanguage);
+      throw new SchemaCrawlerRuntimeException(
+          String.format("Script engine not found for language <%s>", scriptingLanguage));
     }
   }
 }

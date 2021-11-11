@@ -36,8 +36,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -53,8 +53,7 @@ import us.fatehi.utility.string.StringFormat;
  */
 final class PrimaryKeyRetriever extends AbstractRetriever {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(PrimaryKeyRetriever.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(PrimaryKeyRetriever.class.getName());
 
   PrimaryKeyRetriever(
       final RetrieverConnection retrieverConnection,
@@ -143,7 +142,8 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
         createPrimaryKeyForTable(table, results);
       }
     } catch (final SQLException e) {
-      throw new SchemaCrawlerSQLException("Could not retrieve primary keys from SQL:\n" + pkSql, e);
+      throw new SchemaCrawlerSQLException(
+          String.format("Could not retrieve primary keys from SQL:%n%s", pkSql), e);
     }
   }
 
@@ -164,7 +164,7 @@ final class PrimaryKeyRetriever extends AbstractRetriever {
         }
       } catch (final SQLException e) {
         throw new SchemaCrawlerSQLException(
-            "Could not retrieve primary keys for table " + table, e);
+            String.format("Could not retrieve primary keys for table <%s>", table), e);
       }
     }
   }

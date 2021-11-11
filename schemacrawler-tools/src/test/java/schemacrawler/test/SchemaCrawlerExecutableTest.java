@@ -49,7 +49,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
@@ -105,8 +104,8 @@ public class SchemaCrawlerExecutableTest {
     final String command1 = "bad-command";
     final SchemaCrawlerExecutable executable1 = new SchemaCrawlerExecutable(command1);
     executable1.setConnection(connection);
-    final SchemaCrawlerException ex1 =
-        assertThrows(SchemaCrawlerException.class, () -> executable1.execute());
+    final SchemaCrawlerRuntimeException ex1 =
+        assertThrows(SchemaCrawlerRuntimeException.class, () -> executable1.execute());
     assertThat(ex1.getMessage(), is("Unknown command <" + command1 + ">"));
 
     final String command2 = "test-command";

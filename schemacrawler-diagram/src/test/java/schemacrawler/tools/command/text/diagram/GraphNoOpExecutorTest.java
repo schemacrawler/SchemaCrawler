@@ -33,6 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 
 public class GraphNoOpExecutorTest {
@@ -46,6 +47,6 @@ public class GraphNoOpExecutorTest {
   public void constructor() {
     assertThrows(NullPointerException.class, () -> new GraphNoOpExecutor(null));
     assertThrows(
-        SchemaCrawlerException.class, () -> new GraphNoOpExecutor(DiagramOutputFormat.bmp));
+        SchemaCrawlerRuntimeException.class, () -> new GraphNoOpExecutor(DiagramOutputFormat.bmp));
   }
 }

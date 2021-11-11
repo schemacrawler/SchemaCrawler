@@ -197,7 +197,7 @@ public final class DatabaseConnectionSource implements Supplier<Connection> {
       }
       throw new SchemaCrawlerRuntimeException(
           String.format(
-              "Could not connect to %s, for %s, with properties %s",
+              "Could not connect to <%s>, for <%s>, with properties <%s>",
               connectionUrl, username, safeProperties(jdbcConnectionProperties)),
           e);
     }
@@ -208,8 +208,9 @@ public final class DatabaseConnectionSource implements Supplier<Connection> {
       return DriverManager.getDriver(connectionUrl);
     } catch (final SQLException e) {
       throw new SchemaCrawlerSQLException(
-          "Could not find a suitable JDBC driver for database connection URL, "
-              + this.connectionUrl,
+          String.format(
+              "Could not find a suitable JDBC driver for database connection URL <%s>",
+              this.connectionUrl),
           e);
     }
   }

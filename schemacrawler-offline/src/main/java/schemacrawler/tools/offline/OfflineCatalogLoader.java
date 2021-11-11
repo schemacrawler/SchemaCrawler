@@ -21,6 +21,7 @@ import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.catalogloader.BaseCatalogLoader;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.formatter.serialize.JavaSerializedCatalog;
@@ -67,7 +68,7 @@ public final class OfflineCatalogLoader extends BaseCatalogLoader {
       }
       reduceCatalog(catalog);
     } catch (final IOException | SQLException e) {
-      throw new SchemaCrawlerException("Could not load offline database", e);
+      throw new SchemaCrawlerRuntimeException("Could not load offline database", e);
     }
 
     setCatalog(catalog);

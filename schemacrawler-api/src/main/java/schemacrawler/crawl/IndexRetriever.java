@@ -37,8 +37,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.schema.Column;
 import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.IndexType;
@@ -56,8 +56,7 @@ import us.fatehi.utility.string.StringFormat;
  */
 final class IndexRetriever extends AbstractRetriever {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(IndexRetriever.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(IndexRetriever.class.getName());
 
   IndexRetriever(
       final RetrieverConnection retrieverConnection,
@@ -192,7 +191,8 @@ final class IndexRetriever extends AbstractRetriever {
         createIndexForTable(table, results);
       }
     } catch (final SQLException e) {
-      throw new SchemaCrawlerSQLException("Could not retrieve indexes from SQL:\n" + indexesSql, e);
+      throw new SchemaCrawlerSQLException(
+          String.format("Could not retrieve indexes from SQL:%n%s", indexesSql), e);
     }
   }
 
@@ -219,7 +219,8 @@ final class IndexRetriever extends AbstractRetriever {
                     true /* approximate */))) {
       createIndexes(table, results);
     } catch (final SQLException e) {
-      throw new SchemaCrawlerSQLException("Could not retrieve indexes for table " + table, e);
+      throw new SchemaCrawlerSQLException(
+          String.format("Could not retrieve indexes for table <%s>", table), e);
     }
   }
 }
