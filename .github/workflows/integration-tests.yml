@@ -155,3 +155,20 @@ jobs:
           -Ddistrib \
           -Ddocker.skip=false \
           clean package
+
+# CHECK WEBSITE LINKS
+    - id: check-links
+      name: Check website links
+      uses: lycheeverse/lychee-action@v1.1.0
+      with:
+        args: --verbose --accept 200,999 --no-progress ./schemacrawler-website/target/_website/**/*
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+    - id: upload-link-check-report
+      name: Upload website link check report
+      uses: actions/upload-artifact@v2
+      with:
+        path: ./lychee/out.md
+        name: website-link-check-report.md
+        retention-days: 15
