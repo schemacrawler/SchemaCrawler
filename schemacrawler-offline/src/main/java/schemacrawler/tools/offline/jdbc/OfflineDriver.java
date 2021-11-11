@@ -53,7 +53,7 @@ public class OfflineDriver implements Driver {
     try {
       DriverManager.registerDriver(new OfflineDriver());
     } catch (final SQLException e) {
-      LOGGER.log(Level.SEVERE, "Cannot register offline driver", e);
+      LOGGER.log(Level.SEVERE, "Cannot register SchemaCrawler Offline Catalog Snapshot driver", e);
     }
   }
 
