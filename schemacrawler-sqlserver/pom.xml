@@ -44,7 +44,7 @@
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-commandline</artifactId>
       <version>${project.version}</version>
-      <scope>compile</scope>
+      <scope>test</scope>
     </dependency>
 
 
