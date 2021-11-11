@@ -53,6 +53,7 @@ import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 import schemacrawler.Version;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
 import schemacrawler.tools.commandline.state.ShellState;
@@ -98,7 +99,7 @@ public final class CommandLineHelpCommand implements Runnable {
       } else {
         showCompleteHelp(parent);
       }
-    } catch (final Exception e) {
+    } catch (final SchemaCrawlerException e) {
       throw new SchemaCrawlerRuntimeException(e.getMessage(), e);
     }
   }

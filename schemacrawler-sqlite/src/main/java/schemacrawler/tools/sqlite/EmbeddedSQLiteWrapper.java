@@ -38,9 +38,9 @@ import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseUrlConnectionOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -53,7 +53,7 @@ public class EmbeddedSQLiteWrapper {
 
   private Path databaseFile;
 
-  public DatabaseConnectionSource createDatabaseConnectionSource() throws SchemaCrawlerException {
+  public DatabaseConnectionSource createDatabaseConnectionSource() {
     requireNonNull(databaseFile, "Database file not loaded");
 
     try {
@@ -63,7 +63,8 @@ public class EmbeddedSQLiteWrapper {
           new SQLiteDatabaseConnector().newDatabaseConnectionSource(urlConnectionOptions);
       return connectionOptions;
     } catch (final IOException e) {
-      throw new SchemaCrawlerException("Cannot read SQLite database file, " + databaseFile, e);
+      throw new SchemaCrawlerRuntimeException(
+          String.format("Cannot read SQLite database file <%s>", databaseFile), e);
     }
   }
 

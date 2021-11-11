@@ -28,7 +28,8 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.schemacrawler;
 
-/** Exception for the SchemaCrawler. */
+import static schemacrawler.utility.ExceptionUtility.makeExceptionMessage;
+
 public class SchemaCrawlerException extends Exception {
 
   private static final long serialVersionUID = 3257848770627713076L;
@@ -38,6 +39,6 @@ public class SchemaCrawlerException extends Exception {
   }
 
   public SchemaCrawlerException(final String message, final Throwable cause) {
-    super(cause == null ? message : message + ": " + cause.getMessage(), cause);
+    super(makeExceptionMessage(message, cause), cause);
   }
 }

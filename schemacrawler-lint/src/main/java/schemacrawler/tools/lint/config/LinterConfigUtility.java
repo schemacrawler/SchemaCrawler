@@ -35,12 +35,12 @@ import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
-import java.util.logging.Logger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.command.lint.options.LintOptions;
@@ -52,8 +52,7 @@ import us.fatehi.utility.string.StringFormat;
 @UtilityMarker
 public final class LinterConfigUtility {
 
-  public static final Logger LOGGER =
-      Logger.getLogger(LinterConfigUtility.class.getName());
+  public static final Logger LOGGER = Logger.getLogger(LinterConfigUtility.class.getName());
 
   /**
    * Obtain linter configuration from a system property
@@ -70,7 +69,8 @@ public final class LinterConfigUtility {
               .orElseThrow(
                   () ->
                       new SchemaCrawlerRuntimeException(
-                          "Could not load linter configs from file, " + linterConfigsFile));
+                          String.format(
+                              "Could not load linter configs from file <%s>", linterConfigsFile)));
       try (final Reader reader = inputResource.openNewInputReader(UTF_8)) {
         final List<LinterConfig> linterConfigsList = readLinterConfigs(reader);
         for (final LinterConfig linterConfig : linterConfigsList) {
@@ -78,14 +78,13 @@ public final class LinterConfigUtility {
         }
       } catch (final Exception e) {
         throw new SchemaCrawlerRuntimeException(
-            "Could not load linter configs from file, " + linterConfigsFile, e);
+            String.format("Could not load linter configs from file <%s>", linterConfigsFile), e);
       }
     }
     return linterConfigs;
   }
 
-  private static List<LinterConfig> readLinterConfigs(final Reader reader)
-      throws SchemaCrawlerException {
+  private static List<LinterConfig> readLinterConfigs(final Reader reader) {
     requireNonNull(reader, "No input provided");
 
     try {
@@ -99,7 +98,7 @@ public final class LinterConfigUtility {
 
       return linterConfigs;
     } catch (final Exception e) {
-      throw new SchemaCrawlerException("Could not read linter configs", e);
+      throw new SchemaCrawlerRuntimeException("Could not read linter configs", e);
     }
   }
 

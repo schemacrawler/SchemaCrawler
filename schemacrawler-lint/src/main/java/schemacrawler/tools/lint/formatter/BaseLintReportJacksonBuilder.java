@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintReport;
 import schemacrawler.tools.options.OutputOptions;
@@ -29,22 +29,22 @@ abstract class BaseLintReportJacksonBuilder implements LintReportBuilder {
 
   private final PrintWriter out;
 
-  BaseLintReportJacksonBuilder(final OutputOptions outputOptions) throws SchemaCrawlerException {
+  BaseLintReportJacksonBuilder(final OutputOptions outputOptions) {
     try {
       out = new PrintWriter(outputOptions.openNewOutputWriter(), true);
     } catch (final IOException e) {
-      throw new SchemaCrawlerException("Cannot open output writer", e);
+      throw new SchemaCrawlerRuntimeException("Cannot open output writer", e);
     }
   }
 
   @Override
-  public void generateLintReport(final LintReport report) throws SchemaCrawlerException {
+  public void generateLintReport(final LintReport report) {
     requireNonNull(out, "No output stream provided");
     try {
       final ObjectMapper mapper = newConfiguredObjectMapper();
       mapper.writeValue(out, report);
     } catch (final Exception e) {
-      throw new SchemaCrawlerException("Could not generate lint report", e);
+      throw new SchemaCrawlerRuntimeException("Could not generate lint report", e);
     }
   }
 

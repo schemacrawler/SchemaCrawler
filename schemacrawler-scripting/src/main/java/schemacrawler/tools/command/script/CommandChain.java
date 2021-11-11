@@ -34,9 +34,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
@@ -53,8 +54,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
 
   private static final String COMMAND = "chain";
 
-  private static final Logger LOGGER =
-      Logger.getLogger(CommandChain.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(CommandChain.class.getName());
 
   private final CommandRegistry commandRegistry;
   private final List<SchemaCrawlerCommand<?>> scCommands;
@@ -84,7 +84,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
     setIdentifiers(scCommand.getIdentifiers());
   }
 
-  public final SchemaCrawlerCommand<?> addNext(
+  public SchemaCrawlerCommand<?> addNext(
       final String command, final String outputFormat, final String outputFileName)
       throws SchemaCrawlerException {
     requireNonNull(command, "No command provided");
@@ -102,7 +102,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
   }
 
   @Override
-  public void checkAvailability() throws Exception {
+  public void checkAvailability() {
     // Check the availability of the chain, even though there may be no
     // command in the chain until the actual point of execution
     checkAvailabilityChain();
@@ -123,7 +123,7 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
   }
 
   private SchemaCrawlerCommand<?> addNextAndConfigureForExecution(
-      final String command, final OutputOptions outputOptions) throws SchemaCrawlerException {
+      final String command, final OutputOptions outputOptions) {
     try {
       final SchemaCrawlerCommand<?> scCommand =
           commandRegistry.configureNewCommand(
@@ -139,22 +139,25 @@ public final class CommandChain extends BaseSchemaCrawlerCommand<LanguageOptions
       scCommands.add(scCommand);
 
       return scCommand;
-    } catch (final SchemaCrawlerException e) {
-      throw e;
     } catch (final Exception e) {
-      throw new SchemaCrawlerException(
+      throw new SchemaCrawlerRuntimeException(
           String.format("Cannot chain command, unknown command <%s>", command), e);
     }
   }
 
-  private void checkAvailabilityChain() throws Exception {
+  private void checkAvailabilityChain() {
     if (scCommands.isEmpty()) {
       LOGGER.log(Level.INFO, "No command to execute");
       return;
     }
 
     for (final SchemaCrawlerCommand<?> scCommand : scCommands) {
-      scCommand.checkAvailability();
+      try {
+        scCommand.checkAvailability();
+      } catch (final Exception e) {
+        throw new SchemaCrawlerRuntimeException(
+            String.format("Command <%s> is not available", scCommand));
+      }
     }
   }
 

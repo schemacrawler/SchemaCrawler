@@ -82,8 +82,7 @@ public class GraphvizJavaExecutorTest {
         new GraphvizJavaExecutor(dotFile, outputFile, DiagramOutputFormat.xdot);
     assertThat(graphvizJavaExecutor.canGenerate(), is(true));
 
-    final boolean success = graphvizJavaExecutor.call();
-    assertThat(success, is(true));
+    graphvizJavaExecutor.run();
 
     assertThat(
         outputOf(outputFile), hasSameContentAsClasspathResource("/javaexecutor/output.xdot"));

@@ -43,8 +43,8 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.Options;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 
@@ -133,7 +133,7 @@ public abstract class DatabaseConnector implements Options {
    * @param connectionUrl Database connection URL
    */
   public DatabaseConnectionSource newDatabaseConnectionSource(
-      final DatabaseConnectionOptions connectionOptions) throws SchemaCrawlerException {
+      final DatabaseConnectionOptions connectionOptions) {
     requireNonNull(connectionOptions, "No database connection options provided");
 
     // Connect using connection options provided from the command-line,
@@ -163,7 +163,7 @@ public abstract class DatabaseConnector implements Options {
       final Map<String, String> connectionUrlx = databaseConnectionUrlBuilder.toUrlx();
       databaseConnectionSource = new DatabaseConnectionSource(connectionUrl, connectionUrlx);
     } else {
-      throw new SchemaCrawlerException("Could not create new database connection source");
+      throw new SchemaCrawlerRuntimeException("Could not create new database connection source");
     }
 
     return databaseConnectionSource;

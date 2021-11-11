@@ -60,7 +60,7 @@ public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptio
   }
 
   @Override
-  public void checkAvailability() throws Exception {
+  public void checkAvailability() {
     graphExecutorFactory.canGenerate(diagramOutputFormat);
   }
 
@@ -110,11 +110,12 @@ public final class DiagramRenderer extends BaseSchemaCrawlerCommand<DiagramOptio
             .withOutputFile(outputFile)
             .toOptions();
 
-    final GraphExecutor graphExecutor =
-        graphExecutorFactory.getGraphExecutor(
-            dotFile, diagramOutputFormat, outputFile, commandOptions);
-    final boolean successful = graphExecutor.call();
-    if (!successful) {
+    try {
+      final GraphExecutor graphExecutor =
+          graphExecutorFactory.getGraphExecutor(
+              dotFile, diagramOutputFormat, outputFile, commandOptions);
+      graphExecutor.run();
+    } catch (final Exception e) {
       final String message = readResourceFully("/dot.error.txt");
       throw new SchemaCrawlerRuntimeException(message);
     }

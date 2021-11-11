@@ -14,9 +14,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.inclusionrule.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.LoadOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.ExecutableTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -51,8 +51,8 @@ public class Issue342Test {
     executable.setOutputOptions(outputOptions);
     executable.setConnection(connection);
 
-    final SchemaCrawlerException exception =
-        assertThrows(SchemaCrawlerException.class, () -> executable.execute());
+    final SchemaCrawlerRuntimeException exception =
+        assertThrows(SchemaCrawlerRuntimeException.class, () -> executable.execute());
     assertThat(
         exception.getMessage(), is("Output format <json> not supported for command <schema>"));
   }

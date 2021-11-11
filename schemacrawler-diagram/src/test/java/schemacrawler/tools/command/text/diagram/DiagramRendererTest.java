@@ -54,10 +54,10 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.DatabaseTestUtility;
-import schemacrawler.test.utility.TestDisabledWithoutGraphvizExtension;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.TestDisabledWithoutGraphvizExtension;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptions;
 import schemacrawler.tools.command.text.diagram.options.DiagramOptionsBuilder;
@@ -77,7 +77,7 @@ public class DiagramRendererTest {
   private final class GraphvizJavaExecutorFactory extends GraphExecutorFactory {
 
     @Override
-    public void canGenerate(final DiagramOutputFormat diagramOutputFormat) throws Exception {
+    public void canGenerate(final DiagramOutputFormat diagramOutputFormat) {
       // No-op
     }
 
@@ -86,8 +86,7 @@ public class DiagramRendererTest {
         final Path dotFile,
         final DiagramOutputFormat diagramOutputFormat,
         final Path outputFile,
-        final DiagramOptions commandOptions)
-        throws SchemaCrawlerException {
+        final DiagramOptions commandOptions) {
       final GraphExecutor graphExecutor;
       if (diagramOutputFormat != scdot) {
         graphExecutor = new GraphvizJavaExecutor(dotFile, outputFile, diagramOutputFormat);

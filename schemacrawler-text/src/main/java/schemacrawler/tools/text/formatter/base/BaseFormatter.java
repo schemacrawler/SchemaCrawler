@@ -34,14 +34,15 @@ import static us.fatehi.utility.Utility.hasNoUpperCase;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.schema.Column;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.NamedObjectKey;
 import schemacrawler.schemacrawler.Identifiers;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.command.text.schema.options.TextOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.formatter.base.helper.HtmlFormattingHelper;
@@ -53,8 +54,7 @@ import schemacrawler.tools.traversal.TraversalHandler;
 
 public abstract class BaseFormatter<O extends BaseTextOptions> implements TraversalHandler {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(BaseFormatter.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(BaseFormatter.class.getName());
 
   protected final O options;
   protected final OutputOptions outputOptions;
@@ -68,8 +68,7 @@ public abstract class BaseFormatter<O extends BaseTextOptions> implements Traver
       final O options,
       final boolean printVerboseDatabaseInfo,
       final OutputOptions outputOptions,
-      final String identifierQuoteString)
-      throws SchemaCrawlerException {
+      final String identifierQuoteString) {
     this.options = requireNonNull(options, "Options not provided");
 
     this.outputOptions = requireNonNull(outputOptions, "Output options not provided");
@@ -87,7 +86,7 @@ public abstract class BaseFormatter<O extends BaseTextOptions> implements Traver
     try {
       out = new PrintWriter(outputOptions.openNewOutputWriter(false), true);
     } catch (final IOException e) {
-      throw new SchemaCrawlerException("Cannot open output writer", e);
+      throw new SchemaCrawlerRuntimeException("Cannot open output writer", e);
     }
 
     final TextOutputFormat outputFormat =
@@ -142,7 +141,7 @@ public abstract class BaseFormatter<O extends BaseTextOptions> implements Traver
     }
   }
 
-protected String quoteName(final DatabaseObject table){
+  protected String quoteName(final DatabaseObject table) {
     final String tableName;
     if (options.isShowUnqualifiedNames()) {
       tableName = identifiers.quoteName(table);

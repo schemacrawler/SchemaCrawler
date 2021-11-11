@@ -27,6 +27,8 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.test.utility;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -84,11 +86,12 @@ public abstract class BaseAdditionalDatabaseTest {
     return ds;
   }
 
-  protected final Connection getConnection() throws SchemaCrawlerException {
+  protected final Connection getConnection() {
     try {
       return dataSource.getConnection();
     } catch (final SQLException e) {
-      throw new SchemaCrawlerException(e.getMessage(), e);
+      fail("Could not get database connection", e);
+      return null; // Appeasing the compiler - this line will never be executed.
     }
   }
 

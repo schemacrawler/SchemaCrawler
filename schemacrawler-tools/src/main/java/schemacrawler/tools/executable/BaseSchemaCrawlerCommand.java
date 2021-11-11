@@ -63,12 +63,9 @@ public abstract class BaseSchemaCrawlerCommand<C extends CommandOptions>
     outputOptions = OutputOptionsBuilder.newOutputOptions();
   }
 
+  /** Runtime exceptions will be thrown if the command is not available. */
   @Override
-  public void checkAvailability() throws Exception {
-    // Nothing additional to check at this point.
-    // Most command should be available after their class is loaded,
-    // and imports are resolved.
-  }
+  public abstract void checkAvailability() throws RuntimeException;
 
   @Override
   public Catalog getCatalog() {

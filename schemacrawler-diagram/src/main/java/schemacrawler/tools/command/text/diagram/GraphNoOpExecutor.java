@@ -29,25 +29,26 @@ package schemacrawler.tools.command.text.diagram;
 
 import static java.util.Objects.requireNonNull;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 
 final class GraphNoOpExecutor implements GraphExecutor {
 
-  GraphNoOpExecutor(final DiagramOutputFormat diagramOutputFormat) throws SchemaCrawlerException {
+  GraphNoOpExecutor(final DiagramOutputFormat diagramOutputFormat) {
     requireNonNull(diagramOutputFormat, "No diagram output format provided");
     if (diagramOutputFormat != DiagramOutputFormat.scdot) {
-      throw new SchemaCrawlerException("Format should be " + DiagramOutputFormat.scdot);
+      throw new SchemaCrawlerRuntimeException(
+          String.format("Format should be <%s>", DiagramOutputFormat.scdot));
     }
-  }
-
-  @Override
-  public Boolean call() {
-    return true;
   }
 
   @Override
   public boolean canGenerate() {
     return true;
+  }
+
+  @Override
+  public void run() {
+    // No-op
   }
 }

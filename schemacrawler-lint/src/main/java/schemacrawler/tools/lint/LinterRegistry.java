@@ -36,10 +36,11 @@ import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import us.fatehi.utility.string.StringFormat;
 
 /**
@@ -49,8 +50,7 @@ import us.fatehi.utility.string.StringFormat;
  */
 public final class LinterRegistry implements Iterable<String> {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(LinterRegistry.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(LinterRegistry.class.getName());
 
   private static final Linter NO_OP_LINTER =
       new BaseLinter() {
@@ -72,7 +72,7 @@ public final class LinterRegistry implements Iterable<String> {
         }
       };
 
-  private static Map<String, Class<Linter>> loadLinterRegistry() throws SchemaCrawlerException {
+  private static Map<String, Class<Linter>> loadLinterRegistry() {
 
     final Map<String, Class<Linter>> linterRegistry = new HashMap<>();
     try {
@@ -86,7 +86,7 @@ public final class LinterRegistry implements Iterable<String> {
         linterRegistry.put(linterId, linterClass);
       }
     } catch (final Exception e) {
-      throw new SchemaCrawlerException("Could not load linter registry", e);
+      throw new SchemaCrawlerRuntimeException("Could not load linter registry", e);
     }
 
     return linterRegistry;

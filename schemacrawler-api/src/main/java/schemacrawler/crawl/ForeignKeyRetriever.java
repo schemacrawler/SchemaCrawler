@@ -40,8 +40,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
@@ -60,8 +60,7 @@ import us.fatehi.utility.string.StringFormat;
  */
 final class ForeignKeyRetriever extends AbstractRetriever {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(ForeignKeyRetriever.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ForeignKeyRetriever.class.getName());
 
   ForeignKeyRetriever(
       final RetrieverConnection retrieverConnection,
@@ -199,7 +198,8 @@ final class ForeignKeyRetriever extends AbstractRetriever {
       results.setDescription("retrieveForeignKeysUsingSql");
       createForeignKeys(results, foreignKeys);
     } catch (final SQLException e) {
-      throw new SchemaCrawlerSQLException("Could not retrieve foreign keys from SQL:\n" + fkSql, e);
+      throw new SchemaCrawlerSQLException(
+          String.format("Could not retrieve foreign keys from SQL:%n%s", fkSql), e);
     }
   }
 
@@ -223,7 +223,7 @@ final class ForeignKeyRetriever extends AbstractRetriever {
         createForeignKeys(results, foreignKeys);
       } catch (final SQLException e) {
         throw new SchemaCrawlerSQLException(
-            "Could not retrieve foreign keys for table " + table, e);
+            String.format("Could not retrieve foreign keys for table <%s>", table), e);
       }
 
       // We need to get exported keys as well, since if only a single

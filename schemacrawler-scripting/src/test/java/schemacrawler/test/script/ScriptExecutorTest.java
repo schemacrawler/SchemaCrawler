@@ -29,7 +29,7 @@ package schemacrawler.test.script;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.io.StringWriter;
 import java.util.Collections;

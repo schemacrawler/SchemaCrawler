@@ -38,8 +38,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Identifiers;
@@ -60,15 +60,14 @@ import us.fatehi.utility.string.StringFormat;
  * @author Sualeh Fatehi
  */
 public final class OperationCommand extends BaseSchemaCrawlerCommand<OperationOptions> {
-  private static final Logger LOGGER =
-      Logger.getLogger(OperationCommand.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(OperationCommand.class.getName());
 
   public OperationCommand(final String command) {
     super(command);
   }
 
   @Override
-  public void checkAvailability() throws Exception {
+  public void checkAvailability() {
     // Operations are always available
   }
 

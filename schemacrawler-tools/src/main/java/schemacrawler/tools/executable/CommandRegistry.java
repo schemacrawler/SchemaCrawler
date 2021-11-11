@@ -174,8 +174,7 @@ public final class CommandRegistry {
       final SchemaCrawlerOptions schemaCrawlerOptions,
       final Config additionalConfig,
       final OutputOptions outputOptions,
-      final List<CommandProvider> executableCommandProviders)
-      throws SchemaCrawlerException {
+      final List<CommandProvider> executableCommandProviders) {
     for (final CommandProvider commandProvider : commandRegistry) {
       if (commandProvider.supportsSchemaCrawlerCommand(
           command, schemaCrawlerOptions, additionalConfig, outputOptions)) {
@@ -184,15 +183,14 @@ public final class CommandRegistry {
       }
     }
     if (executableCommandProviders.isEmpty()) {
-      throw new SchemaCrawlerException(String.format("Unknown command <%s>", command));
+      throw new SchemaCrawlerRuntimeException(String.format("Unknown command <%s>", command));
     }
   }
 
   private void findSupportedOutputFormats(
       final String command,
       final OutputOptions outputOptions,
-      final List<CommandProvider> executableCommandProviders)
-      throws SchemaCrawlerException {
+      final List<CommandProvider> executableCommandProviders) {
     final Iterator<CommandProvider> iterator = executableCommandProviders.iterator();
     while (iterator.hasNext()) {
       final CommandProvider executableCommandProvider = iterator.next();
@@ -206,7 +204,7 @@ public final class CommandRegistry {
       }
     }
     if (executableCommandProviders.isEmpty()) {
-      throw new SchemaCrawlerException(
+      throw new SchemaCrawlerRuntimeException(
           String.format(
               "Output format <%s> not supported for command <%s>",
               outputOptions.getOutputFormatValue(), command));

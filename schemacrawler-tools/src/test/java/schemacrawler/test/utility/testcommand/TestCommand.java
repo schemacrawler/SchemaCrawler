@@ -45,6 +45,11 @@ public final class TestCommand extends BaseSchemaCrawlerCommand<TestOptions> {
     super(COMMAND);
   }
 
+  @Override
+  public void checkAvailability() {
+    // No-op
+  }
+
   /** {@inheritDoc} */
   @Override
   public void execute() throws Exception {

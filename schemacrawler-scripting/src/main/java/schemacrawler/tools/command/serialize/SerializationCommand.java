@@ -55,7 +55,7 @@ public final class SerializationCommand extends BaseSchemaCrawlerCommand<Seriali
   }
 
   @Override
-  public void checkAvailability() throws Exception {
+  public void checkAvailability() {
     // Nothing additional to check at this point. The Command should be
     // available after the class is loaded, and imports are resolved.
   }

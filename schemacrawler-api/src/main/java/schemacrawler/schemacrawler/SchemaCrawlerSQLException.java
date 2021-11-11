@@ -27,7 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schemacrawler;
 
-import static java.util.Objects.requireNonNull;
+import static schemacrawler.utility.ExceptionUtility.makeExceptionMessage;
 
 import java.sql.SQLException;
 
@@ -35,19 +35,19 @@ public class SchemaCrawlerSQLException extends SQLException {
 
   private static final long serialVersionUID = 3424948223257267142L;
 
-  public SchemaCrawlerSQLException(final String reason) {
-    super(reason);
+  public SchemaCrawlerSQLException(final String message) {
+    super(message);
   }
 
-  public SchemaCrawlerSQLException(final String reason, final Exception cause) {
-    super(reason, cause);
+  public SchemaCrawlerSQLException(final String message, final Exception cause) {
+    super(makeExceptionMessage(message, cause), cause);
   }
 
-  public SchemaCrawlerSQLException(final String reason, final SQLException cause) {
+  public SchemaCrawlerSQLException(final String message, final SQLException cause) {
     super(
-        reason,
-        requireNonNull(cause, reason + ": no underlying SQL exception provided").getSQLState(),
-        cause.getErrorCode(),
+        makeExceptionMessage(message, cause),
+        cause == null ? "" : cause.getSQLState(),
+        cause == null ? 0 : cause.getErrorCode(),
         cause);
   }
 }

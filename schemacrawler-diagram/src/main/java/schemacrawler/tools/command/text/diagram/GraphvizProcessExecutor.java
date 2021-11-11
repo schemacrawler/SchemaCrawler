@@ -38,9 +38,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
+
 import schemacrawler.tools.command.text.diagram.options.DiagramOutputFormat;
 import us.fatehi.utility.ProcessExecutor;
 import us.fatehi.utility.string.FileContents;
@@ -48,8 +47,7 @@ import us.fatehi.utility.string.StringFormat;
 
 final class GraphvizProcessExecutor extends AbstractGraphProcessExecutor {
 
-  private static final Logger LOGGER =
-      Logger.getLogger(GraphvizProcessExecutor.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(GraphvizProcessExecutor.class.getName());
 
   private final List<String> graphvizOpts;
 
@@ -57,15 +55,19 @@ final class GraphvizProcessExecutor extends AbstractGraphProcessExecutor {
       final Path dotFile,
       final Path outputFile,
       final DiagramOutputFormat diagramOutputFormat,
-      final List<String> graphvizOpts)
-      throws SchemaCrawlerException {
+      final List<String> graphvizOpts) {
     super(dotFile, outputFile, diagramOutputFormat);
 
     this.graphvizOpts = requireNonNull(graphvizOpts, "No Graphviz options provided");
   }
 
   @Override
-  public Boolean call() {
+  public boolean canGenerate() {
+    return isGraphvizAvailable();
+  }
+
+  @Override
+  public void run() {
 
     final List<String> command = createDiagramCommand();
     LOGGER.log(
@@ -74,17 +76,8 @@ final class GraphvizProcessExecutor extends AbstractGraphProcessExecutor {
     final ProcessExecutor processExecutor = new ProcessExecutor();
     processExecutor.setCommandLine(command);
 
-    Integer exitCode;
-    try {
-      exitCode = processExecutor.call();
-    } catch (final Exception e) {
-      LOGGER.log(
-          Level.INFO,
-          String.format("Could not generate diagram using Graphviz:%n%s", command.toString()),
-          e);
-      exitCode = Integer.MIN_VALUE;
-    }
-    final boolean successful = exitCode != null && exitCode == 0;
+    final int exitCode = processExecutor.call();
+    final boolean successful = exitCode == 0;
 
     LOGGER.log(
         Level.FINE,
@@ -105,13 +98,6 @@ final class GraphvizProcessExecutor extends AbstractGraphProcessExecutor {
               "Graphviz stderr:%n%s", new FileContents(processExecutor.getProcessError())));
       LOGGER.log(Level.INFO, new StringFormat("Generated diagram <%s>", outputFile));
     }
-
-    return successful;
-  }
-
-  @Override
-  public boolean canGenerate() {
-    return isGraphvizAvailable();
   }
 
   private List<String> createDiagramCommand() {

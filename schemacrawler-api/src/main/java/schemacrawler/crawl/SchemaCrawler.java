@@ -88,7 +88,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.LimitOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaReference;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
@@ -120,15 +120,14 @@ public final class SchemaCrawler {
   public SchemaCrawler(
       final Connection connection,
       final SchemaRetrievalOptions schemaRetrievalOptions,
-      final SchemaCrawlerOptions options)
-      throws SchemaCrawlerException {
+      final SchemaCrawlerOptions options) {
     try {
       retrieverConnection = new RetrieverConnection(connection, schemaRetrievalOptions);
       this.options = requireNonNull(options, "No SchemaCrawler options provided");
       infoLevel = options.getLoadOptions().getSchemaInfoLevel();
       stopWatch = new RetrievalStopWatch(infoLevel);
     } catch (final SQLException e) {
-      throw new SchemaCrawlerException(e.getMessage(), e);
+      throw new SchemaCrawlerRuntimeException(e.getMessage(), e);
     }
   }
 
@@ -138,7 +137,7 @@ public final class SchemaCrawler {
    * @return Database metadata
    * @throws SchemaCrawlerException On an exception
    */
-  public Catalog crawl() throws SchemaCrawlerException {
+  public Catalog crawl() {
     try {
       catalog = new MutableCatalog("catalog", retrieverConnection.getConnectionInfo());
 
@@ -153,12 +152,10 @@ public final class SchemaCrawler {
       crawlSequences();
 
       return catalog;
-    } catch (final SchemaCrawlerSQLException e) {
-      throw new SchemaCrawlerException(e.getMessage(), e.getCause());
-    } catch (final SchemaCrawlerException e) {
+    } catch (final SchemaCrawlerRuntimeException e) {
       throw e;
     } catch (final Exception e) {
-      throw new SchemaCrawlerException(e.getMessage(), e);
+      throw new SchemaCrawlerRuntimeException(e.getMessage(), e);
     }
   }
 
